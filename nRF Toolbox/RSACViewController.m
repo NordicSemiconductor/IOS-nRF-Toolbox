@@ -1,25 +1,34 @@
 //
-//  ViewController.m
+//  RSACViewController.m
 //  nRF Toolbox
 //
-//  Created by Aleksander Nowakowski on 12/12/13.
+//  Created by Aleksander Nowakowski on 13/12/13.
 //  Copyright (c) 2013 Nordic Semiconductor. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "RSACViewController.h"
 #import "Constants.h"
 
-@interface ViewController ()
+@interface RSACViewController ()
 
 @end
 
-@implementation ViewController
+@implementation RSACViewController
 @synthesize backgroundImage;
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+	// Do any additional setup after loading the view.
     if (is4Inches)
     {
         // 4 inches iPhone
