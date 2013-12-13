@@ -8,16 +8,31 @@
 
 #import "ViewController.h"
 
+#define is4Inches ([[UIScreen mainScreen] bounds].size.height == 568)
+
 @interface ViewController ()
 
 @end
 
 @implementation ViewController
+@synthesize backgroundImage;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    if (is4Inches)
+    {
+        // 4 inches iPhone
+        UIImage *image = [UIImage imageNamed:@"Background4.png"];
+        [backgroundImage setImage:image];
+    }
+    else
+    {
+        // 3.5 inches iPhone
+        UIImage *image = [UIImage imageNamed:@"Background35.png"];
+        [backgroundImage setImage:image];
+    }
 }
 
 - (void)didReceiveMemoryWarning
