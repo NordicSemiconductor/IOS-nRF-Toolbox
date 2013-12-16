@@ -19,8 +19,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    if (is4Inches)
+	// Adjust the background to fill the phone space
+    if (is4InchesIPhone)
     {
         // 4 inches iPhone
         UIImage *image = [UIImage imageNamed:@"Background4.png"];

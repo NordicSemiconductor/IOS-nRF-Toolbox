@@ -23,6 +23,8 @@
 		5217F4111859EE0000F2D5BB /* nRF_ToolboxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5217F4101859EE0000F2D5BB /* nRF_ToolboxTests.m */; };
 		5217F41B1859EEF400F2D5BB /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5217F41A1859EEF400F2D5BB /* CoreBluetooth.framework */; };
 		5217F41E185B198E00F2D5BB /* RSACViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5217F41D185B198E00F2D5BB /* RSACViewController.m */; };
+		5217F422185F15FA00F2D5BB /* ScannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5217F421185F15FA00F2D5BB /* ScannerViewController.m */; };
+		5217F428185F28D400F2D5BB /* ScannedPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = 5217F427185F28D400F2D5BB /* ScannedPeripheral.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,11 @@
 		5217F41C185B198E00F2D5BB /* RSACViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSACViewController.h; sourceTree = "<group>"; };
 		5217F41D185B198E00F2D5BB /* RSACViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSACViewController.m; sourceTree = "<group>"; };
 		5217F41F185B1A0800F2D5BB /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		5217F420185F15FA00F2D5BB /* ScannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScannerViewController.h; sourceTree = "<group>"; };
+		5217F421185F15FA00F2D5BB /* ScannerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScannerViewController.m; sourceTree = "<group>"; };
+		5217F426185F28D400F2D5BB /* ScannedPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScannedPeripheral.h; sourceTree = "<group>"; };
+		5217F427185F28D400F2D5BB /* ScannedPeripheral.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScannedPeripheral.m; sourceTree = "<group>"; };
+		5217F429185F32E500F2D5BB /* ScannerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScannerDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +128,11 @@
 			isa = PBXGroup;
 			children = (
 				5217F41F185B1A0800F2D5BB /* Constants.h */,
+				5217F426185F28D400F2D5BB /* ScannedPeripheral.h */,
+				5217F427185F28D400F2D5BB /* ScannedPeripheral.m */,
+				5217F429185F32E500F2D5BB /* ScannerDelegate.h */,
+				5217F420185F15FA00F2D5BB /* ScannerViewController.h */,
+				5217F421185F15FA00F2D5BB /* ScannerViewController.m */,
 				5217F41C185B198E00F2D5BB /* RSACViewController.h */,
 				5217F41D185B198E00F2D5BB /* RSACViewController.m */,
 				5217F3F41859EE0000F2D5BB /* AppDelegate.h */,
@@ -267,6 +279,8 @@
 				5217F3F61859EE0000F2D5BB /* AppDelegate.m in Sources */,
 				5217F3F21859EE0000F2D5BB /* main.m in Sources */,
 				5217F41E185B198E00F2D5BB /* RSACViewController.m in Sources */,
+				5217F428185F28D400F2D5BB /* ScannedPeripheral.m in Sources */,
+				5217F422185F15FA00F2D5BB /* ScannerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,7 +413,7 @@
 				GCC_PREFIX_HEADER = "nRF Toolbox/nRF Toolbox-Prefix.pch";
 				INFOPLIST_FILE = "nRF Toolbox/nRF Toolbox-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "2DE171CE-404F-4292-AA3A-7803896BE79F";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -415,7 +429,7 @@
 				GCC_PREFIX_HEADER = "nRF Toolbox/nRF Toolbox-Prefix.pch";
 				INFOPLIST_FILE = "nRF Toolbox/nRF Toolbox-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "2DE171CE-404F-4292-AA3A-7803896BE79F";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
