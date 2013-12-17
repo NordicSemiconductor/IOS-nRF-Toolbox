@@ -21,23 +21,31 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6IX-0H-9Bm">
-                                <rect key="frame" x="15" y="15" width="90" height="90"/>
+                                <rect key="frame" x="22" y="22" width="78" height="78"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="FeatureRSAC" backgroundImage="FeatureBackground"/>
+                                <state key="highlighted" image="FeatureRSAC" backgroundImage="FeatureBackgroundPressed"/>
                                 <connections>
                                     <segue destination="ajK-NB-gff" kind="push" id="5r6-8u-gor"/>
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0L7-fl-HwT">
-                                <rect key="frame" x="115" y="15" width="90" height="90"/>
+                                <rect key="frame" x="121" y="22" width="78" height="78"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" backgroundImage="FeatureBackground"/>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HBW-Vg-EA4">
-                                <rect key="frame" x="215" y="15" width="90" height="90"/>
+                                <rect key="frame" x="220" y="22" width="78" height="78"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" backgroundImage="FeatureBackground"/>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="RSC" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ljT-Go-gDs">
+                                <rect key="frame" x="40" y="98" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -67,7 +75,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="RUNNING SPEED AND CADENCE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wGI-MU-Ps9">
-                                <rect key="frame" x="-5" y="60" width="32" height="383"/>
+                                <rect key="frame" x="0.0" y="60" width="32" height="383"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="27"/>
                                 <color key="textColor" red="0.66666666666666663" green="0.6705882352941176" blue="0.68627450980392157" alpha="1" colorSpace="calibratedRGB"/>
@@ -137,7 +145,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d7J-1T-DU3">
-                                        <rect key="frame" x="105" y="78" width="95" height="36"/>
+                                        <rect key="frame" x="91" y="78" width="109" height="36"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                         <nil key="highlightedColor"/>
@@ -166,7 +174,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="km" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IyL-8V-KeE">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="m" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IyL-8V-KeE">
                                         <rect key="frame" x="207" y="94" width="32" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -216,7 +224,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="0sc-b2-qkX" secondAttribute="centerX" id="9tf-hB-4df"/>
-                            <constraint firstItem="wGI-MU-Ps9" firstAttribute="leading" secondItem="muv-tX-KBW" secondAttribute="leading" constant="-5" id="LnC-wq-CJ7"/>
+                            <constraint firstItem="wGI-MU-Ps9" firstAttribute="leading" secondItem="muv-tX-KBW" secondAttribute="leading" id="LnC-wq-CJ7"/>
                             <constraint firstItem="5AJ-vh-XED" firstAttribute="top" secondItem="0sc-b2-qkX" secondAttribute="bottom" constant="30" id="U7D-vc-Gtc"/>
                             <constraint firstAttribute="centerY" secondItem="wGI-MU-Ps9" secondAttribute="centerY" id="kYN-HK-4eQ"/>
                         </constraints>
@@ -230,6 +238,7 @@
                         <outlet property="connectButton" destination="0sc-b2-qkX" id="q2h-bv-aun"/>
                         <outlet property="deviceName" destination="RxL-hn-oFh" id="sux-Rb-53E"/>
                         <outlet property="distance" destination="d7J-1T-DU3" id="bnQ-ph-vPx"/>
+                        <outlet property="distanceUnit" destination="IyL-8V-KeE" id="w8s-xR-dzY"/>
                         <outlet property="speed" destination="tz6-tB-HS7" id="TII-ih-I8i"/>
                         <outlet property="strideLength" destination="ulM-eI-Wwm" id="dkg-cx-fL9"/>
                         <outlet property="verticalLabel" destination="wGI-MU-Ps9" id="U8P-6w-OR0"/>
@@ -343,8 +352,9 @@
         <image name="Battery" width="39" height="19"/>
         <image name="ConnectButton" width="163" height="48"/>
         <image name="ConnectButtonPressed" width="163" height="48"/>
-        <image name="FeatureBackground" width="90" height="90"/>
-        <image name="FeatureRSAC" width="90" height="90"/>
+        <image name="FeatureBackground" width="78" height="78"/>
+        <image name="FeatureBackgroundPressed" width="78" height="78"/>
+        <image name="FeatureRSAC" width="78" height="78"/>
         <image name="Signal_3" width="30" height="22"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

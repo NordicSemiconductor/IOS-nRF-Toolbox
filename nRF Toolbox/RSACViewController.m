@@ -172,6 +172,7 @@
     [self.speed setText:@"-"];
     [self.cadence setText:@"-"];
     [self.distance setText:@"-"];
+    [self.distanceUnit setText:@"m"];
     [self.strideLength setText:@"-"];
     [self.activity setText:@"n/a"];
 }
@@ -267,15 +268,24 @@
             }
             
             float speedValue = [self uint16_decode:array + 1] / 256.0f * 3.6f;
-            [self.speed setText:[[NSString alloc] initWithFormat:@"%0.1f", speedValue]];
+            [self.speed setText:[[NSString alloc] initWithFormat:@"%.1f", speedValue]];
             
             int cadenceValue = array[3];
             [self.cadence setText:[[NSString alloc] initWithFormat:@"%d", cadenceValue]];
             
             if (totalDistancePresent)
             {
-                int distanceValue = [self uint32_decode:array + 6];
-                [self.distance setText:[[NSString alloc] initWithFormat:@"%d", distanceValue]];
+                float distanceValue = [self uint32_decode:array + 6];
+                if (distanceValue < 10000) // 1 km in dm
+                {
+                    [self.distance setText:[[NSString alloc] initWithFormat:@"%.0f", distanceValue / 10]];
+                    [self.distanceUnit setText:@"m"];
+                }
+                else
+                {
+                    [self.distance setText:[[NSString alloc] initWithFormat:@"%.2f", distanceValue / 10000]];
+                    [self.distanceUnit setText:@"km"];
+                }
             }
             else
             {
@@ -313,7 +323,7 @@
  *
  * @return      Decoded value.
  */
-- (uint16_t) uint32_decode:(const uint8_t *) p_encoded_data
+- (uint32_t) uint32_decode:(const uint8_t *) p_encoded_data
 {
     return ( (((uint32_t)((uint8_t *)p_encoded_data)[0])) |
             (((uint32_t)((uint8_t *)p_encoded_data)[1]) << 8) |

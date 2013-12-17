@@ -22,6 +22,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *speed;
 @property (strong, nonatomic) IBOutlet UILabel *cadence;
 @property (strong, nonatomic) IBOutlet UILabel *distance;
+@property (strong, nonatomic) IBOutlet UILabel *distanceUnit;
 @property (strong, nonatomic) IBOutlet UILabel *strideLength;
 @property (strong, nonatomic) IBOutlet UILabel *activity;
 
