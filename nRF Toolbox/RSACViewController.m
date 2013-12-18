@@ -30,6 +30,8 @@
     NSTimer *timer;
 }
 - (void)timerFireMethod:(NSTimer *)_timer;
+- (void)appDidEnterBackground:(NSNotification *)_notification;
+- (void)appDidBecomeActiveBackground:(NSNotification *)_notification;
 
 @end
 
@@ -87,6 +89,23 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)appDidEnterBackground:(NSNotification *)_notification
+{
+    UILocalNotification *notification = [[UILocalNotification alloc]init];
+    notification.alertAction = @"Show";
+    notification.alertBody = @"You are still connected to Running Speed and Cadence sensor. It will collect data also in background.";
+    notification.hasAction = NO;
+    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
+    notification.timeZone = [NSTimeZone  defaultTimeZone];
+    notification.soundName = UILocalNotificationDefaultSoundName;
+    [[UIApplication sharedApplication] setScheduledLocalNotifications:[NSArray arrayWithObject:notification]];
+}
+
+-(void)appDidBecomeActiveBackground:(NSNotification *)_notification
+{
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+}
+
 - (IBAction)connectOrDisconnectClicked {
     if (connectedPeripheral != nil)
     {
@@ -96,6 +115,7 @@
 
 -(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
+    // The 'scan' seque will be performed only if connectedPeripheral == nil (if we are not connected already).
     return ![identifier isEqualToString:@"scan"] || connectedPeripheral == nil;
 }
 
@@ -119,7 +139,8 @@
     
     // The sensor has been selected, connect to it
     peripheral.delegate = self;
-    [bluetoothManager connectPeripheral:peripheral options:nil];
+    NSDictionary *options = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:CBConnectPeripheralOptionNotifyOnNotificationKey];
+    [bluetoothManager connectPeripheral:peripheral options:options];
 }
 
 #pragma mark Central Manager delegate methods
@@ -144,6 +165,9 @@
         [connectButton setTitle:@"DISCONNECT" forState:UIControlStateNormal];
     });
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActiveBackground:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    
     // Peripheral has connected. Discover required services
     connectedPeripheral = peripheral;
     [peripheral discoverServices:@[[CBUUID UUIDWithString:rscServiceUUID], [CBUUID UUIDWithString:batteryServiceUUID]]];
@@ -155,10 +179,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Connecting to the peripheral failed. Try again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        
-        [deviceName setText:@"DEFAULT RSC"];
         [connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
-        [battery setTitle:@"n/a" forState:UIControlStateNormal];
         connectedPeripheral = nil;
         
         [self clearUI];
@@ -169,12 +190,12 @@
 {
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
-        [deviceName setText:@"DEFAULT RSC"];
         [connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
-        [battery setTitle:@"n/a" forState:UIControlStateNormal];
         connectedPeripheral = nil;
         
         [self clearUI];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
     });
 }
 
@@ -182,6 +203,10 @@
 {
     stepsNumber = 0;
     cadenceValue = 0;
+    timer = nil;
+    [deviceName setText:@"DEFAULT RSC"];
+    battery.tag = 0;
+    [battery setTitle:@"n/a" forState:UIControlStateNormal];
     [self.speed setText:@"-"];
     [self.cadence setText:@"-"];
     [self.distance setText:@"-"];
@@ -236,17 +261,20 @@
         {
             if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:batteryLevelCharacteristicUUID]])
             {
+                // Read the current battery value
+                [peripheral readValueForCharacteristic:characteristic];
+                
                 // If battery level notifications are available, enable them
-                if (([characteristic properties] & CBCharacteristicPropertyNotify) > 0)
-                {
-                    // Enable notification on data characteristic
-                    [peripheral setNotifyValue:YES forCharacteristic:characteristic];
-                }
-                else
-                {
-                    // Else - read the current battery value
-                    [peripheral readValueForCharacteristic:characteristic];
-                }
+//                if (([characteristic properties] & CBCharacteristicPropertyNotify) > 0)
+//                {
+//                    // Enable notification on data characteristic
+//                    [peripheral setNotifyValue:YES forCharacteristic:characteristic];
+//                }
+//                else
+//                {
+//                    // Else - read the current battery value
+//                    [peripheral readValueForCharacteristic:characteristic];
+//                }
                 break;
             }
         }
@@ -263,9 +291,21 @@
     
         if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:batteryLevelCharacteristicUUID]])
         {
-            int batteryLevel = array[0];
+            uint8_t batteryLevel = array[0];
             NSString* text = [[NSString alloc] initWithFormat:@"%d%%", batteryLevel];
             [battery setTitle:text forState:UIControlStateNormal];
+            
+            if (battery.tag == 0)
+            {
+                // If battery level notifications are available, enable them
+                if (([characteristic properties] & CBCharacteristicPropertyNotify) > 0)
+                {
+                    battery.tag = 1; // mark that we have enabled notifications
+                    
+                    // Enable notification on data characteristic
+                    [peripheral setNotifyValue:YES forCharacteristic:characteristic];
+                }
+            }
         }
         else if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:rscMeasurementCharacteristicUUID]])
         {
@@ -293,7 +333,7 @@
             {
                 [self.strides setText:[[NSString alloc] initWithFormat:@"%d", stepsNumber]];
                 
-                float timeInterval = 60.0f / cadenceValue;
+                float timeInterval = 65.0f / cadenceValue; // 60 second + 5 for calibration
                 timer = [NSTimer scheduledTimerWithTimeInterval:timeInterval target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:NO];
             }
             
@@ -343,8 +383,12 @@
     // If cadence is greater than 0 we have to reschedule the timer with new time interval
     if (cadenceValue > 0)
     {
-        float timeInterval = 60.0f / cadenceValue;
+        float timeInterval = 65.0f / cadenceValue; // 60 second + 5 for calibration
         timer = [NSTimer scheduledTimerWithTimeInterval:timeInterval target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:NO];
+    }
+    else
+    {
+        timer = nil;
     }
 }
 
