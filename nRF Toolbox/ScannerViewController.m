@@ -17,11 +17,11 @@
      */
     NSMutableArray *peripherals;
     /*!
-     * This property is set when the device successfully connects to the peripheral. It is used to cancel the connection
-     * after navigating back to ViewController.
+     * The timer is used to periodically reload table
      */
-    CBPeripheral *connectedPeripheral;
+    NSTimer *timer;
 }
+- (void)timerFireMethod:(NSTimer *)timer;
 
 @end
 
@@ -46,8 +46,14 @@
     devicesTable.delegate = self;
     devicesTable.dataSource = self;
     
+    // We want the scanner to scan with dupliate keys (to refresh RRSI every second) so it has to be done using non-main queue
     dispatch_queue_t centralQueue = dispatch_queue_create("no.nordicsemi.ios.nrftoolbox", DISPATCH_QUEUE_SERIAL);
     bluetoothManager = [[CBCentralManager alloc]initWithDelegate:self queue:centralQueue];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self scanForPeripherals:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -70,7 +76,7 @@
 }
 
 /*!
- * @brief Starts scanning for peripherals with bridgeServiceUUID
+ * @brief Starts scanning for peripherals with rscServiceUUID
  * @param enable If YES, this method will enable scanning for bridge devices, if NO it will stop scanning
  * @return 0 if success, -1 if Bluetooth Manager is not in CBCentralManagerStatePoweredOn state.
  */
@@ -81,15 +87,29 @@
         return -1;
     }
     
-    if (enable)
-    {
-        NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], CBCentralManagerScanOptionAllowDuplicatesKey, nil];
-        [bluetoothManager scanForPeripheralsWithServices:@[ [CBUUID UUIDWithString:rscServiceUUID] ] options:options];
-    } else
-    {
-        [bluetoothManager stopScan];
-    }
+    // Scanner uses other queue to send events. We must edit UI in the main queue
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (enable)
+        {
+            NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], CBCentralManagerScanOptionAllowDuplicatesKey, nil];
+            [bluetoothManager scanForPeripheralsWithServices:@[ [CBUUID UUIDWithString:rscServiceUUID] ] options:options];
+            
+            timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+        }
+        else
+        {
+            [timer invalidate];
+            timer = nil;
+            
+            [bluetoothManager stopScan];
+        }
+    });
     return 0;
+}
+
+- (void)timerFireMethod:(NSTimer *)timer
+{
+    [devicesTable reloadData];
 }
 
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI
@@ -107,7 +127,8 @@
             sensor = [peripherals objectAtIndex:[peripherals indexOfObject:sensor]];
             sensor.RSSI = RSSI.intValue;
         }
-        [devicesTable reloadData];
+        // The table is refreshed using a periodic timer
+        //[devicesTable reloadData];
     });
 }
 
@@ -124,12 +145,12 @@
 
 #pragma mark Table View Data Source delegate methods
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return peripherals.count;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     

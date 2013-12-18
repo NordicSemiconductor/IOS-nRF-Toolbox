@@ -24,6 +24,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *distance;
 @property (strong, nonatomic) IBOutlet UILabel *distanceUnit;
 @property (strong, nonatomic) IBOutlet UILabel *strideLength;
+@property (strong, nonatomic) IBOutlet UILabel *strides;
 @property (strong, nonatomic) IBOutlet UILabel *activity;
 
 - (IBAction)connectOrDisconnectClicked;

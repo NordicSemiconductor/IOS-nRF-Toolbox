@@ -11,8 +11,25 @@
 #import "Constants.h"
 
 @interface RSACViewController () {
+    /*!
+     * This property is set when the device successfully connects to the peripheral. It is used to cancel the connection
+     * after user press Disconnect button.
+     */
     CBPeripheral* connectedPeripheral;
+    /*!
+     * Number of steps counted during the current connection session. Calculated based on cadence and time intervals
+     */
+    uint32_t stepsNumber;
+    /*!
+     * Number of steps counted during the current connection session. Calculated based on cadence and time intervals
+     */
+    uint8_t cadenceValue;
+    /*!
+     * The timer is used to periodically update strides number
+     */
+    NSTimer *timer;
 }
+- (void)timerFireMethod:(NSTimer *)_timer;
 
 @end
 
@@ -30,6 +47,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        stepsNumber = 0;
     }
     return self;
 }
@@ -78,14 +96,7 @@
 
 -(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
-    if ([identifier isEqualToString:@"scan"])
-    {
-        return connectedPeripheral == nil;
-    }
-    else
-    {
-        return YES;
-    }
+    return ![identifier isEqualToString:@"scan"] || connectedPeripheral == nil;
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -169,11 +180,14 @@
 
 - (void) clearUI
 {
+    stepsNumber = 0;
+    cadenceValue = 0;
     [self.speed setText:@"-"];
     [self.cadence setText:@"-"];
     [self.distance setText:@"-"];
     [self.distanceUnit setText:@"m"];
     [self.strideLength setText:@"-"];
+    [self.strides setText:@"-"];
     [self.activity setText:@"n/a"];
 }
 
@@ -184,7 +198,7 @@
     if (error)
     {
         NSLog(@"Error discovering service: %@", [error localizedDescription]);
-        //progressLabel.text = @"Error occured";
+        [bluetoothManager cancelPeripheralConnection:connectedPeripheral];
         return;
     }
     
@@ -230,6 +244,7 @@
                 }
                 else
                 {
+                    // Else - read the current battery value
                     [peripheral readValueForCharacteristic:characteristic];
                 }
                 break;
@@ -270,8 +285,17 @@
             float speedValue = [self uint16_decode:array + 1] / 256.0f * 3.6f;
             [self.speed setText:[[NSString alloc] initWithFormat:@"%.1f", speedValue]];
             
-            int cadenceValue = array[3];
+            cadenceValue = array[3];
             [self.cadence setText:[[NSString alloc] initWithFormat:@"%d", cadenceValue]];
+            
+            // If user started to walk, we have to initialize the timer that will increase strides counter
+            if (cadenceValue > 0 && timer == nil)
+            {
+                [self.strides setText:[[NSString alloc] initWithFormat:@"%d", stepsNumber]];
+                
+                float timeInterval = 60.0f / cadenceValue;
+                timer = [NSTimer scheduledTimerWithTimeInterval:timeInterval target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:NO];
+            }
             
             if (totalDistancePresent)
             {
@@ -303,6 +327,25 @@
             }
         }
     });
+}
+
+-(void)timerFireMethod:(NSTimer *)_timer
+{
+    // Here we will update the stride count.
+    // If a device has been disconnected, abort. There is nothing to do.
+    if (connectedPeripheral == nil)
+        return;
+    
+    // If we are connected, increase the strides counter and display it
+    stepsNumber++;
+    [self.strides setText:[[NSString alloc] initWithFormat:@"%d", stepsNumber]];
+    
+    // If cadence is greater than 0 we have to reschedule the timer with new time interval
+    if (cadenceValue > 0)
+    {
+        float timeInterval = 60.0f / cadenceValue;
+        timer = [NSTimer scheduledTimerWithTimeInterval:timeInterval target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:NO];
+    }
 }
 
 /**@brief Inline function for decoding a uint16 value.
