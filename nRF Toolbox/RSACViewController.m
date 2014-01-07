@@ -263,18 +263,6 @@
             {
                 // Read the current battery value
                 [peripheral readValueForCharacteristic:characteristic];
-                
-                // If battery level notifications are available, enable them
-//                if (([characteristic properties] & CBCharacteristicPropertyNotify) > 0)
-//                {
-//                    // Enable notification on data characteristic
-//                    [peripheral setNotifyValue:YES forCharacteristic:characteristic];
-//                }
-//                else
-//                {
-//                    // Else - read the current battery value
-//                    [peripheral readValueForCharacteristic:characteristic];
-//                }
                 break;
             }
         }
