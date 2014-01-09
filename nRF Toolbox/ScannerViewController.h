@@ -14,7 +14,8 @@
 
 @property (strong, nonatomic) CBCentralManager *bluetoothManager;
 @property (strong, nonatomic) IBOutlet UITableView *devicesTable;
-@property (weak, nonatomic) id <ScannerDelegate> delegate;
+@property (strong, nonatomic) id <ScannerDelegate> delegate;
+@property (strong, nonatomic) CBUUID *filterUUID;
 
 /*!
  * Cancel button has been clicked

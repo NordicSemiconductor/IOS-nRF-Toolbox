@@ -8,7 +8,6 @@
 
 #import "ScannerViewController.h"
 #import "ScannedPeripheral.h"
-#import "Constants.h"
 
 @interface ScannerViewController () {
     /*!
@@ -28,6 +27,7 @@
 @implementation ScannerViewController
 @synthesize bluetoothManager;
 @synthesize devicesTable;
+@synthesize filterUUID;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -92,7 +92,7 @@
         if (enable)
         {
             NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], CBCentralManagerScanOptionAllowDuplicatesKey, nil];
-            [bluetoothManager scanForPeripheralsWithServices:@[ [CBUUID UUIDWithString:rscServiceUUID] ] options:options];
+            [bluetoothManager scanForPeripheralsWithServices:@[ filterUUID ] options:options];
             
             timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
         }

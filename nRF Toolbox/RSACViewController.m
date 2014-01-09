@@ -125,6 +125,7 @@
     {
         // Set this contoller as scanner delegate
         ScannerViewController *controller = (ScannerViewController *)segue.destinationViewController;
+        controller.filterUUID = [CBUUID UUIDWithString:rscServiceUUID];
         controller.delegate = self;
     }
 }
