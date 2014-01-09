@@ -19,6 +19,12 @@
 @property (strong, nonatomic) IBOutlet UILabel *deviceName;
 @property (strong, nonatomic) IBOutlet UIButton *connectButton;
 
+@property (strong, nonatomic) IBOutlet UISegmentedControl *degreeControl;
+@property (strong, nonatomic) IBOutlet UILabel *temperature;
+@property (strong, nonatomic) IBOutlet UILabel *degrees;
+@property (strong, nonatomic) IBOutlet UILabel *timestamp;
+@property (strong, nonatomic) IBOutlet UILabel *type;
 - (IBAction)connectOrDisconnectClicked;
+- (IBAction)degreeHasChanged:(id)sender forEvent:(UIEvent *)event;
 
 @end

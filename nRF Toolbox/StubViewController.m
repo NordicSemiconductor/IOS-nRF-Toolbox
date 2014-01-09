@@ -18,7 +18,7 @@
     CBPeripheral* connectedPeripheral;
     
     CBUUID *htsServiceUUID;
-    CBUUID *htsMeaurementCharacteristicUUID;
+    CBUUID *htsMeasurementCharacteristicUUID;
     CBUUID *batteryServiceUUID;
     CBUUID *batteryLevelCharacteristicUUID;
 }
@@ -40,7 +40,7 @@
     if (self) {
         // Custom initialization
         htsServiceUUID = [CBUUID UUIDWithString:hrsServiceUUIDString];
-        htsMeaurementCharacteristicUUID = [CBUUID UUIDWithString:htsMeasurementCharacteristicUUIDString];
+        htsMeasurementCharacteristicUUID = [CBUUID UUIDWithString:htsMeasurementCharacteristicUUIDString];
         batteryServiceUUID = [CBUUID UUIDWithString:batteryServiceUUIDString];
         batteryLevelCharacteristicUUID = [CBUUID UUIDWithString:batteryLevelCharacteristicUUIDString];
     }

@@ -195,7 +195,7 @@
                                     <segue destination="Day-ms-bMb" kind="modal" identifier="scan" id="RA7-fe-CKE"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gaD-Kn-n30">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gaD-Kn-n30">
                                 <rect key="frame" x="35" y="15" width="39" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
@@ -387,6 +387,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="connectOrDisconnectClicked" destination="Rl2-Gx-bqg" eventType="touchUpInside" id="Seg-ml-agQ"/>
                                     <action selector="connectOrDisconnectClicked" destination="ajK-NB-gff" eventType="touchUpInside" id="grz-Jy-Q4b"/>
                                     <segue destination="Day-ms-bMb" kind="modal" identifier="scan" id="lAt-L9-EDs"/>
                                 </connections>
@@ -397,7 +398,7 @@
                                 <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="20"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wam-fs-VZ9">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wam-fs-VZ9">
                                 <rect key="frame" x="35" y="15" width="39" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
@@ -413,13 +414,62 @@
                                 <color key="textColor" red="0.66666666669999997" green="0.6705882353" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Jb-0V-4z9" userLabel="Label - Temperature">
+                                <rect key="frame" x="60" y="218" width="200" height="68"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="68" id="CPA-YJ-fVr"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="fcm-vo-WQM"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="70"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="°C" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="reN-43-V3D">
+                                <rect key="frame" x="264" y="209" width="34" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="INv-xI-bMa" userLabel="Label - Timestamp">
+                                <rect key="frame" x="55" y="294" width="211" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f9A-mi-kTN" userLabel="Label - Type">
+                                <rect key="frame" x="55" y="323" width="211" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="BPN-NK-B0s">
+                                <rect key="frame" x="84" y="67" width="153" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Celsius"/>
+                                    <segment title="Fahrenheit"/>
+                                </segments>
+                                <color key="tintColor" red="0.0" green="0.61176472902297974" blue="0.87058824300765991" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="degreeHasChanged:forEvent:" destination="Rl2-Gx-bqg" eventType="valueChanged" id="Dax-Gz-MqH"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="6Jo-d7-TXR" secondAttribute="centerX" id="6Qt-Gf-qt2"/>
+                            <constraint firstAttribute="centerX" secondItem="INv-xI-bMa" secondAttribute="centerX" id="AWa-pS-oAB"/>
+                            <constraint firstAttribute="centerX" secondItem="f9A-mi-kTN" secondAttribute="centerX" id="DqO-PF-HsM"/>
                             <constraint firstItem="JiL-3x-kLK" firstAttribute="leading" secondItem="N53-1k-Cvu" secondAttribute="leading" id="Eqf-U0-xh1"/>
+                            <constraint firstAttribute="centerX" secondItem="1Jb-0V-4z9" secondAttribute="centerX" id="P3U-5O-QRz"/>
+                            <constraint firstAttribute="centerY" secondItem="reN-43-V3D" secondAttribute="centerY" constant="25" id="iC5-n5-pfU"/>
+                            <constraint firstItem="f9A-mi-kTN" firstAttribute="top" secondItem="INv-xI-bMa" secondAttribute="bottom" constant="8" id="iR6-AG-6e8"/>
                             <constraint firstItem="DJs-M6-HDi" firstAttribute="top" secondItem="6Jo-d7-TXR" secondAttribute="bottom" constant="30" id="jKz-1m-mAY"/>
                             <constraint firstAttribute="centerY" secondItem="JiL-3x-kLK" secondAttribute="centerY" id="pvs-Ij-U1D"/>
+                            <constraint firstItem="reN-43-V3D" firstAttribute="leading" secondItem="1Jb-0V-4z9" secondAttribute="trailing" constant="8" id="q59-dh-D9m"/>
+                            <constraint firstAttribute="centerY" secondItem="1Jb-0V-4z9" secondAttribute="centerY" id="rhS-IF-smc"/>
+                            <constraint firstItem="INv-xI-bMa" firstAttribute="top" secondItem="1Jb-0V-4z9" secondAttribute="bottom" constant="8" id="sco-nW-pl1"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="lhS-3A-AM3"/>
@@ -427,7 +477,12 @@
                         <outlet property="backgroundImage" destination="Rm2-I5-24q" id="dFL-ep-rgs"/>
                         <outlet property="battery" destination="Wam-fs-VZ9" id="w9a-2s-Lss"/>
                         <outlet property="connectButton" destination="6Jo-d7-TXR" id="kOR-g3-Yfr"/>
+                        <outlet property="degreeControl" destination="BPN-NK-B0s" id="gme-nN-YsB"/>
+                        <outlet property="degrees" destination="reN-43-V3D" id="GTq-5B-Yt4"/>
                         <outlet property="deviceName" destination="5vH-Kr-uQc" id="qi7-T5-TIL"/>
+                        <outlet property="temperature" destination="1Jb-0V-4z9" id="sLq-iQ-7qJ"/>
+                        <outlet property="timestamp" destination="INv-xI-bMa" id="W59-wa-OXL"/>
+                        <outlet property="type" destination="f9A-mi-kTN" id="bms-o2-m5X"/>
                         <outlet property="verticalLabel" destination="JiL-3x-kLK" id="fLp-uk-kCm"/>
                     </connections>
                 </viewController>
@@ -560,6 +615,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="ec3-to-ldY"/>
+        <segue reference="lAt-L9-EDs"/>
     </inferredMetricsTieBreakers>
 </document>
