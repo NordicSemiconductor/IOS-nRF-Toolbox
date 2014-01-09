@@ -28,6 +28,11 @@
      * The timer is used to periodically update strides number
      */
     NSTimer *timer;
+    
+    CBUUID *rscServiceUUID;
+    CBUUID *rscMeasurementCharacteristicUUID;
+    CBUUID *batteryServiceUUID;
+    CBUUID *batteryLevelCharacteristicUUID;
 }
 - (void)timerFireMethod:(NSTimer *)_timer;
 - (void)appDidEnterBackground:(NSNotification *)_notification;
@@ -43,12 +48,17 @@
 @synthesize deviceName;
 @synthesize connectButton;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+
+-(id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithCoder:aDecoder];
     if (self) {
         // Custom initialization
         stepsNumber = 0;
+        rscServiceUUID = [CBUUID UUIDWithString:rscServiceUUIDString];
+        rscMeasurementCharacteristicUUID = [CBUUID UUIDWithString:rscMeasurementCharacteristicUUIDString];
+        batteryServiceUUID = [CBUUID UUIDWithString:batteryServiceUUIDString];
+        batteryLevelCharacteristicUUID = [CBUUID UUIDWithString:batteryLevelCharacteristicUUIDString];
     }
     return self;
 }
@@ -124,7 +134,7 @@
     {
         // Set this contoller as scanner delegate
         ScannerViewController *controller = (ScannerViewController *)segue.destinationViewController;
-        controller.filterUUID = [CBUUID UUIDWithString:rscServiceUUID];
+        controller.filterUUID = rscServiceUUID;
         controller.delegate = self;
     }
 }
@@ -170,7 +180,7 @@
     
     // Peripheral has connected. Discover required services
     connectedPeripheral = peripheral;
-    [peripheral discoverServices:@[[CBUUID UUIDWithString:rscServiceUUID], [CBUUID UUIDWithString:batteryServiceUUID]]];
+    [peripheral discoverServices:@[rscServiceUUID, batteryServiceUUID]];
 }
 
 -(void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
@@ -230,13 +240,13 @@
     for (CBService *service in peripheral.services)
     {
         // Discovers the characteristics for a given service
-        if ([service.UUID isEqual:[CBUUID UUIDWithString:rscServiceUUID]])
+        if ([service.UUID isEqual:rscServiceUUID])
         {
-            [connectedPeripheral discoverCharacteristics:@[[CBUUID UUIDWithString:rscMeasurementCharacteristicUUID]] forService:service];
+            [connectedPeripheral discoverCharacteristics:@[rscMeasurementCharacteristicUUID] forService:service];
         }
-        else if ([service.UUID isEqual:[CBUUID UUIDWithString:batteryServiceUUID]])
+        else if ([service.UUID isEqual:batteryServiceUUID])
         {
-            [connectedPeripheral discoverCharacteristics:@[[CBUUID UUIDWithString:batteryLevelCharacteristicUUID]] forService:service];
+            [connectedPeripheral discoverCharacteristics:@[batteryLevelCharacteristicUUID] forService:service];
         }
     }
 }
@@ -244,22 +254,22 @@
 -(void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error
 {
     // Characteristics for one of those services has been found
-    if ([service.UUID isEqual:[CBUUID UUIDWithString:rscServiceUUID]])
+    if ([service.UUID isEqual:rscServiceUUID])
     {
         for (CBCharacteristic *characteristic in service.characteristics)
         {
-            if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:rscMeasurementCharacteristicUUID]])
+            if ([characteristic.UUID isEqual:rscMeasurementCharacteristicUUID])
             {
                 // Enable notification on data characteristic
                 [peripheral setNotifyValue:YES forCharacteristic:characteristic];
                 break;
             }
         }
-    } else if ([service.UUID isEqual:[CBUUID UUIDWithString:batteryServiceUUID]])
+    } else if ([service.UUID isEqual:batteryServiceUUID])
     {
         for (CBCharacteristic *characteristic in service.characteristics)
         {
-            if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:batteryLevelCharacteristicUUID]])
+            if ([characteristic.UUID isEqual:batteryLevelCharacteristicUUID])
             {
                 // Read the current battery value
                 [peripheral readValueForCharacteristic:characteristic];
@@ -277,7 +287,7 @@
         NSData *data = characteristic.value;
         uint8_t *array = (uint8_t*) data.bytes;
     
-        if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:batteryLevelCharacteristicUUID]])
+        if ([characteristic.UUID isEqual:batteryLevelCharacteristicUUID])
         {
             uint8_t batteryLevel = array[0];
             NSString* text = [[NSString alloc] initWithFormat:@"%d%%", batteryLevel];
@@ -295,7 +305,7 @@
                 }
             }
         }
-        else if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:rscMeasurementCharacteristicUUID]])
+        else if ([characteristic.UUID isEqual:rscMeasurementCharacteristicUUID])
         {
             int flags = array[0];
             BOOL strideLengthPresent = (flags & 0x01) > 0;

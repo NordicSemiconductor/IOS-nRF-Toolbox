@@ -16,6 +16,12 @@
      * after user press Disconnect button.
      */
     CBPeripheral* connectedPeripheral;
+    
+    CBUUID *hrsServiceUUID;
+    CBUUID *hrsHeartRateCharacteristicUUID;
+    CBUUID *hrsSensorLocationCharacteristicUUID;
+    CBUUID *batteryServiceUUID;
+    CBUUID *batteryLevelCharacteristicUUID;
 }
 
 @end
@@ -29,11 +35,16 @@
 @synthesize connectButton;
 
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+-(id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithCoder:aDecoder];
     if (self) {
         // Custom initialization
+        hrsServiceUUID = [CBUUID UUIDWithString:hrsServiceUUIDString];
+        hrsHeartRateCharacteristicUUID = [CBUUID UUIDWithString:hrsHeartRateCharacteristicUUIDString];
+        hrsSensorLocationCharacteristicUUID = [CBUUID UUIDWithString:hrsSensorLocationCharacteristicUUIDString];
+        batteryServiceUUID = [CBUUID UUIDWithString:batteryServiceUUIDString];
+        batteryLevelCharacteristicUUID = [CBUUID UUIDWithString:batteryLevelCharacteristicUUIDString];
     }
     return self;
 }
@@ -82,7 +93,7 @@
     {
         // Set this contoller as scanner delegate
         ScannerViewController *controller = (ScannerViewController *)segue.destinationViewController;
-        controller.filterUUID = [CBUUID UUIDWithString:hrsServiceUUID];
+        controller.filterUUID = hrsServiceUUID;
         controller.delegate = self;
     }
 }
