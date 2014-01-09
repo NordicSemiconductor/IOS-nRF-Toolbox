@@ -27,6 +27,7 @@
 		5217F428185F28D400F2D5BB /* ScannedPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = 5217F427185F28D400F2D5BB /* ScannedPeripheral.m */; };
 		5236E15F187EA73F0057E974 /* HRSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5236E15E187EA73F0057E974 /* HRSViewController.m */; };
 		5236E162187EA7540057E974 /* HTSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5236E161187EA7540057E974 /* HTSViewController.m */; };
+		5236E16C187EC6880057E974 /* StubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5236E16B187EC6880057E974 /* StubViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,8 @@
 		5236E15E187EA73F0057E974 /* HRSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRSViewController.m; sourceTree = "<group>"; };
 		5236E160187EA7540057E974 /* HTSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTSViewController.h; sourceTree = "<group>"; };
 		5236E161187EA7540057E974 /* HTSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTSViewController.m; sourceTree = "<group>"; };
+		5236E16A187EC6880057E974 /* StubViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StubViewController.h; sourceTree = "<group>"; };
+		5236E16B187EC6880057E974 /* StubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StubViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				5236E166187EA7AA0057E974 /* Scanner */,
+				5236E169187EC6310057E974 /* Stub */,
 				5236E163187EA76B0057E974 /* RSAC */,
 				5236E164187EA7850057E974 /* HRS */,
 				5236E165187EA7930057E974 /* HTS */,
@@ -215,6 +219,15 @@
 				5217F421185F15FA00F2D5BB /* ScannerViewController.m */,
 			);
 			name = Scanner;
+			sourceTree = "<group>";
+		};
+		5236E169187EC6310057E974 /* Stub */ = {
+			isa = PBXGroup;
+			children = (
+				5236E16A187EC6880057E974 /* StubViewController.h */,
+				5236E16B187EC6880057E974 /* StubViewController.m */,
+			);
+			name = Stub;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -328,6 +341,7 @@
 				5217F41E185B198E00F2D5BB /* RSACViewController.m in Sources */,
 				5236E162187EA7540057E974 /* HTSViewController.m in Sources */,
 				5217F428185F28D400F2D5BB /* ScannedPeripheral.m in Sources */,
+				5236E16C187EC6880057E974 /* StubViewController.m in Sources */,
 				5217F422185F15FA00F2D5BB /* ScannerViewController.m in Sources */,
 				5236E15F187EA73F0057E974 /* HRSViewController.m in Sources */,
 			);
