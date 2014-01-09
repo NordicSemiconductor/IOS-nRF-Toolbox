@@ -109,7 +109,6 @@
                                 </state>
                                 <connections>
                                     <action selector="connectOrDisconnectClicked" destination="ajK-NB-gff" eventType="touchUpInside" id="ghz-Je-7V3"/>
-                                    <action selector="connectOrDisconnectClicked" destination="9ph-JI-A6G" eventType="touchUpInside" id="ywq-z1-dsw"/>
                                     <segue destination="Day-ms-bMb" kind="modal" identifier="scan" id="ec3-to-ldY"/>
                                 </connections>
                             </button>
@@ -389,7 +388,6 @@
                                 </state>
                                 <connections>
                                     <action selector="connectOrDisconnectClicked" destination="ajK-NB-gff" eventType="touchUpInside" id="grz-Jy-Q4b"/>
-                                    <action selector="connectOrDisconnectClicked" destination="Rl2-Gx-bqg" eventType="touchUpInside" id="vOv-p6-CS6"/>
                                     <segue destination="Day-ms-bMb" kind="modal" identifier="scan" id="lAt-L9-EDs"/>
                                 </connections>
                             </button>
