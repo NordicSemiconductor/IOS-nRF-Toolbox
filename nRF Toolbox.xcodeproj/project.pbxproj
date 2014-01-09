@@ -25,6 +25,8 @@
 		5217F41E185B198E00F2D5BB /* RSACViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5217F41D185B198E00F2D5BB /* RSACViewController.m */; };
 		5217F422185F15FA00F2D5BB /* ScannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5217F421185F15FA00F2D5BB /* ScannerViewController.m */; };
 		5217F428185F28D400F2D5BB /* ScannedPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = 5217F427185F28D400F2D5BB /* ScannedPeripheral.m */; };
+		5236E15F187EA73F0057E974 /* HRSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5236E15E187EA73F0057E974 /* HRSViewController.m */; };
+		5236E162187EA7540057E974 /* HTSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5236E161187EA7540057E974 /* HTSViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +68,10 @@
 		5217F426185F28D400F2D5BB /* ScannedPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScannedPeripheral.h; sourceTree = "<group>"; };
 		5217F427185F28D400F2D5BB /* ScannedPeripheral.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScannedPeripheral.m; sourceTree = "<group>"; };
 		5217F429185F32E500F2D5BB /* ScannerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScannerDelegate.h; sourceTree = "<group>"; };
+		5236E15D187EA73F0057E974 /* HRSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRSViewController.h; sourceTree = "<group>"; };
+		5236E15E187EA73F0057E974 /* HRSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRSViewController.m; sourceTree = "<group>"; };
+		5236E160187EA7540057E974 /* HTSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTSViewController.h; sourceTree = "<group>"; };
+		5236E161187EA7540057E974 /* HTSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTSViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,19 +133,16 @@
 		5217F3EB1859EE0000F2D5BB /* nRF Toolbox */ = {
 			isa = PBXGroup;
 			children = (
+				5236E166187EA7AA0057E974 /* Scanner */,
+				5236E163187EA76B0057E974 /* RSAC */,
+				5236E164187EA7850057E974 /* HRS */,
+				5236E165187EA7930057E974 /* HTS */,
 				5217F41F185B1A0800F2D5BB /* Constants.h */,
-				5217F426185F28D400F2D5BB /* ScannedPeripheral.h */,
-				5217F427185F28D400F2D5BB /* ScannedPeripheral.m */,
-				5217F429185F32E500F2D5BB /* ScannerDelegate.h */,
-				5217F420185F15FA00F2D5BB /* ScannerViewController.h */,
-				5217F421185F15FA00F2D5BB /* ScannerViewController.m */,
-				5217F41C185B198E00F2D5BB /* RSACViewController.h */,
-				5217F41D185B198E00F2D5BB /* RSACViewController.m */,
 				5217F3F41859EE0000F2D5BB /* AppDelegate.h */,
 				5217F3F51859EE0000F2D5BB /* AppDelegate.m */,
-				5217F3F71859EE0000F2D5BB /* Main.storyboard */,
 				5217F3FA1859EE0000F2D5BB /* ViewController.h */,
 				5217F3FB1859EE0000F2D5BB /* ViewController.m */,
+				5217F3F71859EE0000F2D5BB /* Main.storyboard */,
 				5217F3FD1859EE0000F2D5BB /* Images.xcassets */,
 				5217F3EC1859EE0000F2D5BB /* Supporting Files */,
 			);
@@ -173,6 +176,45 @@
 				5217F40D1859EE0000F2D5BB /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5236E163187EA76B0057E974 /* RSAC */ = {
+			isa = PBXGroup;
+			children = (
+				5217F41C185B198E00F2D5BB /* RSACViewController.h */,
+				5217F41D185B198E00F2D5BB /* RSACViewController.m */,
+			);
+			name = RSAC;
+			sourceTree = "<group>";
+		};
+		5236E164187EA7850057E974 /* HRS */ = {
+			isa = PBXGroup;
+			children = (
+				5236E15D187EA73F0057E974 /* HRSViewController.h */,
+				5236E15E187EA73F0057E974 /* HRSViewController.m */,
+			);
+			name = HRS;
+			sourceTree = "<group>";
+		};
+		5236E165187EA7930057E974 /* HTS */ = {
+			isa = PBXGroup;
+			children = (
+				5236E160187EA7540057E974 /* HTSViewController.h */,
+				5236E161187EA7540057E974 /* HTSViewController.m */,
+			);
+			name = HTS;
+			sourceTree = "<group>";
+		};
+		5236E166187EA7AA0057E974 /* Scanner */ = {
+			isa = PBXGroup;
+			children = (
+				5217F426185F28D400F2D5BB /* ScannedPeripheral.h */,
+				5217F427185F28D400F2D5BB /* ScannedPeripheral.m */,
+				5217F429185F32E500F2D5BB /* ScannerDelegate.h */,
+				5217F420185F15FA00F2D5BB /* ScannerViewController.h */,
+				5217F421185F15FA00F2D5BB /* ScannerViewController.m */,
+			);
+			name = Scanner;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -284,8 +326,10 @@
 				5217F3F61859EE0000F2D5BB /* AppDelegate.m in Sources */,
 				5217F3F21859EE0000F2D5BB /* main.m in Sources */,
 				5217F41E185B198E00F2D5BB /* RSACViewController.m in Sources */,
+				5236E162187EA7540057E974 /* HTSViewController.m in Sources */,
 				5217F428185F28D400F2D5BB /* ScannedPeripheral.m in Sources */,
 				5217F422185F15FA00F2D5BB /* ScannerViewController.m in Sources */,
+				5236E15F187EA73F0057E974 /* HRSViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

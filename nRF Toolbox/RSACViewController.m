@@ -39,7 +39,6 @@
 @synthesize bluetoothManager;
 @synthesize backgroundImage;
 @synthesize verticalLabel;
-
 @synthesize battery;
 @synthesize deviceName;
 @synthesize connectButton;

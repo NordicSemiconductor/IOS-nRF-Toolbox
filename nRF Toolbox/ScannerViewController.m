@@ -107,6 +107,10 @@
     return 0;
 }
 
+/*!
+ * @brief This method is called periodically by the timer. It refreshes the devices list. Updates from Central Manager comes to fast and it's hard to select a device if refreshed from there.
+ * @param timer the timer that has called the method
+ */
 - (void)timerFireMethod:(NSTimer *)timer
 {
     [devicesTable reloadData];
