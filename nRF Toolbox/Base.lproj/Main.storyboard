@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="WcK-ur-5nd">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5037.2" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="WcK-ur-5nd">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Main View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" userLabel="Main View Controller" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rJI-9B-D0e"/>
                         <viewControllerLayoutGuide type="bottom" id="mAl-4b-q30"/>
@@ -20,16 +20,16 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6IX-0H-9Bm" userLabel="Button - RSC">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Csb-VN-LzD" userLabel="Button - BPM">
                                 <rect key="frame" x="22" y="22" width="78" height="78"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="FeatureRSAC" backgroundImage="FeatureBackground"/>
-                                <state key="highlighted" image="FeatureRSAC" backgroundImage="FeatureBackgroundPressed"/>
+                                <state key="normal" image="FeatureBGM" backgroundImage="FeatureBackground"/>
+                                <state key="highlighted" image="FeatureBGM" backgroundImage="FeatureBackgroundPressed"/>
                                 <connections>
-                                    <segue destination="ajK-NB-gff" kind="push" identifier="rsc" id="5r6-8u-gor"/>
+                                    <segue destination="K6D-kg-QBM" kind="push" identifier="bgm" id="Hol-2s-kvW"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="RSC" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ljT-Go-gDs">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="BGM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GYJ-TS-dnp">
                                 <rect key="frame" x="40" y="98" width="42" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
@@ -37,7 +37,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0L7-fl-HwT" userLabel="Button - HRS">
-                                <rect key="frame" x="121" y="22" width="78" height="78"/>
+                                <rect key="frame" x="22" y="127" width="78" height="78"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="FeatureHRS" backgroundImage="FeatureBackground"/>
                                 <state key="highlighted" image="FeatureHRS" backgroundImage="FeatureBackgroundPressed"/>
@@ -46,6 +46,22 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="HRM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zlW-vC-vir">
+                                <rect key="frame" x="40" y="203" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="evE-Y0-qcZ" userLabel="Button - HRS">
+                                <rect key="frame" x="121" y="22" width="78" height="78"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="FeatureBPM" backgroundImage="FeatureBackground"/>
+                                <state key="highlighted" image="FeatureBPM" backgroundImage="FeatureBackgroundPressed"/>
+                                <connections>
+                                    <segue destination="Kc0-JV-b23" kind="push" id="7WI-ds-23a"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="BPM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zJq-nK-NsI">
                                 <rect key="frame" x="139" y="98" width="42" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
@@ -53,7 +69,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HBW-Vg-EA4" userLabel="Button - HTS">
-                                <rect key="frame" x="220" y="22" width="78" height="78"/>
+                                <rect key="frame" x="121" y="127" width="78" height="78"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="FeatureHTS" backgroundImage="FeatureBackground"/>
                                 <state key="highlighted" image="FeatureHTS" backgroundImage="FeatureBackgroundPressed"/>
@@ -62,7 +78,55 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="HTM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bGx-Jj-Lms">
+                                <rect key="frame" x="139" y="203" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Imb-El-Rmj" userLabel="Button - HTS">
+                                <rect key="frame" x="220" y="127" width="78" height="78"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="FeatureProximity" backgroundImage="FeatureBackground"/>
+                                <state key="highlighted" image="FeatureProximity" backgroundImage="FeatureBackgroundPressed"/>
+                                <connections>
+                                    <segue destination="inG-0b-px5" kind="push" id="ihy-wO-2KE"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="PROXIMITY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eS4-EQ-xAA">
+                                <rect key="frame" x="229" y="203" width="60" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gxd-xJ-5iT" userLabel="Button - HTS">
+                                <rect key="frame" x="220" y="22" width="78" height="78"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="FeatureDFU" backgroundImage="FeatureBackground"/>
+                                <state key="highlighted" image="FeatureDFU" backgroundImage="FeatureBackgroundPressed"/>
+                                <connections>
+                                    <segue destination="ZfZ-xR-bsT" kind="push" id="ZYv-1n-0xn"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="DFU" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eCI-Q2-t3V">
                                 <rect key="frame" x="238" y="98" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6IX-0H-9Bm" userLabel="Button - RSC">
+                                <rect key="frame" x="22" y="232" width="78" height="78"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="FeatureRSAC" backgroundImage="FeatureBackground"/>
+                                <state key="highlighted" image="FeatureRSAC" backgroundImage="FeatureBackgroundPressed"/>
+                                <connections>
+                                    <segue destination="ajK-NB-gff" kind="push" identifier="rsc" id="5r6-8u-gor"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="RSC" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ljT-Go-gDs">
+                                <rect key="frame" x="40" y="308" width="42" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -80,10 +144,246 @@
             </objects>
             <point key="canvasLocation" x="748" y="117"/>
         </scene>
-        <!--View Controller-->
+        <!--View Controller - BGM-->
+        <scene sceneID="hgy-MS-kOD">
+            <objects>
+                <viewController id="K6D-kg-QBM" userLabel="View Controller - BGM" customClass="BGMViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Hcq-z4-qKc"/>
+                        <viewControllerLayoutGuide type="bottom" id="mgt-Vv-puU"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kQi-nT-dUG">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Background4" translatesAutoresizingMaskIntoConstraints="NO" id="BKW-fD-OXX">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Under Construction..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xIt-dA-VIL">
+                                <rect key="frame" x="76" y="241" width="168" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lao-AT-iL0">
+                                <rect key="frame" x="35" y="15" width="39" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <state key="normal" title="n/a" backgroundImage="Battery">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="DEFAULT GLS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YOQ-kd-Umf">
+                                <rect key="frame" x="82" y="11" width="216" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="20"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lex-q3-aPx">
+                                <rect key="frame" x="79" y="426" width="163" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="17"/>
+                                <state key="normal" title="CONNECT" backgroundImage="ConnectButton">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" backgroundImage="ConnectButtonPressed">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="connectOrDisconnectClicked" destination="K6D-kg-QBM" eventType="touchUpInside" id="4kv-WD-aru"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="GLUCOSE SERVICE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bjg-zK-RVR">
+                                <rect key="frame" x="0.0" y="60" width="32" height="383"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="27"/>
+                                <color key="textColor" red="0.66666666669999997" green="0.6705882353" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="mgt-Vv-puU" firstAttribute="top" secondItem="lex-q3-aPx" secondAttribute="bottom" constant="30" id="Jvy-nj-zVN"/>
+                            <constraint firstItem="bjg-zK-RVR" firstAttribute="leading" secondItem="kQi-nT-dUG" secondAttribute="leading" id="Ne3-2Y-n3n"/>
+                            <constraint firstAttribute="centerY" secondItem="bjg-zK-RVR" secondAttribute="centerY" id="VPO-s6-JGO"/>
+                            <constraint firstAttribute="centerX" secondItem="lex-q3-aPx" secondAttribute="centerX" id="giP-zY-a8a"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="KIG-8R-Oiv"/>
+                    <connections>
+                        <outlet property="backgroundImage" destination="BKW-fD-OXX" id="eon-uI-xgz"/>
+                        <outlet property="battery" destination="lao-AT-iL0" id="uel-yB-ld5"/>
+                        <outlet property="connectButton" destination="lex-q3-aPx" id="tYk-gS-o8j"/>
+                        <outlet property="deviceName" destination="YOQ-kd-Umf" id="MVp-hk-0Rx"/>
+                        <outlet property="verticalLabel" destination="bjg-zK-RVR" id="k8I-M2-u5q"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2rJ-yD-AYt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1350" y="-2020"/>
+        </scene>
+        <!--View Controller - BPM-->
+        <scene sceneID="knE-KG-ydc">
+            <objects>
+                <viewController id="Kc0-JV-b23" userLabel="View Controller - BPM" customClass="BPMViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MDw-8r-L7v"/>
+                        <viewControllerLayoutGuide type="bottom" id="5Yf-ZI-KyQ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3UX-f1-CG4">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Background4" translatesAutoresizingMaskIntoConstraints="NO" id="7AQ-gK-QtB">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Under Construction..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IgV-pB-eKG">
+                                <rect key="frame" x="76" y="241" width="168" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eke-vs-tIX">
+                                <rect key="frame" x="35" y="15" width="39" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <state key="normal" title="n/a" backgroundImage="Battery">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="DEFAULT BPM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eaJ-DI-U0E">
+                                <rect key="frame" x="82" y="11" width="216" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="20"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eWO-hk-F2Z">
+                                <rect key="frame" x="79" y="426" width="163" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="17"/>
+                                <state key="normal" title="CONNECT" backgroundImage="ConnectButton">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" backgroundImage="ConnectButtonPressed">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="connectOrDisconnectClicked" destination="Kc0-JV-b23" eventType="touchUpInside" id="RG4-25-9VU"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="BLOOD PRESSURE MONITOR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ece-Hb-vkc">
+                                <rect key="frame" x="0.0" y="60" width="32" height="383"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="27"/>
+                                <color key="textColor" red="0.66666666669999997" green="0.6705882353" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="5Yf-ZI-KyQ" firstAttribute="top" secondItem="eWO-hk-F2Z" secondAttribute="bottom" constant="30" id="EUm-RG-qL5"/>
+                            <constraint firstAttribute="centerX" secondItem="eWO-hk-F2Z" secondAttribute="centerX" id="FTl-RO-LOo"/>
+                            <constraint firstAttribute="centerY" secondItem="ece-Hb-vkc" secondAttribute="centerY" id="Jnv-k6-4hz"/>
+                            <constraint firstItem="ece-Hb-vkc" firstAttribute="leading" secondItem="3UX-f1-CG4" secondAttribute="leading" id="eMW-fk-j4E"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="1nR-kB-wTH"/>
+                    <connections>
+                        <outlet property="backgroundImage" destination="7AQ-gK-QtB" id="jbI-XE-PZB"/>
+                        <outlet property="battery" destination="Eke-vs-tIX" id="awt-SE-3rr"/>
+                        <outlet property="connectButton" destination="eWO-hk-F2Z" id="n1N-D4-CDf"/>
+                        <outlet property="deviceName" destination="eaJ-DI-U0E" id="9k2-m7-4CP"/>
+                        <outlet property="verticalLabel" destination="ece-Hb-vkc" id="0EN-iy-AbH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0zI-sy-HOE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1350" y="-1301"/>
+        </scene>
+        <!--View Controller - DFU-->
+        <scene sceneID="jQp-94-O02">
+            <objects>
+                <viewController id="ZfZ-xR-bsT" userLabel="View Controller - DFU" customClass="DFUViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="YvG-V7-6cx"/>
+                        <viewControllerLayoutGuide type="bottom" id="K6u-bL-u5j"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dWV-qC-ez4">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Background4" translatesAutoresizingMaskIntoConstraints="NO" id="3gr-Jp-YnC">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Under Construction..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dC5-2f-VvZ">
+                                <rect key="frame" x="76" y="241" width="168" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="DEFAULT DFU" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fT7-zC-dbm">
+                                <rect key="frame" x="34" y="11" width="252" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="20"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hGd-vQ-1ZP">
+                                <rect key="frame" x="79" y="426" width="163" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="17"/>
+                                <state key="normal" title="CONNECT" backgroundImage="ConnectButton">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" backgroundImage="ConnectButtonPressed">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="connectOrDisconnectClicked" destination="ZfZ-xR-bsT" eventType="touchUpInside" id="tSW-9z-Zij"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="DEVICE FIRMWARE UPDATE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5CN-hP-sI7">
+                                <rect key="frame" x="0.0" y="60" width="32" height="383"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="27"/>
+                                <color key="textColor" red="0.66666666669999997" green="0.6705882353" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="hGd-vQ-1ZP" secondAttribute="centerX" id="KPm-8k-QM1"/>
+                            <constraint firstAttribute="centerY" secondItem="5CN-hP-sI7" secondAttribute="centerY" id="MO8-XY-kNG"/>
+                            <constraint firstItem="5CN-hP-sI7" firstAttribute="leading" secondItem="dWV-qC-ez4" secondAttribute="leading" id="T3n-o2-Paa"/>
+                            <constraint firstItem="K6u-bL-u5j" firstAttribute="top" secondItem="hGd-vQ-1ZP" secondAttribute="bottom" constant="30" id="fcg-iD-faM"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="XbP-HK-cP2"/>
+                    <connections>
+                        <outlet property="backgroundImage" destination="3gr-Jp-YnC" id="itH-E2-76D"/>
+                        <outlet property="connectButton" destination="hGd-vQ-1ZP" id="ikD-zg-gyN"/>
+                        <outlet property="deviceName" destination="fT7-zC-dbm" id="B89-jl-FRO"/>
+                        <outlet property="verticalLabel" destination="5CN-hP-sI7" id="ckm-gF-gSj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OCH-04-hl7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1350" y="-589"/>
+        </scene>
+        <!--View Controller - HRM-->
         <scene sceneID="6tG-wn-seY">
             <objects>
-                <viewController id="9ph-JI-A6G" customClass="HRSViewController" sceneMemberID="viewController">
+                <viewController id="9ph-JI-A6G" userLabel="View Controller - HRM" customClass="HRSViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DYm-nm-njU"/>
                         <viewControllerLayoutGuide type="bottom" id="iLa-Fy-7XG"/>
@@ -154,12 +454,94 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uCd-5J-Yri" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1350" y="-590"/>
+            <point key="canvasLocation" x="1350" y="117"/>
         </scene>
-        <!--View Controller-->
+        <!--View Controller - Proximity-->
+        <scene sceneID="7za-bA-dBb">
+            <objects>
+                <viewController id="inG-0b-px5" userLabel="View Controller - Proximity" customClass="ProximityViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Yh6-cp-Qdf"/>
+                        <viewControllerLayoutGuide type="bottom" id="2yw-Oj-cR7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="jxL-cL-gIv">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Background4" translatesAutoresizingMaskIntoConstraints="NO" id="38l-wA-r3P">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gaj-JM-U3X">
+                                <rect key="frame" x="79" y="426" width="163" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="17"/>
+                                <state key="normal" title="CONNECT" backgroundImage="ConnectButton">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" backgroundImage="ConnectButtonPressed">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="connectOrDisconnectClicked" destination="inG-0b-px5" eventType="touchUpInside" id="Kma-5J-Rdx"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lLl-5r-leZ">
+                                <rect key="frame" x="35" y="15" width="39" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <state key="normal" title="n/a" backgroundImage="Battery">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="DEFAULT PROXIMITY" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DqQ-Re-kja">
+                                <rect key="frame" x="82" y="11" width="216" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="20"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="PROXIMITY MONITOR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vwl-LW-QSC">
+                                <rect key="frame" x="0.0" y="60" width="32" height="383"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="27"/>
+                                <color key="textColor" red="0.66666666669999997" green="0.6705882353" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Under Construction..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GB2-r9-HAY">
+                                <rect key="frame" x="76" y="241" width="168" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Vwl-LW-QSC" firstAttribute="leading" secondItem="jxL-cL-gIv" secondAttribute="leading" id="LUU-CV-2Hk"/>
+                            <constraint firstAttribute="centerX" secondItem="gaj-JM-U3X" secondAttribute="centerX" id="NiJ-5k-lcv"/>
+                            <constraint firstItem="2yw-Oj-cR7" firstAttribute="top" secondItem="gaj-JM-U3X" secondAttribute="bottom" constant="30" id="b57-sD-U7A"/>
+                            <constraint firstAttribute="centerY" secondItem="Vwl-LW-QSC" secondAttribute="centerY" id="nIJ-bT-C8t"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="GO1-Sd-mHd"/>
+                    <connections>
+                        <outlet property="backgroundImage" destination="38l-wA-r3P" id="7d5-Uq-4Vp"/>
+                        <outlet property="battery" destination="lLl-5r-leZ" id="ayD-rL-Vf6"/>
+                        <outlet property="connectButton" destination="gaj-JM-U3X" id="eIz-Fd-dNI"/>
+                        <outlet property="deviceName" destination="DqQ-Re-kja" id="b4f-Fr-iOY"/>
+                        <outlet property="verticalLabel" destination="Vwl-LW-QSC" id="J2B-dd-4ct"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xMx-QB-v1a" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1350" y="823"/>
+        </scene>
+        <!--View Controller - RSC-->
         <scene sceneID="DOf-c9-t36">
             <objects>
-                <viewController id="ajK-NB-gff" customClass="RSACViewController" sceneMemberID="viewController">
+                <viewController id="ajK-NB-gff" userLabel="View Controller - RSC" customClass="RSACViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="SxC-wS-ZqA"/>
                         <viewControllerLayoutGuide type="bottom" id="5AJ-vh-XED"/>
@@ -357,12 +739,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eNt-PN-d9z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1350" y="117"/>
+            <point key="canvasLocation" x="1350" y="2268"/>
         </scene>
-        <!--View Controller-->
+        <!--View Controller - HTM-->
         <scene sceneID="6kq-oM-g6K">
             <objects>
-                <viewController id="Rl2-Gx-bqg" customClass="HTSViewController" sceneMemberID="viewController">
+                <viewController id="Rl2-Gx-bqg" userLabel="View Controller - HTM" customClass="HTSViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="T94-QK-E2E"/>
                         <viewControllerLayoutGuide type="bottom" id="DJs-M6-HDi"/>
@@ -488,7 +870,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="134-H9-Zno" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1350" y="840"/>
+            <point key="canvasLocation" x="1350" y="1547"/>
         </scene>
         <!--Scanner View Controller-->
         <scene sceneID="AiV-hG-UJL">
@@ -602,10 +984,14 @@
         <image name="Battery" width="39" height="19"/>
         <image name="ConnectButton" width="163" height="48"/>
         <image name="ConnectButtonPressed" width="163" height="48"/>
+        <image name="FeatureBGM" width="78" height="78"/>
+        <image name="FeatureBPM" width="78" height="78"/>
         <image name="FeatureBackground" width="78" height="78"/>
         <image name="FeatureBackgroundPressed" width="78" height="78"/>
+        <image name="FeatureDFU" width="78" height="78"/>
         <image name="FeatureHRS" width="78" height="78"/>
         <image name="FeatureHTS" width="78" height="78"/>
+        <image name="FeatureProximity" width="78" height="78"/>
         <image name="FeatureRSAC" width="78" height="78"/>
         <image name="Signal_3" width="30" height="22"/>
     </resources>
