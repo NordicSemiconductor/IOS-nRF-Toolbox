@@ -98,7 +98,7 @@
 
 -(void)appDidBecomeActiveBackground:(NSNotification *)_notification
 {
-    //    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
 }
 
 - (IBAction)connectOrDisconnectClicked {
@@ -407,6 +407,26 @@
             else
             {
                 [self.type setText:@"Location: n/a"];
+            }
+            
+            UIApplicationState state = [[UIApplication sharedApplication] applicationState];
+            if (state == UIApplicationStateBackground || state == UIApplicationStateInactive)
+            {
+                UILocalNotification *notification = [[UILocalNotification alloc]init];
+                notification.alertAction = @"Show";
+                if (fahrenheit)
+                {
+                    notification.alertBody = [NSString stringWithFormat:@"New temperature reading: %.2f°F", tempValue];
+                }
+                else
+                {
+                    notification.alertBody = [NSString stringWithFormat:@"New temperature reading: %.2f°C", tempValue];
+                }
+                notification.hasAction = YES;
+                notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
+                notification.timeZone = [NSTimeZone  defaultTimeZone];
+                notification.soundName = UILocalNotificationDefaultSoundName;
+                [[UIApplication sharedApplication] setScheduledLocalNotifications:[NSArray arrayWithObject:notification]];
             }
         }
     });
