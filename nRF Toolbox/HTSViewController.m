@@ -11,29 +11,31 @@
 #import "Constants.h"
 
 @interface HTSViewController () {
-    /*!
-     * This property is set when the device successfully connects to the peripheral. It is used to cancel the connection
-     * after user press Disconnect button.
-     */
-    CBPeripheral* connectedPeripheral;
-    BOOL fahrenheit;
-    float temperatureValue;
-    
     CBUUID *htsServiceUUID;
     CBUUID *htsMeasurementCharacteristicUUID;
     CBUUID *batteryServiceUUID;
     CBUUID *batteryLevelCharacteristicUUID;
 }
 
+/*!
+ * This property is set when the device successfully connects to the peripheral. It is used to cancel the connection
+ * after user press Disconnect button.
+ */
+@property (strong, nonatomic) CBPeripheral* connectedPeripheral;
+
 @end
 
-@implementation HTSViewController
+@implementation HTSViewController {
+    BOOL fahrenheit;
+    float temperatureValue;
+}
 @synthesize bluetoothManager;
 @synthesize backgroundImage;
 @synthesize verticalLabel;
 @synthesize battery;
 @synthesize deviceName;
 @synthesize connectButton;
+@synthesize connectedPeripheral;
 @synthesize degreeControl;
 
 

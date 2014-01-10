@@ -12,11 +12,6 @@
 
 @interface RSACViewController () {
     /*!
-     * This property is set when the device successfully connects to the peripheral. It is used to cancel the connection
-     * after user press Disconnect button.
-     */
-    CBPeripheral* connectedPeripheral;
-    /*!
      * Number of steps counted during the current connection session. Calculated based on cadence and time intervals
      */
     uint32_t stepsNumber;
@@ -24,16 +19,24 @@
      * Number of steps counted during the current connection session. Calculated based on cadence and time intervals
      */
     uint8_t cadenceValue;
-    /*!
-     * The timer is used to periodically update strides number
-     */
-    NSTimer *timer;
     
     CBUUID *rscServiceUUID;
     CBUUID *rscMeasurementCharacteristicUUID;
     CBUUID *batteryServiceUUID;
     CBUUID *batteryLevelCharacteristicUUID;
 }
+
+/*!
+ * This property is set when the device successfully connects to the peripheral. It is used to cancel the connection
+ * after user press Disconnect button.
+ */
+@property (strong, nonatomic) CBPeripheral *connectedPeripheral;
+
+/*!
+ * The timer is used to periodically update strides number
+ */
+@property (strong, nonatomic) NSTimer *timer;
+
 - (void)timerFireMethod:(NSTimer *)_timer;
 - (void)appDidEnterBackground:(NSNotification *)_notification;
 - (void)appDidBecomeActiveBackground:(NSNotification *)_notification;
@@ -47,7 +50,8 @@
 @synthesize battery;
 @synthesize deviceName;
 @synthesize connectButton;
-
+@synthesize connectedPeripheral;
+@synthesize timer;
 
 -(id)initWithCoder:(NSCoder *)aDecoder
 {

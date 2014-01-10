@@ -9,17 +9,18 @@
 #import "ScannerViewController.h"
 #import "ScannedPeripheral.h"
 
-@interface ScannerViewController () {
-    /*!
-     * List of the peripherals shown on the table view. Peripheral are added to this list when it's discovered.
-     * Only peripherals with bridgeServiceUUID in the advertisement packets are being displayed.
-     */
-    NSMutableArray *peripherals;
-    /*!
-     * The timer is used to periodically reload table
-     */
-    NSTimer *timer;
-}
+@interface ScannerViewController ()
+
+/*!
+ * List of the peripherals shown on the table view. Peripheral are added to this list when it's discovered.
+ * Only peripherals with bridgeServiceUUID in the advertisement packets are being displayed.
+ */
+@property (strong, nonatomic) NSMutableArray *peripherals;
+/*!
+ * The timer is used to periodically reload table
+ */
+@property (strong, nonatomic) NSTimer *timer;
+
 - (void)timerFireMethod:(NSTimer *)timer;
 
 @end
@@ -28,6 +29,8 @@
 @synthesize bluetoothManager;
 @synthesize devicesTable;
 @synthesize filterUUID;
+@synthesize peripherals;
+@synthesize timer;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

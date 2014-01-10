@@ -13,11 +13,11 @@
 @interface StubViewController : UIViewController <CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate>
 
 @property (strong, nonatomic) CBCentralManager *bluetoothManager;
-@property (strong, nonatomic) IBOutlet UIImageView *backgroundImage;
-@property (strong, nonatomic) IBOutlet UILabel *verticalLabel;
-@property (strong, nonatomic) IBOutlet UIButton *battery;
-@property (strong, nonatomic) IBOutlet UILabel *deviceName;
-@property (strong, nonatomic) IBOutlet UIButton *connectButton;
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
+@property (weak, nonatomic) IBOutlet UILabel *verticalLabel;
+@property (weak, nonatomic) IBOutlet UIButton *battery;
+@property (weak, nonatomic) IBOutlet UILabel *deviceName;
+@property (weak, nonatomic) IBOutlet UIButton *connectButton;
 
 - (IBAction)connectOrDisconnectClicked;
 

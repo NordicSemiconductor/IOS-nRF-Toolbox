@@ -13,19 +13,19 @@
 @interface RSACViewController : UIViewController <CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate>
 
 @property (strong, nonatomic) CBCentralManager *bluetoothManager;
-@property (strong, nonatomic) IBOutlet UIImageView *backgroundImage;
-@property (strong, nonatomic) IBOutlet UILabel *verticalLabel;
-@property (strong, nonatomic) IBOutlet UIButton *battery;
-@property (strong, nonatomic) IBOutlet UILabel *deviceName;
-@property (strong, nonatomic) IBOutlet UIButton *connectButton;
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
+@property (weak, nonatomic) IBOutlet UILabel *verticalLabel;
+@property (weak, nonatomic) IBOutlet UIButton *battery;
+@property (weak, nonatomic) IBOutlet UILabel *deviceName;
+@property (weak, nonatomic) IBOutlet UIButton *connectButton;
 
-@property (strong, nonatomic) IBOutlet UILabel *speed;
-@property (strong, nonatomic) IBOutlet UILabel *cadence;
-@property (strong, nonatomic) IBOutlet UILabel *distance;
-@property (strong, nonatomic) IBOutlet UILabel *distanceUnit;
-@property (strong, nonatomic) IBOutlet UILabel *strideLength;
-@property (strong, nonatomic) IBOutlet UILabel *strides;
-@property (strong, nonatomic) IBOutlet UILabel *activity;
+@property (weak, nonatomic) IBOutlet UILabel *speed;
+@property (weak, nonatomic) IBOutlet UILabel *cadence;
+@property (weak, nonatomic) IBOutlet UILabel *distance;
+@property (weak, nonatomic) IBOutlet UILabel *distanceUnit;
+@property (weak, nonatomic) IBOutlet UILabel *strideLength;
+@property (weak, nonatomic) IBOutlet UILabel *strides;
+@property (weak, nonatomic) IBOutlet UILabel *activity;
 
 - (IBAction)connectOrDisconnectClicked;
 

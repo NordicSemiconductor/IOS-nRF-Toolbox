@@ -13,7 +13,7 @@
 @interface ScannerViewController : UIViewController <CBCentralManagerDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (strong, nonatomic) CBCentralManager *bluetoothManager;
-@property (strong, nonatomic) IBOutlet UITableView *devicesTable;
+@property (weak, nonatomic) IBOutlet UITableView *devicesTable;
 @property (strong, nonatomic) id <ScannerDelegate> delegate;
 @property (strong, nonatomic) CBUUID *filterUUID;
 
