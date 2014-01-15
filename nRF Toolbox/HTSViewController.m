@@ -23,6 +23,8 @@
  */
 @property (strong, nonatomic) CBPeripheral* connectedPeripheral;
 
+-(void) updateUnits;
+
 @end
 
 @implementation HTSViewController {
@@ -48,8 +50,15 @@
         htsMeasurementCharacteristicUUID = [CBUUID UUIDWithString:htsMeasurementCharacteristicUUIDString];
         batteryServiceUUID = [CBUUID UUIDWithString:batteryServiceUUIDString];
         batteryLevelCharacteristicUUID = [CBUUID UUIDWithString:batteryLevelCharacteristicUUIDString];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActiveBackground:) name:UIApplicationDidBecomeActiveNotification object:nil];
     }
     return self;
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 - (void)viewDidLoad
@@ -70,12 +79,7 @@
     // Rotate the vertical label
     self.verticalLabel.transform = CGAffineTransformMakeRotation(-M_PI / 2);
     
-    fahrenheit = [[NSUserDefaults standardUserDefaults] boolForKey:@"fahrenheit"];
-    if (fahrenheit)
-    {
-        degreeControl.selectedSegmentIndex = 1;
-        [self.degrees setText:@"°F"];
-    }
+    [self updateUnits];
 }
 
 - (void)didReceiveMemoryWarning
@@ -99,6 +103,24 @@
 -(void)appDidBecomeActiveBackground:(NSNotification *)_notification
 {
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    
+    [self updateUnits];
+}
+
+- (void) updateUnits
+{
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    fahrenheit = [[NSUserDefaults standardUserDefaults] boolForKey:@"fahrenheit"];
+    if (fahrenheit)
+    {
+        degreeControl.selectedSegmentIndex = 1;
+        [self.degrees setText:@"°F"];
+    }
+    else
+    {
+        degreeControl.selectedSegmentIndex = 0;
+        [self.degrees setText:@"°C"];
+    }
 }
 
 - (IBAction)connectOrDisconnectClicked {
@@ -127,6 +149,7 @@
         [self.degrees setText:@"°F"];
         temperatureValue = temperatureValue * 9.0f / 5.0f + 32.0f;
     }
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
     if (connectedPeripheral != nil)
     {
@@ -187,8 +210,8 @@
         [connectButton setTitle:@"DISCONNECT" forState:UIControlStateNormal];
     });
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActiveBackground:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActiveBackground:) name:UIApplicationDidBecomeActiveNotification object:nil];
     
     // Peripheral has connected. Discover required services
     connectedPeripheral = peripheral;
@@ -216,8 +239,8 @@
         connectedPeripheral = nil;
         
         [self clearUI];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
+        //[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+        //[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
     });
 }
 

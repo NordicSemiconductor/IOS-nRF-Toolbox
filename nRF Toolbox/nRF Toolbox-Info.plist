@@ -6,6 +6,26 @@
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
 	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeIconFiles</key>
+			<array>
+				<string>icon-hex</string>
+				<string>icon-hex@2x</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>nRF51 Hex</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Default</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.intel.hex</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
@@ -37,6 +57,31 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UTImportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>public.archive</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Intel Hex File</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.intel.hex</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://www.interlog.com/~speff/usefulinfo/Hexfrmt.pdf</string>
+			<key>UTTypeSize320IconFile</key>
+			<string>icon-dfu-320</string>
+			<key>UTTypeSize64IconFile</key>
+			<string>icon-dfu-64</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<string>hex</string>
+			</dict>
+		</dict>
 	</array>
 </dict>
 </plist>

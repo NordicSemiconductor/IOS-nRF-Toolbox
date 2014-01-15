@@ -9,15 +9,15 @@
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "ScannerDelegate.h"
+#import "SelectorDelegate.h"
+#import "DFUController.h"
 
-@interface DFUViewController : UIViewController <CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate>
+@interface DFUViewController : UIViewController <CBCentralManagerDelegate, ScannerDelegate, SelectorDelegate, DFUControllerDelegate>
 
 @property (strong, nonatomic) CBCentralManager *bluetoothManager;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
 @property (weak, nonatomic) IBOutlet UILabel *verticalLabel;
 @property (weak, nonatomic) IBOutlet UILabel *deviceName;
 @property (weak, nonatomic) IBOutlet UIButton *connectButton;
-
-- (IBAction)connectOrDisconnectClicked;
 
 @end

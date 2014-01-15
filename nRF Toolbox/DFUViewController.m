@@ -8,6 +8,7 @@
 
 #import "DFUViewController.h"
 #import "ScannerViewController.h"
+#import "SelectorViewController.h"
 #import "Constants.h"
 
 @interface DFUViewController () {
@@ -17,10 +18,24 @@
 }
 
 /*!
- * This property is set when the device successfully connects to the peripheral. It is used to cancel the connection
- * after user press Disconnect button.
+ * This property is set when the device has been selected on the Scanner View Controller.
  */
-@property (strong, nonatomic) CBPeripheral *connectedPeripheral;
+@property (strong, nonatomic) CBPeripheral *selectedPeripheral;
+
+@property DFUController *dfuController;
+@property (weak, nonatomic) IBOutlet UILabel *fileName;
+@property (weak, nonatomic) IBOutlet UILabel *fileSize;
+@property (weak, nonatomic) IBOutlet UILabel *fileStatus;
+@property (weak, nonatomic) IBOutlet UILabel *status;
+@property (weak, nonatomic) IBOutlet UIProgressView *progress;
+@property (weak, nonatomic) IBOutlet UILabel *progressLabel;
+@property (weak, nonatomic) IBOutlet UIButton *selectFileButton;
+@property (weak, nonatomic) IBOutlet UIView *uploadPane;
+@property (weak, nonatomic) IBOutlet UIButton *uploadButton;
+
+@property BOOL isTransferring;
+
+- (IBAction)uploadPressed;
 
 @end
 
@@ -30,7 +45,17 @@
 @synthesize verticalLabel;
 @synthesize deviceName;
 @synthesize connectButton;
-@synthesize connectedPeripheral;
+@synthesize selectedPeripheral;
+@synthesize dfuController;
+@synthesize fileName;
+@synthesize fileSize;
+@synthesize fileStatus;
+@synthesize status;
+@synthesize progress;
+@synthesize progressLabel;
+@synthesize selectFileButton;
+@synthesize uploadButton;
+@synthesize uploadPane;
 
 
 -(id)initWithCoder:(NSCoder *)aDecoder
@@ -41,6 +66,8 @@
         dfuServiceUUID = [CBUUID UUIDWithString:dfuServiceUUIDString];
         dfuControlPointCharacteristicUUID = [CBUUID UUIDWithString:dfuControlPointCharacteristicUUIDString];
         dfuPacketCharacteristicUUID = [CBUUID UUIDWithString:dfuPacketCharacteristicUUIDString];
+        
+        dfuController = [[DFUController alloc] initWithDelegate:self];
     }
     return self;
 }
@@ -61,13 +88,61 @@
     }
     
     // Rotate the vertical label
-    self.verticalLabel.transform = CGAffineTransformMakeRotation(-M_PI / 2);
+    verticalLabel.transform = CGAffineTransformMakeRotation(-M_PI / 2);
+    
+    // If firmware URL has been set by AppDelegate, show file information
+    if (dfuController.appSize > 0)
+    {
+        fileName.text = dfuController.appName;
+        fileSize.text = [NSString stringWithFormat:@"%ld bytes", dfuController.appSize];
+        fileStatus.text = @"OK";
+    }
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)uploadPressed
+{
+    if (!self.isTransferring)
+    {
+        [bluetoothManager connectPeripheral:selectedPeripheral options:nil];
+        
+        // Animate the pane size
+        CGRect newSize = CGRectMake(35.0, 228.0, 251.0, 96.0);
+        [UIView animateWithDuration:0.4
+                delay:0.0
+                options:UIViewAnimationOptionCurveEaseIn
+                animations:^{
+                    uploadPane.frame = newSize;
+                } completion:^(BOOL finished) {
+                    status.hidden = NO;
+                    progress.hidden = NO;
+                    progressLabel.hidden = NO;
+
+                }];
+    }
+    else
+    {
+        [dfuController cancelTransfer];
+    }
+}
+
+-(void)fileSelected:(NSURL *)url
+{
+    [dfuController setFirmwareURL:url];
+    fileName.text = dfuController.appName;
+    fileSize.text = [NSString stringWithFormat:@"%ld bytes", dfuController.appSize];
+    fileStatus.text = @"OK";
+    
+    // If device has been selected before, allow upload
+    if (selectedPeripheral != nil)
+    {
+        uploadButton.enabled = YES;
+    }
 }
 
 -(void)appDidEnterBackground:(NSNotification *)_notification
@@ -87,17 +162,10 @@
     //    [[UIApplication sharedApplication] cancelAllLocalNotifications];
 }
 
-- (IBAction)connectOrDisconnectClicked {
-    if (connectedPeripheral != nil)
-    {
-        [bluetoothManager cancelPeripheralConnection:connectedPeripheral];
-    }
-}
-
 -(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
-    // The 'scan' seque will be performed only if connectedPeripheral == nil (if we are not connected already).
-    return ![identifier isEqualToString:@"scan"] || connectedPeripheral == nil;
+    // The 'scan' or 'select' seque will be performed only if DFU process has not been started or was completed.
+    return !self.isTransferring;
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -109,6 +177,11 @@
         controller.filterUUID = dfuServiceUUID;
         controller.delegate = self;
     }
+    else if ([segue.identifier isEqualToString:@"select"])
+    {
+        SelectorViewController *controller = (SelectorViewController *)segue.destinationViewController;
+        controller.delegate = self;
+    }
 }
 
 #pragma mark Scanner Delegate methods
@@ -118,11 +191,16 @@
     // We may not use more than one Central Manager instance. Let's just take the one returned from Scanner View Controller
     bluetoothManager = manager;
     bluetoothManager.delegate = self;
+
+    // Set the peripheral
+    dfuController.peripheral = peripheral;
+    selectedPeripheral = peripheral;
+    deviceName.text = peripheral.name;
     
-    // The sensor has been selected, connect to it
-    peripheral.delegate = self;
-    NSDictionary *options = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:CBConnectPeripheralOptionNotifyOnNotificationKey];
-    [bluetoothManager connectPeripheral:peripheral options:options];
+    if (dfuController.appSize > 0)
+    {
+        uploadButton.enabled = YES;
+    }
 }
 
 #pragma mark Central Manager delegate methods
@@ -141,18 +219,11 @@
 
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral
 {
-    // Scanner uses other queue to send events. We must edit UI in the main queue
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [deviceName setText:peripheral.name];
-        [connectButton setTitle:@"DISCONNECT" forState:UIControlStateNormal];
-    });
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActiveBackground:) name:UIApplicationDidBecomeActiveNotification object:nil];
     
     // Peripheral has connected. Discover required services
-    connectedPeripheral = peripheral;
-    [peripheral discoverServices:@[dfuServiceUUID]];
+    [dfuController didConnect];
 }
 
 -(void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
@@ -161,8 +232,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Connecting to the peripheral failed. Try again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        [connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
-        connectedPeripheral = nil;
+        selectedPeripheral = nil;
         
         [self clearUI];
     });
@@ -170,11 +240,12 @@
 
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
 {
+    // Notify DFU controller about link loss
+    [self.dfuController didDisconnect:error];
+    
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
-        [connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
-        connectedPeripheral = nil;
-        
+        self.isTransferring = NO;
         [self clearUI];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -183,8 +254,116 @@
 
 - (void) clearUI
 {
-    // TODO
+    if (selectedPeripheral == nil)
+    {
+        deviceName.text = @"DEFAULT DFU";
+    }
+    status.text = @"";
+    status.hidden = YES;
+    progress.progress = 0.0f;
+    progress.hidden = YES;
+    progressLabel.hidden = YES;
+    progressLabel.text = @"";
+    selectFileButton.enabled = YES;
+    [uploadButton setTitle:@"Upload" forState:UIControlStateNormal];
+    uploadButton.enabled = selectedPeripheral != nil;   // TODO && aplikacja wybrana
+    
+    // Animate upload pane
+    CGRect newSize = CGRectMake(35.0, 228.0, 251.0, 48.0);
+    [UIView animateWithDuration:0.4
+                          delay:0.0
+                        options:UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                         uploadPane.frame = newSize;
+                     } completion:^(BOOL finished) {
+                         // empty
+                     }];
 }
 
+#pragma mark DFU Controller delegate methods
+
+-(void)didChangeState:(DFUControllerState) state;
+{
+    // Scanner uses other queue to send events. We must edit UI in the main queue
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (state == IDLE)
+        {
+            self.isTransferring = YES;
+            selectFileButton.enabled = NO;
+            [uploadButton setTitle:@"Cancel" forState:UIControlStateNormal];
+        }
+        status.text = [self.dfuController stringFromState:state];
+    });
+}
+
+-(void)didUpdateProgress:(float)percent
+{
+    // Scanner uses other queue to send events. We must edit UI in the main queue
+    dispatch_async(dispatch_get_main_queue(), ^{
+        progressLabel.text = [NSString stringWithFormat:@"%.0f %%", percent*100];
+        [progress setProgress:percent animated:YES];
+    });
+}
+
+-(void)didFinishTransfer
+{
+    NSLog(@"Transfer finished!");
+    selectedPeripheral = nil;
+    
+    // Scanner uses other queue to send events. We must edit UI in the main queue
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSString* messge = [NSString stringWithFormat:@"%lu bytes transfered in %lu ms.", dfuController.binSize, (unsigned long) (dfuController.uploadInterval * -1000.0)];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload completed" message:messge delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    });
+}
+
+-(void)didCancelTransfer
+{
+    NSLog(@"Transfer cancelled!");
+}
+
+-(void)didDisconnect:(NSError *)error
+{
+    NSLog(@"Transfer terminated!");
+}
+
+-(void)didErrorOccurred:(DFUTargetResponse)error
+{
+    NSLog(@"Transfer terminated!");
+    
+    // Scanner uses other queue to send events. We must edit UI in the main queue
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSString* message = nil;
+        switch (error)
+        {
+            case CRC_ERROR:
+                message = @"CRC error";
+                break;
+                
+            case DATA_SIZE_EXCEEDS_LIMIT:
+                message = @"Data size exceeds limit";
+                break;
+                
+            case INVALID_STATE:
+                message = @"Device is in invalud state";
+                break;
+                
+            case NOT_SUPPORTED:
+                message = @"Operation not supported. Image file may be to large.";
+                break;
+                
+            case OPERATION_FAILED:
+                message = @"Operation failed";
+                break;
+                
+            default:
+                break;
+        }
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    });
+}
 
 @end

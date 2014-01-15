@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "DFUViewController.h"
 
 @implementation AppDelegate
 
@@ -16,6 +17,21 @@
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     UIImage *navBackgroundImage = [UIImage imageNamed:@"NavBarIOS7"];
     [[UINavigationBar appearance] setBackgroundImage:navBackgroundImage forBarMetrics:UIBarMetricsDefault];
+    
+    return YES;
+}
+
+- (BOOL) application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    UINavigationController *navigationController = (UINavigationController *) self.window.rootViewController;
+    [navigationController popToRootViewControllerAnimated:NO];
+    
+    UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    DFUViewController *dfuvc = [main instantiateViewControllerWithIdentifier:@"DFUViewController"];
+    [dfuvc fileSelected:url];
+    
+    [navigationController pushViewController:dfuvc animated:YES];
     
     return YES;
 }

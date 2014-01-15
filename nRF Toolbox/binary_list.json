@@ -1,0 +1,28 @@
+{
+    "binaries": [
+                 {
+                    "title": "ble_app_hrs.hex",
+                    "filename": "ble_app_hrs",
+                    "extension": "hex",
+                    "size": 52296
+                 },
+                 {
+                    "title": "ble_app_rscs.hex",
+                    "filename": "ble_app_rscs",
+                    "extension": "hex",
+                    "size": 49265
+                 },
+                 {
+                    "title": "ble_app_hrs_s110_v6_0_0.hex",
+                    "filename": "ble_app_hrs_s110_v6_0_0",
+                    "extension": "hex",
+                    "size": 55295
+                 },
+                 {
+                    "title": "ble_app_rscs_s110_v6_0_0.hex",
+                    "filename": "ble_app_rscs_s110_v6_0_0",
+                    "extension": "hex",
+                    "size": 53818
+                 }
+                ]
+}

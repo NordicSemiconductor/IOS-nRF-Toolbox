@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5211EFA41885611F007CC40D /* ble_app_rscs.hex in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFA01885611F007CC40D /* ble_app_rscs.hex */; };
+		5211EFA51885611F007CC40D /* ble_app_hrs.hex in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFA11885611F007CC40D /* ble_app_hrs.hex */; };
+		5211EFA61885611F007CC40D /* ble_app_hrs_s110_v6_0_0.hex in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFA21885611F007CC40D /* ble_app_hrs_s110_v6_0_0.hex */; };
+		5211EFA71885611F007CC40D /* ble_app_rscs_s110_v6_0_0.hex in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFA31885611F007CC40D /* ble_app_rscs_s110_v6_0_0.hex */; };
+		5211EFA91885618E007CC40D /* binary_list.json in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFA81885618E007CC40D /* binary_list.json */; };
+		5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAA1885642F007CC40D /* icon-dfu-64.png */; };
+		5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAB1885642F007CC40D /* icon-dfu-320.png */; };
+		5211EFB018856430007CC40D /* icon-hex.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAC1885642F007CC40D /* icon-hex.png */; };
+		5211EFB118856430007CC40D /* icon-hex@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAD1885642F007CC40D /* icon-hex@2x.png */; };
+		5214D0C71886951500460637 /* IntelHex2BinConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5214D0C61886951500460637 /* IntelHex2BinConverter.m */; };
+		5214D0CE1886C02A00460637 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5214D0CD1886C02A00460637 /* Settings.bundle */; };
 		5217F3E61859EE0000F2D5BB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5217F3E51859EE0000F2D5BB /* Foundation.framework */; };
 		5217F3E81859EE0000F2D5BB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5217F3E71859EE0000F2D5BB /* CoreGraphics.framework */; };
 		5217F3EA1859EE0000F2D5BB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5217F3E91859EE0000F2D5BB /* UIKit.framework */; };
@@ -32,6 +43,10 @@
 		5252A53A18802B8100EFD773 /* BPMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A53918802B8100EFD773 /* BPMViewController.m */; };
 		5252A53E18802F7200EFD773 /* DFUViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A53D18802F7200EFD773 /* DFUViewController.m */; };
 		5252A542188030A800EFD773 /* ProximityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A541188030A800EFD773 /* ProximityViewController.m */; };
+		5252A55518841E2700EFD773 /* DFUController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A55218841E2700EFD773 /* DFUController.m */; };
+		5252A55618841E2700EFD773 /* DFUTargetAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A55418841E2700EFD773 /* DFUTargetAdapter.m */; };
+		5252A55D18853C0600EFD773 /* SelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A55C18853C0600EFD773 /* SelectorViewController.m */; };
+		5252A563188549B000EFD773 /* ImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A562188549B000EFD773 /* ImageCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +60,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5211EFA01885611F007CC40D /* ble_app_rscs.hex */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ble_app_rscs.hex; sourceTree = "<group>"; };
+		5211EFA11885611F007CC40D /* ble_app_hrs.hex */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ble_app_hrs.hex; sourceTree = "<group>"; };
+		5211EFA21885611F007CC40D /* ble_app_hrs_s110_v6_0_0.hex */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ble_app_hrs_s110_v6_0_0.hex; sourceTree = "<group>"; };
+		5211EFA31885611F007CC40D /* ble_app_rscs_s110_v6_0_0.hex */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ble_app_rscs_s110_v6_0_0.hex; sourceTree = "<group>"; };
+		5211EFA81885618E007CC40D /* binary_list.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = binary_list.json; sourceTree = "<group>"; };
+		5211EFAA1885642F007CC40D /* icon-dfu-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-64.png"; sourceTree = "<group>"; };
+		5211EFAB1885642F007CC40D /* icon-dfu-320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-320.png"; sourceTree = "<group>"; };
+		5211EFAC1885642F007CC40D /* icon-hex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-hex.png"; sourceTree = "<group>"; };
+		5211EFAD1885642F007CC40D /* icon-hex@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-hex@2x.png"; sourceTree = "<group>"; };
+		5214D0C51886951500460637 /* IntelHex2BinConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntelHex2BinConverter.h; sourceTree = "<group>"; };
+		5214D0C61886951500460637 /* IntelHex2BinConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntelHex2BinConverter.m; sourceTree = "<group>"; };
+		5214D0CD1886C02A00460637 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		5217F3E21859EE0000F2D5BB /* nRF Toolbox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nRF Toolbox.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5217F3E51859EE0000F2D5BB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5217F3E71859EE0000F2D5BB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -79,6 +106,7 @@
 		5236E161187EA7540057E974 /* HTSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTSViewController.m; sourceTree = "<group>"; };
 		5236E16A187EC6880057E974 /* StubViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StubViewController.h; sourceTree = "<group>"; };
 		5236E16B187EC6880057E974 /* StubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StubViewController.m; sourceTree = "<group>"; };
+		52400DBE18856C2E000B7204 /* SelectorDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectorDelegate.h; sourceTree = "<group>"; };
 		5252A5341880260300EFD773 /* BGMViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGMViewController.h; sourceTree = "<group>"; };
 		5252A5351880260300EFD773 /* BGMViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGMViewController.m; sourceTree = "<group>"; };
 		5252A53818802B8100EFD773 /* BPMViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPMViewController.h; sourceTree = "<group>"; };
@@ -87,6 +115,14 @@
 		5252A53D18802F7200EFD773 /* DFUViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFUViewController.m; sourceTree = "<group>"; };
 		5252A540188030A800EFD773 /* ProximityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProximityViewController.h; sourceTree = "<group>"; };
 		5252A541188030A800EFD773 /* ProximityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProximityViewController.m; sourceTree = "<group>"; };
+		5252A55118841E1200EFD773 /* DFUController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFUController.h; sourceTree = "<group>"; };
+		5252A55218841E2700EFD773 /* DFUController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFUController.m; sourceTree = "<group>"; };
+		5252A55318841E2700EFD773 /* DFUTargetAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFUTargetAdapter.h; sourceTree = "<group>"; };
+		5252A55418841E2700EFD773 /* DFUTargetAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFUTargetAdapter.m; sourceTree = "<group>"; };
+		5252A55B18853C0600EFD773 /* SelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectorViewController.h; sourceTree = "<group>"; };
+		5252A55C18853C0600EFD773 /* SelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectorViewController.m; sourceTree = "<group>"; };
+		5252A561188549B000EFD773 /* ImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCell.h; sourceTree = "<group>"; };
+		5252A562188549B000EFD773 /* ImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,9 +150,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5211EF9F188560B0007CC40D /* Embeded files */ = {
+			isa = PBXGroup;
+			children = (
+				5211EFA81885618E007CC40D /* binary_list.json */,
+				5211EFA01885611F007CC40D /* ble_app_rscs.hex */,
+				5211EFA11885611F007CC40D /* ble_app_hrs.hex */,
+				5211EFA21885611F007CC40D /* ble_app_hrs_s110_v6_0_0.hex */,
+				5211EFA31885611F007CC40D /* ble_app_rscs_s110_v6_0_0.hex */,
+			);
+			name = "Embeded files";
+			sourceTree = "<group>";
+		};
+		5214D0C81886951A00460637 /* Hex to Bin Converter */ = {
+			isa = PBXGroup;
+			children = (
+				5214D0C51886951500460637 /* IntelHex2BinConverter.h */,
+				5214D0C61886951500460637 /* IntelHex2BinConverter.m */,
+			);
+			name = "Hex to Bin Converter";
+			sourceTree = "<group>";
+		};
 		5217F3D91859EE0000F2D5BB = {
 			isa = PBXGroup;
 			children = (
+				5214D0CD1886C02A00460637 /* Settings.bundle */,
 				5217F3EB1859EE0000F2D5BB /* nRF Toolbox */,
 				5217F40A1859EE0000F2D5BB /* nRF ToolboxTests */,
 				5217F3E41859EE0000F2D5BB /* Frameworks */,
@@ -172,6 +230,10 @@
 		5217F3EC1859EE0000F2D5BB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5211EFAA1885642F007CC40D /* icon-dfu-64.png */,
+				5211EFAB1885642F007CC40D /* icon-dfu-320.png */,
+				5211EFAC1885642F007CC40D /* icon-hex.png */,
+				5211EFAD1885642F007CC40D /* icon-hex@2x.png */,
 				5217F3ED1859EE0000F2D5BB /* nRF Toolbox-Info.plist */,
 				5217F3EE1859EE0000F2D5BB /* InfoPlist.strings */,
 				5217F3F11859EE0000F2D5BB /* main.m */,
@@ -267,6 +329,10 @@
 		5252A53B18802F6300EFD773 /* DFU */ = {
 			isa = PBXGroup;
 			children = (
+				5211EF9F188560B0007CC40D /* Embeded files */,
+				5252A55A18853BF000EFD773 /* Image selector */,
+				5214D0C81886951A00460637 /* Hex to Bin Converter */,
+				5252A54F18841D9D00EFD773 /* DFU Implementation */,
 				5252A53C18802F7200EFD773 /* DFUViewController.h */,
 				5252A53D18802F7200EFD773 /* DFUViewController.m */,
 			);
@@ -280,6 +346,29 @@
 				5252A541188030A800EFD773 /* ProximityViewController.m */,
 			);
 			name = PROXIMITY;
+			sourceTree = "<group>";
+		};
+		5252A54F18841D9D00EFD773 /* DFU Implementation */ = {
+			isa = PBXGroup;
+			children = (
+				5252A55118841E1200EFD773 /* DFUController.h */,
+				5252A55218841E2700EFD773 /* DFUController.m */,
+				5252A55318841E2700EFD773 /* DFUTargetAdapter.h */,
+				5252A55418841E2700EFD773 /* DFUTargetAdapter.m */,
+			);
+			name = "DFU Implementation";
+			sourceTree = "<group>";
+		};
+		5252A55A18853BF000EFD773 /* Image selector */ = {
+			isa = PBXGroup;
+			children = (
+				5252A561188549B000EFD773 /* ImageCell.h */,
+				5252A562188549B000EFD773 /* ImageCell.m */,
+				52400DBE18856C2E000B7204 /* SelectorDelegate.h */,
+				5252A55B18853C0600EFD773 /* SelectorViewController.h */,
+				5252A55C18853C0600EFD773 /* SelectorViewController.m */,
+			);
+			name = "Image selector";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -366,9 +455,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5211EFA91885618E007CC40D /* binary_list.json in Resources */,
+				5211EFA41885611F007CC40D /* ble_app_rscs.hex in Resources */,
+				5214D0CE1886C02A00460637 /* Settings.bundle in Resources */,
 				5217F3FE1859EE0000F2D5BB /* Images.xcassets in Resources */,
+				5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */,
 				5217F3F01859EE0000F2D5BB /* InfoPlist.strings in Resources */,
+				5211EFA61885611F007CC40D /* ble_app_hrs_s110_v6_0_0.hex in Resources */,
+				5211EFB118856430007CC40D /* icon-hex@2x.png in Resources */,
 				5217F3F91859EE0000F2D5BB /* Main.storyboard in Resources */,
+				5211EFA51885611F007CC40D /* ble_app_hrs.hex in Resources */,
+				5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */,
+				5211EFA71885611F007CC40D /* ble_app_rscs_s110_v6_0_0.hex in Resources */,
+				5211EFB018856430007CC40D /* icon-hex.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,16 +489,21 @@
 				5252A53E18802F7200EFD773 /* DFUViewController.m in Sources */,
 				5252A53A18802B8100EFD773 /* BPMViewController.m in Sources */,
 				5217F3FC1859EE0000F2D5BB /* ViewController.m in Sources */,
+				5252A55D18853C0600EFD773 /* SelectorViewController.m in Sources */,
+				5252A55518841E2700EFD773 /* DFUController.m in Sources */,
 				5217F3F61859EE0000F2D5BB /* AppDelegate.m in Sources */,
 				5217F3F21859EE0000F2D5BB /* main.m in Sources */,
 				5217F41E185B198E00F2D5BB /* RSACViewController.m in Sources */,
 				5252A542188030A800EFD773 /* ProximityViewController.m in Sources */,
 				5236E162187EA7540057E974 /* HTSViewController.m in Sources */,
+				5214D0C71886951500460637 /* IntelHex2BinConverter.m in Sources */,
+				5252A563188549B000EFD773 /* ImageCell.m in Sources */,
 				5217F428185F28D400F2D5BB /* ScannedPeripheral.m in Sources */,
 				5236E16C187EC6880057E974 /* StubViewController.m in Sources */,
 				5252A5361880260300EFD773 /* BGMViewController.m in Sources */,
 				5217F422185F15FA00F2D5BB /* ScannerViewController.m in Sources */,
 				5236E15F187EA73F0057E974 /* HRSViewController.m in Sources */,
+				5252A55618841E2700EFD773 /* DFUTargetAdapter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
