@@ -319,7 +319,7 @@
         {
             uint8_t batteryLevel = array[0];
             NSString* text = [[NSString alloc] initWithFormat:@"%d%%", batteryLevel];
-            [battery setTitle:text forState:UIControlStateNormal];
+            [battery setTitle:text forState:UIControlStateDisabled];
             
             if (battery.tag == 0)
             {
@@ -356,7 +356,7 @@
             if (tempInFahrenheit && !fahrenheit)
                 tempValue = (tempValue - 32.0f) * 5.0f / 9.0f;
             temperatureValue = tempValue;
-            [self.temperature setText:[NSString stringWithFormat:@"%.2f", tempValue]];
+            self.temperature.text = [NSString stringWithFormat:@"%.2f", tempValue];
             
             if (timestampPresent)
             {
@@ -376,11 +376,11 @@
                 [dateFormat setDateFormat:@"dd.MM.yyyy, hh:mm"];
                 NSString* dateFormattedString = [dateFormat stringFromDate:date];
                 
-                [self.timestamp setText:dateFormattedString];
+                self.timestamp.text = dateFormattedString;
             }
             else
             {
-                [self.timestamp setText:@"Date n/a"];
+                self.timestamp.text = @"Date n/a";
             }
             
             /* temperature type */
@@ -424,12 +424,12 @@
                 }
                 if (location)
                 {
-                    [self.type setText:[NSString stringWithFormat:@"Location: %@", location]];
+                    self.type.text = [NSString stringWithFormat:@"Location: %@", location];
                 }
             }
             else
             {
-                [self.type setText:@"Location: n/a"];
+                self.type.text = @"Location: n/a";
             }
             
             UIApplicationState state = [[UIApplication sharedApplication] applicationState];

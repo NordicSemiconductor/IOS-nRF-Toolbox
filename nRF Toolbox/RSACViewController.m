@@ -295,7 +295,7 @@
         {
             uint8_t batteryLevel = array[0];
             NSString* text = [[NSString alloc] initWithFormat:@"%d%%", batteryLevel];
-            [battery setTitle:text forState:UIControlStateNormal];
+            [battery setTitle:text forState:UIControlStateDisabled];
             
             if (battery.tag == 0)
             {
@@ -325,15 +325,15 @@
             }
             
             float speedValue = [self uint16_decode:array + 1] / 256.0f * 3.6f;
-            [self.speed setText:[[NSString alloc] initWithFormat:@"%.1f", speedValue]];
+            self.speed.text = [NSString stringWithFormat:@"%.1f", speedValue];
             
             cadenceValue = array[3];
-            [self.cadence setText:[[NSString alloc] initWithFormat:@"%d", cadenceValue]];
+            self.cadence.text = [NSString stringWithFormat:@"%d", cadenceValue];
             
             // If user started to walk, we have to initialize the timer that will increase strides counter
             if (cadenceValue > 0 && timer == nil)
             {
-                [self.strides setText:[[NSString alloc] initWithFormat:@"%d", stepsNumber]];
+                self.strides.text = [NSString stringWithFormat:@"%d", stepsNumber];
                 
                 float timeInterval = 65.0f / cadenceValue; // 60 second + 5 for calibration
                 timer = [NSTimer scheduledTimerWithTimeInterval:timeInterval target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:NO];
@@ -344,13 +344,13 @@
                 float distanceValue = [self uint32_decode:array + 6];
                 if (distanceValue < 10000) // 1 km in dm
                 {
-                    [self.distance setText:[[NSString alloc] initWithFormat:@"%.0f", distanceValue / 10]];
-                    [self.distanceUnit setText:@"m"];
+                    self.distance.text = [NSString stringWithFormat:@"%.0f", distanceValue / 10];
+                    self.distanceUnit.text = @"m";
                 }
                 else
                 {
-                    [self.distance setText:[[NSString alloc] initWithFormat:@"%.2f", distanceValue / 10000]];
-                    [self.distanceUnit setText:@"km"];
+                    self.distance.text = [NSString stringWithFormat:@"%.2f", distanceValue / 10000];
+                    self.distance.text = @"km";
                 }
             }
             else
@@ -361,11 +361,11 @@
             if (strideLengthPresent)
             {
                 int strideLengthValue = [self uint16_decode:array + 4];
-                [self.strideLength setText:[[NSString alloc] initWithFormat:@"%d", strideLengthValue]];
+                self.strideLength.text = [NSString stringWithFormat:@"%d", strideLengthValue];
             }
             else
             {
-                [self.strideLength setText:@"n/a"];
+                self.strideLength.text = @"n/a";
             }
         }
     });
