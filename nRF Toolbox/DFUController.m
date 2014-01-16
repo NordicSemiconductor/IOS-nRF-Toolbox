@@ -16,8 +16,8 @@
 @property DFUTargetAdapter *target;
 
 @property NSData *firmwareData;
-@property unsigned long firmwareDataBytesSent;
-@property int notificationPacketInterval;
+@property NSUInteger firmwareDataBytesSent;
+@property uint16_t notificationPacketInterval;
 
 @property (nonatomic) float progress;
 @property (strong, nonatomic) NSDate* startDate;

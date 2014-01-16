@@ -298,12 +298,13 @@
 -(void)didFinishTransfer
 {
     NSLog(@"Transfer finished!");
-    selectedPeripheral = nil;
     self.isTransferring = NO;
     
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
+        selectedPeripheral = nil;
         [self clearUI];
+        
         NSString* messge = [NSString stringWithFormat:@"%lu bytes transfered in %lu ms.", dfuController.binSize, (unsigned long) (dfuController.uploadInterval * 1000.0)];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload completed" message:messge delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
@@ -338,6 +339,7 @@
 -(void)didErrorOccurred:(DFUTargetResponse)error
 {
     NSLog(@"Error occurred: %d", error);
+    self.isTransferring = NO;
     
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -373,6 +375,8 @@
             default:
                 break;
         }
+        //
+        [self clearUI];
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];

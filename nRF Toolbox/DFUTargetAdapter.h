@@ -68,7 +68,7 @@ typedef enum
 
 - (DFUTargetAdapter *) initWithDelegate:(id<DFUTargetAdapterDelegate>) delegate;
 - (void) startDiscovery;
-- (void) sendNotificationRequest:(int) interval;
+- (void) sendNotificationRequest:(uint16_t) interval;
 - (void) sendStartCommand:(int) firmwareLength;
 - (void) sendReceiveCommand;
 - (void) sendFirmwareData:(NSData *) data;

@@ -73,7 +73,7 @@ typedef struct __attribute__((packed))
     [self.peripheral discoverServices:@[[self.class serviceUUID]]];
 }
 
-- (void) sendNotificationRequest:(int) interval
+- (void) sendNotificationRequest:(uint16_t) interval
 {
     NSLog(@"sendNotificationRequest");
     dfu_control_point_data_t data;
