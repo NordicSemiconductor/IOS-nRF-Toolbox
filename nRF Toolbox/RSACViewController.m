@@ -328,7 +328,7 @@
             float speedValue = [CharacteristicReader readUInt16Value:&array] / 256.0f * 3.6f;
             self.speed.text = [NSString stringWithFormat:@"%.1f", speedValue];
             
-            cadenceValue = array[3];
+            cadenceValue = [CharacteristicReader readUInt8Value:&array];
             self.cadence.text = [NSString stringWithFormat:@"%d", cadenceValue];
             
             // If user started to walk, we have to initialize the timer that will increase strides counter
