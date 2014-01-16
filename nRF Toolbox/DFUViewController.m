@@ -219,9 +219,6 @@
 
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActiveBackground:) name:UIApplicationDidBecomeActiveNotification object:nil];
-    
     // Peripheral has connected. Discover required services
     [dfuController didConnect];
 }
@@ -242,14 +239,6 @@
 {
     // Notify DFU controller about link loss
     [self.dfuController didDisconnect:error];
-    
-    // Scanner uses other queue to send events. We must edit UI in the main queue
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.isTransferring = NO;
-        [self clearUI];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
-    });
 }
 
 - (void) clearUI
@@ -290,6 +279,7 @@
         {
             self.isTransferring = YES;
             selectFileButton.enabled = NO;
+            [dfuController startTransfer];
             [uploadButton setTitle:@"Cancel" forState:UIControlStateNormal];
         }
         status.text = [self.dfuController stringFromState:state];
@@ -309,10 +299,12 @@
 {
     NSLog(@"Transfer finished!");
     selectedPeripheral = nil;
+    self.isTransferring = NO;
     
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSString* messge = [NSString stringWithFormat:@"%lu bytes transfered in %lu ms.", dfuController.binSize, (unsigned long) (dfuController.uploadInterval * -1000.0)];
+        [self clearUI];
+        NSString* messge = [NSString stringWithFormat:@"%lu bytes transfered in %lu ms.", dfuController.binSize, (unsigned long) (dfuController.uploadInterval * 1000.0)];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload completed" message:messge delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
     });
@@ -321,16 +313,31 @@
 -(void)didCancelTransfer
 {
     NSLog(@"Transfer cancelled!");
+    self.isTransferring = NO;
+    
+    // Scanner uses other queue to send events. We must edit UI in the main queue
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self clearUI];
+    });
 }
 
 -(void)didDisconnect:(NSError *)error
 {
     NSLog(@"Transfer terminated!");
+    self.isTransferring = NO;
+    
+    // Scanner uses other queue to send events. We must edit UI in the main queue
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self clearUI];
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"The connection has been lost." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    });
 }
 
 -(void)didErrorOccurred:(DFUTargetResponse)error
 {
-    NSLog(@"Transfer terminated!");
+    NSLog(@"Error occurred: %d", error);
     
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -346,7 +353,7 @@
                 break;
                 
             case INVALID_STATE:
-                message = @"Device is in invalud state";
+                message = @"Device is in the invalid state";
                 break;
                 
             case NOT_SUPPORTED:
@@ -355,6 +362,12 @@
                 
             case OPERATION_FAILED:
                 message = @"Operation failed";
+                break;
+                
+            case DEVICE_NOT_SUPPORTED:
+                message = @"Device is not supported. Check if it is in the DFU state.";
+                [bluetoothManager cancelPeripheralConnection:selectedPeripheral];
+                selectedPeripheral = nil;
                 break;
                 
             default:

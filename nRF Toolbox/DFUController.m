@@ -27,6 +27,7 @@
 @implementation DFUController
 @synthesize state = _state;
 @synthesize delegate = _delegate;
+@synthesize uploadInterval = _uploadInterval;
 
 + (CBUUID *) serviceUUID
 {
@@ -141,6 +142,14 @@
     [self.delegate didUpdateProgress:progress];
 }
 
+/*!
+ * @brief Sends the next part of data packets. If data receipes has been switched OFF in the app settings this will try to send all packets in a single loop.
+ *        Disabling data packet receipt procedure may fail as the packet queue on iDeveice has limited size and the transfer is much slower than this method
+ *        adds new packets. The method stores the position of the last packet that has been sent itself and continues from that point when called again.
+ *        If all data packets before receipt notification has been send a (void)didWriteDataPacket method is called.
+ *
+ *        This method sets progress counter which causes [delegate didUpdateProgress:(float)progress] to be called.
+ */
 - (void) sendFirmwareChunk
 {
     NSLog(@"sendFirmwareData");
@@ -179,7 +188,7 @@
 {
     NSLog(@"didDisconnect");
     
-    if (self.state != FINISHED && self.state != CANCELED)
+    if (self.state != FINISHED && self.state != CANCELED && self.state != ERROR)
     {
         [self.delegate didDisconnect:error];
     }
@@ -192,7 +201,16 @@
     if (self.state == DISCOVERING)
     {
         self.state = IDLE;
-        [self startTransfer];
+    }
+}
+
+- (void)didFinishDiscoveryWithError
+{
+    NSLog(@"didFinishDiscoveryWithError");
+    if (self.state == DISCOVERING)
+    {
+        self.state = ERROR;
+        [self.delegate didErrorOccurred:DEVICE_NOT_SUPPORTED];
     }
 }
 
@@ -221,15 +239,27 @@
                 self.state = SEND_RESET;
                 [self.target sendResetAndActivate:YES];
             }
+            else
+            {
+                self.state = ERROR;
+                [self.delegate didErrorOccurred:response];
+                [self.target sendResetAndActivate:NO];
+            }
             break;
             
         case WAIT_RECEIPT:
             if (response == SUCCESS && opcode == RECEIVE_FIRMWARE_IMAGE)
             {
-                self.progress = 1.0;
-                self.uploadInterval = [self.startDate timeIntervalSinceNow];
+                self.progress = 1.0f;
+                _uploadInterval = -[self.startDate timeIntervalSinceNow];
                 self.state = SEND_VALIDATE_COMMAND;
                 [self.target sendValidateCommand];
+            }
+            if (response != SUCCESS)
+            {
+                self.state = ERROR;
+                [self.delegate didErrorOccurred:response];
+                [self.target sendResetAndActivate:NO];
             }
             break;
         
@@ -298,6 +328,7 @@
     {
         // Read number of packet before receipt notification from app settings
         NSUserDefaults* settings = [NSUserDefaults standardUserDefaults];
+        [settings synchronize];
         if ([settings boolForKey:@"dfu_notifications"])
         {
             self.notificationPacketInterval = [settings integerForKey:@"dfu_number_of_packets"];

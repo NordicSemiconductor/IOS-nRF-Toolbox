@@ -62,9 +62,9 @@
 				<string>5</string>
 				<string>10</string>
 				<string>25</string>
+				<string>50</string>
 				<string>100</string>
-				<string>400</string>
-				<string>1000</string>
+				<string>200</string>
 			</array>
 			<key>Values</key>
 			<array>
@@ -73,9 +73,9 @@
 				<integer>5</integer>
 				<integer>10</integer>
 				<integer>25</integer>
+				<integer>50</integer>
 				<integer>100</integer>
-				<integer>400</integer>
-				<integer>1000</integer>
+				<integer>200</integer>
 			</array>
 		</dict>
 	</array>

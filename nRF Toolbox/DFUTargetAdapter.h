@@ -31,13 +31,33 @@ typedef enum
     DATA_SIZE_EXCEEDS_LIMIT,
     CRC_ERROR,
     OPERATION_FAILED,
+    DEVICE_NOT_SUPPORTED,
 } DFUTargetResponse;
 
 @protocol DFUTargetAdapterDelegate <NSObject>
+/*!
+ * @brief Called when service and characteristic discovery has finished.
+ */
 - (void) didFinishDiscovery;
+/*!
+ * @brief Called when service and characteristic discovery has finished but the required service or characteristics were not found.
+ */
+- (void) didFinishDiscoveryWithError;
+/*!
+ * @brief Invoked when Control Point characteristic has been written and confirmation has been received from peripheral.
+ */
 - (void) didWriteControlPoint;
+/*!
+ * @brief Invoked when all data packets before notification were send. Number of data packets before notification receipt may be set in application settings.
+ */
 - (void) didWriteDataPacket;
+/*!
+ * @brief Called when a response has been received from the peripheral. For data receipt see -(void)didReceiveReceipt method.
+ */
 - (void) didReceiveResponse:(DFUTargetResponse) response forCommand:(DFUTargetOpcode) opcode;
+/*!
+ * @brief Called when a data receipt has been received. The peripheral is now ready for more data packets.
+ */
 - (void) didReceiveReceipt;
 @end
 

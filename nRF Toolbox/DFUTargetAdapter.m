@@ -161,8 +161,10 @@ typedef struct __attribute__((packed))
         {
             NSLog(@"Discover characteristics...");
             [self.peripheral discoverCharacteristics:@[[self.class controlPointCharacteristicUUID], [self.class packetCharacteristicUUID]] forService:s];
+            return;
         }
     }
+    [self.delegate didFinishDiscoveryWithError];
 }
 
 - (void) peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error
@@ -194,6 +196,10 @@ typedef struct __attribute__((packed))
     if (self.packetCharacteristic && self.controlPointCharacteristic)
     {
         [self.delegate didFinishDiscovery];
+    }
+    else
+    {
+        [self.delegate didFinishDiscoveryWithError];
     }
 }
 
