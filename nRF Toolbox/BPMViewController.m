@@ -9,6 +9,7 @@
 #import "BPMViewController.h"
 #import "ScannerViewController.h"
 #import "Constants.h"
+#import "CharacteristicReader.h"
 
 @interface BPMViewController () {
     CBUUID *bpmServiceUUID;
@@ -273,7 +274,7 @@
         
         if ([characteristic.UUID isEqual:batteryLevelCharacteristicUUID])
         {
-            uint8_t batteryLevel = array[0];
+            UInt8 batteryLevel = [CharacteristicReader readUInt8Value:&array];
             NSString* text = [[NSString alloc] initWithFormat:@"%d%%", batteryLevel];
             [battery setTitle:text forState:UIControlStateDisabled];
             
@@ -292,7 +293,7 @@
         else if ([characteristic.UUID isEqual:bpmBloodPressureMeasurementCharacteristicUUID] ||
                  [characteristic.UUID isEqual:bpmIntermediateCuffPressureCharacteristicUUID])
         {
-            int flags = *array; array++;
+            UInt8 flags = [CharacteristicReader readUInt8Value:&array];
             BOOL kPa = (flags & 0x01) > 0;
             BOOL timestampPresent = (flags & 0x02) > 0;
             BOOL pulseRatePresent = (flags & 0x04) > 0;
@@ -314,9 +315,9 @@
             // Read main values
             if ([characteristic.UUID isEqual:bpmBloodPressureMeasurementCharacteristicUUID])
             {
-                float systolicValue = [self sfloat_decode:array]; array += 2;
-                float diastolicValue = [self sfloat_decode:array]; array += 2;
-                float meanApValue = [self sfloat_decode:array]; array += 2;
+                float systolicValue = [CharacteristicReader readSFloatValue:&array];
+                float diastolicValue = [CharacteristicReader readSFloatValue:&array];
+                float meanApValue = [CharacteristicReader readSFloatValue:&array];
                 
                 self.systolic.text = [NSString stringWithFormat:@"%.1f", systolicValue];
                 self.diastolic.text = [NSString stringWithFormat:@"%.1f", diastolicValue];
@@ -328,7 +329,8 @@
             }
             else
             {
-                float systolicValue = [self sfloat_decode:array]; array += 6;
+                float systolicValue = [CharacteristicReader readSFloatValue:&array];
+                array += 4;
                 
                 self.systolic.text = [NSString stringWithFormat:@"%.1f", systolicValue];
                 self.diastolic.text = @"n/a";
@@ -342,19 +344,9 @@
             // Read timestamp
             if (timestampPresent)
             {
-                uint16_t year = CFSwapInt16LittleToHost(*(uint16_t*)array); array += 2;
-                uint8_t month = *(uint8_t*)array; array++;
-                uint8_t day = *(uint8_t*)array; array++;
-                uint8_t hour = *(uint8_t*)array; array++;
-                uint8_t min = *(uint8_t*)array; array++;
-                uint8_t sec = *(uint8_t*)array; array++;
-                
-                NSString * dateString = [NSString stringWithFormat:@"%d %d %d %d %d %d", year, month, day, hour, min, sec];
+                NSDate* date = [CharacteristicReader readDateTime:&array];
                 
                 NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-                [dateFormat setDateFormat: @"yyyy MM dd HH mm ss"];
-                NSDate* date = [dateFormat dateFromString:dateString];
-                
                 [dateFormat setDateFormat:@"dd.MM.yyyy, hh:mm"];
                 NSString* dateFormattedString = [dateFormat stringFromDate:date];
                 
@@ -368,48 +360,15 @@
             // Read pulse
             if (pulseRatePresent)
             {
-                float pulseValue = [self sfloat_decode:array]; array += 2;
+                float pulseValue = [CharacteristicReader readSFloatValue:&array];
                 self.pulse.text = [NSString stringWithFormat:@"%.1f", pulseValue];
+            }
+            else
+            {
+                self.pulse.text = @"-";
             }
         }
     });
-}
-
-/*!
- * @brief Inline function for decoding a sfloat value.
- * @param[in]   p_encoded_data   Buffer where the encoded data is stored.
- * @return      Decoded value.
- */
-- (float) sfloat_decode:(const uint8_t *) p_encoded_data
-{
-    int16_t tempData = (int16_t)CFSwapInt16LittleToHost(*(uint16_t*)p_encoded_data);
-    int8_t exponent = (int8_t)(tempData >> 12);
-    int16_t mantissa = (int16_t)(tempData & 0x0FFF);
-    return (float)(mantissa * pow(10, exponent));
-}
-
-/*!
- * @brief Inline function for decoding a uint16 value.
- * @param[in]   p_encoded_data   Buffer where the encoded data is stored.
- * @return      Decoded value.
- */
-- (uint16_t) uint16_decode:(const uint8_t *) p_encoded_data
-{
-    return ( (((uint16_t)((uint8_t *)p_encoded_data)[0])) |
-            (((uint16_t)((uint8_t *)p_encoded_data)[1]) << 8 ));
-}
-
-/*!
- * @brief Inline function for decoding a uint16 value.
- * @param[in]   p_encoded_data   Buffer where the encoded data is stored.
- * @return      Decoded value.
- */
-- (uint32_t) uint32_decode:(const uint8_t *) p_encoded_data
-{
-    return ( (((uint32_t)((uint8_t *)p_encoded_data)[0])) |
-            (((uint32_t)((uint8_t *)p_encoded_data)[1]) << 8) |
-            (((uint32_t)((uint8_t *)p_encoded_data)[2]) << 16) |
-            (((uint32_t)((uint8_t *)p_encoded_data)[3]) << 24 ));
 }
 
 @end

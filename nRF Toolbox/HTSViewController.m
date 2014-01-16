@@ -9,6 +9,7 @@
 #import "HTSViewController.h"
 #import "ScannerViewController.h"
 #import "Constants.h"
+#import "CharacteristicReader.h"
 
 @interface HTSViewController () {
     CBUUID *htsServiceUUID;
@@ -317,7 +318,7 @@
         
         if ([characteristic.UUID isEqual:batteryLevelCharacteristicUUID])
         {
-            uint8_t batteryLevel = array[0];
+            uint8_t batteryLevel = [CharacteristicReader readUInt8Value:&array];
             NSString* text = [[NSString alloc] initWithFormat:@"%d%%", batteryLevel];
             [battery setTitle:text forState:UIControlStateDisabled];
             
@@ -335,22 +336,12 @@
         }
         else if ([characteristic.UUID isEqual:htsMeasurementCharacteristicUUID])
         {
-            int flags = array[0]; array++;
+            int flags = [CharacteristicReader readUInt8Value:&array];
             BOOL tempInFahrenheit = (flags & 0x01) > 0;
             BOOL timestampPresent = (flags & 0x02) > 0;
             BOOL typePresent = (flags & 0x04) > 0;
             
-            int32_t tempData = (int32_t)CFSwapInt32LittleToHost(*(uint32_t*)array); array += 4;
-            int8_t exponent = (int8_t)(tempData >> 24);
-            int32_t mantissa = (int32_t)(tempData & 0x00FFFFFF);
-            
-            if (tempData == 0x007FFFFF )
-            {
-                NSLog(@"Invalid temperature value received");
-                return;
-            }
-            
-            float tempValue = (float)(mantissa*pow(10, exponent));
+            float tempValue = [CharacteristicReader readFloatValue:&array];
             if (!tempInFahrenheit && fahrenheit)
                 tempValue = tempValue * 9.0f / 5.0f + 32.0f;
             if (tempInFahrenheit && !fahrenheit)
@@ -360,19 +351,9 @@
             
             if (timestampPresent)
             {
-                uint16_t year = CFSwapInt16LittleToHost(*(uint16_t*)array); array += 2;
-                uint8_t month = *(uint8_t*)array; array++;
-                uint8_t day = *(uint8_t*)array; array++;
-                uint8_t hour = *(uint8_t*)array; array++;
-                uint8_t min = *(uint8_t*)array; array++;
-                uint8_t sec = *(uint8_t*)array; array++;
-                
-                NSString * dateString = [NSString stringWithFormat:@"%d %d %d %d %d %d", year, month, day, hour, min, sec];
+                NSDate* date = [CharacteristicReader readDateTime:&array];
                 
                 NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-                [dateFormat setDateFormat: @"yyyy MM dd HH mm ss"];
-                NSDate* date = [dateFormat dateFromString:dateString];
-                
                 [dateFormat setDateFormat:@"dd.MM.yyyy, hh:mm"];
                 NSString* dateFormattedString = [dateFormat stringFromDate:date];
                 
@@ -386,7 +367,7 @@
             /* temperature type */
             if (typePresent)
             {
-                uint8_t type = *(uint8_t*)array;
+                uint8_t type = [CharacteristicReader readUInt8Value:&array];
                 NSString* location = nil;
                 
                 switch (type)
@@ -454,6 +435,5 @@
         }
     });
 }
-
 
 @end

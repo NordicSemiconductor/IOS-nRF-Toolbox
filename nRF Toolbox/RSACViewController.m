@@ -9,6 +9,7 @@
 #import "RSACViewController.h"
 #import "ScannerViewController.h"
 #import "Constants.h"
+#import "CharacteristicReader.h"
 
 @interface RSACViewController () {
     /*!
@@ -293,7 +294,7 @@
     
         if ([characteristic.UUID isEqual:batteryLevelCharacteristicUUID])
         {
-            uint8_t batteryLevel = array[0];
+            uint8_t batteryLevel = [CharacteristicReader readUInt8Value:&array];
             NSString* text = [[NSString alloc] initWithFormat:@"%d%%", batteryLevel];
             [battery setTitle:text forState:UIControlStateDisabled];
             
@@ -311,7 +312,7 @@
         }
         else if ([characteristic.UUID isEqual:rscMeasurementCharacteristicUUID])
         {
-            int flags = array[0];
+            int flags = [CharacteristicReader readUInt8Value:&array];
             BOOL strideLengthPresent = (flags & 0x01) > 0;
             BOOL totalDistancePresent = (flags & 0x02) > 0;
             BOOL walking = (flags & 0x04) > 0;
@@ -324,7 +325,7 @@
                 [self.activity setText:@"RUNNING"];
             }
             
-            float speedValue = [self uint16_decode:array + 1] / 256.0f * 3.6f;
+            float speedValue = [CharacteristicReader readUInt16Value:&array] / 256.0f * 3.6f;
             self.speed.text = [NSString stringWithFormat:@"%.1f", speedValue];
             
             cadenceValue = array[3];
@@ -341,7 +342,7 @@
             
             if (totalDistancePresent)
             {
-                float distanceValue = [self uint32_decode:array + 6];
+                float distanceValue = [CharacteristicReader readUInt32Value:&array];
                 if (distanceValue < 10000) // 1 km in dm
                 {
                     self.distance.text = [NSString stringWithFormat:@"%.0f", distanceValue / 10];
@@ -360,7 +361,7 @@
             
             if (strideLengthPresent)
             {
-                int strideLengthValue = [self uint16_decode:array + 4];
+                int strideLengthValue = [CharacteristicReader readUInt16Value:&array];
                 self.strideLength.text = [NSString stringWithFormat:@"%d", strideLengthValue];
             }
             else
@@ -393,32 +394,5 @@
         timer = nil;
     }
 }
-
-/**@brief Inline function for decoding a uint16 value.
- *
- * @param[in]   p_encoded_data   Buffer where the encoded data is stored.
- *
- * @return      Decoded value.
- */
-- (uint16_t) uint16_decode:(const uint8_t *) p_encoded_data
-{
-    return ( (((uint16_t)((uint8_t *)p_encoded_data)[0])) |
-            (((uint16_t)((uint8_t *)p_encoded_data)[1]) << 8 ));
-}
-
-/**@brief Inline function for decoding a uint16 value.
- *
- * @param[in]   p_encoded_data   Buffer where the encoded data is stored.
- *
- * @return      Decoded value.
- */
-- (uint32_t) uint32_decode:(const uint8_t *) p_encoded_data
-{
-    return ( (((uint32_t)((uint8_t *)p_encoded_data)[0])) |
-            (((uint32_t)((uint8_t *)p_encoded_data)[1]) << 8) |
-            (((uint32_t)((uint8_t *)p_encoded_data)[2]) << 16) |
-            (((uint32_t)((uint8_t *)p_encoded_data)[3]) << 24 ));
-}
-
 
 @end

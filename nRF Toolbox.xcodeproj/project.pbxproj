@@ -18,6 +18,7 @@
 		5211EFB118856430007CC40D /* icon-hex@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAD1885642F007CC40D /* icon-hex@2x.png */; };
 		5214D0C71886951500460637 /* IntelHex2BinConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5214D0C61886951500460637 /* IntelHex2BinConverter.m */; };
 		5214D0CE1886C02A00460637 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5214D0CD1886C02A00460637 /* Settings.bundle */; };
+		5214D0D218881D4D00460637 /* CharacteristicReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5214D0D118881D4D00460637 /* CharacteristicReader.m */; };
 		5217F3E61859EE0000F2D5BB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5217F3E51859EE0000F2D5BB /* Foundation.framework */; };
 		5217F3E81859EE0000F2D5BB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5217F3E71859EE0000F2D5BB /* CoreGraphics.framework */; };
 		5217F3EA1859EE0000F2D5BB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5217F3E91859EE0000F2D5BB /* UIKit.framework */; };
@@ -72,6 +73,8 @@
 		5214D0C51886951500460637 /* IntelHex2BinConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntelHex2BinConverter.h; sourceTree = "<group>"; };
 		5214D0C61886951500460637 /* IntelHex2BinConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntelHex2BinConverter.m; sourceTree = "<group>"; };
 		5214D0CD1886C02A00460637 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		5214D0D018881D4D00460637 /* CharacteristicReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CharacteristicReader.h; sourceTree = "<group>"; };
+		5214D0D118881D4D00460637 /* CharacteristicReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CharacteristicReader.m; sourceTree = "<group>"; };
 		5217F3E21859EE0000F2D5BB /* nRF Toolbox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nRF Toolbox.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5217F3E51859EE0000F2D5BB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5217F3E71859EE0000F2D5BB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -171,6 +174,16 @@
 			name = "Hex to Bin Converter";
 			sourceTree = "<group>";
 		};
+		5214D0CF18881D0200460637 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				5217F41F185B1A0800F2D5BB /* Constants.h */,
+				5214D0D018881D4D00460637 /* CharacteristicReader.h */,
+				5214D0D118881D4D00460637 /* CharacteristicReader.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
 		5217F3D91859EE0000F2D5BB = {
 			isa = PBXGroup;
 			children = (
@@ -215,7 +228,7 @@
 				5236E165187EA7930057E974 /* HTS */,
 				5252A53F1880307D00EFD773 /* PROXIMITY */,
 				5236E163187EA76B0057E974 /* RSAC */,
-				5217F41F185B1A0800F2D5BB /* Constants.h */,
+				5214D0CF18881D0200460637 /* Utilities */,
 				5217F3F41859EE0000F2D5BB /* AppDelegate.h */,
 				5217F3F51859EE0000F2D5BB /* AppDelegate.m */,
 				5217F3FA1859EE0000F2D5BB /* ViewController.h */,
@@ -499,6 +512,7 @@
 				5214D0C71886951500460637 /* IntelHex2BinConverter.m in Sources */,
 				5252A563188549B000EFD773 /* ImageCell.m in Sources */,
 				5217F428185F28D400F2D5BB /* ScannedPeripheral.m in Sources */,
+				5214D0D218881D4D00460637 /* CharacteristicReader.m in Sources */,
 				5236E16C187EC6880057E974 /* StubViewController.m in Sources */,
 				5252A5361880260300EFD773 /* BGMViewController.m in Sources */,
 				5217F422185F15FA00F2D5BB /* ScannerViewController.m in Sources */,
