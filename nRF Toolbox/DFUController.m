@@ -171,7 +171,7 @@
     
     [self didWriteDataPacket];
     
-    NSLog(@"Sent %lu bytes, total %lu.", currentDataSent, self.firmwareDataBytesSent);
+    NSLog(@"Sent %lu bytes, total %u.", currentDataSent, self.firmwareDataBytesSent);
 }
 
 - (void) didConnect
