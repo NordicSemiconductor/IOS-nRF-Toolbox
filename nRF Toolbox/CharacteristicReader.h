@@ -8,6 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+typedef union
+{
+    UInt8 value;
+    struct {
+        UInt8 first : 4;
+        UInt8 second : 4;
+    };
+} Nibble;
+
 @interface CharacteristicReader : NSObject
 
 /*!
@@ -72,5 +81,12 @@
  * @return      Decoded value.
  */
 + (NSDate*) readDateTime:(uint8_t**) p_encoded_data;
+
+/*!
+ * @brief Inline function for decoding a Nibble value. It automatically increases the pointer value. A nibble contains a pair of 4-bit values in one byte.
+ * @param[in]   p_encoded_data   Buffer where the encoded data is stored.
+ * @return      Decoded value.
+ */
++ (Nibble) readNibble:(uint8_t**) p_encoded_data;
 
 @end

@@ -10,7 +10,7 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "ScannerDelegate.h"
 
-@interface BGMViewController : UIViewController <CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate>
+@interface BGMViewController : UIViewController <CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate, UITableViewDataSource, UIActionSheetDelegate>
 
 @property (strong, nonatomic) CBCentralManager *bluetoothManager;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;

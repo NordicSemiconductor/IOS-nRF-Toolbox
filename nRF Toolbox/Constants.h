@@ -13,6 +13,7 @@
 
 static NSString * const bgmServiceUUIDString = @"00001808-0000-1000-8000-00805F9B34FB";
 static NSString * const bgmGlucoseMeasurementCharacteristicUUIDString = @"00002A18-0000-1000-8000-00805F9B34FB";
+static NSString * const bgmGlucoseMeasurementContextCharacteristicUUIDString = @"00002A34-0000-1000-8000-00805F9B34FB";
 static NSString * const bgmRecordAccessControlPointCharacteristicUUIDString = @"00002A52-0000-1000-8000-00805F9B34FB";
 
 static NSString * const bpmServiceUUIDString = @"00001810-0000-1000-8000-00805F9B34FB";

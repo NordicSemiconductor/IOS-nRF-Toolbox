@@ -40,6 +40,10 @@
 		5236E15F187EA73F0057E974 /* HRSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5236E15E187EA73F0057E974 /* HRSViewController.m */; };
 		5236E162187EA7540057E974 /* HTSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5236E161187EA7540057E974 /* HTSViewController.m */; };
 		5236E16C187EC6880057E974 /* StubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5236E16B187EC6880057E974 /* StubViewController.m */; };
+		524F2CD818897078008A8555 /* BGMItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 524F2CD718897078008A8555 /* BGMItemCell.m */; };
+		524F2CDF18897D33008A8555 /* GlucoseReading.m in Sources */ = {isa = PBXBuildFile; fileRef = 524F2CDE18897D33008A8555 /* GlucoseReading.m */; };
+		524F2CE2188984E6008A8555 /* BGMDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 524F2CE1188984E6008A8555 /* BGMDetailsViewController.m */; };
+		524F2CE5188D2A56008A8555 /* GlucoseReadingContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 524F2CE4188D2A56008A8555 /* GlucoseReadingContext.m */; };
 		5252A5361880260300EFD773 /* BGMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A5351880260300EFD773 /* BGMViewController.m */; };
 		5252A53A18802B8100EFD773 /* BPMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A53918802B8100EFD773 /* BPMViewController.m */; };
 		5252A53E18802F7200EFD773 /* DFUViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A53D18802F7200EFD773 /* DFUViewController.m */; };
@@ -111,6 +115,14 @@
 		5236E16A187EC6880057E974 /* StubViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StubViewController.h; sourceTree = "<group>"; };
 		5236E16B187EC6880057E974 /* StubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StubViewController.m; sourceTree = "<group>"; };
 		52400DBE18856C2E000B7204 /* SelectorDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectorDelegate.h; sourceTree = "<group>"; };
+		524F2CD618897078008A8555 /* BGMItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGMItemCell.h; sourceTree = "<group>"; };
+		524F2CD718897078008A8555 /* BGMItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGMItemCell.m; sourceTree = "<group>"; };
+		524F2CDD18897D33008A8555 /* GlucoseReading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlucoseReading.h; sourceTree = "<group>"; };
+		524F2CDE18897D33008A8555 /* GlucoseReading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlucoseReading.m; sourceTree = "<group>"; };
+		524F2CE0188984E6008A8555 /* BGMDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGMDetailsViewController.h; sourceTree = "<group>"; };
+		524F2CE1188984E6008A8555 /* BGMDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGMDetailsViewController.m; sourceTree = "<group>"; };
+		524F2CE3188D2A56008A8555 /* GlucoseReadingContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlucoseReadingContext.h; sourceTree = "<group>"; };
+		524F2CE4188D2A56008A8555 /* GlucoseReadingContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlucoseReadingContext.m; sourceTree = "<group>"; };
 		5252A5341880260300EFD773 /* BGMViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGMViewController.h; sourceTree = "<group>"; };
 		5252A5351880260300EFD773 /* BGMViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGMViewController.m; sourceTree = "<group>"; };
 		5252A53818802B8100EFD773 /* BPMViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPMViewController.h; sourceTree = "<group>"; };
@@ -127,6 +139,7 @@
 		5252A55C18853C0600EFD773 /* SelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectorViewController.m; sourceTree = "<group>"; };
 		5252A561188549B000EFD773 /* ImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCell.h; sourceTree = "<group>"; };
 		5252A562188549B000EFD773 /* ImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCell.m; sourceTree = "<group>"; };
+		5285D9A5188D43E500305F1D /* RecordAccess.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecordAccess.h; sourceTree = "<group>"; };
 		52E08DC11889449A00ED959F /* libCorePlot-CocoaTouch.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libCorePlot-CocoaTouch.a"; path = "dependencies/libCorePlot-CocoaTouch.a"; sourceTree = "<group>"; };
 		52E08DC4188944AC00ED959F /* CorePlot-CocoaTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CorePlot-CocoaTouch.h"; path = "dependencies/CorePlot-CocoaTouch.h"; sourceTree = "<group>"; };
 		52E08DC5188944AC00ED959F /* CPTAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPTAnimation.h; path = dependencies/CPTAnimation.h; sourceTree = "<group>"; };
@@ -399,11 +412,28 @@
 			name = Stub;
 			sourceTree = "<group>";
 		};
+		524F2CDC18897D18008A8555 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				524F2CDD18897D33008A8555 /* GlucoseReading.h */,
+				524F2CDE18897D33008A8555 /* GlucoseReading.m */,
+				524F2CE3188D2A56008A8555 /* GlucoseReadingContext.h */,
+				524F2CE4188D2A56008A8555 /* GlucoseReadingContext.m */,
+				5285D9A5188D43E500305F1D /* RecordAccess.h */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		5252A533188025EC00EFD773 /* BGM */ = {
 			isa = PBXGroup;
 			children = (
+				524F2CDC18897D18008A8555 /* Model */,
+				524F2CD618897078008A8555 /* BGMItemCell.h */,
+				524F2CD718897078008A8555 /* BGMItemCell.m */,
 				5252A5341880260300EFD773 /* BGMViewController.h */,
 				5252A5351880260300EFD773 /* BGMViewController.m */,
+				524F2CE0188984E6008A8555 /* BGMDetailsViewController.h */,
+				524F2CE1188984E6008A8555 /* BGMDetailsViewController.m */,
 			);
 			name = BGM;
 			sourceTree = "<group>";
@@ -667,11 +697,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				524F2CE2188984E6008A8555 /* BGMDetailsViewController.m in Sources */,
 				5252A53E18802F7200EFD773 /* DFUViewController.m in Sources */,
 				5252A53A18802B8100EFD773 /* BPMViewController.m in Sources */,
 				5217F3FC1859EE0000F2D5BB /* ViewController.m in Sources */,
 				5252A55D18853C0600EFD773 /* SelectorViewController.m in Sources */,
 				5252A55518841E2700EFD773 /* DFUController.m in Sources */,
+				524F2CDF18897D33008A8555 /* GlucoseReading.m in Sources */,
 				5217F3F61859EE0000F2D5BB /* AppDelegate.m in Sources */,
 				5217F3F21859EE0000F2D5BB /* main.m in Sources */,
 				5217F41E185B198E00F2D5BB /* RSACViewController.m in Sources */,
@@ -680,9 +712,11 @@
 				5214D0C71886951500460637 /* IntelHex2BinConverter.m in Sources */,
 				5252A563188549B000EFD773 /* ImageCell.m in Sources */,
 				5217F428185F28D400F2D5BB /* ScannedPeripheral.m in Sources */,
+				524F2CD818897078008A8555 /* BGMItemCell.m in Sources */,
 				5214D0D218881D4D00460637 /* CharacteristicReader.m in Sources */,
 				5236E16C187EC6880057E974 /* StubViewController.m in Sources */,
 				5252A5361880260300EFD773 /* BGMViewController.m in Sources */,
+				524F2CE5188D2A56008A8555 /* GlucoseReadingContext.m in Sources */,
 				5217F422185F15FA00F2D5BB /* ScannerViewController.m in Sources */,
 				5236E15F187EA73F0057E974 /* HRSViewController.m in Sources */,
 				5252A55618841E2700EFD773 /* DFUTargetAdapter.m in Sources */,

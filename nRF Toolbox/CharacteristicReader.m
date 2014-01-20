@@ -83,4 +83,12 @@
     return  [dateFormat dateFromString:dateString];
 }
 
++(Nibble)readNibble:(uint8_t **)p_encoded_data
+{
+    Nibble nibble;
+    nibble.value = [CharacteristicReader readUInt8Value:p_encoded_data];
+    
+    return nibble;
+}
+
 @end

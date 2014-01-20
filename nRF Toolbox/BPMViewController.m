@@ -200,6 +200,10 @@
 
 - (void) clearUI
 {
+    [deviceName setText:@"DEFAULT BPM"];
+    battery.tag = 0;
+    [battery setTitle:@"n/a" forState:UIControlStateDisabled];
+    
     self.systolicUnit.hidden = YES;
     self.diastolicUnit.hidden = YES;
     self.meanApUnit.hidden = YES;

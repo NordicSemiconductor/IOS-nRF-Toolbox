@@ -221,7 +221,7 @@
     timer = nil;
     [deviceName setText:@"DEFAULT RSC"];
     battery.tag = 0;
-    [battery setTitle:@"n/a" forState:UIControlStateNormal];
+    [battery setTitle:@"n/a" forState:UIControlStateDisabled];
     [self.speed setText:@"-"];
     [self.cadence setText:@"-"];
     [self.distance setText:@"-"];
@@ -294,7 +294,7 @@
     
         if ([characteristic.UUID isEqual:batteryLevelCharacteristicUUID])
         {
-            uint8_t batteryLevel = [CharacteristicReader readUInt8Value:&array];
+            UInt8 batteryLevel = [CharacteristicReader readUInt8Value:&array];
             NSString* text = [[NSString alloc] initWithFormat:@"%d%%", batteryLevel];
             [battery setTitle:text forState:UIControlStateDisabled];
             
@@ -312,7 +312,7 @@
         }
         else if ([characteristic.UUID isEqual:rscMeasurementCharacteristicUUID])
         {
-            int flags = [CharacteristicReader readUInt8Value:&array];
+            UInt8 flags = [CharacteristicReader readUInt8Value:&array];
             BOOL strideLengthPresent = (flags & 0x01) > 0;
             BOOL totalDistancePresent = (flags & 0x02) > 0;
             BOOL walking = (flags & 0x04) > 0;

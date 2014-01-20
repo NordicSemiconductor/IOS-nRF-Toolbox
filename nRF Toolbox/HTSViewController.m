@@ -249,7 +249,7 @@
 {
     [deviceName setText:@"DEFAULT RSC"];
     battery.tag = 0;
-    [battery setTitle:@"n/a" forState:UIControlStateNormal];
+    [battery setTitle:@"n/a" forState:UIControlStateDisabled];
     [self.temperature setText:@"-"];
     [self.timestamp setText:@""];
     [self.type setText:@""];
