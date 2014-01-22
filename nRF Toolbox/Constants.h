@@ -20,6 +20,9 @@ static NSString * const bpmServiceUUIDString = @"00001810-0000-1000-8000-00805F9
 static NSString * const bpmBloodPressureMeasurementCharacteristicUUIDString = @"00002A35-0000-1000-8000-00805F9B34FB";
 static NSString * const bpmIntermediateCuffPressureCharacteristicUUIDString = @"00002A36-0000-1000-8000-00805F9B34FB";
 
+static NSString * const cscServiceUUIDString = @"00001816-0000-1000-8000-00805F9B34FB";
+static NSString * const cscMeasurementCharacteristicUUIDString = @"00002A5B-0000-1000-8000-00805F9B34FB";
+
 static NSString * const dfuServiceUUIDString = @"00001530-1212-EFDE-1523-785FEABCD123";
 static NSString * const dfuControlPointCharacteristicUUIDString = @"00001531-1212-EFDE-1523-785FEABCD123";
 static NSString * const dfuPacketCharacteristicUUIDString = @"00001532-1212-EFDE-1523-785FEABCD123";

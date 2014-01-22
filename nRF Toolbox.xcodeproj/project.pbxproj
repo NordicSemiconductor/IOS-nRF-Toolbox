@@ -52,6 +52,7 @@
 		5252A55618841E2700EFD773 /* DFUTargetAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A55418841E2700EFD773 /* DFUTargetAdapter.m */; };
 		5252A55D18853C0600EFD773 /* SelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A55C18853C0600EFD773 /* SelectorViewController.m */; };
 		5252A563188549B000EFD773 /* ImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A562188549B000EFD773 /* ImageCell.m */; };
+		5285D9A91890033F00305F1D /* CSCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5285D9A81890033F00305F1D /* CSCViewController.m */; };
 		52E08DC21889449A00ED959F /* libCorePlot-CocoaTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52E08DC11889449A00ED959F /* libCorePlot-CocoaTouch.a */; };
 		7EE155F7188E84A800299DBA /* findme_alarm_1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 7EE155F6188E84A800299DBA /* findme_alarm_1.aiff */; };
 		7EE155F9188E84BA00299DBA /* findme_alarm_3.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 7EE155F8188E84BA00299DBA /* findme_alarm_3.aiff */; };
@@ -142,6 +143,8 @@
 		5252A561188549B000EFD773 /* ImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCell.h; sourceTree = "<group>"; };
 		5252A562188549B000EFD773 /* ImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCell.m; sourceTree = "<group>"; };
 		5285D9A5188D43E500305F1D /* RecordAccess.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecordAccess.h; sourceTree = "<group>"; };
+		5285D9A71890033F00305F1D /* CSCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSCViewController.h; sourceTree = "<group>"; };
+		5285D9A81890033F00305F1D /* CSCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSCViewController.m; sourceTree = "<group>"; };
 		52E08DC11889449A00ED959F /* libCorePlot-CocoaTouch.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libCorePlot-CocoaTouch.a"; path = "dependencies/libCorePlot-CocoaTouch.a"; sourceTree = "<group>"; };
 		52E08DC4188944AC00ED959F /* CorePlot-CocoaTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CorePlot-CocoaTouch.h"; path = "dependencies/CorePlot-CocoaTouch.h"; sourceTree = "<group>"; };
 		52E08DC5188944AC00ED959F /* CPTAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPTAnimation.h; path = dependencies/CPTAnimation.h; sourceTree = "<group>"; };
@@ -318,6 +321,7 @@
 				5236E169187EC6310057E974 /* Stub */,
 				5252A533188025EC00EFD773 /* BGM */,
 				5252A53718802B6D00EFD773 /* BPM */,
+				5285D9A61890031F00305F1D /* CSC */,
 				5252A53B18802F6300EFD773 /* DFU */,
 				5236E164187EA7850057E974 /* HRS */,
 				5236E165187EA7930057E974 /* HTS */,
@@ -496,6 +500,15 @@
 				5252A55C18853C0600EFD773 /* SelectorViewController.m */,
 			);
 			name = "Image selector";
+			sourceTree = "<group>";
+		};
+		5285D9A61890031F00305F1D /* CSC */ = {
+			isa = PBXGroup;
+			children = (
+				5285D9A71890033F00305F1D /* CSCViewController.h */,
+				5285D9A81890033F00305F1D /* CSCViewController.m */,
+			);
+			name = CSC;
 			sourceTree = "<group>";
 		};
 		52E08DC01889448400ED959F /* CorePlot */ = {
@@ -719,6 +732,7 @@
 				5236E162187EA7540057E974 /* HTSViewController.m in Sources */,
 				5214D0C71886951500460637 /* IntelHex2BinConverter.m in Sources */,
 				5252A563188549B000EFD773 /* ImageCell.m in Sources */,
+				5285D9A91890033F00305F1D /* CSCViewController.m in Sources */,
 				5217F428185F28D400F2D5BB /* ScannedPeripheral.m in Sources */,
 				524F2CD818897078008A8555 /* BGMItemCell.m in Sources */,
 				5214D0D218881D4D00460637 /* CharacteristicReader.m in Sources */,
