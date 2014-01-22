@@ -186,9 +186,17 @@ enum
     BGMItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BGMCell"];
     
     GlucoseReading* reading = [readings objectAtIndex:indexPath.row];
-    cell.value.text = [NSString stringWithFormat:@"%.1f", reading.glucoseConcentration];
     cell.timestamp.text = [dateFormat stringFromDate:reading.timestamp];
-    cell.type.text = [reading typeAsString];
+    if (reading.glucoseConcentrationTypeAndLocationPresent)
+    {
+        cell.value.text = [NSString stringWithFormat:@"%.1f", reading.glucoseConcentration];
+        cell.type.text = [reading typeAsString];
+    }
+    else
+    {
+        cell.value.text = @"-";
+        cell.type.text = @"Unavailable";
+    }
     
     return cell;
 }
@@ -424,19 +432,34 @@ enum
     }
     else if ([characteristic.UUID isEqual:bgmGlucoseMeasurementCharacteristicUUID])
     {
-        GlucoseReading* reading = [GlucoseReading readingWFromBytes:array];
+        GlucoseReading* reading = [GlucoseReading readingFromBytes:array];
         if ([readings containsObject:reading])
         {
-            // TODO: update
+            // If the reading has been found (the same reading has the same sequence number), replace it with the new one
+            // The indexIfObjext method uses isEqual method from GlucodeReading (comparing by sequence number only)
+            [readings replaceObjectAtIndex:[readings indexOfObject:reading] withObject:reading];
         }
         else
         {
+            // If not, just add the new one to the array
             [readings addObject:reading];
         }
     }
     else if ([characteristic.UUID isEqual:bgmGlucoseMeasurementContextCharacteristicUUID])
     {
-        // TODO: add context
+        //uint8_t test[] = { 0x5F, 0x00, 0x00, 0x02, 0x01, 0xF0, 0x03, 0x13, 0xF2, 0x00, 0x22, 0x03, 0x03, 0xF0, 0x01, 0xE0 };// test data
+        GlucoseReadingContext* context = [GlucoseReadingContext readingContextFromBytes:array];
+        // The indexIfObjext method uses isEqual method from GlucodeReadingContext (comparing with GlucoseReading by sequence number)
+        NSInteger index = [readings indexOfObject:context];
+        if (index != NSNotFound)
+        {
+            GlucoseReading* reading = [readings objectAtIndex:index];
+            reading.context = context;
+        }
+        else
+        {
+            NSLog(@"Glucose Measurement with seq no %d not found", context.sequenceNumber);
+        }
     }
     else if ([characteristic.UUID isEqual:bgmRecordAccessControlPointCharacteristicUUID])
     {

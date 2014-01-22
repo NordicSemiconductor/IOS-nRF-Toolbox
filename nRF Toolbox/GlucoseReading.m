@@ -11,9 +11,15 @@
 
 @implementation GlucoseReading
 
-+ (GlucoseReading *)readingWFromBytes:(uint8_t *)bytes
++ (GlucoseReading *)readingFromBytes:(uint8_t *)bytes
 {
     GlucoseReading* reading = [[GlucoseReading alloc] init];
+    [reading updateFromBytes:bytes];
+    return reading;
+}
+
+- (void)updateFromBytes:(uint8_t *)bytes
+{
     uint8_t* pointer = bytes;
     
     // Parse flags
@@ -23,31 +29,31 @@
     BgmUnit glucoseConcentrationUnit = (flags & 0x04) >> 2;
     BOOL statusAnnunciationPresent = (flags & 0x08) > 0;
     
-    // We will use the sequence number to match the reading with (optional) following glucose context
-    reading.sequenceNumber = [CharacteristicReader readUInt16Value:&pointer];
-    reading.timestamp = [CharacteristicReader readDateTime:&pointer];
+    // Sequence number is used to match the reading with an optional glucose context
+    self.sequenceNumber = [CharacteristicReader readUInt16Value:&pointer];
+    self.timestamp = [CharacteristicReader readDateTime:&pointer];
     
     if (timeOffsetPresent)
     {
-        reading.timeOffset = [CharacteristicReader readSInt16Value:&pointer];
+        self.timeOffset = [CharacteristicReader readSInt16Value:&pointer];
     }
     
+    self.glucoseConcentrationTypeAndLocationPresent = glucoseConcentrationTypeAndLocationPresent;
     if (glucoseConcentrationTypeAndLocationPresent)
     {
-        reading.glucoseConcentration = [CharacteristicReader readSFloatValue:&pointer] * 1000;
-        reading.unit = glucoseConcentrationUnit;
+        self.glucoseConcentration = [CharacteristicReader readSFloatValue:&pointer] * 1000;
+        self.unit = glucoseConcentrationUnit;
         
         Nibble typeAndLocation = [CharacteristicReader readNibble:&pointer];
-        reading.type = typeAndLocation.first;
-        reading.location = typeAndLocation.second;
+        self.type = typeAndLocation.first;
+        self.location = typeAndLocation.second;
     }
     
+    self.sensorStatusAnnunciationPresent = statusAnnunciationPresent;
     if (statusAnnunciationPresent)
     {
-        reading.sensorStatusAnnunciation = [CharacteristicReader readUInt16Value:&pointer];
+        self.sensorStatusAnnunciation = [CharacteristicReader readUInt16Value:&pointer];
     }
-    
-    return reading;
 }
 
 - (NSString *)typeAsString

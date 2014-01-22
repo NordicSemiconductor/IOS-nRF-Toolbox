@@ -12,8 +12,9 @@ typedef union
 {
     UInt8 value;
     struct {
-        UInt8 first : 4;
+        // Reversed order
         UInt8 second : 4;
+        UInt8 first : 4;
     };
 } Nibble;
 

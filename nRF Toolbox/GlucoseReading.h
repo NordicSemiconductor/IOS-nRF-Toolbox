@@ -46,16 +46,20 @@ typedef enum
 @property (assign, nonatomic) UInt16 sequenceNumber;
 @property (strong, nonatomic) NSDate* timestamp;
 @property (assign, nonatomic) SInt16 timeOffset;
+@property (assign, nonatomic) BOOL glucoseConcentrationTypeAndLocationPresent;
 @property (assign, nonatomic) Float32 glucoseConcentration;
 @property (assign, nonatomic) BgmUnit unit;
 @property (assign, nonatomic) BgmType type;
 @property (assign, nonatomic) BgmLocation location;
+@property (assign, nonatomic) BOOL sensorStatusAnnunciationPresent;
 @property (assign, nonatomic) UInt16 sensorStatusAnnunciation;
 
 // Glucose Measurement Context values
 @property (strong, nonatomic) GlucoseReadingContext* context;
 
-+ (GlucoseReading*) readingWFromBytes:(uint8_t*) bytes;
++ (GlucoseReading*) readingFromBytes:(uint8_t*) bytes;
+
+- (void) updateFromBytes:(uint8_t*) bytes;
 
 - (NSString*) typeAsString;
 

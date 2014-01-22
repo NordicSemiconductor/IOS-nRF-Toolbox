@@ -68,18 +68,33 @@ typedef enum
 
 @interface GlucoseReadingContext : NSObject
 
+@property (assign, nonatomic) UInt16 sequenceNumber;
+@property (assign, nonatomic) BOOL carbohydratePresent;
 @property (assign, nonatomic) BgmCarbohydrateId carbohydrateId;
 @property (assign, nonatomic) Float32 carbohydrate; // units of kilograms
+@property (assign, nonatomic) BOOL mealPresent;
 @property (assign, nonatomic) BgmMeal meal;
+@property (assign, nonatomic) BOOL testerAndHealthPresent;
 @property (assign, nonatomic) BgmTester tester;
 @property (assign, nonatomic) BgmHealth health;
+@property (assign, nonatomic) BOOL exercisePresent;
 @property (assign, nonatomic) UInt16 exerciseDuration; // in seconds
 @property (assign, nonatomic) UInt8 exerciseIntensity; // percentage
+@property (assign, nonatomic) BOOL medicationPresent;
 @property (assign, nonatomic) BgmMedicationId medicationId;
 @property (assign, nonatomic) Float32 medication;
 @property (assign, nonatomic) BgmMedicationUnit medicationUnit;
-@property (assign, nonatomic) Float32 HbA1c;
+@property (assign, nonatomic) BOOL HbA1cPresent;
+@property (assign, nonatomic) Float32 HbA1c; // in percantage
 
-+ (GlucoseReadingContext*) reacingContextFromBytes:(uint8_t*) bytes;
++ (GlucoseReadingContext*) readingContextFromBytes:(uint8_t*) bytes;
+
+- (void) updateFromBytes:(uint8_t *)bytes;
+
+- (NSString*) carbohydrateIdAsString;
+- (NSString*) mealIdAsString;
+- (NSString*) testerAsString;
+- (NSString*) healthAsString;
+- (NSString*) medicationIdAsString;
 
 @end
