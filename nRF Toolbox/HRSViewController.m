@@ -96,13 +96,22 @@
     [self initLinePlot];
 }
 
+-(void)viewWillDisappear:(BOOL)animated
+{
+    if (hrPeripheral != nil)
+    {
+        [bluetoothManager cancelPeripheralConnection:hrPeripheral];
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)connectOrDisconnectClicked {
+- (IBAction)connectOrDisconnectClicked
+{
     if (hrPeripheral != nil)
     {
         [bluetoothManager cancelPeripheralConnection:hrPeripheral];
@@ -126,9 +135,29 @@
     }
 }
 
+-(void)appDidEnterBackground:(NSNotification *)_notification
+{
+    NSLog(@"appDidEnterBackground");
+    UILocalNotification *notification = [[UILocalNotification alloc]init];
+    notification.alertAction = @"Show";
+    notification.alertBody = @"You are still connected to Heart Rate sensor. It will collect data also in background.";
+    notification.hasAction = NO;
+    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
+    notification.timeZone = [NSTimeZone  defaultTimeZone];
+    notification.soundName = UILocalNotificationDefaultSoundName;
+    [[UIApplication sharedApplication] setScheduledLocalNotifications:[NSArray arrayWithObject:notification]];
+}
+
+-(void)appDidBecomeActiveBackground:(NSNotification *)_notification
+{
+    NSLog(@"appDidBecomeActiveBackground");
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+}
+
 #pragma mark HRM Graph methods
 
--(void)initLinePlot {
+-(void)initLinePlot
+{
     //Initialize and display Graph (x and y axis lines)
     self.graph = [[CPTXYGraph alloc] initWithFrame:self.graphView.bounds];
     self.hostView = [[CPTGraphHostingView alloc] initWithFrame:self.graphView.bounds];
@@ -222,8 +251,8 @@
     
 }
 
--(void)updatePlotSpace {
-    NSLog(@"updatePlotSpace");
+-(void)updatePlotSpace
+{
     CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)self.graph.defaultPlotSpace;
     [plotSpace scaleToFitPlots:@[self.linePlot]];
     plotSpace.allowsUserInteraction = NO;
@@ -236,7 +265,8 @@
     axisSet.xAxis.majorIntervalLength = CPTDecimalFromInt(plotXInterval);
 }
 
--(void)addHRValueToGraph:(int)data {
+-(void)addHRValueToGraph:(int)data
+{
     [hrValues addObject:[NSDecimalNumber numberWithInt:data]];
     if ([hrValues count] > plotXMaxRange) {
         plotXMaxRange = plotXMaxRange + plotXMaxRange;
@@ -247,8 +277,8 @@
 }
 
 #pragma mark - CPTPlotDataSource methods
--(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot {
-	NSLog(@"numberOfRecordsForPlot");
+-(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot
+{
     return [hrValues count];
 }
 
@@ -256,12 +286,10 @@
 	
 	switch (fieldEnum) {
 		case CPTScatterPlotFieldX:
-            NSLog(@"XField");
             return [NSNumber numberWithUnsignedInteger:index];
 			break;
 			
 		case CPTScatterPlotFieldY:
-            NSLog(@"YField");
             return [hrValues objectAtIndex:index];
 			break;
 	}
@@ -277,8 +305,7 @@
     bluetoothManager = manager;
     bluetoothManager.delegate = self;
     
-    // The sensor has been selected, connect to it
-    //peripheral.delegate = self;
+    // The sensor has been selected, connect to it    
     hrPeripheral = peripheral;
     hrPeripheral.delegate = self;
     NSDictionary *options = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:CBConnectPeripheralOptionNotifyOnNotificationKey];
@@ -308,6 +335,9 @@
         [hrValues removeAllObjects];
     });
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActiveBackground:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    
     // Peripheral has connected. Discover required services
     [hrPeripheral discoverServices:@[HR_Service_UUID,Battery_Service_UUID]];
 }
@@ -333,6 +363,8 @@
         hrPeripheral = nil;
         
         [self clearUI];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
     });
 }
 
@@ -431,7 +463,8 @@
     });
 }
 
--(int) decodeHRValue:(NSData *)data {
+-(int) decodeHRValue:(NSData *)data
+{
     const uint8_t *value = [data bytes];
     int bpmValue = 0;
     if ((value[0] & 0x01) == 0) {
@@ -446,7 +479,8 @@
     return bpmValue;
 }
 
--(NSString *) decodeHRLocation:(NSData *)data {
+-(NSString *) decodeHRLocation:(NSData *)data
+{
     const uint8_t *location = [data bytes];
     NSString *hrmLocation;
     switch (location[0]) {
