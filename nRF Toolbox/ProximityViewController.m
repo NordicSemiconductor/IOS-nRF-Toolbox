@@ -158,12 +158,15 @@
 - (IBAction)findMeButtonClicked
 {
     NSLog(@"FindMeButtonPressed");
-    if (isImmidiateAlertOn) {
-        [self immidiateAlertOff];
+    if (self.immidiateAlertCharacteristic) {
+        if (isImmidiateAlertOn) {
+            [self immidiateAlertOff];
+        }
+        else {
+            [self immidiateAlertOn];
+        }
     }
-    else {
-        [self immidiateAlertOn];
-    }
+    
 }
 
 -(void)initGattServer
@@ -370,6 +373,7 @@
         if (error) {
             NSLog(@"error in disconnection");
             lockImage.highlighted = NO;
+            self.immidiateAlertCharacteristic = nil;
             NSDictionary *options = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:CBConnectPeripheralOptionNotifyOnNotificationKey];
             [bluetoothManager connectPeripheral:proximityPeripheral options:options];
             if (isAppInBackgound) {
@@ -491,6 +495,9 @@
     [battery setTitle:@"n/a" forState:UIControlStateDisabled];
     battery.tag = 0;
     lockImage.highlighted = NO;
+    isAppInBackgound = FALSE;
+    isImmidiateAlertOn = FALSE;
+    self.immidiateAlertCharacteristic = nil;
 }
 
 
