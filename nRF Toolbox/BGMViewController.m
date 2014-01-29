@@ -336,7 +336,7 @@ enum
     [readings removeAllObjects];
     [bgmTableView reloadData];
     
-    [deviceName setText:@"DEFAULT GLS"];
+    [deviceName setText:@"DEFAULT BGM"];
     battery.tag = 0;
     [battery setTitle:@"n/a" forState:UIControlStateDisabled];
 }

@@ -247,7 +247,7 @@
 
 - (void) clearUI
 {
-    [deviceName setText:@"DEFAULT HTS"];
+    [deviceName setText:@"DEFAULT HTM"];
     battery.tag = 0;
     [battery setTitle:@"n/a" forState:UIControlStateDisabled];
     [self.temperature setText:@"-"];
