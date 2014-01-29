@@ -18,6 +18,9 @@
     UIImage *navBackgroundImage = [UIImage imageNamed:@"NavBarIOS7"];
     [[UINavigationBar appearance] setBackgroundImage:navBackgroundImage forBarMetrics:UIBarMetricsDefault];
     
+    NSDictionary* defaults = [NSDictionary dictionaryWithObject:@"2.3" forKey:@"key_diameter"];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
+    
     return YES;
 }
 

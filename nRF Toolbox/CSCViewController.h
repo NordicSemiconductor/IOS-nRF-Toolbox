@@ -18,6 +18,11 @@
 @property (weak, nonatomic) IBOutlet UIButton *battery;
 @property (weak, nonatomic) IBOutlet UILabel *deviceName;
 @property (weak, nonatomic) IBOutlet UIButton *connectButton;
+@property (weak, nonatomic) IBOutlet UILabel *speed;
+@property (weak, nonatomic) IBOutlet UILabel *cadence;
+@property (weak, nonatomic) IBOutlet UILabel *distance;
+@property (weak, nonatomic) IBOutlet UILabel *totalDistance;
+@property (weak, nonatomic) IBOutlet UILabel *wheelToCrankRatio;
 
 - (IBAction)connectOrDisconnectClicked;
 

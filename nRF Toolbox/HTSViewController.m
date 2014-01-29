@@ -247,7 +247,7 @@
 
 - (void) clearUI
 {
-    [deviceName setText:@"DEFAULT RSC"];
+    [deviceName setText:@"DEFAULT HTS"];
     battery.tag = 0;
     [battery setTitle:@"n/a" forState:UIControlStateDisabled];
     [self.temperature setText:@"-"];
