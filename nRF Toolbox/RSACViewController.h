@@ -23,7 +23,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *cadence;
 @property (weak, nonatomic) IBOutlet UILabel *distance;
 @property (weak, nonatomic) IBOutlet UILabel *distanceUnit;
-@property (weak, nonatomic) IBOutlet UILabel *strideLength;
+@property (weak, nonatomic) IBOutlet UILabel *totalDistance;
+@property (weak, nonatomic) IBOutlet UILabel *totalDistanceUnit;
 @property (weak, nonatomic) IBOutlet UILabel *strides;
 @property (weak, nonatomic) IBOutlet UILabel *activity;
 

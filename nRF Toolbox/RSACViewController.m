@@ -20,6 +20,14 @@
      * Number of steps counted during the current connection session. Calculated based on cadence and time intervals
      */
     uint8_t cadenceValue;
+    /*!
+     * The last strip length obtained from the device
+     */
+    uint8_t stripLength;
+    /*!
+     * Trip distance, since connection established, in [cm]. Calculated with each step. If stride length is not present it equals UINT32_MAX.
+     */
+    uint32_t tripDistance;
     
     CBUUID *rscServiceUUID;
     CBUUID *rscMeasurementCharacteristicUUID;
@@ -60,6 +68,7 @@
     if (self) {
         // Custom initialization
         stepsNumber = 0;
+        tripDistance = UINT32_MAX;
         rscServiceUUID = [CBUUID UUIDWithString:rscServiceUUIDString];
         rscMeasurementCharacteristicUUID = [CBUUID UUIDWithString:rscMeasurementCharacteristicUUIDString];
         batteryServiceUUID = [CBUUID UUIDWithString:batteryServiceUUIDString];
@@ -217,6 +226,7 @@
 - (void) clearUI
 {
     stepsNumber = 0;
+    tripDistance = UINT32_MAX;
     cadenceValue = 0;
     timer = nil;
     [deviceName setText:@"DEFAULT RSC"];
@@ -226,7 +236,7 @@
     [self.cadence setText:@"-"];
     [self.distance setText:@"-"];
     [self.distanceUnit setText:@"m"];
-    [self.strideLength setText:@"-"];
+    [self.totalDistance setText:@"-"];
     [self.strides setText:@"-"];
     [self.activity setText:@"n/a"];
 }
@@ -342,31 +352,26 @@
             
             if (totalDistancePresent)
             {
-                float distanceValue = [CharacteristicReader readUInt32Value:&array];
+                float distanceValue = [CharacteristicReader readUInt32Value:&array]; // [dm]
                 if (distanceValue < 10000) // 1 km in dm
                 {
-                    self.distance.text = [NSString stringWithFormat:@"%.0f", distanceValue / 10];
-                    self.distanceUnit.text = @"m";
+                    self.totalDistance.text = [NSString stringWithFormat:@"%.0f", distanceValue / 10];
+                    self.totalDistanceUnit.text = @"m";
                 }
                 else
                 {
-                    self.distance.text = [NSString stringWithFormat:@"%.2f", distanceValue / 10000];
-                    self.distance.text = @"km";
+                    self.totalDistance.text = [NSString stringWithFormat:@"%.2f", distanceValue / 10000];
+                    self.totalDistanceUnit.text = @"km";
                 }
             }
             else
             {
-                [self.distance setText:@"n/a"];
+                [self.totalDistance setText:@"n/a"];
             }
             
             if (strideLengthPresent)
             {
-                int strideLengthValue = [CharacteristicReader readUInt16Value:&array];
-                self.strideLength.text = [NSString stringWithFormat:@"%d", strideLengthValue];
-            }
-            else
-            {
-                self.strideLength.text = @"n/a";
+                stripLength = [CharacteristicReader readUInt16Value:&array]; // [cm]
             }
         }
     });
@@ -381,7 +386,30 @@
     
     // If we are connected, increase the strides counter and display it
     stepsNumber++;
-    [self.strides setText:[[NSString alloc] initWithFormat:@"%d", stepsNumber]];
+    self.strides.text = [NSString stringWithFormat:@"%d", stepsNumber];
+    
+    // If stride length has been set, calculate the trip distance
+    if (stripLength > 0)
+    {
+        tripDistance += stripLength;
+        if (tripDistance < 100000) // 1 km in cm
+        {
+            self.distance.text = [NSString stringWithFormat:@"%.0f", tripDistance / 100.0f];
+            self.distanceUnit.text = @"m";
+        }
+        else
+        {
+            self.distance.text = [NSString stringWithFormat:@"%.2f", tripDistance / 100000.0f];
+            self.distanceUnit.text = @"km";
+        }
+    }
+    else
+    {
+        if (tripDistance == 0)
+        {
+            self.distance.text = @"n/a";
+        }
+    }
     
     // If cadence is greater than 0 we have to reschedule the timer with new time interval
     if (cadenceValue > 0)
