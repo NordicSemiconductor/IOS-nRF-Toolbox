@@ -10,6 +10,7 @@
 #import "ScannerViewController.h"
 #import "Constants.h"
 #import "CorePlot-CocoaTouch.h"
+#import "HelpViewController.h"
 
 @interface HRSViewController ()
 {
@@ -20,6 +21,7 @@
     
     BOOL isBluetoothON;
     BOOL isDeviceConnected;
+    BOOL isBackButtonPressed;
     
     CBUUID *HR_Service_UUID;
     CBUUID *HR_Measurement_Characteristic_UUID;
@@ -53,9 +55,7 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         // Custom initialization
-        isBluetoothON = false;
-        isDeviceConnected = false;
-        hrPeripheral = nil;
+        
         
         HR_Service_UUID = [CBUUID UUIDWithString:hrsServiceUUIDString];
         HR_Measurement_Characteristic_UUID = [CBUUID UUIDWithString:hrsHeartRateCharacteristicUUIDString];
@@ -68,6 +68,7 @@
 
 - (void)viewDidLoad
 {
+    NSLog(@"viewDidLoad");
     if (is4InchesIPhone)
     {
         // 4 inches iPhone
@@ -83,6 +84,12 @@
     
     // Rotate the vertical label
     self.verticalLabel.transform = CGAffineTransformMakeRotation(-M_PI / 2);
+    
+    isBluetoothON = false;
+    isDeviceConnected = false;
+    isBackButtonPressed = false;
+    hrPeripheral = nil;
+    
     hrValues = [[NSMutableArray alloc]init];
     number = 0;
     plotXMaxRange = 100;
@@ -98,10 +105,17 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    if (hrPeripheral != nil)
+    NSLog(@"viewWillDisappear");
+    if (hrPeripheral != nil && isBackButtonPressed)
     {
         [bluetoothManager cancelPeripheralConnection:hrPeripheral];
     }
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    NSLog(@"viewWillAppear");
+    isBackButtonPressed = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -128,10 +142,17 @@
 {
     if ([segue.identifier isEqualToString:@"scan"])
     {
+        NSLog(@"prepareForSegue scan");
         // Set this contoller as scanner delegate
         ScannerViewController *controller = (ScannerViewController *)segue.destinationViewController;
         controller.filterUUID = HR_Service_UUID;
         controller.delegate = self;
+    }
+    else if ([[segue identifier] isEqualToString:@"help"]) {
+        NSLog(@"prepareForSegue help");
+        isBackButtonPressed = NO;
+        HelpViewController *helpVC = [segue destinationViewController];
+        helpVC.helpText = [NSString stringWithFormat:@"-HRM (Heart Rate Monitor) profile allows you to connect to your Heart Rate sensor (f.e. a belt).\n\n-It shows you the current heart rate, location of the sensor and data history on the graph."];
     }
 }
 

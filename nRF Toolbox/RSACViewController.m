@@ -10,6 +10,7 @@
 #import "ScannerViewController.h"
 #import "Constants.h"
 #import "CharacteristicReader.h"
+#import "HelpViewController.h"
 
 @interface RSACViewController () {
     /*!
@@ -33,6 +34,7 @@
     CBUUID *rscMeasurementCharacteristicUUID;
     CBUUID *batteryServiceUUID;
     CBUUID *batteryLevelCharacteristicUUID;
+    BOOL isBackButtonPressed;
 }
 
 /*!
@@ -96,14 +98,20 @@
     
     // Rotate the vertical label
     self.verticalLabel.transform = CGAffineTransformMakeRotation(-M_PI / 2);
+    isBackButtonPressed = NO;
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    if (connectedPeripheral != nil)
+    if (connectedPeripheral != nil && isBackButtonPressed)
     {
         [bluetoothManager cancelPeripheralConnection:connectedPeripheral];
     }
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    isBackButtonPressed = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -150,6 +158,11 @@
         ScannerViewController *controller = (ScannerViewController *)segue.destinationViewController;
         controller.filterUUID = rscServiceUUID;
         controller.delegate = self;
+    }
+    else if ([[segue identifier] isEqualToString:@"help"]) {
+        isBackButtonPressed = NO;
+        HelpViewController *helpVC = [segue destinationViewController];
+        helpVC.helpText = [NSString stringWithFormat:@"-RSC (Running Speed and Cadence) profile allows you to connect to your activity sensor.\n\n-It reads speed and cadence values from the sensor and calculates trip distance if stride length is supported.\n\n-Strides count is calculated by using cadence and the time."];
     }
 }
 

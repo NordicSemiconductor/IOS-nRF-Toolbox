@@ -9,7 +9,8 @@
 #import "ProximityViewController.h"
 #import "ScannerViewController.h"
 #import "Constants.h"
-#import <AudioToolbox/AudioToolbox.h>
+#import <AVFoundation/AVFoundation.h>
+#import "HelpViewController.h"
 
 
 @interface ProximityViewController () {
@@ -18,7 +19,7 @@
     CBUUID *proximityAlertLevelCharacteristicUUID;
     CBUUID *batteryServiceUUID;
     CBUUID *batteryLevelCharacteristicUUID;
-    BOOL isImmidiateAlertOn, isAppInBackgound;
+    BOOL isImmidiateAlertOn, isAppInBackgound, isBackButtonPressed;;
 }
 
 /*!
@@ -28,8 +29,7 @@
 @property (strong, nonatomic) CBPeripheral *proximityPeripheral;
 @property (strong, nonatomic)CBPeripheralManager *peripheralManager;
 @property (strong, nonatomic)CBCharacteristic *immidiateAlertCharacteristic;
-@property CFURLRef alertSoundFileURLRef;
-@property SystemSoundID alertSoundFile;
+@property (strong, nonatomic) AVAudioPlayer *audioPlayer;
 
 @end
 
@@ -43,7 +43,7 @@
 @synthesize proximityPeripheral;
 @synthesize findMeButton;
 @synthesize lockImage;
-@synthesize alertSoundFile;
+@synthesize audioPlayer;
 
 
 
@@ -80,8 +80,10 @@
     self.verticalLabel.transform = CGAffineTransformMakeRotation(-M_PI / 2);
     [self initGattServer];
     self.immidiateAlertCharacteristic = nil;
-    isImmidiateAlertOn = false;
-    isAppInBackgound = false;
+    isImmidiateAlertOn = NO;
+    isAppInBackgound = NO;
+    isBackButtonPressed = NO;
+    [self initSound];
 }
 
 - (void)didReceiveMemoryWarning
@@ -90,9 +92,28 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void) initSound
+{
+    NSError *error  = nil;
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&error];
+    [[AVAudioSession sharedInstance] setActive:YES error:&error];
+    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"high" ofType:@"mp3"]];
+    audioPlayer = [[AVAudioPlayer alloc]
+                   initWithContentsOfURL:url
+                   error:&error];
+    if (error)
+    {
+        NSLog(@"Error in audioPlayer: %@",
+              [error localizedDescription]);
+    } else {        
+        [audioPlayer prepareToPlay];
+    }
+}
+
+
 -(void)appDidEnterBackground:(NSNotification *)_notification
 {
-    isAppInBackgound = true;
+    isAppInBackgound = YES;
     NSString *message = [NSString stringWithFormat:@"You are still connected to %@",proximityPeripheral.name];
     [self showBackgroundAlert:message];
 }
@@ -117,7 +138,7 @@
 
 -(void)appDidBecomeActiveBackground:(NSNotification *)_notification
 {
-    isAppInBackgound = false;
+    isAppInBackgound = NO;
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
 }
 
@@ -144,14 +165,24 @@
         controller.filterUUID = proximityLinkLossServiceUUID;
         controller.delegate = self;
     }
+    else if ([[segue identifier] isEqualToString:@"help"]) {
+        isBackButtonPressed = NO;
+        HelpViewController *helpVC = [segue destinationViewController];
+        helpVC.helpText = [NSString stringWithFormat:@"-PROXIMITY profile allows you to connect to your Proximity sensor.\n\n-You can find your valuables attached with Proximity tag by pressing FindMe button on screen and you can find your phone by pressing relevant button on your tag.\n\n-A notification will appear on your phone screen when you go away from your connected tag."];
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    if (proximityPeripheral != nil)
+    if (proximityPeripheral != nil && isBackButtonPressed)
     {
         [bluetoothManager cancelPeripheralConnection:proximityPeripheral];
     }
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    isBackButtonPressed = YES;
 }
 
 
@@ -166,8 +197,22 @@
             [self immidiateAlertOn];
         }
     }
-    
 }
+
+-(void) enableFindMeButton
+{
+    findMeButton.enabled = YES;
+    [findMeButton setBackgroundColor:[UIColor blackColor]];
+    [findMeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+}
+
+-(void) disableFindButton
+{
+    findMeButton.enabled = NO;
+    [findMeButton setBackgroundColor:[UIColor lightGrayColor]];
+    [findMeButton setTitleColor:[UIColor lightTextColor] forState:UIControlStateNormal];
+}
+
 
 -(void)initGattServer
 {
@@ -219,24 +264,19 @@
 }
 
 #pragma mark Playing Sound methods
-- (void) playVibration {
-    AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+- (void) stopSound {
+    [audioPlayer stop];
 }
 
-- (void) playMildSound {
-    NSURL *alertSoundURL = [[NSBundle mainBundle]URLForResource:@"findme_alarm_3" withExtension:@"aiff"];
-    self.alertSoundFileURLRef = (__bridge CFURLRef) (alertSoundURL);
-    
-    AudioServicesCreateSystemSoundID(self.alertSoundFileURLRef, &alertSoundFile);
-    AudioServicesPlayAlertSound(self.alertSoundFile);
+-(void) playSoundInLoop
+{
+    audioPlayer.numberOfLoops = -1;
+    [audioPlayer play];
 }
 
-- (void) playHighSound {
-    NSURL *alertSoundURL = [[NSBundle mainBundle]URLForResource:@"findme_alarm_1" withExtension:@"aiff"];
-    self.alertSoundFileURLRef = (__bridge CFURLRef) (alertSoundURL);
-    
-    AudioServicesCreateSystemSoundID(self.alertSoundFileURLRef, &alertSoundFile);
-    AudioServicesPlayAlertSound(alertSoundFile);
+-(void) playSoundOnce
+{
+    [audioPlayer play];
 }
 
 #pragma mark CBPeripheralManager delegates
@@ -284,15 +324,15 @@
         switch (alertLevel) {
             case 0:
                 NSLog(@"No alert");
-                [self playVibration];
+                [self stopSound];
                 break;
             case 1:
                 NSLog(@"Low alert");
-                [self playMildSound];
+                [self playSoundInLoop];
                 break;
             case 2:
                 NSLog(@"High alert");
-                [self playHighSound];
+                [self playSoundInLoop];
                 
                 break;
                 
@@ -340,6 +380,7 @@
         [deviceName setText:peripheral.name];
         [connectButton setTitle:@"DISCONNECT" forState:UIControlStateNormal];
         lockImage.highlighted = YES;
+        [self enableFindMeButton];
     });
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -361,7 +402,7 @@
         [alert show];
         [connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
         proximityPeripheral = nil;
-        
+        [self disableFindButton];
         [self clearUI];
     });
 }
@@ -374,6 +415,7 @@
             NSLog(@"error in disconnection");
             lockImage.highlighted = NO;
             self.immidiateAlertCharacteristic = nil;
+            [self disableFindButton];
             NSDictionary *options = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:CBConnectPeripheralOptionNotifyOnNotificationKey];
             [bluetoothManager connectPeripheral:proximityPeripheral options:options];
             if (isAppInBackgound) {
@@ -382,6 +424,7 @@
             else {
                 [self showForegroundAlert:message];
             }
+            [self playSoundOnce];
             
         }
         else {
@@ -390,7 +433,7 @@
                 NSLog(@"disconnected");
                 [connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
                 proximityPeripheral = nil;
-                
+                [self disableFindButton];
                 [self clearUI];
                 [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
                 [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -495,8 +538,8 @@
     [battery setTitle:@"n/a" forState:UIControlStateDisabled];
     battery.tag = 0;
     lockImage.highlighted = NO;
-    isAppInBackgound = FALSE;
-    isImmidiateAlertOn = FALSE;
+    isAppInBackgound = NO;
+    isImmidiateAlertOn = NO;
     self.immidiateAlertCharacteristic = nil;
 }
 

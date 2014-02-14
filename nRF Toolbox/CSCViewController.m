@@ -9,6 +9,7 @@
 #import "CSCViewController.h"
 #import "ScannerViewController.h"
 #import "Constants.h"
+#import "HelpViewController.h"
 
 @interface CSCViewController () {
     CBUUID *cscServiceUUID;
@@ -18,8 +19,7 @@
     int oldWheelRevolution, oldCrankRevolution;
     double travelDistance, oldWheelEventTime, totalTravelDistance, oldCrankEventTime;
     double wheelCircumference;
-    
-    
+    BOOL isBackButtonPressed;
 }
 
 /*!
@@ -87,6 +87,7 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
     
     wheelCircumference = [[[NSUserDefaults standardUserDefaults] valueForKey:@"key_diameter"] doubleValue];
     NSLog(@"circumference: %f",wheelCircumference);
+    isBackButtonPressed = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -114,10 +115,15 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    if (cyclePeripheral != nil)
+    if (cyclePeripheral != nil && isBackButtonPressed)
     {
         [bluetoothManager cancelPeripheralConnection:cyclePeripheral];
     }
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    isBackButtonPressed = YES;
 }
 
 - (IBAction)connectOrDisconnectClicked {
@@ -141,6 +147,11 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
         ScannerViewController *controller = (ScannerViewController *)segue.destinationViewController;
         controller.filterUUID = cscServiceUUID;
         controller.delegate = self;
+    }
+    else if ([[segue identifier] isEqualToString:@"help"]) {
+        isBackButtonPressed = NO;
+        HelpViewController *helpVC = [segue destinationViewController];
+        helpVC.helpText = [NSString stringWithFormat: @"-CSC (Cycling Speed and Cadence) profile allows you to connect to your bike activity sensor.\n\n-It reads wheel and crank data if they are supported by the sensor and calculates speed, cadence, total and trip distance and gear ratio.\n\n-Default wheel size is 29 inches but you can set up wheel size in the iPhone Settings."];
     }
 }
 

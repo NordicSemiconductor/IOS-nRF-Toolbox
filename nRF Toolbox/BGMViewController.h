@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *battery;
 @property (weak, nonatomic) IBOutlet UILabel *deviceName;
 @property (weak, nonatomic) IBOutlet UIButton *connectButton;
+@property (weak, nonatomic) IBOutlet UIButton *recordButton;
 
 - (IBAction)connectOrDisconnectClicked;
 

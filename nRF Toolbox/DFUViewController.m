@@ -10,6 +10,7 @@
 #import "ScannerViewController.h"
 #import "SelectorViewController.h"
 #import "Constants.h"
+#import "HelpViewController.h"
 
 @interface DFUViewController () {
     CBUUID *dfuServiceUUID;
@@ -181,6 +182,10 @@
     {
         SelectorViewController *controller = (SelectorViewController *)segue.destinationViewController;
         controller.delegate = self;
+    }
+    else if ([[segue identifier] isEqualToString:@"help"]) {
+        HelpViewController *helpVC = [segue destinationViewController];
+        helpVC.helpText = [NSString stringWithFormat:@"-The Device Firmware Update (DFU) app that is compatible with Nordic Semiconductor nRF51822 devices that have the S110 SoftDevice and bootloader enabled.\n\n-It allows to upload new application onto the device over-the-air (OTA).\n\n-The DFU discovers supported DFU devices, connects to them, and uploads user selected firmware applications to the device.\n\n-Default number of Packet Receipt Notification is 10 but you can set up other number in the iPhone Settings."];
     }
 }
 

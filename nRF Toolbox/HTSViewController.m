@@ -10,6 +10,7 @@
 #import "ScannerViewController.h"
 #import "Constants.h"
 #import "CharacteristicReader.h"
+#import "HelpViewController.h"
 
 @interface HTSViewController () {
     CBUUID *htsServiceUUID;
@@ -172,6 +173,10 @@
         ScannerViewController *controller = (ScannerViewController *)segue.destinationViewController;
         controller.filterUUID = htsServiceUUID;
         controller.delegate = self;
+    }
+    else if ([[segue identifier] isEqualToString:@"help"]) {
+        HelpViewController *helpVC = [segue destinationViewController];
+        helpVC.helpText = [NSString stringWithFormat:@"-HTM (Health Thermometer Monitor) profile allows you to connect to your Health Thermometer sensor.\n\n-It shows you the temperature value in Celisius and Fahrenheit units.\n\n-Default temperature unit is Celsius but you can set up unit in the iPhone Settings."];
     }
 }
 

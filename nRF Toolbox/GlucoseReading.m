@@ -60,7 +60,7 @@
 {
     switch (self.type) {
         case CAPILLARY_WHOLE_BLOOD:
-            return @"Capillary Whole boood";
+            return @"Capillary Whole blood";
         case CAPILLARY_PLASMA:
             return @"Capillary Plasma";
         case VENOUS_WHOLE_BLOOD:

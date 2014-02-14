@@ -10,6 +10,7 @@
 #import "ScannerViewController.h"
 #import "Constants.h"
 #import "CharacteristicReader.h"
+#import "HelpViewController.h"
 
 @interface BPMViewController () {
     CBUUID *bpmServiceUUID;
@@ -123,6 +124,10 @@
         ScannerViewController *controller = (ScannerViewController *)segue.destinationViewController;
         controller.filterUUID = bpmServiceUUID;
         controller.delegate = self;
+    }
+    else if ([[segue identifier] isEqualToString:@"help"]) {
+        HelpViewController *helpVC = [segue destinationViewController];
+        helpVC.helpText =[NSString stringWithFormat:@"-BPM (Blood Pressure Monitor) profile allows you to connect to your Blood Pressure device.\n\n-It supports the cuff pressure notifications and displays systolic, diastolic and mean arterial pulse values as well as the pulse after blood pressure reading is completed."];
     }
 }
 

@@ -14,6 +14,7 @@
 #import "RecordAccess.h"
 #import "Constants.h"
 #import "CharacteristicReader.h"
+#import "HelpViewController.h"
 
 enum
 {
@@ -45,7 +46,7 @@ enum
 @property (strong, nonatomic) CBCharacteristic* bgmRecordAccessControlPointCharacteristic;
 @property (strong, nonatomic) NSMutableArray* readings;
 @property (weak, nonatomic) IBOutlet UITableView *bgmTableView;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *actionButton;
+//@property (weak, nonatomic) IBOutlet UIBarButtonItem *actionButton;
 
 - (IBAction)actionButtonClicked:(id)sender;
 
@@ -60,7 +61,8 @@ enum
 @synthesize connectButton;
 @synthesize connectedPeripheral;
 @synthesize bgmTableView;
-@synthesize actionButton;
+//@synthesize actionButton;
+@synthesize recordButton;
 @synthesize readings;
 @synthesize bgmRecordAccessControlPointCharacteristic;
 
@@ -128,7 +130,8 @@ enum
     [actionSheet setDestructiveButtonIndex:ACTION_DELETE_ALL];
     [actionSheet setCancelButtonIndex:ACTION_CANCEL];
     
-    [actionSheet showFromBarButtonItem:actionButton animated:YES];
+    //[actionSheet showFromBarButtonItem:actionButton animated:YES];
+    [actionSheet showInView:self.view];
 }
 
 - (IBAction)connectOrDisconnectClicked {
@@ -158,6 +161,11 @@ enum
         BGMDetailsViewController *controller = (BGMDetailsViewController *)segue.destinationViewController;
         controller.reading = [readings objectAtIndex:[bgmTableView indexPathForSelectedRow].row];
     }
+    else if ([[segue identifier] isEqualToString:@"help"]) {
+        HelpViewController *helpVC = [segue destinationViewController];
+        helpVC.helpText =[NSString stringWithFormat:@"-BGM (BLOOD GLUCOSE MONITOR) profile allows you to connect to your Glucose sensor.\n\n-You can read the history of glucose records."];
+    }
+
 }
 
 #pragma mark Scanner Delegate methods
@@ -297,7 +305,7 @@ enum
     dispatch_async(dispatch_get_main_queue(), ^{
         [deviceName setText:peripheral.name];
         [connectButton setTitle:@"DISCONNECT" forState:UIControlStateNormal];
-        actionButton.enabled = YES;
+        [self enableRecordButton];
     });
     
     // Peripheral has connected. Discover required services
@@ -313,8 +321,7 @@ enum
         [alert show];
         [connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
         connectedPeripheral = nil;
-        actionButton.enabled = NO;
-        
+        [self disableRecordButton];
         [self clearUI];
     });
 }
@@ -325,8 +332,7 @@ enum
     dispatch_async(dispatch_get_main_queue(), ^{
         [connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
         connectedPeripheral = nil;
-        actionButton.enabled = NO;
-        
+        [self disableRecordButton];        
         [self clearUI];
     });
 }
@@ -339,6 +345,20 @@ enum
     [deviceName setText:@"DEFAULT BGM"];
     battery.tag = 0;
     [battery setTitle:@"n/a" forState:UIControlStateDisabled];
+}
+
+-(void) enableRecordButton
+{
+    recordButton.enabled = YES;
+    [recordButton setBackgroundColor:[UIColor blackColor]];
+    [recordButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+}
+
+-(void) disableRecordButton
+{
+    recordButton.enabled = NO;
+    [recordButton setBackgroundColor:[UIColor lightGrayColor]];
+    [recordButton setTitleColor:[UIColor lightTextColor] forState:UIControlStateNormal];
 }
 
 #pragma mark Peripheral delegate methods

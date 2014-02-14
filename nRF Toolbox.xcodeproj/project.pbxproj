@@ -54,8 +54,8 @@
 		5252A563188549B000EFD773 /* ImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A562188549B000EFD773 /* ImageCell.m */; };
 		5285D9A91890033F00305F1D /* CSCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5285D9A81890033F00305F1D /* CSCViewController.m */; };
 		52E08DC21889449A00ED959F /* libCorePlot-CocoaTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52E08DC11889449A00ED959F /* libCorePlot-CocoaTouch.a */; };
-		7EE155F7188E84A800299DBA /* findme_alarm_1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 7EE155F6188E84A800299DBA /* findme_alarm_1.aiff */; };
-		7EE155F9188E84BA00299DBA /* findme_alarm_3.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 7EE155F8188E84BA00299DBA /* findme_alarm_3.aiff */; };
+		7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B422818A8DF4D006BA1BC /* high.mp3 */; };
+		7E92108C18A38EE3009C6F2A /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E92108B18A38EE3009C6F2A /* HelpViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -220,8 +220,9 @@
 		52E08E0B188944AC00ED959F /* CPTXYAxisSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPTXYAxisSet.h; path = dependencies/CPTXYAxisSet.h; sourceTree = "<group>"; };
 		52E08E0C188944AC00ED959F /* CPTXYGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPTXYGraph.h; path = dependencies/CPTXYGraph.h; sourceTree = "<group>"; };
 		52E08E0D188944AC00ED959F /* CPTXYPlotSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPTXYPlotSpace.h; path = dependencies/CPTXYPlotSpace.h; sourceTree = "<group>"; };
-		7EE155F6188E84A800299DBA /* findme_alarm_1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = findme_alarm_1.aiff; sourceTree = "<group>"; };
-		7EE155F8188E84BA00299DBA /* findme_alarm_3.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = findme_alarm_3.aiff; sourceTree = "<group>"; };
+		7E1B422818A8DF4D006BA1BC /* high.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = high.mp3; sourceTree = "<group>"; };
+		7E92108A18A38EE3009C6F2A /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
+		7E92108B18A38EE3009C6F2A /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -333,6 +334,8 @@
 				5217F3FA1859EE0000F2D5BB /* ViewController.h */,
 				5217F3FB1859EE0000F2D5BB /* ViewController.m */,
 				5217F3F71859EE0000F2D5BB /* Main.storyboard */,
+				7E92108A18A38EE3009C6F2A /* HelpViewController.h */,
+				7E92108B18A38EE3009C6F2A /* HelpViewController.m */,
 				5217F3FD1859EE0000F2D5BB /* Images.xcassets */,
 				5217F3EC1859EE0000F2D5BB /* Supporting Files */,
 			);
@@ -342,8 +345,7 @@
 		5217F3EC1859EE0000F2D5BB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				7EE155F6188E84A800299DBA /* findme_alarm_1.aiff */,
-				7EE155F8188E84BA00299DBA /* findme_alarm_3.aiff */,
+				7E1B422818A8DF4D006BA1BC /* high.mp3 */,
 				5211EFAA1885642F007CC40D /* icon-dfu-64.png */,
 				5211EFAB1885642F007CC40D /* icon-dfu-320.png */,
 				5211EFAC1885642F007CC40D /* icon-hex.png */,
@@ -645,7 +647,7 @@
 		5217F3DA1859EE0000F2D5BB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Nordic Semiconductor";
 				TargetAttributes = {
 					5217F3E11859EE0000F2D5BB = {
@@ -689,14 +691,13 @@
 				5211EFA41885611F007CC40D /* ble_app_rscs.hex in Resources */,
 				5214D0CE1886C02A00460637 /* Settings.bundle in Resources */,
 				5217F3FE1859EE0000F2D5BB /* Images.xcassets in Resources */,
+				7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */,
 				5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */,
 				5217F3F01859EE0000F2D5BB /* InfoPlist.strings in Resources */,
 				5211EFA61885611F007CC40D /* ble_app_hrs_s110_v6_0_0.hex in Resources */,
 				5211EFB118856430007CC40D /* icon-hex@2x.png in Resources */,
-				7EE155F9188E84BA00299DBA /* findme_alarm_3.aiff in Resources */,
 				5217F3F91859EE0000F2D5BB /* Main.storyboard in Resources */,
 				5211EFA51885611F007CC40D /* ble_app_hrs.hex in Resources */,
-				7EE155F7188E84A800299DBA /* findme_alarm_1.aiff in Resources */,
 				5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */,
 				5211EFA71885611F007CC40D /* ble_app_rscs_s110_v6_0_0.hex in Resources */,
 				5211EFB018856430007CC40D /* icon-hex.png in Resources */,
@@ -733,6 +734,7 @@
 				5214D0C71886951500460637 /* IntelHex2BinConverter.m in Sources */,
 				5252A563188549B000EFD773 /* ImageCell.m in Sources */,
 				5285D9A91890033F00305F1D /* CSCViewController.m in Sources */,
+				7E92108C18A38EE3009C6F2A /* HelpViewController.m in Sources */,
 				5217F428185F28D400F2D5BB /* ScannedPeripheral.m in Sources */,
 				524F2CD818897078008A8555 /* BGMItemCell.m in Sources */,
 				5214D0D218881D4D00460637 /* CharacteristicReader.m in Sources */,
@@ -795,7 +797,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD)";
 				"ARCHS[sdk=*]" = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -810,7 +811,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kamran Saleem Soomro (P4UVT5FG8F)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -826,8 +827,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				ONLY_ACTIVE_ARCH = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				"VALID_ARCHS[sdk=*]" = "arm32 armv7 armv7s";
@@ -838,7 +840,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD)";
 				"ARCHS[sdk=*]" = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -852,7 +853,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Nordic Semiconductor ASA (P3R8YQEV4L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -862,7 +863,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				"VALID_ARCHS[sdk=*]" = "arm32 armv7 armv7s";
@@ -872,7 +874,6 @@
 		5217F4151859EE0000F2D5BB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -888,7 +889,7 @@
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "21DA2A64-1B22-44E1-BC0A-B00075B97CFF";
 				"VALID_ARCHS[sdk=*]" = "arm32 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
@@ -897,11 +898,10 @@
 		5217F4161859EE0000F2D5BB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Nordic Semiconductor ASA (P3R8YQEV4L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Nordic Semiconductor ASA (P3R8YQEV4L)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nRF Toolbox/nRF Toolbox-Prefix.pch";
 				INFOPLIST_FILE = "nRF Toolbox/nRF Toolbox-Info.plist";
@@ -913,7 +913,7 @@
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "6BA3FF09-B2F8-48D7-8BF7-3CCCE6C2C811";
 				"VALID_ARCHS[sdk=*]" = "arm32 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
@@ -922,7 +922,6 @@
 		5217F4181859EE0000F2D5BB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox.app/nRF Toolbox";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -945,7 +944,6 @@
 		5217F4191859EE0000F2D5BB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox.app/nRF Toolbox";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",

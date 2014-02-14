@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "Constants.h"
+#import "HelpViewController.h"
 
 @interface ViewController ()
 
@@ -38,6 +39,17 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSLog(@"prepareForSegue");
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    if ([[segue identifier] isEqualToString:@"help"]) {
+        NSLog(@"correct segue");
+        HelpViewController *helpVC = [segue destinationViewController];
+        helpVC.helpText = [NSString stringWithFormat:@"The nRF Toolbox application works with a wide range of the most popular Bluetooth Low Energy accessories.\n\nVersion %@",version];
+    }
 }
 
 @end
