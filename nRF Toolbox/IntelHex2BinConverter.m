@@ -46,7 +46,7 @@
         // Validate - each line of the file must have a semicollon as a firs char
         if (semicollon != ':')
         {
-            return -1;
+            return 0;
         }
         
         const UInt8 reclen = [IntelHex2BinConverter readByte:pointer]; pointer += 2;
