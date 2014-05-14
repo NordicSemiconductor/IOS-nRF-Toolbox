@@ -887,9 +887,10 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/dependencies",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "21DA2A64-1B22-44E1-BC0A-B00075B97CFF";
+				PROVISIONING_PROFILE = "";
 				"VALID_ARCHS[sdk=*]" = "arm32 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
@@ -900,8 +901,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Nordic Semiconductor ASA (P3R8YQEV4L)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Nordic Semiconductor ASA (P3R8YQEV4L)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nRF Toolbox/nRF Toolbox-Prefix.pch";
 				INFOPLIST_FILE = "nRF Toolbox/nRF Toolbox-Info.plist";
@@ -911,9 +912,10 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/dependencies",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6BA3FF09-B2F8-48D7-8BF7-3CCCE6C2C811";
+				PROVISIONING_PROFILE = "";
 				"VALID_ARCHS[sdk=*]" = "arm32 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};

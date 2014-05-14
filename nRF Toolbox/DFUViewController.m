@@ -175,7 +175,7 @@
     {
         // Set this contoller as scanner delegate
         ScannerViewController *controller = (ScannerViewController *)segue.destinationViewController;
-        controller.filterUUID = dfuServiceUUID;
+        // controller.filterUUID = dfuServiceUUID; - the DFU service should not be advertised. We have to scan for any device hoping it supports DFU.
         controller.delegate = self;
     }
     else if ([segue.identifier isEqualToString:@"select"])

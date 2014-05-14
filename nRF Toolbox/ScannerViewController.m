@@ -95,7 +95,14 @@
         if (enable)
         {
             NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], CBCentralManagerScanOptionAllowDuplicatesKey, nil];
-            [bluetoothManager scanForPeripheralsWithServices:@[ filterUUID ] options:options];
+            if (filterUUID != nil)
+            {
+                [bluetoothManager scanForPeripheralsWithServices:@[ filterUUID ] options:options];
+            }
+            else
+            {
+                [bluetoothManager scanForPeripheralsWithServices:nil options:options];
+            }
             
             timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
         }
@@ -163,7 +170,7 @@
     
     // Update sensor name
     ScannedPeripheral *peripheral = [peripherals objectAtIndex:indexPath.row];
-    cell.textLabel.text = [[peripheral peripheral] name];
+    cell.textLabel.text = [peripheral name];
     
     // Update RSSI indicator
     int RSSI = peripheral.RSSI;

@@ -20,6 +20,16 @@
     return value;
 }
 
+-(NSString*) name
+{
+    NSString* name = [peripheral name];
+    if (name == nil)
+    {
+        return @"No name";
+    }
+    return name;
+}
+
 -(BOOL)isEqual:(id)object
 {
     ScannedPeripheral* other = (ScannedPeripheral*) object;

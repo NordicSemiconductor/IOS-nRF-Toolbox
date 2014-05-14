@@ -16,4 +16,6 @@
 
 + (ScannedPeripheral*) initWithPeripheral:(CBPeripheral*)peripheral rssi:(int)RSSI;
 
+- (NSString*) name;
+
 @end

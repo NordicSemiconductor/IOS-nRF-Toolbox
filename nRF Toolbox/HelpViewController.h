@@ -10,7 +10,10 @@
 
 @interface HelpViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
+@property (weak, nonatomic) IBOutlet UITextView *helpTextView;
+
 @property (strong, nonatomic) NSString *helpText;
 
-@property (weak, nonatomic) IBOutlet UITextView *helpTextView;
+
 @end

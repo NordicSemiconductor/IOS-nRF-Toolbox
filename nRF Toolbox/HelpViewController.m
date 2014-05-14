@@ -7,6 +7,7 @@
 //
 
 #import "HelpViewController.h"
+#import "Constants.h"
 
 @interface HelpViewController ()
 
@@ -14,6 +15,7 @@
 
 @implementation HelpViewController
 
+@synthesize backgroundImage;
 @synthesize helpTextView;
 @synthesize helpText;
 
@@ -28,10 +30,20 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    if (is4InchesIPhone)
+    {
+        // 4 inches iPhone
+        UIImage *image = [UIImage imageNamed:@"Background4.png"];
+        [backgroundImage setImage:image];
+    }
+    else
+    {
+        // 3.5 inches iPhone
+        UIImage *image = [UIImage imageNamed:@"Background35.png"];
+        [backgroundImage setImage:image];
+    }
+    
     helpTextView.text = helpText;
-    [helpTextView setFont:[UIFont fontWithName:@"Helvetica Neue" size:20.0]];
 }
 
 - (void)didReceiveMemoryWarning
