@@ -48,7 +48,7 @@
     if ([[segue identifier] isEqualToString:@"help"]) {
         NSLog(@"correct segue");
         HelpViewController *helpVC = [segue destinationViewController];
-        helpVC.helpText = [NSString stringWithFormat:@"The nRF Toolbox application works with a wide range of the most popular Bluetooth Low Energy accessories.\n\nVersion %@",version];
+        helpVC.helpText = [NSString stringWithFormat:@"        nRF Toolbox Version %@\n\n The nRF Toolbox application works with a wide range of the most popular Bluetooth Low Energy accessories.",version];
     }
 }
 
