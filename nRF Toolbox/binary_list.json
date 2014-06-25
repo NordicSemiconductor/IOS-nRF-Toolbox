@@ -23,6 +23,30 @@
                     "filename": "ble_app_rscs_s110_v6_0_0",
                     "extension": "hex",
                     "size": 53818
+                 },
+                 {
+                 "title": "softdevice_test.hex",
+                 "filename": "softdevice_test",
+                 "extension": "hex",
+                 "size": 229094
+                 },
+                 {
+                 "title": "bootloader_test.hex",
+                 "filename": "bootloader_test",
+                 "extension": "hex",
+                 "size": 39276
+                 },
+                 {
+                 "title": "blinky_arm.hex",
+                 "filename": "blinky_arm",
+                 "extension": "hex",
+                 "size": 2076
+                 },
+                 {
+                 "title": "firmware.zip",
+                 "filename": "firmware",
+                 "extension": "zip",
+                 "size": 113435
                  }
                 ]
 }

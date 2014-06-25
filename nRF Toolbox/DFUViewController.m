@@ -11,52 +11,71 @@
 #import "SelectorViewController.h"
 #import "Constants.h"
 #import "HelpViewController.h"
+#import "FileTypeTableViewController.h"
+#import "SSZipArchive.h"
 
 @interface DFUViewController () {
-    CBUUID *dfuServiceUUID;
-    CBUUID *dfuControlPointCharacteristicUUID;
-    CBUUID *dfuPacketCharacteristicUUID;
+    //CBUUID *dfuServiceUUID;
+    //CBUUID *dfuControlPointCharacteristicUUID;
+    //CBUUID *dfuPacketCharacteristicUUID;
 }
 
 /*!
  * This property is set when the device has been selected on the Scanner View Controller.
  */
 @property (strong, nonatomic) CBPeripheral *selectedPeripheral;
+@property (nonatomic)DfuFirmwareTypes enumFirmwareType;
 
-@property DFUController *dfuController;
+@property DFUOperations *dfuOperations;
+@property NSURL *selectedFileURL;
+@property NSURL *softdeviceURL;
+@property NSURL *bootloaderURL;
+@property NSURL *blinkyappURL;
+@property NSUInteger selectedFileSize;
+
 @property (weak, nonatomic) IBOutlet UILabel *fileName;
 @property (weak, nonatomic) IBOutlet UILabel *fileSize;
 @property (weak, nonatomic) IBOutlet UILabel *fileStatus;
-@property (weak, nonatomic) IBOutlet UILabel *status;
+
+@property (weak, nonatomic) IBOutlet UILabel *uploadStatus;
 @property (weak, nonatomic) IBOutlet UIProgressView *progress;
 @property (weak, nonatomic) IBOutlet UILabel *progressLabel;
 @property (weak, nonatomic) IBOutlet UIButton *selectFileButton;
 @property (weak, nonatomic) IBOutlet UIView *uploadPane;
 @property (weak, nonatomic) IBOutlet UIButton *uploadButton;
+@property (weak, nonatomic) IBOutlet UILabel *fileType;
 
 @property BOOL isTransferring;
+@property BOOL isTransfered;
+@property BOOL isTransferCancelled;
+@property BOOL isConnected;
+@property BOOL isErrorKnown;
 
 - (IBAction)uploadPressed;
 
 @end
 
 @implementation DFUViewController
-@synthesize bluetoothManager;
+//@synthesize bluetoothManager;
 @synthesize backgroundImage;
 @synthesize verticalLabel;
 @synthesize deviceName;
 @synthesize connectButton;
 @synthesize selectedPeripheral;
-@synthesize dfuController;
+@synthesize dfuOperations;
 @synthesize fileName;
 @synthesize fileSize;
 @synthesize fileStatus;
-@synthesize status;
+@synthesize uploadStatus;
 @synthesize progress;
 @synthesize progressLabel;
 @synthesize selectFileButton;
 @synthesize uploadButton;
 @synthesize uploadPane;
+@synthesize selectedFileURL;
+@synthesize fileType;
+@synthesize enumFirmwareType;
+@synthesize selectedFileType;
 
 
 -(id)initWithCoder:(NSCoder *)aDecoder
@@ -64,11 +83,11 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         // Custom initialization
-        dfuServiceUUID = [CBUUID UUIDWithString:dfuServiceUUIDString];
+        /*dfuServiceUUID = [CBUUID UUIDWithString:dfuServiceUUIDString];
         dfuControlPointCharacteristicUUID = [CBUUID UUIDWithString:dfuControlPointCharacteristicUUIDString];
-        dfuPacketCharacteristicUUID = [CBUUID UUIDWithString:dfuPacketCharacteristicUUIDString];
+        dfuPacketCharacteristicUUID = [CBUUID UUIDWithString:dfuPacketCharacteristicUUIDString];*/
         
-        dfuController = [[DFUController alloc] initWithDelegate:self];
+        dfuOperations = [[DFUOperations alloc] initWithDelegate:self];
     }
     return self;
 }
@@ -90,14 +109,17 @@
     
     // Rotate the vertical label
     verticalLabel.transform = CGAffineTransformMakeRotation(-M_PI / 2);
+    /*if(!self.selectedFileType) {
+        self.selectedFileType = [[Utility getFirmwareTypes]firstObject];
+    }*/
     
     // If firmware URL has been set by AppDelegate, show file information
-    if (dfuController.appSize > 0)
+    /*if (dfuController.appSize > 0)
     {
         fileName.text = dfuController.appName;
         fileSize.text = [NSString stringWithFormat:@"%ld bytes", dfuController.appSize];
         fileStatus.text = @"OK";
-    }
+    }*/
 }
 
 - (void)didReceiveMemoryWarning
@@ -108,42 +130,77 @@
 
 -(void)uploadPressed
 {
-    if (!self.isTransferring)
-    {
-        [bluetoothManager connectPeripheral:selectedPeripheral options:nil];
-        
-        // Animate the pane size
-        CGRect newSize = CGRectMake(35.0, 228.0, 251.0, 96.0);
-        [UIView animateWithDuration:0.4
-                delay:0.0
-                options:UIViewAnimationOptionCurveEaseIn
-                animations:^{
-                    uploadPane.frame = newSize;
-                } completion:^(BOOL finished) {
-                    status.hidden = NO;
-                    progress.hidden = NO;
-                    progressLabel.hidden = NO;
-
-                }];
+    if (self.isTransferring) {
+        [dfuOperations cancelDFU];
     }
-    else
-    {
-        [dfuController cancelTransfer];
+    else {
+        [self performDFU];
     }
 }
 
--(void)fileSelected:(NSURL *)url
+-(void)performDFU
 {
-    [dfuController setFirmwareURL:url];
-    fileName.text = dfuController.appName;
-    fileSize.text = [NSString stringWithFormat:@"%ld bytes", dfuController.appSize];
-    fileStatus.text = @"OK";
     
-    // If device has been selected before, allow upload
-    if (selectedPeripheral != nil)
-    {
-        uploadButton.enabled = YES;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // Animate the pane size
+        CGRect newSize = CGRectMake(35.0, 228.0, 251.0, 96.0);
+        [UIView animateWithDuration:0.4
+                              delay:0.0
+                            options:UIViewAnimationOptionCurveEaseIn
+                         animations:^{
+                             uploadPane.frame = newSize;
+                         } completion:^(BOOL finished) {
+                             uploadStatus.hidden = NO;
+                             progress.hidden = NO;
+                             progressLabel.hidden = NO;                             
+                         }];
+    });
+    if (enumFirmwareType == SOFTDEVICE_AND_BOOTLOADER) {
+        if (self.softdeviceURL && self.bootloaderURL) {
+            [dfuOperations performDFUOnFiles:self.softdeviceURL bootloaderURL:self.bootloaderURL firmwareType:SOFTDEVICE_AND_BOOTLOADER];
+        }
+        else {
+            NSLog(@"Softdevice and Bootloader files are missing");
+        }
     }
+    else {
+        [dfuOperations performDFUOnFile:selectedFileURL firmwareType:enumFirmwareType];
+    }
+    
+}
+
+-(void)unzipFirmwareFiles
+{
+    NSLog(@"unzipFirmwareFiles");
+    NSString *zipPath = [[NSBundle mainBundle] pathForResource:@"firmware" ofType:@"zip"];
+    NSString *outputPath = [self _cachesPath:@"unzipFiles"];
+    
+    [SSZipArchive unzipFileAtPath:zipPath toDestination:outputPath];
+    NSLog(@"zipfile path: %@",zipPath);
+    NSLog(@"unzip folder path: %@",outputPath);
+    //path to softdevice
+    NSString *softdevicePath = [outputPath stringByAppendingPathComponent:@"softdevice_test.hex"];
+    NSString *bootloaderPath = [outputPath stringByAppendingPathComponent:@"bootloader_test.hex"];
+    NSString *blinkyappPath = [outputPath stringByAppendingPathComponent:@"blinky_arm.hex"];
+    self.softdeviceURL = [NSURL fileURLWithPath:softdevicePath];
+    self.bootloaderURL = [NSURL fileURLWithPath:bootloaderPath];
+    self.blinkyappURL = [NSURL fileURLWithPath:blinkyappPath];
+    
+}
+
+-(NSString *)_cachesPath:(NSString *)directory {
+	NSString *path = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject]
+                      stringByAppendingPathComponent:@"com.nordicsemi.nRFToolbox"];
+	if (directory) {
+		path = [path stringByAppendingPathComponent:directory];
+	}
+    
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	if (![fileManager fileExistsAtPath:path]) {
+		[fileManager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+	}
+    
+	return path;
 }
 
 -(void)appDidEnterBackground:(NSNotification *)_notification
@@ -166,7 +223,8 @@
 -(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
     // The 'scan' or 'select' seque will be performed only if DFU process has not been started or was completed.
-    return !self.isTransferring;
+    //return !self.isTransferring;
+    return YES;
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -180,6 +238,7 @@
     }
     else if ([segue.identifier isEqualToString:@"select"])
     {
+        NSLog(@"performing Select File segue");
         SelectorViewController *controller = (SelectorViewController *)segue.destinationViewController;
         controller.delegate = self;
     }
@@ -187,80 +246,55 @@
         HelpViewController *helpVC = [segue destinationViewController];
         helpVC.helpText = [NSString stringWithFormat:@"-The Device Firmware Update (DFU) app that is compatible with Nordic Semiconductor nRF51822 devices that have the S110 SoftDevice and bootloader enabled.\n\n-It allows to upload new application onto the device over-the-air (OTA).\n\n-The DFU discovers supported DFU devices, connects to them, and uploads user selected firmware applications to the device.\n\n-Default number of Packet Receipt Notification is 10 but you can set up other number in the iPhone Settings."];
     }
-}
-
-#pragma mark Scanner Delegate methods
-
--(void)centralManager:(CBCentralManager *)manager didPeripheralSelected:(CBPeripheral *)peripheral
-{
-    // We may not use more than one Central Manager instance. Let's just take the one returned from Scanner View Controller
-    bluetoothManager = manager;
-    bluetoothManager.delegate = self;
-
-    // Set the peripheral
-    dfuController.peripheral = peripheral;
-    selectedPeripheral = peripheral;
-    deviceName.text = peripheral.name;
-    
-    if (dfuController.appSize > 0)
-    {
-        uploadButton.enabled = YES;
+    else if ([segue.identifier isEqualToString:@"FileTypeSegue"]) {
+        NSLog(@"performing FileTypeSegue");
+        FileTypeTableViewController *fileTypeVC = [segue destinationViewController];
+        fileTypeVC.chosenFirmwareType = selectedFileType;
     }
 }
 
-#pragma mark Central Manager delegate methods
-
-- (void)centralManagerDidUpdateState:(CBCentralManager *)central
+- (IBAction)unwindFileTypeSelector:(UIStoryboardSegue*)sender
 {
-    if (central.state == CBCentralManagerStatePoweredOn) {
-        // TODO
+    FileTypeTableViewController *fileTypeVC = [sender sourceViewController];
+    selectedFileType = fileTypeVC.chosenFirmwareType;
+    NSLog(@"unwindFileTypeSelector, selected Filetype: %@",selectedFileType);
+    fileType.text = selectedFileType;
+    [self setFirmwareType:selectedFileType];
+    [self enableUploadButton];
+}
+
+-(void) setFirmwareType:(NSString *)firmwareType
+{
+    if ([firmwareType isEqualToString:FIRMWARE_TYPE_SOFTDEVICE]) {
+        enumFirmwareType = SOFTDEVICE;
     }
-    else
-    {
-        // TODO
-        NSLog(@"Bluetooth not ON");
+    else if ([firmwareType isEqualToString:FIRMWARE_TYPE_BOOTLOADER]) {
+        enumFirmwareType = BOOTLOADER;
+    }
+    else if ([firmwareType isEqualToString:FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER]) {
+        enumFirmwareType = SOFTDEVICE_AND_BOOTLOADER;
+    }
+    else if ([firmwareType isEqualToString:FIRMWARE_TYPE_APPLICATION]) {
+        enumFirmwareType = APPLICATION;
     }
 }
 
-- (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral
-{
-    // Peripheral has connected. Discover required services
-    [dfuController didConnect];
-}
 
--(void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
-{
-    // Scanner uses other queue to send events. We must edit UI in the main queue
-    dispatch_async(dispatch_get_main_queue(), ^{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Connecting to the peripheral failed. Try again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
-        selectedPeripheral = nil;
-        
-        [self clearUI];
-    });
-}
-
-- (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
-{
-    // Notify DFU controller about link loss
-    [self.dfuController didDisconnect:error];
-}
 
 - (void) clearUI
 {
-    if (selectedPeripheral == nil)
-    {
-        deviceName.text = @"DEFAULT DFU";
-    }
-    status.text = @"";
-    status.hidden = YES;
+    selectedPeripheral = nil;
+    deviceName.text = @"DEFAULT DFU";
+    uploadStatus.text = @"waiting ...";
+    fileStatus.text = @"";
+    uploadStatus.hidden = YES;
     progress.progress = 0.0f;
     progress.hidden = YES;
     progressLabel.hidden = YES;
     progressLabel.text = @"";
     selectFileButton.enabled = YES;
     [uploadButton setTitle:@"Upload" forState:UIControlStateNormal];
-    uploadButton.enabled = selectedPeripheral != nil;   // TODO && aplikacja wybrana
+    uploadButton.enabled = NO;
     
     // Animate upload pane
     CGRect newSize = CGRectMake(35.0, 228.0, 251.0, 48.0);
@@ -274,9 +308,211 @@
                      }];
 }
 
-#pragma mark DFU Controller delegate methods
+-(void)enableUploadButton
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (selectedPeripheral && selectedFileType && self.selectedFileSize > 0 && self.isConnected) {
+            NSLog(@"enabling upload button ...");
+            uploadButton.enabled = YES;
+        }
+        else {
+            NSLog(@"cant enable Upload button");
+        }
 
--(void)didChangeState:(DFUControllerState) state;
+    });
+}
+
+-(void)showAlert:(NSString *)message
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"DFU" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alert show];
+}
+
+-(NSString *)getUploadStatusMessage
+{
+    switch (enumFirmwareType) {
+        case SOFTDEVICE:
+            return @"uploading softdevice ...";
+            break;
+        case BOOTLOADER:
+            return @"uploading bootloader ...";
+            break;
+        case APPLICATION:
+            return @"uploading application ...";
+            break;
+        case SOFTDEVICE_AND_BOOTLOADER:
+            return @"uploading softdevice ...";
+            break;
+            
+        default:
+            return @"uploading ...";
+            break;
+    }
+}
+
+#pragma mark Scanner Delegate methods
+
+-(void)centralManager:(CBCentralManager *)manager didPeripheralSelected:(CBPeripheral *)peripheral
+{
+    selectedPeripheral = peripheral;
+    [dfuOperations setCentralManager:manager];
+    deviceName.text = peripheral.name;
+    [dfuOperations connectDevice:peripheral];
+    
+    
+}
+
+#pragma mark File Selector Delegate methods
+
+-(void)fileSelected:(NSURL *)url
+{
+    selectedFileURL = url;
+    if (selectedFileURL) {
+        NSLog(@"selectedFile path %@",selectedFileURL);
+        NSString *selectedFileName = [[url path]lastPathComponent];
+        NSData *fileData = [NSData dataWithContentsOfURL:url];
+        self.selectedFileSize = fileData.length;
+        NSLog(@"fileSelected %@",selectedFileName);
+        
+        //get last three characters for file extension
+        NSString *extension = [selectedFileName substringFromIndex: [selectedFileName length] - 3];
+        NSLog(@"selected file extension is %@",extension);
+        if ([extension isEqualToString:@"zip"]) {
+            NSLog(@"this is zip file");
+            [self unzipFirmwareFiles];
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            fileName.text = selectedFileName;
+            fileSize.text = [NSString stringWithFormat:@"%d bytes", self.selectedFileSize];
+            fileStatus.text = @"OK";
+            [self enableUploadButton];
+            
+        });
+        
+    }
+    else {
+        [self showAlert:@"Selected file not exist!"];
+    }
+}
+
+
+#pragma mark DFUOperations delegate methods
+
+-(void)onDeviceConnected:(CBPeripheral *)peripheral
+{
+    NSLog(@"onDeviceConnected %@",peripheral.name);
+    self.isConnected = YES;
+    [self enableUploadButton];
+}
+
+-(void)onDeviceDisconnected:(CBPeripheral *)peripheral
+{
+    NSLog(@"device disconnected %@",peripheral.name);
+    self.isTransferring = NO;
+    self.isConnected = NO;
+    
+    // Scanner uses other queue to send events. We must edit UI in the main queue
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self clearUI];
+        if (!self.isTransfered && !self.isTransferCancelled && !self.isErrorKnown) {
+            [self showAlert:@"The connection has been lost"];
+        }
+        self.isTransferCancelled = NO;
+        self.isTransfered = NO;
+        self.isErrorKnown = NO;
+    });
+
+}
+
+-(void)onDFUStarted
+{
+    NSLog(@"onDFUStarted");
+    self.isTransferring = YES;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [uploadButton setTitle:@"Cancel" forState:UIControlStateNormal];
+        NSString *uploadStatusMessage = [self getUploadStatusMessage];
+        uploadStatus.text = uploadStatusMessage;
+    });
+}
+
+-(void)onDFUCancelled
+{
+    NSLog(@"onDFUCancelled");
+    self.isTransferring = NO;
+    self.isTransferCancelled = YES;
+}
+
+-(void)onSoftDeviceUploadStarted
+{
+    NSLog(@"onSoftDeviceUploadStarted");
+}
+
+-(void)onSoftDeviceUploadCompleted
+{
+    NSLog(@"onSoftDeviceUploadCompleted");
+}
+
+-(void)onBootloaderUploadStarted
+{
+    NSLog(@"onBootloaderUploadStarted");
+    dispatch_async(dispatch_get_main_queue(), ^{
+        uploadStatus.text = @"uploading bootloader ...";
+    });
+    
+}
+
+-(void)onBootloaderUploadCompleted
+{
+    NSLog(@"onBootloaderUploadCompleted");
+}
+
+-(void)onTransferPercentage:(int)percentage
+{
+    NSLog(@"onTransferPercentage %d",percentage);
+    // Scanner uses other queue to send events. We must edit UI in the main queue
+    dispatch_async(dispatch_get_main_queue(), ^{
+        progressLabel.text = [NSString stringWithFormat:@"%d %%", percentage];
+        [progress setProgress:((float)percentage/100.0) animated:YES];
+    });
+    
+}
+
+-(void)onSuccessfulFileTranferred
+{
+    NSLog(@"OnSuccessfulFileTransferred");
+    // Scanner uses other queue to send events. We must edit UI in the main queue
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.isTransferring = NO;
+        self.isTransfered = YES;
+        if (enumFirmwareType == SOFTDEVICE_AND_BOOTLOADER) {
+            NSString* messge = [NSString stringWithFormat:@"%d bytes transfered", dfuOperations.binFileSize+dfuOperations.binFileSize2];
+            [self showAlert:messge];
+        }
+        else {
+            NSString* messge = [NSString stringWithFormat:@"%d bytes transfered", dfuOperations.binFileSize];
+            [self showAlert:messge];
+        }
+        
+    });
+    
+    
+    /*NSString* messge = [NSString stringWithFormat:@"%lu bytes transfered in %lu ms.", dfuController.binSize, (unsigned long) (dfuController.uploadInterval * 1000.0)];*/
+    
+}
+
+-(void)onError:(NSString *)errorMessage
+{
+    NSLog(@"OnError %@",errorMessage);
+    self.isErrorKnown = YES;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self showAlert:errorMessage];        
+    });
+    
+}
+
+
+/*-(void)didChangeState:(DFUControllerState) state;
 {
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -386,6 +622,6 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
     });
-}
+}*/
 
 @end

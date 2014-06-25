@@ -64,8 +64,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     
     // Call delegate method
-    NSDictionary *image = [self.images objectAtIndex:indexPath.row];
-    
+    NSDictionary *image = [self.images objectAtIndex:indexPath.row];    
     NSURL *firmwareURL = [[NSBundle mainBundle] URLForResource:[image objectForKey:@"filename"] withExtension:[image objectForKey:@"extension"]];
     [self.delegate fileSelected:firmwareURL];
 }

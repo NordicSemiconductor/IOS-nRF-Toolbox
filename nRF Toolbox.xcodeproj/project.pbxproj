@@ -48,14 +48,26 @@
 		5252A53A18802B8100EFD773 /* BPMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A53918802B8100EFD773 /* BPMViewController.m */; };
 		5252A53E18802F7200EFD773 /* DFUViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A53D18802F7200EFD773 /* DFUViewController.m */; };
 		5252A542188030A800EFD773 /* ProximityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A541188030A800EFD773 /* ProximityViewController.m */; };
-		5252A55518841E2700EFD773 /* DFUController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A55218841E2700EFD773 /* DFUController.m */; };
-		5252A55618841E2700EFD773 /* DFUTargetAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A55418841E2700EFD773 /* DFUTargetAdapter.m */; };
 		5252A55D18853C0600EFD773 /* SelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A55C18853C0600EFD773 /* SelectorViewController.m */; };
 		5252A563188549B000EFD773 /* ImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A562188549B000EFD773 /* ImageCell.m */; };
 		5285D9A91890033F00305F1D /* CSCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5285D9A81890033F00305F1D /* CSCViewController.m */; };
 		52E08DC21889449A00ED959F /* libCorePlot-CocoaTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52E08DC11889449A00ED959F /* libCorePlot-CocoaTouch.a */; };
 		7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B422818A8DF4D006BA1BC /* high.mp3 */; };
+		7E445C881951A46800633892 /* DFUOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E445C871951A46800633892 /* DFUOperations.m */; };
+		7E445C8B1951A48100633892 /* DFUOperationsDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E445C8A1951A48100633892 /* DFUOperationsDetails.m */; };
+		7E445C8E1951A51A00633892 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E445C8D1951A51A00633892 /* Utility.m */; };
+		7E445C901951B6D800633892 /* softdevice_test.hex in Resources */ = {isa = PBXBuildFile; fileRef = 7E445C8F1951B6D800633892 /* softdevice_test.hex */; };
+		7E445C921951B7CF00633892 /* bootloader_test.hex in Resources */ = {isa = PBXBuildFile; fileRef = 7E445C911951B7CF00633892 /* bootloader_test.hex */; };
+		7E445C971951D09E00633892 /* FileTypeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E445C961951D09E00633892 /* FileTypeTableViewController.m */; };
 		7E92108C18A38EE3009C6F2A /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E92108B18A38EE3009C6F2A /* HelpViewController.m */; };
+		7ED9BDE1195850DC0021814D /* blinky_arm.hex in Resources */ = {isa = PBXBuildFile; fileRef = 7ED9BDE0195850DC0021814D /* blinky_arm.hex */; };
+		7ED9BE5F195ADD4F0021814D /* firmware.zip in Resources */ = {isa = PBXBuildFile; fileRef = 7ED9BE5E195ADD4F0021814D /* firmware.zip */; };
+		7ED9BE63195AE6CC0021814D /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9BE62195AE6CC0021814D /* SSZipArchive.m */; };
+		7ED9BE6E195AE6D80021814D /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9BE66195AE6D80021814D /* ioapi.c */; };
+		7ED9BE6F195AE6D80021814D /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9BE68195AE6D80021814D /* mztools.c */; };
+		7ED9BE70195AE6D80021814D /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9BE6A195AE6D80021814D /* unzip.c */; };
+		7ED9BE71195AE6D80021814D /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9BE6C195AE6D80021814D /* zip.c */; };
+		7ED9BE73195AE76D0021814D /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ED9BE72195AE76D0021814D /* libz.1.2.5.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,10 +146,6 @@
 		5252A53D18802F7200EFD773 /* DFUViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFUViewController.m; sourceTree = "<group>"; };
 		5252A540188030A800EFD773 /* ProximityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProximityViewController.h; sourceTree = "<group>"; };
 		5252A541188030A800EFD773 /* ProximityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProximityViewController.m; sourceTree = "<group>"; };
-		5252A55118841E1200EFD773 /* DFUController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFUController.h; sourceTree = "<group>"; };
-		5252A55218841E2700EFD773 /* DFUController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFUController.m; sourceTree = "<group>"; };
-		5252A55318841E2700EFD773 /* DFUTargetAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFUTargetAdapter.h; sourceTree = "<group>"; };
-		5252A55418841E2700EFD773 /* DFUTargetAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFUTargetAdapter.m; sourceTree = "<group>"; };
 		5252A55B18853C0600EFD773 /* SelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectorViewController.h; sourceTree = "<group>"; };
 		5252A55C18853C0600EFD773 /* SelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectorViewController.m; sourceTree = "<group>"; };
 		5252A561188549B000EFD773 /* ImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCell.h; sourceTree = "<group>"; };
@@ -221,8 +229,32 @@
 		52E08E0C188944AC00ED959F /* CPTXYGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPTXYGraph.h; path = dependencies/CPTXYGraph.h; sourceTree = "<group>"; };
 		52E08E0D188944AC00ED959F /* CPTXYPlotSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPTXYPlotSpace.h; path = dependencies/CPTXYPlotSpace.h; sourceTree = "<group>"; };
 		7E1B422818A8DF4D006BA1BC /* high.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = high.mp3; sourceTree = "<group>"; };
+		7E445C861951A45B00633892 /* DFUOperations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFUOperations.h; sourceTree = "<group>"; };
+		7E445C871951A46800633892 /* DFUOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFUOperations.m; sourceTree = "<group>"; };
+		7E445C891951A47200633892 /* DFUOperationsDetails.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFUOperationsDetails.h; sourceTree = "<group>"; };
+		7E445C8A1951A48100633892 /* DFUOperationsDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFUOperationsDetails.m; sourceTree = "<group>"; };
+		7E445C8C1951A50A00633892 /* Utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
+		7E445C8D1951A51A00633892 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
+		7E445C8F1951B6D800633892 /* softdevice_test.hex */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = softdevice_test.hex; sourceTree = "<group>"; };
+		7E445C911951B7CF00633892 /* bootloader_test.hex */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bootloader_test.hex; sourceTree = "<group>"; };
+		7E445C951951D09E00633892 /* FileTypeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileTypeTableViewController.h; sourceTree = "<group>"; };
+		7E445C961951D09E00633892 /* FileTypeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileTypeTableViewController.m; sourceTree = "<group>"; };
 		7E92108A18A38EE3009C6F2A /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
 		7E92108B18A38EE3009C6F2A /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
+		7ED9BDE0195850DC0021814D /* blinky_arm.hex */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = blinky_arm.hex; sourceTree = "<group>"; };
+		7ED9BE5E195ADD4F0021814D /* firmware.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = firmware.zip; sourceTree = "<group>"; };
+		7ED9BE61195AE6C20021814D /* SSZipArchive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSZipArchive.h; sourceTree = "<group>"; };
+		7ED9BE62195AE6CC0021814D /* SSZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSZipArchive.m; sourceTree = "<group>"; };
+		7ED9BE65195AE6D80021814D /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
+		7ED9BE66195AE6D80021814D /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
+		7ED9BE67195AE6D80021814D /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
+		7ED9BE68195AE6D80021814D /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mztools.c; sourceTree = "<group>"; };
+		7ED9BE69195AE6D80021814D /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
+		7ED9BE6A195AE6D80021814D /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unzip.c; sourceTree = "<group>"; };
+		7ED9BE6B195AE6D80021814D /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
+		7ED9BE6C195AE6D80021814D /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
+		7ED9BE6D195AE6D80021814D /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
+		7ED9BE72195AE76D0021814D /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,6 +262,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7ED9BE73195AE76D0021814D /* libz.1.2.5.dylib in Frameworks */,
 				5217F41B1859EEF400F2D5BB /* CoreBluetooth.framework in Frameworks */,
 				5217F3E81859EE0000F2D5BB /* CoreGraphics.framework in Frameworks */,
 				5217F3EA1859EE0000F2D5BB /* UIKit.framework in Frameworks */,
@@ -259,6 +292,10 @@
 				5211EFA11885611F007CC40D /* ble_app_hrs.hex */,
 				5211EFA21885611F007CC40D /* ble_app_hrs_s110_v6_0_0.hex */,
 				5211EFA31885611F007CC40D /* ble_app_rscs_s110_v6_0_0.hex */,
+				7E445C8F1951B6D800633892 /* softdevice_test.hex */,
+				7E445C911951B7CF00633892 /* bootloader_test.hex */,
+				7ED9BDE0195850DC0021814D /* blinky_arm.hex */,
+				7ED9BE5E195ADD4F0021814D /* firmware.zip */,
 			);
 			name = "Embeded files";
 			sourceTree = "<group>";
@@ -285,6 +322,7 @@
 		5217F3D91859EE0000F2D5BB = {
 			isa = PBXGroup;
 			children = (
+				7ED9BE60195AE6950021814D /* SSZipArchive */,
 				52E08DC01889448400ED959F /* CorePlot */,
 				5214D0CD1886C02A00460637 /* Settings.bundle */,
 				5217F3EB1859EE0000F2D5BB /* nRF Toolbox */,
@@ -306,6 +344,7 @@
 		5217F3E41859EE0000F2D5BB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7ED9BE72195AE76D0021814D /* libz.1.2.5.dylib */,
 				5217F41A1859EEF400F2D5BB /* CoreBluetooth.framework */,
 				5217F3E51859EE0000F2D5BB /* Foundation.framework */,
 				5217F3E71859EE0000F2D5BB /* CoreGraphics.framework */,
@@ -468,6 +507,8 @@
 				5252A54F18841D9D00EFD773 /* DFU Implementation */,
 				5252A53C18802F7200EFD773 /* DFUViewController.h */,
 				5252A53D18802F7200EFD773 /* DFUViewController.m */,
+				7E445C951951D09E00633892 /* FileTypeTableViewController.h */,
+				7E445C961951D09E00633892 /* FileTypeTableViewController.m */,
 			);
 			name = DFU;
 			sourceTree = "<group>";
@@ -484,10 +525,12 @@
 		5252A54F18841D9D00EFD773 /* DFU Implementation */ = {
 			isa = PBXGroup;
 			children = (
-				5252A55118841E1200EFD773 /* DFUController.h */,
-				5252A55218841E2700EFD773 /* DFUController.m */,
-				5252A55318841E2700EFD773 /* DFUTargetAdapter.h */,
-				5252A55418841E2700EFD773 /* DFUTargetAdapter.m */,
+				7E445C861951A45B00633892 /* DFUOperations.h */,
+				7E445C871951A46800633892 /* DFUOperations.m */,
+				7E445C891951A47200633892 /* DFUOperationsDetails.h */,
+				7E445C8A1951A48100633892 /* DFUOperationsDetails.m */,
+				7E445C8C1951A50A00633892 /* Utility.h */,
+				7E445C8D1951A51A00633892 /* Utility.m */,
 			);
 			name = "DFU Implementation";
 			sourceTree = "<group>";
@@ -603,6 +646,32 @@
 			name = CorePlotHeaders;
 			sourceTree = "<group>";
 		};
+		7ED9BE60195AE6950021814D /* SSZipArchive */ = {
+			isa = PBXGroup;
+			children = (
+				7ED9BE64195AE6D80021814D /* minizip */,
+				7ED9BE61195AE6C20021814D /* SSZipArchive.h */,
+				7ED9BE62195AE6CC0021814D /* SSZipArchive.m */,
+			);
+			name = SSZipArchive;
+			sourceTree = "<group>";
+		};
+		7ED9BE64195AE6D80021814D /* minizip */ = {
+			isa = PBXGroup;
+			children = (
+				7ED9BE65195AE6D80021814D /* crypt.h */,
+				7ED9BE66195AE6D80021814D /* ioapi.c */,
+				7ED9BE67195AE6D80021814D /* ioapi.h */,
+				7ED9BE68195AE6D80021814D /* mztools.c */,
+				7ED9BE69195AE6D80021814D /* mztools.h */,
+				7ED9BE6A195AE6D80021814D /* unzip.c */,
+				7ED9BE6B195AE6D80021814D /* unzip.h */,
+				7ED9BE6C195AE6D80021814D /* zip.c */,
+				7ED9BE6D195AE6D80021814D /* zip.h */,
+			);
+			path = minizip;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -687,6 +756,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E445C921951B7CF00633892 /* bootloader_test.hex in Resources */,
+				7E445C901951B6D800633892 /* softdevice_test.hex in Resources */,
 				5211EFA91885618E007CC40D /* binary_list.json in Resources */,
 				5211EFA41885611F007CC40D /* ble_app_rscs.hex in Resources */,
 				5214D0CE1886C02A00460637 /* Settings.bundle in Resources */,
@@ -697,7 +768,9 @@
 				5211EFA61885611F007CC40D /* ble_app_hrs_s110_v6_0_0.hex in Resources */,
 				5211EFB118856430007CC40D /* icon-hex@2x.png in Resources */,
 				5217F3F91859EE0000F2D5BB /* Main.storyboard in Resources */,
+				7ED9BDE1195850DC0021814D /* blinky_arm.hex in Resources */,
 				5211EFA51885611F007CC40D /* ble_app_hrs.hex in Resources */,
+				7ED9BE5F195ADD4F0021814D /* firmware.zip in Resources */,
 				5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */,
 				5211EFA71885611F007CC40D /* ble_app_rscs_s110_v6_0_0.hex in Resources */,
 				5211EFB018856430007CC40D /* icon-hex.png in Resources */,
@@ -719,20 +792,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E445C971951D09E00633892 /* FileTypeTableViewController.m in Sources */,
+				7ED9BE70195AE6D80021814D /* unzip.c in Sources */,
 				524F2CE2188984E6008A8555 /* BGMDetailsViewController.m in Sources */,
 				5252A53E18802F7200EFD773 /* DFUViewController.m in Sources */,
 				5252A53A18802B8100EFD773 /* BPMViewController.m in Sources */,
 				5217F3FC1859EE0000F2D5BB /* ViewController.m in Sources */,
 				5252A55D18853C0600EFD773 /* SelectorViewController.m in Sources */,
-				5252A55518841E2700EFD773 /* DFUController.m in Sources */,
 				524F2CDF18897D33008A8555 /* GlucoseReading.m in Sources */,
 				5217F3F61859EE0000F2D5BB /* AppDelegate.m in Sources */,
+				7ED9BE71195AE6D80021814D /* zip.c in Sources */,
+				7E445C8B1951A48100633892 /* DFUOperationsDetails.m in Sources */,
 				5217F3F21859EE0000F2D5BB /* main.m in Sources */,
 				5217F41E185B198E00F2D5BB /* RSACViewController.m in Sources */,
+				7ED9BE6E195AE6D80021814D /* ioapi.c in Sources */,
 				5252A542188030A800EFD773 /* ProximityViewController.m in Sources */,
+				7ED9BE63195AE6CC0021814D /* SSZipArchive.m in Sources */,
+				7ED9BE6F195AE6D80021814D /* mztools.c in Sources */,
 				5236E162187EA7540057E974 /* HTSViewController.m in Sources */,
+				7E445C8E1951A51A00633892 /* Utility.m in Sources */,
 				5214D0C71886951500460637 /* IntelHex2BinConverter.m in Sources */,
 				5252A563188549B000EFD773 /* ImageCell.m in Sources */,
+				7E445C881951A46800633892 /* DFUOperations.m in Sources */,
 				5285D9A91890033F00305F1D /* CSCViewController.m in Sources */,
 				7E92108C18A38EE3009C6F2A /* HelpViewController.m in Sources */,
 				5217F428185F28D400F2D5BB /* ScannedPeripheral.m in Sources */,
@@ -743,7 +824,6 @@
 				524F2CE5188D2A56008A8555 /* GlucoseReadingContext.m in Sources */,
 				5217F422185F15FA00F2D5BB /* ScannerViewController.m in Sources */,
 				5236E15F187EA73F0057E974 /* HRSViewController.m in Sources */,
-				5252A55618841E2700EFD773 /* DFUTargetAdapter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -827,7 +907,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -853,7 +933,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Nordic Semiconductor ASA (P3R8YQEV4L)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -863,8 +943,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PROVISIONING_PROFILE = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				PROVISIONING_PROFILE = "6BA3FF09-B2F8-48D7-8BF7-3CCCE6C2C811";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				"VALID_ARCHS[sdk=*]" = "arm32 armv7 armv7s";
@@ -881,7 +961,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nRF Toolbox/nRF Toolbox-Prefix.pch";
 				INFOPLIST_FILE = "nRF Toolbox/nRF Toolbox-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -906,7 +986,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nRF Toolbox/nRF Toolbox-Prefix.pch";
 				INFOPLIST_FILE = "nRF Toolbox/nRF Toolbox-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -915,7 +995,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "6BA3FF09-B2F8-48D7-8BF7-3CCCE6C2C811";
 				"VALID_ARCHS[sdk=*]" = "arm32 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};

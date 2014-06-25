@@ -23,9 +23,9 @@ static NSString * const bpmIntermediateCuffPressureCharacteristicUUIDString = @"
 static NSString * const cscServiceUUIDString = @"00001816-0000-1000-8000-00805F9B34FB";
 static NSString * const cscMeasurementCharacteristicUUIDString = @"00002A5B-0000-1000-8000-00805F9B34FB";
 
-static NSString * const dfuServiceUUIDString = @"00001530-1212-EFDE-1523-785FEABCD123";
-static NSString * const dfuControlPointCharacteristicUUIDString = @"00001531-1212-EFDE-1523-785FEABCD123";
-static NSString * const dfuPacketCharacteristicUUIDString = @"00001532-1212-EFDE-1523-785FEABCD123";
+//static NSString * const dfuServiceUUIDString = @"00001530-1212-EFDE-1523-785FEABCD123";
+//static NSString * const dfuControlPointCharacteristicUUIDString = @"00001531-1212-EFDE-1523-785FEABCD123";
+//static NSString * const dfuPacketCharacteristicUUIDString = @"00001532-1212-EFDE-1523-785FEABCD123";
 
 static NSString * const rscServiceUUIDString = @"00001814-0000-1000-8000-00805F9B34FB";
 static NSString * const rscMeasurementCharacteristicUUIDString = @"00002A53-0000-1000-8000-00805F9B34FB";
