@@ -138,6 +138,10 @@
                         bytesCopied++;
                     }
                 }
+                else
+                {
+                    pointer += (reclen << 1);  // Skip the data
+                }
                 break;
             case 0x02:
                 // Should here be the same as for 0x04?
