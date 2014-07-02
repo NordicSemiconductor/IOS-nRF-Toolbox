@@ -24,6 +24,14 @@ extern NSString* const FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER;
 extern int const PACKETS_NOTIFICATION_INTERVAL;
 extern int const PACKET_SIZE;
 
+struct DFUResponse
+{
+    uint8_t responseCode;
+    uint8_t requestedCode;
+    uint8_t responseStatus;
+    
+};
+
 typedef enum {
     START_DFU_REQUEST = 0x01,
     INITIALIZE_DFU_PARAMETERS_REQUEST = 0x02,

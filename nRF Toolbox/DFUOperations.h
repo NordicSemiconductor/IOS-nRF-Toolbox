@@ -46,7 +46,7 @@
 @property (nonatomic)NSUInteger binFileSize;
 @property (nonatomic)NSUInteger binFileSize2;
 @property (strong, nonatomic)NSURL *firmwareFile;
-
+@property struct DFUResponse dfuResponse;
 
 -(DFUOperations *) initWithDelegate:(id<DFUOperationsDelegate>) delegate;
 

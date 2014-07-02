@@ -15,8 +15,6 @@
 
 @implementation DFUOperations
 
-
-
 @synthesize dfuDelegate;
 @synthesize centralManager;
 @synthesize bluetoothPeripheral;
@@ -24,6 +22,7 @@
 @synthesize binFileSize;
 @synthesize binFileSize2;
 @synthesize firmwareFile;
+@synthesize dfuResponse;
 
 bool isDFUPacketCharacteristicFound, isDFUControlPointCharacteristic, isStartingSecondFile;
 int numberOfPackets, bytesInLastPacket, numberOfPackets2, bytesInLastPacket2;
@@ -53,7 +52,6 @@ double const delayInSeconds = 10.0;
         NSString *errorMessage = [NSString stringWithFormat:@"Error on received CBCentralManager\n Message: Bluetooth central manager is nil"];
         [dfuDelegate onError:errorMessage];
     }
-    
 }
 
 -(void)connectDevice:(CBPeripheral *)peripheral
@@ -68,7 +66,6 @@ double const delayInSeconds = 10.0;
         NSString *errorMessage = [NSString stringWithFormat:@"Error on received CBPeripheral\n Message: Bluetooth peripheral is nil"];
         [dfuDelegate onError:errorMessage];
     }
-    
 }
 
 -(void)cancelDFU
@@ -129,7 +126,6 @@ double const delayInSeconds = 10.0;
         NSString *errorMessage = [NSString stringWithFormat:@"Error on openning file\n Message: file is empty or not exist"];
         [dfuDelegate onError:errorMessage];
     }
-    
 }
 
 -(void) openFile2:(NSURL *)fileURL2
@@ -198,7 +194,6 @@ double const delayInSeconds = 10.0;
         percentage = (((double)(writingPacketNumber2 * 20) / (double)(binFileSize2)) * 100);
         [dfuDelegate onTransferPercentage:percentage];
         writingPacketNumber2++;
-        
     }
 }
 
@@ -249,6 +244,129 @@ double const delayInSeconds = 10.0;
     }
 }
 
+-(void)processRequestedCode
+{
+    NSLog(@"processsRequestedCode");
+    switch (dfuResponse.requestedCode) {
+        case START_DFU_REQUEST:
+            NSLog(@"Requested code is StartDFU now processing response status");
+            [self processStartDFUResponseStatus];
+            break;
+        case RECEIVE_FIRMWARE_IMAGE_REQUEST:
+            NSLog(@"Requested code is Receive Firmware Image now processing response status");
+            [self processReceiveFirmwareResponseStatus];
+            break;
+        case VALIDATE_FIRMWARE_REQUEST:
+            NSLog(@"Requested code is Validate Firmware now processing response status");
+            [self processValidateFirmwareResponseStatus];
+            break;
+            
+        default:
+            NSLog(@"invalid Requested code in DFU Response %d",dfuResponse.requestedCode);
+            break;
+    }
+}
+
+-(void)processStartDFUResponseStatus
+{
+    NSLog(@"processStartDFUResponseStatus");
+    NSString *errorMessage = [NSString stringWithFormat:@"Error on StartDFU\n Message: %@",[self responseErrorMessage:dfuResponse.responseStatus]];
+    switch (dfuResponse.responseStatus) {
+        case OPERATION_SUCCESSFUL_RESPONSE:
+            NSLog(@"successfully received startDFU notification");
+            [self startSendingFile];
+            break;
+        case OPERATION_NOT_SUPPORTED_RESPONSE:
+            NSLog(@"device has old DFU. switching to old DFU ...");
+            [self performOldDFUOnFile:firmwareFile];
+            break;
+            
+        default:
+            NSLog(@"StartDFU failed, Error Status: %@",[self responseErrorMessage:dfuResponse.responseStatus]);
+            [dfuDelegate onError:errorMessage];
+            [dfuRequests resetSystem];
+            break;
+    }
+}
+
+-(void)processReceiveFirmwareResponseStatus
+{
+    NSLog(@"processReceiveFirmwareResponseStatus");
+    if (dfuResponse.responseStatus == OPERATION_SUCCESSFUL_RESPONSE) {
+        NSLog(@"successfully received notification for whole File transfer");
+        [dfuRequests validateFirmware];
+    }
+    else {
+        NSLog(@"Firmware Image failed, Error Status: %@",[self responseErrorMessage:dfuResponse.responseStatus]);
+        NSString *errorMessage = [NSString stringWithFormat:@"Error on Receive Firmware Image\n Message: %@",[self responseErrorMessage:dfuResponse.responseStatus]];
+        [dfuDelegate onError:errorMessage];
+    }
+}
+
+-(void)processValidateFirmwareResponseStatus
+{
+    NSLog(@"processValidateFirmwareResponseStatus");
+    if (dfuResponse.responseStatus == OPERATION_SUCCESSFUL_RESPONSE) {
+        NSLog(@"succesfully received notification for ValidateFirmware");
+        [dfuRequests activateAndReset];
+        [dfuDelegate onSuccessfulFileTranferred];
+    }
+    else {
+        NSLog(@"Firmware validate failed, Error Status: %@",[self responseErrorMessage:dfuResponse.responseStatus]);
+        NSString *errorMessage = [NSString stringWithFormat:@"Error on Validate Firmware Request\n Message: %@",[self responseErrorMessage:dfuResponse.responseStatus]];
+        [dfuDelegate onError:errorMessage];
+    }
+}
+
+-(void)processPacketNotification
+{
+    NSLog(@"received Packet Received Notification");
+    if (isStartingSecondFile) {
+        [self writeNextPacket2];
+    }
+    else {
+        [self writeNextPacket];
+    }
+}
+
+-(void)processDFUResponse:(uint8_t *)data
+{
+    NSLog(@"processDFUResponse");
+    [self setDFUResponseStruct:data];
+    if (dfuResponse.responseCode == RESPONSE_CODE) {
+        [self processRequestedCode];
+    }
+    else if(dfuResponse.responseCode == PACKET_RECEIPT_NOTIFICATION_RESPONSE) {
+        [self processPacketNotification];
+    }
+}
+
+-(void)setDFUResponseStruct:(uint8_t *)data
+{
+    dfuResponse.responseCode = data[0];
+    dfuResponse.requestedCode = data[1];
+    dfuResponse.responseStatus = data[2];
+}
+
+-(void)searchDFURequiredCharacteristics:(CBService *)service
+{
+    isDFUControlPointCharacteristic = NO;
+    isDFUPacketCharacteristicFound = NO;
+    for (CBCharacteristic *characteristic in service.characteristics) {
+        NSLog(@"Found characteristic %@",characteristic.UUID);
+        if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:dfuControlPointCharacteristicUUIDString]]) {
+            NSLog(@"Control Point characteristic found");
+            isDFUControlPointCharacteristic = YES;
+            self.dfuControlPointCharacteristic = characteristic;
+        }
+        if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:dfuPacketCharacteristicUUIDString]]) {
+            NSLog(@"Packet Characteristic is found");
+            isDFUPacketCharacteristicFound = YES;
+            self.dfuPacketCharacteristic = characteristic;
+        }
+    }
+}
+
 #pragma mark - CentralManager delegates
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central
 {
@@ -294,21 +412,7 @@ double const delayInSeconds = 10.0;
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error
 {
     NSLog(@"didDiscoverCharacteristicsForService");
-    isDFUControlPointCharacteristic = NO;
-    isDFUPacketCharacteristicFound = NO;
-    for (CBCharacteristic *characteristic in service.characteristics) {
-        NSLog(@"Found characteristic %@",characteristic.UUID);
-        if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:dfuControlPointCharacteristicUUIDString]]) {
-            NSLog(@"Control Point characteristic found");
-            isDFUControlPointCharacteristic = YES;
-            self.dfuControlPointCharacteristic = characteristic;
-        }
-        if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:dfuPacketCharacteristicUUIDString]]) {
-            NSLog(@"Packet Characteristic is found");
-            isDFUPacketCharacteristicFound = YES;
-            self.dfuPacketCharacteristic = characteristic;
-        }
-    }
+    [self searchDFURequiredCharacteristics:service];
     if (isDFUControlPointCharacteristic && isDFUPacketCharacteristicFound) {
         [dfuRequests setPeripheralAndOtherParameters:bluetoothPeripheral
                           controlPointCharacteristic:self.dfuControlPointCharacteristic
@@ -319,9 +423,7 @@ double const delayInSeconds = 10.0;
         NSString *errorMessage = [NSString stringWithFormat:@"Error on discovering characteristics\n Message: Required DFU characteristics are not available on peripheral"];
         [dfuDelegate onError:errorMessage];
     }
-    
 }
-
 
 -(void) peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
@@ -331,59 +433,7 @@ double const delayInSeconds = 10.0;
     }
     else {
         NSLog(@"received notification %@",characteristic.value);
-        uint8_t *data = (uint8_t *)[characteristic.value bytes];
-        if (data[0] == RESPONSE_CODE && data[1] == START_DFU_REQUEST) {
-            if (data[2] == OPERATION_SUCCESSFUL_RESPONSE) {
-                NSLog(@"successfully received startDFU notification %@",characteristic.value);
-                [self startSendingFile];
-            }
-            else {
-                NSLog(@"Start DFU failed, Error Status: %@",[self responseErrorMessage:data[2]]);
-                if ([[self responseErrorMessage:data[2]] isEqual:@"Operation Not Supported"]) {
-                    NSLog(@"device has old DFU. switching to old DFU ...");
-                    [self performOldDFUOnFile:firmwareFile];
-                }
-                else {
-                    NSString *errorMessage = [NSString stringWithFormat:@"Error on StartDFU\n Message: %@",[self responseErrorMessage:data[2]]];
-                    [dfuDelegate onError:errorMessage];
-                    [dfuRequests resetSystem];
-                }
-            }
-        }
-        else if (data[0] == PACKET_RECEIPT_NOTIFICATION_RESPONSE) {
-            NSLog(@"received Packet Received Notification %@",characteristic.value);
-            if (isStartingSecondFile) {
-                [self writeNextPacket2];
-            }
-            else {
-                [self writeNextPacket];
-            }
-        }
-        else if (data[0] == RESPONSE_CODE && data[1] == RECEIVE_FIRMWARE_IMAGE_REQUEST) {
-            if (data[2] == OPERATION_SUCCESSFUL_RESPONSE) {
-                NSLog(@"successfully received notification for whole File transfer");
-                [dfuRequests validateFirmware];
-            }
-            else {
-                NSLog(@"Receive Firmware Image failed, Error Status: %@",[self responseErrorMessage:data[2]]);
-                NSString *errorMessage = [NSString stringWithFormat:@"Error on Receive Firmware Image\n Message: %@",[self responseErrorMessage:data[2]]];
-                [dfuDelegate onError:errorMessage];
-
-            }
-        }
-        else if (data[0] == RESPONSE_CODE && data[1] == VALIDATE_FIRMWARE_REQUEST) {
-            if (data[2] == OPERATION_SUCCESSFUL_RESPONSE) {
-                NSLog(@"succesfully received notification for ValidateFirmware");
-                [dfuRequests activateAndReset];
-                [dfuDelegate onSuccessfulFileTranferred];
-                
-            }
-            else {
-                NSLog(@"Firmware validate failed, Error Status: %@",[self responseErrorMessage:data[2]]);
-                NSString *errorMessage = [NSString stringWithFormat:@"Error on Validate Firmware Request\n Message: %@",[self responseErrorMessage:data[2]]];
-                [dfuDelegate onError:errorMessage];
-            }
-        }
+        [self processDFUResponse:(uint8_t *)[characteristic.value bytes]];
     }
 }
 

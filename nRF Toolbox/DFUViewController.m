@@ -50,6 +50,7 @@
 @property BOOL isTransferCancelled;
 @property BOOL isConnected;
 @property BOOL isErrorKnown;
+@property BOOL isSelectedFileZipped;
 
 - (IBAction)uploadPressed;
 
@@ -140,10 +141,12 @@
 
 -(void)performDFU
 {
-    
     dispatch_async(dispatch_get_main_queue(), ^{
+        uploadStatus.hidden = NO;
+        progress.hidden = NO;
+        progressLabel.hidden = NO;
         // Animate the pane size
-        CGRect newSize = CGRectMake(35.0, 228.0, 251.0, 96.0);
+        /*CGRect newSize = CGRectMake(35.0, 228.0, 251.0, 96.0);
         [UIView animateWithDuration:0.4
                               delay:0.0
                             options:UIViewAnimationOptionCurveEaseIn
@@ -153,20 +156,31 @@
                              uploadStatus.hidden = NO;
                              progress.hidden = NO;
                              progressLabel.hidden = NO;                             
-                         }];
+                         }];*/
     });
-    if (enumFirmwareType == SOFTDEVICE_AND_BOOTLOADER) {
-        if (self.softdeviceURL && self.bootloaderURL) {
-            [dfuOperations performDFUOnFiles:self.softdeviceURL bootloaderURL:self.bootloaderURL firmwareType:SOFTDEVICE_AND_BOOTLOADER];
-        }
-        else {
-            NSLog(@"Softdevice and Bootloader files are missing");
+    if (self.isSelectedFileZipped) {
+        switch (enumFirmwareType) {
+            case SOFTDEVICE_AND_BOOTLOADER:
+                [dfuOperations performDFUOnFiles:self.softdeviceURL bootloaderURL:self.bootloaderURL firmwareType:SOFTDEVICE_AND_BOOTLOADER];
+                break;
+            case SOFTDEVICE:
+                [dfuOperations performDFUOnFile:self.softdeviceURL firmwareType:SOFTDEVICE];
+                break;
+            case BOOTLOADER:
+                [dfuOperations performDFUOnFile:self.bootloaderURL firmwareType:BOOTLOADER];
+                break;
+            case APPLICATION:
+                [dfuOperations performDFUOnFile:self.blinkyappURL firmwareType:APPLICATION];
+                break;
+                
+            default:
+                NSLog(@"Not valid File type");
+                break;
         }
     }
     else {
         [dfuOperations performDFUOnFile:selectedFileURL firmwareType:enumFirmwareType];
     }
-    
 }
 
 -(void)unzipFirmwareFiles
@@ -179,9 +193,9 @@
     NSLog(@"zipfile path: %@",zipPath);
     NSLog(@"unzip folder path: %@",outputPath);
     //path to softdevice
-    NSString *softdevicePath = [outputPath stringByAppendingPathComponent:@"softdevice_test.hex"];
-    NSString *bootloaderPath = [outputPath stringByAppendingPathComponent:@"bootloader_test.hex"];
-    NSString *blinkyappPath = [outputPath stringByAppendingPathComponent:@"blinky_arm.hex"];
+    NSString *softdevicePath = [outputPath stringByAppendingPathComponent:@"softdevice.hex"];
+    NSString *bootloaderPath = [outputPath stringByAppendingPathComponent:@"bootloader.hex"];
+    NSString *blinkyappPath = [outputPath stringByAppendingPathComponent:@"application.hex"];
     self.softdeviceURL = [NSURL fileURLWithPath:softdevicePath];
     self.bootloaderURL = [NSURL fileURLWithPath:bootloaderPath];
     self.blinkyappURL = [NSURL fileURLWithPath:blinkyappPath];
@@ -286,7 +300,7 @@
     selectedPeripheral = nil;
     deviceName.text = @"DEFAULT DFU";
     uploadStatus.text = @"waiting ...";
-    fileStatus.text = @"";
+    //fileStatus.text = @"";
     uploadStatus.hidden = YES;
     progress.progress = 0.0f;
     progress.hidden = YES;
@@ -297,7 +311,7 @@
     uploadButton.enabled = NO;
     
     // Animate upload pane
-    CGRect newSize = CGRectMake(35.0, 228.0, 251.0, 48.0);
+    /*CGRect newSize = CGRectMake(35.0, 228.0, 251.0, 48.0);
     [UIView animateWithDuration:0.4
                           delay:0.0
                         options:UIViewAnimationOptionCurveEaseIn
@@ -305,14 +319,25 @@
                          uploadPane.frame = newSize;
                      } completion:^(BOOL finished) {
                          // empty
-                     }];
+    }];*/
 }
 
 -(void)enableUploadButton
 {
     dispatch_async(dispatch_get_main_queue(), ^{
+        if (selectedFileType && self.selectedFileSize > 0) {
+            if ([self isValidFileSelected]) {
+                NSLog(@" valid file selected");
+                fileStatus.text = @"OK";
+            }
+            else {
+                NSLog(@"Valid file not available in zip file");
+                [self showAlert:@"Valid file not selected or not present"];
+                fileStatus.text = @""; //choose some nice text here
+                return;
+            }
+        }
         if (selectedPeripheral && selectedFileType && self.selectedFileSize > 0 && self.isConnected) {
-            NSLog(@"enabling upload button ...");
             uploadButton.enabled = YES;
         }
         else {
@@ -320,6 +345,56 @@
         }
 
     });
+}
+
+-(BOOL)isValidFileSelected
+{
+    NSLog(@"checkValidFileSelected");
+    if (self.isSelectedFileZipped) {
+        switch (enumFirmwareType) {
+            case SOFTDEVICE_AND_BOOTLOADER:
+                if (self.softdeviceURL && self.bootloaderURL) {
+                    NSLog(@"Found Softdevice and Bootloader files in selected zip file");
+                    return YES;
+                }
+                break;
+            case SOFTDEVICE:
+                if (self.softdeviceURL) {
+                    NSLog(@"Found Softdevice file in selected zip file");
+                    return YES;
+                }
+                break;
+            case BOOTLOADER:
+                if (self.bootloaderURL) {
+                    NSLog(@"Found Bootloader file in selected zip file");
+                    return YES;
+                }
+                break;
+            case APPLICATION:
+                if (self.blinkyappURL) {
+                    NSLog(@"Found Application file in selected zip file");
+                    return YES;
+                }
+                break;
+                
+            default:
+                NSLog(@"Not valid File type");
+                return NO;
+                break;
+        }
+        //Corresponding file to selected file type is not present in zip file
+        return NO;
+    }
+    else if(enumFirmwareType == SOFTDEVICE_AND_BOOTLOADER){
+        NSLog(@"Please select zip file with softdevice and bootloader inside");
+        return NO;
+    }
+    else {
+        //Selcted file is not zip and file type is not Softdevice + Bootloader
+        //then it is upto user to assign correct file to corresponding file type
+        return YES;
+    }
+    
 }
 
 -(void)showAlert:(NSString *)message
@@ -379,13 +454,17 @@
         NSLog(@"selected file extension is %@",extension);
         if ([extension isEqualToString:@"zip"]) {
             NSLog(@"this is zip file");
+            self.isSelectedFileZipped = YES;
             [self unzipFirmwareFiles];
+        }
+        else {
+            self.isSelectedFileZipped = NO;
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
             fileName.text = selectedFileName;
             fileSize.text = [NSString stringWithFormat:@"%d bytes", self.selectedFileSize];
-            fileStatus.text = @"OK";
+            //fileStatus.text = @"OK";
             [self enableUploadButton];
             
         });

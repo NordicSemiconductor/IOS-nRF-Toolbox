@@ -1310,7 +1310,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zgI-eq-aFb" userLabel="View - ACTIVITY">
-                                <rect key="frame" x="35" y="254" width="251" height="59"/>
+                                <rect key="frame" x="35" y="254" width="251" height="93"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PVI-T9-QmJ">
                                         <rect key="frame" x="102" y="9" width="50" height="30"/>
