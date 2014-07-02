@@ -152,6 +152,7 @@ double const delayInSeconds = 10.0;
             NSRange dataRange = NSMakeRange(writingPacketNumber*PACKET_SIZE, bytesInLastPacket);
             NSData *nextPacketData = [self.binFileData subdataWithRange:dataRange];
             NSLog(@"writing packet number %d ...",writingPacketNumber+1);
+            NSLog(@"packet data: %@",nextPacketData);
             [self.bluetoothPeripheral writeValue:nextPacketData forCharacteristic:self.dfuPacketCharacteristic type:CBCharacteristicWriteWithoutResponse];
             if (self.dfuFirmwareType == SOFTDEVICE_AND_BOOTLOADER) {
                 isStartingSecondFile = YES;
@@ -166,6 +167,7 @@ double const delayInSeconds = 10.0;
         NSRange dataRange = NSMakeRange(writingPacketNumber*PACKET_SIZE, PACKET_SIZE);
         NSData *nextPacketData = [self.binFileData subdataWithRange:dataRange];
         NSLog(@"writing packet number %d ...",writingPacketNumber+1);
+        NSLog(@"packet data: %@",nextPacketData);
         [self.bluetoothPeripheral writeValue:nextPacketData forCharacteristic:self.dfuPacketCharacteristic type:CBCharacteristicWriteWithoutResponse];
         percentage = (((double)(writingPacketNumber * 20) / (double)(binFileSize)) * 100);
         [dfuDelegate onTransferPercentage:percentage];
@@ -183,13 +185,16 @@ double const delayInSeconds = 10.0;
             NSRange dataRange = NSMakeRange(writingPacketNumber2*PACKET_SIZE, bytesInLastPacket2);
             NSData *nextPacketData = [self.binFileData2 subdataWithRange:dataRange];
             NSLog(@"writing packet number %d ...",writingPacketNumber2+1);
+            NSLog(@"packet data: %@",nextPacketData);
             [self.bluetoothPeripheral writeValue:nextPacketData forCharacteristic:self.dfuPacketCharacteristic type:CBCharacteristicWriteWithoutResponse];
             [dfuDelegate onBootloaderUploadCompleted];
+            writingPacketNumber2++;
             break;
         }
         NSRange dataRange = NSMakeRange(writingPacketNumber2*PACKET_SIZE, PACKET_SIZE);
         NSData *nextPacketData = [self.binFileData2 subdataWithRange:dataRange];
         NSLog(@"writing packet number %d ...",writingPacketNumber2+1);
+        NSLog(@"packet data: %@",nextPacketData);
         [self.bluetoothPeripheral writeValue:nextPacketData forCharacteristic:self.dfuPacketCharacteristic type:CBCharacteristicWriteWithoutResponse];
         percentage = (((double)(writingPacketNumber2 * 20) / (double)(binFileSize2)) * 100);
         [dfuDelegate onTransferPercentage:percentage];
@@ -300,6 +305,7 @@ double const delayInSeconds = 10.0;
         NSLog(@"Firmware Image failed, Error Status: %@",[self responseErrorMessage:dfuResponse.responseStatus]);
         NSString *errorMessage = [NSString stringWithFormat:@"Error on Receive Firmware Image\n Message: %@",[self responseErrorMessage:dfuResponse.responseStatus]];
         [dfuDelegate onError:errorMessage];
+        [dfuRequests resetSystem];
     }
 }
 
@@ -315,6 +321,7 @@ double const delayInSeconds = 10.0;
         NSLog(@"Firmware validate failed, Error Status: %@",[self responseErrorMessage:dfuResponse.responseStatus]);
         NSString *errorMessage = [NSString stringWithFormat:@"Error on Validate Firmware Request\n Message: %@",[self responseErrorMessage:dfuResponse.responseStatus]];
         [dfuDelegate onError:errorMessage];
+        [dfuRequests resetSystem];
     }
 }
 
@@ -322,10 +329,14 @@ double const delayInSeconds = 10.0;
 {
     NSLog(@"received Packet Received Notification");
     if (isStartingSecondFile) {
-        [self writeNextPacket2];
+        if (writingPacketNumber2 < numberOfPackets2) {
+            [self writeNextPacket2];
+        }
     }
     else {
-        [self writeNextPacket];
+        if (writingPacketNumber < numberOfPackets) {
+            [self writeNextPacket];
+        }        
     }
 }
 

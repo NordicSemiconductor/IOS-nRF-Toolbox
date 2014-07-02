@@ -433,8 +433,6 @@
     [dfuOperations setCentralManager:manager];
     deviceName.text = peripheral.name;
     [dfuOperations connectDevice:peripheral];
-    
-    
 }
 
 #pragma mark File Selector Delegate methods
@@ -585,7 +583,8 @@
     NSLog(@"OnError %@",errorMessage);
     self.isErrorKnown = YES;
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self showAlert:errorMessage];        
+        [self showAlert:errorMessage];
+        [self clearUI];
     });
     
 }

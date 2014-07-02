@@ -59,6 +59,7 @@
 		7E445C921951B7CF00633892 /* bootloader_test.hex in Resources */ = {isa = PBXBuildFile; fileRef = 7E445C911951B7CF00633892 /* bootloader_test.hex */; };
 		7E445C971951D09E00633892 /* FileTypeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E445C961951D09E00633892 /* FileTypeTableViewController.m */; };
 		7E92108C18A38EE3009C6F2A /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E92108B18A38EE3009C6F2A /* HelpViewController.m */; };
+		7ECF201919644226005495C8 /* firmware.zip in Resources */ = {isa = PBXBuildFile; fileRef = 7ECF201819644226005495C8 /* firmware.zip */; };
 		7ED9BDE1195850DC0021814D /* blinky_arm.hex in Resources */ = {isa = PBXBuildFile; fileRef = 7ED9BDE0195850DC0021814D /* blinky_arm.hex */; };
 		7ED9BE63195AE6CC0021814D /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9BE62195AE6CC0021814D /* SSZipArchive.m */; };
 		7ED9BE6E195AE6D80021814D /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9BE66195AE6D80021814D /* ioapi.c */; };
@@ -66,7 +67,6 @@
 		7ED9BE70195AE6D80021814D /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9BE6A195AE6D80021814D /* unzip.c */; };
 		7ED9BE71195AE6D80021814D /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9BE6C195AE6D80021814D /* zip.c */; };
 		7ED9BE73195AE76D0021814D /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ED9BE72195AE76D0021814D /* libz.1.2.5.dylib */; };
-		7ED9BE75196401BA0021814D /* firmware.zip in Resources */ = {isa = PBXBuildFile; fileRef = 7ED9BE74196401BA0021814D /* firmware.zip */; };
 		7ED9BE7719640B890021814D /* softdevice_test.hex in Resources */ = {isa = PBXBuildFile; fileRef = 7ED9BE7619640B890021814D /* softdevice_test.hex */; };
 /* End PBXBuildFile section */
 
@@ -240,6 +240,7 @@
 		7E445C961951D09E00633892 /* FileTypeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileTypeTableViewController.m; sourceTree = "<group>"; };
 		7E92108A18A38EE3009C6F2A /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
 		7E92108B18A38EE3009C6F2A /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
+		7ECF201819644226005495C8 /* firmware.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = firmware.zip; sourceTree = "<group>"; };
 		7ED9BDE0195850DC0021814D /* blinky_arm.hex */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = blinky_arm.hex; sourceTree = "<group>"; };
 		7ED9BE61195AE6C20021814D /* SSZipArchive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSZipArchive.h; sourceTree = "<group>"; };
 		7ED9BE62195AE6CC0021814D /* SSZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSZipArchive.m; sourceTree = "<group>"; };
@@ -253,7 +254,6 @@
 		7ED9BE6C195AE6D80021814D /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
 		7ED9BE6D195AE6D80021814D /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
 		7ED9BE72195AE76D0021814D /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
-		7ED9BE74196401BA0021814D /* firmware.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = firmware.zip; sourceTree = "<group>"; };
 		7ED9BE7619640B890021814D /* softdevice_test.hex */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = softdevice_test.hex; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -294,8 +294,8 @@
 				5211EFA31885611F007CC40D /* ble_app_rscs_s110_v6_0_0.hex */,
 				7E445C911951B7CF00633892 /* bootloader_test.hex */,
 				7ED9BDE0195850DC0021814D /* blinky_arm.hex */,
-				7ED9BE74196401BA0021814D /* firmware.zip */,
 				7ED9BE7619640B890021814D /* softdevice_test.hex */,
+				7ECF201819644226005495C8 /* firmware.zip */,
 			);
 			name = "Embeded files";
 			sourceTree = "<group>";
@@ -770,7 +770,7 @@
 				5217F3F91859EE0000F2D5BB /* Main.storyboard in Resources */,
 				7ED9BDE1195850DC0021814D /* blinky_arm.hex in Resources */,
 				5211EFA51885611F007CC40D /* ble_app_hrs.hex in Resources */,
-				7ED9BE75196401BA0021814D /* firmware.zip in Resources */,
+				7ECF201919644226005495C8 /* firmware.zip in Resources */,
 				5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */,
 				5211EFA71885611F007CC40D /* ble_app_rscs_s110_v6_0_0.hex in Resources */,
 				5211EFB018856430007CC40D /* icon-hex.png in Resources */,
