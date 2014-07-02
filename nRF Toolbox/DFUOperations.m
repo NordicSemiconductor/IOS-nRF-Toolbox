@@ -154,6 +154,7 @@ double const delayInSeconds = 10.0;
             NSLog(@"writing packet number %d ...",writingPacketNumber+1);
             NSLog(@"packet data: %@",nextPacketData);
             [self.bluetoothPeripheral writeValue:nextPacketData forCharacteristic:self.dfuPacketCharacteristic type:CBCharacteristicWriteWithoutResponse];
+            writingPacketNumber++;
             if (self.dfuFirmwareType == SOFTDEVICE_AND_BOOTLOADER) {
                 isStartingSecondFile = YES;
                 NSLog(@"Firmware type is Softdevice plus Bootloader. now upload bootloader ...");
@@ -336,7 +337,7 @@ double const delayInSeconds = 10.0;
     else {
         if (writingPacketNumber < numberOfPackets) {
             [self writeNextPacket];
-        }        
+        }
     }
 }
 

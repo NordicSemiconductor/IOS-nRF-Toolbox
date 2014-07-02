@@ -17,7 +17,6 @@
 @protocol DFUOperationsDelegate
 
 //define protocol functions that can be used in any class using this delegate
-//-(void)onDeviceScanned:(CBPeripheral *)peripheral;
 -(void)onDeviceConnected:(CBPeripheral *)peripheral;
 -(void)onDeviceDisconnected:(CBPeripheral *)peripheral;
 -(void)onDFUStarted;
