@@ -60,6 +60,7 @@
 		7E445C971951D09E00633892 /* FileTypeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E445C961951D09E00633892 /* FileTypeTableViewController.m */; };
 		7E92108C18A38EE3009C6F2A /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E92108B18A38EE3009C6F2A /* HelpViewController.m */; };
 		7ECF201919644226005495C8 /* firmware.zip in Resources */ = {isa = PBXBuildFile; fileRef = 7ECF201819644226005495C8 /* firmware.zip */; };
+		7ECF201F19655312005495C8 /* FileOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ECF201E19655312005495C8 /* FileOperations.m */; };
 		7ED9BDE1195850DC0021814D /* blinky_arm.hex in Resources */ = {isa = PBXBuildFile; fileRef = 7ED9BDE0195850DC0021814D /* blinky_arm.hex */; };
 		7ED9BE63195AE6CC0021814D /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9BE62195AE6CC0021814D /* SSZipArchive.m */; };
 		7ED9BE6E195AE6D80021814D /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9BE66195AE6D80021814D /* ioapi.c */; };
@@ -241,6 +242,8 @@
 		7E92108A18A38EE3009C6F2A /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
 		7E92108B18A38EE3009C6F2A /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
 		7ECF201819644226005495C8 /* firmware.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = firmware.zip; sourceTree = "<group>"; };
+		7ECF201D19655312005495C8 /* FileOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileOperations.h; sourceTree = "<group>"; };
+		7ECF201E19655312005495C8 /* FileOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileOperations.m; sourceTree = "<group>"; };
 		7ED9BDE0195850DC0021814D /* blinky_arm.hex */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = blinky_arm.hex; sourceTree = "<group>"; };
 		7ED9BE61195AE6C20021814D /* SSZipArchive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSZipArchive.h; sourceTree = "<group>"; };
 		7ED9BE62195AE6CC0021814D /* SSZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSZipArchive.m; sourceTree = "<group>"; };
@@ -531,6 +534,8 @@
 				7E445C8A1951A48100633892 /* DFUOperationsDetails.m */,
 				7E445C8C1951A50A00633892 /* Utility.h */,
 				7E445C8D1951A51A00633892 /* Utility.m */,
+				7ECF201D19655312005495C8 /* FileOperations.h */,
+				7ECF201E19655312005495C8 /* FileOperations.m */,
 			);
 			name = "DFU Implementation";
 			sourceTree = "<group>";
@@ -814,6 +819,7 @@
 				5214D0C71886951500460637 /* IntelHex2BinConverter.m in Sources */,
 				5252A563188549B000EFD773 /* ImageCell.m in Sources */,
 				7E445C881951A46800633892 /* DFUOperations.m in Sources */,
+				7ECF201F19655312005495C8 /* FileOperations.m in Sources */,
 				5285D9A91890033F00305F1D /* CSCViewController.m in Sources */,
 				7E92108C18A38EE3009C6F2A /* HelpViewController.m in Sources */,
 				5217F428185F28D400F2D5BB /* ScannedPeripheral.m in Sources */,

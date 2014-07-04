@@ -19,15 +19,14 @@
 @synthesize centralManager;
 @synthesize bluetoothPeripheral;
 @synthesize dfuRequests;
-@synthesize binFileSize;
-@synthesize binFileSize2;
+//@synthesize binFileSize;
+//@synthesize binFileSize2;
 @synthesize firmwareFile;
 @synthesize dfuResponse;
+@synthesize fileRequests;
+@synthesize fileRequests2;
 
 bool isDFUPacketCharacteristicFound, isDFUControlPointCharacteristic, isStartingSecondFile;
-int numberOfPackets, bytesInLastPacket, numberOfPackets2, bytesInLastPacket2;
-int writingPacketNumber = 0;
-int writingPacketNumber2 = 0;
 double const delayInSeconds = 10.0;
 
 -(DFUOperations *) initWithDelegate:(id<DFUOperationsDelegate>) delegate
@@ -77,130 +76,51 @@ double const delayInSeconds = 10.0;
 
 -(void)performDFUOnFiles:(NSURL *)softdeviceURL bootloaderURL:(NSURL *)bootloaderURL firmwareType:(DfuFirmwareTypes)firmwareType
 {
+    [self initFileOperations];
+    [self initFileOperations2];
     isStartingSecondFile = NO;
     self.dfuFirmwareType = firmwareType;
-    [self openFile:softdeviceURL];
-    [self openFile2:bootloaderURL];
+    [fileRequests openFile:softdeviceURL];
+    [fileRequests2 openFile:bootloaderURL];
     [dfuRequests enableNotification];
     [dfuRequests startDFU:firmwareType];
-    [dfuRequests writeFilesSizes:(uint32_t)self.binFileData.length bootloaderSize:(uint32_t)self.binFileData2.length];
+    [dfuRequests writeFilesSizes:(uint32_t)fileRequests.binFileSize bootloaderSize:(uint32_t)fileRequests2.binFileSize];
 }
 
 -(void)performDFUOnFile:(NSURL *)firmwareURL firmwareType:(DfuFirmwareTypes)firmwareType
 {
+    [self initFileOperations];
     isStartingSecondFile = NO;
     firmwareFile = firmwareURL;
     self.dfuFirmwareType = firmwareType;
-    [self openFile:firmwareURL];
+    [fileRequests openFile:firmwareURL];
     [dfuRequests enableNotification];
     [dfuRequests startDFU:firmwareType];
-    [dfuRequests writeFileSize:(uint32_t)self.binFileData.length];
+    [dfuRequests writeFileSize:(uint32_t)fileRequests.binFileSize];
 }
 
 -(void)performOldDFUOnFile:(NSURL *)firmwareURL
 {
+    [self initFileOperations];
     isStartingSecondFile = NO;
-    [self openFile:firmwareURL];
+    [fileRequests openFile:firmwareURL];
     [dfuRequests enableNotification];
     [dfuRequests startOldDFU];
-    [dfuRequests writeFileSizeForOldDFU:(uint32_t)self.binFileData.length];
+    [dfuRequests writeFileSize:(uint32_t)fileRequests.binFileSize];
 }
 
--(void) openFile:(NSURL *)fileURL
+-(void)initFileOperations
 {
-    NSData *hexFileData = [NSData dataWithContentsOfURL:fileURL];
-    if (hexFileData.length > 0) {
-        self.binFileData = [IntelHex2BinConverter convert:hexFileData];
-        NSLog(@"HexFileSize: %lu and BinFileSize: %lu",(unsigned long)hexFileData.length,(unsigned long)self.binFileData.length);
-        numberOfPackets = ceil((double)self.binFileData.length / (double)PACKET_SIZE);
-        bytesInLastPacket = (self.binFileData.length % PACKET_SIZE);
-        if (bytesInLastPacket == 0) {
-            bytesInLastPacket = PACKET_SIZE;
-        }
-        NSLog(@"Number of Packets %d Bytes in last Packet %d",numberOfPackets,bytesInLastPacket);
-        writingPacketNumber = 0;        
-        binFileSize = self.binFileData.length;
-    }
-    else {
-        NSLog(@"Error: file is empty!");
-        NSString *errorMessage = [NSString stringWithFormat:@"Error on openning file\n Message: file is empty or not exist"];
-        [dfuDelegate onError:errorMessage];
-    }
+    fileRequests = [[FileOperations alloc]initWithDelegate:self
+                                             blePeripheral:bluetoothPeripheral
+                                         bleCharacteristic:self.dfuPacketCharacteristic];
 }
 
--(void) openFile2:(NSURL *)fileURL2
+-(void)initFileOperations2
 {
-    NSData *hexFileData = [NSData dataWithContentsOfURL:fileURL2];
-    self.binFileData2 = [IntelHex2BinConverter convert:hexFileData];
-    NSLog(@"HexFileSize: %lu and BinFileSize2: %lu",(unsigned long)hexFileData.length,(unsigned long)self.binFileData2.length);
-    numberOfPackets2 = ceil((double)self.binFileData2.length / (double)PACKET_SIZE);
-    bytesInLastPacket2 = (self.binFileData2.length % PACKET_SIZE);
-    if (bytesInLastPacket2 == 0) {
-        bytesInLastPacket2 = PACKET_SIZE;
-    }
-    NSLog(@"Number of Packets %d Bytes in last Packet %d",numberOfPackets2,bytesInLastPacket2);
-    writingPacketNumber2 = 0;
-    binFileSize2 = self.binFileData2.length;
-}
-
--(void) writeNextPacket
-{
-    int percentage = 0;
-    for (int index = 0; index<PACKETS_NOTIFICATION_INTERVAL; index++) {
-        if (writingPacketNumber > numberOfPackets-2) {
-            NSLog(@"writing last packet");
-            NSRange dataRange = NSMakeRange(writingPacketNumber*PACKET_SIZE, bytesInLastPacket);
-            NSData *nextPacketData = [self.binFileData subdataWithRange:dataRange];
-            NSLog(@"writing packet number %d ...",writingPacketNumber+1);
-            NSLog(@"packet data: %@",nextPacketData);
-            [self.bluetoothPeripheral writeValue:nextPacketData forCharacteristic:self.dfuPacketCharacteristic type:CBCharacteristicWriteWithoutResponse];
-            writingPacketNumber++;
-            if (self.dfuFirmwareType == SOFTDEVICE_AND_BOOTLOADER) {
-                isStartingSecondFile = YES;
-                NSLog(@"Firmware type is Softdevice plus Bootloader. now upload bootloader ...");
-                [dfuDelegate onSoftDeviceUploadCompleted];
-                [dfuDelegate onBootloaderUploadStarted];
-                [self writeNextPacket2];
-            }
-            
-            break;
-        }
-        NSRange dataRange = NSMakeRange(writingPacketNumber*PACKET_SIZE, PACKET_SIZE);
-        NSData *nextPacketData = [self.binFileData subdataWithRange:dataRange];
-        NSLog(@"writing packet number %d ...",writingPacketNumber+1);
-        NSLog(@"packet data: %@",nextPacketData);
-        [self.bluetoothPeripheral writeValue:nextPacketData forCharacteristic:self.dfuPacketCharacteristic type:CBCharacteristicWriteWithoutResponse];
-        percentage = (((double)(writingPacketNumber * 20) / (double)(binFileSize)) * 100);
-        [dfuDelegate onTransferPercentage:percentage];
-        writingPacketNumber++;
-        
-    }
-}
-
--(void) writeNextPacket2
-{
-    int percentage = 0;
-    for (int index = 0; index<PACKETS_NOTIFICATION_INTERVAL; index++) {
-        if (writingPacketNumber2 > numberOfPackets2-2) {
-            NSLog(@"writing last packet");
-            NSRange dataRange = NSMakeRange(writingPacketNumber2*PACKET_SIZE, bytesInLastPacket2);
-            NSData *nextPacketData = [self.binFileData2 subdataWithRange:dataRange];
-            NSLog(@"writing packet number %d ...",writingPacketNumber2+1);
-            NSLog(@"packet data: %@",nextPacketData);
-            [self.bluetoothPeripheral writeValue:nextPacketData forCharacteristic:self.dfuPacketCharacteristic type:CBCharacteristicWriteWithoutResponse];
-            [dfuDelegate onBootloaderUploadCompleted];
-            writingPacketNumber2++;
-            break;
-        }
-        NSRange dataRange = NSMakeRange(writingPacketNumber2*PACKET_SIZE, PACKET_SIZE);
-        NSData *nextPacketData = [self.binFileData2 subdataWithRange:dataRange];
-        NSLog(@"writing packet number %d ...",writingPacketNumber2+1);
-        NSLog(@"packet data: %@",nextPacketData);
-        [self.bluetoothPeripheral writeValue:nextPacketData forCharacteristic:self.dfuPacketCharacteristic type:CBCharacteristicWriteWithoutResponse];
-        percentage = (((double)(writingPacketNumber2 * 20) / (double)(binFileSize2)) * 100);
-        [dfuDelegate onTransferPercentage:percentage];
-        writingPacketNumber2++;
-    }
+    fileRequests2 = [[FileOperations alloc]initWithDelegate:self
+                                             blePeripheral:bluetoothPeripheral
+                                         bleCharacteristic:self.dfuPacketCharacteristic];
 }
 
 -(void) startSendingFile
@@ -211,14 +131,14 @@ double const delayInSeconds = 10.0;
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [dfuRequests enablePacketNotification];
             [dfuRequests receiveFirmwareImage];
-            [self writeNextPacket];
+            [fileRequests writeNextPacket];
             [dfuDelegate onDFUStarted];
         });
     }
     else {
         [dfuRequests enablePacketNotification];
         [dfuRequests receiveFirmwareImage];
-        [self writeNextPacket];
+        [fileRequests writeNextPacket];
         [dfuDelegate onDFUStarted];
     }
     if (self.dfuFirmwareType == SOFTDEVICE_AND_BOOTLOADER) {
@@ -330,13 +250,13 @@ double const delayInSeconds = 10.0;
 {
     NSLog(@"received Packet Received Notification");
     if (isStartingSecondFile) {
-        if (writingPacketNumber2 < numberOfPackets2) {
-            [self writeNextPacket2];
+        if (fileRequests2.writingPacketNumber < fileRequests2.numberOfPackets) {
+            [fileRequests2 writeNextPacket];
         }
     }
     else {
-        if (writingPacketNumber < numberOfPackets) {
-            [self writeNextPacket];
+        if (fileRequests.writingPacketNumber < fileRequests.numberOfPackets) {
+            [fileRequests writeNextPacket];
         }
     }
 }
@@ -379,11 +299,39 @@ double const delayInSeconds = 10.0;
     }
 }
 
+#pragma mark - FileOperations delegates
+
+-(void)onTransferPercentage:(int)percentage
+{
+    NSLog(@"DFUOperations: onTransferPercentage %d",percentage);
+    [dfuDelegate onTransferPercentage:percentage];
+}
+
+-(void)onAllPacketsTranferred
+{
+    NSLog(@"DFUOperations: onAllPacketsTransfered");
+    if (isStartingSecondFile) {
+        [dfuDelegate onBootloaderUploadCompleted];
+    }
+    else if (self.dfuFirmwareType == SOFTDEVICE_AND_BOOTLOADER) {
+     isStartingSecondFile = YES;
+     NSLog(@"Firmware type is Softdevice plus Bootloader. now upload bootloader ...");
+     [dfuDelegate onSoftDeviceUploadCompleted];
+     [dfuDelegate onBootloaderUploadStarted];
+     [fileRequests2 writeNextPacket];
+     }
+}
+
+-(void)onError:(NSString *)errorMessage
+{
+    NSLog(@"DFUOperations: onError");
+    [dfuDelegate onError:errorMessage];
+}
+
 #pragma mark - CentralManager delegates
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central
 {
-    NSLog(@"centralManagerDidUpdateState");
-    
+    NSLog(@"centralManagerDidUpdateState");    
 }
 
 -(void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral

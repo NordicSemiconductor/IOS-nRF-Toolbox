@@ -519,13 +519,15 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         self.isTransferring = NO;
         self.isTransfered = YES;
+        NSString *message = @"successful upload!";
         if (enumFirmwareType == SOFTDEVICE_AND_BOOTLOADER) {
-            NSString* messge = [NSString stringWithFormat:@"%d bytes transfered", dfuOperations.binFileSize+dfuOperations.binFileSize2];
-            [self showAlert:messge];
+            //NSString* messge = [NSString stringWithFormat:@"%d bytes transfered", dfuOperations.binFileSize+dfuOperations.binFileSize2];
+            
+            [self showAlert:message];
         }
         else {
-            NSString* messge = [NSString stringWithFormat:@"%d bytes transfered", dfuOperations.binFileSize];
-            [self showAlert:messge];
+            //NSString* messge = [NSString stringWithFormat:@"%d bytes transfered", dfuOperations.binFileSize];
+            [self showAlert:message];
         }
         
     });

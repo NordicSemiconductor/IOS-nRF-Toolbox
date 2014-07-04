@@ -14,7 +14,7 @@ NSString * const dfuServiceUUIDString = @"00001530-1212-EFDE-1523-785FEABCD123";
 NSString * const dfuControlPointCharacteristicUUIDString = @"00001531-1212-EFDE-1523-785FEABCD123";
 NSString * const dfuPacketCharacteristicUUIDString = @"00001532-1212-EFDE-1523-785FEABCD123";
 
-int const PACKETS_NOTIFICATION_INTERVAL = 50;
+int const PACKETS_NOTIFICATION_INTERVAL = 10;
 int const PACKET_SIZE = 20;
 
 NSString* const FIRMWARE_TYPE_SOFTDEVICE = @"softdevice";
