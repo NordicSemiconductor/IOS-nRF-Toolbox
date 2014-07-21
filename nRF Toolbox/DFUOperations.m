@@ -10,23 +10,24 @@
 #import "Utility.h"
 #import "IntelHex2BinConverter.h"
 #import "DFUOperationsDetails.h"
+#import "BLEOperations.h"
 
 
 
 @implementation DFUOperations
 
 @synthesize dfuDelegate;
-@synthesize centralManager;
-@synthesize bluetoothPeripheral;
 @synthesize dfuRequests;
-//@synthesize binFileSize;
+@synthesize binFileSize;
 //@synthesize binFileSize2;
 @synthesize firmwareFile;
 @synthesize dfuResponse;
 @synthesize fileRequests;
 @synthesize fileRequests2;
+@synthesize bleOperations;
 
-bool isDFUPacketCharacteristicFound, isDFUControlPointCharacteristic, isStartingSecondFile;
+bool isStartingSecondFile;
+NSDate *startTime, *finishTime;
 double const delayInSeconds = 10.0;
 
 -(DFUOperations *) initWithDelegate:(id<DFUOperationsDelegate>) delegate
@@ -35,6 +36,8 @@ double const delayInSeconds = 10.0;
     {
         dfuDelegate = delegate;
         dfuRequests = [[DFUOperationsDetails alloc]init];
+        bleOperations = [[BLEOperations alloc]initWithDelegate:self];
+        
     }
     return self;
 }
@@ -43,8 +46,7 @@ double const delayInSeconds = 10.0;
 -(void)setCentralManager:(CBCentralManager *)manager
 {
     if (manager) {
-        centralManager = manager;
-        centralManager.delegate = self;
+        [bleOperations setBluetoothCentralManager:manager];
     }
     else {
         NSLog(@"CBCentralManager is nil");
@@ -56,9 +58,7 @@ double const delayInSeconds = 10.0;
 -(void)connectDevice:(CBPeripheral *)peripheral
 {
     if (peripheral) {
-        bluetoothPeripheral = peripheral;
-        bluetoothPeripheral.delegate = self;
-        [centralManager connectPeripheral:peripheral options:nil];
+        [bleOperations connectDevice:peripheral];
     }
     else {
         NSLog(@"CBPeripheral is nil");
@@ -76,9 +76,9 @@ double const delayInSeconds = 10.0;
 
 -(void)performDFUOnFiles:(NSURL *)softdeviceURL bootloaderURL:(NSURL *)bootloaderURL firmwareType:(DfuFirmwareTypes)firmwareType
 {
-    [self initFileOperations];
-    [self initFileOperations2];
-    isStartingSecondFile = NO;
+    [self initFirstFileOperations];
+    [self initSecondFileOperations];
+    [self initParameters];
     self.dfuFirmwareType = firmwareType;
     [fileRequests openFile:softdeviceURL];
     [fileRequests2 openFile:bootloaderURL];
@@ -89,9 +89,9 @@ double const delayInSeconds = 10.0;
 
 -(void)performDFUOnFile:(NSURL *)firmwareURL firmwareType:(DfuFirmwareTypes)firmwareType
 {
-    [self initFileOperations];
+    [self initFirstFileOperations];
     isStartingSecondFile = NO;
-    firmwareFile = firmwareURL;
+    [self initParameters];
     self.dfuFirmwareType = firmwareType;
     [fileRequests openFile:firmwareURL];
     [dfuRequests enableNotification];
@@ -101,25 +101,32 @@ double const delayInSeconds = 10.0;
 
 -(void)performOldDFUOnFile:(NSURL *)firmwareURL
 {
-    [self initFileOperations];
-    isStartingSecondFile = NO;
+    [self initFirstFileOperations];
+    [self initParameters];
     [fileRequests openFile:firmwareURL];
     [dfuRequests enableNotification];
     [dfuRequests startOldDFU];
     [dfuRequests writeFileSize:(uint32_t)fileRequests.binFileSize];
 }
 
--(void)initFileOperations
+-(void)initParameters
+{
+    startTime = [NSDate date];
+    binFileSize = 0;
+    isStartingSecondFile = NO;
+}
+
+-(void)initFirstFileOperations
 {
     fileRequests = [[FileOperations alloc]initWithDelegate:self
-                                             blePeripheral:bluetoothPeripheral
+                                             blePeripheral:self.bluetoothPeripheral
                                          bleCharacteristic:self.dfuPacketCharacteristic];
 }
 
--(void)initFileOperations2
+-(void)initSecondFileOperations
 {
     fileRequests2 = [[FileOperations alloc]initWithDelegate:self
-                                             blePeripheral:bluetoothPeripheral
+                                             blePeripheral:self.bluetoothPeripheral
                                          bleCharacteristic:self.dfuPacketCharacteristic];
 }
 
@@ -236,6 +243,7 @@ double const delayInSeconds = 10.0;
     if (dfuResponse.responseStatus == OPERATION_SUCCESSFUL_RESPONSE) {
         NSLog(@"succesfully received notification for ValidateFirmware");
         [dfuRequests activateAndReset];
+        [self calculateDFUTime];
         [dfuDelegate onSuccessfulFileTranferred];
     }
     else {
@@ -280,23 +288,39 @@ double const delayInSeconds = 10.0;
     dfuResponse.responseStatus = data[2];
 }
 
--(void)searchDFURequiredCharacteristics:(CBService *)service
+-(void)setDFUOperationsDetails
 {
-    isDFUControlPointCharacteristic = NO;
-    isDFUPacketCharacteristicFound = NO;
-    for (CBCharacteristic *characteristic in service.characteristics) {
-        NSLog(@"Found characteristic %@",characteristic.UUID);
-        if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:dfuControlPointCharacteristicUUIDString]]) {
-            NSLog(@"Control Point characteristic found");
-            isDFUControlPointCharacteristic = YES;
-            self.dfuControlPointCharacteristic = characteristic;
-        }
-        if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:dfuPacketCharacteristicUUIDString]]) {
-            NSLog(@"Packet Characteristic is found");
-            isDFUPacketCharacteristicFound = YES;
-            self.dfuPacketCharacteristic = characteristic;
-        }
-    }
+    [self.dfuRequests setPeripheralAndOtherParameters:self.bluetoothPeripheral
+                           controlPointCharacteristic:self.dfuControlPointCharacteristic
+                                 packetCharacteristic:self.dfuPacketCharacteristic];
+}
+
+-(void)calculateDFUTime
+{
+    finishTime = [NSDate date];
+    self.uploadTimeInSeconds = [finishTime timeIntervalSinceDate:startTime];
+    NSLog(@"upload time in sec: %u",self.uploadTimeInSeconds);
+}
+
+#pragma mark - BLEOperations delegates
+
+-(void)onDeviceConnected:(CBPeripheral *)peripheral withPacketCharacteristic:(CBCharacteristic *)dfuPacketCharacteristic andControlPointCharacteristic:(CBCharacteristic *)dfuControlPointCharacteristic
+{
+    self.bluetoothPeripheral = peripheral;
+    self.dfuPacketCharacteristic = dfuPacketCharacteristic;
+    self.dfuControlPointCharacteristic = dfuControlPointCharacteristic;
+    [self setDFUOperationsDetails];
+    [dfuDelegate onDeviceConnected:peripheral];
+}
+
+-(void)onDeviceDisconnected:(CBPeripheral *)peripheral
+{
+    [dfuDelegate onDeviceDisconnected:peripheral];
+}
+
+-(void)onReceivedNotification:(NSData *)data
+{
+    [self processDFUResponse:(uint8_t *)[data bytes]];
 }
 
 #pragma mark - FileOperations delegates
@@ -314,12 +338,18 @@ double const delayInSeconds = 10.0;
         [dfuDelegate onBootloaderUploadCompleted];
     }
     else if (self.dfuFirmwareType == SOFTDEVICE_AND_BOOTLOADER) {
-     isStartingSecondFile = YES;
-     NSLog(@"Firmware type is Softdevice plus Bootloader. now upload bootloader ...");
-     [dfuDelegate onSoftDeviceUploadCompleted];
-     [dfuDelegate onBootloaderUploadStarted];
-     [fileRequests2 writeNextPacket];
-     }
+        isStartingSecondFile = YES;
+        NSLog(@"Firmware type is Softdevice plus Bootloader. now upload bootloader ...");
+        [dfuDelegate onSoftDeviceUploadCompleted];
+        [dfuDelegate onBootloaderUploadStarted];
+        [fileRequests2 writeNextPacket];
+    }
+}
+
+-(void)onFileOpened:(NSUInteger)fileSizeOfBin
+{
+    NSLog(@"onFileOpened file size: %d",fileSizeOfBin);
+    binFileSize += fileSizeOfBin;
 }
 
 -(void)onError:(NSString *)errorMessage
@@ -327,89 +357,6 @@ double const delayInSeconds = 10.0;
     NSLog(@"DFUOperations: onError");
     [dfuDelegate onError:errorMessage];
 }
-
-#pragma mark - CentralManager delegates
-- (void)centralManagerDidUpdateState:(CBCentralManager *)central
-{
-    NSLog(@"centralManagerDidUpdateState");    
-}
-
--(void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral
-{
-    NSLog(@"didConnectPeripheral");
-    [bluetoothPeripheral discoverServices:nil];
-}
-
--(void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
-{
-    NSLog(@"didDisconnectPeripheral");
-    [dfuDelegate onDeviceDisconnected:peripheral];
-}
-
--(void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
-{
-    NSLog(@"didFailToConnectPeripheral");
-    [dfuDelegate onDeviceDisconnected:peripheral];
-}
-
-#pragma mark - CBPeripheral delegates
-
-- (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error
-{
-    NSLog(@"didDiscoverServices");
-    for (CBService *service in peripheral.services) {
-        NSLog(@"discovered service %@",service.UUID);
-        if ([service.UUID isEqual:[CBUUID UUIDWithString:dfuServiceUUIDString]]) {
-            NSLog(@"DFU Service is found");
-            [bluetoothPeripheral discoverCharacteristics:nil forService:service];
-            return;
-        }
-    }
-    NSString *errorMessage = [NSString stringWithFormat:@"Error on discovering service\n Message: Required DFU service not available on peripheral"];
-    [dfuDelegate onError:errorMessage];
-}
-
-- (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error
-{
-    NSLog(@"didDiscoverCharacteristicsForService");
-    [self searchDFURequiredCharacteristics:service];
-    if (isDFUControlPointCharacteristic && isDFUPacketCharacteristicFound) {
-        [dfuRequests setPeripheralAndOtherParameters:bluetoothPeripheral
-                          controlPointCharacteristic:self.dfuControlPointCharacteristic
-                                packetCharacteristic:self.dfuPacketCharacteristic];
-        [dfuDelegate onDeviceConnected:bluetoothPeripheral];
-    }
-    else {
-        NSString *errorMessage = [NSString stringWithFormat:@"Error on discovering characteristics\n Message: Required DFU characteristics are not available on peripheral"];
-        [dfuDelegate onError:errorMessage];
-    }
-}
-
--(void) peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
-{
-    NSLog(@"didUpdateValueForCharacteristic");
-    if (error) {
-        NSLog(@"Error in Notification state: %@",[error localizedDescription]);
-    }
-    else {
-        NSLog(@"received notification %@",characteristic.value);
-        [self processDFUResponse:(uint8_t *)[characteristic.value bytes]];
-    }
-}
-
--(void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
-{
-    if (error) {
-        NSLog(@"error in writing characteristic %@ and error %@",characteristic.UUID,[error localizedDescription]);
-        /*NSString *errorMessage = [NSString stringWithFormat:@"Error on Writing Characteristic %@\n Message: %@",characteristic.UUID,[error localizedDescription]];
-        [dfuDelegate onError:errorMessage];*/
-
-    }
-    else {
-        NSLog(@"didWriteValueForCharacteristic %@ and value %@",characteristic.UUID,characteristic.value);
-    }
-}
-
 
 @end
 

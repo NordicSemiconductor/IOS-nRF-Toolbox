@@ -26,6 +26,7 @@
 
 - (BOOL) application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
+    NSLog(@"URL for open file from Email: %@",url);
     UINavigationController *navigationController = (UINavigationController *) self.window.rootViewController;
     [navigationController popToRootViewControllerAnimated:NO];
     

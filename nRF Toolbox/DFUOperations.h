@@ -11,6 +11,7 @@
 #import "DFUOperationsDetails.h"
 #import "Utility.h"
 #import "FileOperations.h"
+#import "BLEOperations.h"
 
 
 @class DFUOperations;
@@ -33,21 +34,19 @@
 
 @end
 
-@interface DFUOperations : NSObject <CBCentralManagerDelegate, CBPeripheralDelegate, FileOperationsDelegate>
+@interface DFUOperations : NSObject <BLEOperationsDelegate, FileOperationsDelegate>
 
-@property (strong, nonatomic) CBCentralManager *centralManager;
 @property (strong, nonatomic) CBPeripheral *bluetoothPeripheral;
-//@property (strong, nonatomic)NSData *binFileData;
-//@property (strong, nonatomic)NSData *binFileData2;
 @property (strong, nonatomic)CBCharacteristic *dfuPacketCharacteristic;
 @property (strong, nonatomic)CBCharacteristic *dfuControlPointCharacteristic;
-@property (strong, nonatomic)DFUOperations *dfuOperations;
+
+@property (strong, nonatomic)BLEOperations *bleOperations;
 @property (strong, nonatomic)DFUOperationsDetails *dfuRequests;
 @property (strong, nonatomic)FileOperations *fileRequests;
 @property (strong, nonatomic)FileOperations *fileRequests2;
 @property (nonatomic)DfuFirmwareTypes dfuFirmwareType;
-//@property (nonatomic)NSUInteger binFileSize;
-//@property (nonatomic)NSUInteger binFileSize2;
+@property (nonatomic)NSUInteger binFileSize;
+@property (nonatomic)NSUInteger uploadTimeInSeconds;
 @property (strong, nonatomic)NSURL *firmwareFile;
 @property struct DFUResponse dfuResponse;
 
@@ -62,7 +61,7 @@
 -(void)performDFUOnFile:(NSURL *)firmwareURL firmwareType:(DfuFirmwareTypes)firmwareType;
 -(void)performDFUOnFiles:(NSURL *)softdeviceURL bootloaderURL:(NSURL *)bootloaderURL firmwareType:(DfuFirmwareTypes)firmwareType;
 -(void)performOldDFUOnFile:(NSURL *)firmwareURL;
-//-(void) openFile:(NSURL *)fileURL;
+
 -(void)cancelDFU;
 
 @end

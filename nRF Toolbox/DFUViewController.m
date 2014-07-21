@@ -13,6 +13,7 @@
 #import "HelpViewController.h"
 #import "FileTypeTableViewController.h"
 #import "SSZipArchive.h"
+#import "UnzipFirmware.h"
 
 @interface DFUViewController () {
     
@@ -33,7 +34,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *fileName;
 @property (weak, nonatomic) IBOutlet UILabel *fileSize;
-@property (weak, nonatomic) IBOutlet UILabel *fileStatus;
+//@property (weak, nonatomic) IBOutlet UILabel *fileStatus;
 
 @property (weak, nonatomic) IBOutlet UILabel *uploadStatus;
 @property (weak, nonatomic) IBOutlet UIProgressView *progress;
@@ -42,6 +43,7 @@
 @property (weak, nonatomic) IBOutlet UIView *uploadPane;
 @property (weak, nonatomic) IBOutlet UIButton *uploadButton;
 @property (weak, nonatomic) IBOutlet UILabel *fileType;
+@property (weak, nonatomic) IBOutlet UIButton *selectFileTypeButton;
 
 @property BOOL isTransferring;
 @property BOOL isTransfered;
@@ -64,7 +66,7 @@
 @synthesize dfuOperations;
 @synthesize fileName;
 @synthesize fileSize;
-@synthesize fileStatus;
+//@synthesize fileStatus;
 @synthesize uploadStatus;
 @synthesize progress;
 @synthesize progressLabel;
@@ -75,6 +77,7 @@
 @synthesize fileType;
 @synthesize enumFirmwareType;
 @synthesize selectedFileType;
+@synthesize selectFileTypeButton;
 
 
 -(id)initWithCoder:(NSCoder *)aDecoder
@@ -103,6 +106,8 @@
     
     // Rotate the vertical label
     verticalLabel.transform = CGAffineTransformMakeRotation(-M_PI / 2);
+    //[self getFilesFromDocumentsFolder];
+    //[self getFilesFromFirmwaresFolder];
 }
 
 - (void)didReceiveMemoryWarning
@@ -110,6 +115,46 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+/*-(void)getFilesFromDocumentsFolder
+{
+    NSLog(@"getFilesFromDocumentsFolder");
+    
+    NSString *documentDirectory = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+
+    NSError *error;
+    NSArray *filePaths = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentDirectory error:&error];
+    if (error) {
+        NSLog(@"error in opening Documents folder of phone");
+     }
+     else {
+         NSLog(@"number of files in Documents folder of phone %d",filePaths.count);
+         for (int i=0; i<filePaths.count; i++) {
+             NSLog(@"Found file in Documents Folder: %@",[filePaths objectAtIndex:i]);
+         }
+     }
+}
+
+-(void)getFilesFromFirmwaresFolder
+{
+    NSLog(@"getFilesFromFirmwareFolder");
+    NSString *appPath = [[NSBundle mainBundle] resourcePath];
+    NSLog(@"app resource path: %@",appPath);
+    NSString *firmwaresFolderPath = [appPath stringByAppendingPathComponent:@"firmwares"];
+    NSLog(@"firmware folder path: %@",firmwaresFolderPath);
+    
+    NSError *error;
+    NSArray *filePaths = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:firmwaresFolderPath error:&error];
+    if (error) {
+        NSLog(@"error in opening Firmwares folder of phone");
+    }
+    else {
+        NSLog(@"number of files in Firmwares folder of app %d",filePaths.count);
+        for (int i=0; i<filePaths.count; i++) {
+            NSLog(@"Found file in Firmwares Folder: %@",[filePaths objectAtIndex:i]);
+        }
+    }
+}*/
 
 -(void)uploadPressed
 {
@@ -124,9 +169,11 @@
 -(void)performDFU
 {
     dispatch_async(dispatch_get_main_queue(), ^{
+        [self disableOtherButtons];
         uploadStatus.hidden = NO;
         progress.hidden = NO;
         progressLabel.hidden = NO;
+        uploadButton.enabled = NO;
     });
     if (self.isSelectedFileZipped) {
         switch (enumFirmwareType) {
@@ -153,38 +200,13 @@
     }
 }
 
--(void)unzipFirmwareFiles
+-(void)unzipFiles:(NSURL *)zipFileURL
 {
-    NSLog(@"unzipFirmwareFiles");
-    NSString *zipPath = [[NSBundle mainBundle] pathForResource:@"firmware" ofType:@"zip"];
-    NSString *outputPath = [self _cachesPath:@"unzipFiles"];
-    
-    [SSZipArchive unzipFileAtPath:zipPath toDestination:outputPath];
-    NSLog(@"zipfile path: %@",zipPath);
-    NSLog(@"unzip folder path: %@",outputPath);
-    //path to softdevice
-    NSString *softdevicePath = [outputPath stringByAppendingPathComponent:@"softdevice.hex"];
-    NSString *bootloaderPath = [outputPath stringByAppendingPathComponent:@"bootloader.hex"];
-    NSString *blinkyappPath = [outputPath stringByAppendingPathComponent:@"application.hex"];
-    self.softdeviceURL = [NSURL fileURLWithPath:softdevicePath];
-    self.bootloaderURL = [NSURL fileURLWithPath:bootloaderPath];
-    self.blinkyappURL = [NSURL fileURLWithPath:blinkyappPath];
-    
-}
-
--(NSString *)_cachesPath:(NSString *)directory {
-	NSString *path = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject]
-                      stringByAppendingPathComponent:@"com.nordicsemi.nRFToolbox"];
-	if (directory) {
-		path = [path stringByAppendingPathComponent:directory];
-	}
-    
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	if (![fileManager fileExistsAtPath:path]) {
-		[fileManager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
-	}
-    
-	return path;
+    UnzipFirmware *unzipFiles = [[UnzipFirmware alloc]init];
+    NSArray *firmwareFilesURL = [unzipFiles unzipFirmwareFiles:zipFileURL];
+    self.softdeviceURL = [firmwareFilesURL objectAtIndex:0];
+    self.bootloaderURL = [firmwareFilesURL objectAtIndex:1];
+    self.blinkyappURL = [firmwareFilesURL objectAtIndex:2];
 }
 
 -(void)appDidEnterBackground:(NSNotification *)_notification
@@ -220,11 +242,11 @@
         // controller.filterUUID = dfuServiceUUID; - the DFU service should not be advertised. We have to scan for any device hoping it supports DFU.
         controller.delegate = self;
     }
-    else if ([segue.identifier isEqualToString:@"select"])
+    else if ([segue.identifier isEqualToString:@"FileSegue"])
     {
         NSLog(@"performing Select File segue");
-        SelectorViewController *controller = (SelectorViewController *)segue.destinationViewController;
-        controller.delegate = self;
+        /*SelectorViewController *controller = (SelectorViewController *)segue.destinationViewController;
+        controller.delegate = self;*/
     }
     else if ([[segue identifier] isEqualToString:@"help"]) {
         HelpViewController *helpVC = [segue destinationViewController];
@@ -235,16 +257,6 @@
         FileTypeTableViewController *fileTypeVC = [segue destinationViewController];
         fileTypeVC.chosenFirmwareType = selectedFileType;
     }
-}
-
-- (IBAction)unwindFileTypeSelector:(UIStoryboardSegue*)sender
-{
-    FileTypeTableViewController *fileTypeVC = [sender sourceViewController];
-    selectedFileType = fileTypeVC.chosenFirmwareType;
-    NSLog(@"unwindFileTypeSelector, selected Filetype: %@",selectedFileType);
-    fileType.text = selectedFileType;
-    [self setFirmwareType:selectedFileType];
-    [self enableUploadButton];
 }
 
 -(void) setFirmwareType:(NSString *)firmwareType
@@ -263,8 +275,6 @@
     }
 }
 
-
-
 - (void) clearUI
 {
     selectedPeripheral = nil;
@@ -275,9 +285,9 @@
     progress.hidden = YES;
     progressLabel.hidden = YES;
     progressLabel.text = @"";
-    selectFileButton.enabled = YES;
     [uploadButton setTitle:@"Upload" forState:UIControlStateNormal];
     uploadButton.enabled = NO;
+    [self enableOtherButtons];
 }
 
 -(void)enableUploadButton
@@ -286,12 +296,12 @@
         if (selectedFileType && self.selectedFileSize > 0) {
             if ([self isValidFileSelected]) {
                 NSLog(@" valid file selected");
-                fileStatus.text = @"OK";
+                //fileStatus.text = @"OK";
             }
             else {
                 NSLog(@"Valid file not available in zip file");
                 [self showAlert:@"Valid file not selected or not present"];
-                fileStatus.text = @""; //choose some nice text here
+                //fileStatus.text = @""; //choose some nice text here
                 return;
             }
         }
@@ -307,7 +317,7 @@
 
 -(BOOL)isValidFileSelected
 {
-    NSLog(@"checkValidFileSelected");
+    NSLog(@"isValidFileSelected");
     if (self.isSelectedFileZipped) {
         switch (enumFirmwareType) {
             case SOFTDEVICE_AND_BOOTLOADER:
@@ -351,8 +361,7 @@
         //Selcted file is not zip and file type is not Softdevice + Bootloader
         //then it is upto user to assign correct file to corresponding file type
         return YES;
-    }
-    
+    }    
 }
 
 -(void)showAlert:(NSString *)message
@@ -383,7 +392,31 @@
     }
 }
 
-#pragma mark Scanner Delegate methods
+-(void)disableOtherButtons
+{
+    selectFileButton.enabled = NO;
+    selectFileTypeButton.enabled = NO;
+    connectButton.enabled = NO;
+}
+
+-(void)enableOtherButtons
+{
+    selectFileButton.enabled = YES;
+    selectFileTypeButton.enabled = YES;
+    connectButton.enabled = YES;
+}
+
+#pragma mark FileType Selector Delegate
+
+- (IBAction)unwindFileTypeSelector:(UIStoryboardSegue*)sender
+{
+    FileTypeTableViewController *fileTypeVC = [sender sourceViewController];
+    selectedFileType = fileTypeVC.chosenFirmwareType;
+    NSLog(@"unwindFileTypeSelector, selected Filetype: %@",selectedFileType);
+    fileType.text = selectedFileType;
+    [self setFirmwareType:selectedFileType];
+    [self enableUploadButton];
+}
 
 -(void)centralManager:(CBCentralManager *)manager didPeripheralSelected:(CBPeripheral *)peripheral
 {
@@ -393,7 +426,7 @@
     [dfuOperations connectDevice:peripheral];
 }
 
-#pragma mark File Selector Delegate methods
+#pragma mark File Selector Delegate
 
 -(void)fileSelected:(NSURL *)url
 {
@@ -411,7 +444,7 @@
         if ([extension isEqualToString:@"zip"]) {
             NSLog(@"this is zip file");
             self.isSelectedFileZipped = YES;
-            [self unzipFirmwareFiles];
+            [self unzipFiles:selectedFileURL];
         }
         else {
             self.isSelectedFileZipped = NO;
@@ -421,9 +454,7 @@
             fileName.text = selectedFileName;
             fileSize.text = [NSString stringWithFormat:@"%d bytes", self.selectedFileSize];
             [self enableUploadButton];
-            
         });
-        
     }
     else {
         [self showAlert:@"Selected file not exist!"];
@@ -456,7 +487,6 @@
         self.isTransfered = NO;
         self.isErrorKnown = NO;
     });
-
 }
 
 -(void)onDFUStarted
@@ -464,6 +494,7 @@
     NSLog(@"onDFUStarted");
     self.isTransferring = YES;
     dispatch_async(dispatch_get_main_queue(), ^{
+        uploadButton.enabled = YES;
         [uploadButton setTitle:@"Cancel" forState:UIControlStateNormal];
         NSString *uploadStatusMessage = [self getUploadStatusMessage];
         uploadStatus.text = uploadStatusMessage;
@@ -475,6 +506,9 @@
     NSLog(@"onDFUCancelled");
     self.isTransferring = NO;
     self.isTransferCancelled = YES;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self enableOtherButtons];
+    });
 }
 
 -(void)onSoftDeviceUploadStarted
@@ -508,8 +542,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         progressLabel.text = [NSString stringWithFormat:@"%d %%", percentage];
         [progress setProgress:((float)percentage/100.0) animated:YES];
-    });
-    
+    });    
 }
 
 -(void)onSuccessfulFileTranferred
@@ -519,22 +552,9 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         self.isTransferring = NO;
         self.isTransfered = YES;
-        NSString *message = @"successful upload!";
-        if (enumFirmwareType == SOFTDEVICE_AND_BOOTLOADER) {
-            //NSString* messge = [NSString stringWithFormat:@"%d bytes transfered", dfuOperations.binFileSize+dfuOperations.binFileSize2];
-            
-            [self showAlert:message];
-        }
-        else {
-            //NSString* messge = [NSString stringWithFormat:@"%d bytes transfered", dfuOperations.binFileSize];
-            [self showAlert:message];
-        }
-        
+        NSString* message = [NSString stringWithFormat:@"%u bytes transfered in %u seconds", dfuOperations.binFileSize, dfuOperations.uploadTimeInSeconds];
+        [self showAlert:message];
     });
-    
-    
-    /*NSString* messge = [NSString stringWithFormat:@"%lu bytes transfered in %lu ms.", dfuController.binSize, (unsigned long) (dfuController.uploadInterval * 1000.0)];*/
-    
 }
 
 -(void)onError:(NSString *)errorMessage
@@ -545,7 +565,6 @@
         [self showAlert:errorMessage];
         [self clearUI];
     });
-    
 }
 
 @end

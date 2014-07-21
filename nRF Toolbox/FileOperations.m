@@ -29,6 +29,7 @@
     NSData *hexFileData = [NSData dataWithContentsOfURL:fileURL];
     if (hexFileData.length > 0) {
         [self convertHexFileToBin:hexFileData];
+        [self.fileDelegate onFileOpened:self.binFileSize];
     }
     else {
         NSLog(@"Error: file is empty!");
@@ -64,15 +65,7 @@
             NSLog(@"packet data: %@",nextPacketData);
             [self.bluetoothPeripheral writeValue:nextPacketData forCharacteristic:self.dfuPacketCharacteristic type:CBCharacteristicWriteWithoutResponse];
             self.writingPacketNumber++;
-            [self.fileDelegate onAllPacketsTranferred];
-            /*if (self.dfuFirmwareType == SOFTDEVICE_AND_BOOTLOADER) {
-                isStartingSecondFile = YES;
-                NSLog(@"Firmware type is Softdevice plus Bootloader. now upload bootloader ...");
-                [dfuDelegate onSoftDeviceUploadCompleted];
-                [dfuDelegate onBootloaderUploadStarted];
-                [self writeNextPacket2];
-            }*/
-            
+            [self.fileDelegate onAllPacketsTranferred];            
             break;
         }
         NSRange dataRange = NSMakeRange(self.writingPacketNumber*PACKET_SIZE, PACKET_SIZE);

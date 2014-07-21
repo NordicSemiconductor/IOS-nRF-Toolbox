@@ -1,9 +1,67 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="WcK-ur-5nd">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
+        <!--View Controller - Select File-->
+        <scene sceneID="VSF-w7-COB">
+            <objects>
+                <viewController id="zVY-se-myH" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="OFN-6J-hTi"/>
+                        <viewControllerLayoutGuide type="bottom" id="Yq0-yf-Xev"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="IgL-aV-7uB">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Select File" id="RRQ-bb-lxN"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F1J-rN-cHF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3377" y="-913"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="H5K-ke-Cjp">
+            <objects>
+                <tabBarController definesPresentationContext="YES" id="dhY-1k-OAO" sceneMemberID="viewController">
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="Cda-QV-752">
+                        <rect key="frame" x="129" y="330" width="163" height="49"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="l4W-CU-22L" kind="relationship" relationship="viewControllers" id="IF9-7g-jvR"/>
+                        <segue destination="Mlr-Z9-EdV" kind="relationship" relationship="viewControllers" id="Aqr-8V-64b"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7ll-Xh-94O" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2317" y="-586"/>
+        </scene>
+        <!--View Controller - Select File-->
+        <scene sceneID="Pgy-ij-fsk">
+            <objects>
+                <viewController id="472-WB-QTN" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="IhN-up-MVQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="mbx-Cm-oZb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="g4A-1e-kXj">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Select File" id="gtB-1H-ECd"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rdf-on-qn6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3377" y="-260"/>
+        </scene>
         <!--Help View Controller-->
         <scene sceneID="0fA-MJ-4zY">
             <objects>
@@ -42,7 +100,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m2V-TE-U5g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3123" y="-261"/>
+            <point key="canvasLocation" x="3649" y="-261"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="ufC-wZ-h7g">
@@ -1232,7 +1290,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8K8-0E-rYV" userLabel="View - ACTIVITY">
-                                <rect key="frame" x="35" y="69" width="251" height="157"/>
+                                <rect key="frame" x="35" y="69" width="251" height="122"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="File Name:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QA8-V7-bTt">
                                         <rect key="frame" x="12" y="11" width="82" height="21"/>
@@ -1244,13 +1302,8 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Status:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iHK-wm-4hx">
-                                        <rect key="frame" x="12" y="69" width="55" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d1Z-zS-eN7">
-                                        <rect key="frame" x="12" y="121" width="75" height="30"/>
+                                        <rect key="frame" x="12" y="92" width="75" height="30"/>
                                         <state key="normal" title="Select File">
                                             <color key="titleColor" red="0.0" green="0.61176472902297974" blue="0.87058824300765991" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1259,7 +1312,7 @@
                                             <color key="titleColor" red="0.66666668653488159" green="0.67058825492858887" blue="0.68627452850341797" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <segue destination="k3H-ff-Vki" kind="modal" identifier="select" id="6Xs-nz-TCU"/>
+                                            <segue destination="dhY-1k-OAO" kind="modal" id="qmw-RP-Ah1"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hw9-yA-g6m">
@@ -1272,29 +1325,27 @@
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="File not loaded" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5vS-I8-PyV">
-                                        <rect key="frame" x="92" y="69" width="150" height="21"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Xt-Bf-mEl">
-                                        <rect key="frame" x="130" y="121" width="112" height="30"/>
+                                        <rect key="frame" x="130" y="92" width="112" height="30"/>
                                         <state key="normal" title="Select File Type">
                                             <color key="titleColor" red="0.0" green="0.60392156860000001" blue="0.85490196080000003" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="disabled">
+                                            <color key="titleColor" red="0.66666668650000005" green="0.67058825489999996" blue="0.68627452850000004" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
                                             <segue destination="NcH-1d-lGU" kind="push" identifier="FileTypeSegue" id="XKA-p6-ErA"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="File Type:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yiv-2t-cJQ">
-                                        <rect key="frame" x="12" y="98" width="69" height="21"/>
+                                        <rect key="frame" x="12" y="69" width="69" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Required" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gkd-zB-UKS">
-                                        <rect key="frame" x="92" y="98" width="133" height="21"/>
+                                        <rect key="frame" x="92" y="69" width="133" height="21"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
@@ -1303,14 +1354,14 @@
                                 <color key="backgroundColor" red="0.90196079019999997" green="0.90588235859999999" blue="0.9098039269" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="DEVICE FIRMWARE UPDATE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JLD-Gd-zCF">
-                                <rect key="frame" x="35" y="234" width="251" height="21"/>
+                                <rect key="frame" x="35" y="199" width="251" height="21"/>
                                 <color key="backgroundColor" red="0.0" green="0.60392156860000001" blue="0.85490196080000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zgI-eq-aFb" userLabel="View - ACTIVITY">
-                                <rect key="frame" x="35" y="254" width="251" height="93"/>
+                                <rect key="frame" x="35" y="219" width="251" height="93"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PVI-T9-QmJ">
                                         <rect key="frame" x="102" y="9" width="50" height="30"/>
@@ -1371,11 +1422,11 @@
                         <outlet property="deviceName" destination="fT7-zC-dbm" id="B89-jl-FRO"/>
                         <outlet property="fileName" destination="Hw9-yA-g6m" id="11V-lY-oo1"/>
                         <outlet property="fileSize" destination="ufz-FZ-yw5" id="kpH-z0-wJ3"/>
-                        <outlet property="fileStatus" destination="5vS-I8-PyV" id="bR0-zg-qS6"/>
                         <outlet property="fileType" destination="gkd-zB-UKS" id="XwO-Ej-8FA"/>
                         <outlet property="progress" destination="c7u-0x-ak9" id="15C-GR-T8q"/>
                         <outlet property="progressLabel" destination="6hI-Pc-GIS" id="pUi-oW-o4u"/>
                         <outlet property="selectFileButton" destination="d1Z-zS-eN7" id="Qz2-4D-efm"/>
+                        <outlet property="selectFileTypeButton" destination="9Xt-Bf-mEl" id="2eE-km-4pd"/>
                         <outlet property="uploadButton" destination="PVI-T9-QmJ" id="YTn-KR-JAy"/>
                         <outlet property="uploadPane" destination="zgI-eq-aFb" id="ge4-ch-atG"/>
                         <outlet property="uploadStatus" destination="I9g-ak-KRW" id="699-O6-jO6"/>
@@ -2040,7 +2091,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rvv-2O-9bt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2527" y="-589"/>
+            <point key="canvasLocation" x="2475" y="110"/>
         </scene>
         <!--Scanner View Controller-->
         <scene sceneID="AiV-hG-UJL">
@@ -2145,6 +2196,44 @@
             </objects>
             <point key="canvasLocation" x="308" y="117"/>
         </scene>
+        <!--Navigation Controller - App Files-->
+        <scene sceneID="SFJ-1x-8LL">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="l4W-CU-22L" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="App Files" id="6DW-bs-csn"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="xYX-hl-2N5">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="zVY-se-myH" kind="relationship" relationship="rootViewController" id="ZYb-fF-SV6"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="J6u-vy-wtF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2851" y="-913"/>
+        </scene>
+        <!--Navigation Controller - User Files-->
+        <scene sceneID="Zj6-2K-LD8">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Mlr-Z9-EdV" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="User Files" id="LKQ-Xl-Zt9"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="va4-JR-cWw">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="472-WB-QTN" kind="relationship" relationship="rootViewController" id="lRS-Xh-BZb"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GlK-fZ-ZVk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2851" y="-260"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Background4" width="320" height="504"/>
@@ -2174,7 +2263,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="avT-gU-1Yo"/>
-        <segue reference="hfZ-yA-x7Y"/>
+        <segue reference="Psd-qy-Brm"/>
+        <segue reference="0i8-Ot-uid"/>
     </inferredMetricsTieBreakers>
 </document>

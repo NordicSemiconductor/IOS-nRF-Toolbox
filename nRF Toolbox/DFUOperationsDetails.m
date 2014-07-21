@@ -122,6 +122,4 @@
     self.dfuPacketCharacteristic = packetCharacteristic;
 }
 
-
-
 @end

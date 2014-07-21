@@ -11,4 +11,5 @@
 @protocol SelectorDelegate <NSObject>
 
 -(void)fileSelected:(NSURL*)url;
+
 @end

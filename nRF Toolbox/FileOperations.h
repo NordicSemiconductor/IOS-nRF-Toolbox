@@ -18,6 +18,7 @@
 //define protocol functions that will be implemented by the class that assign its id to fileDelegate
 -(void)onTransferPercentage:(int)percentage;
 -(void)onAllPacketsTranferred;
+-(void)onFileOpened:(NSUInteger)fileSizeOfBin;
 -(void)onError:(NSString *)errorMessage;
 
 

@@ -7,11 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5211EFA41885611F007CC40D /* ble_app_rscs.hex in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFA01885611F007CC40D /* ble_app_rscs.hex */; };
-		5211EFA51885611F007CC40D /* ble_app_hrs.hex in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFA11885611F007CC40D /* ble_app_hrs.hex */; };
-		5211EFA61885611F007CC40D /* ble_app_hrs_s110_v6_0_0.hex in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFA21885611F007CC40D /* ble_app_hrs_s110_v6_0_0.hex */; };
-		5211EFA71885611F007CC40D /* ble_app_rscs_s110_v6_0_0.hex in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFA31885611F007CC40D /* ble_app_rscs_s110_v6_0_0.hex */; };
-		5211EFA91885618E007CC40D /* binary_list.json in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFA81885618E007CC40D /* binary_list.json */; };
 		5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAA1885642F007CC40D /* icon-dfu-64.png */; };
 		5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAB1885642F007CC40D /* icon-dfu-320.png */; };
 		5211EFB018856430007CC40D /* icon-hex.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAC1885642F007CC40D /* icon-hex.png */; };
@@ -53,22 +48,22 @@
 		5285D9A91890033F00305F1D /* CSCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5285D9A81890033F00305F1D /* CSCViewController.m */; };
 		52E08DC21889449A00ED959F /* libCorePlot-CocoaTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52E08DC11889449A00ED959F /* libCorePlot-CocoaTouch.a */; };
 		7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B422818A8DF4D006BA1BC /* high.mp3 */; };
+		7E2A3C64196D408A009E2506 /* AccessFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E2A3C63196D408A009E2506 /* AccessFileSystem.m */; };
 		7E445C881951A46800633892 /* DFUOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E445C871951A46800633892 /* DFUOperations.m */; };
 		7E445C8B1951A48100633892 /* DFUOperationsDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E445C8A1951A48100633892 /* DFUOperationsDetails.m */; };
 		7E445C8E1951A51A00633892 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E445C8D1951A51A00633892 /* Utility.m */; };
-		7E445C921951B7CF00633892 /* bootloader_test.hex in Resources */ = {isa = PBXBuildFile; fileRef = 7E445C911951B7CF00633892 /* bootloader_test.hex */; };
 		7E445C971951D09E00633892 /* FileTypeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E445C961951D09E00633892 /* FileTypeTableViewController.m */; };
+		7E6ED10B196ED482008010B6 /* firmwares in Resources */ = {isa = PBXBuildFile; fileRef = 7E6ED10A196ED482008010B6 /* firmwares */; };
 		7E92108C18A38EE3009C6F2A /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E92108B18A38EE3009C6F2A /* HelpViewController.m */; };
-		7ECF201919644226005495C8 /* firmware.zip in Resources */ = {isa = PBXBuildFile; fileRef = 7ECF201819644226005495C8 /* firmware.zip */; };
 		7ECF201F19655312005495C8 /* FileOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ECF201E19655312005495C8 /* FileOperations.m */; };
-		7ED9BDE1195850DC0021814D /* blinky_arm.hex in Resources */ = {isa = PBXBuildFile; fileRef = 7ED9BDE0195850DC0021814D /* blinky_arm.hex */; };
+		7ECF2022196AA58D005495C8 /* BLEOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ECF2021196AA58D005495C8 /* BLEOperations.m */; };
+		7ECF2025196AD6AF005495C8 /* UnzipFirmware.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ECF2024196AD6AF005495C8 /* UnzipFirmware.m */; };
 		7ED9BE63195AE6CC0021814D /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9BE62195AE6CC0021814D /* SSZipArchive.m */; };
 		7ED9BE6E195AE6D80021814D /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9BE66195AE6D80021814D /* ioapi.c */; };
 		7ED9BE6F195AE6D80021814D /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9BE68195AE6D80021814D /* mztools.c */; };
 		7ED9BE70195AE6D80021814D /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9BE6A195AE6D80021814D /* unzip.c */; };
 		7ED9BE71195AE6D80021814D /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9BE6C195AE6D80021814D /* zip.c */; };
 		7ED9BE73195AE76D0021814D /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ED9BE72195AE76D0021814D /* libz.1.2.5.dylib */; };
-		7ED9BE7719640B890021814D /* softdevice_test.hex in Resources */ = {isa = PBXBuildFile; fileRef = 7ED9BE7619640B890021814D /* softdevice_test.hex */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,11 +77,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5211EFA01885611F007CC40D /* ble_app_rscs.hex */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ble_app_rscs.hex; sourceTree = "<group>"; };
-		5211EFA11885611F007CC40D /* ble_app_hrs.hex */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ble_app_hrs.hex; sourceTree = "<group>"; };
-		5211EFA21885611F007CC40D /* ble_app_hrs_s110_v6_0_0.hex */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ble_app_hrs_s110_v6_0_0.hex; sourceTree = "<group>"; };
-		5211EFA31885611F007CC40D /* ble_app_rscs_s110_v6_0_0.hex */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ble_app_rscs_s110_v6_0_0.hex; sourceTree = "<group>"; };
-		5211EFA81885618E007CC40D /* binary_list.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = binary_list.json; sourceTree = "<group>"; };
 		5211EFAA1885642F007CC40D /* icon-dfu-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-64.png"; sourceTree = "<group>"; };
 		5211EFAB1885642F007CC40D /* icon-dfu-320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-320.png"; sourceTree = "<group>"; };
 		5211EFAC1885642F007CC40D /* icon-hex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-hex.png"; sourceTree = "<group>"; };
@@ -230,21 +220,25 @@
 		52E08E0C188944AC00ED959F /* CPTXYGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPTXYGraph.h; path = dependencies/CPTXYGraph.h; sourceTree = "<group>"; };
 		52E08E0D188944AC00ED959F /* CPTXYPlotSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPTXYPlotSpace.h; path = dependencies/CPTXYPlotSpace.h; sourceTree = "<group>"; };
 		7E1B422818A8DF4D006BA1BC /* high.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = high.mp3; sourceTree = "<group>"; };
+		7E2A3C62196D408A009E2506 /* AccessFileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessFileSystem.h; sourceTree = "<group>"; };
+		7E2A3C63196D408A009E2506 /* AccessFileSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccessFileSystem.m; sourceTree = "<group>"; };
 		7E445C861951A45B00633892 /* DFUOperations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFUOperations.h; sourceTree = "<group>"; };
 		7E445C871951A46800633892 /* DFUOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFUOperations.m; sourceTree = "<group>"; };
 		7E445C891951A47200633892 /* DFUOperationsDetails.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFUOperationsDetails.h; sourceTree = "<group>"; };
 		7E445C8A1951A48100633892 /* DFUOperationsDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFUOperationsDetails.m; sourceTree = "<group>"; };
 		7E445C8C1951A50A00633892 /* Utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
 		7E445C8D1951A51A00633892 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
-		7E445C911951B7CF00633892 /* bootloader_test.hex */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bootloader_test.hex; sourceTree = "<group>"; };
 		7E445C951951D09E00633892 /* FileTypeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileTypeTableViewController.h; sourceTree = "<group>"; };
 		7E445C961951D09E00633892 /* FileTypeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileTypeTableViewController.m; sourceTree = "<group>"; };
+		7E6ED10A196ED482008010B6 /* firmwares */ = {isa = PBXFileReference; lastKnownFileType = folder; path = firmwares; sourceTree = "<group>"; };
 		7E92108A18A38EE3009C6F2A /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
 		7E92108B18A38EE3009C6F2A /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
-		7ECF201819644226005495C8 /* firmware.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = firmware.zip; sourceTree = "<group>"; };
 		7ECF201D19655312005495C8 /* FileOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileOperations.h; sourceTree = "<group>"; };
 		7ECF201E19655312005495C8 /* FileOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileOperations.m; sourceTree = "<group>"; };
-		7ED9BDE0195850DC0021814D /* blinky_arm.hex */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = blinky_arm.hex; sourceTree = "<group>"; };
+		7ECF2020196AA58D005495C8 /* BLEOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEOperations.h; sourceTree = "<group>"; };
+		7ECF2021196AA58D005495C8 /* BLEOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLEOperations.m; sourceTree = "<group>"; };
+		7ECF2023196AD6AF005495C8 /* UnzipFirmware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnzipFirmware.h; sourceTree = "<group>"; };
+		7ECF2024196AD6AF005495C8 /* UnzipFirmware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnzipFirmware.m; sourceTree = "<group>"; };
 		7ED9BE61195AE6C20021814D /* SSZipArchive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSZipArchive.h; sourceTree = "<group>"; };
 		7ED9BE62195AE6CC0021814D /* SSZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSZipArchive.m; sourceTree = "<group>"; };
 		7ED9BE65195AE6D80021814D /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
@@ -257,7 +251,6 @@
 		7ED9BE6C195AE6D80021814D /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
 		7ED9BE6D195AE6D80021814D /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
 		7ED9BE72195AE76D0021814D /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
-		7ED9BE7619640B890021814D /* softdevice_test.hex */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = softdevice_test.hex; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -287,22 +280,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5211EF9F188560B0007CC40D /* Embeded files */ = {
-			isa = PBXGroup;
-			children = (
-				5211EFA81885618E007CC40D /* binary_list.json */,
-				5211EFA01885611F007CC40D /* ble_app_rscs.hex */,
-				5211EFA11885611F007CC40D /* ble_app_hrs.hex */,
-				5211EFA21885611F007CC40D /* ble_app_hrs_s110_v6_0_0.hex */,
-				5211EFA31885611F007CC40D /* ble_app_rscs_s110_v6_0_0.hex */,
-				7E445C911951B7CF00633892 /* bootloader_test.hex */,
-				7ED9BDE0195850DC0021814D /* blinky_arm.hex */,
-				7ED9BE7619640B890021814D /* softdevice_test.hex */,
-				7ECF201819644226005495C8 /* firmware.zip */,
-			);
-			name = "Embeded files";
-			sourceTree = "<group>";
-		};
 		5214D0C81886951A00460637 /* Hex to Bin Converter */ = {
 			isa = PBXGroup;
 			children = (
@@ -504,7 +481,7 @@
 		5252A53B18802F6300EFD773 /* DFU */ = {
 			isa = PBXGroup;
 			children = (
-				5211EF9F188560B0007CC40D /* Embeded files */,
+				7E6ED10A196ED482008010B6 /* firmwares */,
 				5252A55A18853BF000EFD773 /* Image selector */,
 				5214D0C81886951A00460637 /* Hex to Bin Converter */,
 				5252A54F18841D9D00EFD773 /* DFU Implementation */,
@@ -512,6 +489,10 @@
 				5252A53D18802F7200EFD773 /* DFUViewController.m */,
 				7E445C951951D09E00633892 /* FileTypeTableViewController.h */,
 				7E445C961951D09E00633892 /* FileTypeTableViewController.m */,
+				7ECF2023196AD6AF005495C8 /* UnzipFirmware.h */,
+				7ECF2024196AD6AF005495C8 /* UnzipFirmware.m */,
+				7E2A3C62196D408A009E2506 /* AccessFileSystem.h */,
+				7E2A3C63196D408A009E2506 /* AccessFileSystem.m */,
 			);
 			name = DFU;
 			sourceTree = "<group>";
@@ -536,6 +517,8 @@
 				7E445C8D1951A51A00633892 /* Utility.m */,
 				7ECF201D19655312005495C8 /* FileOperations.h */,
 				7ECF201E19655312005495C8 /* FileOperations.m */,
+				7ECF2020196AA58D005495C8 /* BLEOperations.h */,
+				7ECF2021196AA58D005495C8 /* BLEOperations.m */,
 			);
 			name = "DFU Implementation";
 			sourceTree = "<group>";
@@ -761,23 +744,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7E445C921951B7CF00633892 /* bootloader_test.hex in Resources */,
-				5211EFA91885618E007CC40D /* binary_list.json in Resources */,
-				5211EFA41885611F007CC40D /* ble_app_rscs.hex in Resources */,
+				7E6ED10B196ED482008010B6 /* firmwares in Resources */,
 				5214D0CE1886C02A00460637 /* Settings.bundle in Resources */,
 				5217F3FE1859EE0000F2D5BB /* Images.xcassets in Resources */,
 				7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */,
 				5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */,
 				5217F3F01859EE0000F2D5BB /* InfoPlist.strings in Resources */,
-				5211EFA61885611F007CC40D /* ble_app_hrs_s110_v6_0_0.hex in Resources */,
-				7ED9BE7719640B890021814D /* softdevice_test.hex in Resources */,
 				5211EFB118856430007CC40D /* icon-hex@2x.png in Resources */,
 				5217F3F91859EE0000F2D5BB /* Main.storyboard in Resources */,
-				7ED9BDE1195850DC0021814D /* blinky_arm.hex in Resources */,
-				5211EFA51885611F007CC40D /* ble_app_hrs.hex in Resources */,
-				7ECF201919644226005495C8 /* firmware.zip in Resources */,
 				5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */,
-				5211EFA71885611F007CC40D /* ble_app_rscs_s110_v6_0_0.hex in Resources */,
 				5211EFB018856430007CC40D /* icon-hex.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -798,6 +773,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E445C971951D09E00633892 /* FileTypeTableViewController.m in Sources */,
+				7ECF2022196AA58D005495C8 /* BLEOperations.m in Sources */,
 				7ED9BE70195AE6D80021814D /* unzip.c in Sources */,
 				524F2CE2188984E6008A8555 /* BGMDetailsViewController.m in Sources */,
 				5252A53E18802F7200EFD773 /* DFUViewController.m in Sources */,
@@ -810,6 +786,7 @@
 				7E445C8B1951A48100633892 /* DFUOperationsDetails.m in Sources */,
 				5217F3F21859EE0000F2D5BB /* main.m in Sources */,
 				5217F41E185B198E00F2D5BB /* RSACViewController.m in Sources */,
+				7ECF2025196AD6AF005495C8 /* UnzipFirmware.m in Sources */,
 				7ED9BE6E195AE6D80021814D /* ioapi.c in Sources */,
 				5252A542188030A800EFD773 /* ProximityViewController.m in Sources */,
 				7ED9BE63195AE6CC0021814D /* SSZipArchive.m in Sources */,
@@ -819,6 +796,7 @@
 				5214D0C71886951500460637 /* IntelHex2BinConverter.m in Sources */,
 				5252A563188549B000EFD773 /* ImageCell.m in Sources */,
 				7E445C881951A46800633892 /* DFUOperations.m in Sources */,
+				7E2A3C64196D408A009E2506 /* AccessFileSystem.m in Sources */,
 				7ECF201F19655312005495C8 /* FileOperations.m in Sources */,
 				5285D9A91890033F00305F1D /* CSCViewController.m in Sources */,
 				7E92108C18A38EE3009C6F2A /* HelpViewController.m in Sources */,
@@ -950,7 +928,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				PROVISIONING_PROFILE = "6BA3FF09-B2F8-48D7-8BF7-3CCCE6C2C811";
+				PROVISIONING_PROFILE = "CC0BE38E-338E-451C-9502-29FB361C0CA6";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				"VALID_ARCHS[sdk=*]" = "arm32 armv7 armv7s";
@@ -1001,7 +979,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6BA3FF09-B2F8-48D7-8BF7-3CCCE6C2C811";
+				PROVISIONING_PROFILE = "CC0BE38E-338E-451C-9502-29FB361C0CA6";
 				"VALID_ARCHS[sdk=*]" = "arm32 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
