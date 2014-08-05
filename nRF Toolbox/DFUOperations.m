@@ -19,7 +19,6 @@
 @synthesize dfuDelegate;
 @synthesize dfuRequests;
 @synthesize binFileSize;
-//@synthesize binFileSize2;
 @synthesize firmwareFile;
 @synthesize dfuResponse;
 @synthesize fileRequests;

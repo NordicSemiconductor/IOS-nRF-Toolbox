@@ -43,8 +43,6 @@
 		5252A53A18802B8100EFD773 /* BPMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A53918802B8100EFD773 /* BPMViewController.m */; };
 		5252A53E18802F7200EFD773 /* DFUViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A53D18802F7200EFD773 /* DFUViewController.m */; };
 		5252A542188030A800EFD773 /* ProximityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A541188030A800EFD773 /* ProximityViewController.m */; };
-		5252A55D18853C0600EFD773 /* SelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A55C18853C0600EFD773 /* SelectorViewController.m */; };
-		5252A563188549B000EFD773 /* ImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A562188549B000EFD773 /* ImageCell.m */; };
 		5285D9A91890033F00305F1D /* CSCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5285D9A81890033F00305F1D /* CSCViewController.m */; };
 		52E08DC21889449A00ED959F /* libCorePlot-CocoaTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52E08DC11889449A00ED959F /* libCorePlot-CocoaTouch.a */; };
 		7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B422818A8DF4D006BA1BC /* high.mp3 */; };
@@ -54,16 +52,19 @@
 		7E445C8E1951A51A00633892 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E445C8D1951A51A00633892 /* Utility.m */; };
 		7E445C971951D09E00633892 /* FileTypeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E445C961951D09E00633892 /* FileTypeTableViewController.m */; };
 		7E6ED10B196ED482008010B6 /* firmwares in Resources */ = {isa = PBXBuildFile; fileRef = 7E6ED10A196ED482008010B6 /* firmwares */; };
+		7E6ED10F197D1D8D008010B6 /* AppFilesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6ED10E197D1D8D008010B6 /* AppFilesTableViewController.m */; };
+		7E6ED112197D1DA4008010B6 /* UserFilesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6ED111197D1DA4008010B6 /* UserFilesTableViewController.m */; };
 		7E92108C18A38EE3009C6F2A /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E92108B18A38EE3009C6F2A /* HelpViewController.m */; };
+		7E99686C19800A260092E69E /* FolderFilesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E99686B19800A260092E69E /* FolderFilesTableViewController.m */; };
 		7ECF201F19655312005495C8 /* FileOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ECF201E19655312005495C8 /* FileOperations.m */; };
 		7ECF2022196AA58D005495C8 /* BLEOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ECF2021196AA58D005495C8 /* BLEOperations.m */; };
 		7ECF2025196AD6AF005495C8 /* UnzipFirmware.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ECF2024196AD6AF005495C8 /* UnzipFirmware.m */; };
-		7ED9BE63195AE6CC0021814D /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9BE62195AE6CC0021814D /* SSZipArchive.m */; };
-		7ED9BE6E195AE6D80021814D /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9BE66195AE6D80021814D /* ioapi.c */; };
-		7ED9BE6F195AE6D80021814D /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9BE68195AE6D80021814D /* mztools.c */; };
-		7ED9BE70195AE6D80021814D /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9BE6A195AE6D80021814D /* unzip.c */; };
-		7ED9BE71195AE6D80021814D /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9BE6C195AE6D80021814D /* zip.c */; };
-		7ED9BE73195AE76D0021814D /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ED9BE72195AE76D0021814D /* libz.1.2.5.dylib */; };
+		7EE6691E1983C7DD004680F0 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 7EE669141983C7DD004680F0 /* ioapi.c */; };
+		7EE6691F1983C7DD004680F0 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 7EE669161983C7DD004680F0 /* mztools.c */; };
+		7EE669201983C7DD004680F0 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 7EE669181983C7DD004680F0 /* unzip.c */; };
+		7EE669211983C7DD004680F0 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 7EE6691A1983C7DD004680F0 /* zip.c */; };
+		7EE669221983C7DD004680F0 /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EE6691D1983C7DD004680F0 /* SSZipArchive.m */; };
+		7EEAB3B01983CFEF00309DBC /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EEAB3AF1983CFEF00309DBC /* libz.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,7 +121,6 @@
 		5236E161187EA7540057E974 /* HTSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTSViewController.m; sourceTree = "<group>"; };
 		5236E16A187EC6880057E974 /* StubViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StubViewController.h; sourceTree = "<group>"; };
 		5236E16B187EC6880057E974 /* StubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StubViewController.m; sourceTree = "<group>"; };
-		52400DBE18856C2E000B7204 /* SelectorDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectorDelegate.h; sourceTree = "<group>"; };
 		524F2CD618897078008A8555 /* BGMItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGMItemCell.h; sourceTree = "<group>"; };
 		524F2CD718897078008A8555 /* BGMItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGMItemCell.m; sourceTree = "<group>"; };
 		524F2CDD18897D33008A8555 /* GlucoseReading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlucoseReading.h; sourceTree = "<group>"; };
@@ -137,10 +137,6 @@
 		5252A53D18802F7200EFD773 /* DFUViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFUViewController.m; sourceTree = "<group>"; };
 		5252A540188030A800EFD773 /* ProximityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProximityViewController.h; sourceTree = "<group>"; };
 		5252A541188030A800EFD773 /* ProximityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProximityViewController.m; sourceTree = "<group>"; };
-		5252A55B18853C0600EFD773 /* SelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectorViewController.h; sourceTree = "<group>"; };
-		5252A55C18853C0600EFD773 /* SelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectorViewController.m; sourceTree = "<group>"; };
-		5252A561188549B000EFD773 /* ImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCell.h; sourceTree = "<group>"; };
-		5252A562188549B000EFD773 /* ImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCell.m; sourceTree = "<group>"; };
 		5285D9A5188D43E500305F1D /* RecordAccess.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecordAccess.h; sourceTree = "<group>"; };
 		5285D9A71890033F00305F1D /* CSCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSCViewController.h; sourceTree = "<group>"; };
 		5285D9A81890033F00305F1D /* CSCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSCViewController.m; sourceTree = "<group>"; };
@@ -231,26 +227,32 @@
 		7E445C951951D09E00633892 /* FileTypeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileTypeTableViewController.h; sourceTree = "<group>"; };
 		7E445C961951D09E00633892 /* FileTypeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileTypeTableViewController.m; sourceTree = "<group>"; };
 		7E6ED10A196ED482008010B6 /* firmwares */ = {isa = PBXFileReference; lastKnownFileType = folder; path = firmwares; sourceTree = "<group>"; };
+		7E6ED10D197D1D8D008010B6 /* AppFilesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppFilesTableViewController.h; sourceTree = "<group>"; };
+		7E6ED10E197D1D8D008010B6 /* AppFilesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppFilesTableViewController.m; sourceTree = "<group>"; };
+		7E6ED110197D1DA4008010B6 /* UserFilesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserFilesTableViewController.h; sourceTree = "<group>"; };
+		7E6ED111197D1DA4008010B6 /* UserFilesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserFilesTableViewController.m; sourceTree = "<group>"; };
 		7E92108A18A38EE3009C6F2A /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
 		7E92108B18A38EE3009C6F2A /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
+		7E99686A19800A260092E69E /* FolderFilesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderFilesTableViewController.h; sourceTree = "<group>"; };
+		7E99686B19800A260092E69E /* FolderFilesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FolderFilesTableViewController.m; sourceTree = "<group>"; };
 		7ECF201D19655312005495C8 /* FileOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileOperations.h; sourceTree = "<group>"; };
 		7ECF201E19655312005495C8 /* FileOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileOperations.m; sourceTree = "<group>"; };
 		7ECF2020196AA58D005495C8 /* BLEOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEOperations.h; sourceTree = "<group>"; };
 		7ECF2021196AA58D005495C8 /* BLEOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLEOperations.m; sourceTree = "<group>"; };
 		7ECF2023196AD6AF005495C8 /* UnzipFirmware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnzipFirmware.h; sourceTree = "<group>"; };
 		7ECF2024196AD6AF005495C8 /* UnzipFirmware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnzipFirmware.m; sourceTree = "<group>"; };
-		7ED9BE61195AE6C20021814D /* SSZipArchive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSZipArchive.h; sourceTree = "<group>"; };
-		7ED9BE62195AE6CC0021814D /* SSZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSZipArchive.m; sourceTree = "<group>"; };
-		7ED9BE65195AE6D80021814D /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
-		7ED9BE66195AE6D80021814D /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
-		7ED9BE67195AE6D80021814D /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
-		7ED9BE68195AE6D80021814D /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mztools.c; sourceTree = "<group>"; };
-		7ED9BE69195AE6D80021814D /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
-		7ED9BE6A195AE6D80021814D /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unzip.c; sourceTree = "<group>"; };
-		7ED9BE6B195AE6D80021814D /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
-		7ED9BE6C195AE6D80021814D /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
-		7ED9BE6D195AE6D80021814D /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
-		7ED9BE72195AE76D0021814D /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
+		7EE669131983C7DD004680F0 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
+		7EE669141983C7DD004680F0 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
+		7EE669151983C7DD004680F0 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
+		7EE669161983C7DD004680F0 /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mztools.c; sourceTree = "<group>"; };
+		7EE669171983C7DD004680F0 /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
+		7EE669181983C7DD004680F0 /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unzip.c; sourceTree = "<group>"; };
+		7EE669191983C7DD004680F0 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
+		7EE6691A1983C7DD004680F0 /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
+		7EE6691B1983C7DD004680F0 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
+		7EE6691C1983C7DD004680F0 /* SSZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSZipArchive.h; sourceTree = "<group>"; };
+		7EE6691D1983C7DD004680F0 /* SSZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSZipArchive.m; sourceTree = "<group>"; };
+		7EEAB3AF1983CFEF00309DBC /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -258,7 +260,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7ED9BE73195AE76D0021814D /* libz.1.2.5.dylib in Frameworks */,
+				7EEAB3B01983CFEF00309DBC /* libz.dylib in Frameworks */,
 				5217F41B1859EEF400F2D5BB /* CoreBluetooth.framework in Frameworks */,
 				5217F3E81859EE0000F2D5BB /* CoreGraphics.framework in Frameworks */,
 				5217F3EA1859EE0000F2D5BB /* UIKit.framework in Frameworks */,
@@ -302,7 +304,7 @@
 		5217F3D91859EE0000F2D5BB = {
 			isa = PBXGroup;
 			children = (
-				7ED9BE60195AE6950021814D /* SSZipArchive */,
+				7EE669111983C7DD004680F0 /* SSZipArchive */,
 				52E08DC01889448400ED959F /* CorePlot */,
 				5214D0CD1886C02A00460637 /* Settings.bundle */,
 				5217F3EB1859EE0000F2D5BB /* nRF Toolbox */,
@@ -324,7 +326,7 @@
 		5217F3E41859EE0000F2D5BB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7ED9BE72195AE76D0021814D /* libz.1.2.5.dylib */,
+				7EEAB3AF1983CFEF00309DBC /* libz.dylib */,
 				5217F41A1859EEF400F2D5BB /* CoreBluetooth.framework */,
 				5217F3E51859EE0000F2D5BB /* Foundation.framework */,
 				5217F3E71859EE0000F2D5BB /* CoreGraphics.framework */,
@@ -481,18 +483,14 @@
 		5252A53B18802F6300EFD773 /* DFU */ = {
 			isa = PBXGroup;
 			children = (
+				7E996869197FB8FD0092E69E /* Constants */,
+				7E996868197FA2920092E69E /* Unzip */,
+				7E6ED10C197D1D40008010B6 /* File Selection */,
 				7E6ED10A196ED482008010B6 /* firmwares */,
-				5252A55A18853BF000EFD773 /* Image selector */,
 				5214D0C81886951A00460637 /* Hex to Bin Converter */,
 				5252A54F18841D9D00EFD773 /* DFU Implementation */,
 				5252A53C18802F7200EFD773 /* DFUViewController.h */,
 				5252A53D18802F7200EFD773 /* DFUViewController.m */,
-				7E445C951951D09E00633892 /* FileTypeTableViewController.h */,
-				7E445C961951D09E00633892 /* FileTypeTableViewController.m */,
-				7ECF2023196AD6AF005495C8 /* UnzipFirmware.h */,
-				7ECF2024196AD6AF005495C8 /* UnzipFirmware.m */,
-				7E2A3C62196D408A009E2506 /* AccessFileSystem.h */,
-				7E2A3C63196D408A009E2506 /* AccessFileSystem.m */,
 			);
 			name = DFU;
 			sourceTree = "<group>";
@@ -513,26 +511,12 @@
 				7E445C871951A46800633892 /* DFUOperations.m */,
 				7E445C891951A47200633892 /* DFUOperationsDetails.h */,
 				7E445C8A1951A48100633892 /* DFUOperationsDetails.m */,
-				7E445C8C1951A50A00633892 /* Utility.h */,
-				7E445C8D1951A51A00633892 /* Utility.m */,
 				7ECF201D19655312005495C8 /* FileOperations.h */,
 				7ECF201E19655312005495C8 /* FileOperations.m */,
 				7ECF2020196AA58D005495C8 /* BLEOperations.h */,
 				7ECF2021196AA58D005495C8 /* BLEOperations.m */,
 			);
 			name = "DFU Implementation";
-			sourceTree = "<group>";
-		};
-		5252A55A18853BF000EFD773 /* Image selector */ = {
-			isa = PBXGroup;
-			children = (
-				5252A561188549B000EFD773 /* ImageCell.h */,
-				5252A562188549B000EFD773 /* ImageCell.m */,
-				52400DBE18856C2E000B7204 /* SelectorDelegate.h */,
-				5252A55B18853C0600EFD773 /* SelectorViewController.h */,
-				5252A55C18853C0600EFD773 /* SelectorViewController.m */,
-			);
-			name = "Image selector";
 			sourceTree = "<group>";
 		};
 		5285D9A61890031F00305F1D /* CSC */ = {
@@ -634,28 +618,63 @@
 			name = CorePlotHeaders;
 			sourceTree = "<group>";
 		};
-		7ED9BE60195AE6950021814D /* SSZipArchive */ = {
+		7E6ED10C197D1D40008010B6 /* File Selection */ = {
 			isa = PBXGroup;
 			children = (
-				7ED9BE64195AE6D80021814D /* minizip */,
-				7ED9BE61195AE6C20021814D /* SSZipArchive.h */,
-				7ED9BE62195AE6CC0021814D /* SSZipArchive.m */,
+				7E6ED10D197D1D8D008010B6 /* AppFilesTableViewController.h */,
+				7E6ED10E197D1D8D008010B6 /* AppFilesTableViewController.m */,
+				7E6ED110197D1DA4008010B6 /* UserFilesTableViewController.h */,
+				7E6ED111197D1DA4008010B6 /* UserFilesTableViewController.m */,
+				7E445C951951D09E00633892 /* FileTypeTableViewController.h */,
+				7E445C961951D09E00633892 /* FileTypeTableViewController.m */,
+				7E2A3C62196D408A009E2506 /* AccessFileSystem.h */,
+				7E2A3C63196D408A009E2506 /* AccessFileSystem.m */,
+				7E99686A19800A260092E69E /* FolderFilesTableViewController.h */,
+				7E99686B19800A260092E69E /* FolderFilesTableViewController.m */,
 			);
-			name = SSZipArchive;
+			name = "File Selection";
 			sourceTree = "<group>";
 		};
-		7ED9BE64195AE6D80021814D /* minizip */ = {
+		7E996868197FA2920092E69E /* Unzip */ = {
 			isa = PBXGroup;
 			children = (
-				7ED9BE65195AE6D80021814D /* crypt.h */,
-				7ED9BE66195AE6D80021814D /* ioapi.c */,
-				7ED9BE67195AE6D80021814D /* ioapi.h */,
-				7ED9BE68195AE6D80021814D /* mztools.c */,
-				7ED9BE69195AE6D80021814D /* mztools.h */,
-				7ED9BE6A195AE6D80021814D /* unzip.c */,
-				7ED9BE6B195AE6D80021814D /* unzip.h */,
-				7ED9BE6C195AE6D80021814D /* zip.c */,
-				7ED9BE6D195AE6D80021814D /* zip.h */,
+				7ECF2023196AD6AF005495C8 /* UnzipFirmware.h */,
+				7ECF2024196AD6AF005495C8 /* UnzipFirmware.m */,
+			);
+			name = Unzip;
+			sourceTree = "<group>";
+		};
+		7E996869197FB8FD0092E69E /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				7E445C8C1951A50A00633892 /* Utility.h */,
+				7E445C8D1951A51A00633892 /* Utility.m */,
+			);
+			name = Constants;
+			sourceTree = "<group>";
+		};
+		7EE669111983C7DD004680F0 /* SSZipArchive */ = {
+			isa = PBXGroup;
+			children = (
+				7EE669121983C7DD004680F0 /* minizip */,
+				7EE6691C1983C7DD004680F0 /* SSZipArchive.h */,
+				7EE6691D1983C7DD004680F0 /* SSZipArchive.m */,
+			);
+			path = SSZipArchive;
+			sourceTree = "<group>";
+		};
+		7EE669121983C7DD004680F0 /* minizip */ = {
+			isa = PBXGroup;
+			children = (
+				7EE669131983C7DD004680F0 /* crypt.h */,
+				7EE669141983C7DD004680F0 /* ioapi.c */,
+				7EE669151983C7DD004680F0 /* ioapi.h */,
+				7EE669161983C7DD004680F0 /* mztools.c */,
+				7EE669171983C7DD004680F0 /* mztools.h */,
+				7EE669181983C7DD004680F0 /* unzip.c */,
+				7EE669191983C7DD004680F0 /* unzip.h */,
+				7EE6691A1983C7DD004680F0 /* zip.c */,
+				7EE6691B1983C7DD004680F0 /* zip.h */,
 			);
 			path = minizip;
 			sourceTree = "<group>";
@@ -773,41 +792,42 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E445C971951D09E00633892 /* FileTypeTableViewController.m in Sources */,
+				7EE669201983C7DD004680F0 /* unzip.c in Sources */,
 				7ECF2022196AA58D005495C8 /* BLEOperations.m in Sources */,
-				7ED9BE70195AE6D80021814D /* unzip.c in Sources */,
 				524F2CE2188984E6008A8555 /* BGMDetailsViewController.m in Sources */,
 				5252A53E18802F7200EFD773 /* DFUViewController.m in Sources */,
 				5252A53A18802B8100EFD773 /* BPMViewController.m in Sources */,
 				5217F3FC1859EE0000F2D5BB /* ViewController.m in Sources */,
-				5252A55D18853C0600EFD773 /* SelectorViewController.m in Sources */,
+				7E6ED112197D1DA4008010B6 /* UserFilesTableViewController.m in Sources */,
 				524F2CDF18897D33008A8555 /* GlucoseReading.m in Sources */,
 				5217F3F61859EE0000F2D5BB /* AppDelegate.m in Sources */,
-				7ED9BE71195AE6D80021814D /* zip.c in Sources */,
 				7E445C8B1951A48100633892 /* DFUOperationsDetails.m in Sources */,
 				5217F3F21859EE0000F2D5BB /* main.m in Sources */,
 				5217F41E185B198E00F2D5BB /* RSACViewController.m in Sources */,
 				7ECF2025196AD6AF005495C8 /* UnzipFirmware.m in Sources */,
-				7ED9BE6E195AE6D80021814D /* ioapi.c in Sources */,
 				5252A542188030A800EFD773 /* ProximityViewController.m in Sources */,
-				7ED9BE63195AE6CC0021814D /* SSZipArchive.m in Sources */,
-				7ED9BE6F195AE6D80021814D /* mztools.c in Sources */,
 				5236E162187EA7540057E974 /* HTSViewController.m in Sources */,
 				7E445C8E1951A51A00633892 /* Utility.m in Sources */,
 				5214D0C71886951500460637 /* IntelHex2BinConverter.m in Sources */,
-				5252A563188549B000EFD773 /* ImageCell.m in Sources */,
 				7E445C881951A46800633892 /* DFUOperations.m in Sources */,
 				7E2A3C64196D408A009E2506 /* AccessFileSystem.m in Sources */,
 				7ECF201F19655312005495C8 /* FileOperations.m in Sources */,
+				7EE669211983C7DD004680F0 /* zip.c in Sources */,
 				5285D9A91890033F00305F1D /* CSCViewController.m in Sources */,
 				7E92108C18A38EE3009C6F2A /* HelpViewController.m in Sources */,
 				5217F428185F28D400F2D5BB /* ScannedPeripheral.m in Sources */,
+				7E99686C19800A260092E69E /* FolderFilesTableViewController.m in Sources */,
+				7EE6691F1983C7DD004680F0 /* mztools.c in Sources */,
 				524F2CD818897078008A8555 /* BGMItemCell.m in Sources */,
 				5214D0D218881D4D00460637 /* CharacteristicReader.m in Sources */,
 				5236E16C187EC6880057E974 /* StubViewController.m in Sources */,
 				5252A5361880260300EFD773 /* BGMViewController.m in Sources */,
 				524F2CE5188D2A56008A8555 /* GlucoseReadingContext.m in Sources */,
+				7E6ED10F197D1D8D008010B6 /* AppFilesTableViewController.m in Sources */,
+				7EE6691E1983C7DD004680F0 /* ioapi.c in Sources */,
 				5217F422185F15FA00F2D5BB /* ScannerViewController.m in Sources */,
 				5236E15F187EA73F0057E974 /* HRSViewController.m in Sources */,
+				7EE669221983C7DD004680F0 /* SSZipArchive.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

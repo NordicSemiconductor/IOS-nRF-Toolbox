@@ -30,7 +30,7 @@
 
 - (void)viewDidLoad
 {
-    if (is4InchesIPhone)
+    /*if (is4InchesIPhone)
     {
         // 4 inches iPhone
         UIImage *image = [UIImage imageNamed:@"Background4.png"];
@@ -41,7 +41,7 @@
         // 3.5 inches iPhone
         UIImage *image = [UIImage imageNamed:@"Background35.png"];
         [backgroundImage setImage:image];
-    }
+    }*/
     
     helpTextView.text = helpText;
 }

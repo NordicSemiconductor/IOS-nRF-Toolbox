@@ -18,7 +18,7 @@
     UIImage *navBackgroundImage = [UIImage imageNamed:@"NavBarIOS7"];
     [[UINavigationBar appearance] setBackgroundImage:navBackgroundImage forBarMetrics:UIBarMetricsDefault];
     
-    NSDictionary* defaults = [NSDictionary dictionaryWithObjects:@[@"2.3", [NSNumber numberWithBool:YES], [NSNumber numberWithInt:10]] forKeys:@[@"key_diameter", @"dfu_notifications", @"dfu_number_of_packets"]];
+    NSDictionary* defaults = [NSDictionary dictionaryWithObjects:@[@"2.3", [NSNumber numberWithInt:10]] forKeys:@[@"key_diameter", @"dfu_number_of_packets"]];
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
     
     return YES;
@@ -33,7 +33,7 @@
     UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
     DFUViewController *dfuvc = [main instantiateViewControllerWithIdentifier:@"DFUViewController"];
-    [dfuvc fileSelected:url];
+    [dfuvc onFileSelected:url];
     
     [navigationController pushViewController:dfuvc animated:YES];
     

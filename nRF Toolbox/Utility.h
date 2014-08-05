@@ -19,9 +19,8 @@ extern NSString* const FIRMWARE_TYPE_BOOTLOADER;
 extern NSString* const FIRMWARE_TYPE_APPLICATION;
 extern NSString* const FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER;
 
-+ (NSArray *) getFirmwareTypes;
 
-extern int const PACKETS_NOTIFICATION_INTERVAL;
+extern int PACKETS_NOTIFICATION_INTERVAL;
 extern int const PACKET_SIZE;
 
 struct DFUResponse
@@ -31,6 +30,11 @@ struct DFUResponse
     uint8_t responseStatus;
     
 };
+
+typedef enum {
+    HEX,
+    ZIP
+}enumFileExtension;
 
 typedef enum {
     START_DFU_REQUEST = 0x01,
@@ -63,5 +67,11 @@ typedef enum {
     
 }DfuFirmwareTypes;
 
++ (NSArray *) getFirmwareTypes;
++ (NSString *) stringFileExtension:(enumFileExtension)fileExtension;
++ (NSString *) getDFUHelpText;
++ (NSString *) getEmptyUserFilesText;
++ (NSString *) getDFUAppFileHelpText;
++ (void) showAlert:(NSString *)message;
 
 @end

@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "ScannerDelegate.h"
-#import "SelectorDelegate.h"
+#import "FileTypeTableViewController.h"
+#import "AppFilesTableViewController.h"
 #import "DFUOperations.h"
 
-@interface DFUViewController : UIViewController <ScannerDelegate, SelectorDelegate, DFUOperationsDelegate>
+@interface DFUViewController : UIViewController <ScannerDelegate, FileSelectionDelegate, DFUOperationsDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
 @property (weak, nonatomic) IBOutlet UILabel *verticalLabel;

@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SSZipArchive.h"
 
-@interface UnzipFirmware : NSObject
+@interface UnzipFirmware : NSObject <SSZipArchiveDelegate>
 
--(NSArray *)unzipFirmwareFiles:(NSURL *)zippedFileURL;
+-(NSArray *)unzipFirmwareFiles:(NSURL *)zipFileURL;
 
 @end
