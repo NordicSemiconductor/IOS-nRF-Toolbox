@@ -24,7 +24,7 @@ NSString* const FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER = @"softdevice and boot
 
 + (NSString *) getDFUHelpText
 {
-    return [NSString stringWithFormat:@"-The Device Firmware Update (DFU) app that is compatible with Nordic Semiconductor nRF51822 devices that have the S110 SoftDevice and bootloader enabled.\n\n-It allows to upload new application onto the device over-the-air (OTA).\n\n-The DFU discovers supported DFU devices, connects to them, and uploads user selected firmware applications to the device.\n\n-Default number of Packet Receipt Notification is 10 but you can set up other number in the iPhone Settings.\n\n-(New) Having NordicSemiconductor devices with Softdevice 7.0.0 and new Bootloader, It now allows to upload softdevice, bootloader and application.\n\n-(New) In order to upload softdevice and bootloader together, Zip file having inside softdevice.hex and bootloader.hex is required."];
+    return [NSString stringWithFormat:@"-The Device Firmware Update (DFU) app that is compatible with Nordic Semiconductor nRF51822 devices that have the S110 SoftDevice and bootloader enabled.\n\n-It allows to upload new application onto the device over-the-air (OTA).\n\n-The DFU discovers supported DFU devices, connects to them, and uploads user selected firmware applications to the device.\n\n-Default number of Packet Receipt Notification is 10 but you can set up other number in the iPhone Settings.\n\n-(New) Having NordicSemiconductor devices with Softdevice 7.0.0 and new Bootloader in SDK 6.0, It now allows to upload softdevice, bootloader and application.\n\n-(New) In order to upload softdevice and bootloader together, Zip file having inside softdevice.hex and bootloader.hex is required."];
 }
 
 + (NSString *) getEmptyUserFilesText

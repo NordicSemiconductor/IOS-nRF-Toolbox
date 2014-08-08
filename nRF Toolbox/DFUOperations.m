@@ -133,6 +133,7 @@ double const delayInSeconds = 10.0;
 {
     if (self.dfuFirmwareType == SOFTDEVICE || self.dfuFirmwareType == SOFTDEVICE_AND_BOOTLOADER) {
         NSLog(@"waiting 10 seconds before sending file ...");
+        //Delay of 10 seconds is required in order to update Softdevice in SDK 6.0
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [dfuRequests enablePacketNotification];
