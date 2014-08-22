@@ -89,6 +89,7 @@ double const delayInSeconds = 10.0;
 -(void)performDFUOnFile:(NSURL *)firmwareURL firmwareType:(DfuFirmwareTypes)firmwareType
 {
     firmwareFile = firmwareURL;
+    
     [self initFirstFileOperations];
     isStartingSecondFile = NO;
     [self initParameters];
@@ -101,12 +102,19 @@ double const delayInSeconds = 10.0;
 
 -(void)performOldDFUOnFile:(NSURL *)firmwareURL
 {
-    [self initFirstFileOperations];
-    [self initParameters];
-    [fileRequests openFile:firmwareURL];
-    [dfuRequests enableNotification];
-    [dfuRequests startOldDFU];
-    [dfuRequests writeFileSizeForOldDFU:(uint32_t)fileRequests.binFileSize];
+    if (firmwareURL && self.dfuFirmwareType == APPLICATION) {
+        [self initFirstFileOperations];
+        [self initParameters];
+        [fileRequests openFile:firmwareURL];
+        [dfuRequests enableNotification];
+        [dfuRequests startOldDFU];
+        [dfuRequests writeFileSizeForOldDFU:(uint32_t)fileRequests.binFileSize];
+    }
+    else {
+        NSString *errorMessage = [NSString stringWithFormat:@"Old DFU only supports Application upload"];
+        [dfuDelegate onError:errorMessage];        
+    }
+    
 }
 
 -(void)initParameters
