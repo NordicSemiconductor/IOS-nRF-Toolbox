@@ -88,6 +88,7 @@ double const delayInSeconds = 10.0;
 
 -(void)performDFUOnFile:(NSURL *)firmwareURL firmwareType:(DfuFirmwareTypes)firmwareType
 {
+    firmwareFile = firmwareURL;
     [self initFirstFileOperations];
     isStartingSecondFile = NO;
     [self initParameters];
@@ -105,7 +106,7 @@ double const delayInSeconds = 10.0;
     [fileRequests openFile:firmwareURL];
     [dfuRequests enableNotification];
     [dfuRequests startOldDFU];
-    [dfuRequests writeFileSize:(uint32_t)fileRequests.binFileSize];
+    [dfuRequests writeFileSizeForOldDFU:(uint32_t)fileRequests.binFileSize];
 }
 
 -(void)initParameters
