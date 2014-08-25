@@ -25,7 +25,7 @@
 @synthesize fileRequests2;
 @synthesize bleOperations;
 
-bool isStartingSecondFile;
+bool isStartingSecondFile, isPerformedOldDFU;
 NSDate *startTime, *finishTime;
 double const delayInSeconds = 10.0;
 
@@ -75,6 +75,7 @@ double const delayInSeconds = 10.0;
 
 -(void)performDFUOnFiles:(NSURL *)softdeviceURL bootloaderURL:(NSURL *)bootloaderURL firmwareType:(DfuFirmwareTypes)firmwareType
 {
+    isPerformedOldDFU = NO;
     [self initFirstFileOperations];
     [self initSecondFileOperations];
     [self initParameters];
@@ -88,8 +89,8 @@ double const delayInSeconds = 10.0;
 
 -(void)performDFUOnFile:(NSURL *)firmwareURL firmwareType:(DfuFirmwareTypes)firmwareType
 {
+    isPerformedOldDFU = NO;
     firmwareFile = firmwareURL;
-    
     [self initFirstFileOperations];
     isStartingSecondFile = NO;
     [self initParameters];
@@ -102,6 +103,7 @@ double const delayInSeconds = 10.0;
 
 -(void)performOldDFUOnFile:(NSURL *)firmwareURL
 {
+    isPerformedOldDFU = YES;
     if (firmwareURL && self.dfuFirmwareType == APPLICATION) {
         [self initFirstFileOperations];
         [self initParameters];
@@ -112,7 +114,8 @@ double const delayInSeconds = 10.0;
     }
     else {
         NSString *errorMessage = [NSString stringWithFormat:@"Old DFU only supports Application upload"];
-        [dfuDelegate onError:errorMessage];        
+        [dfuDelegate onError:errorMessage];
+        [dfuRequests resetSystem];
     }
     
 }
@@ -219,8 +222,17 @@ double const delayInSeconds = 10.0;
             [self startSendingFile];
             break;
         case OPERATION_NOT_SUPPORTED_RESPONSE:
-            NSLog(@"device has old DFU. switching to old DFU ...");
-            [self performOldDFUOnFile:firmwareFile];
+            if (!isPerformedOldDFU) {
+                NSLog(@"device has old DFU. switching to old DFU ...");
+                [self performOldDFUOnFile:firmwareFile];
+            }
+            else {
+                NSLog(@"Operation not supported");
+                NSLog(@"Firmware Image failed, Error Status: %@",[self responseErrorMessage:dfuResponse.responseStatus]);
+                NSString *errorMessage = [NSString stringWithFormat:@"Error on StartDFU\n Message: %@",[self responseErrorMessage:dfuResponse.responseStatus]];
+                [dfuDelegate onError:errorMessage];
+                [dfuRequests resetSystem];
+            }
             break;
             
         default:
