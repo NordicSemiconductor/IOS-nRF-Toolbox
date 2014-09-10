@@ -27,7 +27,6 @@
 
 bool isStartingSecondFile, isPerformedOldDFU;
 NSDate *startTime, *finishTime;
-double const delayInSeconds = 10.0;
 
 -(DFUOperations *) initWithDelegate:(id<DFUOperationsDelegate>) delegate
 {
@@ -36,7 +35,6 @@ double const delayInSeconds = 10.0;
         dfuDelegate = delegate;
         dfuRequests = [[DFUOperationsDetails alloc]init];
         bleOperations = [[BLEOperations alloc]initWithDelegate:self];
-        
     }
     return self;
 }
@@ -143,23 +141,10 @@ double const delayInSeconds = 10.0;
 
 -(void) startSendingFile
 {
-    if (self.dfuFirmwareType == SOFTDEVICE || self.dfuFirmwareType == SOFTDEVICE_AND_BOOTLOADER) {
-        NSLog(@"waiting 10 seconds before sending file ...");
-        //Delay of 10 seconds is required in order to update Softdevice in SDK 6.0
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [dfuRequests enablePacketNotification];
-            [dfuRequests receiveFirmwareImage];
-            [fileRequests writeNextPacket];
-            [dfuDelegate onDFUStarted];
-        });
-    }
-    else {
-        [dfuRequests enablePacketNotification];
-        [dfuRequests receiveFirmwareImage];
-        [fileRequests writeNextPacket];
-        [dfuDelegate onDFUStarted];
-    }
+    [dfuRequests enablePacketNotification];
+    [dfuRequests receiveFirmwareImage];
+    [fileRequests writeNextPacket];
+    [dfuDelegate onDFUStarted];
     if (self.dfuFirmwareType == SOFTDEVICE_AND_BOOTLOADER) {
         [dfuDelegate onSoftDeviceUploadStarted];
     }

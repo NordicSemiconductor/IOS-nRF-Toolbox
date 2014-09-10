@@ -57,7 +57,6 @@
     userFilesVC.fileDelegate = self.fileDelegate;
 }
 
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -69,7 +68,6 @@
 {
     return self.files.count;
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -107,8 +105,6 @@
         HelpViewController *helpVC = [segue destinationViewController];
         helpVC.helpText = [Utility getDFUAppFileHelpText];
     }
-    
 }
-
 
 @end

@@ -128,9 +128,6 @@ bool isDFUPacketCharacteristicFound, isDFUControlPointCharacteristic;
 {
     if (error) {
         NSLog(@"error in writing characteristic %@ and error %@",characteristic.UUID,[error localizedDescription]);
-        /*NSString *errorMessage = [NSString stringWithFormat:@"Error on Writing Characteristic %@\n Message: %@",characteristic.UUID,[error localizedDescription]];
-         [dfuDelegate onError:errorMessage];*/
-        
     }
     else {
         NSLog(@"didWriteValueForCharacteristic %@ and value %@",characteristic.UUID,characteristic.value);

@@ -273,7 +273,6 @@
             }
             else {
                 NSLog(@"Valid file not available in zip file");                
-                //[self showAlert:[self getFileValidationMessage]];
                 [Utility showAlert:[self getFileValidationMessage]];
                 return;
             }
@@ -336,12 +335,6 @@
         return YES;
     }    
 }
-
-/*-(void)showAlert:(NSString *)message
-{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"DFU" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-    [alert show];
-}*/
 
 -(NSString *)getUploadStatusMessage
 {
@@ -455,7 +448,6 @@
         });
     }
     else {
-        //[self showAlert:@"Selected file not exist!"];
         [Utility showAlert:@"Selected file not exist!"];
     }
 }
@@ -480,7 +472,6 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self clearUI];
         if (!self.isTransfered && !self.isTransferCancelled && !self.isErrorKnown) {
-            //[self showAlert:@"The connection has been lost"];
             [Utility showAlert:@"The connection has been lost"];
         }
         self.isTransferCancelled = NO;
@@ -553,7 +544,6 @@
         self.isTransferring = NO;
         self.isTransfered = YES;
         NSString* message = [NSString stringWithFormat:@"%u bytes transfered in %u seconds", dfuOperations.binFileSize, dfuOperations.uploadTimeInSeconds];
-        //[self showAlert:message];
         [Utility showAlert:message];
     });
 }
@@ -563,7 +553,6 @@
     NSLog(@"OnError %@",errorMessage);
     self.isErrorKnown = YES;
     dispatch_async(dispatch_get_main_queue(), ^{
-        //[self showAlert:errorMessage];
         [Utility showAlert:errorMessage];
         [self clearUI];
     });
