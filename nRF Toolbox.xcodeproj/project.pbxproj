@@ -339,6 +339,7 @@
 		5217F3EB1859EE0000F2D5BB /* nRF Toolbox */ = {
 			isa = PBXGroup;
 			children = (
+				A8F1142619C1B7EC007F956E /* StoryBoard */,
 				5236E166187EA7AA0057E974 /* Scanner */,
 				5236E169187EC6310057E974 /* Stub */,
 				5252A533188025EC00EFD773 /* BGM */,
@@ -354,7 +355,6 @@
 				5217F3F51859EE0000F2D5BB /* AppDelegate.m */,
 				5217F3FA1859EE0000F2D5BB /* ViewController.h */,
 				5217F3FB1859EE0000F2D5BB /* ViewController.m */,
-				5217F3F71859EE0000F2D5BB /* Main.storyboard */,
 				7E92108A18A38EE3009C6F2A /* HelpViewController.h */,
 				7E92108B18A38EE3009C6F2A /* HelpViewController.m */,
 				5217F3FD1859EE0000F2D5BB /* Images.xcassets */,
@@ -679,6 +679,14 @@
 			path = minizip;
 			sourceTree = "<group>";
 		};
+		A8F1142619C1B7EC007F956E /* StoryBoard */ = {
+			isa = PBXGroup;
+			children = (
+				5217F3F71859EE0000F2D5BB /* Main.storyboard */,
+			);
+			name = StoryBoard;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -912,7 +920,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -965,7 +973,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nRF Toolbox/nRF Toolbox-Prefix.pch";
 				INFOPLIST_FILE = "nRF Toolbox/nRF Toolbox-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -975,7 +983,6 @@
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				"VALID_ARCHS[sdk=*]" = "arm32 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -990,7 +997,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nRF Toolbox/nRF Toolbox-Prefix.pch";
 				INFOPLIST_FILE = "nRF Toolbox/nRF Toolbox-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1000,7 +1007,6 @@
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				"VALID_ARCHS[sdk=*]" = "arm32 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="WcK-ur-5nd">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14A343f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="WcK-ur-5nd">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
         <!--Tab Bar Controller-->
@@ -362,7 +361,6 @@
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="BGMCell" rowHeight="55" id="oeA-fq-r0O" customClass="BGMItemCell">
-                                        <rect key="frame" x="0.0" y="22" width="0.0" height="55"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oeA-fq-r0O" id="Pqo-a2-Q5k">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="54"/>
@@ -424,7 +422,6 @@
                             <constraint firstItem="lex-q3-aPx" firstAttribute="top" secondItem="LHc-JP-qOQ" secondAttribute="bottom" constant="20" id="QwL-kB-vFJ"/>
                             <constraint firstItem="0Z4-c8-a3I" firstAttribute="top" secondItem="kQi-nT-dUG" secondAttribute="top" constant="49" id="REh-zv-chd"/>
                             <constraint firstAttribute="centerY" secondItem="bjg-zK-RVR" secondAttribute="centerY" id="VPO-s6-JGO"/>
-                            <constraint firstItem="LHc-JP-qOQ" firstAttribute="leading" secondItem="bjg-zK-RVR" secondAttribute="trailing" constant="47" id="cV1-XN-IBf"/>
                             <constraint firstItem="uCY-Rg-kB4" firstAttribute="leading" secondItem="kQi-nT-dUG" secondAttribute="leading" constant="35" id="eru-6g-NPt"/>
                             <constraint firstAttribute="centerX" secondItem="lex-q3-aPx" secondAttribute="centerX" id="giP-zY-a8a"/>
                             <constraint firstItem="LHc-JP-qOQ" firstAttribute="top" secondItem="uCY-Rg-kB4" secondAttribute="bottom" constant="29" id="mN8-M6-cMS"/>
@@ -1461,13 +1458,9 @@
                             <constraint firstAttribute="centerX" secondItem="hGd-vQ-1ZP" secondAttribute="centerX" id="KPm-8k-QM1"/>
                             <constraint firstAttribute="centerY" secondItem="5CN-hP-sI7" secondAttribute="centerY" id="MO8-XY-kNG"/>
                             <constraint firstItem="fT7-zC-dbm" firstAttribute="top" secondItem="YvG-V7-6cx" secondAttribute="bottom" constant="11" id="NYm-bN-1f3"/>
-                            <constraint firstItem="spa-sH-2kC" firstAttribute="leading" secondItem="5CN-hP-sI7" secondAttribute="trailing" constant="3" id="Oyr-ma-rnl"/>
-                            <constraint firstItem="JLD-Gd-zCF" firstAttribute="leading" secondItem="5CN-hP-sI7" secondAttribute="trailing" constant="3" id="ScJ-Nn-9Ua"/>
                             <constraint firstItem="5CN-hP-sI7" firstAttribute="leading" secondItem="dWV-qC-ez4" secondAttribute="leading" id="T3n-o2-Paa"/>
                             <constraint firstAttribute="trailing" secondItem="fT7-zC-dbm" secondAttribute="trailing" constant="34" id="VS1-wS-u7h"/>
-                            <constraint firstItem="8K8-0E-rYV" firstAttribute="leading" secondItem="5CN-hP-sI7" secondAttribute="trailing" constant="3" id="XI1-Yz-dW1"/>
                             <constraint firstAttribute="trailing" secondItem="zgI-eq-aFb" secondAttribute="trailing" constant="34" id="YCq-0K-j5D"/>
-                            <constraint firstItem="zgI-eq-aFb" firstAttribute="leading" secondItem="5CN-hP-sI7" secondAttribute="trailing" constant="3" id="cyK-ZT-YsW"/>
                             <constraint firstItem="K6u-bL-u5j" firstAttribute="top" secondItem="hGd-vQ-1ZP" secondAttribute="bottom" constant="30" id="fcg-iD-faM"/>
                             <constraint firstItem="spa-sH-2kC" firstAttribute="top" secondItem="fT7-zC-dbm" secondAttribute="bottom" constant="11" id="qwZ-TH-hgg"/>
                         </constraints>
@@ -2155,7 +2148,7 @@
             </objects>
             <point key="canvasLocation" x="308" y="117"/>
         </scene>
-        <!--Navigation Controller - App Files-->
+        <!--App Files-->
         <scene sceneID="SFJ-1x-8LL">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="l4W-CU-22L" sceneMemberID="viewController">
@@ -2265,7 +2258,7 @@
             </objects>
             <point key="canvasLocation" x="3737" y="-260"/>
         </scene>
-        <!--Navigation Controller - User Files-->
+        <!--User Files-->
         <scene sceneID="Zj6-2K-LD8">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Mlr-Z9-EdV" sceneMemberID="viewController">
@@ -2313,7 +2306,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="DK9-xb-gkr"/>
         <segue reference="0i8-Ot-uid"/>
+        <segue reference="Psd-qy-Brm"/>
     </inferredMetricsTieBreakers>
 </document>

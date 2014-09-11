@@ -77,7 +77,8 @@
     }
     
     // Rotate the vertical label
-    self.verticalLabel.transform = CGAffineTransformMakeRotation(-M_PI / 2);
+    //self.verticalLabel.transform = CGAffineTransformMakeRotation(-M_PI / 2);
+    self.verticalLabel.transform = CGAffineTransformRotate(CGAffineTransformMakeTranslation(-110.0f, 0.0f), (float)(-M_PI / 2));
     [self initGattServer];
     self.immidiateAlertCharacteristic = nil;
     isImmidiateAlertOn = NO;
