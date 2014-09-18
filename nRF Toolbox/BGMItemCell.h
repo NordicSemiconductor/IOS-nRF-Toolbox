@@ -9,8 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @interface BGMItemCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *timestamp;
+/*@property (weak, nonatomic) IBOutlet UILabel *timestamp;
 @property (weak, nonatomic) IBOutlet UILabel *type;
 @property (weak, nonatomic) IBOutlet UILabel *value;
+@property (weak, nonatomic) IBOutlet UILabel *timestamp;*/
+@property (weak, nonatomic) IBOutlet UILabel *type;
+@property (weak, nonatomic) IBOutlet UILabel *value;
+@property (weak, nonatomic) IBOutlet UILabel *timestamp;
 
 @end
