@@ -61,7 +61,6 @@
 @implementation DFUViewController
 
 @synthesize backgroundImage;
-//@synthesize verticalLabel;
 @synthesize deviceName;
 @synthesize connectButton;
 @synthesize selectedPeripheral;
@@ -107,7 +106,6 @@
         [backgroundImage setImage:image];    }
     
     // Rotate the vertical label
-    //self.verticalLabel.transform = CGAffineTransformMakeRotation(-M_PI / 2);
     self.verticalLabel.transform = CGAffineTransformRotate(CGAffineTransformMakeTranslation(-145.0f, 0.0f), (float)(-M_PI / 2));
 }
 

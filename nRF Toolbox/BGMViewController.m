@@ -46,7 +46,6 @@ enum
 @property (strong, nonatomic) CBCharacteristic* bgmRecordAccessControlPointCharacteristic;
 @property (strong, nonatomic) NSMutableArray* readings;
 @property (weak, nonatomic) IBOutlet UITableView *bgmTableView;
-//@property (weak, nonatomic) IBOutlet UIBarButtonItem *actionButton;
 
 - (IBAction)actionButtonClicked:(id)sender;
 
@@ -61,7 +60,6 @@ enum
 @synthesize connectButton;
 @synthesize connectedPeripheral;
 @synthesize bgmTableView;
-//@synthesize actionButton;
 @synthesize recordButton;
 @synthesize readings;
 @synthesize bgmRecordAccessControlPointCharacteristic;
@@ -105,7 +103,6 @@ enum
     }
     
     // Rotate the vertical label
-    //self.verticalLabel.transform = CGAffineTransformMakeRotation(-M_PI / 2);
     self.verticalLabel.transform = CGAffineTransformRotate(CGAffineTransformMakeTranslation(-145.0f, 0.0f), (float)(-M_PI / 2));
     
     bgmTableView.dataSource = self;
@@ -131,7 +128,6 @@ enum
     [actionSheet setDestructiveButtonIndex:ACTION_DELETE_ALL];
     [actionSheet setCancelButtonIndex:ACTION_CANCEL];
     
-    //[actionSheet showFromBarButtonItem:actionButton animated:YES];
     [actionSheet showInView:self.view];
 }
 
