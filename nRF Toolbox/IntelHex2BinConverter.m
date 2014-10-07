@@ -72,7 +72,11 @@
                 break;
             }
             case 0x02:
-                // Should here be the same as for 0x04?
+                // This should be uncommented when implementing Extended Addresses
+                /*const UInt16 newULBA = [IntelHex2BinConverter readAddress:pointer] >> 12;
+                if (binLength > 0 && newULBA != lastULBA + 1)
+                    return binLength;
+                lastULBA = newULBA;*/
                 break;
             case 0x00:
                 // If record type is Data Record (rectype = 0), add it's length (only it the address is >= 0x1000, MBR is skipped)
