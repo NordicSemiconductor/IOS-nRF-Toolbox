@@ -46,7 +46,7 @@
     NSUInteger binLength = 0;
     const NSUInteger hexLength = hex.length;
     const Byte* pointer = (const Byte*)hex.bytes;
-    UInt16 lastULBA = 0;
+    UInt32 lastBaseAddress = 0;
     
     do
     {
@@ -64,23 +64,24 @@
         
         switch (rectype) {
             case 0x04: {
-                // Only consistent hex files are supported. If there is a jump (0x04) to non-following address skip the rest of the file
-                const UInt16 newULBA = [IntelHex2BinConverter readAddress:pointer];
-                if (binLength > 0 && newULBA != lastULBA + 1)
+                // Only consistent hex files are supported. If there is a jump to non-following ULBA address skip the rest of the file
+                const UInt32 newULBA = [IntelHex2BinConverter readAddress:pointer];
+                if (binLength > 0 && newULBA != (lastBaseAddress >> 16) + 1)
                     return binLength;
-                lastULBA = newULBA;
+                lastBaseAddress = newULBA << 16;
                 break;
             }
-            case 0x02:
-                // This should be uncommented when implementing Extended Addresses
-                /*const UInt16 newULBA = [IntelHex2BinConverter readAddress:pointer] >> 12;
-                if (binLength > 0 && newULBA != lastULBA + 1)
+            case 0x02: {
+                // The same with Extended Segment Address. The calculated ULBA must not be greater than the last one + 1
+                const UInt32 newSBA = [IntelHex2BinConverter readAddress:pointer] << 4;
+                if (binLength > 0 && (newSBA >> 16) != (lastBaseAddress >> 16) + 1)
                     return binLength;
-                lastULBA = newULBA;*/
+                lastBaseAddress = newSBA;
                 break;
+            }
             case 0x00:
                 // If record type is Data Record (rectype = 0), add it's length (only it the address is >= 0x1000, MBR is skipped)
-                if ((lastULBA << 16) + offset >= 0x1000)
+                if (lastBaseAddress + offset >= 0x1000)
                     binLength += reclen;
             default:
                 break;
@@ -102,7 +103,7 @@
     const NSUInteger hexLength = hex.length;
     const Byte* pointer = (const Byte*)hex.bytes;
     NSUInteger bytesCopied = 0;
-    UInt16 lastULBA = 0;
+    UInt32 lastBaseAddress = 0;
     
     Byte* bytes = malloc(sizeof(Byte) * binLength);
     Byte* output = bytes;
@@ -124,17 +125,23 @@
         
         switch (rectype) {
             case 0x04: {
-                // Only consistent hex files are supported. If there is a jump (0x04) to non-following address skip the rest of the file
-                const UInt16 newULBA = [IntelHex2BinConverter readAddress:pointer]; pointer += 4;
-                if (bytesCopied > 0 && newULBA != lastULBA + 1)
+                const UInt32 newULBA = [IntelHex2BinConverter readAddress:pointer]; pointer += 4;
+                if (bytesCopied > 0 && newULBA != (lastBaseAddress >> 16) + 1)
                     return [NSData dataWithBytesNoCopy:bytes length:bytesCopied];
-                lastULBA = newULBA;
+                lastBaseAddress = newULBA << 16;
+                break;
+            }
+            case 0x02: {
+                const UInt32 newSBA = [IntelHex2BinConverter readAddress:pointer] << 4; pointer += 4;
+                if (bytesCopied > 0 && (newSBA >> 16) != (lastBaseAddress >> 16) + 1)
+                    return [NSData dataWithBytesNoCopy:bytes length:bytesCopied];
+                lastBaseAddress = newSBA;
                 break;
             }
             case 0x00:
                 // If record type is Data Record (rectype = 0), copy data to output buffer
                 // Skip data below 0x1000 address (MBR)
-                if ((lastULBA << 16) + offset >= 0x1000)
+                if (lastBaseAddress + offset >= 0x1000)
                 {
                     for (int i = 0; i < reclen; i++)
                     {
@@ -147,10 +154,8 @@
                     pointer += (reclen << 1);  // Skip the data
                 }
                 break;
-            case 0x02:
-                // Should here be the same as for 0x04?
             default:
-                pointer += (reclen << 1);  // Skip the data when calculating length
+                pointer += (reclen << 1);  // Skip the irrelevant data
                 break;
         }
         
