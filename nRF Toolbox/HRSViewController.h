@@ -22,6 +22,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *hrValue;
 @property (weak, nonatomic) IBOutlet UILabel *hrLocation;
 
+//DFU Characteristics
+//@property (strong, nonatomic)CBCharacteristic *dfuPacketCharacteristic;
+//@property (strong, nonatomic)CBCharacteristic *dfuControlPointCharacteristic;
+
 @property (weak, nonatomic) IBOutlet UIView *graphView;
 
 - (IBAction)connectOrDisconnectClicked;

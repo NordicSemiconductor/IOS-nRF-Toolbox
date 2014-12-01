@@ -24,7 +24,7 @@
     NSLog(@"unzip folder path: %@",outputPath);
     AccessFileSystem *fileSystem = [[AccessFileSystem alloc]init];
     NSLog(@"number of files inside zip file: %d",[[fileSystem getAllFilesFromDirectory:outputPath] count]);
-    NSString *softdevicePath, *bootloaderPath, *applicationPath;
+    NSString *softdevicePath, *bootloaderPath, *applicationPath, *applicationMetaDataPath, *bootloaderMetaDataPath, *softdeviceMetaDataPath, *systemMetaDataPath;
     NSArray *files = [fileSystem getAllFilesFromDirectory:outputPath];
     NSLog(@"number of files inside zip file: %d",[files count]);
     for (NSString* file in files) {
@@ -43,6 +43,26 @@
             NSLog(@"Found application.hex in zip file");
             applicationPath = [outputPath stringByAppendingPathComponent:@"application.hex"];
             [filesURL addObject:[NSURL fileURLWithPath:applicationPath]];
+        }
+        else if ([file isEqualToString:@"application.dat"]) {
+            NSLog(@"Found application.dat in zip file");
+            applicationMetaDataPath = [outputPath stringByAppendingPathComponent:@"application.dat"];
+            [filesURL addObject:[NSURL fileURLWithPath:applicationMetaDataPath]];
+        }
+        else if ([file isEqualToString:@"bootloader.dat"]) {
+            NSLog(@"Found bootloader.dat in zip file");
+            bootloaderMetaDataPath = [outputPath stringByAppendingPathComponent:@"bootloader.dat"];
+            [filesURL addObject:[NSURL fileURLWithPath:bootloaderMetaDataPath]];
+        }
+        else if ([file isEqualToString:@"softdevice.dat"]) {
+            NSLog(@"Found softdevice.dat in zip file");
+            softdeviceMetaDataPath = [outputPath stringByAppendingPathComponent:@"softdevice.dat"];
+            [filesURL addObject:[NSURL fileURLWithPath:softdeviceMetaDataPath]];
+        }
+        else if ([file isEqualToString:@"system.dat"]) {
+            NSLog(@"Found system.dat in zip file");
+            systemMetaDataPath = [outputPath stringByAppendingPathComponent:@"system.dat"];
+            [filesURL addObject:[NSURL fileURLWithPath:systemMetaDataPath]];
         }
     }
     return [filesURL copy];

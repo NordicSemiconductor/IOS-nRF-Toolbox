@@ -13,6 +13,7 @@
 extern NSString * const dfuServiceUUIDString;
 extern NSString * const dfuControlPointCharacteristicUUIDString;
 extern NSString * const dfuPacketCharacteristicUUIDString;
+extern NSString * const dfuVersionCharacteritsicUUIDString;
 
 extern NSString* const FIRMWARE_TYPE_SOFTDEVICE;
 extern NSString* const FIRMWARE_TYPE_BOOTLOADER;

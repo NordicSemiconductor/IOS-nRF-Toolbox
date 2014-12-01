@@ -15,6 +15,7 @@
 @property (strong, nonatomic) CBPeripheral *bluetoothPeripheral;
 @property (strong, nonatomic)CBCharacteristic *dfuPacketCharacteristic;
 @property (strong, nonatomic)CBCharacteristic *dfuControlPointCharacteristic;
+@property (strong, nonatomic)CBCharacteristic *dfuVersionCharacteristic;
 @property (nonatomic)DfuFirmwareTypes dfuFirmwareType;
 
 //defining public methods
@@ -30,6 +31,22 @@
 -(void) activateAndReset;
 -(void) resetSystem;
 
--(void) setPeripheralAndOtherParameters:(CBPeripheral *)peripheral controlPointCharacteristic:(CBCharacteristic *)controlPointCharacteristic packetCharacteristic:(CBCharacteristic *)PacketCharacteristic;
+//Init Packet is included in new DFU in SDK 7.0
+-(void) sendInitPacket:(NSURL *)metaDataURL;
+
+//dfu Version characteristic is introduced in SDK 7.0
+-(void)getDfuVersion;
+
+//App can be set Accessory to DFU mode in SDK 7.0 in order to update firmware
+-(void)resetAppToDFUMode;
+
+-(void) setPeripheralAndOtherParameters:(CBPeripheral *)peripheral
+                controlPointCharacteristic:(CBCharacteristic *)controlPointCharacteristic
+                packetCharacteristic:(CBCharacteristic *)packetCharacteristic;
+
+-(void) setPeripheralAndOtherParametersWithVersion:(CBPeripheral *)peripheral
+             controlPointCharacteristic:(CBCharacteristic *)controlPointCharacteristic
+                   packetCharacteristic:(CBCharacteristic *)packetCharacteristic
+                  versionCharacteristic:(CBCharacteristic *)versionCharacteristic;
 
 @end

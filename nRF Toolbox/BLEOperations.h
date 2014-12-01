@@ -13,9 +13,16 @@
 
 @protocol BLEOperationsDelegate
 
--(void)onDeviceConnected:(CBPeripheral *)peripheral withPacketCharacteristic:(CBCharacteristic *)dfuPacketCharacteristic andControlPointCharacteristic:(CBCharacteristic *)dfuControlPointCharacteristic;
+-(void)onDeviceConnectedWithVersion:(CBPeripheral *)peripheral
+        withPacketCharacteristic:(CBCharacteristic *)dfuPacketCharacteristic
+        andControlPointCharacteristic:(CBCharacteristic *)dfuControlPointCharacteristic
+        andVersionCharacteristic:(CBCharacteristic *)dfuVersionCharacteristic;
+-(void)onDeviceConnected:(CBPeripheral *)peripheral
+withPacketCharacteristic:(CBCharacteristic *)dfuPacketCharacteristic
+andControlPointCharacteristic:(CBCharacteristic *)dfuControlPointCharacteristic;
 -(void)onDeviceDisconnected:(CBPeripheral *)peripheral;
 -(void)onReceivedNotification:(NSData *)data;
+-(void)onReadDfuVersion:(int)version;
 -(void)onError:(NSString *)errorMessage;
 
 @end
@@ -26,6 +33,9 @@
 @property (strong, nonatomic) CBPeripheral *bluetoothPeripheral;
 @property (strong, nonatomic)CBCharacteristic *dfuPacketCharacteristic;
 @property (strong, nonatomic)CBCharacteristic *dfuControlPointCharacteristic;
+@property (strong, nonatomic)CBCharacteristic *dfuVersionCharacteristic;
+//@property int dfuVersion;
+
 
 -(BLEOperations *) initWithDelegate:(id<BLEOperationsDelegate>) delegate;
 

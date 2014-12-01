@@ -28,6 +28,9 @@
     CBUUID *HR_Location_Characteristic_UUID;
     CBUUID *Battery_Service_UUID;
     CBUUID *Battery_Level_Characteristic_UUID;
+    CBUUID *dfuService_UUID;
+    CBUUID *dfuControl_Point_Characteristic_UUID;
+    CBUUID *dfuPacket_Characteristic_UUID;
 }
 @property CPTScatterPlot *linePlot;
 @property (nonatomic, strong) CPTGraphHostingView *hostView;
@@ -62,6 +65,10 @@
         HR_Location_Characteristic_UUID = [CBUUID UUIDWithString:hrsSensorLocationCharacteristicUUIDString];
         Battery_Service_UUID = [CBUUID UUIDWithString:batteryServiceUUIDString];
         Battery_Level_Characteristic_UUID = [CBUUID UUIDWithString:batteryLevelCharacteristicUUIDString];
+        //dfuService_UUID = [CBUUID UUIDWithString:@"00001530-1212-EFDE-1523-785FEABCD123"];
+        //dfuControl_Point_Characteristic_UUID = [CBUUID UUIDWithString:@"00001531-1212-EFDE-1523-785FEABCD123"];
+        //dfuPacket_Characteristic_UUID = [CBUUID UUIDWithString:@"00001532-1212-EFDE-1523-785FEABCD123"];
+    
     }
     return self;
 }
@@ -360,7 +367,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActiveBackground:) name:UIApplicationDidBecomeActiveNotification object:nil];
     
     // Peripheral has connected. Discover required services
-    [hrPeripheral discoverServices:@[HR_Service_UUID,Battery_Service_UUID]];
+    //[hrPeripheral discoverServices:@[HR_Service_UUID,Battery_Service_UUID]];
+    [hrPeripheral discoverServices:nil];
 }
 
 -(void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
@@ -395,6 +403,7 @@
 {
     NSLog(@"didDiscoverServices");
     if (!error) {
+        NSLog(@"services discovered %d",[peripheral.services count] );
         for (CBService *hrService in peripheral.services) {
             NSLog(@"service discovered: %@",hrService.UUID);
             if ([hrService.UUID isEqual:HR_Service_UUID])
@@ -407,6 +416,12 @@
                 NSLog(@"Battery service found");
                 [hrPeripheral discoverCharacteristics:nil forService:hrService];
             }
+            // code to discover DFU Service
+            else if ([hrService.UUID isEqual:dfuService_UUID]) {
+                NSLog(@"DFU Service is found");
+                [hrPeripheral discoverCharacteristics:nil forService:hrService];
+            }
+
         }
     } else {
         NSLog(@"error in discovering services on device: %@",hrPeripheral.name);
@@ -440,11 +455,41 @@
             }
             
         }
+        /*else if([service.UUID isEqual:dfuService_UUID]) {
+            for (CBCharacteristic *characteristic in service.characteristics) {
+                NSLog(@"DFU characteristic is found %@",characteristic.UUID);
+                if ([characteristic.UUID isEqual:dfuControl_Point_Characteristic_UUID]) {
+                    NSLog(@"dfuControl_Point_Characteristic is found %@",characteristic.UUID);
+                    self.dfuControlPointCharacteristic = characteristic;
+                    //[hrPeripheral readValueForCharacteristic:characteristic];
+                }
+                else if ([characteristic.UUID isEqual:dfuPacket_Characteristic_UUID]) {
+                    NSLog(@"dfuPacket_Characteristic is found %@",characteristic.UUID);
+                    self.dfuPacketCharacteristic = characteristic;
+                }
+            }
+            [self enableControlPointNotification];
+            [self startDFU];
+        }*/
         
     } else {
         NSLog(@"error in discovering characteristic on device: %@",hrPeripheral.name);
     }
 }
+
+/*-(void) enableControlPointNotification
+{
+    NSLog(@"DFUOperationsdetails enableNotification");
+    [hrPeripheral setNotifyValue:YES forCharacteristic:self.dfuControlPointCharacteristic];
+}
+
+-(void) startDFU
+{
+    NSLog(@"DFUOperationsdetails startDFU");
+    //self.dfuFirmwareType = firmwareType;
+    uint8_t value[] = {0x01, 0x04};
+    [hrPeripheral writeValue:[NSData dataWithBytes:&value length:2] forCharacteristic:self.dfuControlPointCharacteristic type:CBCharacteristicWriteWithResponse];
+}*/
 
 -(void) peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {

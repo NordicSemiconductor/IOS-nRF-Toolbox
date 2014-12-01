@@ -21,7 +21,9 @@
 
 //define protocol functions that can be used in any class using this delegate
 -(void)onDeviceConnected:(CBPeripheral *)peripheral;
+-(void)onDeviceConnectedWithVersion:(CBPeripheral *)peripheral;
 -(void)onDeviceDisconnected:(CBPeripheral *)peripheral;
+-(void)onReadDFUVersion:(int)version;
 -(void)onDFUStarted;
 -(void)onDFUCancelled;
 -(void)onSoftDeviceUploadStarted;
@@ -39,6 +41,7 @@
 @property (strong, nonatomic) CBPeripheral *bluetoothPeripheral;
 @property (strong, nonatomic)CBCharacteristic *dfuPacketCharacteristic;
 @property (strong, nonatomic)CBCharacteristic *dfuControlPointCharacteristic;
+@property (strong, nonatomic)CBCharacteristic *dfuVersionCharacteristic;
 
 @property (strong, nonatomic)BLEOperations *bleOperations;
 @property (strong, nonatomic)DFUOperationsDetails *dfuRequests;
@@ -48,6 +51,8 @@
 @property (nonatomic)NSUInteger binFileSize;
 @property (nonatomic)NSUInteger uploadTimeInSeconds;
 @property (strong, nonatomic)NSURL *firmwareFile;
+@property (strong, nonatomic)NSURL *firmwareFileMetaData;
+
 @property struct DFUResponse dfuResponse;
 
 -(DFUOperations *) initWithDelegate:(id<DFUOperationsDelegate>) delegate;
@@ -59,9 +64,11 @@
 -(void)setCentralManager:(CBCentralManager *)manager;
 -(void)connectDevice:(CBPeripheral *)peripheral;
 -(void)performDFUOnFile:(NSURL *)firmwareURL firmwareType:(DfuFirmwareTypes)firmwareType;
+-(void)performDFUOnFileWithMetaData:(NSURL *)firmwareURL firmwareMetaDataURL:(NSURL *)metaDataURL firmwareType:(DfuFirmwareTypes)firmwareType;
 -(void)performDFUOnFiles:(NSURL *)softdeviceURL bootloaderURL:(NSURL *)bootloaderURL firmwareType:(DfuFirmwareTypes)firmwareType;
+-(void)performDFUOnFilesWithMetaData:(NSURL *)softdeviceURL bootloaderURL:(NSURL *)bootloaderURL firmwaresMetaDataURL:(NSURL *)metaDataURL firmwareType:(DfuFirmwareTypes)firmwareType;
 -(void)performOldDFUOnFile:(NSURL *)firmwareURL;
-
+-(void)setAppToBootloaderMode;
 -(void)cancelDFU;
 
 @end

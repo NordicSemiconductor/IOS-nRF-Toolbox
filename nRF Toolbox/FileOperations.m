@@ -75,8 +75,7 @@
         [self.bluetoothPeripheral writeValue:nextPacketData forCharacteristic:self.dfuPacketCharacteristic type:CBCharacteristicWriteWithoutResponse];
         percentage = (((double)(self.writingPacketNumber * 20) / (double)(self.binFileSize)) * 100);
         [self.fileDelegate onTransferPercentage:percentage];
-        self.writingPacketNumber++;
-        
+        self.writingPacketNumber++;        
     }
 
 }

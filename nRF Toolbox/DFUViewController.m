@@ -31,7 +31,12 @@
 @property NSURL *softdeviceURL;
 @property NSURL *bootloaderURL;
 @property NSURL *applicationURL;
+@property NSURL *applicationMetaDataURL;
+@property NSURL *bootloaderMetaDataURL;
+@property NSURL *softdeviceMetaDataURL;
+@property NSURL *systemMetaDataURL;
 @property NSUInteger selectedFileSize;
+@property int dfuVersion;
 
 
 @property (weak, nonatomic) IBOutlet UILabel *fileName;
@@ -53,6 +58,7 @@
 @property BOOL isConnected;
 @property BOOL isErrorKnown;
 @property BOOL isSelectedFileZipped;
+@property BOOL isDfuVersionExist;
 
 - (IBAction)uploadPressed;
 
@@ -137,16 +143,37 @@
     if (self.isSelectedFileZipped) {
         switch (enumFirmwareType) {
             case SOFTDEVICE_AND_BOOTLOADER:
-                [dfuOperations performDFUOnFiles:self.softdeviceURL bootloaderURL:self.bootloaderURL firmwareType:SOFTDEVICE_AND_BOOTLOADER];
+                if (self.isDfuVersionExist) {
+                    [dfuOperations performDFUOnFilesWithMetaData:self.softdeviceURL bootloaderURL:self.bootloaderURL firmwaresMetaDataURL:self.systemMetaDataURL firmwareType:SOFTDEVICE_AND_BOOTLOADER];
+                }
+                else {
+                    [dfuOperations performDFUOnFiles:self.softdeviceURL bootloaderURL:self.bootloaderURL firmwareType:SOFTDEVICE_AND_BOOTLOADER];
+                }
+                
                 break;
             case SOFTDEVICE:
-                [dfuOperations performDFUOnFile:self.softdeviceURL firmwareType:SOFTDEVICE];
+                if (self.isDfuVersionExist) {
+                    [dfuOperations performDFUOnFileWithMetaData:self.softdeviceURL firmwareMetaDataURL:self.softdeviceMetaDataURL firmwareType:SOFTDEVICE];
+                }
+                else {
+                    [dfuOperations performDFUOnFile:self.softdeviceURL firmwareType:SOFTDEVICE];
+                }
                 break;
             case BOOTLOADER:
-                [dfuOperations performDFUOnFile:self.bootloaderURL firmwareType:BOOTLOADER];
+                if (self.isDfuVersionExist) {
+                    [dfuOperations performDFUOnFileWithMetaData:self.bootloaderURL firmwareMetaDataURL:self.bootloaderMetaDataURL firmwareType:BOOTLOADER];
+                }
+                else {
+                    [dfuOperations performDFUOnFile:self.bootloaderURL firmwareType:BOOTLOADER];
+                }
                 break;
             case APPLICATION:
+                if (self.isDfuVersionExist) {
+                    [dfuOperations performDFUOnFileWithMetaData:self.applicationURL firmwareMetaDataURL:self.applicationMetaDataURL firmwareType:APPLICATION];
+                }
+                else {
                 [dfuOperations performDFUOnFile:self.applicationURL firmwareType:APPLICATION];
+                }
                 break;
                 
             default:
@@ -173,7 +200,19 @@
         }
         else if ([[[firmwareURL path] lastPathComponent] isEqualToString:@"application.hex"]) {
             self.applicationURL = firmwareURL;
-        }        
+        }
+        else if ([[[firmwareURL path] lastPathComponent] isEqualToString:@"application.dat"]) {
+            self.applicationMetaDataURL = firmwareURL;
+        }
+        else if ([[[firmwareURL path] lastPathComponent] isEqualToString:@"bootloader.dat"]) {
+            self.bootloaderMetaDataURL = firmwareURL;
+        }
+        else if ([[[firmwareURL path] lastPathComponent] isEqualToString:@"softdevice.dat"]) {
+            self.softdeviceMetaDataURL = firmwareURL;
+        }
+        else if ([[[firmwareURL path] lastPathComponent] isEqualToString:@"system.dat"]) {
+            self.systemMetaDataURL = firmwareURL;
+        }
     }
 }
 
@@ -276,12 +315,23 @@
                 return;
             }
         }
-        if (selectedPeripheral && selectedFileType && self.selectedFileSize > 0 && self.isConnected) {
-            uploadButton.enabled = YES;
+        if (self.isDfuVersionExist) {
+            if (selectedPeripheral && selectedFileType && self.selectedFileSize > 0 && self.isConnected && self.dfuVersion > 1) {
+                uploadButton.enabled = YES;
+            }
+            else {
+                NSLog(@"cant enable Upload button");
+            }
         }
         else {
-            NSLog(@"cant enable Upload button");
+            if (selectedPeripheral && selectedFileType && self.selectedFileSize > 0 && self.isConnected) {
+                uploadButton.enabled = YES;
+            }
+            else {
+                NSLog(@"cant enable Upload button");
+            }
         }
+        
 
     });
 }
@@ -407,6 +457,7 @@
     [self enableUploadButton];
 }
 
+#pragma mark Device Selection Delegate
 -(void)centralManager:(CBCentralManager *)manager didPeripheralSelected:(CBPeripheral *)peripheral
 {
     selectedPeripheral = peripheral;
@@ -458,6 +509,15 @@
 {
     NSLog(@"onDeviceConnected %@",peripheral.name);
     self.isConnected = YES;
+    self.isDfuVersionExist = NO;
+    [self enableUploadButton];
+}
+
+-(void)onDeviceConnectedWithVersion:(CBPeripheral *)peripheral
+{
+    NSLog(@"onDeviceConnectedWithVersion %@",peripheral.name);
+    self.isConnected = YES;
+    self.isDfuVersionExist = YES;
     [self enableUploadButton];
 }
 
@@ -469,14 +529,37 @@
     
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self clearUI];
-        if (!self.isTransfered && !self.isTransferCancelled && !self.isErrorKnown) {
-            [Utility showAlert:@"The connection has been lost"];
+        if (self.dfuVersion != 1) {
+            [self clearUI];
+        
+        
+            if (!self.isTransfered && !self.isTransferCancelled && !self.isErrorKnown) {
+                [Utility showAlert:@"The connection has been lost"];
+            }
+            self.isTransferCancelled = NO;
+            self.isTransfered = NO;
+            self.isErrorKnown = NO;
         }
-        self.isTransferCancelled = NO;
-        self.isTransfered = NO;
-        self.isErrorKnown = NO;
+        else {
+            double delayInSeconds = 3.0;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [dfuOperations connectDevice:peripheral];
+            });
+            
+        }
     });
+}
+
+-(void)onReadDFUVersion:(int)version
+{
+    NSLog(@"onReadDFUVersion %d",version);
+    self.dfuVersion = version;
+    NSLog(@"DFU Version: %d",self.dfuVersion);
+    if (self.dfuVersion == 1) {
+        [dfuOperations setAppToBootloaderMode];
+    }
+    [self enableUploadButton];
 }
 
 -(void)onDFUStarted

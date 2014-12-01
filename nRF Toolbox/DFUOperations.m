@@ -25,8 +25,10 @@
 @synthesize fileRequests2;
 @synthesize bleOperations;
 
-bool isStartingSecondFile, isPerformedOldDFU;
+bool isStartingSecondFile, isPerformedOldDFU, isVersionCharacteristicExist;
 NSDate *startTime, *finishTime;
+
+
 
 -(DFUOperations *) initWithDelegate:(id<DFUOperationsDelegate>) delegate
 {
@@ -71,6 +73,12 @@ NSDate *startTime, *finishTime;
     [dfuDelegate onDFUCancelled];
 }
 
+-(void)setAppToBootloaderMode
+{
+    NSLog(@"setAppToBootloaderMode");
+    [dfuRequests resetAppToDFUMode];    
+}
+
 -(void)performDFUOnFiles:(NSURL *)softdeviceURL bootloaderURL:(NSURL *)bootloaderURL firmwareType:(DfuFirmwareTypes)firmwareType
 {
     isPerformedOldDFU = NO;
@@ -85,6 +93,24 @@ NSDate *startTime, *finishTime;
     [dfuRequests writeFilesSizes:(uint32_t)fileRequests.binFileSize bootloaderSize:(uint32_t)fileRequests2.binFileSize];
 }
 
+-(void)performDFUOnFilesWithMetaData:(NSURL *)softdeviceURL bootloaderURL:(NSURL *)bootloaderURL firmwaresMetaDataURL:(NSURL *)metaDataURL firmwareType:(DfuFirmwareTypes)firmwareType
+{
+    self.firmwareFileMetaData = metaDataURL;
+    isPerformedOldDFU = NO;
+    [self initFirstFileOperations];
+    [self initSecondFileOperations];
+    [self initParameters];
+    self.dfuFirmwareType = firmwareType;
+    [fileRequests openFile:softdeviceURL];
+    [fileRequests2 openFile:bootloaderURL];
+    [dfuRequests enableNotification];
+    [dfuRequests startDFU:firmwareType];
+    [dfuRequests writeFilesSizes:(uint32_t)fileRequests.binFileSize bootloaderSize:(uint32_t)fileRequests2.binFileSize];
+    if (isVersionCharacteristicExist) {
+        [dfuRequests getDfuVersion];
+    }
+}
+
 -(void)performDFUOnFile:(NSURL *)firmwareURL firmwareType:(DfuFirmwareTypes)firmwareType
 {
     isPerformedOldDFU = NO;
@@ -97,6 +123,27 @@ NSDate *startTime, *finishTime;
     [dfuRequests enableNotification];
     [dfuRequests startDFU:firmwareType];
     [dfuRequests writeFileSize:(uint32_t)fileRequests.binFileSize];
+    if (isVersionCharacteristicExist) {
+        [dfuRequests getDfuVersion];
+    }
+}
+
+-(void)performDFUOnFileWithMetaData:(NSURL *)firmwareURL firmwareMetaDataURL:(NSURL *)metaDataURL firmwareType:(DfuFirmwareTypes)firmwareType
+{
+    self.firmwareFileMetaData = metaDataURL;
+    isPerformedOldDFU = NO;
+    firmwareFile = firmwareURL;
+    [self initFirstFileOperations];
+    isStartingSecondFile = NO;
+    [self initParameters];
+    self.dfuFirmwareType = firmwareType;
+    [fileRequests openFile:firmwareURL];
+    [dfuRequests enableNotification];
+    [dfuRequests startDFU:firmwareType];
+    [dfuRequests writeFileSize:(uint32_t)fileRequests.binFileSize];
+    if (isVersionCharacteristicExist) {
+        [dfuRequests getDfuVersion];
+    }
 }
 
 -(void)performOldDFUOnFile:(NSURL *)firmwareURL
@@ -190,6 +237,10 @@ NSDate *startTime, *finishTime;
             NSLog(@"Requested code is Validate Firmware now processing response status");
             [self processValidateFirmwareResponseStatus];
             break;
+        case INITIALIZE_DFU_PARAMETERS_REQUEST:
+            NSLog(@"Requested code is Initialize DFU Parameters now processing response status");
+            [self processInitPacketResponseStatus];
+            break;
             
         default:
             NSLog(@"invalid Requested code in DFU Response %d",dfuResponse.requestedCode);
@@ -204,7 +255,13 @@ NSDate *startTime, *finishTime;
     switch (dfuResponse.responseStatus) {
         case OPERATION_SUCCESSFUL_RESPONSE:
             NSLog(@"successfully received startDFU notification");
-            [self startSendingFile];
+            //Start initPacket in order to support ned DFU in SDK 7.1
+            if (isVersionCharacteristicExist) {
+                [dfuRequests sendInitPacket:self.firmwareFileMetaData];
+            }
+            else {
+                [self startSendingFile];
+            }
             break;
         case OPERATION_NOT_SUPPORTED_RESPONSE:
             if (!isPerformedOldDFU) {
@@ -225,6 +282,18 @@ NSDate *startTime, *finishTime;
             [dfuDelegate onError:errorMessage];
             [dfuRequests resetSystem];
             break;
+    }
+}
+
+-(void)processInitPacketResponseStatus
+{
+    NSLog(@"processInitPacketResponseStatus");
+    if(dfuResponse.responseStatus == OPERATION_SUCCESSFUL_RESPONSE) {
+        NSLog(@"successfully received initPacket notification");
+        [self startSendingFile];
+    }
+    else {
+        NSLog(@"unsuccessfull initPacket notification %d",dfuResponse.responseStatus);
     }
 }
 
@@ -301,6 +370,14 @@ NSDate *startTime, *finishTime;
                                  packetCharacteristic:self.dfuPacketCharacteristic];
 }
 
+-(void)setDFUOperationsDetailsWithVersion
+{
+    [self.dfuRequests setPeripheralAndOtherParametersWithVersion:self.bluetoothPeripheral
+                           controlPointCharacteristic:self.dfuControlPointCharacteristic
+                                 packetCharacteristic:self.dfuPacketCharacteristic
+                                versionCharacteristic:self.dfuVersionCharacteristic];
+}
+
 -(void)calculateDFUTime
 {
     finishTime = [NSDate date];
@@ -310,8 +387,25 @@ NSDate *startTime, *finishTime;
 
 #pragma mark - BLEOperations delegates
 
--(void)onDeviceConnected:(CBPeripheral *)peripheral withPacketCharacteristic:(CBCharacteristic *)dfuPacketCharacteristic andControlPointCharacteristic:(CBCharacteristic *)dfuControlPointCharacteristic
+-(void)onDeviceConnectedWithVersion:(CBPeripheral *)peripheral
+        withPacketCharacteristic:(CBCharacteristic *)dfuPacketCharacteristic
+        andControlPointCharacteristic:(CBCharacteristic *)dfuControlPointCharacteristic
+        andVersionCharacteristic:(CBCharacteristic *)dfuVersionCharacteristic
 {
+    isVersionCharacteristicExist = YES;
+    self.bluetoothPeripheral = peripheral;
+    self.dfuPacketCharacteristic = dfuPacketCharacteristic;
+    self.dfuControlPointCharacteristic = dfuControlPointCharacteristic;
+    self.dfuVersionCharacteristic = dfuVersionCharacteristic;
+    [self setDFUOperationsDetailsWithVersion];
+    [dfuDelegate onDeviceConnectedWithVersion:peripheral];
+}
+
+-(void)onDeviceConnected:(CBPeripheral *)peripheral
+withPacketCharacteristic:(CBCharacteristic *)dfuPacketCharacteristic
+andControlPointCharacteristic:(CBCharacteristic *)dfuControlPointCharacteristic
+{
+    isVersionCharacteristicExist = NO;
     self.bluetoothPeripheral = peripheral;
     self.dfuPacketCharacteristic = dfuPacketCharacteristic;
     self.dfuControlPointCharacteristic = dfuControlPointCharacteristic;
@@ -319,9 +413,16 @@ NSDate *startTime, *finishTime;
     [dfuDelegate onDeviceConnected:peripheral];
 }
 
+
 -(void)onDeviceDisconnected:(CBPeripheral *)peripheral
 {
     [dfuDelegate onDeviceDisconnected:peripheral];
+}
+
+-(void)onReadDfuVersion:(int)version
+{
+    NSLog(@"onReadDfuVersion %d",version);
+    [dfuDelegate onReadDFUVersion:version];
 }
 
 -(void)onReceivedNotification:(NSData *)data

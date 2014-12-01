@@ -129,6 +129,7 @@
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI
 {
     // Scanner uses other queue to send events. We must edit UI in the main queue
+    //NSLog(@"scanned peripheral : %@",peripheral.name);
     dispatch_async(dispatch_get_main_queue(), ^{
         // Add the sensor to the list and reload deta set
         ScannedPeripheral* sensor = [ScannedPeripheral initWithPeripheral:peripheral rssi:RSSI.intValue];

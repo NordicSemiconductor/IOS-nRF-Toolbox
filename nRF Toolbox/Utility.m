@@ -13,6 +13,7 @@
 NSString * const dfuServiceUUIDString = @"00001530-1212-EFDE-1523-785FEABCD123";
 NSString * const dfuControlPointCharacteristicUUIDString = @"00001531-1212-EFDE-1523-785FEABCD123";
 NSString * const dfuPacketCharacteristicUUIDString = @"00001532-1212-EFDE-1523-785FEABCD123";
+NSString * const dfuVersionCharacteritsicUUIDString = @"00001534-1212-EFDE-1523-785FEABCD123";
 
 int  PACKETS_NOTIFICATION_INTERVAL = 10;
 int const PACKET_SIZE = 20;
