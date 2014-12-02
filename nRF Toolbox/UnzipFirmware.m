@@ -2,7 +2,7 @@
 //  UnzipFirmware.m
 //  nRF Toolbox
 //
-//  Created by Nordic Semiconductor on 07/07/14.
+//  Created by Kamran Saleem Soomro on 07/07/14.
 //  Copyright (c) 2014 Nordic Semiconductor. All rights reserved.
 //
 
@@ -24,45 +24,60 @@
     NSLog(@"unzip folder path: %@",outputPath);
     AccessFileSystem *fileSystem = [[AccessFileSystem alloc]init];
     NSLog(@"number of files inside zip file: %d",[[fileSystem getAllFilesFromDirectory:outputPath] count]);
-    NSString *softdevicePath, *bootloaderPath, *applicationPath, *applicationMetaDataPath, *bootloaderMetaDataPath, *softdeviceMetaDataPath, *systemMetaDataPath;
+    //NSString *softdevicePath, *bootloaderPath, *applicationPath, *applicationMetaDataPath, *bootloaderMetaDataPath, *softdeviceMetaDataPath, *systemMetaDataPath;
     NSArray *files = [fileSystem getAllFilesFromDirectory:outputPath];
     NSLog(@"number of files inside zip file: %d",[files count]);
     for (NSString* file in files) {
         NSLog(@"file inside zip file: %@",file);
         if ([file isEqualToString:@"softdevice.hex"]) {
             NSLog(@"Found softdevice.hex in zip file");
-            softdevicePath = [outputPath stringByAppendingPathComponent:@"softdevice.hex"];
-            [filesURL addObject:[NSURL fileURLWithPath:softdevicePath]];
+            //softdevicePath = [outputPath stringByAppendingPathComponent:@"softdevice.hex"];
+            [filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"softdevice.hex"]]];
         }
         else if ([file isEqualToString:@"bootloader.hex"]) {
             NSLog(@"Found bootloader.hex in zip file");
-            bootloaderPath = [outputPath stringByAppendingPathComponent:@"bootloader.hex"];
-            [filesURL addObject:[NSURL fileURLWithPath:bootloaderPath]];
+            //bootloaderPath = [outputPath stringByAppendingPathComponent:@"bootloader.hex"];
+            [filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"bootloader.hex"]]];
         }
         else if ([file isEqualToString:@"application.hex"]) {
             NSLog(@"Found application.hex in zip file");
-            applicationPath = [outputPath stringByAppendingPathComponent:@"application.hex"];
-            [filesURL addObject:[NSURL fileURLWithPath:applicationPath]];
+            //applicationPath = [outputPath stringByAppendingPathComponent:@"application.hex"];
+            [filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"application.hex"]]];
+        }
+        else if ([file isEqualToString:@"softdevice.bin"]) {
+            NSLog(@"Found softdevice.bin in zip file");
+            //softdevicePath = [outputPath stringByAppendingPathComponent:@"softdevice.hex"];
+            [filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"softdevice.bin"]]];
+        }
+        else if ([file isEqualToString:@"bootloader.bin"]) {
+            NSLog(@"Found bootloader.bin in zip file");
+            //bootloaderPath = [outputPath stringByAppendingPathComponent:@"bootloader.hex"];
+            [filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"bootloader.bin"]]];
+        }
+        else if ([file isEqualToString:@"application.bin"]) {
+            NSLog(@"Found application.bin in zip file");
+            //applicationPath = [outputPath stringByAppendingPathComponent:@"application.hex"];
+            [filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"application.bin"]]];
         }
         else if ([file isEqualToString:@"application.dat"]) {
             NSLog(@"Found application.dat in zip file");
-            applicationMetaDataPath = [outputPath stringByAppendingPathComponent:@"application.dat"];
-            [filesURL addObject:[NSURL fileURLWithPath:applicationMetaDataPath]];
+            //applicationMetaDataPath = [outputPath stringByAppendingPathComponent:@"application.dat"];
+            [filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"application.dat"]]];
         }
         else if ([file isEqualToString:@"bootloader.dat"]) {
             NSLog(@"Found bootloader.dat in zip file");
-            bootloaderMetaDataPath = [outputPath stringByAppendingPathComponent:@"bootloader.dat"];
-            [filesURL addObject:[NSURL fileURLWithPath:bootloaderMetaDataPath]];
+            //bootloaderMetaDataPath = [outputPath stringByAppendingPathComponent:@"bootloader.dat"];
+            [filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"bootloader.dat"]]];
         }
         else if ([file isEqualToString:@"softdevice.dat"]) {
             NSLog(@"Found softdevice.dat in zip file");
-            softdeviceMetaDataPath = [outputPath stringByAppendingPathComponent:@"softdevice.dat"];
-            [filesURL addObject:[NSURL fileURLWithPath:softdeviceMetaDataPath]];
+            //softdeviceMetaDataPath = [outputPath stringByAppendingPathComponent:@"softdevice.dat"];
+            [filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"softdevice.dat"]]];
         }
         else if ([file isEqualToString:@"system.dat"]) {
             NSLog(@"Found system.dat in zip file");
-            systemMetaDataPath = [outputPath stringByAppendingPathComponent:@"system.dat"];
-            [filesURL addObject:[NSURL fileURLWithPath:systemMetaDataPath]];
+            //systemMetaDataPath = [outputPath stringByAppendingPathComponent:@"system.dat"];
+            [filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"system.dat"]]];
         }
     }
     return [filesURL copy];

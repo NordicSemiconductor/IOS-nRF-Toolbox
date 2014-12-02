@@ -2,7 +2,7 @@
 //  Utility.m
 //  nRFDeviceFirmwareUpdate
 //
-//  Created by Nordic Semiconductor on 22/05/14.
+//  Created by Kamran Saleem Soomro on 22/05/14.
 //  Copyright (c) 2014 Nordic Semiconductor. All rights reserved.
 //
 
@@ -52,7 +52,8 @@ NSString* const FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER = @"softdevice and boot
     switch (fileExtension) {
         case HEX:
             return @"hex";
-        
+        case BIN:
+            return @"bin";
         case ZIP:
             return @"zip";
             

@@ -2,7 +2,7 @@
 //  Utility.h
 //  nRFDeviceFirmwareUpdate
 //
-//  Created by Nordic Semiconductor on 22/05/14.
+//  Created by Kamran Saleem Soomro on 22/05/14.
 //  Copyright (c) 2014 Nordic Semiconductor. All rights reserved.
 //
 
@@ -34,8 +34,14 @@ struct DFUResponse
 
 typedef enum {
     HEX,
+    BIN,
     ZIP
 }enumFileExtension;
+
+typedef enum {
+    START_INIT_PACKET = 0x00,
+    END_INIT_PACKET = 0x01
+}initPacketParam;
 
 typedef enum {
     START_DFU_REQUEST = 0x01,

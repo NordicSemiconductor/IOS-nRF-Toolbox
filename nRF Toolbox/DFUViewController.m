@@ -2,7 +2,7 @@
 //  DFUViewController.m
 //  nRF Toolbox
 //
-//  Created by Aleksander Nowakowski on 10/01/14.
+//  Created by Kamran Saleem Soomro on 10/01/14.
 //  Copyright (c) 2014 Nordic Semiconductor. All rights reserved.
 //
 
@@ -31,6 +31,9 @@
 @property NSURL *softdeviceURL;
 @property NSURL *bootloaderURL;
 @property NSURL *applicationURL;
+//@property NSURL *softdeviceBinURL;
+//@property NSURL *bootloaderBinURL;
+//@property NSURL *applicationBinURL;
 @property NSURL *applicationMetaDataURL;
 @property NSURL *bootloaderMetaDataURL;
 @property NSURL *softdeviceMetaDataURL;
@@ -186,9 +189,11 @@
     }
 }
 
+//Unzip and check if both bin and hex formats are present for same file then pick only bin format and drop hex format
 -(void)unzipFiles:(NSURL *)zipFileURL
 {
     self.softdeviceURL = self.bootloaderURL = self.applicationURL = nil;
+    self.softdeviceMetaDataURL = self.bootloaderMetaDataURL = self.applicationMetaDataURL = self.systemMetaDataURL = nil;
     UnzipFirmware *unzipFiles = [[UnzipFirmware alloc]init];
     NSArray *firmwareFilesURL = [unzipFiles unzipFirmwareFiles:zipFileURL];
     for (NSURL *firmwareURL in firmwareFilesURL) {
@@ -213,6 +218,17 @@
         else if ([[[firmwareURL path] lastPathComponent] isEqualToString:@"system.dat"]) {
             self.systemMetaDataURL = firmwareURL;
         }
+    }
+    for (NSURL *firmwareBinURL in firmwareFilesURL) {
+         if ([[[firmwareBinURL path] lastPathComponent] isEqualToString:@"softdevice.bin"]) {
+             self.softdeviceURL = firmwareBinURL;
+         }
+         else if ([[[firmwareBinURL path] lastPathComponent] isEqualToString:@"bootloader.bin"]) {
+             self.bootloaderURL = firmwareBinURL;
+         }
+         else if ([[[firmwareBinURL path] lastPathComponent] isEqualToString:@"application.bin"]) {
+             self.applicationURL = firmwareBinURL;
+         }
     }
 }
 

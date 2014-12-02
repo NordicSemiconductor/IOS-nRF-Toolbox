@@ -2,7 +2,7 @@
 //  AccessFileSystem.m
 //  nRF Toolbox
 //
-//  Created by Nordic Semiconductor on 09/07/14.
+//  Created by Kamran Saleem Soomro on 09/07/14.
 //  Copyright (c) 2014 Nordic Semiconductor. All rights reserved.
 //
 
@@ -51,8 +51,30 @@
     NSMutableArray *requiredFilesNames = [[NSMutableArray alloc]init];
     [requiredFilesNames addObjectsFromArray:[self getZipFilesFromDirectory:directoryPath]];
     [requiredFilesNames addObjectsFromArray:[self getHexFilesFromDirectory:directoryPath]];
+    [requiredFilesNames addObjectsFromArray:[self getBinFilesFromDirectory:directoryPath]];
     return requiredFilesNames;
 }
+
+-(NSArray *)getBinFilesFromDirectory:(NSString *)directoryPath
+{
+    NSMutableArray *binFilesNames = [[NSMutableArray alloc]init];
+    NSError *error;
+    NSArray *fileNames = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directoryPath error:&error];
+    if (error) {
+        NSLog(@"error in opening directory path: %@",directoryPath);
+        return nil;
+    }
+    else {
+        NSLog(@"number of files in directory %d",fileNames.count);
+        for (NSString *fileName in fileNames) {
+            if ([self checkFileExtension:fileName fileExtension:BIN]) {
+                [binFilesNames addObject:fileName];
+            }
+        }
+        return [binFilesNames copy];
+    }
+}
+
 
 -(NSArray *)getHexFilesFromDirectory:(NSString *)directoryPath
 {

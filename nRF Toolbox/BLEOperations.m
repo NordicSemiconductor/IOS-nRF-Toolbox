@@ -2,7 +2,7 @@
 //  BLEOperations.m
 //  nRF Toolbox
 //
-//  Created by Nordic Semiconductor on 07/07/14.
+//  Created by Kamran Saleem Soomro on 07/07/14.
 //  Copyright (c) 2014 Nordic Semiconductor. All rights reserved.
 //
 

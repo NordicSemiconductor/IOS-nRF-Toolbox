@@ -2,7 +2,7 @@
 //  DFUOperationsDetails.h
 //  nRFDeviceFirmwareUpdate
 //
-//  Created by Nordic Semiconductor on 02/06/14.
+//  Created by Kamran Saleem Soomro on 02/06/14.
 //  Copyright (c) 2014 Nordic Semiconductor. All rights reserved.
 //
 

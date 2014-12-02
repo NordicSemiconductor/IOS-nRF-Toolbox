@@ -2,7 +2,7 @@
 //  FolderFilesTableViewController.m
 //  nRF Toolbox
 //
-//  Created by Nordic Semiconductor on 23/07/14.
+//  Created by Kamran Saleem Soomro on 23/07/14.
 //  Copyright (c) 2014 Nordic Semiconductor. All rights reserved.
 //
 

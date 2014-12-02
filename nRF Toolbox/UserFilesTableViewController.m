@@ -2,7 +2,7 @@
 //  UserFilesTableViewController.m
 //  nRF Toolbox
 //
-//  Created by Nordic Semiconductor on 21/07/14.
+//  Created by Kamran Saleem Soomro on 21/07/14.
 //  Copyright (c) 2014 Nordic Semiconductor. All rights reserved.
 //
 
@@ -93,6 +93,9 @@
         }        
     }
     else if ([self.fileSystem checkFileExtension:fileName fileExtension:HEX]) {
+        cell.imageView.image = [UIImage imageNamed:@"file"];
+    }
+    else if ([self.fileSystem checkFileExtension:fileName fileExtension:BIN]) {
         cell.imageView.image = [UIImage imageNamed:@"file"];
     }
     else if ([self.fileSystem checkFileExtension:fileName fileExtension:ZIP]) {

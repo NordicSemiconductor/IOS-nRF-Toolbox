@@ -2,7 +2,7 @@
 //  DFUOperations.m
 //  nRFDeviceFirmwareUpdate
 //
-//  Created by Nordic Semiconductor on 18/06/14.
+//  Created by Kamran Saleem Soomro on 18/06/14.
 //  Copyright (c) 2014 Nordic Semiconductor. All rights reserved.
 //
 
@@ -293,7 +293,11 @@ NSDate *startTime, *finishTime;
         [self startSendingFile];
     }
     else {
-        NSLog(@"unsuccessfull initPacket notification %d",dfuResponse.responseStatus);
+        //NSLog(@"unsuccessfull initPacket notification %d",dfuResponse.responseStatus);
+        NSLog(@"Init Packet failed, Error Status: %@",[self responseErrorMessage:dfuResponse.responseStatus]);
+        NSString *errorMessage = [NSString stringWithFormat:@"Error on Init Packet\n Message: %@",[self responseErrorMessage:dfuResponse.responseStatus]];
+        [dfuDelegate onError:errorMessage];
+        [dfuRequests resetSystem];
     }
 }
 
