@@ -31,9 +31,6 @@
 @property NSURL *softdeviceURL;
 @property NSURL *bootloaderURL;
 @property NSURL *applicationURL;
-//@property NSURL *softdeviceBinURL;
-//@property NSURL *bootloaderBinURL;
-//@property NSURL *applicationBinURL;
 @property NSURL *applicationMetaDataURL;
 @property NSURL *bootloaderMetaDataURL;
 @property NSURL *softdeviceMetaDataURL;
@@ -333,7 +330,16 @@
         }
         if (self.isDfuVersionExist) {
             if (selectedPeripheral && selectedFileType && self.selectedFileSize > 0 && self.isConnected && self.dfuVersion > 1) {
-                uploadButton.enabled = YES;
+                //TODO check if initPacket file (*.dat) exist inside selected zip file
+                if ([self isInitPacketFileExist]) {
+                    uploadButton.enabled = YES;
+                }
+                else {
+                    //TODO show message "init packet file (.dat) missing. on screen"
+                    //TODO create method for showing right message like getFileValidationMessage
+                    [Utility showAlert:[self getInitPacketFileValidationMessage]];
+                }
+                
             }
             else {
                 NSLog(@"cant enable Upload button");
@@ -347,9 +353,51 @@
                 NSLog(@"cant enable Upload button");
             }
         }
-        
 
     });
+}
+
+-(BOOL)isInitPacketFileExist
+{
+    //Zip file is required with firmware and .dat files
+    if (self.isSelectedFileZipped) {
+        switch (enumFirmwareType) {
+            case SOFTDEVICE_AND_BOOTLOADER:
+                if (self.systemMetaDataURL) {
+                    NSLog(@"Found system.dat in selected zip file");
+                    return YES;
+                }
+                break;
+            case SOFTDEVICE:
+                if (self.softdeviceMetaDataURL) {
+                    NSLog(@"Found softdevice.dat file in selected zip file");
+                    return YES;
+                }
+                break;
+            case BOOTLOADER:
+                if (self.bootloaderMetaDataURL) {
+                    NSLog(@"Found Bootloader.dat file in selected zip file");
+                    return YES;
+                }
+                break;
+            case APPLICATION:
+                if (self.applicationMetaDataURL) {
+                    NSLog(@"Found Application.dat file in selected zip file");
+                    return YES;
+                }
+                break;
+                
+            default:
+                NSLog(@"Not valid File type");
+                return NO;
+                break;
+        }
+        //Corresponding file .dat to selected firmware is not present in zip file
+        return NO;
+    }
+    else {//Zip file is not selected
+        return NO;
+    }
 }
 
 -(BOOL)isValidFileSelected
@@ -421,6 +469,31 @@
             return @"uploading ...";
             break;
     }
+}
+
+-(NSString *)getInitPacketFileValidationMessage
+{
+    NSString *message;
+    switch (enumFirmwareType) {
+        case SOFTDEVICE:
+            message = [NSString stringWithFormat:@"softdevice.dat is missing. It must be placed inside zip file with softdevice"];
+            return message;
+        case BOOTLOADER:
+            message = [NSString stringWithFormat:@"bootloader.dat is missing. It must be placed inside zip file with bootloader"];
+            return message;
+        case APPLICATION:
+            message = [NSString stringWithFormat:@"application.dat is missing. It must be placed inside zip file with application"];
+            return message;
+            
+        case SOFTDEVICE_AND_BOOTLOADER:
+            return @"system.dat is missing. It must be placed inside zip file with softdevice and bootloader";
+            break;
+            
+        default:
+            return @"Not valid File type";
+            break;
+    }
+
 }
 
 -(NSString *)getFileValidationMessage

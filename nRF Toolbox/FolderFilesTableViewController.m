@@ -34,7 +34,7 @@
     self.fileSystem = [[AccessFileSystem alloc]init];
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     if (self.files.count == 0) {
-        [Utility showAlert:@"There are no Hex or Zip files found inside selected folder."];
+        [Utility showAlert:[Utility getEmptyFolderText]];
     }
 }
 

@@ -25,18 +25,25 @@ NSString* const FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER = @"softdevice and boot
 
 + (NSString *) getDFUHelpText
 {
-    return [NSString stringWithFormat:@"-The Device Firmware Update (DFU) app that is compatible with Nordic Semiconductor nRF51822 devices that have the S110 SoftDevice and bootloader enabled.\n\n-It allows to upload new application onto the device over-the-air (OTA).\n\n-The DFU discovers supported DFU devices, connects to them, and uploads user selected firmware applications to the device.\n\n-Default number of Packet Receipt Notification is 10 but you can set up other number in the iPhone Settings.\n\n-(New) Having NordicSemiconductor devices with Softdevice 7.0.0 and new Bootloader in SDK 6.0, It now allows to upload softdevice, bootloader and application.\n\n-(New) In order to upload softdevice and bootloader together, Zip file having inside softdevice.hex and bootloader.hex is required."];
+    return [NSString stringWithFormat:@"-The Device Firmware Update (DFU) app that is compatible with Nordic Semiconductor nRF51822 devices that have the S110 SoftDevice and bootloader enabled.\n\n-It allows to upload new application onto the device over-the-air (OTA).\n\n-The DFU discovers supported DFU devices, connects to them, and uploads user selected firmware applications to the device.\n\n-Default number of Packet Receipt Notification is 10 but you can set up other number in the iPhone Settings.\n\n-(New) Bin format is also supported in this version.\n\n-(New) This version supports Nordic Semiconductor softdevice 7.1 and SDK 7.1 and it is backword compatible. \n\n-(New) In SDK 7.0 and above initPacket is sent in a file (.dat) in addition to firmware file.\n\n-(New) For Application update application.hex or application.bin and application.dat is required inside a zip file.\n\n-(New) For Bootloader update bootloader.hex or bootloader.bin and bootloader.dat is required inside a zip file.\n\n-(New) For Softdevice update softdevice.hex or softdevice.bin and softdevice.dat is required.\n\n-(New) For updating both softdevice and bootloader system.dat is required in addition."];
 }
 
 + (NSString *) getEmptyUserFilesText
 {
-    return [NSString stringWithFormat:@"-User can add Folders and Files with HEX and ZIP extensions from Emails and iTunes.\n\n-User added files will be appeared here.\n\n- In order to add files from iTunes:\n   1. Open iTunes on your PC and connect iPhone to it.\n   2.On the left, under Devices select your iPhone.\n   3.on the top, select tab Apps.\n   4. on the bottom, under File Sharing select app nRF Toolbox and then add files."];
+    return [NSString stringWithFormat:@"-User can add Folders and Files with HEX, BIN and ZIP extensions from Emails and iTunes.\n\n-User added files will be appeared here.\n\n- In order to add files from iTunes:\n   1. Open iTunes on your PC and connect iPhone to it.\n   2.On the left, under Devices select your iPhone.\n   3.on the top, select tab Apps.\n   4. on the bottom, under File Sharing select app nRF Toolbox and then add files."];
 }
 
 + (NSString *) getDFUAppFileHelpText
 {
     return [NSString stringWithFormat:@"-User can add Folders and Files with HEX and ZIP extensions from Emails and iTunes.\n\n-User added files will be appeared on tab User Files.\n\n- In order to add files from iTunes:\n   1. Open iTunes on your PC and connect iPhone to it.\n   2.On the left, under Devices select your iPhone.\n   3.on the top, select tab Apps.\n   4. on the bottom, under File Sharing select app nRF Toolbox and then add files.\n\n- In order to add files from Emails:\n   1. Attach file to your email.\n   2.Open your email on your iPhone.\n   3.Long click on attached file and then select Open in nRF Toolbox."];
 }
+
++ (NSString *) getEmptyFolderText
+{
+    return @"There are no Hex, Bin or Zip files found inside selected folder.";
+}
+
+
 
 + (NSArray *) getFirmwareTypes
 {

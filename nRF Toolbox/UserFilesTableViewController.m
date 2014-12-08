@@ -107,7 +107,6 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     NSString *fileName = [self.files objectAtIndex:indexPath.row];
     NSString *filePath = [self.documentsDirectoryPath stringByAppendingPathComponent:fileName];
     
