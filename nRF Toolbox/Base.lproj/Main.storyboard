@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A386a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="WcK-ur-5nd">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14C78c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="WcK-ur-5nd">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -136,6 +136,65 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m2V-TE-U5g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3241" y="-1659"/>
+        </scene>
+        <!--Page View Controller-->
+        <scene sceneID="3Hv-BF-Vrs">
+            <objects>
+                <pageViewController storyboardIdentifier="IdPageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="Bgl-bO-hGC" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="D51-xg-fHS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3583" y="-1655"/>
+        </scene>
+        <!--Page Image View Controller-->
+        <scene sceneID="mrw-MW-dMV">
+            <objects>
+                <viewController storyboardIdentifier="IdPageImageViewController" id="2e6-Xm-maX" customClass="PageImageViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="oX7-aZ-DkA"/>
+                        <viewControllerLayoutGuide type="bottom" id="SxK-DM-ItE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Pva-4k-P9f">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kkZ-qr-uW5">
+                                <rect key="frame" x="0.0" y="20" width="320" height="472"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="QVd-YU-ldb"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TLi-b8-WFO">
+                                <rect key="frame" x="137" y="504" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="heP-eb-7b7"/>
+                                </constraints>
+                                <state key="normal" title="Skip">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="skipButtonPressed:" destination="2e6-Xm-maX" eventType="touchUpInside" id="q71-XY-djK"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="kkZ-qr-uW5" firstAttribute="top" secondItem="oX7-aZ-DkA" secondAttribute="bottom" id="9YZ-9I-Q1G"/>
+                            <constraint firstItem="TLi-b8-WFO" firstAttribute="leading" secondItem="Pva-4k-P9f" secondAttribute="leadingMargin" constant="121" id="LCc-EX-1vu"/>
+                            <constraint firstItem="TLi-b8-WFO" firstAttribute="top" secondItem="kkZ-qr-uW5" secondAttribute="bottom" constant="17" id="QyZ-F7-Y4o"/>
+                            <constraint firstItem="SxK-DM-ItE" firstAttribute="top" secondItem="TLi-b8-WFO" secondAttribute="bottom" constant="34" id="UY2-Ed-wIK"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="kkZ-qr-uW5" secondAttribute="trailing" constant="-16" id="bMG-n6-J5Q"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="TLi-b8-WFO" secondAttribute="trailing" constant="121" id="cX1-eR-HF4"/>
+                            <constraint firstItem="kkZ-qr-uW5" firstAttribute="leading" secondItem="Pva-4k-P9f" secondAttribute="leadingMargin" constant="-16" id="j9N-2W-WOp"/>
+                            <constraint firstItem="TLi-b8-WFO" firstAttribute="top" secondItem="kkZ-qr-uW5" secondAttribute="bottom" constant="17" id="zP1-ym-rtf"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="pageImage" destination="kkZ-qr-uW5" id="NYB-zZ-imA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vHF-ct-GTW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3936" y="-1655"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="ufC-wZ-h7g">

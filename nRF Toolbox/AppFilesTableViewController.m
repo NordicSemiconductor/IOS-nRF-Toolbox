@@ -102,8 +102,9 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
      if ([[segue identifier] isEqualToString:@"help"]) {
-        HelpViewController *helpVC = [segue destinationViewController];
-        helpVC.helpText = [Utility getDFUAppFileHelpText];
+         HelpViewController *helpVC = [segue destinationViewController];
+         helpVC.helpText = [Utility getDFUAppFileHelpText];
+         helpVC.isAppFileTableViewController = YES;
     }
 }
 

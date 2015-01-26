@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AppFilesTableViewController.h"
 
-@interface UserFilesTableViewController : UITableViewController 
+@interface UserFilesTableViewController : UITableViewController<UIPageViewControllerDataSource>
 
 - (IBAction)cancelBarButtonPressed:(UIBarButtonItem *)sender;
 
@@ -17,5 +17,8 @@
 @property (retain)id<FileSelectionDelegate> fileDelegate;
 
 @property (weak, nonatomic) IBOutlet UITextView *emptyMessageText;
+
+@property (strong, nonatomic)NSArray *pageContentImages;
+@property (strong, nonatomic)UIPageViewController *pageViewController;
 
 @end

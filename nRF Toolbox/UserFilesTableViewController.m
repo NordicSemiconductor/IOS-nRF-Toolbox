@@ -10,6 +10,7 @@
 #import "AccessFileSystem.h"
 #import "Utility.h"
 #import "FolderFilesTableViewController.h"
+#import "PageImageViewController.h"
 
 
 @interface UserFilesTableViewController ()
@@ -21,6 +22,8 @@
 @end
 
 @implementation UserFilesTableViewController
+
+int PAGE_NUMBERS;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -39,6 +42,9 @@
     self.documentsDirectoryPath = [self.fileSystem getDocumentsDirectoryPath];
     self.files = [[self.fileSystem getDirectoriesAndRequiredFilesFromDocumentsDirectory] mutableCopy];
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    if (self.files.count == 0) {
+        [self showAddFilesDemo];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -55,6 +61,104 @@
     self.emptyMessageText.text = [Utility getEmptyUserFilesText];
     self.emptyMessageText.editable = NO;
 }
+
+-(void) hideNavigationBar
+{
+    [self.navigationController setNavigationBarHidden:YES];
+}
+
+-(void) initDFUDemoImages
+{
+    self.pageContentImages = @[@"AddingFiles",
+                               @"Itunes1.png",
+                               @"Itunes2.png",
+                               @"EmailAttachment1.png",
+                               @"EmailAttachment2.png"];
+    
+    PAGE_NUMBERS = [self.pageContentImages count];
+}
+
+-(void)showAddFilesDemo
+{
+    [self hideNavigationBar];
+    [self initDFUDemoImages];
+    [self.tabBarController.tabBar setHidden:YES];
+    
+    self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"IdPageViewController"];
+    
+    //Assign datasource (pages or viewcontrollers) of PageViewController to self
+    self.pageViewController.dataSource = self;
+    
+    //set pages or viewcontrollers of PageViewController
+    PageImageViewController *pageContentViewController = [self createPageContentViewControllerAtIndex:0];
+    NSArray *pageContentViewControllers = @[pageContentViewController];
+    [self.pageViewController setViewControllers:pageContentViewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:Nil];
+    
+    // Change the size of page view controller
+    self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 20);
+    
+    //Add PageViewController to this Root View Controller as child viewcontroller
+    [self addChildViewController:_pageViewController];
+    [self.view addSubview:_pageViewController.view];
+    [self.pageViewController didMoveToParentViewController:self];
+}
+
+-(PageImageViewController *)createPageContentViewControllerAtIndex:(NSUInteger)index
+{
+    if (index >= PAGE_NUMBERS || PAGE_NUMBERS < 1) {
+        return nil;
+    }
+    PageImageViewController *pageContentVC = [self.storyboard instantiateViewControllerWithIdentifier:@"IdPageImageViewController"];
+    pageContentVC.pageIndex = index;
+    pageContentVC.pageImageFileName = self.pageContentImages[index];
+    return pageContentVC;
+}
+
+
+#pragma mark - Page View Controller Data Source
+
+-(UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
+{
+    NSLog(@"pageViewController viewControllerBeforeViewController");
+    NSUInteger index = ((PageImageViewController *)viewController).pageIndex;
+    if ((index == 0) || (index == NSNotFound)) {
+        NSLog(@"page index is equal to first Page Number or index not found");
+        return nil;
+    }
+    NSLog(@"decreasing page index");
+    index--;
+    return [self createPageContentViewControllerAtIndex:index];
+}
+
+-(UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
+{
+    NSLog(@"pageViewController viewControllerAfterViewController");
+    NSUInteger index = ((PageImageViewController *)viewController).pageIndex;
+    if (index == NSNotFound) {
+        return nil;
+    }
+    index++;
+    if (index == PAGE_NUMBERS) {
+        NSLog(@"page index is equal to Max Page Number");
+        return nil;
+    }
+    NSLog(@"increasing page index");
+    return [self createPageContentViewControllerAtIndex:index];
+}
+
+
+- (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController
+{
+    NSLog(@"presentationCountForPageViewController %d",PAGE_NUMBERS);
+    return PAGE_NUMBERS;
+}
+
+- (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
+{
+    NSLog(@"presentationIndexForPageViewController");
+    return 0;
+}
+
 
 #pragma mark - Table view data source
 

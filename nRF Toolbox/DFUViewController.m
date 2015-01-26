@@ -276,6 +276,7 @@
     else if ([[segue identifier] isEqualToString:@"help"]) {
         HelpViewController *helpVC = [segue destinationViewController];
         helpVC.helpText = [Utility getDFUHelpText];
+        helpVC.isDFUViewController = YES;
     }
     else if ([segue.identifier isEqualToString:@"FileTypeSegue"]) {
         NSLog(@"performing FileTypeSegue");
