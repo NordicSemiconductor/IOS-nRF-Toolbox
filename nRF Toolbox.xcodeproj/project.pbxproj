@@ -65,6 +65,8 @@
 		7EE669211983C7DD004680F0 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 7EE6691A1983C7DD004680F0 /* zip.c */; };
 		7EE669221983C7DD004680F0 /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EE6691D1983C7DD004680F0 /* SSZipArchive.m */; };
 		7EEAB3B01983CFEF00309DBC /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EEAB3AF1983CFEF00309DBC /* libz.dylib */; };
+		A8B2DFA01AB1C3040043D988 /* JsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B2DF9D1AB1C3040043D988 /* JsonParser.m */; };
+		A8B2DFA11AB1C3040043D988 /* InitData.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B2DF9F1AB1C3040043D988 /* InitData.m */; };
 		A8F94C7A1A72592800F2D927 /* PageImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F94C791A72592800F2D927 /* PageImageViewController.m */; };
 		A8F94C7C1A725D9600F2D927 /* Application_Zip_Image.png in Resources */ = {isa = PBXBuildFile; fileRef = A8F94C7B1A725D9600F2D927 /* Application_Zip_Image.png */; };
 		A8F94C7E1A725DA800F2D927 /* Bootloader_Zip_Image.png in Resources */ = {isa = PBXBuildFile; fileRef = A8F94C7D1A725DA800F2D927 /* Bootloader_Zip_Image.png */; };
@@ -264,6 +266,10 @@
 		7EE6691C1983C7DD004680F0 /* SSZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSZipArchive.h; sourceTree = "<group>"; };
 		7EE6691D1983C7DD004680F0 /* SSZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSZipArchive.m; sourceTree = "<group>"; };
 		7EEAB3AF1983CFEF00309DBC /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		A8B2DF9C1AB1C3040043D988 /* JsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsonParser.h; sourceTree = "<group>"; };
+		A8B2DF9D1AB1C3040043D988 /* JsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JsonParser.m; sourceTree = "<group>"; };
+		A8B2DF9E1AB1C3040043D988 /* InitData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitData.h; sourceTree = "<group>"; };
+		A8B2DF9F1AB1C3040043D988 /* InitData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitData.m; sourceTree = "<group>"; };
 		A8F94C781A72592800F2D927 /* PageImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageImageViewController.h; sourceTree = "<group>"; };
 		A8F94C791A72592800F2D927 /* PageImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageImageViewController.m; sourceTree = "<group>"; };
 		A8F94C7B1A725D9600F2D927 /* Application_Zip_Image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Application_Zip_Image.png; sourceTree = "<group>"; };
@@ -518,6 +524,7 @@
 		5252A53B18802F6300EFD773 /* DFU */ = {
 			isa = PBXGroup;
 			children = (
+				A8B2DF9B1AB1C2EB0043D988 /* JSON Parser */,
 				7E996869197FB8FD0092E69E /* Constants */,
 				7E996868197FA2920092E69E /* Unzip */,
 				7E6ED10C197D1D40008010B6 /* File Selection */,
@@ -714,6 +721,17 @@
 			path = minizip;
 			sourceTree = "<group>";
 		};
+		A8B2DF9B1AB1C2EB0043D988 /* JSON Parser */ = {
+			isa = PBXGroup;
+			children = (
+				A8B2DF9C1AB1C3040043D988 /* JsonParser.h */,
+				A8B2DF9D1AB1C3040043D988 /* JsonParser.m */,
+				A8B2DF9E1AB1C3040043D988 /* InitData.h */,
+				A8B2DF9F1AB1C3040043D988 /* InitData.m */,
+			);
+			name = "JSON Parser";
+			sourceTree = "<group>";
+		};
 		A8F1142619C1B7EC007F956E /* StoryBoard */ = {
 			isa = PBXGroup;
 			children = (
@@ -844,8 +862,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8B2DFA01AB1C3040043D988 /* JsonParser.m in Sources */,
 				7E445C971951D09E00633892 /* FileTypeTableViewController.m in Sources */,
 				7EE669201983C7DD004680F0 /* unzip.c in Sources */,
+				A8B2DFA11AB1C3040043D988 /* InitData.m in Sources */,
 				7ECF2022196AA58D005495C8 /* BLEOperations.m in Sources */,
 				524F2CE2188984E6008A8555 /* BGMDetailsViewController.m in Sources */,
 				5252A53E18802F7200EFD773 /* DFUViewController.m in Sources */,

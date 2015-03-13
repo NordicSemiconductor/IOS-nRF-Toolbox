@@ -11,6 +11,8 @@
 
 @interface UnzipFirmware : NSObject <SSZipArchiveDelegate>
 
+@property(nonatomic, retain)NSMutableArray *filesURL;
+
 -(NSArray *)unzipFirmwareFiles:(NSURL *)zipFileURL;
 
 @end

@@ -9,78 +9,90 @@
 #import "UnzipFirmware.h"
 #import "SSZipArchive.h"
 #import "AccessFileSystem.h"
+#import "JsonParser.h"
+#import "InitData.h"
 
 @implementation UnzipFirmware
 
 -(NSArray *)unzipFirmwareFiles:(NSURL *)zipFileURL
 {
-    NSMutableArray *filesURL = [[NSMutableArray alloc]init];
+    self.filesURL = [[NSMutableArray alloc]init];
     NSString *zipFilePath = [zipFileURL path];
-    NSLog(@"unzipFirmwareFiles");
-    NSLog(@"zipFileURL %@",zipFileURL);
-    NSLog(@"zipFilePath %@",zipFilePath);
     NSString *outputPath = [self cachesPath:@"/UnzipFiles"];
     [SSZipArchive unzipFileAtPath:zipFilePath toDestination:outputPath delegate:self];
-    NSLog(@"unzip folder path: %@",outputPath);
     AccessFileSystem *fileSystem = [[AccessFileSystem alloc]init];
-    NSLog(@"number of files inside zip file: %d",[[fileSystem getAllFilesFromDirectory:outputPath] count]);
-    //NSString *softdevicePath, *bootloaderPath, *applicationPath, *applicationMetaDataPath, *bootloaderMetaDataPath, *softdeviceMetaDataPath, *systemMetaDataPath;
     NSArray *files = [fileSystem getAllFilesFromDirectory:outputPath];
     NSLog(@"number of files inside zip file: %d",[files count]);
+    if ([self findManifestFileInsideZip:files outputPathInPhone:outputPath]) {
+        return [self.filesURL copy];
+    }
+    else {
+        [self findFilesInsideZip:files outputPathInPhone:outputPath];
+        return [self.filesURL copy];
+    }    
+}
+
+-(void)findFilesInsideZip:(NSArray *)files outputPathInPhone:(NSString *)outputPath
+{
     for (NSString* file in files) {
-        NSLog(@"file inside zip file: %@",file);
-        if ([file isEqualToString:@"softdevice.hex"]) {
-            NSLog(@"Found softdevice.hex in zip file");
-            //softdevicePath = [outputPath stringByAppendingPathComponent:@"softdevice.hex"];
-            [filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"softdevice.hex"]]];
-        }
-        else if ([file isEqualToString:@"bootloader.hex"]) {
-            NSLog(@"Found bootloader.hex in zip file");
-            //bootloaderPath = [outputPath stringByAppendingPathComponent:@"bootloader.hex"];
-            [filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"bootloader.hex"]]];
-        }
-        else if ([file isEqualToString:@"application.hex"]) {
-            NSLog(@"Found application.hex in zip file");
-            //applicationPath = [outputPath stringByAppendingPathComponent:@"application.hex"];
-            [filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"application.hex"]]];
-        }
-        else if ([file isEqualToString:@"softdevice.bin"]) {
-            NSLog(@"Found softdevice.bin in zip file");
-            //softdevicePath = [outputPath stringByAppendingPathComponent:@"softdevice.hex"];
-            [filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"softdevice.bin"]]];
-        }
-        else if ([file isEqualToString:@"bootloader.bin"]) {
-            NSLog(@"Found bootloader.bin in zip file");
-            //bootloaderPath = [outputPath stringByAppendingPathComponent:@"bootloader.hex"];
-            [filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"bootloader.bin"]]];
-        }
-        else if ([file isEqualToString:@"application.bin"]) {
-            NSLog(@"Found application.bin in zip file");
-            //applicationPath = [outputPath stringByAppendingPathComponent:@"application.hex"];
-            [filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"application.bin"]]];
-        }
-        else if ([file isEqualToString:@"application.dat"]) {
-            NSLog(@"Found application.dat in zip file");
-            //applicationMetaDataPath = [outputPath stringByAppendingPathComponent:@"application.dat"];
-            [filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"application.dat"]]];
-        }
-        else if ([file isEqualToString:@"bootloader.dat"]) {
-            NSLog(@"Found bootloader.dat in zip file");
-            //bootloaderMetaDataPath = [outputPath stringByAppendingPathComponent:@"bootloader.dat"];
-            [filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"bootloader.dat"]]];
-        }
-        else if ([file isEqualToString:@"softdevice.dat"]) {
-            NSLog(@"Found softdevice.dat in zip file");
-            //softdeviceMetaDataPath = [outputPath stringByAppendingPathComponent:@"softdevice.dat"];
-            [filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"softdevice.dat"]]];
-        }
-        else if ([file isEqualToString:@"system.dat"]) {
-            NSLog(@"Found system.dat in zip file");
-            //systemMetaDataPath = [outputPath stringByAppendingPathComponent:@"system.dat"];
-            [filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"system.dat"]]];
+         if ([file isEqualToString:@"softdevice.hex"]) {
+             NSLog(@"softdevice.hex is found inside zip file");
+             [self.filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"softdevice.hex"]]];
+         }
+         else if ([file isEqualToString:@"bootloader.hex"]) {
+             NSLog(@"bootloader.hex is found inside zip file");
+             [self.filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"bootloader.hex"]]];
+         }
+         else if ([file isEqualToString:@"application.hex"]) {
+             NSLog(@"application.hex is found inside zip file");
+             [self.filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"application.hex"]]];
+         }
+         else if ([file isEqualToString:@"softdevice.bin"]) {
+             NSLog(@"softdevice.bin is found inside zip file");
+             [self.filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"softdevice.bin"]]];
+         }
+         else if ([file isEqualToString:@"bootloader.bin"]) {
+             NSLog(@"bootloader.bin is found inside zip file");
+             [self.filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"bootloader.bin"]]];
+         }
+         else if ([file isEqualToString:@"application.bin"]) {
+             NSLog(@"application.bin is found inside zip file");
+             [self.filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"application.bin"]]];
+         }
+         else if ([file isEqualToString:@"application.dat"]) {
+             NSLog(@"application.dat is found inside zip file");
+             [self.filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"application.dat"]]];
+         }
+         else if ([file isEqualToString:@"bootloader.dat"]) {
+             NSLog(@"bootloader.dat is found inside zip file");
+             [self.filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"bootloader.dat"]]];
+         }
+         else if ([file isEqualToString:@"softdevice.dat"]) {
+             NSLog(@"softdevice.dat is found inside zip file");
+             [self.filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"softdevice.dat"]]];
+         }
+         else if ([file isEqualToString:@"system.dat"]) {
+             NSLog(@"system.dat is found inside zip file");
+             [self.filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"system.dat"]]];
+         }
+     }
+}
+
+-(BOOL)findManifestFileInsideZip:(NSArray *)files outputPathInPhone:(NSString *)outputPath
+{
+    for (NSString* file in files) {
+        if ([file isEqualToString:@"manifest.json"]) {
+            NSLog(@"manifest.json file is found inside zip");
+            NSData *data = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"manifest.json"]]];
+            JsonParser *parser = [[JsonParser alloc]init];
+            InitData *packetData = [parser parseJson:data];
+            [self.filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"manifest.json"]]];
+            [self.filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:packetData.firmwareBinFileName]]];
+            [self.filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:packetData.firmwareDatFileName]]];
+            return YES;
         }
     }
-    return [filesURL copy];
+    return NO;
 }
 
 -(NSString *)cachesPath:(NSString *)directory {

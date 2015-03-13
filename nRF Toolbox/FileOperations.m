@@ -70,21 +70,6 @@
     self.binFileSize = self.binFileData.length;
 }
 
-/*-(void)convertHexFileToBin:(NSData *)hexFileData
-{
-    self.binFileData = [IntelHex2BinConverter convert:hexFileData];
-    NSLog(@"HexFileSize: %lu and BinFileSize: %lu",(unsigned long)hexFileData.length,(unsigned long)self.binFileData.length);
-    self.numberOfPackets = ceil((double)self.binFileData.length / (double)PACKET_SIZE);
-    self.bytesInLastPacket = (self.binFileData.length % PACKET_SIZE);
-    if (self.bytesInLastPacket == 0) {
-        self.bytesInLastPacket = PACKET_SIZE;
-    }
-    NSLog(@"Number of Packets %d Bytes in last Packet %d",self.numberOfPackets,self.bytesInLastPacket);
-    self.writingPacketNumber = 0;
-    self.binFileSize = self.binFileData.length;
-
-}*/
-
 -(void)writeNextPacket
 {
     int percentage = 0;

@@ -25,7 +25,7 @@
 @synthesize fileRequests2;
 @synthesize bleOperations;
 
-bool isStartingSecondFile, isPerformedOldDFU, isVersionCharacteristicExist;
+bool isStartingSecondFile, isPerformedOldDFU, isVersionCharacteristicExist, isOneFileForSDAndBL;
 NSDate *startTime, *finishTime;
 
 
@@ -37,6 +37,7 @@ NSDate *startTime, *finishTime;
         dfuDelegate = delegate;
         dfuRequests = [[DFUOperationsDetails alloc]init];
         bleOperations = [[BLEOperations alloc]initWithDelegate:self];
+        isOneFileForSDAndBL = NO;
     }
     return self;
 }
@@ -110,6 +111,26 @@ NSDate *startTime, *finishTime;
         [dfuRequests getDfuVersion];
     }
 }
+
+-(void)performDFUOnFileWithMetaDataAndFileSizes:(NSURL *)firmwareURL firmwareMetaDataURL:(NSURL *)metaDataURL softdeviceFileSize:(uint32_t)softdeviceSize bootloaderFileSize:(uint32_t)bootloaderSize  firmwareType:(DfuFirmwareTypes)firmwareType
+{
+    self.firmwareFileMetaData = metaDataURL;
+    isOneFileForSDAndBL = YES;
+    isPerformedOldDFU = NO;
+    firmwareFile = firmwareURL;
+    [self initFirstFileOperations];
+    isStartingSecondFile = NO;
+    [self initParameters];
+    self.dfuFirmwareType = firmwareType;
+    [fileRequests openFile:firmwareURL];
+    [dfuRequests enableNotification];
+    [dfuRequests startDFU:firmwareType];
+    [dfuRequests writeFilesSizes:(uint32_t)softdeviceSize bootloaderSize:(uint32_t)bootloaderSize];
+    if (isVersionCharacteristicExist) {
+        [dfuRequests getDfuVersion];
+    }
+}
+
 
 -(void)performDFUOnFile:(NSURL *)firmwareURL firmwareType:(DfuFirmwareTypes)firmwareType
 {
@@ -192,7 +213,7 @@ NSDate *startTime, *finishTime;
     [dfuRequests receiveFirmwareImage];
     [fileRequests writeNextPacket];
     [dfuDelegate onDFUStarted];
-    if (self.dfuFirmwareType == SOFTDEVICE_AND_BOOTLOADER) {
+    if (self.dfuFirmwareType == SOFTDEVICE_AND_BOOTLOADER && !isOneFileForSDAndBL) {
         [dfuDelegate onSoftDeviceUploadStarted];
     }
 }
@@ -456,11 +477,19 @@ andControlPointCharacteristic:(CBCharacteristic *)dfuControlPointCharacteristic
         [dfuDelegate onBootloaderUploadCompleted];
     }
     else if (self.dfuFirmwareType == SOFTDEVICE_AND_BOOTLOADER) {
-        isStartingSecondFile = YES;
-        NSLog(@"Firmware type is Softdevice plus Bootloader. now upload bootloader ...");
-        [dfuDelegate onSoftDeviceUploadCompleted];
-        [dfuDelegate onBootloaderUploadStarted];
-        [fileRequests2 writeNextPacket];
+        //TODO test if there is one file with both softdevice and bootloader inside as given by manifest.json
+        //if there are two files for softdevice and bootloader
+        if (!isOneFileForSDAndBL) {
+            isStartingSecondFile = YES;
+            NSLog(@"Firmware type is Softdevice plus Bootloader. now upload bootloader ...");
+            [dfuDelegate onSoftDeviceUploadCompleted];
+            [dfuDelegate onBootloaderUploadStarted];
+            [fileRequests2 writeNextPacket];
+        }
+        else { //if there is one file for both softdevice and bootloader as mentioned in manifest.json
+            isOneFileForSDAndBL = NO;
+        }
+        
     }
 }
 

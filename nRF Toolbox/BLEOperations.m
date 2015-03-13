@@ -12,12 +12,19 @@
 @implementation BLEOperations
 
 bool isDFUPacketCharacteristicFound, isDFUControlPointCharacteristic, isDFUVersionCharacteristicFound, isDFUServiceFound;
+CBUUID *HR_Service_UUID;
+CBUUID *HR_Location_Characteristic_UUID;
+static NSString * const hrsServiceUUIDString = @"0000180D-0000-1000-8000-00805F9B34FB";
+static NSString * const hrsSensorLocationCharacteristicUUIDString = @"00002A38-0000-1000-8000-00805F9B34FB";
+
 
 -(BLEOperations *) initWithDelegate:(id<BLEOperationsDelegate>) delegate
 {
     if (self = [super init])
     {
-        self.bleDelegate = delegate;        
+        self.bleDelegate = delegate;
+        HR_Service_UUID = [CBUUID UUIDWithString:hrsServiceUUIDString];
+        HR_Location_Characteristic_UUID = [CBUUID UUIDWithString:hrsSensorLocationCharacteristicUUIDString];
     }
     return self;
 }
@@ -125,6 +132,15 @@ bool isDFUPacketCharacteristicFound, isDFUControlPointCharacteristic, isDFUVersi
             NSString *errorMessage = [NSString stringWithFormat:@"Error on discovering characteristics\n Message: Required DFU characteristics are not available on peripheral"];
             [self.centralManager cancelPeripheralConnection:peripheral];
             [self.bleDelegate onError:errorMessage];
+        }
+    }
+    else if ([service.UUID isEqual:HR_Service_UUID]) {
+        for (CBCharacteristic *characteristic in service.characteristics)
+        {
+            if ([characteristic.UUID isEqual:HR_Location_Characteristic_UUID]) {
+                NSLog(@"HR Position characteristic is found");
+                [self.bluetoothPeripheral readValueForCharacteristic:characteristic];
+            }
         }
     }
 }

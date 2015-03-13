@@ -15,6 +15,8 @@
 #import "SSZipArchive.h"
 #import "UnzipFirmware.h"
 #import "Utility.h"
+#import "JsonParser.h"
+
 
 @interface DFUViewController () {
     
@@ -35,7 +37,9 @@
 @property NSURL *bootloaderMetaDataURL;
 @property NSURL *softdeviceMetaDataURL;
 @property NSURL *systemMetaDataURL;
+@property NSURL *softdevice_bootloaderURL;
 @property NSUInteger selectedFileSize;
+@property (nonatomic, retain)InitData *manifestData;
 @property int dfuVersion;
 
 
@@ -59,6 +63,7 @@
 @property BOOL isErrorKnown;
 @property BOOL isSelectedFileZipped;
 @property BOOL isDfuVersionExist;
+@property BOOL isManifestExist;
 
 - (IBAction)uploadPressed;
 
@@ -144,7 +149,13 @@
         switch (enumFirmwareType) {
             case SOFTDEVICE_AND_BOOTLOADER:
                 if (self.isDfuVersionExist) {
-                    [dfuOperations performDFUOnFilesWithMetaData:self.softdeviceURL bootloaderURL:self.bootloaderURL firmwaresMetaDataURL:self.systemMetaDataURL firmwareType:SOFTDEVICE_AND_BOOTLOADER];
+                    if (self.isManifestExist) {
+                        [dfuOperations performDFUOnFileWithMetaDataAndFileSizes:self.softdevice_bootloaderURL firmwareMetaDataURL:self.systemMetaDataURL softdeviceFileSize:self.manifestData.softdeviceSize bootloaderFileSize:self.manifestData.bootloaderSize firmwareType:SOFTDEVICE_AND_BOOTLOADER];
+                    }
+                    else {
+                        [dfuOperations performDFUOnFilesWithMetaData:self.softdeviceURL bootloaderURL:self.bootloaderURL firmwaresMetaDataURL:self.systemMetaDataURL firmwareType:SOFTDEVICE_AND_BOOTLOADER];
+                    }
+                    
                 }
                 else {
                     [dfuOperations performDFUOnFiles:self.softdeviceURL bootloaderURL:self.bootloaderURL firmwareType:SOFTDEVICE_AND_BOOTLOADER];
@@ -193,6 +204,68 @@
     self.softdeviceMetaDataURL = self.bootloaderMetaDataURL = self.applicationMetaDataURL = self.systemMetaDataURL = nil;
     UnzipFirmware *unzipFiles = [[UnzipFirmware alloc]init];
     NSArray *firmwareFilesURL = [unzipFiles unzipFirmwareFiles:zipFileURL];
+    if ([self getManifestFile:firmwareFilesURL]) {
+        self.isManifestExist = YES;
+        return;
+    }
+    [self getHexAndDatFile:firmwareFilesURL];
+    [self getBinFiles:firmwareFilesURL];
+}
+
+-(BOOL)getManifestFile:(NSArray *)firmwareFilesURL
+{
+    for (NSURL *firmwareManifestURL in firmwareFilesURL) {
+        if ([[[firmwareManifestURL path] lastPathComponent] isEqualToString:@"manifest.json"]) {
+            //TODO now parse the manifest.json file and then search the required files and assigned to appropriate properties (i.e self.softdeviceURL, self.bootloaderURL, self.applicationURL, self.applicationMetaDataURL, ...)
+            NSData *data = [NSData dataWithContentsOfURL:firmwareManifestURL];
+            self.manifestData = [[[JsonParser alloc]init] parseJson:data];
+            [self getBinAndDatFilesAsMentionedInManfest:firmwareFilesURL jsonPacketData:self.manifestData];
+            return YES;
+        }
+    }
+    return NO;
+}
+
+-(void)getBinAndDatFilesAsMentionedInManfest:(NSArray *)firmwareFilesURL jsonPacketData:(InitData *)data
+{
+    for (NSURL *firmwareURL in firmwareFilesURL) {
+        if ([[[firmwareURL path] lastPathComponent] isEqualToString:data.firmwareBinFileName]) {
+            if (data.firmwareType == SOFTDEVICE) {
+                self.softdeviceURL = firmwareURL;
+            }
+            else if (data.firmwareType == BOOTLOADER) {
+                self.bootloaderURL = firmwareURL;
+            }
+            else if (data.firmwareType == APPLICATION)
+            {
+                self.applicationURL = firmwareURL;
+            }
+            else if (data.firmwareType == SOFTDEVICE_AND_BOOTLOADER)
+            {
+                self.softdevice_bootloaderURL = firmwareURL;
+            }
+        }
+        else if ([[[firmwareURL path] lastPathComponent] isEqualToString:data.firmwareDatFileName]) {
+            if (data.firmwareType == SOFTDEVICE) {
+                self.softdeviceMetaDataURL = firmwareURL;
+            }
+            else if (data.firmwareType == BOOTLOADER) {
+                self.bootloaderMetaDataURL = firmwareURL;
+            }
+            else if (data.firmwareType == APPLICATION)
+            {
+                self.applicationMetaDataURL = firmwareURL;
+            }
+            else if (data.firmwareType == SOFTDEVICE_AND_BOOTLOADER)
+            {
+                self.systemMetaDataURL = firmwareURL;
+            }
+        }
+    }
+}
+
+-(void)getHexAndDatFile:(NSArray *)firmwareFilesURL
+{
     for (NSURL *firmwareURL in firmwareFilesURL) {
         if ([[[firmwareURL path] lastPathComponent] isEqualToString:@"softdevice.hex"]) {
             self.softdeviceURL = firmwareURL;
@@ -216,16 +289,20 @@
             self.systemMetaDataURL = firmwareURL;
         }
     }
+}
+
+-(void)getBinFiles:(NSArray *)firmwareFilesURL
+{
     for (NSURL *firmwareBinURL in firmwareFilesURL) {
-         if ([[[firmwareBinURL path] lastPathComponent] isEqualToString:@"softdevice.bin"]) {
-             self.softdeviceURL = firmwareBinURL;
-         }
-         else if ([[[firmwareBinURL path] lastPathComponent] isEqualToString:@"bootloader.bin"]) {
-             self.bootloaderURL = firmwareBinURL;
-         }
-         else if ([[[firmwareBinURL path] lastPathComponent] isEqualToString:@"application.bin"]) {
-             self.applicationURL = firmwareBinURL;
-         }
+        if ([[[firmwareBinURL path] lastPathComponent] isEqualToString:@"softdevice.bin"]) {
+            self.softdeviceURL = firmwareBinURL;
+        }
+        else if ([[[firmwareBinURL path] lastPathComponent] isEqualToString:@"bootloader.bin"]) {
+            self.bootloaderURL = firmwareBinURL;
+        }
+        else if ([[[firmwareBinURL path] lastPathComponent] isEqualToString:@"application.bin"]) {
+            self.applicationURL = firmwareBinURL;
+        }
     }
 }
 
@@ -407,10 +484,19 @@
     if (self.isSelectedFileZipped) {
         switch (enumFirmwareType) {
             case SOFTDEVICE_AND_BOOTLOADER:
-                if (self.softdeviceURL && self.bootloaderURL) {
-                    NSLog(@"Found Softdevice and Bootloader files in selected zip file");
-                    return YES;
+                if (self.isManifestExist) {
+                    if (self.softdevice_bootloaderURL) {
+                        NSLog(@"Found Softdevice_Bootloader file in selected zip file");
+                        return YES;
+                    }
                 }
+                else {
+                    if (self.softdeviceURL && self.bootloaderURL) {
+                        NSLog(@"Found Softdevice and Bootloader files in selected zip file");
+                        return YES;
+                    }
+                }
+                
                 break;
             case SOFTDEVICE:
                 if (self.softdeviceURL) {
@@ -463,6 +549,9 @@
             return @"uploading application ...";
             break;
         case SOFTDEVICE_AND_BOOTLOADER:
+            if (self.isManifestExist) {
+                return @"uploading softdevice+bootloader ...";
+            }
             return @"uploading softdevice ...";
             break;
             
@@ -575,6 +664,7 @@
         if ([extension isEqualToString:@"zip"]) {
             NSLog(@"this is zip file");
             self.isSelectedFileZipped = YES;
+            self.isManifestExist = NO;
             [self unzipFiles:selectedFileURL];
         }
         else {

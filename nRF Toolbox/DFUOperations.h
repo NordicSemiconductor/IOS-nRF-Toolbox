@@ -67,6 +67,7 @@
 -(void)performDFUOnFileWithMetaData:(NSURL *)firmwareURL firmwareMetaDataURL:(NSURL *)metaDataURL firmwareType:(DfuFirmwareTypes)firmwareType;
 -(void)performDFUOnFiles:(NSURL *)softdeviceURL bootloaderURL:(NSURL *)bootloaderURL firmwareType:(DfuFirmwareTypes)firmwareType;
 -(void)performDFUOnFilesWithMetaData:(NSURL *)softdeviceURL bootloaderURL:(NSURL *)bootloaderURL firmwaresMetaDataURL:(NSURL *)metaDataURL firmwareType:(DfuFirmwareTypes)firmwareType;
+-(void)performDFUOnFileWithMetaDataAndFileSizes:(NSURL *)firmwareURL firmwareMetaDataURL:(NSURL *)metaDataURL softdeviceFileSize:(uint32_t)softdeviceSize bootloaderFileSize:(uint32_t)bootloaderSize  firmwareType:(DfuFirmwareTypes)firmwareType;
 -(void)performOldDFUOnFile:(NSURL *)firmwareURL;
 -(void)setAppToBootloaderMode;
 -(void)cancelDFU;
