@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Health Thermometer</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Temperature</string>
+			<key>Key</key>
+			<string>fahrenheit</string>
+			<key>DefaultValue</key>
+			<false/>
+			<key>Titles</key>
+			<array>
+				<string>Celsius</string>
+				<string>Farhernheit</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<false/>
+				<true/>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Cycling Speed &amp; Cadence</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Wheel Diameter</string>
+			<key>Key</key>
+			<string>key_diameter</string>
+			<key>DefaultValue</key>
+			<string>2.3</string>
+			<key>Titles</key>
+			<array>
+				<string>29 inches</string>
+				<string>28 inches</string>
+				<string>27 inches</string>
+				<string>26 inches</string>
+				<string>20 inches</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>2.3</string>
+				<string>2.2</string>
+				<string>2.15</string>
+				<string>2.07</string>
+				<string>1.6</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Title</key>
+			<string>Device Firmware Update</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Number of packets</string>
+			<key>Key</key>
+			<string>dfu_number_of_packets</string>
+			<key>DefaultValue</key>
+			<integer>10</integer>
+			<key>Titles</key>
+			<array>
+				<string>1</string>
+				<string>2</string>
+				<string>5</string>
+				<string>10</string>
+				<string>25</string>
+				<string>50</string>
+				<string>100</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>5</integer>
+				<integer>10</integer>
+				<integer>25</integer>
+				<integer>50</integer>
+				<integer>100</integer>
+			</array>
+		</dict>
+	</array>
+	<key>StringsTable</key>
+	<string>Root</string>
+</dict>
+</plist>
