@@ -306,23 +306,6 @@
     }
 }
 
--(void)appDidEnterBackground:(NSNotification *)_notification
-{
-    //    UILocalNotification *notification = [[UILocalNotification alloc]init];
-    //    notification.alertAction = @"Show";
-    //    notification.alertBody = @"You are still connected to Running Speed and Cadence sensor. It will collect data also in background.";
-    //    notification.hasAction = NO;
-    //    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
-    //    notification.timeZone = [NSTimeZone  defaultTimeZone];
-    //    notification.soundName = UILocalNotificationDefaultSoundName;
-    //    [[UIApplication sharedApplication] setScheduledLocalNotifications:[NSArray arrayWithObject:notification]];
-}
-
--(void)appDidBecomeActiveBackground:(NSNotification *)_notification
-{
-    //    [[UIApplication sharedApplication] cancelAllLocalNotifications];
-}
-
 -(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
     // The 'scan' or 'select' seque will be performed only if DFU process has not been started or was completed.

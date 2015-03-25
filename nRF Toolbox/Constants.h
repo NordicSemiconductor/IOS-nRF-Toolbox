@@ -44,4 +44,8 @@ static NSString * const proximityAlertLevelCharacteristicUUIDString = @"00002A06
 static NSString * const batteryServiceUUIDString = @"0000180F-0000-1000-8000-00805F9B34FB";
 static NSString * const batteryLevelCharacteristicUUIDString = @"00002A19-0000-1000-8000-00805F9B34FB";
 
+static NSString * const uartServiceUUIDString = @"6E400001-B5A3-F393-E0A9-E50E24DCCA9E";
+static NSString * const uartTXCharacteristicUUIDString = @"6E400003-B5A3-F393-E0A9-E50E24DCCA9E";
+static NSString * const uartRXCharacteristicUUIDString = @"6E400002-B5A3-F393-E0A9-E50E24DCCA9E";
+
 #endif

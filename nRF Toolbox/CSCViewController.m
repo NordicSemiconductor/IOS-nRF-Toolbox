@@ -191,7 +191,10 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
         [deviceName setText:peripheral.name];
         [connectButton setTitle:@"DISCONNECT" forState:UIControlStateNormal];
     });
-    
+    //Following if condition display user permission alert for background notification
+    if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound categories:nil]];
+    }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActiveBackground:) name:UIApplicationDidBecomeActiveNotification object:nil];
     
