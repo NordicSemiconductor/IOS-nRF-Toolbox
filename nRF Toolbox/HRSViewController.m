@@ -22,6 +22,7 @@
     BOOL isBluetoothON;
     BOOL isDeviceConnected;
     BOOL isBackButtonPressed;
+    BOOL isAppInBackground;
     
     CBUUID *HR_Service_UUID;
     CBUUID *HR_Measurement_Characteristic_UUID;
@@ -86,9 +87,10 @@
     // Rotate the vertical label
     self.verticalLabel.transform = CGAffineTransformRotate(CGAffineTransformMakeTranslation(-120.0f, 0.0f), (float)(-M_PI / 2));
     
-    isBluetoothON = false;
-    isDeviceConnected = false;
-    isBackButtonPressed = false;
+    isBluetoothON = NO;
+    isDeviceConnected = NO;
+    isBackButtonPressed = NO;
+    isAppInBackground = NO;
     hrPeripheral = nil;
     
     hrValues = [[NSMutableArray alloc]init];
@@ -160,20 +162,27 @@
 -(void)appDidEnterBackground:(NSNotification *)_notification
 {
     NSLog(@"appDidEnterBackground");
+    isAppInBackground = YES;
+    [self showBackgroundNotification:[NSString stringWithFormat:@"You are still connected to %@ sensor. It will collect data also in background.",self.hrPeripheral.name]];
+}
+
+-(void)appDidEnterForeground:(NSNotification *)_notification
+{
+    NSLog(@"appDidEnterForeground");
+    isAppInBackground = NO;
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+}
+
+-(void)showBackgroundNotification:(NSString *)message
+{
     UILocalNotification *notification = [[UILocalNotification alloc]init];
     notification.alertAction = @"Show";
-    notification.alertBody = @"You are still connected to Heart Rate sensor. It will collect data also in background.";
+    notification.alertBody = message;
     notification.hasAction = NO;
     notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
     notification.timeZone = [NSTimeZone  defaultTimeZone];
     notification.soundName = UILocalNotificationDefaultSoundName;
     [[UIApplication sharedApplication] setScheduledLocalNotifications:[NSArray arrayWithObject:notification]];
-}
-
--(void)appDidBecomeActiveBackground:(NSNotification *)_notification
-{
-    NSLog(@"appDidBecomeActiveBackground");
-    [[UIApplication sharedApplication] cancelAllLocalNotifications];
 }
 
 #pragma mark HRM Graph methods
@@ -356,9 +365,12 @@
         [connectButton setTitle:@"DISCONNECT" forState:UIControlStateNormal];
         [hrValues removeAllObjects];
     });
-    
+    //Following if condition display user permission alert for background notification
+    if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound categories:nil]];
+    }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActiveBackground:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterForeground:) name:UIApplicationDidBecomeActiveNotification object:nil];
     
     // Peripheral has connected. Discover required services
     //[hrPeripheral discoverServices:@[HR_Service_UUID,Battery_Service_UUID]];
@@ -384,8 +396,10 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
         hrPeripheral = nil;
-        
         [self clearUI];
+        if (isAppInBackground) {
+            [self showBackgroundNotification:[NSString stringWithFormat:@"%@ sensor is disconnected.",peripheral.name]];
+        }
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
     });
@@ -413,7 +427,6 @@
             // code to discover DFU Service
             else if ([hrService.UUID isEqual:dfuService_UUID]) {
                 NSLog(@"DFU Service is found");
-                [hrPeripheral discoverCharacteristics:nil forService:hrService];
             }
 
         }
@@ -447,7 +460,6 @@
                     [hrPeripheral readValueForCharacteristic:characteristic];
                 }
             }
-            
         }
     } else {
         NSLog(@"error in discovering characteristic on device: %@",hrPeripheral.name);

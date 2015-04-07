@@ -10,8 +10,10 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "ScannerDelegate.h"
 #import "CorePlot-CocoaTouch.h"
+#import "CoreLinePlotViewController.h"
 
 @interface HRSViewController : UIViewController <CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate, CPTPlotDataSource>
+
 
 @property (strong, nonatomic) CBCentralManager *bluetoothManager;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
