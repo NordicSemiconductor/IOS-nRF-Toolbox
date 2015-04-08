@@ -797,7 +797,7 @@
 		5217F3DA1859EE0000F2D5BB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0620;
 				ORGANIZATIONNAME = "Nordic Semiconductor";
 				TargetAttributes = {
 					5217F3E11859EE0000F2D5BB = {
@@ -1004,7 +1004,7 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
-				"VALID_ARCHS[sdk=*]" = "arm32 armv7 armv7s";
+				VALID_ARCHS = "arm32 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -1039,7 +1039,7 @@
 				PROVISIONING_PROFILE = "4c78c840-4628-4744-8dad-d82a200349bc";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
-				"VALID_ARCHS[sdk=*]" = "arm32 armv7 armv7s";
+				VALID_ARCHS = "arm32 armv7 armv7s";
 			};
 			name = Release;
 		};

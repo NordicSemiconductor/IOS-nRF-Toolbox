@@ -1,10 +1,24 @@
-//
-//  HRSViewController.m
-//  nRF Toolbox
-//
-//  Created by Kamran Soomro on 09/01/14.
-//  Copyright (c) 2014 Nordic Semiconductor. All rights reserved.
-//
+/*
+ * Copyright (c) 2015, Nordic Semiconductor
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this
+ * software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+ * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #import "HRSViewController.h"
 #import "ScannerViewController.h"
@@ -159,25 +173,6 @@
     }
 }
 
-/*-(void)appDidEnterBackground:(NSNotification *)_notification
-{
-    NSLog(@"appDidEnterBackground");
-    UILocalNotification *notification = [[UILocalNotification alloc]init];
-    notification.alertAction = @"Show";
-    notification.alertBody = @"You are still connected to Heart Rate sensor. It will collect data also in background.";
-    notification.hasAction = NO;
-    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
-    notification.timeZone = [NSTimeZone  defaultTimeZone];
-    notification.soundName = UILocalNotificationDefaultSoundName;
-    [[UIApplication sharedApplication] setScheduledLocalNotifications:[NSArray arrayWithObject:notification]];
-}
-
--(void)appDidBecomeActiveBackground:(NSNotification *)_notification
-{
-    NSLog(@"appDidBecomeActiveBackground");
-    [[UIApplication sharedApplication] cancelAllLocalNotifications];
-}*/
-
 -(void)appDidEnterBackground:(NSNotification *)_notification
 {
     NSLog(@"appDidEnterBackground");
@@ -187,7 +182,7 @@
 
 -(void)appDidEnterForeground:(NSNotification *)_notification
 {
-    NSLog(@"appDidBecomeActiveBackground");
+    NSLog(@"appDidEnterForeground");
     isAppInBackground = NO;
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
 }
@@ -446,7 +441,6 @@
             // code to discover DFU Service
             else if ([hrService.UUID isEqual:dfuService_UUID]) {
                 NSLog(@"DFU Service is found");
-                [hrPeripheral discoverCharacteristics:nil forService:hrService];
             }
 
         }
@@ -480,7 +474,6 @@
                     [hrPeripheral readValueForCharacteristic:characteristic];
                 }
             }
-            
         }
     } else {
         NSLog(@"error in discovering characteristic on device: %@",hrPeripheral.name);
