@@ -89,5 +89,26 @@ NSString* const FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER = @"softdevice and boot
  [alert show];
 }
 
++(void)showBackgroundNotification:(NSString *)message
+{
+    UILocalNotification *notification = [[UILocalNotification alloc]init];
+    notification.alertAction = @"Show";
+    notification.alertBody = message;
+    notification.hasAction = NO;
+    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
+    notification.timeZone = [NSTimeZone  defaultTimeZone];
+    notification.soundName = UILocalNotificationDefaultSoundName;
+    [[UIApplication sharedApplication] setScheduledLocalNotifications:[NSArray arrayWithObject:notification]];
+}
+
++ (BOOL)isApplicationStateInactiveORBackground {
+    UIApplicationState applicationState = [[UIApplication sharedApplication] applicationState];
+    if (applicationState == UIApplicationStateInactive || applicationState == UIApplicationStateBackground) {
+        return YES;
+    }
+    else {
+        return NO;
+    }
+}
 
 @end

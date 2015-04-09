@@ -23,6 +23,7 @@
 #import "UARTViewController.h"
 #import "ScannerViewController.h"
 #import "Constants.h"
+#import "AppUtilities.h"
 #import "HelpViewController.h"
 
 @interface UARTViewController ()
@@ -41,8 +42,6 @@
 @synthesize connectButton;
 @synthesize deviceName;
 @synthesize uartRXCharacteristic;
-
-bool isAppInBackground = NO;
 
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -94,7 +93,7 @@ bool isAppInBackground = NO;
     else if ([[segue identifier] isEqualToString:@"help"]) {
         NSLog(@"prepareForSegue help");
         HelpViewController *helpVC = [segue destinationViewController];
-        helpVC.helpText = [NSString stringWithFormat:@"-UART profile allows you to connect to your UART sensor.\n\n-You can send and receive short messages of 20 characters in total."];
+        helpVC.helpText = [AppUtilities getUARTHelpText];
     }
 }
 
@@ -117,8 +116,11 @@ bool isAppInBackground = NO;
         else {
             text = value;
         }
-        [self.uartPeripheral writeValue:[text dataUsingEncoding:NSUTF8StringEncoding] forCharacteristic:uartRXCharacteristic type:CBCharacteristicWriteWithoutResponse];
-        [self displayOnTableView:[NSString stringWithFormat:@"RX: %@",text]];
+        if (uartRXCharacteristic) {
+            [self.uartPeripheral writeValue:[text dataUsingEncoding:NSUTF8StringEncoding] forCharacteristic:uartRXCharacteristic type:CBCharacteristicWriteWithoutResponse];
+            [self displayOnTableView:[NSString stringWithFormat:@"RX: %@",text]];
+        }
+        
     }
 }
 
@@ -232,8 +234,7 @@ bool isAppInBackground = NO;
 {
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Connecting to the peripheral failed. Try again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
+        [AppUtilities showAlert:@"Error" alertMessage:@"Connecting to the peripheral failed. Try again"];
         [connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
         [deviceName setText:@"DEFAULT UART"];
         uartPeripheral = nil;
@@ -247,8 +248,8 @@ bool isAppInBackground = NO;
         [connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
         [deviceName setText:@"DEFAULT UART"];
         uartPeripheral = nil;
-        if (isAppInBackground) {
-            [self showBackgroundNotification:[NSString stringWithFormat:@"%@ sensor is disconnected",peripheral.name]];
+        if ([AppUtilities isApplicationStateInactiveORBackground]) {
+            [AppUtilities showBackgroundNotification:[NSString stringWithFormat:@"%@ peripheral is disconnected",peripheral.name]];
         }
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -316,27 +317,13 @@ bool isAppInBackground = NO;
 -(void)appDidEnterBackground:(NSNotification *)_notification
 {
     NSLog(@"appDidEnterBackground");
-    isAppInBackground = YES;
-    [self showBackgroundNotification:[NSString stringWithFormat:@"You are still connected to %@ sensor.",self.uartPeripheral.name]];
+    [AppUtilities showBackgroundNotification:[NSString stringWithFormat:@"You are still connected to %@ peripheral.",self.uartPeripheral.name]];
 }
 
 -(void)appDidEnterForeground:(NSNotification *)_notification
 {
     NSLog(@"appDidEnterForeground");
-    isAppInBackground = NO;
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
-}
-
--(void)showBackgroundNotification:(NSString *)message
-{
-    UILocalNotification *notification = [[UILocalNotification alloc]init];
-    notification.alertAction = @"Show";
-    notification.alertBody = message;
-    notification.hasAction = NO;
-    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
-    notification.timeZone = [NSTimeZone  defaultTimeZone];
-    notification.soundName = UILocalNotificationDefaultSoundName;
-    [[UIApplication sharedApplication] setScheduledLocalNotifications:[NSArray arrayWithObject:notification]];
 }
 
 - (IBAction)connectOrDisconnectClicked:(UIButton *)sender {

@@ -20,10 +20,11 @@
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#import <AVFoundation/AVFoundation.h>
 #import "ProximityViewController.h"
 #import "ScannerViewController.h"
 #import "Constants.h"
-#import <AVFoundation/AVFoundation.h>
+#import "AppUtilities.h"
 #import "HelpViewController.h"
 
 
@@ -33,7 +34,7 @@
     CBUUID *proximityAlertLevelCharacteristicUUID;
     CBUUID *batteryServiceUUID;
     CBUUID *batteryLevelCharacteristicUUID;
-    BOOL isImmidiateAlertOn, isAppInBackgound, isBackButtonPressed;;
+    BOOL isImmidiateAlertOn, isBackButtonPressed;;
 }
 
 /*!
@@ -95,7 +96,6 @@
     [self initGattServer];
     self.immidiateAlertCharacteristic = nil;
     isImmidiateAlertOn = NO;
-    isAppInBackgound = NO;
     isBackButtonPressed = NO;
     [self initSound];
 }
@@ -127,32 +127,12 @@
 
 -(void)appDidEnterBackground:(NSNotification *)_notification
 {
-    isAppInBackgound = YES;
     NSString *message = [NSString stringWithFormat:@"You are still connected to %@",proximityPeripheral.name];
-    [self showBackgroundAlert:message];
-}
-
--(void)showBackgroundAlert:(NSString *)message
-{
-    UILocalNotification *notification = [[UILocalNotification alloc]init];
-    notification.alertAction = @"Show";
-    notification.alertBody = message;
-    notification.hasAction = NO;
-    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
-    notification.timeZone = [NSTimeZone  defaultTimeZone];
-    notification.soundName = UILocalNotificationDefaultSoundName;
-    [[UIApplication sharedApplication] setScheduledLocalNotifications:[NSArray arrayWithObject:notification]];
-}
-
--(void)showForegroundAlert:(NSString *)message
-{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"nRF Toolbox" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-    [alert show];
+    [AppUtilities showBackgroundNotification:message];
 }
 
 -(void)appDidBecomeActiveBackground:(NSNotification *)_notification
 {
-    isAppInBackgound = NO;
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
 }
 
@@ -182,7 +162,7 @@
     else if ([[segue identifier] isEqualToString:@"help"]) {
         isBackButtonPressed = NO;
         HelpViewController *helpVC = [segue destinationViewController];
-        helpVC.helpText = [NSString stringWithFormat:@"-PROXIMITY profile allows you to connect to your Proximity sensor.\n\n-You can find your valuables attached with Proximity tag by pressing FindMe button on screen and you can find your phone by pressing relevant button on your tag.\n\n-A notification will appear on your phone screen when you go away from your connected tag."];
+        helpVC.helpText = [AppUtilities getProximityHelpText];
     }
 }
 
@@ -402,9 +382,9 @@
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActiveBackground:) name:UIApplicationDidBecomeActiveNotification object:nil];
-    if (isAppInBackgound) {
+    if ([AppUtilities isApplicationStateInactiveORBackground]) {
         NSString *message = [NSString stringWithFormat:@"%@ is within range!",proximityPeripheral.name];
-        [self showBackgroundAlert:message];
+        [AppUtilities showBackgroundNotification:message];
     }
     
     // Peripheral has connected. Discover required services
@@ -415,8 +395,7 @@
 {
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Connecting to the peripheral failed. Try again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
+        [AppUtilities showAlert:@"Error" alertMessage:@"Connecting to the peripheral failed. Try again"];
         [connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
         proximityPeripheral = nil;
         [self disableFindButton];
@@ -429,26 +408,27 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         NSString *message = [NSString stringWithFormat:@"%@ is out of range!",proximityPeripheral.name];
         if (error) {
-            NSLog(@"error in disconnection");
+            NSLog(@"error in disconnection or linkloss");
             lockImage.highlighted = NO;
             self.immidiateAlertCharacteristic = nil;
             [self disableFindButton];
             NSDictionary *options = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:CBConnectPeripheralOptionNotifyOnNotificationKey];
             [bluetoothManager connectPeripheral:proximityPeripheral options:options];
-            if (isAppInBackgound) {
-                [self showBackgroundAlert:message];
+            if ([AppUtilities isApplicationStateInactiveORBackground]) {
+                [AppUtilities showBackgroundNotification:message];
             }
             else {
-                [self showForegroundAlert:message];
+                [AppUtilities showAlert:@"PROXIMITY" alertMessage:message];
             }
             [self playSoundOnce];
             
         }
         else {
-            // Scanner uses other queue to send events. We must edit UI in the main queue
-            
                 NSLog(@"disconnected");
                 [connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
+                if ([AppUtilities isApplicationStateInactiveORBackground]) {
+                    [AppUtilities showBackgroundNotification:[NSString stringWithFormat:@"%@ peripheral is disconnected",peripheral.name]];
+                }
                 proximityPeripheral = nil;
                 [self disableFindButton];
                 [self clearUI];
@@ -555,7 +535,6 @@
     [battery setTitle:@"n/a" forState:UIControlStateDisabled];
     battery.tag = 0;
     lockImage.highlighted = NO;
-    isAppInBackgound = NO;
     isImmidiateAlertOn = NO;
     self.immidiateAlertCharacteristic = nil;
 }

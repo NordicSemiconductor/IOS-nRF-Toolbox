@@ -128,10 +128,20 @@
     {
         // 3.5 inches iPhone
         UIImage *image = [UIImage imageNamed:@"Background35.png"];
-        [backgroundImage setImage:image];    }
+        [backgroundImage setImage:image];
+    }
     
     // Rotate the vertical label
     self.verticalLabel.transform = CGAffineTransformRotate(CGAffineTransformMakeTranslation(-145.0f, 0.0f), (float)(-M_PI / 2));
+}
+
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:YES];
+    //if DFU peripheral is connected and user press Back button then disconnect it
+    if ([self isMovingFromParentViewController] && self.isConnected) {
+        NSLog(@"isMovingFromParentViewController");
+        [dfuOperations cancelDFU];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -621,6 +631,20 @@
     connectButton.enabled = YES;
 }
 
+-(void)appDidEnterBackground:(NSNotification *)_notification
+{
+    NSLog(@"appDidEnterBackground");
+    if (self.isConnected && self.isTransferring) {
+        [Utility showBackgroundNotification:[self getUploadStatusMessage]];
+    }
+}
+
+-(void)appDidEnterForeground:(NSNotification *)_notification
+{
+    NSLog(@"appDidEnterForeground");
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+}
+
 #pragma mark FileType Selector Delegate
 
 - (IBAction)unwindFileTypeSelector:(UIStoryboardSegue*)sender
@@ -688,6 +712,13 @@
     self.isConnected = YES;
     self.isDfuVersionExist = NO;
     [self enableUploadButton];
+    //Following if condition display user permission alert for background notification
+    if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound categories:nil]];
+    }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterForeground:) name:UIApplicationDidBecomeActiveNotification object:nil];
+
 }
 
 -(void)onDeviceConnectedWithVersion:(CBPeripheral *)peripheral
@@ -696,6 +727,13 @@
     self.isConnected = YES;
     self.isDfuVersionExist = YES;
     [self enableUploadButton];
+    //Following if condition display user permission alert for background notification
+    if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound categories:nil]];
+    }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterForeground:) name:UIApplicationDidBecomeActiveNotification object:nil];
+
 }
 
 -(void)onDeviceDisconnected:(CBPeripheral *)peripheral
@@ -711,7 +749,14 @@
         
         
             if (!self.isTransfered && !self.isTransferCancelled && !self.isErrorKnown) {
-                [Utility showAlert:@"The connection has been lost"];
+                if ([Utility isApplicationStateInactiveORBackground]) {
+                    [Utility showBackgroundNotification:[NSString stringWithFormat:@"%@ peripheral is disconnected.",peripheral.name]];
+                }
+                else {
+                    [Utility showAlert:@"The connection has been lost"];
+                }
+                [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+                [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
             }
             self.isTransferCancelled = NO;
             self.isTransfered = NO;
@@ -747,7 +792,13 @@
         uploadButton.enabled = YES;
         [uploadButton setTitle:@"Cancel" forState:UIControlStateNormal];
         NSString *uploadStatusMessage = [self getUploadStatusMessage];
-        uploadStatus.text = uploadStatusMessage;
+        if ([Utility isApplicationStateInactiveORBackground]) {
+            [Utility showBackgroundNotification:uploadStatusMessage];
+        }
+        else {
+            uploadStatus.text = uploadStatusMessage;
+        }
+        
     });
 }
 
@@ -775,7 +826,13 @@
 {
     NSLog(@"onBootloaderUploadStarted");
     dispatch_async(dispatch_get_main_queue(), ^{
-        uploadStatus.text = @"uploading bootloader ...";
+        if ([Utility isApplicationStateInactiveORBackground]) {
+            [Utility showBackgroundNotification:@"uploading bootloader ..."];
+        }
+        else {
+            uploadStatus.text = @"uploading bootloader ...";
+        }
+        
     });
     
 }
@@ -803,7 +860,13 @@
         self.isTransferring = NO;
         self.isTransfered = YES;
         NSString* message = [NSString stringWithFormat:@"%u bytes transfered in %u seconds", dfuOperations.binFileSize, dfuOperations.uploadTimeInSeconds];
-        [Utility showAlert:message];
+        if ([Utility isApplicationStateInactiveORBackground]) {
+            [Utility showBackgroundNotification:message];
+        }
+        else {
+            [Utility showAlert:message];
+        }
+        
     });
 }
 

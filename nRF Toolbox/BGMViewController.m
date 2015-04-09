@@ -27,6 +27,7 @@
 #import "GlucoseReading.h"
 #import "RecordAccess.h"
 #import "Constants.h"
+#import "AppUtilities.h"
 #import "CharacteristicReader.h"
 #import "HelpViewController.h"
 
@@ -128,6 +129,16 @@ enum
     // Dispose of any resources that can be recreated.
 }
 
+-(void)appDidEnterBackground:(NSNotification *)_notification
+{
+    [AppUtilities showBackgroundNotification:[NSString stringWithFormat:@"You are still connected to %@ peripheral. It will collect data also in background.",connectedPeripheral.name]];
+}
+
+-(void)appDidBecomeActiveBackground:(NSNotification *)_notification
+{
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+}
+
 - (IBAction)actionButtonClicked:(id)sender {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] init];
     actionSheet.delegate = self;
@@ -174,7 +185,7 @@ enum
     }
     else if ([[segue identifier] isEqualToString:@"help"]) {
         HelpViewController *helpVC = [segue destinationViewController];
-        helpVC.helpText =[NSString stringWithFormat:@"-BGM (BLOOD GLUCOSE MONITOR) profile allows you to connect to your Glucose sensor.\n\n-You can read the history of glucose records."];
+        helpVC.helpText = [AppUtilities getBGMHelpText];
     }
 
 }
@@ -317,6 +328,13 @@ enum
         [deviceName setText:peripheral.name];
         [connectButton setTitle:@"DISCONNECT" forState:UIControlStateNormal];
         [self enableRecordButton];
+        //Following if condition display user permission alert for background notification
+        if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
+            [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound categories:nil]];
+        }
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActiveBackground:) name:UIApplicationDidBecomeActiveNotification object:nil];
+
     });
     
     // Peripheral has connected. Discover required services
@@ -328,8 +346,7 @@ enum
 {
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Connecting to the peripheral failed. Try again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
+        [AppUtilities showAlert:@"Error" alertMessage:@"Connecting to the peripheral failed. Try again"];
         [connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
         connectedPeripheral = nil;
         [self disableRecordButton];
@@ -342,9 +359,14 @@ enum
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
         [connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
+        if ([AppUtilities isApplicationStateInactiveORBackground]) {
+            [AppUtilities showBackgroundNotification:[NSString stringWithFormat:@"%@ peripheral is disconnected",peripheral.name]];
+        }
         connectedPeripheral = nil;
         [self disableRecordButton];        
-        [self clearUI];
+        [self clearUI];        
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
     });
 }
 
