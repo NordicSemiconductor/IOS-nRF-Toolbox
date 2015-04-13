@@ -47,7 +47,7 @@
         return nil;
     }
     else {
-        NSLog(@"number of files in directory %d",fileNames.count);
+        NSLog(@"number of files in directory %lu",(unsigned long)fileNames.count);
         [allFilesNames addObjectsFromArray:[self getSubDirectoriesInDocumentsDirectory]];
         [allFilesNames addObjectsFromArray:[self getRequiredFilesFromDocumentsDirectory]];
         return [allFilesNames copy];
@@ -79,7 +79,7 @@
         return nil;
     }
     else {
-        NSLog(@"number of files in directory %d",fileNames.count);
+        NSLog(@"number of files in directory %lu",(unsigned long)fileNames.count);
         for (NSString *fileName in fileNames) {
             if ([self checkFileExtension:fileName fileExtension:BIN]) {
                 [binFilesNames addObject:fileName];
@@ -100,7 +100,7 @@
         return nil;
     }
     else {
-        NSLog(@"number of hex files in directory %d",fileNames.count);
+        NSLog(@"number of hex files in directory %lu",(unsigned long)fileNames.count);
         for (NSString *fileName in fileNames) {
             if ([self checkFileExtension:fileName fileExtension:HEX]) {
                 [hexFilesNames addObject:fileName];
@@ -120,7 +120,7 @@
         return nil;
     }
     else {
-        NSLog(@"number of zip files in directory %d",fileNames.count);
+        NSLog(@"number of zip files in directory %lu",(unsigned long)fileNames.count);
         for (NSString *fileName in fileNames) {
             if ([self checkFileExtension:fileName fileExtension:ZIP]) {
                 [zipFilesNames addObject:fileName];
@@ -140,7 +140,7 @@
         return nil;
     }
     else {
-        NSLog(@"number of files in directory %d",fileNames.count);
+        NSLog(@"number of files in directory %lu",(unsigned long)fileNames.count);
         for (NSString *fileName in fileNames) {
             NSLog(@"Found file in directory: %@",fileName);
             [AllFilesNames addObject:fileName];

@@ -325,7 +325,7 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
             fileName.text = selectedFileName;
-            fileSize.text = [NSString stringWithFormat:@"%d bytes", self.dfuHelper.selectedFileSize];
+            fileSize.text = [NSString stringWithFormat:@"%lu bytes", (unsigned long)self.dfuHelper.selectedFileSize];
             [self enableUploadButton];
         });
     }
@@ -487,7 +487,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         self.isTransferring = NO;
         self.isTransfered = YES;
-        NSString* message = [NSString stringWithFormat:@"%u bytes transfered in %u seconds", dfuOperations.binFileSize, dfuOperations.uploadTimeInSeconds];
+        NSString* message = [NSString stringWithFormat:@"%lu bytes transfered in %lu seconds", dfuOperations.binFileSize, (unsigned long)dfuOperations.uploadTimeInSeconds];
         if ([Utility isApplicationStateInactiveORBackground]) {
             [Utility showBackgroundNotification:message];
         }

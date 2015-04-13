@@ -262,7 +262,7 @@
 {
     NSLog(@"didDiscoverServices");
     if (!error) {
-        NSLog(@"services discovered %d",[peripheral.services count] );
+        NSLog(@"services discovered %lu",(unsigned long)[peripheral.services count] );
         for (CBService *uartService in peripheral.services) {
             NSLog(@"service discovered: %@",uartService.UUID);
             if ([uartService.UUID isEqual:UART_Service_UUID])

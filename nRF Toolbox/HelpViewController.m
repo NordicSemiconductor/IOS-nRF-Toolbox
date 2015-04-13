@@ -84,7 +84,7 @@ int PAGE_NUMBERS;
                                @"Softdevice_Zip_Image.png",
                                @"System_Zip_Image.png"];
     
-    PAGE_NUMBERS = [self.pageContentImages count];
+    PAGE_NUMBERS = (int)[self.pageContentImages count];
 }
 
 -(void) initUserFilesDemoImages
@@ -95,7 +95,7 @@ int PAGE_NUMBERS;
                                @"EmailAttachment1.png",
                                @"EmailAttachment2.png"];
     
-    PAGE_NUMBERS = [self.pageContentImages count];
+    PAGE_NUMBERS = (int)[self.pageContentImages count];
 }
 
 
