@@ -807,7 +807,7 @@
 		5217F3DA1859EE0000F2D5BB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0620;
+				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "Nordic Semiconductor";
 				TargetAttributes = {
 					5217F3E11859EE0000F2D5BB = {
