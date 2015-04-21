@@ -23,6 +23,7 @@
 #import "CSCViewController.h"
 #import "ScannerViewController.h"
 #import "Constants.h"
+#import "AppUtilities.h"
 #import "HelpViewController.h"
 
 @interface CSCViewController () {
@@ -112,14 +113,7 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
 
 -(void)appDidEnterBackground:(NSNotification *)_notification
 {
-    UILocalNotification *notification = [[UILocalNotification alloc]init];
-    notification.alertAction = @"Show";
-    notification.alertBody = @"You are still connected to Cycling Speed and Cadence sensor. It will collect data also in background.";
-    notification.hasAction = NO;
-    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
-    notification.timeZone = [NSTimeZone  defaultTimeZone];
-    notification.soundName = UILocalNotificationDefaultSoundName;
-    [[UIApplication sharedApplication] setScheduledLocalNotifications:[NSArray arrayWithObject:notification]];
+    [AppUtilities showBackgroundNotification:[NSString stringWithFormat:@"You are still connected to %@ peripheral. It will collect data also in background.",self.cyclePeripheral.name]];
 }
 
 -(void)appDidBecomeActiveBackground:(NSNotification *)_notification
@@ -165,7 +159,7 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
     else if ([[segue identifier] isEqualToString:@"help"]) {
         isBackButtonPressed = NO;
         HelpViewController *helpVC = [segue destinationViewController];
-        helpVC.helpText = [NSString stringWithFormat: @"-CSC (Cycling Speed and Cadence) profile allows you to connect to your bike activity sensor.\n\n-It reads wheel and crank data if they are supported by the sensor and calculates speed, cadence, total and trip distance and gear ratio.\n\n-Default wheel size is 29 inches but you can set up wheel size in the iPhone Settings."];
+        helpVC.helpText = [AppUtilities getCSCHelpText];
     }
 }
 
@@ -213,7 +207,6 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActiveBackground:) name:UIApplicationDidBecomeActiveNotification object:nil];
     
     // Peripheral has connected. Discover required services
-    //cyclePeripheral = peripheral;
     [cyclePeripheral discoverServices:@[cscServiceUUID, batteryServiceUUID]];
 }
 
@@ -221,8 +214,7 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
 {
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Connecting to the peripheral failed. Try again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
+        [AppUtilities showAlert:@"Error" alertMessage:@"Connecting to the peripheral failed. Try again"];
         cyclePeripheral = nil;        
         [self clearUI];
     });
@@ -232,9 +224,10 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
 {
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
-        
+        if ([AppUtilities isApplicationStateInactiveORBackground]) {
+            [AppUtilities showBackgroundNotification:[NSString stringWithFormat:@"%@ is disconnected",peripheral.name]];
+        }
         cyclePeripheral = nil;
-        
         [self clearUI];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];

@@ -36,7 +36,7 @@
     [SSZipArchive unzipFileAtPath:zipFilePath toDestination:outputPath delegate:self];
     AccessFileSystem *fileSystem = [[AccessFileSystem alloc]init];
     NSArray *files = [fileSystem getAllFilesFromDirectory:outputPath];
-    NSLog(@"number of files inside zip file: %d",[files count]);
+    NSLog(@"number of files inside zip file: %lu",(unsigned long)[files count]);
     if ([self findManifestFileInsideZip:files outputPathInPhone:outputPath]) {
         return [self.filesURL copy];
     }
@@ -137,12 +137,12 @@
 
 -(void)zipArchiveDidUnzipFileAtIndex:(NSInteger)fileIndex totalFiles:(NSInteger)totalFiles archivePath:(NSString *)archivePath fileInfo:(unz_file_info)fileInfo
 {
-    NSLog(@"zipArchiveDidUnzipFileAtIndex, fileIndex: %d, totalFiles: %d, archivePath: %@",fileIndex,totalFiles,archivePath);
+    NSLog(@"zipArchiveDidUnzipFileAtIndex, fileIndex: %ld, totalFiles: %ld, archivePath: %@",(long)fileIndex,(long)totalFiles,archivePath);
 }
 
 -(void)zipArchiveProgressEvent:(NSInteger)loaded total:(NSInteger)total
 {
-    NSLog(@"zipArchiveProgressEvent, loaded: %d, total: %d",loaded,total);
+    NSLog(@"zipArchiveProgressEvent, loaded: %ld, total: %ld",(long)loaded,(long)total);
 }
 
 -(void)zipArchiveWillUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo
@@ -152,7 +152,7 @@
 
 -(void)zipArchiveWillUnzipFileAtIndex:(NSInteger)fileIndex totalFiles:(NSInteger)totalFiles archivePath:(NSString *)archivePath fileInfo:(unz_file_info)fileInfo
 {
-    NSLog(@"zipArchiveWillUnzipFileAtIndex fileIndex: %d totalFiles: %d archivePath: %@",fileIndex,totalFiles,archivePath);
+    NSLog(@"zipArchiveWillUnzipFileAtIndex fileIndex: %ld totalFiles: %ld archivePath: %@",(long)fileIndex,(long)totalFiles,archivePath);
 }
 
 

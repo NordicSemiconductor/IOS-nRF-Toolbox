@@ -89,7 +89,7 @@ int PAGE_NUMBERS;
                                @"EmailAttachment1.png",
                                @"EmailAttachment2.png"];
     
-    PAGE_NUMBERS = [self.pageContentImages count];
+    PAGE_NUMBERS = (int)[self.pageContentImages count];
 }
 
 -(void)showAddFilesDemo

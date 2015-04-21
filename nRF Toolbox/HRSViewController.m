@@ -23,6 +23,7 @@
 #import "HRSViewController.h"
 #import "ScannerViewController.h"
 #import "Constants.h"
+#import "AppUtilities.h"
 #import "CorePlot-CocoaTouch.h"
 #import "HelpViewController.h"
 
@@ -36,7 +37,6 @@
     BOOL isBluetoothON;
     BOOL isDeviceConnected;
     BOOL isBackButtonPressed;
-    BOOL isAppInBackground;
     
     CBUUID *HR_Service_UUID;
     CBUUID *HR_Measurement_Characteristic_UUID;
@@ -104,7 +104,6 @@
     isBluetoothON = NO;
     isDeviceConnected = NO;
     isBackButtonPressed = NO;
-    isAppInBackground = NO;
     hrPeripheral = nil;
     
     hrValues = [[NSMutableArray alloc]init];
@@ -169,34 +168,20 @@
         NSLog(@"prepareForSegue help");
         isBackButtonPressed = NO;
         HelpViewController *helpVC = [segue destinationViewController];
-        helpVC.helpText = [NSString stringWithFormat:@"-HRM (Heart Rate Monitor) profile allows you to connect to your Heart Rate sensor (f.e. a belt).\n\n-It shows you the current heart rate, location of the sensor and data history on the graph."];
+        helpVC.helpText = [AppUtilities getHRSHelpText];
     }
 }
 
 -(void)appDidEnterBackground:(NSNotification *)_notification
 {
     NSLog(@"appDidEnterBackground");
-    isAppInBackground = YES;
-    [self showBackgroundNotification:[NSString stringWithFormat:@"You are still connected to %@ sensor. It will collect data also in background.",self.hrPeripheral.name]];
+    [AppUtilities showBackgroundNotification:[NSString stringWithFormat:@"You are still connected to %@ sensor. It will collect data also in background.",self.hrPeripheral.name]];
 }
 
 -(void)appDidEnterForeground:(NSNotification *)_notification
 {
     NSLog(@"appDidEnterForeground");
-    isAppInBackground = NO;
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
-}
-
--(void)showBackgroundNotification:(NSString *)message
-{
-    UILocalNotification *notification = [[UILocalNotification alloc]init];
-    notification.alertAction = @"Show";
-    notification.alertBody = message;
-    notification.hasAction = NO;
-    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
-    notification.timeZone = [NSTimeZone  defaultTimeZone];
-    notification.soundName = UILocalNotificationDefaultSoundName;
-    [[UIApplication sharedApplication] setScheduledLocalNotifications:[NSArray arrayWithObject:notification]];
 }
 
 #pragma mark HRM Graph methods
@@ -395,8 +380,7 @@
 {
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Connecting to the peripheral failed. Try again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
+        [AppUtilities showAlert:@"Error" alertMessage:@"Connecting to the peripheral failed. Try again"];
         [connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
         hrPeripheral = nil;
         
@@ -411,8 +395,8 @@
         [connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
         hrPeripheral = nil;
         [self clearUI];
-        if (isAppInBackground) {
-            [self showBackgroundNotification:[NSString stringWithFormat:@"%@ sensor is disconnected.",peripheral.name]];
+        if ([AppUtilities isApplicationStateInactiveORBackground]) {
+            [AppUtilities showBackgroundNotification:[NSString stringWithFormat:@"%@ peripheral is disconnected.",peripheral.name]];
         }
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -425,7 +409,7 @@
 {
     NSLog(@"didDiscoverServices");
     if (!error) {
-        NSLog(@"services discovered %d",[peripheral.services count] );
+        NSLog(@"services discovered %lu",(unsigned long)[peripheral.services count] );
         for (CBService *hrService in peripheral.services) {
             NSLog(@"service discovered: %@",hrService.UUID);
             if ([hrService.UUID isEqual:HR_Service_UUID])

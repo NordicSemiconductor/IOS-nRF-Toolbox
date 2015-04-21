@@ -96,7 +96,7 @@
 -(void) sendInitPacket:(NSURL *)metaDataURL
 {
     NSData *fileData = [NSData dataWithContentsOfURL:metaDataURL];
-    NSLog(@"metaDataFile length: %d",[fileData length]);
+    NSLog(@"metaDataFile length: %lu",(unsigned long)[fileData length]);
     
     //send initPacket with parameter value set to Receive Init Packet [0] to dfu Control Point Characteristic
     uint8_t initPacketStart[] = {INITIALIZE_DFU_PARAMETERS_REQUEST, START_INIT_PACKET};

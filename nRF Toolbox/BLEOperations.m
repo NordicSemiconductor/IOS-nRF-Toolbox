@@ -109,7 +109,7 @@ static NSString * const hrsSensorLocationCharacteristicUUIDString = @"00002A38-0
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error
 {
     isDFUServiceFound = NO;
-    NSLog(@"didDiscoverServices, found %d services",peripheral.services.count);
+    NSLog(@"didDiscoverServices, found %lu services",(unsigned long)peripheral.services.count);
     for (CBService *service in peripheral.services) {
         NSLog(@"discovered service %@",service.UUID);
         if ([service.UUID isEqual:[CBUUID UUIDWithString:dfuServiceUUIDString]]) {

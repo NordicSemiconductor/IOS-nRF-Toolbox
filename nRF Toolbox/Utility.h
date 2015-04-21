@@ -95,5 +95,7 @@ typedef enum {
 + (NSString *) getEmptyFolderText;
 + (NSString *) getDFUAppFileHelpText;
 + (void) showAlert:(NSString *)message;
++(void)showBackgroundNotification:(NSString *)message;
++ (BOOL)isApplicationStateInactiveORBackground;
 
 @end

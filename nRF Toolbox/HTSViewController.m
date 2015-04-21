@@ -23,6 +23,7 @@
 #import "HTSViewController.h"
 #import "ScannerViewController.h"
 #import "Constants.h"
+#import "AppUtilities.h"
 #import "CharacteristicReader.h"
 #import "HelpViewController.h"
 
@@ -67,15 +68,15 @@
         batteryServiceUUID = [CBUUID UUIDWithString:batteryServiceUUIDString];
         batteryLevelCharacteristicUUID = [CBUUID UUIDWithString:batteryLevelCharacteristicUUIDString];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActiveBackground:) name:UIApplicationDidBecomeActiveNotification object:nil];
+        //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActiveBackground:) name:UIApplicationDidBecomeActiveNotification object:nil];
     }
     return self;
 }
 
--(void)dealloc
+/*-(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
-}
+}*/
 
 - (void)viewDidLoad
 {
@@ -106,14 +107,7 @@
 
 -(void)appDidEnterBackground:(NSNotification *)_notification
 {
-    UILocalNotification *notification = [[UILocalNotification alloc]init];
-    notification.alertAction = @"Show";
-    notification.alertBody = @"You are still connected to Health Thermometer sensor. It will collect data also in background.";
-    notification.hasAction = NO;
-    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
-    notification.timeZone = [NSTimeZone  defaultTimeZone];
-    notification.soundName = UILocalNotificationDefaultSoundName;
-    [[UIApplication sharedApplication] setScheduledLocalNotifications:[NSArray arrayWithObject:notification]];
+    [AppUtilities showBackgroundNotification:[NSString stringWithFormat:@"You are still connected to %@ peripheral. It will collect data also in background.",connectedPeripheral.name]];
 }
 
 -(void)appDidBecomeActiveBackground:(NSNotification *)_notification
@@ -190,7 +184,7 @@
     }
     else if ([[segue identifier] isEqualToString:@"help"]) {
         HelpViewController *helpVC = [segue destinationViewController];
-        helpVC.helpText = [NSString stringWithFormat:@"-HTM (Health Thermometer Monitor) profile allows you to connect to your Health Thermometer sensor.\n\n-It shows you the temperature value in Celisius and Fahrenheit units.\n\n-Default temperature unit is Celsius but you can set up unit in the iPhone Settings."];
+        helpVC.helpText = [AppUtilities getHTSHelpText];
     }
 }
 
@@ -242,8 +236,7 @@
 {
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Connecting to the peripheral failed. Try again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
+        [AppUtilities showAlert:@"Error" alertMessage:@"Connecting to the peripheral failed. Try again"];
         [connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
         connectedPeripheral = nil;
         
@@ -256,8 +249,10 @@
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
         [connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
+        if ([AppUtilities isApplicationStateInactiveORBackground]) {
+            [AppUtilities showBackgroundNotification:[NSString stringWithFormat:@"%@ peripheral is disconnected",peripheral.name]];
+        }
         connectedPeripheral = nil;
-        
         [self clearUI];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -432,24 +427,17 @@
                 self.type.text = @"Location: n/a";
             }
             
-            UIApplicationState state = [[UIApplication sharedApplication] applicationState];
-            if (state == UIApplicationStateBackground || state == UIApplicationStateInactive)
-            {
-                UILocalNotification *notification = [[UILocalNotification alloc]init];
-                notification.alertAction = @"Show";
+            if ([AppUtilities isApplicationStateInactiveORBackground]) {
+                NSString *message;
                 if (fahrenheit)
                 {
-                    notification.alertBody = [NSString stringWithFormat:@"New temperature reading: %.2f°F", tempValue];
+                    message = [NSString stringWithFormat:@"New temperature reading: %.2f°F", tempValue];
                 }
                 else
                 {
-                    notification.alertBody = [NSString stringWithFormat:@"New temperature reading: %.2f°C", tempValue];
+                    message = [NSString stringWithFormat:@"New temperature reading: %.2f°C", tempValue];
                 }
-                notification.hasAction = YES;
-                notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
-                notification.timeZone = [NSTimeZone  defaultTimeZone];
-                notification.soundName = UILocalNotificationDefaultSoundName;
-                [[UIApplication sharedApplication] setScheduledLocalNotifications:[NSArray arrayWithObject:notification]];
+                [AppUtilities showBackgroundNotification:message];
             }
         }
     });

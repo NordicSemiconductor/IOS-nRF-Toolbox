@@ -23,6 +23,7 @@
 #import "RSACViewController.h"
 #import "ScannerViewController.h"
 #import "Constants.h"
+#import "AppUtilities.h"
 #import "CharacteristicReader.h"
 #import "HelpViewController.h"
 
@@ -136,14 +137,7 @@
 
 -(void)appDidEnterBackground:(NSNotification *)_notification
 {
-    UILocalNotification *notification = [[UILocalNotification alloc]init];
-    notification.alertAction = @"Show";
-    notification.alertBody = @"You are still connected to Running Speed and Cadence sensor. It will collect data also in background.";
-    notification.hasAction = NO;
-    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
-    notification.timeZone = [NSTimeZone  defaultTimeZone];
-    notification.soundName = UILocalNotificationDefaultSoundName;
-    [[UIApplication sharedApplication] setScheduledLocalNotifications:[NSArray arrayWithObject:notification]];
+    [AppUtilities showBackgroundNotification:[NSString stringWithFormat:@"You are still connected to %@ peripheral. It will collect data also in background.",connectedPeripheral.name]];
 }
 
 -(void)appDidBecomeActiveBackground:(NSNotification *)_notification
@@ -176,7 +170,7 @@
     else if ([[segue identifier] isEqualToString:@"help"]) {
         isBackButtonPressed = NO;
         HelpViewController *helpVC = [segue destinationViewController];
-        helpVC.helpText = [NSString stringWithFormat:@"-RSC (Running Speed and Cadence) profile allows you to connect to your activity sensor.\n\n-It reads speed and cadence values from the sensor and calculates trip distance if stride length is supported.\n\n-Strides count is calculated by using cadence and the time."];
+        helpVC.helpText = [AppUtilities getRSACHelpText];
     }
 }
 
@@ -231,8 +225,7 @@
 {
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Connecting to the peripheral failed. Try again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
+        [AppUtilities showAlert:@"Error" alertMessage:@"Connecting to the peripheral failed. Try again"];
         [connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
         connectedPeripheral = nil;
         
@@ -245,8 +238,10 @@
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
         [connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
+        if ([AppUtilities isApplicationStateInactiveORBackground]) {
+            [AppUtilities showBackgroundNotification:[NSString stringWithFormat:@"%@ peripheral is disconnected",peripheral.name]];
+        }
         connectedPeripheral = nil;
-        
         [self clearUI];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
