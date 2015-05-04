@@ -137,12 +137,12 @@
 
 -(void)zipArchiveDidUnzipFileAtIndex:(NSInteger)fileIndex totalFiles:(NSInteger)totalFiles archivePath:(NSString *)archivePath fileInfo:(unz_file_info)fileInfo
 {
-    NSLog(@"zipArchiveDidUnzipFileAtIndex, fileIndex: %ld, totalFiles: %ld, archivePath: %@",fileIndex,(long)totalFiles,archivePath);
+    NSLog(@"zipArchiveDidUnzipFileAtIndex, fileIndex: %ld, totalFiles: %ld, archivePath: %@",(long)fileIndex,(long)totalFiles,archivePath);
 }
 
 -(void)zipArchiveProgressEvent:(NSInteger)loaded total:(NSInteger)total
 {
-    NSLog(@"zipArchiveProgressEvent, loaded: %ld, total: %ld",loaded,(long)total);
+    NSLog(@"zipArchiveProgressEvent, loaded: %ld, total: %ld",(long)loaded,(long)total);
 }
 
 -(void)zipArchiveWillUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo
@@ -152,7 +152,7 @@
 
 -(void)zipArchiveWillUnzipFileAtIndex:(NSInteger)fileIndex totalFiles:(NSInteger)totalFiles archivePath:(NSString *)archivePath fileInfo:(unz_file_info)fileInfo
 {
-    NSLog(@"zipArchiveWillUnzipFileAtIndex fileIndex: %ld totalFiles: %ld archivePath: %@",fileIndex,(long)totalFiles,archivePath);
+    NSLog(@"zipArchiveWillUnzipFileAtIndex fileIndex: %ld totalFiles: %ld archivePath: %@",(long)fileIndex,(long)totalFiles,archivePath);
 }
 
 

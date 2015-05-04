@@ -42,8 +42,7 @@
  * This property is set when the device has been selected on the Scanner View Controller.
  */
 @property (strong, nonatomic) CBPeripheral *selectedPeripheral;
-
-@property DFUOperations *dfuOperations;
+@property (strong, nonatomic) DFUOperations *dfuOperations;
 @property (strong, nonatomic) DFUHelper *dfuHelper;
 
 @property (weak, nonatomic) IBOutlet UILabel *fileName;
@@ -487,7 +486,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         self.isTransferring = NO;
         self.isTransfered = YES;
-        NSString* message = [NSString stringWithFormat:@"%lu bytes transfered in %lu seconds", dfuOperations.binFileSize, (unsigned long)dfuOperations.uploadTimeInSeconds];
+        NSString* message = [NSString stringWithFormat:@"%lu bytes transfered in %lu seconds", (unsigned long)dfuOperations.binFileSize, (unsigned long)dfuOperations.uploadTimeInSeconds];
         if ([Utility isApplicationStateInactiveORBackground]) {
             [Utility showBackgroundNotification:message];
         }

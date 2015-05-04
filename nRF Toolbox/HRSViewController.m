@@ -409,7 +409,7 @@
 {
     NSLog(@"didDiscoverServices");
     if (!error) {
-        NSLog(@"services discovered %d",[peripheral.services count] );
+        NSLog(@"services discovered %lu",(unsigned long)[peripheral.services count] );
         for (CBService *hrService in peripheral.services) {
             NSLog(@"service discovered: %@",hrService.UUID);
             if ([hrService.UUID isEqual:HR_Service_UUID])

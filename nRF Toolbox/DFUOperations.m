@@ -22,7 +22,6 @@
 
 #import "DFUOperations.h"
 #import "Utility.h"
-#import "IntelHex2BinConverter.h"
 #import "DFUOperationsDetails.h"
 #import "BLEOperations.h"
 
@@ -111,6 +110,7 @@ NSDate *startTime, *finishTime;
 -(void)performDFUOnFilesWithMetaData:(NSURL *)softdeviceURL bootloaderURL:(NSURL *)bootloaderURL firmwaresMetaDataURL:(NSURL *)metaDataURL firmwareType:(DfuFirmwareTypes)firmwareType
 {
     self.firmwareFileMetaData = metaDataURL;
+    isOneFileForSDAndBL = NO;
     isPerformedOldDFU = NO;
     [self initFirstFileOperations];
     [self initSecondFileOperations];

@@ -95,16 +95,16 @@
                         <viewControllerLayoutGuide type="bottom" id="2Qa-oN-odi"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="uaA-4u-f9N">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="519"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background4" translatesAutoresizingMaskIntoConstraints="NO" id="pVo-mB-Cd2">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Background4" translatesAutoresizingMaskIntoConstraints="NO" id="pVo-mB-Cd2">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="320" id="oYe-Sh-bpc"/>
                                 </constraints>
                             </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Test" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4WG-sp-58g">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" editable="NO" text="Test" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4WG-sp-58g">
                                 <rect key="frame" x="20" y="20" width="280" height="451"/>
                                 <color key="backgroundColor" red="0.90196079015731812" green="0.90588235855102539" blue="0.90980392694473267" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -2533,7 +2533,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="MGB-6U-Gsz"/>
-        <segue reference="DK9-xb-gkr"/>
+        <segue reference="YqS-rM-m7i"/>
+        <segue reference="E9S-ch-JJq"/>
     </inferredMetricsTieBreakers>
 </document>
