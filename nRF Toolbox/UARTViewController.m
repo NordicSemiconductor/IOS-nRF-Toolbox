@@ -31,8 +31,6 @@
     CBUUID *UART_Service_UUID;
     CBUUID *UART_RX_Characteristic_UUID;
     CBUUID *UART_TX_Characteristic_UUID;
-    //NSTimer *writeTimer;
-    int counter;
 }
 
 @property(strong, nonatomic)NSTimer *writeTimer;
@@ -69,7 +67,6 @@
     self.displayText.delegate = self;
     self.displayText.dataSource = self;
     self.uartDisplayText = [[NSMutableArray alloc]init];
-    counter = 0;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -113,21 +110,7 @@
 
 -(void)writeValueOnRX:(NSString *)value
 {
-    if (uartRXCharacteristic) {
-        NSString *text = @"01234567890123456789";
-        for(int i=0; i<20; i++) {
-            [self.uartPeripheral writeValue:[text dataUsingEncoding:NSUTF8StringEncoding] forCharacteristic:uartRXCharacteristic type:CBCharacteristicWriteWithoutResponse];
-        }
-        //NSString *text = @"0123456789012345678901234567890123456789";
-        //[self.uartPeripheral writeValue:[text dataUsingEncoding:NSUTF8StringEncoding] forCharacteristic:uartRXCharacteristic type:CBCharacteristicWriteWithoutResponse];
-        /*self.writeTimer = [NSTimer scheduledTimerWithTimeInterval:0.03
-                                                           target:self
-                                                         selector:@selector(writeSixPackets)
-                                                         userInfo:nil
-                                                          repeats:YES];*/
-    }
-    //[self.uartPeripheral writeValue:[value dataUsingEncoding:NSUTF8StringEncoding] forCharacteristic:uartRXCharacteristic type:CBCharacteristicWriteWithoutResponse];
-    /*NSString *text;
+    NSString *text;
     if (value.length != 0) {
         if (value.length > 20) {
             text = [value substringToIndex:20];
@@ -136,30 +119,9 @@
             text = value;
         }
         if (uartRXCharacteristic) {
-            self.writeTimer = [NSTimer scheduledTimerWithTimeInterval:0.01
-                                                               target:self
-                                                             selector:@selector(writeSixPackets)
-                                                             userInfo:nil
-                                                              repeats:YES];
-            //[self.uartPeripheral writeValue:[text dataUsingEncoding:NSUTF8StringEncoding] forCharacteristic:uartRXCharacteristic type:CBCharacteristicWriteWithoutResponse];
-            //[self displayOnTableView:[NSString stringWithFormat:@"RX: %@",text]];
+            [self.uartPeripheral writeValue:[text dataUsingEncoding:NSUTF8StringEncoding] forCharacteristic:uartRXCharacteristic type:CBCharacteristicWriteWithoutResponse];
+            [self displayOnTableView:[NSString stringWithFormat:@"RX: %@",text]];
         }
-    }*/
-}
-
--(void)writeSixPackets
-{
-    NSString *text = @"01234567890123456789";
-    //182 Bytes
-    /*NSString *text =     @"01234567890123456789012345-01234567890123456789012345-01234567890123456789012345-01234567890123456789012345-01234567890123456789012345-78901234567890123456-";*/
-    counter++;
-    for(int i=0; i<6; i++) {
-        [self.uartPeripheral writeValue:[text dataUsingEncoding:NSUTF8StringEncoding] forCharacteristic:uartRXCharacteristic type:CBCharacteristicWriteWithoutResponse];
-    }
-    if (counter>=2) {
-        [self.writeTimer invalidate];
-        self.writeTimer = nil;
-        counter = 0;
     }
 }
 
@@ -287,6 +249,7 @@
         [connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
         [deviceName setText:@"DEFAULT UART"];
         uartPeripheral = nil;
+        uartRXCharacteristic = nil;
         if ([AppUtilities isApplicationStateInactiveORBackground]) {
             [AppUtilities showBackgroundNotification:[NSString stringWithFormat:@"%@ peripheral is disconnected",peripheral.name]];
         }
