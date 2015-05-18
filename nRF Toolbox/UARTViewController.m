@@ -33,6 +33,8 @@
     CBUUID *UART_TX_Characteristic_UUID;
 }
 
+@property(strong, nonatomic)NSTimer *writeTimer;
+
 @end
 
 @implementation UARTViewController
@@ -42,6 +44,7 @@
 @synthesize connectButton;
 @synthesize deviceName;
 @synthesize uartRXCharacteristic;
+@synthesize uartTXCharacteristic;
 
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -247,6 +250,7 @@
         [connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
         [deviceName setText:@"DEFAULT UART"];
         uartPeripheral = nil;
+        uartRXCharacteristic = nil;
         if ([AppUtilities isApplicationStateInactiveORBackground]) {
             [AppUtilities showBackgroundNotification:[NSString stringWithFormat:@"%@ peripheral is disconnected",peripheral.name]];
         }

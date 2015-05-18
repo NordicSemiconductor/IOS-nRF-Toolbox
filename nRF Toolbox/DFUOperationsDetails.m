@@ -22,7 +22,6 @@
 
 #import "DFUOperationsDetails.h"
 #import "Utility.h"
-#import "IntelHex2BinConverter.h"
 
 @implementation DFUOperationsDetails
 

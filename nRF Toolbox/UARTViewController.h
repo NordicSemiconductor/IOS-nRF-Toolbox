@@ -28,6 +28,7 @@
 @property (strong, nonatomic) CBCentralManager *bluetoothManager;
 @property (strong, nonatomic) CBPeripheral *uartPeripheral;
 @property (strong, nonatomic)CBCharacteristic *uartRXCharacteristic;
+@property (strong, nonatomic)CBCharacteristic *uartTXCharacteristic;
 @property (strong, nonatomic) NSMutableArray *uartDisplayText;
 
 

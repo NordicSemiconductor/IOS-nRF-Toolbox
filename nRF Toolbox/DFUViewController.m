@@ -29,7 +29,7 @@
 #import "SSZipArchive.h"
 #import "UnzipFirmware.h"
 #import "Utility.h"
-#import "JsonParser.h"
+//#import "JsonParser.h"
 #import "DFUHelper.h"
 #include "DFUHelper.h"
 
