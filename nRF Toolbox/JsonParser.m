@@ -25,7 +25,7 @@
 
 @implementation JsonParser
 
--(InitData *)parseJson:(NSData *)data
+-(NSArray *)parseJson:(NSData *)data
 {    
     if(data) {
         NSError *error;
@@ -42,12 +42,14 @@
                 NSLog(@"Manifest value is null");
                 return nil;
             }
-            self.packetData = [[InitData alloc]init];
+            self.firmwareFiles = [[NSMutableArray alloc]init];
             for (id key in manifestValue) {
+                self.packetData = [[InitData alloc]init];
                 id value = [manifestValue objectForKey:key];
                 if ([key isEqualToString:@"application"]) {
                     if (![value isEqual:[NSNull null]]) {
                         self.packetData.firmwareType = APPLICATION;
+                        NSLog(@"Application found");
                         [self processManifest:value];
                     }
                 }
@@ -55,6 +57,7 @@
                 {
                     if (![value isEqual:[NSNull null]]) {
                         self.packetData.firmwareType = BOOTLOADER;
+                        NSLog(@"Bootloader found");
                         [self processManifest:value];
                     }
                 }
@@ -62,6 +65,7 @@
                 {
                     if (![value isEqual:[NSNull null]] ) {
                         self.packetData.firmwareType = SOFTDEVICE;
+                        NSLog(@"Softdevice found");
                         [self processManifest:value];
                     }
                 }
@@ -69,11 +73,13 @@
                 {
                     if (![value isEqual:[NSNull null]]) {
                         self.packetData.firmwareType = SOFTDEVICE_AND_BOOTLOADER;
+                        NSLog(@"Softdevice+Bootloader found");
                         [self processManifest:value];
                     }
                 }
+                [self.firmwareFiles addObject:self.packetData];
             }
-            return self.packetData;
+            return [self.firmwareFiles copy];
         }
         else {
             NSLog(@"Error. Json dont have top level dictionary");
@@ -83,8 +89,7 @@
     else {
         NSLog(@"data is empty");
         return nil;
-    }
-    
+    }    
 }
 
 -(void)processManifest:(id)value
@@ -94,27 +99,32 @@
             id innerValue = [value objectForKey:firmwareKey];
             if ([firmwareKey isEqualToString:@"init_packet_data"]) {
                 if (![innerValue isEqual:[NSNull null]] ) {
+                    NSLog(@"InitPacket found");
                     [self processInitPacketData:innerValue];
                 }
             }
             else if ([firmwareKey isEqualToString:@"bin_file"]) {
                 if (![innerValue isEqual:[NSNull null]] ) {
+                    NSLog(@"Bin file found");
                     self.packetData.firmwareBinFileName = innerValue;
                 }
             }
             else if ([firmwareKey isEqualToString:@"dat_file"]) {
                 if (![innerValue isEqual:[NSNull null]] ) {
+                    NSLog(@"Dat file found");
                     self.packetData.firmwareDatFileName = innerValue;
                 }
             }
             else if ([firmwareKey isEqualToString:@"bl_size"]) {
                 if (![innerValue isEqual:[NSNull null]] ) {
+                    NSLog(@"BL size found");
                     self.packetData.bootloaderSize = (int)[innerValue integerValue];
                 }
                 
             }
             else if ([firmwareKey isEqualToString:@"sd_size"]) {
                 if (![innerValue isEqual:[NSNull null]] ) {
+                    NSLog(@"SD size found");
                     self.packetData.softdeviceSize = (int)[innerValue integerValue];
                 }
             }
@@ -129,28 +139,28 @@
             id innerValue = [value objectForKey:initPacketDataKey];
             if ([initPacketDataKey isEqualToString:@"application_version"]) {
                 if (![innerValue isEqual:[NSNull null]]) {
-                    self.packetData.applicationVersion = (uint32_t)[innerValue integerValue];
+                    NSLog(@"Application version found");
                 }
             }
             else if ([initPacketDataKey isEqualToString:@"device_revision"]) {
                 if (![innerValue isEqual:[NSNull null]]) {
-                    self.packetData.deviceRevision = (uint16_t)[innerValue integerValue];
+                    NSLog(@"Device revision found");
                 }
                 
             }
             else if ([initPacketDataKey isEqualToString:@"device_type"]) {
                 if (![innerValue isEqual:[NSNull null]]) {
-                    self.packetData.deviceType = (uint16_t)[innerValue integerValue];
+                    NSLog(@"Device type found");
                 }
             }
             else if ([initPacketDataKey isEqualToString:@"firmware_crc16"]) {
                 if (![innerValue isEqual:[NSNull null]]) {
-                    self.packetData.firmwareCRC = (uint16_t)[[value valueForKey:initPacketDataKey] integerValue];
+                    NSLog(@"CRC found");
                 }
             }
             else if ([initPacketDataKey isEqualToString:@"softdevice_req"]) {
                 if (![innerValue isEqual:[NSNull null]]) {
-                    self.packetData.softdeviceRequired = [value objectForKey:initPacketDataKey];
+                    NSLog(@"Supported Softdevice found");
                 }
             }
         }

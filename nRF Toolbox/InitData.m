@@ -28,10 +28,5 @@
 @synthesize firmwareType;
 @synthesize bootloaderSize;
 @synthesize softdeviceSize;
-@synthesize applicationVersion;
-@synthesize deviceRevision;
-@synthesize deviceType;
-@synthesize firmwareCRC;
-@synthesize softdeviceRequired;
 
 @end

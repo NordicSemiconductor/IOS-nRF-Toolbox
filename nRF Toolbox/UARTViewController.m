@@ -33,8 +33,6 @@
     CBUUID *UART_TX_Characteristic_UUID;
 }
 
-@property(strong, nonatomic)NSTimer *writeTimer;
-
 @end
 
 @implementation UARTViewController
@@ -44,6 +42,7 @@
 @synthesize connectButton;
 @synthesize deviceName;
 @synthesize uartRXCharacteristic;
+@synthesize uartTXCharacteristic;
 
 -(id)initWithCoder:(NSCoder *)aDecoder
 {

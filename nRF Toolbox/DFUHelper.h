@@ -36,8 +36,11 @@
 @property NSURL *softdeviceMetaDataURL;
 @property NSURL *systemMetaDataURL;
 @property NSURL *softdevice_bootloaderURL;
+@property NSURL *manifestFileURL;
 @property NSUInteger selectedFileSize;
-@property (nonatomic, retain)InitData *manifestData;
+@property uint32_t bootloaderSize;
+@property uint32_t softdeviceSize;
+@property (nonatomic, retain)NSArray *manifestData;
 @property (nonatomic)DfuFirmwareTypes enumFirmwareType;
 
 @property int dfuVersion;
@@ -47,10 +50,6 @@
 
 -(void)checkAndPerformDFU;
 -(void)unzipFiles:(NSURL *)zipFileURL;
--(BOOL)getManifestFile:(NSArray *)firmwareFilesURL;
--(void)getBinAndDatFilesAsMentionedInManfest:(NSArray *)firmwareFilesURL jsonPacketData:(InitData *)data;
--(void)getHexAndDatFile:(NSArray *)firmwareFilesURL;
--(void)getBinFiles:(NSArray *)firmwareFilesURL;
 -(void) setFirmwareType:(NSString *)firmwareType;
 -(BOOL)isInitPacketFileExist;
 -(BOOL)isValidFileSelected;

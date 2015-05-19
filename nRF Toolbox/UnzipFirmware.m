@@ -23,8 +23,6 @@
 #import "UnzipFirmware.h"
 #import "SSZipArchive.h"
 #import "AccessFileSystem.h"
-#import "JsonParser.h"
-#import "InitData.h"
 
 @implementation UnzipFirmware
 
@@ -38,7 +36,7 @@
     NSArray *files = [fileSystem getAllFilesFromDirectory:outputPath];
     NSLog(@"number of files inside zip file: %lu",(unsigned long)[files count]);
     if ([self findManifestFileInsideZip:files outputPathInPhone:outputPath]) {
-        return [self.filesURL copy];
+        return [self getAllFilesURLInsideZipFile:files outputPathInPhone:outputPath];
     }
     else {
         [self findFilesInsideZip:files outputPathInPhone:outputPath];
@@ -97,16 +95,18 @@
     for (NSString* file in files) {
         if ([file isEqualToString:@"manifest.json"]) {
             NSLog(@"manifest.json file is found inside zip");
-            NSData *data = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"manifest.json"]]];
-            JsonParser *parser = [[JsonParser alloc]init];
-            InitData *packetData = [parser parseJson:data];
-            [self.filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:@"manifest.json"]]];
-            [self.filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:packetData.firmwareBinFileName]]];
-            [self.filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:packetData.firmwareDatFileName]]];
             return YES;
         }
     }
     return NO;
+}
+-(NSArray *)getAllFilesURLInsideZipFile:files outputPathInPhone:outputPath
+{
+    for (NSString* file in files) {
+        NSLog(@"with Manifest, Inside Zip found file: %@",file);
+        [self.filesURL addObject:[NSURL fileURLWithPath:[outputPath stringByAppendingPathComponent:file]]];
+    }
+    return [self.filesURL copy];
 }
 
 -(NSString *)cachesPath:(NSString *)directory {
@@ -154,7 +154,5 @@
 {
     NSLog(@"zipArchiveWillUnzipFileAtIndex fileIndex: %ld totalFiles: %ld archivePath: %@",(long)fileIndex,(long)totalFiles,archivePath);
 }
-
-
 
 @end
