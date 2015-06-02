@@ -25,7 +25,7 @@
 
 @implementation JsonParser
 
--(InitData *)parseJson:(NSData *)data
+-(NSArray *)parseJson:(NSData *)data
 {    
     if(data) {
         NSError *error;
@@ -42,8 +42,9 @@
                 NSLog(@"Manifest value is null");
                 return nil;
             }
-            self.packetData = [[InitData alloc]init];
+            self.firmwareFiles = [[NSMutableArray alloc]init];
             for (id key in manifestValue) {
+                self.packetData = [[InitData alloc]init];
                 id value = [manifestValue objectForKey:key];
                 if ([key isEqualToString:@"application"]) {
                     if (![value isEqual:[NSNull null]]) {
@@ -76,8 +77,9 @@
                         [self processManifest:value];
                     }
                 }
+                [self.firmwareFiles addObject:self.packetData];
             }
-            return self.packetData;
+            return [self.firmwareFiles copy];
         }
         else {
             NSLog(@"Error. Json dont have top level dictionary");
@@ -138,32 +140,27 @@
             if ([initPacketDataKey isEqualToString:@"application_version"]) {
                 if (![innerValue isEqual:[NSNull null]]) {
                     NSLog(@"Application version found");
-                    self.packetData.applicationVersion = (uint32_t)[innerValue integerValue];
                 }
             }
             else if ([initPacketDataKey isEqualToString:@"device_revision"]) {
                 if (![innerValue isEqual:[NSNull null]]) {
                     NSLog(@"Device revision found");
-                    self.packetData.deviceRevision = (uint16_t)[innerValue integerValue];
                 }
                 
             }
             else if ([initPacketDataKey isEqualToString:@"device_type"]) {
                 if (![innerValue isEqual:[NSNull null]]) {
                     NSLog(@"Device type found");
-                    self.packetData.deviceType = (uint16_t)[innerValue integerValue];
                 }
             }
             else if ([initPacketDataKey isEqualToString:@"firmware_crc16"]) {
                 if (![innerValue isEqual:[NSNull null]]) {
                     NSLog(@"CRC found");
-                    self.packetData.firmwareCRC = (uint16_t)[[value valueForKey:initPacketDataKey] integerValue];
                 }
             }
             else if ([initPacketDataKey isEqualToString:@"softdevice_req"]) {
                 if (![innerValue isEqual:[NSNull null]]) {
                     NSLog(@"Supported Softdevice found");
-                    self.packetData.softdeviceRequired = [value objectForKey:initPacketDataKey];
                 }
             }
         }

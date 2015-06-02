@@ -28,9 +28,9 @@
 
 
 @property (nonatomic, retain)InitData *packetData;
+@property(nonatomic, retain)NSMutableArray *firmwareFiles;
 
--(InitData *)parseJson:(NSData *)data;
-
+-(NSArray *)parseJson:(NSData *)data;
 
 
 @end

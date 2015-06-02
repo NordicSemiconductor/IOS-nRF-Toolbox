@@ -30,11 +30,5 @@
 @property (nonatomic)DfuFirmwareTypes firmwareType;
 @property (nonatomic)uint32_t bootloaderSize;
 @property (nonatomic)uint32_t softdeviceSize;
-@property (nonatomic)long applicationVersion;
-@property (nonatomic)int deviceRevision;
-@property (nonatomic)int deviceType;
-@property (nonatomic)int firmwareCRC;
-@property (nonatomic)NSArray *softdeviceRequired;
-
 
 @end

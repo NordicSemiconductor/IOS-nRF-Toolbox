@@ -42,7 +42,7 @@
             case SOFTDEVICE_AND_BOOTLOADER:
                 if (self.isDfuVersionExist) {
                     if (self.isManifestExist) {
-                        [self.dfuOperations performDFUOnFileWithMetaDataAndFileSizes:self.softdevice_bootloaderURL firmwareMetaDataURL:self.systemMetaDataURL softdeviceFileSize:self.manifestData.softdeviceSize bootloaderFileSize:self.manifestData.bootloaderSize firmwareType:SOFTDEVICE_AND_BOOTLOADER];
+                        [self.dfuOperations performDFUOnFileWithMetaDataAndFileSizes:self.softdevice_bootloaderURL firmwareMetaDataURL:self.systemMetaDataURL softdeviceFileSize:self.softdeviceSize bootloaderFileSize:self.bootloaderSize firmwareType:SOFTDEVICE_AND_BOOTLOADER];
                     }
                     else {
                         [self.dfuOperations performDFUOnFilesWithMetaData:self.softdeviceURL bootloaderURL:self.bootloaderURL firmwaresMetaDataURL:self.systemMetaDataURL firmwareType:SOFTDEVICE_AND_BOOTLOADER];
@@ -96,63 +96,75 @@
     self.softdeviceMetaDataURL = self.bootloaderMetaDataURL = self.applicationMetaDataURL = self.systemMetaDataURL = nil;
     UnzipFirmware *unzipFiles = [[UnzipFirmware alloc]init];
     NSArray *firmwareFilesURL = [unzipFiles unzipFirmwareFiles:zipFileURL];
-    if ([self getManifestFile:firmwareFilesURL]) {
+    // if manifest file exist inside then parse it and retrieve the files from the given path
+    if ([self checkIfManifestFileExist:firmwareFilesURL]) {
         self.isManifestExist = YES;
+        [self parseManifestFile];
+        [self getBinAndDatFilesAsMentionedInManfest:firmwareFilesURL jsonParsedData:self.manifestData];
         return;
     }
     [self getHexAndDatFile:firmwareFilesURL];
     [self getBinFiles:firmwareFilesURL];
 }
 
--(BOOL)getManifestFile:(NSArray *)firmwareFilesURL
+-(BOOL)checkIfManifestFileExist:(NSArray *)firmwareFilesURL
 {
+    self.manifestFileURL = nil;
     for (NSURL *firmwareManifestURL in firmwareFilesURL) {
         if ([[[firmwareManifestURL path] lastPathComponent] isEqualToString:@"manifest.json"]) {
-            //TODO now parse the manifest.json file and then search the required files and assigned to appropriate properties (i.e self.softdeviceURL, self.bootloaderURL, self.applicationURL, self.applicationMetaDataURL, ...)
-            NSData *data = [NSData dataWithContentsOfURL:firmwareManifestURL];
-            self.manifestData = [[[JsonParser alloc]init] parseJson:data];
-            [self getBinAndDatFilesAsMentionedInManfest:firmwareFilesURL jsonPacketData:self.manifestData];
+            self.manifestFileURL = firmwareManifestURL;
             return YES;
         }
     }
     return NO;
 }
 
--(void)getBinAndDatFilesAsMentionedInManfest:(NSArray *)firmwareFilesURL jsonPacketData:(InitData *)data
+-(void)parseManifestFile
 {
-    for (NSURL *firmwareURL in firmwareFilesURL) {
-        if ([[[firmwareURL path] lastPathComponent] isEqualToString:data.firmwareBinFileName]) {
-            if (data.firmwareType == SOFTDEVICE) {
-                self.softdeviceURL = firmwareURL;
+    NSData *data = [NSData dataWithContentsOfURL:self.manifestFileURL];
+    self.manifestData = [[[JsonParser alloc]init] parseJson:data];
+}
+
+-(void)getBinAndDatFilesAsMentionedInManfest:(NSArray *)firmwareFilesURL jsonParsedData:(NSArray *)jsonData
+{
+    for (InitData *data in jsonData) {
+        for (NSURL *firmwareURL in firmwareFilesURL) {
+            if ([[[firmwareURL path] lastPathComponent] isEqualToString:data.firmwareBinFileName]) {
+                if (data.firmwareType == SOFTDEVICE) {
+                    self.softdeviceURL = firmwareURL;
+                }
+                else if (data.firmwareType == BOOTLOADER) {
+                    self.bootloaderURL = firmwareURL;
+                }
+                else if (data.firmwareType == APPLICATION)
+                {
+                    self.applicationURL = firmwareURL;
+                }
+                else if (data.firmwareType == SOFTDEVICE_AND_BOOTLOADER)
+                {
+                    self.softdevice_bootloaderURL = firmwareURL;
+                    self.softdeviceSize = data.softdeviceSize;
+                    self.bootloaderSize = data.bootloaderSize;
+                }
             }
-            else if (data.firmwareType == BOOTLOADER) {
-                self.bootloaderURL = firmwareURL;
-            }
-            else if (data.firmwareType == APPLICATION)
-            {
-                self.applicationURL = firmwareURL;
-            }
-            else if (data.firmwareType == SOFTDEVICE_AND_BOOTLOADER)
-            {
-                self.softdevice_bootloaderURL = firmwareURL;
+            else if ([[[firmwareURL path] lastPathComponent] isEqualToString:data.firmwareDatFileName]) {
+                if (data.firmwareType == SOFTDEVICE) {
+                    self.softdeviceMetaDataURL = firmwareURL;
+                }
+                else if (data.firmwareType == BOOTLOADER) {
+                    self.bootloaderMetaDataURL = firmwareURL;
+                }
+                else if (data.firmwareType == APPLICATION)
+                {
+                    self.applicationMetaDataURL = firmwareURL;
+                }
+                else if (data.firmwareType == SOFTDEVICE_AND_BOOTLOADER)
+                {
+                    self.systemMetaDataURL = firmwareURL;
+                }
             }
         }
-        else if ([[[firmwareURL path] lastPathComponent] isEqualToString:data.firmwareDatFileName]) {
-            if (data.firmwareType == SOFTDEVICE) {
-                self.softdeviceMetaDataURL = firmwareURL;
-            }
-            else if (data.firmwareType == BOOTLOADER) {
-                self.bootloaderMetaDataURL = firmwareURL;
-            }
-            else if (data.firmwareType == APPLICATION)
-            {
-                self.applicationMetaDataURL = firmwareURL;
-            }
-            else if (data.firmwareType == SOFTDEVICE_AND_BOOTLOADER)
-            {
-                self.systemMetaDataURL = firmwareURL;
-            }
-        }
+
     }
 }
 
