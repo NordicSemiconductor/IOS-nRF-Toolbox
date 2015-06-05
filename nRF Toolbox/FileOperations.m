@@ -101,8 +101,8 @@
         }
         NSRange dataRange = NSMakeRange(self.writingPacketNumber*PACKET_SIZE, PACKET_SIZE);
         NSData *nextPacketData = [self.binFileData subdataWithRange:dataRange];
-        NSLog(@"writing packet number %d ...",self.writingPacketNumber+1);
-        NSLog(@"packet data: %@",nextPacketData);
+        //NSLog(@"writing packet number %d ...",self.writingPacketNumber+1);
+        //NSLog(@"packet data: %@",nextPacketData);
         [self.bluetoothPeripheral writeValue:nextPacketData forCharacteristic:self.dfuPacketCharacteristic type:CBCharacteristicWriteWithoutResponse];
         percentage = (((double)(self.writingPacketNumber * 20) / (double)(self.binFileSize)) * 100);
         [self.fileDelegate onTransferPercentage:percentage];

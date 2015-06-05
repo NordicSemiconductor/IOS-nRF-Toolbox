@@ -22,21 +22,33 @@
 
 #import <UIKit/UIKit.h>
 #import "ScannerDelegate.h"
+#import "EditPopupViewController.h"
+#import "BluetoothManager.h"
 
-@interface UARTViewController : UIViewController<CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface UARTViewController : UIViewController<BluetoothManagerDelegate, ScannerDelegate, UIPopoverPresentationControllerDelegate, ButtonConfigureDelegate>
 
-@property (strong, nonatomic) CBCentralManager *bluetoothManager;
-@property (strong, nonatomic) CBPeripheral *uartPeripheral;
-@property (strong, nonatomic)CBCharacteristic *uartRXCharacteristic;
-@property (strong, nonatomic)CBCharacteristic *uartTXCharacteristic;
-@property (strong, nonatomic) NSMutableArray *uartDisplayText;
+@property (strong, nonatomic) NSString *uartPeripheralName;
+@property (strong, nonatomic) NSMutableArray *uartLogText;
+@property (strong, nonatomic) NSMutableArray *buttonsCommands;
+@property (strong, nonatomic) NSMutableArray *buttonsHiddenStatus;
+@property (strong, nonatomic) NSMutableArray *buttonsImageNames;
+
+@property (strong, nonatomic) NSArray *buttonIcons;
+@property (strong, nonatomic) UIButton *selectedButton;
 
 
 - (IBAction)connectOrDisconnectClicked:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UIButton *connectButton;
-@property (weak, nonatomic) IBOutlet UITextField *uartRXText;
 @property (weak, nonatomic) IBOutlet UILabel *deviceName;
 @property (weak, nonatomic) IBOutlet UILabel *verticalLabel;
-@property (weak, nonatomic) IBOutlet UITableView *displayText;
+@property (weak, nonatomic) IBOutlet UIButton *editButton;
+
+
+- (IBAction)editButtonPressed:(UIButton *)sender;
+@property BOOL isEditMode;
+
+@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray* buttons;
+
+@property (strong, nonatomic) BluetoothManager *uartBluetoothManager;
 
 @end
