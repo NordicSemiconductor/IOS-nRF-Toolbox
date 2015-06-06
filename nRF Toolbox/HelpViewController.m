@@ -47,6 +47,7 @@ int PAGE_NUMBERS;
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
     NSLog(@"viewDidLoad");
     helpTextView.text = helpText;
 

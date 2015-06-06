@@ -80,6 +80,7 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
     if (is4InchesIPhone)
     {
         // 4 inches iPhone

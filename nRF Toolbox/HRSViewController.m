@@ -84,6 +84,7 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
     NSLog(@"viewDidLoad");
     if (is4InchesIPhone)
     {
@@ -121,6 +122,7 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
     NSLog(@"viewWillDisappear");
     if (hrPeripheral != nil && isBackButtonPressed)
     {
@@ -130,6 +132,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     NSLog(@"viewWillAppear");
     isBackButtonPressed = YES;
 }

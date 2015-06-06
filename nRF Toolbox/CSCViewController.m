@@ -78,6 +78,7 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
     if (is4InchesIPhone)
     {
         // 4 inches iPhone
@@ -123,6 +124,7 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
     if (cyclePeripheral != nil && isBackButtonPressed)
     {
         [bluetoothManager cancelPeripheralConnection:cyclePeripheral];
@@ -131,6 +133,7 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     isBackButtonPressed = YES;
 }
 
