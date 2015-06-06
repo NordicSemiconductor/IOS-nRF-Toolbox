@@ -118,6 +118,7 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
     if (connectedPeripheral != nil && isBackButtonPressed)
     {
         [bluetoothManager cancelPeripheralConnection:connectedPeripheral];
@@ -126,6 +127,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     isBackButtonPressed = YES;
 }
 

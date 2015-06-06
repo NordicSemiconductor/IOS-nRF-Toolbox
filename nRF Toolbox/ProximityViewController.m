@@ -78,6 +78,7 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
     if (is4InchesIPhone)
     {
         // 4 inches iPhone
@@ -168,6 +169,7 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
     if (proximityPeripheral != nil && isBackButtonPressed)
     {
         [bluetoothManager cancelPeripheralConnection:proximityPeripheral];
@@ -176,6 +178,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     isBackButtonPressed = YES;
 }
 
