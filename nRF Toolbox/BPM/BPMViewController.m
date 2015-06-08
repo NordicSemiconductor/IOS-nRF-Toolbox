@@ -78,6 +78,7 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
     if (is4InchesIPhone)
     {
         // 4 inches iPhone
@@ -93,12 +94,6 @@
     
     // Rotate the vertical label
     self.verticalLabel.transform = CGAffineTransformRotate(CGAffineTransformMakeTranslation(-150.0f, 0.0f), (float)(-M_PI / 2));
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(void)appDidEnterBackground:(NSNotification *)_notification

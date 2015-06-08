@@ -78,6 +78,7 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
     if (is4InchesIPhone)
     {
         // 4 inches iPhone
@@ -98,12 +99,6 @@
     isImmidiateAlertOn = NO;
     isBackButtonPressed = NO;
     [self initSound];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(void) initSound
@@ -168,6 +163,7 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
     if (proximityPeripheral != nil && isBackButtonPressed)
     {
         [bluetoothManager cancelPeripheralConnection:proximityPeripheral];
@@ -176,6 +172,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     isBackButtonPressed = YES;
 }
 
