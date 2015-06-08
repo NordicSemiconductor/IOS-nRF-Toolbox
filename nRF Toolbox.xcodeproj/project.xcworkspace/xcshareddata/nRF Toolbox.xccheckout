@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>24AB6908-1111-4360-A8D1-865C2AD3CAC5</string>
+	<key>IDESourceControlProjectName</key>
+	<string>nRF Toolbox</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>958FE99C6EF42F577CD7208DD2E4411706BA021D</key>
+		<string>ssh://stash.nordicsemi.no:7999/apps-ios/nrf-toolbox.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>nRF Toolbox.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>958FE99C6EF42F577CD7208DD2E4411706BA021D</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://stash.nordicsemi.no:7999/apps-ios/nrf-toolbox.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>958FE99C6EF42F577CD7208DD2E4411706BA021D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>958FE99C6EF42F577CD7208DD2E4411706BA021D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>nRFToolbox</string>
+		</dict>
+	</array>
+</dict>
+</plist>
