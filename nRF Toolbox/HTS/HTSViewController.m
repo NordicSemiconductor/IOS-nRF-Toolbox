@@ -67,19 +67,13 @@
         htsMeasurementCharacteristicUUID = [CBUUID UUIDWithString:htsMeasurementCharacteristicUUIDString];
         batteryServiceUUID = [CBUUID UUIDWithString:batteryServiceUUIDString];
         batteryLevelCharacteristicUUID = [CBUUID UUIDWithString:batteryLevelCharacteristicUUIDString];
-        
-        //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActiveBackground:) name:UIApplicationDidBecomeActiveNotification object:nil];
     }
     return self;
 }
 
-/*-(void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
-}*/
-
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
     if (is4InchesIPhone)
     {
         // 4 inches iPhone
@@ -97,12 +91,6 @@
     self.verticalLabel.transform = CGAffineTransformRotate(CGAffineTransformMakeTranslation(-185.0f, 0.0f), (float)(-M_PI / 2));
     
     [self updateUnits];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(void)appDidEnterBackground:(NSNotification *)_notification

@@ -78,6 +78,7 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
     if (is4InchesIPhone)
     {
         // 4 inches iPhone
@@ -105,12 +106,6 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
     isBackButtonPressed = YES;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 -(void)appDidEnterBackground:(NSNotification *)_notification
 {
     [AppUtilities showBackgroundNotification:[NSString stringWithFormat:@"You are still connected to %@ peripheral. It will collect data also in background.",self.cyclePeripheral.name]];
@@ -123,6 +118,7 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
     if (cyclePeripheral != nil && isBackButtonPressed)
     {
         [bluetoothManager cancelPeripheralConnection:cyclePeripheral];
@@ -131,6 +127,7 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     isBackButtonPressed = YES;
 }
 

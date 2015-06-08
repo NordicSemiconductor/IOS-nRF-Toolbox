@@ -29,7 +29,6 @@
 #import "SSZipArchive.h"
 #import "UnzipFirmware.h"
 #import "Utility.h"
-//#import "JsonParser.h"
 #import "DFUHelper.h"
 #include "DFUHelper.h"
 
@@ -101,6 +100,7 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
     if (is4InchesIPhone)
     {
         // 4 inches iPhone
@@ -125,12 +125,6 @@
         NSLog(@"isMovingFromParentViewController");
         [dfuOperations cancelDFU];
     }
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(void)uploadPressed

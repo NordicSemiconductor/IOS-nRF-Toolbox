@@ -47,6 +47,7 @@ int PAGE_NUMBERS;
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
     NSLog(@"viewDidLoad");
     helpTextView.text = helpText;
 
@@ -63,12 +64,6 @@ int PAGE_NUMBERS;
         [self showDFUDemo];
         self.isAppFileTableViewController = NO;
     }
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(void) hideNavigationBar
@@ -110,9 +105,6 @@ int PAGE_NUMBERS;
     PageImageViewController *pageContentViewController = [self createPageContentViewControllerAtIndex:0];
     NSArray *pageContentViewControllers = @[pageContentViewController];
     [self.pageViewController setViewControllers:pageContentViewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:Nil];
-    
-    // Change the size of page view controller
-    /*self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 100);*/
     
     //Add PageViewController to this Root View Controller as child viewcontroller
     [self addChildViewController:_pageViewController];
