@@ -71,7 +71,6 @@
         default:
             break;
     }    
-    
     [self.bluetoothPeripheral writeValue:[NSData dataWithBytes:&fileSizeCollection length:sizeof(fileSizeCollection)] forCharacteristic:self.dfuPacketCharacteristic type:CBCharacteristicWriteWithoutResponse];
 }
 
@@ -94,16 +93,32 @@
 //Init Packet is included in new DFU in SDK 7.0
 -(void) sendInitPacket:(NSURL *)metaDataURL
 {
+    
     NSData *fileData = [NSData dataWithContentsOfURL:metaDataURL];
-    NSLog(@"metaDataFile length: %lu",(unsigned long)[fileData length]);
+    
+    int numberOfPackets = ceil((double)fileData.length /(double)PACKET_SIZE);
+    int bytesInLastPacket = fileData.length % 20;
+    
+    NSLog(@"metaDataFile length: %lu and number of packets: %d",(unsigned long)[fileData length], numberOfPackets);
     
     //send initPacket with parameter value set to Receive Init Packet [0] to dfu Control Point Characteristic
     uint8_t initPacketStart[] = {INITIALIZE_DFU_PARAMETERS_REQUEST, START_INIT_PACKET};
     [self.bluetoothPeripheral writeValue:[NSData dataWithBytes:&initPacketStart length:sizeof(initPacketStart)] forCharacteristic:self.dfuControlPointCharacteristic type:CBCharacteristicWriteWithResponse];
     
-    //send init Packet data to dfu Packet Characteristic
-    [self.bluetoothPeripheral writeValue:fileData forCharacteristic:self.dfuPacketCharacteristic type:CBCharacteristicWriteWithoutResponse];
-    
+    // send init Packet data to dfu Packet Characteristic
+    // for longer .dat file the data need to be chopped into 20 bytes
+    for (int index = 0; index < numberOfPackets-1; index++) {
+        //chopping data into 20 bytes packet
+        NSRange dataRange = NSMakeRange(index*PACKET_SIZE, PACKET_SIZE);
+        NSData *packetData = [fileData subdataWithRange:dataRange];
+        //writing 20 bytes packet to peripheral
+        [self.bluetoothPeripheral writeValue:packetData forCharacteristic:self.dfuPacketCharacteristic type:CBCharacteristicWriteWithoutResponse];
+    }
+    //chopping data for last packet that can be less than 20 bytes
+    NSRange dataRange = NSMakeRange((numberOfPackets-1)*PACKET_SIZE, bytesInLastPacket);
+    NSData *packetData = [fileData subdataWithRange:dataRange];
+    //writing last packet
+    [self.bluetoothPeripheral writeValue:packetData forCharacteristic:self.dfuPacketCharacteristic type:CBCharacteristicWriteWithoutResponse];
     
     //send initPacket with parameter value set to Init Packet Complete [1] to dfu Control Point Characteristic
     uint8_t initPacketEnd[] = {INITIALIZE_DFU_PARAMETERS_REQUEST, END_INIT_PACKET};
