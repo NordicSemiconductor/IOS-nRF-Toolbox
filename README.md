@@ -2,6 +2,8 @@
 
 The nRF Toolbox is a container app that stores your Nordic Semiconductor apps for Bluetooth Smart in one location. 
 
+The current version is 2.1.
+
 It contains applications demonstrating Bluetooth Smart profiles: 
 * **Cycling Speed and Cadence**, 
 * **Running Speed and Cadence**, 
