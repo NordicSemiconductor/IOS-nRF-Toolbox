@@ -85,6 +85,9 @@
     if ([self.fileSystem checkFileExtension:fileName fileExtension:HEX]) {
         cell.imageView.image = [UIImage imageNamed:@"file"];
     }
+    else if ([self.fileSystem checkFileExtension:fileName fileExtension:BIN]) {
+        cell.imageView.image = [UIImage imageNamed:@"file"];
+    }
     else if ([self.fileSystem checkFileExtension:fileName fileExtension:ZIP]) {
         cell.imageView.image = [UIImage imageNamed:@"zipFile"];
     }
