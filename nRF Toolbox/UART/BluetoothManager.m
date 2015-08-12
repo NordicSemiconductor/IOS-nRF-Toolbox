@@ -163,18 +163,16 @@
 
 -(void) peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if (!error) {
-            NSLog(@"received update from UART: %@, UUID: %@",characteristic.value,characteristic.UUID);
-            if (characteristic.value.length != 0) {
-                [self.uartDelegate didReceiveTXNotification:characteristic.value];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"CBPeripheralTXNotification" object:self];
-            }
+    if (!error) {
+        NSLog(@"received update after Async: %@, UUID: %@",characteristic.value,characteristic.UUID);
+        if (characteristic.value.length != 0) {
+            [self.uartDelegate didReceiveTXNotification:characteristic.value];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CBPeripheralTXNotification" object:self];
         }
-        else {
-            NSLog(@"error in update UART value");
-        }
-    });
+    }
+    else {
+        NSLog(@"error in update UART value");
+    }
 }
 
 @end
