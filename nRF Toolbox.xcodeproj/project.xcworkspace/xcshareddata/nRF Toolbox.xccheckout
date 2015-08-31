@@ -12,34 +12,22 @@
 	<dict>
 		<key>958FE99C6EF42F577CD7208DD2E4411706BA021D</key>
 		<string>ssh://stash.nordicsemi.no:7999/apps-ios/nrf-toolbox.git</string>
-		<key>F0C302ECCECFB665EA48C7A535F2A9D012C2B8FA</key>
-		<string>https://github.com/NordicSemiconductor/IOS-nRF-Toolbox.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>nRF Toolbox.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>958FE99C6EF42F577CD7208DD2E4411706BA021D</key>
-		<string>../../../nRFToolbox</string>
-		<key>F0C302ECCECFB665EA48C7A535F2A9D012C2B8FA</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/NordicSemiconductor/IOS-nRF-Toolbox.git</string>
+	<string>ssh://stash.nordicsemi.no:7999/apps-ios/nrf-toolbox.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>F0C302ECCECFB665EA48C7A535F2A9D012C2B8FA</string>
+	<string>958FE99C6EF42F577CD7208DD2E4411706BA021D</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>F0C302ECCECFB665EA48C7A535F2A9D012C2B8FA</string>
-			<key>IDESourceControlWCCName</key>
-			<string>IOS-nRF-Toolbox</string>
-		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

@@ -22,6 +22,7 @@
 
 #import "ScannerViewController.h"
 #import "ScannedPeripheral.h"
+#import "Utility.h"
 
 @interface ScannerViewController ()
 
@@ -78,11 +79,42 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)getConnectedPeripherals {
+    NSLog(@"getConnectedPeripherals");
+    if (filterUUID != nil) {
+        NSLog(@"Retrieving Connected Peripherals ...");
+        NSArray *connectedPeripherals = [bluetoothManager retrieveConnectedPeripheralsWithServices:@[filterUUID]];
+        NSLog(@"Connected Peripherals with filter: %lu",(unsigned long)connectedPeripherals.count);
+        for (CBPeripheral *connectedPeripheral in connectedPeripherals) {
+            NSLog(@"Connected Peripheral: %@",connectedPeripheral.name);
+            [self addConnectedPeripheral:connectedPeripheral];
+        }
+    }
+    else {
+        CBUUID *dfuServiceUUID = [CBUUID UUIDWithString:dfuServiceUUIDString];
+        CBUUID *ancsServiceUUID = [CBUUID UUIDWithString:ANCSServiceUUIDString];
+        NSArray *connectedPeripherals = [bluetoothManager retrieveConnectedPeripheralsWithServices:@[dfuServiceUUID, ancsServiceUUID]];
+        NSLog(@"Connected Peripherals without filter: %lu",(unsigned long)connectedPeripherals.count);
+        for (CBPeripheral *connectedPeripheral in connectedPeripherals) {
+            NSLog(@"Connected Peripheral: %@",connectedPeripheral.name);
+            [self addConnectedPeripheral:connectedPeripheral];
+        }
+    }
+}
+
+- (void) addConnectedPeripheral:(CBPeripheral *)peripheral
+{
+    ScannedPeripheral* sensor = [ScannedPeripheral initWithPeripheral:peripheral rssi:0 isPeripheralConnected:YES];
+    [peripherals addObject:sensor];
+}
+
 #pragma mark Central Manager delegate methods
 
 -(void)centralManagerDidUpdateState:(CBCentralManager *)central
 {
     if (central.state == CBCentralManagerStatePoweredOn) {
+        //TODO Retrieve already connected/paired devices
+        [self getConnectedPeripherals];
         [self scanForPeripherals:YES];
     }
 }
@@ -141,7 +173,7 @@
     //NSLog(@"scanned peripheral : %@",peripheral.name);
     dispatch_async(dispatch_get_main_queue(), ^{
         // Add the sensor to the list and reload deta set
-        ScannedPeripheral* sensor = [ScannedPeripheral initWithPeripheral:peripheral rssi:RSSI.intValue];
+        ScannedPeripheral* sensor = [ScannedPeripheral initWithPeripheral:peripheral rssi:RSSI.intValue isPeripheralConnected:NO];
         if (![peripherals containsObject:sensor])
         {
             [peripherals addObject:sensor];
@@ -179,18 +211,26 @@
     // Update sensor name
     ScannedPeripheral *peripheral = [peripherals objectAtIndex:indexPath.row];
     cell.textLabel.text = [peripheral name];
-    
+    if (peripheral.isConnected) {
+        cell.imageView.image = [UIImage imageNamed:@"Connected"];
+    }
+    else {
+        cell.imageView.image = [self getRSSIImage:peripheral.RSSI];
+    }
+    return cell;
+}
+
+-(UIImage *) getRSSIImage:(int)rssi {
     // Update RSSI indicator
-    int RSSI = peripheral.RSSI;
     UIImage* image;
-    if (RSSI < -90) {
+    if (rssi < -90) {
         image = [UIImage imageNamed: @"Signal_0"];
     }
-    else if (RSSI < -70)
+    else if (rssi < -70)
     {
         image = [UIImage imageNamed: @"Signal_1"];
     }
-    else if (RSSI < -50)
+    else if (rssi < -50)
     {
         image = [UIImage imageNamed: @"Signal_2"];
     }
@@ -198,8 +238,7 @@
     {
         image = [UIImage imageNamed: @"Signal_3"];
     }
-    cell.imageView.image = image;
-    return cell;
+    return image;
 }
 
 @end
