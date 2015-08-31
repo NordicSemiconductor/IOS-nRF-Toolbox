@@ -29,6 +29,9 @@ NSString * const dfuControlPointCharacteristicUUIDString = @"00001531-1212-EFDE-
 NSString * const dfuPacketCharacteristicUUIDString = @"00001532-1212-EFDE-1523-785FEABCD123";
 NSString * const dfuVersionCharacteritsicUUIDString = @"00001534-1212-EFDE-1523-785FEABCD123";
 
+NSString * const ANCSServiceUUIDString = @"7905F431-B5CE-4E99-A40F-4B1E122D00D0";
+NSString * const TimerServiceUUIDString = @"1805";
+
 int  PACKETS_NOTIFICATION_INTERVAL = 10;
 int const PACKET_SIZE = 20;
 
