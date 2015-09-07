@@ -124,6 +124,7 @@
     if ([self isMovingFromParentViewController] && self.isConnected) {
         NSLog(@"isMovingFromParentViewController");
         [dfuOperations cancelDFU];
+        [NSThread sleepForTimeInterval:1.0f];
     }
 }
 
