@@ -4,7 +4,7 @@
 /**
  *  @brief Enumeration of animation curves.
  **/
-typedef enum _CPTAnimationCurve {
+typedef NS_ENUM (NSInteger, CPTAnimationCurve) {
     CPTAnimationCurveDefault,          ///< Use the default animation curve.
     CPTAnimationCurveLinear,           ///< Linear animation curve.
     CPTAnimationCurveBackIn,           ///< Backing in animation curve.
@@ -37,8 +37,7 @@ typedef enum _CPTAnimationCurve {
     CPTAnimationCurveQuinticIn,        ///< Quintic in animation curve.
     CPTAnimationCurveQuinticOut,       ///< Quintic out animation curve.
     CPTAnimationCurveQuinticInOut      ///< Quintic in and out animation curve.
-}
-CPTAnimationCurve;
+};
 
 /**
  *  @brief Animation delegate.
@@ -53,27 +52,27 @@ CPTAnimationCurve;
 /** @brief @optional Informs the delegate that an animation operation started animating.
  *  @param operation The animation operation.
  **/
--(void)animationDidStart:(CPTAnimationOperation *)operation;
+-(void)animationDidStart:(nonnull CPTAnimationOperation *)operation;
 
 /** @brief @optional Informs the delegate that an animation operation stopped after reaching its full duration.
  *  @param operation The animation operation.
  **/
--(void)animationDidFinish:(CPTAnimationOperation *)operation;
+-(void)animationDidFinish:(nonnull CPTAnimationOperation *)operation;
 
 /** @brief @optional Informs the delegate that an animation operation was stopped before reaching its full duration.
  *  @param operation The animation operation.
  **/
--(void)animationCancelled:(CPTAnimationOperation *)operation;
+-(void)animationCancelled:(nonnull CPTAnimationOperation *)operation;
 
 /** @brief @optional Informs the delegate that the animated property is about to update.
  *  @param operation The animation operation.
  **/
--(void)animationWillUpdate:(CPTAnimationOperation *)operation;
+-(void)animationWillUpdate:(nonnull CPTAnimationOperation *)operation;
 
 /** @brief @optional Informs the delegate that the animated property has been updated.
  *  @param operation The animation operation.
  **/
--(void)animationDidUpdate:(CPTAnimationOperation *)operation;
+-(void)animationDidUpdate:(nonnull CPTAnimationOperation *)operation;
 
 /// @}
 
@@ -82,20 +81,10 @@ CPTAnimationCurve;
 #pragma mark -
 
 @interface CPTAnimation : NSObject
-{
-    @private
-    NSMutableArray *animationOperations;
-    NSMutableArray *runningAnimationOperations;
-    NSMutableArray *expiredAnimationOperations;
-    NSTimer *timer;
-
-    CGFloat timeOffset;
-    CPTAnimationCurve defaultAnimationCurve;
-}
 
 /// @name Time
 /// @{
-@property (nonatomic, readonly, assign) CGFloat timeOffset;
+@property (nonatomic, readonly) CGFloat timeOffset;
 /// @}
 
 /// @name Animation Curve
@@ -105,24 +94,24 @@ CPTAnimationCurve;
 
 /// @name Animation Controller Instance
 /// @{
-+(CPTAnimation *)sharedInstance;
++(nonnull instancetype)sharedInstance;
 /// @}
 
 /// @name Property Animation
 /// @{
-+(CPTAnimationOperation *)animate:(id)object property:(NSString *)property period:(CPTAnimationPeriod *)period animationCurve:(CPTAnimationCurve)animationCurve delegate:(NSObject<CPTAnimationDelegate> *)delegate;
++(nonnull CPTAnimationOperation *)animate:(nullable id)object property:(nonnull NSString *)property period:(nullable CPTAnimationPeriod *)period animationCurve:(CPTAnimationCurve)animationCurve delegate:(nullable id<CPTAnimationDelegate>)delegate;
 /// @}
 
 /// @name Animation Management
 /// @{
--(CPTAnimationOperation *)addAnimationOperation:(CPTAnimationOperation *)animationOperation;
--(void)removeAnimationOperation:(CPTAnimationOperation *)animationOperation;
+-(nonnull CPTAnimationOperation *)addAnimationOperation:(nonnull CPTAnimationOperation *)animationOperation;
+-(void)removeAnimationOperation:(nullable CPTAnimationOperation *)animationOperation;
 -(void)removeAllAnimationOperations;
 /// @}
 
 /// @name Retrieving Animation Operations
 /// @{
--(CPTAnimationOperation *)operationWithIdentifier:(id<NSCopying, NSObject>)identifier;
+-(nullable CPTAnimationOperation *)operationWithIdentifier:(nullable id<NSCopying, NSObject>)identifier;
 /// @}
 
 @end

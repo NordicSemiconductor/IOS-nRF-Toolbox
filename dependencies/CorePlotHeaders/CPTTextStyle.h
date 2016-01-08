@@ -1,25 +1,31 @@
-#include "CPTTextStylePlatformSpecific.h"
+#import "CPTDefinitions.h"
+#import "CPTTextStylePlatformSpecific.h"
 
 @class CPTColor;
+@class CPTTextStyle;
 
-@interface CPTTextStyle : NSObject<NSCoding, NSCopying, NSMutableCopying> {
-    @protected
-    NSString *fontName;
-    CGFloat fontSize;
-    CPTColor *color;
-    CPTTextAlignment textAlignment;
-    NSLineBreakMode lineBreakMode;
-}
+/**
+ *  @brief An array of text styles.
+ **/
+typedef NSArray<CPTTextStyle *> *CPTTextStyleArray;
 
-@property (readonly, copy, nonatomic) NSString *fontName;
-@property (readonly, assign, nonatomic) CGFloat fontSize;
-@property (readonly, copy, nonatomic) CPTColor *color;
-@property (readonly, assign, nonatomic) CPTTextAlignment textAlignment;
+/**
+ *  @brief A mutable array of text styles.
+ **/
+typedef NSMutableArray<CPTTextStyle *> *CPTMutableTextStyleArray;
+
+@interface CPTTextStyle : NSObject<NSCoding, NSCopying, NSMutableCopying>
+
+@property (readonly, copy, nonatomic, nullable) NSString *fontName;
+@property (readonly, nonatomic) CGFloat fontSize;
+@property (readonly, copy, nonatomic, nullable) CPTColor *color;
+@property (readonly, nonatomic) CPTTextAlignment textAlignment;
 @property (readonly, assign, nonatomic) NSLineBreakMode lineBreakMode;
 
 /// @name Factory Methods
 /// @{
-+(id)textStyle;
++(nonnull instancetype)textStyle;
++(nonnull instancetype)textStyleWithStyle:(nullable CPTTextStyle *)textStyle;
 /// @}
 
 @end
@@ -31,11 +37,11 @@
  **/
 @interface CPTTextStyle(CPTPlatformSpecificTextStyleExtensions)
 
-@property (readonly, copy, nonatomic) NSDictionary *attributes;
+@property (readonly, nonatomic, nonnull) CPTDictionary attributes;
 
 /// @name Factory Methods
 /// @{
-+(id)textStyleWithAttributes:(NSDictionary *)attributes;
++(nonnull instancetype)textStyleWithAttributes:(nullable CPTDictionary)attributes;
 /// @}
 
 @end
@@ -49,12 +55,12 @@
 
 /// @name Measurement
 /// @{
--(CGSize)sizeWithTextStyle:(CPTTextStyle *)style;
+-(CGSize)sizeWithTextStyle:(nullable CPTTextStyle *)style;
 /// @}
 
 /// @name Drawing
 /// @{
--(void)drawInRect:(CGRect)rect withTextStyle:(CPTTextStyle *)style inContext:(CGContextRef)context;
+-(void)drawInRect:(CGRect)rect withTextStyle:(nullable CPTTextStyle *)style inContext:(nonnull CGContextRef)context;
 /// @}
 
 @end

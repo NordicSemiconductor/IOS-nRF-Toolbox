@@ -12,49 +12,37 @@ typedef struct _CPTGradientElement {
     CPTRGBAColor color; ///< Color
     CGFloat position;   ///< Gradient position (0 ≤ @par{position} ≤ 1)
 
-    struct _CPTGradientElement *nextElement; ///< Pointer to the next CPTGradientElement in the list (last element == @NULL)
+    struct _CPTGradientElement *__nullable nextElement; ///< Pointer to the next CPTGradientElement in the list (last element == @NULL)
 }
 CPTGradientElement;
 
 /**
  *  @brief Enumeration of blending modes
  **/
-typedef enum _CPTBlendingMode {
+typedef NS_ENUM (NSInteger, CPTGradientBlendingMode) {
     CPTLinearBlendingMode,          ///< Linear blending mode
     CPTChromaticBlendingMode,       ///< Chromatic blending mode
     CPTInverseChromaticBlendingMode ///< Inverse chromatic blending mode
-}
-CPTGradientBlendingMode;
+};
 
 /**
  *  @brief Enumeration of gradient types
  **/
-typedef enum _CPTGradientType {
+typedef NS_ENUM (NSInteger, CPTGradientType) {
     CPTGradientTypeAxial, ///< Axial gradient
     CPTGradientTypeRadial ///< Radial gradient
-}
-CPTGradientType;
+};
 
 @class CPTColorSpace;
 @class CPTColor;
 
-@interface CPTGradient : NSObject<NSCopying, NSCoding> {
-    @private
-    CPTColorSpace *colorspace;
-    CPTGradientElement *elementList;
-    CPTGradientBlendingMode blendingMode;
-    CGFunctionRef gradientFunction;
-    CGFloat angle; // angle in degrees
-    CPTGradientType gradientType;
-    CGPoint startAnchor;
-    CGPoint endAnchor;
-}
+@interface CPTGradient : NSObject<NSCopying, NSCoding>
 
 @property (nonatomic, readonly, getter = isOpaque) BOOL opaque;
 
 /// @name Gradient Type
 /// @{
-@property (nonatomic, readonly, assign) CPTGradientBlendingMode blendingMode;
+@property (nonatomic, readonly) CPTGradientBlendingMode blendingMode;
 @property (nonatomic, readwrite, assign) CPTGradientType gradientType;
 /// @}
 
@@ -71,46 +59,46 @@ CPTGradientType;
 
 /// @name Factory Methods
 /// @{
-+(CPTGradient *)gradientWithBeginningColor:(CPTColor *)begin endingColor:(CPTColor *)end;
-+(CPTGradient *)gradientWithBeginningColor:(CPTColor *)begin endingColor:(CPTColor *)end beginningPosition:(CGFloat)beginningPosition endingPosition:(CGFloat)endingPosition;
++(nonnull instancetype)gradientWithBeginningColor:(nonnull CPTColor *)begin endingColor:(nonnull CPTColor *)end;
++(nonnull instancetype)gradientWithBeginningColor:(nonnull CPTColor *)begin endingColor:(nonnull CPTColor *)end beginningPosition:(CGFloat)beginningPosition endingPosition:(CGFloat)endingPosition;
 
-+(CPTGradient *)aquaSelectedGradient;
-+(CPTGradient *)aquaNormalGradient;
-+(CPTGradient *)aquaPressedGradient;
++(nonnull instancetype)aquaSelectedGradient;
++(nonnull instancetype)aquaNormalGradient;
++(nonnull instancetype)aquaPressedGradient;
 
-+(CPTGradient *)unifiedSelectedGradient;
-+(CPTGradient *)unifiedNormalGradient;
-+(CPTGradient *)unifiedPressedGradient;
-+(CPTGradient *)unifiedDarkGradient;
++(nonnull instancetype)unifiedSelectedGradient;
++(nonnull instancetype)unifiedNormalGradient;
++(nonnull instancetype)unifiedPressedGradient;
++(nonnull instancetype)unifiedDarkGradient;
 
-+(CPTGradient *)sourceListSelectedGradient;
-+(CPTGradient *)sourceListUnselectedGradient;
++(nonnull instancetype)sourceListSelectedGradient;
++(nonnull instancetype)sourceListUnselectedGradient;
 
-+(CPTGradient *)rainbowGradient;
-+(CPTGradient *)hydrogenSpectrumGradient;
++(nonnull instancetype)rainbowGradient;
++(nonnull instancetype)hydrogenSpectrumGradient;
 /// @}
 
 /// @name Modification
 /// @{
--(CPTGradient *)gradientWithAlphaComponent:(CGFloat)alpha;
--(CPTGradient *)gradientWithBlendingMode:(CPTGradientBlendingMode)mode;
+-(nonnull CPTGradient *)gradientWithAlphaComponent:(CGFloat)alpha;
+-(nonnull CPTGradient *)gradientWithBlendingMode:(CPTGradientBlendingMode)mode;
 
--(CPTGradient *)addColorStop:(CPTColor *)color atPosition:(CGFloat)position; // positions given relative to [0,1]
--(CPTGradient *)removeColorStopAtIndex:(NSUInteger)idx;
--(CPTGradient *)removeColorStopAtPosition:(CGFloat)position;
+-(nonnull CPTGradient *)addColorStop:(nonnull CPTColor *)color atPosition:(CGFloat)position; // positions given relative to [0,1]
+-(nonnull CPTGradient *)removeColorStopAtIndex:(NSUInteger)idx;
+-(nonnull CPTGradient *)removeColorStopAtPosition:(CGFloat)position;
 /// @}
 
 /// @name Information
 /// @{
--(CGColorRef)newColorStopAtIndex:(NSUInteger)idx;
--(CGColorRef)newColorAtPosition:(CGFloat)position;
+-(nullable CGColorRef)newColorStopAtIndex:(NSUInteger)idx;
+-(nonnull CGColorRef)newColorAtPosition:(CGFloat)position;
 /// @}
 
 /// @name Drawing
 /// @{
--(void)drawSwatchInRect:(CGRect)rect inContext:(CGContextRef)context;
--(void)fillRect:(CGRect)rect inContext:(CGContextRef)context;
--(void)fillPathInContext:(CGContextRef)context;
+-(void)drawSwatchInRect:(CGRect)rect inContext:(nonnull CGContextRef)context;
+-(void)fillRect:(CGRect)rect inContext:(nonnull CGContextRef)context;
+-(void)fillPathInContext:(nonnull CGContextRef)context;
 /// @}
 
 @end

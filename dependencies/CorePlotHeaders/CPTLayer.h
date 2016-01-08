@@ -2,6 +2,8 @@
 #import "CPTResponder.h"
 #import <QuartzCore/QuartzCore.h>
 
+/// @file
+
 @class CPTGraph;
 @class CPTShadow;
 
@@ -11,29 +13,35 @@
 /** @brief Notification sent by all layers when the layer @link CALayer::bounds bounds @endlink change.
  *  @ingroup notification
  **/
-extern NSString *const CPTLayerBoundsDidChangeNotification;
+extern NSString *__nonnull const CPTLayerBoundsDidChangeNotification;
 
 /// @}
 
-@interface CPTLayer : CALayer<CPTResponder> {
-    @private
-    CGFloat paddingLeft;
-    CGFloat paddingTop;
-    CGFloat paddingRight;
-    CGFloat paddingBottom;
-    BOOL masksToBorder;
-    CPTShadow *shadow;
-    BOOL renderingRecursively;
-    BOOL useFastRendering;
-    __cpt_weak CPTGraph *graph;
-    CGPathRef outerBorderPath;
-    CGPathRef innerBorderPath;
-    id<NSCopying, NSCoding, NSObject> identifier;
-}
+/**
+ *  @brief An array of CALayer objects.
+ **/
+typedef NSArray<CALayer *> *CPTSublayerArray;
+
+/**
+ *  @brief A mutable array of CALayer objects.
+ **/
+typedef NSMutableArray<CALayer *> *CPTMutableSublayerArray;
+
+/**
+ *  @brief A set of CALayer objects.
+ **/
+typedef NSSet<CALayer *> *CPTSublayerSet;
+
+/**
+ *  @brief A mutable set of CALayer objects.
+ **/
+typedef NSMutableSet<CALayer *> *CPTMutableSublayerSet;
+
+@interface CPTLayer : CALayer<CPTResponder>
 
 /// @name Graph
 /// @{
-@property (nonatomic, readwrite, cpt_weak_property) __cpt_weak CPTGraph *graph;
+@property (nonatomic, readwrite, cpt_weak_property, nullable) cpt_weak CPTGraph *graph;
 /// @}
 
 /// @name Padding
@@ -47,53 +55,55 @@ extern NSString *const CPTLayerBoundsDidChangeNotification;
 /// @name Drawing
 /// @{
 @property (readwrite) CGFloat contentsScale;
-@property (nonatomic, readonly, assign) BOOL useFastRendering;
-@property (nonatomic, readwrite, copy) CPTShadow *shadow;
+@property (nonatomic, readonly) BOOL useFastRendering;
+@property (nonatomic, readwrite, copy, nullable) CPTShadow *shadow;
 @property (nonatomic, readonly) CGSize shadowMargin;
 /// @}
 
 /// @name Masking
 /// @{
 @property (nonatomic, readwrite, assign) BOOL masksToBorder;
-@property (nonatomic, readwrite, assign) CGPathRef outerBorderPath;
-@property (nonatomic, readwrite, assign) CGPathRef innerBorderPath;
-@property (nonatomic, readonly, assign) CGPathRef maskingPath;
-@property (nonatomic, readonly, assign) CGPathRef sublayerMaskingPath;
+@property (nonatomic, readwrite, assign, nullable)  CGPathRef outerBorderPath;
+@property (nonatomic, readwrite, assign, nullable)  CGPathRef innerBorderPath;
+@property (nonatomic, readonly, nullable)  CGPathRef maskingPath;
+@property (nonatomic, readonly, nullable)  CGPathRef sublayerMaskingPath;
 /// @}
 
 /// @name Identification
 /// @{
-@property (nonatomic, readwrite, copy) id<NSCopying, NSCoding, NSObject> identifier;
+@property (nonatomic, readwrite, copy, nullable) id<NSCopying, NSCoding, NSObject> identifier;
 /// @}
 
 /// @name Layout
 /// @{
-@property (readonly) NSSet *sublayersExcludedFromAutomaticLayout;
+@property (nonatomic, readonly, nullable) CPTSublayerSet sublayersExcludedFromAutomaticLayout;
 /// @}
 
 /// @name Initialization
 /// @{
--(id)initWithFrame:(CGRect)newFrame;
+-(nonnull instancetype)initWithFrame:(CGRect)newFrame NS_DESIGNATED_INITIALIZER;
+-(nonnull instancetype)initWithCoder:(nonnull NSCoder *)coder NS_DESIGNATED_INITIALIZER;
+-(nonnull instancetype)initWithLayer:(nonnull id)layer NS_DESIGNATED_INITIALIZER;
 /// @}
 
 /// @name Drawing
 /// @{
--(void)renderAsVectorInContext:(CGContextRef)context;
--(void)recursivelyRenderInContext:(CGContextRef)context;
--(void)layoutAndRenderInContext:(CGContextRef)context;
--(NSData *)dataForPDFRepresentationOfLayer;
+-(void)renderAsVectorInContext:(nonnull CGContextRef)context;
+-(void)recursivelyRenderInContext:(nonnull CGContextRef)context;
+-(void)layoutAndRenderInContext:(nonnull CGContextRef)context;
+-(nonnull NSData *)dataForPDFRepresentationOfLayer;
 /// @}
 
 /// @name Masking
 /// @{
--(void)applySublayerMaskToContext:(CGContextRef)context forSublayer:(CPTLayer *)sublayer withOffset:(CGPoint)offset;
--(void)applyMaskToContext:(CGContextRef)context;
+-(void)applySublayerMaskToContext:(nonnull CGContextRef)context forSublayer:(nonnull CPTLayer *)sublayer withOffset:(CGPoint)offset;
+-(void)applyMaskToContext:(nonnull CGContextRef)context;
 /// @}
 
 /// @name Layout
 /// @{
 -(void)pixelAlign;
--(void)sublayerMarginLeft:(CGFloat *)left top:(CGFloat *)top right:(CGFloat *)right bottom:(CGFloat *)bottom;
+-(void)sublayerMarginLeft:(nonnull CGFloat *)left top:(nonnull CGFloat *)top right:(nonnull CGFloat *)right bottom:(nonnull CGFloat *)bottom;
 /// @}
 
 /// @name Information
@@ -102,27 +112,3 @@ extern NSString *const CPTLayerBoundsDidChangeNotification;
 /// @}
 
 @end
-
-/// @cond
-#if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
-#else
-// for MacOS 10.6 SDK compatibility
-#if MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_7
-@interface CALayer(CPTExtensions)
-
-@property (readwrite) CGFloat contentsScale;
-
-@end
-#endif
-
-// for MacOS 10.5 SDK compatibility
-#if MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_6
-@interface CALayer(CPTExtensions2)
-
-+(BOOL)needsDisplayForKey:(NSString *)aKey;
-
-@end
-#endif
-#endif
-
-/// @endcond

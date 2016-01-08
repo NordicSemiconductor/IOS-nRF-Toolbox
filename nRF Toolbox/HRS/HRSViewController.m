@@ -216,10 +216,10 @@
     // y-axis from 0 to 300
     CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)self.graph.defaultPlotSpace;
     plotSpace.allowsUserInteraction = NO;
-    plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(plotXMinRange)
-                                                    length:CPTDecimalFromInt(plotXMaxRange)];
-    plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(plotYMinRange)
-                                                    length:CPTDecimalFromInt(plotYMaxRange)];
+    plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:[NSNumber numberWithInt:plotXMinRange]
+                                                    length:[NSNumber numberWithInt:plotXMaxRange]];
+    plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:[NSNumber numberWithInt:plotYMinRange]
+                                                    length:[NSNumber numberWithInt:plotYMaxRange]];
     
     CPTXYAxisSet *axisSet = (CPTXYAxisSet *)self.graph.axisSet;
     
@@ -230,7 +230,7 @@
     
     //Define x-axis properties
     //x-axis intermediate interval 2
-    axisSet.xAxis.majorIntervalLength = CPTDecimalFromInt(plotXInterval);
+    axisSet.xAxis.majorIntervalLength = [NSNumber numberWithInt:plotXInterval];
     axisSet.xAxis.minorTicksPerInterval = 4;
     axisSet.xAxis.minorTickLength = 5;
     axisSet.xAxis.majorTickLength = 7;
@@ -240,7 +240,7 @@
     
     //Define y-axis properties
     //y-axis intermediate interval = 50;
-    axisSet.yAxis.majorIntervalLength = CPTDecimalFromInt(plotYInterval);
+    axisSet.yAxis.majorIntervalLength = [NSNumber numberWithInt:plotYInterval];
     axisSet.yAxis.minorTicksPerInterval = 4;
     axisSet.yAxis.minorTickLength = 5;
     axisSet.yAxis.majorTickLength = 7;
@@ -283,13 +283,13 @@
     CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)self.graph.defaultPlotSpace;
     [plotSpace scaleToFitPlots:@[self.linePlot]];
     plotSpace.allowsUserInteraction = NO;
-    plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(plotXMinRange)
-                                                    length:CPTDecimalFromInt(plotXMaxRange)];
-    plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(plotYMinRange)
-                                                    length:CPTDecimalFromInt(plotYMaxRange)];
+    plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:[NSNumber numberWithInt:plotXMinRange]
+                                                    length:[NSNumber numberWithInt:plotXMaxRange]];
+    plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:[NSNumber numberWithInt:plotYMinRange]
+                                                    length:[NSNumber numberWithInt:plotYMaxRange]];
     
     CPTXYAxisSet *axisSet = (CPTXYAxisSet *)self.graph.axisSet;
-    axisSet.xAxis.majorIntervalLength = CPTDecimalFromInt(plotXInterval);
+    axisSet.xAxis.majorIntervalLength = [NSNumber numberWithInt:plotXInterval];
 }
 
 -(void)addHRValueToGraph:(int)data
