@@ -57,7 +57,7 @@ bool isUartPeripheralConnected = NO;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"viewDidLoad");
+    
     // Rotate the vertical label
     self.verticalLabel.transform = CGAffineTransformRotate(CGAffineTransformMakeTranslation(-20.0f, 0.0f), (float)(-M_PI / 2));
     self.uartLogText = [[NSMutableArray alloc]init];
@@ -82,19 +82,16 @@ bool isUartPeripheralConnected = NO;
 {
     if ([segue.identifier isEqualToString:@"scan"])
     {
-        NSLog(@"prepareForSegue scan");
         // Set this contoller as scanner delegate
         ScannerViewController *controller = (ScannerViewController *)segue.destinationViewController;
         controller.filterUUID = UART_Service_UUID;
         controller.delegate = self;
     }
     else if ([[segue identifier] isEqualToString:@"help"]) {
-        NSLog(@"prepareForSegue help");
         HelpViewController *helpVC = (HelpViewController *)[segue destinationViewController];
         helpVC.helpText = [AppUtilities getUARTHelpText];
     }
     else if ([[segue identifier] isEqualToString:@"log"]) {
-        NSLog(@"prepareForSegue log");
         LogViewController *logVC = (LogViewController *)[segue destinationViewController];
         logVC.logText = self.uartLogText;
         logVC.uartPeripheralName = self.uartPeripheralName;
@@ -114,7 +111,6 @@ bool isUartPeripheralConnected = NO;
 {
     NSUserDefaults *buttonsConfigurations = [NSUserDefaults standardUserDefaults];
     if ([buttonsConfigurations objectForKey:@"buttonsCommands"]) { //Buttons configurations already saved in NSUserDefaults
-        NSLog(@"Buttons configurations already saved in NSUserDefaults");
         //retrieving the saved values
         self.buttonsCommands = [NSMutableArray arrayWithArray:[buttonsConfigurations objectForKey:@"buttonsCommands"]];
         self.buttonsHiddenStatus = [NSMutableArray arrayWithArray:[buttonsConfigurations objectForKey:@"buttonsHiddenStatus"]];
@@ -122,7 +118,6 @@ bool isUartPeripheralConnected = NO;
         [self showButtonsWithSavedConfiguration];
     }
     else { //First time viewcontroller is loaded and there is no saved buttons configurations in NSUserDefaults
-        NSLog(@"First time viewcontroller is loaded and there is no saved buttons configurations in NSUserDefaults");
         //setting up the default values for the first time
         self.buttonsCommands = [[NSMutableArray alloc]initWithArray:@[@"Play",@"Stop",@"Pause",@"Rewind",@"Record",@"FastForward",@"Start",@"Shuffle",@"End"]];
         self.buttonsHiddenStatus = [[NSMutableArray alloc]initWithArray:@[@NO,@NO,@NO,@NO,@NO,@NO,@NO,@NO,@NO]];
@@ -137,7 +132,6 @@ bool isUartPeripheralConnected = NO;
 
 -(void)showButtonsWithSavedConfiguration
 {
-    NSLog(@"showButtonsWithSavedConfiguration");
     for (UIButton *button in self.buttons) {
         //set the buttons background color to some shade of Blue and icons
         [button setBackgroundColor:[UIColor colorWithRed:0.0f/255.0f green:156.0f/255.0f blue:222.0f/255.0f alpha:1.0f]];
@@ -173,7 +167,6 @@ bool isUartPeripheralConnected = NO;
             text = value;
         }
         if (isRXCharacteristicFound) {
-            NSLog(@"writing command: %@ to UART peripheral: %@",text,self.uartPeripheralName);
             [self.uartBluetoothManager writeRXValue:text];
             [self addLogText:[NSString stringWithFormat:@"RX: %@",text]];
         }
@@ -198,13 +191,11 @@ bool isUartPeripheralConnected = NO;
 
 -(void)appDidEnterBackground:(NSNotification *)_notification
 {
-    NSLog(@"appDidEnterBackground");
     [AppUtilities showBackgroundNotification:[NSString stringWithFormat:@"You are still connected to %@ peripheral.",self.uartPeripheralName]];
 }
 
 -(void)appDidEnterForeground:(NSNotification *)_notification
 {
-    NSLog(@"appDidEnterForeground");
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
 }
 
@@ -216,12 +207,12 @@ bool isUartPeripheralConnected = NO;
 
 //One out of 9 Remote Buttons is pressed
 - (IBAction)buttonPressed:(id)sender {
-    NSLog(@"tag of buttonPressed: %ld",(long)[sender tag]);
     if (self.isEditMode) {
         self.selectedButton = (UIButton*)sender;
         [self showPopoverOnButton];
     }
-    else {
+    else
+    {
         NSString *command = self.buttonsCommands[[sender tag]-1];
         [self writeValueOnRX:command];
     }
@@ -258,7 +249,7 @@ bool isUartPeripheralConnected = NO;
     int buttonTag = (int)[self.selectedButton tag] - 1;
     self.buttonsHiddenStatus[[self.selectedButton tag] - 1] = [NSNumber numberWithBool:status];
     [buttonsConfigurations setObject:self.buttonsHiddenStatus forKey:@"buttonsHiddenStatus"];
-    if (index > 0) {
+    if (index >= 0) {
         UIImage *image = [UIImage imageNamed:self.buttonIcons[index]];
         [self.selectedButton setImage:image forState:UIControlStateNormal];
         NSString *selectedIconName = self.buttonIcons[index];
@@ -268,14 +259,12 @@ bool isUartPeripheralConnected = NO;
     if (![command isEqualToString:@""]) {
         // we subtract 1 from tag because tag start from 1 not from 0
         self.buttonsCommands[buttonTag] = command;
-        NSLog(@"selcted Button command: %@",self.buttonsCommands[buttonTag]);
         [buttonsConfigurations setObject:self.buttonsCommands forKey:@"buttonsCommands"];
     }
     [buttonsConfigurations synchronize];
 }
 
 - (IBAction)editButtonPressed:(UIButton *)sender {
-    NSLog(@"editButtonPressed");
     if (self.isEditMode) {
         //Editing Done, Normal Mode, Done pressed
         [self.editButton setTitle:@"Edit" forState:UIControlStateNormal];
@@ -309,14 +298,13 @@ bool isUartPeripheralConnected = NO;
 
 -(void)didDeviceConnected:(NSString *)peripheralName
 {
-    NSLog(@"onDeviceConnected %@",peripheralName);
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
         self.uartPeripheralName = peripheralName;
         isUartPeripheralConnected = YES;
         [deviceName setText:self.uartPeripheralName];
         [connectButton setTitle:@"DISCONNECT" forState:UIControlStateNormal];
-        [self addLogText:[NSString stringWithFormat:@"%@ is Connected",self.uartPeripheralName]];
+        [self addLogText:[NSString stringWithFormat:@"%@ is connected",self.uartPeripheralName]];
     });
     //Following if condition display user permission alert for background notification
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
@@ -329,14 +317,13 @@ bool isUartPeripheralConnected = NO;
 
 -(void)didDeviceDisconnected
 {
-    NSLog(@"UARTViewController: didDeviceDisconnected %@",self.uartPeripheralName);
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
         [connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
         [deviceName setText:@"DEFAULT UART"];
-        [self addLogText:[NSString stringWithFormat:@"%@ is Disconnected",self.uartPeripheralName]];
+        [self addLogText:[NSString stringWithFormat:@"%@ is disconnected",self.uartPeripheralName]];
         if ([AppUtilities isApplicationStateInactiveORBackground]) {
-            [AppUtilities showBackgroundNotification:[NSString stringWithFormat:@"%@ peripheral is disconnected",self.uartPeripheralName]];
+            [AppUtilities showBackgroundNotification:[NSString stringWithFormat:@"%@ peripheral is disconnected", self.uartPeripheralName]];
         }
         self.uartPeripheralName = nil;
         isRXCharacteristicFound = NO;
@@ -349,21 +336,18 @@ bool isUartPeripheralConnected = NO;
 
 -(void)didDiscoverUARTService:(CBService *)uartService
 {
-    NSLog(@"didDiscoverUARTService");
-    [self addLogText:[NSString stringWithFormat:@"UART service is discovered"]];
+    [self addLogText:[NSString stringWithFormat:@"UART service discovered"]];
 }
 
 -(void)didDiscoverRXCharacteristic:(CBCharacteristic *)rxCharacteristic
 {
-    NSLog(@"didDiscoverRXCharacteristic");
     isRXCharacteristicFound = YES;
-    [self addLogText:[NSString stringWithFormat:@"UART RX characteristic is discovered"]];
+    [self addLogText:[NSString stringWithFormat:@"UART RX characteristic discovered"]];
 }
 
 -(void)didDiscoverTXCharacteristic:(CBCharacteristic *)txCharacteristic
 {
-    NSLog(@"didDiscoverTXCharacteristic");
-    [self addLogText:[NSString stringWithFormat:@"UART TX characteristic is discovered"]];
+    [self addLogText:[NSString stringWithFormat:@"UART TX characteristic discovered"]];
 }
 
 -(void)didReceiveTXNotification:(NSData *)data
@@ -374,7 +358,7 @@ bool isUartPeripheralConnected = NO;
 
 -(void)didError:(NSString *)errorMessage
 {
-    NSLog(@"didError: %@",errorMessage);
+    NSLog(@"Error: %@", errorMessage);
 }
 
 @end

@@ -24,8 +24,6 @@
 
 @interface EditPopupViewController ()
 
-
-
 @end
 
 @implementation EditPopupViewController
@@ -43,17 +41,15 @@
 }
 
 - (IBAction)okButtonPressed:(UIButton *)sender {
-    NSLog(@"okButtonPressed");
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.delegate didButtonConfigured:self.command iconIndex:self.iconIndex shouldHideButton:self.isHidden];
 }
 
 - (IBAction)CancelButtonPressed:(UIButton *)sender {
-    NSLog(@"cancelButtonPressed");
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
 - (IBAction)showHideButtonPressed:(UIButton *)sender {
-    NSLog(@"showHideButtonPressed");
     if (self.isHidden) {
         self.isHidden = NO;
         [self.showHideButton setTitle:@"Hide" forState:UIControlStateNormal];
@@ -65,8 +61,7 @@
 }
 
 - (IBAction)iconButtonPressed:(id)sender {
-    NSLog(@"iconButtonPressed %ld",(long)[sender tag]);
-    self.iconIndex = (int)[sender tag]-1;
+    self.iconIndex = (int)[sender tag] - 1;
     [self setSelectedButtonBackgroundColor];
 }
 
@@ -81,13 +76,11 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    NSLog(@"textFieldShouldBeginEditing");
     return YES;
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    NSLog(@"textFieldShouldReturn");
     [self.commandTextField resignFirstResponder];
     self.command = self.commandTextField.text;
     return YES;
