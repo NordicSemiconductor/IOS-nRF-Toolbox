@@ -243,9 +243,9 @@
 -(void)initPlotRange
 {
     plotXMaxRange = 121;
-    plotXMinRange = 0;
+    plotXMinRange = -1;
     plotYMaxRange = 201;
-    plotYMinRange = 0;
+    plotYMinRange = -1;
     
     plotXInterval = 20;
     plotYInterval = 50;
@@ -334,14 +334,19 @@
 
 -(CPTPlotRange *)plotSpace:(CPTPlotSpace *)space willChangePlotRangeTo:(CPTPlotRange *)newRange forCoordinate:(CPTCoordinate)coordinate
 {
+    // The Y range does not change here
+    if (coordinate == CPTCoordinateY) {
+        return newRange;
+    }
+    
+    // Adjust axis on scrolling
     CPTXYAxisSet *axisSet = (CPTXYAxisSet *) space.graph.axisSet;
     
-    if (newRange.locationDouble >= 0)
+    if (newRange.locationDouble >= plotXMinRange)
     {
         // Adjust axis to keep them in view at the left and bottom;
         // adjust scale-labels to match the scroll.
-        //
-        axisSet.yAxis.orthogonalPosition = newRange.location;
+        axisSet.yAxis.orthogonalPosition = [NSNumber numberWithDouble:newRange.locationDouble - plotXMinRange];
         return newRange;
     }
     axisSet.yAxis.orthogonalPosition = 0;
