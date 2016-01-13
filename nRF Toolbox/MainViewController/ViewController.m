@@ -25,14 +25,17 @@
 #import "HelpViewController.h"
 
 @interface ViewController ()
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @end
 
 @implementation ViewController
+@synthesize collectionView;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    collectionView.dataSource = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -43,13 +46,24 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSLog(@"prepareForSegue");
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     if ([[segue identifier] isEqualToString:@"help"]) {
-        NSLog(@"correct segue");
         HelpViewController *helpVC = [segue destinationViewController];
         helpVC.helpText = [NSString stringWithFormat:@"        nRF Toolbox Version %@\n\n The nRF Toolbox application works with a wide range of the most popular Bluetooth Low Energy accessories.",version];
     }
+}
+
+#pragma mark UICollectionViewDataSource methods
+
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return 9;
+}
+
+-(UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString* name = [NSString stringWithFormat:@"profile_%ld", (long)indexPath.item];
+    return [cv dequeueReusableCellWithReuseIdentifier:name forIndexPath:indexPath];
 }
 
 @end

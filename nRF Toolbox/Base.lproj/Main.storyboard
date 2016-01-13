@@ -225,145 +225,285 @@
                                     <constraint firstAttribute="width" constant="120" id="ue8-IT-oFy"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Csb-VN-LzD" userLabel="Button - BPM">
-                                <rect key="frame" x="22" y="22" width="78" height="78"/>
-                                <state key="normal" image="FeatureBGM" backgroundImage="FeatureBackground"/>
-                                <state key="highlighted" image="FeatureBGM" backgroundImage="FeatureBackgroundPressed"/>
-                                <connections>
-                                    <segue destination="K6D-kg-QBM" kind="show" identifier="bgm" id="Hol-2s-kvW"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="BGM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GYJ-TS-dnp">
-                                <rect key="frame" x="40" y="98" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0L7-fl-HwT" userLabel="Button - HRS">
-                                <rect key="frame" x="121" y="127" width="78" height="78"/>
-                                <state key="normal" image="FeatureHRS" backgroundImage="FeatureBackground"/>
-                                <state key="highlighted" image="FeatureHRS" backgroundImage="FeatureBackgroundPressed"/>
-                                <connections>
-                                    <segue destination="9ph-JI-A6G" kind="show" identifier="hrs" id="Ruz-sg-m4A"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="HRM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zlW-vC-vir">
-                                <rect key="frame" x="139" y="203" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="evE-Y0-qcZ" userLabel="Button - HRS">
-                                <rect key="frame" x="121" y="22" width="78" height="78"/>
-                                <state key="normal" image="FeatureBPM" backgroundImage="FeatureBackground"/>
-                                <state key="highlighted" image="FeatureBPM" backgroundImage="FeatureBackgroundPressed"/>
-                                <connections>
-                                    <segue destination="Kc0-JV-b23" kind="show" id="7WI-ds-23a"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="BPM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zJq-nK-NsI">
-                                <rect key="frame" x="139" y="98" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HBW-Vg-EA4" userLabel="Button - HTS">
-                                <rect key="frame" x="220" y="127" width="78" height="78"/>
-                                <state key="normal" image="FeatureHTS" backgroundImage="FeatureBackground"/>
-                                <state key="highlighted" image="FeatureHTS" backgroundImage="FeatureBackgroundPressed"/>
-                                <connections>
-                                    <segue destination="Rl2-Gx-bqg" kind="show" identifier="hts" id="HU1-A0-pG0"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="HTM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bGx-Jj-Lms">
-                                <rect key="frame" x="238" y="203" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Imb-El-Rmj" userLabel="Button - HTS">
-                                <rect key="frame" x="22" y="232" width="78" height="78"/>
-                                <state key="normal" image="FeatureProximity" backgroundImage="FeatureBackground"/>
-                                <state key="highlighted" image="FeatureProximity" backgroundImage="FeatureBackgroundPressed"/>
-                                <connections>
-                                    <segue destination="inG-0b-px5" kind="show" id="ihy-wO-2KE"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="PROXIMITY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eS4-EQ-xAA">
-                                <rect key="frame" x="31" y="308" width="60" height="21"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gxd-xJ-5iT" userLabel="Button - HTS">
-                                <rect key="frame" x="22" y="127" width="78" height="78"/>
-                                <state key="normal" image="FeatureDFU" backgroundImage="FeatureBackground"/>
-                                <state key="highlighted" image="FeatureDFU" backgroundImage="FeatureBackgroundPressed"/>
-                                <connections>
-                                    <segue destination="ZfZ-xR-bsT" kind="show" id="ZYv-1n-0xn"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="DFU" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eCI-Q2-t3V">
-                                <rect key="frame" x="40" y="203" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uAC-ZS-yr7" userLabel="Button - HTS">
-                                <rect key="frame" x="220" y="22" width="78" height="78"/>
-                                <state key="normal" image="FeatureCSC" backgroundImage="FeatureBackground"/>
-                                <state key="highlighted" image="FeatureCSC" backgroundImage="FeatureBackgroundPressed"/>
-                                <connections>
-                                    <segue destination="VtK-t5-9C8" kind="show" id="4db-Db-Sow"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="CSC" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yfz-BV-vCr">
-                                <rect key="frame" x="238" y="98" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6IX-0H-9Bm" userLabel="Button - RSC">
-                                <rect key="frame" x="121" y="232" width="78" height="78"/>
-                                <state key="normal" image="FeatureRSAC" backgroundImage="FeatureBackground"/>
-                                <state key="highlighted" image="FeatureRSAC" backgroundImage="FeatureBackgroundPressed"/>
-                                <connections>
-                                    <segue destination="ajK-NB-gff" kind="show" identifier="rsc" id="5r6-8u-gor"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="RSC" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ljT-Go-gDs">
-                                <rect key="frame" x="139" y="308" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rbw-Dv-3T7">
-                                <rect key="frame" x="220" y="232" width="78" height="78"/>
-                                <state key="normal" image="FeatureUART" backgroundImage="FeatureBackground">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted" backgroundImage="FeatureBackgroundPressed"/>
-                                <connections>
-                                    <segue destination="H5O-PI-o2R" kind="show" id="3Ah-7I-q0m"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="UART" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kxp-eX-TgN">
-                                <rect key="frame" x="238" y="308" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="4j9-U2-dDx">
+                                <rect key="frame" x="20" y="20" width="560" height="486"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="16" id="3Qa-zp-y57">
+                                    <size key="itemSize" width="80" height="100"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="profile_0" id="wbZ-EE-Mbi">
+                                        <rect key="frame" x="0.0" y="0.0" width="78" height="95"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="78" height="95"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Csb-VN-LzD" userLabel="Button - BPM">
+                                                    <rect key="frame" x="0.0" y="0.0" width="78" height="78"/>
+                                                    <state key="normal" image="FeatureBGM" backgroundImage="FeatureBackground"/>
+                                                    <state key="highlighted" image="FeatureBGM" backgroundImage="FeatureBackgroundPressed"/>
+                                                    <connections>
+                                                        <segue destination="K6D-kg-QBM" kind="show" identifier="bgm" id="Hol-2s-kvW"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="BGM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GYJ-TS-dnp">
+                                                    <rect key="frame" x="18" y="76" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <size key="customSize" width="78" height="95"/>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="profile_1" id="sKG-hE-GKh">
+                                        <rect key="frame" x="96" y="0.0" width="78" height="95"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="78" height="95"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nil-h4-bxV" userLabel="Button - BPM">
+                                                    <rect key="frame" x="0.0" y="0.0" width="78" height="78"/>
+                                                    <state key="normal" image="FeatureBPM" backgroundImage="FeatureBackground"/>
+                                                    <state key="highlighted" image="FeatureBPM" backgroundImage="FeatureBackgroundPressed"/>
+                                                    <connections>
+                                                        <segue destination="Kc0-JV-b23" kind="show" id="Mqn-0p-JsA"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="BGM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PMF-TR-5Jd">
+                                                    <rect key="frame" x="18" y="76" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <size key="customSize" width="78" height="95"/>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="profile_2" id="AkK-GK-k6x">
+                                        <rect key="frame" x="193" y="0.0" width="78" height="95"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="78" height="95"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qow-gh-9At" userLabel="Button - BPM">
+                                                    <rect key="frame" x="0.0" y="1" width="78" height="78"/>
+                                                    <state key="normal" image="FeatureCSC" backgroundImage="FeatureBackground"/>
+                                                    <state key="highlighted" image="FeatureCSC" backgroundImage="FeatureBackgroundPressed"/>
+                                                    <connections>
+                                                        <segue destination="VtK-t5-9C8" kind="show" id="Crj-2n-cwk"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="CSC" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sqb-yb-jf7">
+                                                    <rect key="frame" x="18" y="77" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <size key="customSize" width="78" height="95"/>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="profile_3" id="NqA-VM-fOz">
+                                        <rect key="frame" x="289" y="0.0" width="78" height="95"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="78" height="95"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tM4-vU-BpP" userLabel="Button - BPM">
+                                                    <rect key="frame" x="0.0" y="1" width="78" height="78"/>
+                                                    <state key="normal" image="FeatureDFU" backgroundImage="FeatureBackground"/>
+                                                    <state key="highlighted" image="FeatureDFU" backgroundImage="FeatureBackgroundPressed"/>
+                                                    <connections>
+                                                        <segue destination="ZfZ-xR-bsT" kind="show" id="ZJJ-4B-gY9"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="DFU" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3JN-WM-fso">
+                                                    <rect key="frame" x="18" y="77" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <size key="customSize" width="78" height="95"/>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="profile_4" id="Orw-ud-SfQ">
+                                        <rect key="frame" x="386" y="0.0" width="78" height="95"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="78" height="95"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hVc-ib-Saw" userLabel="Button - BPM">
+                                                    <rect key="frame" x="0.0" y="0.0" width="78" height="78"/>
+                                                    <state key="normal" image="FeatureHRS" backgroundImage="FeatureBackground"/>
+                                                    <state key="highlighted" image="FeatureHRS" backgroundImage="FeatureBackgroundPressed"/>
+                                                    <connections>
+                                                        <segue destination="9ph-JI-A6G" kind="show" id="bTb-pb-IZ2"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="HRM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FQA-vs-faP">
+                                                    <rect key="frame" x="18" y="76" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <size key="customSize" width="78" height="95"/>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="profile_5" id="FIv-d7-xFg">
+                                        <rect key="frame" x="482" y="0.0" width="78" height="95"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="78" height="95"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eDh-ma-wCW" userLabel="Button - BPM">
+                                                    <rect key="frame" x="0.0" y="0.0" width="78" height="78"/>
+                                                    <state key="normal" image="FeatureHTS" backgroundImage="FeatureBackground"/>
+                                                    <state key="highlighted" image="FeatureHTS" backgroundImage="FeatureBackgroundPressed"/>
+                                                    <connections>
+                                                        <segue destination="Rl2-Gx-bqg" kind="show" id="wkH-nJ-GzJ"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="HTM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mwl-cM-3Ja">
+                                                    <rect key="frame" x="18" y="76" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <size key="customSize" width="78" height="95"/>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="profile_6" id="Pwn-26-qLK">
+                                        <rect key="frame" x="0.0" y="100" width="78" height="95"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="78" height="95"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aBC-x8-eEs" userLabel="Button - BPM">
+                                                    <rect key="frame" x="0.0" y="0.0" width="78" height="78"/>
+                                                    <state key="normal" image="FeatureProximity" backgroundImage="FeatureBackground"/>
+                                                    <state key="highlighted" image="FeatureProximity" backgroundImage="FeatureBackgroundPressed"/>
+                                                    <connections>
+                                                        <segue destination="inG-0b-px5" kind="show" id="cuf-yM-JZK"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="PROXIMITY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LXi-uH-Hb9">
+                                                    <rect key="frame" x="10" y="76" width="60" height="21"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <size key="customSize" width="78" height="95"/>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="profile_7" id="yhW-M5-G9w">
+                                        <rect key="frame" x="96" y="100" width="78" height="95"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="78" height="95"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kgq-wn-z2R" userLabel="Button - BPM">
+                                                    <rect key="frame" x="0.0" y="0.0" width="78" height="78"/>
+                                                    <state key="normal" image="FeatureRSAC" backgroundImage="FeatureBackground"/>
+                                                    <state key="highlighted" image="FeatureRSAC" backgroundImage="FeatureBackgroundPressed"/>
+                                                    <connections>
+                                                        <segue destination="ajK-NB-gff" kind="show" id="bCv-X5-Usl"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="RSC" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8cy-SX-o5d">
+                                                    <rect key="frame" x="18" y="76" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <size key="customSize" width="78" height="95"/>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="profile_8" id="phh-8r-9Ox">
+                                        <rect key="frame" x="193" y="100" width="78" height="95"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="78" height="95"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MEj-E9-JbH" userLabel="Button - BPM">
+                                                    <rect key="frame" x="0.0" y="0.0" width="78" height="78"/>
+                                                    <state key="normal" image="FeatureUART" backgroundImage="FeatureBackground"/>
+                                                    <state key="highlighted" image="FeatureUART" backgroundImage="FeatureBackgroundPressed"/>
+                                                    <connections>
+                                                        <segue destination="H5O-PI-o2R" kind="show" id="zhT-Q0-ixF"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="UART" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qZ3-1a-rHK">
+                                                    <rect key="frame" x="18" y="76" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <size key="customSize" width="78" height="95"/>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Rv9-E3-Iiv" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="1Dy-cw-uQa"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="4j9-U2-dDx" secondAttribute="trailing" constant="40" id="6u8-cD-Hkd"/>
+                            <constraint firstItem="4j9-U2-dDx" firstAttribute="top" secondItem="rJI-9B-D0e" secondAttribute="bottom" priority="750" constant="20" id="BpW-72-NrK"/>
                             <constraint firstAttribute="trailing" secondItem="6u2-b9-1zJ" secondAttribute="trailing" id="MXl-V8-QdI"/>
+                            <constraint firstItem="4j9-U2-dDx" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" priority="750" id="NH5-o3-2Mo"/>
                             <constraint firstItem="mAl-4b-q30" firstAttribute="top" secondItem="6u2-b9-1zJ" secondAttribute="bottom" id="Na5-Hr-rnK"/>
+                            <constraint firstItem="4j9-U2-dDx" firstAttribute="top" secondItem="rJI-9B-D0e" secondAttribute="bottom" constant="20" id="OFb-um-vWR">
+                                <variation key="widthClass=regular" constant="60"/>
+                            </constraint>
+                            <constraint firstItem="4j9-U2-dDx" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" priority="750" id="PI8-Kc-fHo"/>
+                            <constraint firstItem="4j9-U2-dDx" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="40" id="ai8-s5-PP9"/>
                             <constraint firstItem="6u2-b9-1zJ" firstAttribute="top" secondItem="rJI-9B-D0e" secondAttribute="bottom" id="bAN-Oo-auy"/>
+                            <constraint firstItem="mAl-4b-q30" firstAttribute="top" secondItem="4j9-U2-dDx" secondAttribute="bottom" constant="30" id="cFJ-zO-Lj0"/>
                             <constraint firstItem="mAl-4b-q30" firstAttribute="top" secondItem="Rv9-E3-Iiv" secondAttribute="bottom" constant="8" id="oii-JL-He7"/>
                             <constraint firstItem="6u2-b9-1zJ" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="pr3-ib-Vre"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="6u8-cD-Hkd"/>
+                                <exclude reference="OFb-um-vWR"/>
+                                <exclude reference="ai8-s5-PP9"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=regular">
+                            <mask key="constraints">
+                                <include reference="6u8-cD-Hkd"/>
+                                <include reference="OFb-um-vWR"/>
+                                <include reference="ai8-s5-PP9"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="O0a-sh-2l2">
                         <barButtonItem key="rightBarButtonItem" id="vv3-ur-2vA">
@@ -379,10 +519,13 @@
                             </button>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="collectionView" destination="4j9-U2-dDx" id="DMP-Vd-ZIh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1402.5" y="123.59154929577464"/>
+            <point key="canvasLocation" x="1419" y="123"/>
         </scene>
         <!--View Controller - BGM-->
         <scene sceneID="hgy-MS-kOD">
@@ -3623,7 +3766,7 @@
         <image name="userIcon" width="15" height="15"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="xLT-KT-SKG"/>
-        <segue reference="nX1-cs-GXT"/>
+        <segue reference="0i8-Ot-uid"/>
+        <segue reference="1Z4-Ua-cTl"/>
     </inferredMetricsTieBreakers>
 </document>
