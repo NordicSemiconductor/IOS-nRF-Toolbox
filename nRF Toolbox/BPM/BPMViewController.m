@@ -54,7 +54,6 @@
 
 @implementation BPMViewController
 @synthesize bluetoothManager;
-@synthesize backgroundImage;
 @synthesize verticalLabel;
 @synthesize battery;
 @synthesize deviceName;
@@ -79,18 +78,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if (is4InchesIPhone)
-    {
-        // 4 inches iPhone
-        UIImage *image = [UIImage imageNamed:@"Background4.png"];
-        [backgroundImage setImage:image];
-    }
-    else
-    {
-        // 3.5 inches iPhone
-        UIImage *image = [UIImage imageNamed:@"Background35.png"];
-        [backgroundImage setImage:image];
-    }
     
     // Rotate the vertical label
     self.verticalLabel.transform = CGAffineTransformRotate(CGAffineTransformMakeTranslation(-150.0f, 0.0f), (float)(-M_PI / 2));

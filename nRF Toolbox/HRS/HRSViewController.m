@@ -30,7 +30,7 @@
 @interface HRSViewController ()
 {
     NSMutableArray *hrValues;
-    int number;
+    NSMutableArray *xValues;
     int plotXMaxRange, plotXMinRange, plotYMaxRange, plotYMinRange;
     int plotXInterval, plotYInterval;
     
@@ -43,12 +43,8 @@
     CBUUID *HR_Location_Characteristic_UUID;
     CBUUID *Battery_Service_UUID;
     CBUUID *Battery_Level_Characteristic_UUID;
-    CBUUID *dfuService_UUID;
-    CBUUID *dfuControl_Point_Characteristic_UUID;
-    CBUUID *dfuPacket_Characteristic_UUID;
 }
 @property CPTScatterPlot *linePlot;
-@property (nonatomic, strong) CPTGraphHostingView *hostView;
 @property (nonatomic, strong) CPTGraph *graph;
 
 @property (strong, nonatomic) CBPeripheral *hrPeripheral;
@@ -57,14 +53,13 @@
 
 @implementation HRSViewController
 @synthesize bluetoothManager;
-@synthesize backgroundImage;
 @synthesize verticalLabel;
 @synthesize battery;
 @synthesize deviceName;
 @synthesize connectButton;
 @synthesize hrValue;
 @synthesize hrLocation;
-@synthesize hostView;
+@synthesize graphView;
 @synthesize hrPeripheral;
 
 
@@ -85,19 +80,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"viewDidLoad");
-    if (is4InchesIPhone)
-    {
-        // 4 inches iPhone
-        UIImage *image = [UIImage imageNamed:@"Background4.png"];
-        [backgroundImage setImage:image];
-    }
-    else
-    {
-        // 3.5 inches iPhone
-        UIImage *image = [UIImage imageNamed:@"Background35.png"];
-        [backgroundImage setImage:image];
-    }
     
     // Rotate the vertical label
     self.verticalLabel.transform = CGAffineTransformRotate(CGAffineTransformMakeTranslation(-120.0f, 0.0f), (float)(-M_PI / 2));
@@ -108,22 +90,15 @@
     hrPeripheral = nil;
     
     hrValues = [[NSMutableArray alloc]init];
-    number = 0;
-    plotXMaxRange = 100;
-    plotXMinRange = 0;
-    plotYMaxRange = 305;
-    plotYMinRange = 0;
+    xValues  = [[NSMutableArray alloc]init];
     
-    plotXInterval = 20;
-    plotYInterval = 50;
-    
+    [self initPlotRange];
     [self initLinePlot];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    NSLog(@"viewWillDisappear");
     if (hrPeripheral != nil && isBackButtonPressed)
     {
         [bluetoothManager cancelPeripheralConnection:hrPeripheral];
@@ -133,7 +108,6 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    NSLog(@"viewWillAppear");
     isBackButtonPressed = YES;
 }
 
@@ -155,14 +129,12 @@
 {
     if ([segue.identifier isEqualToString:@"scan"])
     {
-        NSLog(@"prepareForSegue scan");
         // Set this contoller as scanner delegate
         ScannerViewController *controller = (ScannerViewController *)segue.destinationViewController;
         controller.filterUUID = HR_Service_UUID;
         controller.delegate = self;
     }
     else if ([[segue identifier] isEqualToString:@"help"]) {
-        NSLog(@"prepareForSegue help");
         isBackButtonPressed = NO;
         HelpViewController *helpVC = [segue destinationViewController];
         helpVC.helpText = [AppUtilities getHRSHelpText];
@@ -171,13 +143,11 @@
 
 -(void)appDidEnterBackground:(NSNotification *)_notification
 {
-    NSLog(@"appDidEnterBackground");
     [AppUtilities showBackgroundNotification:[NSString stringWithFormat:@"You are still connected to %@ sensor. It will collect data also in background.",self.hrPeripheral.name]];
 }
 
 -(void)appDidEnterForeground:(NSNotification *)_notification
 {
-    NSLog(@"appDidEnterForeground");
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
 }
 
@@ -187,18 +157,14 @@
 {
     //Initialize and display Graph (x and y axis lines)
     self.graph = [[CPTXYGraph alloc] initWithFrame:self.graphView.bounds];
-    self.hostView = [[CPTGraphHostingView alloc] initWithFrame:self.graphView.bounds];
-    self.hostView.hostedGraph = self.graph;
-    [self.graphView addSubview:hostView];
+    self.graphView.hostedGraph = self.graph;
     
     //apply styling to Graph
     [self.graph applyTheme:[CPTTheme themeNamed:kCPTPlainWhiteTheme]];
     
     //set graph backgound area transparent
-    self.graph.backgroundColor = nil;
-    self.graph.fill = nil;
-    self.graph.plotAreaFrame.fill = nil;
-    self.graph.plotAreaFrame.plotArea.fill = nil;
+    self.graph.fill = [CPTFill fillWithColor:[CPTColor clearColor]];
+    self.graph.plotAreaFrame.fill = [CPTFill fillWithColor:[CPTColor clearColor]];
     
     //This removes top and right lines of graph
     self.graph.plotAreaFrame.borderLineStyle = nil;
@@ -215,11 +181,9 @@
     // x-axis from 0 to 100
     // y-axis from 0 to 300
     CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)self.graph.defaultPlotSpace;
-    plotSpace.allowsUserInteraction = NO;
-    plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:[NSNumber numberWithInt:plotXMinRange]
-                                                    length:[NSNumber numberWithInt:plotXMaxRange]];
-    plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:[NSNumber numberWithInt:plotYMinRange]
-                                                    length:[NSNumber numberWithInt:plotYMaxRange]];
+    plotSpace.allowsUserInteraction = YES;
+    plotSpace.delegate = self;
+    [self resetPlotRange];
     
     CPTXYAxisSet *axisSet = (CPTXYAxisSet *)self.graph.axisSet;
     
@@ -234,7 +198,7 @@
     axisSet.xAxis.minorTicksPerInterval = 4;
     axisSet.xAxis.minorTickLength = 5;
     axisSet.xAxis.majorTickLength = 7;
-    axisSet.xAxis.title = @"Time(Seconds)";
+    axisSet.xAxis.title = @"Time (s)";
     axisSet.xAxis.titleOffset = 25;
     axisSet.xAxis.labelFormatter = axisLabelFormatter;
     
@@ -260,11 +224,11 @@
 	lineStyle.lineColor = [CPTColor blackColor];
 	self.linePlot.dataLineStyle = lineStyle;
     
-	CPTMutableLineStyle *symbolineStyle = [CPTMutableLineStyle lineStyle];
-	symbolineStyle.lineColor = [CPTColor blackColor];
+	CPTMutableLineStyle *symbolLineStyle = [CPTMutableLineStyle lineStyle];
+	symbolLineStyle.lineColor = [CPTColor blackColor];
 	CPTPlotSymbol *symbol = [CPTPlotSymbol ellipsePlotSymbol];
 	symbol.fill = [CPTFill fillWithColor:[CPTColor blackColor]];
-	symbol.lineStyle = symbolineStyle;
+	symbol.lineStyle = symbolLineStyle;
 	symbol.size = CGSizeMake(3.0f, 3.0f);
 	self.linePlot.plotSymbol = symbol;
     
@@ -274,46 +238,80 @@
     gridLineStyle.lineWidth = 0.5;
     axisSet.xAxis.majorGridLineStyle = gridLineStyle;
     axisSet.yAxis.majorGridLineStyle = gridLineStyle;
-    
-    
 }
 
--(void)updatePlotSpace
+-(void)initPlotRange
+{
+    plotXMaxRange = 121;
+    plotXMinRange = 0;
+    plotYMaxRange = 201;
+    plotYMinRange = 0;
+    
+    plotXInterval = 20;
+    plotYInterval = 50;
+}
+
+-(void) resetPlotRange
 {
     CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)self.graph.defaultPlotSpace;
-    [plotSpace scaleToFitPlots:@[self.linePlot]];
-    plotSpace.allowsUserInteraction = NO;
     plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:[NSNumber numberWithInt:plotXMinRange]
                                                     length:[NSNumber numberWithInt:plotXMaxRange]];
     plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:[NSNumber numberWithInt:plotYMinRange]
                                                     length:[NSNumber numberWithInt:plotYMaxRange]];
-    
-    CPTXYAxisSet *axisSet = (CPTXYAxisSet *)self.graph.axisSet;
-    axisSet.xAxis.majorIntervalLength = [NSNumber numberWithInt:plotXInterval];
 }
 
 -(void)addHRValueToGraph:(int)data
 {
+    // In this method the new value is added to hrValues array
     [hrValues addObject:[NSDecimalNumber numberWithInt:data]];
-    if ([hrValues count] > plotXMaxRange) {
-        plotXMaxRange = plotXMaxRange + plotXMaxRange;
-        plotXInterval = plotXInterval + plotXInterval;
-        [self updatePlotSpace];
+    
+    // Also, we save the time when the data was received
+    // 'Last' and 'previous' values are timestamps of those values. We calculate them to know whether we should automatically scroll the graph
+    double previous = [[(NSDecimalNumber*)[xValues lastObject] decimalNumberBySubtracting:(NSDecimalNumber*)[xValues firstObject]] doubleValue];
+    [xValues addObject:[HRSViewController longUnixEpoch]];
+    double last = [[(NSDecimalNumber*)[xValues lastObject] decimalNumberBySubtracting:(NSDecimalNumber*)[xValues firstObject]] doubleValue];
+    
+    // Here we calculate the max value visible on the graph
+    CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)self.graph.defaultPlotSpace;
+    double max = plotSpace.xRange.locationDouble + plotSpace.xRange.lengthDouble;
+    
+    // If the previous value was on the graph, but the new one is out of it, scroll the graph automatically
+    if (last > max && previous <= max)
+    {
+        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:[NSNumber numberWithInt:last - plotXMaxRange + 1]
+                                                        length:[NSNumber numberWithInt:plotXMaxRange]];
+    }
+    
+    // Rescale Y axis to display higher values
+    if (data >= plotYMaxRange)
+    {
+        while (data >= plotYMaxRange)
+        {
+            plotYMaxRange += 50;
+        }
+        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:[NSNumber numberWithInt:plotYMinRange]
+                                                        length:[NSNumber numberWithInt:plotYMaxRange]];
     }
     [self.graph reloadData];
 }
 
++ (NSNumber*) longUnixEpoch {
+    return [NSDecimalNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]]; // in seconds
+ }
+
 #pragma mark - CPTPlotDataSource methods
+
 -(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot
 {
     return [hrValues count];
 }
 
--(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index {
-	
+-(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index
+{
 	switch (fieldEnum) {
 		case CPTScatterPlotFieldX:
-            return [NSNumber numberWithUnsignedInteger:index];
+            // The xValues stores timestamps. To show them starting from 0 we have to subtract the first one.
+            return [(NSDecimalNumber*)[xValues objectAtIndex:index] decimalNumberBySubtracting:(NSDecimalNumber*)[xValues firstObject]];
 			break;
 			
 		case CPTScatterPlotFieldY:
@@ -323,6 +321,32 @@
 	return [NSDecimalNumber zero];
 }
 
+#pragma mark - CPRPlotSpaceDelegate methods
+
+-(BOOL)plotSpace:(CPTPlotSpace *)space shouldScaleBy:(CGFloat)interactionScale aboutPoint:(CGPoint)interactionPoint
+{
+    return NO;
+}
+
+-(CGPoint)plotSpace:(CPTPlotSpace *)space willDisplaceBy:(CGPoint)displacement {
+    return CGPointMake(displacement.x, 0);
+}
+
+-(CPTPlotRange *)plotSpace:(CPTPlotSpace *)space willChangePlotRangeTo:(CPTPlotRange *)newRange forCoordinate:(CPTCoordinate)coordinate
+{
+    CPTXYAxisSet *axisSet = (CPTXYAxisSet *) space.graph.axisSet;
+    
+    if (newRange.locationDouble >= 0)
+    {
+        // Adjust axis to keep them in view at the left and bottom;
+        // adjust scale-labels to match the scroll.
+        //
+        axisSet.yAxis.orthogonalPosition = newRange.location;
+        return newRange;
+    }
+    axisSet.yAxis.orthogonalPosition = 0;
+    return [CPTPlotRange plotRangeWithLocation:[NSNumber numberWithInt:plotXMinRange] length:[NSNumber numberWithInt:plotXMaxRange]];
+}
 
 #pragma mark Scanner Delegate methods
 
@@ -360,6 +384,10 @@
         [deviceName setText:peripheral.name];
         [connectButton setTitle:@"DISCONNECT" forState:UIControlStateNormal];
         [hrValues removeAllObjects];
+        [xValues removeAllObjects];
+        
+        [self initPlotRange];
+        [self resetPlotRange];
     });
     //Following if condition display user permission alert for background notification
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
@@ -404,11 +432,8 @@
 
 -(void) peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error
 {
-    NSLog(@"didDiscoverServices");
     if (!error) {
-        NSLog(@"services discovered %lu",(unsigned long)[peripheral.services count] );
         for (CBService *hrService in peripheral.services) {
-            NSLog(@"service discovered: %@",hrService.UUID);
             if ([hrService.UUID isEqual:HR_Service_UUID])
             {
                 NSLog(@"HR service found");
@@ -419,14 +444,10 @@
                 NSLog(@"Battery service found");
                 [hrPeripheral discoverCharacteristics:nil forService:hrService];
             }
-            // code to discover DFU Service
-            else if ([hrService.UUID isEqual:dfuService_UUID]) {
-                NSLog(@"DFU Service is found");
-            }
 
         }
     } else {
-        NSLog(@"error in discovering services on device: %@",hrPeripheral.name);
+        NSLog(@"Error occurred while discovering service: %@",[error localizedDescription]);
     }
 }
 
@@ -437,27 +458,26 @@
             for (CBCharacteristic *characteristic in service.characteristics)
             {
                 if ([characteristic.UUID isEqual:HR_Measurement_Characteristic_UUID]) {
-                    NSLog(@"HR Measurement characteritsic is found");
+                    NSLog(@"HR Measurement characteritsic found");
                     [hrPeripheral setNotifyValue:YES forCharacteristic:characteristic ];
                 }
                 else if ([characteristic.UUID isEqual:HR_Location_Characteristic_UUID]) {
-                    NSLog(@"HR Position characteristic is found");
+                    NSLog(@"Body Sensor Location characteristic found");
                     [hrPeripheral readValueForCharacteristic:characteristic];
                 }
             }
         }
         else if ([service.UUID isEqual:Battery_Service_UUID]) {
-            
             for (CBCharacteristic *characteristic in service.characteristics)
             {
                 if ([characteristic.UUID isEqual:Battery_Level_Characteristic_UUID]) {
-                    NSLog(@"Battery Level characteristic is found");
+                    NSLog(@"Battery Level characteristic found");
                     [hrPeripheral readValueForCharacteristic:characteristic];
                 }
             }
         }
     } else {
-        NSLog(@"error in discovering characteristic on device: %@",hrPeripheral.name);
+        NSLog(@"Error occurred while discovering characteristic: %@",[error localizedDescription]);
     }
 }
 
@@ -465,11 +485,10 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         if (!error) {
-            NSLog(@"received update from HR: %@, UUID: %@",characteristic.value,characteristic.UUID);
             if ([characteristic.UUID isEqual:HR_Measurement_Characteristic_UUID]) {
-                NSLog(@"HRM value: %@",characteristic.value);
-                [self addHRValueToGraph:[self decodeHRValue:characteristic.value]];
-                hrValue.text = [NSString stringWithFormat:@"%d",[self decodeHRValue:characteristic.value]];
+                int value = [self decodeHRValue:characteristic.value];
+                [self addHRValueToGraph: value];
+                hrValue.text = [NSString stringWithFormat:@"%d", value];
             }
             else if ([characteristic.UUID isEqual:HR_Location_Characteristic_UUID]) {
                 hrLocation.text = [self decodeHRLocation:characteristic.value];
@@ -494,7 +513,7 @@
             }
         }
         else {
-            NSLog(@"error in update HRM value");
+            NSLog(@"Error occurred while updating characteristic value: %@",[error localizedDescription]);
         }
     });
 }
@@ -504,14 +523,11 @@
     const uint8_t *value = [data bytes];
     int bpmValue = 0;
     if ((value[0] & 0x01) == 0) {
-        NSLog(@"8 bit HR Value");
         bpmValue = value[1];
     }
     else {
-        NSLog(@"16 bit HR Value");
         bpmValue = CFSwapInt16LittleToHost(*(uint16_t *)(&value[1]));
     }
-    NSLog(@"BPM: %d",bpmValue);
     return bpmValue;
 }
 
@@ -545,7 +561,6 @@
             hrmLocation = @"Invalid";
             break;
     }
-    NSLog(@"HRM location is %@",hrmLocation);
     return hrmLocation;
 }
 

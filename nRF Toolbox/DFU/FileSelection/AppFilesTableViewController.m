@@ -47,7 +47,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.tableView setBackgroundView:[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Background4"]]];
+    //[self.tableView setBackgroundView:[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Background4"]]];
     
     self.tabBarController.delegate = self;
     self.fileSystem = [[AccessFileSystem alloc]init];
@@ -66,8 +66,7 @@
 -(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
     NSLog(@"UserFilesVC didSelectViewController");
-    UINavigationController *navController = [tabBarController.viewControllers objectAtIndex:1];
-    UserFilesTableViewController *userFilesVC = (UserFilesTableViewController *)[navController topViewController];
+    UserFilesTableViewController *userFilesVC = [tabBarController.viewControllers objectAtIndex:1];
     userFilesVC.fileDelegate = self.fileDelegate;
 }
 
@@ -107,10 +106,6 @@
     NSURL *fileURL = [NSURL fileURLWithPath:filePath];
 
     [self.fileDelegate onFileSelected:fileURL];
-}
-
-- (IBAction)CancelBarButtonPressed:(UIBarButtonItem *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

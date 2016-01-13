@@ -28,9 +28,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    UIImage *navBackgroundImage = [UIImage imageNamed:@"NavBarIOS7"];
-    [[UINavigationBar appearance] setBackgroundImage:navBackgroundImage forBarMetrics:UIBarMetricsDefault];
+    //[[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    //UIImage *navBackgroundImage = [UIImage imageNamed:@"NavBarIOS7"];
+    //[[UINavigationBar appearance] setBackgroundImage:navBackgroundImage forBarPosition:UIBarPositionTop barMetrics:UIBarMetricsDefault];
     
     NSDictionary* defaults = [NSDictionary dictionaryWithObjects:@[@"2.3", [NSNumber numberWithInt:10]] forKeys:@[@"key_diameter", @"dfu_number_of_packets"]];
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];

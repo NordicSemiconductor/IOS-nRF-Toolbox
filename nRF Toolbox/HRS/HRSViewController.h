@@ -25,11 +25,10 @@
 #import "ScannerDelegate.h"
 #import "CorePlot-CocoaTouch.h"
 
-@interface HRSViewController : UIViewController <CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate, CPTPlotDataSource>
+@interface HRSViewController : UIViewController <CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate, CPTPlotDataSource, CPTPlotSpaceDelegate>
 
 
 @property (strong, nonatomic) CBCentralManager *bluetoothManager;
-@property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
 @property (weak, nonatomic) IBOutlet UILabel *verticalLabel;
 @property (weak, nonatomic) IBOutlet UIButton *battery;
 @property (weak, nonatomic) IBOutlet UILabel *deviceName;
@@ -37,7 +36,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *hrValue;
 @property (weak, nonatomic) IBOutlet UILabel *hrLocation;
 
-@property (weak, nonatomic) IBOutlet UIView *graphView;
+@property (weak, nonatomic) IBOutlet CPTGraphHostingView *graphView;
 
 - (IBAction)connectOrDisconnectClicked;
 

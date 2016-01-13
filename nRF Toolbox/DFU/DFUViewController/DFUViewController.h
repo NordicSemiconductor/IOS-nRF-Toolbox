@@ -29,7 +29,6 @@
 
 @interface DFUViewController : UIViewController <ScannerDelegate, FileSelectionDelegate, DFUOperationsDelegate>
 
-@property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
 @property (weak, nonatomic) IBOutlet UILabel *verticalLabel;
 @property (weak, nonatomic) IBOutlet UILabel *deviceName;
 @property (weak, nonatomic) IBOutlet UIButton *connectButton;

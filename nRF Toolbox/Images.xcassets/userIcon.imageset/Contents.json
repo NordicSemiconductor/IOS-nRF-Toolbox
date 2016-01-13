@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "smiley-smile.png"
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "smiley-smile.png",
       "scale" : "2x"
     },
     {

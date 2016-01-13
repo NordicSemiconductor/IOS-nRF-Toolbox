@@ -68,7 +68,6 @@
 
 @implementation DFUViewController
 
-@synthesize backgroundImage;
 @synthesize deviceName;
 @synthesize connectButton;
 @synthesize selectedPeripheral;
@@ -100,20 +99,7 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    if (is4InchesIPhone)
-    {
-        // 4 inches iPhone
-        UIImage *image = [UIImage imageNamed:@"Background4.png"];
-        [backgroundImage setImage:image];
-    }
-    else
-    {
-        // 3.5 inches iPhone
-        UIImage *image = [UIImage imageNamed:@"Background35.png"];
-        [backgroundImage setImage:image];
-    }
-    
+    [super viewDidLoad];    
     // Rotate the vertical label
     self.verticalLabel.transform = CGAffineTransformRotate(CGAffineTransformMakeTranslation(-145.0f, 0.0f), (float)(-M_PI / 2));
 }
@@ -171,9 +157,7 @@
         NSLog(@"performing Select File segue");
         UITabBarController *barController = segue.destinationViewController;
         NSLog(@"BarController %@",barController);
-        UINavigationController *navController = [barController.viewControllers firstObject];
-        NSLog(@"NavigationController %@",navController);
-        AppFilesTableViewController *appFilesVC = (AppFilesTableViewController *)navController.topViewController;
+        AppFilesTableViewController *appFilesVC = [barController.viewControllers firstObject];
         NSLog(@"AppFilesTableVC %@",appFilesVC);        
         appFilesVC.fileDelegate = self;
     }

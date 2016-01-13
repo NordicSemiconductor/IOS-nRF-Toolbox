@@ -30,8 +30,6 @@
 
 @interface AppFilesTableViewController : UITableViewController <UITabBarControllerDelegate>
 
-- (IBAction)CancelBarButtonPressed:(UIBarButtonItem *)sender;
-
 //define delegate property
 @property (retain)id<FileSelectionDelegate> fileDelegate;
 

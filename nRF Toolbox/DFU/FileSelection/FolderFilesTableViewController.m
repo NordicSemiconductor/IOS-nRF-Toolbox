@@ -44,7 +44,7 @@
 {
     [super viewDidLoad];
     
-    [self.tableView setBackgroundView:[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Background4"]]];
+    //[self.tableView setBackgroundView:[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Background4"]]];
     self.fileSystem = [[AccessFileSystem alloc]init];
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     if (self.files.count == 0) {

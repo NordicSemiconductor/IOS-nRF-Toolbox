@@ -29,24 +29,10 @@
 @end
 
 @implementation ViewController
-@synthesize backgroundImage;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Adjust the background to fill the phone space
-    if (is4InchesIPhone)
-    {
-        // 4 inches iPhone
-        UIImage *image = [UIImage imageNamed:@"Background4.png"];
-        [backgroundImage setImage:image];
-    }
-    else
-    {
-        // 3.5 inches iPhone
-        UIImage *image = [UIImage imageNamed:@"Background35.png"];
-        [backgroundImage setImage:image];
-    }
 }
 
 - (void)didReceiveMemoryWarning

@@ -51,7 +51,7 @@ int PAGE_NUMBERS;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.tableView setBackgroundView:[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Background4"]]];
+    //[self.tableView setBackgroundView:[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Background4"]]];
     self.fileSystem = [[AccessFileSystem alloc]init];
     self.documentsDirectoryPath = [self.fileSystem getDocumentsDirectoryPath];
     self.files = [[self.fileSystem getDirectoriesAndRequiredFilesFromDocumentsDirectory] mutableCopy];
