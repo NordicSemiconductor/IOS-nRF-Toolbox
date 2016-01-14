@@ -2124,8 +2124,12 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="BackgroundTitle" translatesAutoresizingMaskIntoConstraints="NO" id="N7E-Zl-a8K">
+                            <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BackgroundTitle" translatesAutoresizingMaskIntoConstraints="NO" id="N7E-Zl-a8K">
                                 <rect key="frame" x="240" y="514" width="120" height="14"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="1j3-ho-cRo"/>
+                                    <constraint firstAttribute="height" constant="14" id="afG-tP-LxB"/>
+                                </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zgI-eq-aFb" userLabel="View - ACTIVITY">
                                 <rect key="frame" x="39" y="220" width="527" height="93"/>
@@ -3781,7 +3785,7 @@
         <image name="userIcon" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="lQw-YZ-fLh"/>
-        <segue reference="lAt-L9-EDs"/>
+        <segue reference="avT-gU-1Yo"/>
+        <segue reference="hfZ-yA-x7Y"/>
     </inferredMetricsTieBreakers>
 </document>
