@@ -15,7 +15,7 @@
 				<string>icon-hex@2x</string>
 			</array>
 			<key>CFBundleTypeName</key>
-			<string>nRF51 Hex</string>
+			<string>nRF5x Hex</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSHandlerRank</key>
@@ -32,7 +32,7 @@
 				<string>icon-hex@2x</string>
 			</array>
 			<key>CFBundleTypeName</key>
-			<string>nRF51Zip</string>
+			<string>Distribution Packet (ZIP)</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSHandlerRank</key>

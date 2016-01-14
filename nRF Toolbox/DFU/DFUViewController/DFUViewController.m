@@ -88,7 +88,8 @@
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
-    if (self) {
+    if (self)
+    {
         PACKETS_NOTIFICATION_INTERVAL = [[[NSUserDefaults standardUserDefaults] valueForKey:@"dfu_number_of_packets"] intValue];
         NSLog(@"PACKETS_NOTIFICATION_INTERVAL %d",PACKETS_NOTIFICATION_INTERVAL);
         dfuOperations = [[DFUOperations alloc] initWithDelegate:self];
@@ -104,11 +105,12 @@
     self.verticalLabel.transform = CGAffineTransformRotate(CGAffineTransformMakeTranslation(-145.0f, 0.0f), (float)(-M_PI / 2));
 }
 
--(void)viewDidDisappear:(BOOL)animated {
+-(void)viewDidDisappear:(BOOL)animated
+{
     [super viewDidDisappear:YES];
     //if DFU peripheral is connected and user press Back button then disconnect it
-    if ([self isMovingFromParentViewController] && self.isConnected) {
-        NSLog(@"isMovingFromParentViewController");
+    if ([self isMovingFromParentViewController] && self.isConnected)
+    {
         [dfuOperations cancelDFU];
         [NSThread sleepForTimeInterval:1.0f];
     }
@@ -116,10 +118,12 @@
 
 -(void)uploadPressed
 {
-    if (self.isTransferring) {
+    if (self.isTransferring)
+    {
         [dfuOperations cancelDFU];
     }
-    else {
+    else
+    {
         [self performDFU];
     }
 }
@@ -154,22 +158,20 @@
     }
     else if ([segue.identifier isEqualToString:@"FileSegue"])
     {
-        NSLog(@"performing Select File segue");
         UITabBarController *barController = segue.destinationViewController;
-        NSLog(@"BarController %@",barController);
         AppFilesTableViewController *appFilesVC = [barController.viewControllers firstObject];
-        NSLog(@"AppFilesTableVC %@",appFilesVC);        
         appFilesVC.fileDelegate = self;
     }
-    else if ([[segue identifier] isEqualToString:@"help"]) {
+    else if ([segue.identifier isEqualToString:@"FileTypeSegue"])
+    {
+        FileTypeTableViewController *fileTypeVC = [segue destinationViewController];
+        fileTypeVC.chosenFirmwareType = selectedFileType;
+    }
+    else if ([[segue identifier] isEqualToString:@"help"])
+    {
         HelpViewController *helpVC = [segue destinationViewController];
         helpVC.helpText = [Utility getDFUHelpText];
         helpVC.isDFUViewController = YES;
-    }
-    else if ([segue.identifier isEqualToString:@"FileTypeSegue"]) {
-        NSLog(@"performing FileTypeSegue");
-        FileTypeTableViewController *fileTypeVC = [segue destinationViewController];
-        fileTypeVC.chosenFirmwareType = selectedFileType;
     }
 }
 
@@ -177,7 +179,7 @@
 {
     selectedPeripheral = nil;
     deviceName.text = @"DEFAULT DFU";
-    uploadStatus.text = @"waiting ...";
+    uploadStatus.text = @"Waiting ...";
     uploadStatus.hidden = YES;
     progress.progress = 0.0f;
     progress.hidden = YES;
@@ -191,22 +193,28 @@
 -(void)enableUploadButton
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (selectedFileType && self.dfuHelper.selectedFileSize > 0) {
-            if ([self.dfuHelper isValidFileSelected]) {
+        if (selectedFileType && self.dfuHelper.selectedFileSize > 0)
+        {
+            if ([self.dfuHelper isValidFileSelected])
+            {
                 NSLog(@" valid file selected");
             }
-            else {
+            else
+            {
                 NSLog(@"Valid file not available in zip file");
                 [Utility showAlert:[self.dfuHelper getFileValidationMessage]];
                 return;
             }
         }
         if (self.dfuHelper.isDfuVersionExist) {
-            if (selectedPeripheral && selectedFileType && self.dfuHelper.selectedFileSize > 0 && self.isConnected && self.dfuHelper.dfuVersion > 1) {
-                if ([self.dfuHelper isInitPacketFileExist]) {
+            if (selectedPeripheral && selectedFileType && self.dfuHelper.selectedFileSize > 0 && self.isConnected && self.dfuHelper.dfuVersion > 1)
+            {
+                if ([self.dfuHelper isInitPacketFileExist])
+                {
                     uploadButton.enabled = YES;
                 }
-                else {
+                else
+                {
                     [Utility showAlert:[self.dfuHelper getInitPacketFileValidationMessage]];
                 }
             }
@@ -214,11 +222,14 @@
                 NSLog(@"cant enable Upload button");
             }
         }
-        else {
-            if (selectedPeripheral && selectedFileType && self.dfuHelper.selectedFileSize > 0 && self.isConnected) {
+        else
+        {
+            if (selectedPeripheral && selectedFileType && self.dfuHelper.selectedFileSize > 0 && self.isConnected)
+            {
                 uploadButton.enabled = YES;
             }
-            else {
+            else
+            {
                 NSLog(@"cant enable Upload button");
             }
         }
@@ -242,15 +253,14 @@
 
 -(void)appDidEnterBackground:(NSNotification *)_notification
 {
-    NSLog(@"appDidEnterBackground");
-    if (self.isConnected && self.isTransferring) {
+    if (self.isConnected && self.isTransferring)
+    {
         [Utility showBackgroundNotification:[self.dfuHelper getUploadStatusMessage]];
     }
 }
 
 -(void)appDidEnterForeground:(NSNotification *)_notification
 {
-    NSLog(@"appDidEnterForeground");
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
 }
 
@@ -260,7 +270,6 @@
 {
     FileTypeTableViewController *fileTypeVC = [sender sourceViewController];
     selectedFileType = fileTypeVC.chosenFirmwareType;
-    NSLog(@"unwindFileTypeSelector, selected Filetype: %@",selectedFileType);
     fileType.text = selectedFileType;
     [self.dfuHelper setFirmwareType:selectedFileType];
     [self enableUploadButton];
@@ -279,25 +288,22 @@
 
 -(void)onFileSelected:(NSURL *)url
 {
-    NSLog(@"onFileSelected");
     self.dfuHelper.selectedFileURL = url;
     if (self.dfuHelper.selectedFileURL) {
-        NSLog(@"selectedFile URL %@",self.dfuHelper.selectedFileURL);
         NSString *selectedFileName = [[url path]lastPathComponent];
         NSData *fileData = [NSData dataWithContentsOfURL:url];
         self.dfuHelper.selectedFileSize = fileData.length;
-        NSLog(@"fileSelected %@",selectedFileName);
         
         //get last three characters for file extension
         NSString *extension = [selectedFileName substringFromIndex: [selectedFileName length] - 3];
-        NSLog(@"selected file extension is %@",extension);
-        if ([extension isEqualToString:@"zip"]) {
-            NSLog(@"this is zip file");
+        if ([extension isEqualToString:@"zip"])
+        {
             self.dfuHelper.isSelectedFileZipped = YES;
             self.dfuHelper.isManifestExist = NO;
             [self.dfuHelper unzipFiles:self.dfuHelper.selectedFileURL];
         }
-        else {
+        else
+        {
             self.dfuHelper.isSelectedFileZipped = NO;
         }
         
@@ -317,7 +323,6 @@
 
 -(void)onDeviceConnected:(CBPeripheral *)peripheral
 {
-    NSLog(@"onDeviceConnected %@",peripheral.name);
     self.isConnected = YES;
     self.dfuHelper.isDfuVersionExist = NO;
     [self enableUploadButton];
@@ -332,7 +337,6 @@
 
 -(void)onDeviceConnectedWithVersion:(CBPeripheral *)peripheral
 {
-    NSLog(@"onDeviceConnectedWithVersion %@",peripheral.name);
     self.isConnected = YES;
     self.dfuHelper.isDfuVersionExist = YES;
     [self enableUploadButton];
@@ -347,7 +351,6 @@
 
 -(void)onDeviceDisconnected:(CBPeripheral *)peripheral
 {
-    NSLog(@"device disconnected %@",peripheral.name);
     self.isTransferring = NO;
     self.isConnected = NO;
     
@@ -383,7 +386,6 @@
 
 -(void)onReadDFUVersion:(int)version
 {
-    NSLog(@"onReadDFUVersion %d",version);
     self.dfuHelper.dfuVersion = version;
     NSLog(@"DFU Version: %d",self.dfuHelper.dfuVersion);
     if (self.dfuHelper.dfuVersion == 1) {
@@ -394,7 +396,7 @@
 
 -(void)onDFUStarted
 {
-    NSLog(@"onDFUStarted");
+    NSLog(@"DFU Started");
     self.isTransferring = YES;
     dispatch_async(dispatch_get_main_queue(), ^{
         uploadButton.enabled = YES;
@@ -411,7 +413,7 @@
 
 -(void)onDFUCancelled
 {
-    NSLog(@"onDFUCancelled");
+    NSLog(@"DFU Cancelled");
     self.isTransferring = NO;
     self.isTransferCancelled = YES;
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -421,23 +423,23 @@
 
 -(void)onSoftDeviceUploadStarted
 {
-    NSLog(@"onSoftDeviceUploadStarted");
+    NSLog(@"SoftDevice Upload Started");
 }
 
 -(void)onSoftDeviceUploadCompleted
 {
-    NSLog(@"onSoftDeviceUploadCompleted");
+    NSLog(@"SoftDevice Upload Completed");
 }
 
 -(void)onBootloaderUploadStarted
 {
-    NSLog(@"onBootloaderUploadStarted");
+    NSLog(@"Bootloader Upload Started");
     dispatch_async(dispatch_get_main_queue(), ^{
         if ([Utility isApplicationStateInactiveORBackground]) {
-            [Utility showBackgroundNotification:@"uploading bootloader ..."];
+            [Utility showBackgroundNotification:@"Uploading bootloader ..."];
         }
         else {
-            uploadStatus.text = @"uploading bootloader ...";
+            uploadStatus.text = @"Uploading bootloader ...";
         }
     });
     
@@ -445,40 +447,42 @@
 
 -(void)onBootloaderUploadCompleted
 {
-    NSLog(@"onBootloaderUploadCompleted");
+    NSLog(@"Bootloader Upload Completed");
 }
 
 -(void)onTransferPercentage:(int)percentage
 {
-    NSLog(@"onTransferPercentage %d",percentage);
+    NSLog(@"Transfer progress: %d%%",percentage);
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
-        progressLabel.text = [NSString stringWithFormat:@"%d %%", percentage];
+        progressLabel.text = [NSString stringWithFormat:@"%d%%", percentage];
         [progress setProgress:((float)percentage/100.0) animated:YES];
     });    
 }
 
 -(void)onSuccessfulFileTranferred
 {
-    NSLog(@"OnSuccessfulFileTransferred");
+    NSLog(@"File Transferred");
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
         self.isTransferring = NO;
         self.isTransfered = YES;
         NSString* message = [NSString stringWithFormat:@"%lu bytes transfered in %lu seconds", (unsigned long)dfuOperations.binFileSize, (unsigned long)dfuOperations.uploadTimeInSeconds];
-        if ([Utility isApplicationStateInactiveORBackground]) {
+        
+        if ([Utility isApplicationStateInactiveORBackground])
+        {
             [Utility showBackgroundNotification:message];
         }
-        else {
+        else
+        {
             [Utility showAlert:message];
         }
-        
     });
 }
 
 -(void)onError:(NSString *)errorMessage
 {
-    NSLog(@"OnError %@",errorMessage);
+    NSLog(@"Error: %@", errorMessage);
     self.isErrorKnown = YES;
     dispatch_async(dispatch_get_main_queue(), ^{
         [Utility showAlert:errorMessage];

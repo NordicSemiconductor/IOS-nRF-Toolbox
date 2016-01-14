@@ -26,6 +26,8 @@
 
 @interface HelpViewController ()
 
+@property (weak, nonatomic) IBOutlet UITextView *helpTextView;
+
 @end
 
 @implementation HelpViewController
@@ -33,35 +35,28 @@
 @synthesize helpTextView;
 @synthesize helpText;
 
-int PAGE_NUMBERS;
-
-//- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-//{
-//    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-//    if (self) {
-//        // Custom initialization
-//    }
-//    return self;
-//}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    helpTextView.text = helpText;
+    // By setting selectible to YES the font size is not reseted. It looks like a iOS bug.
+//    [helpTextView setSelectable:YES];
+    [helpTextView setText:helpText];
+    [helpTextView setSelectable:NO];
 
     if (self.isDFUViewController) {
-        [self hideNavigationBar];
-        [self initDFUDemoImages];
-        [self showDFUDemo];
-        self.isDFUViewController = NO;
+//        [self hideNavigationBar];
+//        [self initDFUDemoImages];
+//        [self showDFUDemo];
+//        self.isDFUViewController = NO;
     }
     else if (self.isAppFileTableViewController) {
-        [self hideNavigationBar];
-        [self initUserFilesDemoImages];
-        [self.tabBarController.tabBar setHidden:YES];
-        [self showDFUDemo];
-        self.isAppFileTableViewController = NO;
+//        [self hideNavigationBar];
+//        [self initUserFilesDemoImages];
+//        [self.tabBarController.tabBar setHidden:YES];
+//        [self showDFUDemo];
+//        self.isAppFileTableViewController = NO;
     }
 }
 
@@ -70,102 +65,5 @@ int PAGE_NUMBERS;
     [self.navigationController setNavigationBarHidden:YES];
 }
 
--(void) initDFUDemoImages
-{
-    self.pageContentImages = @[@"DFU_Main_Page.png",
-                               @"Application_Zip_Image.png",
-                               @"Bootloader_Zip_Image.png",
-                               @"Softdevice_Zip_Image.png",
-                               @"System_Zip_Image.png"];
-    
-    PAGE_NUMBERS = (int)[self.pageContentImages count];
-}
-
--(void) initUserFilesDemoImages
-{
-    self.pageContentImages = @[@"AddingFiles",
-                               @"Itunes1.png",
-                               @"Itunes2.png",
-                               @"EmailAttachment1.png",
-                               @"EmailAttachment2.png"];
-    
-    PAGE_NUMBERS = (int)[self.pageContentImages count];
-}
-
-
--(void) showDFUDemo
-{
-    self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"IdPageViewController"];
-    
-    //Assign datasource (pages or viewcontrollers) of PageViewController to self
-    self.pageViewController.dataSource = self;
-    
-    //set pages or viewcontrollers of PageViewController
-    PageImageViewController *pageContentViewController = [self createPageContentViewControllerAtIndex:0];
-    NSArray *pageContentViewControllers = @[pageContentViewController];
-    [self.pageViewController setViewControllers:pageContentViewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:Nil];
-    
-    //Add PageViewController to this Root View Controller as child viewcontroller
-    [self addChildViewController:_pageViewController];
-    [self.view addSubview:_pageViewController.view];
-    [self.pageViewController didMoveToParentViewController:self];
-}
-
-
--(PageImageViewController *)createPageContentViewControllerAtIndex:(NSUInteger)index
-{
-    if (index >= PAGE_NUMBERS || PAGE_NUMBERS < 1) {
-        return nil;
-    }
-    PageImageViewController *pageContentVC = [self.storyboard instantiateViewControllerWithIdentifier:@"IdPageImageViewController"];
-    pageContentVC.pageIndex = index;
-    pageContentVC.pageImageFileName = self.pageContentImages[index];
-    return pageContentVC;
-}
-
-
-#pragma mark - Page View Controller Data Source
-
--(UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
-{
-    NSLog(@"pageViewController viewControllerBeforeViewController");
-    NSUInteger index = ((PageImageViewController *)viewController).pageIndex;
-    if ((index == 0) || (index == NSNotFound)) {
-        NSLog(@"page index is equal to first Page Number or index not found");
-        return nil;
-    }
-    NSLog(@"decreasing page index");
-    index--;
-    return [self createPageContentViewControllerAtIndex:index];
-}
-
--(UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
-{
-    NSLog(@"pageViewController viewControllerAfterViewController");
-    NSUInteger index = ((PageImageViewController *)viewController).pageIndex;
-    if (index == NSNotFound) {
-        return nil;
-    }
-    index++;
-    if (index == PAGE_NUMBERS) {
-        NSLog(@"page index is equal to Max Page Number");
-        return nil;
-    }
-    NSLog(@"increasing page index");
-    return [self createPageContentViewControllerAtIndex:index];
-}
-
-
-- (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController
-{
-    NSLog(@"presentationCountForPageViewController %d",PAGE_NUMBERS);
-    return PAGE_NUMBERS;
-}
-
-- (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
-{
-    NSLog(@"presentationIndexForPageViewController");
-    return 0;
-}
 
 @end

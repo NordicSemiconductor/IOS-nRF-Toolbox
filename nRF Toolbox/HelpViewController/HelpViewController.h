@@ -22,14 +22,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HelpViewController : UIViewController <UIPageViewControllerDataSource>
-
-@property (weak, nonatomic) IBOutlet UITextView *helpTextView;
+@interface HelpViewController : UIViewController
 
 @property (strong, nonatomic) NSString *helpText;
 @property(nonatomic) BOOL isDFUViewController;
 @property(nonatomic) BOOL isAppFileTableViewController;
-@property (strong, nonatomic)NSArray *pageContentImages;
-@property (strong, nonatomic)UIPageViewController *pageViewController;
 
 @end

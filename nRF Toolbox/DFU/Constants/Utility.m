@@ -42,7 +42,7 @@ NSString* const FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER = @"softdevice and boot
 
 + (NSString *) getDFUHelpText
 {
-    return [NSString stringWithFormat:@"-The Device Firmware Update (DFU) app that is compatible with Nordic Semiconductor nRF51822 devices that have the S110 SoftDevice and bootloader enabled.\n\n-It allows to upload new application onto the device over-the-air (OTA).\n\n-The DFU discovers supported DFU devices, connects to them, and uploads user selected firmware applications to the device.\n\n-Default number of Packet Receipt Notification is 10 but you can set up other number in the iPhone Settings.\n\n-(New) Bin format is also supported in this version.\n\n-(New) This version supports Nordic Semiconductor softdevice 7.1 and SDK 7.1 and it is backword compatible. \n\n-(New) In SDK 7.0 and above initPacket is sent in a file (.dat) in addition to firmware file.\n\n-(New) For Application update application.hex or application.bin and application.dat is required inside a zip file.\n\n-(New) For Bootloader update bootloader.hex or bootloader.bin and bootloader.dat is required inside a zip file.\n\n-(New) For Softdevice update softdevice.hex or softdevice.bin and softdevice.dat is required.\n\n-(New) For updating both softdevice and bootloader system.dat is required in addition."];
+    return [NSString stringWithFormat:@"The Device Firmware Update (DFU) profile allows to upload a new application, Soft Device or bootloader onto the device over-the-air (OTA). It is compatible with nRF5x devices, from Nordic Semiconductor, that have the S110, S130 or S132 SoftDevice and the DFU bootloader enabled. \n\nDefault number of Packet Receipt Notification is 10 and can changed in the Settings. For more information about the DFU check the documentation."];
 }
 
 + (NSString *) getEmptyUserFilesText
@@ -60,12 +60,11 @@ NSString* const FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER = @"softdevice and boot
     return @"There are no Hex, Bin or Zip files found inside selected folder.";
 }
 
-
-
 + (NSArray *) getFirmwareTypes
 {
     static NSArray *events;
-    if (events == nil) {
+    if (events == nil)
+    {
         events = @[FIRMWARE_TYPE_SOFTDEVICE, FIRMWARE_TYPE_BOOTLOADER, FIRMWARE_TYPE_APPLICATION, FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER];
     }
     return events;
@@ -73,7 +72,8 @@ NSString* const FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER = @"softdevice and boot
 
 + (NSString *) stringFileExtension:(enumFileExtension)fileExtension
 {
-    switch (fileExtension) {
+    switch (fileExtension)
+    {
         case HEX:
             return @"hex";
         case BIN:

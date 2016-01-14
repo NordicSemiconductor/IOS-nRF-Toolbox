@@ -49,7 +49,7 @@
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     if ([[segue identifier] isEqualToString:@"help"]) {
         HelpViewController *helpVC = [segue destinationViewController];
-        helpVC.helpText = [NSString stringWithFormat:@"        nRF Toolbox Version %@\n\n The nRF Toolbox application works with a wide range of the most popular Bluetooth Low Energy accessories.",version];
+        helpVC.helpText = [NSString stringWithFormat:@"The nRF Toolbox works with a wide range of the most popular Bluetooth Low Energy accessories. It contains applications demonstrating standard BLE profiles:\n-Cycling Speed and Cadence,\n-Running Speed and Cadence,\n-Heart Rate Monitor,\n-Blood Pressure Monitor,\n-Health Thermometer Monitor,\n-Glucose Monitor,\n-Proximity Monitor.\n\nAdditionaly, it supports Nordic Semiconductor's proprietary profiles:\n-UART (Universal Asynchronous Receiver/Transmitter),\n-DFU (Device Firmware Update).\n\nVersion %@", version];
     }
 }
 

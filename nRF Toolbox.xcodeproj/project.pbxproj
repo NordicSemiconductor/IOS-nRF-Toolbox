@@ -78,16 +78,6 @@
 		A8B2DFA01AB1C3040043D988 /* JsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B2DF9D1AB1C3040043D988 /* JsonParser.m */; };
 		A8B2DFA11AB1C3040043D988 /* InitData.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B2DF9F1AB1C3040043D988 /* InitData.m */; };
 		A8F94C7A1A72592800F2D927 /* PageImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F94C791A72592800F2D927 /* PageImageViewController.m */; };
-		A8F94C7C1A725D9600F2D927 /* Application_Zip_Image.png in Resources */ = {isa = PBXBuildFile; fileRef = A8F94C7B1A725D9600F2D927 /* Application_Zip_Image.png */; };
-		A8F94C7E1A725DA800F2D927 /* Bootloader_Zip_Image.png in Resources */ = {isa = PBXBuildFile; fileRef = A8F94C7D1A725DA800F2D927 /* Bootloader_Zip_Image.png */; };
-		A8F94C801A725DBA00F2D927 /* Softdevice_Zip_Image.png in Resources */ = {isa = PBXBuildFile; fileRef = A8F94C7F1A725DBA00F2D927 /* Softdevice_Zip_Image.png */; };
-		A8F94C821A725DCC00F2D927 /* System_Zip_Image.png in Resources */ = {isa = PBXBuildFile; fileRef = A8F94C811A725DCC00F2D927 /* System_Zip_Image.png */; };
-		A8F94C861A72632E00F2D927 /* DFU_Main_Page.png in Resources */ = {isa = PBXBuildFile; fileRef = A8F94C851A72632E00F2D927 /* DFU_Main_Page.png */; };
-		A8F94C8C1A729E8C00F2D927 /* EmailAttachment2.png in Resources */ = {isa = PBXBuildFile; fileRef = A8F94C8B1A729E8C00F2D927 /* EmailAttachment2.png */; };
-		A8F94C961A72B02600F2D927 /* Itunes2.png in Resources */ = {isa = PBXBuildFile; fileRef = A8F94C951A72B02600F2D927 /* Itunes2.png */; };
-		A8F94C981A72E59E00F2D927 /* AddingFiles.png in Resources */ = {isa = PBXBuildFile; fileRef = A8F94C971A72E59E00F2D927 /* AddingFiles.png */; };
-		A8F94C9A1A72E5E300F2D927 /* Itunes1.png in Resources */ = {isa = PBXBuildFile; fileRef = A8F94C991A72E5E300F2D927 /* Itunes1.png */; };
-		A8F94C9C1A72E5FD00F2D927 /* EmailAttachment1.png in Resources */ = {isa = PBXBuildFile; fileRef = A8F94C9B1A72E5FD00F2D927 /* EmailAttachment1.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -304,16 +294,6 @@
 		A8B2DF9F1AB1C3040043D988 /* InitData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitData.m; sourceTree = "<group>"; };
 		A8F94C781A72592800F2D927 /* PageImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageImageViewController.h; sourceTree = "<group>"; };
 		A8F94C791A72592800F2D927 /* PageImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageImageViewController.m; sourceTree = "<group>"; };
-		A8F94C7B1A725D9600F2D927 /* Application_Zip_Image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Application_Zip_Image.png; sourceTree = "<group>"; };
-		A8F94C7D1A725DA800F2D927 /* Bootloader_Zip_Image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bootloader_Zip_Image.png; sourceTree = "<group>"; };
-		A8F94C7F1A725DBA00F2D927 /* Softdevice_Zip_Image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Softdevice_Zip_Image.png; sourceTree = "<group>"; };
-		A8F94C811A725DCC00F2D927 /* System_Zip_Image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = System_Zip_Image.png; sourceTree = "<group>"; };
-		A8F94C851A72632E00F2D927 /* DFU_Main_Page.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DFU_Main_Page.png; sourceTree = "<group>"; };
-		A8F94C8B1A729E8C00F2D927 /* EmailAttachment2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EmailAttachment2.png; sourceTree = "<group>"; };
-		A8F94C951A72B02600F2D927 /* Itunes2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Itunes2.png; sourceTree = "<group>"; };
-		A8F94C971A72E59E00F2D927 /* AddingFiles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AddingFiles.png; sourceTree = "<group>"; };
-		A8F94C991A72E5E300F2D927 /* Itunes1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Itunes1.png; sourceTree = "<group>"; };
-		A8F94C9B1A72E5FD00F2D927 /* EmailAttachment1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EmailAttachment1.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -759,16 +739,6 @@
 		A85667DD1B222AA7004A6D3C /* AppImages */ = {
 			isa = PBXGroup;
 			children = (
-				A8F94C971A72E59E00F2D927 /* AddingFiles.png */,
-				A8F94C9B1A72E5FD00F2D927 /* EmailAttachment1.png */,
-				A8F94C8B1A729E8C00F2D927 /* EmailAttachment2.png */,
-				A8F94C991A72E5E300F2D927 /* Itunes1.png */,
-				A8F94C951A72B02600F2D927 /* Itunes2.png */,
-				A8F94C851A72632E00F2D927 /* DFU_Main_Page.png */,
-				A8F94C7B1A725D9600F2D927 /* Application_Zip_Image.png */,
-				A8F94C7D1A725DA800F2D927 /* Bootloader_Zip_Image.png */,
-				A8F94C7F1A725DBA00F2D927 /* Softdevice_Zip_Image.png */,
-				A8F94C811A725DCC00F2D927 /* System_Zip_Image.png */,
 				5211EFAA1885642F007CC40D /* icon-dfu-64.png */,
 				5211EFAB1885642F007CC40D /* icon-dfu-320.png */,
 				5211EFAC1885642F007CC40D /* icon-hex.png */,
@@ -926,27 +896,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A8F94C801A725DBA00F2D927 /* Softdevice_Zip_Image.png in Resources */,
 				7E6ED10B196ED482008010B6 /* firmwares in Resources */,
 				5214D0CE1886C02A00460637 /* Settings.bundle in Resources */,
 				5217F3FE1859EE0000F2D5BB /* Images.xcassets in Resources */,
 				7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */,
-				A8F94C8C1A729E8C00F2D927 /* EmailAttachment2.png in Resources */,
 				52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */,
 				5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */,
-				A8F94C861A72632E00F2D927 /* DFU_Main_Page.png in Resources */,
-				A8F94C7C1A725D9600F2D927 /* Application_Zip_Image.png in Resources */,
-				A8F94C9C1A72E5FD00F2D927 /* EmailAttachment1.png in Resources */,
-				A8F94C7E1A725DA800F2D927 /* Bootloader_Zip_Image.png in Resources */,
-				A8F94C821A725DCC00F2D927 /* System_Zip_Image.png in Resources */,
-				A8F94C981A72E59E00F2D927 /* AddingFiles.png in Resources */,
 				5217F3F01859EE0000F2D5BB /* InfoPlist.strings in Resources */,
 				5211EFB118856430007CC40D /* icon-hex@2x.png in Resources */,
 				5217F3F91859EE0000F2D5BB /* Main.storyboard in Resources */,
 				5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */,
 				5211EFB018856430007CC40D /* icon-hex.png in Resources */,
-				A8F94C9A1A72E5E300F2D927 /* Itunes1.png in Resources */,
-				A8F94C961A72B02600F2D927 /* Itunes2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
