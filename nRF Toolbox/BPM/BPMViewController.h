@@ -22,9 +22,10 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
+#import "BaseViewController.h"
 #import "ScannerDelegate.h"
 
-@interface BPMViewController : UIViewController <CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate>
+@interface BPMViewController : BaseViewController <CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate>
 
 @property (strong, nonatomic) CBCentralManager *bluetoothManager;
 @property (weak, nonatomic) IBOutlet UILabel *verticalLabel;

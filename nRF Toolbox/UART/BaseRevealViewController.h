@@ -20,12 +20,10 @@
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <UIKit/UIKit.h>
+#import "SWRevealViewController.h"
 
-@interface HelpViewController : UIViewController
+@interface BaseRevealViewController : SWRevealViewController
 
-@property (strong, nonatomic) NSString *helpText;
-@property(nonatomic) BOOL isDFUViewController;
-@property(nonatomic) BOOL isAppFileTableViewController;
+- (void)showAbout:(NSString*)message;
 
 @end

@@ -22,18 +22,10 @@
 
 #import <UIKit/UIKit.h>
 #import "BluetoothManager.h"
+#import "Logger.h"
 
-@interface LogViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface LogViewController : UIViewController <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, Logger>
 
-@property (strong, nonatomic) NSMutableArray *logText;
-
-@property (weak, nonatomic) IBOutlet UITableView *displayLogTextTable;
-@property (weak, nonatomic) IBOutlet UITextField *commandTextField;
-
-@property (strong, nonatomic) BluetoothManager *uartBluetoothManager;
-@property (strong, nonatomic) NSString *uartPeripheralName;
-@property BOOL isRXCharacteristicFound;
-@property BOOL isUartPeripheralConnected;
-
+@property (strong, nonatomic) BluetoothManager *bluetoothManager;
 
 @end

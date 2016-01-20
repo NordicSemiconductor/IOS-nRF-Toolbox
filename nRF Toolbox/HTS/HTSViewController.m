@@ -25,7 +25,6 @@
 #import "Constants.h"
 #import "AppUtilities.h"
 #import "CharacteristicReader.h"
-#import "HelpViewController.h"
 
 @interface HTSViewController () {
     CBUUID *htsServiceUUID;
@@ -41,6 +40,7 @@
 @property (strong, nonatomic) CBPeripheral* connectedPeripheral;
 
 -(void) updateUnits;
+-(IBAction)aboutButtonClicked:(id)sender;
 
 @end
 
@@ -108,6 +108,10 @@
     }
 }
 
+- (IBAction)aboutButtonClicked:(id)sender {
+    [self showAbout:[AppUtilities getHTSHelpText]];
+}
+
 - (IBAction)connectOrDisconnectClicked {
     if (connectedPeripheral != nil)
     {
@@ -156,10 +160,6 @@
         ScannerViewController *controller = (ScannerViewController *)segue.destinationViewController;
         controller.filterUUID = htsServiceUUID;
         controller.delegate = self;
-    }
-    else if ([[segue identifier] isEqualToString:@"help"]) {
-        HelpViewController *helpVC = [segue destinationViewController];
-        helpVC.helpText = [AppUtilities getHTSHelpText];
     }
 }
 
@@ -283,7 +283,8 @@
                 break;
             }
         }
-    } else if ([service.UUID isEqual:batteryServiceUUID])
+    }
+    else if ([service.UUID isEqual:batteryServiceUUID])
     {
         for (CBCharacteristic *characteristic in service.characteristics)
         {
@@ -402,7 +403,8 @@
                 self.type.text = @"Location: n/a";
             }
             
-            if ([AppUtilities isApplicationStateInactiveORBackground]) {
+            if ([AppUtilities isApplicationStateInactiveORBackground])
+            {
                 NSString *message;
                 if (fahrenheit)
                 {

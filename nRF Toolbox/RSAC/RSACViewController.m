@@ -25,7 +25,6 @@
 #import "Constants.h"
 #import "AppUtilities.h"
 #import "CharacteristicReader.h"
-#import "HelpViewController.h"
 
 @interface RSACViewController () {
     /*!
@@ -66,6 +65,8 @@
 - (void)timerFireMethod:(NSTimer *)_timer;
 - (void)appDidEnterBackground:(NSNotification *)_notification;
 - (void)appDidBecomeActiveBackground:(NSNotification *)_notification;
+
+-(IBAction)aboutButtonClicked:(id)sender;
 
 @end
 
@@ -127,6 +128,10 @@
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
 }
 
+- (IBAction)aboutButtonClicked:(id)sender {
+    [self showAbout:[AppUtilities getRSACHelpText]];
+}
+
 - (IBAction)connectOrDisconnectClicked {
     if (connectedPeripheral != nil)
     {
@@ -148,11 +153,6 @@
         ScannerViewController *controller = (ScannerViewController *)segue.destinationViewController;
         controller.filterUUID = rscServiceUUID;
         controller.delegate = self;
-    }
-    else if ([[segue identifier] isEqualToString:@"help"]) {
-        isBackButtonPressed = NO;
-        HelpViewController *helpVC = [segue destinationViewController];
-        helpVC.helpText = [AppUtilities getRSACHelpText];
     }
 }
 

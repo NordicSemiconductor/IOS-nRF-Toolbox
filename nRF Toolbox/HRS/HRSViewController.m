@@ -25,7 +25,6 @@
 #import "Constants.h"
 #import "AppUtilities.h"
 #import "CorePlot-CocoaTouch.h"
-#import "HelpViewController.h"
 
 @interface HRSViewController ()
 {
@@ -48,6 +47,7 @@
 @property (nonatomic, strong) CPTGraph *graph;
 
 @property (strong, nonatomic) CBPeripheral *hrPeripheral;
+- (IBAction)aboutButtonClicked:(id)sender;
 
 @end
 
@@ -111,6 +111,10 @@
     isBackButtonPressed = YES;
 }
 
+- (IBAction)aboutButtonClicked:(id)sender {
+    [self showAbout:[AppUtilities getHRSHelpText]];
+}
+
 - (IBAction)connectOrDisconnectClicked
 {
     if (hrPeripheral != nil)
@@ -133,11 +137,6 @@
         ScannerViewController *controller = (ScannerViewController *)segue.destinationViewController;
         controller.filterUUID = HR_Service_UUID;
         controller.delegate = self;
-    }
-    else if ([[segue identifier] isEqualToString:@"help"]) {
-        isBackButtonPressed = NO;
-        HelpViewController *helpVC = [segue destinationViewController];
-        helpVC.helpText = [AppUtilities getHRSHelpText];
     }
 }
 
@@ -577,5 +576,4 @@
     hrLocation.text = @"n/a";
     hrValue.text = @"-";
 }
-
 @end

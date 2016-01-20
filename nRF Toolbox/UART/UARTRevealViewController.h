@@ -20,9 +20,8 @@
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <UIKit/UIKit.h>
-#import "BaseViewController.h"
+#import "BaseRevealViewController.h"
 
-@interface ViewController : BaseViewController<UICollectionViewDataSource>
+@interface UARTRevealViewController : BaseRevealViewController
 
 @end

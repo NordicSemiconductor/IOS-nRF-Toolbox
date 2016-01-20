@@ -25,7 +25,6 @@
 #import "ScannerViewController.h"
 #import "Constants.h"
 #import "AppUtilities.h"
-#import "HelpViewController.h"
 
 
 @interface ProximityViewController () {
@@ -46,6 +45,8 @@
 @property (strong, nonatomic)CBCharacteristic *immidiateAlertCharacteristic;
 @property (strong, nonatomic) AVAudioPlayer *audioPlayer;
 
+-(IBAction)aboutButtonClicked:(id)sender;
+
 @end
 
 @implementation ProximityViewController
@@ -58,8 +59,6 @@
 @synthesize findMeButton;
 @synthesize lockImage;
 @synthesize audioPlayer;
-
-
 
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -99,8 +98,7 @@
                    error:&error];
     if (error)
     {
-        NSLog(@"Error in audioPlayer: %@",
-              [error localizedDescription]);
+        NSLog(@"Error in audioPlayer: %@",  [error localizedDescription]);
     } else {        
         [audioPlayer prepareToPlay];
     }
@@ -118,8 +116,11 @@
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
 }
 
+- (IBAction)aboutButtonClicked:(id)sender {
+    [self showAbout:[AppUtilities getProximityHelpText]];
+}
+
 - (IBAction)connectOrDisconnectClicked {
-    NSLog(@"connect button pressed");
     if (proximityPeripheral != nil)
     {
         [bluetoothManager cancelPeripheralConnection:proximityPeripheral];
@@ -141,11 +142,6 @@
         controller.filterUUID = proximityLinkLossServiceUUID;
         controller.delegate = self;
     }
-    else if ([[segue identifier] isEqualToString:@"help"]) {
-        isBackButtonPressed = NO;
-        HelpViewController *helpVC = [segue destinationViewController];
-        helpVC.helpText = [AppUtilities getProximityHelpText];
-    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -166,12 +162,14 @@
 
 - (IBAction)findMeButtonClicked
 {
-    NSLog(@"FindMeButtonPressed");
-    if (self.immidiateAlertCharacteristic) {
-        if (isImmidiateAlertOn) {
+    if (self.immidiateAlertCharacteristic)
+    {
+        if (isImmidiateAlertOn)
+        {
             [self immidiateAlertOff];
         }
-        else {
+        else
+        {
             [self immidiateAlertOn];
         }
     }
@@ -191,7 +189,6 @@
     [findMeButton setTitleColor:[UIColor lightTextColor] forState:UIControlStateNormal];
 }
 
-
 -(void)initGattServer
 {
     self.peripheralManager = [[CBPeripheralManager alloc]initWithDelegate:self queue:nil];
@@ -199,7 +196,6 @@
 
 -(void)addServices
 {
-    NSLog(@"addServices");
     CBMutableService *service = [[CBMutableService alloc]initWithType:[CBUUID UUIDWithString:@"1802"] primary:YES];
     service.characteristics = [NSArray arrayWithObject:[self createCharacteristic]];
     [self.peripheralManager addService:service];
@@ -208,7 +204,6 @@
 
 -(CBMutableCharacteristic *)createCharacteristic
 {
-    NSLog(@"createCharacteristic");
     CBCharacteristicProperties properties = CBCharacteristicPropertyWriteWithoutResponse;
     CBAttributePermissions permissions = CBAttributePermissionsWriteable;
     CBMutableCharacteristic *characteristic = [[CBMutableCharacteristic alloc]initWithType:[CBUUID UUIDWithString:@"2A06"] properties:properties value:nil permissions:permissions];
@@ -218,8 +213,8 @@
 
 -(void)immidiateAlertOn
 {
-    if (self.immidiateAlertCharacteristic) {
-        NSLog(@"immidiateAlertOn");
+    if (self.immidiateAlertCharacteristic)
+    {
         uint8_t val = 2;
         NSData *data = [NSData dataWithBytes:&val length:1];
         [proximityPeripheral writeValue:data forCharacteristic:self.immidiateAlertCharacteristic type:CBCharacteristicWriteWithoutResponse];
@@ -230,19 +225,20 @@
 
 -(void)immidiateAlertOff
 {
-    if (self.immidiateAlertCharacteristic) {
-        NSLog(@"immidiateAlertOff");
+    if (self.immidiateAlertCharacteristic)
+    {
         uint8_t val = 0;
         NSData *data = [NSData dataWithBytes:&val length:1];
         [proximityPeripheral writeValue:data forCharacteristic:self.immidiateAlertCharacteristic type:CBCharacteristicWriteWithoutResponse];
         isImmidiateAlertOn = false;
         [findMeButton setTitle:@"FindMe" forState:UIControlStateNormal];
     }
-    
 }
 
 #pragma mark Playing Sound methods
-- (void) stopSound {
+
+- (void) stopSound
+{
     [audioPlayer stop];
 }
 
@@ -260,8 +256,8 @@
 #pragma mark CBPeripheralManager delegates
 -(void)peripheralManagerDidUpdateState:(CBPeripheralManager *)peripheral
 {
-    NSLog(@"peripheralManagerDidUpdateState");
-    switch ([peripheral state]) {
+    switch ([peripheral state])
+    {
         case CBPeripheralManagerStatePoweredOff:
             NSLog(@"State is Off");
             break;
@@ -278,40 +274,43 @@
 
 -(void)peripheralManager:(CBPeripheralManager *)peripheral didAddService:(CBService *)service error:(NSError *)error
 {
-    if (error) {
+    if (error)
+    {
         NSLog(@"Error in adding service");
     }
-    else {
-        NSLog(@"service added successfully");
+    else
+    {
+        NSLog(@"Service added successfully");
     }
 }
 
 -(void)peripheralManager:(CBPeripheralManager *)peripheral didReceiveReadRequest:(CBATTRequest *)request
 {
-    NSLog(@"didReceiveReadRequest");
+    // Do nothing
 }
 
 -(void)peripheralManager:(CBPeripheralManager *)peripheral didReceiveWriteRequests:(NSArray *)requests
 {
-    NSLog(@"didReceiveWriteRequests");
     CBATTRequest *attributeRequest = [requests objectAtIndex:0];
     if ([attributeRequest.characteristic.UUID isEqual:[CBUUID UUIDWithString:@"2A06"]]) {
         const uint8_t *data = [attributeRequest.value bytes];
         int alertLevel = data[0];
-        NSLog(@"Alert Level is: %d",alertLevel);
-        switch (alertLevel) {
+        
+        switch (alertLevel)
+        {
             case 0:
                 NSLog(@"No alert");
                 [self stopSound];
                 break;
+                
             case 1:
                 NSLog(@"Low alert");
                 [self playSoundInLoop];
                 break;
+                
             case 2:
                 NSLog(@"High alert");
                 [self playSoundInLoop];
-                
                 break;
                 
             default:
@@ -320,7 +319,6 @@
         
     }
 }
-
 
 #pragma mark Scanner Delegate methods
 
@@ -392,7 +390,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         NSString *message = [NSString stringWithFormat:@"%@ is out of range!",proximityPeripheral.name];
         if (error) {
-            NSLog(@"error in disconnection or linkloss");
+            NSLog(@"Error in disconnection or linkloss");
             lockImage.highlighted = NO;
             self.immidiateAlertCharacteristic = nil;
             [self disableFindButton];
@@ -408,7 +406,6 @@
             
         }
         else {
-                NSLog(@"disconnected");
                 [connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
                 if ([AppUtilities isApplicationStateInactiveORBackground]) {
                     [AppUtilities showBackgroundNotification:[NSString stringWithFormat:@"%@ peripheral is disconnected",peripheral.name]];
@@ -426,14 +423,14 @@
 #pragma mark CBPeripheral delegates
 -(void) peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error
 {
-    NSLog(@"didDiscoverServices inside %@",peripheral.name);
     for (CBService *service in peripheral.services) {
-        NSLog(@"service found: %@",service.UUID);
-        if ([service.UUID isEqual:[CBUUID UUIDWithString:@"1803"]]) {
+        if ([service.UUID isEqual:[CBUUID UUIDWithString:@"1803"]])
+        {
             NSLog(@"Linkloss service is found");
             [proximityPeripheral discoverCharacteristics:[NSArray arrayWithObject:[CBUUID UUIDWithString:@"2A06"]] forService:service];
         }
-        else if ([service.UUID isEqual:[CBUUID UUIDWithString:@"1802"]]) {
+        else if ([service.UUID isEqual:[CBUUID UUIDWithString:@"1802"]])
+        {
             NSLog(@"Immidiate Alert service is found");
             [proximityPeripheral discoverCharacteristics:[NSArray arrayWithObject:[CBUUID UUIDWithString:@"2A06"]] forService:service];
         }
@@ -447,31 +444,33 @@
 
 -(void) peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error
 {
-    if ([service.UUID isEqual:[CBUUID UUIDWithString:@"1803"]]) {
-        for (CBCharacteristic *characteristic in service.characteristics) {
-            if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:@"2A06"]]) {
-                NSLog(@"Alert level characteristic is found under Linkloss service");
+    if ([service.UUID isEqual:[CBUUID UUIDWithString:@"1803"]])
+    {
+        for (CBCharacteristic *characteristic in service.characteristics)
+        {
+            if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:@"2A06"]])
+            {
                 uint8_t val = 1;
                 NSData *data = [NSData dataWithBytes:&val length:1];
-                NSLog(@"writing Alert level characteristic");
                 [proximityPeripheral writeValue:data forCharacteristic:characteristic type:CBCharacteristicWriteWithResponse];
             }
         }
     }
-    else if ([service.UUID isEqual:[CBUUID UUIDWithString:@"1802"]]) {
-        for (CBCharacteristic *characteristic in service.characteristics) {
+    else if ([service.UUID isEqual:[CBUUID UUIDWithString:@"1802"]])
+    {
+        for (CBCharacteristic *characteristic in service.characteristics)
+        {
             if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:@"2A06"]]) {
-                NSLog(@"Alert level characteristic is found under Immidiate Alert service");
                 self.immidiateAlertCharacteristic = characteristic;
             }
         }
     }
-    else if ([service.UUID isEqual:batteryServiceUUID]) {
-        
+    else if ([service.UUID isEqual:batteryServiceUUID])
+    {
         for (CBCharacteristic *characteristic in service.characteristics)
         {
-            if ([characteristic.UUID isEqual:batteryLevelCharacteristicUUID]) {
-                NSLog(@"Battery Level characteristic is found");
+            if ([characteristic.UUID isEqual:batteryLevelCharacteristicUUID])
+            {
                 [proximityPeripheral readValueForCharacteristic:characteristic];
             }
         }
@@ -486,15 +485,15 @@
             if ([characteristic.UUID isEqual:batteryLevelCharacteristicUUID]) {
             const uint8_t *array = [characteristic.value bytes];
             uint8_t batteryLevel = array[0];
-                NSLog(@"battery value received %d",batteryLevel);
+                
             NSString* text = [[NSString alloc] initWithFormat:@"%d%%", batteryLevel];
             [battery setTitle:text forState:UIControlStateDisabled];
+                
             if (battery.tag == 0)
             {
                 // If battery level notifications are available, enable them
                 if (([characteristic properties] & CBCharacteristicPropertyNotify) > 0)
                 {
-                    NSLog(@"battery has notifications");
                     battery.tag = 1; // mark that we have enabled notifications
                     
                     // Enable notification on data characteristic
@@ -502,7 +501,7 @@
                 }
                 else
                 {
-                    NSLog(@"battery don't have notifications");
+                    // battery don't have notifications
                 }
             }
         }
@@ -522,6 +521,5 @@
     isImmidiateAlertOn = NO;
     self.immidiateAlertCharacteristic = nil;
 }
-
 
 @end

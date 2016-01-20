@@ -25,7 +25,6 @@
 #import "Constants.h"
 #import "AppUtilities.h"
 #import "CharacteristicReader.h"
-#import "HelpViewController.h"
 
 @interface BPMViewController () {
     CBUUID *bpmServiceUUID;
@@ -49,6 +48,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *meanApUnit;
 @property (weak, nonatomic) IBOutlet UILabel *pulse;
 @property (weak, nonatomic) IBOutlet UILabel *timestamp;
+
+- (IBAction)aboutButtonClicked:(id)sender;
 
 @end
 
@@ -93,6 +94,10 @@
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
 }
 
+- (IBAction)aboutButtonClicked:(id)sender {
+    [self showAbout:[AppUtilities getBPMHelpText]];
+}
+
 - (IBAction)connectOrDisconnectClicked {
     if (connectedPeripheral != nil)
     {
@@ -114,10 +119,6 @@
         ScannerViewController *controller = (ScannerViewController *)segue.destinationViewController;
         controller.filterUUID = bpmServiceUUID;
         controller.delegate = self;
-    }
-    else if ([[segue identifier] isEqualToString:@"help"]) {
-        HelpViewController *helpVC = [segue destinationViewController];
-        helpVC.helpText = [AppUtilities getBPMHelpText];
     }
 }
 
@@ -254,7 +255,8 @@
                 [peripheral setNotifyValue:YES forCharacteristic:characteristic];
             }
         }
-    } else if ([service.UUID isEqual:batteryServiceUUID])
+    }
+    else if ([service.UUID isEqual:batteryServiceUUID])
     {
         for (CBCharacteristic *characteristic in service.characteristics)
         {

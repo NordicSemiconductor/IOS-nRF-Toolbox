@@ -21,34 +21,11 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 #import "ScannerDelegate.h"
 #import "EditPopupViewController.h"
 #import "BluetoothManager.h"
 
-@interface UARTViewController : UIViewController<BluetoothManagerDelegate, ScannerDelegate, UIPopoverPresentationControllerDelegate, ButtonConfigureDelegate>
-
-@property (strong, nonatomic) NSString *uartPeripheralName;
-@property (strong, nonatomic) NSMutableArray *uartLogText;
-@property (strong, nonatomic) NSMutableArray *buttonsCommands;
-@property (strong, nonatomic) NSMutableArray *buttonsHiddenStatus;
-@property (strong, nonatomic) NSMutableArray *buttonsImageNames;
-
-@property (strong, nonatomic) NSArray *buttonIcons;
-@property (strong, nonatomic) UIButton *selectedButton;
-
-
-- (IBAction)connectOrDisconnectClicked:(UIButton *)sender;
-@property (weak, nonatomic) IBOutlet UIButton *connectButton;
-@property (weak, nonatomic) IBOutlet UILabel *deviceName;
-@property (weak, nonatomic) IBOutlet UILabel *verticalLabel;
-@property (weak, nonatomic) IBOutlet UIButton *editButton;
-
-
-- (IBAction)editButtonPressed:(UIButton *)sender;
-@property BOOL isEditMode;
-
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray* buttons;
-
-@property (strong, nonatomic) BluetoothManager *uartBluetoothManager;
+@interface UARTViewController : BaseViewController<BluetoothManagerDelegate, ScannerDelegate, UIPopoverPresentationControllerDelegate, ButtonConfigureDelegate>
 
 @end

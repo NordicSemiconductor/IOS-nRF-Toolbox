@@ -80,7 +80,6 @@
 }
 
 - (void)getConnectedPeripherals {
-    NSLog(@"getConnectedPeripherals");
     if (filterUUID != nil) {
         NSLog(@"Retrieving Connected Peripherals ...");
         NSArray *connectedPeripherals = [bluetoothManager retrieveConnectedPeripheralsWithServices:@[filterUUID]];
@@ -171,19 +170,22 @@
 {
     // Scanner uses other queue to send events. We must edit UI in the main queue
     //NSLog(@"scanned peripheral : %@",peripheral.name);
-    dispatch_async(dispatch_get_main_queue(), ^{
-        // Add the sensor to the list and reload deta set
-        ScannedPeripheral* sensor = [ScannedPeripheral initWithPeripheral:peripheral rssi:RSSI.intValue isPeripheralConnected:NO];
-        if (![peripherals containsObject:sensor])
-        {
-            [peripherals addObject:sensor];
-        }
-        else
-        {
-            sensor = [peripherals objectAtIndex:[peripherals indexOfObject:sensor]];
-            sensor.RSSI = RSSI.intValue;
-        }
-    });
+    if ([[advertisementData objectForKey:CBAdvertisementDataIsConnectable] boolValue])
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // Add the sensor to the list and reload deta set
+            ScannedPeripheral* sensor = [ScannedPeripheral initWithPeripheral:peripheral rssi:RSSI.intValue isPeripheralConnected:NO];
+            if (![peripherals containsObject:sensor])
+            {
+                [peripherals addObject:sensor];
+            }
+            else
+            {
+                sensor = [peripherals objectAtIndex:[peripherals indexOfObject:sensor]];
+                sensor.RSSI = RSSI.intValue;
+            }
+        });
+    }
 }
 
 #pragma mark Table View delegate methods

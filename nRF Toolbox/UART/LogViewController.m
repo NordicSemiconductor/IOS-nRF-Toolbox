@@ -21,64 +21,99 @@
  */
 
 #import "LogViewController.h"
-#import "BluetoothManager.h"
+#import "LogItemCell.h"
 
 @interface LogViewController ()
+
+@property (weak, nonatomic) IBOutlet UITableView *displayLogTextTable;
+@property (weak, nonatomic) IBOutlet UITextField *commandTextField;
 
 @end
 
 @implementation LogViewController
 
+@synthesize displayLogTextTable;
+@synthesize commandTextField;
+@synthesize bluetoothManager;
+
+NSMutableArray *logItems;
+
+-(id)initWithCoder:(NSCoder *)decoder
+{
+    self = [super initWithCoder:decoder];
+    if (self) {
+        // Custom initialization
+        logItems = [[NSMutableArray alloc] init];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.displayLogTextTable.delegate = self;
-    self.displayLogTextTable.dataSource = self;
-    self.commandTextField.placeholder = @"No UART connected";
-    [self setup];
-}
-
--(void) setup
-{
-    //if there is any log statement exist then reload table
-    if ([self.logText count] > 0) {
-        [self.displayLogTextTable reloadData];
-        [self scrollDisplayViewDown];
-    }
-    //if uart peripheral is connected then get the BluetoothManager class sharedInstance
-    //also subscribe for two observers to receive TX notification and peripheral disconnection message
-    if (self.isUartPeripheralConnected) {
-        NSLog(@"sent peripheral is connected");
-        self.uartBluetoothManager = [BluetoothManager sharedInstance];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didDeviceDisconnected) name:@"CBPeripheralDisconnectNotification" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveTXNotification) name:@"CBPeripheralTXNotification" object:nil];
-        self.commandTextField.placeholder = @"Type Command";
-    }
-
-}
-
-- (void)dealloc
-{
-    //Unsubscribe to both notifications
-    NSLog(@"LogViewController: dealloc, Removing observer");
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CBPeripheralDisconnectNotification" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CBPeripheralTXNotification" object:nil];
+    
+    displayLogTextTable.delegate = self;
+    displayLogTextTable.dataSource = self;
+    displayLogTextTable.rowHeight = UITableViewAutomaticDimension;
+    displayLogTextTable.estimatedRowHeight = 25;
+    [displayLogTextTable reloadData];
+    
+    commandTextField.placeholder = @"No UART connected";
+    commandTextField.delegate = self;
 }
 
 -(void)scrollDisplayViewDown
  {
      //scrolls the table view down when last log statement is below the bottom of tableview
-     NSLog(@"scrollDisplayViewDown");
-     [self.displayLogTextTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.logText count]-1 inSection:0]
+     [displayLogTextTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[logItems count]-1 inSection:0]
                                      atScrollPosition:UITableViewScrollPositionBottom animated:YES];
  }
 
+-(void)log:(LogLevel)level message:(NSString *)message
+{
+    LogItem *item = [[LogItem alloc] init];
+    item.level = level;
+    item.message = message;
+    item.timestamp = [self getCurrentTime];
+    [logItems addObject:item];
+    
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [displayLogTextTable reloadData];
+        [self scrollDisplayViewDown];
+    });
+}
+
+-(NSString *)getCurrentTime
+{
+    NSDate * now = [NSDate date];
+    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+    [outputFormatter setDateFormat:@"HH:mm:ss.SSS"];
+    NSString *timeString = [outputFormatter stringFromDate:now];
+    return timeString;
+}
+
 #pragma mark - TextField editing
+
+-(void)setBluetoothManager:(BluetoothManager *)manager
+{
+    bluetoothManager = manager;
+    
+    if (manager)
+    {
+        commandTextField.placeholder = @"Write command";
+        commandTextField.text = @"";
+    }
+    else
+    {
+        commandTextField.placeholder = @"No UART connected";
+        commandTextField.text = @"";
+    }
+}
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
  {
-     NSLog(@"textFieldShouldBeginEditing");
      //Only shows the keyboard when Uart peripheral is connected
-     if (self.isUartPeripheralConnected) {
+     if (bluetoothManager) {
          return YES;
      }
      return NO;
@@ -86,99 +121,24 @@
      
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-     NSLog(@"textFieldShouldReturn");
      [self.commandTextField resignFirstResponder];
-     [self writeValueOnRX:self.commandTextField.text];
+     [bluetoothManager send:self.commandTextField.text];
      self.commandTextField.text = @"";
      return YES;
  }
 
-#pragma mark - Tableview delegates
+#pragma mark - TableView delegates
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.logText count];
+    return [logItems count];
  }
  
- -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"logCell"];
-     if (cell == nil) {
-         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"logCell"];
-         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-     }
-     cell.textLabel.font  = [ UIFont fontWithName: @"Arial" size: 12.0 ];
-     cell.textLabel.text = [self.logText objectAtIndex:indexPath.row];
-     return cell;
- }
- 
- -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-     return 20.0;
- }
-
--(NSString *)showCurrentTime
-{
-    NSDate * now = [NSDate date];
-    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
-    [outputFormatter setDateFormat:@"HH:mm:ss"];
-    NSString *timeString = [outputFormatter stringFromDate:now];
-    return timeString;
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    LogItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"logCell"];
+    LogItem *item = [logItems objectAtIndex:indexPath.row];
+    
+    [cell set:item];
+    return cell;
 }
-
--(void)writeValueOnRX:(NSString *)value
-{
-    NSString *text;
-    if (value.length != 0) {
-        //if text types is greater than 20 characters the extract the first 20 characters
-        if (value.length > 20) {
-            text = [value substringToIndex:20];
-        }
-        else {
-            text = value;
-        }
-        if (self.isRXCharacteristicFound) {
-            NSLog(@"writing command: %@ to UART peripheral: %@",text,self.uartPeripheralName);
-            [self.uartBluetoothManager writeRXValue:text];
-            [self addLogText:[NSString stringWithFormat:@"RX: %@",text]];
-        }
-    }
-}
-
--(void)addLogText:(NSString *)logText
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.logText addObject:[NSString stringWithFormat:@"[%@] %@",[self showCurrentTime],logText]];
-        [self.displayLogTextTable reloadData];
-        [self scrollDisplayViewDown];
-    });    
-}
-
--(void)didDeviceDisconnected
-{
-    NSLog(@"Received Notifictaion, LogViewController: didDeviceDisconnected");
-    self.uartPeripheralName = nil;
-    self.isRXCharacteristicFound = NO;
-    self.isUartPeripheralConnected = NO;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.commandTextField.placeholder = @"No UART connected";
-    });
-    [self refreshTableAfterDelay];
-}
-
--(void)didReceiveTXNotification
-{
-    NSLog(@"Received Notification, LogViewController: didReceiveTXNotification");
-    [self refreshTableAfterDelay];
-}
-
--(void)refreshTableAfterDelay
-{
-    //One second delay because Log table datasource is updated in UARTViewController
-    double delayInSeconds = 1.0;
-    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(time, dispatch_get_main_queue(), ^(void){
-        [self.displayLogTextTable reloadData];
-        [self scrollDisplayViewDown];
-    });
-}
-
 
 @end

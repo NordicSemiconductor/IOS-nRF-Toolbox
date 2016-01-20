@@ -24,25 +24,41 @@
 
 @interface EditPopupViewController ()
 
+@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray* iconButtons;
+@property (weak, nonatomic) IBOutlet UIButton *showHideButton;
+@property (weak, nonatomic) IBOutlet UITextField *commandTextField;
+
+- (IBAction)showHideButtonPressed:(UIButton *)sender;
+- (IBAction)okButtonPressed:(UIButton *)sender;
+- (IBAction)CancelButtonPressed:(UIButton *)sender;
+
 @end
 
 @implementation EditPopupViewController
 
+@synthesize showHideButton;
+@synthesize iconButtons;
+@synthesize commandTextField;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if (self.isHidden) {
-        [self.showHideButton setTitle:@"Show" forState:UIControlStateNormal];
+    
+    if (self.isHidden)
+    {
+        [showHideButton setTitle:@"Show" forState:UIControlStateNormal];
     }
-    else {
-        [self.showHideButton setTitle:@"Hide" forState:UIControlStateNormal];
+    else
+    {
+        [showHideButton setTitle:@"Hide" forState:UIControlStateNormal];
     }
-    self.commandTextField.text = self.command;
-    [self.iconButtons[self.iconIndex] setBackgroundColor:[UIColor grayColor]];
+    
+    commandTextField.text = self.command;
+    [iconButtons[self.iconIndex] setBackgroundColor:[UIColor grayColor]];
 }
 
 - (IBAction)okButtonPressed:(UIButton *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self.delegate didButtonConfigured:self.command iconIndex:self.iconIndex shouldHideButton:self.isHidden];
+    [self.delegate didButtonConfigured:commandTextField.text iconIndex:self.iconIndex shouldHideButton:self.isHidden];
 }
 
 - (IBAction)CancelButtonPressed:(UIButton *)sender {
@@ -50,41 +66,30 @@
 }
 
 - (IBAction)showHideButtonPressed:(UIButton *)sender {
-    if (self.isHidden) {
+    if (self.isHidden)
+    {
         self.isHidden = NO;
         [self.showHideButton setTitle:@"Hide" forState:UIControlStateNormal];
     }
-    else {
+    else
+    {
         self.isHidden = YES;
         [self.showHideButton setTitle:@"Show" forState:UIControlStateNormal];
     }
 }
 
-- (IBAction)iconButtonPressed:(id)sender {
+- (IBAction)iconButtonPressed:(id)sender
+{
     self.iconIndex = (int)[sender tag] - 1;
     [self setSelectedButtonBackgroundColor];
 }
 
--(void)setSelectedButtonBackgroundColor {
+-(void)setSelectedButtonBackgroundColor
+{
     for (UIButton *button in self.iconButtons) {
         [button setBackgroundColor:[UIColor colorWithRed:230.0f/255.0f green:230.0f/255.0f blue:230.0f/255.0f alpha:0.0f]];
     }
-    [self.iconButtons[self.iconIndex] setBackgroundColor:[UIColor grayColor]];
+    [iconButtons[self.iconIndex] setBackgroundColor:[UIColor grayColor]];
 }
-
-#pragma mark - TextField editing
-
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-    return YES;
-}
-
--(BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [self.commandTextField resignFirstResponder];
-    self.command = self.commandTextField.text;
-    return YES;
-}
-
 
 @end

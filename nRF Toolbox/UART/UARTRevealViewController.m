@@ -20,9 +20,34 @@
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <UIKit/UIKit.h>
-#import "BaseViewController.h"
+#import "UARTRevealViewController.h"
+#import "AppUtilities.h"
 
-@interface ViewController : BaseViewController<UICollectionViewDataSource>
+@interface UARTRevealViewController ()
+
+-(IBAction)aboutButtonClicked:(id)sender;
+
+@end
+
+@implementation UARTRevealViewController
+
+-(void)viewDidLoad
+{
+    // Set the rear view width to almost whole screen width
+    self.rearViewRevealWidth = [[UIScreen mainScreen] bounds].size.width - 50;
+    self.rearViewRevealDisplacement = 0;
+}
+
+-(void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    // This method is called after the device orientation has changed
+    
+    // Set the rear view width to almost whole screen width
+    self.rearViewRevealWidth = size.width - 50;
+}
+
+- (IBAction)aboutButtonClicked:(id)sender {
+    [self showAbout:[AppUtilities getUARTHelpText]];
+}
 
 @end

@@ -22,10 +22,12 @@
 
 #import "ViewController.h"
 #import "Constants.h"
-#import "HelpViewController.h"
 
 @interface ViewController ()
+
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+
+- (IBAction)aboutButtonClicked:(id)sender;
 
 @end
 
@@ -44,13 +46,11 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (IBAction)aboutButtonClicked:(id)sender
 {
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    if ([[segue identifier] isEqualToString:@"help"]) {
-        HelpViewController *helpVC = [segue destinationViewController];
-        helpVC.helpText = [NSString stringWithFormat:@"The nRF Toolbox works with a wide range of the most popular Bluetooth Low Energy accessories. It contains applications demonstrating standard BLE profiles:\n-Cycling Speed and Cadence,\n-Running Speed and Cadence,\n-Heart Rate Monitor,\n-Blood Pressure Monitor,\n-Health Thermometer Monitor,\n-Glucose Monitor,\n-Proximity Monitor.\n\nAdditionaly, it supports Nordic Semiconductor's proprietary profiles:\n-UART (Universal Asynchronous Receiver/Transmitter),\n-DFU (Device Firmware Update).\n\nVersion %@", version];
-    }
+    NSString* message = [NSString stringWithFormat:@"The nRF Toolbox works with a wide range of the most popular Bluetooth Low Energy accessories. It contains applications demonstrating standard BLE profiles:\n\n%C Cycling Speed and Cadence,\n%C Running Speed and Cadence,\n%C Heart Rate Monitor,\n%C Blood Pressure Monitor,\n%C Health Thermometer Monitor,\n%C Glucose Monitor,\n%C Proximity Monitor.\n\nAdditionaly, it supports Nordic Semiconductor's proprietary profiles:\n\n%C UART (Universal Asynchronous Receiver/Transmitter),\n%C DFU (Device Firmware Update).\n\nVersion %@", (unichar) 0x2022, (unichar) 0x2022, (unichar) 0x2022, (unichar) 0x2022, (unichar) 0x2022, (unichar) 0x2022, (unichar) 0x2022, (unichar) 0x2022, (unichar) 0x2022, version];
+    [self showAbout:message];
 }
 
 #pragma mark UICollectionViewDataSource methods

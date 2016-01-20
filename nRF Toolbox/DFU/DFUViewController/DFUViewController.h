@@ -22,12 +22,13 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
+#import "BaseViewController.h"
 #import "ScannerDelegate.h"
 #import "FileTypeTableViewController.h"
 #import "AppFilesTableViewController.h"
 #import "DFUOperations.h"
 
-@interface DFUViewController : UIViewController <ScannerDelegate, FileSelectionDelegate, DFUOperationsDelegate>
+@interface DFUViewController : BaseViewController <ScannerDelegate, FileSelectionDelegate, DFUOperationsDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *verticalLabel;
 @property (weak, nonatomic) IBOutlet UILabel *deviceName;

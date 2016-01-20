@@ -21,8 +21,9 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "BaseViewController.h"
 
-@interface ViewController : BaseViewController<UICollectionViewDataSource>
+@interface BaseViewController : UIViewController
+
+- (void)showAbout:(NSString*)message;
 
 @end

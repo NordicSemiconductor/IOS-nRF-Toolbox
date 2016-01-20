@@ -20,16 +20,45 @@
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <UIKit/UIKit.h>
+#import "NSDataAsHex.h"
 
-@interface PageImageViewController : UIViewController
+@implementation NSData (NSData_Conversion)
 
-@property (weak, nonatomic) IBOutlet UIImageView *pageImage;
+#pragma mark - String Conversion
 
-- (IBAction)skipButtonPressed:(UIButton *)sender;
+/* Returns hexadecimal string of NSData. Empty string if data is empty.   */
+- (NSString *)hexadecimalStringWithDashes:(BOOL)with {
+    const unsigned char *dataBuffer = (const unsigned char *)[self bytes];
+    
+    if (!dataBuffer || [self length] == 0)
+    {
+        return [NSString string];
+    }
+    
+    NSUInteger          dataLength  = [self length];
+    NSMutableString     *hexString  = [NSMutableString stringWithCapacity:(with ? dataLength * 3 - 1 : dataLength * 2)];
+    
+    for (int i = 0; i < dataLength; ++i)
+    {
+        [hexString appendString:[NSString stringWithFormat:@"%02lx", (unsigned long)dataBuffer[i]]];
+        if (with && i < dataLength - 1)
+        {
+            [hexString appendString:@"-"];
+        }
+    }
+    
+    return [NSString stringWithString:hexString];
+}
 
-@property NSUInteger pageIndex;
-@property NSString *pageImageFileName;
-
+-(NSString *)string {
+    if ([self length] > 0)
+    {
+        return [NSString stringWithUTF8String:[self bytes]];
+    }
+    else
+    {
+        return [NSString string];
+    }
+}
 
 @end

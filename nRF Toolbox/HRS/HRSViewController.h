@@ -22,10 +22,11 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
+#import "BaseViewController.h"
 #import "ScannerDelegate.h"
 #import "CorePlot-CocoaTouch.h"
 
-@interface HRSViewController : UIViewController <CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate, CPTPlotDataSource, CPTPlotSpaceDelegate>
+@interface HRSViewController : BaseViewController <CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate, CPTPlotDataSource, CPTPlotSpaceDelegate>
 
 
 @property (strong, nonatomic) CBCentralManager *bluetoothManager;

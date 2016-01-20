@@ -29,7 +29,6 @@
 #import "Constants.h"
 #import "AppUtilities.h"
 #import "CharacteristicReader.h"
-#import "HelpViewController.h"
 
 enum
 {
@@ -63,6 +62,7 @@ enum
 @property (weak, nonatomic) IBOutlet UITableView *bgmTableView;
 
 - (IBAction)actionButtonClicked:(id)sender;
+- (IBAction)aboutButtonClicked:(id)sender;
 
 @end
 
@@ -142,6 +142,10 @@ enum
     [actionSheet showInView:self.view];
 }
 
+- (IBAction)aboutButtonClicked:(id)sender {
+    [self showAbout:[AppUtilities getBGMHelpText]];
+}
+
 - (IBAction)connectOrDisconnectClicked {
     if (connectedPeripheral != nil)
     {
@@ -169,11 +173,6 @@ enum
         BGMDetailsViewController *controller = (BGMDetailsViewController *)segue.destinationViewController;
         controller.reading = [readings objectAtIndex:[bgmTableView indexPathForSelectedRow].row];
     }
-    else if ([[segue identifier] isEqualToString:@"help"]) {
-        HelpViewController *helpVC = [segue destinationViewController];
-        helpVC.helpText = [AppUtilities getBGMHelpText];
-    }
-
 }
 
 #pragma mark Scanner Delegate methods

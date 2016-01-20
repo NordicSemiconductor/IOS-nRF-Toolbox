@@ -20,50 +20,11 @@
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "HelpViewController.h"
-#import "Constants.h"
-#import "PageImageViewController.h"
+#import <Foundation/Foundation.h>
 
-@interface HelpViewController ()
+@interface NSData (NSData_Conversion)
 
-@property (weak, nonatomic) IBOutlet UITextView *helpTextView;
-
-@end
-
-@implementation HelpViewController
-
-@synthesize helpTextView;
-@synthesize helpText;
-
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    // By setting selectible to YES the font size is not reseted. It looks like a iOS bug.
-//    [helpTextView setSelectable:YES];
-    [helpTextView setText:helpText];
-    [helpTextView setSelectable:NO];
-
-    if (self.isDFUViewController) {
-//        [self hideNavigationBar];
-//        [self initDFUDemoImages];
-//        [self showDFUDemo];
-//        self.isDFUViewController = NO;
-    }
-    else if (self.isAppFileTableViewController) {
-//        [self hideNavigationBar];
-//        [self initUserFilesDemoImages];
-//        [self.tabBarController.tabBar setHidden:YES];
-//        [self showDFUDemo];
-//        self.isAppFileTableViewController = NO;
-    }
-}
-
--(void) hideNavigationBar
-{
-    [self.navigationController setNavigationBarHidden:YES];
-}
-
+- (NSString *)string;
+- (NSString *)hexadecimalStringWithDashes:(BOOL)with;
 
 @end

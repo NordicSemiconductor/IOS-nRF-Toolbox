@@ -23,7 +23,6 @@
 #import "AppFilesTableViewController.h"
 #import "AccessFileSystem.h"
 #import "UserFilesTableViewController.h"
-#import "HelpViewController.h"
 
 @interface AppFilesTableViewController ()
 
@@ -47,7 +46,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //[self.tableView setBackgroundView:[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Background4"]]];
     
     self.tabBarController.delegate = self;
     self.fileSystem = [[AccessFileSystem alloc]init];
@@ -65,7 +63,6 @@
 
 -(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
-    NSLog(@"UserFilesVC didSelectViewController");
     UserFilesTableViewController *userFilesVC = [tabBarController.viewControllers objectAtIndex:1];
     userFilesVC.fileDelegate = self.fileDelegate;
 }
@@ -108,13 +105,5 @@
     [self.fileDelegate onFileSelected:fileURL];
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-     if ([[segue identifier] isEqualToString:@"help"]) {
-         HelpViewController *helpVC = [segue destinationViewController];
-         helpVC.helpText = [Utility getDFUAppFileHelpText];
-         helpVC.isAppFileTableViewController = YES;
-    }
-}
 
 @end

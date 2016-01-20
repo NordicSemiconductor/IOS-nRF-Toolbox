@@ -21,8 +21,18 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "BaseViewController.h"
+#import "Logger.h"
 
-@interface ViewController : BaseViewController<UICollectionViewDataSource>
+@interface LogItem : NSObject
+
+@property (nonatomic) NSString *timestamp;
+@property (nonatomic) LogLevel level;
+@property (nonatomic) NSString *message;
+
+@end
+
+@interface LogItemCell : UITableViewCell
+
+-(void)set:(LogItem*)item;
 
 @end

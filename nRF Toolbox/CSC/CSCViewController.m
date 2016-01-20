@@ -24,7 +24,6 @@
 #import "ScannerViewController.h"
 #import "Constants.h"
 #import "AppUtilities.h"
-#import "HelpViewController.h"
 
 @interface CSCViewController () {
     CBUUID *cscServiceUUID;
@@ -42,6 +41,7 @@
  * after user press Disconnect button.
  */
 @property (strong, nonatomic) CBPeripheral *cyclePeripheral;
+- (IBAction)aboutButtonClicked:(id)sender;
 
 @end
 
@@ -89,7 +89,6 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
     oldCrankRevolution = 0;
     
     wheelCircumference = [[[NSUserDefaults standardUserDefaults] valueForKey:@"key_diameter"] doubleValue];
-    NSLog(@"circumference: %f",wheelCircumference);
     isBackButtonPressed = YES;
 }
 
@@ -118,6 +117,10 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
     isBackButtonPressed = YES;
 }
 
+- (IBAction)aboutButtonClicked:(id)sender {
+    [self showAbout:[AppUtilities getCSCHelpText]];
+}
+
 - (IBAction)connectOrDisconnectClicked {
     if (cyclePeripheral != nil)
     {
@@ -139,11 +142,6 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
         ScannerViewController *controller = (ScannerViewController *)segue.destinationViewController;
         controller.filterUUID = cscServiceUUID;
         controller.delegate = self;
-    }
-    else if ([[segue identifier] isEqualToString:@"help"]) {
-        isBackButtonPressed = NO;
-        HelpViewController *helpVC = [segue destinationViewController];
-        helpVC.helpText = [AppUtilities getCSCHelpText];
     }
 }
 
@@ -222,9 +220,10 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
 
 -(void) peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error
 {
-    NSLog(@"didDiscoverServices");
-    if (!error) {
-        for (CBService *service in peripheral.services) {
+    if (!error)
+    {
+        for (CBService *service in peripheral.services)
+        {
             if ([service.UUID isEqual:cscServiceUUID])
             {
                 [cyclePeripheral discoverCharacteristics:nil forService:service];
@@ -241,11 +240,14 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
 
 -(void) peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error
 {
-    if (!error) {
-        if ([service.UUID isEqual:cscServiceUUID]) {
+    if (!error)
+    {
+        if ([service.UUID isEqual:cscServiceUUID])
+        {
             for (CBCharacteristic *characteristic in service.characteristics)
             {
-                if ([characteristic.UUID isEqual:cscMeasurementCharacteristicUUID]) {
+                if ([characteristic.UUID isEqual:cscMeasurementCharacteristicUUID])
+                {
                     [cyclePeripheral setNotifyValue:YES forCharacteristic:characteristic ];
                 }
             }
@@ -254,7 +256,8 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
             
             for (CBCharacteristic *characteristic in service.characteristics)
             {
-                if ([characteristic.UUID isEqual:batteryLevelCharacteristicUUID]) {
+                if ([characteristic.UUID isEqual:batteryLevelCharacteristicUUID])
+                {
                     [cyclePeripheral readValueForCharacteristic:characteristic];
                 }
             }
@@ -269,12 +272,14 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
 -(void) peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (!error) {
-            NSLog(@"received update from CSC: %@, UUID: %@",characteristic.value,characteristic.UUID);
-            if ([characteristic.UUID isEqual:cscMeasurementCharacteristicUUID]) {
+        if (!error)
+        {
+            if ([characteristic.UUID isEqual:cscMeasurementCharacteristicUUID])
+            {
                 [self decodeCSCData:characteristic.value];
             }
-            else if ([characteristic.UUID isEqual:batteryLevelCharacteristicUUID]) {
+            else if ([characteristic.UUID isEqual:batteryLevelCharacteristicUUID])
+            {
                 const uint8_t *array = [characteristic.value bytes];
                 uint8_t batteryLevel = array[0];
                 NSString* text = [[NSString alloc] initWithFormat:@"%d%%", batteryLevel];
@@ -301,16 +306,17 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
 
 -(void)decodeCSCData:(NSData *)data
 {
-    NSLog(@"decodeCSCData");
     const uint8_t *value = [data bytes];
     double wheelRevDiff,crankRevDiff;
     wheelRevDiff = crankRevDiff = 0.0;
     double ratio = 0.0;
     uint8_t flag = value[0];
     
-    if ((flag & WHEEL_REVOLUTION_FLAG) == 1) {
+    if ((flag & WHEEL_REVOLUTION_FLAG) == 1)
+    {
         wheelRevDiff = [self processWheelData:data];
-        if ((flag & 0x02) == 2)  {
+        if ((flag & 0x02) == 2)
+        {
             crankRevDiff = [self processCrankData:data crankRevolutionIndex:7];
             if (crankRevDiff > 0) {
                 ratio = wheelRevDiff/crankRevDiff;
@@ -318,8 +324,10 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
             }
         }
     }
-    else {
-        if ((flag & CRANK_REVOLUTION_FLAG) == 2)  {
+    else
+    {
+        if ((flag & CRANK_REVOLUTION_FLAG) == 2)
+        {
             [self processCrankData:data crankRevolutionIndex:1];
         }
     }
@@ -354,7 +362,7 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
         wheelEventTimeDiff = wheelEventTimeDiff / 1024.0;
         //convert speed from m/s to km/h by multiplying 3.6
         travelSpeed = (((wheelRevolutionDiff * wheelCircumference)/wheelEventTimeDiff)*3.6);
-        NSLog(@"Travel Speed in km/h: %f",travelSpeed);
+
         speed.text = [NSString stringWithFormat:@"%.2f",travelSpeed];
         distance.text = [NSString stringWithFormat:@"%.2f",travelDistance];
         totalDistance.text = [NSString stringWithFormat:@"%.2f",totalTravelDistance];
@@ -417,8 +425,6 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
     oldCrankRevolution = 0.0;
     travelDistance = 0;
     totalTravelDistance = 0;
-    
 }
-
 
 @end

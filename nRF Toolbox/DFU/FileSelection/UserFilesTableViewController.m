@@ -24,20 +24,19 @@
 #import "AccessFileSystem.h"
 #import "Utility.h"
 #import "FolderFilesTableViewController.h"
-#import "PageImageViewController.h"
 
 
 @interface UserFilesTableViewController ()
 
 @property (nonatomic,strong)NSMutableArray *files;
 @property (nonatomic,strong)NSString *documentsDirectoryPath;
-@property (nonatomic, strong)AccessFileSystem *fileSystem;
+@property (nonatomic,strong)AccessFileSystem *fileSystem;
 
 @end
 
 @implementation UserFilesTableViewController
 
-int PAGE_NUMBERS;
+//int PAGE_NUMBERS;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -51,13 +50,13 @@ int PAGE_NUMBERS;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //[self.tableView setBackgroundView:[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Background4"]]];
+    
     self.fileSystem = [[AccessFileSystem alloc]init];
     self.documentsDirectoryPath = [self.fileSystem getDocumentsDirectoryPath];
     self.files = [[self.fileSystem getDirectoriesAndRequiredFilesFromDocumentsDirectory] mutableCopy];
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     if (self.files.count == 0) {
-        [self showAddFilesDemo];
+//        [self showAddFilesDemo];
     }
 }
 
@@ -81,97 +80,97 @@ int PAGE_NUMBERS;
     [self.navigationController setNavigationBarHidden:YES];
 }
 
--(void) initDFUDemoImages
-{
-    self.pageContentImages = @[@"AddingFiles",
-                               @"Itunes1.png",
-                               @"Itunes2.png",
-                               @"EmailAttachment1.png",
-                               @"EmailAttachment2.png"];
-    
-    PAGE_NUMBERS = (int)[self.pageContentImages count];
-}
+//-(void) initDFUDemoImages
+//{
+//    self.pageContentImages = @[@"AddingFiles",
+//                               @"Itunes1.png",
+//                               @"Itunes2.png",
+//                               @"EmailAttachment1.png",
+//                               @"EmailAttachment2.png"];
+//    
+//    PAGE_NUMBERS = (int)[self.pageContentImages count];
+//}
 
--(void)showAddFilesDemo
-{
-    [self hideNavigationBar];
-    [self initDFUDemoImages];
-    [self.tabBarController.tabBar setHidden:YES];
-    
-    self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"IdPageViewController"];
-    
-    //Assign datasource (pages or viewcontrollers) of PageViewController to self
-    self.pageViewController.dataSource = self;
-    
-    //set pages or viewcontrollers of PageViewController
-    PageImageViewController *pageContentViewController = [self createPageContentViewControllerAtIndex:0];
-    NSArray *pageContentViewControllers = @[pageContentViewController];
-    [self.pageViewController setViewControllers:pageContentViewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:Nil];
-    
-    // Change the size of page view controller
-    self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 20);
-    
-    //Add PageViewController to this Root View Controller as child viewcontroller
-    [self addChildViewController:_pageViewController];
-    [self.view addSubview:_pageViewController.view];
-    [self.pageViewController didMoveToParentViewController:self];
-}
-
--(PageImageViewController *)createPageContentViewControllerAtIndex:(NSUInteger)index
-{
-    if (index >= PAGE_NUMBERS || PAGE_NUMBERS < 1) {
-        return nil;
-    }
-    PageImageViewController *pageContentVC = [self.storyboard instantiateViewControllerWithIdentifier:@"IdPageImageViewController"];
-    pageContentVC.pageIndex = index;
-    pageContentVC.pageImageFileName = self.pageContentImages[index];
-    return pageContentVC;
-}
-
-
-#pragma mark - Page View Controller Data Source
-
--(UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
-{
-    NSLog(@"pageViewController viewControllerBeforeViewController");
-    NSUInteger index = ((PageImageViewController *)viewController).pageIndex;
-    if ((index == 0) || (index == NSNotFound)) {
-        NSLog(@"page index is equal to first Page Number or index not found");
-        return nil;
-    }
-    NSLog(@"decreasing page index");
-    index--;
-    return [self createPageContentViewControllerAtIndex:index];
-}
-
--(UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
-{
-    NSLog(@"pageViewController viewControllerAfterViewController");
-    NSUInteger index = ((PageImageViewController *)viewController).pageIndex;
-    if (index == NSNotFound) {
-        return nil;
-    }
-    index++;
-    if (index == PAGE_NUMBERS) {
-        NSLog(@"page index is equal to Max Page Number");
-        return nil;
-    }
-    NSLog(@"increasing page index");
-    return [self createPageContentViewControllerAtIndex:index];
-}
+//-(void)showAddFilesDemo
+//{
+//    [self hideNavigationBar];
+//    [self initDFUDemoImages];
+//    [self.tabBarController.tabBar setHidden:YES];
+//    
+//    self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"IdPageViewController"];
+//    
+//    //Assign datasource (pages or viewcontrollers) of PageViewController to self
+//    self.pageViewController.dataSource = self;
+//    
+//    //set pages or viewcontrollers of PageViewController
+//    PageImageViewController *pageContentViewController = [self createPageContentViewControllerAtIndex:0];
+//    NSArray *pageContentViewControllers = @[pageContentViewController];
+//    [self.pageViewController setViewControllers:pageContentViewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:Nil];
+//    
+//    // Change the size of page view controller
+//    self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 20);
+//    
+//    //Add PageViewController to this Root View Controller as child viewcontroller
+//    [self addChildViewController:_pageViewController];
+//    [self.view addSubview:_pageViewController.view];
+//    [self.pageViewController didMoveToParentViewController:self];
+//}
+//
+//-(PageImageViewController *)createPageContentViewControllerAtIndex:(NSUInteger)index
+//{
+//    if (index >= PAGE_NUMBERS || PAGE_NUMBERS < 1) {
+//        return nil;
+//    }
+//    PageImageViewController *pageContentVC = [self.storyboard instantiateViewControllerWithIdentifier:@"IdPageImageViewController"];
+//    pageContentVC.pageIndex = index;
+//    pageContentVC.pageImageFileName = self.pageContentImages[index];
+//    return pageContentVC;
+//}
 
 
-- (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController
-{
-    NSLog(@"presentationCountForPageViewController %d",PAGE_NUMBERS);
-    return PAGE_NUMBERS;
-}
-
-- (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
-{
-    NSLog(@"presentationIndexForPageViewController");
-    return 0;
-}
+//#pragma mark - Page View Controller Data Source
+//
+//-(UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
+//{
+//    NSLog(@"pageViewController viewControllerBeforeViewController");
+//    NSUInteger index = ((PageImageViewController *)viewController).pageIndex;
+//    if ((index == 0) || (index == NSNotFound)) {
+//        NSLog(@"page index is equal to first Page Number or index not found");
+//        return nil;
+//    }
+//    NSLog(@"decreasing page index");
+//    index--;
+//    return [self createPageContentViewControllerAtIndex:index];
+//}
+//
+//-(UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
+//{
+//    NSLog(@"pageViewController viewControllerAfterViewController");
+//    NSUInteger index = ((PageImageViewController *)viewController).pageIndex;
+//    if (index == NSNotFound) {
+//        return nil;
+//    }
+//    index++;
+//    if (index == PAGE_NUMBERS) {
+//        NSLog(@"page index is equal to Max Page Number");
+//        return nil;
+//    }
+//    NSLog(@"increasing page index");
+//    return [self createPageContentViewControllerAtIndex:index];
+//}
+//
+//
+//- (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController
+//{
+//    NSLog(@"presentationCountForPageViewController %d",PAGE_NUMBERS);
+//    return PAGE_NUMBERS;
+//}
+//
+//- (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
+//{
+//    NSLog(@"presentationIndexForPageViewController");
+//    return 0;
+//}
 
 
 #pragma mark - Table view data source
@@ -201,22 +200,28 @@ int PAGE_NUMBERS;
     // Configure the cell...
     NSString *fileName = [self.files objectAtIndex:indexPath.row];
     NSString *filePath = [self.documentsDirectoryPath stringByAppendingPathComponent:fileName];
-    if ([self.fileSystem isDirectory:filePath]) {
+    if ([self.fileSystem isDirectory:filePath])
+    {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        if ([fileName isEqualToString:@"Inbox"]) {
+        if ([fileName isEqualToString:@"Inbox"])
+        {
             cell.imageView.image = [UIImage imageNamed:@"emailFolder"];
         }
-        else {
+        else
+        {
             cell.imageView.image = [UIImage imageNamed:@"folder"];
         }        
     }
-    else if ([self.fileSystem checkFileExtension:fileName fileExtension:HEX]) {
+    else if ([self.fileSystem checkFileExtension:fileName fileExtension:HEX])
+    {
         cell.imageView.image = [UIImage imageNamed:@"file"];
     }
-    else if ([self.fileSystem checkFileExtension:fileName fileExtension:BIN]) {
+    else if ([self.fileSystem checkFileExtension:fileName fileExtension:BIN])
+    {
         cell.imageView.image = [UIImage imageNamed:@"file"];
     }
-    else if ([self.fileSystem checkFileExtension:fileName fileExtension:ZIP]) {
+    else if ([self.fileSystem checkFileExtension:fileName fileExtension:ZIP])
+    {
         cell.imageView.image = [UIImage imageNamed:@"zipFile"];
     }
     cell.textLabel.text = [self.files objectAtIndex:indexPath.row];
@@ -238,22 +243,21 @@ int PAGE_NUMBERS;
 -(void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
     [super setEditing:editing animated:animated];
-    NSLog(@"setEditing");
     [self.tableView setEditing:editing animated:YES];
 }
 
 -(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"editingStyleForRowAtIndexPath");
     return UITableViewCellEditingStyleDelete;
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"commitEditingStyle");
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSString *fileName = [self.files objectAtIndex:indexPath.row];
-        if (![fileName isEqualToString:@"Inbox"]) {
+        
+        if (![fileName isEqualToString:@"Inbox"])
+        {
             NSLog(@"Removing file: %@",fileName);
             [self.files removeObjectAtIndex:indexPath.row];
             NSString *filePath = [self.documentsDirectoryPath stringByAppendingPathComponent:fileName];
@@ -261,45 +265,44 @@ int PAGE_NUMBERS;
             [self.fileSystem deleteFile:filePath];
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         }
-        else {
+        else
+        {
             NSLog(@"Cant remove Inbox directory");
             [Utility showAlert:@"User can't delete Inbox directory"];
             [tableView reloadData];
         }
-        
     }
 }
 
-
- #pragma mark - Navigation
+#pragma mark - Navigation
 
 -(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
     NSIndexPath *selectionIndexPath = [self.tableView indexPathForSelectedRow];
     NSString *fileName = [self.files objectAtIndex:selectionIndexPath.row];
     NSString *filePath = [self.documentsDirectoryPath stringByAppendingPathComponent:fileName];
-    if ([self.fileSystem isDirectory:filePath]) {
-        return YES;
-    }
-    return NO;
+    
+    return [self.fileSystem isDirectory:filePath];
 }
  
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
-     NSIndexPath *selectionIndexPath = [self.tableView indexPathForSelectedRow];
-     NSString *fileName = [self.files objectAtIndex:selectionIndexPath.row];
-     NSString *filePath = [self.documentsDirectoryPath stringByAppendingPathComponent:fileName];
-     if ([self.fileSystem isDirectory:filePath]) {
-         FolderFilesTableViewController *folderVC = [segue destinationViewController];
-         folderVC.directoryPath = filePath;
-         folderVC.files = [[self.fileSystem getRequiredFilesFromDirectory:filePath] mutableCopy];
-         folderVC.fileDelegate = self.fileDelegate;
-     }
- }
- 
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSIndexPath *selectionIndexPath = [self.tableView indexPathForSelectedRow];
+    NSString *fileName = [self.files objectAtIndex:selectionIndexPath.row];
+    NSString *filePath = [self.documentsDirectoryPath stringByAppendingPathComponent:fileName];
+    
+    if ([self.fileSystem isDirectory:filePath])
+    {
+        FolderFilesTableViewController *folderVC = [segue destinationViewController];
+        folderVC.directoryPath = filePath;
+        folderVC.files = [[self.fileSystem getRequiredFilesFromDirectory:filePath] mutableCopy];
+        folderVC.fileDelegate = self.fileDelegate;
+    }
+}
 
-- (IBAction)cancelBarButtonPressed:(UIBarButtonItem *)sender {
+- (IBAction)cancelBarButtonPressed:(UIBarButtonItem *)sender
+{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

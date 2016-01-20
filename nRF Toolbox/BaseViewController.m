@@ -20,9 +20,17 @@
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 
-@interface ViewController : BaseViewController<UICollectionViewDataSource>
+@interface BaseViewController ()
+
+@end
+
+@implementation BaseViewController
+
+- (void)showAbout:(NSString*)message {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"About" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alert show];
+}
 
 @end

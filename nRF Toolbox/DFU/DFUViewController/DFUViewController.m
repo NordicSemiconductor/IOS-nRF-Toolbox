@@ -24,7 +24,6 @@
 #import "ScannerViewController.h"
 
 #import "Constants.h"
-#import "HelpViewController.h"
 #import "FileTypeTableViewController.h"
 #import "SSZipArchive.h"
 #import "UnzipFirmware.h"
@@ -63,6 +62,7 @@
 @property BOOL isErrorKnown;
 
 - (IBAction)uploadPressed;
+- (IBAction)aboutButtonClicked:(id)sender;
 
 @end
 
@@ -128,6 +128,10 @@
     }
 }
 
+- (IBAction)aboutButtonClicked:(id)sender {
+    [self showAbout:[Utility getDFUHelpText]];
+}
+
 -(void)performDFU
 {
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -166,12 +170,6 @@
     {
         FileTypeTableViewController *fileTypeVC = [segue destinationViewController];
         fileTypeVC.chosenFirmwareType = selectedFileType;
-    }
-    else if ([[segue identifier] isEqualToString:@"help"])
-    {
-        HelpViewController *helpVC = [segue destinationViewController];
-        helpVC.helpText = [Utility getDFUHelpText];
-        helpVC.isDFUViewController = YES;
     }
 }
 

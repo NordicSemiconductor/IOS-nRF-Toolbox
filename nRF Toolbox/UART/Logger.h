@@ -21,8 +21,19 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "BaseViewController.h"
 
-@interface ViewController : BaseViewController<UICollectionViewDataSource>
+typedef NS_ENUM( NSInteger, LogLevel )
+{
+    Debug,
+    Verbose,
+    Info,
+    App,
+    Warning,
+    Error
+};
+
+@protocol Logger <NSObject>
+
+-(void)log:(LogLevel)level message:(NSString*)message;
 
 @end

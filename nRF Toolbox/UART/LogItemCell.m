@@ -20,45 +20,54 @@
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "PageImageViewController.h"
+#import "LogItemCell.h"
 
-@interface PageImageViewController ()
+@implementation LogItem
 
 @end
 
-@implementation PageImageViewController
+@interface LogItemCell ()
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    self.pageImage.image = [UIImage imageNamed:self.pageImageFileName];
-}
+@property (weak, nonatomic) IBOutlet UILabel *timestamp;
+@property (weak, nonatomic) IBOutlet UILabel *message;
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+@end
 
-- (IBAction)skipButtonPressed:(UIButton *)sender {
-    [self showHelpNavigationBar];
-    [self showTabBar];
-    [self removePageViewControllersFromHelp];
-}
+@implementation LogItemCell
 
--(void)showHelpNavigationBar
+-(void)set:(LogItem*)item
 {
-    [self.parentViewController.parentViewController.navigationController setNavigationBarHidden:NO];
-}
-
--(void)showTabBar
-{
-    [self.parentViewController.parentViewController.tabBarController.tabBar setHidden:NO];
-}
-
--(void)removePageViewControllersFromHelp
-{
-    [self.parentViewController.view removeFromSuperview];
-    [self.parentViewController removeFromParentViewController];
+    self.timestamp.text = item.timestamp;
+    self.message.text = item.message;
+    
+    // Use the color based on the log level
+    UIColor *color = nil;
+    switch (item.level) {
+        case Debug:
+            color = [UIColor colorWithRed:0x00/255.0 green:0x9C/255.0 blue:0xDE/255.0 alpha:1];
+            break;
+            
+        case Verbose:
+            color = [UIColor colorWithRed:0xB8/255.0 green:0xB0/255.0 blue:0x56/255.0 alpha:1];
+            break;
+            
+        case Info:
+            color = [UIColor blackColor];
+            break;
+            
+        case App:
+            color = [UIColor colorWithRed:0x23/255.0 green:0x8C/255.0 blue:0x0F/255.0 alpha:1];
+            break;
+            
+        case Warning:
+            color = [UIColor colorWithRed:0xD7/255.0 green:0x79/255.0 blue:0x26/255.0 alpha:1];
+            break;
+            
+        case Error:
+            color = [UIColor redColor];
+            break;
+    }
+    self.message.textColor = color;
 }
 
 @end
