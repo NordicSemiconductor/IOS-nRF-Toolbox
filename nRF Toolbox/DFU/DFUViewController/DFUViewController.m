@@ -368,7 +368,14 @@
     
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (self.dfuHelper.dfuVersion != 1) {
+        if (self.dfuHelper.dfuVersion == 0) {
+            double delayInSeconds = 3.0;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [dfuOperations connectDevice:peripheral];
+            });
+        }
+        else {
             [self clearUI];
         
             if (!self.isTransfered && !self.isTransferCancelled && !self.isErrorKnown) {
@@ -384,14 +391,6 @@
             self.isTransferCancelled = NO;
             self.isTransfered = NO;
             self.isErrorKnown = NO;
-        }
-        else {
-            double delayInSeconds = 3.0;
-            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                [dfuOperations connectDevice:peripheral];
-            });
-            
         }
     });
 }
