@@ -53,19 +53,22 @@
     }
     
     commandTextField.text = self.command;
-    [iconButtons[self.iconIndex] setBackgroundColor:[UIColor grayColor]];
+    [iconButtons[self.iconIndex] setBackgroundColor:[UIColor colorWithRed:222.0f/255.0f green:74.0f/255.0f blue:19.0f/255.0f alpha:1.0f]];
 }
 
-- (IBAction)okButtonPressed:(UIButton *)sender {
+- (IBAction)okButtonPressed:(UIButton *)sender
+{
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.delegate didButtonConfigured:commandTextField.text iconIndex:self.iconIndex shouldHideButton:self.isHidden];
 }
 
-- (IBAction)CancelButtonPressed:(UIButton *)sender {
+- (IBAction)CancelButtonPressed:(UIButton *)sender
+{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)showHideButtonPressed:(UIButton *)sender {
+- (IBAction)showHideButtonPressed:(UIButton *)sender
+{
     if (self.isHidden)
     {
         self.isHidden = NO;
@@ -87,9 +90,9 @@
 -(void)setSelectedButtonBackgroundColor
 {
     for (UIButton *button in self.iconButtons) {
-        [button setBackgroundColor:[UIColor colorWithRed:230.0f/255.0f green:230.0f/255.0f blue:230.0f/255.0f alpha:0.0f]];
+        [button setBackgroundColor:[UIColor colorWithRed:127/255.0f green:127/255.0f blue:127/255.0f alpha:1.0f]];
     }
-    [iconButtons[self.iconIndex] setBackgroundColor:[UIColor grayColor]];
+    [iconButtons[self.iconIndex] setBackgroundColor:[UIColor colorWithRed:222.0f/255.0f green:74.0f/255.0f blue:19.0f/255.0f alpha:1.0f]];
 }
 
 @end

@@ -63,9 +63,15 @@ NSMutableArray *logItems;
 
 -(void)scrollDisplayViewDown
  {
-     //scrolls the table view down when last log statement is below the bottom of tableview
-     [displayLogTextTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[logItems count]-1 inSection:0]
-                                     atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+     @try {
+         //scrolls the table view down when last log statement is below the bottom of tableview
+         [displayLogTextTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[logItems count]-1 inSection:0]
+                                    atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+     }
+     @catch (NSException *exception) {
+         NSLog(@"Exception!");
+         // do nothing
+     }
  }
 
 -(void)log:(LogLevel)level message:(NSString *)message

@@ -34,7 +34,7 @@
 -(void)viewDidLoad
 {
     // Set the rear view width to almost whole screen width
-    self.rearViewRevealWidth = [[UIScreen mainScreen] bounds].size.width - 50;
+    self.rearViewRevealWidth = [[UIScreen mainScreen] bounds].size.width - 30;
     self.rearViewRevealDisplacement = 0;
 }
 
@@ -43,7 +43,7 @@
     // This method is called after the device orientation has changed
     
     // Set the rear view width to almost whole screen width
-    self.rearViewRevealWidth = size.width - 50;
+    self.rearViewRevealWidth = size.width - 30;
 }
 
 - (IBAction)aboutButtonClicked:(id)sender {

@@ -701,10 +701,10 @@
 			isa = PBXGroup;
 			children = (
 				52BDCBE51C4FA02700E2680F /* Logger.h */,
-				A85667D71B1F3C1A004A6D3C /* LogViewController.h */,
-				A85667D81B1F3C1A004A6D3C /* LogViewController.m */,
 				52BDCBD51C49492300E2680F /* LogItemCell.h */,
 				52BDCBD61C49492300E2680F /* LogItemCell.m */,
+				A85667D71B1F3C1A004A6D3C /* LogViewController.h */,
+				A85667D81B1F3C1A004A6D3C /* LogViewController.m */,
 			);
 			name = Logger;
 			sourceTree = "<group>";
