@@ -21,13 +21,15 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "AppFilesTableViewController.h"
+#import "AppFilesViewController.h"
 
-@interface UserFilesTableViewController : UITableViewController
+@interface FolderFilesViewController : UIViewController
+
+@property (nonatomic, strong) NSMutableArray *files;
+@property (nonatomic, strong) NSString *directoryPath;
 
 //define delegate property
 @property (retain)id<FileSelectionDelegate> fileDelegate;
-
-@property (weak, nonatomic) IBOutlet UITextView *emptyMessageText;
+@property (strong, nonatomic) NSString* selectedPath;
 
 @end

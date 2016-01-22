@@ -20,42 +20,29 @@
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FolderFilesTableViewController.h"
+#import "FolderFilesViewController.h"
+#include "UserFilesViewController.h"
 #import "AccessFileSystem.h"
 
-@interface FolderFilesTableViewController ()
+@interface FolderFilesViewController ()
 
 @property (nonatomic, strong)AccessFileSystem *fileSystem;
 
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
 @end
 
-@implementation FolderFilesTableViewController
+@implementation FolderFilesViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+@synthesize tableView;
+@synthesize selectedPath;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    //[self.tableView setBackgroundView:[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Background4"]]];
-    self.fileSystem = [[AccessFileSystem alloc]init];
+    self.fileSystem = [[AccessFileSystem alloc] init];
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    if (self.files.count == 0) {
-        [Utility showAlert:[Utility getEmptyFolderText]];
-    }
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
@@ -76,52 +63,64 @@
     return self.files.count;
 }
 
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FolderFilesCell" forIndexPath:indexPath];
+    UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:@"FolderFilesCell" forIndexPath:indexPath];
     NSString *fileName = [self.files objectAtIndex:indexPath.row];
+    NSString *filePath = [self.directoryPath stringByAppendingPathComponent:fileName];
+    
     // Configure the cell...
+    cell.textLabel.text = [self.files objectAtIndex:indexPath.row];
     if ([self.fileSystem checkFileExtension:fileName fileExtension:HEX]) {
-        cell.imageView.image = [UIImage imageNamed:@"file"];
+        cell.imageView.image = [UIImage imageNamed:@"ic_file"];
     }
     else if ([self.fileSystem checkFileExtension:fileName fileExtension:BIN]) {
-        cell.imageView.image = [UIImage imageNamed:@"file"];
+        cell.imageView.image = [UIImage imageNamed:@"ic_file"];
     }
     else if ([self.fileSystem checkFileExtension:fileName fileExtension:ZIP]) {
-        cell.imageView.image = [UIImage imageNamed:@"zipFile"];
+        cell.imageView.image = [UIImage imageNamed:@"ic_archive"];
+    }
+    
+    if ([filePath isEqualToString:selectedPath])
+    {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }
+    else
+    {
+        cell.accessoryType = UITableViewCellAccessoryNone;
     }
 
-    cell.textLabel.text = [self.files objectAtIndex:indexPath.row];
     return cell;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     NSString *fileName = [self.files objectAtIndex:indexPath.row];
     NSString *filePath = [self.directoryPath stringByAppendingPathComponent:fileName];
     NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+    
+    selectedPath = filePath;
+    [tv reloadData];
+    
     [self.fileDelegate onFileSelected:fileURL];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    // TODO fix
+    // [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
     [super setEditing:editing animated:animated];
-    NSLog(@"setEditing");
     [self.tableView setEditing:editing animated:YES];
 }
 
 -(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"editingStyleForRowAtIndexPath");
     return UITableViewCellEditingStyleDelete;
 }
 
--(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)tableView:(UITableView *)tv commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"commitEditingStyle");
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSString *fileName = [self.files objectAtIndex:indexPath.row];
         NSLog(@"Removing file: %@",fileName);
@@ -129,7 +128,7 @@
         NSString *filePath = [self.directoryPath stringByAppendingPathComponent:fileName];
         NSLog(@"Removing file from path %@",filePath);
         [self.fileSystem deleteFile:filePath];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];        
+        [tv deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];        
     }
 }
 

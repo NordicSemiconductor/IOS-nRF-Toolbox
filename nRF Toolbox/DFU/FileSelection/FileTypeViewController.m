@@ -20,15 +20,55 @@
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <UIKit/UIKit.h>
-#import "AppFilesTableViewController.h"
+#import "FileTypeViewController.h"
+#import "Utility.h"
 
-@interface FolderFilesTableViewController : UITableViewController
+@interface FileTypeViewController ()
 
-@property (nonatomic, strong)NSMutableArray *files;
-@property (nonatomic, strong)NSString *directoryPath;
+@end
 
-//define delegate property
-@property (retain)id<FileSelectionDelegate> fileDelegate;
+@implementation FileTypeViewController
+
+@synthesize chosenFirmwareType;
+@synthesize delegate;
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [[Utility getFirmwareTypes] count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:@"FileTypeCell" forIndexPath:indexPath];
+    NSString* cellType = [[Utility getFirmwareTypes] objectAtIndex:indexPath.row];
+    
+    // Configure the cell...
+    cell.textLabel.text = cellType;
+    if ([cellType isEqual:chosenFirmwareType])
+    {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }
+    else
+    {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *firmwareType = [[Utility getFirmwareTypes] objectAtIndex:indexPath.row];
+    chosenFirmwareType = firmwareType;
+    [tv reloadData];
+    
+    [delegate onFileTypeSelected:firmwareType];
+}
 
 @end

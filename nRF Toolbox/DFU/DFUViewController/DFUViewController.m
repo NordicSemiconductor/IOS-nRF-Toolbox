@@ -24,7 +24,7 @@
 #import "ScannerViewController.h"
 
 #import "Constants.h"
-#import "FileTypeTableViewController.h"
+#import "UserFilesViewController.h"
 #import "SSZipArchive.h"
 #import "UnzipFirmware.h"
 #import "Utility.h"
@@ -42,6 +42,7 @@
 @property (strong, nonatomic) CBPeripheral *selectedPeripheral;
 @property (strong, nonatomic) DFUOperations *dfuOperations;
 @property (strong, nonatomic) DFUHelper *dfuHelper;
+@property (strong, nonatomic) NSString *selectedFileType;
 
 @property (weak, nonatomic) IBOutlet UILabel *fileName;
 @property (weak, nonatomic) IBOutlet UILabel *fileSize;
@@ -54,6 +55,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *uploadButton;
 @property (weak, nonatomic) IBOutlet UILabel *fileType;
 @property (weak, nonatomic) IBOutlet UIButton *selectFileTypeButton;
+@property (weak, nonatomic) IBOutlet UILabel *verticalLabel;
+@property (weak, nonatomic) IBOutlet UILabel *deviceName;
+@property (weak, nonatomic) IBOutlet UIButton *connectButton;
 
 @property BOOL isTransferring;
 @property BOOL isTransfered;
@@ -163,13 +167,23 @@
     else if ([segue.identifier isEqualToString:@"FileSegue"])
     {
         UITabBarController *barController = segue.destinationViewController;
-        AppFilesTableViewController *appFilesVC = [barController.viewControllers firstObject];
+        AppFilesViewController *appFilesVC = [barController.viewControllers firstObject];
         appFilesVC.fileDelegate = self;
+        UserFilesViewController* userFilesVC = [barController.viewControllers lastObject];
+        userFilesVC.fileDelegate = self;
+        
+        if (self.dfuHelper.selectedFileURL)
+        {
+            NSString *path = [self.dfuHelper.selectedFileURL path];
+            appFilesVC.selectedPath = path;
+            userFilesVC.selectedPath = path;
+        }
     }
     else if ([segue.identifier isEqualToString:@"FileTypeSegue"])
     {
-        FileTypeTableViewController *fileTypeVC = [segue destinationViewController];
+        FileTypeViewController *fileTypeVC = [segue destinationViewController];
         fileTypeVC.chosenFirmwareType = selectedFileType;
+        fileTypeVC.delegate = self;
     }
 }
 
@@ -262,18 +276,8 @@
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
 }
 
-#pragma mark FileType Selector Delegate
-
-- (IBAction)unwindFileTypeSelector:(UIStoryboardSegue*)sender
-{
-    FileTypeTableViewController *fileTypeVC = [sender sourceViewController];
-    selectedFileType = fileTypeVC.chosenFirmwareType;
-    fileType.text = selectedFileType;
-    [self.dfuHelper setFirmwareType:selectedFileType];
-    [self enableUploadButton];
-}
-
 #pragma mark Device Selection Delegate
+
 -(void)centralManager:(CBCentralManager *)manager didPeripheralSelected:(CBPeripheral *)peripheral
 {
     selectedPeripheral = peripheral;
@@ -316,6 +320,13 @@
     }
 }
 
+-(void)onFileTypeSelected:(NSString *)type
+{
+    selectedFileType = type;
+    fileType.text = selectedFileType;
+    [self.dfuHelper setFirmwareType:selectedFileType];
+    [self enableUploadButton];
+}
 
 #pragma mark DFUOperations delegate methods
 

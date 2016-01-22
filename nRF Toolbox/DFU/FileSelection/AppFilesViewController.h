@@ -22,7 +22,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FileTypeTableViewController : UITableViewController
-@property (strong, nonatomic) NSString *chosenFirmwareType;
+@protocol FileSelectionDelegate <NSObject>
+
+-(void)onFileSelected:(NSURL *)fileURL;
+
+@end
+
+@interface AppFilesViewController : UIViewController
+
+//define delegate property
+@property (retain)id<FileSelectionDelegate> fileDelegate;
+@property (strong, nonatomic) NSString* selectedPath;
 
 @end

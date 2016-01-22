@@ -55,11 +55,6 @@ NSString* const FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER = @"softdevice and boot
     return [NSString stringWithFormat:@"-User can add Folders and Files with Hex, Bin and Zip extensions from Emails and iTunes.\n\n-User added files will be appeared on tab User Files.\n\n- In order to add files from iTunes:\n   1. Open iTunes on your PC and connect iPhone to it.\n   2.On the left, under Devices select your iPhone.\n   3.on the top, select tab Apps.\n   4. on the bottom, under File Sharing select app nRF Toolbox and then add files.\n\n- In order to add files from Emails:\n   1. Attach file to your email.\n   2.Open your email on your iPhone.\n   3.Long click on attached file and then select Open in nRF Toolbox."];
 }
 
-+ (NSString *) getEmptyFolderText
-{
-    return @"There are no Hex, Bin or Zip files found inside selected folder.";
-}
-
 + (NSArray *) getFirmwareTypes
 {
     static NSArray *events;

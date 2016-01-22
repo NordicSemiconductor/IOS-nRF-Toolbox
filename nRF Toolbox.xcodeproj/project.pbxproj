@@ -61,11 +61,11 @@
 		7E445C881951A46800633892 /* DFUOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E445C871951A46800633892 /* DFUOperations.m */; };
 		7E445C8B1951A48100633892 /* DFUOperationsDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E445C8A1951A48100633892 /* DFUOperationsDetails.m */; };
 		7E445C8E1951A51A00633892 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E445C8D1951A51A00633892 /* Utility.m */; };
-		7E445C971951D09E00633892 /* FileTypeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E445C961951D09E00633892 /* FileTypeTableViewController.m */; };
+		7E445C971951D09E00633892 /* FileTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E445C961951D09E00633892 /* FileTypeViewController.m */; };
 		7E6ED10B196ED482008010B6 /* firmwares in Resources */ = {isa = PBXBuildFile; fileRef = 7E6ED10A196ED482008010B6 /* firmwares */; };
-		7E6ED10F197D1D8D008010B6 /* AppFilesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6ED10E197D1D8D008010B6 /* AppFilesTableViewController.m */; };
-		7E6ED112197D1DA4008010B6 /* UserFilesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6ED111197D1DA4008010B6 /* UserFilesTableViewController.m */; };
-		7E99686C19800A260092E69E /* FolderFilesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E99686B19800A260092E69E /* FolderFilesTableViewController.m */; };
+		7E6ED10F197D1D8D008010B6 /* AppFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6ED10E197D1D8D008010B6 /* AppFilesViewController.m */; };
+		7E6ED112197D1DA4008010B6 /* UserFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6ED111197D1DA4008010B6 /* UserFilesViewController.m */; };
+		7E99686C19800A260092E69E /* FolderFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E99686B19800A260092E69E /* FolderFilesViewController.m */; };
 		7ECF201F19655312005495C8 /* FileOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ECF201E19655312005495C8 /* FileOperations.m */; };
 		7ECF2022196AA58D005495C8 /* BLEOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ECF2021196AA58D005495C8 /* BLEOperations.m */; };
 		7ECF2025196AD6AF005495C8 /* UnzipFirmware.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ECF2024196AD6AF005495C8 /* UnzipFirmware.m */; };
@@ -265,15 +265,15 @@
 		7E445C8A1951A48100633892 /* DFUOperationsDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFUOperationsDetails.m; sourceTree = "<group>"; };
 		7E445C8C1951A50A00633892 /* Utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
 		7E445C8D1951A51A00633892 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
-		7E445C951951D09E00633892 /* FileTypeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileTypeTableViewController.h; sourceTree = "<group>"; };
-		7E445C961951D09E00633892 /* FileTypeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileTypeTableViewController.m; sourceTree = "<group>"; };
+		7E445C951951D09E00633892 /* FileTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileTypeViewController.h; path = FileSelection/FileTypeViewController.h; sourceTree = "<group>"; };
+		7E445C961951D09E00633892 /* FileTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileTypeViewController.m; path = FileSelection/FileTypeViewController.m; sourceTree = "<group>"; };
 		7E6ED10A196ED482008010B6 /* firmwares */ = {isa = PBXFileReference; lastKnownFileType = folder; path = firmwares; sourceTree = "<group>"; };
-		7E6ED10D197D1D8D008010B6 /* AppFilesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppFilesTableViewController.h; sourceTree = "<group>"; };
-		7E6ED10E197D1D8D008010B6 /* AppFilesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppFilesTableViewController.m; sourceTree = "<group>"; };
-		7E6ED110197D1DA4008010B6 /* UserFilesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserFilesTableViewController.h; sourceTree = "<group>"; };
-		7E6ED111197D1DA4008010B6 /* UserFilesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserFilesTableViewController.m; sourceTree = "<group>"; };
-		7E99686A19800A260092E69E /* FolderFilesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderFilesTableViewController.h; sourceTree = "<group>"; };
-		7E99686B19800A260092E69E /* FolderFilesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FolderFilesTableViewController.m; sourceTree = "<group>"; };
+		7E6ED10D197D1D8D008010B6 /* AppFilesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppFilesViewController.h; sourceTree = "<group>"; };
+		7E6ED10E197D1D8D008010B6 /* AppFilesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppFilesViewController.m; sourceTree = "<group>"; };
+		7E6ED110197D1DA4008010B6 /* UserFilesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserFilesViewController.h; sourceTree = "<group>"; };
+		7E6ED111197D1DA4008010B6 /* UserFilesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserFilesViewController.m; sourceTree = "<group>"; };
+		7E99686A19800A260092E69E /* FolderFilesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderFilesViewController.h; sourceTree = "<group>"; };
+		7E99686B19800A260092E69E /* FolderFilesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FolderFilesViewController.m; sourceTree = "<group>"; };
 		7ECF201D19655312005495C8 /* FileOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileOperations.h; sourceTree = "<group>"; };
 		7ECF201E19655312005495C8 /* FileOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileOperations.m; sourceTree = "<group>"; };
 		7ECF2020196AA58D005495C8 /* BLEOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEOperations.h; sourceTree = "<group>"; };
@@ -458,6 +458,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		522636281C5261C90054A550 /* File Type Selection */ = {
+			isa = PBXGroup;
+			children = (
+				7E445C951951D09E00633892 /* FileTypeViewController.h */,
+				7E445C961951D09E00633892 /* FileTypeViewController.m */,
+			);
+			name = "File Type Selection";
+			sourceTree = "<group>";
+		};
 		5236E163187EA76B0057E974 /* RSAC */ = {
 			isa = PBXGroup;
 			children = (
@@ -548,6 +557,7 @@
 				A8B2DF9B1AB1C2EB0043D988 /* JSON Parser */,
 				7E996869197FB8FD0092E69E /* Constants */,
 				7E996868197FA2920092E69E /* Unzip */,
+				522636281C5261C90054A550 /* File Type Selection */,
 				7E6ED10C197D1D40008010B6 /* File Selection */,
 				7E6ED10A196ED482008010B6 /* firmwares */,
 				5214D0C81886951A00460637 /* Hex to Bin Converter */,
@@ -730,16 +740,14 @@
 		7E6ED10C197D1D40008010B6 /* File Selection */ = {
 			isa = PBXGroup;
 			children = (
-				7E6ED10D197D1D8D008010B6 /* AppFilesTableViewController.h */,
-				7E6ED10E197D1D8D008010B6 /* AppFilesTableViewController.m */,
-				7E6ED110197D1DA4008010B6 /* UserFilesTableViewController.h */,
-				7E6ED111197D1DA4008010B6 /* UserFilesTableViewController.m */,
-				7E445C951951D09E00633892 /* FileTypeTableViewController.h */,
-				7E445C961951D09E00633892 /* FileTypeTableViewController.m */,
 				7E2A3C62196D408A009E2506 /* AccessFileSystem.h */,
 				7E2A3C63196D408A009E2506 /* AccessFileSystem.m */,
-				7E99686A19800A260092E69E /* FolderFilesTableViewController.h */,
-				7E99686B19800A260092E69E /* FolderFilesTableViewController.m */,
+				7E6ED10D197D1D8D008010B6 /* AppFilesViewController.h */,
+				7E6ED10E197D1D8D008010B6 /* AppFilesViewController.m */,
+				7E6ED110197D1DA4008010B6 /* UserFilesViewController.h */,
+				7E6ED111197D1DA4008010B6 /* UserFilesViewController.m */,
+				7E99686A19800A260092E69E /* FolderFilesViewController.h */,
+				7E99686B19800A260092E69E /* FolderFilesViewController.m */,
 			);
 			name = "File Selection";
 			path = FileSelection;
@@ -975,7 +983,7 @@
 				A80462591AD670480074F116 /* AppUtilities.m in Sources */,
 				A8B2DFA01AB1C3040043D988 /* JsonParser.m in Sources */,
 				A86A784C1AB8542E00823AAB /* UARTViewController.m in Sources */,
-				7E445C971951D09E00633892 /* FileTypeTableViewController.m in Sources */,
+				7E445C971951D09E00633892 /* FileTypeViewController.m in Sources */,
 				7EE669201983C7DD004680F0 /* unzip.c in Sources */,
 				52BDCBD01C491B6F00E2680F /* BaseRevealViewController.m in Sources */,
 				A8B2DFA11AB1C3040043D988 /* InitData.m in Sources */,
@@ -987,7 +995,7 @@
 				52BDCBD41C491C8600E2680F /* UARTRevealViewController.m in Sources */,
 				A85667D91B1F3C1A004A6D3C /* LogViewController.m in Sources */,
 				5217F3FC1859EE0000F2D5BB /* ViewController.m in Sources */,
-				7E6ED112197D1DA4008010B6 /* UserFilesTableViewController.m in Sources */,
+				7E6ED112197D1DA4008010B6 /* UserFilesViewController.m in Sources */,
 				A85667DC1B208186004A6D3C /* BluetoothManager.m in Sources */,
 				524F2CDF18897D33008A8555 /* GlucoseReading.m in Sources */,
 				5217F3F61859EE0000F2D5BB /* AppDelegate.m in Sources */,
@@ -1008,7 +1016,7 @@
 				5285D9A91890033F00305F1D /* CSCViewController.m in Sources */,
 				52BDCBDA1C4D1AAC00E2680F /* NSDataAsHex.m in Sources */,
 				5217F428185F28D400F2D5BB /* ScannedPeripheral.m in Sources */,
-				7E99686C19800A260092E69E /* FolderFilesTableViewController.m in Sources */,
+				7E99686C19800A260092E69E /* FolderFilesViewController.m in Sources */,
 				7EE6691F1983C7DD004680F0 /* mztools.c in Sources */,
 				52BDCBC11C43D4CB00E2680F /* NavigationController.m in Sources */,
 				524F2CD818897078008A8555 /* BGMItemCell.m in Sources */,
@@ -1016,7 +1024,7 @@
 				5236E16C187EC6880057E974 /* StubViewController.m in Sources */,
 				5252A5361880260300EFD773 /* BGMViewController.m in Sources */,
 				524F2CE5188D2A56008A8555 /* GlucoseReadingContext.m in Sources */,
-				7E6ED10F197D1D8D008010B6 /* AppFilesTableViewController.m in Sources */,
+				7E6ED10F197D1D8D008010B6 /* AppFilesViewController.m in Sources */,
 				A804625C1AD807510074F116 /* DFUHelper.m in Sources */,
 				7EE6691E1983C7DD004680F0 /* ioapi.c in Sources */,
 				5217F422185F15FA00F2D5BB /* ScannerViewController.m in Sources */,

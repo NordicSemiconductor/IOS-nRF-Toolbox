@@ -20,11 +20,11 @@
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "AppFilesTableViewController.h"
+#import "AppFilesViewController.h"
 #import "AccessFileSystem.h"
-#import "UserFilesTableViewController.h"
+#import "UserFilesViewController.h"
 
-@interface AppFilesTableViewController ()
+@interface AppFilesViewController ()
 
 @property (nonatomic,strong)NSArray *files;
 @property (nonatomic,strong)NSString *appDirectoryPath;
@@ -32,39 +32,17 @@
 
 @end
 
-@implementation AppFilesTableViewController
+@implementation AppFilesViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+@synthesize selectedPath;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.tabBarController.delegate = self;
     self.fileSystem = [[AccessFileSystem alloc]init];
     self.appDirectoryPath = [self.fileSystem getAppDirectoryPath:@"firmwares"];
     self.files = [self.fileSystem getFilesFromAppDirectory:@"firmwares"];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-#pragma mark- TabBarController delegate
-
--(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
-{
-    UserFilesTableViewController *userFilesVC = [tabBarController.viewControllers objectAtIndex:1];
-    userFilesVC.fileDelegate = self.fileDelegate;
 }
 
 #pragma mark - Table view data source
@@ -79,31 +57,49 @@
     return self.files.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AppFilesCell" forIndexPath:indexPath];
+    UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:@"AppFilesCell" forIndexPath:indexPath];
     NSString *fileName = [self.files objectAtIndex:indexPath.row];
+    NSString *filePath = [self.appDirectoryPath stringByAppendingPathComponent:fileName];
     
     // Configure the cell...
     cell.textLabel.text = [self.files objectAtIndex:indexPath.row];
-    if ([self.fileSystem checkFileExtension:fileName fileExtension:HEX]) {
-        cell.imageView.image = [UIImage imageNamed:@"file"];
+    if ([self.fileSystem checkFileExtension:fileName fileExtension:HEX])
+    {
+        cell.imageView.image = [UIImage imageNamed:@"ic_file"];
+    }
+    else if ([self.fileSystem checkFileExtension:fileName fileExtension:BIN])
+    {
+        cell.imageView.image = [UIImage imageNamed:@"ic_file"];
     }
     else if ([self.fileSystem checkFileExtension:fileName fileExtension:ZIP])
-    cell.imageView.image = [UIImage imageNamed:@"zipFile"];
+    {
+        cell.imageView.image = [UIImage imageNamed:@"ic_archive"];
+    }
+    
+    if ([filePath isEqualToString:selectedPath])
+    {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }
+    else
+    {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
     return cell;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self dismissViewControllerAnimated:YES completion:nil];
     NSString *fileName = [self.files objectAtIndex:indexPath.row];
     NSString *filePath = [self.appDirectoryPath stringByAppendingPathComponent:fileName];
-    
     NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+    
+    selectedPath = filePath;
+    [tv reloadData];
 
     [self.fileDelegate onFileSelected:fileURL];
 }
-
 
 @end

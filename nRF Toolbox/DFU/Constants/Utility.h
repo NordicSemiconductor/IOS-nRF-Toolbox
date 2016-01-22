@@ -95,7 +95,6 @@ typedef enum {
 + (NSString *) stringFileExtension:(enumFileExtension)fileExtension;
 + (NSString *) getDFUHelpText;
 + (NSString *) getEmptyUserFilesText;
-+ (NSString *) getEmptyFolderText;
 + (NSString *) getDFUAppFileHelpText;
 + (void) showAlert:(NSString *)message;
 +(void)showBackgroundNotification:(NSString *)message;

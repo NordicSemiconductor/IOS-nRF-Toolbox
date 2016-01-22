@@ -21,13 +21,12 @@
  */
 
 #import <UIKit/UIKit.h>
-#import <CoreBluetooth/CoreBluetooth.h>
-#import "BaseViewController.h"
-#import "ScannerDelegate.h"
-#import "FileTypeViewController.h"
 #import "AppFilesViewController.h"
-#import "DFUOperations.h"
 
-@interface DFUViewController : BaseViewController <ScannerDelegate, FileSelectionDelegate, FileTypeSelectionDelegate, DFUOperationsDelegate>
+@interface UserFilesViewController : UIViewController <FileSelectionDelegate>
+
+//define delegate property
+@property (retain)id<FileSelectionDelegate> fileDelegate;
+@property (strong, nonatomic) NSString* selectedPath;
 
 @end
