@@ -57,17 +57,24 @@
     [tableView reloadData];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+}
+
 - (void)didClickDone
 {
     NSURL *fileURL = [NSURL fileURLWithPath:selectedPath];
     [self.fileDelegate onFileSelected:fileURL];
     
     [self dismissViewControllerAnimated:YES completion:nil];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
 -(void)didClickCancel
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
 #pragma mark - Table view data source

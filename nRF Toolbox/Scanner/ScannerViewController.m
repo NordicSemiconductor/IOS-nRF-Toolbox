@@ -60,8 +60,14 @@
     bluetoothManager = [[CBCentralManager alloc] initWithDelegate:self queue:centralQueue];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [super viewWillDisappear:animated];
     [self scanForPeripherals:NO];
 }

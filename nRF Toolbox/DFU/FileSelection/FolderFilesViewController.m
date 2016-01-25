@@ -56,15 +56,7 @@
     
     // Go back to DFUViewController
     [self dismissViewControllerAnimated:YES completion:nil];
-//    NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
-//    for (UIViewController *aViewController in allViewControllers)
-//    {
-//        if ([aViewController isKindOfClass:[DFUViewController class]])
-//        {
-//            [self.navigationController popToViewController:aViewController animated:YES];
-//            break;
-//        }
-//    }
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
 #pragma mark - Table view data source

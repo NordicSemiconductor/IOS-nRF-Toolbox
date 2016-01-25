@@ -37,7 +37,11 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <color key="tintColor" red="0.0" green="0.60392159223556519" blue="0.85490196943283081" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="barTintColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="selectedImageTintColor" red="0.0" green="0.60392159223556519" blue="0.85490196943283081" alpha="1" colorSpace="calibratedRGB"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="0.0" green="0.60392159223556519" blue="0.85490196943283081" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </tabBar>
                     <connections>
                         <segue destination="t2a-Jq-CNK" kind="relationship" relationship="viewControllers" id="qZN-Rt-b2t"/>
