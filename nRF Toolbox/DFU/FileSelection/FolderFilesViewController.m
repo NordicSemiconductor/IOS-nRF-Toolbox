@@ -23,12 +23,15 @@
 #import "FolderFilesViewController.h"
 #include "UserFilesViewController.h"
 #import "AccessFileSystem.h"
+#import "DFUViewController.h"
 
 @interface FolderFilesViewController ()
 
 @property (nonatomic, strong)AccessFileSystem *fileSystem;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+- (IBAction)didClickDone:(id)sender;
 
 @end
 
@@ -42,7 +45,22 @@
     [super viewDidLoad];
     
     self.fileSystem = [[AccessFileSystem alloc] init];
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    [self.navigationItem.rightBarButtonItem setEnabled:selectedPath != nil];
+}
+
+- (IBAction)didClickDone:(id)sender {
+    NSURL *fileURL = [NSURL fileURLWithPath:selectedPath];
+    [self.fileDelegate onFileSelected:fileURL];
+    
+    // Go back to DFUViewController
+    NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
+    for (UIViewController *aViewController in allViewControllers) {
+        if ([aViewController isKindOfClass:[DFUViewController class]]) {
+            [self.navigationController popToViewController:aViewController animated:YES];
+            break;
+        }
+    }
 }
 
 #pragma mark - Table view data source
@@ -54,12 +72,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (self.files.count == 0) {
-        self.navigationItem.rightBarButtonItem.enabled = NO;
-    }
-    else {
-        self.navigationItem.rightBarButtonItem.enabled = YES;
-    }
     return self.files.count;
 }
 
@@ -101,17 +113,9 @@
     
     selectedPath = filePath;
     [tv reloadData];
+    [self.navigationItem.rightBarButtonItem setEnabled:YES];
     
-    [self.fileDelegate onFileSelected:fileURL];
-    
-    // TODO fix
-    // [self.navigationController popViewControllerAnimated:YES];
-}
-
--(void)setEditing:(BOOL)editing animated:(BOOL)animated
-{
-    [super setEditing:editing animated:animated];
-    [self.tableView setEditing:editing animated:YES];
+    [self.preselectionDelegate onFilePreselected:fileURL];
 }
 
 -(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -131,5 +135,4 @@
         [tv deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];        
     }
 }
-
 @end

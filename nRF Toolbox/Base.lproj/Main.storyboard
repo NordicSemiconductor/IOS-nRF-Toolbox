@@ -17,7 +17,9 @@
                         <rect key="frame" x="129" y="330" width="163" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <color key="barTintColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" red="0.0" green="0.60392159223556519" blue="0.85490196943283081" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="selectedImageTintColor" red="0.0" green="0.60392159223556519" blue="0.85490196943283081" alpha="1" colorSpace="calibratedRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="t2a-Jq-CNK" kind="relationship" relationship="viewControllers" id="qZN-Rt-b2t"/>
@@ -1907,6 +1909,13 @@
                             <constraint firstAttribute="trailing" secondItem="aKb-wc-UXG" secondAttribute="trailing" id="nlq-g3-cP6"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="6Dz-n0-Ckv">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="0iS-7C-TUh">
+                            <connections>
+                                <action selector="didClickDone:" destination="MZc-IT-Uk4" id="kPI-Rj-iue"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fqi-hg-CT1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -3126,6 +3135,12 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="toolbar_shadow" translatesAutoresizingMaskIntoConstraints="NO" id="a5V-pg-dpS" userLabel="Shadow">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="8"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="8" id="ibL-Vd-6hc"/>
+                                </constraints>
+                            </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="W5D-0X-jiM">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3154,12 +3169,6 @@
                                     <outlet property="delegate" destination="t2a-Jq-CNK" id="hwZ-i4-rhd"/>
                                 </connections>
                             </tableView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="toolbar_shadow" translatesAutoresizingMaskIntoConstraints="NO" id="a5V-pg-dpS" userLabel="Shadow">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="8"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="8" id="ibL-Vd-6hc"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -3173,6 +3182,9 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="App Files" image="appIcon" id="CAx-HI-feY"/>
+                    <connections>
+                        <outlet property="tableView" destination="W5D-0X-jiM" id="8ep-Y7-KX0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lqv-dW-7EC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -3236,6 +3248,13 @@
                             <constraint firstItem="BQ9-i8-wbC" firstAttribute="leading" secondItem="cUm-89-ZK2" secondAttribute="leading" id="xtB-1U-DpZ"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="dpx-p5-wQh">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="bld-f7-FAF">
+                            <connections>
+                                <action selector="didClickDone:" destination="4bI-af-War" id="mxi-an-awI"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="BQ9-i8-wbC" id="YJ5-yg-zzD"/>
                     </connections>

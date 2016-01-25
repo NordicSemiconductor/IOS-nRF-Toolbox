@@ -24,8 +24,8 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "BaseViewController.h"
 #import "ScannerDelegate.h"
+#import "FileSelectionDelegate.h"
 #import "FileTypeViewController.h"
-#import "AppFilesViewController.h"
 #import "DFUOperations.h"
 
 @interface DFUViewController : BaseViewController <ScannerDelegate, FileSelectionDelegate, FileTypeSelectionDelegate, DFUOperationsDelegate>

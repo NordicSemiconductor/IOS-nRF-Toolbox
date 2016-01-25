@@ -24,6 +24,7 @@
 #import "ScannerViewController.h"
 
 #import "Constants.h"
+#import "AppFilesViewController.h"
 #import "UserFilesViewController.h"
 #import "SSZipArchive.h"
 #import "UnzipFirmware.h"

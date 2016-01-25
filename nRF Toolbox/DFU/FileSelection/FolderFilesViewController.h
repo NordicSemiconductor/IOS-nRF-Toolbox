@@ -21,7 +21,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "AppFilesViewController.h"
+#import "FileSelectionDelegate.h"
 
 @interface FolderFilesViewController : UIViewController
 
@@ -30,6 +30,7 @@
 
 //define delegate property
 @property (retain)id<FileSelectionDelegate> fileDelegate;
+@property (retain)id<FilePreselectionDelegate> preselectionDelegate;
 @property (strong, nonatomic) NSString* selectedPath;
 
 @end

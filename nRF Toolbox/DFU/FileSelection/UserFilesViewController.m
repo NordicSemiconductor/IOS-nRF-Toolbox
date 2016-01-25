@@ -23,6 +23,7 @@
 #import "UserFilesViewController.h"
 #import "AccessFileSystem.h"
 #import "Utility.h"
+#import "AppFilesViewController.h"
 #import "FolderFilesViewController.h"
 
 
@@ -48,8 +49,21 @@
     self.fileSystem = [[AccessFileSystem alloc] init];
     self.documentsDirectoryPath = [self.fileSystem getDocumentsDirectoryPath];
     self.files = [[self.fileSystem getDirectoriesAndRequiredFilesFromDocumentsDirectory] mutableCopy];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    // A file might have been selected on another tab. We have to refresh the Done button and the list.
+    self.tabBarController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(didClickDone)];
+    self.tabBarController.navigationItem.rightBarButtonItem.enabled = selectedPath != nil;
+    [tableView reloadData];
+}
+
+- (void)didClickDone {
+    NSURL *fileURL = [NSURL fileURLWithPath:selectedPath];
+    [self.fileDelegate onFileSelected:fileURL];
     
-    self.tabBarController.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Table view data source
@@ -61,12 +75,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectionred
 {
-    if (self.files.count == 0) {
-        self.navigationItem.rightBarButtonItem.enabled = NO;
-    }
-    else {
-        self.navigationItem.rightBarButtonItem.enabled = YES;
-    }
     return self.files.count;
 }
 
@@ -120,25 +128,21 @@
     if (![self.fileSystem isDirectory:filePath]) {
         selectedPath = filePath;
         [tv reloadData];
+        self.tabBarController.navigationItem.rightBarButtonItem.enabled = YES;
         
-        NSURL *fileURL = [NSURL fileURLWithPath:filePath];
-        [self.fileDelegate onFileSelected:fileURL];
-        
-        // TODO select view
-        // [self.navigationController popViewControllerAnimated:YES];
-    }    
+        AppFilesViewController* appFilesVC = self.tabBarController.viewControllers.firstObject;
+        appFilesVC.selectedPath = selectedPath;
+    }
 }
 
--(void)onFileSelected:(NSURL *)fileURL
+-(void)onFilePreselected:(NSURL *)fileURL
 {
     selectedPath = [fileURL path];
-    [self.fileDelegate onFileSelected:fileURL];
-}
-
--(void)setEditing:(BOOL)editing animated:(BOOL)animated
-{
-    [super setEditing:editing animated:animated];
-    [tableView setEditing:editing animated:YES];
+    [tableView reloadData];
+    self.tabBarController.navigationItem.rightBarButtonItem.enabled = YES;
+    
+    AppFilesViewController* appFilesVC = self.tabBarController.viewControllers.firstObject;
+    appFilesVC.selectedPath = selectedPath;
 }
 
 -(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -192,7 +196,8 @@
         FolderFilesViewController *folderVC = [segue destinationViewController];
         folderVC.directoryPath = filePath;
         folderVC.files = [[self.fileSystem getRequiredFilesFromDirectory:filePath] mutableCopy];
-        folderVC.fileDelegate = self;
+        folderVC.fileDelegate = self.fileDelegate;
+        folderVC.preselectionDelegate = self;
         folderVC.selectedPath = selectedPath;
     }
 }

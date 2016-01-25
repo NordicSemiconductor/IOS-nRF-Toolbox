@@ -20,13 +20,16 @@
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <UIKit/UIKit.h>
-#import "FileSelectionDelegate.h"
+#import <Foundation/Foundation.h>
 
-@interface UserFilesViewController : UIViewController <FilePreselectionDelegate>
+@protocol FileSelectionDelegate <NSObject>
 
-//define delegate property
-@property (retain)id<FileSelectionDelegate> fileDelegate;
-@property (strong, nonatomic) NSString* selectedPath;
+-(void)onFileSelected:(NSURL *)fileURL;
+
+@end
+
+@protocol FilePreselectionDelegate <NSObject>
+
+-(void)onFilePreselected:(NSURL *)fileURL;
 
 @end

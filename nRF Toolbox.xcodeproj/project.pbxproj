@@ -133,6 +133,7 @@
 		5217F426185F28D400F2D5BB /* ScannedPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScannedPeripheral.h; sourceTree = "<group>"; };
 		5217F427185F28D400F2D5BB /* ScannedPeripheral.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScannedPeripheral.m; sourceTree = "<group>"; };
 		5217F429185F32E500F2D5BB /* ScannerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScannerDelegate.h; sourceTree = "<group>"; };
+		5226362A1C564E5F0054A550 /* FileSelectionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSelectionDelegate.h; sourceTree = "<group>"; };
 		5236E15D187EA73F0057E974 /* HRSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRSViewController.h; sourceTree = "<group>"; };
 		5236E15E187EA73F0057E974 /* HRSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRSViewController.m; sourceTree = "<group>"; };
 		5236E160187EA7540057E974 /* HTSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTSViewController.h; sourceTree = "<group>"; };
@@ -742,6 +743,7 @@
 			children = (
 				7E2A3C62196D408A009E2506 /* AccessFileSystem.h */,
 				7E2A3C63196D408A009E2506 /* AccessFileSystem.m */,
+				5226362A1C564E5F0054A550 /* FileSelectionDelegate.h */,
 				7E6ED10D197D1D8D008010B6 /* AppFilesViewController.h */,
 				7E6ED10E197D1D8D008010B6 /* AppFilesViewController.m */,
 				7E6ED110197D1DA4008010B6 /* UserFilesViewController.h */,

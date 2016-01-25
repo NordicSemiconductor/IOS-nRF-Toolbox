@@ -29,20 +29,37 @@
 @property (nonatomic,strong)NSArray *files;
 @property (nonatomic,strong)NSString *appDirectoryPath;
 @property (nonatomic, strong)AccessFileSystem *fileSystem;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 
 @implementation AppFilesViewController
 
 @synthesize selectedPath;
+@synthesize tableView;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.fileSystem = [[AccessFileSystem alloc]init];
+    self.fileSystem = [[AccessFileSystem alloc] init];
     self.appDirectoryPath = [self.fileSystem getAppDirectoryPath:@"firmwares"];
     self.files = [self.fileSystem getFilesFromAppDirectory:@"firmwares"];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    // A file might have been selected on another tab. We have to refresh the Done button and the list.
+    self.tabBarController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(didClickDone)];
+    self.tabBarController.navigationItem.rightBarButtonItem.enabled = selectedPath != nil;
+    [tableView reloadData];
+}
+
+- (void)didClickDone {
+    NSURL *fileURL = [NSURL fileURLWithPath:selectedPath];
+    [self.fileDelegate onFileSelected:fileURL];
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Table view data source
@@ -91,15 +108,14 @@
 
 -(void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
     NSString *fileName = [self.files objectAtIndex:indexPath.row];
     NSString *filePath = [self.appDirectoryPath stringByAppendingPathComponent:fileName];
-    NSURL *fileURL = [NSURL fileURLWithPath:filePath];
     
     selectedPath = filePath;
     [tv reloadData];
-
-    [self.fileDelegate onFileSelected:fileURL];
+    self.tabBarController.navigationItem.rightBarButtonItem.enabled = YES;
+    
+    UserFilesViewController* userFilesVC = self.tabBarController.viewControllers.lastObject;
+    userFilesVC.selectedPath = selectedPath;
 }
-
 @end

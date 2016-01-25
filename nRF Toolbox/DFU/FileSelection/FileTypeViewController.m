@@ -25,12 +25,26 @@
 
 @interface FileTypeViewController ()
 
+- (IBAction)didClickDone:(id)sender;
+
 @end
 
 @implementation FileTypeViewController
 
 @synthesize chosenFirmwareType;
 @synthesize delegate;
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [self.navigationItem.rightBarButtonItem setEnabled:chosenFirmwareType != nil];
+}
+
+- (IBAction)didClickDone:(id)sender {
+    [delegate onFileTypeSelected:chosenFirmwareType];
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 #pragma mark - Table view data source
 
@@ -67,8 +81,6 @@
     NSString *firmwareType = [[Utility getFirmwareTypes] objectAtIndex:indexPath.row];
     chosenFirmwareType = firmwareType;
     [tv reloadData];
-    
-    [delegate onFileTypeSelected:firmwareType];
+    [self.navigationItem.rightBarButtonItem setEnabled:YES];
 }
-
 @end

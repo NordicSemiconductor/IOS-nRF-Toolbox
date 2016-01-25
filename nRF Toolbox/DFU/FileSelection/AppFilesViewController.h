@@ -21,12 +21,7 @@
  */
 
 #import <UIKit/UIKit.h>
-
-@protocol FileSelectionDelegate <NSObject>
-
--(void)onFileSelected:(NSURL *)fileURL;
-
-@end
+#import "FileSelectionDelegate.h"
 
 @interface AppFilesViewController : UIViewController
 
