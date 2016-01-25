@@ -51,19 +51,10 @@
     self.files = [[self.fileSystem getDirectoriesAndRequiredFilesFromDocumentsDirectory] mutableCopy];
 }
 
--(void)viewDidAppear:(BOOL)animated
+-(void)viewWillAppear:(BOOL)animated
 {
-    // A file might have been selected on another tab. We have to refresh the Done button and the list.
-    self.tabBarController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(didClickDone)];
     self.tabBarController.navigationItem.rightBarButtonItem.enabled = selectedPath != nil;
     [tableView reloadData];
-}
-
-- (void)didClickDone {
-    NSURL *fileURL = [NSURL fileURLWithPath:selectedPath];
-    [self.fileDelegate onFileSelected:fileURL];
-    
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Table view data source
@@ -139,7 +130,7 @@
 {
     selectedPath = [fileURL path];
     [tableView reloadData];
-    self.tabBarController.navigationItem.rightBarButtonItem.enabled = YES;
+    self.tabBarController.navigationItem.rightBarButtonItem.enabled = fileURL != nil;
     
     AppFilesViewController* appFilesVC = self.tabBarController.viewControllers.firstObject;
     appFilesVC.selectedPath = selectedPath;
@@ -163,6 +154,16 @@
             NSLog(@"Removing file from path %@",filePath);
             [self.fileSystem deleteFile:filePath];
             [tv deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            
+            if ([filePath isEqualToString:selectedPath])
+            {
+                selectedPath = nil;
+                [tableView reloadData];
+                
+                AppFilesViewController* appFilesVC = self.tabBarController.viewControllers.firstObject;
+                appFilesVC.selectedPath = nil;
+                self.tabBarController.navigationItem.rightBarButtonItem.enabled = NO;
+            }
         }
         else
         {
@@ -195,6 +196,7 @@
     {
         FolderFilesViewController *folderVC = [segue destinationViewController];
         folderVC.directoryPath = filePath;
+        folderVC.directoryName = fileName;
         folderVC.files = [[self.fileSystem getRequiredFilesFromDirectory:filePath] mutableCopy];
         folderVC.fileDelegate = self.fileDelegate;
         folderVC.preselectionDelegate = self;

@@ -161,18 +161,20 @@
     if ([segue.identifier isEqualToString:@"scan"])
     {
         // Set this contoller as scanner delegate
-        ScannerViewController *controller = (ScannerViewController *)segue.destinationViewController;
+        UINavigationController *nc = segue.destinationViewController;
+        ScannerViewController *controller = (ScannerViewController *)nc.childViewControllerForStatusBarHidden;
         //controller.filterUUID = dfuServiceUUID; - the DFU service should not be advertised. We have to scan for any device hoping it supports DFU.
         controller.delegate = self;
     }
     else if ([segue.identifier isEqualToString:@"FileSegue"])
     {
-        UITabBarController *barController = segue.destinationViewController;
+        UINavigationController* nc = segue.destinationViewController;
+        UITabBarController *barController = (UITabBarController*) nc.childViewControllerForStatusBarHidden;
         AppFilesViewController *appFilesVC = [barController.viewControllers firstObject];
         appFilesVC.fileDelegate = self;
         UserFilesViewController* userFilesVC = [barController.viewControllers lastObject];
         userFilesVC.fileDelegate = self;
-        
+                
         if (self.dfuHelper.selectedFileURL)
         {
             NSString *path = [self.dfuHelper.selectedFileURL path];

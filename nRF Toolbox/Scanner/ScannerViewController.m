@@ -47,15 +47,6 @@
 @synthesize peripherals;
 @synthesize timer;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -66,7 +57,7 @@
     
     // We want the scanner to scan with dupliate keys (to refresh RRSI every second) so it has to be done using non-main queue
     dispatch_queue_t centralQueue = dispatch_queue_create("no.nordicsemi.ios.nrftoolbox", DISPATCH_QUEUE_SERIAL);
-    bluetoothManager = [[CBCentralManager alloc]initWithDelegate:self queue:centralQueue];
+    bluetoothManager = [[CBCentralManager alloc] initWithDelegate:self queue:centralQueue];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -75,27 +66,30 @@
     [self scanForPeripherals:NO];
 }
 
-- (IBAction)didCancelClicked:(id)sender {
+- (IBAction)didCancelClicked:(id)sender
+{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)getConnectedPeripherals {
-    if (filterUUID != nil) {
-        NSLog(@"Retrieving Connected Peripherals ...");
+- (void)getConnectedPeripherals
+{
+    if (filterUUID != nil)
+    {
         NSArray *connectedPeripherals = [bluetoothManager retrieveConnectedPeripheralsWithServices:@[filterUUID]];
-        NSLog(@"Connected Peripherals with filter: %lu",(unsigned long)connectedPeripherals.count);
-        for (CBPeripheral *connectedPeripheral in connectedPeripherals) {
-            NSLog(@"Connected Peripheral: %@",connectedPeripheral.name);
+        
+        for (CBPeripheral *connectedPeripheral in connectedPeripherals)
+        {
             [self addConnectedPeripheral:connectedPeripheral];
         }
     }
-    else {
+    else
+    {
         CBUUID *dfuServiceUUID = [CBUUID UUIDWithString:dfuServiceUUIDString];
         CBUUID *ancsServiceUUID = [CBUUID UUIDWithString:ANCSServiceUUIDString];
         NSArray *connectedPeripherals = [bluetoothManager retrieveConnectedPeripheralsWithServices:@[dfuServiceUUID, ancsServiceUUID]];
-        NSLog(@"Connected Peripherals without filter: %lu",(unsigned long)connectedPeripherals.count);
-        for (CBPeripheral *connectedPeripheral in connectedPeripherals) {
-            NSLog(@"Connected Peripheral: %@",connectedPeripheral.name);
+        
+        for (CBPeripheral *connectedPeripheral in connectedPeripherals)
+        {
             [self addConnectedPeripheral:connectedPeripheral];
         }
     }
@@ -111,7 +105,8 @@
 
 -(void)centralManagerDidUpdateState:(CBCentralManager *)central
 {
-    if (central.state == CBCentralManagerStatePoweredOn) {
+    if (central.state == CBCentralManagerStatePoweredOn)
+    {
         //TODO Retrieve already connected/paired devices
         [self getConnectedPeripherals];
         [self scanForPeripherals:YES];
@@ -169,7 +164,6 @@
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI
 {
     // Scanner uses other queue to send events. We must edit UI in the main queue
-    //NSLog(@"scanned peripheral : %@",peripheral.name);
     if ([[advertisementData objectForKey:CBAdvertisementDataIsConnectable] boolValue])
     {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -213,10 +207,12 @@
     // Update sensor name
     ScannedPeripheral *peripheral = [peripherals objectAtIndex:indexPath.row];
     cell.textLabel.text = [peripheral name];
-    if (peripheral.isConnected) {
+    if (peripheral.isConnected)
+    {
         cell.imageView.image = [UIImage imageNamed:@"Connected"];
     }
-    else {
+    else
+    {
         cell.imageView.image = [self getRSSIImage:peripheral.RSSI];
     }
     return cell;
@@ -225,7 +221,8 @@
 -(UIImage *) getRSSIImage:(int)rssi {
     // Update RSSI indicator
     UIImage* image;
-    if (rssi < -90) {
+    if (rssi < -90)
+    {
         image = [UIImage imageNamed: @"Signal_0"];
     }
     else if (rssi < -70)

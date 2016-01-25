@@ -139,7 +139,8 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
     if ([segue.identifier isEqualToString:@"scan"])
     {
         // Set this contoller as scanner delegate
-        ScannerViewController *controller = (ScannerViewController *)segue.destinationViewController;
+        UINavigationController *nc = segue.destinationViewController;
+        ScannerViewController *controller = (ScannerViewController *)nc.childViewControllerForStatusBarHidden;
         controller.filterUUID = cscServiceUUID;
         controller.delegate = self;
     }

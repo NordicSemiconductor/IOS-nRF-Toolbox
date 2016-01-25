@@ -46,6 +46,7 @@
     
     self.fileSystem = [[AccessFileSystem alloc] init];
     
+    self.navigationItem.title = self.directoryName;
     [self.navigationItem.rightBarButtonItem setEnabled:selectedPath != nil];
 }
 
@@ -54,13 +55,16 @@
     [self.fileDelegate onFileSelected:fileURL];
     
     // Go back to DFUViewController
-    NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
-    for (UIViewController *aViewController in allViewControllers) {
-        if ([aViewController isKindOfClass:[DFUViewController class]]) {
-            [self.navigationController popToViewController:aViewController animated:YES];
-            break;
-        }
-    }
+    [self dismissViewControllerAnimated:YES completion:nil];
+//    NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
+//    for (UIViewController *aViewController in allViewControllers)
+//    {
+//        if ([aViewController isKindOfClass:[DFUViewController class]])
+//        {
+//            [self.navigationController popToViewController:aViewController animated:YES];
+//            break;
+//        }
+//    }
 }
 
 #pragma mark - Table view data source
@@ -83,13 +87,16 @@
     
     // Configure the cell...
     cell.textLabel.text = [self.files objectAtIndex:indexPath.row];
-    if ([self.fileSystem checkFileExtension:fileName fileExtension:HEX]) {
+    if ([self.fileSystem checkFileExtension:fileName fileExtension:HEX])
+    {
         cell.imageView.image = [UIImage imageNamed:@"ic_file"];
     }
-    else if ([self.fileSystem checkFileExtension:fileName fileExtension:BIN]) {
+    else if ([self.fileSystem checkFileExtension:fileName fileExtension:BIN])
+    {
         cell.imageView.image = [UIImage imageNamed:@"ic_file"];
     }
-    else if ([self.fileSystem checkFileExtension:fileName fileExtension:ZIP]) {
+    else if ([self.fileSystem checkFileExtension:fileName fileExtension:ZIP])
+    {
         cell.imageView.image = [UIImage imageNamed:@"ic_archive"];
     }
     
@@ -125,14 +132,25 @@
 
 -(void)tableView:(UITableView *)tv commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
         NSString *fileName = [self.files objectAtIndex:indexPath.row];
         NSLog(@"Removing file: %@",fileName);
         [self.files removeObjectAtIndex:indexPath.row];
         NSString *filePath = [self.directoryPath stringByAppendingPathComponent:fileName];
         NSLog(@"Removing file from path %@",filePath);
         [self.fileSystem deleteFile:filePath];
-        [tv deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];        
+        [tv deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+        
+        if ([filePath isEqualToString:selectedPath])
+        {
+            selectedPath = nil;
+            [tableView reloadData];
+            
+            [self.preselectionDelegate onFilePreselected:nil];
+            self.navigationItem.rightBarButtonItem.enabled = NO;
+        }
     }
 }
 @end

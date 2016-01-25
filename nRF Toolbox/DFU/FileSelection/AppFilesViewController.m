@@ -45,21 +45,29 @@
     self.fileSystem = [[AccessFileSystem alloc] init];
     self.appDirectoryPath = [self.fileSystem getAppDirectoryPath:@"firmwares"];
     self.files = [self.fileSystem getFilesFromAppDirectory:@"firmwares"];
+    
+    // The Navigation Item buttons may be initialized just once, here. They apply also to UserFilesVewController.
+    self.tabBarController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(didClickDone)];
+    self.tabBarController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(didClickCancel)];
 }
 
--(void)viewDidAppear:(BOOL)animated
+-(void)viewWillAppear:(BOOL)animated
 {
-    // A file might have been selected on another tab. We have to refresh the Done button and the list.
-    self.tabBarController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(didClickDone)];
     self.tabBarController.navigationItem.rightBarButtonItem.enabled = selectedPath != nil;
     [tableView reloadData];
 }
 
-- (void)didClickDone {
+- (void)didClickDone
+{
     NSURL *fileURL = [NSURL fileURLWithPath:selectedPath];
     [self.fileDelegate onFileSelected:fileURL];
     
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)didClickCancel
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Table view data source

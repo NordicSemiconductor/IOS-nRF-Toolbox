@@ -27,6 +27,7 @@
 
 @property (nonatomic, strong) NSMutableArray *files;
 @property (nonatomic, strong) NSString *directoryPath;
+@property (nonatomic, strong) NSString *directoryName;
 
 //define delegate property
 @property (retain)id<FileSelectionDelegate> fileDelegate;
