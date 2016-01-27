@@ -37,7 +37,6 @@ extern NSString* const FIRMWARE_TYPE_BOOTLOADER;
 extern NSString* const FIRMWARE_TYPE_APPLICATION;
 extern NSString* const FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER;
 
-
 extern int PACKETS_NOTIFICATION_INTERVAL;
 extern int const PACKET_SIZE;
 
@@ -46,7 +45,6 @@ struct DFUResponse
     uint8_t responseCode;
     uint8_t requestedCode;
     uint8_t responseStatus;
-    
 };
 
 typedef enum {
@@ -80,15 +78,13 @@ typedef enum {
     DATA_SIZE_EXCEEDS_LIMIT_RESPONSE = 0x04,
     CRC_ERROR_RESPONSE = 0x05,
     OPERATION_FAILED_RESPONSE = 0x06
-    
 }DfuOperationStatus;
 
-typedef enum {    
+typedef enum {
     SOFTDEVICE = 0x01,
     BOOTLOADER = 0x02,
     SOFTDEVICE_AND_BOOTLOADER = 0x03,
-    APPLICATION = 0x04    
-    
+    APPLICATION = 0x04
 }DfuFirmwareTypes;
 
 + (NSArray *) getFirmwareTypes;
@@ -97,7 +93,7 @@ typedef enum {
 + (NSString *) getEmptyUserFilesText;
 + (NSString *) getDFUAppFileHelpText;
 + (void) showAlert:(NSString *)message;
-+(void)showBackgroundNotification:(NSString *)message;
-+ (BOOL)isApplicationStateInactiveORBackground;
++ (void) showBackgroundNotification:(NSString *)message;
++ (BOOL) isApplicationStateInactiveORBackground;
 
 @end

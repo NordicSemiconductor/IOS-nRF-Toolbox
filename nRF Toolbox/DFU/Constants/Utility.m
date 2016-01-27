@@ -32,13 +32,13 @@ NSString * const dfuVersionCharacteritsicUUIDString = @"00001534-1212-EFDE-1523-
 NSString * const ANCSServiceUUIDString = @"7905F431-B5CE-4E99-A40F-4B1E122D00D0";
 NSString * const TimerServiceUUIDString = @"1805";
 
-int  PACKETS_NOTIFICATION_INTERVAL = 10;
+int PACKETS_NOTIFICATION_INTERVAL = 10;
 int const PACKET_SIZE = 20;
 
-NSString* const FIRMWARE_TYPE_SOFTDEVICE = @"softdevice";
-NSString* const FIRMWARE_TYPE_BOOTLOADER = @"bootloader";
-NSString* const FIRMWARE_TYPE_APPLICATION = @"application";
-NSString* const FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER = @"softdevice and bootloader";
+NSString* const FIRMWARE_TYPE_SOFTDEVICE = @"Softdevice";
+NSString* const FIRMWARE_TYPE_BOOTLOADER = @"Bootloader";
+NSString* const FIRMWARE_TYPE_APPLICATION = @"Application";
+NSString* const FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER = @"Softdevice and bootloader";
 
 + (NSString *) getDFUHelpText
 {
@@ -53,16 +53,6 @@ NSString* const FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER = @"softdevice and boot
 + (NSString *) getDFUAppFileHelpText
 {
     return [NSString stringWithFormat:@"-User can add Folders and Files with Hex, Bin and Zip extensions from Emails and iTunes.\n\n-User added files will be appeared on tab User Files.\n\n- In order to add files from iTunes:\n   1. Open iTunes on your PC and connect iPhone to it.\n   2.On the left, under Devices select your iPhone.\n   3.on the top, select tab Apps.\n   4. on the bottom, under File Sharing select app nRF Toolbox and then add files.\n\n- In order to add files from Emails:\n   1. Attach file to your email.\n   2.Open your email on your iPhone.\n   3.Long click on attached file and then select Open in nRF Toolbox."];
-}
-
-+ (NSArray *) getFirmwareTypes
-{
-    static NSArray *events;
-    if (events == nil)
-    {
-        events = @[FIRMWARE_TYPE_SOFTDEVICE, FIRMWARE_TYPE_BOOTLOADER, FIRMWARE_TYPE_APPLICATION, FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER];
-    }
-    return events;
 }
 
 + (NSString *) stringFileExtension:(enumFileExtension)fileExtension
@@ -83,8 +73,8 @@ NSString* const FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER = @"softdevice and boot
 
 + (void)showAlert:(NSString *)message
 {
- UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"DFU" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
- [alert show];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"DFU" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alert show];
 }
 
 +(void)showBackgroundNotification:(NSString *)message
@@ -101,12 +91,7 @@ NSString* const FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER = @"softdevice and boot
 
 + (BOOL)isApplicationStateInactiveORBackground {
     UIApplicationState applicationState = [[UIApplication sharedApplication] applicationState];
-    if (applicationState == UIApplicationStateInactive || applicationState == UIApplicationStateBackground) {
-        return YES;
-    }
-    else {
-        return NO;
-    }
+    return applicationState == UIApplicationStateInactive || applicationState == UIApplicationStateBackground;
 }
 
 @end

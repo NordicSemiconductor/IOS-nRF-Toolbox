@@ -22,7 +22,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8jQ-rF-8cp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3634" y="-936"/>
+            <point key="canvasLocation" x="3611" y="-637"/>
         </scene>
         <!--Select File-->
         <scene sceneID="H5K-ke-Cjp">
@@ -50,7 +50,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7ll-Xh-94O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4394" y="-936"/>
+            <point key="canvasLocation" x="4371" y="-637"/>
         </scene>
         <!--User Files-->
         <scene sceneID="dHY-vd-u7x">
@@ -64,6 +64,15 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="folderEmpty" translatesAutoresizingMaskIntoConstraints="NO" id="Ftt-Y2-9Mg" userLabel="Empty folder icon">
+                                <rect key="frame" x="268" y="212" width="64" height="64"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Empty folder" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Pd-7R-z4y">
+                                <rect key="frame" x="251" y="276" width="98" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.19607843137254902" green="0.19607843137254902" blue="0.19607843137254902" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="A5Z-T2-ip6">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -98,10 +107,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Ftt-Y2-9Mg" firstAttribute="centerX" secondItem="kjT-Ys-qPf" secondAttribute="centerX" id="3fJ-Om-0wH"/>
+                            <constraint firstItem="Ftt-Y2-9Mg" firstAttribute="centerY" secondItem="kjT-Ys-qPf" secondAttribute="centerY" id="6pg-S9-mJH"/>
                             <constraint firstItem="A5Z-T2-ip6" firstAttribute="leading" secondItem="kjT-Ys-qPf" secondAttribute="leading" id="DyF-VL-4h8"/>
+                            <constraint firstItem="0Pd-7R-z4y" firstAttribute="centerX" secondItem="kjT-Ys-qPf" secondAttribute="centerX" id="GtV-n3-DK2"/>
                             <constraint firstItem="A5Z-T2-ip6" firstAttribute="top" secondItem="Sft-YD-j8G" secondAttribute="bottom" id="HaH-so-1ae"/>
                             <constraint firstAttribute="trailing" secondItem="A5Z-T2-ip6" secondAttribute="trailing" id="XBX-jb-Afv"/>
                             <constraint firstItem="wOf-Wx-bXB" firstAttribute="top" secondItem="A5Z-T2-ip6" secondAttribute="bottom" id="nKM-ts-JHM"/>
+                            <constraint firstItem="0Pd-7R-z4y" firstAttribute="top" secondItem="Ftt-Y2-9Mg" secondAttribute="bottom" id="oO6-d2-Hwj"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="User Files" image="userIcon" id="5k5-Wd-wNJ"/>
@@ -111,7 +124,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xAa-BD-z3c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5350" y="-563"/>
+            <point key="canvasLocation" x="5327" y="-261"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="ufC-wZ-h7g">
@@ -1877,7 +1890,7 @@
             </objects>
             <point key="canvasLocation" x="2531" y="-1362"/>
         </scene>
-        <!--File Type View Controller-->
+        <!--Select File Type-->
         <scene sceneID="uMY-1J-jO5">
             <objects>
                 <viewController id="MZc-IT-Uk4" customClass="FileTypeViewController" sceneMemberID="viewController">
@@ -1908,25 +1921,21 @@
                                     <outlet property="delegate" destination="MZc-IT-Uk4" id="SrS-z4-tlq"/>
                                 </connections>
                             </tableView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="toolbar_shadow" translatesAutoresizingMaskIntoConstraints="NO" id="96I-td-688" userLabel="Shadow">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="8"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="8" id="BWE-Ox-bTE"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="96I-td-688" firstAttribute="leading" secondItem="4aO-k7-U4L" secondAttribute="leading" id="LIj-qi-lwp"/>
                             <constraint firstItem="aKb-wc-UXG" firstAttribute="leading" secondItem="4aO-k7-U4L" secondAttribute="leading" id="SfP-0T-vL1"/>
-                            <constraint firstItem="96I-td-688" firstAttribute="top" secondItem="7mJ-OY-XHa" secondAttribute="bottom" id="W5S-2p-98s"/>
-                            <constraint firstAttribute="trailing" secondItem="96I-td-688" secondAttribute="trailing" id="ZLB-WX-voQ"/>
                             <constraint firstItem="aKb-wc-UXG" firstAttribute="top" secondItem="7mJ-OY-XHa" secondAttribute="bottom" id="fig-xd-TzS"/>
                             <constraint firstItem="37h-Fe-eVV" firstAttribute="top" secondItem="aKb-wc-UXG" secondAttribute="bottom" id="g68-XH-Zh4"/>
                             <constraint firstAttribute="trailing" secondItem="aKb-wc-UXG" secondAttribute="trailing" id="nlq-g3-cP6"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="6Dz-n0-Ckv">
+                    <navigationItem key="navigationItem" title="Select File Type" id="6Dz-n0-Ckv">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="ItP-5K-ScT">
+                            <connections>
+                                <action selector="didClickCancel:" destination="MZc-IT-Uk4" id="v6p-7i-Lod"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="0iS-7C-TUh">
                             <connections>
                                 <action selector="didClickDone:" destination="MZc-IT-Uk4" id="kPI-Rj-iue"/>
@@ -1936,7 +1945,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fqi-hg-CT1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3634" y="-252"/>
+            <point key="canvasLocation" x="4371" y="-1362"/>
         </scene>
         <!--View Controller - DFU-->
         <scene sceneID="jQp-94-O02">
@@ -1981,7 +1990,7 @@
                                 <color key="textColor" red="0.66666666669999997" green="0.6705882353" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Firmware" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spa-sH-2kC">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FIRMWARE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spa-sH-2kC">
                                 <rect key="frame" x="39" y="49" width="527" height="21"/>
                                 <color key="backgroundColor" red="0.0" green="0.60392156860000001" blue="0.85490196080000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -2047,41 +2056,23 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="reg-IX-oHS">
-                                        <rect key="frame" x="143" y="92" width="240" height="30"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d1Z-zS-eN7">
-                                                <rect key="frame" x="8" y="0.0" width="88" height="30"/>
-                                                <state key="normal" title="Select File">
-                                                    <color key="titleColor" red="0.0" green="0.61176472902297974" blue="0.87058824300765991" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <state key="disabled">
-                                                    <color key="titleColor" red="0.66666668653488159" green="0.67058825492858887" blue="0.68627452850341797" alpha="1" colorSpace="calibratedRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <segue destination="ILm-7h-33Q" kind="presentation" identifier="FileSegue" id="cPh-rQ-HbQ"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Xt-Bf-mEl">
-                                                <rect key="frame" x="120" y="0.0" width="112" height="30"/>
-                                                <state key="normal" title="Select File Type">
-                                                    <color key="titleColor" red="0.0" green="0.60392156860000001" blue="0.85490196080000003" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <state key="disabled">
-                                                    <color key="titleColor" red="0.66666668650000005" green="0.67058825489999996" blue="0.68627452850000004" alpha="1" colorSpace="calibratedRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <segue destination="MZc-IT-Uk4" kind="show" identifier="FileTypeSegue" id="hfu-nW-O06"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d1Z-zS-eN7">
+                                        <rect key="frame" x="219" y="92" width="88" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="240" id="JAt-G0-6bl"/>
-                                            <constraint firstAttribute="height" constant="30" id="UDZ-9S-BMo"/>
+                                            <constraint firstAttribute="height" constant="30" id="M1h-hh-C7S"/>
+                                            <constraint firstAttribute="width" constant="88" id="z3c-2M-gyh"/>
                                         </constraints>
-                                    </view>
+                                        <state key="normal" title="Select File">
+                                            <color key="titleColor" red="0.0" green="0.61176472902297974" blue="0.87058824300765991" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="disabled">
+                                            <color key="titleColor" red="0.66666668653488159" green="0.67058825492858887" blue="0.68627452850341797" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="ILm-7h-33Q" kind="presentation" identifier="FileSegue" id="cPh-rQ-HbQ"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -2090,15 +2081,15 @@
                                     <constraint firstAttribute="trailing" secondItem="gkd-zB-UKS" secondAttribute="trailing" constant="8" id="4nR-rK-Kdb"/>
                                     <constraint firstItem="ufz-FZ-yw5" firstAttribute="top" secondItem="Hw9-yA-g6m" secondAttribute="bottom" constant="8" id="6xX-pd-hmg"/>
                                     <constraint firstItem="gkd-zB-UKS" firstAttribute="leading" secondItem="yiv-2t-cJQ" secondAttribute="trailing" constant="8" id="8tD-Qw-pnP"/>
-                                    <constraint firstItem="reg-IX-oHS" firstAttribute="top" secondItem="gkd-zB-UKS" secondAttribute="bottom" constant="2" id="Fho-YF-dO5"/>
                                     <constraint firstItem="QA8-V7-bTt" firstAttribute="top" secondItem="8K8-0E-rYV" secondAttribute="top" constant="11" id="Gvz-rC-jFl"/>
+                                    <constraint firstItem="d1Z-zS-eN7" firstAttribute="centerX" secondItem="8K8-0E-rYV" secondAttribute="centerX" id="XPw-eY-up6"/>
                                     <constraint firstAttribute="trailing" secondItem="Hw9-yA-g6m" secondAttribute="trailing" constant="8" id="alb-kF-o8Y"/>
                                     <constraint firstItem="yiv-2t-cJQ" firstAttribute="leading" secondItem="8K8-0E-rYV" secondAttribute="leading" constant="12" id="bVV-MJ-89K"/>
                                     <constraint firstItem="gkd-zB-UKS" firstAttribute="top" secondItem="ufz-FZ-yw5" secondAttribute="bottom" constant="8" id="cwn-Us-WE3"/>
                                     <constraint firstAttribute="height" constant="122" id="f7y-rm-f4w"/>
-                                    <constraint firstItem="reg-IX-oHS" firstAttribute="centerX" secondItem="8K8-0E-rYV" secondAttribute="centerX" id="ggg-Pj-PcA"/>
                                     <constraint firstItem="yiv-2t-cJQ" firstAttribute="top" secondItem="cRU-Hd-ZKh" secondAttribute="bottom" constant="8" id="gj0-nI-vhD"/>
                                     <constraint firstItem="cRU-Hd-ZKh" firstAttribute="leading" secondItem="8K8-0E-rYV" secondAttribute="leading" constant="12" id="hsl-4N-jrj"/>
+                                    <constraint firstAttribute="bottom" secondItem="d1Z-zS-eN7" secondAttribute="bottom" id="lfJ-Zu-alN"/>
                                     <constraint firstItem="Hw9-yA-g6m" firstAttribute="top" secondItem="8K8-0E-rYV" secondAttribute="top" constant="11" id="tnT-ol-0mO"/>
                                     <constraint firstItem="Hw9-yA-g6m" firstAttribute="leading" secondItem="QA8-V7-bTt" secondAttribute="trailing" constant="8" id="uUO-sx-Nz2"/>
                                     <constraint firstItem="QA8-V7-bTt" firstAttribute="leading" secondItem="8K8-0E-rYV" secondAttribute="leading" constant="12" id="x4b-If-Fhg"/>
@@ -2245,7 +2236,6 @@
                         <outlet property="progress" destination="c7u-0x-ak9" id="15C-GR-T8q"/>
                         <outlet property="progressLabel" destination="6hI-Pc-GIS" id="pUi-oW-o4u"/>
                         <outlet property="selectFileButton" destination="d1Z-zS-eN7" id="Qz2-4D-efm"/>
-                        <outlet property="selectFileTypeButton" destination="9Xt-Bf-mEl" id="2eE-km-4pd"/>
                         <outlet property="uploadButton" destination="PVI-T9-QmJ" id="YTn-KR-JAy"/>
                         <outlet property="uploadPane" destination="zgI-eq-aFb" id="ge4-ch-atG"/>
                         <outlet property="uploadStatus" destination="I9g-ak-KRW" id="699-O6-jO6"/>
@@ -3102,7 +3092,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="91A-FG-3qM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4242" y="555"/>
+            <point key="canvasLocation" x="4371" y="123"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="G41-di-2O3">
@@ -3180,7 +3170,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lqv-dW-7EC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5350" y="-1241"/>
+            <point key="canvasLocation" x="5327" y="-935"/>
         </scene>
         <!--Folder Files View Controller-->
         <scene sceneID="nro-W8-4UN">
@@ -3194,6 +3184,15 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="folderEmpty" translatesAutoresizingMaskIntoConstraints="NO" id="PF7-aH-oYu" userLabel="Empty folder icon">
+                                <rect key="frame" x="268" y="212" width="64" height="64"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Empty folder" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hOE-Zc-Wsl">
+                                <rect key="frame" x="251" y="276" width="98" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.19607843137254902" green="0.19607843137254902" blue="0.19607843137254902" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BQ9-i8-wbC">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="438"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3233,9 +3232,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="PF7-aH-oYu" firstAttribute="centerX" secondItem="cUm-89-ZK2" secondAttribute="centerX" id="AIQ-73-ZDF"/>
+                            <constraint firstItem="hOE-Zc-Wsl" firstAttribute="centerX" secondItem="cUm-89-ZK2" secondAttribute="centerX" id="G3m-Im-adl"/>
                             <constraint firstAttribute="trailing" secondItem="2fM-BE-Key" secondAttribute="trailing" id="Iy3-gI-qDp"/>
                             <constraint firstAttribute="trailing" secondItem="BQ9-i8-wbC" secondAttribute="trailing" id="Kwo-8L-Mbi"/>
                             <constraint firstItem="O4O-6g-Adc" firstAttribute="top" secondItem="2fM-BE-Key" secondAttribute="bottom" id="cpg-iD-ptb"/>
+                            <constraint firstItem="hOE-Zc-Wsl" firstAttribute="top" secondItem="PF7-aH-oYu" secondAttribute="bottom" id="dfs-bO-k3H"/>
+                            <constraint firstItem="PF7-aH-oYu" firstAttribute="centerY" secondItem="cUm-89-ZK2" secondAttribute="centerY" id="inW-PK-Y0Y"/>
                             <constraint firstItem="2fM-BE-Key" firstAttribute="leading" secondItem="cUm-89-ZK2" secondAttribute="leading" id="knp-Ep-PPh"/>
                             <constraint firstItem="BQ9-i8-wbC" firstAttribute="top" secondItem="3oD-8d-bJW" secondAttribute="bottom" id="oR0-Bp-qF8"/>
                             <constraint firstItem="O4O-6g-Adc" firstAttribute="top" secondItem="BQ9-i8-wbC" secondAttribute="bottom" constant="49" id="s3k-Lq-GEg"/>
@@ -3255,7 +3258,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5z6-tl-x1X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6095" y="-563"/>
+            <point key="canvasLocation" x="6063" y="-261"/>
         </scene>
         <!--View Controller - UART-->
         <scene sceneID="bnf-jV-dRu">
@@ -3943,7 +3946,25 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jAT-rL-YJx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3430" y="555"/>
+            <point key="canvasLocation" x="3611" y="123"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Sx3-3C-IYn">
+            <objects>
+                <navigationController storyboardIdentifier="SelectFileType" automaticallyAdjustsScrollViewInsets="NO" id="Fcn-6b-dF4" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="B78-ho-AWz">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="MZc-IT-Uk4" kind="relationship" relationship="rootViewController" id="lP7-Vg-WDb"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WNe-6F-MJh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3611" y="-1362"/>
         </scene>
     </scenes>
     <resources>
@@ -3984,12 +4005,13 @@
         <image name="Stop" width="50" height="50"/>
         <image name="appIcon" width="24" height="24"/>
         <image name="closelock" width="170" height="135"/>
+        <image name="folderEmpty" width="64" height="64"/>
         <image name="openlock" width="170" height="135"/>
         <image name="toolbar_shadow" width="1" height="5"/>
         <image name="userIcon" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="RA7-fe-CKE"/>
+        <segue reference="0i8-Ot-uid"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.60392159219999997" blue="0.85490196939999996" alpha="1" colorSpace="calibratedRGB"/>
 </document>

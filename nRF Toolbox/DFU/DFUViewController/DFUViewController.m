@@ -30,12 +30,8 @@
 #import "UnzipFirmware.h"
 #import "Utility.h"
 #import "DFUHelper.h"
-#include "DFUHelper.h"
 
-
-@interface DFUViewController () {
-    
-}
+@interface DFUViewController ()
 
 /*!
  * This property is set when the device has been selected on the Scanner View Controller.
@@ -141,6 +137,7 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self disableOtherButtons];
+        uploadStatus.text = @"Starting DFU...";
         uploadStatus.hidden = NO;
         progress.hidden = NO;
         progressLabel.hidden = NO;
@@ -182,19 +179,13 @@
             userFilesVC.selectedPath = path;
         }
     }
-    else if ([segue.identifier isEqualToString:@"FileTypeSegue"])
-    {
-        FileTypeViewController *fileTypeVC = [segue destinationViewController];
-        fileTypeVC.chosenFirmwareType = selectedFileType;
-        fileTypeVC.delegate = self;
-    }
 }
 
 - (void) clearUI
 {
     selectedPeripheral = nil;
     deviceName.text = @"DEFAULT DFU";
-    uploadStatus.text = @"Waiting ...";
+    uploadStatus.text = @"Waiting...";
     uploadStatus.hidden = YES;
     progress.progress = 0.0f;
     progress.hidden = YES;
@@ -212,7 +203,7 @@
         {
             if ([self.dfuHelper isValidFileSelected])
             {
-                NSLog(@" valid file selected");
+                NSLog(@"Valid file selected");
             }
             else
             {
@@ -221,7 +212,9 @@
                 return;
             }
         }
-        if (self.dfuHelper.isDfuVersionExist) {
+        
+        if (self.dfuHelper.isDfuVersionExist)
+        {
             if (selectedPeripheral && selectedFileType && self.dfuHelper.selectedFileSize > 0 && self.isConnected && self.dfuHelper.dfuVersion > 1)
             {
                 if ([self.dfuHelper isInitPacketFileExist])
@@ -233,8 +226,13 @@
                     [Utility showAlert:[self.dfuHelper getInitPacketFileValidationMessage]];
                 }
             }
-            else {
-                NSLog(@"cant enable Upload button");
+            else
+            {
+                if (selectedPeripheral && self.isConnected && self.dfuHelper.dfuVersion < 1)
+                {
+                    uploadStatus.text = [NSString stringWithFormat:@"Unsupported DFU version: %d", self.dfuHelper.dfuVersion];
+                }
+                NSLog(@"Can't enable Upload button");
             }
         }
         else
@@ -245,7 +243,7 @@
             }
             else
             {
-                NSLog(@"cant enable Upload button");
+                NSLog(@"Can't enable Upload button");
             }
         }
 
@@ -287,39 +285,112 @@
     [dfuOperations setCentralManager:manager];
     deviceName.text = peripheral.name;
     [dfuOperations connectDevice:peripheral];
+    
+    uploadStatus.text = @"Verifying device...";
+    uploadStatus.hidden = NO;
 }
 
 #pragma mark File Selection Delegate
 
 -(void)onFileSelected:(NSURL *)url
 {
+    // Reset the file type. A new file has been selected
+    [self onFileTypeNotSelected];
+    
+    // Save the URL in DFU helper
     self.dfuHelper.selectedFileURL = url;
+    
     if (self.dfuHelper.selectedFileURL) {
-        NSString *selectedFileName = [[url path]lastPathComponent];
+        NSMutableArray *availableTypes = [[NSMutableArray alloc] initWithCapacity:4];
+        
+        // Read file name and size
+        NSString *selectedFileName = [[url path] lastPathComponent];
         NSData *fileData = [NSData dataWithContentsOfURL:url];
         self.dfuHelper.selectedFileSize = fileData.length;
         
-        //get last three characters for file extension
-        NSString *extension = [selectedFileName substringFromIndex: [selectedFileName length] - 3];
+        // Get last three characters for file extension
+        NSString *extension = [[selectedFileName substringFromIndex: [selectedFileName length] - 3] lowercaseString];
         if ([extension isEqualToString:@"zip"])
         {
             self.dfuHelper.isSelectedFileZipped = YES;
             self.dfuHelper.isManifestExist = NO;
-            [self.dfuHelper unzipFiles:self.dfuHelper.selectedFileURL];
+            // Unzip the file. It will parse the Manifest file, if such exist, and assign firmware URLs
+            [self.dfuHelper unzipFiles:url];
+            
+            // Manifest file has been parsed, we can now determine the file type based on its content
+            // If a type is clear (only one bin/hex file) - just select it. Otherwise give user a change to select
+            NSString* type = nil;
+            if (((self.dfuHelper.softdevice_bootloaderURL && !self.dfuHelper.softdeviceURL && !self.dfuHelper.bootloaderURL) ||
+                 (self.dfuHelper.softdeviceURL && self.dfuHelper.bootloaderURL && !self.dfuHelper.softdevice_bootloaderURL)) &&
+                 !self.dfuHelper.applicationURL)
+            {
+                type = FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER;
+            }
+            else if (self.dfuHelper.softdeviceURL && !self.dfuHelper.bootloaderURL && !self.dfuHelper.applicationURL && !self.dfuHelper.softdevice_bootloaderURL)
+            {
+                type = FIRMWARE_TYPE_SOFTDEVICE;
+            }
+            else if (self.dfuHelper.bootloaderURL && !self.dfuHelper.softdeviceURL && !self.dfuHelper.applicationURL && !self.dfuHelper.softdevice_bootloaderURL)
+            {
+                type = FIRMWARE_TYPE_BOOTLOADER;
+            }
+            else if (self.dfuHelper.applicationURL && !self.dfuHelper.softdeviceURL && !self.dfuHelper.bootloaderURL && !self.dfuHelper.softdevice_bootloaderURL)
+            {
+                type = FIRMWARE_TYPE_APPLICATION;
+            }
+            
+            // The type has been established?
+            if (type)
+            {
+                // This will set the selectedFileType property
+                [self onFileTypeSelected:type];
+            }
+            else
+            {
+                if (self.dfuHelper.softdeviceURL)
+                {
+                    [availableTypes addObject:FIRMWARE_TYPE_SOFTDEVICE];
+                }
+                if (self.dfuHelper.bootloaderURL)
+                {
+                    [availableTypes addObject:FIRMWARE_TYPE_BOOTLOADER];
+                }
+                if (self.dfuHelper.applicationURL)
+                {
+                    [availableTypes addObject:FIRMWARE_TYPE_APPLICATION];
+                }
+                if (self.dfuHelper.softdevice_bootloaderURL)
+                {
+                    [availableTypes addObject:FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER];
+                }
+            }
         }
         else
         {
+            // If a HEX/BIN file has been selected user needs to choose the type manually
             self.dfuHelper.isSelectedFileZipped = NO;
+            [availableTypes addObjectsFromArray:@[FIRMWARE_TYPE_SOFTDEVICE, FIRMWARE_TYPE_BOOTLOADER, FIRMWARE_TYPE_APPLICATION, FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER]];
         }
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            fileName.text = selectedFileName;
-            fileSize.text = [NSString stringWithFormat:@"%lu bytes", (unsigned long)self.dfuHelper.selectedFileSize];
-            [self enableUploadButton];
-        });
+        // Update UI
+        fileName.text = selectedFileName;
+        fileSize.text = [NSString stringWithFormat:@"%lu bytes", (unsigned long)self.dfuHelper.selectedFileSize];
+        
+        // The File Type selection screen can be ommited it the type has been determined from the manifest file
+        if (!selectedFileType)
+        {
+            // Show view to select the file type
+            UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            UINavigationController *nc = (UINavigationController *) [mainStoryboard instantiateViewControllerWithIdentifier:@"SelectFileType"];
+            FileTypeViewController *fileTypeVC = (FileTypeViewController *) nc.childViewControllerForStatusBarHidden;
+            fileTypeVC.options = availableTypes;
+            fileTypeVC.delegate = self;
+            [self presentViewController:nc animated:YES completion:nil];
+        }
     }
-    else {
-        [Utility showAlert:@"Selected file not exist!"];
+    else
+    {
+        [Utility showAlert:@"Selected file doesn't exist!"];
     }
 }
 
@@ -327,8 +398,19 @@
 {
     selectedFileType = type;
     fileType.text = selectedFileType;
-    [self.dfuHelper setFirmwareType:selectedFileType];
-    [self enableUploadButton];
+    if (type)
+    {
+        [self.dfuHelper setFirmwareType:selectedFileType];
+        [self enableUploadButton];
+    }
+}
+
+-(void)onFileTypeNotSelected
+{
+    self.dfuHelper.selectedFileURL = nil;
+    fileName.text = nil;
+    fileSize.text = nil;
+    [self onFileTypeSelected:nil];
 }
 
 #pragma mark DFUOperations delegate methods
@@ -338,13 +420,18 @@
     self.isConnected = YES;
     self.dfuHelper.isDfuVersionExist = NO;
     [self enableUploadButton];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        uploadStatus.text = @"Device ready";
+    });
+    
     //Following if condition display user permission alert for background notification
-    if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
+    if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)])
+    {
         [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound categories:nil]];
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterForeground:) name:UIApplicationDidBecomeActiveNotification object:nil];
-
 }
 
 -(void)onDeviceConnectedWithVersion:(CBPeripheral *)peripheral
@@ -352,13 +439,18 @@
     self.isConnected = YES;
     self.dfuHelper.isDfuVersionExist = YES;
     [self enableUploadButton];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        uploadStatus.text = @"Reading DFU version...";
+    });
+    
     //Following if condition display user permission alert for background notification
+    
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
         [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound categories:nil]];
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterForeground:) name:UIApplicationDidBecomeActiveNotification object:nil];
-
 }
 
 -(void)onDeviceDisconnected:(CBPeripheral *)peripheral
@@ -368,14 +460,18 @@
     
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (self.dfuHelper.dfuVersion != 1) {
+        if (self.dfuHelper.dfuVersion != 1)
+        {
             [self clearUI];
         
-            if (!self.isTransfered && !self.isTransferCancelled && !self.isErrorKnown) {
-                if ([Utility isApplicationStateInactiveORBackground]) {
+            if (!self.isTransfered && !self.isTransferCancelled && !self.isErrorKnown)
+            {
+                if ([Utility isApplicationStateInactiveORBackground])
+                {
                     [Utility showBackgroundNotification:[NSString stringWithFormat:@"%@ peripheral is disconnected.",peripheral.name]];
                 }
-                else {
+                else
+                {
                     [Utility showAlert:@"The connection has been lost"];
                 }
                 [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
@@ -385,13 +481,13 @@
             self.isTransfered = NO;
             self.isErrorKnown = NO;
         }
-        else {
+        else
+        {
             double delayInSeconds = 3.0;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                 [dfuOperations connectDevice:peripheral];
             });
-            
         }
     });
 }
@@ -400,24 +496,37 @@
 {
     self.dfuHelper.dfuVersion = version;
     NSLog(@"DFU Version: %d",self.dfuHelper.dfuVersion);
-    if (self.dfuHelper.dfuVersion == 1) {
+    if (self.dfuHelper.dfuVersion == 1)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            uploadStatus.text = @"Switching to DFU mode...";
+        });
         [dfuOperations setAppToBootloaderMode];
     }
-    [self enableUploadButton];
+    else
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            uploadStatus.text = @"Device ready";
+        });
+        [self enableUploadButton];
+    }
 }
 
 -(void)onDFUStarted
 {
     NSLog(@"DFU Started");
     self.isTransferring = YES;
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         uploadButton.enabled = YES;
         [uploadButton setTitle:@"Cancel" forState:UIControlStateNormal];
         NSString *uploadStatusMessage = [self.dfuHelper getUploadStatusMessage];
-        if ([Utility isApplicationStateInactiveORBackground]) {
+        if ([Utility isApplicationStateInactiveORBackground])
+        {
             [Utility showBackgroundNotification:uploadStatusMessage];
         }
-        else {
+        else
+        {
             uploadStatus.text = uploadStatusMessage;
         }
     });
@@ -447,14 +556,15 @@
 {
     NSLog(@"Bootloader Upload Started");
     dispatch_async(dispatch_get_main_queue(), ^{
-        if ([Utility isApplicationStateInactiveORBackground]) {
-            [Utility showBackgroundNotification:@"Uploading bootloader ..."];
+        if ([Utility isApplicationStateInactiveORBackground])
+        {
+            [Utility showBackgroundNotification:@"Uploading bootloader..."];
         }
-        else {
-            uploadStatus.text = @"Uploading bootloader ...";
+        else
+        {
+            uploadStatus.text = @"Uploading bootloader...";
         }
     });
-    
 }
 
 -(void)onBootloaderUploadCompleted

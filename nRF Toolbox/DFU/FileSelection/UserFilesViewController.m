@@ -54,7 +54,15 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     self.tabBarController.navigationItem.rightBarButtonItem.enabled = selectedPath != nil;
-    [tableView reloadData];
+    [self ensureFolderNotEmpty];
+}
+
+-(void)ensureFolderNotEmpty
+{
+    if (self.files.count == 0)
+    {
+        tableView.hidden = YES;
+    }
 }
 
 #pragma mark - Table view data source
@@ -116,13 +124,10 @@
     NSString *fileName = [self.files objectAtIndex:indexPath.row];
     NSString *filePath = [self.documentsDirectoryPath stringByAppendingPathComponent:fileName];
     
-    if (![self.fileSystem isDirectory:filePath]) {
-        selectedPath = filePath;
-        [tv reloadData];
-        self.tabBarController.navigationItem.rightBarButtonItem.enabled = YES;
-        
-        AppFilesViewController* appFilesVC = self.tabBarController.viewControllers.firstObject;
-        appFilesVC.selectedPath = selectedPath;
+    if (![self.fileSystem isDirectory:filePath])
+    {
+        NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+        [self onFilePreselected:fileURL];
     }
 }
 
@@ -149,21 +154,17 @@
         if (![fileName isEqualToString:@"Inbox"])
         {
             NSLog(@"Removing file: %@",fileName);
-            [self.files removeObjectAtIndex:indexPath.row];
             NSString *filePath = [self.documentsDirectoryPath stringByAppendingPathComponent:fileName];
-            NSLog(@"Removing file from path %@",filePath);
             [self.fileSystem deleteFile:filePath];
+            [self.files removeObjectAtIndex:indexPath.row];
             [tv deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             
             if ([filePath isEqualToString:selectedPath])
             {
-                selectedPath = nil;
-                [tableView reloadData];
-                
-                AppFilesViewController* appFilesVC = self.tabBarController.viewControllers.firstObject;
-                appFilesVC.selectedPath = nil;
-                self.tabBarController.navigationItem.rightBarButtonItem.enabled = NO;
+                [self onFilePreselected:nil];
             }
+            
+            [self performSelector:@selector(ensureFolderNotEmpty) withObject:nil afterDelay:0.6];
         }
         else
         {

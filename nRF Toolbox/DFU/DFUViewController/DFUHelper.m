@@ -29,7 +29,8 @@
 
 -(DFUHelper *)initWithData:(DFUOperations *)dfuOperations
 {
-    if (self = [super init]) {
+    if (self = [super init])
+    {
         self.dfuOperations = dfuOperations;
     }
     return self;
@@ -37,44 +38,56 @@
 
 -(void)checkAndPerformDFU
 {
-    if (self.isSelectedFileZipped) {
-        switch (self.enumFirmwareType) {
+    if (self.isSelectedFileZipped)
+    {
+        switch (self.enumFirmwareType)
+        {
             case SOFTDEVICE_AND_BOOTLOADER:
-                if (self.isDfuVersionExist) {
-                    if (self.isManifestExist) {
+                if (self.isDfuVersionExist)
+                {
+                    if (self.isManifestExist)
+                    {
                         [self.dfuOperations performDFUOnFileWithMetaDataAndFileSizes:self.softdevice_bootloaderURL firmwareMetaDataURL:self.systemMetaDataURL softdeviceFileSize:self.softdeviceSize bootloaderFileSize:self.bootloaderSize firmwareType:SOFTDEVICE_AND_BOOTLOADER];
                     }
-                    else {
+                    else
+                    {
                         [self.dfuOperations performDFUOnFilesWithMetaData:self.softdeviceURL bootloaderURL:self.bootloaderURL firmwaresMetaDataURL:self.systemMetaDataURL firmwareType:SOFTDEVICE_AND_BOOTLOADER];
                     }
                     
                 }
-                else {
+                else
+                {
                     [self.dfuOperations performDFUOnFiles:self.softdeviceURL bootloaderURL:self.bootloaderURL firmwareType:SOFTDEVICE_AND_BOOTLOADER];
                 }
                 
                 break;
             case SOFTDEVICE:
-                if (self.isDfuVersionExist) {
+                if (self.isDfuVersionExist)
+                {
                     [self.dfuOperations performDFUOnFileWithMetaData:self.softdeviceURL firmwareMetaDataURL:self.softdeviceMetaDataURL firmwareType:SOFTDEVICE];
                 }
-                else {
+                else
+                {
                     [self.dfuOperations performDFUOnFile:self.softdeviceURL firmwareType:SOFTDEVICE];
                 }
                 break;
             case BOOTLOADER:
-                if (self.isDfuVersionExist) {
+                if (self.isDfuVersionExist)
+                {
                     [self.dfuOperations performDFUOnFileWithMetaData:self.bootloaderURL firmwareMetaDataURL:self.bootloaderMetaDataURL firmwareType:BOOTLOADER];
                 }
-                else {
+                else
+                {
                     [self.dfuOperations performDFUOnFile:self.bootloaderURL firmwareType:BOOTLOADER];
                 }
                 break;
             case APPLICATION:
-                if (self.isDfuVersionExist) {
+                if (self.isDfuVersionExist)
+                {
                     [self.dfuOperations performDFUOnFileWithMetaData:self.applicationURL firmwareMetaDataURL:self.applicationMetaDataURL firmwareType:APPLICATION];
                 }
-                else {
+                else
+                {
                     [self.dfuOperations performDFUOnFile:self.applicationURL firmwareType:APPLICATION];
                 }
                 break;
@@ -84,7 +97,8 @@
                 break;
         }
     }
-    else {
+    else
+    {
         [self.dfuOperations performDFUOnFile:self.selectedFileURL firmwareType:self.enumFirmwareType];
     }
 }
@@ -92,12 +106,15 @@
 //Unzip and check if both bin and hex formats are present for same file then pick only bin format and drop hex format
 -(void)unzipFiles:(NSURL *)zipFileURL
 {
-    self.softdeviceURL = self.bootloaderURL = self.applicationURL = nil;
+    self.softdeviceURL = self.bootloaderURL = self.applicationURL = self.softdevice_bootloaderURL = nil;
     self.softdeviceMetaDataURL = self.bootloaderMetaDataURL = self.applicationMetaDataURL = self.systemMetaDataURL = nil;
+    
     UnzipFirmware *unzipFiles = [[UnzipFirmware alloc]init];
     NSArray *firmwareFilesURL = [unzipFiles unzipFirmwareFiles:zipFileURL];
-    // if manifest file exist inside then parse it and retrieve the files from the given path
-    if ([self checkIfManifestFileExist:firmwareFilesURL]) {
+    
+    // If manifest file exist inside then parse it and retrieve the files from the given path
+    if ([self checkIfManifestFileExist:firmwareFilesURL])
+    {
         self.isManifestExist = YES;
         [self parseManifestFile];
         [self getBinAndDatFilesAsMentionedInManfest:firmwareFilesURL jsonParsedData:self.manifestData];
@@ -110,8 +127,10 @@
 -(BOOL)checkIfManifestFileExist:(NSArray *)firmwareFilesURL
 {
     self.manifestFileURL = nil;
-    for (NSURL *firmwareManifestURL in firmwareFilesURL) {
-        if ([[[firmwareManifestURL path] lastPathComponent] isEqualToString:@"manifest.json"]) {
+    for (NSURL *firmwareManifestURL in firmwareFilesURL)
+    {
+        if ([[[firmwareManifestURL path] lastPathComponent] isEqualToString:@"manifest.json"])
+        {
             self.manifestFileURL = firmwareManifestURL;
             return YES;
         }
@@ -122,18 +141,23 @@
 -(void)parseManifestFile
 {
     NSData *data = [NSData dataWithContentsOfURL:self.manifestFileURL];
-    self.manifestData = [[[JsonParser alloc]init] parseJson:data];
+    self.manifestData = [[[JsonParser alloc] init] parseJson:data];
 }
 
 -(void)getBinAndDatFilesAsMentionedInManfest:(NSArray *)firmwareFilesURL jsonParsedData:(NSArray *)jsonData
 {
-    for (InitData *data in jsonData) {
-        for (NSURL *firmwareURL in firmwareFilesURL) {
-            if ([[[firmwareURL path] lastPathComponent] isEqualToString:data.firmwareBinFileName]) {
-                if (data.firmwareType == SOFTDEVICE) {
+    for (InitData *data in jsonData)
+    {
+        for (NSURL *firmwareURL in firmwareFilesURL)
+        {
+            if ([[[firmwareURL path] lastPathComponent] isEqualToString:data.firmwareBinFileName])
+            {
+                if (data.firmwareType == SOFTDEVICE)
+                {
                     self.softdeviceURL = firmwareURL;
                 }
-                else if (data.firmwareType == BOOTLOADER) {
+                else if (data.firmwareType == BOOTLOADER)
+                {
                     self.bootloaderURL = firmwareURL;
                 }
                 else if (data.firmwareType == APPLICATION)
@@ -147,11 +171,14 @@
                     self.bootloaderSize = data.bootloaderSize;
                 }
             }
-            else if ([[[firmwareURL path] lastPathComponent] isEqualToString:data.firmwareDatFileName]) {
-                if (data.firmwareType == SOFTDEVICE) {
+            else if ([[[firmwareURL path] lastPathComponent] isEqualToString:data.firmwareDatFileName])
+            {
+                if (data.firmwareType == SOFTDEVICE)
+                {
                     self.softdeviceMetaDataURL = firmwareURL;
                 }
-                else if (data.firmwareType == BOOTLOADER) {
+                else if (data.firmwareType == BOOTLOADER)
+                {
                     self.bootloaderMetaDataURL = firmwareURL;
                 }
                 else if (data.firmwareType == APPLICATION)
@@ -164,32 +191,39 @@
                 }
             }
         }
-
     }
 }
 
 -(void)getHexAndDatFile:(NSArray *)firmwareFilesURL
 {
-    for (NSURL *firmwareURL in firmwareFilesURL) {
-        if ([[[firmwareURL path] lastPathComponent] isEqualToString:@"softdevice.hex"]) {
+    for (NSURL *firmwareURL in firmwareFilesURL)
+    {
+        if ([[[firmwareURL path] lastPathComponent] isEqualToString:@"softdevice.hex"])
+        {
             self.softdeviceURL = firmwareURL;
         }
-        else if ([[[firmwareURL path] lastPathComponent] isEqualToString:@"bootloader.hex"]) {
+        else if ([[[firmwareURL path] lastPathComponent] isEqualToString:@"bootloader.hex"])
+        {
             self.bootloaderURL = firmwareURL;
         }
-        else if ([[[firmwareURL path] lastPathComponent] isEqualToString:@"application.hex"]) {
+        else if ([[[firmwareURL path] lastPathComponent] isEqualToString:@"application.hex"])
+        {
             self.applicationURL = firmwareURL;
         }
-        else if ([[[firmwareURL path] lastPathComponent] isEqualToString:@"application.dat"]) {
+        else if ([[[firmwareURL path] lastPathComponent] isEqualToString:@"application.dat"])
+        {
             self.applicationMetaDataURL = firmwareURL;
         }
-        else if ([[[firmwareURL path] lastPathComponent] isEqualToString:@"bootloader.dat"]) {
+        else if ([[[firmwareURL path] lastPathComponent] isEqualToString:@"bootloader.dat"])
+        {
             self.bootloaderMetaDataURL = firmwareURL;
         }
-        else if ([[[firmwareURL path] lastPathComponent] isEqualToString:@"softdevice.dat"]) {
+        else if ([[[firmwareURL path] lastPathComponent] isEqualToString:@"softdevice.dat"])
+        {
             self.softdeviceMetaDataURL = firmwareURL;
         }
-        else if ([[[firmwareURL path] lastPathComponent] isEqualToString:@"system.dat"]) {
+        else if ([[[firmwareURL path] lastPathComponent] isEqualToString:@"system.dat"])
+        {
             self.systemMetaDataURL = firmwareURL;
         }
     }
@@ -197,14 +231,18 @@
 
 -(void)getBinFiles:(NSArray *)firmwareFilesURL
 {
-    for (NSURL *firmwareBinURL in firmwareFilesURL) {
-        if ([[[firmwareBinURL path] lastPathComponent] isEqualToString:@"softdevice.bin"]) {
+    for (NSURL *firmwareBinURL in firmwareFilesURL)
+    {
+        if ([[[firmwareBinURL path] lastPathComponent] isEqualToString:@"softdevice.bin"])
+        {
             self.softdeviceURL = firmwareBinURL;
         }
-        else if ([[[firmwareBinURL path] lastPathComponent] isEqualToString:@"bootloader.bin"]) {
+        else if ([[[firmwareBinURL path] lastPathComponent] isEqualToString:@"bootloader.bin"])
+        {
             self.bootloaderURL = firmwareBinURL;
         }
-        else if ([[[firmwareBinURL path] lastPathComponent] isEqualToString:@"application.bin"]) {
+        else if ([[[firmwareBinURL path] lastPathComponent] isEqualToString:@"application.bin"])
+        {
             self.applicationURL = firmwareBinURL;
         }
     }
@@ -212,16 +250,20 @@
 
 -(void) setFirmwareType:(NSString *)firmwareType
 {
-    if ([firmwareType isEqualToString:FIRMWARE_TYPE_SOFTDEVICE]) {
+    if ([firmwareType isEqualToString:FIRMWARE_TYPE_SOFTDEVICE])
+    {
         self.enumFirmwareType = SOFTDEVICE;
     }
-    else if ([firmwareType isEqualToString:FIRMWARE_TYPE_BOOTLOADER]) {
+    else if ([firmwareType isEqualToString:FIRMWARE_TYPE_BOOTLOADER])
+    {
         self.enumFirmwareType = BOOTLOADER;
     }
-    else if ([firmwareType isEqualToString:FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER]) {
+    else if ([firmwareType isEqualToString:FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER])
+    {
         self.enumFirmwareType = SOFTDEVICE_AND_BOOTLOADER;
     }
-    else if ([firmwareType isEqualToString:FIRMWARE_TYPE_APPLICATION]) {
+    else if ([firmwareType isEqualToString:FIRMWARE_TYPE_APPLICATION])
+    {
         self.enumFirmwareType = APPLICATION;
     }
 }
@@ -261,10 +303,11 @@
                 return NO;
                 break;
         }
-        //Corresponding file .dat to selected firmware is not present in zip file
+        // Corresponding file .dat to selected firmware is not present in zip file
         return NO;
     }
-    else {//Zip file is not selected
+    else {
+        // Zip file is not selected
         return NO;
     }
 }
@@ -272,42 +315,49 @@
 -(BOOL)isValidFileSelected
 {
     NSLog(@"isValidFileSelected");
-    if (self.isSelectedFileZipped) {
-        switch (self.enumFirmwareType) {
+    if (self.isSelectedFileZipped)
+    {
+        switch (self.enumFirmwareType)
+        {
             case SOFTDEVICE_AND_BOOTLOADER:
-                if (self.isManifestExist) {
-                    if (self.softdevice_bootloaderURL) {
+                if (self.isManifestExist)
+                {
+                    if (self.softdevice_bootloaderURL)
+                    {
                         NSLog(@"Found Softdevice_Bootloader file in selected zip file");
                         return YES;
                     }
                 }
-                else {
-                    if (self.softdeviceURL && self.bootloaderURL) {
+                else
+                {
+                    if (self.softdeviceURL && self.bootloaderURL)
+                    {
                         NSLog(@"Found Softdevice and Bootloader files in selected zip file");
                         return YES;
                     }
                 }
-                
                 break;
             case SOFTDEVICE:
-                if (self.softdeviceURL) {
+                if (self.softdeviceURL)
+                {
                     NSLog(@"Found Softdevice file in selected zip file");
                     return YES;
                 }
                 break;
             case BOOTLOADER:
-                if (self.bootloaderURL) {
+                if (self.bootloaderURL)
+                {
                     NSLog(@"Found Bootloader file in selected zip file");
                     return YES;
                 }
                 break;
             case APPLICATION:
-                if (self.applicationURL) {
+                if (self.applicationURL)
+                {
                     NSLog(@"Found Application file in selected zip file");
                     return YES;
                 }
                 break;
-                
             default:
                 NSLog(@"Not valid File type");
                 return NO;
@@ -316,11 +366,13 @@
         //Corresponding file to selected file type is not present in zip file
         return NO;
     }
-    else if(self.enumFirmwareType == SOFTDEVICE_AND_BOOTLOADER){
+    else if (self.enumFirmwareType == SOFTDEVICE_AND_BOOTLOADER)
+    {
         NSLog(@"Please select zip file with softdevice and bootloader inside");
         return NO;
     }
-    else {
+    else
+    {
         //Selcted file is not zip and file type is not Softdevice + Bootloader
         //then it is upto user to assign correct file to corresponding file type
         return YES;
@@ -329,66 +381,47 @@
 
 -(NSString *)getUploadStatusMessage
 {
-    switch (self.enumFirmwareType) {
+    switch (self.enumFirmwareType)
+    {
         case SOFTDEVICE:
-            return @"uploading softdevice ...";
-            break;
+            return @"Uploading softdevice...";
+            
         case BOOTLOADER:
-            return @"uploading bootloader ...";
-            break;
+            return @"Uploading bootloader...";
+            
         case APPLICATION:
-            return @"uploading application ...";
-            break;
+            return @"Uploading application...";
+            
         case SOFTDEVICE_AND_BOOTLOADER:
-            if (self.isManifestExist) {
-                return @"uploading softdevice+bootloader ...";
+            if (self.isManifestExist)
+            {
+                return @"Uploading softdevice and bootloader...";
             }
-            return @"uploading softdevice ...";
-            break;
+            return @"Uploading softdevice...";
             
         default:
-            return @"uploading ...";
-            break;
+            return @"Uploading...";
     }
 }
 
 -(NSString *)getInitPacketFileValidationMessage
 {
-    NSString *message;
-    switch (self.enumFirmwareType) {
-        case SOFTDEVICE:
-            message = [NSString stringWithFormat:@"softdevice.dat is missing. It must be placed inside zip file with softdevice"];
-            return message;
-        case BOOTLOADER:
-            message = [NSString stringWithFormat:@"bootloader.dat is missing. It must be placed inside zip file with bootloader"];
-            return message;
-        case APPLICATION:
-            message = [NSString stringWithFormat:@"application.dat is missing. It must be placed inside zip file with application"];
-            return message;
-            
-        case SOFTDEVICE_AND_BOOTLOADER:
-            return @"system.dat is missing. It must be placed inside zip file with softdevice and bootloader";
-            break;
-            
-        default:
-            return @"Not valid File type";
-            break;
-    }
-    
+    return [NSString stringWithFormat:@"Selected device requires the Init packet together with the firmware file. Use the distribution packet (ZIP) instead."];
 }
 
 -(NSString *)getFileValidationMessage
 {
     NSString *message;
-    switch (self.enumFirmwareType) {
+    switch (self.enumFirmwareType)
+    {
         case SOFTDEVICE:
-            message = [NSString stringWithFormat:@"softdevice.hex not exist inside selected file %@",[self.selectedFileURL lastPathComponent]];
+            message = [NSString stringWithFormat:@"softdevice.hex not exist inside selected file %@", [self.selectedFileURL lastPathComponent]];
             return message;
         case BOOTLOADER:
-            message = [NSString stringWithFormat:@"bootloader.hex not exist inside selected file %@",[self.selectedFileURL lastPathComponent]];
+            message = [NSString stringWithFormat:@"bootloader.hex not exist inside selected file %@", [self.selectedFileURL lastPathComponent]];
             return message;
         case APPLICATION:
-            message = [NSString stringWithFormat:@"application.hex not exist inside selected file %@",[self.selectedFileURL lastPathComponent]];
+            message = [NSString stringWithFormat:@"application.hex not exist inside selected file %@", [self.selectedFileURL lastPathComponent]];
             return message;
             
         case SOFTDEVICE_AND_BOOTLOADER:

@@ -23,27 +23,34 @@
 #import "FileTypeViewController.h"
 #import "Utility.h"
 
-@interface FileTypeViewController ()
+@interface FileTypeViewController () {
+    NSString *chosenFirmwareType;
+}
 
 - (IBAction)didClickDone:(id)sender;
+- (IBAction)didClickCancel:(id)sender;
 
 @end
 
 @implementation FileTypeViewController
 
-@synthesize chosenFirmwareType;
 @synthesize delegate;
+@synthesize options;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    [self.navigationItem.rightBarButtonItem setEnabled:chosenFirmwareType != nil];
 }
 
 - (IBAction)didClickDone:(id)sender {
     [delegate onFileTypeSelected:chosenFirmwareType];
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)didClickCancel:(id)sender {
+    [delegate onFileTypeNotSelected];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Table view data source
@@ -55,13 +62,13 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[Utility getFirmwareTypes] count];
+    return [options count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:@"FileTypeCell" forIndexPath:indexPath];
-    NSString* cellType = [[Utility getFirmwareTypes] objectAtIndex:indexPath.row];
+    NSString* cellType = [options objectAtIndex:indexPath.row];
     
     // Configure the cell...
     cell.textLabel.text = cellType;
@@ -78,7 +85,7 @@
 
 -(void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *firmwareType = [[Utility getFirmwareTypes] objectAtIndex:indexPath.row];
+    NSString *firmwareType = [options objectAtIndex:indexPath.row];
     chosenFirmwareType = firmwareType;
     [tv reloadData];
     [self.navigationItem.rightBarButtonItem setEnabled:YES];

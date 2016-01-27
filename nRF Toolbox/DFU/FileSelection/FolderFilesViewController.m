@@ -45,9 +45,13 @@
     [super viewDidLoad];
     
     self.fileSystem = [[AccessFileSystem alloc] init];
-    
     self.navigationItem.title = self.directoryName;
-    [self.navigationItem.rightBarButtonItem setEnabled:selectedPath != nil];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.navigationItem.rightBarButtonItem.enabled = selectedPath != nil;
+    [self ensureFolderNotEmpty];
 }
 
 - (IBAction)didClickDone:(id)sender {
@@ -55,8 +59,18 @@
     [self.fileDelegate onFileSelected:fileURL];
     
     // Go back to DFUViewController
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.fileDelegate onFileSelected:fileURL];
+    }];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+}
+
+-(void)ensureFolderNotEmpty
+{
+    if (self.files.count == 0)
+    {
+        tableView.hidden = YES;
+    }
 }
 
 #pragma mark - Table view data source
@@ -112,7 +126,7 @@
     
     selectedPath = filePath;
     [tv reloadData];
-    [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    self.navigationItem.rightBarButtonItem.enabled = YES;
     
     [self.preselectionDelegate onFilePreselected:fileURL];
 }
@@ -128,21 +142,21 @@
     {
         NSString *fileName = [self.files objectAtIndex:indexPath.row];
         NSLog(@"Removing file: %@",fileName);
-        [self.files removeObjectAtIndex:indexPath.row];
-        NSString *filePath = [self.directoryPath stringByAppendingPathComponent:fileName];
-        NSLog(@"Removing file from path %@",filePath);
-        [self.fileSystem deleteFile:filePath];
-        [tv deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         
+        NSString *filePath = [self.directoryPath stringByAppendingPathComponent:fileName];
+        [self.fileSystem deleteFile:filePath];
+        [self.files removeObjectAtIndex:indexPath.row];
+        [tv deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         
         if ([filePath isEqualToString:selectedPath])
         {
             selectedPath = nil;
-            [tableView reloadData];
             
             [self.preselectionDelegate onFilePreselected:nil];
             self.navigationItem.rightBarButtonItem.enabled = NO;
         }
+        
+        [self performSelector:@selector(ensureFolderNotEmpty) withObject:nil afterDelay:0.6];
     }
 }
 @end

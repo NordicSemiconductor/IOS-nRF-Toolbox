@@ -65,9 +65,10 @@
 - (void)didClickDone
 {
     NSURL *fileURL = [NSURL fileURLWithPath:selectedPath];
-    [self.fileDelegate onFileSelected:fileURL];
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.fileDelegate onFileSelected:fileURL];
+    }];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 

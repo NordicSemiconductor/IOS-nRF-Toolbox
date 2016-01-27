@@ -25,12 +25,13 @@
 @protocol FileTypeSelectionDelegate <NSObject>
 
 -(void)onFileTypeSelected:(NSString *)type;
+-(void)onFileTypeNotSelected;
 
 @end
 
 @interface FileTypeViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
 @property (strong, nonatomic) id<FileTypeSelectionDelegate> delegate;
-@property (strong, nonatomic) NSString *chosenFirmwareType;
+@property (strong, nonatomic) NSArray *options;
 
 @end
