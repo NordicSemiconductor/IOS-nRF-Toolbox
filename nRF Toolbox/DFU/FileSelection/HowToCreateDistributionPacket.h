@@ -21,12 +21,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "FileSelectionDelegate.h"
 
-@interface UserFilesViewController : UIViewController <FilePreselectionDelegate, UITableViewDelegate>
-
-//define delegate property
-@property (retain)id<FileSelectionDelegate> fileDelegate;
-@property (strong, nonatomic) NSString* selectedPath;
+@interface HowToCreateDistributionPacket : UIViewController
 
 @end

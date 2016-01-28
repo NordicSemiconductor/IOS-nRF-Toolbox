@@ -30,6 +30,7 @@
 @property (nonatomic, strong)AccessFileSystem *fileSystem;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIView *emptyView;
 
 - (IBAction)didClickDone:(id)sender;
 
@@ -38,6 +39,7 @@
 @implementation FolderFilesViewController
 
 @synthesize tableView;
+@synthesize emptyView;
 @synthesize selectedPath;
 
 - (void)viewDidLoad
@@ -69,7 +71,7 @@
 {
     if (self.files.count == 0)
     {
-        tableView.hidden = YES;
+        emptyView.hidden = NO;
     }
 }
 

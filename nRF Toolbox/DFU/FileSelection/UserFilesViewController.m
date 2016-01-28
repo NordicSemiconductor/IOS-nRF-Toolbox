@@ -34,12 +34,14 @@
 @property (nonatomic,strong)AccessFileSystem *fileSystem;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIView *emptyView;
 
 @end
 
 @implementation UserFilesViewController
 
 @synthesize tableView;
+@synthesize emptyView;
 @synthesize selectedPath;
 
 - (void)viewDidLoad
@@ -49,6 +51,7 @@
     self.fileSystem = [[AccessFileSystem alloc] init];
     self.documentsDirectoryPath = [self.fileSystem getDocumentsDirectoryPath];
     self.files = [[self.fileSystem getDirectoriesAndRequiredFilesFromDocumentsDirectory] mutableCopy];
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -61,8 +64,18 @@
 {
     if (self.files.count == 0)
     {
-        tableView.hidden = YES;
+        emptyView.hidden = NO;
     }
+}
+
+-(void)onFilePreselected:(NSURL *)fileURL
+{
+    selectedPath = [fileURL path];
+    [tableView reloadData];
+    self.tabBarController.navigationItem.rightBarButtonItem.enabled = fileURL != nil;
+    
+    AppFilesViewController* appFilesVC = self.tabBarController.viewControllers.firstObject;
+    appFilesVC.selectedPath = selectedPath;
 }
 
 #pragma mark - Table view data source
@@ -74,18 +87,37 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectionred
 {
-    return self.files.count;
+    return self.files.count + 1; // at row #1 there is a Tutorial
+}
+
+-(CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
+    if (indexPath.row == 0)
+    {
+        return 84; // Tutorial row
+    }
+    else
+    {
+        return 44; // Normal row
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.row == 0)
+    {
+        // Tutorial row
+        return [tv dequeueReusableCellWithIdentifier:@"UserFilesCellHelp" forIndexPath:indexPath];
+    }
+    
+    // Normal row
     UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:@"UserFilesCell" forIndexPath:indexPath];
     
     // Configure the cell...
-    NSString *fileName = [self.files objectAtIndex:indexPath.row];
+    NSString *fileName = [self.files objectAtIndex:indexPath.row - 1];
     NSString *filePath = [self.documentsDirectoryPath stringByAppendingPathComponent:fileName];
     
-    cell.textLabel.text = [self.files objectAtIndex:indexPath.row];
+    cell.textLabel.text = fileName;
     cell.accessoryType = UITableViewCellAccessoryNone;
     if ([self.fileSystem isDirectory:filePath])
     {
@@ -121,87 +153,83 @@
 
 -(void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *fileName = [self.files objectAtIndex:indexPath.row];
-    NSString *filePath = [self.documentsDirectoryPath stringByAppendingPathComponent:fileName];
-    
-    if (![self.fileSystem isDirectory:filePath])
+    if (indexPath.row == 0)
     {
-        NSURL *fileURL = [NSURL fileURLWithPath:filePath];
-        [self onFilePreselected:fileURL];
+        // Tutorial row
+        [self performSegueWithIdentifier:@"OpenTutorial" sender:self];
     }
-}
-
--(void)onFilePreselected:(NSURL *)fileURL
-{
-    selectedPath = [fileURL path];
-    [tableView reloadData];
-    self.tabBarController.navigationItem.rightBarButtonItem.enabled = fileURL != nil;
-    
-    AppFilesViewController* appFilesVC = self.tabBarController.viewControllers.firstObject;
-    appFilesVC.selectedPath = selectedPath;
+    else
+    {
+        // Normal row
+        NSString *fileName = [self.files objectAtIndex:indexPath.row - 1];
+        NSString *filePath = [self.documentsDirectoryPath stringByAppendingPathComponent:fileName];
+        
+        if (![self.fileSystem isDirectory:filePath])
+        {
+            NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+            [self onFilePreselected:fileURL];
+        }
+        else
+        {
+            // Folder clicked
+            [self performSegueWithIdentifier:@"OpenFolder" sender:self];
+        }
+    }
 }
 
 -(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return UITableViewCellEditingStyleDelete;
+    if (indexPath.row > 0)
+    {
+        // Inbox folder can't be deleted
+        NSString *fileName = [self.files objectAtIndex:indexPath.row - 1];
+        if (![fileName isEqualToString:@"Inbox"])
+        {
+            return UITableViewCellEditingStyleDelete;
+        }
+    }
+    return UITableViewCellEditingStyleNone;
 }
 
 -(void)tableView:(UITableView *)tv commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSString *fileName = [self.files objectAtIndex:indexPath.row];
+        NSString *fileName = [self.files objectAtIndex:indexPath.row - 1];
+        NSString *filePath = [self.documentsDirectoryPath stringByAppendingPathComponent:fileName];
+        [self.fileSystem deleteFile:filePath];
+        [self.files removeObjectAtIndex:indexPath.row - 1];
+        [tv deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         
-        if (![fileName isEqualToString:@"Inbox"])
+        if ([filePath isEqualToString:selectedPath])
         {
-            NSLog(@"Removing file: %@",fileName);
-            NSString *filePath = [self.documentsDirectoryPath stringByAppendingPathComponent:fileName];
-            [self.fileSystem deleteFile:filePath];
-            [self.files removeObjectAtIndex:indexPath.row];
-            [tv deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            
-            if ([filePath isEqualToString:selectedPath])
-            {
-                [self onFilePreselected:nil];
-            }
-            
-            [self performSelector:@selector(ensureFolderNotEmpty) withObject:nil afterDelay:0.6];
+            [self onFilePreselected:nil];
         }
-        else
-        {
-            NSLog(@"Can't remove Inbox directory");
-            [Utility showAlert:@"User can't delete Inbox directory"];
-            [tv reloadData];
-        }
+        
+        [self performSelector:@selector(ensureFolderNotEmpty) withObject:nil afterDelay:0.6];
     }
 }
 
 #pragma mark - Navigation
 
--(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
-{
-    NSIndexPath *selectionIndexPath = [self.tableView indexPathForSelectedRow];
-    NSString *fileName = [self.files objectAtIndex:selectionIndexPath.row];
-    NSString *filePath = [self.documentsDirectoryPath stringByAppendingPathComponent:fileName];
-    
-    return [self.fileSystem isDirectory:filePath];
-}
- 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSIndexPath *selectionIndexPath = [self.tableView indexPathForSelectedRow];
-    NSString *fileName = [self.files objectAtIndex:selectionIndexPath.row];
-    NSString *filePath = [self.documentsDirectoryPath stringByAppendingPathComponent:fileName];
-    
-    if ([self.fileSystem isDirectory:filePath])
+    if ([segue.identifier isEqualToString:@"OpenFolder"])
     {
-        FolderFilesViewController *folderVC = [segue destinationViewController];
-        folderVC.directoryPath = filePath;
-        folderVC.directoryName = fileName;
-        folderVC.files = [[self.fileSystem getRequiredFilesFromDirectory:filePath] mutableCopy];
-        folderVC.fileDelegate = self.fileDelegate;
-        folderVC.preselectionDelegate = self;
-        folderVC.selectedPath = selectedPath;
+        NSIndexPath *selectionIndexPath = [self.tableView indexPathForSelectedRow];
+        NSString *fileName = [self.files objectAtIndex:selectionIndexPath.row - 1];
+        NSString *filePath = [self.documentsDirectoryPath stringByAppendingPathComponent:fileName];
+        
+        if ([self.fileSystem isDirectory:filePath])
+        {
+            FolderFilesViewController *folderVC = [segue destinationViewController];
+            folderVC.directoryPath = filePath;
+            folderVC.directoryName = fileName;
+            folderVC.files = [[self.fileSystem getRequiredFilesFromDirectory:filePath] mutableCopy];
+            folderVC.fileDelegate = self.fileDelegate;
+            folderVC.preselectionDelegate = self;
+            folderVC.selectedPath = selectedPath;
+        }
     }
 }
 

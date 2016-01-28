@@ -20,13 +20,12 @@
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <UIKit/UIKit.h>
-#import "FileSelectionDelegate.h"
+#import "HowToCreateDistributionPacket.h"
 
-@interface UserFilesViewController : UIViewController <FilePreselectionDelegate, UITableViewDelegate>
+@implementation HowToCreateDistributionPacket
 
-//define delegate property
-@property (retain)id<FileSelectionDelegate> fileDelegate;
-@property (strong, nonatomic) NSString* selectedPath;
+- (IBAction)openLink:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://github.com/NordicSemiconductor/pc-nrfutil"]];
+}
 
 @end
