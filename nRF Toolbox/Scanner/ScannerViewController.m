@@ -36,6 +36,8 @@
  */
 @property (strong, nonatomic) NSTimer *timer;
 
+@property (weak, nonatomic) IBOutlet UIView *emptyView;
+
 - (void)timerFireMethod:(NSTimer *)timer;
 
 @end
@@ -43,6 +45,7 @@
 @implementation ScannerViewController
 @synthesize bluetoothManager;
 @synthesize devicesTable;
+@synthesize emptyView;
 @synthesize filterUUID;
 @synthesize peripherals;
 @synthesize timer;
@@ -54,6 +57,12 @@
     peripherals = [NSMutableArray arrayWithCapacity:8];
     devicesTable.delegate = self;
     devicesTable.dataSource = self;
+    
+    // Display an activity indicator in the Navigation bar
+    UIActivityIndicatorView* uiBusy = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    uiBusy.hidesWhenStopped = YES;
+    [uiBusy startAnimating];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:uiBusy];
     
     // We want the scanner to scan with dupliate keys (to refresh RRSI every second) so it has to be done using non-main queue
     dispatch_queue_t centralQueue = dispatch_queue_create("no.nordicsemi.ios.nrftoolbox", DISPATCH_QUEUE_SERIAL);
@@ -164,7 +173,11 @@
  */
 - (void)timerFireMethod:(NSTimer *)timer
 {
-    [devicesTable reloadData];
+    if ([peripherals count] > 0)
+    {
+        emptyView.hidden = YES;
+        [devicesTable reloadData];
+    }
 }
 
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI
