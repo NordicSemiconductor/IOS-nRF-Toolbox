@@ -33,6 +33,7 @@
 		5217F422185F15FA00F2D5BB /* ScannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5217F421185F15FA00F2D5BB /* ScannerViewController.m */; };
 		5217F428185F28D400F2D5BB /* ScannedPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = 5217F427185F28D400F2D5BB /* ScannedPeripheral.m */; };
 		5226362F1C5A601C0054A550 /* HowToCreateDistributionPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5226362E1C5A601C0054A550 /* HowToCreateDistributionPacket.m */; };
+		522636351C5F87E50054A550 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 522636341C5F87E50054A550 /* SWRevealViewController.m */; };
 		5236E15F187EA73F0057E974 /* HRSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5236E15E187EA73F0057E974 /* HRSViewController.m */; };
 		5236E162187EA7540057E974 /* HTSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5236E161187EA7540057E974 /* HTSViewController.m */; };
 		5236E16C187EC6880057E974 /* StubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5236E16B187EC6880057E974 /* StubViewController.m */; };
@@ -51,7 +52,6 @@
 		52BDCBC11C43D4CB00E2680F /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BDCBC01C43D4CB00E2680F /* NavigationController.m */; };
 		52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */; };
 		52BDCBC91C48FDB800E2680F /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BDCBC81C48FDB800E2680F /* BaseViewController.m */; };
-		52BDCBCD1C490C9A00E2680F /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BDCBCC1C490C9A00E2680F /* SWRevealViewController.m */; };
 		52BDCBD01C491B6F00E2680F /* BaseRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BDCBCF1C491B6F00E2680F /* BaseRevealViewController.m */; };
 		52BDCBD41C491C8600E2680F /* UARTRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BDCBD31C491C8600E2680F /* UARTRevealViewController.m */; };
 		52BDCBD71C49492300E2680F /* LogItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BDCBD61C49492300E2680F /* LogItemCell.m */; };
@@ -137,6 +137,8 @@
 		5226362A1C564E5F0054A550 /* FileSelectionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSelectionDelegate.h; sourceTree = "<group>"; };
 		5226362D1C5A601C0054A550 /* HowToCreateDistributionPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HowToCreateDistributionPacket.h; sourceTree = "<group>"; };
 		5226362E1C5A601C0054A550 /* HowToCreateDistributionPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HowToCreateDistributionPacket.m; sourceTree = "<group>"; };
+		522636331C5F87E50054A550 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWRevealViewController.h; path = SWRevealViewController/SWRevealViewController.h; sourceTree = "<group>"; };
+		522636341C5F87E50054A550 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWRevealViewController.m; path = SWRevealViewController/SWRevealViewController.m; sourceTree = "<group>"; };
 		5236E15D187EA73F0057E974 /* HRSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRSViewController.h; sourceTree = "<group>"; };
 		5236E15E187EA73F0057E974 /* HRSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRSViewController.m; sourceTree = "<group>"; };
 		5236E160187EA7540057E974 /* HTSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTSViewController.h; sourceTree = "<group>"; };
@@ -249,8 +251,6 @@
 		52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		52BDCBC71C48FDB800E2680F /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		52BDCBC81C48FDB800E2680F /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
-		52BDCBCB1C490C9A00E2680F /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWRevealViewController.h; path = "../../ANT Shared Channel/ANT Shared Channel/ANT Shared Channel/SWRevealViewController.h"; sourceTree = "<group>"; };
-		52BDCBCC1C490C9A00E2680F /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWRevealViewController.m; path = "../../ANT Shared Channel/ANT Shared Channel/ANT Shared Channel/SWRevealViewController.m"; sourceTree = "<group>"; };
 		52BDCBCE1C491B6F00E2680F /* BaseRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseRevealViewController.h; path = UART/BaseRevealViewController.h; sourceTree = "<group>"; };
 		52BDCBCF1C491B6F00E2680F /* BaseRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseRevealViewController.m; path = UART/BaseRevealViewController.m; sourceTree = "<group>"; };
 		52BDCBD21C491C8600E2680F /* UARTRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UARTRevealViewController.h; sourceTree = "<group>"; };
@@ -703,8 +703,8 @@
 		52BDCBCA1C490C6000E2680F /* RevealViewVontroller */ = {
 			isa = PBXGroup;
 			children = (
-				52BDCBCB1C490C9A00E2680F /* SWRevealViewController.h */,
-				52BDCBCC1C490C9A00E2680F /* SWRevealViewController.m */,
+				522636331C5F87E50054A550 /* SWRevealViewController.h */,
+				522636341C5F87E50054A550 /* SWRevealViewController.m */,
 			);
 			name = RevealViewVontroller;
 			sourceTree = "<group>";
@@ -1019,7 +1019,6 @@
 				5217F3F21859EE0000F2D5BB /* main.m in Sources */,
 				5217F41E185B198E00F2D5BB /* RSACViewController.m in Sources */,
 				7ECF2025196AD6AF005495C8 /* UnzipFirmware.m in Sources */,
-				52BDCBCD1C490C9A00E2680F /* SWRevealViewController.m in Sources */,
 				5252A542188030A800EFD773 /* ProximityViewController.m in Sources */,
 				5236E162187EA7540057E974 /* HTSViewController.m in Sources */,
 				7E445C8E1951A51A00633892 /* Utility.m in Sources */,
@@ -1035,6 +1034,7 @@
 				7E99686C19800A260092E69E /* FolderFilesViewController.m in Sources */,
 				7EE6691F1983C7DD004680F0 /* mztools.c in Sources */,
 				52BDCBC11C43D4CB00E2680F /* NavigationController.m in Sources */,
+				522636351C5F87E50054A550 /* SWRevealViewController.m in Sources */,
 				524F2CD818897078008A8555 /* BGMItemCell.m in Sources */,
 				5214D0D218881D4D00460637 /* CharacteristicReader.m in Sources */,
 				5236E16C187EC6880057E974 /* StubViewController.m in Sources */,
