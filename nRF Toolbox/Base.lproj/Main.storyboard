@@ -4090,7 +4090,7 @@
                                     <constraint firstAttribute="height" constant="30" id="waI-Os-eKa"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="send"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="send"/>
                                 <connections>
                                     <outlet property="delegate" destination="y8v-dl-m9e" id="Pbd-d3-ctn"/>
                                 </connections>
