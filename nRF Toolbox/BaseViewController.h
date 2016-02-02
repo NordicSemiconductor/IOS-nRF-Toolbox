@@ -25,5 +25,6 @@
 @interface BaseViewController : UIViewController
 
 - (void)showAbout:(NSString*)message;
+- (void)showAbout:(NSString*)message otherButton:(NSString*)button;
 
 @end

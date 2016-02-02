@@ -23,6 +23,6 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 
-@interface ViewController : BaseViewController<UICollectionViewDataSource>
+@interface ViewController : BaseViewController<UICollectionViewDataSource, UIAlertViewDelegate>
 
 @end

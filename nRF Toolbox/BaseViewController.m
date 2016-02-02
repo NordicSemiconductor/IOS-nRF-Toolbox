@@ -29,7 +29,12 @@
 @implementation BaseViewController
 
 - (void)showAbout:(NSString*)message {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"About" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"About" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+}
+
+- (void)showAbout:(NSString*)message otherButton:(NSString*)button {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"About" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:button, nil];
     [alert show];
 }
 

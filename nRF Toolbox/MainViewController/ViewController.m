@@ -40,17 +40,24 @@
     collectionView.dataSource = self;
 }
 
-- (void)didReceiveMemoryWarning
+-(void)viewWillAppear:(BOOL)animated
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
 - (IBAction)aboutButtonClicked:(id)sender
 {
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    NSString* message = [NSString stringWithFormat:@"The nRF Toolbox works with a wide range of the most popular Bluetooth Low Energy accessories. It contains applications demonstrating standard BLE profiles:\n\n%C Cycling Speed and Cadence,\n%C Running Speed and Cadence,\n%C Heart Rate Monitor,\n%C Blood Pressure Monitor,\n%C Health Thermometer Monitor,\n%C Glucose Monitor,\n%C Proximity Monitor.\n\nAdditionaly, it supports Nordic Semiconductor's proprietary profiles:\n\n%C UART (Universal Asynchronous Receiver/Transmitter),\n%C DFU (Device Firmware Update).\n\nVersion %@", (unichar) 0x2022, (unichar) 0x2022, (unichar) 0x2022, (unichar) 0x2022, (unichar) 0x2022, (unichar) 0x2022, (unichar) 0x2022, (unichar) 0x2022, (unichar) 0x2022, version];
-    [self showAbout:message];
+    NSString* message = [NSString stringWithFormat:@"The nRF Toolbox works with the most popular Bluetooth Low Energy accessories that use standard BLE profiles. Additionaly, it supports Nordic Semiconductor's proprietary profiles:\n\n%C UART (Universal Asynchronous Receiver/Transmitter),\n%C DFU (Device Firmware Update).\n\nMore information and the source code may be found on GitHub.\n\nVersion %@", (unichar) 0x2022, (unichar) 0x2022, version];
+    [self showAbout:message otherButton:@"GitHub"];
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) /* OK = 0, GitHub = 1 */
+    {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://github.com/NordicSemiconductor/IOS-nRF-Toolbox"]];
+    }
 }
 
 #pragma mark UICollectionViewDataSource methods

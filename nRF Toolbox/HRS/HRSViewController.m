@@ -92,7 +92,6 @@
     hrValues = [[NSMutableArray alloc]init];
     xValues  = [[NSMutableArray alloc]init];
     
-    [self initPlotRange];
     [self initLinePlot];
 }
 
@@ -240,7 +239,7 @@
     axisSet.yAxis.majorGridLineStyle = gridLineStyle;
 }
 
--(void)initPlotRange
+-(void) resetPlotRange
 {
     plotXMaxRange = 121;
     plotXMinRange = -1;
@@ -249,10 +248,7 @@
     
     plotXInterval = 20;
     plotYInterval = 50;
-}
-
--(void) resetPlotRange
-{
+    
     CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)self.graph.defaultPlotSpace;
     plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:[NSNumber numberWithInt:plotXMinRange]
                                                     length:[NSNumber numberWithInt:plotXMaxRange]];
@@ -391,7 +387,6 @@
         [hrValues removeAllObjects];
         [xValues removeAllObjects];
         
-        [self initPlotRange];
         [self resetPlotRange];
     });
     //Following if condition display user permission alert for background notification
@@ -576,5 +571,11 @@
     battery.tag = 0;
     hrLocation.text = @"n/a";
     hrValue.text = @"-";
+    
+    // Clear and reset the graph
+    [hrValues removeAllObjects];
+    [xValues removeAllObjects];
+    [self resetPlotRange];
+    [self.graph reloadData];
 }
 @end
