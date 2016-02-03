@@ -29,7 +29,7 @@
 
 @end
 
-@interface EditPopupViewController : UIViewController 
+@interface EditPopupViewController : UIViewController<UITextFieldDelegate>
 
 //define delegate property
 @property (nonatomic, assign)id<ButtonConfigureDelegate> delegate;

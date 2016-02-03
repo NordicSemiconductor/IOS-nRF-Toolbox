@@ -3847,7 +3847,7 @@
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="glN-JA-Naa">
-                                <rect key="frame" x="170" y="153" width="260" height="295"/>
+                                <rect key="frame" x="170" y="123" width="260" height="295"/>
                                 <subviews>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Ax-zd-6ST">
                                         <rect key="frame" x="16" y="16" width="70" height="70"/>
@@ -3982,7 +3982,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="4JI-2k-4TS" firstAttribute="leading" secondItem="VbO-N4-bO9" secondAttribute="leading" id="1AS-HO-46q"/>
-                            <constraint firstItem="glN-JA-Naa" firstAttribute="centerY" secondItem="VbO-N4-bO9" secondAttribute="centerY" id="5Lp-mb-g4a"/>
+                            <constraint firstItem="glN-JA-Naa" firstAttribute="centerY" secondItem="VbO-N4-bO9" secondAttribute="centerY" multiplier="0.9" id="5Lp-mb-g4a"/>
                             <constraint firstItem="tNp-ca-oC6" firstAttribute="top" secondItem="TGd-qN-o6Z" secondAttribute="bottom" constant="30" id="83M-gj-vel"/>
                             <constraint firstItem="46U-iX-Nsv" firstAttribute="leading" secondItem="VbO-N4-bO9" secondAttribute="leadingMargin" constant="-16" id="ARJ-TG-mQq"/>
                             <constraint firstAttribute="trailing" secondItem="yQ8-20-EzP" secondAttribute="trailing" id="DuB-DP-cwJ"/>
@@ -4577,7 +4577,7 @@
         <image name="userIcon" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="0i8-Ot-uid"/>
+        <segue reference="nX1-cs-GXT"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.60392159219999997" blue="0.85490196939999996" alpha="1" colorSpace="calibratedRGB"/>
 </document>

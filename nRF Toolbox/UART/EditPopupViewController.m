@@ -53,6 +53,7 @@
     }
     
     commandTextField.text = self.command;
+    commandTextField.delegate = self;
     [iconButtons[self.iconIndex] setBackgroundColor:[UIColor colorWithRed:222.0f/255.0f green:74.0f/255.0f blue:19.0f/255.0f alpha:1.0f]];
 }
 
@@ -89,10 +90,16 @@
 
 -(void)setSelectedButtonBackgroundColor
 {
-    for (UIButton *button in self.iconButtons) {
+    for (UIButton *button in self.iconButtons)
+    {
         [button setBackgroundColor:[UIColor colorWithRed:127/255.0f green:127/255.0f blue:127/255.0f alpha:1.0f]];
     }
     [iconButtons[self.iconIndex] setBackgroundColor:[UIColor colorWithRed:222.0f/255.0f green:74.0f/255.0f blue:19.0f/255.0f alpha:1.0f]];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return NO;
 }
 
 @end
