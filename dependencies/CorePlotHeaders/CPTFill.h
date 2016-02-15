@@ -1,22 +1,34 @@
+/// @file
+
 @class CPTGradient;
 @class CPTImage;
 @class CPTColor;
+@class CPTFill;
 
-@interface CPTFill : NSObject<NSCopying, NSCoding> {
-}
+/**
+ *  @brief An array of fills.
+ **/
+typedef NSArray<CPTFill *> *CPTFillArray;
+
+/**
+ *  @brief A mutable array of fills.
+ **/
+typedef NSMutableArray<CPTFill *> *CPTMutableFillArray;
+
+@interface CPTFill : NSObject<NSCopying, NSCoding>
 
 /// @name Factory Methods
 /// @{
-+(CPTFill *)fillWithColor:(CPTColor *)aColor;
-+(CPTFill *)fillWithGradient:(CPTGradient *)aGradient;
-+(CPTFill *)fillWithImage:(CPTImage *)anImage;
++(nonnull instancetype)fillWithColor:(nullable CPTColor *)aColor;
++(nonnull instancetype)fillWithGradient:(nullable CPTGradient *)aGradient;
++(nonnull instancetype)fillWithImage:(nullable CPTImage *)anImage;
 /// @}
 
 /// @name Initialization
 /// @{
--(id)initWithColor:(CPTColor *)aColor;
--(id)initWithGradient:(CPTGradient *)aGradient;
--(id)initWithImage:(CPTImage *)anImage;
+-(nonnull instancetype)initWithColor:(nullable CPTColor *)aColor;
+-(nonnull instancetype)initWithGradient:(nullable CPTGradient *)aGradient;
+-(nonnull instancetype)initWithImage:(nullable CPTImage *)anImage;
 /// @}
 
 @end
@@ -27,11 +39,12 @@
 @interface CPTFill(AbstractMethods)
 
 @property (nonatomic, readonly, getter = isOpaque) BOOL opaque;
+@property (nonatomic, readonly, nullable) CGColorRef cgColor;
 
 /// @name Drawing
 /// @{
--(void)fillRect:(CGRect)rect inContext:(CGContextRef)context;
--(void)fillPathInContext:(CGContextRef)context;
+-(void)fillRect:(CGRect)rect inContext:(nonnull CGContextRef)context;
+-(void)fillPathInContext:(nonnull CGContextRef)context;
 /// @}
 
 @end

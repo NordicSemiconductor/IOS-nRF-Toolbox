@@ -10,7 +10,7 @@
  **/
 
 /**
- *  @def __cpt_weak
+ *  @def cpt_weak
  *  @hideinitializer
  *  @brief A custom definition for automatic reference counting (ARC) weak references that falls back to
  *  <code>__unsafe_unretained</code> values on older platforms.
@@ -34,13 +34,13 @@
 #endif
 
 #if CPT_SDK_SUPPORTS_WEAK
-#define __cpt_weak        __weak
+#define cpt_weak          __weak
 #define cpt_weak_property weak
 #else
 #if __clang__ && (__clang_major__ >= 3)
-#define __cpt_weak __unsafe_unretained
+#define cpt_weak __unsafe_unretained
 #else
-#define __cpt_weak
+#define cpt_weak
 #endif
 #define cpt_weak_property assign
 #endif
@@ -107,44 +107,42 @@
 /**
  *  @brief Enumeration of numeric types
  **/
-typedef enum  _CPTNumericType {
+typedef NS_ENUM (NSInteger, CPTNumericType) {
     CPTNumericTypeInteger, ///< Integer
     CPTNumericTypeFloat,   ///< Float
     CPTNumericTypeDouble   ///< Double
-}
-CPTNumericType;
+};
 
 /**
  *  @brief Enumeration of error bar types
  **/
-typedef enum _CPTErrorBarType {
+typedef NS_ENUM (NSInteger, CPTErrorBarType) {
     CPTErrorBarTypeCustom,        ///< Custom error bars
     CPTErrorBarTypeConstantRatio, ///< Constant ratio error bars
     CPTErrorBarTypeConstantValue  ///< Constant value error bars
-}
-CPTErrorBarType;
+};
 
 /**
  *  @brief Enumeration of axis scale types
  **/
-typedef enum _CPTScaleType {
-    CPTScaleTypeLinear,   ///< Linear axis scale
-    CPTScaleTypeLog,      ///< Logarithmic axis scale
-    CPTScaleTypeAngular,  ///< Angular axis scale (not implemented)
-    CPTScaleTypeDateTime, ///< Date/time axis scale (not implemented)
-    CPTScaleTypeCategory  ///< Category axis scale (not implemented)
-}
-CPTScaleType;
+typedef NS_ENUM (NSInteger, CPTScaleType) {
+    CPTScaleTypeLinear,    ///< Linear axis scale
+    CPTScaleTypeLog,       ///< Logarithmic axis scale
+    CPTScaleTypeAngular,   ///< Angular axis scale (not implemented)
+    CPTScaleTypeDateTime,  ///< Date/time axis scale (not implemented)
+    CPTScaleTypeCategory,  ///< Category axis scale
+    CPTScaleTypeLogModulus ///< Log-modulus axis scale
+};
 
 /**
  *  @brief Enumeration of axis coordinates
  **/
-typedef enum _CPTCoordinate {
-    CPTCoordinateX = 0, ///< X axis
-    CPTCoordinateY = 1, ///< Y axis
-    CPTCoordinateZ = 2  ///< Z axis
-}
-CPTCoordinate;
+typedef NS_ENUM (NSInteger, CPTCoordinate) {
+    CPTCoordinateX    = 0,           ///< X axis
+    CPTCoordinateY    = 1,           ///< Y axis
+    CPTCoordinateZ    = 2,           ///< Z axis
+    CPTCoordinateNone = NSIntegerMax ///< Invalid coordinate value
+};
 
 /**
  *  @brief RGBA color for gradients
@@ -160,17 +158,16 @@ CPTRGBAColor;
 /**
  *  @brief Enumeration of label positioning offset directions
  **/
-typedef enum _CPTSign {
+typedef NS_ENUM (NSInteger, CPTSign) {
     CPTSignNone     = 0,  ///< No offset
     CPTSignPositive = +1, ///< Positive offset
     CPTSignNegative = -1  ///< Negative offset
-}
-CPTSign;
+};
 
 /**
  *  @brief Locations around the edge of a rectangle.
  **/
-typedef enum _CPTRectAnchor {
+typedef NS_ENUM (NSInteger, CPTRectAnchor) {
     CPTRectAnchorBottomLeft,  ///< The bottom left corner
     CPTRectAnchorBottom,      ///< The bottom center
     CPTRectAnchorBottomRight, ///< The bottom right corner
@@ -180,18 +177,74 @@ typedef enum _CPTRectAnchor {
     CPTRectAnchorTop,         ///< The top center
     CPTRectAnchorTopRight,    ///< The top right
     CPTRectAnchorCenter       ///< The center of the rect
-}
-CPTRectAnchor;
+};
 
 /**
  *  @brief Label and constraint alignment constants.
  **/
-typedef enum _CPTAlignment {
+typedef NS_ENUM (NSInteger, CPTAlignment) {
     CPTAlignmentLeft,   ///< Align horizontally to the left side.
     CPTAlignmentCenter, ///< Align horizontally to the center.
     CPTAlignmentRight,  ///< Align horizontally to the right side.
     CPTAlignmentTop,    ///< Align vertically to the top.
     CPTAlignmentMiddle, ///< Align vertically to the middle.
     CPTAlignmentBottom  ///< Align vertically to the bottom.
+};
+
+/**
+ *  @brief Edge inset distances for stretchable images.
+ **/
+typedef struct _CPTEdgeInsets {
+    CGFloat top;    ///< The top inset.
+    CGFloat left;   ///< The left inset.
+    CGFloat bottom; ///< The bottom inset.
+    CGFloat right;  ///< The right inset.
 }
-CPTAlignment;
+CPTEdgeInsets;
+
+extern const CPTEdgeInsets CPTEdgeInsetsZero; ///< Defines a set of stretchable image edge insets where all of the values are zero (@num{0}).
+
+/**
+ *  @brief An array of numbers.
+ **/
+typedef NSArray<NSNumber *> *CPTNumberArray;
+
+/**
+ *  @brief A mutable array of numbers.
+ **/
+typedef NSMutableArray<NSNumber *> *CPTMutableNumberArray;
+
+/**
+ *  @brief A set of numbers.
+ **/
+typedef NSSet<NSNumber *> *CPTNumberSet;
+
+/**
+ *  @brief A mutable set of numbers.
+ **/
+typedef NSMutableSet<NSNumber *> *CPTMutableNumberSet;
+
+/**
+ *  @brief An array of strings.
+ **/
+typedef NSArray<NSString *> *CPTStringArray;
+
+/**
+ *  @brief A mutable array of strings.
+ **/
+typedef NSMutableArray<NSString *> *CPTMutableStringArray;
+
+/**
+ *  @brief An array of strings.
+ **/
+typedef NSDictionary<NSString *, id> *CPTDictionary;
+
+/**
+ *  @brief A mutable array of strings.
+ **/
+typedef NSMutableDictionary<NSString *, id> *CPTMutableDictionary;
+
+/**
+ *  @brief Render a Quick Look image into the given context.
+ **/
+typedef void (^CPTQuickLookImageBlock)(__nonnull CGContextRef context, CGFloat scale, CGRect bounds);

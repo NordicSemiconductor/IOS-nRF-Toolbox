@@ -3,17 +3,12 @@
 
 @class CPTConstraints;
 
-@interface CPTLayerAnnotation : CPTAnnotation {
-    @private
-    __cpt_weak CPTLayer *anchorLayer;
-    CPTConstraints *xConstraints;
-    CPTConstraints *yConstraints;
-    CPTRectAnchor rectAnchor;
-}
+@interface CPTLayerAnnotation : CPTAnnotation
 
-@property (nonatomic, readonly, cpt_weak_property) __cpt_weak CPTLayer *anchorLayer;
+@property (nonatomic, readonly, nullable) cpt_weak CPTLayer *anchorLayer;
 @property (nonatomic, readwrite, assign) CPTRectAnchor rectAnchor;
 
--(id)initWithAnchorLayer:(CPTLayer *)anchorLayer;
+-(nonnull instancetype)initWithAnchorLayer:(nonnull CPTLayer *)anchorLayer NS_DESIGNATED_INITIALIZER;
+-(nonnull instancetype)initWithCoder:(nonnull NSCoder *)coder NS_DESIGNATED_INITIALIZER;
 
 @end

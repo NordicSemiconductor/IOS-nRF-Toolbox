@@ -1,18 +1,17 @@
-@interface CPTConstraints : NSObject<NSCoding, NSCopying> {
-}
+@interface CPTConstraints : NSObject<NSCoding, NSCopying>
 
 /// @name Factory Methods
 /// @{
-+(CPTConstraints *)constraintWithLowerOffset:(CGFloat)newOffset;
-+(CPTConstraints *)constraintWithUpperOffset:(CGFloat)newOffset;
-+(CPTConstraints *)constraintWithRelativeOffset:(CGFloat)newOffset;
++(nonnull instancetype)constraintWithLowerOffset:(CGFloat)newOffset;
++(nonnull instancetype)constraintWithUpperOffset:(CGFloat)newOffset;
++(nonnull instancetype)constraintWithRelativeOffset:(CGFloat)newOffset;
 /// @}
 
 /// @name Initialization
 /// @{
--(id)initWithLowerOffset:(CGFloat)newOffset;
--(id)initWithUpperOffset:(CGFloat)newOffset;
--(id)initWithRelativeOffset:(CGFloat)newOffset;
+-(nonnull instancetype)initWithLowerOffset:(CGFloat)newOffset;
+-(nonnull instancetype)initWithUpperOffset:(CGFloat)newOffset;
+-(nonnull instancetype)initWithRelativeOffset:(CGFloat)newOffset;
 /// @}
 
 @end
@@ -24,7 +23,7 @@
 
 /// @name Comparison
 /// @{
--(BOOL)isEqualToConstraint:(CPTConstraints *)otherConstraint;
+-(BOOL)isEqualToConstraint:(nullable CPTConstraints *)otherConstraint;
 /// @}
 
 /// @name Position

@@ -1,38 +1,44 @@
 #import "CPTDefinitions.h"
 
+/// @file
+
+@class CPTLegendEntry;
 @class CPTPlot;
 @class CPTTextStyle;
 
-@interface CPTLegendEntry : NSObject<NSCoding> {
-    @private
-    __cpt_weak CPTPlot *plot;
-    NSUInteger index;
-    NSUInteger row;
-    NSUInteger column;
-    CPTTextStyle *textStyle;
-}
+/**
+ *  @brief An array of CPTLegendEntry objects.
+ **/
+typedef NSArray<CPTLegendEntry *> *CPTLegendEntryArray;
+
+/**
+ *  @brief A mutable array of CPTLegendEntry objects.
+ **/
+typedef NSMutableArray<CPTLegendEntry *> *CPTMutableLegendEntryArray;
+
+@interface CPTLegendEntry : NSObject<NSCoding>
 
 /// @name Plot Info
 /// @{
-@property (nonatomic, readwrite, cpt_weak_property) __cpt_weak CPTPlot *plot;
+@property (nonatomic, readwrite, cpt_weak_property, nullable) cpt_weak CPTPlot *plot;
 @property (nonatomic, readwrite, assign) NSUInteger index;
 /// @}
 
 /// @name Formatting
 /// @{
-@property (nonatomic, readwrite, retain) CPTTextStyle *textStyle;
+@property (nonatomic, readwrite, strong, nullable) CPTTextStyle *textStyle;
 /// @}
 
 /// @name Layout
 /// @{
 @property (nonatomic, readwrite, assign) NSUInteger row;
 @property (nonatomic, readwrite, assign) NSUInteger column;
-@property (nonatomic, readonly, assign) CGSize titleSize;
+@property (nonatomic, readonly) CGSize titleSize;
 /// @}
 
 /// @name Drawing
 /// @{
--(void)drawTitleInRect:(CGRect)rect inContext:(CGContextRef)context scale:(CGFloat)scale;
+-(void)drawTitleInRect:(CGRect)rect inContext:(nonnull CGContextRef)context scale:(CGFloat)scale;
 /// @}
 
 @end

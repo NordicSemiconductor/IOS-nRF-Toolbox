@@ -22,12 +22,12 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
+#import "BaseViewController.h"
 #import "ScannerDelegate.h"
 
-@interface ProximityViewController : UIViewController <CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate, CBPeripheralManagerDelegate>
+@interface ProximityViewController : BaseViewController <CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate, CBPeripheralManagerDelegate>
 
 @property (strong, nonatomic) CBCentralManager *bluetoothManager;
-@property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
 @property (weak, nonatomic) IBOutlet UILabel *verticalLabel;
 @property (weak, nonatomic) IBOutlet UIButton *battery;
 @property (weak, nonatomic) IBOutlet UILabel *deviceName;

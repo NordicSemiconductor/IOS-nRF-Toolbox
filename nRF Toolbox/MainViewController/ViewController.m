@@ -22,48 +22,55 @@
 
 #import "ViewController.h"
 #import "Constants.h"
-#import "HelpViewController.h"
 
 @interface ViewController ()
+
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+
+- (IBAction)aboutButtonClicked:(id)sender;
 
 @end
 
 @implementation ViewController
-@synthesize backgroundImage;
+@synthesize collectionView;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Adjust the background to fill the phone space
-    if (is4InchesIPhone)
-    {
-        // 4 inches iPhone
-        UIImage *image = [UIImage imageNamed:@"Background4.png"];
-        [backgroundImage setImage:image];
-    }
-    else
-    {
-        // 3.5 inches iPhone
-        UIImage *image = [UIImage imageNamed:@"Background35.png"];
-        [backgroundImage setImage:image];
-    }
+    collectionView.dataSource = self;
 }
 
-- (void)didReceiveMemoryWarning
+-(void)viewWillAppear:(BOOL)animated
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (IBAction)aboutButtonClicked:(id)sender
 {
-    NSLog(@"prepareForSegue");
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    if ([[segue identifier] isEqualToString:@"help"]) {
-        NSLog(@"correct segue");
-        HelpViewController *helpVC = [segue destinationViewController];
-        helpVC.helpText = [NSString stringWithFormat:@"        nRF Toolbox Version %@\n\n The nRF Toolbox application works with a wide range of the most popular Bluetooth Low Energy accessories.",version];
+    NSString* message = [NSString stringWithFormat:@"The nRF Toolbox works with the most popular Bluetooth Low Energy accessories that use standard BLE profiles. Additionaly, it supports Nordic Semiconductor's proprietary profiles:\n\n%C UART (Universal Asynchronous Receiver/Transmitter),\n%C DFU (Device Firmware Update).\n\nMore information and the source code may be found on GitHub.\n\nVersion %@", (unichar) 0x2022, (unichar) 0x2022, version];
+    [self showAbout:message otherButton:@"GitHub"];
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) /* OK = 0, GitHub = 1 */
+    {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://github.com/NordicSemiconductor/IOS-nRF-Toolbox"]];
     }
+}
+
+#pragma mark UICollectionViewDataSource methods
+
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return 9;
+}
+
+-(UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString* name = [NSString stringWithFormat:@"profile_%ld", (long)indexPath.item];
+    return [cv dequeueReusableCellWithReuseIdentifier:name forIndexPath:indexPath];
 }
 
 @end

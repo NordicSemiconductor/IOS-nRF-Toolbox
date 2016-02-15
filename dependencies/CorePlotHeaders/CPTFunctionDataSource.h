@@ -1,8 +1,6 @@
 #import "CPTPlot.h"
 
-@class CPTMutablePlotRange;
 @class CPTPlotRange;
-@class CPTPlotSpace;
 
 /// @file
 
@@ -11,32 +9,30 @@
  **/
 typedef double (*CPTDataSourceFunction)(double);
 
-@interface CPTFunctionDataSource : NSObject<CPTPlotDataSource> {
-    @private
-    __cpt_weak CPTPlot *dataPlot;
-    CPTDataSourceFunction dataSourceFunction;
-    CGFloat resolution;
-    double cachedStep;
-    NSUInteger dataCount;
-    NSUInteger cachedCount;
-    CPTMutablePlotRange *cachedPlotRange;
-    CPTPlotRange *dataRange;
-}
+/**
+ *  @brief An Objective-C block called to generate plot data in a CPTFunctionDataSource datasource.
+ **/
+typedef double (^CPTDataSourceBlock)(double);
 
-@property (nonatomic, readonly) CPTDataSourceFunction dataSourceFunction;
-@property (nonatomic, readonly, cpt_weak_property) __cpt_weak CPTPlot *dataPlot;
+@interface CPTFunctionDataSource : NSObject<CPTPlotDataSource>
+
+@property (nonatomic, readonly, nullable) CPTDataSourceFunction dataSourceFunction;
+@property (nonatomic, readonly, nullable) CPTDataSourceBlock dataSourceBlock;
+@property (nonatomic, readonly, nonnull) CPTPlot *dataPlot;
 
 @property (nonatomic, readwrite) CGFloat resolution;
-@property (nonatomic, readwrite, retain) CPTPlotRange *dataRange;
+@property (nonatomic, readwrite, strong, nullable) CPTPlotRange *dataRange;
 
 /// @name Factory Methods
 /// @{
-+(id)dataSourceForPlot:(CPTPlot *)plot withFunction:(CPTDataSourceFunction)function;
++(nonnull instancetype)dataSourceForPlot:(nonnull CPTPlot *)plot withFunction:(nonnull CPTDataSourceFunction)function;
++(nonnull instancetype)dataSourceForPlot:(nonnull CPTPlot *)plot withBlock:(nonnull CPTDataSourceBlock)block;
 /// @}
 
 /// @name Initialization
 /// @{
--(id)initForPlot:(CPTPlot *)plot withFunction:(CPTDataSourceFunction)function;
+-(nonnull instancetype)initForPlot:(nonnull CPTPlot *)plot withFunction:(nonnull CPTDataSourceFunction)function;
+-(nonnull instancetype)initForPlot:(nonnull CPTPlot *)plot withBlock:(nonnull CPTDataSourceBlock)block;
 /// @}
 
 @end

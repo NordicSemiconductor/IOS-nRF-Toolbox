@@ -25,7 +25,6 @@
 #import "Constants.h"
 #import "AppUtilities.h"
 #import "CharacteristicReader.h"
-#import "HelpViewController.h"
 
 @interface BPMViewController () {
     CBUUID *bpmServiceUUID;
@@ -50,11 +49,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *pulse;
 @property (weak, nonatomic) IBOutlet UILabel *timestamp;
 
+- (IBAction)aboutButtonClicked:(id)sender;
+
 @end
 
 @implementation BPMViewController
 @synthesize bluetoothManager;
-@synthesize backgroundImage;
 @synthesize verticalLabel;
 @synthesize battery;
 @synthesize deviceName;
@@ -79,18 +79,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if (is4InchesIPhone)
-    {
-        // 4 inches iPhone
-        UIImage *image = [UIImage imageNamed:@"Background4.png"];
-        [backgroundImage setImage:image];
-    }
-    else
-    {
-        // 3.5 inches iPhone
-        UIImage *image = [UIImage imageNamed:@"Background35.png"];
-        [backgroundImage setImage:image];
-    }
     
     // Rotate the vertical label
     self.verticalLabel.transform = CGAffineTransformRotate(CGAffineTransformMakeTranslation(-150.0f, 0.0f), (float)(-M_PI / 2));
@@ -104,6 +92,10 @@
 -(void)appDidBecomeActiveBackground:(NSNotification *)_notification
 {
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
+}
+
+- (IBAction)aboutButtonClicked:(id)sender {
+    [self showAbout:[AppUtilities getBPMHelpText]];
 }
 
 - (IBAction)connectOrDisconnectClicked {
@@ -124,13 +116,10 @@
     if ([segue.identifier isEqualToString:@"scan"])
     {
         // Set this contoller as scanner delegate
-        ScannerViewController *controller = (ScannerViewController *)segue.destinationViewController;
+        UINavigationController *nc = segue.destinationViewController;
+        ScannerViewController *controller = (ScannerViewController *)nc.childViewControllerForStatusBarHidden;
         controller.filterUUID = bpmServiceUUID;
         controller.delegate = self;
-    }
-    else if ([[segue identifier] isEqualToString:@"help"]) {
-        HelpViewController *helpVC = [segue destinationViewController];
-        helpVC.helpText = [AppUtilities getBPMHelpText];
     }
 }
 
@@ -267,7 +256,8 @@
                 [peripheral setNotifyValue:YES forCharacteristic:characteristic];
             }
         }
-    } else if ([service.UUID isEqual:batteryServiceUUID])
+    }
+    else if ([service.UUID isEqual:batteryServiceUUID])
     {
         for (CBCharacteristic *characteristic in service.characteristics)
         {

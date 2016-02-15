@@ -1,22 +1,18 @@
+#import "CPTAxis.h"
 #import "CPTLayer.h"
 
-@class CPTAxis;
 @class CPTLineStyle;
 
-@interface CPTAxisSet : CPTLayer {
-    @private
-    NSArray *axes;
-    CPTLineStyle *borderLineStyle;
-}
+@interface CPTAxisSet : CPTLayer
 
 /// @name Axes
 /// @{
-@property (nonatomic, readwrite, retain) NSArray *axes;
+@property (nonatomic, readwrite, strong, nullable) CPTAxisArray axes;
 /// @}
 
 /// @name Drawing
 /// @{
-@property (nonatomic, readwrite, copy) CPTLineStyle *borderLineStyle;
+@property (nonatomic, readwrite, copy, nullable) CPTLineStyle *borderLineStyle;
 /// @}
 
 /// @name Labels
@@ -26,7 +22,7 @@
 
 /// @name Axes
 /// @{
--(CPTAxis *)axisForCoordinate:(CPTCoordinate)coordinate atIndex:(NSUInteger)idx;
+-(nullable CPTAxis *)axisForCoordinate:(CPTCoordinate)coordinate atIndex:(NSUInteger)idx;
 /// @}
 
 @end

@@ -22,44 +22,40 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreBluetooth/CoreBluetooth.h>
+#import "Logger.h"
 
 @protocol BluetoothManagerDelegate
 
+/*!
+ * A callback called when the peripheral has been successfully connected.
+ */
 -(void)didDeviceConnected:(NSString *)peripheralName;
+/*!
+ * A callback called when the device got disconnected wither by user or due to a link loss.
+ */
 -(void)didDeviceDisconnected;
--(void)didDiscoverUARTService:(CBService *)uartService;
--(void)didDiscoverRXCharacteristic:(CBCharacteristic *)rxCharacteristic;
--(void)didDiscoverTXCharacteristic:(CBCharacteristic *)txCharacteristic;
--(void)didReceiveTXNotification:(NSData *)data;
--(void)didError:(NSString *)errorMessage;
+/*!
+ * Method called when the device has been initialized and is ready to be used.
+ */
+-(void)isDeviceReady;
+/*!
+ * Method called when the device does not have the required service.
+ */
+-(void)deviceNotSupported;
 
 @end
 
 @interface BluetoothManager : NSObject <CBCentralManagerDelegate, CBPeripheralDelegate>
 
-//Singleton Design pattern
-+ (id)sharedInstance;
+-(instancetype)initWithManager:(CBCentralManager*)manager;
 
-//set Delegate properties for UARTViewController
--(void)setUARTDelegate:(id<BluetoothManagerDelegate>)uartDelegate;
+// Delegate properties
+@property (nonatomic, weak) id<BluetoothManagerDelegate> delegate;
+@property (nonatomic, weak) id<Logger> logger;
 
-@property (strong, nonatomic) CBCentralManager *centralManager;
-@property (strong, nonatomic) CBPeripheral *bluetoothPeripheral;
-
-//Delegate properties for UARTViewController
-@property (nonatomic, assign)id<BluetoothManagerDelegate> uartDelegate;
-
--(void)setBluetoothCentralManager:(CBCentralManager *)manager;
 -(void)connectDevice:(CBPeripheral *)peripheral;
 -(void)disconnectDevice;
--(void)writeRXValue:(NSString *)value;
-
-@property (nonatomic, strong) CBUUID *UART_Service_UUID;
-@property (nonatomic, strong) CBUUID *UART_RX_Characteristic_UUID;
-@property (nonatomic, strong) CBUUID *UART_TX_Characteristic_UUID;
-
-@property (strong, nonatomic)CBCharacteristic *uartRXCharacteristic;
-@property (strong, nonatomic)CBCharacteristic *uartTXCharacteristic;
-
+-(void)send:(NSString *)text;
+-(BOOL)isConnected;
 
 @end

@@ -2,16 +2,12 @@
 
 @class CPTConstraints;
 
-@interface CPTXYAxis : CPTAxis {
-    @private
-    NSDecimal orthogonalCoordinateDecimal;
-    CPTConstraints *axisConstraints;
-}
+@interface CPTXYAxis : CPTAxis
 
 /// @name Positioning
 /// @{
-@property (nonatomic, readwrite) NSDecimal orthogonalCoordinateDecimal;
-@property (nonatomic, readwrite, retain) CPTConstraints *axisConstraints;
+@property (nonatomic, readwrite, strong, nullable) NSNumber *orthogonalPosition;
+@property (nonatomic, readwrite, strong, nullable) CPTConstraints *axisConstraints;
 /// @}
 
 @end

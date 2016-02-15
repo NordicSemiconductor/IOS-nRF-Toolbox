@@ -1,19 +1,25 @@
 #import "CPTDefinitions.h"
 
+/// @file
+
+@class CPTAnnotation;
 @class CPTAnnotationHostLayer;
 @class CPTLayer;
 
-@interface CPTAnnotation : NSObject<NSCoding> {
-    @private
-    __cpt_weak CPTAnnotationHostLayer *annotationHostLayer;
-    CPTLayer *contentLayer;
-    CGPoint contentAnchorPoint;
-    CGPoint displacement;
-    CGFloat rotation;
-}
+/**
+ *  @brief An array of annotations.
+ **/
+typedef NSArray<__kindof CPTAnnotation *> *CPTAnnotationArray;
 
-@property (nonatomic, readwrite, retain) CPTLayer *contentLayer;
-@property (nonatomic, readwrite, cpt_weak_property) __cpt_weak CPTAnnotationHostLayer *annotationHostLayer;
+/**
+ *  @brief A mutable array of annotations.
+ **/
+typedef NSMutableArray<__kindof CPTAnnotation *> *CPTMutableAnnotationArray;
+
+@interface CPTAnnotation : NSObject<NSCoding>
+
+@property (nonatomic, readwrite, strong, nullable) CPTLayer *contentLayer;
+@property (nonatomic, readwrite, cpt_weak_property, nullable) cpt_weak CPTAnnotationHostLayer *annotationHostLayer;
 @property (nonatomic, readwrite, assign) CGPoint contentAnchorPoint;
 @property (nonatomic, readwrite, assign) CGPoint displacement;
 @property (nonatomic, readwrite, assign) CGFloat rotation;

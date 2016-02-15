@@ -29,25 +29,13 @@
 
 @end
 
-@interface EditPopupViewController : UIViewController 
-
-- (IBAction)okButtonPressed:(UIButton *)sender;
-
-- (IBAction)CancelButtonPressed:(UIButton *)sender;
-
-@property (weak, nonatomic) IBOutlet UIButton *showHideButton;
-
-- (IBAction)showHideButtonPressed:(UIButton *)sender;
-
-@property (weak, nonatomic) IBOutlet UITextField *commandTextField;
+@interface EditPopupViewController : UIViewController<UITextFieldDelegate>
 
 //define delegate property
 @property (nonatomic, assign)id<ButtonConfigureDelegate> delegate;
 
 @property (strong, nonatomic) NSString *command;
-@property BOOL isHidden;
-@property int iconIndex;
-
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray* iconButtons;
+@property (assign) BOOL isHidden;
+@property (assign) int iconIndex;
 
 @end

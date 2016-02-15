@@ -3,17 +3,12 @@
 @class CPTLineStyle;
 @class CPTFill;
 
-@interface CPTBorderedLayer : CPTAnnotationHostLayer {
-    @private
-    CPTLineStyle *borderLineStyle;
-    CPTFill *fill;
-    BOOL inLayout;
-}
+@interface CPTBorderedLayer : CPTAnnotationHostLayer
 
 /// @name Drawing
 /// @{
-@property (nonatomic, readwrite, copy) CPTLineStyle *borderLineStyle;
-@property (nonatomic, readwrite, copy) CPTFill *fill;
+@property (nonatomic, readwrite, copy, nullable) CPTLineStyle *borderLineStyle;
+@property (nonatomic, readwrite, copy, nullable) CPTFill *fill;
 /// @}
 
 /// @name Layout
@@ -23,7 +18,7 @@
 
 /// @name Drawing
 /// @{
--(void)renderBorderedLayerAsVectorInContext:(CGContextRef)context;
+-(void)renderBorderedLayerAsVectorInContext:(nonnull CGContextRef)context;
 /// @}
 
 @end

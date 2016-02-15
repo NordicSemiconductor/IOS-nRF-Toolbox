@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "958FE99C6EF42F577CD7208DD2E4411706BA021D",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "958FE99C6EF42F577CD7208DD2E4411706BA021D" : 0,
+    "B914B81A7E8FA88EE4CB45173C7B2606D56E68A0" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "24AB6908-1111-4360-A8D1-865C2AD3CAC5",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "958FE99C6EF42F577CD7208DD2E4411706BA021D" : "nRFToolbox",
+    "B914B81A7E8FA88EE4CB45173C7B2606D56E68A0" : "ANT%20Shared%20Channel\/ANT%20Shared%20Channel\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "nRF Toolbox",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "nRF Toolbox.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "ssh:\/\/stash.nordicsemi.no:7999\/apps-ios\/nrf-toolbox.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "958FE99C6EF42F577CD7208DD2E4411706BA021D"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "ssh:\/\/stash.nordicsemi.no:7999\/apps-ios\/ant-shared-channel-demo.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "B914B81A7E8FA88EE4CB45173C7B2606D56E68A0"
+    }
+  ]
+}

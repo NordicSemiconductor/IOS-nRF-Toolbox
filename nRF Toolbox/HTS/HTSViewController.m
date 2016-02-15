@@ -25,7 +25,6 @@
 #import "Constants.h"
 #import "AppUtilities.h"
 #import "CharacteristicReader.h"
-#import "HelpViewController.h"
 
 @interface HTSViewController () {
     CBUUID *htsServiceUUID;
@@ -41,6 +40,7 @@
 @property (strong, nonatomic) CBPeripheral* connectedPeripheral;
 
 -(void) updateUnits;
+-(IBAction)aboutButtonClicked:(id)sender;
 
 @end
 
@@ -49,7 +49,6 @@
     float temperatureValue;
 }
 @synthesize bluetoothManager;
-@synthesize backgroundImage;
 @synthesize verticalLabel;
 @synthesize battery;
 @synthesize deviceName;
@@ -74,18 +73,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if (is4InchesIPhone)
-    {
-        // 4 inches iPhone
-        UIImage *image = [UIImage imageNamed:@"Background4.png"];
-        [backgroundImage setImage:image];
-    }
-    else
-    {
-        // 3.5 inches iPhone
-        UIImage *image = [UIImage imageNamed:@"Background35.png"];
-        [backgroundImage setImage:image];
-    }
     
     // Rotate the vertical label
     self.verticalLabel.transform = CGAffineTransformRotate(CGAffineTransformMakeTranslation(-185.0f, 0.0f), (float)(-M_PI / 2));
@@ -119,6 +106,10 @@
         degreeControl.selectedSegmentIndex = 0;
         [self.degrees setText:@"°C"];
     }
+}
+
+- (IBAction)aboutButtonClicked:(id)sender {
+    [self showAbout:[AppUtilities getHTSHelpText]];
 }
 
 - (IBAction)connectOrDisconnectClicked {
@@ -166,13 +157,10 @@
     if ([segue.identifier isEqualToString:@"scan"])
     {
         // Set this contoller as scanner delegate
-        ScannerViewController *controller = (ScannerViewController *)segue.destinationViewController;
+        UINavigationController *nc = segue.destinationViewController;
+        ScannerViewController *controller = (ScannerViewController *)nc.childViewControllerForStatusBarHidden;
         controller.filterUUID = htsServiceUUID;
         controller.delegate = self;
-    }
-    else if ([[segue identifier] isEqualToString:@"help"]) {
-        HelpViewController *helpVC = [segue destinationViewController];
-        helpVC.helpText = [AppUtilities getHTSHelpText];
     }
 }
 
@@ -296,7 +284,8 @@
                 break;
             }
         }
-    } else if ([service.UUID isEqual:batteryServiceUUID])
+    }
+    else if ([service.UUID isEqual:batteryServiceUUID])
     {
         for (CBCharacteristic *characteristic in service.characteristics)
         {
@@ -415,7 +404,8 @@
                 self.type.text = @"Location: n/a";
             }
             
-            if ([AppUtilities isApplicationStateInactiveORBackground]) {
+            if ([AppUtilities isApplicationStateInactiveORBackground])
+            {
                 NSString *message;
                 if (fahrenheit)
                 {

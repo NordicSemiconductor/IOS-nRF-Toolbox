@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
+                        <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BackgroundImage" translatesAutoresizingMaskIntoConstraints="NO" id="IbW-Qw-AwQ">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BackgroundTitle" translatesAutoresizingMaskIntoConstraints="NO" id="KT3-SI-RG3">
+                                <rect key="frame" x="240" y="578" width="120" height="14"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="Qtq-TU-jR9"/>
+                                    <constraint firstAttribute="height" constant="14" id="fGa-BJ-u0E"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nordic_logo" translatesAutoresizingMaskIntoConstraints="NO" id="tzl-Xm-8rS">
+                                <rect key="frame" x="209" y="89" width="182" height="242"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" priority="750" constant="182" id="3P6-NS-sak"/>
+                                    <constraint firstAttribute="height" priority="750" constant="242" id="VZX-R1-3bz"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="288" id="n6U-TS-GWl"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="382" id="ohw-bZ-YSK"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="n6U-TS-GWl"/>
+                                        <exclude reference="ohw-bZ-YSK"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="n6U-TS-GWl"/>
+                                        <include reference="ohw-bZ-YSK"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="IbW-Qw-AwQ" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="BZC-ke-NHS"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="IbW-Qw-AwQ" secondAttribute="bottom" id="F66-9D-sck"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="KT3-SI-RG3" secondAttribute="bottom" constant="8" id="Q8p-a8-sqv"/>
+                            <constraint firstItem="tzl-Xm-8rS" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="RmZ-rE-Ipg"/>
+                            <constraint firstItem="tzl-Xm-8rS" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" multiplier="0.7" id="ZLR-bL-L28"/>
+                            <constraint firstItem="KT3-SI-RG3" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="gI6-My-T0c"/>
+                            <constraint firstAttribute="trailing" secondItem="IbW-Qw-AwQ" secondAttribute="trailing" id="nPk-Ka-yRW"/>
+                            <constraint firstItem="IbW-Qw-AwQ" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="vVz-ui-pYW"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="76.5" y="435.75"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="BackgroundImage" width="512" height="682"/>
+        <image name="BackgroundTitle" width="120" height="12"/>
+        <image name="nordic_logo" width="182" height="242"/>
+    </resources>
+</document>

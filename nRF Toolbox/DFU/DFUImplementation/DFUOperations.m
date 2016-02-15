@@ -41,8 +41,6 @@
 bool isStartingSecondFile, isPerformedOldDFU, isVersionCharacteristicExist, isOneFileForSDAndBL;
 NSDate *startTime, *finishTime;
 
-
-
 -(DFUOperations *) initWithDelegate:(id<DFUOperationsDelegate>) delegate
 {
     if (self = [super init])
@@ -58,10 +56,12 @@ NSDate *startTime, *finishTime;
 
 -(void)setCentralManager:(CBCentralManager *)manager
 {
-    if (manager) {
+    if (manager)
+    {
         [bleOperations setBluetoothCentralManager:manager];
     }
-    else {
+    else
+    {
         NSLog(@"CBCentralManager is nil");
         NSString *errorMessage = [NSString stringWithFormat:@"Error on received CBCentralManager\n Message: Bluetooth central manager is nil"];
         [dfuDelegate onError:errorMessage];
@@ -70,10 +70,12 @@ NSDate *startTime, *finishTime;
 
 -(void)connectDevice:(CBPeripheral *)peripheral
 {
-    if (peripheral) {
+    if (peripheral)
+    {
         [bleOperations connectDevice:peripheral];
     }
-    else {
+    else
+    {
         NSLog(@"CBPeripheral is nil");
         NSString *errorMessage = [NSString stringWithFormat:@"Error on received CBPeripheral\n Message: Bluetooth peripheral is nil"];
         [dfuDelegate onError:errorMessage];
@@ -121,9 +123,6 @@ NSDate *startTime, *finishTime;
     [dfuRequests enableNotification];
     [dfuRequests startDFU:firmwareType];
     [dfuRequests writeFilesSizes:(uint32_t)fileRequests.binFileSize bootloaderSize:(uint32_t)fileRequests2.binFileSize];
-    if (isVersionCharacteristicExist) {
-        [dfuRequests getDfuVersion];
-    }
 }
 
 -(void)performDFUOnFileWithMetaDataAndFileSizes:(NSURL *)firmwareURL firmwareMetaDataURL:(NSURL *)metaDataURL softdeviceFileSize:(uint32_t)softdeviceSize bootloaderFileSize:(uint32_t)bootloaderSize  firmwareType:(DfuFirmwareTypes)firmwareType
@@ -140,9 +139,6 @@ NSDate *startTime, *finishTime;
     [dfuRequests enableNotification];
     [dfuRequests startDFU:firmwareType];
     [dfuRequests writeFilesSizes:(uint32_t)softdeviceSize bootloaderSize:(uint32_t)bootloaderSize];
-    if (isVersionCharacteristicExist) {
-        [dfuRequests getDfuVersion];
-    }
 }
 
 
@@ -158,9 +154,6 @@ NSDate *startTime, *finishTime;
     [dfuRequests enableNotification];
     [dfuRequests startDFU:firmwareType];
     [dfuRequests writeFileSize:(uint32_t)fileRequests.binFileSize];
-    if (isVersionCharacteristicExist) {
-        [dfuRequests getDfuVersion];
-    }
 }
 
 -(void)performDFUOnFileWithMetaData:(NSURL *)firmwareURL firmwareMetaDataURL:(NSURL *)metaDataURL firmwareType:(DfuFirmwareTypes)firmwareType
@@ -176,15 +169,13 @@ NSDate *startTime, *finishTime;
     [dfuRequests enableNotification];
     [dfuRequests startDFU:firmwareType];
     [dfuRequests writeFileSize:(uint32_t)fileRequests.binFileSize];
-    if (isVersionCharacteristicExist) {
-        [dfuRequests getDfuVersion];
-    }
 }
 
 -(void)performOldDFUOnFile:(NSURL *)firmwareURL
 {
     isPerformedOldDFU = YES;
-    if (firmwareURL && self.dfuFirmwareType == APPLICATION) {
+    if (firmwareURL && self.dfuFirmwareType == APPLICATION)
+    {
         [self initFirstFileOperations];
         [self initParameters];
         [fileRequests openFile:firmwareURL];
@@ -192,12 +183,12 @@ NSDate *startTime, *finishTime;
         [dfuRequests startOldDFU];
         [dfuRequests writeFileSizeForOldDFU:(uint32_t)fileRequests.binFileSize];
     }
-    else {
+    else
+    {
         NSString *errorMessage = [NSString stringWithFormat:@"Old DFU only supports Application upload"];
         [dfuDelegate onError:errorMessage];
         [dfuRequests resetSystem];
     }
-    
 }
 
 -(void)initParameters
@@ -221,20 +212,23 @@ NSDate *startTime, *finishTime;
                                          bleCharacteristic:self.dfuPacketCharacteristic];
 }
 
--(void) startSendingFile
+-(void)startSendingFile
 {
     [dfuRequests enablePacketNotification];
     [dfuRequests receiveFirmwareImage];
     [fileRequests writeNextPacket];
     [dfuDelegate onDFUStarted];
-    if (self.dfuFirmwareType == SOFTDEVICE_AND_BOOTLOADER && !isOneFileForSDAndBL) {
+    
+    if (self.dfuFirmwareType == SOFTDEVICE_AND_BOOTLOADER && !isOneFileForSDAndBL)
+    {
         [dfuDelegate onSoftDeviceUploadStarted];
     }
 }
 
--(NSString *) responseErrorMessage:(DfuOperationStatus)errorCode
+-(NSString *)responseErrorMessage:(DfuOperationStatus)errorCode
 {
-    switch (errorCode) {
+    switch (errorCode)
+    {
         case OPERATION_FAILED_RESPONSE:
             return @"Operation Failed";
             break;
@@ -259,7 +253,8 @@ NSDate *startTime, *finishTime;
 -(void)processRequestedCode
 {
     NSLog(@"processsRequestedCode");
-    switch (dfuResponse.requestedCode) {
+    switch (dfuResponse.requestedCode)
+    {
         case START_DFU_REQUEST:
             NSLog(@"Requested code is StartDFU now processing response status");
             [self processStartDFUResponseStatus];
@@ -291,19 +286,23 @@ NSDate *startTime, *finishTime;
         case OPERATION_SUCCESSFUL_RESPONSE:
             NSLog(@"successfully received startDFU notification");
             //Start initPacket in order to support ned DFU in SDK 7.1
-            if (isVersionCharacteristicExist) {
+            if (isVersionCharacteristicExist)
+            {
                 [dfuRequests sendInitPacket:self.firmwareFileMetaData];
             }
-            else {
+            else
+            {
                 [self startSendingFile];
             }
             break;
         case OPERATION_NOT_SUPPORTED_RESPONSE:
-            if (!isPerformedOldDFU) {
-                NSLog(@"device has old DFU. switching to old DFU ...");
+            if (!isPerformedOldDFU)
+            {
+                NSLog(@"device has old DFU. switching to old DFU...");
                 [self performOldDFUOnFile:firmwareFile];
             }
-            else {
+            else
+            {
                 NSLog(@"Operation not supported");
                 NSLog(@"Firmware Image failed, Error Status: %@",[self responseErrorMessage:dfuResponse.responseStatus]);
                 NSString *errorMessage = [NSString stringWithFormat:@"Error on StartDFU\n Message: %@",[self responseErrorMessage:dfuResponse.responseStatus]];
@@ -323,11 +322,13 @@ NSDate *startTime, *finishTime;
 -(void)processInitPacketResponseStatus
 {
     NSLog(@"processInitPacketResponseStatus");
-    if(dfuResponse.responseStatus == OPERATION_SUCCESSFUL_RESPONSE) {
+    if(dfuResponse.responseStatus == OPERATION_SUCCESSFUL_RESPONSE)
+    {
         NSLog(@"successfully received initPacket notification");
         [self startSendingFile];
     }
-    else {
+    else
+    {
         //NSLog(@"unsuccessfull initPacket notification %d",dfuResponse.responseStatus);
         NSLog(@"Init Packet failed, Error Status: %@",[self responseErrorMessage:dfuResponse.responseStatus]);
         NSString *errorMessage = [NSString stringWithFormat:@"Error on Init Packet\n Message: %@",[self responseErrorMessage:dfuResponse.responseStatus]];
@@ -339,11 +340,13 @@ NSDate *startTime, *finishTime;
 -(void)processReceiveFirmwareResponseStatus
 {
     NSLog(@"processReceiveFirmwareResponseStatus");
-    if (dfuResponse.responseStatus == OPERATION_SUCCESSFUL_RESPONSE) {
+    if (dfuResponse.responseStatus == OPERATION_SUCCESSFUL_RESPONSE)
+    {
         NSLog(@"successfully received notification for whole File transfer");
         [dfuRequests validateFirmware];
     }
-    else {
+    else
+    {
         NSLog(@"Firmware Image failed, Error Status: %@",[self responseErrorMessage:dfuResponse.responseStatus]);
         NSString *errorMessage = [NSString stringWithFormat:@"Error on Receive Firmware Image\n Message: %@",[self responseErrorMessage:dfuResponse.responseStatus]];
         [dfuDelegate onError:errorMessage];
@@ -354,13 +357,16 @@ NSDate *startTime, *finishTime;
 -(void)processValidateFirmwareResponseStatus
 {
     NSLog(@"processValidateFirmwareResponseStatus");
-    if (dfuResponse.responseStatus == OPERATION_SUCCESSFUL_RESPONSE) {
+    
+    if (dfuResponse.responseStatus == OPERATION_SUCCESSFUL_RESPONSE)
+    {
         NSLog(@"succesfully received notification for ValidateFirmware");
         [dfuRequests activateAndReset];
         [self calculateDFUTime];
         [dfuDelegate onSuccessfulFileTranferred];
     }
-    else {
+    else
+    {
         NSLog(@"Firmware validate failed, Error Status: %@",[self responseErrorMessage:dfuResponse.responseStatus]);
         NSString *errorMessage = [NSString stringWithFormat:@"Error on Validate Firmware Request\n Message: %@",[self responseErrorMessage:dfuResponse.responseStatus]];
         [dfuDelegate onError:errorMessage];
@@ -371,13 +377,17 @@ NSDate *startTime, *finishTime;
 -(void)processPacketNotification
 {
     NSLog(@"received Packet Received Notification");
-    if (isStartingSecondFile) {
-        if (fileRequests2.writingPacketNumber < fileRequests2.numberOfPackets) {
+    if (isStartingSecondFile)
+    {
+        if (fileRequests2.writingPacketNumber < fileRequests2.numberOfPackets)
+        {
             [fileRequests2 writeNextPacket];
         }
     }
-    else {
-        if (fileRequests.writingPacketNumber < fileRequests.numberOfPackets) {
+    else
+    {
+        if (fileRequests.writingPacketNumber < fileRequests.numberOfPackets)
+        {
             [fileRequests writeNextPacket];
         }
     }
@@ -432,11 +442,16 @@ NSDate *startTime, *finishTime;
         andVersionCharacteristic:(CBCharacteristic *)dfuVersionCharacteristic
 {
     isVersionCharacteristicExist = YES;
+    
     self.bluetoothPeripheral = peripheral;
+    
     self.dfuPacketCharacteristic = dfuPacketCharacteristic;
     self.dfuControlPointCharacteristic = dfuControlPointCharacteristic;
     self.dfuVersionCharacteristic = dfuVersionCharacteristic;
+    
     [self setDFUOperationsDetailsWithVersion];
+    
+    // Notify the View Controller - we can begin uploading now
     [dfuDelegate onDeviceConnectedWithVersion:peripheral];
 }
 
@@ -445,28 +460,35 @@ withPacketCharacteristic:(CBCharacteristic *)dfuPacketCharacteristic
 andControlPointCharacteristic:(CBCharacteristic *)dfuControlPointCharacteristic
 {
     isVersionCharacteristicExist = NO;
+    
     self.bluetoothPeripheral = peripheral;
     self.dfuPacketCharacteristic = dfuPacketCharacteristic;
     self.dfuControlPointCharacteristic = dfuControlPointCharacteristic;
+    
     [self setDFUOperationsDetails];
+    
+    // Notify the View Controller - we can begin uploading now
     [dfuDelegate onDeviceConnected:peripheral];
 }
 
 
 -(void)onDeviceDisconnected:(CBPeripheral *)peripheral
 {
+    // Notify the View Controller
     [dfuDelegate onDeviceDisconnected:peripheral];
 }
 
 -(void)onReadDfuVersion:(int)version
 {
-    NSLog(@"onReadDfuVersion %d",version);
+    NSLog(@"onReadDfuVersion %d", version);
     //check if DfuVersionCharacteristic has been read successfully
     //one reason is that Service Changed Indication is not enabled in Buttonless DFU update
-    if (version == 0) {
+    if (version == -1)
+    {
         [dfuRequests resetSystem];
     }
-    else {
+    else
+    {
         [dfuDelegate onReadDFUVersion:version];
     }
 }
@@ -480,30 +502,34 @@ andControlPointCharacteristic:(CBCharacteristic *)dfuControlPointCharacteristic
 
 -(void)onTransferPercentage:(int)percentage
 {
-    NSLog(@"DFUOperations: onTransferPercentage %d",percentage);
+    NSLog(@"DFUOperations: progress: %d%%", percentage);
+    // Notify the View Controller
     [dfuDelegate onTransferPercentage:percentage];
 }
 
 -(void)onAllPacketsTranferred
 {
     NSLog(@"DFUOperations: onAllPacketsTransfered");
-    if (isStartingSecondFile) {
+    if (isStartingSecondFile)
+    {
         [dfuDelegate onBootloaderUploadCompleted];
     }
-    else if (self.dfuFirmwareType == SOFTDEVICE_AND_BOOTLOADER) {
+    else if (self.dfuFirmwareType == SOFTDEVICE_AND_BOOTLOADER)
+    {
         //TODO test if there is one file with both softdevice and bootloader inside as given by manifest.json
         //if there are two files for softdevice and bootloader
-        if (!isOneFileForSDAndBL) {
+        if (!isOneFileForSDAndBL)
+        {
             isStartingSecondFile = YES;
-            NSLog(@"Firmware type is Softdevice plus Bootloader. now upload bootloader ...");
+            NSLog(@"Firmware type is Softdevice plus Bootloader. Now upload bootloader...");
             [dfuDelegate onSoftDeviceUploadCompleted];
             [dfuDelegate onBootloaderUploadStarted];
             [fileRequests2 writeNextPacket];
         }
-        else { //if there is one file for both softdevice and bootloader as mentioned in manifest.json
+        else
+        { //if there is one file for both softdevice and bootloader as mentioned in manifest.json
             isOneFileForSDAndBL = NO;
         }
-        
     }
 }
 

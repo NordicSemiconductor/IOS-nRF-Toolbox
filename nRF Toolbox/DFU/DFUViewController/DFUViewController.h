@@ -22,17 +22,12 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
+#import "BaseViewController.h"
 #import "ScannerDelegate.h"
-#import "FileTypeTableViewController.h"
-#import "AppFilesTableViewController.h"
+#import "FileSelectionDelegate.h"
+#import "FileTypeViewController.h"
 #import "DFUOperations.h"
 
-@interface DFUViewController : UIViewController <ScannerDelegate, FileSelectionDelegate, DFUOperationsDelegate>
-
-@property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
-@property (weak, nonatomic) IBOutlet UILabel *verticalLabel;
-@property (weak, nonatomic) IBOutlet UILabel *deviceName;
-@property (weak, nonatomic) IBOutlet UIButton *connectButton;
-@property (strong, nonatomic)NSString *selectedFileType;
+@interface DFUViewController : BaseViewController <ScannerDelegate, FileSelectionDelegate, FileTypeSelectionDelegate, DFUOperationsDelegate>
 
 @end

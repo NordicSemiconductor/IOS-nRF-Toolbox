@@ -4,13 +4,10 @@
 @class CPTPlotGroup;
 @class CPTPlotArea;
 
-@interface CPTPlotAreaFrame : CPTBorderedLayer {
-    @private
-    CPTPlotArea *plotArea;
-}
+@interface CPTPlotAreaFrame : CPTBorderedLayer
 
-@property (nonatomic, readonly, retain) CPTPlotArea *plotArea;
-@property (nonatomic, readwrite, retain) CPTAxisSet *axisSet;
-@property (nonatomic, readwrite, retain) CPTPlotGroup *plotGroup;
+@property (nonatomic, readonly, nullable) CPTPlotArea *plotArea;
+@property (nonatomic, readwrite, strong, nullable) CPTAxisSet *axisSet;
+@property (nonatomic, readwrite, strong, nullable) CPTPlotGroup *plotGroup;
 
 @end

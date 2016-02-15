@@ -60,7 +60,7 @@
     if (carbohydrateIdPresent)
     {
         self.carbohydrateId = [CharacteristicReader readUInt8Value:&pointer];
-        self.carbohydrate = [CharacteristicReader readSFloatValue:&pointer];
+        self.carbohydrate = [CharacteristicReader readSFloatValue:&pointer] / 1000;
     }
     
     self.mealPresent = mealPresent;
@@ -88,7 +88,7 @@
     if (medicationPresent)
     {
         self.medicationId = [CharacteristicReader readUInt8Value:&pointer];
-        self.medication = [CharacteristicReader readSFloatValue:&pointer];
+        self.medication = [CharacteristicReader readSFloatValue:&pointer] / 1000000;
         self.medicationUnit = medicationUnit;
     }
     

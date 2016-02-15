@@ -21,8 +21,8 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface ViewController : UIViewController
-@property (strong, nonatomic) IBOutlet UIImageView *backgroundImage;
+@interface ViewController : BaseViewController<UICollectionViewDataSource, UIAlertViewDelegate>
 
 @end

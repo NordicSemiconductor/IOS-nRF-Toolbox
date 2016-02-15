@@ -92,7 +92,7 @@
             NSLog(@"writing last packet");
             NSRange dataRange = NSMakeRange(self.writingPacketNumber*PACKET_SIZE, self.bytesInLastPacket);
             NSData *nextPacketData = [self.binFileData subdataWithRange:dataRange];
-            NSLog(@"writing packet number %d ...",self.writingPacketNumber+1);
+            NSLog(@"writing packet number %d...",self.writingPacketNumber+1);
             NSLog(@"packet data: %@",nextPacketData);
             [self.bluetoothPeripheral writeValue:nextPacketData forCharacteristic:self.dfuPacketCharacteristic type:CBCharacteristicWriteWithoutResponse];
             self.writingPacketNumber++;

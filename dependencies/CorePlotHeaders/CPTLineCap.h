@@ -6,7 +6,7 @@
 /**
  *  @brief Line cap types.
  **/
-typedef enum _CPTLineCapType {
+typedef NS_ENUM (NSInteger, CPTLineCapType) {
     CPTLineCapTypeNone,       ///< No line cap.
     CPTLineCapTypeOpenArrow,  ///< Open arrow line cap.
     CPTLineCapTypeSolidArrow, ///< Solid arrow line cap.
@@ -20,47 +20,37 @@ typedef enum _CPTLineCapType {
     CPTLineCapTypeCross,      ///< X line cap.
     CPTLineCapTypeSnow,       ///< Snowflake line cap.
     CPTLineCapTypeCustom      ///< Custom line cap.
-}
-CPTLineCapType;
+};
 
-@interface CPTLineCap : NSObject<NSCoding, NSCopying> {
-    @private
-    CGSize size;
-    CPTLineCapType lineCapType;
-    CPTLineStyle *lineStyle;
-    CPTFill *fill;
-    CGPathRef cachedLineCapPath;
-    CGPathRef customLineCapPath;
-    BOOL usesEvenOddClipRule;
-}
+@interface CPTLineCap : NSObject<NSCoding, NSCopying>
 
 @property (nonatomic, readwrite, assign) CGSize size;
 @property (nonatomic, readwrite, assign) CPTLineCapType lineCapType;
-@property (nonatomic, readwrite, retain) CPTLineStyle *lineStyle;
-@property (nonatomic, readwrite, retain) CPTFill *fill;
-@property (nonatomic, readwrite, assign) CGPathRef customLineCapPath;
+@property (nonatomic, readwrite, strong, nullable) CPTLineStyle *lineStyle;
+@property (nonatomic, readwrite, strong, nullable) CPTFill *fill;
+@property (nonatomic, readwrite, assign, nullable) CGPathRef customLineCapPath;
 @property (nonatomic, readwrite, assign) BOOL usesEvenOddClipRule;
 
 /// @name Factory Methods
 /// @{
-+(CPTLineCap *)lineCap;
-+(CPTLineCap *)openArrowPlotLineCap;
-+(CPTLineCap *)solidArrowPlotLineCap;
-+(CPTLineCap *)sweptArrowPlotLineCap;
-+(CPTLineCap *)rectanglePlotLineCap;
-+(CPTLineCap *)ellipsePlotLineCap;
-+(CPTLineCap *)diamondPlotLineCap;
-+(CPTLineCap *)pentagonPlotLineCap;
-+(CPTLineCap *)hexagonPlotLineCap;
-+(CPTLineCap *)barPlotLineCap;
-+(CPTLineCap *)crossPlotLineCap;
-+(CPTLineCap *)snowPlotLineCap;
-+(CPTLineCap *)customLineCapWithPath:(CGPathRef)aPath;
++(nonnull instancetype)lineCap;
++(nonnull instancetype)openArrowPlotLineCap;
++(nonnull instancetype)solidArrowPlotLineCap;
++(nonnull instancetype)sweptArrowPlotLineCap;
++(nonnull instancetype)rectanglePlotLineCap;
++(nonnull instancetype)ellipsePlotLineCap;
++(nonnull instancetype)diamondPlotLineCap;
++(nonnull instancetype)pentagonPlotLineCap;
++(nonnull instancetype)hexagonPlotLineCap;
++(nonnull instancetype)barPlotLineCap;
++(nonnull instancetype)crossPlotLineCap;
++(nonnull instancetype)snowPlotLineCap;
++(nonnull instancetype)customLineCapWithPath:(nullable CGPathRef)aPath;
 /// @}
 
 /// @name Drawing
 /// @{
--(void)renderAsVectorInContext:(CGContextRef)context atPoint:(CGPoint)center inDirection:(CGPoint)direction;
+-(void)renderAsVectorInContext:(nonnull CGContextRef)context atPoint:(CGPoint)center inDirection:(CGPoint)direction;
 /// @}
 
 @end

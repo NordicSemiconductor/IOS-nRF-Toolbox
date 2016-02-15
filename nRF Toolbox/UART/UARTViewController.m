@@ -21,17 +21,38 @@
  */
 
 #import "UARTViewController.h"
+#import "SWRevealViewController.h"
 #import "ScannerViewController.h"
 #import "Constants.h"
+#import "LogViewController.h"
 #import "AppUtilities.h"
-#import "HelpViewController.h"
 #import "EditPopupViewController.h"
 #import "LogViewController.h"
 
 @interface UARTViewController ()
-{
-    CBUUID *UART_Service_UUID;
-}
+
+@property (strong, nonatomic) BluetoothManager *bluetoothManager;
+
+@property (strong, nonatomic) NSString *uartPeripheralName;
+@property (strong, nonatomic) NSMutableArray *buttonsCommands;
+@property (strong, nonatomic) NSMutableArray *buttonsHiddenStatus;
+@property (strong, nonatomic) NSMutableArray *buttonsImageNames;
+
+@property (strong, nonatomic) NSArray *buttonIcons;
+@property (strong, nonatomic) UIButton *selectedButton;
+
+@property (weak, nonatomic) IBOutlet UIButton *connectButton;
+@property (weak, nonatomic) IBOutlet UILabel *deviceName;
+@property (weak, nonatomic) IBOutlet UILabel *verticalLabel;
+@property (weak, nonatomic) IBOutlet UIButton *editButton;
+@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray* buttons;
+
+@property (nonatomic, weak) LogViewController* logger;
+@property (nonatomic) BOOL editMode;
+
+- (IBAction)editButtonPressed:(UIButton *)sender;
+- (IBAction)connectOrDisconnectClicked:(UIButton *)sender;
+- (IBAction)showLogButtonClidked:(id)sender;
 
 @end
 
@@ -39,16 +60,13 @@
 
 @synthesize connectButton;
 @synthesize deviceName;
+@synthesize logger;
 
-bool isRXCharacteristicFound = NO;
-bool isUartPeripheralConnected = NO;
-
--(id)initWithCoder:(NSCoder *)aDecoder
+-(id)initWithCoder:(NSCoder *)decoder
 {
-    self = [super initWithCoder:aDecoder];
+    self = [super initWithCoder:decoder];
     if (self) {
         // Custom initialization
-        UART_Service_UUID = [CBUUID UUIDWithString:uartServiceUUIDString];
         self.buttonIcons = @[@"Stop",@"Play",@"Pause",@"FastForward",@"Rewind",@"End",@"Start",@"Shuffle",@"Record",@"Number_1",
                              @"Number_2",@"Number_3",@"Number_4",@"Number_5",@"Number_6",@"Number_7",@"Number_8",@"Number_9",];
     }
@@ -57,76 +75,127 @@ bool isUartPeripheralConnected = NO;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"viewDidLoad");
+    
     // Rotate the vertical label
     self.verticalLabel.transform = CGAffineTransformRotate(CGAffineTransformMakeTranslation(-20.0f, 0.0f), (float)(-M_PI / 2));
-    self.uartLogText = [[NSMutableArray alloc]init];
-    self.isEditMode = NO;
     
-    //Set Normal Color to All Remote Buttons in Normal Mode
-    [self setButtonsBackgroundColor];
-
-    //Retrieve three arrays (icons names (NSString), commands (NSString), visibility(Bool)) from NSUserDefaults
+    // Retrieve three arrays (icons names (NSString), commands (NSString), visibility(Bool)) from NSUserDefaults
     [self retrieveButtonsConfigurations];
+    self.editMode = NO;
+    
+    // Configure the SWRevealViewController
+    SWRevealViewController *revealViewController = self.revealViewController;
+    if (revealViewController)
+    {
+        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+        logger = (LogViewController*) revealViewController.rearViewController;
+    }
+}
+
+- (IBAction)showLogButtonClidked:(id)sender
+{
+    [self.revealViewController revealToggleAnimated:YES];
+}
+
+- (IBAction)editButtonPressed:(UIButton *)sender
+{
+    self.editMode = !self.editMode;
 }
 
 #pragma mark - Navigation
 
 -(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
-    // The 'scan' seque will be performed only if connectedPeripheral == nil (if we are not connected already).
-    return ![identifier isEqualToString:@"scan"] || isUartPeripheralConnected == NO;
+    // The 'scan' seque will be performed only if bluetoothManager == nil (if we are not connected already).
+    return ![identifier isEqualToString:@"scan"] || self.bluetoothManager == nil;
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"scan"])
     {
-        NSLog(@"prepareForSegue scan");
         // Set this contoller as scanner delegate
-        ScannerViewController *controller = (ScannerViewController *)segue.destinationViewController;
-        controller.filterUUID = UART_Service_UUID;
+        UINavigationController *nc = segue.destinationViewController;
+        ScannerViewController *controller = (ScannerViewController *)nc.childViewControllerForStatusBarHidden;
         controller.delegate = self;
-    }
-    else if ([[segue identifier] isEqualToString:@"help"]) {
-        NSLog(@"prepareForSegue help");
-        HelpViewController *helpVC = (HelpViewController *)[segue destinationViewController];
-        helpVC.helpText = [AppUtilities getUARTHelpText];
-    }
-    else if ([[segue identifier] isEqualToString:@"log"]) {
-        NSLog(@"prepareForSegue log");
-        LogViewController *logVC = (LogViewController *)[segue destinationViewController];
-        logVC.logText = self.uartLogText;
-        logVC.uartPeripheralName = self.uartPeripheralName;
-        logVC.isRXCharacteristicFound = isRXCharacteristicFound;
-        logVC.isUartPeripheralConnected = isUartPeripheralConnected;
     }
 }
 
--(void)setButtonsBackgroundColor
+#pragma mark - Scanner Delegate methods
+
+-(void)centralManager:(CBCentralManager *)manager didPeripheralSelected:(CBPeripheral *)peripheral
 {
-    for (UIButton *button in self.buttons) {
-        [button setBackgroundColor:[UIColor colorWithRed:0.0f/255.0f green:156.0f/255.0f blue:222.0f/255.0f alpha:1.0f]];
+    // We may not use more than one Central Manager instance. Let's just take the one returned from Scanner View Controller
+    self.bluetoothManager = [[BluetoothManager alloc] initWithManager: manager];
+    self.bluetoothManager.delegate = self;
+    self.bluetoothManager.logger = logger;
+    
+    [self.bluetoothManager connectDevice:peripheral];
+}
+
+-(void)appDidEnterBackground:(NSNotification *)_notification
+{
+    [AppUtilities showBackgroundNotification:[NSString stringWithFormat:@"You are still connected to %@ peripheral.",self.uartPeripheralName]];
+}
+
+-(void)appDidEnterForeground:(NSNotification *)_notification
+{
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+}
+
+- (IBAction)connectOrDisconnectClicked:(UIButton *)sender {
+    [self.bluetoothManager disconnectDevice];
+}
+
+#pragma mark - UART API
+
+-(void)send:(NSString *)value
+{
+    if (self.bluetoothManager)
+    {
+        [self.bluetoothManager send:value];
+    }
+}
+
+#pragma mark - Buttons behaviour
+
+-(void)setEditMode:(BOOL)editMode
+{
+    _editMode = editMode;
+    
+    if (editMode)
+    {
+        [self.editButton setTitle:@"Done" forState:UIControlStateNormal];
+        for (UIButton *button in self.buttons) {
+            [button setBackgroundColor:[UIColor colorWithRed:222.0f/255.0f green:74.0f/255.0f blue:19.0f/255.0f alpha:1.0f]];
+            [button setEnabled:YES];
+        }
+    }
+    else
+    {
+        [self.editButton setTitle:@"Edit" forState:UIControlStateNormal];
+        [self showButtonsWithSavedConfiguration];
     }
 }
 
 -(void)retrieveButtonsConfigurations
 {
     NSUserDefaults *buttonsConfigurations = [NSUserDefaults standardUserDefaults];
-    if ([buttonsConfigurations objectForKey:@"buttonsCommands"]) { //Buttons configurations already saved in NSUserDefaults
-        NSLog(@"Buttons configurations already saved in NSUserDefaults");
-        //retrieving the saved values
+    
+    if ([buttonsConfigurations objectForKey:@"buttonsCommands"]) //Buttons configurations already saved in NSUserDefaults
+    {
+        // Retrieving the saved values
         self.buttonsCommands = [NSMutableArray arrayWithArray:[buttonsConfigurations objectForKey:@"buttonsCommands"]];
         self.buttonsHiddenStatus = [NSMutableArray arrayWithArray:[buttonsConfigurations objectForKey:@"buttonsHiddenStatus"]];
         self.buttonsImageNames = [NSMutableArray arrayWithArray:[buttonsConfigurations objectForKey:@"buttonsImageNames"]];
         [self showButtonsWithSavedConfiguration];
     }
-    else { //First time viewcontroller is loaded and there is no saved buttons configurations in NSUserDefaults
-        NSLog(@"First time viewcontroller is loaded and there is no saved buttons configurations in NSUserDefaults");
-        //setting up the default values for the first time
-        self.buttonsCommands = [[NSMutableArray alloc]initWithArray:@[@"Play",@"Stop",@"Pause",@"Rewind",@"Record",@"FastForward",@"Start",@"Shuffle",@"End"]];
-        self.buttonsHiddenStatus = [[NSMutableArray alloc]initWithArray:@[@NO,@NO,@NO,@NO,@NO,@NO,@NO,@NO,@NO]];
-        self.buttonsImageNames = [[NSMutableArray alloc]initWithArray:@[@"Play",@"Stop",@"Pause",@"Rewind",@"Record",@"FastForward",@"Start",@"Shuffle",@"End"]];
+    else //First time viewcontroller is loaded and there is no saved buttons configurations in NSUserDefaults
+    {
+        // Setting up the default values for the first time
+        self.buttonsCommands = [[NSMutableArray alloc]initWithArray:@[@"",@"",@"",@"",@"",@"",@"",@"",@""]];
+        self.buttonsHiddenStatus = [[NSMutableArray alloc]initWithArray:@[@YES,@YES,@YES,@YES,@YES,@YES,@YES,@YES,@YES]];
+        self.buttonsImageNames = [[NSMutableArray alloc]initWithArray:@[@"Play",@"Play",@"Play",@"Play",@"Play",@"Play",@"Play",@"Play",@"Play"]];
         
         [buttonsConfigurations setObject:self.buttonsCommands forKey:@"buttonsCommands"];
         [buttonsConfigurations setObject:self.buttonsHiddenStatus forKey:@"buttonsHiddenStatus"];
@@ -137,93 +206,38 @@ bool isUartPeripheralConnected = NO;
 
 -(void)showButtonsWithSavedConfiguration
 {
-    NSLog(@"showButtonsWithSavedConfiguration");
-    for (UIButton *button in self.buttons) {
-        //set the buttons background color to some shade of Blue and icons
-        [button setBackgroundColor:[UIColor colorWithRed:0.0f/255.0f green:156.0f/255.0f blue:222.0f/255.0f alpha:1.0f]];
-        UIImage *image = [UIImage imageNamed:self.buttonsImageNames[[button tag]-1]];
-        [button setImage:image forState:UIControlStateNormal];
-        //Show/Hide Buttons
-        if ([self.buttonsHiddenStatus[[button tag]-1] boolValue]) {
-            button.hidden = YES;
+    for (UIButton *button in self.buttons)
+    {
+        if ([self.buttonsHiddenStatus[[button tag]-1] boolValue])
+        {
+            [button setBackgroundColor:[UIColor colorWithRed:200.0f/255.0f green:200.0f/255.0f blue:200.0f/255.0f alpha:1.0f]];
+            [button setImage:nil forState:UIControlStateNormal];
+            [button setEnabled:NO];
         }
-        else {
-            button.hidden = NO;
-        }
-    }
-}
-
--(NSString *)showCurrentTime
-{
-    NSDate * now = [NSDate date];
-    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
-    [outputFormatter setDateFormat:@"HH:mm:ss"];
-    NSString *timeString = [outputFormatter stringFromDate:now];
-    return timeString;
-}
-
--(void)writeValueOnRX:(NSString *)value
-{
-    NSString *text;
-    if (value.length != 0) {
-        if (value.length > 20) {
-            text = [value substringToIndex:20];
-        }
-        else {
-            text = value;
-        }
-        if (isRXCharacteristicFound) {
-            NSLog(@"writing command: %@ to UART peripheral: %@",text,self.uartPeripheralName);
-            [self.uartBluetoothManager writeRXValue:text];
-            [self addLogText:[NSString stringWithFormat:@"RX: %@",text]];
+        else
+        {
+            [button setBackgroundColor:[UIColor colorWithRed:0.0f/255.0f green:156.0f/255.0f blue:222.0f/255.0f alpha:1.0f]];
+            UIImage *image = [UIImage imageNamed:self.buttonsImageNames[[button tag]-1]];
+            [button setImage:image forState:UIControlStateNormal];
+            [button setEnabled:YES];
         }
     }
 }
 
--(void)addLogText:(NSString *)logText
-{
-    [self.uartLogText addObject:[NSString stringWithFormat:@"[%@] %@",[self showCurrentTime],logText]];
-}
-
-#pragma mark Scanner Delegate methods
-
--(void)centralManager:(CBCentralManager *)manager didPeripheralSelected:(CBPeripheral *)peripheral
-{
-    // We may not use more than one Central Manager instance. Let's just take the one returned from Scanner View Controller
-    self.uartBluetoothManager = [BluetoothManager sharedInstance];
-    [self.uartBluetoothManager setBluetoothCentralManager:manager];
-    [self.uartBluetoothManager setUARTDelegate:self];
-    [self.uartBluetoothManager connectDevice:peripheral];
-}
-
--(void)appDidEnterBackground:(NSNotification *)_notification
-{
-    NSLog(@"appDidEnterBackground");
-    [AppUtilities showBackgroundNotification:[NSString stringWithFormat:@"You are still connected to %@ peripheral.",self.uartPeripheralName]];
-}
-
--(void)appDidEnterForeground:(NSNotification *)_notification
-{
-    NSLog(@"appDidEnterForeground");
-    [[UIApplication sharedApplication] cancelAllLocalNotifications];
-}
-
-- (IBAction)connectOrDisconnectClicked:(UIButton *)sender {
-    [self.uartBluetoothManager disconnectDevice];
-}
-
-#pragma mark - Remote Control Button Pressed
+#pragma mark - Edit action handling
 
 //One out of 9 Remote Buttons is pressed
-- (IBAction)buttonPressed:(id)sender {
-    NSLog(@"tag of buttonPressed: %ld",(long)[sender tag]);
-    if (self.isEditMode) {
+- (IBAction)buttonPressed:(id)sender
+{
+    if (self.editMode)
+    {
         self.selectedButton = (UIButton*)sender;
         [self showPopoverOnButton];
     }
-    else {
+    else
+    {
         NSString *command = self.buttonsCommands[[sender tag]-1];
-        [self writeValueOnRX:command];
+        [self send:command];
     }
 }
 
@@ -231,7 +245,7 @@ bool isUartPeripheralConnected = NO;
 {
     EditPopupViewController *popoverVC = [self.storyboard instantiateViewControllerWithIdentifier:@"StoryboardIDEditPopup"];
     popoverVC.delegate = self;
-    popoverVC.isHidden = [self.buttonsHiddenStatus[[self.selectedButton tag]-1 ] boolValue];
+    popoverVC.isHidden = NO; //[self.buttonsHiddenStatus[[self.selectedButton tag]-1 ] boolValue]; // Show it when the popover opens
     popoverVC.command = self.buttonsCommands[[self.selectedButton tag]-1];
     NSString *buttonImageName = self.buttonsImageNames[[self.selectedButton tag] -1];
     popoverVC.iconIndex = (int)[self.buttonIcons indexOfObject:buttonImageName];
@@ -253,128 +267,80 @@ bool isUartPeripheralConnected = NO;
 
 //Delegate of ButtonConfigureDelegate is called when user will press OK button on EditPopupViewController
 - (void) didButtonConfigured:(NSString*)command iconIndex:(int)index shouldHideButton:(BOOL)status {
-    NSLog(@"didButtonConfigured: command %@, iconIndex %d, shouldHideButton %d",command,index,status);
     NSUserDefaults *buttonsConfigurations = [NSUserDefaults standardUserDefaults];
+    
     int buttonTag = (int)[self.selectedButton tag] - 1;
+    
     self.buttonsHiddenStatus[[self.selectedButton tag] - 1] = [NSNumber numberWithBool:status];
     [buttonsConfigurations setObject:self.buttonsHiddenStatus forKey:@"buttonsHiddenStatus"];
-    if (index > 0) {
+    
+    if (!status)
+    {
         UIImage *image = [UIImage imageNamed:self.buttonIcons[index]];
         [self.selectedButton setImage:image forState:UIControlStateNormal];
-        NSString *selectedIconName = self.buttonIcons[index];
-        self.buttonsImageNames[buttonTag] = selectedIconName;
-        [buttonsConfigurations setObject:self.buttonsImageNames forKey:@"buttonsImageNames"];
     }
-    if (![command isEqualToString:@""]) {
-        // we subtract 1 from tag because tag start from 1 not from 0
-        self.buttonsCommands[buttonTag] = command;
-        NSLog(@"selcted Button command: %@",self.buttonsCommands[buttonTag]);
-        [buttonsConfigurations setObject:self.buttonsCommands forKey:@"buttonsCommands"];
+    else
+    {
+        [self.selectedButton setImage:nil forState:UIControlStateNormal];
     }
+    
+    self.buttonsImageNames[buttonTag] = self.buttonIcons[index];
+    [buttonsConfigurations setObject:self.buttonsImageNames forKey:@"buttonsImageNames"];
+    
+    self.buttonsCommands[buttonTag] = command;
+    [buttonsConfigurations setObject:self.buttonsCommands forKey:@"buttonsCommands"];
+    
     [buttonsConfigurations synchronize];
 }
 
-- (IBAction)editButtonPressed:(UIButton *)sender {
-    NSLog(@"editButtonPressed");
-    if (self.isEditMode) {
-        //Editing Done, Normal Mode, Done pressed
-        [self.editButton setTitle:@"Edit" forState:UIControlStateNormal];
-        self.isEditMode = NO;
-        //Set Normal Color to All Remote Buttons in Normal Mode
-        for (UIButton *button in self.buttons) {
-            [button setBackgroundColor:[UIColor colorWithRed:0.0f/255.0f green:156.0f/255.0f blue:222.0f/255.0f alpha:1.0f]];
-            //Show/Hide Button
-            if ([self.buttonsHiddenStatus[[button tag]-1] boolValue]) {
-                button.hidden = YES;
-            }
-            else {
-                button.hidden = NO;
-            }
-        }
-        
-    }
-    else {
-        //Editing Start, Edit Mode, Edit Pressed
-        [self.editButton setTitle:@"Done" forState:UIControlStateNormal];
-        self.isEditMode = YES;
-        //Set Orange Grey Color to all Remote Buttons in Edit Mode
-        for (UIButton *button in self.buttons) {
-            [button setBackgroundColor:[UIColor colorWithRed:222.0f/255.0f green:74.0f/255.0f blue:19.0f/255.0f alpha:1.0f]];
-            button.hidden = NO;
-        }
-    }
-}
-
-#pragma mark BluetoothManager delegate methods
+#pragma mark - BluetoothManager delegate methods
 
 -(void)didDeviceConnected:(NSString *)peripheralName
 {
-    NSLog(@"onDeviceConnected %@",peripheralName);
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
+        logger.bluetoothManager = self.bluetoothManager;
         self.uartPeripheralName = peripheralName;
-        isUartPeripheralConnected = YES;
-        [deviceName setText:self.uartPeripheralName];
+        [deviceName setText:peripheralName];
         [connectButton setTitle:@"DISCONNECT" forState:UIControlStateNormal];
-        [self addLogText:[NSString stringWithFormat:@"%@ is Connected",self.uartPeripheralName]];
     });
+    
     //Following if condition display user permission alert for background notification
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
         [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound categories:nil]];
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterForeground:) name:UIApplicationDidBecomeActiveNotification object:nil];
-    
 }
 
 -(void)didDeviceDisconnected
 {
-    NSLog(@"UARTViewController: didDeviceDisconnected %@",self.uartPeripheralName);
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
+        logger.bluetoothManager = nil;
         [connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
         [deviceName setText:@"DEFAULT UART"];
-        [self addLogText:[NSString stringWithFormat:@"%@ is Disconnected",self.uartPeripheralName]];
+        
         if ([AppUtilities isApplicationStateInactiveORBackground]) {
-            [AppUtilities showBackgroundNotification:[NSString stringWithFormat:@"%@ peripheral is disconnected",self.uartPeripheralName]];
+            [AppUtilities showBackgroundNotification:[NSString stringWithFormat:@"%@ peripheral is disconnected", self.uartPeripheralName]];
         }
         self.uartPeripheralName = nil;
-        isRXCharacteristicFound = NO;
-        isUartPeripheralConnected = NO;
         
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
     });
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
+    
+    self.bluetoothManager = nil;
 }
 
--(void)didDiscoverUARTService:(CBService *)uartService
+-(void)isDeviceReady
 {
-    NSLog(@"didDiscoverUARTService");
-    [self addLogText:[NSString stringWithFormat:@"UART service is discovered"]];
+    NSLog(@"Device is ready");
 }
 
--(void)didDiscoverRXCharacteristic:(CBCharacteristic *)rxCharacteristic
+-(void)deviceNotSupported
 {
-    NSLog(@"didDiscoverRXCharacteristic");
-    isRXCharacteristicFound = YES;
-    [self addLogText:[NSString stringWithFormat:@"UART RX characteristic is discovered"]];
-}
-
--(void)didDiscoverTXCharacteristic:(CBCharacteristic *)txCharacteristic
-{
-    NSLog(@"didDiscoverTXCharacteristic");
-    [self addLogText:[NSString stringWithFormat:@"UART TX characteristic is discovered"]];
-}
-
--(void)didReceiveTXNotification:(NSData *)data
-{
-    NSString* text = [NSString stringWithUTF8String:[data bytes]];
-    [self addLogText:[NSString stringWithFormat:@"TX: %@",text]];
-}
-
--(void)didError:(NSString *)errorMessage
-{
-    NSLog(@"didError: %@",errorMessage);
+    NSLog(@"Device not supported");
 }
 
 @end

@@ -1,43 +1,46 @@
+#import "CPTDefinitions.h"
+
+/// @file
+
 @class CPTColor;
 @class CPTFill;
 @class CPTGradient;
+@class CPTLineStyle;
 
-@interface CPTLineStyle : NSObject<NSCoding, NSCopying, NSMutableCopying> {
-    @private
-    CGLineCap lineCap;
-//    CGLineDash lineDash; // We should make a struct to keep this information
-    CGLineJoin lineJoin;
-    CGFloat miterLimit;
-    CGFloat lineWidth;
-    NSArray *dashPattern;
-    CGFloat patternPhase;
-//    StrokePattern; // We should make a struct to keep this information
-    CPTColor *lineColor;
-    CPTFill *lineFill;
-    CPTGradient *lineGradient;
-}
+/**
+ *  @brief An array of line styles.
+ **/
+typedef NSArray<CPTLineStyle *> *CPTLineStyleArray;
 
-@property (nonatomic, readonly, assign) CGLineCap lineCap;
-@property (nonatomic, readonly, assign) CGLineJoin lineJoin;
-@property (nonatomic, readonly, assign) CGFloat miterLimit;
-@property (nonatomic, readonly, assign) CGFloat lineWidth;
-@property (nonatomic, readonly, retain) NSArray *dashPattern;
-@property (nonatomic, readonly, assign) CGFloat patternPhase;
-@property (nonatomic, readonly, retain) CPTColor *lineColor;
-@property (nonatomic, readonly, retain) CPTFill *lineFill;
-@property (nonatomic, readonly, retain) CPTGradient *lineGradient;
+/**
+ *  @brief A mutable array of line styles.
+ **/
+typedef NSMutableArray<CPTLineStyle *> *CPTMutableLineStyleArray;
+
+@interface CPTLineStyle : NSObject<NSCoding, NSCopying, NSMutableCopying>
+
+@property (nonatomic, readonly) CGLineCap lineCap;
+@property (nonatomic, readonly) CGLineJoin lineJoin;
+@property (nonatomic, readonly) CGFloat miterLimit;
+@property (nonatomic, readonly) CGFloat lineWidth;
+@property (nonatomic, readonly, nullable) CPTNumberArray dashPattern;
+@property (nonatomic, readonly) CGFloat patternPhase;
+@property (nonatomic, readonly, nullable) CPTColor *lineColor;
+@property (nonatomic, readonly, nullable) CPTFill *lineFill;
+@property (nonatomic, readonly, nullable) CPTGradient *lineGradient;
 @property (nonatomic, readonly, getter = isOpaque) BOOL opaque;
 
 /// @name Factory Methods
 /// @{
-+(id)lineStyle;
++(nonnull instancetype)lineStyle;
++(nonnull instancetype)lineStyleWithStyle:(nullable CPTLineStyle *)lineStyle;
 /// @}
 
 /// @name Drawing
 /// @{
--(void)setLineStyleInContext:(CGContextRef)context;
--(void)strokePathInContext:(CGContextRef)context;
--(void)strokeRect:(CGRect)rect inContext:(CGContextRef)context;
+-(void)setLineStyleInContext:(nonnull CGContextRef)context;
+-(void)strokePathInContext:(nonnull CGContextRef)context;
+-(void)strokeRect:(CGRect)rect inContext:(nonnull CGContextRef)context;
 /// @}
 
 @end

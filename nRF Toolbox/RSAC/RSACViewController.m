@@ -25,7 +25,6 @@
 #import "Constants.h"
 #import "AppUtilities.h"
 #import "CharacteristicReader.h"
-#import "HelpViewController.h"
 
 @interface RSACViewController () {
     /*!
@@ -67,11 +66,12 @@
 - (void)appDidEnterBackground:(NSNotification *)_notification;
 - (void)appDidBecomeActiveBackground:(NSNotification *)_notification;
 
+-(IBAction)aboutButtonClicked:(id)sender;
+
 @end
 
 @implementation RSACViewController
 @synthesize bluetoothManager;
-@synthesize backgroundImage;
 @synthesize verticalLabel;
 @synthesize battery;
 @synthesize deviceName;
@@ -97,19 +97,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Adjust the background to fill the phone space
-    if (is4InchesIPhone)
-    {
-        // 4 inches iPhone
-        UIImage *image = [UIImage imageNamed:@"Background4.png"];
-        [backgroundImage setImage:image];
-    }
-    else
-    {
-        // 3.5 inches iPhone
-        UIImage *image = [UIImage imageNamed:@"Background35.png"];
-        [backgroundImage setImage:image];
-    }
     
     // Rotate the vertical label
     self.verticalLabel.transform = CGAffineTransformRotate(CGAffineTransformMakeTranslation(-170.0f, 0.0f), (float)(-M_PI / 2));
@@ -141,6 +128,10 @@
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
 }
 
+- (IBAction)aboutButtonClicked:(id)sender {
+    [self showAbout:[AppUtilities getRSACHelpText]];
+}
+
 - (IBAction)connectOrDisconnectClicked {
     if (connectedPeripheral != nil)
     {
@@ -159,14 +150,10 @@
     if ([segue.identifier isEqualToString:@"scan"])
     {
         // Set this contoller as scanner delegate
-        ScannerViewController *controller = (ScannerViewController *)segue.destinationViewController;
+        UINavigationController *nc = segue.destinationViewController;
+        ScannerViewController *controller = (ScannerViewController *)nc.childViewControllerForStatusBarHidden;
         controller.filterUUID = rscServiceUUID;
         controller.delegate = self;
-    }
-    else if ([[segue identifier] isEqualToString:@"help"]) {
-        isBackButtonPressed = NO;
-        HelpViewController *helpVC = [segue destinationViewController];
-        helpVC.helpText = [AppUtilities getRSACHelpText];
     }
 }
 

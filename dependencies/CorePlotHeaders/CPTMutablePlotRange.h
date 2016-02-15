@@ -1,12 +1,15 @@
 #import "CPTPlotRange.h"
 
-@interface CPTMutablePlotRange : CPTPlotRange {
-}
+@interface CPTMutablePlotRange : CPTPlotRange
 
 /// @name Range Limits
 /// @{
-@property (nonatomic, readwrite) NSDecimal location;
-@property (nonatomic, readwrite) NSDecimal length;
+@property (nonatomic, readwrite, strong) NSNumber *location;
+@property (nonatomic, readwrite, strong) NSNumber *length;
+@property (nonatomic, readwrite) NSDecimal locationDecimal;
+@property (nonatomic, readwrite) NSDecimal lengthDecimal;
+@property (nonatomic, readwrite) double locationDouble;
+@property (nonatomic, readwrite) double lengthDouble;
 /// @}
 
 /// @name Combining Ranges
@@ -23,7 +26,7 @@
 
 /// @name Expanding/Contracting Ranges
 /// @{
--(void)expandRangeByFactor:(NSDecimal)factor;
+-(void)expandRangeByFactor:(NSNumber *)factor;
 /// @}
 
 @end

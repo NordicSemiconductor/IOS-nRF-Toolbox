@@ -32,17 +32,17 @@ NSString * const dfuVersionCharacteritsicUUIDString = @"00001534-1212-EFDE-1523-
 NSString * const ANCSServiceUUIDString = @"7905F431-B5CE-4E99-A40F-4B1E122D00D0";
 NSString * const TimerServiceUUIDString = @"1805";
 
-int  PACKETS_NOTIFICATION_INTERVAL = 10;
+int PACKETS_NOTIFICATION_INTERVAL = 10;
 int const PACKET_SIZE = 20;
 
-NSString* const FIRMWARE_TYPE_SOFTDEVICE = @"softdevice";
-NSString* const FIRMWARE_TYPE_BOOTLOADER = @"bootloader";
-NSString* const FIRMWARE_TYPE_APPLICATION = @"application";
-NSString* const FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER = @"softdevice and bootloader";
+NSString* const FIRMWARE_TYPE_SOFTDEVICE = @"Softdevice";
+NSString* const FIRMWARE_TYPE_BOOTLOADER = @"Bootloader";
+NSString* const FIRMWARE_TYPE_APPLICATION = @"Application";
+NSString* const FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER = @"Softdevice and bootloader";
 
 + (NSString *) getDFUHelpText
 {
-    return [NSString stringWithFormat:@"-The Device Firmware Update (DFU) app that is compatible with Nordic Semiconductor nRF51822 devices that have the S110 SoftDevice and bootloader enabled.\n\n-It allows to upload new application onto the device over-the-air (OTA).\n\n-The DFU discovers supported DFU devices, connects to them, and uploads user selected firmware applications to the device.\n\n-Default number of Packet Receipt Notification is 10 but you can set up other number in the iPhone Settings.\n\n-(New) Bin format is also supported in this version.\n\n-(New) This version supports Nordic Semiconductor softdevice 7.1 and SDK 7.1 and it is backword compatible. \n\n-(New) In SDK 7.0 and above initPacket is sent in a file (.dat) in addition to firmware file.\n\n-(New) For Application update application.hex or application.bin and application.dat is required inside a zip file.\n\n-(New) For Bootloader update bootloader.hex or bootloader.bin and bootloader.dat is required inside a zip file.\n\n-(New) For Softdevice update softdevice.hex or softdevice.bin and softdevice.dat is required.\n\n-(New) For updating both softdevice and bootloader system.dat is required in addition."];
+    return [NSString stringWithFormat:@"The Device Firmware Update (DFU) profile allows to upload a new application, Soft Device or bootloader onto the device over-the-air (OTA). It is compatible with nRF5x devices, from Nordic Semiconductor, that have the S110, S130 or S132 SoftDevice and the DFU bootloader enabled. \n\nDefault number of Packet Receipt Notification is 10 and can changed in the Settings. For more information about the DFU check the documentation."];
 }
 
 + (NSString *) getEmptyUserFilesText
@@ -55,25 +55,10 @@ NSString* const FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER = @"softdevice and boot
     return [NSString stringWithFormat:@"-User can add Folders and Files with Hex, Bin and Zip extensions from Emails and iTunes.\n\n-User added files will be appeared on tab User Files.\n\n- In order to add files from iTunes:\n   1. Open iTunes on your PC and connect iPhone to it.\n   2.On the left, under Devices select your iPhone.\n   3.on the top, select tab Apps.\n   4. on the bottom, under File Sharing select app nRF Toolbox and then add files.\n\n- In order to add files from Emails:\n   1. Attach file to your email.\n   2.Open your email on your iPhone.\n   3.Long click on attached file and then select Open in nRF Toolbox."];
 }
 
-+ (NSString *) getEmptyFolderText
-{
-    return @"There are no Hex, Bin or Zip files found inside selected folder.";
-}
-
-
-
-+ (NSArray *) getFirmwareTypes
-{
-    static NSArray *events;
-    if (events == nil) {
-        events = @[FIRMWARE_TYPE_SOFTDEVICE, FIRMWARE_TYPE_BOOTLOADER, FIRMWARE_TYPE_APPLICATION, FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER];
-    }
-    return events;
-}
-
 + (NSString *) stringFileExtension:(enumFileExtension)fileExtension
 {
-    switch (fileExtension) {
+    switch (fileExtension)
+    {
         case HEX:
             return @"hex";
         case BIN:
@@ -88,8 +73,8 @@ NSString* const FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER = @"softdevice and boot
 
 + (void)showAlert:(NSString *)message
 {
- UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"DFU" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
- [alert show];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"DFU" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alert show];
 }
 
 +(void)showBackgroundNotification:(NSString *)message
@@ -106,12 +91,7 @@ NSString* const FIRMWARE_TYPE_BOTH_SOFTDEVICE_BOOTLOADER = @"softdevice and boot
 
 + (BOOL)isApplicationStateInactiveORBackground {
     UIApplicationState applicationState = [[UIApplication sharedApplication] applicationState];
-    if (applicationState == UIApplicationStateInactive || applicationState == UIApplicationStateBackground) {
-        return YES;
-    }
-    else {
-        return NO;
-    }
+    return applicationState == UIApplicationStateInactive || applicationState == UIApplicationStateBackground;
 }
 
 @end

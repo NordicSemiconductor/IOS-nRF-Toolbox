@@ -29,7 +29,6 @@
 #import "Constants.h"
 #import "AppUtilities.h"
 #import "CharacteristicReader.h"
-#import "HelpViewController.h"
 
 enum
 {
@@ -63,12 +62,12 @@ enum
 @property (weak, nonatomic) IBOutlet UITableView *bgmTableView;
 
 - (IBAction)actionButtonClicked:(id)sender;
+- (IBAction)aboutButtonClicked:(id)sender;
 
 @end
 
 @implementation BGMViewController
 @synthesize bluetoothManager;
-@synthesize backgroundImage;
 @synthesize verticalLabel;
 @synthesize battery;
 @synthesize deviceName;
@@ -103,20 +102,7 @@ enum
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    if (is4InchesIPhone)
-    {
-        // 4 inches iPhone
-        UIImage *image = [UIImage imageNamed:@"Background4.png"];
-        [backgroundImage setImage:image];
-    }
-    else
-    {
-        // 3.5 inches iPhone
-        UIImage *image = [UIImage imageNamed:@"Background35.png"];
-        [backgroundImage setImage:image];
-    }
-    
+        
     // Rotate the vertical label
     self.verticalLabel.transform = CGAffineTransformRotate(CGAffineTransformMakeTranslation(-145.0f, 0.0f), (float)(-M_PI / 2));
     
@@ -156,6 +142,10 @@ enum
     [actionSheet showInView:self.view];
 }
 
+- (IBAction)aboutButtonClicked:(id)sender {
+    [self showAbout:[AppUtilities getBGMHelpText]];
+}
+
 - (IBAction)connectOrDisconnectClicked {
     if (connectedPeripheral != nil)
     {
@@ -174,7 +164,8 @@ enum
     if ([segue.identifier isEqualToString:@"scan"])
     {
         // Set this contoller as scanner delegate
-        ScannerViewController *controller = (ScannerViewController *)segue.destinationViewController;
+        UINavigationController *nc = segue.destinationViewController;
+        ScannerViewController *controller = (ScannerViewController *)nc.childViewControllerForStatusBarHidden;
         controller.filterUUID = bgmServiceUUID;
         controller.delegate = self;
     }
@@ -183,11 +174,6 @@ enum
         BGMDetailsViewController *controller = (BGMDetailsViewController *)segue.destinationViewController;
         controller.reading = [readings objectAtIndex:[bgmTableView indexPathForSelectedRow].row];
     }
-    else if ([[segue identifier] isEqualToString:@"help"]) {
-        HelpViewController *helpVC = [segue destinationViewController];
-        helpVC.helpText = [AppUtilities getBGMHelpText];
-    }
-
 }
 
 #pragma mark Scanner Delegate methods

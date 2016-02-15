@@ -1,18 +1,16 @@
-@interface CPTColorSpace : NSObject<NSCoding> {
-    @private
-    CGColorSpaceRef cgColorSpace;
-}
+@interface CPTColorSpace : NSObject<NSCoding>
 
-@property (nonatomic, readonly, assign) CGColorSpaceRef cgColorSpace;
+@property (nonatomic, readonly, nullable) CGColorSpaceRef cgColorSpace;
 
 /// @name Factory Methods
 /// @{
-+(CPTColorSpace *)genericRGBSpace;
++(nonnull instancetype)genericRGBSpace;
 /// @}
 
 /// @name Initialization
 /// @{
--(id)initWithCGColorSpace:(CGColorSpaceRef)colorSpace;
+-(nonnull instancetype)initWithCGColorSpace:(nonnull CGColorSpaceRef)colorSpace NS_DESIGNATED_INITIALIZER;
+-(nonnull instancetype)initWithCoder:(nonnull NSCoder *)decoder NS_DESIGNATED_INITIALIZER;
 /// @}
 
 @end
