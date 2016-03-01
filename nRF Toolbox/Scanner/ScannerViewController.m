@@ -53,7 +53,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    // Do any additional setup after loading the view.
     peripherals = [NSMutableArray arrayWithCapacity:8];
     devicesTable.delegate = self;
     devicesTable.dataSource = self;

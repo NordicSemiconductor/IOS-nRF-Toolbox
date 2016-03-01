@@ -21,10 +21,11 @@
  */
 
 #import <UIKit/UIKit.h>
+#import <DFULibrary/DFULibrary-Swift.h>
 
 @protocol FileTypeSelectionDelegate <NSObject>
 
--(void)onFileTypeSelected:(NSString *)type;
+-(void)onFileTypeSelected:(DFUFirmwareType)type;
 -(void)onFileTypeNotSelected;
 
 @end
@@ -32,6 +33,5 @@
 @interface FileTypeViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
 @property (strong, nonatomic) id<FileTypeSelectionDelegate> delegate;
-@property (strong, nonatomic) NSArray *options;
 
 @end

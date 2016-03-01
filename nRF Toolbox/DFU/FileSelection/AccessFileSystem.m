@@ -42,11 +42,13 @@
     NSMutableArray *allFilesNames = [[NSMutableArray alloc]init];
     NSError *error;
     NSArray *fileNames = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[self getDocumentsDirectoryPath] error:&error];
-    if (error) {
+    if (error)
+    {
         NSLog(@"error in opening directory path: %@",[self getDocumentsDirectoryPath]);
         return nil;
     }
-    else {
+    else
+    {
         NSLog(@"number of files in directory %lu",(unsigned long)fileNames.count);
         [allFilesNames addObjectsFromArray:[self getSubDirectoriesInDocumentsDirectory]];
         [allFilesNames addObjectsFromArray:[self getRequiredFilesFromDocumentsDirectory]];
@@ -74,14 +76,17 @@
     NSMutableArray *binFilesNames = [[NSMutableArray alloc]init];
     NSError *error;
     NSArray *fileNames = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directoryPath error:&error];
-    if (error) {
+    if (error)
+    {
         NSLog(@"error in opening directory path: %@",directoryPath);
         return nil;
     }
-    else {
-        NSLog(@"number of files in directory %lu",(unsigned long)fileNames.count);
-        for (NSString *fileName in fileNames) {
-            if ([self checkFileExtension:fileName fileExtension:BIN]) {
+    else
+    {
+        for (NSString *fileName in fileNames)
+        {
+            if ([self checkFileExtension:fileName fileExtension:@"bin"])
+            {
                 [binFilesNames addObject:fileName];
             }
         }
@@ -95,14 +100,17 @@
     NSMutableArray *hexFilesNames = [[NSMutableArray alloc]init];
     NSError *error;
     NSArray *fileNames = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directoryPath error:&error];
-    if (error) {
+    if (error)
+    {
         NSLog(@"error in opening directory path: %@",directoryPath);
         return nil;
     }
-    else {
-        NSLog(@"number of hex files in directory %lu",(unsigned long)fileNames.count);
-        for (NSString *fileName in fileNames) {
-            if ([self checkFileExtension:fileName fileExtension:HEX]) {
+    else
+    {
+        for (NSString *fileName in fileNames)
+        {
+            if ([self checkFileExtension:fileName fileExtension:@"hex"])
+            {
                 [hexFilesNames addObject:fileName];
             }
         }
@@ -115,14 +123,17 @@
     NSMutableArray *zipFilesNames = [[NSMutableArray alloc]init];
     NSError *error;
     NSArray *fileNames = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directoryPath error:&error];
-    if (error) {
+    if (error)
+    {
         NSLog(@"error in opening directory path: %@",directoryPath);
         return nil;
     }
-    else {
-        NSLog(@"number of zip files in directory %lu",(unsigned long)fileNames.count);
-        for (NSString *fileName in fileNames) {
-            if ([self checkFileExtension:fileName fileExtension:ZIP]) {
+    else
+    {
+        for (NSString *fileName in fileNames)
+        {
+            if ([self checkFileExtension:fileName fileExtension:@"zip"])
+            {
                 [zipFilesNames addObject:fileName];
             }
         }
@@ -135,14 +146,15 @@
     NSMutableArray *AllFilesNames = [[NSMutableArray alloc]init];
     NSError *error;
     NSArray *fileNames = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directoryPath error:&error];
-    if (error) {
+    if (error)
+    {
         NSLog(@"error in opening directory path: %@",directoryPath);
         return nil;
     }
-    else {
-        NSLog(@"number of files in directory %lu",(unsigned long)fileNames.count);
-        for (NSString *fileName in fileNames) {
-            NSLog(@"Found file in directory: %@",fileName);
+    else
+    {
+        for (NSString *fileName in fileNames)
+        {
             [AllFilesNames addObject:fileName];
         }
         return [AllFilesNames copy];
@@ -155,12 +167,13 @@
     NSArray *documentsFiles = [self getAllFilesFromDocumentsDirectory];
     NSString *documentsDirectoryPath = [self getDocumentsDirectoryPath];
     NSString *filePath;
-    for (NSString *file in documentsFiles) {
+    for (NSString *file in documentsFiles)
+    {
         filePath = [documentsDirectoryPath stringByAppendingPathComponent:file];
-        if ([self isDirectory:filePath]) {
+        if ([self isDirectory:filePath])
+        {
             NSLog(@"Found Directory: %@",file);
             [directories addObject:file];
-
         }
     }    
     return [directories copy];
@@ -170,30 +183,30 @@
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     BOOL isDirectory;
-    if ([fileManager fileExistsAtPath:path isDirectory:&isDirectory]) {
+    if ([fileManager fileExistsAtPath:path isDirectory:&isDirectory])
+    {
         return isDirectory;
     }
-    else {
+    else
+    {
         return NO;
     }
 }
 
--(BOOL)checkFileExtension:(NSString *)fileName fileExtension:(enumFileExtension)fileExtension
+-(BOOL)checkFileExtension:(NSString *)fileName fileExtension:(NSString*)fileExtension
 {
-    if ([[fileName pathExtension] isEqualToString:[Utility stringFileExtension:fileExtension]]) {
-        return YES;
-    }
-    else {
-        return NO;
-    }
+    NSString *extension = [[fileName pathExtension] lowercaseString];
+    return [extension isEqualToString:fileExtension];
 }
 
--(NSArray *)getFilesFromDirectory:(NSString *)directoryPath fileExtension:(enumFileExtension)fileExtension
+-(NSArray *)getFilesFromDirectory:(NSString *)directoryPath fileExtension:(NSString*)fileExtension
 {
     NSMutableArray *filesWithExt = [[NSMutableArray alloc]init];
     NSArray *files = [self getAllFilesFromDirectory:directoryPath];
-    for (NSString *file in files) {
-        if ([[file pathExtension] isEqualToString:[Utility stringFileExtension:fileExtension]]) {
+    for (NSString *file in files)
+    {
+        NSString *extension = [[file pathExtension] lowercaseString];
+        if ([extension isEqualToString:fileExtension]) {
             [filesWithExt addObject:file];
         }
     }
@@ -221,11 +234,13 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;
     [fileManager removeItemAtPath:path error:&error];
-    if (error) {
-        NSLog(@"%@ is not removed",path);
+    if (error)
+    {
+        NSLog(@"%@ is not removed", path);
     }
-    else {
-        NSLog(@"%@ is removed successfully",path);
+    else
+    {
+        NSLog(@"%@ is removed successfully", path);
     }
 }
 
