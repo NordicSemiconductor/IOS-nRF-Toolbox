@@ -24,11 +24,13 @@
 #import "Utility.h"
 
 @interface FileTypeViewController () {
-    NSString *chosenFirmwareType;
+    DFUFirmwareType chosenFirmwareType;
 }
 
 - (IBAction)didClickDone:(id)sender;
 - (IBAction)didClickCancel:(id)sender;
+
+@property (strong, nonatomic) NSArray *options;
 
 @end
 
@@ -37,10 +39,9 @@
 @synthesize delegate;
 @synthesize options;
 
-- (void)viewDidLoad
+-(void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidLoad];
-    
+    options = @[@"Softdevice", @"Bootloader", @"Application"];
 }
 
 - (IBAction)didClickDone:(id)sender {
@@ -72,7 +73,7 @@
     
     // Configure the cell...
     cell.textLabel.text = cellType;
-    if ([cellType isEqual:chosenFirmwareType])
+    if (chosenFirmwareType == [self pathToType:indexPath])
     {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
@@ -85,9 +86,21 @@
 
 -(void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *firmwareType = [options objectAtIndex:indexPath.row];
-    chosenFirmwareType = firmwareType;
-    [tv reloadData];
+    chosenFirmwareType = [self pathToType:indexPath];
+    [tv reloadData]; // To add the checkmark
     [self.navigationItem.rightBarButtonItem setEnabled:YES];
+}
+
+-(DFUFirmwareType)pathToType:(NSIndexPath *)indexPath
+{
+    switch (indexPath.row) {
+        case 0:
+            return DFUFirmwareTypeSoftdevice;
+        case 1:
+            return DFUFirmwareTypeBootloader;
+        case 2:
+        default:
+            return DFUFirmwareTypeApplication;
+    }
 }
 @end

@@ -43,14 +43,14 @@
 //Get hex and zip files inside given directory path
 -(NSArray *)getRequiredFilesFromDirectory:(NSString *)directoryPath;
 //Get files with given file extension and directory path
--(NSArray *)getFilesFromDirectory:(NSString *)directoryPath fileExtension:(enumFileExtension)fileExtension;
+-(NSArray *)getFilesFromDirectory:(NSString *)directoryPath fileExtension:(NSString *)fileExtension;
 //Get only directories inside Documents directory
 -(NSArray *)getSubDirectoriesInDocumentsDirectory;
 
 //check if given path is directory or not
 -(BOOL)isDirectory:(NSString *)path;
 //check if given file has given extension
--(BOOL)checkFileExtension:(NSString *)fileName fileExtension:(enumFileExtension)fileExtension;
+-(BOOL)checkFileExtension:(NSString *)fileName fileExtension:(NSString *)fileExtension;
 
 -(void)deleteFile:(NSString *)path;
 @end

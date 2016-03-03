@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "nRF Toolbox/DFU/FileSelection/FileTypeViewController.m"
-            timestampString = "476103241.506937"
+            timestampString = "478461498.478699"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
             landmarkName = "-didClickDone:"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "nRF Toolbox/DFU/FileSelection/FileTypeViewController.m"
-            timestampString = "476103243.173119"
+            timestampString = "478461498.478699"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
             landmarkName = "-didClickCancel:"
             landmarkType = "5">
          </BreakpointContent>

@@ -76,27 +76,39 @@
 			<key>Key</key>
 			<string>dfu_number_of_packets</string>
 			<key>DefaultValue</key>
-			<integer>10</integer>
+			<integer>12</integer>
 			<key>Titles</key>
 			<array>
+				<string>Disabled</string>
 				<string>1</string>
 				<string>2</string>
-				<string>5</string>
-				<string>10</string>
+				<string>6</string>
+				<string>12</string>
 				<string>25</string>
 				<string>50</string>
 				<string>100</string>
 			</array>
 			<key>Values</key>
 			<array>
+				<string>0</string>
 				<integer>1</integer>
 				<integer>2</integer>
-				<integer>5</integer>
-				<integer>10</integer>
+				<integer>6</integer>
+				<integer>12</integer>
 				<integer>25</integer>
 				<integer>50</integer>
 				<integer>100</integer>
 			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>External MCP DFU</string>
+			<key>Key</key>
+			<string>dfu_force_dfu</string>
+			<key>DefaultValue</key>
+			<false/>
 		</dict>
 	</array>
 	<key>StringsTable</key>

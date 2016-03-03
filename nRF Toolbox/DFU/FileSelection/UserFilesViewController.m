@@ -131,15 +131,15 @@
             cell.imageView.image = [UIImage imageNamed:@"ic_folder"];
         }
     }
-    else if ([self.fileSystem checkFileExtension:fileName fileExtension:HEX])
+    else if ([self.fileSystem checkFileExtension:fileName fileExtension:@"hex"])
     {
         cell.imageView.image = [UIImage imageNamed:@"ic_file"];
     }
-    else if ([self.fileSystem checkFileExtension:fileName fileExtension:BIN])
+    else if ([self.fileSystem checkFileExtension:fileName fileExtension:@"bin"])
     {
         cell.imageView.image = [UIImage imageNamed:@"ic_file"];
     }
-    else if ([self.fileSystem checkFileExtension:fileName fileExtension:ZIP])
+    else if ([self.fileSystem checkFileExtension:fileName fileExtension:@"zip"])
     {
         cell.imageView.image = [UIImage imageNamed:@"ic_archive"];
     }
