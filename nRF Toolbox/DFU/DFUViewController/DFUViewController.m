@@ -400,9 +400,6 @@ currentSpeedBytesPerSecond:(double)speed avgSpeedBytesPerSecond:(double)avgSpeed
             case DFUFirmwareTypeApplication:
                 fileType.text = @"Application";
                 break;
-            case DFUFirmwareTypeSoftdeviceBootloader:
-                fileType.text = @"Softdevice and Bootloader";
-                break;
         }
     }
     else

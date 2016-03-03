@@ -41,7 +41,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    options = @[@"Softdevice", @"Bootloader", @"Softdevice and Bootloader", @"Application"];
+    options = @[@"Softdevice", @"Bootloader", @"Application"];
 }
 
 - (IBAction)didClickDone:(id)sender {
@@ -73,7 +73,7 @@
     
     // Configure the cell...
     cell.textLabel.text = cellType;
-    if (chosenFirmwareType == indexPath.row + 1)
+    if (chosenFirmwareType == [self pathToType:indexPath])
     {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
@@ -86,8 +86,21 @@
 
 -(void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    chosenFirmwareType = indexPath.row + 1;
+    chosenFirmwareType = [self pathToType:indexPath];
     [tv reloadData]; // To add the checkmark
     [self.navigationItem.rightBarButtonItem setEnabled:YES];
+}
+
+-(DFUFirmwareType)pathToType:(NSIndexPath *)indexPath
+{
+    switch (indexPath.row) {
+        case 0:
+            return DFUFirmwareTypeSoftdevice;
+        case 1:
+            return DFUFirmwareTypeBootloader;
+        case 2:
+        default:
+            return DFUFirmwareTypeApplication;
+    }
 }
 @end
