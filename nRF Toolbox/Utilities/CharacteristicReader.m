@@ -23,7 +23,28 @@
 #import "CharacteristicReader.h"
 
 
+typedef enum {
+    MDER_S_POSITIVE_INFINITY = 0x07FE,
+    MDER_S_NaN = 0x07FF,
+    MDER_S_NRes = 0x0800,
+    MDER_S_RESERVED_VALUE = 0x0801,
+    MDER_S_NEGATIVE_INFINITY = 0x0802
+} ReservedSFloatValues;
+static const UInt32 FIRST_S_RESERVED_VALUE = MDER_S_POSITIVE_INFINITY;
+
+typedef enum {
+    MDER_POSITIVE_INFINITY = 0x007FFFFE,
+    MDER_NaN = 0x007FFFFF,
+    MDER_NRes = 0x00800000,
+    MDER_RESERVED_VALUE = 0x00800001,
+    MDER_NEGATIVE_INFINITY = 0x00800002
+} ReservedFloatValues;
+static const UInt32 FIRST_RESERVED_VALUE = MDER_POSITIVE_INFINITY;
+
+static const double reserved_float_values[5] = {INFINITY, NAN, NAN, NAN, -INFINITY};
+
 @implementation CharacteristicReader
+
 
 + (UInt8)readUInt8Value:(uint8_t **)p_encoded_data
 {
@@ -65,20 +86,59 @@
 
 + (Float32)readSFloatValue:(uint8_t **)p_encoded_data
 {
-    SInt16 tempData = (SInt16) CFSwapInt16LittleToHost(*(uint16_t*)*p_encoded_data);
-    SInt8 exponent = (SInt8)(tempData >> 12);
-    SInt16 mantissa = (SInt16)(tempData & 0x0FFF);
+    UInt16 tempData = CFSwapInt16LittleToHost(*(uint16_t*)*p_encoded_data);
+    
+    SInt16 mantissa = tempData & 0x0FFF;
+    SInt8 exponent = tempData >> 12;
+    
+    if (exponent >= 0x0008) {
+        exponent = -((0x000F + 1) - exponent);
+    }
+    
+    Float32 output = 0;
+    
+    if (mantissa >= FIRST_S_RESERVED_VALUE && mantissa <= MDER_S_NEGATIVE_INFINITY)
+    {
+        output = reserved_float_values[mantissa - FIRST_S_RESERVED_VALUE];
+    }
+    else
+    {
+        if (mantissa >= 0x0800)
+        {
+            mantissa = -((0x0FFF + 1) - mantissa);
+        }
+        double magnitude = pow(10.0f, exponent);
+        output = (mantissa * magnitude);
+    }
+    
     *p_encoded_data += 2;
-    return (Float32)(mantissa * pow(10, exponent));
+    return output;
 }
 
 +(Float32)readFloatValue:(uint8_t **)p_encoded_data
 {
     SInt32 tempData = (SInt32) CFSwapInt32LittleToHost(*(uint32_t*)*p_encoded_data);
-    SInt8 exponent = (SInt8)(tempData >> 24);
-    SInt32 mantissa = (SInt32)(tempData & 0x00FFFFFF);
+    
+    SInt32 mantissa = tempData & 0xFFFFFF;
+    SInt8 exponent = tempData >> 24;
+    Float32 output = 0;
+    
+    if (mantissa >= FIRST_RESERVED_VALUE && mantissa <= MDER_NEGATIVE_INFINITY)
+    {
+        output = reserved_float_values[mantissa - FIRST_RESERVED_VALUE];
+    }
+    else
+    {
+        if (mantissa >= 0x800000)
+        {
+            mantissa = -((0xFFFFFF + 1) - mantissa);
+        }
+        double magnitude = pow(10.0f, exponent);
+        output = (mantissa * magnitude);
+    }
+    
     *p_encoded_data += 4;
-    return (Float32)(mantissa * pow(10, exponent));
+    return output;
 }
 
 +(NSDate *)readDateTime:(uint8_t **)p_encoded_data

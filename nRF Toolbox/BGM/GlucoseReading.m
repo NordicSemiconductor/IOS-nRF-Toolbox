@@ -55,7 +55,7 @@
     self.glucoseConcentrationTypeAndLocationPresent = glucoseConcentrationTypeAndLocationPresent;
     if (glucoseConcentrationTypeAndLocationPresent)
     {
-        self.glucoseConcentration = [CharacteristicReader readSFloatValue:&pointer] * 1000.0f;
+        self.glucoseConcentration = [CharacteristicReader readSFloatValue:&pointer];
         self.unit = glucoseConcentrationUnit;
         
         Nibble typeAndLocation = [CharacteristicReader readNibble:&pointer];
