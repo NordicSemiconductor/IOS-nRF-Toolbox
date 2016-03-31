@@ -33,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *type;
 @property (weak, nonatomic) IBOutlet UILabel *location;
 @property (weak, nonatomic) IBOutlet UILabel *concentration;
+@property (weak, nonatomic) IBOutlet UILabel *unit;
 @property (weak, nonatomic) IBOutlet UILabel *lowBatteryStatus;
 @property (weak, nonatomic) IBOutlet UILabel *sensorMalfunctionStatus;
 @property (weak, nonatomic) IBOutlet UILabel *insufficienSampleStatus;
@@ -84,33 +85,31 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-	if (is4InchesIPhone)
-    {
-        // 4 inches iPhone
-        UIImage *image = [UIImage imageNamed:@"Background4.png"];
-        [backgroundImage setImage:image];
-    }
-    else
-    {
-        // 3.5 inches iPhone
-        UIImage *image = [UIImage imageNamed:@"Background35.png"];
-        [backgroundImage setImage:image];
-    }
-    
+        
     sequenceNumber.text = [NSString stringWithFormat:@"%d", reading.sequenceNumber];
     timestamp.text = [dateFormat stringFromDate:reading.timestamp];
     if (reading.glucoseConcentrationTypeAndLocationPresent)
     {
         self.type.text = [reading typeAsString];
         self.location.text = [reading locationAsString];
-        self.concentration.text = [NSString stringWithFormat:@"%.1f", reading.glucoseConcentration];
+        
+        if (reading.unit == MOL_L)
+        {
+            self.concentration.text = [NSString stringWithFormat:@"%.1f", reading.glucoseConcentration * 1000.0f]; // converting mol/l -> mmol/l
+            self.unit.text = @"mmol/L";
+        }
+        else
+        {
+            self.concentration.text = [NSString stringWithFormat:@"%.0f", reading.glucoseConcentration * 100000.0f]; // converting kg/l -> mg/dl
+            self.unit.text = @"mg/dL";
+        }
     }
     else
     {
         self.type.text = @"Unavailable";
         self.location.text = @"Unavailable";
         self.concentration.text = @"-";
+        self.unit.text = @"";
     }
     
     //reading.sensorStatusAnnunciationPresent = YES;

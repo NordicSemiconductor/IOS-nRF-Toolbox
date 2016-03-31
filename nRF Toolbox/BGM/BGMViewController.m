@@ -205,13 +205,23 @@ enum
     cell.timestamp.text = [dateFormat stringFromDate:reading.timestamp];
     if (reading.glucoseConcentrationTypeAndLocationPresent)
     {
-        cell.value.text = [NSString stringWithFormat:@"%.1f", reading.glucoseConcentration];
         cell.type.text = [reading typeAsString];
+        if (reading.unit == MOL_L)
+        {
+            cell.value.text = [NSString stringWithFormat:@"%.1f", reading.glucoseConcentration * 1000.0f]; // converting mol/l -> mmol/l
+            cell.unit.text = @"mmol/L";
+        }
+        else
+        {
+            cell.value.text = [NSString stringWithFormat:@"%.0f", reading.glucoseConcentration * 100000.0f]; // converting kg/l -> mg/dl
+            cell.unit.text = @"mg/dL";
+        }
     }
     else
     {
         cell.value.text = @"-";
         cell.type.text = @"Unavailable";
+        cell.unit.text = @"";
     }
     
     return cell;
