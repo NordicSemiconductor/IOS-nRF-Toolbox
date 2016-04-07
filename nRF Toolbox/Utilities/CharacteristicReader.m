@@ -72,7 +72,7 @@ static const double reserved_float_values[5] = {INFINITY, NAN, NAN, NAN, -INFINI
 
 + (UInt32)readUInt32Value:(uint8_t **)p_encoded_data
 {
-    UInt32 value = (UInt16) CFSwapInt32LittleToHost(*(uint32_t*)*p_encoded_data);
+    UInt32 value = (UInt32) CFSwapInt32LittleToHost(*(uint32_t*)*p_encoded_data);
     *p_encoded_data += 4;
     return value;
 }
