@@ -333,14 +333,14 @@
             UInt8 flags = [CharacteristicReader readUInt8Value:&array];
             BOOL strideLengthPresent = (flags & 0x01) > 0;
             BOOL totalDistancePresent = (flags & 0x02) > 0;
-            BOOL walking = (flags & 0x04) > 0;
-            if (walking)
+            BOOL running = (flags & 0x04) > 0;
+            if (running)
             {
-                [self.activity setText:@"WALKING"];
+                [self.activity setText:@"RUNNING"];
             }
             else
             {
-                [self.activity setText:@"RUNNING"];
+                [self.activity setText:@"WALKING"];
             }
             
             float speedValue = [CharacteristicReader readUInt16Value:&array] / 256.0f * 3.6f;
@@ -356,6 +356,11 @@
                 
                 float timeInterval = 65.0f / cadenceValue; // 60 second + 5 for calibration
                 timer = [NSTimer scheduledTimerWithTimeInterval:timeInterval target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:NO];
+            }
+            
+            if (strideLengthPresent)
+            {
+                stripLength = [CharacteristicReader readUInt16Value:&array]; // [cm]
             }
             
             if (totalDistancePresent)
@@ -375,11 +380,6 @@
             else
             {
                 [self.totalDistance setText:@"n/a"];
-            }
-            
-            if (strideLengthPresent)
-            {
-                stripLength = [CharacteristicReader readUInt16Value:&array]; // [cm]
             }
         }
     });
