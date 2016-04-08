@@ -1,0 +1,10 @@
+framework module DFULibrary {
+  umbrella header "DFULibrary.h"
+
+  export *
+  module * { export * }
+}
+
+module DFULibrary.Swift {
+    header "DFULibrary-Swift.h"
+}

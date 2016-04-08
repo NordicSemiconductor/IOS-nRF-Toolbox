@@ -1,0 +1,12 @@
+The EVReflection folder contains the EVReflection library by evermeer:
+
+https://github.com/evermeer/EVReflection
+
+Release 2.17.0, access date 13 Feb 2016
+
+https://github.com/evermeer/EVReflection/releases/tag/2.17.0
+
+The content of this project was copied here to avoid using additional frameworks.
+The folder may be removed and the original framework may be attached instead.
+
+Access to classes and field has been changed from public to internal to hide this library outside.
