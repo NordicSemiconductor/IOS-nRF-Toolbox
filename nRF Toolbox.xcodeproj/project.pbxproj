@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E5CC7901CB6AA370092162C /* DFULibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E5CC78F1CB6AA370092162C /* DFULibrary.framework */; };
+		0E5CC7941CB78F310092162C /* DFULibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0E5CC7931CB78F310092162C /* DFULibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAA1885642F007CC40D /* icon-dfu-64.png */; };
 		5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAB1885642F007CC40D /* icon-dfu-320.png */; };
 		5211EFB018856430007CC40D /* icon-hex.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAC1885642F007CC40D /* icon-hex.png */; };
@@ -44,8 +46,6 @@
 		5252A53A18802B8100EFD773 /* BPMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A53918802B8100EFD773 /* BPMViewController.m */; };
 		5252A53E18802F7200EFD773 /* DFUViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A53D18802F7200EFD773 /* DFUViewController.m */; };
 		5252A542188030A800EFD773 /* ProximityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A541188030A800EFD773 /* ProximityViewController.m */; };
-		52704A801C7237CE00ED2B19 /* DFULibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52704A7F1C7237CE00ED2B19 /* DFULibrary.framework */; };
-		52704A811C7237CE00ED2B19 /* DFULibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 52704A7F1C7237CE00ED2B19 /* DFULibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5285D9A91890033F00305F1D /* CSCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5285D9A81890033F00305F1D /* CSCViewController.m */; };
 		52BDCB191C3FD31F00E2680F /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BDCB181C3FD31F00E2680F /* Accelerate.framework */; };
 		52BDCBBC1C3FD67F00E2680F /* libCorePlot-CocoaTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BDCBBB1C3FD67F00E2680F /* libCorePlot-CocoaTouch.a */; };
@@ -61,7 +61,6 @@
 		7E2A3C64196D408A009E2506 /* AccessFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E2A3C63196D408A009E2506 /* AccessFileSystem.m */; };
 		7E445C8E1951A51A00633892 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E445C8D1951A51A00633892 /* Utility.m */; };
 		7E445C971951D09E00633892 /* FileTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E445C961951D09E00633892 /* FileTypeViewController.m */; };
-		7E6ED10B196ED482008010B6 /* firmwares in Resources */ = {isa = PBXBuildFile; fileRef = 7E6ED10A196ED482008010B6 /* firmwares */; };
 		7E6ED10F197D1D8D008010B6 /* AppFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6ED10E197D1D8D008010B6 /* AppFilesViewController.m */; };
 		7E6ED112197D1DA4008010B6 /* UserFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6ED111197D1DA4008010B6 /* UserFilesViewController.m */; };
 		7E99686C19800A260092E69E /* FolderFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E99686B19800A260092E69E /* FolderFilesViewController.m */; };
@@ -90,11 +89,11 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		52704A821C7237CE00ED2B19 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				52704A811C7237CE00ED2B19 /* DFULibrary.framework in Embed Frameworks */,
+				0E5CC7941CB78F310092162C /* DFULibrary.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -102,6 +101,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0E5CC78F1CB6AA370092162C /* DFULibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DFULibrary.framework; path = "../../Library/Developer/Xcode/DerivedData/ToolboxWorkspace-enirbyzawxzisifzezyychvdhkjh/Build/Products/Debug-iphoneos/DFULibrary.framework"; sourceTree = "<group>"; };
+		0E5CC7931CB78F310092162C /* DFULibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DFULibrary.framework; sourceTree = "<group>"; };
 		5211EFAA1885642F007CC40D /* icon-dfu-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-64.png"; sourceTree = "<group>"; };
 		5211EFAB1885642F007CC40D /* icon-dfu-320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-320.png"; sourceTree = "<group>"; };
 		5211EFAC1885642F007CC40D /* icon-hex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-hex.png"; sourceTree = "<group>"; };
@@ -164,7 +165,6 @@
 		5252A53D18802F7200EFD773 /* DFUViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFUViewController.m; sourceTree = "<group>"; };
 		5252A540188030A800EFD773 /* ProximityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProximityViewController.h; sourceTree = "<group>"; };
 		5252A541188030A800EFD773 /* ProximityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProximityViewController.m; sourceTree = "<group>"; };
-		52704A7F1C7237CE00ED2B19 /* DFULibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = DFULibrary.framework; path = "/Users/alno/Library/Developer/Xcode/DerivedData/DFULibraryTest-ahabzrvrnsaupwbpachxvarwbayg/Build/Products/Debug-iphoneos/DFULibrary.framework"; sourceTree = "<absolute>"; };
 		5285D9A5188D43E500305F1D /* RecordAccess.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecordAccess.h; sourceTree = "<group>"; };
 		5285D9A71890033F00305F1D /* CSCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSCViewController.h; sourceTree = "<group>"; };
 		5285D9A81890033F00305F1D /* CSCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSCViewController.m; sourceTree = "<group>"; };
@@ -309,7 +309,7 @@
 				522636371C60FFB00054A550 /* libz.tbd in Frameworks */,
 				52BDCB191C3FD31F00E2680F /* Accelerate.framework in Frameworks */,
 				52BDCBBE1C3FD86900E2680F /* QuartzCore.framework in Frameworks */,
-				52704A801C7237CE00ED2B19 /* DFULibrary.framework in Frameworks */,
+				0E5CC7901CB6AA370092162C /* DFULibrary.framework in Frameworks */,
 				5217F41B1859EEF400F2D5BB /* CoreBluetooth.framework in Frameworks */,
 				5217F3E81859EE0000F2D5BB /* CoreGraphics.framework in Frameworks */,
 				5217F3EA1859EE0000F2D5BB /* UIKit.framework in Frameworks */,
@@ -347,6 +347,7 @@
 		5217F3D91859EE0000F2D5BB = {
 			isa = PBXGroup;
 			children = (
+				0E5CC7931CB78F310092162C /* DFULibrary.framework */,
 				7EE669111983C7DD004680F0 /* SSZipArchive */,
 				52E08DC01889448400ED959F /* CorePlot */,
 				5214D0CD1886C02A00460637 /* Settings.bundle */,
@@ -369,8 +370,8 @@
 		5217F3E41859EE0000F2D5BB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0E5CC78F1CB6AA370092162C /* DFULibrary.framework */,
 				522636361C60FFB00054A550 /* libz.tbd */,
-				52704A7F1C7237CE00ED2B19 /* DFULibrary.framework */,
 				52BDCBBD1C3FD86900E2680F /* QuartzCore.framework */,
 				52BDCB181C3FD31F00E2680F /* Accelerate.framework */,
 				5217F41A1859EEF400F2D5BB /* CoreBluetooth.framework */,
@@ -901,7 +902,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7E6ED10B196ED482008010B6 /* firmwares in Resources */,
 				5214D0CE1886C02A00460637 /* Settings.bundle in Resources */,
 				5217F3FE1859EE0000F2D5BB /* Images.xcassets in Resources */,
 				7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */,
@@ -1039,8 +1039,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
@@ -1085,7 +1084,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Nordic Semiconductor ASA (P3R8YQEV4L)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
@@ -1099,7 +1098,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = NO;
-				PROVISIONING_PROFILE = "4c78c840-4628-4744-8dad-d82a200349bc";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 armv7 armv7s";
@@ -1110,7 +1109,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mostafa Berg (U3G89AQLW2)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1123,12 +1122,13 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/dependencies",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nordicsemi.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "$(VALID_ARCHS)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1137,8 +1137,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nRF Toolbox/nRF Toolbox-Prefix.pch";
@@ -1156,6 +1155,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "$(VALID_ARCHS)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
