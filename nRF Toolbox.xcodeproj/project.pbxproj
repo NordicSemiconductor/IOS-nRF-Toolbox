@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0E645A0A1CBF915F00D36AD0 /* DFULibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E645A091CBF915F00D36AD0 /* DFULibrary.framework */; };
-		0E645A0D1CBF943000D36AD0 /* DFULibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0E645A091CBF915F00D36AD0 /* DFULibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0E0F9A7A1CC0F49C00596575 /* DFULibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E0F9A791CC0F49C00596575 /* DFULibrary.framework */; };
+		0E0F9A7B1CC0F4D000596575 /* DFULibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0E0F9A791CC0F49C00596575 /* DFULibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0E645A0F1CBF957800D36AD0 /* firmwares in Resources */ = {isa = PBXBuildFile; fileRef = 7E6ED10A196ED482008010B6 /* firmwares */; };
 		5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAA1885642F007CC40D /* icon-dfu-64.png */; };
 		5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAB1885642F007CC40D /* icon-dfu-320.png */; };
@@ -90,11 +90,11 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		0E645A0E1CBF943000D36AD0 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				0E645A0D1CBF943000D36AD0 /* DFULibrary.framework in Embed Frameworks */,
+				0E0F9A7B1CC0F4D000596575 /* DFULibrary.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -102,7 +102,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0E645A091CBF915F00D36AD0 /* DFULibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DFULibrary.framework; sourceTree = "<group>"; };
+		0E0F9A791CC0F49C00596575 /* DFULibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DFULibrary.framework; sourceTree = "<group>"; };
 		5211EFAA1885642F007CC40D /* icon-dfu-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-64.png"; sourceTree = "<group>"; };
 		5211EFAB1885642F007CC40D /* icon-dfu-320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-320.png"; sourceTree = "<group>"; };
 		5211EFAC1885642F007CC40D /* icon-hex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-hex.png"; sourceTree = "<group>"; };
@@ -309,7 +309,7 @@
 				522636371C60FFB00054A550 /* libz.tbd in Frameworks */,
 				52BDCB191C3FD31F00E2680F /* Accelerate.framework in Frameworks */,
 				52BDCBBE1C3FD86900E2680F /* QuartzCore.framework in Frameworks */,
-				0E645A0A1CBF915F00D36AD0 /* DFULibrary.framework in Frameworks */,
+				0E0F9A7A1CC0F49C00596575 /* DFULibrary.framework in Frameworks */,
 				5217F41B1859EEF400F2D5BB /* CoreBluetooth.framework in Frameworks */,
 				5217F3E81859EE0000F2D5BB /* CoreGraphics.framework in Frameworks */,
 				5217F3EA1859EE0000F2D5BB /* UIKit.framework in Frameworks */,
@@ -369,7 +369,7 @@
 		5217F3E41859EE0000F2D5BB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0E645A091CBF915F00D36AD0 /* DFULibrary.framework */,
+				0E0F9A791CC0F49C00596575 /* DFULibrary.framework */,
 				522636361C60FFB00054A550 /* libz.tbd */,
 				52BDCBBD1C3FD86900E2680F /* QuartzCore.framework */,
 				52BDCB181C3FD31F00E2680F /* Accelerate.framework */,
