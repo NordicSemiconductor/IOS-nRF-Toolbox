@@ -1,0 +1,25 @@
+PODS:
+  - EVReflection (2.24.0)
+  - iOSDFULibrary (0.1.1):
+    - EVReflection (~> 2.6)
+    - Zip (~> 0.3)
+  - Zip (0.3.4)
+
+DEPENDENCIES:
+  - iOSDFULibrary (from `https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library.git`)
+
+EXTERNAL SOURCES:
+  iOSDFULibrary:
+    :git: https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library.git
+
+CHECKOUT OPTIONS:
+  iOSDFULibrary:
+    :commit: 2493257f6070ac9fcfcd8526b276beb3bd30b67c
+    :git: https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library.git
+
+SPEC CHECKSUMS:
+  EVReflection: 1dbb41847798d88ab625007a6a311f28a5d71d86
+  iOSDFULibrary: d279c0429bc876d068fc689f78d999610ea8f22e
+  Zip: 99d6f8bdcbcf1fd2f189af929651282bdc42c2f7
+
+COCOAPODS: 0.39.0
