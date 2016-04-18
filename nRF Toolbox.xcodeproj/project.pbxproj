@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0E0F9A7A1CC0F49C00596575 /* DFULibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E0F9A791CC0F49C00596575 /* DFULibrary.framework */; };
-		0E0F9A7B1CC0F4D000596575 /* DFULibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0E0F9A791CC0F49C00596575 /* DFULibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0E645A0F1CBF957800D36AD0 /* firmwares in Resources */ = {isa = PBXBuildFile; fileRef = 7E6ED10A196ED482008010B6 /* firmwares */; };
 		5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAA1885642F007CC40D /* icon-dfu-64.png */; };
 		5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAB1885642F007CC40D /* icon-dfu-320.png */; };
@@ -65,11 +63,6 @@
 		7E6ED10F197D1D8D008010B6 /* AppFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6ED10E197D1D8D008010B6 /* AppFilesViewController.m */; };
 		7E6ED112197D1DA4008010B6 /* UserFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6ED111197D1DA4008010B6 /* UserFilesViewController.m */; };
 		7E99686C19800A260092E69E /* FolderFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E99686B19800A260092E69E /* FolderFilesViewController.m */; };
-		7EE6691E1983C7DD004680F0 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 7EE669141983C7DD004680F0 /* ioapi.c */; };
-		7EE6691F1983C7DD004680F0 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 7EE669161983C7DD004680F0 /* mztools.c */; };
-		7EE669201983C7DD004680F0 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 7EE669181983C7DD004680F0 /* unzip.c */; };
-		7EE669211983C7DD004680F0 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 7EE6691A1983C7DD004680F0 /* zip.c */; };
-		7EE669221983C7DD004680F0 /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EE6691D1983C7DD004680F0 /* SSZipArchive.m */; };
 		A80462591AD670480074F116 /* AppUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = A80462581AD670480074F116 /* AppUtilities.m */; };
 		A83894521B17731D005B738D /* EditPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A83894511B17731D005B738D /* EditPopupViewController.m */; };
 		A85667D91B1F3C1A004A6D3C /* LogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A85667D81B1F3C1A004A6D3C /* LogViewController.m */; };
@@ -94,7 +87,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				0E0F9A7B1CC0F4D000596575 /* DFULibrary.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -102,7 +94,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0E0F9A791CC0F49C00596575 /* DFULibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DFULibrary.framework; sourceTree = "<group>"; };
 		5211EFAA1885642F007CC40D /* icon-dfu-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-64.png"; sourceTree = "<group>"; };
 		5211EFAB1885642F007CC40D /* icon-dfu-320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-320.png"; sourceTree = "<group>"; };
 		5211EFAC1885642F007CC40D /* icon-hex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-hex.png"; sourceTree = "<group>"; };
@@ -278,17 +269,6 @@
 		7E6ED111197D1DA4008010B6 /* UserFilesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserFilesViewController.m; sourceTree = "<group>"; };
 		7E99686A19800A260092E69E /* FolderFilesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderFilesViewController.h; sourceTree = "<group>"; };
 		7E99686B19800A260092E69E /* FolderFilesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FolderFilesViewController.m; sourceTree = "<group>"; };
-		7EE669131983C7DD004680F0 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
-		7EE669141983C7DD004680F0 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
-		7EE669151983C7DD004680F0 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
-		7EE669161983C7DD004680F0 /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mztools.c; sourceTree = "<group>"; };
-		7EE669171983C7DD004680F0 /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
-		7EE669181983C7DD004680F0 /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unzip.c; sourceTree = "<group>"; };
-		7EE669191983C7DD004680F0 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
-		7EE6691A1983C7DD004680F0 /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
-		7EE6691B1983C7DD004680F0 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
-		7EE6691C1983C7DD004680F0 /* SSZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSZipArchive.h; sourceTree = "<group>"; };
-		7EE6691D1983C7DD004680F0 /* SSZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSZipArchive.m; sourceTree = "<group>"; };
 		A80462571AD670480074F116 /* AppUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppUtilities.h; sourceTree = "<group>"; };
 		A80462581AD670480074F116 /* AppUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppUtilities.m; sourceTree = "<group>"; };
 		A83894501B17731D005B738D /* EditPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditPopupViewController.h; sourceTree = "<group>"; };
@@ -309,7 +289,6 @@
 				522636371C60FFB00054A550 /* libz.tbd in Frameworks */,
 				52BDCB191C3FD31F00E2680F /* Accelerate.framework in Frameworks */,
 				52BDCBBE1C3FD86900E2680F /* QuartzCore.framework in Frameworks */,
-				0E0F9A7A1CC0F49C00596575 /* DFULibrary.framework in Frameworks */,
 				5217F41B1859EEF400F2D5BB /* CoreBluetooth.framework in Frameworks */,
 				5217F3E81859EE0000F2D5BB /* CoreGraphics.framework in Frameworks */,
 				5217F3EA1859EE0000F2D5BB /* UIKit.framework in Frameworks */,
@@ -347,7 +326,6 @@
 		5217F3D91859EE0000F2D5BB = {
 			isa = PBXGroup;
 			children = (
-				7EE669111983C7DD004680F0 /* SSZipArchive */,
 				52E08DC01889448400ED959F /* CorePlot */,
 				5214D0CD1886C02A00460637 /* Settings.bundle */,
 				5217F3EB1859EE0000F2D5BB /* nRF Toolbox */,
@@ -369,7 +347,6 @@
 		5217F3E41859EE0000F2D5BB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0E0F9A791CC0F49C00596575 /* DFULibrary.framework */,
 				522636361C60FFB00054A550 /* libz.tbd */,
 				52BDCBBD1C3FD86900E2680F /* QuartzCore.framework */,
 				52BDCB181C3FD31F00E2680F /* Accelerate.framework */,
@@ -734,33 +711,6 @@
 			path = Constants;
 			sourceTree = "<group>";
 		};
-		7EE669111983C7DD004680F0 /* SSZipArchive */ = {
-			isa = PBXGroup;
-			children = (
-				7EE669121983C7DD004680F0 /* minizip */,
-				7EE6691C1983C7DD004680F0 /* SSZipArchive.h */,
-				7EE6691D1983C7DD004680F0 /* SSZipArchive.m */,
-			);
-			name = SSZipArchive;
-			path = dependencies/SSZipArchive;
-			sourceTree = "<group>";
-		};
-		7EE669121983C7DD004680F0 /* minizip */ = {
-			isa = PBXGroup;
-			children = (
-				7EE669131983C7DD004680F0 /* crypt.h */,
-				7EE669141983C7DD004680F0 /* ioapi.c */,
-				7EE669151983C7DD004680F0 /* ioapi.h */,
-				7EE669161983C7DD004680F0 /* mztools.c */,
-				7EE669171983C7DD004680F0 /* mztools.h */,
-				7EE669181983C7DD004680F0 /* unzip.c */,
-				7EE669191983C7DD004680F0 /* unzip.h */,
-				7EE6691A1983C7DD004680F0 /* zip.c */,
-				7EE6691B1983C7DD004680F0 /* zip.h */,
-			);
-			path = minizip;
-			sourceTree = "<group>";
-		};
 		A85667DD1B222AA7004A6D3C /* AppImages */ = {
 			isa = PBXGroup;
 			children = (
@@ -933,7 +883,6 @@
 				A80462591AD670480074F116 /* AppUtilities.m in Sources */,
 				A86A784C1AB8542E00823AAB /* UARTViewController.m in Sources */,
 				7E445C971951D09E00633892 /* FileTypeViewController.m in Sources */,
-				7EE669201983C7DD004680F0 /* unzip.c in Sources */,
 				52BDCBD01C491B6F00E2680F /* BaseRevealViewController.m in Sources */,
 				524F2CE2188984E6008A8555 /* BGMDetailsViewController.m in Sources */,
 				5252A53E18802F7200EFD773 /* DFUViewController.m in Sources */,
@@ -954,12 +903,10 @@
 				7E445C8E1951A51A00633892 /* Utility.m in Sources */,
 				52BDCBC91C48FDB800E2680F /* BaseViewController.m in Sources */,
 				7E2A3C64196D408A009E2506 /* AccessFileSystem.m in Sources */,
-				7EE669211983C7DD004680F0 /* zip.c in Sources */,
 				5285D9A91890033F00305F1D /* CSCViewController.m in Sources */,
 				52BDCBDA1C4D1AAC00E2680F /* NSDataAsHex.m in Sources */,
 				5217F428185F28D400F2D5BB /* ScannedPeripheral.m in Sources */,
 				7E99686C19800A260092E69E /* FolderFilesViewController.m in Sources */,
-				7EE6691F1983C7DD004680F0 /* mztools.c in Sources */,
 				52BDCBC11C43D4CB00E2680F /* NavigationController.m in Sources */,
 				522636351C5F87E50054A550 /* SWRevealViewController.m in Sources */,
 				524F2CD818897078008A8555 /* BGMItemCell.m in Sources */,
@@ -968,11 +915,9 @@
 				5252A5361880260300EFD773 /* BGMViewController.m in Sources */,
 				524F2CE5188D2A56008A8555 /* GlucoseReadingContext.m in Sources */,
 				7E6ED10F197D1D8D008010B6 /* AppFilesViewController.m in Sources */,
-				7EE6691E1983C7DD004680F0 /* ioapi.c in Sources */,
 				5217F422185F15FA00F2D5BB /* ScannerViewController.m in Sources */,
 				52BDCBD71C49492300E2680F /* LogItemCell.m in Sources */,
 				5236E15F187EA73F0057E974 /* HRSViewController.m in Sources */,
-				7EE669221983C7DD004680F0 /* SSZipArchive.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
