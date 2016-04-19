@@ -21,7 +21,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import <DFULibrary/DFULibrary-Swift.h>
+#import "iOSDFULibrary-swift.h"
 
 @protocol FileTypeSelectionDelegate <NSObject>
 

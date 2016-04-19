@@ -1,4 +1,0 @@
-module HexToBinConverter [system][extern_c] {
-    header "IntelHex2BinConverter.h"
-    export *
-}
