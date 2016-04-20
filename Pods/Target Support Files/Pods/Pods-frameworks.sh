@@ -84,12 +84,14 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "Pods/CorePlot.framework"
   install_framework "Pods/EVReflection.framework"
   install_framework "Pods/SWRevealViewController.framework"
   install_framework "Pods/Zip.framework"
   install_framework "Pods/iOSDFULibrary.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "Pods/CorePlot.framework"
   install_framework "Pods/EVReflection.framework"
   install_framework "Pods/SWRevealViewController.framework"
   install_framework "Pods/Zip.framework"
