@@ -1,6 +1,8 @@
 # iOS DFU Library
+
 ## Changelog
 
+  - **0.1.5**: Improved readme
   - **0.1.4**: Removed unnecessary public headears from PodSpec
   - **0.1.3**: Removed extraneous IntelHextBin module as it's no longer necessary
   - **0.1.2**: Added Pod name that caused a missing reference issue and other minor bugfixes
@@ -8,31 +10,35 @@
   - **0.1.0**: Initial Pod implementation
 
 ## Usage
+
 ---
+
 #### Method 1: Via Cocoapods (Recommended method)
 
-  1) Open up a terminal window and `cd` to your project's root directory
-  2) Createa **Podfile** with the following content
+  - Open up a terminal window and **cd** to your project's root directory
+  - Create a **Podfile** with the following content
 
-    use_frameworks!
-        pod 'iOSDFULibrary'
-    end
+        use_frameworks!
+            pod 'iOSDFULibrary'
+        end
 
-  3) Install dependencies
+  - Install dependencies
 
-    pod install
+        pod install
 
-  4) Open the newly created `.xcworkspace` and begin working on your project.
+  - Open the newly created `.xcworkspace` and begin working on your project.
+
 ---
-#### Method 2: Building from source (Requires more configuration)
-  1) Create a new blank XCode workspace `/path/to/workspace` and open it
-  2) In Finder, drag your main project's `xcodeproject` file from `/path/to/myProject` into the new workspace
-  3) Clone the repository our other repository into `/path/to/dfuLibrary`
-  
-    cd /path/to/dfuLibrary && git clone git@github.com:NordicSemiconductor/IOS-DFU-Library.git
- 
-  4) In Finder, Drag the librarie's `xcodeproject` file into your workspace
-  5) Begin working on your project from within the workspace.
+
+#### Method 2: Building from source
+ - Create a new blank XCode workspace `/path/to/workspace` and open it
+ - In Finder, drag your main project's `xcodeproject` file from `/path/to/myProject` into the new workspace
+ - Clone the repository our other repository into `/path/to/dfuLibrary`
+
+        cd /path/to/dfuLibrary && git clone git@github.com:NordicSemiconductor/IOS-DFU-Library.git
+
+ - In Finder, Drag the librarie's `xcodeproject` file into your workspace
+ - Begin working on your project from within the workspace.
 
 ---
 
