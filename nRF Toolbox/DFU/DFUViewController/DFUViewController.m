@@ -400,6 +400,9 @@ currentSpeedBytesPerSecond:(double)speed avgSpeedBytesPerSecond:(double)avgSpeed
             case DFUFirmwareTypeApplication:
                 fileType.text = @"Application";
                 break;
+            default:
+                NSLog(@"Not implemented yet");
+                break;
         }
     }
     else
