@@ -947,7 +947,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PODS_ROOT)",
-					"$(PROJECT_DIR)/dependencies",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -992,7 +991,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PODS_ROOT)",
-					"$(PROJECT_DIR)/dependencies",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
