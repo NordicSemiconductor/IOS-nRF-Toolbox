@@ -27,8 +27,6 @@
 #import "FileSelectionDelegate.h"
 #import "FileTypeViewController.h"
 
-#import <DFULibrary/DFULibrary-Swift.h>
-
 @interface DFUViewController : BaseViewController <ScannerDelegate, FileSelectionDelegate, FileTypeSelectionDelegate,
 LoggerDelegate, DFUServiceDelegate, DFUProgressDelegate>
 

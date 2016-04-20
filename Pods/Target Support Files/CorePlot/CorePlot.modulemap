@@ -1,0 +1,28 @@
+framework module CorePlot {
+  umbrella header "CorePlot-umbrella.h"
+
+  export *
+  module * { export * }
+
+  private header "_CPTAnimationCGFloatPeriod.h"
+  private header "_CPTAnimationCGPointPeriod.h"
+  private header "_CPTAnimationCGRectPeriod.h"
+  private header "_CPTAnimationCGSizePeriod.h"
+  private header "_CPTAnimationNSDecimalPeriod.h"
+  private header "_CPTAnimationNSNumberPeriod.h"
+  private header "_CPTAnimationPlotRangePeriod.h"
+  private header "_CPTAnimationTimingFunctions.h"
+  private header "_CPTBorderLayer.h"
+  private header "_CPTConstraintsFixed.h"
+  private header "_CPTConstraintsRelative.h"
+  private header "_CPTDarkGradientTheme.h"
+  private header "_CPTFillColor.h"
+  private header "_CPTFillGradient.h"
+  private header "_CPTFillImage.h"
+  private header "_CPTMaskLayer.h"
+  private header "_CPTPlainBlackTheme.h"
+  private header "_CPTPlainWhiteTheme.h"
+  private header "_CPTSlateTheme.h"
+  private header "_CPTStocksTheme.h"
+  private header "_CPTXYTheme.h"
+}
