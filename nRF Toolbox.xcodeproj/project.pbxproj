@@ -33,7 +33,6 @@
 		5217F422185F15FA00F2D5BB /* ScannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5217F421185F15FA00F2D5BB /* ScannerViewController.m */; };
 		5217F428185F28D400F2D5BB /* ScannedPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = 5217F427185F28D400F2D5BB /* ScannedPeripheral.m */; };
 		5226362F1C5A601C0054A550 /* HowToCreateDistributionPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5226362E1C5A601C0054A550 /* HowToCreateDistributionPacket.m */; };
-		522636351C5F87E50054A550 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 522636341C5F87E50054A550 /* SWRevealViewController.m */; };
 		522636371C60FFB00054A550 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 522636361C60FFB00054A550 /* libz.tbd */; };
 		5236E15F187EA73F0057E974 /* HRSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5236E15E187EA73F0057E974 /* HRSViewController.m */; };
 		5236E162187EA7540057E974 /* HTSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5236E161187EA7540057E974 /* HTSViewController.m */; };
@@ -132,8 +131,6 @@
 		5226362A1C564E5F0054A550 /* FileSelectionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSelectionDelegate.h; sourceTree = "<group>"; };
 		5226362D1C5A601C0054A550 /* HowToCreateDistributionPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HowToCreateDistributionPacket.h; sourceTree = "<group>"; };
 		5226362E1C5A601C0054A550 /* HowToCreateDistributionPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HowToCreateDistributionPacket.m; sourceTree = "<group>"; };
-		522636331C5F87E50054A550 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWRevealViewController.h; path = SWRevealViewController/SWRevealViewController.h; sourceTree = "<group>"; };
-		522636341C5F87E50054A550 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWRevealViewController.m; path = SWRevealViewController/SWRevealViewController.m; sourceTree = "<group>"; };
 		522636361C60FFB00054A550 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		5236E15D187EA73F0057E974 /* HRSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRSViewController.h; sourceTree = "<group>"; };
 		5236E15E187EA73F0057E974 /* HRSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRSViewController.m; sourceTree = "<group>"; };
@@ -381,7 +378,6 @@
 				5252A53F1880307D00EFD773 /* PROXIMITY */,
 				5236E163187EA76B0057E974 /* RSAC */,
 				A86A78491AB8537200823AAB /* UART */,
-				52BDCBCA1C490C6000E2680F /* RevealViewVontroller */,
 				52BDCBD11C491C0B00E2680F /* BaseViewController */,
 				5214D0CF18881D0200460637 /* Utilities */,
 				5217F3F41859EE0000F2D5BB /* AppDelegate.h */,
@@ -639,15 +635,6 @@
 			);
 			name = CorePlotHeaders;
 			path = dependencies/CorePlotHeaders;
-			sourceTree = "<group>";
-		};
-		52BDCBCA1C490C6000E2680F /* RevealViewVontroller */ = {
-			isa = PBXGroup;
-			children = (
-				522636331C5F87E50054A550 /* SWRevealViewController.h */,
-				522636341C5F87E50054A550 /* SWRevealViewController.m */,
-			);
-			name = RevealViewVontroller;
 			sourceTree = "<group>";
 		};
 		52BDCBD11C491C0B00E2680F /* BaseViewController */ = {
@@ -975,7 +962,6 @@
 				5217F428185F28D400F2D5BB /* ScannedPeripheral.m in Sources */,
 				7E99686C19800A260092E69E /* FolderFilesViewController.m in Sources */,
 				52BDCBC11C43D4CB00E2680F /* NavigationController.m in Sources */,
-				522636351C5F87E50054A550 /* SWRevealViewController.m in Sources */,
 				524F2CD818897078008A8555 /* BGMItemCell.m in Sources */,
 				5214D0D218881D4D00460637 /* CharacteristicReader.m in Sources */,
 				5236E16C187EC6880057E974 /* StubViewController.m in Sources */,
