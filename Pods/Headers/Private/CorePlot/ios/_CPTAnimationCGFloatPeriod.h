@@ -1,0 +1,1 @@
+../../../../CorePlot/framework/Source/_CPTAnimationCGFloatPeriod.h
