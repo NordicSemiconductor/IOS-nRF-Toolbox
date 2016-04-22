@@ -383,7 +383,7 @@ enum
     [readings removeAllObjects];
     [cbgmTableView reloadData];
     
-    [deviceName setText:@"DEFAULT BGM"];
+    [deviceName setText:@"DEFAULT CGM"];
     battery.tag = 0;
     [battery setTitle:@"n/a" forState:UIControlStateDisabled];
 }
@@ -440,24 +440,24 @@ enum
     // Characteristics for one of those services has been found
     if ([service.UUID isEqual:cbgmServiceUUID])
     {
+
         for (CBCharacteristic *characteristic in service.characteristics)
         {
-            if (([characteristic properties] & CBCharacteristicPropertyNotify) > 0) {
+            if ([characteristic.UUID isEqual:cgmGlucoseMeasurementCharacteristicUUID] ||
+                [characteristic.UUID isEqual:cgmGlucoseMeasurementContextCharacteristicUUID])
+            {
+                // Enable notification on data characteristic
                 [peripheral setNotifyValue:YES forCharacteristic:characteristic];
+                [peripheral readValueForCharacteristic:characteristic];
             }
-//            if ([characteristic.UUID isEqual:cgmGlucoseMeasurementCharacteristicUUID] ||
-//                [characteristic.UUID isEqual:cgmGlucoseMeasurementContextCharacteristicUUID])
-//            {
-//                // Enable notification on data characteristic
-//                [peripheral setNotifyValue:YES forCharacteristic:characteristic];
-//            }
-//            else if ([characteristic.UUID isEqual:cgmRecordAccessControlPointCharacteristicUUID])
-//            {
-//                bgmRecordAccessControlPointCharacteristic = characteristic;
-//                
-//                // Enable notification on data characteristic
-//                [peripheral setNotifyValue:YES forCharacteristic:characteristic];
-//            }
+            else if ([characteristic.UUID isEqual:cgmRecordAccessControlPointCharacteristicUUID])
+            {
+                cgmRecordAccessControlPointCharacteristic = characteristic;
+                
+                // Enable notification on data characteristic
+                [peripheral setNotifyValue:YES forCharacteristic:characteristic];
+                [peripheral readValueForCharacteristic:characteristic];
+            }
         }
     }
     else if ([service.UUID isEqual:batteryServiceUUID])
@@ -476,6 +476,8 @@ enum
 
 -(void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
+    NSLog(@"Characteristic update: %@", characteristic.UUID);
+
     // Decode the characteristic data
     NSData *data = characteristic.value;
     uint8_t *array = (uint8_t*) data.bytes;
@@ -536,6 +538,7 @@ enum
     else if ([characteristic.UUID isEqual:cgmRecordAccessControlPointCharacteristicUUID])
     {
         NSLog(@"CGM Accesscontrol update!");
+        return;
         RecordAccessParam* param = (RecordAccessParam*) array;
         
         dispatch_async(dispatch_get_main_queue(), ^{
