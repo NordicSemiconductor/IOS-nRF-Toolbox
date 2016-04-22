@@ -35,5 +35,6 @@
 + (NSString *) getCSCHelpText;
 + (NSString *) getBPMHelpText;
 + (NSString *) getBGMHelpText;
++ (NSString *) getCBGMHelpText;
 
 @end
