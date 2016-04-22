@@ -434,13 +434,13 @@
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r0F-IH-HA0">
                                                     <rect key="frame" x="0.0" y="0.0" width="78" height="78"/>
-                                                    <state key="normal" image="FeatureBGM" backgroundImage="FeatureBackground"/>
+                                                    <state key="normal" image="FeatureCGM" backgroundImage="FeatureBackground"/>
                                                     <state key="highlighted" image="FeatureBGM" backgroundImage="FeatureBackgroundPressed"/>
                                                     <connections>
                                                         <segue destination="7dt-BO-10S" kind="show" id="Jgf-KN-D4H"/>
                                                     </connections>
                                                 </button>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cont. BGM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UQO-k1-OQO">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="CGM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UQO-k1-OQO">
                                                     <rect key="frame" x="-4" y="76" width="86" height="21"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -4613,7 +4613,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DEFAULT BGM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D2E-qg-TTe">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DEFAULT CGM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D2E-qg-TTe">
                                 <rect key="frame" x="86" y="11" width="492" height="27"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="27" id="0kE-8A-Kd3"/>
@@ -4637,9 +4637,10 @@
                                 </state>
                                 <connections>
                                     <action selector="connectOrDisconnectClicked" destination="7dt-BO-10S" eventType="touchUpInside" id="lcK-9Y-iXt"/>
+                                    <segue destination="BQP-B5-Tee" kind="show" identifier="scan" id="HCL-ul-C5w"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="BLOOD GLUCOSE MONITOR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X8w-cq-8Lg">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="CONTINUOUS GLUCOSE MONITOR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X8w-cq-8Lg">
                                 <rect key="frame" x="0.0" y="60" width="32" height="383"/>
                                 <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="27"/>
                                 <color key="textColor" red="0.66666666669999997" green="0.6705882353" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
@@ -4829,6 +4830,7 @@
         <image name="FeatureBPM" width="78" height="78"/>
         <image name="FeatureBackground" width="78" height="78"/>
         <image name="FeatureBackgroundPressed" width="78" height="78"/>
+        <image name="FeatureCGM" width="156" height="156"/>
         <image name="FeatureCSC" width="78" height="78"/>
         <image name="FeatureDFU" width="78" height="78"/>
         <image name="FeatureHRS" width="78" height="78"/>
@@ -4868,7 +4870,7 @@
         <image name="userIcon" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="avT-gU-1Yo"/>
+        <segue reference="HCL-ul-C5w"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.60392159219999997" blue="0.85490196939999996" alpha="1" colorSpace="calibratedRGB"/>
 </document>

@@ -44,10 +44,16 @@ enum
 @interface CBGMViewController () {
     NSDateFormatter *dateFormat;
     
-    CBUUID *bgmServiceUUID;
-    CBUUID *bgmGlucoseMeasurementCharacteristicUUID;
-    CBUUID *bgmGlucoseMeasurementContextCharacteristicUUID;
-    CBUUID *bgmRecordAccessControlPointCharacteristicUUID;
+    CBUUID *cbgmServiceUUID;
+    CBUUID *cgmGlucoseMeasurementCharacteristicUUID;
+    CBUUID *cgmGlucoseMeasurementContextCharacteristicUUID;
+    CBUUID *cgmRecordAccessControlPointCharacteristicUUID;
+    CBUUID *cgmFeatureCharacteristicUUID;
+    CBUUID *cgmStatusCharacteristicUUID;
+    CBUUID *cgmSessionStartTimeCharacteristicUUID;
+    CBUUID *cgmSessionRunTimeCharacteristicUUID;
+    CBUUID *cgmSpecificOpsControlPointCharacteristicUUID;
+    
     CBUUID *batteryServiceUUID;
     CBUUID *batteryLevelCharacteristicUUID;
 }
@@ -57,7 +63,7 @@ enum
  * after user press Disconnect button.
  */
 @property (strong, nonatomic) CBPeripheral *connectedPeripheral;
-@property (strong, nonatomic) CBCharacteristic* bgmRecordAccessControlPointCharacteristic;
+@property (strong, nonatomic) CBCharacteristic* cgmRecordAccessControlPointCharacteristic;
 @property (strong, nonatomic) NSMutableArray* readings;
 @property (weak, nonatomic) IBOutlet UITableView *cbgmTableView;
 
@@ -76,7 +82,7 @@ enum
 @synthesize cbgmTableView;
 @synthesize recordButton;
 @synthesize readings;
-@synthesize bgmRecordAccessControlPointCharacteristic;
+@synthesize cgmRecordAccessControlPointCharacteristic;
 
 
 -(id)initWithCoder:(NSCoder *)aDecoder
@@ -89,10 +95,16 @@ enum
         dateFormat = [[NSDateFormatter alloc] init];
         [dateFormat setDateFormat:@"dd.MM.yyyy, hh:mm"];
         
-        bgmServiceUUID = [CBUUID UUIDWithString:bgmServiceUUIDString];
-        bgmGlucoseMeasurementCharacteristicUUID = [CBUUID UUIDWithString:bgmGlucoseMeasurementCharacteristicUUIDString];
-        bgmGlucoseMeasurementContextCharacteristicUUID = [CBUUID UUIDWithString:bgmGlucoseMeasurementContextCharacteristicUUIDString];
-        bgmRecordAccessControlPointCharacteristicUUID = [CBUUID UUIDWithString:bgmRecordAccessControlPointCharacteristicUUIDString];
+        cbgmServiceUUID = [CBUUID UUIDWithString:cgmServiceUUIDString];
+        cgmGlucoseMeasurementCharacteristicUUID         = [CBUUID UUIDWithString:bgmGlucoseMeasurementCharacteristicUUIDString];
+        cgmGlucoseMeasurementContextCharacteristicUUID  = [CBUUID UUIDWithString:bgmGlucoseMeasurementContextCharacteristicUUIDString];
+        cgmRecordAccessControlPointCharacteristicUUID   = [CBUUID UUIDWithString:bgmRecordAccessControlPointCharacteristicUUIDString];
+        cgmFeatureCharacteristicUUID                    = [CBUUID UUIDWithString:cgmFeatureCharacteristicUUIDString];
+        cgmStatusCharacteristicUUID                     = [CBUUID UUIDWithString:cgmStatusCharacteristicUUIDString];
+        cgmSessionStartTimeCharacteristicUUID           = [CBUUID UUIDWithString:cgmSessionRunTimeCharacteristicUUIDString];
+        cgmSessionRunTimeCharacteristicUUID             = [CBUUID UUIDWithString:cgmSessionRunTimeCharacteristicUUIDString];
+        cgmSpecificOpsControlPointCharacteristicUUID    = [CBUUID UUIDWithString:cgmSpecificOpsControlPointCharacteristicUUIDString];
+
         batteryServiceUUID = [CBUUID UUIDWithString:batteryServiceUUIDString];
         batteryLevelCharacteristicUUID = [CBUUID UUIDWithString:batteryLevelCharacteristicUUIDString];
     }
@@ -143,7 +155,7 @@ enum
 }
 
 - (IBAction)aboutButtonClicked:(id)sender {
-    [self showAbout:[AppUtilities getBGMHelpText]];
+    [self showAbout:[AppUtilities getCBGMHelpText]];
 }
 
 - (IBAction)connectOrDisconnectClicked {
@@ -166,7 +178,7 @@ enum
         // Set this contoller as scanner delegate
         UINavigationController *nc = segue.destinationViewController;
         ScannerViewController *controller = (ScannerViewController *)nc.childViewControllerForStatusBarHidden;
-        controller.filterUUID = bgmServiceUUID;
+        controller.filterUUID = cbgmServiceUUID;
         controller.delegate = self;
     }
     else if ([segue.identifier isEqualToString:@"details"])
@@ -299,7 +311,7 @@ enum
     if (size > 0)
     {
         NSData* data = [NSData dataWithBytes:&param length:size];
-        [connectedPeripheral writeValue:data forCharacteristic:bgmRecordAccessControlPointCharacteristic type:CBCharacteristicWriteWithResponse];
+        [connectedPeripheral writeValue:data forCharacteristic:cgmRecordAccessControlPointCharacteristic type:CBCharacteristicWriteWithResponse];
     }
 }
 
@@ -335,7 +347,7 @@ enum
     
     // Peripheral has connected. Discover required services
     connectedPeripheral = peripheral;
-    [peripheral discoverServices:@[bgmServiceUUID, batteryServiceUUID]];
+    [peripheral discoverServices:@[cbgmServiceUUID, batteryServiceUUID]];
 }
 
 -(void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
@@ -404,9 +416,17 @@ enum
     for (CBService *service in peripheral.services)
     {
         // Discovers the characteristics for a given service
-        if ([service.UUID isEqual:bgmServiceUUID])
+        if ([service.UUID isEqual:cbgmServiceUUID])
         {
-            [connectedPeripheral discoverCharacteristics:@[bgmGlucoseMeasurementCharacteristicUUID, bgmGlucoseMeasurementContextCharacteristicUUID, bgmRecordAccessControlPointCharacteristicUUID] forService:service];
+            [connectedPeripheral discoverCharacteristics:@[cgmGlucoseMeasurementCharacteristicUUID,
+                                                           cgmGlucoseMeasurementContextCharacteristicUUID,
+                                                           cgmRecordAccessControlPointCharacteristicUUID,
+                                                           cgmFeatureCharacteristicUUID,
+                                                           cgmStatusCharacteristicUUID,
+                                                           cgmSessionStartTimeCharacteristicUUID,
+                                                           cgmSessionRunTimeCharacteristicUUID,
+                                                           cgmSpecificOpsControlPointCharacteristicUUID]
+                                              forService:service];
         }
         else if ([service.UUID isEqual:batteryServiceUUID])
         {
@@ -418,23 +438,26 @@ enum
 -(void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error
 {
     // Characteristics for one of those services has been found
-    if ([service.UUID isEqual:bgmServiceUUID])
+    if ([service.UUID isEqual:cbgmServiceUUID])
     {
         for (CBCharacteristic *characteristic in service.characteristics)
         {
-            if ([characteristic.UUID isEqual:bgmGlucoseMeasurementCharacteristicUUID] ||
-                [characteristic.UUID isEqual:bgmGlucoseMeasurementContextCharacteristicUUID])
-            {
-                // Enable notification on data characteristic
+            if (([characteristic properties] & CBCharacteristicPropertyNotify) > 0) {
                 [peripheral setNotifyValue:YES forCharacteristic:characteristic];
             }
-            else if ([characteristic.UUID isEqual:bgmRecordAccessControlPointCharacteristicUUID])
-            {
-                bgmRecordAccessControlPointCharacteristic = characteristic;
-                
-                // Enable notification on data characteristic
-                [peripheral setNotifyValue:YES forCharacteristic:characteristic];
-            }
+//            if ([characteristic.UUID isEqual:cgmGlucoseMeasurementCharacteristicUUID] ||
+//                [characteristic.UUID isEqual:cgmGlucoseMeasurementContextCharacteristicUUID])
+//            {
+//                // Enable notification on data characteristic
+//                [peripheral setNotifyValue:YES forCharacteristic:characteristic];
+//            }
+//            else if ([characteristic.UUID isEqual:cgmRecordAccessControlPointCharacteristicUUID])
+//            {
+//                bgmRecordAccessControlPointCharacteristic = characteristic;
+//                
+//                // Enable notification on data characteristic
+//                [peripheral setNotifyValue:YES forCharacteristic:characteristic];
+//            }
         }
     }
     else if ([service.UUID isEqual:batteryServiceUUID])
@@ -456,12 +479,10 @@ enum
     // Decode the characteristic data
     NSData *data = characteristic.value;
     uint8_t *array = (uint8_t*) data.bytes;
-    
     if ([characteristic.UUID isEqual:batteryLevelCharacteristicUUID])
     {
         uint8_t batteryLevel = [CharacteristicReader readUInt8Value:&array];
         NSString* text = [[NSString alloc] initWithFormat:@"%d%%", batteryLevel];
-        
         // Scanner uses other queue to send events. We must edit UI in the main queue
         dispatch_async(dispatch_get_main_queue(), ^{
             [battery setTitle:text forState:UIControlStateDisabled];
@@ -479,8 +500,9 @@ enum
             }
         }
     }
-    else if ([characteristic.UUID isEqual:bgmGlucoseMeasurementCharacteristicUUID])
+    else if ([characteristic.UUID isEqual:cgmGlucoseMeasurementCharacteristicUUID])
     {
+        NSLog(@"Glucose reading update!");
         GlucoseReading* reading = [GlucoseReading readingFromBytes:array];
         if ([readings containsObject:reading])
         {
@@ -494,8 +516,9 @@ enum
             [readings addObject:reading];
         }
     }
-    else if ([characteristic.UUID isEqual:bgmGlucoseMeasurementContextCharacteristicUUID])
+    else if ([characteristic.UUID isEqual:cgmGlucoseMeasurementContextCharacteristicUUID])
     {
+        NSLog(@"Glucose measurement ctx update!");
         //uint8_t test[] = { 0x5F, 0x00, 0x00, 0x02, 0x01, 0xF0, 0x03, 0x13, 0xF2, 0x00, 0x22, 0x03, 0x03, 0xF0, 0x01, 0xE0 };// test data
         GlucoseReadingContext* context = [GlucoseReadingContext readingContextFromBytes:array];
         // The indexIfObjext method uses isEqual method from GlucodeReadingContext (comparing with GlucoseReading by sequence number)
@@ -510,8 +533,9 @@ enum
             NSLog(@"Glucose Measurement with seq no %d not found", context.sequenceNumber);
         }
     }
-    else if ([characteristic.UUID isEqual:bgmRecordAccessControlPointCharacteristicUUID])
+    else if ([characteristic.UUID isEqual:cgmRecordAccessControlPointCharacteristicUUID])
     {
+        NSLog(@"CGM Accesscontrol update!");
         RecordAccessParam* param = (RecordAccessParam*) array;
         
         dispatch_async(dispatch_get_main_queue(), ^{
