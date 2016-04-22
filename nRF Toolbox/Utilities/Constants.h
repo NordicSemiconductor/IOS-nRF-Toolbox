@@ -25,9 +25,18 @@
 
 #define is4InchesIPhone ([[UIScreen mainScreen] bounds].size.height == 568)
 
+static NSString * const cgmServiceUUIDString = @"0000181F-0000-1000-8000-00805F9B34FB";
+static NSString * const cgmGlucoseMeasurementCharacteristicUUIDString = @"00002AA7-0000-1000-8000-00805F9B34FB";
+static NSString * const cgmFeatureCharacteristicUUIDString = @"00002AA8-0000-1000-8000-00805F9B34FB";
+static NSString * const cgmStatusCharacteristicUUIDString = @"00002AA9-0000-1000-8000-00805F9B34FB";
+static NSString * const cgmSessionStartTimeCharacteristicUUIDString = @"00002AAA-0000-1000-8000-00805F9B34FB";
+static NSString * const cgmSessionRunTimeCharacteristicUUIDString = @"00002AAB-0000-1000-8000-00805F9B34FB";
+static NSString * const cgmSpecificOpsControlPointCharacteristicUUIDString = @"00002AAC-0000-1000-8000-00805F9B34FB";
+
 static NSString * const bgmServiceUUIDString = @"00001808-0000-1000-8000-00805F9B34FB";
 static NSString * const bgmGlucoseMeasurementCharacteristicUUIDString = @"00002A18-0000-1000-8000-00805F9B34FB";
 static NSString * const bgmGlucoseMeasurementContextCharacteristicUUIDString = @"00002A34-0000-1000-8000-00805F9B34FB";
+static NSString * const bgmGlucoseFeatureCharacteristicUUIDString = @"00002A51-0000-1000-8000-00805F9B34FB";
 static NSString * const bgmRecordAccessControlPointCharacteristicUUIDString = @"00002A52-0000-1000-8000-00805F9B34FB";
 
 static NSString * const bpmServiceUUIDString = @"00001810-0000-1000-8000-00805F9B34FB";
