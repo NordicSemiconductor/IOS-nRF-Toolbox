@@ -25,20 +25,15 @@
 #import "CBGMItemCell.h"
 #import "ScannerViewController.h"
 #import "GlucoseReading.h"
-#import "RecordAccess.h"
+#import "CGMSpecificOperations.h"
 #import "Constants.h"
 #import "AppUtilities.h"
 #import "CharacteristicReader.h"
 
 enum
 {
-    ACTION_REFRESH,
-    ACTION_ALL_RECORDS,
-    ACTION_FIRST_RECORD,
-    ACTION_LAST_RECORD,
-    ACTION_CLEAR,
-    ACTION_DELETE_ALL,
-    ACTION_CANCEL
+    ACTION_START_SESSION,
+    ACTION_STOP_SESSION,
 };
 
 @interface CBGMViewController () {
@@ -64,6 +59,7 @@ enum
  */
 @property (strong, nonatomic) CBPeripheral *connectedPeripheral;
 @property (strong, nonatomic) CBCharacteristic* cgmRecordAccessControlPointCharacteristic;
+@property (strong, nonatomic) CBCharacteristic* cgmSpecificOpsControlPointCharacteristic;
 @property (strong, nonatomic) NSMutableArray* readings;
 @property (weak, nonatomic) IBOutlet UITableView *cbgmTableView;
 
@@ -82,6 +78,7 @@ enum
 @synthesize cbgmTableView;
 @synthesize recordButton;
 @synthesize readings;
+@synthesize cgmSpecificOpsControlPointCharacteristic;
 @synthesize cgmRecordAccessControlPointCharacteristic;
 
 
@@ -96,12 +93,12 @@ enum
         [dateFormat setDateFormat:@"dd.MM.yyyy, hh:mm"];
         
         cbgmServiceUUID = [CBUUID UUIDWithString:cgmServiceUUIDString];
-        cgmGlucoseMeasurementCharacteristicUUID         = [CBUUID UUIDWithString:bgmGlucoseMeasurementCharacteristicUUIDString];
+        cgmGlucoseMeasurementCharacteristicUUID         = [CBUUID UUIDWithString:cgmGlucoseMeasurementCharacteristicUUIDString];
         cgmGlucoseMeasurementContextCharacteristicUUID  = [CBUUID UUIDWithString:bgmGlucoseMeasurementContextCharacteristicUUIDString];
         cgmRecordAccessControlPointCharacteristicUUID   = [CBUUID UUIDWithString:bgmRecordAccessControlPointCharacteristicUUIDString];
         cgmFeatureCharacteristicUUID                    = [CBUUID UUIDWithString:cgmFeatureCharacteristicUUIDString];
         cgmStatusCharacteristicUUID                     = [CBUUID UUIDWithString:cgmStatusCharacteristicUUIDString];
-        cgmSessionStartTimeCharacteristicUUID           = [CBUUID UUIDWithString:cgmSessionRunTimeCharacteristicUUIDString];
+        cgmSessionStartTimeCharacteristicUUID           = [CBUUID UUIDWithString:cgmSessionStartTimeCharacteristicUUIDString];
         cgmSessionRunTimeCharacteristicUUID             = [CBUUID UUIDWithString:cgmSessionRunTimeCharacteristicUUIDString];
         cgmSpecificOpsControlPointCharacteristicUUID    = [CBUUID UUIDWithString:cgmSpecificOpsControlPointCharacteristicUUIDString];
 
@@ -138,20 +135,16 @@ enum
 }
 
 - (IBAction)actionButtonClicked:(id)sender {
+
     UIActionSheet *actionSheet = [[UIActionSheet alloc] init];
     actionSheet.delegate = self;
-    
-    [actionSheet addButtonWithTitle:@"Refresh"];
-    [actionSheet addButtonWithTitle:@"All"];
-    [actionSheet addButtonWithTitle:@"First"];
-    [actionSheet addButtonWithTitle:@"Last"];
-    [actionSheet addButtonWithTitle:@"Clear"];
-    [actionSheet addButtonWithTitle:@"Delete All"];
-    [actionSheet addButtonWithTitle:@"Cancel"];
-    [actionSheet setDestructiveButtonIndex:ACTION_DELETE_ALL];
-    [actionSheet setCancelButtonIndex:ACTION_CANCEL];
-    
+
+    [actionSheet addButtonWithTitle:@"Start Session"];
+    [actionSheet addButtonWithTitle:@"Stop Session"];
+    [actionSheet setDestructiveButtonIndex:1];
+
     [actionSheet showInView:self.view];
+
 }
 
 - (IBAction)aboutButtonClicked:(id)sender {
@@ -240,63 +233,34 @@ enum
 }
 
 #pragma mark Action Sheet delegate methods
-
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    // Cancel button pressed?
-    if (buttonIndex == ACTION_CANCEL)
-        return;
-    
-    RecordAccessParam param;
+   
+    SpecficOpsParam param;
     NSInteger size = 0;
     BOOL clearList = YES;
+    CBCharacteristic *targetCharacteristic = Nil;
+    NSLog(@"Start session");
+    param.opCode = START_SESSION;
+    size = 1;
+    
     switch (buttonIndex)
     {
-        case ACTION_REFRESH:
+        case ACTION_START_SESSION:
         {
-            if ([readings count] > 0)
-            {
-                param.opCode = REPORT_STORED_RECORDS;
-                param.operatorType = GREATER_THAN_OR_EQUAL;
-                param.value.singleParam.filterType = SEQUENCE_NUMBER;
-                GlucoseReading* reading = [readings objectAtIndex:([readings count] - 1)];
-                param.value.singleParam.paramLE = CFSwapInt16HostToLittle(reading.sequenceNumber);
-                size = 5;
-                clearList = NO;
-                break;
-            } // else, obtain all records
-        }
-        case ACTION_ALL_RECORDS:
-        {
-            param.opCode = REPORT_STORED_RECORDS;
-            param.operatorType = ALL_RECORDS;
-            size = 2;
+            NSLog(@"Start session");
+            param.opCode = START_SESSION;
+            param.operatorType = 0x00;
+            size = 1;
+            targetCharacteristic = cgmSpecificOpsControlPointCharacteristic;
             break;
         }
-        case ACTION_FIRST_RECORD:
+        case ACTION_STOP_SESSION:
         {
-            param.opCode = REPORT_STORED_RECORDS;
-            param.operatorType = FIRST_RECORD;
-            size = 2;
-            break;
-        }
-        case ACTION_LAST_RECORD:
-        {
-            param.opCode = REPORT_STORED_RECORDS;
-            param.operatorType = LAST_RECORD;
-            size = 2;
-            break;
-        }
-        case ACTION_CLEAR:
-        {
-            // do nothing
-            break;
-        }
-        case ACTION_DELETE_ALL:
-        {
-            param.opCode = DELETE_STORED_RECORDS;
-            param.operatorType = ALL_RECORDS;
-            size = 2;
+            NSLog(@"Stop session");
+            param.opCode = STOP_SESSION;
+            size = 1;
+            targetCharacteristic = cgmSpecificOpsControlPointCharacteristic;
             break;
         }
     }
@@ -307,11 +271,10 @@ enum
         [readings removeAllObjects];
         [cbgmTableView reloadData];
     }
-    
-    if (size > 0)
-    {
+
+    if(size > 0) {
         NSData* data = [NSData dataWithBytes:&param length:size];
-        [connectedPeripheral writeValue:data forCharacteristic:cgmRecordAccessControlPointCharacteristic type:CBCharacteristicWriteWithResponse];
+        [connectedPeripheral writeValue:data forCharacteristic:targetCharacteristic type:CBCharacteristicWriteWithResponse];
     }
 }
 
@@ -415,6 +378,7 @@ enum
     
     for (CBService *service in peripheral.services)
     {
+
         // Discovers the characteristics for a given service
         if ([service.UUID isEqual:cbgmServiceUUID])
         {
@@ -440,23 +404,26 @@ enum
     // Characteristics for one of those services has been found
     if ([service.UUID isEqual:cbgmServiceUUID])
     {
-
         for (CBCharacteristic *characteristic in service.characteristics)
         {
+            [peripheral setNotifyValue:YES forCharacteristic:characteristic];
             if ([characteristic.UUID isEqual:cgmGlucoseMeasurementCharacteristicUUID] ||
                 [characteristic.UUID isEqual:cgmGlucoseMeasurementContextCharacteristicUUID])
             {
                 // Enable notification on data characteristic
-                [peripheral setNotifyValue:YES forCharacteristic:characteristic];
-                [peripheral readValueForCharacteristic:characteristic];
+//                [peripheral setNotifyValue:YES forCharacteristic:characteristic];
             }
             else if ([characteristic.UUID isEqual:cgmRecordAccessControlPointCharacteristicUUID])
             {
                 cgmRecordAccessControlPointCharacteristic = characteristic;
-                
                 // Enable notification on data characteristic
-                [peripheral setNotifyValue:YES forCharacteristic:characteristic];
-                [peripheral readValueForCharacteristic:characteristic];
+//                [peripheral setNotifyValue:YES forCharacteristic:characteristic];
+            }
+            else if ([characteristic.UUID isEqual:cgmSpecificOpsControlPointCharacteristicUUID])
+            {
+                cgmSpecificOpsControlPointCharacteristic = characteristic;
+                // Enable notification on data characteristic
+//                [peripheral setNotifyValue:YES forCharacteristic:characteristic];
             }
         }
     }
@@ -476,7 +443,6 @@ enum
 
 -(void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-    NSLog(@"Characteristic update: %@", characteristic.UUID);
 
     // Decode the characteristic data
     NSData *data = characteristic.value;
@@ -504,23 +470,65 @@ enum
     }
     else if ([characteristic.UUID isEqual:cgmGlucoseMeasurementCharacteristicUUID])
     {
-        NSLog(@"Glucose reading update!");
-        GlucoseReading* reading = [GlucoseReading readingFromBytes:array];
-        if ([readings containsObject:reading])
-        {
-            // If the reading has been found (the same reading has the same sequence number), replace it with the new one
-            // The indexIfObjext method uses isEqual method from GlucodeReading (comparing by sequence number only)
-            [readings replaceObjectAtIndex:[readings indexOfObject:reading] withObject:reading];
-        }
-        else
-        {
-            // If not, just add the new one to the array
-            [readings addObject:reading];
-        }
+        NSLog(@"Glucose measurement update!");
+        SpecficOpsParam* param = (SpecficOpsParam*) array;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            GlucoseReading* reading = [GlucoseReading readingFromBytes:array];
+            if ([readings containsObject:reading])
+            {
+                // If the reading has been found (the same reading has the same sequence number), replace it with the new one
+                // The indexIfObjext method uses isEqual method from GlucodeReading (comparing by sequence number only)
+                [readings replaceObjectAtIndex:[readings indexOfObject:reading] withObject:reading];
+            }
+            else
+            {
+                // If not, just add the new one to the array
+                [readings addObject:reading];
+            }
+            [cbgmTableView reloadData];
+        });
+//        NSLog(@"Response code: %d", param->value.response.responseCode);
+//
+//        switch (param->value.response.responseCode)
+//        {
+//            case SUCCESS:
+//            {
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    GlucoseReading* reading = [GlucoseReading readingFromBytes:array];
+//                    if ([readings containsObject:reading])
+//                    {
+//                        // If the reading has been found (the same reading has the same sequence number), replace it with the new one
+//                        // The indexIfObjext method uses isEqual method from GlucodeReading (comparing by sequence number only)
+//                        [readings replaceObjectAtIndex:[readings indexOfObject:reading] withObject:reading];
+//                    }
+//                    else
+//                    {
+//                        // If not, just add the new one to the array
+//                        [readings addObject:reading];
+//                    }
+//                   [cbgmTableView reloadData];
+//                });
+//                break;
+//            }
+//
+//            case OP_CODE_NOT_SUPPORTED:
+//            {
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Operation not supported" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//                    [alert show];
+//                });
+//                break;
+//            }
+//
+//            default:
+//                NSLog(@"Response:");
+//                NSLog(@"Op code: %d, operator %d", param->opCode, param->operatorType);
+//                NSLog(@"Req Op Code: %d, response: %d", param->value.response.requestOpCode, param->value.response.responseCode);
+//            break;
+//        }
     }
     else if ([characteristic.UUID isEqual:cgmGlucoseMeasurementContextCharacteristicUUID])
     {
-        NSLog(@"Glucose measurement ctx update!");
         //uint8_t test[] = { 0x5F, 0x00, 0x00, 0x02, 0x01, 0xF0, 0x03, 0x13, 0xF2, 0x00, 0x22, 0x03, 0x03, 0xF0, 0x01, 0xE0 };// test data
         GlucoseReadingContext* context = [GlucoseReadingContext readingContextFromBytes:array];
         // The indexIfObjext method uses isEqual method from GlucodeReadingContext (comparing with GlucoseReading by sequence number)
@@ -535,59 +543,28 @@ enum
             NSLog(@"Glucose Measurement with seq no %d not found", context.sequenceNumber);
         }
     }
-    else if ([characteristic.UUID isEqual:cgmRecordAccessControlPointCharacteristicUUID])
-    {
-        NSLog(@"CGM Accesscontrol update!");
-        return;
-        RecordAccessParam* param = (RecordAccessParam*) array;
-        
+    else if ([characteristic.UUID isEqual:cgmSpecificOpsControlPointCharacteristicUUID]){
+        SpecficOpsParam* param = (SpecficOpsParam*) array;
+    
         dispatch_async(dispatch_get_main_queue(), ^{
-        switch (param->value.response.responseCode)
-        {
-            case SUCCESS:
+            switch (param->value.response.responseCode)
             {
-                // Refresh the table
-               [cbgmTableView reloadData];
-                break;
-            }
-                
-            case OP_CODE_NOT_SUPPORTED:
-            {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Operation not supported" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                [alert show];
-                break;
-            }
-                
-            case NO_RECORDS_FOUND:
-            {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Status" message:@"No records found" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                [alert show];
-                break;
-            }
-                
-            case OPERATOR_NOT_SUPPORTED:
-                NSLog(@"Operator not supported");
-                break;
-                
-            case INVALID_OPERATOR:
-                NSLog(@"Invalid operator");
-                break;
-                
-            case OPERAND_NOT_SUPPORTED:
-                NSLog(@"Operand not supported");
-                break;
-                
-            case INVALID_OPERAND:
-                NSLog(@"Invalid operand");
-                break;
-                
-            default:
-                NSLog(@"Response:");
-                NSLog(@"Op code: %d, operator %d", param->opCode, param->operatorType);
-                NSLog(@"Req Op Code: %d, response: %d", param->value.response.requestOpCode, param->value.response.responseCode);
-                break;
+                default:
+                    NSLog(@"Response:");
+                    NSLog(@"Op code: %d, operator %d", param->opCode, param->operatorType);
+                    NSLog(@"Req Op Code: %d, response: %d", param->value.response.requestOpCode, param->value.response.responseCode);
+                    break;
             }
         });
+        return;
+    }
+    else if ([characteristic.UUID isEqual:cgmSessionStartTimeCharacteristicUUID]){
+        NSLog(@"Start time did update");
+    }
+    else if ([characteristic.UUID isEqual:cgmSessionRunTimeCharacteristicUUID]){
+        NSLog(@"runtime did update");
+    }else{
+        NSLog(@"Other characteristic update");
     }
 }
 

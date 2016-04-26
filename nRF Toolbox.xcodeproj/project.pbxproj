@@ -96,6 +96,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3066BD6A1CCF5ED2006343F7 /* CGMSpecificOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGMSpecificOperations.h; sourceTree = "<group>"; };
 		30A16EBC1CC7BF85009D26CA /* CBGMDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBGMDetailsViewController.h; sourceTree = "<group>"; };
 		30A16EBD1CC7BF85009D26CA /* CBGMDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBGMDetailsViewController.m; sourceTree = "<group>"; };
 		30A16EBE1CC7BF85009D26CA /* CBGMItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBGMItemCell.h; sourceTree = "<group>"; };
@@ -269,6 +270,7 @@
 				30A16EC51CC7BF85009D26CA /* GlucoseReadingContext.h */,
 				30A16EC61CC7BF85009D26CA /* GlucoseReadingContext.m */,
 				30A16EC71CC7BF85009D26CA /* RecordAccess.h */,
+				3066BD6A1CCF5ED2006343F7 /* CGMSpecificOperations.h */,
 			);
 			path = Model;
 			sourceTree = "<group>";
