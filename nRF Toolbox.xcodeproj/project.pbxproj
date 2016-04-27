@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0E645A0F1CBF957800D36AD0 /* firmwares in Resources */ = {isa = PBXBuildFile; fileRef = 7E6ED10A196ED482008010B6 /* firmwares */; };
+		308AA4D71CD0F977004B39DB /* NORBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308AA4D61CD0F977004B39DB /* NORBaseViewController.swift */; };
 		30921FD31CD0E7A5009CBDDE /* NORNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30921FD21CD0E7A5009CBDDE /* NORNavigationController.swift */; };
 		30921FD51CD0EB55009CBDDE /* NORMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30921FD41CD0EB55009CBDDE /* NORMainViewController.swift */; };
 		5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAA1885642F007CC40D /* icon-dfu-64.png */; };
@@ -93,7 +94,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		30921FD11CD0E7A5009CBDDE /* nRF Toolbox-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "nRF Toolbox-Bridging-Header.h"; sourceTree = "<group>"; };
+		308AA4D51CD0F837004B39DB /* nRF Toolbox-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "nRF Toolbox-Bridging-Header.h"; sourceTree = "<group>"; };
+		308AA4D61CD0F977004B39DB /* NORBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORBaseViewController.swift; path = BaseViewController/NORBaseViewController.swift; sourceTree = "<group>"; };
 		30921FD21CD0E7A5009CBDDE /* NORNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORNavigationController.swift; sourceTree = "<group>"; };
 		30921FD41CD0EB55009CBDDE /* NORMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORMainViewController.swift; sourceTree = "<group>"; };
 		5211EFAA1885642F007CC40D /* icon-dfu-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-64.png"; sourceTree = "<group>"; };
@@ -473,6 +475,7 @@
 				52BDCBC81C48FDB800E2680F /* BaseViewController.m */,
 				52BDCBCE1C491B6F00E2680F /* BaseRevealViewController.h */,
 				52BDCBCF1C491B6F00E2680F /* BaseRevealViewController.m */,
+				308AA4D61CD0F977004B39DB /* NORBaseViewController.swift */,
 			);
 			name = BaseViewController;
 			sourceTree = "<group>";
@@ -557,8 +560,8 @@
 		A85667E31B2233A3004A6D3C /* MainViewController */ = {
 			isa = PBXGroup;
 			children = (
+				308AA4D51CD0F837004B39DB /* nRF Toolbox-Bridging-Header.h */,
 				30921FD21CD0E7A5009CBDDE /* NORNavigationController.swift */,
-				30921FD11CD0E7A5009CBDDE /* nRF Toolbox-Bridging-Header.h */,
 				30921FD41CD0EB55009CBDDE /* NORMainViewController.swift */,
 			);
 			path = MainViewController;
@@ -762,6 +765,7 @@
 				A83894521B17731D005B738D /* EditPopupViewController.m in Sources */,
 				5226362F1C5A601C0054A550 /* HowToCreateDistributionPacket.m in Sources */,
 				5252A53A18802B8100EFD773 /* BPMViewController.m in Sources */,
+				308AA4D71CD0F977004B39DB /* NORBaseViewController.swift in Sources */,
 				52BDCBD41C491C8600E2680F /* UARTRevealViewController.m in Sources */,
 				A85667D91B1F3C1A004A6D3C /* LogViewController.m in Sources */,
 				7E6ED112197D1DA4008010B6 /* UserFilesViewController.m in Sources */,
