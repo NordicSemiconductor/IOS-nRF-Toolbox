@@ -3185,7 +3185,7 @@
         <!--Navigation Controller-->
         <scene sceneID="G41-di-2O3">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="WcK-ur-5nd" customClass="NavigationController" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="WcK-ur-5nd" customClass="NORNavigationController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="JA8-oA-nye">
