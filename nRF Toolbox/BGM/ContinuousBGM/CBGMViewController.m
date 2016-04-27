@@ -34,6 +34,7 @@ enum
 {
     ACTION_START_SESSION,
     ACTION_STOP_SESSION,
+    ACTION_SET_TIMER
 };
 
 @interface CBGMViewController () {
@@ -141,6 +142,7 @@ enum
 
     [actionSheet addButtonWithTitle:@"Start Session"];
     [actionSheet addButtonWithTitle:@"Stop Session"];
+    [actionSheet addButtonWithTitle:@"Set interval: 1 Min."];
     [actionSheet setDestructiveButtonIndex:1];
 
     [actionSheet showInView:self.view];
@@ -238,11 +240,8 @@ enum
    
     SpecficOpsParam param;
     NSInteger size = 0;
-    BOOL clearList = YES;
+    BOOL clearList = NO;
     CBCharacteristic *targetCharacteristic = Nil;
-    NSLog(@"Start session");
-    param.opCode = START_SESSION;
-    size = 1;
     
     switch (buttonIndex)
     {
@@ -250,7 +249,6 @@ enum
         {
             NSLog(@"Start session");
             param.opCode = START_SESSION;
-            param.operatorType = 0x00;
             size = 1;
             targetCharacteristic = cgmSpecificOpsControlPointCharacteristic;
             break;
@@ -262,6 +260,14 @@ enum
             size = 1;
             targetCharacteristic = cgmSpecificOpsControlPointCharacteristic;
             break;
+        }
+        case ACTION_SET_TIMER:
+        {
+            NSLog(@"Set interval to 1 Min");
+            param.opCode = SET_COMMUNICATION_INTERVAL;
+            param.operatorType = 1;
+            size = 2;
+            targetCharacteristic = cgmSpecificOpsControlPointCharacteristic;
         }
     }
     
@@ -407,23 +413,14 @@ enum
         for (CBCharacteristic *characteristic in service.characteristics)
         {
             [peripheral setNotifyValue:YES forCharacteristic:characteristic];
-            if ([characteristic.UUID isEqual:cgmGlucoseMeasurementCharacteristicUUID] ||
-                [characteristic.UUID isEqual:cgmGlucoseMeasurementContextCharacteristicUUID])
-            {
-                // Enable notification on data characteristic
-//                [peripheral setNotifyValue:YES forCharacteristic:characteristic];
-            }
-            else if ([characteristic.UUID isEqual:cgmRecordAccessControlPointCharacteristicUUID])
+            
+            if ([characteristic.UUID isEqual:cgmRecordAccessControlPointCharacteristicUUID])
             {
                 cgmRecordAccessControlPointCharacteristic = characteristic;
-                // Enable notification on data characteristic
-//                [peripheral setNotifyValue:YES forCharacteristic:characteristic];
             }
             else if ([characteristic.UUID isEqual:cgmSpecificOpsControlPointCharacteristicUUID])
             {
                 cgmSpecificOpsControlPointCharacteristic = characteristic;
-                // Enable notification on data characteristic
-//                [peripheral setNotifyValue:YES forCharacteristic:characteristic];
             }
         }
     }
@@ -470,8 +467,9 @@ enum
     }
     else if ([characteristic.UUID isEqual:cgmGlucoseMeasurementCharacteristicUUID])
     {
-        NSLog(@"Glucose measurement update!");
         SpecficOpsParam* param = (SpecficOpsParam*) array;
+
+        NSLog(@"Measurement response Code: %d, array: %@", param->value.response.responseCode, [data description]);
         dispatch_async(dispatch_get_main_queue(), ^{
             GlucoseReading* reading = [GlucoseReading readingFromBytes:array];
             if ([readings containsObject:reading])
@@ -550,7 +548,6 @@ enum
             switch (param->value.response.responseCode)
             {
                 default:
-                    NSLog(@"Response:");
                     NSLog(@"Op code: %d, operator %d", param->opCode, param->operatorType);
                     NSLog(@"Req Op Code: %d, response: %d", param->value.response.requestOpCode, param->value.response.responseCode);
                     break;
