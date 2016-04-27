@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NORMainViewController: NORBaseViewController, UICollectionViewDataSource {
+class NORMainViewController: UIViewController, UICollectionViewDataSource, UIAlertViewDelegate {
 
     // MARK: - Outlets & Actions
     @IBOutlet weak var collectionView: UICollectionView!
@@ -33,7 +33,8 @@ class NORMainViewController: NORBaseViewController, UICollectionViewDataSource {
         //Note: The character \u{2022} found here is a unicode bullet, used just for styling purposes
         let aboutMessage = String("The nRF Toolbox works with the most popular Bluetooth Low Energy accessories that use standard BLE profiles. Additionaly, it supports Nordic Semiconductor's proprietary profiles:\n\n\u{2022}UART (Universal Asynchronous Receiver/Transmitter),\n\n\u{2022}DFU (Device Firmware Update).\n\nMore information and the source code may be found on GitHub.\n\nVersion \(appVersion)")
         
-        self.showAbout(message: aboutMessage, otherButtonTitle: "GitHub")
+        let alertView = UIAlertView.init(title: "About", message: aboutMessage, delegate: self, cancelButtonTitle: "Ok", otherButtonTitles:"GitHub")
+        alertView.show()
     }
 
     // MARK: - UIalertViewDelegate
