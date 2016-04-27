@@ -162,7 +162,7 @@
         <!--Main View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" userLabel="Main View Controller" customClass="ViewController" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" userLabel="Main View Controller" customClass="NORMainViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rJI-9B-D0e"/>
                         <viewControllerLayoutGuide type="bottom" id="mAl-4b-q30"/>
@@ -481,14 +481,14 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="aboutButtonClicked:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="E6r-dM-2OM"/>
+                                    <action selector="aboutButtonTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="e46-T5-o9q"/>
                                 </connections>
                             </button>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="collectionView" destination="4j9-U2-dDx" id="DMP-Vd-ZIh"/>
+                        <outlet property="collectionView" destination="4j9-U2-dDx" id="ejM-lO-gYf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

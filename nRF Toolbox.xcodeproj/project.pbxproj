@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0E645A0F1CBF957800D36AD0 /* firmwares in Resources */ = {isa = PBXBuildFile; fileRef = 7E6ED10A196ED482008010B6 /* firmwares */; };
 		30921FD31CD0E7A5009CBDDE /* NORNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30921FD21CD0E7A5009CBDDE /* NORNavigationController.swift */; };
+		30921FD51CD0EB55009CBDDE /* NORMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30921FD41CD0EB55009CBDDE /* NORMainViewController.swift */; };
 		5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAA1885642F007CC40D /* icon-dfu-64.png */; };
 		5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAB1885642F007CC40D /* icon-dfu-320.png */; };
 		5211EFB018856430007CC40D /* icon-hex.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAC1885642F007CC40D /* icon-hex.png */; };
@@ -22,7 +23,6 @@
 		5217F3F21859EE0000F2D5BB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5217F3F11859EE0000F2D5BB /* main.m */; };
 		5217F3F61859EE0000F2D5BB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5217F3F51859EE0000F2D5BB /* AppDelegate.m */; };
 		5217F3F91859EE0000F2D5BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5217F3F71859EE0000F2D5BB /* Main.storyboard */; };
-		5217F3FC1859EE0000F2D5BB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5217F3FB1859EE0000F2D5BB /* ViewController.m */; };
 		5217F3FE1859EE0000F2D5BB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5217F3FD1859EE0000F2D5BB /* Images.xcassets */; };
 		5217F4061859EE0000F2D5BB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5217F3E51859EE0000F2D5BB /* Foundation.framework */; };
 		5217F4071859EE0000F2D5BB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5217F3E91859EE0000F2D5BB /* UIKit.framework */; };
@@ -95,6 +95,7 @@
 /* Begin PBXFileReference section */
 		30921FD11CD0E7A5009CBDDE /* nRF Toolbox-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "nRF Toolbox-Bridging-Header.h"; sourceTree = "<group>"; };
 		30921FD21CD0E7A5009CBDDE /* NORNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORNavigationController.swift; sourceTree = "<group>"; };
+		30921FD41CD0EB55009CBDDE /* NORMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORMainViewController.swift; sourceTree = "<group>"; };
 		5211EFAA1885642F007CC40D /* icon-dfu-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-64.png"; sourceTree = "<group>"; };
 		5211EFAB1885642F007CC40D /* icon-dfu-320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-320.png"; sourceTree = "<group>"; };
 		5211EFAC1885642F007CC40D /* icon-hex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-hex.png"; sourceTree = "<group>"; };
@@ -113,8 +114,6 @@
 		5217F3F41859EE0000F2D5BB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5217F3F51859EE0000F2D5BB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5217F3F81859EE0000F2D5BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		5217F3FA1859EE0000F2D5BB /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		5217F3FB1859EE0000F2D5BB /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		5217F3FD1859EE0000F2D5BB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5217F4031859EE0000F2D5BB /* nRF ToolboxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "nRF ToolboxTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5217F40C1859EE0000F2D5BB /* nRF ToolboxTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "nRF ToolboxTests-Info.plist"; sourceTree = "<group>"; };
@@ -558,10 +557,9 @@
 		A85667E31B2233A3004A6D3C /* MainViewController */ = {
 			isa = PBXGroup;
 			children = (
-				5217F3FA1859EE0000F2D5BB /* ViewController.h */,
-				5217F3FB1859EE0000F2D5BB /* ViewController.m */,
 				30921FD21CD0E7A5009CBDDE /* NORNavigationController.swift */,
 				30921FD11CD0E7A5009CBDDE /* nRF Toolbox-Bridging-Header.h */,
+				30921FD41CD0EB55009CBDDE /* NORMainViewController.swift */,
 			);
 			path = MainViewController;
 			sourceTree = "<group>";
@@ -766,7 +764,6 @@
 				5252A53A18802B8100EFD773 /* BPMViewController.m in Sources */,
 				52BDCBD41C491C8600E2680F /* UARTRevealViewController.m in Sources */,
 				A85667D91B1F3C1A004A6D3C /* LogViewController.m in Sources */,
-				5217F3FC1859EE0000F2D5BB /* ViewController.m in Sources */,
 				7E6ED112197D1DA4008010B6 /* UserFilesViewController.m in Sources */,
 				A85667DC1B208186004A6D3C /* BluetoothManager.m in Sources */,
 				524F2CDF18897D33008A8555 /* GlucoseReading.m in Sources */,
@@ -786,6 +783,7 @@
 				30921FD31CD0E7A5009CBDDE /* NORNavigationController.swift in Sources */,
 				5214D0D218881D4D00460637 /* CharacteristicReader.m in Sources */,
 				5236E16C187EC6880057E974 /* StubViewController.m in Sources */,
+				30921FD51CD0EB55009CBDDE /* NORMainViewController.swift in Sources */,
 				5252A5361880260300EFD773 /* BGMViewController.m in Sources */,
 				524F2CE5188D2A56008A8555 /* GlucoseReadingContext.m in Sources */,
 				7E6ED10F197D1D8D008010B6 /* AppFilesViewController.m in Sources */,
