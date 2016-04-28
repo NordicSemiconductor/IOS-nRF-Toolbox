@@ -148,14 +148,14 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
 
 #pragma mark Scanner Delegate methods
 
--(void)centralManager:(CBCentralManager *)manager didPeripheralSelected:(CBPeripheral *)peripheral
+-(void)centralManagerDidSelectPeripheralWithManager:(CBCentralManager *)aManager andPeripheral:(CBPeripheral *)aPeripheral
 {
     // We may not use more than one Central Manager instance. Let's just take the one returned from Scanner View Controller
-    bluetoothManager = manager;
+    bluetoothManager = aManager;
     bluetoothManager.delegate = self;
     
     // The sensor has been selected, connect to it
-    cyclePeripheral = peripheral;
+    cyclePeripheral = aPeripheral;
     cyclePeripheral.delegate = self;
     NSDictionary *options = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:CBConnectPeripheralOptionNotifyOnNotificationKey];
     [bluetoothManager connectPeripheral:cyclePeripheral options:options];

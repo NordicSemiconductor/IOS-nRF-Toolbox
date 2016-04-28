@@ -125,19 +125,19 @@
 
 #pragma mark Scanner Delegate methods
 
--(void)centralManager:(CBCentralManager *)manager didPeripheralSelected:(CBPeripheral *)peripheral
+-(void)centralManagerDidSelectPeripheralWithManager:(CBCentralManager *)aManager andPeripheral:(CBPeripheral *)aPeripheral
 {
     // Some devices disconnects just after finishing measurement so we have to clear the UI before new connection, not after previous.
     [self clearUI];
     
     // We may not use more than one Central Manager instance. Let's just take the one returned from Scanner View Controller
-    bluetoothManager = manager;
+    bluetoothManager = aManager;
     bluetoothManager.delegate = self;
     
     // The sensor has been selected, connect to it
-    peripheral.delegate = self;
+    aPeripheral.delegate = self;
     NSDictionary *options = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:CBConnectPeripheralOptionNotifyOnNotificationKey];
-    [bluetoothManager connectPeripheral:peripheral options:options];
+    [bluetoothManager connectPeripheral:aPeripheral options:options];
 }
 
 #pragma mark Central Manager delegate methods

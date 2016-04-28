@@ -23,9 +23,9 @@
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "BaseViewController.h"
-#import "ScannerDelegate.h"
+#import "nRF_ToolBox-swift.h"
 
-@interface BGMViewController : BaseViewController <CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate, UITableViewDataSource, UIActionSheetDelegate>
+@interface BGMViewController : BaseViewController <CBCentralManagerDelegate, CBPeripheralDelegate, NORScannerDelegate, UITableViewDataSource, UIActionSheetDelegate>
 
 @property (strong, nonatomic) CBCentralManager *bluetoothManager;
 @property (weak, nonatomic) IBOutlet UILabel *verticalLabel;

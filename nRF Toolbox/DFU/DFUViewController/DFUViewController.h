@@ -23,11 +23,11 @@
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "BaseViewController.h"
-#import "ScannerDelegate.h"
+#import "nRF_Toolbox-swift.h"
 #import "FileSelectionDelegate.h"
 #import "FileTypeViewController.h"
 
-@interface DFUViewController : BaseViewController <ScannerDelegate, FileSelectionDelegate, FileTypeSelectionDelegate,
+@interface DFUViewController : BaseViewController <NORScannerDelegate, FileSelectionDelegate, FileTypeSelectionDelegate,
 LoggerDelegate, DFUServiceDelegate, DFUProgressDelegate>
 
 @end

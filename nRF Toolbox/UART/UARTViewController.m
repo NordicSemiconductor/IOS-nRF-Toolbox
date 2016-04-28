@@ -123,14 +123,14 @@
 
 #pragma mark - Scanner Delegate methods
 
--(void)centralManager:(CBCentralManager *)manager didPeripheralSelected:(CBPeripheral *)peripheral
+-(void)centralManagerDidSelectPeripheralWithManager:(CBCentralManager *)aManager andPeripheral:(CBPeripheral *)aPeripheral
 {
     // We may not use more than one Central Manager instance. Let's just take the one returned from Scanner View Controller
-    self.bluetoothManager = [[BluetoothManager alloc] initWithManager: manager];
+    self.bluetoothManager = [[BluetoothManager alloc] initWithManager: aManager];
     self.bluetoothManager.delegate = self;
     self.bluetoothManager.logger = logger;
     
-    [self.bluetoothManager connectDevice:peripheral];
+    [self.bluetoothManager connectDevice:aPeripheral];
 }
 
 -(void)appDidEnterBackground:(NSNotification *)_notification

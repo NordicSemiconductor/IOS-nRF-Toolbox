@@ -22,13 +22,13 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
-#include "ScannerDelegate.h"
+#include "nRF_ToolBox-swift.h"
 
 @interface ScannerViewController : UIViewController <CBCentralManagerDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (strong, nonatomic) CBCentralManager *bluetoothManager;
 @property (weak, nonatomic) IBOutlet UITableView *devicesTable;
-@property (strong, nonatomic) id <ScannerDelegate> delegate;
+@property (strong, nonatomic) id <NORScannerDelegate> delegate;
 @property (strong, nonatomic) CBUUID *filterUUID;
 
 /*!

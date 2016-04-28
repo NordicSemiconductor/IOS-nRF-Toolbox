@@ -210,7 +210,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     
     // Call delegate method
-    [self.delegate centralManager:bluetoothManager didPeripheralSelected:[[peripherals objectAtIndex:indexPath.row] peripheral]];
+    [self.delegate centralManagerDidSelectPeripheralWithManager:bluetoothManager andPeripheral:[[peripherals objectAtIndex:indexPath.row] peripheral]];
 }
 
 #pragma mark Table View Data Source delegate methods

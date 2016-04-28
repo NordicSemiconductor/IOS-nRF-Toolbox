@@ -264,13 +264,14 @@
 
 #pragma mark - Device selection delegate methods
 
--(void)centralManager:(CBCentralManager *)manager didPeripheralSelected:(CBPeripheral *)peripheral
+-(void)centralManagerDidSelectPeripheralWithManager:(CBCentralManager *)aManager andPeripheral:(CBPeripheral *)aPeripheral
 {
-    selectedPeripheral = peripheral;
-    centralManager = manager;
-    deviceName.text = peripheral.name;
+    selectedPeripheral = aPeripheral;
+    centralManager = aManager;
+    deviceName.text = aPeripheral.name;
     [self enableOrDisableUploadButton];
 }
+
 
 #pragma mark - DFU Service delegate methods
 

@@ -22,9 +22,9 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
-#import "ScannerDelegate.h"
+#import "nRF_ToolBox-swift.h"
 
-@interface StubViewController : UIViewController <CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate>
+@interface StubViewController : UIViewController <CBCentralManagerDelegate, CBPeripheralDelegate, NORScannerDelegate>
 
 @property (strong, nonatomic) CBCentralManager *bluetoothManager;
 @property (weak, nonatomic) IBOutlet UILabel *verticalLabel;
