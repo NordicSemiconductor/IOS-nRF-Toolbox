@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0E645A0F1CBF957800D36AD0 /* firmwares in Resources */ = {isa = PBXBuildFile; fileRef = 7E6ED10A196ED482008010B6 /* firmwares */; };
+		30A114541CD1EA7E000F0F02 /* ContinuousGlucoseReading.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A114531CD1EA7E000F0F02 /* ContinuousGlucoseReading.m */; };
 		30A16ECF1CC7BF85009D26CA /* CBGMDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A16EBD1CC7BF85009D26CA /* CBGMDetailsViewController.m */; };
 		30A16ED01CC7BF85009D26CA /* CBGMItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A16EBF1CC7BF85009D26CA /* CBGMItemCell.m */; };
 		30A16ED11CC7BF85009D26CA /* CBGMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A16EC11CC7BF85009D26CA /* CBGMViewController.m */; };
@@ -97,6 +98,8 @@
 
 /* Begin PBXFileReference section */
 		3066BD6A1CCF5ED2006343F7 /* CGMSpecificOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGMSpecificOperations.h; sourceTree = "<group>"; };
+		30A114521CD1EA7E000F0F02 /* ContinuousGlucoseReading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContinuousGlucoseReading.h; sourceTree = "<group>"; };
+		30A114531CD1EA7E000F0F02 /* ContinuousGlucoseReading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContinuousGlucoseReading.m; sourceTree = "<group>"; };
 		30A16EBC1CC7BF85009D26CA /* CBGMDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBGMDetailsViewController.h; sourceTree = "<group>"; };
 		30A16EBD1CC7BF85009D26CA /* CBGMDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBGMDetailsViewController.m; sourceTree = "<group>"; };
 		30A16EBE1CC7BF85009D26CA /* CBGMItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBGMItemCell.h; sourceTree = "<group>"; };
@@ -265,6 +268,8 @@
 		30A16EC21CC7BF85009D26CA /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				30A114521CD1EA7E000F0F02 /* ContinuousGlucoseReading.h */,
+				30A114531CD1EA7E000F0F02 /* ContinuousGlucoseReading.m */,
 				30A16EC31CC7BF85009D26CA /* GlucoseReading.h */,
 				30A16EC41CC7BF85009D26CA /* GlucoseReading.m */,
 				30A16EC51CC7BF85009D26CA /* GlucoseReadingContext.h */,
@@ -798,6 +803,7 @@
 				5226362F1C5A601C0054A550 /* HowToCreateDistributionPacket.m in Sources */,
 				30A16ED31CC7BF85009D26CA /* GlucoseReadingContext.m in Sources */,
 				30A16ED01CC7BF85009D26CA /* CBGMItemCell.m in Sources */,
+				30A114541CD1EA7E000F0F02 /* ContinuousGlucoseReading.m in Sources */,
 				5252A53A18802B8100EFD773 /* BPMViewController.m in Sources */,
 				52BDCBD41C491C8600E2680F /* UARTRevealViewController.m in Sources */,
 				A85667D91B1F3C1A004A6D3C /* LogViewController.m in Sources */,
