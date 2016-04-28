@@ -21,7 +21,7 @@
  */
 
 #import "ScannerViewController.h"
-#import "ScannedPeripheral.h"
+#import "nRF_Toolbox-swift.h"
 #import "Utility.h"
 
 @interface ScannerViewController ()
@@ -112,8 +112,9 @@
 
 - (void) addConnectedPeripheral:(CBPeripheral *)peripheral
 {
-    ScannedPeripheral* sensor = [ScannedPeripheral initWithPeripheral:peripheral rssi:0 isPeripheralConnected:YES];
-    [peripherals addObject:sensor];
+    
+//    NORScannedPeripheral* sensor = [ScannedPeripheral initWithPeripheral:peripheral rssi:0 isPeripheralConnected:YES];
+//    [peripherals addObject:sensor];
 }
 
 #pragma mark Central Manager delegate methods
@@ -187,7 +188,7 @@
     {
         dispatch_async(dispatch_get_main_queue(), ^{
             // Add the sensor to the list and reload deta set
-            ScannedPeripheral* sensor = [ScannedPeripheral initWithPeripheral:peripheral rssi:RSSI.intValue isPeripheralConnected:NO];
+            NORScannedPeripheral *sensor = [[NORScannedPeripheral alloc] initWithPeripheral:peripheral andRSSI:RSSI.intValue andIsConnected:NO];
             if (![peripherals containsObject:sensor])
             {
                 [peripherals addObject:sensor];
@@ -224,7 +225,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     
     // Update sensor name
-    ScannedPeripheral *peripheral = [peripherals objectAtIndex:indexPath.row];
+    NORScannedPeripheral *peripheral = [peripherals objectAtIndex:indexPath.row];
     cell.textLabel.text = [peripheral name];
     if (peripheral.isConnected)
     {
@@ -237,7 +238,7 @@
     return cell;
 }
 
--(UIImage *) getRSSIImage:(int)rssi {
+-(UIImage *) getRSSIImage:(long)rssi {
     // Update RSSI indicator
     UIImage* image;
     if (rssi < -90)
