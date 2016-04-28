@@ -24,7 +24,7 @@
 #import "CBGMDetailsViewController.h"
 #import "CBGMItemCell.h"
 #import "ScannerViewController.h"
-#import "GlucoseReading.h"
+#import "ContinuousGlucoseReading.h"
 #import "CGMSpecificOperations.h"
 #import "Constants.h"
 #import "AppUtilities.h"
@@ -208,28 +208,13 @@ enum
 {
     CBGMItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CBGMCell"];
     
-    GlucoseReading* reading = [readings objectAtIndex:indexPath.row];
-    cell.timestamp.text = [dateFormat stringFromDate:reading.timestamp];
-    if (reading.glucoseConcentrationTypeAndLocationPresent)
-    {
-        cell.type.text = [reading typeAsString];
-        if (reading.unit == MOL_L)
-        {
-            cell.value.text = [NSString stringWithFormat:@"%.1f", reading.glucoseConcentration * 1000.0f]; // converting mol/l -> mmol/l
-            cell.unit.text = @"mmol/L";
-        }
-        else
-        {
-            cell.value.text = [NSString stringWithFormat:@"%.0f", reading.glucoseConcentration * 100000.0f]; // converting kg/l -> mg/dl
-            cell.unit.text = @"mg/dL";
-        }
-    }
-    else
-    {
-        cell.value.text = @"-";
-        cell.type.text = @"Unavailable";
-        cell.unit.text = @"";
-    }
+    ContinuousGlucoseReading* reading = [readings objectAtIndex:indexPath.row];
+    //FIXME
+//    cell.type.text = [reading typeAsString];
+    cell.timestamp.text = [dateFormat stringFromDate:[NSDate dateWithTimeIntervalSinceNow:reading.timeOffsetSinceSessionStart]];
+    cell.type.text = @"Default type";
+    cell.value.text = [NSString stringWithFormat:@"%.0f", reading.glucoseConcentration];
+    cell.unit.text = @"mg/DL";
     
     return cell;
 }
@@ -467,11 +452,12 @@ enum
     }
     else if ([characteristic.UUID isEqual:cgmGlucoseMeasurementCharacteristicUUID])
     {
+
         SpecficOpsParam* param = (SpecficOpsParam*) array;
 
         NSLog(@"Measurement response Code: %d, array: %@", param->value.response.responseCode, [data description]);
         dispatch_async(dispatch_get_main_queue(), ^{
-            GlucoseReading* reading = [GlucoseReading readingFromBytes:array];
+            ContinuousGlucoseReading* reading = [ContinuousGlucoseReading readingFromBytes:array];
             if ([readings containsObject:reading])
             {
                 // If the reading has been found (the same reading has the same sequence number), replace it with the new one
