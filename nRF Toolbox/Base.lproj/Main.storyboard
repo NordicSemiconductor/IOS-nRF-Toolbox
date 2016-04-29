@@ -498,7 +498,7 @@
         <!--View Controller - BGM-->
         <scene sceneID="hgy-MS-kOD">
             <objects>
-                <viewController id="K6D-kg-QBM" userLabel="View Controller - BGM" customClass="BGMViewController" sceneMemberID="viewController">
+                <viewController id="K6D-kg-QBM" userLabel="View Controller - BGM" customClass="NORBGMViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Hcq-z4-qKc"/>
                         <viewControllerLayoutGuide type="bottom" id="mgt-Vv-puU"/>
@@ -552,7 +552,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="connectOrDisconnectClicked" destination="K6D-kg-QBM" eventType="touchUpInside" id="4kv-WD-aru"/>
+                                    <action selector="connectionButtonTapped:" destination="K6D-kg-QBM" eventType="touchUpInside" id="XHk-jH-oO0"/>
                                     <segue destination="BQP-B5-Tee" kind="presentation" identifier="scan" id="avT-gU-1Yo"/>
                                 </connections>
                             </button>
@@ -659,7 +659,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="actionButtonClicked:" destination="K6D-kg-QBM" eventType="touchUpInside" id="thw-gK-xLM"/>
+                                    <action selector="actionButtonTapped:" destination="K6D-kg-QBM" eventType="touchUpInside" id="MGX-sN-fnC"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="toolbar_shadow" translatesAutoresizingMaskIntoConstraints="NO" id="JUf-tA-Tqz" userLabel="Shadow">
@@ -711,7 +711,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="aboutButtonClicked:" destination="K6D-kg-QBM" eventType="touchUpInside" id="KPF-yJ-PJW"/>
+                                    <action selector="aboutButtonTapped:" destination="K6D-kg-QBM" eventType="touchUpInside" id="MNc-As-0IB"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -719,12 +719,12 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="600"/>
                     <connections>
-                        <outlet property="battery" destination="lao-AT-iL0" id="uel-yB-ld5"/>
-                        <outlet property="bgmTableView" destination="uCY-Rg-kB4" id="26Q-gf-ljk"/>
-                        <outlet property="connectButton" destination="lex-q3-aPx" id="tYk-gS-o8j"/>
-                        <outlet property="deviceName" destination="YOQ-kd-Umf" id="MVp-hk-0Rx"/>
-                        <outlet property="recordButton" destination="LHc-JP-qOQ" id="s2m-JE-t8T"/>
-                        <outlet property="verticalLabel" destination="bjg-zK-RVR" id="k8I-M2-u5q"/>
+                        <outlet property="battery" destination="lao-AT-iL0" id="xJw-FB-94x"/>
+                        <outlet property="bgmTableView" destination="uCY-Rg-kB4" id="MZ8-ll-b07"/>
+                        <outlet property="connectButton" destination="lex-q3-aPx" id="n5S-OY-XhI"/>
+                        <outlet property="deviceName" destination="YOQ-kd-Umf" id="juZ-Gl-s1Z"/>
+                        <outlet property="recordsButton" destination="LHc-JP-qOQ" id="Z0Y-xA-iZR"/>
+                        <outlet property="verticalLabel" destination="bjg-zK-RVR" id="wbJ-XY-01O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2rJ-yD-AYt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4606,7 +4606,7 @@
         <image name="userIcon" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="QaF-as-tpw"/>
+        <segue reference="avT-gU-1Yo"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.60392159219999997" blue="0.85490196939999996" alpha="1" colorSpace="calibratedRGB"/>
 </document>

@@ -3,3 +3,9 @@
 //
 
 #import "GlucoseReading.h"
+#import "BaseViewController.h"
+#import "BGMitemCell.h"
+#import "Constants.h"
+#import "AppUtilities.h"
+#import "RecordAccess.h"
+#import "CharacteristicReader.h"
