@@ -21,7 +21,6 @@
  */
 
 #import "BGMViewController.h"
-#import "BGMDetailsViewController.h"
 #import "BGMItemCell.h"
 #import "GlucoseReading.h"
 #import "RecordAccess.h"
@@ -170,7 +169,7 @@ enum
     }
     else if ([segue.identifier isEqualToString:@"details"])
     {
-        BGMDetailsViewController *controller = (BGMDetailsViewController *)segue.destinationViewController;
+        NORBGMDetailsViewController *controller = (NORBGMDetailsViewController *)segue.destinationViewController;
         controller.reading = [readings objectAtIndex:[bgmTableView indexPathForSelectedRow].row];
     }
 }

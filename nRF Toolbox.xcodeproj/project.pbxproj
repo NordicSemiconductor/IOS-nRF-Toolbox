@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0E645A0F1CBF957800D36AD0 /* firmwares in Resources */ = {isa = PBXBuildFile; fileRef = 7E6ED10A196ED482008010B6 /* firmwares */; };
+		305E07B51CD3534D00B32EB2 /* NORBGMDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 305E07B41CD3534D00B32EB2 /* NORBGMDetailsViewController.swift */; };
 		30921FD31CD0E7A5009CBDDE /* NORNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30921FD21CD0E7A5009CBDDE /* NORNavigationController.swift */; };
 		30921FD51CD0EB55009CBDDE /* NORMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30921FD41CD0EB55009CBDDE /* NORMainViewController.swift */; };
 		30A114561CD2367C000F0F02 /* NORScannedPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A114551CD2367C000F0F02 /* NORScannedPeripheral.swift */; };
@@ -39,7 +40,6 @@
 		5236E162187EA7540057E974 /* HTSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5236E161187EA7540057E974 /* HTSViewController.m */; };
 		524F2CD818897078008A8555 /* BGMItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 524F2CD718897078008A8555 /* BGMItemCell.m */; };
 		524F2CDF18897D33008A8555 /* GlucoseReading.m in Sources */ = {isa = PBXBuildFile; fileRef = 524F2CDE18897D33008A8555 /* GlucoseReading.m */; };
-		524F2CE2188984E6008A8555 /* BGMDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 524F2CE1188984E6008A8555 /* BGMDetailsViewController.m */; };
 		524F2CE5188D2A56008A8555 /* GlucoseReadingContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 524F2CE4188D2A56008A8555 /* GlucoseReadingContext.m */; };
 		5252A5361880260300EFD773 /* BGMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A5351880260300EFD773 /* BGMViewController.m */; };
 		5252A53A18802B8100EFD773 /* BPMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A53918802B8100EFD773 /* BPMViewController.m */; };
@@ -93,6 +93,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		305E07B41CD3534D00B32EB2 /* NORBGMDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBGMDetailsViewController.swift; sourceTree = "<group>"; };
 		30921FD11CD0E7A5009CBDDE /* nRF Toolbox-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "nRF Toolbox-Bridging-Header.h"; sourceTree = "<group>"; };
 		30921FD21CD0E7A5009CBDDE /* NORNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORNavigationController.swift; sourceTree = "<group>"; };
 		30921FD41CD0EB55009CBDDE /* NORMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORMainViewController.swift; sourceTree = "<group>"; };
@@ -138,8 +139,6 @@
 		524F2CD718897078008A8555 /* BGMItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGMItemCell.m; sourceTree = "<group>"; };
 		524F2CDD18897D33008A8555 /* GlucoseReading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlucoseReading.h; sourceTree = "<group>"; };
 		524F2CDE18897D33008A8555 /* GlucoseReading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlucoseReading.m; sourceTree = "<group>"; };
-		524F2CE0188984E6008A8555 /* BGMDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGMDetailsViewController.h; sourceTree = "<group>"; };
-		524F2CE1188984E6008A8555 /* BGMDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGMDetailsViewController.m; sourceTree = "<group>"; };
 		524F2CE3188D2A56008A8555 /* GlucoseReadingContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlucoseReadingContext.h; sourceTree = "<group>"; };
 		524F2CE4188D2A56008A8555 /* GlucoseReadingContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlucoseReadingContext.m; sourceTree = "<group>"; };
 		5252A5341880260300EFD773 /* BGMViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGMViewController.h; sourceTree = "<group>"; };
@@ -405,8 +404,7 @@
 				524F2CD718897078008A8555 /* BGMItemCell.m */,
 				5252A5341880260300EFD773 /* BGMViewController.h */,
 				5252A5351880260300EFD773 /* BGMViewController.m */,
-				524F2CE0188984E6008A8555 /* BGMDetailsViewController.h */,
-				524F2CE1188984E6008A8555 /* BGMDetailsViewController.m */,
+				305E07B41CD3534D00B32EB2 /* NORBGMDetailsViewController.swift */,
 			);
 			path = BGM;
 			sourceTree = "<group>";
@@ -741,7 +739,6 @@
 				A86A784C1AB8542E00823AAB /* UARTViewController.m in Sources */,
 				7E445C971951D09E00633892 /* FileTypeViewController.m in Sources */,
 				52BDCBD01C491B6F00E2680F /* BaseRevealViewController.m in Sources */,
-				524F2CE2188984E6008A8555 /* BGMDetailsViewController.m in Sources */,
 				5252A53E18802F7200EFD773 /* DFUViewController.m in Sources */,
 				A83894521B17731D005B738D /* EditPopupViewController.m in Sources */,
 				5226362F1C5A601C0054A550 /* HowToCreateDistributionPacket.m in Sources */,
@@ -749,6 +746,7 @@
 				30A1145C1CD24611000F0F02 /* NORScannerViewController.swift in Sources */,
 				52BDCBD41C491C8600E2680F /* UARTRevealViewController.m in Sources */,
 				A85667D91B1F3C1A004A6D3C /* LogViewController.m in Sources */,
+				305E07B51CD3534D00B32EB2 /* NORBGMDetailsViewController.swift in Sources */,
 				7E6ED112197D1DA4008010B6 /* UserFilesViewController.m in Sources */,
 				A85667DC1B208186004A6D3C /* BluetoothManager.m in Sources */,
 				524F2CDF18897D33008A8555 /* GlucoseReading.m in Sources */,

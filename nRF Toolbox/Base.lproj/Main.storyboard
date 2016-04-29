@@ -734,7 +734,7 @@
         <!--Details View Controller-->
         <scene sceneID="7EN-LX-8Kn">
             <objects>
-                <viewController id="Tpl-nT-cEd" customClass="BGMDetailsViewController" sceneMemberID="viewController">
+                <viewController id="Tpl-nT-cEd" customClass="NORBGMDetailsViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="PHL-LE-koA"/>
                         <viewControllerLayoutGuide type="bottom" id="njK-oW-VFL"/>
@@ -1321,37 +1321,38 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="900"/>
                     <connections>
-                        <outlet property="HbA1c" destination="POR-cN-lhN" id="dJf-eI-LRH"/>
-                        <outlet property="carbodydrateId" destination="B5k-Ql-CZq" id="4Zr-Mr-Lbr"/>
-                        <outlet property="carbohydrate" destination="t3F-Ud-6vl" id="wbn-lQ-YfM"/>
-                        <outlet property="concentration" destination="saP-gV-3eH" id="JaU-r5-jqw"/>
-                        <outlet property="contextPresentStatus" destination="vdj-6l-Rvn" id="0gj-o3-FvT"/>
-                        <outlet property="deviceFaultStatus" destination="jkP-qL-Wly" id="SNr-af-Grs"/>
-                        <outlet property="exerciseDuration" destination="3mY-1R-1hG" id="MvX-iX-8uD"/>
-                        <outlet property="exerciseIntensity" destination="tgC-Uz-lJw" id="nIM-PX-MXZ"/>
-                        <outlet property="health" destination="V9i-cy-qWO" id="ZqI-yE-m5m"/>
-                        <outlet property="insufficienSampleStatus" destination="oo4-zE-D08" id="WDH-Ny-Jec"/>
-                        <outlet property="location" destination="pwq-Kr-bZF" id="gzS-8Z-9Pu"/>
-                        <outlet property="lowBatteryStatus" destination="JuA-Xf-lbG" id="siA-0n-Y1o"/>
-                        <outlet property="meal" destination="iZK-Yy-Dlf" id="yzM-7m-KVr"/>
-                        <outlet property="medication" destination="8sD-cQ-FlS" id="IKM-K5-g2h"/>
-                        <outlet property="medicationId" destination="S7F-xy-FmV" id="M1V-Ys-LyQ"/>
-                        <outlet property="medicationUnit" destination="8pX-Be-sJ0" id="TVU-xE-wbP"/>
-                        <outlet property="resultTooHighStatus" destination="mBo-05-mwN" id="kYP-dt-rXd"/>
-                        <outlet property="resultTooLowStatus" destination="WjV-vs-KrG" id="Pk9-f8-Yud"/>
-                        <outlet property="scrollView" destination="p3z-hf-1gf" id="cyF-EK-R7L"/>
-                        <outlet property="sensorMalfunctionStatus" destination="Eky-Vt-Cyn" id="laI-I2-rj3"/>
-                        <outlet property="sequenceNumber" destination="5Il-7V-B03" id="7MP-ug-sx6"/>
-                        <outlet property="stripInsertionStatus" destination="eJk-ut-Csg" id="9IE-Re-fSN"/>
-                        <outlet property="stripPulledTooSoonStatus" destination="DtO-1z-bTY" id="dNp-9b-K5w"/>
-                        <outlet property="stripTypeStatus" destination="0Bn-0p-thx" id="Oh7-ak-ea4"/>
-                        <outlet property="tempTooHighStatus" destination="o0i-tS-uws" id="XT0-jK-ySy"/>
-                        <outlet property="tempTooLowStatus" destination="Ixl-UR-YdM" id="3gx-Ca-uY3"/>
-                        <outlet property="tester" destination="uv1-uU-uzd" id="jsk-b7-EJW"/>
-                        <outlet property="timeStatus" destination="rga-aD-RyF" id="Erx-w3-JF3"/>
-                        <outlet property="timestamp" destination="C6n-EA-uML" id="QQu-Sa-jP8"/>
-                        <outlet property="type" destination="2sr-1d-5me" id="TEN-Qf-OGQ"/>
-                        <outlet property="unit" destination="bLM-kE-x1J" id="f6L-fz-yzt"/>
+                        <outlet property="backgroundImage" destination="zBa-QR-saO" id="iPL-El-qAg"/>
+                        <outlet property="carbohydrate" destination="t3F-Ud-6vl" id="YnI-b2-Xmp"/>
+                        <outlet property="carbohydrateId" destination="B5k-Ql-CZq" id="1Pk-m5-nc9"/>
+                        <outlet property="contextPresentStatus" destination="vdj-6l-Rvn" id="NNA-hA-83R"/>
+                        <outlet property="deviceFaultStats" destination="jkP-qL-Wly" id="sWW-z0-DbB"/>
+                        <outlet property="exerciseDuration" destination="3mY-1R-1hG" id="eqk-yk-AUr"/>
+                        <outlet property="exerciseIntensity" destination="tgC-Uz-lJw" id="uam-kR-DXz"/>
+                        <outlet property="glucose" destination="saP-gV-3eH" id="yBL-fp-y87"/>
+                        <outlet property="hbA1c" destination="POR-cN-lhN" id="FaM-NJ-2yl"/>
+                        <outlet property="health" destination="V9i-cy-qWO" id="Kmh-WU-fdZ"/>
+                        <outlet property="insufficcientSampleStatus" destination="oo4-zE-D08" id="R5d-JQ-1Fm"/>
+                        <outlet property="location" destination="pwq-Kr-bZF" id="UFS-mF-JLD"/>
+                        <outlet property="lowBatteryStatus" destination="JuA-Xf-lbG" id="7Ab-lz-Hy9"/>
+                        <outlet property="meal" destination="iZK-Yy-Dlf" id="es9-1F-3QK"/>
+                        <outlet property="medication" destination="8sD-cQ-FlS" id="49i-gt-u7S"/>
+                        <outlet property="medicationId" destination="S7F-xy-FmV" id="UC4-XR-1Hk"/>
+                        <outlet property="medicationUnit" destination="8pX-Be-sJ0" id="zBq-4X-Gio"/>
+                        <outlet property="resultTooHighStatus" destination="mBo-05-mwN" id="7MH-fV-fca"/>
+                        <outlet property="resultTooLowStatus" destination="WjV-vs-KrG" id="I23-5K-tsF"/>
+                        <outlet property="scrollView" destination="p3z-hf-1gf" id="tH2-8z-nIZ"/>
+                        <outlet property="sensorMalfunctionStatus" destination="Eky-Vt-Cyn" id="iHd-Rk-5Vm"/>
+                        <outlet property="sequenceNumber" destination="5Il-7V-B03" id="bqv-MA-xW3"/>
+                        <outlet property="stripInsertionStatus" destination="eJk-ut-Csg" id="uj3-QF-UaG"/>
+                        <outlet property="stripPulledTooSoonStatus" destination="DtO-1z-bTY" id="skC-5i-A6G"/>
+                        <outlet property="stripTypeIncorrectStatus" destination="0Bn-0p-thx" id="kBT-ro-9Ie"/>
+                        <outlet property="tempTooHighStatus" destination="o0i-tS-uws" id="W0y-1g-zhJ"/>
+                        <outlet property="tempTooLowstatus" destination="Ixl-UR-YdM" id="K5H-wW-Tv3"/>
+                        <outlet property="tester" destination="uv1-uU-uzd" id="qzX-UT-sIY"/>
+                        <outlet property="timeFaultStatus" destination="rga-aD-RyF" id="tb0-1E-vRP"/>
+                        <outlet property="timestamp" destination="C6n-EA-uML" id="fDW-xh-Lhb"/>
+                        <outlet property="type" destination="2sr-1d-5me" id="u5V-jp-L27"/>
+                        <outlet property="unit" destination="bLM-kE-x1J" id="xe7-eD-uE7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y6e-B5-EJU" userLabel="First Responder" sceneMemberID="firstResponder"/>
