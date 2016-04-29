@@ -37,7 +37,6 @@
 		522636371C60FFB00054A550 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 522636361C60FFB00054A550 /* libz.tbd */; };
 		5236E15F187EA73F0057E974 /* HRSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5236E15E187EA73F0057E974 /* HRSViewController.m */; };
 		5236E162187EA7540057E974 /* HTSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5236E161187EA7540057E974 /* HTSViewController.m */; };
-		5236E16C187EC6880057E974 /* StubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5236E16B187EC6880057E974 /* StubViewController.m */; };
 		524F2CD818897078008A8555 /* BGMItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 524F2CD718897078008A8555 /* BGMItemCell.m */; };
 		524F2CDF18897D33008A8555 /* GlucoseReading.m in Sources */ = {isa = PBXBuildFile; fileRef = 524F2CDE18897D33008A8555 /* GlucoseReading.m */; };
 		524F2CE2188984E6008A8555 /* BGMDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 524F2CE1188984E6008A8555 /* BGMDetailsViewController.m */; };
@@ -135,8 +134,6 @@
 		5236E15E187EA73F0057E974 /* HRSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRSViewController.m; sourceTree = "<group>"; };
 		5236E160187EA7540057E974 /* HTSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTSViewController.h; sourceTree = "<group>"; };
 		5236E161187EA7540057E974 /* HTSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTSViewController.m; sourceTree = "<group>"; };
-		5236E16A187EC6880057E974 /* StubViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StubViewController.h; sourceTree = "<group>"; };
-		5236E16B187EC6880057E974 /* StubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StubViewController.m; sourceTree = "<group>"; };
 		524F2CD618897078008A8555 /* BGMItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGMItemCell.h; sourceTree = "<group>"; };
 		524F2CD718897078008A8555 /* BGMItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGMItemCell.m; sourceTree = "<group>"; };
 		524F2CDD18897D33008A8555 /* GlucoseReading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlucoseReading.h; sourceTree = "<group>"; };
@@ -283,7 +280,6 @@
 				A8F1142619C1B7EC007F956E /* StoryBoard */,
 				A85667E31B2233A3004A6D3C /* MainViewController */,
 				5236E166187EA7AA0057E974 /* Scanner */,
-				5236E169187EC6310057E974 /* Stub */,
 				5252A533188025EC00EFD773 /* BGM */,
 				5252A53718802B6D00EFD773 /* BPM */,
 				5285D9A61890031F00305F1D /* CSC */,
@@ -387,15 +383,6 @@
 				30A1145B1CD24611000F0F02 /* NORScannerViewController.swift */,
 			);
 			path = Scanner;
-			sourceTree = "<group>";
-		};
-		5236E169187EC6310057E974 /* Stub */ = {
-			isa = PBXGroup;
-			children = (
-				5236E16A187EC6880057E974 /* StubViewController.h */,
-				5236E16B187EC6880057E974 /* StubViewController.m */,
-			);
-			path = Stub;
 			sourceTree = "<group>";
 		};
 		524F2CDC18897D18008A8555 /* Model */ = {
@@ -781,7 +768,6 @@
 				30921FD31CD0E7A5009CBDDE /* NORNavigationController.swift in Sources */,
 				30A114561CD2367C000F0F02 /* NORScannedPeripheral.swift in Sources */,
 				5214D0D218881D4D00460637 /* CharacteristicReader.m in Sources */,
-				5236E16C187EC6880057E974 /* StubViewController.m in Sources */,
 				30921FD51CD0EB55009CBDDE /* NORMainViewController.swift in Sources */,
 				5252A5361880260300EFD773 /* BGMViewController.m in Sources */,
 				524F2CE5188D2A56008A8555 /* GlucoseReadingContext.m in Sources */,
