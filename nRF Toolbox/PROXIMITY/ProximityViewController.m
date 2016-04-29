@@ -22,7 +22,6 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import "ProximityViewController.h"
-#import "ScannerViewController.h"
 #import "Constants.h"
 #import "AppUtilities.h"
 
@@ -139,7 +138,7 @@
     {
         // Set this contoller as scanner delegate
         UINavigationController *nc = segue.destinationViewController;
-        ScannerViewController *controller = (ScannerViewController *)nc.childViewControllerForStatusBarHidden;
+        NORScannerViewController *controller = (NORScannerViewController *)nc.childViewControllerForStatusBarHidden;
         controller.filterUUID = proximityLinkLossServiceUUID;
         controller.delegate = self;
     }

@@ -21,7 +21,6 @@
  */
 
 #import "DFUViewController.h"
-#import "ScannerViewController.h"
 
 #import "Constants.h"
 #import "AppFilesViewController.h"
@@ -168,7 +167,7 @@
     {
         // Set this contoller as scanner delegate
         UINavigationController *nc = segue.destinationViewController;
-        ScannerViewController *scannerViewController = (ScannerViewController *)nc.childViewControllerForStatusBarHidden;
+        NORScannerViewController *scannerViewController = (NORScannerViewController *)nc.childViewControllerForStatusBarHidden;
         //controller.filterUUID = dfuServiceUUID; - the DFU service should not be advertised. We have to scan for any device hoping it supports DFU.
         scannerViewController.delegate = self;
     }

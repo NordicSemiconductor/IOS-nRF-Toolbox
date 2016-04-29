@@ -21,7 +21,6 @@
  */
 
 #import "StubViewController.h"
-#import "ScannerViewController.h"
 #import "Constants.h"
 
 @interface StubViewController () {
@@ -110,7 +109,7 @@
     if ([segue.identifier isEqualToString:@"scan"])
     {
         // Set this contoller as scanner delegate
-        ScannerViewController *controller = (ScannerViewController *)segue.destinationViewController;
+        NORScannerViewController *controller = (NORScannerViewController *)segue.destinationViewController;
         controller.filterUUID = htsServiceUUID;
         controller.delegate = self;
     }

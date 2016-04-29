@@ -12,10 +12,10 @@ import CoreBluetooth
 @objc class NORScannedPeripheral: NSObject {
     
     var peripheral  : CBPeripheral
-    var RSSI        : Int
+    var RSSI        : Int32
     var isConnected : Bool
     
-    init(withPeripheral aPeripheral: CBPeripheral, andRSSI anRSSI:Int, andIsConnected aConnectionStatus: Bool) {
+    init(withPeripheral aPeripheral: CBPeripheral, andRSSI anRSSI:Int32, andIsConnected aConnectionStatus: Bool) {
         peripheral = aPeripheral
         RSSI = anRSSI
         isConnected = aConnectionStatus

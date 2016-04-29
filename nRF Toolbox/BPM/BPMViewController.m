@@ -21,7 +21,6 @@
  */
 
 #import "BPMViewController.h"
-#import "ScannerViewController.h"
 #import "Constants.h"
 #import "AppUtilities.h"
 #import "CharacteristicReader.h"
@@ -117,7 +116,7 @@
     {
         // Set this contoller as scanner delegate
         UINavigationController *nc = segue.destinationViewController;
-        ScannerViewController *controller = (ScannerViewController *)nc.childViewControllerForStatusBarHidden;
+        NORScannerViewController *controller = (NORScannerViewController *)nc.childViewControllerForStatusBarHidden;
         controller.filterUUID = bpmServiceUUID;
         controller.delegate = self;
     }

@@ -12,6 +12,7 @@
 		30921FD51CD0EB55009CBDDE /* NORMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30921FD41CD0EB55009CBDDE /* NORMainViewController.swift */; };
 		30A114561CD2367C000F0F02 /* NORScannedPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A114551CD2367C000F0F02 /* NORScannedPeripheral.swift */; };
 		30A1145A1CD2426B000F0F02 /* NORScannerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A114591CD2426B000F0F02 /* NORScannerDelegate.swift */; };
+		30A1145C1CD24611000F0F02 /* NORScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A1145B1CD24611000F0F02 /* NORScannerViewController.swift */; };
 		5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAA1885642F007CC40D /* icon-dfu-64.png */; };
 		5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAB1885642F007CC40D /* icon-dfu-320.png */; };
 		5211EFB018856430007CC40D /* icon-hex.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAC1885642F007CC40D /* icon-hex.png */; };
@@ -32,7 +33,6 @@
 		5217F4111859EE0000F2D5BB /* nRF_ToolboxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5217F4101859EE0000F2D5BB /* nRF_ToolboxTests.m */; };
 		5217F41B1859EEF400F2D5BB /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5217F41A1859EEF400F2D5BB /* CoreBluetooth.framework */; };
 		5217F41E185B198E00F2D5BB /* RSACViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5217F41D185B198E00F2D5BB /* RSACViewController.m */; };
-		5217F422185F15FA00F2D5BB /* ScannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5217F421185F15FA00F2D5BB /* ScannerViewController.m */; };
 		5226362F1C5A601C0054A550 /* HowToCreateDistributionPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5226362E1C5A601C0054A550 /* HowToCreateDistributionPacket.m */; };
 		522636371C60FFB00054A550 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 522636361C60FFB00054A550 /* libz.tbd */; };
 		5236E15F187EA73F0057E974 /* HRSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5236E15E187EA73F0057E974 /* HRSViewController.m */; };
@@ -99,6 +99,7 @@
 		30921FD41CD0EB55009CBDDE /* NORMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORMainViewController.swift; sourceTree = "<group>"; };
 		30A114551CD2367C000F0F02 /* NORScannedPeripheral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORScannedPeripheral.swift; sourceTree = "<group>"; };
 		30A114591CD2426B000F0F02 /* NORScannerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORScannerDelegate.swift; sourceTree = "<group>"; };
+		30A1145B1CD24611000F0F02 /* NORScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORScannerViewController.swift; sourceTree = "<group>"; };
 		5211EFAA1885642F007CC40D /* icon-dfu-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-64.png"; sourceTree = "<group>"; };
 		5211EFAB1885642F007CC40D /* icon-dfu-320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-320.png"; sourceTree = "<group>"; };
 		5211EFAC1885642F007CC40D /* icon-hex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-hex.png"; sourceTree = "<group>"; };
@@ -126,8 +127,6 @@
 		5217F41C185B198E00F2D5BB /* RSACViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSACViewController.h; sourceTree = "<group>"; };
 		5217F41D185B198E00F2D5BB /* RSACViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSACViewController.m; sourceTree = "<group>"; };
 		5217F41F185B1A0800F2D5BB /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		5217F420185F15FA00F2D5BB /* ScannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScannerViewController.h; sourceTree = "<group>"; };
-		5217F421185F15FA00F2D5BB /* ScannerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScannerViewController.m; sourceTree = "<group>"; };
 		5226362A1C564E5F0054A550 /* FileSelectionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSelectionDelegate.h; sourceTree = "<group>"; };
 		5226362D1C5A601C0054A550 /* HowToCreateDistributionPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HowToCreateDistributionPacket.h; sourceTree = "<group>"; };
 		5226362E1C5A601C0054A550 /* HowToCreateDistributionPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HowToCreateDistributionPacket.m; sourceTree = "<group>"; };
@@ -383,10 +382,9 @@
 		5236E166187EA7AA0057E974 /* Scanner */ = {
 			isa = PBXGroup;
 			children = (
-				5217F420185F15FA00F2D5BB /* ScannerViewController.h */,
-				5217F421185F15FA00F2D5BB /* ScannerViewController.m */,
 				30A114551CD2367C000F0F02 /* NORScannedPeripheral.swift */,
 				30A114591CD2426B000F0F02 /* NORScannerDelegate.swift */,
+				30A1145B1CD24611000F0F02 /* NORScannerViewController.swift */,
 			);
 			path = Scanner;
 			sourceTree = "<group>";
@@ -761,6 +759,7 @@
 				A83894521B17731D005B738D /* EditPopupViewController.m in Sources */,
 				5226362F1C5A601C0054A550 /* HowToCreateDistributionPacket.m in Sources */,
 				5252A53A18802B8100EFD773 /* BPMViewController.m in Sources */,
+				30A1145C1CD24611000F0F02 /* NORScannerViewController.swift in Sources */,
 				52BDCBD41C491C8600E2680F /* UARTRevealViewController.m in Sources */,
 				A85667D91B1F3C1A004A6D3C /* LogViewController.m in Sources */,
 				7E6ED112197D1DA4008010B6 /* UserFilesViewController.m in Sources */,
@@ -787,7 +786,6 @@
 				5252A5361880260300EFD773 /* BGMViewController.m in Sources */,
 				524F2CE5188D2A56008A8555 /* GlucoseReadingContext.m in Sources */,
 				7E6ED10F197D1D8D008010B6 /* AppFilesViewController.m in Sources */,
-				5217F422185F15FA00F2D5BB /* ScannerViewController.m in Sources */,
 				52BDCBD71C49492300E2680F /* LogItemCell.m in Sources */,
 				5236E15F187EA73F0057E974 /* HRSViewController.m in Sources */,
 			);

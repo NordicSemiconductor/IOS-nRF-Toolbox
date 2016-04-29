@@ -3095,7 +3095,7 @@
         <!--Select Device-->
         <scene sceneID="AiV-hG-UJL">
             <objects>
-                <viewController id="Day-ms-bMb" customClass="ScannerViewController" sceneMemberID="viewController">
+                <viewController id="Day-ms-bMb" customClass="NORScannerViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Efc-Me-hNX"/>
                         <viewControllerLayoutGuide type="bottom" id="PNk-wh-BIi"/>
@@ -3169,13 +3169,13 @@
                     <navigationItem key="navigationItem" title="Select Device" id="UvX-aE-1Eg">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="F0H-b0-5w4">
                             <connections>
-                                <action selector="didCancelClicked:" destination="Day-ms-bMb" id="Qkv-6d-oIa"/>
+                                <action selector="cancelButtonTapped:" destination="Day-ms-bMb" id="ase-eV-B91"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="devicesTable" destination="Z7G-tL-EMa" id="0fo-HQ-Izb"/>
-                        <outlet property="emptyView" destination="Gdc-ES-NXq" id="8h3-Sd-aiu"/>
+                        <outlet property="devicesTable" destination="Z7G-tL-EMa" id="ygX-Gh-LI7"/>
+                        <outlet property="emptyView" destination="Gdc-ES-NXq" id="wiF-aD-oNr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="91A-FG-3qM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4605,7 +4605,7 @@
         <image name="userIcon" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="MGB-6U-Gsz"/>
+        <segue reference="QaF-as-tpw"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.60392159219999997" blue="0.85490196939999996" alpha="1" colorSpace="calibratedRGB"/>
 </document>

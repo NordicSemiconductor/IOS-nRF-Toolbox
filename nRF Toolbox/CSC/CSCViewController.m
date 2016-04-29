@@ -21,7 +21,6 @@
  */
 
 #import "CSCViewController.h"
-#import "ScannerViewController.h"
 #import "Constants.h"
 #import "AppUtilities.h"
 
@@ -140,7 +139,7 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
     {
         // Set this contoller as scanner delegate
         UINavigationController *nc = segue.destinationViewController;
-        ScannerViewController *controller = (ScannerViewController *)nc.childViewControllerForStatusBarHidden;
+        NORScannerViewController *controller = (NORScannerViewController *)nc.childViewControllerForStatusBarHidden;
         controller.filterUUID = cscServiceUUID;
         controller.delegate = self;
     }

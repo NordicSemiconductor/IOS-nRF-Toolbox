@@ -23,7 +23,6 @@
 #import "BGMViewController.h"
 #import "BGMDetailsViewController.h"
 #import "BGMItemCell.h"
-#import "ScannerViewController.h"
 #import "GlucoseReading.h"
 #import "RecordAccess.h"
 #import "Constants.h"
@@ -165,7 +164,7 @@ enum
     {
         // Set this contoller as scanner delegate
         UINavigationController *nc = segue.destinationViewController;
-        ScannerViewController *controller = (ScannerViewController *)nc.childViewControllerForStatusBarHidden;
+        NORScannerViewController *controller = (NORScannerViewController *)nc.childViewControllerForStatusBarHidden;
         controller.filterUUID = bgmServiceUUID;
         controller.delegate = self;
     }

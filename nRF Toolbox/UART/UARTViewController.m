@@ -22,7 +22,6 @@
 
 #import "UARTViewController.h"
 #import "SWRevealViewController.h"
-#import "ScannerViewController.h"
 #import "Constants.h"
 #import "LogViewController.h"
 #import "AppUtilities.h"
@@ -116,7 +115,7 @@
     {
         // Set this contoller as scanner delegate
         UINavigationController *nc = segue.destinationViewController;
-        ScannerViewController *controller = (ScannerViewController *)nc.childViewControllerForStatusBarHidden;
+        NORScannerViewController *controller = (NORScannerViewController *)nc.childViewControllerForStatusBarHidden;
         controller.delegate = self;
     }
 }
