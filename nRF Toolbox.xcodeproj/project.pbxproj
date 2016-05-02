@@ -17,6 +17,7 @@
 		30A16ED41CC7BF85009D26CA /* BGMDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A16ECA1CC7BF85009D26CA /* BGMDetailsViewController.m */; };
 		30A16ED51CC7BF85009D26CA /* BGMItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A16ECC1CC7BF85009D26CA /* BGMItemCell.m */; };
 		30A16ED61CC7BF85009D26CA /* BGMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A16ECE1CC7BF85009D26CA /* BGMViewController.m */; };
+		30AA81481CD74623001EA567 /* ContinuousGlucoseFeatureData.m in Sources */ = {isa = PBXBuildFile; fileRef = 30AA81471CD74623001EA567 /* ContinuousGlucoseFeatureData.m */; };
 		5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAA1885642F007CC40D /* icon-dfu-64.png */; };
 		5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAB1885642F007CC40D /* icon-dfu-320.png */; };
 		5211EFB018856430007CC40D /* icon-hex.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAC1885642F007CC40D /* icon-hex.png */; };
@@ -117,6 +118,8 @@
 		30A16ECC1CC7BF85009D26CA /* BGMItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGMItemCell.m; sourceTree = "<group>"; };
 		30A16ECD1CC7BF85009D26CA /* BGMViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGMViewController.h; sourceTree = "<group>"; };
 		30A16ECE1CC7BF85009D26CA /* BGMViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGMViewController.m; sourceTree = "<group>"; };
+		30AA81461CD74623001EA567 /* ContinuousGlucoseFeatureData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContinuousGlucoseFeatureData.h; sourceTree = "<group>"; };
+		30AA81471CD74623001EA567 /* ContinuousGlucoseFeatureData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContinuousGlucoseFeatureData.m; sourceTree = "<group>"; };
 		5211EFAA1885642F007CC40D /* icon-dfu-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-64.png"; sourceTree = "<group>"; };
 		5211EFAB1885642F007CC40D /* icon-dfu-320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-320.png"; sourceTree = "<group>"; };
 		5211EFAC1885642F007CC40D /* icon-hex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-hex.png"; sourceTree = "<group>"; };
@@ -276,6 +279,8 @@
 				30A16EC61CC7BF85009D26CA /* GlucoseReadingContext.m */,
 				30A16EC71CC7BF85009D26CA /* RecordAccess.h */,
 				3066BD6A1CCF5ED2006343F7 /* CGMSpecificOperations.h */,
+				30AA81461CD74623001EA567 /* ContinuousGlucoseFeatureData.h */,
+				30AA81471CD74623001EA567 /* ContinuousGlucoseFeatureData.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -823,6 +828,7 @@
 				52BDCBDA1C4D1AAC00E2680F /* NSDataAsHex.m in Sources */,
 				30A16ED61CC7BF85009D26CA /* BGMViewController.m in Sources */,
 				30A16ED11CC7BF85009D26CA /* CBGMViewController.m in Sources */,
+				30AA81481CD74623001EA567 /* ContinuousGlucoseFeatureData.m in Sources */,
 				5217F428185F28D400F2D5BB /* ScannedPeripheral.m in Sources */,
 				7E99686C19800A260092E69E /* FolderFilesViewController.m in Sources */,
 				30A16ED51CC7BF85009D26CA /* BGMItemCell.m in Sources */,
