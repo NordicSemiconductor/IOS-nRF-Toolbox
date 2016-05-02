@@ -60,28 +60,28 @@ typedef enum
 
 typedef enum
 {
-    RESERVED = 0,
-    COMMUNICATION_INTERVAL_IN_MINUTES = 1,
-    CALIBRATION_VALUE = 4,
-    CALIBRATION_RECORD_NUMBER = 5,
-    CALIBRATION_DATA = 6,
-    PATIENT_HIGH_BG_VALUE = 7,
-    PATIENT_LOW_BG_VALUE = 10,
-    HYPO_ALERT_LEVEL_VALUE = 13,
-    HYPER_ALERT_LEVEL_VALUE = 16,
-    RATE_OF_DECREASE_ALERT_LEVEL_VALUE = 19,
-    RATE_OF_INCREASE_ALERT_LEVEL_VALUE = 22,
-    REQUEST_OP_CODE_RESPONSE_CODE_VALUE = 28
+    RESERVED                            = 0,
+    COMMUNICATION_INTERVAL_IN_MINUTES   = 1,
+    CALIBRATION_VALUE                   = 4,
+    CALIBRATION_RECORD_NUMBER           = 5,
+    CALIBRATION_DATA                    = 6,
+    PATIENT_HIGH_BG_VALUE               = 7,
+    PATIENT_LOW_BG_VALUE                = 10,
+    HYPO_ALERT_LEVEL_VALUE              = 13,
+    HYPER_ALERT_LEVEL_VALUE             = 16,
+    RATE_OF_DECREASE_ALERT_LEVEL_VALUE  = 19,
+    RATE_OF_INCREASE_ALERT_LEVEL_VALUE  = 22,
+    REQUEST_OP_CODE_RESPONSE_CODE_VALUE = 28,
 } GCMEnumerations;
 
 typedef enum
 {
-    RESERVED_RESPONSE,
-    SUCCESS,
-    OP_CODE_NOT_SUPPORTED,
-    INVALID_OPERAND,
-    PROCEDURE_NOT_COMPLETED,
-    PARAMETER_OUT_OF_RANGE,
+    RESERVED_RESPONSE       = 0,
+    SUCCESS                 = 1,
+    OP_CODE_NOT_SUPPORTED   = 2,
+    INVALID_OPERAND         = 3,
+    PROCEDURE_NOT_COMPLETED = 4,
+    PARAMETER_OUT_OF_RANGE  = 5,
 } CGMOpcodeResponseCodes;
 
 typedef struct __attribute__ ((__packed__))
@@ -91,8 +91,8 @@ typedef struct __attribute__ ((__packed__))
     union  __attribute__ ((__packed__)) {
         UInt16 numberLE; // Little Endian
         struct  __attribute__ ((__packed__)) {
-            UInt8 requestOpCode;
             UInt8 responseCode;
+            UInt8 requestOpCode;
         } response;
         struct  __attribute__ ((__packed__)) {
             UInt8 filterType;
