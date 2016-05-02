@@ -82,38 +82,16 @@
     return self;
 }
 
-- (void)viewDidLoad
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidLoad];
-        
-    sequenceNumber.text = [NSString stringWithFormat:@"%d", reading.sequenceNumber];
-    timestamp.text = [dateFormat stringFromDate:reading.timestamp];
-    if (reading.glucoseConcentrationTypeAndLocationPresent)
-    {
-        self.type.text = [reading typeAsString];
-        self.location.text = [reading locationAsString];
-        
-        if (reading.unit == MOL_L)
-        {
-            self.concentration.text = [NSString stringWithFormat:@"%.1f", reading.glucoseConcentration * 1000.0f]; // converting mol/l -> mmol/l
-            self.unit.text = @"mmol/L";
-        }
-        else
-        {
-            self.concentration.text = [NSString stringWithFormat:@"%.0f", reading.glucoseConcentration * 100000.0f]; // converting kg/l -> mg/dl
-            self.unit.text = @"mg/dL";
-        }
-    }
-    else
-    {
-        self.type.text = @"Unavailable";
-        self.location.text = @"Unavailable";
-        self.concentration.text = @"-";
-        self.unit.text = @"";
-    }
-    
-    //reading.sensorStatusAnnunciationPresent = YES;
-    //reading.sensorStatusAnnunciation = 0x73C3;
+    [super viewWillAppear:animated];
+//    sequenceNumber.text = [NSString stringWithFormat:@"%d", reading.sequenceNumber];
+    timestamp.text = [dateFormat stringFromDate:reading.timesStamp];
+    self.type.text = [reading typeAsString];
+    self.location.text = [reading locationAsString];
+    self.concentration.text = [NSString stringWithFormat:@"%.1f", reading.glucoseConcentration];
+    self.unit.text = @"mg/dL";
+
     if (reading.sensorStatusAnnunciationPresent)
     {
         UInt16 status = reading.sensorStatusAnnunciation;
@@ -131,53 +109,53 @@
         [self updateView:self.timeStatus withStatus:(status & 0x0800) > 0];
     }
     
-    if (reading.context != nil)
-    {
-        GlucoseReadingContext* context = reading.context;
-        self.contextPresentStatus.text = @"Available";
-        
-        if (context.carbohydratePresent)
-        {
-            self.carbodydrateId.text = [context carbohydrateIdAsString];
-            self.carbohydrate.text = [NSString stringWithFormat:@"%.1f", context.carbohydrate * 1000];
-        }
-        
-        if (context.mealPresent)
-        {
-            self.meal.text = [context mealIdAsString];
-        }
-        
-        if (context.testerAndHealthPresent)
-        {
-            self.tester.text = [context testerAsString];
-            self.health.text = [context healthAsString];
-        }
-        
-        if (context.exercisePresent)
-        {
-            self.exerciseDuration.text = [NSString stringWithFormat:@"%d", context.exerciseDuration / 60];
-            self.exerciseIntensity.text = [NSString stringWithFormat:@"%d", context.exerciseIntensity];
-        }
-        
-        if (context.medicationPresent)
-        {
-            self.medicationId.text = [context medicationIdAsString];
-            self.medication.text = [NSString stringWithFormat:@"%.0f", context.medication * 1000];
-            if (context.medicationUnit == KILOGRAMS)
-            {
-                self.medicationUnit.text = @"mg";
-            }
-            else
-            {
-                self.medicationUnit.text = @"ml";
-            }
-        }
-        
-        if (context.HbA1cPresent)
-        {
-            self.HbA1c.text = [NSString stringWithFormat:@"%.2f", context.HbA1c];
-        }
-    }
+//    if (reading.context != nil)
+//    {
+//        GlucoseReadingContext* context = reading.context;
+//        self.contextPresentStatus.text = @"Available";
+//        
+//        if (context.carbohydratePresent)
+//        {
+//            self.carbodydrateId.text = [context carbohydrateIdAsString];
+//            self.carbohydrate.text = [NSString stringWithFormat:@"%.1f", context.carbohydrate * 1000];
+//        }
+//        
+//        if (context.mealPresent)
+//        {
+//            self.meal.text = [context mealIdAsString];
+//        }
+//        
+//        if (context.testerAndHealthPresent)
+//        {
+//            self.tester.text = [context testerAsString];
+//            self.health.text = [context healthAsString];
+//        }
+//        
+//        if (context.exercisePresent)
+//        {
+//            self.exerciseDuration.text = [NSString stringWithFormat:@"%d", context.exerciseDuration / 60];
+//            self.exerciseIntensity.text = [NSString stringWithFormat:@"%d", context.exerciseIntensity];
+//        }
+//        
+//        if (context.medicationPresent)
+//        {
+//            self.medicationId.text = [context medicationIdAsString];
+//            self.medication.text = [NSString stringWithFormat:@"%.0f", context.medication * 1000];
+//            if (context.medicationUnit == KILOGRAMS)
+//            {
+//                self.medicationUnit.text = @"mg";
+//            }
+//            else
+//            {
+//                self.medicationUnit.text = @"ml";
+//            }
+//        }
+//        
+//        if (context.HbA1cPresent)
+//        {
+//            self.HbA1c.text = [NSString stringWithFormat:@"%.2f", context.HbA1c];
+//        }
+//    }
 }
 
 - (void)didReceiveMemoryWarning

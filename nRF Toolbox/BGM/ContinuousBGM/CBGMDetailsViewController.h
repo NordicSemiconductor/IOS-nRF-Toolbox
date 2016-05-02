@@ -21,11 +21,11 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "GlucoseReading.h"
+#import "ContinuousGlucoseReading.h"
 
 @interface CBGMDetailsViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
 
-@property (strong, nonatomic) GlucoseReading* reading;
+@property (strong, nonatomic) ContinuousGlucoseReading* reading;
 
 @end
