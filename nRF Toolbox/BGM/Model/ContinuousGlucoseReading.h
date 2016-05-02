@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "ContinuousGlucoseFeatureData.h"
 typedef enum
 {
     MG_DL = 0,
@@ -49,6 +49,7 @@ typedef enum
 @interface ContinuousGlucoseReading : NSObject
 
 // Glucose Measurement values
+@property (weak, nonatomic)   ContinuousGlucoseFeatureData* CGMfeatureData;
 @property (assign, nonatomic) UInt8 measurementSize;
 @property (strong, nonatomic) NSDate* timesStamp;
 @property (assign, nonatomic) SInt16 timeOffsetSinceSessionStart;
@@ -66,7 +67,7 @@ typedef enum
 
 + (ContinuousGlucoseReading*) readingFromBytes:(uint8_t*) bytes;
 - (void) updateFromBytes:(uint8_t*) bytes;
-//- (NSString*) typeAsString;
-//- (NSString*) locationAsString;
+- (NSString*) typeAsString;
+- (NSString*) locationAsString;
 
 @end
