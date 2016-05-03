@@ -66,6 +66,7 @@ enum
 @property (strong, nonatomic) NSMutableArray* readings;
 @property (weak, nonatomic) IBOutlet UITableView *cbgmTableView;
 @property (strong, nonatomic) ContinuousGlucoseFeatureData *cgmFeatureData;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *cgmActivityIndicator;
 
 - (IBAction)actionButtonClicked:(id)sender;
 - (IBAction)aboutButtonClicked:(id)sender;
@@ -86,6 +87,7 @@ enum
 @synthesize cgmRecordAccessControlPointCharacteristic;
 @synthesize cgmFeatureCharacteristic;
 @synthesize cgmFeatureData;
+@synthesize cgmActivityIndicator;
 
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -184,7 +186,7 @@ enum
     {
         CBGMDetailsViewController *controller = (CBGMDetailsViewController *)segue.destinationViewController;
         ContinuousGlucoseReading *aReading = [readings objectAtIndex:[cbgmTableView indexPathForSelectedRow].row];
-        controller.reading = [readings objectAtIndex:[cbgmTableView indexPathForSelectedRow].row];
+        controller.reading = aReading;
     }
 }
 
@@ -246,6 +248,7 @@ enum
             param.opCode = START_SESSION;
             size = 1;
             targetCharacteristic = cgmSpecificOpsControlPointCharacteristic;
+            [cgmActivityIndicator startAnimating];
             break;
         }
         case ACTION_STOP_SESSION:
@@ -254,6 +257,7 @@ enum
             param.opCode = STOP_SESSION;
             size = 1;
             targetCharacteristic = cgmSpecificOpsControlPointCharacteristic;
+            [cgmActivityIndicator stopAnimating];
             break;
         }
         case ACTION_SET_TIMER:

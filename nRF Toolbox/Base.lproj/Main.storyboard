@@ -4613,7 +4613,7 @@
                                 </state>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DEFAULT CGM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D2E-qg-TTe">
-                                <rect key="frame" x="86" y="11" width="492" height="27"/>
+                                <rect key="frame" x="86" y="11" width="452" height="27"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="27" id="0kE-8A-Kd3"/>
                                 </constraints>
@@ -4751,6 +4751,9 @@
                                     <constraint firstAttribute="height" constant="8" id="HWX-FQ-HO6"/>
                                 </constraints>
                             </imageView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ESe-8Z-tBW">
+                                <rect key="frame" x="546" y="18" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -4761,6 +4764,8 @@
                             <constraint firstItem="NQd-sI-Q3q" firstAttribute="top" secondItem="tYs-mK-Z9E" secondAttribute="bottom" id="DR1-bm-jBq"/>
                             <constraint firstItem="Irb-w0-EwX" firstAttribute="leading" secondItem="TZb-pl-LiS" secondAttribute="leadingMargin" constant="19" id="E2d-0d-f9z"/>
                             <constraint firstItem="NQd-sI-Q3q" firstAttribute="leading" secondItem="TZb-pl-LiS" secondAttribute="leading" id="IKw-Kg-cBP"/>
+                            <constraint firstItem="ESe-8Z-tBW" firstAttribute="top" secondItem="tYs-mK-Z9E" secondAttribute="bottom" constant="18" id="Mtj-Op-fdy"/>
+                            <constraint firstItem="pDj-EH-rOJ" firstAttribute="top" secondItem="ESe-8Z-tBW" secondAttribute="bottom" constant="11" id="N5I-dD-MSd"/>
                             <constraint firstItem="Jam-bR-210" firstAttribute="top" secondItem="HtY-po-XdK" secondAttribute="bottom" constant="8" id="NLm-Ph-cdd"/>
                             <constraint firstItem="orb-va-rG1" firstAttribute="top" secondItem="Irb-w0-EwX" secondAttribute="bottom" constant="36" id="NcY-Yv-2Mu"/>
                             <constraint firstAttribute="trailing" secondItem="NQd-sI-Q3q" secondAttribute="trailing" id="Ove-5l-4sP"/>
@@ -4777,10 +4782,12 @@
                             <constraint firstItem="D2E-qg-TTe" firstAttribute="top" secondItem="tYs-mK-Z9E" secondAttribute="bottom" constant="11" id="hP7-vg-yBo"/>
                             <constraint firstItem="X8w-cq-8Lg" firstAttribute="leading" secondItem="TZb-pl-LiS" secondAttribute="leading" id="i97-YF-O4v"/>
                             <constraint firstItem="QeP-Ag-ceJ" firstAttribute="leading" secondItem="TZb-pl-LiS" secondAttribute="leadingMargin" constant="19" id="ios-LH-B8t"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ESe-8Z-tBW" secondAttribute="trailing" constant="14" id="lye-YI-xUk"/>
                             <constraint firstItem="Wc6-15-2Qy" firstAttribute="top" secondItem="tYs-mK-Z9E" secondAttribute="bottom" id="qIh-H3-xGr"/>
                             <constraint firstItem="pDj-EH-rOJ" firstAttribute="top" secondItem="D2E-qg-TTe" secondAttribute="bottom" constant="11" id="qvJ-Bs-SOX"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="D2E-qg-TTe" secondAttribute="trailing" constant="2" id="sZI-P2-mFD"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="D2E-qg-TTe" secondAttribute="trailing" constant="42" id="sZI-P2-mFD"/>
                             <constraint firstAttribute="trailing" secondItem="Wc6-15-2Qy" secondAttribute="trailing" id="upl-FN-QMe"/>
+                            <constraint firstItem="ESe-8Z-tBW" firstAttribute="leading" secondItem="D2E-qg-TTe" secondAttribute="trailing" constant="8" id="wo7-Pg-CjC"/>
                             <constraint firstItem="Jam-bR-210" firstAttribute="top" secondItem="U5z-nQ-VEi" secondAttribute="bottom" constant="30" id="ztK-QF-8db"/>
                         </constraints>
                     </view>
@@ -4807,6 +4814,7 @@
                     <connections>
                         <outlet property="battery" destination="QeP-Ag-ceJ" id="oKN-Vk-8d7"/>
                         <outlet property="cbgmTableView" destination="Irb-w0-EwX" id="mgj-A4-GUp"/>
+                        <outlet property="cgmActivityIndicator" destination="ESe-8Z-tBW" id="HED-DH-dlv"/>
                         <outlet property="connectButton" destination="U5z-nQ-VEi" id="LbH-yT-ES2"/>
                         <outlet property="deviceName" destination="D2E-qg-TTe" id="HRy-Xe-su5"/>
                         <outlet property="recordButton" destination="orb-va-rG1" id="wgQ-C5-Mat"/>
