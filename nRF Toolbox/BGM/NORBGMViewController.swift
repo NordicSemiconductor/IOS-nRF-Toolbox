@@ -226,7 +226,7 @@ class NORBGMViewController: BaseViewController ,CBCentralManagerDelegate, CBPeri
                 readings?.addObject(reading)
             }
         } else if characteristic.UUID.isEqual(bgmGlucoseMeasurementContextCharacteristicUUID) {
-            let context = GlucoseReadingContext.init(fromBytes: UnsafeMutablePointer(array))
+            let context = NORGlucoseReadingContext.readingContextFromBytes(UnsafeMutablePointer(array))
             let index = readings?.indexOfObject(context)
             if index != NSNotFound {
                 let reading = readings?.objectAtIndex(index!) as! NORGlucoseReading

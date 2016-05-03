@@ -12,6 +12,7 @@
 		305E07B71CD3608500B32EB2 /* NORBGMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 305E07B61CD3608500B32EB2 /* NORBGMViewController.swift */; };
 		308AA5761CD8A7B400CC9857 /* NORBGMItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308AA5751CD8A7B400CC9857 /* NORBGMItemCell.swift */; };
 		308AA5781CD8AF6B00CC9857 /* NORGlucoseReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308AA5771CD8AF6B00CC9857 /* NORGlucoseReading.swift */; };
+		308AA57A1CD8DD4300CC9857 /* NORGlucoseReadingContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308AA5791CD8DD4300CC9857 /* NORGlucoseReadingContext.swift */; };
 		30921FD31CD0E7A5009CBDDE /* NORNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30921FD21CD0E7A5009CBDDE /* NORNavigationController.swift */; };
 		30921FD51CD0EB55009CBDDE /* NORMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30921FD41CD0EB55009CBDDE /* NORMainViewController.swift */; };
 		30A114561CD2367C000F0F02 /* NORScannedPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A114551CD2367C000F0F02 /* NORScannedPeripheral.swift */; };
@@ -41,7 +42,6 @@
 		522636371C60FFB00054A550 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 522636361C60FFB00054A550 /* libz.tbd */; };
 		5236E15F187EA73F0057E974 /* HRSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5236E15E187EA73F0057E974 /* HRSViewController.m */; };
 		5236E162187EA7540057E974 /* HTSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5236E161187EA7540057E974 /* HTSViewController.m */; };
-		524F2CE5188D2A56008A8555 /* GlucoseReadingContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 524F2CE4188D2A56008A8555 /* GlucoseReadingContext.m */; };
 		5252A53A18802B8100EFD773 /* BPMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A53918802B8100EFD773 /* BPMViewController.m */; };
 		5252A53E18802F7200EFD773 /* DFUViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A53D18802F7200EFD773 /* DFUViewController.m */; };
 		5252A542188030A800EFD773 /* ProximityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A541188030A800EFD773 /* ProximityViewController.m */; };
@@ -97,6 +97,7 @@
 		305E07B61CD3608500B32EB2 /* NORBGMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBGMViewController.swift; sourceTree = "<group>"; };
 		308AA5751CD8A7B400CC9857 /* NORBGMItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBGMItemCell.swift; sourceTree = "<group>"; };
 		308AA5771CD8AF6B00CC9857 /* NORGlucoseReading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORGlucoseReading.swift; sourceTree = "<group>"; };
+		308AA5791CD8DD4300CC9857 /* NORGlucoseReadingContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORGlucoseReadingContext.swift; path = Model/NORGlucoseReadingContext.swift; sourceTree = "<group>"; };
 		30921FD11CD0E7A5009CBDDE /* nRF Toolbox-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "nRF Toolbox-Bridging-Header.h"; sourceTree = "<group>"; };
 		30921FD21CD0E7A5009CBDDE /* NORNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORNavigationController.swift; sourceTree = "<group>"; };
 		30921FD41CD0EB55009CBDDE /* NORMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORMainViewController.swift; sourceTree = "<group>"; };
@@ -138,8 +139,6 @@
 		5236E15E187EA73F0057E974 /* HRSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRSViewController.m; sourceTree = "<group>"; };
 		5236E160187EA7540057E974 /* HTSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTSViewController.h; sourceTree = "<group>"; };
 		5236E161187EA7540057E974 /* HTSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTSViewController.m; sourceTree = "<group>"; };
-		524F2CE3188D2A56008A8555 /* GlucoseReadingContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlucoseReadingContext.h; sourceTree = "<group>"; };
-		524F2CE4188D2A56008A8555 /* GlucoseReadingContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlucoseReadingContext.m; sourceTree = "<group>"; };
 		5252A53818802B8100EFD773 /* BPMViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPMViewController.h; sourceTree = "<group>"; };
 		5252A53918802B8100EFD773 /* BPMViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPMViewController.m; sourceTree = "<group>"; };
 		5252A53C18802F7200EFD773 /* DFUViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFUViewController.h; sourceTree = "<group>"; };
@@ -384,9 +383,8 @@
 		524F2CDC18897D18008A8555 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				308AA5791CD8DD4300CC9857 /* NORGlucoseReadingContext.swift */,
 				308AA5771CD8AF6B00CC9857 /* NORGlucoseReading.swift */,
-				524F2CE3188D2A56008A8555 /* GlucoseReadingContext.h */,
-				524F2CE4188D2A56008A8555 /* GlucoseReadingContext.m */,
 				5285D9A5188D43E500305F1D /* RecordAccess.h */,
 			);
 			name = Model;
@@ -738,6 +736,7 @@
 				5226362F1C5A601C0054A550 /* HowToCreateDistributionPacket.m in Sources */,
 				5252A53A18802B8100EFD773 /* BPMViewController.m in Sources */,
 				30A1145C1CD24611000F0F02 /* NORScannerViewController.swift in Sources */,
+				308AA57A1CD8DD4300CC9857 /* NORGlucoseReadingContext.swift in Sources */,
 				305E07B71CD3608500B32EB2 /* NORBGMViewController.swift in Sources */,
 				52BDCBD41C491C8600E2680F /* UARTRevealViewController.m in Sources */,
 				A85667D91B1F3C1A004A6D3C /* LogViewController.m in Sources */,
@@ -762,7 +761,6 @@
 				308AA5761CD8A7B400CC9857 /* NORBGMItemCell.swift in Sources */,
 				5214D0D218881D4D00460637 /* CharacteristicReader.m in Sources */,
 				30921FD51CD0EB55009CBDDE /* NORMainViewController.swift in Sources */,
-				524F2CE5188D2A56008A8555 /* GlucoseReadingContext.m in Sources */,
 				7E6ED10F197D1D8D008010B6 /* AppFilesViewController.m in Sources */,
 				52BDCBD71C49492300E2680F /* LogItemCell.m in Sources */,
 				5236E15F187EA73F0057E974 /* HRSViewController.m in Sources */,

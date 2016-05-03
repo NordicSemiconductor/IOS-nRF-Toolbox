@@ -139,15 +139,12 @@ class NORBGMDetailsViewController: UIViewController {
                 medicationId.text = context?.medicationIdAsString()
                 medication.text   = String(format: "%.0f", (context?.medication)! * 1000)
                 
-                    switch context?.medicationUnit {
-                    case KILOGRAMS?:
+                    switch (context?.medicationUnit)! {
+                    case .KILOGRAMS:
                         medicationUnit.text = "mg"
                         break
-                    case LITERS?:
+                    case .LITERS:
                         medicationUnit.text = "ml"
-                        break
-                    default:
-                        medicationUnit.text = "-"
                         break
                     }
             }

@@ -7,4 +7,3 @@
 #import "AppUtilities.h"
 #import "RecordAccess.h"
 #import "CharacteristicReader.h"
-#import "GlucoseReadingContext.h"

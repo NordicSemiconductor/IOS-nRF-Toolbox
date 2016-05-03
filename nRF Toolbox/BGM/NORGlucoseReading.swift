@@ -21,7 +21,7 @@ class NORGlucoseReading: NSObject {
     var location                                    : BGMLocation?
     var sensorStatusAnnunciationPresent             : Bool?
     var sensorStatusAnnunciation                    : UInt16?
-    var context                                     : GlucoseReadingContext?
+    var context                                     : NORGlucoseReadingContext?
 
     //MARK: - Enum Definitions
     enum BGMUnit : UInt8 {
