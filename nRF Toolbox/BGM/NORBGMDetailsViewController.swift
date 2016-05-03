@@ -60,7 +60,7 @@ class NORBGMDetailsViewController: UIViewController {
     @IBOutlet weak var unit: UILabel!
     
     //MARK: - Properties
-    var reading     : GlucoseReading?
+    var reading     : NORGlucoseReading?
     var dateFormat  : NSDateFormatter?
     
     required init(coder aDecoder: NSCoder) {
@@ -79,18 +79,14 @@ class NORBGMDetailsViewController: UIViewController {
             type.text       = reading?.typeAsString()
             location.text   = reading?.locationAsString()
             
-            switch reading?.unit {
-            case MOL_L?:
+            switch (reading?.unit)! {
+            case .MOL_L:
                 glucose.text = String(format: "%0.1f", (reading?.glucoseConcentration)! * 1000.0)  //mol/l to mmol/l conversion
                 unit.text = "mmol/l"
                 break;
-            case KG_L?:
+            case .KG_L:
                 glucose.text = String(format: "%.0f", (reading?.glucoseConcentration)! * 100000.0) //kg/l to mg/dl conversion
                 unit.text = "mg/dl"
-                break;
-            default:
-                glucose.text = String(format: "%.1f", (reading?.glucoseConcentration)!)
-                unit.text = ""
                 break;
             }
         } else {

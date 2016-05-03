@@ -54,7 +54,7 @@ typedef enum
     USER_FACING_TIME
 } FilterType;
 
-typedef enum
+typedef enum : UInt8
 {
     RESERVED_RESPONSE,
     SUCCESS,
@@ -65,7 +65,7 @@ typedef enum
     NO_RECORDS_FOUND,
     ABORT_UNSUCCESSFUL,
     PROCEDURE_NOT_COMPLETED,
-    OPERAND_NOT_SUPPORTED
+    OPERAND_NOT_SUPPORTED,
 } ResponseCode;
 
 typedef struct __attribute__ ((__packed__))

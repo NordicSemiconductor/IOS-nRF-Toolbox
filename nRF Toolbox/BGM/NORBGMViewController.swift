@@ -202,13 +202,75 @@ class NORBGMViewController: BaseViewController ,CBCentralManagerDelegate, CBPeri
         let array = data!.bytes
         
         if characteristic.UUID.isEqual(batteryLevelCharacteristicUUID) {
-            CharacteristicReader.readUInt8Value(&array) ERROR: Stopped working here, Swift->ObjC->Swift pointers are confusing, bite the bullet and probably convert the reader class while i am at it!
-        }else if characteristic.UUID.isEqual(bgmGlucoseMeasurementCharacteristicUUID){
-            //HandleMeasurement
-        }else if characteristic.UUID.isEqual(bgmGlucoseMeasurementContextCharacteristicUUID){
-            //HandleMeasurementCtx
-        }else if characteristic.UUID.isEqual(bgmRecordAccessControlPointCharacteristicUUID){
-            //HandleRecordAccessControl
+            let batteryLevel = CharacteristicReader.readUInt8Value(UnsafeMutablePointer(array))
+            let text = String(format: "%d%%", batteryLevel)
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                self.battery.setTitle(text, forState: UIControlState.Disabled)
+            })
+            if battery.tag == 0 {
+                // If battery level notifications are available, enable them
+                if characteristic.properties.contains(CBCharacteristicProperties.Notify)
+                {
+                    battery.tag = 1; // mark that we have enabled notifications
+                    peripheral.setNotifyValue(true, forCharacteristic: characteristic)
+                }
+            }
+            
+        } else if characteristic.UUID.isEqual(bgmGlucoseMeasurementCharacteristicUUID) {
+            let reading = NORGlucoseReading.readingFromBytes(UnsafeMutablePointer(array))
+            
+            if (readings?.containsObject(reading) != false) {
+                readings?.replaceObjectAtIndex((readings?.indexOfObject(reading))!, withObject: reading)
+            } else {
+                readings?.addObject(reading)
+            }
+        } else if characteristic.UUID.isEqual(bgmGlucoseMeasurementContextCharacteristicUUID) {
+            let context = GlucoseReadingContext.init(fromBytes: UnsafeMutablePointer(array))
+            let index = readings?.indexOfObject(context)
+            if index != NSNotFound {
+                let reading = readings?.objectAtIndex(index!) as! NORGlucoseReading
+                reading.context = context
+            }else{
+                print("Glucose measurement with sequence number: %d not found", context.sequenceNumber)
+            }
+        } else if characteristic.UUID.isEqual(bgmRecordAccessControlPointCharacteristicUUID) {
+            let param = unsafeBitCast(CFArrayGetValueAtIndex(array as! CFArray, 0), RecordAccessParam.self)
+            dispatch_async(dispatch_get_main_queue(), {
+                switch(param.value.response.responseCode){
+                case SUCCESS.rawValue:
+                    self.bgmTableView.reloadData()
+                    break
+                case OP_CODE_NOT_SUPPORTED.rawValue:
+                    let alert = UIAlertView.init(title: "Error", message: "Operation not supported", delegate: nil, cancelButtonTitle: "OK")
+                    alert.show()
+                    break
+                case NO_RECORDS_FOUND.rawValue:
+                    let alert = UIAlertView.init(title: "Error", message: "No records found", delegate: nil, cancelButtonTitle: "OK")
+                    alert.show()
+                    break
+                case OPERATOR_NOT_SUPPORTED.rawValue:
+                    let alert = UIAlertView.init(title: "Error", message: "Operator not supported", delegate: nil, cancelButtonTitle: "OK")
+                    alert.show()
+                    break
+                case INVALID_OPERATOR.rawValue:
+                    let alert = UIAlertView.init(title: "Error", message: "Invalid operator", delegate: nil, cancelButtonTitle: "OK")
+                    alert.show()
+                    break
+                case OPERAND_NOT_SUPPORTED.rawValue:
+                    let alert = UIAlertView.init(title: "Error", message: "Operand not supported", delegate: nil, cancelButtonTitle: "OK")
+                    alert.show()
+                    break
+                case INVALID_OPERAND.rawValue:
+                    let alert = UIAlertView.init(title: "Error", message: "Invalid operand", delegate: nil, cancelButtonTitle: "OK")
+                    alert.show()
+                    break
+                    default:
+                        print(String(format:"Op code: %d, operator %d", param.opCode, param.operatorType))
+                        print(String(format:"Req Op Code: %d, response: %d", param.value.response.requestOpCode, param.value.response.responseCode))
+                    break
+                }
+            })
         }
     }
     //MARK: - CBCentralManagerDelegate Methdos
@@ -268,25 +330,22 @@ class NORBGMViewController: BaseViewController ,CBCentralManagerDelegate, CBPeri
     
     //MARK: - UITableViewDelegate methods
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("BGMCell") as! BGMItemCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("BGMCell") as! NORBGMItemCell
         
-        let reading = readings?.objectAtIndex(indexPath.row) as! GlucoseReading
-        cell.timestamp.text = dateFormatter?.stringFromDate(reading.timestamp)
+        let reading = (readings?.objectAtIndex(indexPath.row))! as! NORGlucoseReading
+        cell.timestamp.text = dateFormatter?.stringFromDate(reading.timestamp!)
         
         if reading.glucoseConcentrationTypeAndLocationPresent == true {
             cell.type.text = reading.typeAsString()
-            switch reading.unit {
-            case MOL_L:
-                cell.value.text = String(format: "%.1f", reading.glucoseConcentration * 1000)   // mol/l -> mmol/l conversion
+
+            switch reading.unit! {
+            case .MOL_L:
+                cell.value.text = String(format: "%.1f", reading.glucoseConcentration! * 1000)   // mol/l -> mmol/l conversion
                 cell.unit.text = "mmol/l"
                 break
-            case KG_L:
-                cell.value.text = String(format: "%0f", reading.glucoseConcentration * 100000)  // kg/l -> mg/dl conversion
+            case .KG_L:
+                cell.value.text = String(format: "%0f", reading.glucoseConcentration! * 100000)  // kg/l -> mg/dl conversion
                 cell.unit.text = "mg/dl"
-                break
-            default:
-                cell.value.text = String(reading.glucoseConcentration)
-                cell.unit.text = ""
                 break
             }
         } else {
@@ -314,8 +373,8 @@ class NORBGMViewController: BaseViewController ,CBCentralManagerDelegate, CBPeri
                 param?.opCode = UInt8(REPORT_STORED_RECORDS.rawValue)
                 param?.operatorType = UInt8(GREATER_THAN_OR_EQUAL.rawValue)
                 param?.value.singleParam.filterType = UInt8(SEQUENCE_NUMBER.rawValue)
-                let reading = readings?.objectAtIndex((readings?.count)! - 1) as! GlucoseReading
-                param?.value.singleParam.paramLE = CFSwapInt16HostToLittle(reading.sequenceNumber)
+                let reading = readings?.objectAtIndex((readings?.count)! - 1) as! NORGlucoseReading
+                param?.value.singleParam.paramLE = CFSwapInt16HostToLittle(reading.sequenceNumber!)
                 size = 5
                 clearList = false
                 
@@ -374,7 +433,7 @@ class NORBGMViewController: BaseViewController ,CBCentralManagerDelegate, CBPeri
             controller.delegate = self
         }else if segue.identifier == "details" {
             let controller = segue.destinationViewController as! NORBGMDetailsViewController
-            controller.reading = readings?.objectAtIndex((bgmTableView.indexPathForSelectedRow?.row)!) as? GlucoseReading
+            controller.reading = readings?.objectAtIndex((bgmTableView.indexPathForSelectedRow?.row)!) as? NORGlucoseReading
         }
     }
 }

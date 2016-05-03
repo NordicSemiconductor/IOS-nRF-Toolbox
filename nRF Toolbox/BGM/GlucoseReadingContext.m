@@ -21,8 +21,8 @@
  */
 
 #import "GlucoseReadingContext.h"
-#import "GlucoseReading.h"
 #import "CharacteristicReader.h"
+#import "nRF_Toolbox-swift.h"
 
 @implementation GlucoseReadingContext
 
@@ -73,8 +73,8 @@
     if (testerAndHelathPresent)
     {
         Nibble nibble = [CharacteristicReader readNibble:&pointer];
-        self.tester = nibble.first;
-        self.health = nibble.second;
+        self.tester = nibble.parts.first;
+        self.health = nibble.parts.second;
     }
     
     self.exercisePresent = exerciseInfoPresent;
@@ -196,9 +196,9 @@
 
 -(BOOL)isEqual:(id)object
 {
-    // The context class is compared to the reading while searching for rading with its sequence number
-    GlucoseReading* reading = (GlucoseReading*) object;
-    return self.sequenceNumber == reading.sequenceNumber;
+    // The context class is compared to the reading while searching for rading with its sequence
+    NORGlucoseReading* reading = (NORGlucoseReading*) object;
+    return self.sequenceNumber == [reading sequneceNumber];
 }
 
 @end

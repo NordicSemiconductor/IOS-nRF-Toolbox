@@ -22,14 +22,14 @@
 
 #import <Foundation/Foundation.h>
 
-typedef union
+typedef struct
 {
     UInt8 value;
     struct {
         // Reversed order
         UInt8 second : 4;
         UInt8 first : 4;
-    };
+    } parts;
 } Nibble;
 
 @interface CharacteristicReader : NSObject

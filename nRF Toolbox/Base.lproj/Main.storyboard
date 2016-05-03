@@ -578,7 +578,7 @@
                                 <color key="separatorColor" red="0.73333334922790527" green="0.74117648601531982" blue="0.75294119119644165" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="BGMCell" id="EMf-0w-QHD" customClass="BGMItemCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="BGMCell" id="EMf-0w-QHD" customClass="NORBGMItemCell" customModule="nRF_Toolbox" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="22" width="527" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EMf-0w-QHD" id="esg-YP-CNM">
@@ -637,10 +637,10 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.90196079019999997" green="0.90588235859999999" blue="0.9098039269" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
-                                            <outlet property="timestamp" destination="F3L-dM-fUr" id="oGr-3y-Va9"/>
-                                            <outlet property="type" destination="gCt-0S-Y2s" id="fxk-dh-QHP"/>
-                                            <outlet property="unit" destination="N7h-AE-chk" id="dkz-DY-5kh"/>
-                                            <outlet property="value" destination="1T8-EJ-ajQ" id="5ym-xR-Dfl"/>
+                                            <outlet property="timestamp" destination="F3L-dM-fUr" id="3KP-gr-exK"/>
+                                            <outlet property="type" destination="gCt-0S-Y2s" id="vO3-UU-27Z"/>
+                                            <outlet property="unit" destination="N7h-AE-chk" id="AIt-gp-4Bz"/>
+                                            <outlet property="value" destination="1T8-EJ-ajQ" id="tri-zB-NeP"/>
                                             <segue destination="Tpl-nT-cEd" kind="show" identifier="details" id="LBK-bJ-zED"/>
                                         </connections>
                                     </tableViewCell>
