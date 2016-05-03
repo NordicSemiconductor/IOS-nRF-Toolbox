@@ -148,7 +148,7 @@ enum
 
     [actionSheet addButtonWithTitle:@"Start Session"];
     [actionSheet addButtonWithTitle:@"Stop Session"];
-    [actionSheet addButtonWithTitle:@"Set interval: 1 Min."];
+    [actionSheet addButtonWithTitle:@"Set update interval"];
     [actionSheet setDestructiveButtonIndex:1];
 
     [actionSheet showInView:self.view];
