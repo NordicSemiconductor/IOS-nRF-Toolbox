@@ -30,7 +30,7 @@
 
 @interface UARTViewController ()
 
-@property (strong, nonatomic) BluetoothManager *bluetoothManager;
+@property (strong, nonatomic) NORBluetoothManager *bluetoothManager;
 
 @property (strong, nonatomic) NSString *uartPeripheralName;
 @property (strong, nonatomic) NSMutableArray *buttonsCommands;
@@ -125,11 +125,11 @@
 -(void)centralManagerDidSelectPeripheralWithManager:(CBCentralManager *)aManager andPeripheral:(CBPeripheral *)aPeripheral
 {
     // We may not use more than one Central Manager instance. Let's just take the one returned from Scanner View Controller
-    self.bluetoothManager = [[BluetoothManager alloc] initWithManager: aManager];
+    self.bluetoothManager = [[NORBluetoothManager alloc] initWithManager: aManager];
     self.bluetoothManager.delegate = self;
     self.bluetoothManager.logger = logger;
     
-    [self.bluetoothManager connectDevice:aPeripheral];
+    [self.bluetoothManager connectPeripheralWithPeripheral:aPeripheral];
 }
 
 -(void)appDidEnterBackground:(NSNotification *)_notification
@@ -143,7 +143,7 @@
 }
 
 - (IBAction)connectOrDisconnectClicked:(UIButton *)sender {
-    [self.bluetoothManager disconnectDevice];
+    [self.bluetoothManager cancelPeriphralConnection];
 }
 
 #pragma mark - UART API
@@ -152,7 +152,7 @@
 {
     if (self.bluetoothManager)
     {
-        [self.bluetoothManager send:value];
+        [self.bluetoothManager sendWithText:value];
     }
 }
 
@@ -294,7 +294,7 @@
 
 #pragma mark - BluetoothManager delegate methods
 
--(void)didDeviceConnected:(NSString *)peripheralName
+-(void)didConnectPeripheralWithDeviceName:(NSString *)peripheralName
 {
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -312,7 +312,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterForeground:) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
--(void)didDeviceDisconnected
+-(void)didDisconnectPeripheral
 {
     // Scanner uses other queue to send events. We must edit UI in the main queue
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -332,12 +332,12 @@
     self.bluetoothManager = nil;
 }
 
--(void)isDeviceReady
+-(void)peripheralReady
 {
     NSLog(@"Device is ready");
 }
 
--(void)deviceNotSupported
+-(void)peripheralNotSupported
 {
     NSLog(@"Device not supported");
 }

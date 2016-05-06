@@ -43,27 +43,27 @@
     // Use the color based on the log level
     UIColor *color = nil;
     switch (item.level) {
-        case Debug:
+        case DebugLogLevel:
             color = [UIColor colorWithRed:0x00/255.0 green:0x9C/255.0 blue:0xDE/255.0 alpha:1];
             break;
             
-        case Verbose:
+        case VerboseLogLevel:
             color = [UIColor colorWithRed:0xB8/255.0 green:0xB0/255.0 blue:0x56/255.0 alpha:1];
             break;
             
-        case Info:
+        case InfoLogLevel:
             color = [UIColor blackColor];
             break;
             
-        case App:
+        case AppLogLevel:
             color = [UIColor colorWithRed:0x23/255.0 green:0x8C/255.0 blue:0x0F/255.0 alpha:1];
             break;
             
-        case Warning:
+        case WarningLogLevel:
             color = [UIColor colorWithRed:0xD7/255.0 green:0x79/255.0 blue:0x26/255.0 alpha:1];
             break;
             
-        case Error:
+        case ErrorLogLevel:
             color = [UIColor redColor];
             break;
     }

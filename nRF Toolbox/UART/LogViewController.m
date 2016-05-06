@@ -74,7 +74,7 @@ NSMutableArray *logItems;
      }
  }
 
--(void)log:(LogLevel)level message:(NSString *)message
+-(void)log:(NORLogLevel)level message:(NSString *)message
 {
     LogItem *item = [[LogItem alloc] init];
     item.level = level;
@@ -100,7 +100,7 @@ NSMutableArray *logItems;
 
 #pragma mark - TextField editing
 
--(void)setBluetoothManager:(BluetoothManager *)manager
+-(void)setBluetoothManager:(NORBluetoothManager *)manager
 {
     bluetoothManager = manager;
     
@@ -127,10 +127,10 @@ NSMutableArray *logItems;
      
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-     [self.commandTextField resignFirstResponder];
-     [bluetoothManager send:self.commandTextField.text];
-     self.commandTextField.text = @"";
-     return YES;
+    [self.commandTextField resignFirstResponder];
+    [bluetoothManager sendWithText:self.commandTextField.text];
+    self.commandTextField.text = @"";
+    return YES;
  }
 
 #pragma mark - TableView delegates

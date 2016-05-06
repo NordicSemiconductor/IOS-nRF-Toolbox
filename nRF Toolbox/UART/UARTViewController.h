@@ -24,8 +24,7 @@
 #import "BaseViewController.h"
 #import "nRF_Toolbox-swift.h"
 #import "EditPopupViewController.h"
-#import "BluetoothManager.h"
 
-@interface UARTViewController : BaseViewController<BluetoothManagerDelegate, NORScannerDelegate, UIPopoverPresentationControllerDelegate, ButtonConfigureDelegate>
+@interface UARTViewController : BaseViewController<NORBluetoothManagerDelegate, NORScannerDelegate, UIPopoverPresentationControllerDelegate, ButtonConfigureDelegate>
 
 @end

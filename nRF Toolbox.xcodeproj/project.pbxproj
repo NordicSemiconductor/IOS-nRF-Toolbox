@@ -10,6 +10,7 @@
 		0E645A0F1CBF957800D36AD0 /* firmwares in Resources */ = {isa = PBXBuildFile; fileRef = 7E6ED10A196ED482008010B6 /* firmwares */; };
 		305E07B51CD3534D00B32EB2 /* NORBGMDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 305E07B41CD3534D00B32EB2 /* NORBGMDetailsViewController.swift */; };
 		305E07B71CD3608500B32EB2 /* NORBGMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 305E07B61CD3608500B32EB2 /* NORBGMViewController.swift */; };
+		3069A1D71CDC788A003869EA /* NORBluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3069A1D61CDC788A003869EA /* NORBluetoothManager.swift */; };
 		308AA5761CD8A7B400CC9857 /* NORBGMItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308AA5751CD8A7B400CC9857 /* NORBGMItemCell.swift */; };
 		308AA5781CD8AF6B00CC9857 /* NORGlucoseReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308AA5771CD8AF6B00CC9857 /* NORGlucoseReading.swift */; };
 		308AA57A1CD8DD4300CC9857 /* NORGlucoseReadingContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308AA5791CD8DD4300CC9857 /* NORGlucoseReadingContext.swift */; };
@@ -64,7 +65,6 @@
 		A80462591AD670480074F116 /* AppUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = A80462581AD670480074F116 /* AppUtilities.m */; };
 		A83894521B17731D005B738D /* EditPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A83894511B17731D005B738D /* EditPopupViewController.m */; };
 		A85667D91B1F3C1A004A6D3C /* LogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A85667D81B1F3C1A004A6D3C /* LogViewController.m */; };
-		A85667DC1B208186004A6D3C /* BluetoothManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A85667DB1B208186004A6D3C /* BluetoothManager.m */; };
 		A86A784C1AB8542E00823AAB /* UARTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A86A784B1AB8542E00823AAB /* UARTViewController.m */; };
 		F427A816F7641D9828BAF315 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */; };
 /* End PBXBuildFile section */
@@ -95,6 +95,7 @@
 /* Begin PBXFileReference section */
 		305E07B41CD3534D00B32EB2 /* NORBGMDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBGMDetailsViewController.swift; sourceTree = "<group>"; };
 		305E07B61CD3608500B32EB2 /* NORBGMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBGMViewController.swift; sourceTree = "<group>"; };
+		3069A1D61CDC788A003869EA /* NORBluetoothManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBluetoothManager.swift; sourceTree = "<group>"; };
 		308AA5751CD8A7B400CC9857 /* NORBGMItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBGMItemCell.swift; sourceTree = "<group>"; };
 		308AA5771CD8AF6B00CC9857 /* NORGlucoseReading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORGlucoseReading.swift; sourceTree = "<group>"; };
 		308AA5791CD8DD4300CC9857 /* NORGlucoseReadingContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORGlucoseReadingContext.swift; path = Model/NORGlucoseReadingContext.swift; sourceTree = "<group>"; };
@@ -182,8 +183,6 @@
 		A83894511B17731D005B738D /* EditPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditPopupViewController.m; sourceTree = "<group>"; };
 		A85667D71B1F3C1A004A6D3C /* LogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogViewController.h; sourceTree = "<group>"; };
 		A85667D81B1F3C1A004A6D3C /* LogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogViewController.m; sourceTree = "<group>"; };
-		A85667DA1B208186004A6D3C /* BluetoothManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothManager.h; sourceTree = "<group>"; };
-		A85667DB1B208186004A6D3C /* BluetoothManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BluetoothManager.m; sourceTree = "<group>"; };
 		A86A784A1AB8542E00823AAB /* UARTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UARTViewController.h; sourceTree = "<group>"; };
 		A86A784B1AB8542E00823AAB /* UARTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UARTViewController.m; sourceTree = "<group>"; };
 		ACB6349B9439D9A78E406AD1 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -218,6 +217,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3069A1D21CDC76FE003869EA /* BluetoothManager */ = {
+			isa = PBXGroup;
+			children = (
+				3069A1D61CDC788A003869EA /* NORBluetoothManager.swift */,
+			);
+			path = BluetoothManager;
+			sourceTree = "<group>";
+		};
 		5214D0CF18881D0200460637 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,6 +279,7 @@
 			isa = PBXGroup;
 			children = (
 				A8F1142619C1B7EC007F956E /* StoryBoard */,
+				3069A1D21CDC76FE003869EA /* BluetoothManager */,
 				A85667E31B2233A3004A6D3C /* MainViewController */,
 				5236E166187EA7AA0057E974 /* Scanner */,
 				5252A533188025EC00EFD773 /* BGM */,
@@ -462,15 +470,6 @@
 			name = Logger;
 			sourceTree = "<group>";
 		};
-		52BDCBE41C4F955300E2680F /* Bluetooth Manager */ = {
-			isa = PBXGroup;
-			children = (
-				A85667DA1B208186004A6D3C /* BluetoothManager.h */,
-				A85667DB1B208186004A6D3C /* BluetoothManager.m */,
-			);
-			name = "Bluetooth Manager";
-			sourceTree = "<group>";
-		};
 		7E6ED10C197D1D40008010B6 /* File Selection */ = {
 			isa = PBXGroup;
 			children = (
@@ -540,7 +539,6 @@
 		A86A78491AB8537200823AAB /* UART */ = {
 			isa = PBXGroup;
 			children = (
-				52BDCBE41C4F955300E2680F /* Bluetooth Manager */,
 				52BDCBE31C4F953C00E2680F /* Logger */,
 				52BDCBD21C491C8600E2680F /* UARTRevealViewController.h */,
 				52BDCBD31C491C8600E2680F /* UARTRevealViewController.m */,
@@ -742,7 +740,6 @@
 				A85667D91B1F3C1A004A6D3C /* LogViewController.m in Sources */,
 				305E07B51CD3534D00B32EB2 /* NORBGMDetailsViewController.swift in Sources */,
 				7E6ED112197D1DA4008010B6 /* UserFilesViewController.m in Sources */,
-				A85667DC1B208186004A6D3C /* BluetoothManager.m in Sources */,
 				5217F3F61859EE0000F2D5BB /* AppDelegate.m in Sources */,
 				5217F3F21859EE0000F2D5BB /* main.m in Sources */,
 				5217F41E185B198E00F2D5BB /* RSACViewController.m in Sources */,
@@ -756,6 +753,7 @@
 				30A1145A1CD2426B000F0F02 /* NORScannerDelegate.swift in Sources */,
 				52BDCBDA1C4D1AAC00E2680F /* NSDataAsHex.m in Sources */,
 				7E99686C19800A260092E69E /* FolderFilesViewController.m in Sources */,
+				3069A1D71CDC788A003869EA /* NORBluetoothManager.swift in Sources */,
 				30921FD31CD0E7A5009CBDDE /* NORNavigationController.swift in Sources */,
 				30A114561CD2367C000F0F02 /* NORScannedPeripheral.swift in Sources */,
 				308AA5761CD8A7B400CC9857 /* NORBGMItemCell.swift in Sources */,

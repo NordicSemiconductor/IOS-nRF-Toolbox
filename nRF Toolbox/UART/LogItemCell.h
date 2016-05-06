@@ -26,7 +26,7 @@
 @interface LogItem : NSObject
 
 @property (nonatomic) NSString *timestamp;
-@property (nonatomic) LogLevel level;
+@property (nonatomic) NORLogLevel level;
 @property (nonatomic) NSString *message;
 
 @end

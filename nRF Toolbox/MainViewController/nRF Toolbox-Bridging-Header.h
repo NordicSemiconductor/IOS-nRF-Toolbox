@@ -7,3 +7,4 @@
 #import "AppUtilities.h"
 #import "RecordAccess.h"
 #import "CharacteristicReader.h"
+#import "Logger.h"

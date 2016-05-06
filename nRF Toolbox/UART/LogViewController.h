@@ -21,11 +21,11 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "BluetoothManager.h"
 #import "Logger.h"
+#import "nRF_Toolbox-swift.h"
 
 @interface LogViewController : UIViewController <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, Logger>
 
-@property (strong, nonatomic) BluetoothManager *bluetoothManager;
+@property (strong, nonatomic) NORBluetoothManager *bluetoothManager;
 
 @end

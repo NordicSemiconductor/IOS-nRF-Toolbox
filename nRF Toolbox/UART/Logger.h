@@ -22,18 +22,18 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM( NSInteger, LogLevel )
+typedef NS_ENUM( NSInteger, NORLogLevel )
 {
-    Debug,
-    Verbose,
-    Info,
-    App,
-    Warning,
-    Error
+    DebugLogLevel,
+    VerboseLogLevel,
+    InfoLogLevel,
+    AppLogLevel,
+    WarningLogLevel,
+    ErrorLogLevel
 };
 
 @protocol Logger <NSObject>
 
--(void)log:(LogLevel)level message:(NSString*)message;
+-(void)log:(NORLogLevel)level message:(NSString*)message;
 
 @end
