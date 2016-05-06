@@ -69,7 +69,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="BackgroundImage" width="512" height="682"/>
+        <image name="BackgroundImage" width="1536" height="2048"/>
         <image name="BackgroundTitle" width="120" height="12"/>
         <image name="nordic_logo" width="182" height="242"/>
     </resources>
