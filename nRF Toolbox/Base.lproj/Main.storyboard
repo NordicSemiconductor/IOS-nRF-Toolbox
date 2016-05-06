@@ -1362,7 +1362,7 @@
         <!--View Controller - BPM-->
         <scene sceneID="knE-KG-ydc">
             <objects>
-                <viewController id="Kc0-JV-b23" userLabel="View Controller - BPM" customClass="BPMViewController" sceneMemberID="viewController">
+                <viewController id="Kc0-JV-b23" userLabel="View Controller - BPM" customClass="NORBPMViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MDw-8r-L7v"/>
                         <viewControllerLayoutGuide type="bottom" id="5Yf-ZI-KyQ"/>
@@ -1405,7 +1405,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="connectOrDisconnectClicked" destination="Kc0-JV-b23" eventType="touchUpInside" id="RG4-25-9VU"/>
+                                    <action selector="connectionButtonTapped:" destination="Kc0-JV-b23" eventType="touchUpInside" id="qS3-LD-Z7X"/>
                                     <segue destination="BQP-B5-Tee" kind="presentation" identifier="scan" id="YqS-rM-m7i"/>
                                 </connections>
                             </button>
@@ -1659,25 +1659,25 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="aboutButtonClicked:" destination="Kc0-JV-b23" eventType="touchUpInside" id="ITf-cp-sSx"/>
+                                    <action selector="aboutButtonTapped:" destination="Kc0-JV-b23" eventType="touchUpInside" id="z6h-P1-oiP"/>
                                 </connections>
                             </button>
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="battery" destination="Eke-vs-tIX" id="awt-SE-3rr"/>
-                        <outlet property="connectButton" destination="eWO-hk-F2Z" id="n1N-D4-CDf"/>
-                        <outlet property="deviceName" destination="eaJ-DI-U0E" id="9k2-m7-4CP"/>
-                        <outlet property="diastolic" destination="4lx-Rt-Yty" id="eNR-1V-F3h"/>
-                        <outlet property="diastolicUnit" destination="w38-Wq-Jdq" id="9Nh-AO-aW2"/>
-                        <outlet property="meanAp" destination="EZF-09-JyH" id="saQ-TQ-gtE"/>
-                        <outlet property="meanApUnit" destination="u6Z-xZ-yG1" id="RjP-Li-jQx"/>
-                        <outlet property="pulse" destination="Mfh-vd-YNw" id="kHt-Pj-AaX"/>
-                        <outlet property="systolic" destination="edf-jT-36l" id="ccR-Ww-x6D"/>
-                        <outlet property="systolicUnit" destination="31n-Az-BCF" id="2Ri-z7-IOT"/>
-                        <outlet property="timestamp" destination="LZp-5J-280" id="nWt-vd-lUb"/>
-                        <outlet property="verticalLabel" destination="ece-Hb-vkc" id="0EN-iy-AbH"/>
+                        <outlet property="battery" destination="Eke-vs-tIX" id="t4D-dt-wfa"/>
+                        <outlet property="connectionButton" destination="eWO-hk-F2Z" id="pG5-e2-0cs"/>
+                        <outlet property="deviceName" destination="eaJ-DI-U0E" id="5Fp-Ea-9gM"/>
+                        <outlet property="diastolic" destination="4lx-Rt-Yty" id="eTh-6t-qgo"/>
+                        <outlet property="diastolicUnit" destination="w38-Wq-Jdq" id="VVS-LG-j63"/>
+                        <outlet property="meanAp" destination="EZF-09-JyH" id="jyO-sB-s0m"/>
+                        <outlet property="meanApUnit" destination="u6Z-xZ-yG1" id="9H7-FI-edi"/>
+                        <outlet property="pulse" destination="Mfh-vd-YNw" id="bOP-eO-1s3"/>
+                        <outlet property="systolic" destination="edf-jT-36l" id="krA-Kb-8YE"/>
+                        <outlet property="systolicUnit" destination="31n-Az-BCF" id="nfM-Gb-Gww"/>
+                        <outlet property="timestamp" destination="LZp-5J-280" id="2ca-DQ-A4m"/>
+                        <outlet property="verticalLabel" destination="ece-Hb-vkc" id="Jya-3Q-YtI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0zI-sy-HOE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4604,7 +4604,7 @@
         <image name="userIcon" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="MGB-6U-Gsz"/>
+        <segue reference="YqS-rM-m7i"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.60392159219999997" blue="0.85490196939999996" alpha="1" colorSpace="calibratedRGB"/>
 </document>
