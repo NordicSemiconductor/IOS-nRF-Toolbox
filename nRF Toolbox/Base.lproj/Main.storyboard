@@ -2311,7 +2311,7 @@
         <!--View Controller - HRM-->
         <scene sceneID="6tG-wn-seY">
             <objects>
-                <viewController id="9ph-JI-A6G" userLabel="View Controller - HRM" customClass="HRSViewController" sceneMemberID="viewController">
+                <viewController id="9ph-JI-A6G" userLabel="View Controller - HRM" customClass="NORHRMViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DYm-nm-njU"/>
                         <viewControllerLayoutGuide type="bottom" id="iLa-Fy-7XG"/>
@@ -2341,7 +2341,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="connectOrDisconnectClicked" destination="9ph-JI-A6G" eventType="touchUpInside" id="VI2-pT-Ms9"/>
+                                    <action selector="connectionButtonTapped:" destination="9ph-JI-A6G" eventType="touchUpInside" id="uEN-lb-7I7"/>
                                     <segue destination="BQP-B5-Tee" kind="presentation" identifier="scan" id="MGB-6U-Gsz"/>
                                 </connections>
                             </button>
@@ -2444,23 +2444,21 @@
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="wS4-Nf-jTc">
                                 <rect key="frame" x="558" y="11" width="22" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <action selector="aboutButtonClicked:" destination="9ph-JI-A6G" eventType="touchUpInside" id="i5h-9W-Eav"/>
+                                    <action selector="aboutButtonTapped:" destination="9ph-JI-A6G" eventType="touchUpInside" id="uJC-Kb-dcO"/>
                                 </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="battery" destination="wMT-Da-Ii4" id="ngH-91-b6B"/>
-                        <outlet property="connectButton" destination="DP4-3N-4LK" id="i2G-B6-iPr"/>
-                        <outlet property="deviceName" destination="tt3-gG-Slr" id="J6s-lR-OfM"/>
-                        <outlet property="graphView" destination="t9F-Lw-Qhr" id="9cm-84-yN4"/>
-                        <outlet property="hrLocation" destination="2B6-LZ-9yb" id="iPC-sc-efo"/>
-                        <outlet property="hrValue" destination="93K-ca-Jtw" id="cgj-jH-MGh"/>
-                        <outlet property="verticalLabel" destination="VdZ-25-r77" id="pW1-Fe-v3r"/>
+                        <outlet property="battery" destination="wMT-Da-Ii4" id="aEK-kJ-nGV"/>
+                        <outlet property="connectionButton" destination="DP4-3N-4LK" id="PA1-hN-3WM"/>
+                        <outlet property="deviceName" destination="tt3-gG-Slr" id="jC6-ow-0Gb"/>
+                        <outlet property="graphView" destination="t9F-Lw-Qhr" id="96Y-Sb-Br1"/>
+                        <outlet property="hrLocation" destination="2B6-LZ-9yb" id="C8h-So-xdK"/>
+                        <outlet property="hrValue" destination="93K-ca-Jtw" id="zSa-sA-gPp"/>
+                        <outlet property="verticalLabel" destination="VdZ-25-r77" id="6V6-uq-DLs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uCd-5J-Yri" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4606,7 +4604,7 @@
         <image name="userIcon" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="avT-gU-1Yo"/>
+        <segue reference="MGB-6U-Gsz"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.60392159219999997" blue="0.85490196939999996" alpha="1" colorSpace="calibratedRGB"/>
 </document>
