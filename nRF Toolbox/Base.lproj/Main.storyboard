@@ -1687,7 +1687,7 @@
         <!--View Controller - CSC-->
         <scene sceneID="Z21-8S-DTi">
             <objects>
-                <viewController id="VtK-t5-9C8" userLabel="View Controller - CSC" customClass="CSCViewController" sceneMemberID="viewController">
+                <viewController id="VtK-t5-9C8" userLabel="View Controller - CSC" customClass="NORCSCViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rbV-BS-rOZ"/>
                         <viewControllerLayoutGuide type="bottom" id="cZc-RY-S1l"/>
@@ -1857,7 +1857,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="connectOrDisconnectClicked" destination="VtK-t5-9C8" eventType="touchUpInside" id="A3s-L7-tfa"/>
+                                    <action selector="connectionButtonTapped:" destination="VtK-t5-9C8" eventType="touchUpInside" id="iRy-qj-8XG"/>
                                     <segue destination="BQP-B5-Tee" kind="presentation" identifier="scan" id="QaF-as-tpw"/>
                                 </connections>
                             </button>
@@ -1932,20 +1932,21 @@
                                 </state>
                                 <connections>
                                     <action selector="aboutButtonClicked:" destination="VtK-t5-9C8" eventType="touchUpInside" id="sko-oy-4dl"/>
+                                    <action selector="aboutButtonTapped:" destination="VtK-t5-9C8" eventType="touchUpInside" id="80A-ZU-NNf"/>
                                 </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="battery" destination="LJg-mH-nw1" id="gcl-T2-coN"/>
-                        <outlet property="cadence" destination="qi4-ti-Ltb" id="grC-wR-DmX"/>
-                        <outlet property="connectButton" destination="vxe-SV-MEc" id="O5y-4j-Z7j"/>
-                        <outlet property="deviceName" destination="7Li-Yu-dEL" id="EC4-7Z-WV3"/>
-                        <outlet property="distance" destination="XBR-5Z-cqu" id="pog-Xk-eo0"/>
-                        <outlet property="speed" destination="FLR-fm-Ao1" id="6a0-4r-ZPB"/>
-                        <outlet property="totalDistance" destination="vn7-EF-Grg" id="7R5-Kb-2Nq"/>
-                        <outlet property="verticalLabel" destination="JII-IE-2IK" id="zu4-WZ-LEB"/>
-                        <outlet property="wheelToCrankRatio" destination="614-mq-2l5" id="iEH-LB-geA"/>
+                        <outlet property="battery" destination="LJg-mH-nw1" id="V4v-YV-W8p"/>
+                        <outlet property="cadence" destination="qi4-ti-Ltb" id="vBq-Ov-Rxt"/>
+                        <outlet property="connectionButton" destination="vxe-SV-MEc" id="kax-iP-tTq"/>
+                        <outlet property="deviceName" destination="7Li-Yu-dEL" id="Lxt-Za-ajb"/>
+                        <outlet property="distance" destination="XBR-5Z-cqu" id="vhR-T3-eQS"/>
+                        <outlet property="speed" destination="FLR-fm-Ao1" id="GWn-s9-vli"/>
+                        <outlet property="totalDistance" destination="vn7-EF-Grg" id="dgx-gM-703"/>
+                        <outlet property="verticalLabel" destination="JII-IE-2IK" id="6Xc-Xn-zmT"/>
+                        <outlet property="wheelToCrankRatio" destination="614-mq-2l5" id="D5u-K3-YJf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gHy-xJ-bS4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4604,7 +4605,7 @@
         <image name="userIcon" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="YqS-rM-m7i"/>
+        <segue reference="QaF-as-tpw"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.60392159219999997" blue="0.85490196939999996" alpha="1" colorSpace="calibratedRGB"/>
 </document>

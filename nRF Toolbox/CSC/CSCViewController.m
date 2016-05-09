@@ -306,6 +306,7 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
 
 -(void)decodeCSCData:(NSData *)data
 {
+
     const uint8_t *value = [data bytes];
     double wheelRevDiff,crankRevDiff;
     wheelRevDiff = crankRevDiff = 0.0;
@@ -392,6 +393,7 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
     
     crankRevolution = CFSwapInt16LittleToHost(*(uint16_t *)(&value[index]));
     crankEventTime = (CFSwapInt16LittleToHost(*(uint16_t *)(&value[index+2])) + 1);
+
     if (oldCrankEventTime != 0) {
         crankEventTimeDiff = crankEventTime - oldCrankEventTime;
     }
@@ -400,8 +402,10 @@ const uint8_t CRANK_REVOLUTION_FLAG = 0x02;
     }
     if (crankEventTimeDiff > 0) {
         crankEventTimeDiff = crankEventTimeDiff / 1024.0;
+        print("%f, %f", crankRevolutionDiff, crankEventTimeDiff)
         travelCadence = ((crankRevolutionDiff / crankEventTimeDiff) * 60);
     }
+
     oldCrankRevolution = crankRevolution;
     oldCrankEventTime = crankEventTime;
     cadence.text = [NSString stringWithFormat:@"%d",travelCadence];
