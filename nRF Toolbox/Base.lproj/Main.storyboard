@@ -2921,7 +2921,7 @@
         <!--View Controller - HTM-->
         <scene sceneID="6kq-oM-g6K">
             <objects>
-                <viewController id="Rl2-Gx-bqg" userLabel="View Controller - HTM" customClass="HTSViewController" sceneMemberID="viewController">
+                <viewController id="Rl2-Gx-bqg" userLabel="View Controller - HTM" customClass="NORHTSViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="T94-QK-E2E"/>
                         <viewControllerLayoutGuide type="bottom" id="DJs-M6-HDi"/>
@@ -2944,8 +2944,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="connectOrDisconnectClicked" destination="Rl2-Gx-bqg" eventType="touchUpInside" id="Seg-ml-agQ"/>
-                                    <action selector="connectOrDisconnectClicked" destination="ajK-NB-gff" eventType="touchUpInside" id="grz-Jy-Q4b"/>
+                                    <action selector="connectionButtonTapped:" destination="Rl2-Gx-bqg" eventType="touchUpInside" id="3ni-ux-nw1"/>
                                     <segue destination="BQP-B5-Tee" kind="presentation" identifier="scan" id="lAt-L9-EDs"/>
                                 </connections>
                             </button>
@@ -3014,7 +3013,7 @@
                                 </segments>
                                 <color key="tintColor" red="0.0" green="0.61176472902297974" blue="0.87058824300765991" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <action selector="degreeHasChanged:forEvent:" destination="Rl2-Gx-bqg" eventType="valueChanged" id="Dax-Gz-MqH"/>
+                                    <action selector="degreeHasChanged:" destination="Rl2-Gx-bqg" eventType="valueChanged" id="NOB-jr-Hh7"/>
                                 </connections>
                             </segmentedControl>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f9A-mi-kTN" userLabel="Label - Type">
@@ -3074,18 +3073,21 @@
                                     <action selector="aboutButtonClicked:" destination="Rl2-Gx-bqg" eventType="touchUpInside" id="RMj-tP-ZCJ"/>
                                 </connections>
                             </button>
+                            <connections>
+                                <action selector="aboutButtonTapped:" destination="Rl2-Gx-bqg" id="eRN-2r-DkU"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="battery" destination="Wam-fs-VZ9" id="w9a-2s-Lss"/>
-                        <outlet property="connectButton" destination="6Jo-d7-TXR" id="kOR-g3-Yfr"/>
-                        <outlet property="degreeControl" destination="BPN-NK-B0s" id="gme-nN-YsB"/>
-                        <outlet property="degrees" destination="reN-43-V3D" id="GTq-5B-Yt4"/>
-                        <outlet property="deviceName" destination="5vH-Kr-uQc" id="qi7-T5-TIL"/>
-                        <outlet property="temperature" destination="1Jb-0V-4z9" id="sLq-iQ-7qJ"/>
-                        <outlet property="timestamp" destination="INv-xI-bMa" id="W59-wa-OXL"/>
-                        <outlet property="type" destination="f9A-mi-kTN" id="bms-o2-m5X"/>
-                        <outlet property="verticalLabel" destination="JiL-3x-kLK" id="fLp-uk-kCm"/>
+                        <outlet property="battery" destination="Wam-fs-VZ9" id="2Js-OV-wYL"/>
+                        <outlet property="connectionButon" destination="6Jo-d7-TXR" id="62C-oP-wBD"/>
+                        <outlet property="degreeControl" destination="BPN-NK-B0s" id="LrV-6O-sR9"/>
+                        <outlet property="deviceName" destination="5vH-Kr-uQc" id="w0D-ix-RKH"/>
+                        <outlet property="temperature" destination="1Jb-0V-4z9" id="567-nh-Hiu"/>
+                        <outlet property="temperatureUnit" destination="reN-43-V3D" id="NYs-nu-a4K"/>
+                        <outlet property="timestamp" destination="INv-xI-bMa" id="Edp-gW-PaE"/>
+                        <outlet property="type" destination="f9A-mi-kTN" id="Ccv-7T-G5o"/>
+                        <outlet property="verticalLabel" destination="JiL-3x-kLK" id="onJ-AO-YfD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="134-H9-Zno" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4605,7 +4607,7 @@
         <image name="userIcon" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="QaF-as-tpw"/>
+        <segue reference="lAt-L9-EDs"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.60392159219999997" blue="0.85490196939999996" alpha="1" colorSpace="calibratedRGB"/>
 </document>
