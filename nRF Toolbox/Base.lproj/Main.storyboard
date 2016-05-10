@@ -2469,7 +2469,7 @@
         <!--View Controller - Proximity-->
         <scene sceneID="7za-bA-dBb">
             <objects>
-                <viewController id="inG-0b-px5" userLabel="View Controller - Proximity" customClass="ProximityViewController" sceneMemberID="viewController">
+                <viewController id="inG-0b-px5" userLabel="View Controller - Proximity" customClass="NORProximityViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Yh6-cp-Qdf"/>
                         <viewControllerLayoutGuide type="bottom" id="2yw-Oj-cR7"/>
@@ -2492,7 +2492,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="connectOrDisconnectClicked" destination="inG-0b-px5" eventType="touchUpInside" id="Kma-5J-Rdx"/>
+                                    <action selector="connectionButtonTapped:" destination="inG-0b-px5" eventType="touchUpInside" id="m5O-0l-fSY"/>
                                     <segue destination="BQP-B5-Tee" kind="presentation" identifier="scan" id="ydJ-CZ-Xyf"/>
                                 </connections>
                             </button>
@@ -2534,7 +2534,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="findMeButtonClicked" destination="inG-0b-px5" eventType="touchUpInside" id="L1u-p9-XGx"/>
+                                    <action selector="findmeButtonTapped:" destination="inG-0b-px5" eventType="touchUpInside" id="9bz-xh-8ZP"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BackgroundTitle" translatesAutoresizingMaskIntoConstraints="NO" id="cnp-vw-eJ7">
@@ -2600,18 +2600,18 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="aboutButtonClicked:" destination="inG-0b-px5" eventType="touchUpInside" id="5fU-qC-OPp"/>
+                                    <action selector="aboutButtonTapped:" destination="inG-0b-px5" eventType="touchUpInside" id="0o2-wP-hFX"/>
                                 </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="battery" destination="lLl-5r-leZ" id="ayD-rL-Vf6"/>
-                        <outlet property="connectButton" destination="gaj-JM-U3X" id="eIz-Fd-dNI"/>
-                        <outlet property="deviceName" destination="DqQ-Re-kja" id="b4f-Fr-iOY"/>
-                        <outlet property="findMeButton" destination="O6G-iq-zoH" id="IHK-hP-uBF"/>
-                        <outlet property="lockImage" destination="qTV-NK-Xvx" id="4em-Mw-LdO"/>
-                        <outlet property="verticalLabel" destination="Vwl-LW-QSC" id="J2B-dd-4ct"/>
+                        <outlet property="battery" destination="lLl-5r-leZ" id="Eew-dx-yUo"/>
+                        <outlet property="connectionButton" destination="gaj-JM-U3X" id="sNH-gk-vO0"/>
+                        <outlet property="deviceName" destination="DqQ-Re-kja" id="kgr-kX-PtJ"/>
+                        <outlet property="findmeButton" destination="O6G-iq-zoH" id="x76-Fv-wtU"/>
+                        <outlet property="lockImage" destination="qTV-NK-Xvx" id="rI5-YS-XrL"/>
+                        <outlet property="verticalLabel" destination="Vwl-LW-QSC" id="vqp-Cf-QT0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xMx-QB-v1a" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4607,7 +4607,7 @@
         <image name="userIcon" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="lAt-L9-EDs"/>
+        <segue reference="ydJ-CZ-Xyf"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.60392159219999997" blue="0.85490196939999996" alpha="1" colorSpace="calibratedRGB"/>
 </document>

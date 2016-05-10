@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0E645A0F1CBF957800D36AD0 /* firmwares in Resources */ = {isa = PBXBuildFile; fileRef = 7E6ED10A196ED482008010B6 /* firmwares */; };
+		300508931CE1D75800D93BE0 /* NORProximityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300508921CE1D75800D93BE0 /* NORProximityViewController.swift */; };
 		3010F6051CDCB4F900CB285A /* NORBPMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3010F6041CDCB4F900CB285A /* NORBPMViewController.swift */; };
 		305E07B51CD3534D00B32EB2 /* NORBGMDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 305E07B41CD3534D00B32EB2 /* NORBGMDetailsViewController.swift */; };
 		305E07B71CD3608500B32EB2 /* NORBGMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 305E07B61CD3608500B32EB2 /* NORBGMViewController.swift */; };
@@ -46,7 +47,6 @@
 		5226362F1C5A601C0054A550 /* HowToCreateDistributionPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5226362E1C5A601C0054A550 /* HowToCreateDistributionPacket.m */; };
 		522636371C60FFB00054A550 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 522636361C60FFB00054A550 /* libz.tbd */; };
 		5252A53E18802F7200EFD773 /* DFUViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A53D18802F7200EFD773 /* DFUViewController.m */; };
-		5252A542188030A800EFD773 /* ProximityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A541188030A800EFD773 /* ProximityViewController.m */; };
 		52BDCB191C3FD31F00E2680F /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BDCB181C3FD31F00E2680F /* Accelerate.framework */; };
 		52BDCBBE1C3FD86900E2680F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BDCBBD1C3FD86900E2680F /* QuartzCore.framework */; };
 		52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */; };
@@ -93,6 +93,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		300508921CE1D75800D93BE0 /* NORProximityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORProximityViewController.swift; sourceTree = "<group>"; };
 		3010F6041CDCB4F900CB285A /* NORBPMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBPMViewController.swift; sourceTree = "<group>"; };
 		305E07B41CD3534D00B32EB2 /* NORBGMDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBGMDetailsViewController.swift; sourceTree = "<group>"; };
 		305E07B61CD3608500B32EB2 /* NORBGMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBGMViewController.swift; sourceTree = "<group>"; };
@@ -142,8 +143,6 @@
 		522636361C60FFB00054A550 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		5252A53C18802F7200EFD773 /* DFUViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFUViewController.h; sourceTree = "<group>"; };
 		5252A53D18802F7200EFD773 /* DFUViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFUViewController.m; sourceTree = "<group>"; };
-		5252A540188030A800EFD773 /* ProximityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProximityViewController.h; sourceTree = "<group>"; };
-		5252A541188030A800EFD773 /* ProximityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProximityViewController.m; sourceTree = "<group>"; };
 		5285D9A5188D43E500305F1D /* RecordAccess.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecordAccess.h; sourceTree = "<group>"; };
 		52BDCB181C3FD31F00E2680F /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		52BDCBBD1C3FD86900E2680F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -427,8 +426,7 @@
 		5252A53F1880307D00EFD773 /* PROXIMITY */ = {
 			isa = PBXGroup;
 			children = (
-				5252A540188030A800EFD773 /* ProximityViewController.h */,
-				5252A541188030A800EFD773 /* ProximityViewController.m */,
+				300508921CE1D75800D93BE0 /* NORProximityViewController.swift */,
 			);
 			path = PROXIMITY;
 			sourceTree = "<group>";
@@ -738,7 +736,6 @@
 				3010F6051CDCB4F900CB285A /* NORBPMViewController.swift in Sources */,
 				3080C4711CE06D0E009C2D8C /* NORCSCViewController.swift in Sources */,
 				5217F41E185B198E00F2D5BB /* RSACViewController.m in Sources */,
-				5252A542188030A800EFD773 /* ProximityViewController.m in Sources */,
 				308EE1781CE0CBF700F2A854 /* NORHTSViewController.swift in Sources */,
 				7E445C8E1951A51A00633892 /* Utility.m in Sources */,
 				52BDCBC91C48FDB800E2680F /* BaseViewController.m in Sources */,
@@ -748,6 +745,7 @@
 				52BDCBDA1C4D1AAC00E2680F /* NSDataAsHex.m in Sources */,
 				7E99686C19800A260092E69E /* FolderFilesViewController.m in Sources */,
 				3069A1D71CDC788A003869EA /* NORBluetoothManager.swift in Sources */,
+				300508931CE1D75800D93BE0 /* NORProximityViewController.swift in Sources */,
 				30921FD31CD0E7A5009CBDDE /* NORNavigationController.swift in Sources */,
 				30A114561CD2367C000F0F02 /* NORScannedPeripheral.swift in Sources */,
 				308AA5761CD8A7B400CC9857 /* NORBGMItemCell.swift in Sources */,
