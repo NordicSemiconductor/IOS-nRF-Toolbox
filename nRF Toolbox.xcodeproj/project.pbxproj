@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0E645A0F1CBF957800D36AD0 /* firmwares in Resources */ = {isa = PBXBuildFile; fileRef = 7E6ED10A196ED482008010B6 /* firmwares */; };
+		3000B20F1CE3169F00F64CEE /* NORBaseRevealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3000B20E1CE3169F00F64CEE /* NORBaseRevealViewController.swift */; };
+		3000B2111CE317D900F64CEE /* NORUARTRevealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3000B2101CE317D900F64CEE /* NORUARTRevealViewController.swift */; };
+		3000B2131CE3195E00F64CEE /* NOREditPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3000B2121CE3195E00F64CEE /* NOREditPopupViewController.swift */; };
 		300508931CE1D75800D93BE0 /* NORProximityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300508921CE1D75800D93BE0 /* NORProximityViewController.swift */; };
 		300508951CE2078A00D93BE0 /* NORRSCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300508941CE2078A00D93BE0 /* NORRSCViewController.swift */; };
 		3010F6051CDCB4F900CB285A /* NORBPMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3010F6041CDCB4F900CB285A /* NORBPMViewController.swift */; };
@@ -51,8 +54,6 @@
 		52BDCBBE1C3FD86900E2680F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BDCBBD1C3FD86900E2680F /* QuartzCore.framework */; };
 		52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */; };
 		52BDCBC91C48FDB800E2680F /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BDCBC81C48FDB800E2680F /* BaseViewController.m */; };
-		52BDCBD01C491B6F00E2680F /* BaseRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BDCBCF1C491B6F00E2680F /* BaseRevealViewController.m */; };
-		52BDCBD41C491C8600E2680F /* UARTRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BDCBD31C491C8600E2680F /* UARTRevealViewController.m */; };
 		52BDCBD71C49492300E2680F /* LogItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BDCBD61C49492300E2680F /* LogItemCell.m */; };
 		52BDCBDA1C4D1AAC00E2680F /* NSDataAsHex.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BDCBD91C4D1AAC00E2680F /* NSDataAsHex.m */; };
 		7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B422818A8DF4D006BA1BC /* high.mp3 */; };
@@ -63,7 +64,6 @@
 		7E6ED112197D1DA4008010B6 /* UserFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6ED111197D1DA4008010B6 /* UserFilesViewController.m */; };
 		7E99686C19800A260092E69E /* FolderFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E99686B19800A260092E69E /* FolderFilesViewController.m */; };
 		A80462591AD670480074F116 /* AppUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = A80462581AD670480074F116 /* AppUtilities.m */; };
-		A83894521B17731D005B738D /* EditPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A83894511B17731D005B738D /* EditPopupViewController.m */; };
 		A85667D91B1F3C1A004A6D3C /* LogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A85667D81B1F3C1A004A6D3C /* LogViewController.m */; };
 		A86A784C1AB8542E00823AAB /* UARTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A86A784B1AB8542E00823AAB /* UARTViewController.m */; };
 		F427A816F7641D9828BAF315 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */; };
@@ -93,6 +93,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3000B20E1CE3169F00F64CEE /* NORBaseRevealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBaseRevealViewController.swift; sourceTree = "<group>"; };
+		3000B2101CE317D900F64CEE /* NORUARTRevealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORUARTRevealViewController.swift; sourceTree = "<group>"; };
+		3000B2121CE3195E00F64CEE /* NOREditPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NOREditPopupViewController.swift; sourceTree = "<group>"; };
 		300508921CE1D75800D93BE0 /* NORProximityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORProximityViewController.swift; sourceTree = "<group>"; };
 		300508941CE2078A00D93BE0 /* NORRSCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORRSCViewController.swift; sourceTree = "<group>"; };
 		3010F6041CDCB4F900CB285A /* NORBPMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBPMViewController.swift; sourceTree = "<group>"; };
@@ -148,10 +151,6 @@
 		52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		52BDCBC71C48FDB800E2680F /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		52BDCBC81C48FDB800E2680F /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
-		52BDCBCE1C491B6F00E2680F /* BaseRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseRevealViewController.h; path = UART/BaseRevealViewController.h; sourceTree = "<group>"; };
-		52BDCBCF1C491B6F00E2680F /* BaseRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseRevealViewController.m; path = UART/BaseRevealViewController.m; sourceTree = "<group>"; };
-		52BDCBD21C491C8600E2680F /* UARTRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UARTRevealViewController.h; sourceTree = "<group>"; };
-		52BDCBD31C491C8600E2680F /* UARTRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UARTRevealViewController.m; sourceTree = "<group>"; };
 		52BDCBD51C49492300E2680F /* LogItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogItemCell.h; sourceTree = "<group>"; };
 		52BDCBD61C49492300E2680F /* LogItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogItemCell.m; sourceTree = "<group>"; };
 		52BDCBD81C4D1AAC00E2680F /* NSDataAsHex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataAsHex.h; sourceTree = "<group>"; };
@@ -174,8 +173,6 @@
 		89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A80462571AD670480074F116 /* AppUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppUtilities.h; sourceTree = "<group>"; };
 		A80462581AD670480074F116 /* AppUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppUtilities.m; sourceTree = "<group>"; };
-		A83894501B17731D005B738D /* EditPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditPopupViewController.h; sourceTree = "<group>"; };
-		A83894511B17731D005B738D /* EditPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditPopupViewController.m; sourceTree = "<group>"; };
 		A85667D71B1F3C1A004A6D3C /* LogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogViewController.h; sourceTree = "<group>"; };
 		A85667D81B1F3C1A004A6D3C /* LogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogViewController.m; sourceTree = "<group>"; };
 		A86A784A1AB8542E00823AAB /* UARTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UARTViewController.h; sourceTree = "<group>"; };
@@ -443,8 +440,7 @@
 			children = (
 				52BDCBC71C48FDB800E2680F /* BaseViewController.h */,
 				52BDCBC81C48FDB800E2680F /* BaseViewController.m */,
-				52BDCBCE1C491B6F00E2680F /* BaseRevealViewController.h */,
-				52BDCBCF1C491B6F00E2680F /* BaseRevealViewController.m */,
+				3000B20E1CE3169F00F64CEE /* NORBaseRevealViewController.swift */,
 			);
 			name = BaseViewController;
 			sourceTree = "<group>";
@@ -531,12 +527,10 @@
 			isa = PBXGroup;
 			children = (
 				52BDCBE31C4F953C00E2680F /* Logger */,
-				52BDCBD21C491C8600E2680F /* UARTRevealViewController.h */,
-				52BDCBD31C491C8600E2680F /* UARTRevealViewController.m */,
 				A86A784A1AB8542E00823AAB /* UARTViewController.h */,
 				A86A784B1AB8542E00823AAB /* UARTViewController.m */,
-				A83894501B17731D005B738D /* EditPopupViewController.h */,
-				A83894511B17731D005B738D /* EditPopupViewController.m */,
+				3000B2101CE317D900F64CEE /* NORUARTRevealViewController.swift */,
+				3000B2121CE3195E00F64CEE /* NOREditPopupViewController.swift */,
 			);
 			path = UART;
 			sourceTree = "<group>";
@@ -719,20 +713,18 @@
 				A86A784C1AB8542E00823AAB /* UARTViewController.m in Sources */,
 				30F92D4B1CD9CF0700C73285 /* NORHRMViewController.swift in Sources */,
 				7E445C971951D09E00633892 /* FileTypeViewController.m in Sources */,
-				52BDCBD01C491B6F00E2680F /* BaseRevealViewController.m in Sources */,
 				5252A53E18802F7200EFD773 /* DFUViewController.m in Sources */,
-				A83894521B17731D005B738D /* EditPopupViewController.m in Sources */,
 				5226362F1C5A601C0054A550 /* HowToCreateDistributionPacket.m in Sources */,
 				30A1145C1CD24611000F0F02 /* NORScannerViewController.swift in Sources */,
 				308AA57A1CD8DD4300CC9857 /* NORGlucoseReadingContext.swift in Sources */,
 				305E07B71CD3608500B32EB2 /* NORBGMViewController.swift in Sources */,
-				52BDCBD41C491C8600E2680F /* UARTRevealViewController.m in Sources */,
 				A85667D91B1F3C1A004A6D3C /* LogViewController.m in Sources */,
 				305E07B51CD3534D00B32EB2 /* NORBGMDetailsViewController.swift in Sources */,
 				7E6ED112197D1DA4008010B6 /* UserFilesViewController.m in Sources */,
 				5217F3F61859EE0000F2D5BB /* AppDelegate.m in Sources */,
 				5217F3F21859EE0000F2D5BB /* main.m in Sources */,
 				3010F6051CDCB4F900CB285A /* NORBPMViewController.swift in Sources */,
+				3000B2131CE3195E00F64CEE /* NOREditPopupViewController.swift in Sources */,
 				3080C4711CE06D0E009C2D8C /* NORCSCViewController.swift in Sources */,
 				308EE1781CE0CBF700F2A854 /* NORHTSViewController.swift in Sources */,
 				7E445C8E1951A51A00633892 /* Utility.m in Sources */,
@@ -751,6 +743,8 @@
 				5214D0D218881D4D00460637 /* CharacteristicReader.m in Sources */,
 				30921FD51CD0EB55009CBDDE /* NORMainViewController.swift in Sources */,
 				7E6ED10F197D1D8D008010B6 /* AppFilesViewController.m in Sources */,
+				3000B2111CE317D900F64CEE /* NORUARTRevealViewController.swift in Sources */,
+				3000B20F1CE3169F00F64CEE /* NORBaseRevealViewController.swift in Sources */,
 				52BDCBD71C49492300E2680F /* LogItemCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

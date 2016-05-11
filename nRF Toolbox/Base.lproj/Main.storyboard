@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="WcK-ur-5nd">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="WcK-ur-5nd">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -4183,7 +4183,7 @@
         <!--Edit Popup View Controller-->
         <scene sceneID="E82-2D-Kfc">
             <objects>
-                <viewController storyboardIdentifier="StoryboardIDEditPopup" id="6Px-f6-4un" customClass="EditPopupViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="StoryboardIDEditPopup" id="6Px-f6-4un" customClass="NOREditPopupViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ecs-1M-adi"/>
                         <viewControllerLayoutGuide type="bottom" id="dp8-2h-75L"/>
@@ -4192,10 +4192,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view alpha="0.40000000000000002" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="10b-o2-Yxm">
-                                <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Configure button" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EsU-nP-6kK">
                                 <rect key="frame" x="42" y="13" width="217" height="26"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -4208,7 +4204,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                                 <connections>
-                                    <outlet property="delegate" destination="6Px-f6-4un" id="I8v-ne-gaQ"/>
+                                    <outlet property="delegate" destination="6Px-f6-4un" id="xF8-4W-vsq"/>
                                 </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Select icon:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9GS-ty-fgU">
@@ -4257,16 +4253,6 @@
                                     <action selector="iconButtonPressed:" destination="6Px-f6-4un" eventType="touchUpInside" id="iCg-Js-udg"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ya9-DD-9Dp">
-                                <rect key="frame" x="189" y="135" width="30" height="30"/>
-                                <color key="backgroundColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" image="Rewind">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="iconButtonPressed:" destination="6Px-f6-4un" eventType="touchUpInside" id="PcE-cP-00l"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" tag="6" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="alu-AX-RfV">
                                 <rect key="frame" x="227" y="135" width="30" height="30"/>
                                 <color key="backgroundColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -4275,6 +4261,16 @@
                                 </state>
                                 <connections>
                                     <action selector="iconButtonPressed:" destination="6Px-f6-4un" eventType="touchUpInside" id="OlD-OZ-GpM"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="7" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Xe-Y9-Y5O">
+                                <rect key="frame" x="40" y="173" width="30" height="30"/>
+                                <color key="backgroundColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" image="Start">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="iconButtonPressed:" destination="6Px-f6-4un" eventType="touchUpInside" id="f7n-Ij-x9l"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="8" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hAG-3O-dSv">
@@ -4304,7 +4300,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="iconButtonPressed:" destination="6Px-f6-4un" eventType="touchUpInside" id="cPP-V9-V0Y"/>
+                                    <action selector="iconButtonPressed:" destination="6Px-f6-4un" eventType="touchUpInside" id="B6C-aG-ye3"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="11" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pVw-8e-Chr">
@@ -4387,16 +4383,6 @@
                                     <action selector="iconButtonPressed:" destination="6Px-f6-4un" eventType="touchUpInside" id="RsF-NE-dl6"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="7" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Xe-Y9-Y5O">
-                                <rect key="frame" x="40" y="173" width="30" height="30"/>
-                                <color key="backgroundColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" image="Start">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="iconButtonPressed:" destination="6Px-f6-4un" eventType="touchUpInside" id="f7n-Ij-x9l"/>
-                                </connections>
-                            </button>
                             <view alpha="0.5" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SkY-c2-6wz" userLabel="Line">
                                 <rect key="frame" x="-1" y="258" width="301" height="1"/>
                                 <color key="backgroundColor" red="0.83529411764705885" green="0.58431372549019611" blue="0.45098039215686275" alpha="1" colorSpace="calibratedRGB"/>
@@ -4408,7 +4394,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="okButtonPressed:" destination="6Px-f6-4un" eventType="touchUpInside" id="TsQ-SC-qfv"/>
+                                    <action selector="okButtonPressed:" destination="6Px-f6-4un" eventType="touchUpInside" id="PC1-aE-MTw"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lLu-9r-Kq3">
@@ -4418,7 +4404,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="CancelButtonPressed:" destination="6Px-f6-4un" eventType="touchUpInside" id="XZ6-Qk-FUD"/>
+                                    <action selector="cancelButtonPressed:" destination="6Px-f6-4un" eventType="touchUpInside" id="uOI-9R-axc"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Ye-BA-hIP">
@@ -4428,7 +4414,17 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="showHideButtonPressed:" destination="6Px-f6-4un" eventType="touchUpInside" id="prR-MD-iI7"/>
+                                    <action selector="toggleVisibilityButtonPressed:" destination="6Px-f6-4un" eventType="touchUpInside" id="IoG-4M-FBM"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ya9-DD-9Dp">
+                                <rect key="frame" x="189" y="135" width="30" height="30"/>
+                                <color key="backgroundColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" image="Rewind">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="iconButtonPressed:" destination="6Px-f6-4un" eventType="touchUpInside" id="PcE-cP-00l"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -4437,36 +4433,36 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="300" height="300"/>
                     <connections>
-                        <outlet property="commandTextField" destination="d4a-jF-Bc2" id="NI5-YU-gQ8"/>
-                        <outlet property="showHideButton" destination="8Ye-BA-hIP" id="pOj-Wg-WkK"/>
-                        <outletCollection property="iconButtons" destination="0ql-3p-O8u" id="E3l-td-RJO"/>
-                        <outletCollection property="iconButtons" destination="zh4-Co-OyC" id="oFd-v1-ujs"/>
-                        <outletCollection property="iconButtons" destination="SKe-fq-zVC" id="cbf-h5-zRY"/>
-                        <outletCollection property="iconButtons" destination="JTi-lf-7o9" id="6DC-OB-eJD"/>
-                        <outletCollection property="iconButtons" destination="Ya9-DD-9Dp" id="GaO-cK-CwI"/>
-                        <outletCollection property="iconButtons" destination="alu-AX-RfV" id="B0i-fn-COI"/>
-                        <outletCollection property="iconButtons" destination="9Xe-Y9-Y5O" id="4rn-Xm-NWe"/>
-                        <outletCollection property="iconButtons" destination="hAG-3O-dSv" id="5fH-gz-dd1"/>
-                        <outletCollection property="iconButtons" destination="S94-XF-pNl" id="bik-jI-4JT"/>
-                        <outletCollection property="iconButtons" destination="DHC-LC-ksC" id="Awq-bj-WTs"/>
-                        <outletCollection property="iconButtons" destination="pVw-8e-Chr" id="cbT-OJ-Ydq"/>
-                        <outletCollection property="iconButtons" destination="HfJ-Wc-a2f" id="Tre-bk-hbq"/>
-                        <outletCollection property="iconButtons" destination="chO-GD-Ug1" id="oGt-fI-djh"/>
-                        <outletCollection property="iconButtons" destination="3x4-cn-cjm" id="cEg-n3-BiF"/>
-                        <outletCollection property="iconButtons" destination="Gsc-VJ-IZE" id="HA9-I7-283"/>
-                        <outletCollection property="iconButtons" destination="7ee-Ma-NtR" id="p5w-z1-Aza"/>
-                        <outletCollection property="iconButtons" destination="77L-eJ-s9h" id="KNw-kq-VFM"/>
-                        <outletCollection property="iconButtons" destination="E3h-6C-ltz" id="Y4z-nS-YMj"/>
+                        <outlet property="commandTextField" destination="d4a-jF-Bc2" id="rh0-Pr-aJD"/>
+                        <outlet property="toggleVisibilityButton" destination="8Ye-BA-hIP" id="kpz-pf-eSx"/>
+                        <outletCollection property="iconButtons" destination="0ql-3p-O8u" collectionClass="NSMutableArray" id="RqL-5A-Y6K"/>
+                        <outletCollection property="iconButtons" destination="zh4-Co-OyC" collectionClass="NSMutableArray" id="qBW-w5-SRC"/>
+                        <outletCollection property="iconButtons" destination="SKe-fq-zVC" collectionClass="NSMutableArray" id="tNr-7c-coW"/>
+                        <outletCollection property="iconButtons" destination="JTi-lf-7o9" collectionClass="NSMutableArray" id="cGg-bc-GKH"/>
+                        <outletCollection property="iconButtons" destination="Ya9-DD-9Dp" collectionClass="NSMutableArray" id="rRw-p8-Xay"/>
+                        <outletCollection property="iconButtons" destination="alu-AX-RfV" collectionClass="NSMutableArray" id="BgA-NS-Fs9"/>
+                        <outletCollection property="iconButtons" destination="9Xe-Y9-Y5O" collectionClass="NSMutableArray" id="7lh-NI-eSs"/>
+                        <outletCollection property="iconButtons" destination="hAG-3O-dSv" collectionClass="NSMutableArray" id="ome-n9-Cie"/>
+                        <outletCollection property="iconButtons" destination="S94-XF-pNl" collectionClass="NSMutableArray" id="Alb-Ml-dwu"/>
+                        <outletCollection property="iconButtons" destination="DHC-LC-ksC" collectionClass="NSMutableArray" id="3OB-y5-Ovx"/>
+                        <outletCollection property="iconButtons" destination="pVw-8e-Chr" collectionClass="NSMutableArray" id="0kQ-1T-fxe"/>
+                        <outletCollection property="iconButtons" destination="HfJ-Wc-a2f" collectionClass="NSMutableArray" id="lhc-ZC-80t"/>
+                        <outletCollection property="iconButtons" destination="chO-GD-Ug1" collectionClass="NSMutableArray" id="P5f-6P-LeD"/>
+                        <outletCollection property="iconButtons" destination="3x4-cn-cjm" collectionClass="NSMutableArray" id="ZYQ-NT-XdC"/>
+                        <outletCollection property="iconButtons" destination="Gsc-VJ-IZE" collectionClass="NSMutableArray" id="chB-yH-tq8"/>
+                        <outletCollection property="iconButtons" destination="7ee-Ma-NtR" collectionClass="NSMutableArray" id="QU6-UL-0Pf"/>
+                        <outletCollection property="iconButtons" destination="77L-eJ-s9h" collectionClass="NSMutableArray" id="Kj9-2W-djM"/>
+                        <outletCollection property="iconButtons" destination="E3h-6C-ltz" collectionClass="NSMutableArray" id="y5Q-0e-8y9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8nO-zW-NV5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1900" y="3134"/>
+            <point key="canvasLocation" x="4095" y="3405"/>
         </scene>
         <!--Reveal View Controller-->
         <scene sceneID="o7H-iQ-Ybv">
             <objects>
-                <viewController id="0VH-j9-Lgb" customClass="UARTRevealViewController" sceneMemberID="viewController">
+                <viewController id="0VH-j9-Lgb" customClass="NORUARTRevealViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="I4d-kS-0ew"/>
                         <viewControllerLayoutGuide type="bottom" id="4cU-45-GfH"/>
@@ -4486,7 +4482,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="aboutButtonClicked:" destination="0VH-j9-Lgb" eventType="touchUpInside" id="p8v-3e-KlD"/>
+                                    <action selector="aboutButtonTapped:" destination="0VH-j9-Lgb" eventType="touchUpInside" id="XKE-Im-HC1"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -4607,7 +4603,7 @@
         <image name="userIcon" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="RA7-fe-CKE"/>
+        <segue reference="nX1-cs-GXT"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.60392159219999997" blue="0.85490196939999996" alpha="1" colorSpace="calibratedRGB"/>
 </document>

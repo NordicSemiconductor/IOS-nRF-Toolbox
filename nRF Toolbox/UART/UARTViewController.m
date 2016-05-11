@@ -25,7 +25,6 @@
 #import "Constants.h"
 #import "LogViewController.h"
 #import "AppUtilities.h"
-#import "EditPopupViewController.h"
 #import "LogViewController.h"
 
 @interface UARTViewController ()
@@ -242,12 +241,12 @@
 
 -(void)showPopoverOnButton
 {
-    EditPopupViewController *popoverVC = [self.storyboard instantiateViewControllerWithIdentifier:@"StoryboardIDEditPopup"];
+    NOREditPopupViewController *popoverVC = [self.storyboard instantiateViewControllerWithIdentifier:@"StoryboardIDEditPopup"];
     popoverVC.delegate = self;
-    popoverVC.isHidden = NO; //[self.buttonsHiddenStatus[[self.selectedButton tag]-1 ] boolValue]; // Show it when the popover opens
+    [popoverVC setIsHidden:NO]; //[self.buttonsHiddenStatus[[self.selectedButton tag]-1 ] boolValue]; // Show it when the popover opens
     popoverVC.command = self.buttonsCommands[[self.selectedButton tag]-1];
     NSString *buttonImageName = self.buttonsImageNames[[self.selectedButton tag] -1];
-    popoverVC.iconIndex = (int)[self.buttonIcons indexOfObject:buttonImageName];
+    [popoverVC setIconIndex:(int)[self.buttonIcons indexOfObject:buttonImageName]];
     popoverVC.modalPresentationStyle = UIModalPresentationPopover;
     popoverVC.popoverPresentationController.delegate = self;
     [self presentViewController:popoverVC animated:YES completion:nil];
@@ -265,15 +264,15 @@
 }
 
 //Delegate of ButtonConfigureDelegate is called when user will press OK button on EditPopupViewController
-- (void) didButtonConfigured:(NSString*)command iconIndex:(int)index shouldHideButton:(BOOL)status {
+-(void) didConfigureButton:(UIButton *)aButton withCommand:(NSString *)aCommand andIconIndex:(NSInteger)index shouldHide:(BOOL)hide {
     NSUserDefaults *buttonsConfigurations = [NSUserDefaults standardUserDefaults];
     
     int buttonTag = (int)[self.selectedButton tag] - 1;
     
-    self.buttonsHiddenStatus[[self.selectedButton tag] - 1] = [NSNumber numberWithBool:status];
+    self.buttonsHiddenStatus[[self.selectedButton tag] - 1] = [NSNumber numberWithBool:hide];
     [buttonsConfigurations setObject:self.buttonsHiddenStatus forKey:@"buttonsHiddenStatus"];
     
-    if (!status)
+    if (!hide)
     {
         UIImage *image = [UIImage imageNamed:self.buttonIcons[index]];
         [self.selectedButton setImage:image forState:UIControlStateNormal];
@@ -286,7 +285,7 @@
     self.buttonsImageNames[buttonTag] = self.buttonIcons[index];
     [buttonsConfigurations setObject:self.buttonsImageNames forKey:@"buttonsImageNames"];
     
-    self.buttonsCommands[buttonTag] = command;
+    self.buttonsCommands[buttonTag] = aCommand;
     [buttonsConfigurations setObject:self.buttonsCommands forKey:@"buttonsCommands"];
     
     [buttonsConfigurations synchronize];
