@@ -2621,7 +2621,7 @@
         <!--View Controller - RSC-->
         <scene sceneID="DOf-c9-t36">
             <objects>
-                <viewController id="ajK-NB-gff" userLabel="View Controller - RSC" customClass="RSACViewController" sceneMemberID="viewController">
+                <viewController id="ajK-NB-gff" userLabel="View Controller - RSC" customClass="NORRSCViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="SxC-wS-ZqA"/>
                         <viewControllerLayoutGuide type="bottom" id="5AJ-vh-XED"/>
@@ -2650,7 +2650,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="connectOrDisconnectClicked" destination="ajK-NB-gff" eventType="touchUpInside" id="a6f-XE-bp5"/>
+                                    <action selector="connectionButtonTapped:" destination="ajK-NB-gff" eventType="touchUpInside" id="e1I-yU-cvo"/>
                                     <segue destination="BQP-B5-Tee" kind="presentation" identifier="scan" id="RA7-fe-CKE"/>
                                 </connections>
                             </button>
@@ -2894,24 +2894,24 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="aboutButtonClicked:" destination="ajK-NB-gff" eventType="touchUpInside" id="ZTS-7N-lfU"/>
+                                    <action selector="aboutButtonTapped:" destination="ajK-NB-gff" eventType="touchUpInside" id="iF5-hl-jn0"/>
                                 </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="activity" destination="ukA-UL-NcE" id="fSF-cr-Vl1"/>
-                        <outlet property="battery" destination="gaD-Kn-n30" id="OVU-L7-fU9"/>
-                        <outlet property="cadence" destination="SvE-5t-hck" id="Mrl-po-3xp"/>
-                        <outlet property="connectButton" destination="0sc-b2-qkX" id="q2h-bv-aun"/>
-                        <outlet property="deviceName" destination="RxL-hn-oFh" id="sux-Rb-53E"/>
-                        <outlet property="distance" destination="d7J-1T-DU3" id="bnQ-ph-vPx"/>
-                        <outlet property="distanceUnit" destination="IyL-8V-KeE" id="w8s-xR-dzY"/>
-                        <outlet property="speed" destination="tz6-tB-HS7" id="TII-ih-I8i"/>
-                        <outlet property="strides" destination="Dxs-kf-u1C" id="Zz5-in-IFe"/>
-                        <outlet property="totalDistance" destination="ulM-eI-Wwm" id="fzi-8K-Fnp"/>
-                        <outlet property="totalDistanceUnit" destination="wwz-60-pId" id="qUu-9f-raw"/>
-                        <outlet property="verticalLabel" destination="wGI-MU-Ps9" id="U8P-6w-OR0"/>
+                        <outlet property="activity" destination="ukA-UL-NcE" id="RpO-TD-abv"/>
+                        <outlet property="battery" destination="gaD-Kn-n30" id="06T-w0-Ai3"/>
+                        <outlet property="cadence" destination="SvE-5t-hck" id="Ays-Fd-O6g"/>
+                        <outlet property="connectionButton" destination="0sc-b2-qkX" id="gp2-ZH-224"/>
+                        <outlet property="deviceName" destination="RxL-hn-oFh" id="tbr-Ef-0wI"/>
+                        <outlet property="distance" destination="d7J-1T-DU3" id="20E-WY-ZH4"/>
+                        <outlet property="distanceUnit" destination="IyL-8V-KeE" id="XCT-bk-2Os"/>
+                        <outlet property="speed" destination="tz6-tB-HS7" id="oRu-Za-dZN"/>
+                        <outlet property="strides" destination="Dxs-kf-u1C" id="Q2k-ab-Kta"/>
+                        <outlet property="totalDistance" destination="ulM-eI-Wwm" id="RcN-n8-mt7"/>
+                        <outlet property="totalDistanceUnit" destination="wwz-60-pId" id="LIO-YD-NlS"/>
+                        <outlet property="verticalLabel" destination="wGI-MU-Ps9" id="w12-FY-Ulj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eNt-PN-d9z" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4607,7 +4607,7 @@
         <image name="userIcon" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ydJ-CZ-Xyf"/>
+        <segue reference="RA7-fe-CKE"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.60392159219999997" blue="0.85490196939999996" alpha="1" colorSpace="calibratedRGB"/>
 </document>
