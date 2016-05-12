@@ -3834,7 +3834,7 @@
         <!--View Controller - UART-->
         <scene sceneID="bnf-jV-dRu">
             <objects>
-                <viewController id="H5O-PI-o2R" userLabel="View Controller - UART" customClass="UARTViewController" sceneMemberID="viewController">
+                <viewController id="H5O-PI-o2R" userLabel="View Controller - UART" customClass="NORUARTViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="GEz-OR-cq3"/>
                         <viewControllerLayoutGuide type="bottom" id="tNp-ca-oC6"/>
@@ -3859,7 +3859,7 @@
                                 </state>
                                 <state key="highlighted" backgroundImage="ConnectButtonPressed"/>
                                 <connections>
-                                    <action selector="connectOrDisconnectClicked:" destination="H5O-PI-o2R" eventType="touchUpInside" id="JPT-vQ-n7b"/>
+                                    <action selector="connectionButtonTapped:" destination="H5O-PI-o2R" eventType="touchUpInside" id="TTF-Bm-20z"/>
                                     <segue destination="BQP-B5-Tee" kind="presentation" identifier="scan" id="nX1-cs-GXT"/>
                                 </connections>
                             </button>
@@ -3886,7 +3886,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="buttonPressed:" destination="H5O-PI-o2R" eventType="touchUpInside" id="x85-hR-f53"/>
+                                            <action selector="buttonTapped:" destination="H5O-PI-o2R" eventType="touchUpInside" id="ZCF-cd-i8e"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xCZ-mg-Pzl">
@@ -3896,7 +3896,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="buttonPressed:" destination="H5O-PI-o2R" eventType="touchUpInside" id="UtW-Fs-lUK"/>
+                                            <action selector="buttonTapped:" destination="H5O-PI-o2R" eventType="touchUpInside" id="tl6-qf-Hnl"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2JM-e6-c00">
@@ -3906,75 +3906,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="buttonPressed:" destination="H5O-PI-o2R" eventType="touchUpInside" id="8LF-uT-Ydh"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="7" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6rp-Tr-dNl">
-                                        <rect key="frame" x="16" y="172" width="70" height="70"/>
-                                        <color key="backgroundColor" red="0.0" green="0.61176470588235299" blue="0.87058823529411766" alpha="1" colorSpace="deviceRGB"/>
-                                        <state key="normal" image="Start">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="buttonPressed:" destination="H5O-PI-o2R" eventType="touchUpInside" id="hPx-vV-UKT"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="slk-Es-lHo">
-                                        <rect key="frame" x="94" y="94" width="70" height="70"/>
-                                        <color key="backgroundColor" red="0.0" green="0.61176470588235299" blue="0.87058823529411766" alpha="1" colorSpace="deviceRGB"/>
-                                        <state key="normal" image="Record">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="buttonPressed:" destination="H5O-PI-o2R" eventType="touchUpInside" id="usp-aX-aEb"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="6" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FGg-Km-3mT">
-                                        <rect key="frame" x="172" y="94" width="70" height="70"/>
-                                        <color key="backgroundColor" red="0.0" green="0.61176470588235299" blue="0.87058823529411766" alpha="1" colorSpace="deviceRGB"/>
-                                        <state key="normal" image="FastForward">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="buttonPressed:" destination="H5O-PI-o2R" eventType="touchUpInside" id="4DV-hG-9UP"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="8" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jxX-uC-HTj">
-                                        <rect key="frame" x="94" y="172" width="70" height="70"/>
-                                        <color key="backgroundColor" red="0.0" green="0.61176470588235299" blue="0.87058823529411766" alpha="1" colorSpace="deviceRGB"/>
-                                        <state key="normal" image="Shuffle">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="buttonPressed:" destination="H5O-PI-o2R" eventType="touchUpInside" id="gU3-Bx-kTS"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="9" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rfQ-89-Jcs">
-                                        <rect key="frame" x="172" y="172" width="70" height="70"/>
-                                        <color key="backgroundColor" red="0.0" green="0.61176470588235299" blue="0.87058823529411766" alpha="1" colorSpace="deviceRGB"/>
-                                        <state key="normal" image="End">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="buttonPressed:" destination="H5O-PI-o2R" eventType="touchUpInside" id="yjg-GZ-RoT"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yT6-eu-Q0a">
-                                        <rect key="frame" x="160" y="254" width="90" height="30"/>
-                                        <state key="normal" title="Show Log">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="showLogButtonClidked:" destination="H5O-PI-o2R" eventType="touchUpInside" id="idF-hX-F4f"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oRE-eX-71i">
-                                        <rect key="frame" x="32" y="254" width="46" height="30"/>
-                                        <state key="normal" title="Edit">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="editButtonPressed:" destination="H5O-PI-o2R" eventType="touchUpInside" id="Mrt-uV-NUW"/>
+                                            <action selector="buttonTapped:" destination="H5O-PI-o2R" eventType="touchUpInside" id="Y9y-SM-IEx"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oq7-Le-1Lw">
@@ -3984,7 +3916,75 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="buttonPressed:" destination="H5O-PI-o2R" eventType="touchUpInside" id="JPK-vB-2nK"/>
+                                            <action selector="buttonTapped:" destination="H5O-PI-o2R" eventType="touchUpInside" id="9pw-di-Gfq"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="slk-Es-lHo">
+                                        <rect key="frame" x="94" y="94" width="70" height="70"/>
+                                        <color key="backgroundColor" red="0.0" green="0.61176470588235299" blue="0.87058823529411766" alpha="1" colorSpace="deviceRGB"/>
+                                        <state key="normal" image="Record">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="buttonTapped:" destination="H5O-PI-o2R" eventType="touchUpInside" id="BIg-H3-ne3"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="6" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FGg-Km-3mT">
+                                        <rect key="frame" x="172" y="94" width="70" height="70"/>
+                                        <color key="backgroundColor" red="0.0" green="0.61176470588235299" blue="0.87058823529411766" alpha="1" colorSpace="deviceRGB"/>
+                                        <state key="normal" image="FastForward">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="buttonTapped:" destination="H5O-PI-o2R" eventType="touchUpInside" id="ND1-Nw-P7g"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="7" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6rp-Tr-dNl">
+                                        <rect key="frame" x="16" y="172" width="70" height="70"/>
+                                        <color key="backgroundColor" red="0.0" green="0.61176470588235299" blue="0.87058823529411766" alpha="1" colorSpace="deviceRGB"/>
+                                        <state key="normal" image="Start">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="buttonTapped:" destination="H5O-PI-o2R" eventType="touchUpInside" id="1cJ-gx-FHO"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="8" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jxX-uC-HTj">
+                                        <rect key="frame" x="94" y="172" width="70" height="70"/>
+                                        <color key="backgroundColor" red="0.0" green="0.61176470588235299" blue="0.87058823529411766" alpha="1" colorSpace="deviceRGB"/>
+                                        <state key="normal" image="Shuffle">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="buttonTapped:" destination="H5O-PI-o2R" eventType="touchUpInside" id="G06-aO-vrY"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="9" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rfQ-89-Jcs">
+                                        <rect key="frame" x="172" y="172" width="70" height="70"/>
+                                        <color key="backgroundColor" red="0.0" green="0.61176470588235299" blue="0.87058823529411766" alpha="1" colorSpace="deviceRGB"/>
+                                        <state key="normal" image="End">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="buttonTapped:" destination="H5O-PI-o2R" eventType="touchUpInside" id="36Q-Qy-ML1"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yT6-eu-Q0a">
+                                        <rect key="frame" x="160" y="254" width="90" height="30"/>
+                                        <state key="normal" title="Show Log">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="showLogButtonTapped:" destination="H5O-PI-o2R" eventType="touchUpInside" id="Opn-ua-DCq"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oRE-eX-71i">
+                                        <rect key="frame" x="32" y="254" width="46" height="30"/>
+                                        <state key="normal" title="Edit">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="editButtonTapped:" destination="H5O-PI-o2R" eventType="touchUpInside" id="Iz3-Ni-6pP"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -4032,19 +4032,19 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="connectButton" destination="TGd-qN-o6Z" id="2YY-gr-egZ"/>
-                        <outlet property="deviceName" destination="gXB-ef-ZAE" id="K7P-gu-Z6a"/>
-                        <outlet property="editButton" destination="oRE-eX-71i" id="HHx-fH-rEe"/>
-                        <outlet property="verticalLabel" destination="46U-iX-Nsv" id="sVZ-rZ-lJb"/>
-                        <outletCollection property="buttons" destination="6Ax-zd-6ST" id="oDy-Z1-KKx"/>
-                        <outletCollection property="buttons" destination="xCZ-mg-Pzl" id="cGg-sf-h5s"/>
-                        <outletCollection property="buttons" destination="2JM-e6-c00" id="LHT-aw-Zu4"/>
-                        <outletCollection property="buttons" destination="oq7-Le-1Lw" id="tvJ-e2-2ud"/>
-                        <outletCollection property="buttons" destination="6rp-Tr-dNl" id="Q1p-36-S7H"/>
-                        <outletCollection property="buttons" destination="slk-Es-lHo" id="wyP-lq-MTi"/>
-                        <outletCollection property="buttons" destination="FGg-Km-3mT" id="mhB-mr-x7F"/>
-                        <outletCollection property="buttons" destination="jxX-uC-HTj" id="KAY-WG-gFB"/>
-                        <outletCollection property="buttons" destination="rfQ-89-Jcs" id="nUC-bi-6L5"/>
+                        <outlet property="connectionButton" destination="TGd-qN-o6Z" id="CAs-Kj-bkE"/>
+                        <outlet property="deviceName" destination="gXB-ef-ZAE" id="f5k-Im-TWQ"/>
+                        <outlet property="editButton" destination="oRE-eX-71i" id="M4f-hw-zxL"/>
+                        <outlet property="verticalLabel" destination="46U-iX-Nsv" id="UOT-Gf-p7N"/>
+                        <outletCollection property="buttons" destination="6Ax-zd-6ST" collectionClass="NSMutableArray" id="ghz-04-RAh"/>
+                        <outletCollection property="buttons" destination="xCZ-mg-Pzl" collectionClass="NSMutableArray" id="ezs-cQ-Xti"/>
+                        <outletCollection property="buttons" destination="2JM-e6-c00" collectionClass="NSMutableArray" id="gNk-OY-9xH"/>
+                        <outletCollection property="buttons" destination="oq7-Le-1Lw" collectionClass="NSMutableArray" id="ZYg-cd-4wV"/>
+                        <outletCollection property="buttons" destination="slk-Es-lHo" collectionClass="NSMutableArray" id="tWD-ZS-ZbC"/>
+                        <outletCollection property="buttons" destination="FGg-Km-3mT" collectionClass="NSMutableArray" id="HHB-R0-4OA"/>
+                        <outletCollection property="buttons" destination="6rp-Tr-dNl" collectionClass="NSMutableArray" id="bRW-vj-q8N"/>
+                        <outletCollection property="buttons" destination="jxX-uC-HTj" collectionClass="NSMutableArray" id="vvk-7Z-Ctv"/>
+                        <outletCollection property="buttons" destination="rfQ-89-Jcs" collectionClass="NSMutableArray" id="mV1-Aa-UmQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bUV-aO-pEc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4054,7 +4054,7 @@
         <!--Log View Controller-->
         <scene sceneID="zCT-Jj-SHk">
             <objects>
-                <viewController id="y8v-dl-m9e" customClass="LogViewController" sceneMemberID="viewController">
+                <viewController id="y8v-dl-m9e" customClass="NORLogViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="abd-EE-hSB"/>
                         <viewControllerLayoutGuide type="bottom" id="x9k-4m-DDe"/>
@@ -4067,7 +4067,7 @@
                                 <rect key="frame" x="0.0" y="66" width="540" height="534"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="LogItem" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="logCell" rowHeight="25" id="ruC-cJ-Ur7" customClass="LogItemCell">
+                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="LogItem" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="logCell" rowHeight="25" id="ruC-cJ-Ur7" customClass="NORLogItemTableViewCell" customModule="nRF_Toolbox" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="22" width="540" height="25"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ruC-cJ-Ur7" id="YOG-TB-x9u">
@@ -4108,8 +4108,8 @@
                                             </variation>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="message" destination="n0X-l1-9Ny" id="mBB-zw-jmw"/>
-                                            <outlet property="timestamp" destination="AzR-Kz-RVa" id="Fkh-NA-u1k"/>
+                                            <outlet property="message" destination="n0X-l1-9Ny" id="tik-8d-JQY"/>
+                                            <outlet property="timestamp" destination="AzR-Kz-RVa" id="LIJ-P6-W2k"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

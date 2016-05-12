@@ -9,7 +9,7 @@
 import UIKit
 import CoreBluetooth
 
-@objc protocol NORBluetoothManagerDelegate {
+protocol NORBluetoothManagerDelegate {
     
     func didConnectPeripheral(deviceName aName : String)
     func didDisconnectPeripheral()
@@ -22,7 +22,7 @@ class NORBluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDeleg
     
     //MARK: - Delegate Properties
     var delegate : NORBluetoothManagerDelegate?
-    var logger   : Logger?
+    var logger   : NORLogger?
     
     //MARK: - Class Properties
     var UARTServiceUUID             : CBUUID?
@@ -172,18 +172,18 @@ class NORBluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDeleg
     
     //MARK: - Logger API
 
-    func log(withLevel aLevel : NORLogLevel, andMessage aMessage : String) {
+    func log(withLevel aLevel : NORLOGLevel, andMessage aMessage : String) {
         guard logger != nil else {
             return
         }
-        logger?.log(aLevel,message: aMessage)
+        logger?.log(level: aLevel,message: aMessage)
     }
     
     func logError(error anError : NSError) {
         guard logger != nil else {
             return
         }
-        logger?.log(.ErrorLogLevel, message: String(format: "Error %ld: %@", anError.code, anError.localizedDescription))
+        logger?.log(level: .ErrorLogLevel, message: String(format: "Error %ld: %@", anError.code, anError.localizedDescription))
     }
     
     func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {

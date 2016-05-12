@@ -47,8 +47,7 @@ class NOREditPopupViewController: UIViewController, UITextFieldDelegate {
         }else{
             toggleVisibilityButton.setTitle("Hide", forState: UIControlState.Normal)
         }
-        
-        print("Oultlet count = \(iconButtons?.count)")
+
         commandTextField.text = self.command!
         let button = iconButtons[self.iconIndex!]
         button.backgroundColor = UIColor(red: 222.0/255.0, green: 74.0/255.0, blue: 19.0/255.0, alpha: 1.0)
