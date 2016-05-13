@@ -3372,7 +3372,7 @@
         <!--How to create Distribution packet (ZIP)?-->
         <scene sceneID="Zul-pa-kwN">
             <objects>
-                <viewController id="h5f-4T-1jh" customClass="HowToCreateDistributionPacket" sceneMemberID="viewController">
+                <viewController id="h5f-4T-1jh" customClass="NORTutorialViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="UTE-x7-pg0"/>
                         <viewControllerLayoutGuide type="bottom" id="h0k-uY-s78"/>
@@ -3427,7 +3427,7 @@
                                                 <rect key="frame" x="16" y="293" width="568" height="30"/>
                                                 <state key="normal" title="https://github.com/NordicSemiconductor/pc-nrfutil"/>
                                                 <connections>
-                                                    <action selector="openLink:" destination="h5f-4T-1jh" eventType="touchUpInside" id="Nti-Jh-OM3"/>
+                                                    <action selector="openURLButtonTapped:" destination="h5f-4T-1jh" eventType="touchUpInside" id="VL5-yz-8an"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5QN-tc-q3p">

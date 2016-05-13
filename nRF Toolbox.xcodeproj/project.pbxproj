@@ -16,6 +16,7 @@
 		300508951CE2078A00D93BE0 /* NORRSCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300508941CE2078A00D93BE0 /* NORRSCViewController.swift */; };
 		3010F6051CDCB4F900CB285A /* NORBPMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3010F6041CDCB4F900CB285A /* NORBPMViewController.swift */; };
 		304299221CE5DE8E00E1D2AB /* NORUserFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304299211CE5DE8E00E1D2AB /* NORUserFilesViewController.swift */; };
+		304299241CE6114000E1D2AB /* NORTutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304299231CE6114000E1D2AB /* NORTutorialViewController.swift */; };
 		30499E4B1CE4667800E0993B /* NORDFUConstantsUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E4A1CE4667800E0993B /* NORDFUConstantsUtility.swift */; };
 		30499E4D1CE4687300E0993B /* NORFileTypeSelectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E4C1CE4687300E0993B /* NORFileTypeSelectionDelegate.swift */; };
 		30499E4F1CE4688700E0993B /* NORFileTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E4E1CE4688700E0993B /* NORFileTypeViewController.swift */; };
@@ -61,7 +62,6 @@
 		5217F40F1859EE0000F2D5BB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5217F40D1859EE0000F2D5BB /* InfoPlist.strings */; };
 		5217F4111859EE0000F2D5BB /* nRF_ToolboxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5217F4101859EE0000F2D5BB /* nRF_ToolboxTests.m */; };
 		5217F41B1859EEF400F2D5BB /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5217F41A1859EEF400F2D5BB /* CoreBluetooth.framework */; };
-		5226362F1C5A601C0054A550 /* HowToCreateDistributionPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5226362E1C5A601C0054A550 /* HowToCreateDistributionPacket.m */; };
 		522636371C60FFB00054A550 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 522636361C60FFB00054A550 /* libz.tbd */; };
 		52BDCB191C3FD31F00E2680F /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BDCB181C3FD31F00E2680F /* Accelerate.framework */; };
 		52BDCBBE1C3FD86900E2680F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BDCBBD1C3FD86900E2680F /* QuartzCore.framework */; };
@@ -105,6 +105,7 @@
 		300508941CE2078A00D93BE0 /* NORRSCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORRSCViewController.swift; sourceTree = "<group>"; };
 		3010F6041CDCB4F900CB285A /* NORBPMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBPMViewController.swift; sourceTree = "<group>"; };
 		304299211CE5DE8E00E1D2AB /* NORUserFilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORUserFilesViewController.swift; sourceTree = "<group>"; };
+		304299231CE6114000E1D2AB /* NORTutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORTutorialViewController.swift; sourceTree = "<group>"; };
 		30499E4A1CE4667800E0993B /* NORDFUConstantsUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORDFUConstantsUtility.swift; sourceTree = "<group>"; };
 		30499E4C1CE4687300E0993B /* NORFileTypeSelectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORFileTypeSelectionDelegate.swift; path = FileSelection/NORFileTypeSelectionDelegate.swift; sourceTree = "<group>"; };
 		30499E4E1CE4688700E0993B /* NORFileTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORFileTypeViewController.swift; path = FileSelection/NORFileTypeViewController.swift; sourceTree = "<group>"; };
@@ -157,8 +158,6 @@
 		5217F4101859EE0000F2D5BB /* nRF_ToolboxTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = nRF_ToolboxTests.m; sourceTree = "<group>"; };
 		5217F41A1859EEF400F2D5BB /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		5217F41F185B1A0800F2D5BB /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		5226362D1C5A601C0054A550 /* HowToCreateDistributionPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HowToCreateDistributionPacket.h; sourceTree = "<group>"; };
-		5226362E1C5A601C0054A550 /* HowToCreateDistributionPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HowToCreateDistributionPacket.m; sourceTree = "<group>"; };
 		522636361C60FFB00054A550 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		5285D9A5188D43E500305F1D /* RecordAccess.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecordAccess.h; sourceTree = "<group>"; };
 		52BDCB181C3FD31F00E2680F /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
@@ -332,8 +331,7 @@
 		5226362B1C5A5FE10054A550 /* Tutorial */ = {
 			isa = PBXGroup;
 			children = (
-				5226362D1C5A601C0054A550 /* HowToCreateDistributionPacket.h */,
-				5226362E1C5A601C0054A550 /* HowToCreateDistributionPacket.m */,
+				304299231CE6114000E1D2AB /* NORTutorialViewController.swift */,
 			);
 			name = Tutorial;
 			sourceTree = "<group>";
@@ -702,7 +700,6 @@
 				30499E551CE4732200E0993B /* NORFileSelectionDelegate.swift in Sources */,
 				A80462591AD670480074F116 /* AppUtilities.m in Sources */,
 				30F92D4B1CD9CF0700C73285 /* NORHRMViewController.swift in Sources */,
-				5226362F1C5A601C0054A550 /* HowToCreateDistributionPacket.m in Sources */,
 				304D58FD1CE34FC600148271 /* NORLogViewController.swift in Sources */,
 				30499E571CE4736500E0993B /* NORFilePreselectionDelegate.swift in Sources */,
 				30A1145C1CD24611000F0F02 /* NORScannerViewController.swift in Sources */,
@@ -719,6 +716,7 @@
 				3080C4711CE06D0E009C2D8C /* NORCSCViewController.swift in Sources */,
 				308EE1781CE0CBF700F2A854 /* NORHTSViewController.swift in Sources */,
 				304D58FB1CE34EE600148271 /* NORLogger.swift in Sources */,
+				304299241CE6114000E1D2AB /* NORTutorialViewController.swift in Sources */,
 				30499E511CE471C500E0993B /* NORDFUViewController.swift in Sources */,
 				52BDCBC91C48FDB800E2680F /* BaseViewController.m in Sources */,
 				3000B2151CE32A9200F64CEE /* NORUARTViewController.swift in Sources */,
