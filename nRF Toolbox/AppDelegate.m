@@ -21,7 +21,6 @@
  */
 
 #import "AppDelegate.h"
-#import "DFUViewController.h"
 
 @implementation AppDelegate
 
@@ -47,10 +46,10 @@
     
     UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
-    DFUViewController *dfuvc = [main instantiateViewControllerWithIdentifier:@"DFUViewController"];
-    [dfuvc onFileSelected:url];
+//    DFUViewController *dfuvc = [main instantiateViewControllerWithIdentifier:@"DFUViewController"];
+//    [dfuvc onFileSelected:url];
     
-    [navigationController pushViewController:dfuvc animated:YES];
+//    [navigationController pushViewController:dfuvc animated:YES];
     
     return YES;
 }

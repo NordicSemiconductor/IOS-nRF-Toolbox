@@ -23,7 +23,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8jQ-rF-8cp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3611" y="-637"/>
+            <point key="canvasLocation" x="3611" y="-629"/>
         </scene>
         <!--Select File-->
         <scene sceneID="H5K-ke-Cjp">
@@ -46,17 +46,17 @@
                     </tabBar>
                     <connections>
                         <segue destination="t2a-Jq-CNK" kind="relationship" relationship="viewControllers" id="qZN-Rt-b2t"/>
-                        <segue destination="Qad-SN-gjU" kind="relationship" relationship="viewControllers" id="WzM-VK-bMs"/>
+                        <segue destination="Qad-SN-gjU" kind="relationship" relationship="viewControllers" id="HrP-j4-VfF"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7ll-Xh-94O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4371" y="-637"/>
+            <point key="canvasLocation" x="4371" y="-629"/>
         </scene>
         <!--User Files-->
         <scene sceneID="dHY-vd-u7x">
             <objects>
-                <viewController id="Qad-SN-gjU" customClass="UserFilesViewController" sceneMemberID="viewController">
+                <viewController id="Qad-SN-gjU" customClass="NORUserFilesViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Sft-YD-j8G"/>
                         <viewControllerLayoutGuide type="bottom" id="wOf-Wx-bXB"/>
@@ -65,8 +65,8 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cxz-VV-YON">
-                                <rect key="frame" x="246" y="192" width="108" height="104"/>
+                            <view hidden="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cxz-VV-YON">
+                                <rect key="frame" x="246" y="249" width="108" height="104"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No files found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Pd-7R-z4y">
                                         <rect key="frame" x="0.0" y="83" width="108" height="21"/>
@@ -149,8 +149,8 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="User Files" image="userIcon" id="5k5-Wd-wNJ"/>
                     <connections>
-                        <outlet property="emptyView" destination="cxz-VV-YON" id="hu2-t2-OJN"/>
-                        <outlet property="tableView" destination="A5Z-T2-ip6" id="Yzy-aV-JDp"/>
+                        <outlet property="emptyView" destination="cxz-VV-YON" id="leG-8I-HN7"/>
+                        <outlet property="tableView" destination="A5Z-T2-ip6" id="Din-VY-t2b"/>
                         <segue destination="4bI-af-War" kind="show" identifier="OpenFolder" id="zkZ-Q8-IUd"/>
                         <segue destination="ghu-GK-Bc6" kind="show" identifier="OpenTutorial" id="ecN-nG-vcZ"/>
                     </connections>
@@ -1956,7 +1956,7 @@
         <!--Select File Type-->
         <scene sceneID="uMY-1J-jO5">
             <objects>
-                <viewController id="MZc-IT-Uk4" customClass="FileTypeViewController" sceneMemberID="viewController">
+                <viewController id="MZc-IT-Uk4" customClass="NORFileTypeViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7mJ-OY-XHa"/>
                         <viewControllerLayoutGuide type="bottom" id="37h-Fe-eVV"/>
@@ -1980,8 +1980,8 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="MZc-IT-Uk4" id="Wgc-v3-FAx"/>
-                                    <outlet property="delegate" destination="MZc-IT-Uk4" id="SrS-z4-tlq"/>
+                                    <outlet property="dataSource" destination="MZc-IT-Uk4" id="7kC-5P-M1S"/>
+                                    <outlet property="delegate" destination="MZc-IT-Uk4" id="Cuw-8P-e0U"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -1996,12 +1996,12 @@
                     <navigationItem key="navigationItem" title="Select File Type" id="6Dz-n0-Ckv">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="ItP-5K-ScT">
                             <connections>
-                                <action selector="didClickCancel:" destination="MZc-IT-Uk4" id="v6p-7i-Lod"/>
+                                <action selector="cancelButtonTapped:" destination="MZc-IT-Uk4" id="2t8-hX-8Iz"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="0iS-7C-TUh">
                             <connections>
-                                <action selector="didClickDone:" destination="MZc-IT-Uk4" id="kPI-Rj-iue"/>
+                                <action selector="doneButtonTapped:" destination="MZc-IT-Uk4" id="JF6-P1-8pc"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -2013,7 +2013,7 @@
         <!--View Controller - DFU-->
         <scene sceneID="jQp-94-O02">
             <objects>
-                <viewController storyboardIdentifier="DFUViewController" id="ZfZ-xR-bsT" userLabel="View Controller - DFU" customClass="DFUViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DFUViewController" id="ZfZ-xR-bsT" userLabel="View Controller - DFU" customClass="NORDFUViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="YvG-V7-6cx"/>
                         <viewControllerLayoutGuide type="bottom" id="K6u-bL-u5j"/>
@@ -2092,14 +2092,6 @@
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ufz-FZ-yw5">
-                                        <rect key="frame" x="69" y="40" width="450" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="21" id="lMr-if-DNJ"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yiv-2t-cJQ">
                                         <rect key="frame" x="12" y="69" width="49" height="21"/>
                                         <constraints>
@@ -2136,6 +2128,14 @@
                                             <segue destination="ILm-7h-33Q" kind="presentation" identifier="FileSegue" id="cPh-rQ-HbQ"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ufz-FZ-yw5">
+                                        <rect key="frame" x="69" y="40" width="450" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="lMr-if-DNJ"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -2216,7 +2216,7 @@
                                             <color key="titleColor" red="0.66666668653488159" green="0.67058825492858887" blue="0.68627452850341797" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="uploadPressed" destination="ZfZ-xR-bsT" eventType="touchUpInside" id="BlL-wA-RhJ"/>
+                                            <action selector="uploadButtonTapped:" destination="ZfZ-xR-bsT" eventType="touchUpInside" id="gua-Xf-5r6"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -2285,24 +2285,24 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="aboutButtonClicked:" destination="ZfZ-xR-bsT" eventType="touchUpInside" id="O93-UN-5uk"/>
+                                    <action selector="aboutButtonTapped:" destination="ZfZ-xR-bsT" eventType="touchUpInside" id="796-bD-mQf"/>
                                 </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="connectButton" destination="hGd-vQ-1ZP" id="ikD-zg-gyN"/>
-                        <outlet property="deviceName" destination="fT7-zC-dbm" id="B89-jl-FRO"/>
-                        <outlet property="fileName" destination="Hw9-yA-g6m" id="11V-lY-oo1"/>
-                        <outlet property="fileSize" destination="ufz-FZ-yw5" id="kpH-z0-wJ3"/>
-                        <outlet property="fileType" destination="gkd-zB-UKS" id="XwO-Ej-8FA"/>
-                        <outlet property="progress" destination="c7u-0x-ak9" id="15C-GR-T8q"/>
-                        <outlet property="progressLabel" destination="6hI-Pc-GIS" id="pUi-oW-o4u"/>
-                        <outlet property="selectFileButton" destination="d1Z-zS-eN7" id="Qz2-4D-efm"/>
-                        <outlet property="uploadButton" destination="PVI-T9-QmJ" id="YTn-KR-JAy"/>
-                        <outlet property="uploadPane" destination="zgI-eq-aFb" id="ge4-ch-atG"/>
-                        <outlet property="uploadStatus" destination="I9g-ak-KRW" id="699-O6-jO6"/>
-                        <outlet property="verticalLabel" destination="5CN-hP-sI7" id="ckm-gF-gSj"/>
+                        <outlet property="connectButton" destination="hGd-vQ-1ZP" id="oBu-O1-oMZ"/>
+                        <outlet property="deviceName" destination="fT7-zC-dbm" id="SyM-Ek-AbS"/>
+                        <outlet property="fileName" destination="Hw9-yA-g6m" id="4lB-AX-tcK"/>
+                        <outlet property="fileSize" destination="ufz-FZ-yw5" id="uV3-8J-MMr"/>
+                        <outlet property="fileType" destination="gkd-zB-UKS" id="KFb-QL-xjZ"/>
+                        <outlet property="progress" destination="c7u-0x-ak9" id="Z76-aE-x2e"/>
+                        <outlet property="progressLabel" destination="6hI-Pc-GIS" id="TaH-ZR-8kp"/>
+                        <outlet property="selectFileButton" destination="d1Z-zS-eN7" id="T5b-oB-kdX"/>
+                        <outlet property="uploadButton" destination="PVI-T9-QmJ" id="b3Q-SA-uyT"/>
+                        <outlet property="uploadPane" destination="zgI-eq-aFb" id="dU3-FR-v2N"/>
+                        <outlet property="uploadStatus" destination="I9g-ak-KRW" id="WgE-b8-uEh"/>
+                        <outlet property="verticalLabel" destination="5CN-hP-sI7" id="i3d-EW-omC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OCH-04-hl7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3207,7 +3207,7 @@
         <!--App Files-->
         <scene sceneID="VAc-1S-DVb">
             <objects>
-                <viewController id="t2a-Jq-CNK" customClass="AppFilesViewController" sceneMemberID="viewController">
+                <viewController id="t2a-Jq-CNK" customClass="NORAppFilesViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="W7V-dO-c8B"/>
                         <viewControllerLayoutGuide type="bottom" id="xBR-lC-Sam"/>
@@ -3245,8 +3245,8 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="t2a-Jq-CNK" id="td9-iy-EYy"/>
-                                    <outlet property="delegate" destination="t2a-Jq-CNK" id="hwZ-i4-rhd"/>
+                                    <outlet property="dataSource" destination="t2a-Jq-CNK" id="DJC-eu-XRP"/>
+                                    <outlet property="delegate" destination="t2a-Jq-CNK" id="mx1-Ly-Caz"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -3260,7 +3260,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="App Files" image="appIcon" id="CAx-HI-feY"/>
                     <connections>
-                        <outlet property="tableView" destination="W5D-0X-jiM" id="8ep-Y7-KX0"/>
+                        <outlet property="tableView" destination="W5D-0X-jiM" id="aD9-hD-R9P"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lqv-dW-7EC" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3270,7 +3270,7 @@
         <!--Folder Files View Controller-->
         <scene sceneID="nro-W8-4UN">
             <objects>
-                <viewController modalTransitionStyle="flipHorizontal" id="4bI-af-War" customClass="FolderFilesViewController" sceneMemberID="viewController">
+                <viewController modalTransitionStyle="flipHorizontal" id="4bI-af-War" customClass="NORFolderFilesViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3oD-8d-bJW"/>
                         <viewControllerLayoutGuide type="bottom" id="O4O-6g-Adc"/>
@@ -3279,8 +3279,8 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WyQ-6E-ZcW" userLabel="Empty view">
-                                <rect key="frame" x="224" y="192" width="152" height="104"/>
+                            <view hidden="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WyQ-6E-ZcW" userLabel="Empty view">
+                                <rect key="frame" x="224" y="249" width="152" height="104"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="This folder is empty" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2e0-Ee-lgZ">
                                         <rect key="frame" x="0.0" y="83" width="152" height="21"/>
@@ -3327,8 +3327,8 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="4bI-af-War" id="PFj-kh-g2v"/>
-                                    <outlet property="delegate" destination="4bI-af-War" id="U9U-oe-YoS"/>
+                                    <outlet property="dataSource" destination="4bI-af-War" id="Uac-i3-jV6"/>
+                                    <outlet property="delegate" destination="4bI-af-War" id="gaW-aU-QRN"/>
                                 </connections>
                             </tableView>
                             <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2fM-BE-Key">
@@ -3356,13 +3356,13 @@
                     <navigationItem key="navigationItem" id="dpx-p5-wQh">
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="bld-f7-FAF">
                             <connections>
-                                <action selector="didClickDone:" destination="4bI-af-War" id="mxi-an-awI"/>
+                                <action selector="doneButtonTapped:" destination="4bI-af-War" id="sLq-OP-4xL"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="emptyView" destination="WyQ-6E-ZcW" id="H2L-H8-rb4"/>
-                        <outlet property="tableView" destination="BQ9-i8-wbC" id="YJ5-yg-zzD"/>
+                        <outlet property="emptyView" destination="WyQ-6E-ZcW" id="VwG-pd-goU"/>
+                        <outlet property="tableView" destination="BQ9-i8-wbC" id="ky4-3K-EDC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5z6-tl-x1X" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4603,7 +4603,7 @@
         <image name="userIcon" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="nX1-cs-GXT"/>
+        <segue reference="0i8-Ot-uid"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.60392159219999997" blue="0.85490196939999996" alpha="1" colorSpace="calibratedRGB"/>
 </document>

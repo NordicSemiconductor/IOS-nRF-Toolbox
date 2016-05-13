@@ -15,6 +15,15 @@
 		300508931CE1D75800D93BE0 /* NORProximityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300508921CE1D75800D93BE0 /* NORProximityViewController.swift */; };
 		300508951CE2078A00D93BE0 /* NORRSCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300508941CE2078A00D93BE0 /* NORRSCViewController.swift */; };
 		3010F6051CDCB4F900CB285A /* NORBPMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3010F6041CDCB4F900CB285A /* NORBPMViewController.swift */; };
+		304299221CE5DE8E00E1D2AB /* NORUserFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304299211CE5DE8E00E1D2AB /* NORUserFilesViewController.swift */; };
+		30499E4B1CE4667800E0993B /* NORDFUConstantsUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E4A1CE4667800E0993B /* NORDFUConstantsUtility.swift */; };
+		30499E4D1CE4687300E0993B /* NORFileTypeSelectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E4C1CE4687300E0993B /* NORFileTypeSelectionDelegate.swift */; };
+		30499E4F1CE4688700E0993B /* NORFileTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E4E1CE4688700E0993B /* NORFileTypeViewController.swift */; };
+		30499E511CE471C500E0993B /* NORDFUViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E501CE471C500E0993B /* NORDFUViewController.swift */; };
+		30499E551CE4732200E0993B /* NORFileSelectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E541CE4732200E0993B /* NORFileSelectionDelegate.swift */; };
+		30499E571CE4736500E0993B /* NORFilePreselectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E561CE4736500E0993B /* NORFilePreselectionDelegate.swift */; };
+		30499E591CE4A07700E0993B /* NORAppFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E581CE4A07700E0993B /* NORAppFilesViewController.swift */; };
+		30499E5D1CE4C6C700E0993B /* NORFolderFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E5C1CE4C6C700E0993B /* NORFolderFilesViewController.swift */; };
 		304D58FB1CE34EE600148271 /* NORLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304D58FA1CE34EE600148271 /* NORLogger.swift */; };
 		304D58FD1CE34FC600148271 /* NORLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304D58FC1CE34FC600148271 /* NORLogViewController.swift */; };
 		304D58FF1CE3521900148271 /* NORLogItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304D58FE1CE3521900148271 /* NORLogItem.swift */; };
@@ -54,19 +63,12 @@
 		5217F41B1859EEF400F2D5BB /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5217F41A1859EEF400F2D5BB /* CoreBluetooth.framework */; };
 		5226362F1C5A601C0054A550 /* HowToCreateDistributionPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5226362E1C5A601C0054A550 /* HowToCreateDistributionPacket.m */; };
 		522636371C60FFB00054A550 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 522636361C60FFB00054A550 /* libz.tbd */; };
-		5252A53E18802F7200EFD773 /* DFUViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5252A53D18802F7200EFD773 /* DFUViewController.m */; };
 		52BDCB191C3FD31F00E2680F /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BDCB181C3FD31F00E2680F /* Accelerate.framework */; };
 		52BDCBBE1C3FD86900E2680F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BDCBBD1C3FD86900E2680F /* QuartzCore.framework */; };
 		52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */; };
 		52BDCBC91C48FDB800E2680F /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BDCBC81C48FDB800E2680F /* BaseViewController.m */; };
 		52BDCBDA1C4D1AAC00E2680F /* NSDataAsHex.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BDCBD91C4D1AAC00E2680F /* NSDataAsHex.m */; };
 		7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B422818A8DF4D006BA1BC /* high.mp3 */; };
-		7E2A3C64196D408A009E2506 /* AccessFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E2A3C63196D408A009E2506 /* AccessFileSystem.m */; };
-		7E445C8E1951A51A00633892 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E445C8D1951A51A00633892 /* Utility.m */; };
-		7E445C971951D09E00633892 /* FileTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E445C961951D09E00633892 /* FileTypeViewController.m */; };
-		7E6ED10F197D1D8D008010B6 /* AppFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6ED10E197D1D8D008010B6 /* AppFilesViewController.m */; };
-		7E6ED112197D1DA4008010B6 /* UserFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6ED111197D1DA4008010B6 /* UserFilesViewController.m */; };
-		7E99686C19800A260092E69E /* FolderFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E99686B19800A260092E69E /* FolderFilesViewController.m */; };
 		A80462591AD670480074F116 /* AppUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = A80462581AD670480074F116 /* AppUtilities.m */; };
 		F427A816F7641D9828BAF315 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */; };
 /* End PBXBuildFile section */
@@ -102,6 +104,15 @@
 		300508921CE1D75800D93BE0 /* NORProximityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORProximityViewController.swift; sourceTree = "<group>"; };
 		300508941CE2078A00D93BE0 /* NORRSCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORRSCViewController.swift; sourceTree = "<group>"; };
 		3010F6041CDCB4F900CB285A /* NORBPMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBPMViewController.swift; sourceTree = "<group>"; };
+		304299211CE5DE8E00E1D2AB /* NORUserFilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORUserFilesViewController.swift; sourceTree = "<group>"; };
+		30499E4A1CE4667800E0993B /* NORDFUConstantsUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORDFUConstantsUtility.swift; sourceTree = "<group>"; };
+		30499E4C1CE4687300E0993B /* NORFileTypeSelectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORFileTypeSelectionDelegate.swift; path = FileSelection/NORFileTypeSelectionDelegate.swift; sourceTree = "<group>"; };
+		30499E4E1CE4688700E0993B /* NORFileTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORFileTypeViewController.swift; path = FileSelection/NORFileTypeViewController.swift; sourceTree = "<group>"; };
+		30499E501CE471C500E0993B /* NORDFUViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORDFUViewController.swift; sourceTree = "<group>"; };
+		30499E541CE4732200E0993B /* NORFileSelectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORFileSelectionDelegate.swift; sourceTree = "<group>"; };
+		30499E561CE4736500E0993B /* NORFilePreselectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORFilePreselectionDelegate.swift; sourceTree = "<group>"; };
+		30499E581CE4A07700E0993B /* NORAppFilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORAppFilesViewController.swift; sourceTree = "<group>"; };
+		30499E5C1CE4C6C700E0993B /* NORFolderFilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORFolderFilesViewController.swift; sourceTree = "<group>"; };
 		304D58FA1CE34EE600148271 /* NORLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORLogger.swift; sourceTree = "<group>"; };
 		304D58FC1CE34FC600148271 /* NORLogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORLogViewController.swift; sourceTree = "<group>"; };
 		304D58FE1CE3521900148271 /* NORLogItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORLogItem.swift; sourceTree = "<group>"; };
@@ -146,12 +157,9 @@
 		5217F4101859EE0000F2D5BB /* nRF_ToolboxTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = nRF_ToolboxTests.m; sourceTree = "<group>"; };
 		5217F41A1859EEF400F2D5BB /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		5217F41F185B1A0800F2D5BB /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		5226362A1C564E5F0054A550 /* FileSelectionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSelectionDelegate.h; sourceTree = "<group>"; };
 		5226362D1C5A601C0054A550 /* HowToCreateDistributionPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HowToCreateDistributionPacket.h; sourceTree = "<group>"; };
 		5226362E1C5A601C0054A550 /* HowToCreateDistributionPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HowToCreateDistributionPacket.m; sourceTree = "<group>"; };
 		522636361C60FFB00054A550 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		5252A53C18802F7200EFD773 /* DFUViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFUViewController.h; sourceTree = "<group>"; };
-		5252A53D18802F7200EFD773 /* DFUViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFUViewController.m; sourceTree = "<group>"; };
 		5285D9A5188D43E500305F1D /* RecordAccess.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecordAccess.h; sourceTree = "<group>"; };
 		52BDCB181C3FD31F00E2680F /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		52BDCBBD1C3FD86900E2680F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -161,19 +169,7 @@
 		52BDCBD81C4D1AAC00E2680F /* NSDataAsHex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataAsHex.h; sourceTree = "<group>"; };
 		52BDCBD91C4D1AAC00E2680F /* NSDataAsHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataAsHex.m; sourceTree = "<group>"; };
 		7E1B422818A8DF4D006BA1BC /* high.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = high.mp3; sourceTree = "<group>"; };
-		7E2A3C62196D408A009E2506 /* AccessFileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessFileSystem.h; sourceTree = "<group>"; };
-		7E2A3C63196D408A009E2506 /* AccessFileSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccessFileSystem.m; sourceTree = "<group>"; };
-		7E445C8C1951A50A00633892 /* Utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
-		7E445C8D1951A51A00633892 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
-		7E445C951951D09E00633892 /* FileTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileTypeViewController.h; path = FileSelection/FileTypeViewController.h; sourceTree = "<group>"; };
-		7E445C961951D09E00633892 /* FileTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileTypeViewController.m; path = FileSelection/FileTypeViewController.m; sourceTree = "<group>"; };
 		7E6ED10A196ED482008010B6 /* firmwares */ = {isa = PBXFileReference; lastKnownFileType = folder; path = firmwares; sourceTree = "<group>"; };
-		7E6ED10D197D1D8D008010B6 /* AppFilesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppFilesViewController.h; sourceTree = "<group>"; };
-		7E6ED10E197D1D8D008010B6 /* AppFilesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppFilesViewController.m; sourceTree = "<group>"; };
-		7E6ED110197D1DA4008010B6 /* UserFilesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserFilesViewController.h; sourceTree = "<group>"; };
-		7E6ED111197D1DA4008010B6 /* UserFilesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserFilesViewController.m; sourceTree = "<group>"; };
-		7E99686A19800A260092E69E /* FolderFilesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderFilesViewController.h; sourceTree = "<group>"; };
-		7E99686B19800A260092E69E /* FolderFilesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FolderFilesViewController.m; sourceTree = "<group>"; };
 		89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A80462571AD670480074F116 /* AppUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppUtilities.h; sourceTree = "<group>"; };
 		A80462581AD670480074F116 /* AppUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppUtilities.m; sourceTree = "<group>"; };
@@ -327,8 +323,8 @@
 		522636281C5261C90054A550 /* File Type Selection */ = {
 			isa = PBXGroup;
 			children = (
-				7E445C951951D09E00633892 /* FileTypeViewController.h */,
-				7E445C961951D09E00633892 /* FileTypeViewController.m */,
+				30499E4C1CE4687300E0993B /* NORFileTypeSelectionDelegate.swift */,
+				30499E4E1CE4688700E0993B /* NORFileTypeViewController.swift */,
 			);
 			name = "File Type Selection";
 			sourceTree = "<group>";
@@ -459,16 +455,12 @@
 		7E6ED10C197D1D40008010B6 /* File Selection */ = {
 			isa = PBXGroup;
 			children = (
+				30499E541CE4732200E0993B /* NORFileSelectionDelegate.swift */,
+				30499E561CE4736500E0993B /* NORFilePreselectionDelegate.swift */,
+				30499E581CE4A07700E0993B /* NORAppFilesViewController.swift */,
+				30499E5C1CE4C6C700E0993B /* NORFolderFilesViewController.swift */,
+				304299211CE5DE8E00E1D2AB /* NORUserFilesViewController.swift */,
 				5226362B1C5A5FE10054A550 /* Tutorial */,
-				7E2A3C62196D408A009E2506 /* AccessFileSystem.h */,
-				7E2A3C63196D408A009E2506 /* AccessFileSystem.m */,
-				5226362A1C564E5F0054A550 /* FileSelectionDelegate.h */,
-				7E6ED10D197D1D8D008010B6 /* AppFilesViewController.h */,
-				7E6ED10E197D1D8D008010B6 /* AppFilesViewController.m */,
-				7E6ED110197D1DA4008010B6 /* UserFilesViewController.h */,
-				7E6ED111197D1DA4008010B6 /* UserFilesViewController.m */,
-				7E99686A19800A260092E69E /* FolderFilesViewController.h */,
-				7E99686B19800A260092E69E /* FolderFilesViewController.m */,
 			);
 			name = "File Selection";
 			path = FileSelection;
@@ -477,8 +469,7 @@
 		7E996869197FB8FD0092E69E /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				7E445C8C1951A50A00633892 /* Utility.h */,
-				7E445C8D1951A51A00633892 /* Utility.m */,
+				30499E4A1CE4667800E0993B /* NORDFUConstantsUtility.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -506,8 +497,7 @@
 		A85667E21B2230CA004A6D3C /* DFUViewController */ = {
 			isa = PBXGroup;
 			children = (
-				5252A53C18802F7200EFD773 /* DFUViewController.h */,
-				5252A53D18802F7200EFD773 /* DFUViewController.m */,
+				30499E501CE471C500E0993B /* NORDFUViewController.swift */,
 			);
 			path = DFUViewController;
 			sourceTree = "<group>";
@@ -707,43 +697,45 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				304299221CE5DE8E00E1D2AB /* NORUserFilesViewController.swift in Sources */,
+				30499E5D1CE4C6C700E0993B /* NORFolderFilesViewController.swift in Sources */,
+				30499E551CE4732200E0993B /* NORFileSelectionDelegate.swift in Sources */,
 				A80462591AD670480074F116 /* AppUtilities.m in Sources */,
 				30F92D4B1CD9CF0700C73285 /* NORHRMViewController.swift in Sources */,
-				7E445C971951D09E00633892 /* FileTypeViewController.m in Sources */,
-				5252A53E18802F7200EFD773 /* DFUViewController.m in Sources */,
 				5226362F1C5A601C0054A550 /* HowToCreateDistributionPacket.m in Sources */,
 				304D58FD1CE34FC600148271 /* NORLogViewController.swift in Sources */,
+				30499E571CE4736500E0993B /* NORFilePreselectionDelegate.swift in Sources */,
 				30A1145C1CD24611000F0F02 /* NORScannerViewController.swift in Sources */,
 				308AA57A1CD8DD4300CC9857 /* NORGlucoseReadingContext.swift in Sources */,
 				305E07B71CD3608500B32EB2 /* NORBGMViewController.swift in Sources */,
 				305E07B51CD3534D00B32EB2 /* NORBGMDetailsViewController.swift in Sources */,
 				304D58FF1CE3521900148271 /* NORLogItem.swift in Sources */,
-				7E6ED112197D1DA4008010B6 /* UserFilesViewController.m in Sources */,
 				5217F3F61859EE0000F2D5BB /* AppDelegate.m in Sources */,
 				5217F3F21859EE0000F2D5BB /* main.m in Sources */,
+				30499E4B1CE4667800E0993B /* NORDFUConstantsUtility.swift in Sources */,
 				3010F6051CDCB4F900CB285A /* NORBPMViewController.swift in Sources */,
 				3000B2131CE3195E00F64CEE /* NOREditPopupViewController.swift in Sources */,
 				304D59011CE352B300148271 /* NORLogItemTableViewCell.swift in Sources */,
 				3080C4711CE06D0E009C2D8C /* NORCSCViewController.swift in Sources */,
 				308EE1781CE0CBF700F2A854 /* NORHTSViewController.swift in Sources */,
 				304D58FB1CE34EE600148271 /* NORLogger.swift in Sources */,
-				7E445C8E1951A51A00633892 /* Utility.m in Sources */,
+				30499E511CE471C500E0993B /* NORDFUViewController.swift in Sources */,
 				52BDCBC91C48FDB800E2680F /* BaseViewController.m in Sources */,
 				3000B2151CE32A9200F64CEE /* NORUARTViewController.swift in Sources */,
 				308AA5781CD8AF6B00CC9857 /* NORGlucoseReading.swift in Sources */,
-				7E2A3C64196D408A009E2506 /* AccessFileSystem.m in Sources */,
 				300508951CE2078A00D93BE0 /* NORRSCViewController.swift in Sources */,
 				30A1145A1CD2426B000F0F02 /* NORScannerDelegate.swift in Sources */,
 				52BDCBDA1C4D1AAC00E2680F /* NSDataAsHex.m in Sources */,
-				7E99686C19800A260092E69E /* FolderFilesViewController.m in Sources */,
 				3069A1D71CDC788A003869EA /* NORBluetoothManager.swift in Sources */,
 				300508931CE1D75800D93BE0 /* NORProximityViewController.swift in Sources */,
 				30921FD31CD0E7A5009CBDDE /* NORNavigationController.swift in Sources */,
 				30A114561CD2367C000F0F02 /* NORScannedPeripheral.swift in Sources */,
+				30499E4D1CE4687300E0993B /* NORFileTypeSelectionDelegate.swift in Sources */,
 				308AA5761CD8A7B400CC9857 /* NORBGMItemCell.swift in Sources */,
 				5214D0D218881D4D00460637 /* CharacteristicReader.m in Sources */,
 				30921FD51CD0EB55009CBDDE /* NORMainViewController.swift in Sources */,
-				7E6ED10F197D1D8D008010B6 /* AppFilesViewController.m in Sources */,
+				30499E591CE4A07700E0993B /* NORAppFilesViewController.swift in Sources */,
+				30499E4F1CE4688700E0993B /* NORFileTypeViewController.swift in Sources */,
 				3000B2111CE317D900F64CEE /* NORUARTRevealViewController.swift in Sources */,
 				3000B20F1CE3169F00F64CEE /* NORBaseRevealViewController.swift in Sources */,
 			);
@@ -886,6 +878,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEFINES_MODULE = NO;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -933,6 +926,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				DEFINES_MODULE = NO;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
