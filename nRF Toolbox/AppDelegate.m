@@ -21,6 +21,7 @@
  */
 
 #import "AppDelegate.h"
+#import "nRF_Toolbox-Swift.h"
 
 @implementation AppDelegate
 
@@ -46,10 +47,9 @@
     
     UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
-//    DFUViewController *dfuvc = [main instantiateViewControllerWithIdentifier:@"DFUViewController"];
-//    [dfuvc onFileSelected:url];
-    
-//    [navigationController pushViewController:dfuvc animated:YES];
+    NORDFUViewController *dfuvc = [main instantiateViewControllerWithIdentifier:@"DFUViewController"];
+    [dfuvc onFileSelectedWithURL:url];
+    [navigationController pushViewController:dfuvc animated:YES];
     
     return YES;
 }
