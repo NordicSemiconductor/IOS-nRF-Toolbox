@@ -93,7 +93,6 @@ class NORUserFilesViewController: UIViewController, NORFilePreselectionDelegate,
         // Configure the cell...
         let filePath = (files?[indexPath.row-1])!
         let fileName = filePath.lastPathComponent
-        print(fileName)
 
         aCell.textLabel?.text = fileName
         aCell.accessoryType = UITableViewCellAccessoryType.None
