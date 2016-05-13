@@ -10,7 +10,7 @@ import UIKit
 import CoreBluetooth
 import AVFoundation
 
-class NORProximityViewController: BaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, NORScannerDelegate, CBPeripheralManagerDelegate {
+class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, NORScannerDelegate, CBPeripheralManagerDelegate {
     
     //MARK: - Class Properties
     var bluetoothManager                        : CBCentralManager?
@@ -52,7 +52,7 @@ class NORProximityViewController: BaseViewController, CBCentralManagerDelegate, 
     }
     
     @IBAction func aboutButtonTapped(sender: AnyObject) {
-        self.showAbout(AppUtilities.getProximityHelpText())
+        self.showAbout(message: AppUtilities.getProximityHelpText())
     }
 
     

@@ -9,7 +9,7 @@
 import UIKit
 import CoreBluetooth
 
-class NORBPMViewController: BaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, NORScannerDelegate {
+class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, NORScannerDelegate {
     
     //MARK: - ViewController Properties
     var bpmServiceUUID                                : CBUUID?
@@ -41,7 +41,7 @@ class NORBPMViewController: BaseViewController, CBCentralManagerDelegate, CBPeri
         }
     }
     @IBAction func aboutButtonTapped(sender: AnyObject) {
-        self.showAbout(AppUtilities.getBPMHelpText())
+        self.showAbout(message: AppUtilities.getBPMHelpText())
     }
 
     //MARK: - UIViewController methods

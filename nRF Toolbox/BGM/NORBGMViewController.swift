@@ -9,7 +9,7 @@
 import UIKit
 import CoreBluetooth
 
-class NORBGMViewController: BaseViewController ,CBCentralManagerDelegate, CBPeripheralDelegate, NORScannerDelegate, UITableViewDataSource, UIActionSheetDelegate {
+class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBPeripheralDelegate, NORScannerDelegate, UITableViewDataSource, UIActionSheetDelegate {
     var bluetoothManager : CBCentralManager?
     
     //MARK: - Class properties
@@ -92,7 +92,7 @@ class NORBGMViewController: BaseViewController ,CBCentralManagerDelegate, CBPeri
     }
 
     func handleAboutButtonTapped() {
-        self.showAbout(AppUtilities.getBGMHelpText())
+        self.showAbout(message: AppUtilities.getBGMHelpText())
     }
     
     func handleConnectionButtonTapped() {

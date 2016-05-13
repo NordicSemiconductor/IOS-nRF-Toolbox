@@ -10,7 +10,7 @@ import UIKit
 import CoreBluetooth
 import CorePlot
 
-class NORHRMViewController: BaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, NORScannerDelegate, CPTPlotDataSource, CPTPlotSpaceDelegate {
+class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, NORScannerDelegate, CPTPlotDataSource, CPTPlotSpaceDelegate {
 
     //MARK: - Properties
     var bluetoothManager                : CBCentralManager?
@@ -51,7 +51,7 @@ class NORHRMViewController: BaseViewController, CBCentralManagerDelegate, CBPeri
         }
     }
     @IBAction func aboutButtonTapped(sender: AnyObject) {
-        self.showAbout(AppUtilities.getHRSHelpText())
+        self.showAbout(message: AppUtilities.getHRSHelpText())
     }
     //MARK: - UIViewController delegate
     required init?(coder aDecoder: NSCoder) {

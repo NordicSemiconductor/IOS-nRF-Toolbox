@@ -9,7 +9,7 @@
 import UIKit
 import CoreBluetooth
 
-class NORHTSViewController: BaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, NORScannerDelegate {
+class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, NORScannerDelegate {
 
     //MARK: - ViewController properties
     var bluetoothManager                 : CBCentralManager?
@@ -34,7 +34,7 @@ class NORHTSViewController: BaseViewController, CBCentralManagerDelegate, CBPeri
    
     //MARK: - ViewControllerActions
     @IBAction func aboutButtonTapped(sender: AnyObject) {
-            self.showAbout(AppUtilities.getHTSHelpText())
+        self.showAbout(message: AppUtilities.getHTSHelpText())
     }
     
     @IBAction func connectionButtonTapped(sender: AnyObject) {

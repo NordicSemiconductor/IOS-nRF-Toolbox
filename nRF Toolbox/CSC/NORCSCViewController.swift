@@ -9,7 +9,7 @@
 import UIKit
 import CoreBluetooth
 
-class NORCSCViewController: BaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, NORScannerDelegate {
+class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, NORScannerDelegate {
 
     //MARK: - ViewController properties
     let WHEEL_REVOLUTION_FLAG               : UInt8 = 0x01
@@ -47,7 +47,7 @@ class NORCSCViewController: BaseViewController, CBCentralManagerDelegate, CBPeri
         }
     }
     @IBAction func aboutButtonTapped(sender: AnyObject) {
-        self.showAbout(AppUtilities.getCSCHelpText())
+        self.showAbout(message: AppUtilities.getCSCHelpText())
     }
 
     //MARK: - UIViewController delegate

@@ -12,7 +12,7 @@ import iOSDFULibrary
 
 
 
-class NORDFUViewController: BaseViewController, NORScannerDelegate, NORFileTypeSelectionDelegate, NORFileSelectionDelegate, LoggerDelegate, DFUServiceDelegate, DFUProgressDelegate {
+class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTypeSelectionDelegate, NORFileSelectionDelegate, LoggerDelegate, DFUServiceDelegate, DFUProgressDelegate {
     
     //MARK: - Class properties
     var selectedPeripheral : CBPeripheral?
@@ -239,7 +239,7 @@ class NORDFUViewController: BaseViewController, NORScannerDelegate, NORFileTypeS
     
     //MARK: - NORDFUViewController implementation
     func handleAboutButtonTapped() {
-        self.showAbout(NORDFUConstantsUtility.getDFUHelpText())
+        self.showAbout(message: NORDFUConstantsUtility.getDFUHelpText())
     }
     
     func handleUploadButtonTapped() {
