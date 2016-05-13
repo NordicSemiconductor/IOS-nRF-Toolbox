@@ -1,17 +1,6 @@
 # iOS DFU Library
 
-## Changelog
-
-  - **0.1.5**: Improved readme
-  - **0.1.4**: Removed unnecessary public headears from PodSpec
-  - **0.1.3**: Removed extraneous IntelHextBin module as it's no longer necessary
-  - **0.1.2**: Added Pod name that caused a missing reference issue and other minor bugfixes
-  - **0.1.1**: Bugfix: Release/Debug configurations had a missing reference
-  - **0.1.0**: Initial Pod implementation
-
-## Usage
-
----
+## Installation
 
 #### Method 1: Via Cocoapods (Recommended method)
 
@@ -28,7 +17,6 @@
 
   - Open the newly created `.xcworkspace` and begin working on your project.
 
----
 
 #### Method 2: Building from source
  - Create a new blank XCode workspace `/path/to/workspace` and open it
@@ -55,13 +43,19 @@ DFU library has been designed to make it very easy to include these devices into
 
 [![Alt text for your video](http://img.youtube.com/vi/LdY2m_bZTgE/0.jpg)](http://youtu.be/LdY2m_bZTgE)
 
+---
+
 ### Documentation
 
-See the [documentation](documentation) for more information.
+See the [documentation](documentation.md) for more information.
+
+---
 
 ### Requirements
 
 The library is compatible with nRF51 and nRF52 devices with S-Series Soft Device and the DFU Bootloader flashed on. 
+
+---
 
 ### DFU History
 
@@ -73,6 +67,8 @@ The library is compatible with nRF51 and nRF52 devices with S-Series Soft Device
 - Buttonless update support for bonded devices - sharing the LTK between an app and the bootloader.
 
 Check platform folders for mode details about compatibility for each library.
+
+---
 
 ### Resources
 

@@ -139,7 +139,27 @@ class NORDFUViewController: BaseViewController, NORScannerDelegate, NORFileTypeS
     }
     //MARK: - LoggerDelegate
     func logWith(level:LogLevel, message:String){
-        print("%ld: %@", level, message)
+        var levelString : String?
+        switch(level) {
+            case .Application:
+                levelString = "Application"
+                break
+            case .Debug:
+                levelString = "Debug"
+                break
+            case .Error:
+                levelString = "Error"
+                break
+            case .Info:
+                levelString = "Info"
+                break
+            case .Verbose:
+                levelString = "Verbose"
+                break
+            case .Warning:
+                levelString = "Warning"
+        }
+        print("\(levelString!): \(message)")
     }
 
     //MARK: - DFUServiceDelegate
