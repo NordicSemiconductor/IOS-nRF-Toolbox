@@ -129,8 +129,8 @@ class NORGlucoseReadingContext: NSObject {
         if (testerAndHelathPresent)
         {
             let nibble : Nibble = CharacteristicReader.readNibble(&pointer)
-            self.tester = BgmTester(rawValue: nibble.parts.first)
-            self.health = BgmHealth(rawValue: nibble.parts.second)
+            self.tester = BgmTester(rawValue: nibble.first)
+            self.health = BgmHealth(rawValue: nibble.second)
         }
         
         self.exercisePresent = exerciseInfoPresent

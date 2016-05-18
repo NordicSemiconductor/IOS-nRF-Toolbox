@@ -24,12 +24,8 @@
 
 typedef struct
 {
-    UInt8 value;
-    struct {
-        // Reversed order
-        UInt8 second : 4;
-        UInt8 first : 4;
-    } parts;
+    UInt8 second;
+    UInt8 first;
 } Nibble;
 
 @interface CharacteristicReader : NSObject

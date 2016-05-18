@@ -60,11 +60,47 @@ class NORGlucoseReading: NSObject {
     }
 
     func locationAsString() -> String {
-        return "Lcoation"
+        switch self.location! {
+        case .ALTERNATE_SITE_TEST:
+            return "Alternate site test"
+        case .CONTROL_SOLUTION_LOCATION:
+            return "Control solution"
+        case .EARLOBE:
+            return "Earlobe"
+        case .FINGER:
+            return "Finger"
+        case .LOCATION_NOT_AVAILABLE:
+            return "Not available"
+        case .RESERVED_LOCATION:
+            return "Reserved value"
+        }
     }
     
     func typeAsString() -> String {
-        return "Type"
+        switch self.type!{
+        case .ARTERIAL_PLASMA:
+            return "Arterial plasma"
+        case .ARTERIAL_WHOLE_BLOOD:
+            return "Arterial whole blood"
+        case .CAPILLARY_PLASMA:
+            return "Capillary plasma"
+        case .CAPILLARY_WHOLE_BLOOD:
+            return "Capillary whole blood"
+        case .CONTROL_SOLUTION_TYPE:
+            return "Control solution"
+        case .INTERSTITIAL_FLUID:
+            return "Interstitial fluid"
+        case .UNDETERMINED_PLASMA:
+            return "Undetermined plasma"
+        case .UNDETERMINED_WHOLE_BLOOD:
+            return "Undetermined whole blood"
+        case .VENOUS_PLASMA:
+            return "Venous plasma"
+        case .VENOUS_WHOLE_BLOOD:
+            return "Venous whole blood"
+        case .RESERVED_TYPE:
+            return "Reserved value"
+        }
     }
     
     func updateFromBytes(bytes : UnsafePointer<UInt8>) {
@@ -87,12 +123,17 @@ class NORGlucoseReading: NSObject {
         }
         
         self.glucoseConcentrationTypeAndLocationPresent = glucoseConcentrationTypeAndLocationPresent
-        self.unit = glucoseConcentrationUnit
-        
-        let typeAndLocation : Nibble = CharacteristicReader.readNibble(&pointer)
-        self.type       = BGMType(rawValue: typeAndLocation.parts.first)
-        self.location   = BGMLocation(rawValue: typeAndLocation.parts.second)
-        
+        if self.glucoseConcentrationTypeAndLocationPresent == true {
+            self.glucoseConcentration = CharacteristicReader.readSFloatValue(&pointer)
+            self.unit = glucoseConcentrationUnit
+            let typeAndLocation = CharacteristicReader.readNibble(&pointer)
+            self.type       = BGMType(rawValue: typeAndLocation.first)
+            self.location   = BGMLocation(rawValue: typeAndLocation.second)
+        } else {
+            self.type       = BGMType.RESERVED_TYPE
+            self.location   = BGMLocation.RESERVED_LOCATION
+        }
+
         self.sensorStatusAnnunciationPresent = statusAnnuciationPresent
         if statusAnnuciationPresent == true {
             self.sensorStatusAnnunciation = CharacteristicReader.readUInt16Value(&pointer)

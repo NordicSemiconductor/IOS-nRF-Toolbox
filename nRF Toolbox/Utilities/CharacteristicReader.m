@@ -160,7 +160,10 @@ static const double reserved_float_values[5] = {INFINITY, NAN, NAN, NAN, -INFINI
 +(Nibble)readNibble:(uint8_t **)p_encoded_data
 {
     Nibble nibble;
-    nibble.value = [CharacteristicReader readUInt8Value:p_encoded_data];
+    
+    UInt8 value = [CharacteristicReader readUInt8Value:p_encoded_data];
+    nibble.second = value >> 4;
+    nibble.first  = value & 0xF;
     
     return nibble;
 }

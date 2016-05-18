@@ -63,7 +63,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
         
         bgmServiceUUID                                  = CBUUID(string: NORServiceIdentifiers.bgmServiceUUIDString)
         bgmGlucoseMeasurementCharacteristicUUID         = CBUUID(string: NORServiceIdentifiers.bgmGlucoseMeasurementCharacteristicUUIDString)
-        bgmGlucoseMeasurementCharacteristicUUID         = CBUUID(string: NORServiceIdentifiers.bgmGlucoseMeasurementCharacteristicUUIDString)
+        bgmGlucoseMeasurementContextCharacteristicUUID  = CBUUID(string: NORServiceIdentifiers.bgmGlucoseMeasurementContextCharacteristicUUIDString)
         bgmRecordAccessControlPointCharacteristicUUID   = CBUUID(string: NORServiceIdentifiers.bgmRecordAccessControlPointCharacteristicUUIDString)
         batteryServiceUUID                              = CBUUID(string: NORServiceIdentifiers.batteryServiceUUIDString)
         batteryLevelCharacteristicUUID                  = CBUUID(string: NORServiceIdentifiers.batteryLevelCharacteristicUUIDString)
@@ -198,11 +198,10 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     }
     
     func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
-        let data  = characteristic.value
-        let array = data!.bytes
+        var array = UnsafeMutablePointer<UInt8>((characteristic.value?.bytes)!)
         
         if characteristic.UUID.isEqual(batteryLevelCharacteristicUUID) {
-            let batteryLevel = CharacteristicReader.readUInt8Value(UnsafeMutablePointer(array))
+            let batteryLevel = CharacteristicReader.readUInt8Value(&array)
             let text = String(format: "%d%%", batteryLevel)
             
             dispatch_async(dispatch_get_main_queue(), {
@@ -218,6 +217,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
             }
             
         } else if characteristic.UUID.isEqual(bgmGlucoseMeasurementCharacteristicUUID) {
+            print("New glucose reading")
             let reading = NORGlucoseReading.readingFromBytes(UnsafeMutablePointer(array))
             
             if (readings?.containsObject(reading) != false) {
@@ -235,39 +235,45 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
                 print("Glucose measurement with sequence number: %d not found", context.sequenceNumber)
             }
         } else if characteristic.UUID.isEqual(bgmRecordAccessControlPointCharacteristicUUID) {
-            let param = unsafeBitCast(CFArrayGetValueAtIndex(array as! CFArray, 0), RecordAccessParam.self)
+            print("OpCode: \(array[0]), Operator: \(array[2])")
             dispatch_async(dispatch_get_main_queue(), {
-                switch(param.value.response.responseCode){
-                case SUCCESS.rawValue:
+                switch(NORBGMResponseCode(rawValue:array[2])!){
+                case .SUCCESS:
                     self.bgmTableView.reloadData()
                     break
-                case OP_CODE_NOT_SUPPORTED.rawValue:
+                case .OP_CODE_NOT_SUPPORTED:
                     let alert = UIAlertView.init(title: "Error", message: "Operation not supported", delegate: nil, cancelButtonTitle: "OK")
                     alert.show()
                     break
-                case NO_RECORDS_FOUND.rawValue:
+                case .NO_RECORDS_FOUND:
                     let alert = UIAlertView.init(title: "Error", message: "No records found", delegate: nil, cancelButtonTitle: "OK")
                     alert.show()
                     break
-                case OPERATOR_NOT_SUPPORTED.rawValue:
+                case .OPERATOR_NOT_SUPPORTED:
                     let alert = UIAlertView.init(title: "Error", message: "Operator not supported", delegate: nil, cancelButtonTitle: "OK")
                     alert.show()
                     break
-                case INVALID_OPERATOR.rawValue:
+                case .INVALID_OPERATOR:
                     let alert = UIAlertView.init(title: "Error", message: "Invalid operator", delegate: nil, cancelButtonTitle: "OK")
                     alert.show()
                     break
-                case OPERAND_NOT_SUPPORTED.rawValue:
+                case .OPERAND_NOT_SUPPORTED:
                     let alert = UIAlertView.init(title: "Error", message: "Operand not supported", delegate: nil, cancelButtonTitle: "OK")
                     alert.show()
                     break
-                case INVALID_OPERAND.rawValue:
+                case .INVALID_OPERAND:
                     let alert = UIAlertView.init(title: "Error", message: "Invalid operand", delegate: nil, cancelButtonTitle: "OK")
                     alert.show()
                     break
-                    default:
-                        print(String(format:"Op code: %d, operator %d", param.opCode, param.operatorType))
-                        print(String(format:"Req Op Code: %d, response: %d", param.value.response.requestOpCode, param.value.response.responseCode))
+                case .ABORT_UNSUCCESSFUL:
+                    let alert = UIAlertView.init(title: "Error", message: "Abort unsuccessful", delegate: nil, cancelButtonTitle: "OK")
+                    alert.show()
+                    break
+                case .PROCEDURE_NOT_COMPLETED:
+                    let alert = UIAlertView.init(title: "Error", message: "Procedure not completed", delegate: nil, cancelButtonTitle: "OK")
+                    alert.show()
+                    break
+                case .RESERVED:
                     break
                 }
             })
@@ -362,48 +368,44 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
         guard buttonIndex != BGMViewActions.Cancel.rawValue else {
             return
         }
-        
-        var param : RecordAccessParam?
-        var size  : Int = 0
+
+        var accessParam : [UInt8] = []
         var clearList : Bool = true
         
-        switch buttonIndex {
-        case BGMViewActions.Refresh.rawValue:
+        switch  BGMViewActions(rawValue: buttonIndex)! {
+        case .Refresh:
             if readings?.count > 0 {
-                param?.opCode = UInt8(REPORT_STORED_RECORDS.rawValue)
-                param?.operatorType = UInt8(GREATER_THAN_OR_EQUAL.rawValue)
-                param?.value.singleParam.filterType = UInt8(SEQUENCE_NUMBER.rawValue)
                 let reading = readings?.objectAtIndex((readings?.count)! - 1) as! NORGlucoseReading
-                param?.value.singleParam.paramLE = CFSwapInt16HostToLittle(reading.sequenceNumber!)
-                size = 5
+//                param.value.singleParam = NORBGMAccessSingleParam(filterType: NORBGMFilterType.SEQUENCE_NUMBER, paramLE: CFSwapInt16HostToLittle(reading.sequenceNumber!))
+                accessParam.append(NORBGMOpCode.REPORT_STORED_RECORDS.rawValue)
+                accessParam.append(NORBGMOPerator.GREATER_THAN_OR_EQUAL.rawValue)
+                accessParam.append(NORBGMFilterType.SEQUENCE_NUMBER.rawValue)
+                accessParam.append(UInt8(reading.sequenceNumber! & 0xFF))
+                accessParam.append(UInt8(reading.sequenceNumber! >> 8))
                 clearList = false
                 
                 break
             }else{
                 //Fall through
             }
-        case BGMViewActions.AllRecords.rawValue:
-            param?.opCode = UInt8(REPORT_STORED_RECORDS.rawValue)
-            param?.operatorType = UInt8(ALL_RECORDS.rawValue)
-            size = 2
+        case .AllRecords:
+            accessParam.append(NORBGMOpCode.REPORT_STORED_RECORDS.rawValue)
+            accessParam.append(NORBGMOPerator.ALL_RECORDS.rawValue)
             break
-        case BGMViewActions.FirstRecord.rawValue:
-            param?.opCode = UInt8(REPORT_STORED_RECORDS.rawValue)
-            param?.operatorType = UInt8(FIRST_RECORD.rawValue)
-            size = 2
+        case .FirstRecord:
+            accessParam.append(NORBGMOpCode.REPORT_STORED_RECORDS.rawValue)
+            accessParam.append(NORBGMOPerator.FIRST_RECORD.rawValue)
             break
-        case BGMViewActions.LastRecord.rawValue:
-            param?.opCode = UInt8(REPORT_STORED_RECORDS.rawValue)
-            param?.operatorType = UInt8(LAST_RECORD.rawValue)
-            size = 2
+        case .LastRecord:
+            accessParam.append(NORBGMOpCode.REPORT_STORED_RECORDS.rawValue)
+            accessParam.append(NORBGMOPerator.LAST_RECORD.rawValue)
             break
-        case BGMViewActions.Clear.rawValue:
+        case .Clear:
             //NOOP
             break
-        case BGMViewActions.DeleteAllRecords.rawValue:
-            param?.opCode = UInt8(DELETE_STORED_RECORDS.rawValue)
-            param?.operatorType = UInt8(ALL_RECORDS.rawValue)
-            size = 2
+        case .DeleteAllRecords:
+            accessParam.append(NORBGMOpCode.DELETE_STORED_RECORDS.rawValue)
+            accessParam.append(NORBGMOPerator.ALL_RECORDS.rawValue)
             break
         default:
             break
@@ -414,8 +416,8 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
             bgmTableView.reloadData()
         }
         
-        if size > 0 {
-            let data = NSData(bytes: &param, length: size)
+        if accessParam.count > 0 {
+            let data = NSData(bytes: accessParam, length: accessParam.count)
             connectedPeripheral?.writeValue(data, forCharacteristic: bgmRecordAccessControlPointCharacteristic!, type: CBCharacteristicWriteType.WithResponse)
         }
     }
