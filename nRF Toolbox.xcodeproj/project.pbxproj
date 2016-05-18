@@ -12,6 +12,7 @@
 		3000B2131CE3195E00F64CEE /* NOREditPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3000B2121CE3195E00F64CEE /* NOREditPopupViewController.swift */; };
 		3000B2151CE32A9200F64CEE /* NORUARTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3000B2141CE32A9200F64CEE /* NORUARTViewController.swift */; };
 		300143271CEC4B9D008379DF /* NORAppUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300143261CEC4B9D008379DF /* NORAppUtilities.swift */; };
+		300143291CEC59F4008379DF /* NORServiceIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300143281CEC59F4008379DF /* NORServiceIdentifiers.swift */; };
 		300508931CE1D75800D93BE0 /* NORProximityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300508921CE1D75800D93BE0 /* NORProximityViewController.swift */; };
 		300508951CE2078A00D93BE0 /* NORRSCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300508941CE2078A00D93BE0 /* NORRSCViewController.swift */; };
 		3010F6051CDCB4F900CB285A /* NORBPMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3010F6041CDCB4F900CB285A /* NORBPMViewController.swift */; };
@@ -99,6 +100,7 @@
 		3000B2121CE3195E00F64CEE /* NOREditPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NOREditPopupViewController.swift; sourceTree = "<group>"; };
 		3000B2141CE32A9200F64CEE /* NORUARTViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORUARTViewController.swift; sourceTree = "<group>"; };
 		300143261CEC4B9D008379DF /* NORAppUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORAppUtilities.swift; sourceTree = "<group>"; };
+		300143281CEC59F4008379DF /* NORServiceIdentifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORServiceIdentifiers.swift; sourceTree = "<group>"; };
 		300508921CE1D75800D93BE0 /* NORProximityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORProximityViewController.swift; sourceTree = "<group>"; };
 		300508941CE2078A00D93BE0 /* NORRSCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORRSCViewController.swift; sourceTree = "<group>"; };
 		3010F6041CDCB4F900CB285A /* NORBPMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBPMViewController.swift; sourceTree = "<group>"; };
@@ -155,7 +157,6 @@
 		5217F40E1859EE0000F2D5BB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5217F4101859EE0000F2D5BB /* nRF_ToolboxTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = nRF_ToolboxTests.m; sourceTree = "<group>"; };
 		5217F41A1859EEF400F2D5BB /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
-		5217F41F185B1A0800F2D5BB /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		522636361C60FFB00054A550 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		5285D9A5188D43E500305F1D /* RecordAccess.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecordAccess.h; sourceTree = "<group>"; };
 		52BDCB181C3FD31F00E2680F /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
@@ -216,10 +217,10 @@
 		5214D0CF18881D0200460637 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				5217F41F185B1A0800F2D5BB /* Constants.h */,
 				5214D0D018881D4D00460637 /* CharacteristicReader.h */,
 				5214D0D118881D4D00460637 /* CharacteristicReader.m */,
 				300143261CEC4B9D008379DF /* NORAppUtilities.swift */,
+				300143281CEC59F4008379DF /* NORServiceIdentifiers.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -685,6 +686,7 @@
 				30499E5D1CE4C6C700E0993B /* NORFolderFilesViewController.swift in Sources */,
 				30499E551CE4732200E0993B /* NORFileSelectionDelegate.swift in Sources */,
 				30F92D4B1CD9CF0700C73285 /* NORHRMViewController.swift in Sources */,
+				300143291CEC59F4008379DF /* NORServiceIdentifiers.swift in Sources */,
 				304D58FD1CE34FC600148271 /* NORLogViewController.swift in Sources */,
 				30499E571CE4736500E0993B /* NORFilePreselectionDelegate.swift in Sources */,
 				30A1145C1CD24611000F0F02 /* NORScannerViewController.swift in Sources */,

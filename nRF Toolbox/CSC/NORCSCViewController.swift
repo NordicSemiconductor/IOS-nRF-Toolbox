@@ -53,10 +53,10 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     //MARK: - UIViewController delegate
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        cscServiceUUID = CBUUID(string: cscServiceUUIDString)
-        cscMeasurementCharacteristicUUID = CBUUID(string: cscMeasurementCharacteristicUUIDString)
-        batteryServiceUUID = CBUUID(string: batteryServiceUUIDString)
-        batteryLevelCharacteristicUUID = CBUUID(string:batteryLevelCharacteristicUUIDString)
+        cscServiceUUID                   = CBUUID(string: NORServiceIdentifiers.cscServiceUUIDString)
+        cscMeasurementCharacteristicUUID = CBUUID(string: NORServiceIdentifiers.cscMeasurementCharacteristicUUIDString)
+        batteryServiceUUID               = CBUUID(string: NORServiceIdentifiers.batteryServiceUUIDString)
+        batteryLevelCharacteristicUUID   = CBUUID(string: NORServiceIdentifiers.batteryLevelCharacteristicUUIDString)
     }
     
     override func viewDidLoad() {

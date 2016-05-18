@@ -90,10 +90,10 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         // Custom initialization
-        htsServiceUUID                   = CBUUID(string: htsServiceUUIDString)
-        htsMeasurementCharacteristicUUID = CBUUID(string: htsMeasurementCharacteristicUUIDString)
-        batteryServiceUUID               = CBUUID(string: batteryServiceUUIDString)
-        batteryLevelCharacteristicUUID   = CBUUID(string: batteryLevelCharacteristicUUIDString)
+        htsServiceUUID                   = CBUUID(string: NORServiceIdentifiers.htsServiceUUIDString)
+        htsMeasurementCharacteristicUUID = CBUUID(string: NORServiceIdentifiers.htsMeasurementCharacteristicUUIDString)
+        batteryServiceUUID               = CBUUID(string: NORServiceIdentifiers.batteryServiceUUIDString)
+        batteryLevelCharacteristicUUID   = CBUUID(string: NORServiceIdentifiers.batteryLevelCharacteristicUUIDString)
     }
     
     override func viewDidLoad() {

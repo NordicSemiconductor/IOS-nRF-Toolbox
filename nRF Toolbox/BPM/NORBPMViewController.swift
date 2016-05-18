@@ -47,11 +47,11 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     //MARK: - UIViewController methods
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        bpmServiceUUID = CBUUID(string: bpmServiceUUIDString)
-        bpmBloodPressureMeasurementCharacteristicUUID = CBUUID(string: bpmBloodPressureMeasurementCharacteristicUUIDString)
-        bpmIntermediateCuffPressureCharacteristicUUID = CBUUID(string: bpmIntermediateCuffPressureCharacteristicUUIDString)
-        batteryServiceUUID                            = CBUUID(string: batteryServiceUUIDString)
-        batteryLevelCharacteristicUUID                = CBUUID(string: batteryLevelCharacteristicUUIDString)
+        bpmServiceUUID                                = CBUUID(string: NORServiceIdentifiers.bpmServiceUUIDString)
+        bpmBloodPressureMeasurementCharacteristicUUID = CBUUID(string: NORServiceIdentifiers.bpmBloodPressureMeasurementCharacteristicUUIDString)
+        bpmIntermediateCuffPressureCharacteristicUUID = CBUUID(string: NORServiceIdentifiers.bpmIntermediateCuffPressureCharacteristicUUIDString)
+        batteryServiceUUID                            = CBUUID(string: NORServiceIdentifiers.batteryServiceUUIDString)
+        batteryLevelCharacteristicUUID                = CBUUID(string: NORServiceIdentifiers.batteryLevelCharacteristicUUIDString)
     }
     
     override func viewDidLoad() {

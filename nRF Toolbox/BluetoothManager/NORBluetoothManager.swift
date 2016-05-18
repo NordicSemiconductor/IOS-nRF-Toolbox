@@ -38,9 +38,9 @@ class NORBluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDeleg
     required init(withManager aManager : CBCentralManager) {
         super.init()
         // ret: instancetype
-        UARTServiceUUID = CBUUID(string: uartServiceUUIDString)
-        UARTTXCharacteristicUUID = CBUUID(string: uartTXCharacteristicUUIDString)
-        UARTRXCharacteristicUUID = CBUUID(string: uartRXCharacteristicUUIDString)
+        UARTServiceUUID          = CBUUID(string: NORServiceIdentifiers.uartServiceUUIDString)
+        UARTTXCharacteristicUUID = CBUUID(string: NORServiceIdentifiers.uartTXCharacteristicUUIDString)
+        UARTRXCharacteristicUUID = CBUUID(string: NORServiceIdentifiers.uartRXCharacteristicUUIDString)
         centralManager = aManager
         centralManager?.delegate = self
     }

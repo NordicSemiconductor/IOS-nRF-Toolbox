@@ -59,10 +59,10 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         super.init(coder: aDecoder)
         stepsNumber                      = 0
         tripDistance                     = 0
-        rscServiceUUID                   = CBUUID(string:rscServiceUUIDString)
-        rscMeasurementCharacteristicUUID = CBUUID(string:rscMeasurementCharacteristicUUIDString)
-        batteryServiceUUID               = CBUUID(string:batteryServiceUUIDString)
-        batteryLevelCharacteristicUUID   = CBUUID(string:batteryLevelCharacteristicUUIDString)
+        rscServiceUUID                   = CBUUID(string: NORServiceIdentifiers.rscServiceUUIDString)
+        rscMeasurementCharacteristicUUID = CBUUID(string: NORServiceIdentifiers.rscMeasurementCharacteristicUUIDString)
+        batteryServiceUUID               = CBUUID(string: NORServiceIdentifiers.batteryServiceUUIDString)
+        batteryLevelCharacteristicUUID   = CBUUID(string: NORServiceIdentifiers.batteryLevelCharacteristicUUIDString)
     }
     
     override func viewDidLoad() {

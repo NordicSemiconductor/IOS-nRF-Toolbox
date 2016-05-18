@@ -56,11 +56,11 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     //MARK: - UIViewController delegate
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        hrServiceUUID                    = CBUUID(string: hrsServiceUUIDString)
-        hrMeasurementCharacteristicUUID  = CBUUID(string: hrsHeartRateCharacteristicUUIDString)
-        hrLocationCharacteristicUUID     = CBUUID(string: hrsSensorLocationCharacteristicUUIDString)
-        batteryServiceUUID               = CBUUID(string: batteryServiceUUIDString)
-        batteryLevelCharacteristicUUID   = CBUUID(string: batteryLevelCharacteristicUUIDString)
+        hrServiceUUID                    = CBUUID(string: NORServiceIdentifiers.hrsServiceUUIDString)
+        hrMeasurementCharacteristicUUID  = CBUUID(string: NORServiceIdentifiers.hrsHeartRateCharacteristicUUIDString)
+        hrLocationCharacteristicUUID     = CBUUID(string: NORServiceIdentifiers.hrsSensorLocationCharacteristicUUIDString)
+        batteryServiceUUID               = CBUUID(string: NORServiceIdentifiers.batteryServiceUUIDString)
+        batteryLevelCharacteristicUUID   = CBUUID(string: NORServiceIdentifiers.batteryLevelCharacteristicUUIDString)
     }
     
     override func viewDidLoad() {

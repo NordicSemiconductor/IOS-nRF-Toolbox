@@ -60,11 +60,11 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         // Custom initialization
-        proximityImmediateAlertServiceUUID      = CBUUID(string:proximityImmediateAlertServiceUUIDString)
-        proximityLinkLossServiceUUID            = CBUUID(string: proximityLinkLossServiceUUIDString)
-        proximityAlertLevelCharacteristicUUID   = CBUUID(string:proximityAlertLevelCharacteristicUUIDString)
-        batteryServiceUUID                      = CBUUID(string:batteryServiceUUIDString)
-        batteryLevelCharacteristicUUID          = CBUUID(string:batteryLevelCharacteristicUUIDString)
+        proximityImmediateAlertServiceUUID      = CBUUID(string: NORServiceIdentifiers.proximityImmediateAlertServiceUUIDString)
+        proximityLinkLossServiceUUID            = CBUUID(string: NORServiceIdentifiers.proximityLinkLossServiceUUIDString)
+        proximityAlertLevelCharacteristicUUID   = CBUUID(string: NORServiceIdentifiers.proximityAlertLevelCharacteristicUUIDString)
+        batteryServiceUUID                      = CBUUID(string: NORServiceIdentifiers.batteryServiceUUIDString)
+        batteryLevelCharacteristicUUID          = CBUUID(string: NORServiceIdentifiers.batteryLevelCharacteristicUUIDString)
     }
     
     override func viewDidLoad() {

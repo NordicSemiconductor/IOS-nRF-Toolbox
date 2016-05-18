@@ -61,12 +61,12 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
         dateFormatter = NSDateFormatter()
         dateFormatter?.dateFormat = "dd.MM.yyyy, hh:mm"
         
-        bgmServiceUUID                                  = CBUUID(string: bgmServiceUUIDString)
-        bgmGlucoseMeasurementCharacteristicUUID         = CBUUID(string: bgmGlucoseMeasurementCharacteristicUUIDString)
-        bgmGlucoseMeasurementCharacteristicUUID         = CBUUID(string: bgmGlucoseMeasurementCharacteristicUUIDString)
-        bgmRecordAccessControlPointCharacteristicUUID   = CBUUID(string: bgmRecordAccessControlPointCharacteristicUUIDString)
-        batteryServiceUUID                              = CBUUID(string: batteryServiceUUIDString)
-        batteryLevelCharacteristicUUID                  = CBUUID(string: batteryLevelCharacteristicUUIDString)
+        bgmServiceUUID                                  = CBUUID(string: NORServiceIdentifiers.bgmServiceUUIDString)
+        bgmGlucoseMeasurementCharacteristicUUID         = CBUUID(string: NORServiceIdentifiers.bgmGlucoseMeasurementCharacteristicUUIDString)
+        bgmGlucoseMeasurementCharacteristicUUID         = CBUUID(string: NORServiceIdentifiers.bgmGlucoseMeasurementCharacteristicUUIDString)
+        bgmRecordAccessControlPointCharacteristicUUID   = CBUUID(string: NORServiceIdentifiers.bgmRecordAccessControlPointCharacteristicUUIDString)
+        batteryServiceUUID                              = CBUUID(string: NORServiceIdentifiers.batteryServiceUUIDString)
+        batteryLevelCharacteristicUUID                  = CBUUID(string: NORServiceIdentifiers.batteryLevelCharacteristicUUIDString)
     }
 
     override func viewDidLoad() {
