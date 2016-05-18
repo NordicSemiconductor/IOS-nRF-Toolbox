@@ -141,8 +141,8 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
                 self.connectionButton.setTitle("CONNECT", forState: UIControlState.Normal)
                 self.deviceName.text = "DEFAULT UART"
                 
-                if AppUtilities.isApplicationStateInactiveORBackground() {
-                    AppUtilities.showBackgroundNotification("Peripheral \(self.uartPeripheralName) is disconnected")
+                if NORAppUtilities.isApplicationInactive() {
+                    NORAppUtilities.showBackgroundNotification(message: "Peripheral \(self.uartPeripheralName) is disconnected")
                 }
 
                 self.uartPeripheralName = nil
@@ -243,7 +243,7 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
     }
 
     func applicationDidEnterBackgroundCallback(){
-        AppUtilities.showBackgroundNotification("You are still connected to \(uartPeripheralName)")
+        NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(uartPeripheralName)")
     }
     
     func applicationDidBecomeActiveCallback(){

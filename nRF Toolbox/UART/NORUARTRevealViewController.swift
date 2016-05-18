@@ -31,7 +31,7 @@ class NORUARTRevealViewController: NORBaseRevealViewController {
 
     //MARK: - Impementation
     func handleActionButtonTappedEvent() {
-        self.ShowAbout(message: AppUtilities.getUARTHelpText())
+        self.ShowAbout(message: NORAppUtilities.getHelpTextForService(service: .UART))
     }
 
 }

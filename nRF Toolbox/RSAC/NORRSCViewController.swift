@@ -51,7 +51,7 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     }
     
     @IBAction func aboutButtonTapped(sender: AnyObject) {
-        self.showAbout(message: AppUtilities.getRSACHelpText())
+        self.showAbout(message: NORAppUtilities.getHelpTextForService(service: .RSC))
     }
 
     //MARK: - UIViewDelegate
@@ -143,7 +143,7 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     }
 
     func applicationDidEnterBackgroundCallback() {
-        AppUtilities.showBackgroundNotification("You are still connected to \(connectedPeripheral?.name). It will collect data in the background")
+        NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(connectedPeripheral?.name). It will collect data in the background")
     }
     
     func applicationDidBecomeActiveCallback() {
@@ -198,7 +198,7 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     func centralManager(central: CBCentralManager, didFailToConnectPeripheral peripheral: CBPeripheral, error: NSError?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
         dispatch_async(dispatch_get_main_queue(), {
-            AppUtilities.showAlert("Error", alertMessage: "Connecting to peripheral failed. Try again")
+            NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to peripheral failed. Try again")
             self.connectionButton.setTitle("CONNECT", forState: UIControlState.Normal)
             self.connectedPeripheral = nil
             self.clearUI()
@@ -209,8 +209,8 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         // Scanner uses other queue to send events. We must edit UI in the main queue
         dispatch_async(dispatch_get_main_queue(), {
             self.connectionButton.setTitle("CONNECT", forState: UIControlState.Normal)
-            if AppUtilities.isApplicationStateInactiveORBackground(){
-                AppUtilities.showBackgroundNotification("Peripheral \(peripheral.name) is disconnected")
+            if NORAppUtilities.isApplicationInactive(){
+                NORAppUtilities.showBackgroundNotification(message: "Peripheral \(peripheral.name) is disconnected")
             }
             self.connectedPeripheral = nil
             self.clearUI()

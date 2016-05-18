@@ -51,7 +51,7 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         }
     }
     @IBAction func aboutButtonTapped(sender: AnyObject) {
-        self.showAbout(message: AppUtilities.getHRSHelpText())
+        self.showAbout(message: NORAppUtilities.getHelpTextForService(service: .HRM))
     }
     //MARK: - UIViewController delegate
     required init?(coder aDecoder: NSCoder) {
@@ -347,7 +347,7 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     func centralManager(central: CBCentralManager, didFailToConnectPeripheral peripheral: CBPeripheral, error: NSError?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
         dispatch_async(dispatch_get_main_queue(), {
-            AppUtilities.showAlert("Error", alertMessage: "Connecting to peripheral failed. Try again")
+            NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to peripheral failed. Try again")
             self.connectionButton.setTitle("CONNCECT", forState: UIControlState.Normal)
             self.peripheral = nil
             self.clearUI()
@@ -361,8 +361,8 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
             self.peripheral = nil;
             self.clearUI()
             
-            if AppUtilities.isApplicationStateInactiveORBackground() {
-                AppUtilities.showBackgroundNotification(String(format: "%@ peripheral is disconnected.", peripheral.name!))
+            if NORAppUtilities.isApplicationInactive() {
+                NORAppUtilities.showBackgroundNotification(message: String(format: "%@ peripheral is disconnected.", peripheral.name!))
             }
             NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidBecomeActiveNotification, object: nil)
             NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidEnterBackgroundNotification, object: nil)
@@ -443,7 +443,7 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     
     //MARK: - UIApplicationDelegate callbacks
     func appDidEnterBackgroundCallback() {
-        AppUtilities.showBackgroundNotification(String(format: "You are still connected to %@ sensor. It will collect data also in background.", peripheral!.name!))
+        NORAppUtilities.showBackgroundNotification(message: String(format: "You are still connected to %@ sensor. It will collect data also in background.", peripheral!.name!))
     }
     
     func appDidBecomeActiveCallback() {

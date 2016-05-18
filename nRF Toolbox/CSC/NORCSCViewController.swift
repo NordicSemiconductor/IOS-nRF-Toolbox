@@ -47,7 +47,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         }
     }
     @IBAction func aboutButtonTapped(sender: AnyObject) {
-        self.showAbout(message: AppUtilities.getCSCHelpText())
+        self.showAbout(message: NORAppUtilities.getHelpTextForService(service: .CSC))
     }
 
     //MARK: - UIViewController delegate
@@ -141,7 +141,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         // Scanner uses other queue to send events. We must edit UI in the main queue
         print("did fail to connect")
         dispatch_async(dispatch_get_main_queue(), {
-            AppUtilities.showAlert("Error", alertMessage:"Connecting to the peripheral failed. Try again")
+            NORAppUtilities.showAlert(title: "Error", andMessage:"Connecting to the peripheral failed. Try again")
             self.cyclePeripheral = nil
             self.clearUI()
         })
@@ -151,8 +151,8 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         print("Disconnected \(peripheral)")
         // Scanner uses other queue to send events. We must edit UI in the main queue
         dispatch_async(dispatch_get_main_queue(), {
-            if AppUtilities.isApplicationStateInactiveORBackground() {
-                AppUtilities.showBackgroundNotification(String(format: "%@ is disconnected", peripheral.name!))
+            if NORAppUtilities.isApplicationInactive() {
+                NORAppUtilities.showBackgroundNotification(message: String(format: "%@ is disconnected", peripheral.name!))
             }
             NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidBecomeActiveNotification, object: nil)
             NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidEnterBackgroundNotification, object: nil)
@@ -164,7 +164,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     
     //MARK: -  NORCSCViewController implementation
     func didEnterBackgroundHandler() {
-        AppUtilities.showBackgroundNotification("You are still connected to \(cyclePeripheral!.name), it will collect data in the background")
+        NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(cyclePeripheral!.name), it will collect data in the background")
     }
     
     func didBecomeActiveHandler() {

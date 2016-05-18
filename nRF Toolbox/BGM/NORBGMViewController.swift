@@ -92,7 +92,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     }
 
     func handleAboutButtonTapped() {
-        self.showAbout(message: AppUtilities.getBGMHelpText())
+        self.showAbout(message: NORAppUtilities.getHelpTextForService(service: .BGM))
     }
     
     func handleConnectionButtonTapped() {
@@ -150,7 +150,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     }
     
     func applicationDidEnterBackgroundHandler() {
-        AppUtilities.showBackgroundNotification(String(format: "You are still connected to %s peripheral. It will collect data also in background.", (connectedPeripheral?.name)!))
+        NORAppUtilities.showBackgroundNotification(message: String(format: "You are still connected to %s peripheral. It will collect data also in background.", (connectedPeripheral?.name)!))
     }
     
     func applicationDidBecomeActiveHandler(){
@@ -301,8 +301,8 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     }
     
     func centralManager(central: CBCentralManager, didFailToConnectPeripheral peripheral: CBPeripheral, error: NSError?) {
-        dispatch_async(dispatch_get_main_queue()) { 
-            AppUtilities.showAlert("Error", alertMessage: "Connecting to peripheral failed. Please Try again")
+        dispatch_async(dispatch_get_main_queue()) {
+            NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to peripheral failed. Please Try again")
             self.connectButton.setTitle("CONNECT", forState: UIControlState.Normal)
             self.connectedPeripheral = nil
             self.disableActionButton()
@@ -314,8 +314,8 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
         dispatch_async(dispatch_get_main_queue()) { 
             self.connectButton.setTitle("CONNECT", forState: UIControlState.Normal)
             
-            if AppUtilities.isApplicationStateInactiveORBackground() == true {
-                AppUtilities.showBackgroundNotification(String(format: "%s peripheral is disconnected", peripheral.name!))
+            if NORAppUtilities.isApplicationInactive() == true {
+                NORAppUtilities.showBackgroundNotification(message: String(format: "%s peripheral is disconnected", peripheral.name!))
             }
             self.disableActionButton()
             self.clearUI()

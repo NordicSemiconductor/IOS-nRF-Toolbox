@@ -52,7 +52,7 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
     }
     
     @IBAction func aboutButtonTapped(sender: AnyObject) {
-        self.showAbout(message: AppUtilities.getProximityHelpText())
+        self.showAbout(message: NORAppUtilities.getHelpTextForService(service: .Proximity))
     }
 
     
@@ -185,7 +185,7 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
     }
 
     func applicationDidEnterBackgroundCallback() {
-        AppUtilities.showBackgroundNotification("You are still connected to \(proximityPeripheral?.name)")
+        NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(proximityPeripheral?.name)")
     }
     
     func applicationDidBecomeActiveCallback() {
@@ -241,8 +241,8 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
         }
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.applicationDidEnterBackgroundCallback), name: UIApplicationDidEnterBackgroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.applicationDidBecomeActiveCallback), name: UIApplicationDidBecomeActiveNotification, object: nil)
-        if AppUtilities.isApplicationStateInactiveORBackground() {
-            AppUtilities.showBackgroundNotification("\(self.proximityPeripheral?.name) is within range!")
+        if NORAppUtilities.isApplicationInactive() {
+            NORAppUtilities.showBackgroundNotification(message: "\(self.proximityPeripheral?.name) is within range!")
         }
         
         self.proximityPeripheral?.discoverServices([proximityLinkLossServiceUUID!, proximityImmediateAlertServiceUUID!, batteryServiceUUID!])
@@ -251,7 +251,7 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
     func centralManager(central: CBCentralManager, didFailToConnectPeripheral peripheral: CBPeripheral, error: NSError?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
         dispatch_async(dispatch_get_main_queue(), {
-            AppUtilities.showAlert("Error", alertMessage: "Connecting to the peripheral failed. Try again")
+            NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to the peripheral failed. Try again")
             self.connectionButton.setTitle("CONNECT", forState: UIControlState.Normal)
             self.proximityPeripheral = nil
             self.disableFindmeButton()
@@ -268,16 +268,16 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
                 self.lockImage.highlighted = false
                 self.disableFindmeButton()
                 self.bluetoothManager?.connectPeripheral(self.proximityPeripheral!, options: [CBConnectPeripheralOptionNotifyOnNotificationKey : NSNumber(bool:true)])
-                if AppUtilities.isApplicationStateInactiveORBackground() {
-                    AppUtilities.showBackgroundNotification(message)
+                if NORAppUtilities.isApplicationInactive() {
+                    NORAppUtilities.showBackgroundNotification(message: message)
                 }else{
-                    AppUtilities.showAlert("PROXIMITY", alertMessage: message)
+                    NORAppUtilities.showAlert(title: "PROXIMITY", andMessage: message)
                 }
                 self.playSoundOnce()
             }else{
                 self.connectionButton.setTitle("CONNECT", forState: UIControlState.Normal)
-                if AppUtilities.isApplicationStateInactiveORBackground() {
-                    AppUtilities.showBackgroundNotification("Peripheral \(peripheral.name)  is disconnected")
+                if NORAppUtilities.isApplicationInactive() {
+                    NORAppUtilities.showBackgroundNotification(message: "Peripheral \(peripheral.name)  is disconnected")
                 }
                 
                 self.proximityPeripheral = nil

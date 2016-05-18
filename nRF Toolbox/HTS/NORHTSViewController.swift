@@ -34,7 +34,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
    
     //MARK: - ViewControllerActions
     @IBAction func aboutButtonTapped(sender: AnyObject) {
-        self.showAbout(message: AppUtilities.getHTSHelpText())
+        self.showAbout(message: NORAppUtilities.getHelpTextForService(service: .HTM))
     }
     
     @IBAction func connectionButtonTapped(sender: AnyObject) {
@@ -237,7 +237,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                     self.type.text = "Location: n/a";
                 }
                 
-                if  AppUtilities.isApplicationStateInactiveORBackground()
+                if  NORAppUtilities.isApplicationInactive()
                 {
                     var message : String = ""
                     if (self.temperatureValueFahrenheit == true) {
@@ -246,7 +246,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                         message = String(format:"New temperature reading: %.2f°C", tempValue)
                     }
                     
-                    AppUtilities.showBackgroundNotification(message)
+                    NORAppUtilities.showBackgroundNotification(message: message)
                 }
             }
             })
@@ -275,7 +275,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     func centralManager(central: CBCentralManager, didFailToConnectPeripheral peripheral: CBPeripheral, error: NSError?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
         dispatch_async(dispatch_get_main_queue(), {
-            AppUtilities.showAlert("Error", alertMessage: "Connecting to peripheral failed. Try again")
+            NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to peripheral failed. Try again")
             self.connectionButon.setTitle("CONNECT", forState: UIControlState.Normal)
             self.connectedPeripheral = nil
             self.clearUI()
@@ -286,8 +286,8 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         // Scanner uses other queue to send events. We must edit UI in the main queue
         dispatch_async(dispatch_get_main_queue(), {
             self.connectionButon.setTitle("CONNECT", forState: UIControlState.Normal)
-            if AppUtilities.isApplicationStateInactiveORBackground() {
-                AppUtilities.showBackgroundNotification("Peripheral \(peripheral.name) is disconnected")
+            if NORAppUtilities.isApplicationInactive() {
+                NORAppUtilities.showBackgroundNotification(message: "Peripheral \(peripheral.name) is disconnected")
             }
             self.connectedPeripheral = nil
             self.clearUI()
@@ -321,7 +321,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     }
     
     func didEnterBackrgoundCallback() {
-        AppUtilities.showBackgroundNotification("You are still connected to \(connectedPeripheral?.name) peripheral. It will collect data also in background.")
+        NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(connectedPeripheral?.name) peripheral. It will collect data also in background.")
     }
     
     func didBecomeActiveCallback() {

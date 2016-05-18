@@ -11,6 +11,7 @@
 		3000B2111CE317D900F64CEE /* NORUARTRevealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3000B2101CE317D900F64CEE /* NORUARTRevealViewController.swift */; };
 		3000B2131CE3195E00F64CEE /* NOREditPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3000B2121CE3195E00F64CEE /* NOREditPopupViewController.swift */; };
 		3000B2151CE32A9200F64CEE /* NORUARTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3000B2141CE32A9200F64CEE /* NORUARTViewController.swift */; };
+		300143271CEC4B9D008379DF /* NORAppUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300143261CEC4B9D008379DF /* NORAppUtilities.swift */; };
 		300508931CE1D75800D93BE0 /* NORProximityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300508921CE1D75800D93BE0 /* NORProximityViewController.swift */; };
 		300508951CE2078A00D93BE0 /* NORRSCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300508941CE2078A00D93BE0 /* NORRSCViewController.swift */; };
 		3010F6051CDCB4F900CB285A /* NORBPMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3010F6041CDCB4F900CB285A /* NORBPMViewController.swift */; };
@@ -67,7 +68,6 @@
 		52BDCBBE1C3FD86900E2680F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BDCBBD1C3FD86900E2680F /* QuartzCore.framework */; };
 		52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */; };
 		7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B422818A8DF4D006BA1BC /* high.mp3 */; };
-		A80462591AD670480074F116 /* AppUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = A80462581AD670480074F116 /* AppUtilities.m */; };
 		F427A816F7641D9828BAF315 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -98,6 +98,7 @@
 		3000B2101CE317D900F64CEE /* NORUARTRevealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORUARTRevealViewController.swift; sourceTree = "<group>"; };
 		3000B2121CE3195E00F64CEE /* NOREditPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NOREditPopupViewController.swift; sourceTree = "<group>"; };
 		3000B2141CE32A9200F64CEE /* NORUARTViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORUARTViewController.swift; sourceTree = "<group>"; };
+		300143261CEC4B9D008379DF /* NORAppUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORAppUtilities.swift; sourceTree = "<group>"; };
 		300508921CE1D75800D93BE0 /* NORProximityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORProximityViewController.swift; sourceTree = "<group>"; };
 		300508941CE2078A00D93BE0 /* NORRSCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORRSCViewController.swift; sourceTree = "<group>"; };
 		3010F6041CDCB4F900CB285A /* NORBPMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBPMViewController.swift; sourceTree = "<group>"; };
@@ -163,8 +164,6 @@
 		7E1B422818A8DF4D006BA1BC /* high.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = high.mp3; sourceTree = "<group>"; };
 		7E6ED10A196ED482008010B6 /* firmwares */ = {isa = PBXFileReference; lastKnownFileType = folder; path = firmwares; sourceTree = "<group>"; };
 		89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A80462571AD670480074F116 /* AppUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppUtilities.h; sourceTree = "<group>"; };
-		A80462581AD670480074F116 /* AppUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppUtilities.m; sourceTree = "<group>"; };
 		ACB6349B9439D9A78E406AD1 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E06E945532289442646C4202 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -220,8 +219,7 @@
 				5217F41F185B1A0800F2D5BB /* Constants.h */,
 				5214D0D018881D4D00460637 /* CharacteristicReader.h */,
 				5214D0D118881D4D00460637 /* CharacteristicReader.m */,
-				A80462571AD670480074F116 /* AppUtilities.h */,
-				A80462581AD670480074F116 /* AppUtilities.m */,
+				300143261CEC4B9D008379DF /* NORAppUtilities.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -686,7 +684,6 @@
 				304299221CE5DE8E00E1D2AB /* NORUserFilesViewController.swift in Sources */,
 				30499E5D1CE4C6C700E0993B /* NORFolderFilesViewController.swift in Sources */,
 				30499E551CE4732200E0993B /* NORFileSelectionDelegate.swift in Sources */,
-				A80462591AD670480074F116 /* AppUtilities.m in Sources */,
 				30F92D4B1CD9CF0700C73285 /* NORHRMViewController.swift in Sources */,
 				304D58FD1CE34FC600148271 /* NORLogViewController.swift in Sources */,
 				30499E571CE4736500E0993B /* NORFilePreselectionDelegate.swift in Sources */,
@@ -719,6 +716,7 @@
 				308AA5761CD8A7B400CC9857 /* NORBGMItemCell.swift in Sources */,
 				5214D0D218881D4D00460637 /* CharacteristicReader.m in Sources */,
 				30921FD51CD0EB55009CBDDE /* NORMainViewController.swift in Sources */,
+				300143271CEC4B9D008379DF /* NORAppUtilities.swift in Sources */,
 				30499E591CE4A07700E0993B /* NORAppFilesViewController.swift in Sources */,
 				30499E4F1CE4688700E0993B /* NORFileTypeViewController.swift in Sources */,
 				3000B2111CE317D900F64CEE /* NORUARTRevealViewController.swift in Sources */,
