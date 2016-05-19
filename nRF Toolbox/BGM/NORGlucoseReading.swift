@@ -108,25 +108,25 @@ class NORGlucoseReading: NSObject {
         var pointer = UnsafeMutablePointer<UInt8>(bytes)
         
         //Parse falgs
-        let flags = CharacteristicReader.readUInt8Value(&pointer)
+        let flags = NORCharacteristicReader.readUInt8Value(ptr: &pointer)
         let timeOffsetPresent: Bool = (flags & 0x01) > 0
         let glucoseConcentrationTypeAndLocationPresent: Bool = (flags & 0x02) > 0
         let glucoseConcentrationUnit = BGMUnit(rawValue: (flags & 0x04) >> 2)
         let statusAnnuciationPresent :Bool = (flags & 0x08) > 0
         
         // Sequence number is used to match the reading with an optional glucose context
-        self.sequenceNumber = CharacteristicReader.readUInt16Value(&pointer)
-        self.timestamp      = CharacteristicReader.readDateTime(&pointer)
+        self.sequenceNumber = NORCharacteristicReader.readUInt16Value(ptr: &pointer)
+        self.timestamp      = NORCharacteristicReader.readDateTime(ptr: &pointer)
         
         if timeOffsetPresent {
-            self.timeOffset = CharacteristicReader.readSInt16Value(&pointer)
+            self.timeOffset = NORCharacteristicReader.readSInt16Value(ptr: &pointer)
         }
         
         self.glucoseConcentrationTypeAndLocationPresent = glucoseConcentrationTypeAndLocationPresent
         if self.glucoseConcentrationTypeAndLocationPresent == true {
-            self.glucoseConcentration = CharacteristicReader.readSFloatValue(&pointer)
+            self.glucoseConcentration = NORCharacteristicReader.readSFloatValue(ptr: &pointer)
             self.unit = glucoseConcentrationUnit
-            let typeAndLocation = CharacteristicReader.readNibble(&pointer)
+            let typeAndLocation = NORCharacteristicReader.readNibble(ptr: &pointer)
             self.type       = BGMType(rawValue: typeAndLocation.first)
             self.location   = BGMLocation(rawValue: typeAndLocation.second)
         } else {
@@ -136,7 +136,7 @@ class NORGlucoseReading: NSObject {
 
         self.sensorStatusAnnunciationPresent = statusAnnuciationPresent
         if statusAnnuciationPresent == true {
-            self.sensorStatusAnnunciation = CharacteristicReader.readUInt16Value(&pointer)
+            self.sensorStatusAnnunciation = NORCharacteristicReader.readUInt16Value(ptr: &pointer)
         }
     }
     

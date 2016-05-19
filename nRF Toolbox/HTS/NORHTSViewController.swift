@@ -150,7 +150,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
             var array = UnsafeMutablePointer<UInt8>((data?.bytes)!)
             
             if characteristic.UUID == self.batteryLevelCharacteristicUUID {
-                let batteryLevel = CharacteristicReader.readUInt8Value(&array)
+                let batteryLevel = NORCharacteristicReader.readUInt8Value(ptr: &array)
                 
                 let text = String(format: "%d%%", batteryLevel)
                 self.battery.setTitle(text, forState: UIControlState.Disabled)
@@ -165,12 +165,12 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                     }
                 }
             }else if characteristic.UUID == self.htsMeasurementCharacteristicUUID {
-                let flags = CharacteristicReader.readUInt8Value(&array)
+                let flags = NORCharacteristicReader.readUInt8Value(ptr: &array)
                 let tempInFahrenheit : Bool = (flags & 0x01) > 0
                 let timestampPresent : Bool = (flags & 0x02) > 0
                 let typePresent      : Bool = (flags & 0x04) > 0
                 
-                var tempValue        : Float = CharacteristicReader.readFloatValue(&array)
+                var tempValue        : Float = NORCharacteristicReader.readFloatValue(ptr: &array)
                 if tempInFahrenheit == false && self.temperatureValueFahrenheit! == true {
                     tempValue = tempValue * 9.0 / 5.0 + 32.0
                 }
@@ -182,7 +182,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                 self.temperature.text = String(format: "%.2f", tempValue)
                 
                 if timestampPresent == true {
-                    let date = CharacteristicReader.readDateTime(&array)
+                    let date = NORCharacteristicReader.readDateTime(ptr: &array)
                     let dateFormat = NSDateFormatter()
                     dateFormat.dateFormat = "dd.MM.yyyy, hh:mm"
                     
@@ -194,7 +194,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                 
                 /* temperature type */
                 if typePresent == true {
-                    let type = CharacteristicReader.readUInt8Value(&array)
+                    let type = NORCharacteristicReader.readUInt8Value(ptr: &array)
                     var location : NSString = ""
                     
                     switch (type)

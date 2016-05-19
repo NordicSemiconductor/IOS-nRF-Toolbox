@@ -5,6 +5,7 @@
 //  Created by Mostafa Berg on 18/05/16.
 //  Copyright © 2016 Nordic Semiconductor. All rights reserved.
 //
+import Foundation
 
 class NORServiceIdentifiers: NSObject {
     static let bgmServiceUUIDString                                 = "00001808-0000-1000-8000-00805F9B34FB"

@@ -201,7 +201,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
         var array = UnsafeMutablePointer<UInt8>((characteristic.value?.bytes)!)
         
         if characteristic.UUID.isEqual(batteryLevelCharacteristicUUID) {
-            let batteryLevel = CharacteristicReader.readUInt8Value(&array)
+            let batteryLevel = NORCharacteristicReader.readUInt8Value(ptr: &array)
             let text = String(format: "%d%%", batteryLevel)
             
             dispatch_async(dispatch_get_main_queue(), {

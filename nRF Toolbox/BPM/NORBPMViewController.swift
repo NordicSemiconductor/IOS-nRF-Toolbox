@@ -191,7 +191,7 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                 // Decode the characteristic data
                 let data = characteristic.value;
                 var pointer = UnsafeMutablePointer<UInt8>(data!.bytes)
-                let batteryLevel = CharacteristicReader.readUInt8Value(&pointer)
+                let batteryLevel = NORCharacteristicReader.readUInt8Value(ptr: &pointer)
                 let text = String(format: "%d%%", batteryLevel)
                 self.battery.setTitle(text, forState: UIControlState.Disabled)
                 
@@ -205,7 +205,7 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                 characteristic.UUID == self.bpmIntermediateCuffPressureCharacteristicUUID {
                 let data = characteristic.value
                 var pointer = UnsafeMutablePointer<UInt8>(data!.bytes)
-                let flags = CharacteristicReader.readUInt8Value(&pointer)
+                let flags = NORCharacteristicReader.readUInt8Value(ptr: &pointer)
                 let kPA              : Bool = (flags & 0x01) > 0
                 let timestampPresent : Bool = (flags & 0x02) > 0
                 let pulseRatePresent : Bool = (flags & 0x04) > 0
@@ -222,9 +222,9 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                 
                 //Read main values
                 if characteristic.UUID == self.bpmBloodPressureMeasurementCharacteristicUUID {
-                    let systolicValue  = CharacteristicReader.readSFloatValue(&pointer)
-                    let diastolicValue = CharacteristicReader.readSFloatValue(&pointer)
-                    let meanApValue    = CharacteristicReader.readSFloatValue(&pointer)
+                    let systolicValue  = NORCharacteristicReader.readSFloatValue(ptr: &pointer)
+                    let diastolicValue = NORCharacteristicReader.readSFloatValue(ptr: &pointer)
+                    let meanApValue    = NORCharacteristicReader.readSFloatValue(ptr: &pointer)
                     
                     self.systolic.text = String(format: "%.1f", systolicValue)
                     self.diastolic.text = String(format: "%.1f", diastolicValue)
@@ -235,7 +235,7 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                     self.meanApUnit.hidden      = false
                 } else {
                     
-                    let systolicValue = CharacteristicReader.readSFloatValue(&pointer)
+                    let systolicValue = NORCharacteristicReader.readSFloatValue(ptr: &pointer)
                     pointer += 4
                     
                     self.systolic.text = String(format: "%.1f", systolicValue)
@@ -249,7 +249,7 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                 
                 // Read timestamp
                 if timestampPresent {
-                    let date = CharacteristicReader.readDateTime(&pointer)
+                    let date = NORCharacteristicReader.readDateTime(ptr: &pointer)
                     let dateFormatter = NSDateFormatter()
                     dateFormatter.dateFormat = "dd.MM.yyy, hh:mm"
                     let dateformattedString = dateFormatter.stringFromDate(date)
@@ -260,7 +260,7 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
 
                 // Read pulse
                 if pulseRatePresent {
-                    let pulseValue = CharacteristicReader.readSFloatValue(&pointer)
+                    let pulseValue = NORCharacteristicReader.readSFloatValue(ptr: &pointer)
                     self.pulse.text = String(format: "%.1f", pulseValue)
                 }else{
                     self.pulse.text = "-"

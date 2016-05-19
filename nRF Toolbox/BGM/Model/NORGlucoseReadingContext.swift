@@ -94,7 +94,7 @@ class NORGlucoseReadingContext: NSObject {
         var pointer = UnsafeMutablePointer<UInt8>(bytes)
         
         // Parse flags
-        let flags = CharacteristicReader.readUInt8Value(&pointer)
+        let flags = NORCharacteristicReader.readUInt8Value(ptr: &pointer)
         let carbohydrateIdPresent : Bool = (flags & 0x01) > 0
         let mealPresent : Bool = (flags & 0x02) > 0
         let testerAndHelathPresent : Bool = (flags & 0x04) > 0
@@ -105,7 +105,7 @@ class NORGlucoseReadingContext: NSObject {
         let extendedFlags : Bool = (flags & 0x80) > 0
         
         // Sequence number is used to match the reading with the glucose measurement
-        self.sequenceNumber = CharacteristicReader.readUInt16Value(&pointer)
+        self.sequenceNumber = NORCharacteristicReader.readUInt16Value(ptr: &pointer)
         
         if (extendedFlags)
         {
@@ -115,20 +115,20 @@ class NORGlucoseReadingContext: NSObject {
         self.carbohydratePresent = carbohydrateIdPresent
         if (carbohydrateIdPresent)
         {
-            self.carbohydrateId = BgmCarbohydrateId(rawValue:CharacteristicReader.readUInt8Value(&pointer))
-            self.carbohydrate = CharacteristicReader.readSFloatValue(&pointer) / 1000
+            self.carbohydrateId = BgmCarbohydrateId(rawValue:NORCharacteristicReader.readUInt8Value(ptr: &pointer))
+            self.carbohydrate = NORCharacteristicReader.readSFloatValue(ptr: &pointer) / 1000
         }
         
         self.mealPresent = mealPresent
         if (mealPresent)
         {
-            self.meal = BgmMeal(rawValue:CharacteristicReader.readUInt8Value(&pointer))
+            self.meal = BgmMeal(rawValue:NORCharacteristicReader.readUInt8Value(ptr: &pointer))
         }
         
         self.testerAndHealthPresent = testerAndHelathPresent
         if (testerAndHelathPresent)
         {
-            let nibble : Nibble = CharacteristicReader.readNibble(&pointer)
+            let nibble = NORCharacteristicReader.readNibble(ptr: &pointer)
             self.tester = BgmTester(rawValue: nibble.first)
             self.health = BgmHealth(rawValue: nibble.second)
         }
@@ -136,22 +136,22 @@ class NORGlucoseReadingContext: NSObject {
         self.exercisePresent = exerciseInfoPresent
         if (exerciseInfoPresent)
         {
-            self.exerciseDuration = CharacteristicReader.readUInt16Value(&pointer)
-            self.exerciseIntensity = CharacteristicReader.readUInt8Value(&pointer)
+            self.exerciseDuration = NORCharacteristicReader.readUInt16Value(ptr: &pointer)
+            self.exerciseIntensity = NORCharacteristicReader.readUInt8Value(ptr: &pointer)
         }
         
         self.medicationPresent = medicationPresent
         if (medicationPresent)
         {
-            self.medicationId = BgmMedicationId(rawValue:CharacteristicReader.readUInt8Value(&pointer));
-            self.medication = CharacteristicReader.readSFloatValue(&pointer) / 1000000
+            self.medicationId = BgmMedicationId(rawValue:NORCharacteristicReader.readUInt8Value(ptr: &pointer));
+            self.medication = NORCharacteristicReader.readSFloatValue(ptr: &pointer) / 1000000
             self.medicationUnit = medicationUnit
         }
         
         self.HbA1cPresent = HbA1cPresent
         if (HbA1cPresent)
         {
-            self.HbA1c = CharacteristicReader.readSFloatValue(&pointer)
+            self.HbA1c = NORCharacteristicReader.readSFloatValue(ptr: &pointer)
         }
     }
 

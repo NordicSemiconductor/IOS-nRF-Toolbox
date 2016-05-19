@@ -265,7 +265,7 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
             var array = UnsafeMutablePointer<UInt8>(data!.bytes)
             
             if characteristic.UUID == self.batteryLevelCharacteristicUUID! {
-                let batteryLevel = CharacteristicReader.readUInt8Value(&array)
+                let batteryLevel = NORCharacteristicReader.readUInt8Value(ptr: &array)
                 let text = String(format:"%d%%", batteryLevel)
                 self.battery.setTitle(text , forState: UIControlState.Disabled)
 
@@ -278,7 +278,7 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                     }
                 }
             }else if characteristic.UUID == self.rscMeasurementCharacteristicUUID! {
-                let flags = CharacteristicReader.readUInt8Value(&array)
+                let flags = NORCharacteristicReader.readUInt8Value(ptr: &array)
                 let strideLengthPresent  = (flags & 0x01) > 0
                 let totalDistancePresent = (flags & 0x02) > 0
                 let running              = (flags & 0x04) > 0
@@ -287,10 +287,10 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                 }else{
                     self.activity.text = "WALKING"
                 }
-                let speedValue = Float(CharacteristicReader.readUInt16Value(&array)) / 256.0 * 3.6
+                let speedValue = Float(NORCharacteristicReader.readUInt16Value(ptr: &array)) / 256.0 * 3.6
                 self.speed.text = String(format:"%.1f", speedValue)
                 
-                self.cadenceValue = CharacteristicReader.readUInt8Value(&array)
+                self.cadenceValue = NORCharacteristicReader.readUInt8Value(ptr: &array)
                 self.cadence.text = String(format:"%d", self.cadenceValue!)
                 
                 // If user started to walk, we have to initialize the timer that will increase strides counter
@@ -301,11 +301,11 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                 }
 
                 if strideLengthPresent == true {
-                    self.stripLength = CharacteristicReader.readUInt8Value(&array) // value in Centimeters
+                    self.stripLength = NORCharacteristicReader.readUInt8Value(ptr: &array) // value in Centimeters
                 }
                 
                 if totalDistancePresent == true {
-                    let distanceValue = CharacteristicReader.readUInt32Value(&array) //value in Centimeters
+                    let distanceValue = NORCharacteristicReader.readUInt32Value(ptr: &array) //value in Centimeters
                     let distanceValueInKilometers = Double(distanceValue / 10000)
                     let distanceValueInMeters = Double(distanceValue / 10)
                     if distanceValueInKilometers < 1 {
