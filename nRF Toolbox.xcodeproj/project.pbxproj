@@ -15,6 +15,7 @@
 		300143291CEC59F4008379DF /* NORServiceIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300143281CEC59F4008379DF /* NORServiceIdentifiers.swift */; };
 		3001432B1CEC6D2A008379DF /* NORBGMRecordAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001432A1CEC6D2A008379DF /* NORBGMRecordAccess.swift */; };
 		3001432D1CECADFB008379DF /* NORCharacteristicReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001432C1CECADFB008379DF /* NORCharacteristicReader.swift */; };
+		3001432F1CEDAD04008379DF /* NORCharacteristicReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001432E1CEDAD04008379DF /* NORCharacteristicReaderTests.swift */; };
 		300508931CE1D75800D93BE0 /* NORProximityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300508921CE1D75800D93BE0 /* NORProximityViewController.swift */; };
 		300508951CE2078A00D93BE0 /* NORRSCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300508941CE2078A00D93BE0 /* NORRSCViewController.swift */; };
 		3010F6051CDCB4F900CB285A /* NORBPMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3010F6041CDCB4F900CB285A /* NORBPMViewController.swift */; };
@@ -63,7 +64,6 @@
 		5217F4061859EE0000F2D5BB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5217F3E51859EE0000F2D5BB /* Foundation.framework */; };
 		5217F4071859EE0000F2D5BB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5217F3E91859EE0000F2D5BB /* UIKit.framework */; };
 		5217F40F1859EE0000F2D5BB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5217F40D1859EE0000F2D5BB /* InfoPlist.strings */; };
-		5217F4111859EE0000F2D5BB /* nRF_ToolboxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5217F4101859EE0000F2D5BB /* nRF_ToolboxTests.m */; };
 		5217F41B1859EEF400F2D5BB /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5217F41A1859EEF400F2D5BB /* CoreBluetooth.framework */; };
 		522636371C60FFB00054A550 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 522636361C60FFB00054A550 /* libz.tbd */; };
 		52BDCB191C3FD31F00E2680F /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BDCB181C3FD31F00E2680F /* Accelerate.framework */; };
@@ -104,6 +104,7 @@
 		300143281CEC59F4008379DF /* NORServiceIdentifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORServiceIdentifiers.swift; sourceTree = "<group>"; };
 		3001432A1CEC6D2A008379DF /* NORBGMRecordAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORBGMRecordAccess.swift; path = Model/NORBGMRecordAccess.swift; sourceTree = "<group>"; };
 		3001432C1CECADFB008379DF /* NORCharacteristicReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORCharacteristicReader.swift; sourceTree = "<group>"; };
+		3001432E1CEDAD04008379DF /* NORCharacteristicReaderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORCharacteristicReaderTests.swift; sourceTree = "<group>"; };
 		300508921CE1D75800D93BE0 /* NORProximityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORProximityViewController.swift; sourceTree = "<group>"; };
 		300508941CE2078A00D93BE0 /* NORRSCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORRSCViewController.swift; sourceTree = "<group>"; };
 		3010F6041CDCB4F900CB285A /* NORBPMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBPMViewController.swift; sourceTree = "<group>"; };
@@ -155,7 +156,6 @@
 		5217F4031859EE0000F2D5BB /* nRF ToolboxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "nRF ToolboxTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5217F40C1859EE0000F2D5BB /* nRF ToolboxTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "nRF ToolboxTests-Info.plist"; sourceTree = "<group>"; };
 		5217F40E1859EE0000F2D5BB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		5217F4101859EE0000F2D5BB /* nRF_ToolboxTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = nRF_ToolboxTests.m; sourceTree = "<group>"; };
 		5217F41A1859EEF400F2D5BB /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		522636361C60FFB00054A550 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		52BDCB181C3FD31F00E2680F /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
@@ -299,7 +299,7 @@
 		5217F40A1859EE0000F2D5BB /* nRF ToolboxTests */ = {
 			isa = PBXGroup;
 			children = (
-				5217F4101859EE0000F2D5BB /* nRF_ToolboxTests.m */,
+				3001432E1CEDAD04008379DF /* NORCharacteristicReaderTests.swift */,
 				5217F40B1859EE0000F2D5BB /* Supporting Files */,
 			);
 			path = "nRF ToolboxTests";
@@ -727,7 +727,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5217F4111859EE0000F2D5BB /* nRF_ToolboxTests.m in Sources */,
+				3001432F1CEDAD04008379DF /* NORCharacteristicReaderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -953,6 +953,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox.app/nRF Toolbox";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -965,8 +966,10 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "nRF ToolboxTests/nRF ToolboxTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "no.nordicsemi.ios.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -976,6 +979,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox.app/nRF Toolbox";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -984,6 +988,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nRF Toolbox/nRF Toolbox-Prefix.pch";
 				INFOPLIST_FILE = "nRF ToolboxTests/nRF ToolboxTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "no.nordicsemi.ios.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
