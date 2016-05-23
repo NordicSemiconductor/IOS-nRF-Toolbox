@@ -338,6 +338,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
         initiator.packetReceiptNotificationParameter = UInt16((NSUserDefaults.standardUserDefaults().valueForKey("dfu_number_of_packets")?.intValue)!)
         initiator.logger = self
         initiator.delegate = self
+        initiator.progressDelegate = self
         dfuController = initiator.start()
         uploadButton.setTitle("Cancel", forState: UIControlState.Normal)
         uploadButton.enabled = true
