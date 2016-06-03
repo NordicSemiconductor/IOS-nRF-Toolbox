@@ -1,0 +1,6 @@
+framework module Pods_nRF_Toolbox {
+  umbrella header "Pods-nRF Toolbox-umbrella.h"
+
+  export *
+  module * { export * }
+}
