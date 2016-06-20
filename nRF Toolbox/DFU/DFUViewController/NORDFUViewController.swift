@@ -163,7 +163,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
     }
 
     //MARK: - DFUServiceDelegate
-    func didStateChangedTo(state: State) {
+    func didStateChangedTo(state: DFUState) {
         
         switch state {
             case .Connecting:

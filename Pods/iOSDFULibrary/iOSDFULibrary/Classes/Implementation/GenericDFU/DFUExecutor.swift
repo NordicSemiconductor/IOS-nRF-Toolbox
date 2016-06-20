@@ -25,7 +25,6 @@ class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     internal var initiator           : DFUServiceInitiator
     internal var firmware            : DFUFirmware
     internal var peripheral          : CBPeripheral
-    internal var originalCentralManagerDelegate : CBCentralManagerDelegate
     internal var isSecureDFU         : Bool?
     internal var centralManager      : CBCentralManager
 
@@ -34,8 +33,6 @@ class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         self.firmware   = initiator.file!
         self.peripheral = initiator.target
         self.centralManager = initiator.centralManager
-        //To restore delegate upon completion
-        originalCentralManagerDelegate = self.centralManager.delegate!
     }
 
     //MARK: - DFU Executor implementation
@@ -58,8 +55,6 @@ class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     func didDiscoverDFUService(secureDFU : Bool) {
         self.isSecureDFU = secureDFU
-        self.restoreCentralManagerDelegate()
-        
         if isSecureDFU! {
             self.startSecureDFU()
         } else {
@@ -93,11 +88,6 @@ class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         self.delegate?.didErrorOccur(DFUError.DeviceNotSupported, withMessage: "device does not have DFU enabled")
         self.delegate?.didStateChangedTo(.Disconnecting)
         self.centralManager.cancelPeripheralConnection(peripheral)
-        self.restoreCentralManagerDelegate()
-    }
-    
-    func restoreCentralManagerDelegate() {
-        self.centralManager.delegate = originalCentralManagerDelegate
     }
     
     //MARK: - DFU Controller methods
