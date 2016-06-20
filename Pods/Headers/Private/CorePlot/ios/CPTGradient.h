@@ -1,1 +1,0 @@
-../../../../CorePlot/framework/Source/CPTGradient.h

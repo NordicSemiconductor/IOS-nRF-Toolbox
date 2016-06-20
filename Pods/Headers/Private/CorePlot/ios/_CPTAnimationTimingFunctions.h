@@ -1,1 +1,0 @@
-../../../../CorePlot/framework/Source/_CPTAnimationTimingFunctions.h

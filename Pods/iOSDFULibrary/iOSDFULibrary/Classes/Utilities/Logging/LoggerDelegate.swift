@@ -30,7 +30,7 @@ Log level. Logger application may filter log entries based on their level. Level
 - Warning -     Important messages.
 - Error -       Highest priority messages with errors.
 */
-@objc public enum LogLevel : Int {
+public enum LogLevel : Int {
     case Debug       = 0
     case Verbose     = 1
     case Info        = 5
@@ -42,7 +42,7 @@ Log level. Logger application may filter log entries based on their level. Level
 /**
  *  The Logger delegate.
  */
-@objc public protocol LoggerDelegate {
+public protocol LoggerDelegate : class {
     /**
      This method is called whenever a new log entry is to be saved. The logger implementation should save this or present it to the user.
      
