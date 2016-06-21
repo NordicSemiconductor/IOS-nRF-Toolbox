@@ -18,8 +18,11 @@ class NORDFUConstantsUtility: NSObject {
     }
     
     static func showAlert(message aMessage : String) {
-        let alert = UIAlertView(title: "DFU", message: aMessage, delegate: nil, cancelButtonTitle: "OK")
-        alert.show()
+        dispatch_async(dispatch_get_main_queue()) { 
+            let alert = UIAlertView(title: "DFU", message: aMessage, delegate: nil, cancelButtonTitle: "OK")
+            alert.show()
+        }
+        
     }
     
     static func showBackgroundNotification(message aMessage : String) {
