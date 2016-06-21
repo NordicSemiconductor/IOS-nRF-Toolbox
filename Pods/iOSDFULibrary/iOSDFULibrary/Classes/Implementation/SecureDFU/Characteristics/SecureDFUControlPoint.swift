@@ -176,7 +176,7 @@ internal struct SecureDFUPacketReceiptNotification {
     let requestOpCode   : SecureDFUOpCode?
     let resultCode      : SecureDFUResultCode?
     let offset          : Int
-    let crc             : Int
+    let crc             : UInt32
 
     init?(_ data:NSData) {
 
@@ -210,15 +210,13 @@ internal struct SecureDFUPacketReceiptNotification {
         let offsetResult: UInt32 = reportedOffsetLE.reverse().reduce(UInt32(0)) {
             $0 << 0o10 + UInt32($1)
         }
-        var reportedOffset = offsetResult
-        self.offset = Int(reportedOffset)
-        
+        self.offset = Int(offsetResult)
         var reportedCRCLE:[UInt8] = [UInt8](count: 4, repeatedValue:0)
         data.getBytes(&reportedCRCLE, range: NSRange(location: 4, length: 4))
         let crcResult: UInt32 = reportedCRCLE.reverse().reduce(UInt32(0)) {
             $0 << 0o10 + UInt32($1)
         }
-        self.crc = Int(crcResult)
+        self.crc = UInt32(crcResult)
     }
 }
 

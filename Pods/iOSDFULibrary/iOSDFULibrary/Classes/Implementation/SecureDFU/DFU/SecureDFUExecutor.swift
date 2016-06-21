@@ -21,6 +21,7 @@
 */
 
 internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
+
     /// The DFU Service Initiator instance that was used to start the service.
     private let initiator:SecureDFUServiceInitiator
     
@@ -341,14 +342,10 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
             }else{
                 sendingFirmware = false
                 firmwareSent    = true
-                //Execute last Object!
-                peripheral.sendExecuteCommand()
-                return
             }
         }
         
         if initPacketSent == true && firmwareSent == false {
-            print("Setting PRN to 12")
             peripheral.setPRNValue(12) //Enable PRN at 12 packets
         } else {
             self.firmwareSent    = false
@@ -369,6 +366,7 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
                 peripheral.disconnect()
                 peripheral.switchToNewPeripheralAndConnect(initiator.peripheralSelector)
             } else {
+                print("#### has no next part, completed")
                 delegate?.didStateChangedTo(.Completed)
                 peripheral.disconnect()
             }
