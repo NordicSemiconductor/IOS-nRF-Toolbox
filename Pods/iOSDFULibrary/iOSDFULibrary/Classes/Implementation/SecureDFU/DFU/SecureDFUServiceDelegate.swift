@@ -21,12 +21,15 @@
 */
 
 public enum SecureDFUError : Int {
-    case RemoteSuccess               = 1
-    case RemoteInvalidState          = 2
-    case RemoteNotSupported          = 3
-    case RemoteDataExceedsLimit      = 4
-    case RemoteCrcError              = 5
-    case RemoteOperationFailed       = 6
+    case InvalidCode                = 0
+    case Success                    = 1
+    case OpCodeNotSupported         = 2
+    case InvalidParameter           = 3
+    case InsufficientResources      = 4
+    case InvalidObject              = 5
+    case UnsupportedType            = 7
+    case OperationFailed            = 10
+    case ExtendedError              = 11
     
     /// Providing the DFUFirmware is required.
     case FileNotSpecified            = 101

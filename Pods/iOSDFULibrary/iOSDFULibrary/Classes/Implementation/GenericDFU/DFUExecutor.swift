@@ -133,9 +133,10 @@ class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     }
     
     public func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {
-        //discover services
-        peripheral.delegate = self
-        peripheral.discoverServices([LegacyDFUService.UUID,SecureDFUService.UUID])
+        //Discover services as soon as we connect to peripheral
+        self.peripheral = peripheral
+        self.peripheral.delegate = self
+        self.peripheral.discoverServices(nil) //Discover all services
     }
     
     public func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
@@ -164,10 +165,9 @@ class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 self.didDiscoverDFUService(false)
                 return
             }
-            
-            //No DFU found at this point, disconnect and report
-            self.deviceNotSupported()
         }
+        //No DFU found at this point, disconnect and report
+        self.deviceNotSupported()
     }
 
 }
