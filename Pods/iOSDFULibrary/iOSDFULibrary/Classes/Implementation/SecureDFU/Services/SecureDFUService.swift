@@ -185,6 +185,8 @@ internal typealias SDFUErrorCallback = (error:SecureDFUError, withMessage:String
             }
             , onError: errorHandler)
 
+        //Reset counters before sending next chunk
+        self.dfuPacketCharacteristic?.resetCounters()
         self.dfuPacketCharacteristic?.sendData(withPRN: aCount, andRange: chunkRange, inFirmware: aFirmware, andProgressHandler: progressDelegate, andCompletion: successHandler)
     }
 

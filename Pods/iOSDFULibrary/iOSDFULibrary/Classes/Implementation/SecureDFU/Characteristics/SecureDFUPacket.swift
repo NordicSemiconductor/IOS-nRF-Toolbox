@@ -137,17 +137,19 @@ internal class SecureDFUPacket {
                     //to start sending next chunk
                     if currentProgress == 100 {
                         aCompletion(responseData: nil)
-                        self.resetCounters()
                     }
                     
                     //Notify progrsess delegate of overall progress
-                    aProgressHandler?.onUploadProgress(aFirmware.currentPart,
-                        totalParts: aFirmware.parts,
-                        progress: totalProgress,
-                        currentSpeedBytesPerSecond:currentSpeed,
-                        avgSpeedBytesPerSecond:avgSpeed)
+                    dispatch_async(dispatch_get_main_queue(), {
+                        aProgressHandler?.onUploadProgress(aFirmware.currentPart,
+                            totalParts: aFirmware.parts,
+                            progress: totalProgress,
+                            currentSpeedBytesPerSecond:currentSpeed,
+                            avgSpeedBytesPerSecond:avgSpeed)
+                    })
+                    
                 })
-                progress = currentProgress
+                self.progress = currentProgress
             }
         }
     }
