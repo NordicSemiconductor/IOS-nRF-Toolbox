@@ -305,21 +305,24 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
     }
     
     func clearUI() {
+
         dfuController        = nil
         selectedPeripheral   = nil
-        
-        deviceName.text      = "DEFAULT DFU"
-        uploadStatus.text    = nil
-        uploadStatus.hidden  = true
-        progress.progress    = 0.0
-        progress.hidden      = true
-        progressLabel.text   = nil
-        progressLabel.hidden = true
-        
-        uploadButton.setTitle("Upload", forState: UIControlState.Normal)
-        self.updateUploadButtonState()
-        self.enableOtherButtons()
-        self.removeObservers()
+
+        dispatch_async(dispatch_get_main_queue(), {
+            self.deviceName.text      = "DEFAULT DFU"
+            self.uploadStatus.text    = nil
+            self.uploadStatus.hidden  = true
+            self.progress.progress    = 0.0
+            self.progress.hidden      = true
+            self.progressLabel.text   = nil
+            self.progressLabel.hidden = true
+            
+            self.uploadButton.setTitle("Upload", forState: UIControlState.Normal)
+            self.updateUploadButtonState()
+            self.enableOtherButtons()
+            self.removeObservers()
+        })
     }
     
     func performDFU() {
