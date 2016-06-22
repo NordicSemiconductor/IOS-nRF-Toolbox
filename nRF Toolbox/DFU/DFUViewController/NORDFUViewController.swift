@@ -200,13 +200,13 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
                 break
         }
     }
+    
     func didErrorOccur(error: DFUError, withMessage message: String) {
-        print("Error : \(error): \(message)")
         NORDFUConstantsUtility.showAlert(message: message)
         if NORDFUConstantsUtility.isApplicationStateInactiveOrBackgrounded() {
             NORDFUConstantsUtility.showBackgroundNotification(message: message)
         }
-        clearUI()
+        self.clearUI()
     }
 
     //MARK: - DFUProgressDelegate
@@ -291,7 +291,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
     }
 
     func updateUploadButtonState() {
-        uploadButton.enabled = selectedFirmware != nil && selectedFirmware != nil
+        uploadButton.enabled = selectedFirmware != nil && selectedPeripheral != nil
     }
     
     func disableOtherButtons() {
@@ -305,11 +305,10 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
     }
     
     func clearUI() {
-
-        dfuController        = nil
-        selectedPeripheral   = nil
-
         dispatch_async(dispatch_get_main_queue(), {
+            self.dfuController        = nil
+            self.selectedPeripheral   = nil
+
             self.deviceName.text      = "DEFAULT DFU"
             self.uploadStatus.text    = nil
             self.uploadStatus.hidden  = true
