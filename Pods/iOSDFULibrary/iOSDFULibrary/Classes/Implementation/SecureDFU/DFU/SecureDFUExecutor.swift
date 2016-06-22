@@ -145,8 +145,7 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
         
         //Log how much of the packet has been already sent
         let sentPercentage = Int(Double(anOffset) / Double(initPacketLength) * 100.0)
-        print(String(format:"%d%% of init packet sent, resuming!", sentPercentage))
-        
+        self.initiator.logger?.logWith(.Info, message: String(format:"%d%% of init packet sent, resuming!", sentPercentage))
         //get remaining data to send
         let data = self.firmware.initPacket?.subdataWithRange(NSRange(location: Int(anOffset), length: Int(initPacketLength - anOffset)))
         
@@ -165,19 +164,19 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
             if match == true {
                 //Resume Init
                 if self.offset < UInt32((self.firmware.initPacket?.length)!) {
-                    print("Init packet was incomplete, resuming..")
+                    self.initiator.logger?.logWith(.Info, message: "Init packet was incomplete, resuming..")
                     self.resumeSendInitpacket(atOffset: offset)
                 }else{
                     self.initPacketSent  = true
                     self.firmwareSent    = false
                     self.sendingFirmware = false
-                    print("Init packet was complete, verify data object")
+                    self.initiator.logger?.logWith(.Info, message: "Init packet was complete, verify data object")
                     peripheral.ReadObjectInfoData()
                 }
             }else{
                 //Start new flash, we either are flashing a different firmware
                 //or we are resuming from a BL/SD + App and need to start all over again.
-                print("firmare init packet doesn't match, will overwrite and start again")
+                self.initiator.logger?.logWith(.Info, message: "firmare init packet doesn't match, will overwrite and start again")
                 self.initPacketSent = false
                 self.firmwareSent = false
                 self.sendingFirmware = false
@@ -208,10 +207,10 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
             
             if match == true {
                 var completedPercent = Int(Double(self.offset!) / Double(self.firmware.data.length) * 100)
-                print(String(format:"Data object info CRC matches, resuming from %d%%..",completedPercent))
+                self.initiator.logger?.logWith(.Info, message: String(format:"Data object info CRC matches, resuming from %d%%..",completedPercent))
                 peripheral.setPRNValue(12)
             } else {
-                print("Data object does not match\nStart from scratch?")
+                self.initiator.logger?.logWith(.Error, message: "Data object does not match")
             }
         } else {
             dispatch_async(dispatch_get_main_queue(), {
@@ -226,8 +225,8 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
 
     func createObjectDataForCurrentChunk() {
         var currentRange = self.firmwareRanges![self.currentRangeIdx!]
-        
-        print("current firmware chunk length = \(currentRange.length)")
+        self.initiator.logger?.logWith(.Info, message: "current firmware chunk length = \(currentRange.length)")
+
         peripheral.createObjectData(withLength: UInt32(currentRange.length))
     }
     
@@ -241,12 +240,12 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
     }
 
     func firmwareChunkSendcomplete() {
-        print("Chunk sent !, calc CRC,verify, execute!")
+        self.initiator.logger?.logWith(.Application, message: "Chunk sent!")
         peripheral.sendCalculateChecksumCommand()
     }
 
     func objectCreateDataCompleted(data: NSData?) {
-        print("Object created, sending data for chunk \(self.currentRangeIdx!)")
+        self.initiator.logger?.logWith(.Info, message: "Object created, sending data for chunk \(self.currentRangeIdx!)")
         sendCurrentChunk()
     }
 
@@ -309,11 +308,11 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
             var chunkData = self.firmware.data.subdataWithRange(NSRange(location: 0, length:Int(self.offset!)))
             var crc = CRC32.init(data: chunkData).crc
             if self.crc == crc {
-                print("Chunk CRC matches, exetuce!")
+                self.initiator.logger?.logWith(.Info, message: "Chunk CRC matches, exetuce!")
                 peripheral.sendExecuteCommand()
                 return
             }else{
-                print("Chunk CRC mismatch!")
+                self.initiator.logger?.logWith(.Error, message: "Chunk CRC mismatch!")
                 return
             }
         }
@@ -322,13 +321,13 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
             if offset == UInt32((firmware.initPacket?.length)!) {
                 var calculatedCRC = CRC32(data: self.firmware.initPacket!).crc
                 if calculatedCRC == self.crc {
-                    print("CRC match, send execute command")
+                    self.initiator.logger?.logWith(.Info, message: "CRC match, send execute command")
                     peripheral.sendExecuteCommand()
                 }else{
-                    print("CRC for init packet does not match, local = \(calculatedCRC), reported = \(self.crc!)\nStart from scratch?")
+                    self.initiator.logger?.logWith(.Error, message: "CRC for init packet does not match, local = \(calculatedCRC), reported = \(self.crc!)")
                 }
             } else {
-                print("Offset doesn't match packet size!\nstart from scratch?")
+                self.initiator.logger?.logWith(.Error, message: "Offset doesn't match packet size!")
             }
         }
     }
@@ -366,7 +365,6 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
                 peripheral.disconnect()
                 peripheral.switchToNewPeripheralAndConnect(initiator.peripheralSelector)
             } else {
-                print("#### has no next part, completed")
                 delegate?.didStateChangedTo(.Completed)
                 peripheral.disconnect()
             }
@@ -374,18 +372,21 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
     }
 
     func didDeviceFailToConnect() {
-        print("Failed to connect")
+        self.delegate?.didStateChangedTo(.Aborted)
+        self.initiator.logger?.logWith(.Error, message: "Failed to connect")
     }
     
     func peripheralDisconnected() {
-        print("Disconnected!")
+        self.initiator.logger?.logWith(.Application, message: "Disconnected")
     }
     
     func peripheralDisconnected(withError anError : NSError) {
-        print("Disconnected with error!")
+        self.initiator.logger?.logWith(.Error, message: anError.description)
+        self.delegate?.didStateChangedTo(.Aborted)
     }
     
     func onErrorOccured(withError anError:SecureDFUError, andMessage aMessage:String) {
-        print("Error occured: \(anError), \(aMessage)")
+        self.initiator.logger?.logWith(.Error, message: aMessage)
+        self.delegate?.didStateChangedTo(.Aborted)
     }
 }
