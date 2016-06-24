@@ -579,7 +579,7 @@
                                 </state>
                                 <connections>
                                     <action selector="connectionButtonTapped:" destination="K6D-kg-QBM" eventType="touchUpInside" id="XHk-jH-oO0"/>
-                                    <segue destination="BQP-B5-Tee" kind="presentation" identifier="scan" id="avT-gU-1Yo"/>
+                                    <segue destination="BQP-B5-Tee" kind="show" identifier="scan" id="eeF-P4-72I"/>
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="BLOOD GLUCOSE MONITOR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bjg-zK-RVR">
@@ -4577,7 +4577,7 @@
         <!--View Controller - CBGM-->
         <scene sceneID="m7x-mS-y3M">
             <objects>
-                <viewController id="5Ta-i6-8fT" userLabel="View Controller - CBGM" sceneMemberID="viewController">
+                <viewController id="5Ta-i6-8fT" userLabel="View Controller - CBGM" customClass="NORCGMViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qde-1B-ab3"/>
                         <viewControllerLayoutGuide type="bottom" id="ss0-Eo-MLL"/>
@@ -4631,7 +4631,8 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="connectOrDisconnectClicked" destination="5Ta-i6-8fT" eventType="touchUpInside" id="Ega-bI-U5g"/>
+                                    <action selector="connectionButtonTapped:" destination="5Ta-i6-8fT" eventType="touchUpInside" id="KBO-MH-Zup"/>
+                                    <segue destination="BQP-B5-Tee" kind="show" identifier="scan" id="9aU-2l-xWz"/>
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="CONTINUOUS GLUCOSE MONITOR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DXK-xJ-iG3">
@@ -4656,7 +4657,7 @@
                                 <color key="separatorColor" red="0.73333334920000004" green="0.74117648599999997" blue="0.75294119120000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CBGMCell" id="Lsc-ay-09r" userLabel="CBGMCell" customClass="CBGMItemCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CGMCell" id="Lsc-ay-09r" userLabel="CBGMCell" customClass="NORCGMItemCell" customModule="nRF_Toolbox" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="22" width="527" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lsc-ay-09r" id="5v4-4C-7zK">
@@ -4715,10 +4716,10 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.90196079019999997" green="0.90588235859999999" blue="0.9098039269" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
-                                            <outlet property="timestamp" destination="TgP-3H-CZ5" id="wgb-UA-WPW"/>
-                                            <outlet property="type" destination="UWw-HJ-u1h" id="Xrq-Ik-oW6"/>
-                                            <outlet property="unit" destination="Mza-F4-ze7" id="fQp-np-9Ai"/>
-                                            <outlet property="value" destination="HcH-6q-Yv7" id="aZG-4E-zdL"/>
+                                            <outlet property="timestamp" destination="TgP-3H-CZ5" id="oT3-f9-kdY"/>
+                                            <outlet property="type" destination="UWw-HJ-u1h" id="MEN-L8-CIC"/>
+                                            <outlet property="unit" destination="Mza-F4-ze7" id="og9-vP-O0i"/>
+                                            <outlet property="value" destination="HcH-6q-Yv7" id="RuO-SY-pmq"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -4736,7 +4737,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="actionButtonClicked:" destination="5Ta-i6-8fT" eventType="touchUpInside" id="s5t-Hy-wnc"/>
+                                    <action selector="actionButtonTapped:" destination="5Ta-i6-8fT" eventType="touchUpInside" id="PPo-pZ-N5i"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="toolbar_shadow" translatesAutoresizingMaskIntoConstraints="NO" id="Yc2-Ty-52g" userLabel="Shadow">
@@ -4795,12 +4796,9 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="aboutButtonClicked:" destination="5Ta-i6-8fT" eventType="touchUpInside" id="vs1-Co-Wfi"/>
+                                    <action selector="aboutButtonTapped:" destination="5Ta-i6-8fT" eventType="touchUpInside" id="Vif-3M-toK"/>
                                 </connections>
                             </button>
-                            <connections>
-                                <action selector="aboutButtonClicked:" destination="5Ta-i6-8fT" id="E4f-Ah-GFz"/>
-                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -4809,7 +4807,7 @@
                         <outlet property="battery" destination="1lx-e3-yha" id="x1D-iz-tff"/>
                         <outlet property="cbgmTableView" destination="jXh-bb-WDr" id="bGr-dH-5gf"/>
                         <outlet property="cgmActivityIndicator" destination="wCR-7w-mDp" id="qAM-hG-taM"/>
-                        <outlet property="connectButton" destination="uz9-v1-z1J" id="bEx-zf-byl"/>
+                        <outlet property="connectionButton" destination="uz9-v1-z1J" id="cNG-OX-3iT"/>
                         <outlet property="deviceName" destination="Yxf-88-jLg" id="6I2-Yr-zSc"/>
                         <outlet property="recordButton" destination="9qZ-OU-ESb" id="rlW-VL-GaQ"/>
                         <outlet property="verticalLabel" destination="DXK-xJ-iG3" id="aay-Xp-pb8"/>
@@ -4823,7 +4821,7 @@
         <!--CGM Reading details-->
         <scene sceneID="Bq8-UE-fM1">
             <objects>
-                <viewController title="CGM Reading details" id="mrg-v0-oyG" sceneMemberID="viewController">
+                <viewController title="CGM Reading details" id="mrg-v0-oyG" customClass="NORCGMDetailsViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="yPW-ZS-f29"/>
                         <viewControllerLayoutGuide type="bottom" id="KdD-HS-Q8W"/>
@@ -5178,7 +5176,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="GyK-6r-sF3"/>
                     <connections>
-                        <outlet property="backgroundImage" destination="nl4-gv-erM" id="2Fy-iA-fcP"/>
+                        <outlet property="backgroundImage" destination="nl4-gv-erM" id="7Cl-T4-V7e"/>
                         <outlet property="concentration" destination="Ius-xX-4pM" id="zpz-yx-qzB"/>
                         <outlet property="deviceFaultStatus" destination="I5J-59-WVL" id="kz8-mD-R2t"/>
                         <outlet property="insufficienSampleStatus" destination="oeu-Oi-kUB" id="qkm-kM-MSs"/>
@@ -5257,7 +5255,7 @@
         <image name="userIcon" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="lAt-L9-EDs"/>
+        <segue reference="ydJ-CZ-Xyf"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.60392159219999997" blue="0.85490196939999996" alpha="1" colorSpace="calibratedRGB"/>
 </document>

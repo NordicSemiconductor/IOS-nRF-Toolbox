@@ -16,6 +16,16 @@
 		3001432B1CEC6D2A008379DF /* NORBGMRecordAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001432A1CEC6D2A008379DF /* NORBGMRecordAccess.swift */; };
 		3001432D1CECADFB008379DF /* NORCharacteristicReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001432C1CECADFB008379DF /* NORCharacteristicReader.swift */; };
 		3001432F1CEDAD04008379DF /* NORCharacteristicReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001432E1CEDAD04008379DF /* NORCharacteristicReaderTests.swift */; };
+		3001EBB11D1BE1F3008C5C37 /* NORGlucoseReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBB01D1BE1F3008C5C37 /* NORGlucoseReading.swift */; };
+		3001EBB71D1BE1FB008C5C37 /* NORBGMDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBB41D1BE1FB008C5C37 /* NORBGMDetailsViewController.swift */; };
+		3001EBB81D1BE1FB008C5C37 /* NORBGMItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBB51D1BE1FB008C5C37 /* NORBGMItemCell.swift */; };
+		3001EBB91D1BE1FB008C5C37 /* NORBGMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBB61D1BE1FB008C5C37 /* NORBGMViewController.swift */; };
+		3001EBBB1D1BE306008C5C37 /* NORCGMReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBBA1D1BE306008C5C37 /* NORCGMReading.swift */; };
+		3001EBBD1D1BE695008C5C37 /* NORCGMFeatureData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBBC1D1BE695008C5C37 /* NORCGMFeatureData.swift */; };
+		3001EBBF1D1BE727008C5C37 /* NORCGMSpecificOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBBE1D1BE727008C5C37 /* NORCGMSpecificOperations.swift */; };
+		3001EBC31D1C1430008C5C37 /* NORCGMItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBC01D1C12E4008C5C37 /* NORCGMItemCell.swift */; };
+		3001EBC51D1C153C008C5C37 /* NORCGMDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBC41D1C153C008C5C37 /* NORCGMDetailsViewController.swift */; };
+		3001EBC71D1C1BAA008C5C37 /* NORCGMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBC61D1C1BAA008C5C37 /* NORCGMViewController.swift */; };
 		300508931CE1D75800D93BE0 /* NORProximityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300508921CE1D75800D93BE0 /* NORProximityViewController.swift */; };
 		300508951CE2078A00D93BE0 /* NORRSCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300508941CE2078A00D93BE0 /* NORRSCViewController.swift */; };
 		3010F6051CDCB4F900CB285A /* NORBPMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3010F6041CDCB4F900CB285A /* NORBPMViewController.swift */; };
@@ -35,13 +45,9 @@
 		304D58FD1CE34FC600148271 /* NORLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304D58FC1CE34FC600148271 /* NORLogViewController.swift */; };
 		304D58FF1CE3521900148271 /* NORLogItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304D58FE1CE3521900148271 /* NORLogItem.swift */; };
 		304D59011CE352B300148271 /* NORLogItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304D59001CE352B300148271 /* NORLogItemTableViewCell.swift */; };
-		305E07B51CD3534D00B32EB2 /* NORBGMDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 305E07B41CD3534D00B32EB2 /* NORBGMDetailsViewController.swift */; };
-		305E07B71CD3608500B32EB2 /* NORBGMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 305E07B61CD3608500B32EB2 /* NORBGMViewController.swift */; };
 		3069A1D71CDC788A003869EA /* NORBluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3069A1D61CDC788A003869EA /* NORBluetoothManager.swift */; };
 		306ECD621CE61A3600E48BBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306ECD611CE61A3600E48BBD /* AppDelegate.swift */; };
 		3080C4711CE06D0E009C2D8C /* NORCSCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3080C4701CE06D0E009C2D8C /* NORCSCViewController.swift */; };
-		308AA5761CD8A7B400CC9857 /* NORBGMItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308AA5751CD8A7B400CC9857 /* NORBGMItemCell.swift */; };
-		308AA5781CD8AF6B00CC9857 /* NORGlucoseReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308AA5771CD8AF6B00CC9857 /* NORGlucoseReading.swift */; };
 		308AA57A1CD8DD4300CC9857 /* NORGlucoseReadingContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308AA5791CD8DD4300CC9857 /* NORGlucoseReadingContext.swift */; };
 		308EE1781CE0CBF700F2A854 /* NORHTSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308EE1771CE0CBF700F2A854 /* NORHTSViewController.swift */; };
 		30921FD31CD0E7A5009CBDDE /* NORNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30921FD21CD0E7A5009CBDDE /* NORNavigationController.swift */; };
@@ -105,6 +111,16 @@
 		3001432A1CEC6D2A008379DF /* NORBGMRecordAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORBGMRecordAccess.swift; path = Model/NORBGMRecordAccess.swift; sourceTree = "<group>"; };
 		3001432C1CECADFB008379DF /* NORCharacteristicReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORCharacteristicReader.swift; sourceTree = "<group>"; };
 		3001432E1CEDAD04008379DF /* NORCharacteristicReaderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORCharacteristicReaderTests.swift; sourceTree = "<group>"; };
+		3001EBB01D1BE1F3008C5C37 /* NORGlucoseReading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORGlucoseReading.swift; path = Model/NORGlucoseReading.swift; sourceTree = "<group>"; };
+		3001EBB41D1BE1FB008C5C37 /* NORBGMDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBGMDetailsViewController.swift; sourceTree = "<group>"; };
+		3001EBB51D1BE1FB008C5C37 /* NORBGMItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBGMItemCell.swift; sourceTree = "<group>"; };
+		3001EBB61D1BE1FB008C5C37 /* NORBGMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBGMViewController.swift; sourceTree = "<group>"; };
+		3001EBBA1D1BE306008C5C37 /* NORCGMReading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORCGMReading.swift; path = Model/NORCGMReading.swift; sourceTree = "<group>"; };
+		3001EBBC1D1BE695008C5C37 /* NORCGMFeatureData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORCGMFeatureData.swift; path = Model/NORCGMFeatureData.swift; sourceTree = "<group>"; };
+		3001EBBE1D1BE727008C5C37 /* NORCGMSpecificOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORCGMSpecificOperations.swift; path = Model/NORCGMSpecificOperations.swift; sourceTree = "<group>"; };
+		3001EBC01D1C12E4008C5C37 /* NORCGMItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORCGMItemCell.swift; sourceTree = "<group>"; };
+		3001EBC41D1C153C008C5C37 /* NORCGMDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORCGMDetailsViewController.swift; sourceTree = "<group>"; };
+		3001EBC61D1C1BAA008C5C37 /* NORCGMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORCGMViewController.swift; sourceTree = "<group>"; };
 		300508921CE1D75800D93BE0 /* NORProximityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORProximityViewController.swift; sourceTree = "<group>"; };
 		300508941CE2078A00D93BE0 /* NORRSCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORRSCViewController.swift; sourceTree = "<group>"; };
 		3010F6041CDCB4F900CB285A /* NORBPMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBPMViewController.swift; sourceTree = "<group>"; };
@@ -124,13 +140,9 @@
 		304D58FC1CE34FC600148271 /* NORLogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORLogViewController.swift; sourceTree = "<group>"; };
 		304D58FE1CE3521900148271 /* NORLogItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORLogItem.swift; sourceTree = "<group>"; };
 		304D59001CE352B300148271 /* NORLogItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORLogItemTableViewCell.swift; sourceTree = "<group>"; };
-		305E07B41CD3534D00B32EB2 /* NORBGMDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBGMDetailsViewController.swift; sourceTree = "<group>"; };
-		305E07B61CD3608500B32EB2 /* NORBGMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBGMViewController.swift; sourceTree = "<group>"; };
 		3069A1D61CDC788A003869EA /* NORBluetoothManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBluetoothManager.swift; sourceTree = "<group>"; };
 		306ECD611CE61A3600E48BBD /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3080C4701CE06D0E009C2D8C /* NORCSCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORCSCViewController.swift; sourceTree = "<group>"; };
-		308AA5751CD8A7B400CC9857 /* NORBGMItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBGMItemCell.swift; sourceTree = "<group>"; };
-		308AA5771CD8AF6B00CC9857 /* NORGlucoseReading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORGlucoseReading.swift; sourceTree = "<group>"; };
 		308AA5791CD8DD4300CC9857 /* NORGlucoseReadingContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORGlucoseReadingContext.swift; path = Model/NORGlucoseReadingContext.swift; sourceTree = "<group>"; };
 		308EE1771CE0CBF700F2A854 /* NORHTSViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORHTSViewController.swift; sourceTree = "<group>"; };
 		30921FD21CD0E7A5009CBDDE /* NORNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORNavigationController.swift; sourceTree = "<group>"; };
@@ -196,6 +208,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3001EBB21D1BE1FB008C5C37 /* ContinuousGlucoseMonitoring */ = {
+			isa = PBXGroup;
+			children = (
+				3001EBC61D1C1BAA008C5C37 /* NORCGMViewController.swift */,
+				3001EBC41D1C153C008C5C37 /* NORCGMDetailsViewController.swift */,
+				3001EBC01D1C12E4008C5C37 /* NORCGMItemCell.swift */,
+			);
+			path = ContinuousGlucoseMonitoring;
+			sourceTree = "<group>";
+		};
+		3001EBB31D1BE1FB008C5C37 /* StandarGlucoseMonitoring */ = {
+			isa = PBXGroup;
+			children = (
+				3001EBB41D1BE1FB008C5C37 /* NORBGMDetailsViewController.swift */,
+				3001EBB51D1BE1FB008C5C37 /* NORBGMItemCell.swift */,
+				3001EBB61D1BE1FB008C5C37 /* NORBGMViewController.swift */,
+			);
+			path = StandarGlucoseMonitoring;
+			sourceTree = "<group>";
+		};
 		304299361CE6154100E1D2AB /* BaseViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -370,8 +402,11 @@
 		524F2CDC18897D18008A8555 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3001EBB01D1BE1F3008C5C37 /* NORGlucoseReading.swift */,
+				3001EBBA1D1BE306008C5C37 /* NORCGMReading.swift */,
+				3001EBBE1D1BE727008C5C37 /* NORCGMSpecificOperations.swift */,
+				3001EBBC1D1BE695008C5C37 /* NORCGMFeatureData.swift */,
 				308AA5791CD8DD4300CC9857 /* NORGlucoseReadingContext.swift */,
-				308AA5771CD8AF6B00CC9857 /* NORGlucoseReading.swift */,
 				3001432A1CEC6D2A008379DF /* NORBGMRecordAccess.swift */,
 			);
 			name = Model;
@@ -380,10 +415,9 @@
 		5252A533188025EC00EFD773 /* BGM */ = {
 			isa = PBXGroup;
 			children = (
+				3001EBB21D1BE1FB008C5C37 /* ContinuousGlucoseMonitoring */,
+				3001EBB31D1BE1FB008C5C37 /* StandarGlucoseMonitoring */,
 				524F2CDC18897D18008A8555 /* Model */,
-				305E07B41CD3534D00B32EB2 /* NORBGMDetailsViewController.swift */,
-				305E07B61CD3608500B32EB2 /* NORBGMViewController.swift */,
-				308AA5751CD8A7B400CC9857 /* NORBGMItemCell.swift */,
 			);
 			path = BGM;
 			sourceTree = "<group>";
@@ -684,12 +718,11 @@
 				30499E551CE4732200E0993B /* NORFileSelectionDelegate.swift in Sources */,
 				30F92D4B1CD9CF0700C73285 /* NORHRMViewController.swift in Sources */,
 				300143291CEC59F4008379DF /* NORServiceIdentifiers.swift in Sources */,
+				3001EBC71D1C1BAA008C5C37 /* NORCGMViewController.swift in Sources */,
 				304D58FD1CE34FC600148271 /* NORLogViewController.swift in Sources */,
 				30499E571CE4736500E0993B /* NORFilePreselectionDelegate.swift in Sources */,
 				30A1145C1CD24611000F0F02 /* NORScannerViewController.swift in Sources */,
 				308AA57A1CD8DD4300CC9857 /* NORGlucoseReadingContext.swift in Sources */,
-				305E07B71CD3608500B32EB2 /* NORBGMViewController.swift in Sources */,
-				305E07B51CD3534D00B32EB2 /* NORBGMDetailsViewController.swift in Sources */,
 				3001432B1CEC6D2A008379DF /* NORBGMRecordAccess.swift in Sources */,
 				304D58FF1CE3521900148271 /* NORLogItem.swift in Sources */,
 				3042993C1CE6154100E1D2AB /* NORBaseRevealViewController.swift in Sources */,
@@ -698,14 +731,17 @@
 				3010F6051CDCB4F900CB285A /* NORBPMViewController.swift in Sources */,
 				3000B2131CE3195E00F64CEE /* NOREditPopupViewController.swift in Sources */,
 				306ECD621CE61A3600E48BBD /* AppDelegate.swift in Sources */,
+				3001EBB71D1BE1FB008C5C37 /* NORBGMDetailsViewController.swift in Sources */,
 				304D59011CE352B300148271 /* NORLogItemTableViewCell.swift in Sources */,
+				3001EBC51D1C153C008C5C37 /* NORCGMDetailsViewController.swift in Sources */,
 				3080C4711CE06D0E009C2D8C /* NORCSCViewController.swift in Sources */,
 				308EE1781CE0CBF700F2A854 /* NORHTSViewController.swift in Sources */,
 				304D58FB1CE34EE600148271 /* NORLogger.swift in Sources */,
 				304299241CE6114000E1D2AB /* NORTutorialViewController.swift in Sources */,
 				30499E511CE471C500E0993B /* NORDFUViewController.swift in Sources */,
+				3001EBBB1D1BE306008C5C37 /* NORCGMReading.swift in Sources */,
+				3001EBB11D1BE1F3008C5C37 /* NORGlucoseReading.swift in Sources */,
 				3000B2151CE32A9200F64CEE /* NORUARTViewController.swift in Sources */,
-				308AA5781CD8AF6B00CC9857 /* NORGlucoseReading.swift in Sources */,
 				300508951CE2078A00D93BE0 /* NORRSCViewController.swift in Sources */,
 				30A1145A1CD2426B000F0F02 /* NORScannerDelegate.swift in Sources */,
 				3069A1D71CDC788A003869EA /* NORBluetoothManager.swift in Sources */,
@@ -713,11 +749,15 @@
 				30921FD31CD0E7A5009CBDDE /* NORNavigationController.swift in Sources */,
 				3042993D1CE6154100E1D2AB /* NORBaseViewController.swift in Sources */,
 				30A114561CD2367C000F0F02 /* NORScannedPeripheral.swift in Sources */,
+				3001EBC31D1C1430008C5C37 /* NORCGMItemCell.swift in Sources */,
+				3001EBB91D1BE1FB008C5C37 /* NORBGMViewController.swift in Sources */,
 				30499E4D1CE4687300E0993B /* NORFileTypeSelectionDelegate.swift in Sources */,
-				308AA5761CD8A7B400CC9857 /* NORBGMItemCell.swift in Sources */,
 				30921FD51CD0EB55009CBDDE /* NORMainViewController.swift in Sources */,
+				3001EBBD1D1BE695008C5C37 /* NORCGMFeatureData.swift in Sources */,
+				3001EBB81D1BE1FB008C5C37 /* NORBGMItemCell.swift in Sources */,
 				300143271CEC4B9D008379DF /* NORAppUtilities.swift in Sources */,
 				30499E591CE4A07700E0993B /* NORAppFilesViewController.swift in Sources */,
+				3001EBBF1D1BE727008C5C37 /* NORCGMSpecificOperations.swift in Sources */,
 				30499E4F1CE4688700E0993B /* NORFileTypeViewController.swift in Sources */,
 				3000B2111CE317D900F64CEE /* NORUARTRevealViewController.swift in Sources */,
 			);
