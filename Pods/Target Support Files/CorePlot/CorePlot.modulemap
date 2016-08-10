@@ -1,0 +1,6 @@
+framework module CorePlot {
+  umbrella header "CorePlot-umbrella.h"
+
+  export *
+  module * { export * }
+}

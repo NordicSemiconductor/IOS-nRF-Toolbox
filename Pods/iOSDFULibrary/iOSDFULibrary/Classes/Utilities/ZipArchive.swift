@@ -1,0 +1,130 @@
+/*
+* Copyright (c) 2016, Nordic Semiconductor
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+*
+* 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+* documentation and/or other materials provided with the distribution.
+*
+* 3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this
+* software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+* LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+* HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+* LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+* ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+* USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+
+import Zip
+
+internal class ZipArchive {
+    
+    private init() {
+        // Forbid creating instance of this class
+        // Use this class only in static way
+    }
+    
+    /**
+     Opens the ZIP archive and returs a list of URLs to all unzipped files.
+     Unzipped files were moved to a temporary destination in Cache Directory.
+     
+     - parameter url: URL to a ZIP file
+     
+     - throws: an error if unzipping, or obtaining the list of files failed
+     
+     - returns: list of URLs to unzipped files in the tmp folder
+     */
+    internal static func unzip(url:NSURL) throws -> [NSURL] {
+        let fileName = url.lastPathComponent
+        let destinationPath = try createTemporaryFolderPath(fileName!)
+        
+        // Unzip file to the destination folder
+        let destination = NSURL.init(fileURLWithPath: destinationPath)
+        try Zip.unzipFile(url, destination: destination, overwrite: true, password: nil, progress: nil)
+        
+        // Get folder content
+        let files = try getFilesFromDirectory(destinationPath)
+        
+        // Convert Strings to NSURLs
+        var urls = [NSURL]()
+        for file in files {
+            urls.append(NSURL.fileURLWithPath(destinationPath + file))
+        }
+        return urls
+    }
+    
+    /**
+     A path to a newly created temp directory or nil in case of an error.
+     
+     - throws: an error when creating the tmp directory failed
+     
+     - returns: a path to the tmp folder
+     */
+    internal static func createTemporaryFolderPath(name:String) throws -> String {
+        // Build the temp folder path. Content of the ZIP file will be copied into it
+        let tempPath = NSTemporaryDirectory() + ".dfu/unzip/" + name + "/"
+        
+        // Check if folder exists. Remove it if so
+        let fileManager = NSFileManager.defaultManager()
+        if fileManager.fileExistsAtPath(tempPath) {
+            do {
+                try fileManager.removeItemAtPath(tempPath)
+            } catch let error as NSError {
+                NSLog("Error while removing old temp file: \(error.localizedDescription)")
+                throw error
+            }
+        }
+        
+        // Create a new temporary folder
+        do {
+            try fileManager.createDirectoryAtPath(tempPath, withIntermediateDirectories: true, attributes: nil)
+        } catch let error as NSError {
+            NSLog("Error while creating temp file: \(error.localizedDescription)")
+            throw error
+        }
+        
+        return tempPath
+    }
+    
+    /**
+     Returns a list of paths to all files from a given directory.
+     
+     - parameter path: a path to the directory to get files from
+     
+     - throws: an error if could not get contents of the directory
+     
+     - returns: list of paths to files from the directory at given path
+     */
+    internal static func getFilesFromDirectory(path:String) throws -> [String] {
+        let fileManager = NSFileManager.defaultManager()
+        
+        do {
+            return try fileManager.contentsOfDirectoryAtPath(path)
+        } catch let error as NSError {
+            NSLog("Error while obtaining content of temp folder: \(error.localizedDescription)")
+            throw error
+        }
+    }
+    
+    /**
+     Looks for a file with given name inside an array or file URLs.
+     
+     - parameter name: file name
+     - parameter urls: list of files URLs to search in
+     
+     - returns: URL to a file or nil
+     */
+    internal static func findFile(name:String, inside urls:[NSURL]) -> NSURL? {
+        for url in urls {
+            if url.lastPathComponent == name {
+                return url
+            }
+        }
+        return nil
+    }
+}
