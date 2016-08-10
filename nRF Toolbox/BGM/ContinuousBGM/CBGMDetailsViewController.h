@@ -20,21 +20,12 @@
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "ContinuousGlucoseReading.h"
 
-@interface AppUtilities : NSObject
+@interface CBGMDetailsViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
 
-+ (void) showAlert:(NSString *)title alertMessage:(NSString *)message;
-+ (void)showBackgroundNotification:(NSString *)message;
-+ (BOOL)isApplicationStateInactiveORBackground;
-+ (NSString *) getUARTHelpText;
-+ (NSString *) getRSACHelpText;
-+ (NSString *) getProximityHelpText;
-+ (NSString *) getHTSHelpText;
-+ (NSString *) getHRSHelpText;
-+ (NSString *) getCSCHelpText;
-+ (NSString *) getBPMHelpText;
-+ (NSString *) getBGMHelpText;
-+ (NSString *) getCBGMHelpText;
+@property (strong, nonatomic) ContinuousGlucoseReading* reading;
 
 @end

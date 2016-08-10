@@ -82,4 +82,8 @@
     return [NSString stringWithFormat:@"The BGM (BLOOD GLUCOSE MONITOR) profile allows you to connect to your Glucose sensor.\nTap the Get Records button to read the history of glucose records."];
 }
 
++ (NSString *) getCBGMHelpText {
+    return [NSString stringWithFormat:@"The CBGM (Continuous BLOOD GLUCOSE MONITOR) profile allows you to connect to your Continuous Glucose sensor.\nTap the Get Records button to read the history of glucose records."];
+}
+
 @end

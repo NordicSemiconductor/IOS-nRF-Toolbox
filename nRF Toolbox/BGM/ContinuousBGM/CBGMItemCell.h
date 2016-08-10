@@ -20,21 +20,13 @@
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@interface AppUtilities : NSObject
+@interface CBGMItemCell : UITableViewCell
 
-+ (void) showAlert:(NSString *)title alertMessage:(NSString *)message;
-+ (void)showBackgroundNotification:(NSString *)message;
-+ (BOOL)isApplicationStateInactiveORBackground;
-+ (NSString *) getUARTHelpText;
-+ (NSString *) getRSACHelpText;
-+ (NSString *) getProximityHelpText;
-+ (NSString *) getHTSHelpText;
-+ (NSString *) getHRSHelpText;
-+ (NSString *) getCSCHelpText;
-+ (NSString *) getBPMHelpText;
-+ (NSString *) getBGMHelpText;
-+ (NSString *) getCBGMHelpText;
+@property (weak, nonatomic) IBOutlet UILabel *type;
+@property (weak, nonatomic) IBOutlet UILabel *value;
+@property (weak, nonatomic) IBOutlet UILabel *timestamp;
+@property (weak, nonatomic) IBOutlet UILabel *unit;
 
 @end

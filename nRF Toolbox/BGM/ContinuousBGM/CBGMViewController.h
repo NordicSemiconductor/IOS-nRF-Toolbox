@@ -20,21 +20,20 @@
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import <CoreBluetooth/CoreBluetooth.h>
+#import "BaseViewController.h"
+#import "ScannerDelegate.h"
 
-@interface AppUtilities : NSObject
+@interface CBGMViewController : BaseViewController <CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate, UITableViewDataSource, UIActionSheetDelegate>
 
-+ (void) showAlert:(NSString *)title alertMessage:(NSString *)message;
-+ (void)showBackgroundNotification:(NSString *)message;
-+ (BOOL)isApplicationStateInactiveORBackground;
-+ (NSString *) getUARTHelpText;
-+ (NSString *) getRSACHelpText;
-+ (NSString *) getProximityHelpText;
-+ (NSString *) getHTSHelpText;
-+ (NSString *) getHRSHelpText;
-+ (NSString *) getCSCHelpText;
-+ (NSString *) getBPMHelpText;
-+ (NSString *) getBGMHelpText;
-+ (NSString *) getCBGMHelpText;
+@property (strong, nonatomic) CBCentralManager *bluetoothManager;
+@property (weak, nonatomic) IBOutlet UILabel *verticalLabel;
+@property (weak, nonatomic) IBOutlet UIButton *battery;
+@property (weak, nonatomic) IBOutlet UILabel *deviceName;
+@property (weak, nonatomic) IBOutlet UIButton *connectButton;
+@property (weak, nonatomic) IBOutlet UIButton *recordButton;
+
+- (IBAction)connectOrDisconnectClicked;
 
 @end

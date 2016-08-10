@@ -20,21 +20,24 @@
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
+#import "CBGMItemCell.h"
 
-@interface AppUtilities : NSObject
+@implementation CBGMItemCell
 
-+ (void) showAlert:(NSString *)title alertMessage:(NSString *)message;
-+ (void)showBackgroundNotification:(NSString *)message;
-+ (BOOL)isApplicationStateInactiveORBackground;
-+ (NSString *) getUARTHelpText;
-+ (NSString *) getRSACHelpText;
-+ (NSString *) getProximityHelpText;
-+ (NSString *) getHTSHelpText;
-+ (NSString *) getHRSHelpText;
-+ (NSString *) getCSCHelpText;
-+ (NSString *) getBPMHelpText;
-+ (NSString *) getBGMHelpText;
-+ (NSString *) getCBGMHelpText;
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        // Initialization code
+    }
+    return self;
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
 
 @end
