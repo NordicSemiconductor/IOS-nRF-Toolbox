@@ -49,11 +49,12 @@ internal typealias SDFUErrorCallback = (error:SecureDFUError, withMessage:String
     private var report           : SDFUErrorCallback?
     
     /// A temporaty callback used to report progress status.
-    private var progressDelegate : DFUProgressDelegate?
     
     // -- Properties stored when upload started in order to resume it --
+    private var progressDelegate : DFUProgressDelegate?
     private var firmware:DFUFirmware?
     private var packetReceiptNotificationNumber:UInt16?
+    private var chunkRange:NSRange?
     // -- End --
     
     // MARK: - Initialization
@@ -187,14 +188,26 @@ internal typealias SDFUErrorCallback = (error:SecureDFUError, withMessage:String
     }
 
     func sendFirmwareChunk(chunkRange : NSRange, inFirmware aFirmware : DFUFirmware, andPacketReceiptCount aCount : UInt16, andProgressDelegate progressDelegate : DFUProgressDelegate, andCompletionHandler completionHandler : SDFUCallback, andErrorHandler errorHandler : SDFUErrorCallback) {
-    
+
+        //Those will be stored here in case of pause/resume
+        self.success                            = completionHandler
+        self.report                             = errorHandler
+        self.firmware                           = aFirmware
+        self.packetReceiptNotificationNumber    = aCount
+        self.chunkRange                         = chunkRange
+        self.progressDelegate                   = progressDelegate
+
         var successHandler : SDFUCallback = { (responseData) in
             self.dfuControlPointCharacteristic?.uploadFinished()
             completionHandler(responseData: nil)
         }
 
         self.dfuControlPointCharacteristic!.waitUntilUploadComplete(onSuccess: successHandler, onPacketReceiptNofitication: { (bytesReceived) in
-                self.dfuPacketCharacteristic?.sendData(withPRN: aCount, andRange: chunkRange, inFirmware: aFirmware, andProgressHandler: progressDelegate, andCompletion: successHandler)
+                if !self.paused && !self.aborted {
+                    self.dfuPacketCharacteristic?.sendData(withPRN: aCount, andRange: chunkRange, inFirmware: aFirmware, andProgressHandler: progressDelegate, andCompletion: successHandler)
+                } else if self.aborted {
+                    errorHandler(error: SecureDFUError.DeviceDisconnected, withMessage: "DFU operation aborted")
+                }
             }
             , onError: errorHandler)
 
@@ -218,12 +231,15 @@ internal typealias SDFUErrorCallback = (error:SecureDFUError, withMessage:String
     }
     
     func resume() {
-        //paused = false
+        if !aborted {
+            paused = false
+            self.dfuPacketCharacteristic?.sendData(withPRN: self.packetReceiptNotificationNumber!, andRange: self.chunkRange!, inFirmware: self.firmware!, andProgressHandler: self.progressDelegate!, andCompletion: self.success!)
+        }
     }
     
     func abort() {
-        //aborted = true
-        //paused = false
+        aborted = true
+        paused = false
     }
     
     // MARK: - Peripheral Delegate callbacks

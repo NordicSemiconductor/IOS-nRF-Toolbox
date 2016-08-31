@@ -39,10 +39,6 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
     
     /// The DFU Service instance. Not nil when found on the peripheral.
     private var dfuService:SecureDFUService?
-    /// A flag set when a command to jump to DFU Bootloader has been sent.
-    private var jumpingToBootloader = false
-    /// A flag set when a command to activate the new firmware and reset the device has been sent.
-    private var activating = false
     /// A flag set when upload has been paused.
     private var paused = false
     /// A flag set when upload has been aborted.
@@ -356,6 +352,23 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
     }
     
     func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
+        if error != nil {
+            if error!.code == CBError.PeripheralDisconnected.rawValue ||
+                error!.code == CBError.ConnectionTimeout.rawValue {
+                logger.i("Disconnected by the remote device")
+            }else{
+                logger.d("[Callback] Central Manager did disconnect peripheral without error")
+                delegate?.peripheralDisconnected()
+            }
+            logger.d("[Callback] Central Manager did disconnect peripheral")
+            logger.i("Disconnected")
+            logger.e(error!)
+            delegate?.peripheralDisconnected(withError: error!)
+        } else {
+            logger.d("[Callback] Central Manager did disconnect peripheral without error")
+            logger.i("Disconnected")
+            delegate?.peripheralDisconnected()
+        }
     }
     
     func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
