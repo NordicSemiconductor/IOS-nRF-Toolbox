@@ -258,7 +258,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
         // but it will pause just before seding the data.
         dfuController?.pause()
         
-        let alert = UIAlertController(title: "Abort?", message: "Do you want to abort?", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let alert = UIAlertController(title: "Abort?", message: "Do you want to abort?", preferredStyle: .Alert)
         let abort = UIAlertAction(title: "Abort", style: .Destructive, handler: { (anAction) in
             self.dfuController?.abort()
             alert.dismissViewControllerAnimated(true, completion: nil)
