@@ -93,7 +93,6 @@ class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     func deviceNotSupported(){
         self.delegate?.didErrorOccur(DFUError.DeviceNotSupported, withMessage: "device does not have DFU enabled")
         self.delegate?.didStateChangedTo(.Disconnecting)
-        self.centralManager.cancelPeripheralConnection(peripheral)
     }
     
     //MARK: - DFU Controller methods
@@ -134,7 +133,8 @@ class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     //MARK: - CBCentralManager delegate
     public func centralManagerDidUpdateState(central: CBCentralManager){
         if central.state != CBCentralManagerState.PoweredOn {
-            self.delegate?.didErrorOccur(DFUError.FailedToConnect, withMessage: "Failed to connect to peripheral")
+            self.delegate?.didErrorOccur(DFUError.FailedToConnect, withMessage: "The bluetooth radio is powered off")
+            self.delegate?.didStateChangedTo(.Failed)
         }
     }
     
@@ -149,12 +149,14 @@ class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     public func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
         guard error == nil else {
             self.delegate?.didErrorOccur(DFUError.DeviceDisconnected, withMessage: "Error while disconnecting from peripheral: \(error)")
+            self.delegate?.didStateChangedTo(.Failed)
             return
         }
     }
     
     public func centralManager(central: CBCentralManager, didFailToConnectPeripheral peripheral: CBPeripheral, error: NSError?) {
             self.delegate?.didErrorOccur(DFUError.FailedToConnect, withMessage: "Error while connecting to peripheral: \(error)")
+            self.delegate?.didStateChangedTo(.Failed)
     }
 
     //MARK: - CBPeripheralDelegate

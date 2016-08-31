@@ -1,7 +1,7 @@
 PODS:
   - CorePlot (2.1)
   - EVReflection (2.45.0)
-  - iOSDFULibrary (1.0.10b):
+  - iOSDFULibrary (1.0.11b):
     - Zip (~> 0.3)
   - SWRevealViewController (2.3.0)
   - Zip (0.4.3)
@@ -9,26 +9,26 @@ PODS:
 DEPENDENCIES:
   - CorePlot (~> 2.1)
   - EVReflection
-  - iOSDFULibrary (from `https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library.git`, branch `feature/pause`)
+  - iOSDFULibrary (from `https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library.git`, branch `develop`)
   - SWRevealViewController (~> 2.3)
 
 EXTERNAL SOURCES:
   iOSDFULibrary:
-    :branch: feature/pause
+    :branch: develop
     :git: https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library.git
 
 CHECKOUT OPTIONS:
   iOSDFULibrary:
-    :commit: dbcc48985cd50a3629a25418b66682d8f2e69c65
+    :commit: 944b7fa9c4f384a26d1a37191434a6ef14897382
     :git: https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library.git
 
 SPEC CHECKSUMS:
   CorePlot: ab9898c79b94999018e9634ab0aa4c21480c8552
   EVReflection: aa7065b5757b4efd7265cdb17074aeef57c3f981
-  iOSDFULibrary: 7c729a948e4a69cfd8829b30ca0aa478d64b3ab4
+  iOSDFULibrary: b537d9acd0ecc341e48e61dc1cc7ee955c0fb02f
   SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
   Zip: 670419a5ba9faaf5f24ed3650c4c38b4136e996b
 
-PODFILE CHECKSUM: e608951e6f5d528ad10b355afb96a62a6183e3a0
+PODFILE CHECKSUM: 62037b88bc72915ae1fc207bcfa0619512eddf8f
 
 COCOAPODS: 1.1.0.beta.1

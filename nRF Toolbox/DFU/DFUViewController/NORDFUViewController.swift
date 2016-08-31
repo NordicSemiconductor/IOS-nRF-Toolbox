@@ -204,6 +204,9 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
             case .OperationNotPermitted:
                 uploadStatus.text = "Operation not permitted..."
                 break
+            case .Failed:
+                uploadStatus.text = "Connection Failure"
+                break
         }
     }
     

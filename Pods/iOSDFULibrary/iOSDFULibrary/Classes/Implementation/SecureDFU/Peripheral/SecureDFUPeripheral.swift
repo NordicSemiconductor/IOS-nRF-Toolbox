@@ -45,7 +45,9 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
     private var aborted = false
     /// Maxmimum length reported by peripheral
     private var maxWtireLength : UInt32 = 0
-
+    /// Resetting flag, when the peripheral disconnects to reconncet
+    public var isResetting = false
+    
     // MARK: - Initialization
     
     init(_ initiator:SecureDFUServiceInitiator) {
@@ -104,6 +106,7 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
             aborted = true
             paused = false
             dfuService!.abort()
+            disconnect()
         }
     }
     
@@ -352,6 +355,21 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
     }
     
     func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
+        if isResetting == true {
+            if error != nil {
+                logger.i("Resetting peripheral")
+                logger.d("[Callback] Central Manager did disconnect peripheral with error while resetting")
+            } else {
+                logger.i("Resetting peripheral")
+                logger.d("[Callback] Central Manager did disconnect peripheral without error")
+            }
+            return
+        }
+        if aborted == true {
+            delegate?.onAborted()
+            aborted = false
+            return
+        }
         if error != nil {
             if error!.code == CBError.PeripheralDisconnected.rawValue ||
                 error!.code == CBError.ConnectionTimeout.rawValue {

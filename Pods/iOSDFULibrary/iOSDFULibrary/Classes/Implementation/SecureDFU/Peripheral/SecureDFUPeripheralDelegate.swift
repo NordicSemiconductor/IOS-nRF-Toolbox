@@ -79,6 +79,11 @@ internal protocol SecureDFUPeripheralDelegate {
     func firmwareSendComplete()
 
     /**
+     Method called after the DFU operation was aborted and the device got disconnected.
+     */
+    func onAborted()
+
+    /**
      Callback when firmware chunk is successfully sent
      */
     func firmwareChunkSendcomplete()

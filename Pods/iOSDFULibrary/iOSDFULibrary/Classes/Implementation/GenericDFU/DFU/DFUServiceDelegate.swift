@@ -66,7 +66,7 @@
  - Completed:       THe DFU operation is completed and successful
  - Aborted:         DFU Operation was aborted
  */
-@available (iOS, deprecated=0.1.9, renamed="DFUState", message="Please use `DFUState` instead")
+@available (iOS, deprecated=0.2.0, renamed="DFUState", message="Please use `DFUState` instead")
 @objc public enum State : Int {
     case Connecting
     case Starting
@@ -78,6 +78,7 @@
     case Aborted
     case SignatureMismatch
     case OperationNotPermitted
+    case Failed
 }
 
 //This will take over as soon as all developers have migrated from State to DFUState
@@ -93,6 +94,7 @@
     case Aborted
     case SignatureMismatch
     case OperationNotPermitted
+    case Failed
 }
 
 /**

@@ -86,6 +86,14 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
     }
 
     // MARK: - Secure DFU Peripheral Delegate methods
+    func onAborted() {
+        dispatch_async(dispatch_get_main_queue(), {
+            self.delegate?.didStateChangedTo(DFUState.Aborted)
+        })
+        // Release the cyclic reference
+        peripheral.destroy()
+    }
+
     func onDeviceReady() {
         //All services/characteristics have been discovered, Start by reading object info
         //to get the maximum write size.
@@ -373,9 +381,14 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
                 self.sendingFirmware = false
                 self.firmwareSent    = false
                 self.isResuming      = false
+                //setting the resetting state flag so we don't assume this is an error
+                peripheral.isResetting = true
                 peripheral.disconnect()
                 peripheral.switchToNewPeripheralAndConnect(initiator.peripheralSelector)
             } else {
+                //This is not a reset disconnection
+                peripheral.isResetting = false
+                self.firmwareSent       = true
                 delegate?.didStateChangedTo(.Completed)
                 peripheral.disconnect()
             }
@@ -385,19 +398,27 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
     func didDeviceFailToConnect() {
         self.initiator.logger?.logWith(.Error, message: "Failed to connect")
         self.delegate?.didErrorOccur(.FailedToConnect, withMessage: "Failed to connect")
-        self.delegate?.didStateChangedTo(.Aborted)
+        self.delegate?.didStateChangedTo(.Failed)
     }
     
     func peripheralDisconnected() {
-        self.initiator.logger?.logWith(.Application, message: "Disconnected")
-        self.delegate?.didErrorOccur(.DeviceDisconnected, withMessage: "Failed to connect")
-        self.delegate?.didStateChangedTo(.Aborted)
+        if peripheral.isResetting {
+            self.initiator.logger?.logWith(.Application, message: "Peripheral is now resetting, operation will resume after restart...")
+            self.delegate?.didStateChangedTo(.Starting)
+        }else if self.firmwareSent {
+            self.initiator.logger?.logWith(.Application, message: "Operation completed, peripheral has been disconnected")
+            self.delegate?.didStateChangedTo(.Completed)
+
+        }else{
+            self.initiator.logger?.logWith(.Application, message: "Operation Aborted by user, peripheral has been disconnected")
+            self.delegate?.didStateChangedTo(.Aborted)
+        }
     }
     
     func peripheralDisconnected(withError anError : NSError) {
         self.initiator.logger?.logWith(.Error, message: anError.description)
-        self.delegate?.didErrorOccur(.DeviceDisconnected, withMessage: anError.description)
-        self.delegate?.didStateChangedTo(.Aborted)
+        self.delegate?.didErrorOccur(.DeviceDisconnected, withMessage: anError.localizedDescription)
+        self.delegate?.didStateChangedTo(.Failed)
     }
     
     func onErrorOccured(withError anError:SecureDFUError, andMessage aMessage:String) {
@@ -409,7 +430,8 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
         if anError == .SignatureMismatch {
             self.delegate?.didStateChangedTo(.SignatureMismatch)
         }else{
-            self.delegate?.didStateChangedTo(.Aborted)
+            self.delegate?.didStateChangedTo(.Failed)
         }
+        peripheral.disconnect()
     }
 }
