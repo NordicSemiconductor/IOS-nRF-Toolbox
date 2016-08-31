@@ -198,6 +198,12 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
                 }
                 self.clearUI()
                 break
+            case .SignatureMismatch:
+                uploadStatus.text = "Signature mismatch..."
+                break
+            case .OperationNotPermitted:
+                uploadStatus.text = "Operation not permitted..."
+                break
         }
     }
     

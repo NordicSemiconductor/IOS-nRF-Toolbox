@@ -174,6 +174,7 @@ import CoreBluetooth
         let executor = LegacyDFUExecutor(self)
         let controller = LegacyDFUServiceController(executor)
         executor.start()
+        self.logger?.logWith(.Verbose, message: "Started Legacy DFU service controller")
         return controller
     }
 }

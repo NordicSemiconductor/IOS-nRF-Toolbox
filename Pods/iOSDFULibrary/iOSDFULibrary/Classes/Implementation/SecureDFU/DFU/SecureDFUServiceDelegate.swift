@@ -27,7 +27,9 @@ public enum SecureDFUError : Int {
     case InvalidParameter           = 3
     case InsufficientResources      = 4
     case InvalidObject              = 5
+    case SignatureMismatch          = 6
     case UnsupportedType            = 7
+    case OperationNotpermitted      = 8
     case OperationFailed            = 10
     case ExtendedError              = 11
     
@@ -55,29 +57,6 @@ public enum SecureDFUError : Int {
     case UnsupportedResponse         = 307
     /// Error called during upload when the number of bytes sent is not equal to number of bytes confirmed in Packet Receipt Notification.
     case BytesLost                   = 308
-}
-
-/**
- The state of the DFU Service.
- 
- - Connecting:      Service is connecting to the DFU target
- - Starting:        DFU Service is initializing DFU operation
- - EnablingDfuMode: Service is switching the device to DFU mode
- - Uploading:       Service is uploading the firmware
- - Validating:      The DFU target is validating the firmware
- - Disconnecting:   The iDevice is disconnecting or waiting for disconnection
- - Completed:       THe DFU operation is completed and successful
- - Aborted:         DFU Operation was aborted
- */
-public enum SecureDFUState : Int {
-    case Connecting
-    case Starting
-    case EnablingDfuMode
-    case Uploading
-    case Validating
-    case Disconnecting
-    case Completed
-    case Aborted
 }
 
 /**
@@ -121,7 +100,7 @@ public protocol SecureDFUServiceDelegate : class {
      
      - parameter state: the new state fo the service
      */
-    func didStateChangedTo(state:SecureDFUState)
+    func didStateChangedTo(state:DFUState)
     
     /**
      Called after an error occurred.

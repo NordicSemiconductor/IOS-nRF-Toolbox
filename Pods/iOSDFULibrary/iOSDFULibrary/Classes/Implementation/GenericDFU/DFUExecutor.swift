@@ -56,13 +56,16 @@ class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     func didDiscoverDFUService(secureDFU : Bool) {
         self.isSecureDFU = secureDFU
         if isSecureDFU! {
+            initiator.logger?.logWith(.Verbose, message: "Did discover secure DFU service")
             self.startSecureDFU()
         } else {
+            initiator.logger?.logWith(.Verbose, message: "Did discover legacy DFU service")
             self.startLegacyDFU()
         }
     }
 
     func startSecureDFU() {
+        initiator.logger?.logWith(.Verbose, message: "Starting Secure DFU Service initiator")
         self.initiator.onPeripheralDFUDiscovery(true)
         let dfuInitiator = SecureDFUServiceInitiator(centralManager: self.centralManager, target: self.peripheral)
         dfuInitiator.withFirmwareFile(firmware)
@@ -70,10 +73,12 @@ class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         dfuInitiator.progressDelegate = initiator.progressDelegate
         dfuInitiator.logger = initiator.logger
         dfuInitiator.peripheralSelector = DFUPeripheralSelector(secureDFU: true)
+        initiator.logger?.logWith(.Verbose, message: "Instantiated Secure DFU peripheral selector")
         self.secureDFUController = dfuInitiator.start()
     }
     
     func startLegacyDFU() {
+        initiator.logger?.logWith(.Verbose, message: "Starting legacy DFU Service initiator")
         self.initiator.onPeripheralDFUDiscovery(true)
         let dfuInitiator = LegacyDFUServiceInitiator(centralManager: self.centralManager, target: self.peripheral)
         dfuInitiator.withFirmwareFile(firmware)
@@ -81,6 +86,7 @@ class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         dfuInitiator.progressDelegate = initiator.progressDelegate
         dfuInitiator.logger = initiator.logger
         dfuInitiator.peripheralSelector = DFUPeripheralSelector(secureDFU: false)
+        initiator.logger?.logWith(.Verbose, message: "Instantiated Legacy DFU peripheral selector")
         self.legacyDFUController = dfuInitiator.start()
     }
     
@@ -137,6 +143,7 @@ class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         self.peripheral = peripheral
         self.peripheral.delegate = self
         self.peripheral.discoverServices(nil) //Discover all services
+        self.initiator.logger?.logWith(.Verbose, message: "Discovering all services for peripheral \(self.peripheral)")
     }
     
     public func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
@@ -153,7 +160,7 @@ class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     //MARK: - CBPeripheralDelegate
     public func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
         for aService in peripheral.services! {
-            
+            initiator.logger?.logWith(.Verbose, message: "Discovered Service \(aService.UUID) on peripheral \(peripheral)")
             if aService.UUID == SecureDFUService.UUID {
                 //First priority if SDFU
                 self.didDiscoverDFUService(true)

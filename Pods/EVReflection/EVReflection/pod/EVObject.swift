@@ -39,7 +39,7 @@ public class EVObject: NSObject, NSCoding { // These are redundant in Swift 2+: 
     - parameter dictionary: The dictionary that will be used to create this object
     - parameter conversionOptions: Option set for the various conversion options.
     */
-    public convenience init(dictionary: NSDictionary, conversionOptions: ConversionOptions = .DefaultDeserialize) {
+    public convenience required init(dictionary: NSDictionary, conversionOptions: ConversionOptions = .DefaultDeserialize) {
         self.init()
         EVReflection.setPropertiesfromDictionary(dictionary, anyObject: self, conversionOptions: conversionOptions)
     }
@@ -50,7 +50,7 @@ public class EVObject: NSObject, NSCoding { // These are redundant in Swift 2+: 
     - parameter json: The json string that will be used to create this object
     - parameter conversionOptions: Option set for the various conversion options.
     */
-    public convenience init(json: String?, conversionOptions: ConversionOptions = .DefaultDeserialize) {
+    public convenience required init(json: String?, conversionOptions: ConversionOptions = .DefaultDeserialize) {
         self.init()
         let jsonDict = EVReflection.dictionaryFromJson(json)
         EVReflection.setPropertiesfromDictionary(jsonDict, anyObject: self, conversionOptions: conversionOptions)
@@ -407,4 +407,21 @@ public class EVObject: NSObject, NSCoding { // These are redundant in Swift 2+: 
     public func addStatusMessage(type: DeserialisationStatus, message: String) {
         evReflectionStatuses.append(type, message)
     }
+    
+    /**
+     Convert a Swift dictionary to a NSDictionary.
+     
+     - parameter key:  Key of the property that is the dictionary. Can be used when overriding this function
+     - parameter dict: The Swift dictionary
+     
+     - returns: The dictionary converted to a NSDictionary
+     */
+    public func convertDictionary(key: String, dict: Any) -> NSDictionary {        
+        let returnDict = NSMutableDictionary()
+        for (key, value) in dict as? NSDictionary ?? NSDictionary() {
+            returnDict[key as? String ?? ""] = value
+        }
+        return returnDict
+    }
+    
 }

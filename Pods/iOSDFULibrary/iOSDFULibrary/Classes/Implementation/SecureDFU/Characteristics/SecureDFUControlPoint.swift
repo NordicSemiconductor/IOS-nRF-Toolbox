@@ -30,7 +30,7 @@ internal enum SecureDFUOpCode : UInt8 {
     case SetPRNValue                = 0x02
     case CalculateChecksum          = 0x03
     case Execute                    = 0x04
-    case ReadObject                 = 0x05
+    case ReadError                  = 0x05
     case ReadObjectInfo             = 0x06
     case ResponseCode               = 0x60
 
@@ -49,6 +49,7 @@ internal enum SecureDFUProcedureType : UInt8 {
 internal enum SecureDFURequest {
     case CreateData(size : UInt32)
     case CreateCommand(size : UInt32)
+    case ReadError()
     case ReadObjectInfoCommand()
     case ReadObjectInfoData()
     case SetPacketReceiptNotification(value : UInt16)
@@ -73,6 +74,9 @@ internal enum SecureDFURequest {
             //Size is converted to Little Endian (0123 -> 3210)
             let bytes:[UInt8] = [UInt8(SecureDFUOpCode.CreateObject.code), UInt8(SecureDFUProcedureType.Command.rawValue), byteArray[3], byteArray[2], byteArray[1], byteArray[0]]
             return NSData(bytes: bytes, length: bytes.count)
+        case .ReadError():
+            let bytes:[UInt8] = [SecureDFUOpCode.ReadError.code]
+            return NSData(bytes: bytes, length: bytes.count)
         case .ReadObjectInfoCommand():
             let bytes:[UInt8] = [SecureDFUOpCode.ReadObjectInfo.code, SecureDFUProcedureType.Command.rawValue]
             return NSData(bytes: bytes, length: bytes.count)
@@ -89,6 +93,7 @@ internal enum SecureDFURequest {
         case .ExecuteCommand():
             let byteArray:[UInt8] = [UInt8(SecureDFUOpCode.Execute.code)]
             return NSData(bytes: byteArray, length: byteArray.count)
+
         }
     }
 
@@ -108,6 +113,8 @@ internal enum SecureDFURequest {
             return "Calculate checksum for last object"
         case .ExecuteCommand():
             return "Execute last object command"
+        case .ReadError():
+            return "Read Extended error command"
         }
     }
 }
@@ -122,7 +129,9 @@ internal enum SecureDFUResultCode : UInt8 {
     case InvalidObjcet         = 0x05
     case SignatureMismatch     = 0x06
     case UnsupportedType       = 0x07
+    case OperationNotpermitted = 0x08
     case OperationFailed       = 0x0A
+    case ExtendedError         = 0x0B
     
     var description:String {
         switch self {
@@ -133,8 +142,10 @@ internal enum SecureDFUResultCode : UInt8 {
             case .InsufficientResources: return "Insufficient resources"
             case .InvalidObjcet:         return "Invalid object"
             case .SignatureMismatch:     return "Signature mismatch"
+            case .OperationNotpermitted: return "Operation not permitted"
             case .UnsupportedType:       return "Unsupported type"
             case .OperationFailed:       return "Operation failed"
+            case .ExtendedError:         return "Extended error"
         }
     }
     
@@ -310,6 +321,9 @@ internal class SecureDFUControlPoint : NSObject, CBPeripheralDelegate {
         case .CalculateChecksumCommand():
             logger.a("Writing \(request.description)")
             break
+        case .ReadError():
+            logger.a("Writing \(request.description)")
+            break
         case .ExecuteCommand():
             logger.a("Writing \(request.description)")
             break
@@ -396,6 +410,9 @@ internal class SecureDFUControlPoint : NSObject, CBPeripheralDelegate {
                     success?(responseData: response.responseData)
                     break
                 case .CalculateChecksum:
+                    success?(responseData: response.responseData)
+                    break
+                case .ReadError:
                     success?(responseData: response.responseData)
                     break
                 case .Execute:

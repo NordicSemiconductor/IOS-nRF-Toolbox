@@ -72,7 +72,7 @@ internal class DFUPacket {
             data.appendBytes(UnsafePointer(appSize), length: 4)
         }
         logger.v("Writing image sizes (\(size.softdevice)b, \(size.bootloader)b, \(size.application)b) to characteristic \(DFUPacket.UUID.UUIDString)...")
-        logger.d("peripheral.writeValue(0x\(data.hexString), forCharacteristic: \(DFUVersion.UUID.UUIDString), type: WithoutResponse)")
+        logger.d("peripheral.writeValue(0x\(data.hexString), forCharacteristic: \(DFUPacket.UUID.UUIDString), type: WithoutResponse)")
         peripheral.writeValue(data, forCharacteristic: characteristic, type: CBCharacteristicWriteType.WithoutResponse)
     }
     
@@ -92,7 +92,7 @@ internal class DFUPacket {
             data.appendBytes(UnsafePointer(appSize), length: 4)
         }
         logger.v("Writing image size (\(size.application)b) to characteristic \(DFUPacket.UUID.UUIDString)...")
-        logger.d("peripheral.writeValue(0x\(data.hexString), forCharacteristic: \(DFUVersion.UUID.UUIDString), type: WithoutResponse)")
+        logger.d("peripheral.writeValue(0x\(data.hexString), forCharacteristic: \(DFUPacket.UUID.UUIDString), type: WithoutResponse)")
         peripheral.writeValue(data, forCharacteristic: characteristic, type: CBCharacteristicWriteType.WithoutResponse)
     }
     
@@ -114,7 +114,7 @@ internal class DFUPacket {
             let packet = data.subdataWithRange(NSRange(location: offset, length: packetLength))
             
             logger.v("Writing to characteristic \(DFUPacket.UUID.UUIDString)...")
-            logger.d("peripheral.writeValue(0x\(packet.hexString), forCharacteristic: \(DFUVersion.UUID.UUIDString), type: WithoutResponse)")
+            logger.d("peripheral.writeValue(0x\(packet.hexString), forCharacteristic: \(DFUPacket.UUID.UUIDString), type: WithoutResponse)")
             peripheral.writeValue(packet, forCharacteristic: characteristic, type: CBCharacteristicWriteType.WithoutResponse)
             
             offset += packetLength

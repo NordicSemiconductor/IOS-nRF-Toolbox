@@ -20,9 +20,6 @@
 * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-// import EVReflection
-import EVReflection
-
 // Errors
 internal enum DFUStreamZipError : ErrorType {
     case NoManifest
@@ -40,51 +37,6 @@ internal enum DFUStreamZipError : ErrorType {
     }
 }
 
-// Manifest model
-internal class ManifestFirmwareInfo : EVObject {
-    var binFile:String? = nil
-    var datFile:String? = nil
-    
-    var valid:Bool {
-        return binFile != nil && datFile != nil
-    }
-    
-    override func propertyMapping() -> [(String?, String?)] {
-        // Ignore init_packet_data section
-        return [("init_packet_data", nil)]
-    }
-}
-
-internal class SoftdeviceBootloaderInfo : ManifestFirmwareInfo {
-    var blSize:UInt32 = 0
-    var sdSize:UInt32 = 0
-}
-
-internal class Manifest : EVObject {
-    var application:ManifestFirmwareInfo?
-    var softdevice:ManifestFirmwareInfo?
-    var bootloader:ManifestFirmwareInfo?
-    var softdeviceBootloader:SoftdeviceBootloaderInfo?
-    
-    var valid:Bool {
-        // The manifest.json file may specify only:
-        // 1. a softdevice, a bootloader, or both combined (with, or without an app)
-        // 2. only the app
-        let hasApplication = application != nil
-        var count = 0
-        
-        count += softdevice != nil ? 1 : 0
-        count += bootloader != nil ? 1 : 0
-        count += softdeviceBootloader != nil ? 1 : 0
-        
-        return count == 1 || (count == 0 && hasApplication)
-    }
-}
-
-internal class ManifestData : EVObject {
-    var manifest:Manifest?
-}
-
 internal class DFUStreamZip : DFUStream {
     private static let MANIFEST_FILE = "manifest.json"
     
@@ -93,7 +45,7 @@ internal class DFUStreamZip : DFUStream {
     private(set) var currentPartType:UInt8 = 0
     
     /// The parsed manifest file if such found, nil otherwise.
-    private var manifestData:ManifestData?
+    private var manifest:Manifest?
     /// Binaries with softdevice and bootloader.
     private var systemBinaries:NSData?
     /// Binaries with an app.
@@ -162,26 +114,18 @@ internal class DFUStreamZip : DFUStream {
             // Read manifest content
             let json = try String(contentsOfURL: url)
             
-            // EVReflection library is used to deserialize JSON
-            // As we use it in a framework, we have to set the bundle identifier manually
-            // TODO change this if EVReflection fixed: https://github.com/evermeer/EVReflection/issues/25
-            EVReflection.setBundleIdentifier(ManifestData)
-            
             // Deserialize json
-            manifestData = ManifestData(json: json)
-            
-            if let manifest = manifestData?.manifest {
-                if !manifest.valid {
-                    throw DFUStreamZipError.InvalidManifest
-                }
-                
+            manifest = Manifest(withJsonString: json)
+
+            if manifest!.valid {
+
                 // After validation we are sure that the manifest file contains at most one
                 // of: softdeviceBootloader, softdevice or bootloader
                 
                 // Look for and assign files specified in the manifest
                 let softdeviceBootloaderType = FIRMWARE_TYPE_SOFTDEVICE | FIRMWARE_TYPE_BOOTLOADER
                 if type & softdeviceBootloaderType == softdeviceBootloaderType {
-                    if let softdeviceBootloader = manifest.softdeviceBootloader {
+                    if let softdeviceBootloader = manifest!.softdeviceBootloader {
                         let (bin, dat) = try getContentOf(softdeviceBootloader, from: contentUrls)
                         systemBinaries = bin
                         systemInitPacket = dat
@@ -193,7 +137,7 @@ internal class DFUStreamZip : DFUStream {
                 
                 let softdeviceType = FIRMWARE_TYPE_SOFTDEVICE
                 if type & softdeviceType == softdeviceType {
-                    if let softdevice = manifest.softdevice {
+                    if let softdevice = manifest!.softdevice {
                         if systemBinaries != nil {
                             // It is not allowed to put both softdevice and softdeviceBootloader in the manifest
                             throw DFUStreamZipError.InvalidManifest
@@ -208,7 +152,7 @@ internal class DFUStreamZip : DFUStream {
                 
                 let bootloaderType = FIRMWARE_TYPE_BOOTLOADER
                 if type & bootloaderType == bootloaderType {
-                    if let bootloader = manifest.bootloader {
+                    if let bootloader = manifest!.bootloader {
                         if systemBinaries != nil {
                             // It is not allowed to put both bootloader and softdeviceBootloader in the manifest
                             throw DFUStreamZipError.InvalidManifest
@@ -223,7 +167,7 @@ internal class DFUStreamZip : DFUStream {
                 
                 let applicationType = FIRMWARE_TYPE_APPLICATION
                 if type & applicationType == applicationType {
-                    if let application = manifest.application {
+                    if let application = manifest!.application {
                         let (bin, dat) = try getContentOf(application, from: contentUrls)
                         appBinaries = bin
                         appInitPacket = dat

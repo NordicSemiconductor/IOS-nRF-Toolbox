@@ -174,6 +174,7 @@ public class SecureDFUServiceInitiator : NSObject {
         let executor = SecureDFUExecutor(self)
         let controller = SecureDFUServiceController(executor)
         executor.start()
+        self.logger?.logWith(.Verbose, message: "Started Secure DFU service controller")
         return controller
     }
 }

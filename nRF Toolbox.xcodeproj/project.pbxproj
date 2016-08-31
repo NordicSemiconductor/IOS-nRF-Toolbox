@@ -480,15 +480,6 @@
 			name = Logger;
 			sourceTree = "<group>";
 		};
-		53EF2F241B6CAFECAC9C2C90 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				C8695017A2046BB9BB5E39B5 /* Pods-nRF Toolbox.debug.xcconfig */,
-				2BD6C356E3B0AE06E3CC2370 /* Pods-nRF Toolbox.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		7E6ED10C197D1D40008010B6 /* File Selection */ = {
 			isa = PBXGroup;
 			children = (
@@ -684,7 +675,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		8623E8FC53C27E914EEBA1FB /* [CP] Copy Pods Resources */ = {

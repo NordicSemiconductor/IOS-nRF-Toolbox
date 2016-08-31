@@ -379,7 +379,7 @@ internal struct PacketReceiptNotification {
             case .StartDfu(_), .StartDfu_v1,  .ValidateFirmware:
                 logger.a("\(request!.description) request sent")
                 // do not call success until we get a notification
-            case .JumpToBootloader, .ReceiveFirmwareImage, .ActivateAndReset, .Reset, .PacketReceiptNotificationRequest(_):
+            case .JumpToBootloader, .ActivateAndReset, .Reset, .PacketReceiptNotificationRequest(_):
                 logger.a("\(request!.description) request sent")
                 // there will be no notification send after these requests, call success() immetiatelly
                 // (for .ReceiveFirmwareImage the notification will be sent after firmware upload is complete)
@@ -388,7 +388,12 @@ internal struct PacketReceiptNotification {
                 // Log was created before sending the Op Code
                 
                 // do not call success until we get a notification
-                break;
+                break
+            case .ReceiveFirmwareImage:
+                if proceed == nil {
+                    success?()
+                }
+                break
             }
         }
     }

@@ -70,6 +70,7 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
         })
         peripheral.delegate = self
         peripheral.connect()
+        self.initiator.logger?.logWith(.Verbose, message: "Connecting to Secure DFU peripheral \(peripheral)")
     }
 
     func pause() -> Bool {
@@ -204,11 +205,21 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
 
         if isResuming == true {
             let match = self.verifyDataCRC(fordata: self.firmware.data, andPacketOffset: self.offset!, andperipheralCRC: self.crc!)
-            
+
             if match == true {
-                var completedPercent = Int(Double(self.offset!) / Double(self.firmware.data.length) * 100)
-                self.initiator.logger?.logWith(.Info, message: String(format:"Data object info CRC matches, resuming from %d%%..",completedPercent))
-                peripheral.setPRNValue(12)
+                var completion = Int(Double(self.offset!) / Double(self.firmware.data.length) * 100)
+                if Double(self.offset!) == Double(self.firmware.data.length) {
+                    sendingFirmware = false
+                    firmwareSent    = true
+                    self.initiator.logger?.logWith(.Info, message: "Data object fully sent, but not executed yet.")
+                    self.peripheral.sendExecuteCommand()
+                }else{
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.delegate?.didStateChangedTo(DFUState.Uploading)
+                    })
+                    self.initiator.logger?.logWith(.Info, message: String(format:"Data object info CRC matches, resuming from %d%%..",completion))
+                    peripheral.setPRNValue(12)
+                }
             } else {
                 self.initiator.logger?.logWith(.Error, message: "Data object does not match")
             }
@@ -372,21 +383,33 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
     }
 
     func didDeviceFailToConnect() {
-        self.delegate?.didStateChangedTo(.Aborted)
         self.initiator.logger?.logWith(.Error, message: "Failed to connect")
+        self.delegate?.didErrorOccur(.FailedToConnect, withMessage: "Failed to connect")
+        self.delegate?.didStateChangedTo(.Aborted)
     }
     
     func peripheralDisconnected() {
         self.initiator.logger?.logWith(.Application, message: "Disconnected")
+        self.delegate?.didErrorOccur(.DeviceDisconnected, withMessage: "Failed to connect")
+        self.delegate?.didStateChangedTo(.Aborted)
     }
     
     func peripheralDisconnected(withError anError : NSError) {
         self.initiator.logger?.logWith(.Error, message: anError.description)
+        self.delegate?.didErrorOccur(.DeviceDisconnected, withMessage: anError.description)
         self.delegate?.didStateChangedTo(.Aborted)
     }
     
     func onErrorOccured(withError anError:SecureDFUError, andMessage aMessage:String) {
         self.initiator.logger?.logWith(.Error, message: aMessage)
-        self.delegate?.didStateChangedTo(.Aborted)
+        self.delegate?.didErrorOccur(.DeviceDisconnected, withMessage: aMessage)
+
+        //Temp fix for sig mismatch
+        //TODO: This is a quick solution until we have a unified (S)DFUError enum
+        if anError == .SignatureMismatch {
+            self.delegate?.didStateChangedTo(.SignatureMismatch)
+        }else{
+            self.delegate?.didStateChangedTo(.Aborted)
+        }
     }
 }

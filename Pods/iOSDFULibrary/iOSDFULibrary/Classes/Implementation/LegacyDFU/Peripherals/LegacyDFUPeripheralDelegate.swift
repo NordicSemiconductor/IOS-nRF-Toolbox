@@ -43,6 +43,15 @@ internal protocol DFUPeripheralDelegate {
     func onStartDfuWithTypeNotSupported()
     
     /**
+     Callback called when the target DFU device returned Invalid state after sending Start DFU command
+     this usually means that the device has been interrupted while uploading the firmware and needs to 
+     strat from scratch, in theory this should be able to just resume, but in practice there are some
+     issues that arise, like not being able to verify if the same firmware file is being sent, etc..
+     it is better to simply send a reset command and start from scratch on invalid state cases.
+     */
+    func onDeviceReportedInvalidState()
+    
+    /**
      Callback called after the Start DFU command (v.2 or v.1) has been successfully sent and a Success
      response was received. The delegate should now initialize sending the Init Packet (if provided),
      or start sending firmware (in other case).

@@ -32,6 +32,9 @@ internal typealias ErrorCallback = (error:DFUError, withMessage:String) -> Void
         return service.UUID.isEqual(UUID)
     }
     
+    /// The target DFU Peripheral
+    public var targetPeripheral : LegacyDFUPeripheral?
+
     /// The logger helper.
     private var logger:LoggerHelper
     /// The service object from CoreBluetooth used to initialize the DFUService instance.
@@ -163,7 +166,14 @@ internal typealias ErrorCallback = (error:DFUError, withMessage:String) -> Void
         // 1. Sends the Start DFU command with the firmware type to DFU Control Point characteristic
         // 2. Sends firmware sizes to DFU Packet characteristic
         // 3. Receives response notification and calls onSuccess or onError
-        dfuControlPointCharacteristic!.send(Request.StartDfu(type: type), onSuccess: success, onError: report)
+        dfuControlPointCharacteristic!.send(Request.StartDfu(type: type), onSuccess: success) { (error, aMessage) in
+            if error == DFUError.RemoteInvalidState {
+                self.targetPeripheral?.resetInvalidState()
+                self.sendReset(onError: report)
+                return
+            }
+            report(error: error, withMessage: aMessage)
+        }
         dfuPacketCharacteristic!.sendFirmwareSize(size)
     }
     
