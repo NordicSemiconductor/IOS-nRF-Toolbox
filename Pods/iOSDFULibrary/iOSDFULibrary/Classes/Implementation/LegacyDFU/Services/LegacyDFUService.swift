@@ -25,7 +25,7 @@ import CoreBluetooth
 internal typealias Callback = Void -> Void
 internal typealias ErrorCallback = (error:DFUError, withMessage:String) -> Void
 
-@objc internal class DFUService : NSObject, CBPeripheralDelegate {
+@objc internal class LegacyDFUService : NSObject, CBPeripheralDelegate {
     static internal let UUID = CBUUID.init(string: "00001530-1212-EFDE-1523-785FEABCD123")
     
     static func matches(service:CBService) -> Bool {
@@ -352,22 +352,25 @@ internal typealias ErrorCallback = (error:DFUError, withMessage:String) -> Void
                 onError: report)
     }
     
-    func pause() {
+    func pause() -> Bool {
         if !aborted {
             paused = true
         }
+        return paused
     }
     
-    func resume() {
+    func resume() -> Bool {
         if !aborted && paused && firmware != nil {
             paused = false
             // onSuccess and onError callbacks are still kept by dfuControlPointCharacteristic
             dfuPacketCharacteristic!.sendNext(packetReceiptNotificationNumber!, packetsOf: firmware!, andReportProgressTo: progressDelegate)
+            return paused
         }
         paused = false
+        return paused
     }
     
-    func abort() {
+    func abort() -> Bool {
         aborted = true
         // When upload has been started and paused, we have to send the Reset command here as the device will 
         // not get a Packet Receipt Notification. If it hasn't been paused, the Reset command will be sent after receiving it, on line 270.
@@ -376,6 +379,7 @@ internal typealias ErrorCallback = (error:DFUError, withMessage:String) -> Void
             sendReset(onError: report!)
         }
         paused = false
+        return aborted
     }
     
     /**

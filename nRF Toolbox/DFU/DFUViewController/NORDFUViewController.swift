@@ -163,7 +163,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
     }
 
     //MARK: - DFUServiceDelegate
-    func didStateChangedTo(state: State) {
+    func didStateChangedTo(state: DFUState) {
         
         switch state {
             case .Connecting:
@@ -200,13 +200,13 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
                 break
         }
     }
+    
     func didErrorOccur(error: DFUError, withMessage message: String) {
-        print("Error : \(error): \(message)")
         NORDFUConstantsUtility.showAlert(message: message)
         if NORDFUConstantsUtility.isApplicationStateInactiveOrBackgrounded() {
             NORDFUConstantsUtility.showBackgroundNotification(message: message)
         }
-        clearUI()
+        self.clearUI()
     }
 
     //MARK: - DFUProgressDelegate
@@ -291,7 +291,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
     }
 
     func updateUploadButtonState() {
-        uploadButton.enabled = selectedFirmware != nil && selectedFirmware != nil
+        uploadButton.enabled = selectedFirmware != nil && selectedPeripheral != nil
     }
     
     func disableOtherButtons() {
@@ -305,21 +305,23 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
     }
     
     func clearUI() {
-        dfuController        = nil
-        selectedPeripheral   = nil
-        
-        deviceName.text      = "DEFAULT DFU"
-        uploadStatus.text    = nil
-        uploadStatus.hidden  = true
-        progress.progress    = 0.0
-        progress.hidden      = true
-        progressLabel.text   = nil
-        progressLabel.hidden = true
-        
-        uploadButton.setTitle("Upload", forState: UIControlState.Normal)
-        self.updateUploadButtonState()
-        self.enableOtherButtons()
-        self.removeObservers()
+        dispatch_async(dispatch_get_main_queue(), {
+            self.dfuController        = nil
+            self.selectedPeripheral   = nil
+
+            self.deviceName.text      = "DEFAULT DFU"
+            self.uploadStatus.text    = nil
+            self.uploadStatus.hidden  = true
+            self.progress.progress    = 0.0
+            self.progress.hidden      = true
+            self.progressLabel.text   = nil
+            self.progressLabel.hidden = true
+            
+            self.uploadButton.setTitle("Upload", forState: UIControlState.Normal)
+            self.updateUploadButtonState()
+            self.enableOtherButtons()
+            self.removeObservers()
+        })
     }
     
     func performDFU() {

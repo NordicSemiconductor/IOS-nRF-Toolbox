@@ -22,7 +22,7 @@
 
 import CoreBluetooth
 
-@objc internal class DFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate {
+internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate {
     /// Bluetooth Central Manager used to scan for the peripheral.
     private let centralManager:CBCentralManager
     /// The DFU Target peripheral.
@@ -31,14 +31,14 @@ import CoreBluetooth
     /// The optional logger delegate.
     private var logger:LoggerHelper
     /// The peripheral delegate.
-    internal var delegate:DFUPeripheralDelegate?
+    internal var delegate:SecureDFUPeripheralDelegate?
     /// Selector used to find the advertising peripheral in DFU Bootloader mode.
     private var peripheralSelector:DFUPeripheralSelector?
     
     // MARK: - DFU properties
     
     /// The DFU Service instance. Not nil when found on the peripheral.
-    private var dfuService:DFUService?
+    private var dfuService:SecureDFUService?
     /// A flag set when a command to jump to DFU Bootloader has been sent.
     private var jumpingToBootloader = false
     /// A flag set when a command to activate the new firmware and reset the device has been sent.
@@ -47,13 +47,15 @@ import CoreBluetooth
     private var paused = false
     /// A flag set when upload has been aborted.
     private var aborted = false
+    /// Maxmimum length reported by peripheral
+    private var maxWtireLength : UInt32 = 0
     
     // MARK: - Initialization
     
-    init(_ initiator:DFUServiceInitiator) {
+    init(_ initiator:SecureDFUServiceInitiator) {
         self.centralManager = initiator.centralManager
         self.peripheral = initiator.target
-        self.logger = LoggerHelper(initiator)
+        self.logger = LoggerHelper(initiator.logger!)
         super.init()
         
         // self.peripheral.delegate = self // this is set when device got connected
@@ -116,16 +118,6 @@ import CoreBluetooth
      since DFU Bootloader version 0.5 (SDK 7.0.0).
      */
     func isInitPacketRequired() -> Bool {
-        // Init packet has started being required the same time when the DFU Version
-        // characteristic was introduced (SDK 7.0.0). It version exists, and we are not
-        // in Application mode, then the Init Packet is required.
-        
-        if let version = dfuService!.version {
-            // In the application mode we don't know whether init packet is required
-            // as the app is indepenrent from the DFU Bootloader.
-            let isInApplicationMode = version.major == 0 && version.minor == 1
-            return !isInApplicationMode
-        }
         return false
     }
     
@@ -133,12 +125,134 @@ import CoreBluetooth
      Enables notifications on DFU Control Point characteristic.
      */
     func enableControlPoint() {
-        dfuService!.enableControlPoint(
-            onSuccess: { self.delegate?.onControlPointEnabled() },
-            onError: { error, message in self.delegate?.didErrorOccur(error, withMessage: message) }
-        )
+        dfuService?.enableControlPoint(onSuccess: {_ in 
+            self.delegate?.onControlPointEnabled()
+            }, onError: { (error, message) in
+                self.delegate?.onErrorOccured(withError: error, andMessage: message)
+        })
+    }
+
+    /**
+     Reads object info command to get max write size
+    */
+    func ReadObjectInfoCommand() {
+        dfuService?.readObjectInfoCommand(onSuccess: { (responseData) in
+            //Parse resonpes data
+            let count = (responseData?.length)! / sizeof(UInt32)
+            var array = [UInt32](count: count, repeatedValue:0)
+            var range = count * sizeof(UInt32)
+            responseData?.getBytes(&array, length: range)
+            self.logger.i("Read Object Info Command : received data : MaxLen:\(array[0]), Offset:\(array[1]), CRC: \(array[2]))")
+            self.delegate?.objectInfoReadCommandCompleted(array[0], offset: array[1], crc: array[2])
+            }, onError: { (error, message) in
+                self.logger.e("Error occured: \(error), \(message)")
+                self.delegate?.onErrorOccured(withError: error, andMessage: message)
+        })
+    }
+
+    /**
+     Reads object info data to get max write size
+     */
+    func ReadObjectInfoData() {
+        dfuService?.readObjectInfoData(onSuccess: { (responseData) in
+            //Parse resonpes data
+            let count = (responseData?.length)! / sizeof(UInt32)
+            var array = [UInt32](count: count, repeatedValue:0)
+            var range = count * sizeof(UInt32)
+            responseData?.getBytes(&array, length: range)
+            self.logger.i("Read Object Info Data : received data : MaxLen:\(array[0]), Offset:\(array[1]), CRC: \(array[2]))")
+            self.delegate?.objectInfoReadDataCompleted(array[0], offset: array[1], crc: array[2])
+            }, onError: { (error, message) in
+                self.logger.e("Error occured: \(error), \(message)")
+                self.delegate?.onErrorOccured(withError: error, andMessage: message)
+        })
+    }
+
+    /**
+     Send firmware data
+    */
+    func sendFirmwareChunk(firmware: DFUFirmware, andChunkRange aRange : NSRange, andPacketCount aCount : UInt16, andProgressDelegate aProgressDelegate : DFUProgressDelegate) {
+
+        self.dfuService?.sendFirmwareChunk(aRange, inFirmware: firmware, andPacketReceiptCount: aCount, andProgressDelegate: aProgressDelegate, andCompletionHandler: { (responseData) in
+            self.delegate?.firmwareChunkSendcomplete()
+            }, andErrorHandler: { (error, message) in
+                self.delegate?.onErrorOccured(withError: error, andMessage: message)
+        })
+
+    }
+
+    /**
+    Creates object data
+    */
+    func createObjectData(withLength length: UInt32) {
+        dfuService?.createObjectData(withLength: length, onSuccess: { (responseData) in
+            self.delegate?.objectCreateDataCompleted(responseData)
+            }, onError: { (error, message) in
+                self.logger.e("Error occured: \(error), \(message)")
+                self.delegate?.onErrorOccured(withError: error, andMessage: message)
+        })
+    }
+
+    /**
+    Creates an object command
+    */
+    func createObjectCommand(length: UInt32) {
+        dfuService?.createObjectCommand(withLength: length, onSuccess: { (responseData) in
+            self.delegate?.objectCreateCommandCompleted(responseData)
+            }, onError: { (error, message) in
+                self.logger.e("Error occured: \(error), \(message)")
+                self.delegate?.onErrorOccured(withError: error, andMessage: message)
+        })
+    }
+    /**
+     Set PRN Value
+    */
+    func setPRNValue(aValue : UInt16 = 0) {
+        dfuService?.setPacketReceiptNotificationValue(aValue, onSuccess: { (responseData) in
+            self.delegate?.setPRNValueCompleted()
+            }, onError: { (error, message) in
+                self.logger.e("Error occured: \(error), \(message)")
+                self.delegate?.onErrorOccured(withError: error, andMessage: message)
+        })
     }
     
+    /**
+     Send Init packet
+    */
+    func sendInitpacket(packetData : NSData){
+        dfuService?.sendInitPacket(withdata: packetData)
+        self.delegate?.initPacketSendCompleted()
+    }
+    
+    /**
+     Send calculate Checksum comand
+    */
+    func sendCalculateChecksumCommand() {
+        dfuService?.calculateChecksumCommand(onSuccess: { (responseData) in
+            //Parse resonpse data
+            let count = (responseData?.length)! / sizeof(UInt32)
+            var array = [UInt32](count: count, repeatedValue:0)
+            var range = count * sizeof(UInt32)
+            responseData?.getBytes(&array, length: range)
+            self.delegate?.calculateChecksumCompleted(array[0], CRC: array[1])
+            }, onError: { (error, message) in
+                self.logger.e("Error occured: \(error), \(message)")
+                self.delegate?.onErrorOccured(withError: error, andMessage: message)
+        })
+    }
+    
+    /**
+     Send execute command
+    */
+    func sendExecuteCommand() {
+        dfuService?.executeCommand(onSuccess: { (responseData) in
+                print("execute completed")
+                self.delegate?.executeCommandCompleted()
+            }, onError: { (error, message) in
+                self.logger.e("Error occured: \(error), \(message)")
+                self.delegate?.onErrorOccured(withError: error, andMessage: message)
+        })
+    }
     /**
      Calculates whether the target device is in application mode and must be switched to the DFU mode.
      
@@ -158,116 +272,6 @@ import CoreBluetooth
     }
     
     /**
-     Switches target device to the DFU Bootloader mode.
-     */
-    func jumpToBootloader() {
-        jumpingToBootloader = true
-        dfuService!.jumpToBootloaderMode(
-            // onSuccess the device gets disconnected and centralManager(_:didDisconnectPeripheral:error) will be called
-            onError: { error, message in self.delegate?.didErrorOccur(error, withMessage: message) }
-        )
-    }
-    
-    /**
-     Sends the DFU Start command with the specified firmware type to the DFU Control Point characteristic
-     followed by firmware sizes (in bytes) to the DFU Packet characteristic. Then it waits for a response
-     notification from the device. In case of a Success, it calls `delegate.onStartDfuSent()`.
-     If the response has an error code NotSupported it means, that the target device does not support 
-     updating Softdevice or Bootloader and the old Start DFU command needs to be used. The old command
-     (without a type) allowed to send only an application firmware.
-     
-     - parameter type: the firmware type bitfield. See FIRMWARE_TYPE_* constants
-     - parameter size: the size of all parts of the firmware
-     */
-    func sendStartDfuWithFirmwareType(type:UInt8, andSize size:DFUFirmwareSize) {
-        dfuService!.sendDfuStartWithFirmwareType(type, andSize: size,
-            onSuccess: { self.delegate?.onStartDfuSent() },
-            onError: { error, message in
-                if error == DFUError.RemoteNotSupported {
-                    self.logger.w("DFU target does not support DFU v.2")
-                    self.delegate?.onStartDfuWithTypeNotSupported()
-                } else {
-                    self.delegate?.didErrorOccur(error, withMessage: message)
-                }
-            }
-        )
-    }
-    
-    /**
-     Sends the old Start DFU command, where there was no type byte. The old format allowed to send
-     the application update only. Try this method if `sendStartDfuWithFirmwareType(_:andSize:)` 
-     returned NotSupported and the firmware contains only the application.
-     
-     - parameter size: the size of all parts of the firmware, where size of softdevice and bootloader are 0
-     */
-    func sendStartDfuWithFirmwareSize(size:DFUFirmwareSize) {
-        logger.v("Switching to DFU v.1")
-        dfuService!.sendStartDfuWithFirmwareSize(size,
-            onSuccess: { self.delegate?.onStartDfuSent() },
-            onError: { error, message in self.delegate?.didErrorOccur(error, withMessage: message) }
-        )
-    }
-    
-    /**
-     Sends the Init Packet with firmware metadata. When complete, the `delegate.onInitPacketSent()`
-     callback is called.
-     
-     - parameter data: Init Packet data
-     */
-    func sendInitPacket(data:NSData) {
-        dfuService!.sendInitPacket(data,
-            onSuccess: { self.delegate?.onInitPacketSent() },
-            onError: { error, message in self.delegate?.didErrorOccur(error, withMessage: message) }
-        )
-    }
-    
-    /**
-     Sends the firmware to the DFU target device. Before that, it will send the desired number of
-     packets to be received before sending a new Packet Receipt Notification.
-     When the whole firmware is transferred the `delegate.onFirmwareSent()` callback is invoked.
-     
-     - parameter firmware: the firmware
-     - parameter number: number of packets of firmware data to be received by the DFU target
-     before sending a new Packet Receipt Notification. Set 0 to disable PRNs (not recommended)
-     - parameter progressDelegate: the deleagate that will be informed about progress changes
-     */
-    func sendFirmware(firmware:DFUFirmware, withPacketReceiptNotificationNumber number:UInt16, andReportProgressTo progressDelegate:DFUProgressDelegate?) {
-        dfuService!.sendPacketReceiptNotificationRequest(number,
-            onSuccess: {
-                // Now the service is ready to send the firmware
-                self.dfuService!.sendFirmware(firmware, withPacketReceiptNotificationNumber: number,
-                    onProgress: progressDelegate,
-                    onSuccess: { self.delegate?.onFirmwareSent() },
-                    onError: { error, message in self.delegate?.didErrorOccur(error, withMessage: message) }
-                )
-            },
-            onError: { error, message in self.delegate?.didErrorOccur(error, withMessage: message) }
-        )
-    }
-    
-    /**
-     Sends the Validate Firmware request to DFU Control Point characteristic.
-     On success, the `delegate.onFirmwareVerified()` method will be called.
-     */
-    func validateFirmware() {
-        dfuService!.sendValidateFirmwareRequest(
-            onSuccess: { self.delegate?.onFirmwareVerified() },
-            onError: { error, message in self.delegate?.didErrorOccur(error, withMessage: message) }
-        )
-    }
-    
-    /**
-     Sends the Activate and Reset command to the DFU Control Point characteristic.
-     */
-    func activateAndReset() {
-        activating = true
-        dfuService!.sendActivateAndResetRequest(
-            // onSuccess the device gets disconnected and centralManager(_:didDisconnectPeripheral:error) will be called
-            onError: { error, message in self.delegate?.didErrorOccur(error, withMessage: message) }
-        )
-    }
-    
-    /**
      Scans for a next device to connect to. When device is found and selected, it connects to it.
      
      After updating the Softdevice the device may start advertising with an address incremented by 1.
@@ -280,14 +284,12 @@ import CoreBluetooth
         // Release the previous peripheral
         self.peripheral!.delegate = nil
         self.peripheral = nil
-        self.dfuService = nil
-        
         self.peripheralSelector = selector
         logger.v("Scanning for the DFU Bootloader...")
         centralManager.scanForPeripheralsWithServices(selector.filterBy(), options: nil)
     }
-    
-    /**
+
+   /**
      This method breaks the cyclic reference and both DFUExecutor and DFUPeripheral may be released.
      */
     func destroy() {
@@ -332,50 +334,6 @@ import CoreBluetooth
     }
     
     func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
-        // When device got disconnected due to a buttonless jump or a firmware activation, it is handled differently
-        if jumpingToBootloader || activating || aborted {
-            // This time we expect an error with code = 7: "The specified device has disconnected from us." (graceful disconnect)
-            // or code = 6: "The connection has timed out unexpectedly." (in case it disconnected before sending the ACK).
-            if error != nil {
-                logger.d("[Callback] Central Manager did disconnect peripheral")
-                if error!.code == 7 || error!.code == 6 {
-                    logger.i("Disconnected by the remote device")
-                } else {
-                    // This should never happen...
-                    logger.e(error!)
-                }
-            } else {
-                // This should never happen...
-                logger.d("[Callback] Central Manager did disconnect peripheral without error")
-            }
-            
-            if jumpingToBootloader {
-                jumpingToBootloader = false
-                // Connect again, hoping for DFU mode this time
-                connect()
-            } else if activating {
-                activating = false
-                // This part of firmware has been successfully
-                delegate?.onTransferComplete()
-            } else if aborted {
-                // The device has reseted. Notify user
-                delegate?.onAborted()
-            }
-            return
-        }
-        
-        cleanUp()
-        
-        if let error = error {
-            logger.d("[Callback] Central Manager did disconnect peripheral")
-            logger.i("Disconnected")
-            logger.e(error)
-            delegate?.didDeviceDisconnectWithError(error)
-        } else {
-            logger.d("[Callback] Central Manager did disconnect peripheral without error")
-            logger.i("Disconnected")
-            delegate?.didDeviceDisconnect()
-        }
     }
     
     func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
@@ -390,7 +348,6 @@ import CoreBluetooth
                 } else {
                     logger.i("DFU Bootloader found")
                 }
-                
                 self.peripheral = peripheral
                 self.peripheralSelector = nil
                 connect()
@@ -408,29 +365,29 @@ import CoreBluetooth
         if error != nil {
             logger.e("Services discovery failed")
             logger.e(error!)
-            delegate?.didErrorOccur(DFUError.ServiceDiscoveryFailed, withMessage: "Services discovery failed")
+            delegate?.onErrorOccured(withError: SecureDFUError.ServiceDiscoveryFailed, andMessage: "Service discovery failed")
         } else {
             logger.i("Services discovered")
             
             // Find the DFU Service
             let services = peripheral.services!
             for service in services {
-                if DFUService.matches(service) {
-                    logger.v("DFU Service found")
+                if SecureDFUService.matches(service) {
+                    logger.v("Secure DFU Service found")
                     
                     // DFU Service has been found. Discover characteristics...
-                    dfuService = DFUService(service, logger)
+                    dfuService = SecureDFUService(service, logger)
                     dfuService!.discoverCharacteristics(
-                        onSuccess: { () -> () in self.delegate?.onDeviceReady() },
-                        onError: { (error, message) -> () in self.delegate?.didErrorOccur(error, withMessage: message) }
+                        onSuccess: { (data) -> () in self.delegate?.onDeviceReady() },
+                        onError: { (error, message) -> () in self.delegate?.onErrorOccured(withError: error, andMessage: message) }
                     )
                 }
             }
             
             if dfuService == nil {
-                logger.e("DFU Service not found")
+                logger.e("Secure DFU Service not found")
                 // The device does not support DFU, nor buttonless jump
-                delegate?.didErrorOccur(DFUError.DeviceNotSupported, withMessage: "DFU Service not found")
+                delegate?.onErrorOccured(withError:SecureDFUError.DeviceNotSupported, andMessage: "Secure DFU Service not found")
             }
         }
     }

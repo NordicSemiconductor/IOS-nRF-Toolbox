@@ -48,7 +48,7 @@
     case ReadingVersionFailed        = 303
     case EnablingControlPointFailed  = 304
     case WritingCharacteristicFailed = 305
-    case ReceivingNotificatinoFailed = 306
+    case ReceivingNotificationFailed = 306
     case UnsupportedResponse         = 307
     /// Error called during upload when the number of bytes sent is not equal to number of bytes confirmed in Packet Receipt Notification.
     case BytesLost                   = 308
@@ -66,7 +66,21 @@
  - Completed:       THe DFU operation is completed and successful
  - Aborted:         DFU Operation was aborted
  */
+@available (iOS, deprecated=0.1.9, renamed="DFUState", message="Please use `DFUState` instead")
 @objc public enum State : Int {
+    case Connecting
+    case Starting
+    case EnablingDfuMode
+    case Uploading
+    case Validating
+    case Disconnecting
+    case Completed
+    case Aborted
+}
+
+//This will take over as soon as all developers have migrated from State to DFUState
+@available(iOS, introduced=0.2.0)
+@objc public enum DFUState : Int {
     case Connecting
     case Starting
     case EnablingDfuMode
@@ -118,7 +132,7 @@
      
      - parameter state: the new state fo the service
      */
-    func didStateChangedTo(state:State)
+    func didStateChangedTo(state:DFUState)
     
     /**
      Called after an error occurred.

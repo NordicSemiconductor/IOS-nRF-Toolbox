@@ -20,9 +20,9 @@
 * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-internal class DFUExecutor : DFUPeripheralDelegate {
+internal class LegacyDFUExecutor : DFUPeripheralDelegate {
     /// The DFU Service Initiator instance that was used to start the service.
-    private let initiator:DFUServiceInitiator
+    private let initiator:LegacyDFUServiceInitiator
     
     /// The service delegate will be informed about status changes and errors.
     private var delegate:DFUServiceDelegate? {
@@ -37,7 +37,7 @@ internal class DFUExecutor : DFUPeripheralDelegate {
     }
     
     /// The DFU Target peripheral. The peripheral keeps the cyclic reference to the DFUExecutor preventing both from being disposed before DFU ends.
-    private var peripheral:DFUPeripheral
+    private var peripheral:LegacyDFUPeripheral
     /// The firmware to be sent over-the-air
     private var firmware:DFUFirmware
     
@@ -45,10 +45,10 @@ internal class DFUExecutor : DFUPeripheralDelegate {
     
     // MARK: - Initialization
     
-    init(_ initiator:DFUServiceInitiator) {
+    init(_ initiator:LegacyDFUServiceInitiator) {
         self.initiator = initiator
         self.firmware = initiator.file!
-        self.peripheral = DFUPeripheral(initiator)
+        self.peripheral = LegacyDFUPeripheral(initiator)
     }
     
     // MARK: - DFU Controller methods
@@ -56,7 +56,7 @@ internal class DFUExecutor : DFUPeripheralDelegate {
     func start() {
         self.error = nil
         dispatch_async(dispatch_get_main_queue(), {
-            self.delegate?.didStateChangedTo(State.Connecting)
+            self.delegate?.didStateChangedTo(DFUState.Connecting)
         })
         peripheral.delegate = self
         peripheral.connect()
@@ -82,7 +82,7 @@ internal class DFUExecutor : DFUPeripheralDelegate {
             return
         }
         dispatch_async(dispatch_get_main_queue(), {
-            self.delegate?.didStateChangedTo(State.Starting)
+            self.delegate?.didStateChangedTo(DFUState.Starting)
         })
         peripheral.enableControlPoint()
     }
@@ -91,7 +91,7 @@ internal class DFUExecutor : DFUPeripheralDelegate {
         // Check whether the target is in application or bootloader mode
         if peripheral.isInApplicationMode(initiator.forceDfu) {
             dispatch_async(dispatch_get_main_queue(), {
-                self.delegate?.didStateChangedTo(State.EnablingDfuMode)
+                self.delegate?.didStateChangedTo(DFUState.EnablingDfuMode)
             })
             peripheral.jumpToBootloader()
         } else {
@@ -132,7 +132,7 @@ internal class DFUExecutor : DFUPeripheralDelegate {
      */
     func sendFirmware() {
         dispatch_async(dispatch_get_main_queue(), {
-            self.delegate?.didStateChangedTo(State.Uploading)
+            self.delegate?.didStateChangedTo(DFUState.Uploading)
         })
         // First the service will send the number of packets of firmware data to be received 
         // by the DFU target before sending a new Packet Receipt Notification.
@@ -142,14 +142,14 @@ internal class DFUExecutor : DFUPeripheralDelegate {
     
     func onFirmwareSent() {
         dispatch_async(dispatch_get_main_queue(), {
-            self.delegate?.didStateChangedTo(State.Validating)
+            self.delegate?.didStateChangedTo(DFUState.Validating)
         })
         peripheral.validateFirmware()
     }
     
     func onFirmwareVerified() {
         dispatch_async(dispatch_get_main_queue(), {
-            self.delegate?.didStateChangedTo(State.Disconnecting)
+            self.delegate?.didStateChangedTo(DFUState.Disconnecting)
         })
         peripheral.activateAndReset()
     }
@@ -168,7 +168,7 @@ internal class DFUExecutor : DFUPeripheralDelegate {
     
     func onAborted() {
         dispatch_async(dispatch_get_main_queue(), {
-            self.delegate?.didStateChangedTo(State.Aborted)
+            self.delegate?.didStateChangedTo(DFUState.Aborted)
         })
         // Release the cyclic reference
         peripheral.destroy()
@@ -189,7 +189,7 @@ internal class DFUExecutor : DFUPeripheralDelegate {
                 self.delegate?.didErrorOccur(error.error, withMessage: error.message)
             } else {
                 // If no, the DFU operation is complete
-                self.delegate?.didStateChangedTo(State.Completed)
+                self.delegate?.didStateChangedTo(DFUState.Completed)
             }
         })
         // Release the cyclic reference

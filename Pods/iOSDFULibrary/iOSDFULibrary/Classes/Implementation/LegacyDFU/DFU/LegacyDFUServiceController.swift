@@ -24,13 +24,13 @@
 A controller object used to pause, resume or abort the DFU operation. Check methods documentation
 for more information.
 */
-@objc public class DFUServiceController : NSObject {
-    private let executor:DFUExecutor
+@objc public class LegacyDFUServiceController : NSObject {
+    private let executor:LegacyDFUExecutor
     
     private var servicePaused = false
     private var serviceAborted = false
     
-    internal init(_ executor:DFUExecutor) {
+    internal init(_ executor:LegacyDFUExecutor) {
         self.executor = executor
     }
     
@@ -40,19 +40,21 @@ for more information.
      next Packet Receipt Notification. Otherwise it will continue to send Op Codes and pause before sending the first bytes
      of the firmware. With Packet Receipt Notifications disabled it is the only moment when upload may be paused.
      */
-    public func pause() {
+    public func pause() -> Bool {
         if !servicePaused && executor.pause() {
             servicePaused = true
         }
+        return servicePaused
     }
     
     /**
      Call this method to resume the paused transffer, otherwise does nothing.
      */
-    public func resume() {
+    public func resume() -> Bool {
         if servicePaused && executor.resume() {
             servicePaused = false
         }
+        return servicePaused
     }
     
     /**
@@ -64,9 +66,10 @@ for more information.
      Packet Receipt Notification. It PRM procedure is disabled it will continue until the whole 
      firmware is sent and then Reset will be sent instead of Verify Firmware op code.
      */
-    public func abort() {
+    public func abort() -> Bool {
         serviceAborted = true
         executor.abort()
+        return serviceAborted
     }
     
     /**

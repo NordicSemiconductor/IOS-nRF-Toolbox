@@ -20,42 +20,42 @@
 * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-internal class LoggerHelper {
-    private var initiator:DFUServiceInitiator
+class LoggerHelper {
+    private var logger:LoggerDelegate
     
-    init(_ initiator:DFUServiceInitiator) {
-        self.initiator = initiator
+    init(_ logger:LoggerDelegate) {
+        self.logger = logger
     }
     
     func d(message:String) {
-        self.initiator.logger?.logWith(.Debug, message: message)
+        logger.logWith(.Debug, message: message)
     }
     
     func v(message:String) {
-        self.initiator.logger?.logWith(.Verbose, message: message)
+        logger.logWith(.Verbose, message: message)
     }
     
     func i(message:String) {
-        self.initiator.logger?.logWith(.Info, message: message)
+        logger.logWith(.Info, message: message)
     }
     
     func a(message:String) {
-        self.initiator.logger?.logWith(.Application, message: message)
+        logger.logWith(.Application, message: message)
     }
     
     func w(message:String) {
-        self.initiator.logger?.logWith(.Warning, message: message)
+        logger.logWith(.Warning, message: message)
     }
     
     func w(error:NSError) {
-        self.initiator.logger?.logWith(.Warning, message: "Error \(error.code): \(error.localizedDescription)");
+        logger.logWith(.Warning, message: "Error \(error.code): \(error.localizedDescription)");
     }
     
     func e(message:String) {
-        self.initiator.logger?.logWith(.Error, message: message)
+        logger.logWith(.Error, message: message)
     }
     
     func e(error:NSError) {
-        self.initiator.logger?.logWith(.Error, message: "Error \(error.code): \(error.localizedDescription)");
+        logger.logWith(.Error, message: "Error \(error.code): \(error.localizedDescription)");
     }
 }

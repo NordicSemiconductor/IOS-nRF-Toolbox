@@ -1,6 +1,6 @@
 use_frameworks!
-target 'nRF Toolbox' do
-	pod 'iOSDFULibrary'
-	pod 'SWRevealViewController', '~> 2.3'
-	pod 'CorePlot', '~> 2.1'
+target "nRF Toolbox" do
+    pod 'iOSDFULibrary', :git => 'https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library.git', :branch => 'Develop'
+    pod 'SWRevealViewController', '~> 2.3'
+    pod 'CorePlot', '~> 2.1'
 end

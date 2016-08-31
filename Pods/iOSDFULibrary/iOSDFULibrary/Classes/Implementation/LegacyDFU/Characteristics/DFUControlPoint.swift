@@ -24,17 +24,36 @@ import CoreBluetooth
 
 internal typealias ProgressCallback = (bytesReceived:Int) -> Void
 
+@available(iOS, deprecated=0.1.9, message="OpCode has been deprecated, use DFUOpCode instead", renamed="DFUOpCode")
 internal enum OpCode : UInt8 {
-    case StartDfu = 1
-    case InitDfuParameters = 2
-    case ReceiveFirmwareImage = 3
-    case ValidateFirmware = 4
-    case ActivateAndReset = 5
-    case Reset = 6
-    case ReportReceivedImageSize = 7 // unused in this library
-    case PacketReceiptNotificationRequest = 8
-    case ResponseCode = 16
-    case PacketReceiptNotification = 17
+    case StartDfu                           = 1
+    case InitDfuParameters                  = 2
+    case ReceiveFirmwareImage               = 3
+    case ValidateFirmware                   = 4
+    case ActivateAndReset                   = 5
+    case Reset                              = 6
+    case ReportReceivedImageSize            = 7 // unused in this library
+    case PacketReceiptNotificationRequest   = 8
+    case ResponseCode                       = 16
+    case PacketReceiptNotification          = 17
+    
+    var code:UInt8 {
+        return rawValue
+    }
+}
+
+@available(iOS, introduced=0.1.9)
+internal enum DFUOpCode : UInt8 {
+    case StartDfu                           = 1
+    case InitDfuParameters                  = 2
+    case ReceiveFirmwareImage               = 3
+    case ValidateFirmware                   = 4
+    case ActivateAndReset                   = 5
+    case Reset                              = 6
+    case ReportReceivedImageSize            = 7 // unused in this library
+    case PacketReceiptNotificationRequest   = 8
+    case ResponseCode                       = 16
+    case PacketReceiptNotification          = 17
     
     var code:UInt8 {
         return rawValue
@@ -129,7 +148,32 @@ internal enum Request {
     }
 }
 
+@available(iOS, deprecated=0.1.9, message="StatusCode has been deprecated, use DFUSResultCode instead", renamed="DFUResultCode")
 internal enum StatusCode : UInt8 {
+    case Success              = 1
+    case InvalidState         = 2
+    case NotSupported         = 3
+    case DataSizeExceedsLimit = 4
+    case CRCError             = 5
+    case OperationFailed      = 6
+    
+    var description:String {
+        switch self {
+        case .Success: return "Success"
+        case .InvalidState: return "Device is in invalid state"
+        case .NotSupported: return "Operation not supported"
+        case .DataSizeExceedsLimit:  return "Data size exceeds limit"
+        case .CRCError: return "CRC Error"
+        case .OperationFailed: return "Operation failed"
+        }
+    }
+    
+    var code:UInt8 {
+        return rawValue
+    }
+}
+
+internal enum DFUResultCode : UInt8 {
     case Success              = 1
     case InvalidState         = 2
     case NotSupported         = 3
@@ -354,7 +398,7 @@ internal struct PacketReceiptNotification {
             // This characteristic is never read, the error may only pop up when notification is received
             logger.e("Receiving notification failed")
             logger.e(error!)
-            report?(error:DFUError.ReceivingNotificatinoFailed, withMessage:"Receiving notification failed")
+            report?(error:DFUError.ReceivingNotificationFailed, withMessage:"Receiving notification failed")
         } else {
             // During the upload we may get either a Packet Receipt Notification, or a Response with status code
             if proceed != nil {

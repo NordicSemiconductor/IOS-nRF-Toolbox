@@ -46,7 +46,7 @@ internal class ManifestFirmwareInfo : EVObject {
     var datFile:String? = nil
     
     var valid:Bool {
-        return binFile != nil // && datFile != nil The init packet was not required before SDK 7.1
+        return binFile != nil && datFile != nil
     }
     
     override func propertyMapping() -> [(String?, String?)] {
