@@ -37,7 +37,7 @@ class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
 
     //MARK: - DFU Executor implementation
     
-    public var paused:Bool {
+    var paused:Bool {
         if self.isSecureDFU! {
             return (secureDFUController?.paused)!
         }else{
@@ -45,7 +45,7 @@ class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         }
     }
     
-    public var aborted:Bool {
+    var aborted:Bool {
         if self.isSecureDFU! {
             return (secureDFUController?.aborted)!
         }else{
@@ -101,7 +101,7 @@ class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             self.delegate?.didStateChangedTo(DFUState.Connecting)
         })
         
-        var centralManager = self.initiator.centralManager
+        let centralManager = self.initiator.centralManager
         centralManager.delegate = self
         centralManager.connectPeripheral(peripheral, options: nil)
     }
@@ -131,14 +131,14 @@ class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     }
 
     //MARK: - CBCentralManager delegate
-    public func centralManagerDidUpdateState(central: CBCentralManager){
+    func centralManagerDidUpdateState(central: CBCentralManager){
         if central.state != CBCentralManagerState.PoweredOn {
             self.delegate?.didErrorOccur(DFUError.FailedToConnect, withMessage: "The bluetooth radio is powered off")
             self.delegate?.didStateChangedTo(.Failed)
         }
     }
     
-    public func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {
+    func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {
         //Discover services as soon as we connect to peripheral
         self.peripheral = peripheral
         self.peripheral.delegate = self
@@ -146,7 +146,7 @@ class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         self.initiator.logger?.logWith(.Verbose, message: "Discovering all services for peripheral \(self.peripheral)")
     }
     
-    public func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
+    func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
         guard error == nil else {
             self.delegate?.didErrorOccur(DFUError.DeviceDisconnected, withMessage: "Error while disconnecting from peripheral: \(error)")
             self.delegate?.didStateChangedTo(.Failed)
@@ -154,13 +154,13 @@ class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         }
     }
     
-    public func centralManager(central: CBCentralManager, didFailToConnectPeripheral peripheral: CBPeripheral, error: NSError?) {
+    func centralManager(central: CBCentralManager, didFailToConnectPeripheral peripheral: CBPeripheral, error: NSError?) {
             self.delegate?.didErrorOccur(DFUError.FailedToConnect, withMessage: "Error while connecting to peripheral: \(error)")
             self.delegate?.didStateChangedTo(.Failed)
     }
 
     //MARK: - CBPeripheralDelegate
-    public func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
+    func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
         for aService in peripheral.services! {
             initiator.logger?.logWith(.Verbose, message: "Discovered Service \(aService.UUID) on peripheral \(peripheral)")
             if aService.UUID == SecureDFUService.UUID {

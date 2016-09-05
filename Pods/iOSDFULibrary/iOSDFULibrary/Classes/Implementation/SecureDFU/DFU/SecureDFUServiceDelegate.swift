@@ -21,42 +21,74 @@
 */
 
 public enum SecureDFUError : Int {
-    case InvalidCode                = 0
-    case Success                    = 1
-    case OpCodeNotSupported         = 2
-    case InvalidParameter           = 3
-    case InsufficientResources      = 4
-    case InvalidObject              = 5
-    case SignatureMismatch          = 6
-    case UnsupportedType            = 7
-    case OperationNotpermitted      = 8
-    case OperationFailed            = 10
-    case ExtendedError              = 11
+    case InvalidCode                    = 0
+    case Success                        = 1
+    case OpCodeNotSupported             = 2
+    case InvalidParameter               = 3
+    case InsufficientResources          = 4
+    case InvalidObject                  = 5
+    case SignatureMismatch              = 6
+    case UnsupportedType                = 7
+    case OperationNotpermitted          = 8
+    case OperationFailed                = 10
+    case ExtendedError                  = 11
     
     /// Providing the DFUFirmware is required.
-    case FileNotSpecified            = 101
+    case FileNotSpecified               = 101
     /// Given firmware file is not supported.
-    case FileInvalid                 = 102
+    case FileInvalid                    = 102
     /// Since SDK 7.0.0 the DFU Bootloader requires the extended Init Packet. For more details, see:
     /// http://infocenter.nordicsemi.com/topic/com.nordic.infocenter.sdk5.v11.0.0/bledfu_example_init.html?cp=4_0_0_4_2_1_1_3
-    case ExtendedInitPacketRequired  = 103
+    case ExtendedInitPacketRequired     = 103
     /// Before SDK 7.0.0 the init packet could have contained only 2-byte CRC value, and was optional.
     /// Providing an extended one instead would cause CRC error during validation (the bootloader assumes that the 2 first bytes
     /// of the init packet are the firmware CRC).
-    case InitPacketRequired          = 104
+    case InitPacketRequired             = 104
     
-    case FailedToConnect             = 201
-    case DeviceDisconnected          = 202
+    case FailedToConnect                = 201
+    case DeviceDisconnected             = 202
     
-    case ServiceDiscoveryFailed      = 301
-    case DeviceNotSupported          = 302
-    case ReadingVersionFailed        = 303
-    case EnablingControlPointFailed  = 304
-    case WritingCharacteristicFailed = 305
-    case ReceivingNotificationFailed = 306
-    case UnsupportedResponse         = 307
+    case ServiceDiscoveryFailed         = 301
+    case DeviceNotSupported             = 302
+    case ReadingVersionFailed           = 303
+    case EnablingControlPointFailed     = 304
+    case WritingCharacteristicFailed    = 305
+    case ReceivingNotificationFailed    = 306
+    case UnsupportedResponse            = 307
     /// Error called during upload when the number of bytes sent is not equal to number of bytes confirmed in Packet Receipt Notification.
-    case BytesLost                   = 308
+    case BytesLost                      = 308
+    case CharacteristicDiscoveryFailed  = 309
+    
+    var description:String {
+        switch self {
+            case .InvalidCode:                  return "Invalid code"
+            case .Success:                      return "Success"
+            case .OpCodeNotSupported:           return "OpCode not supported"
+            case .InvalidParameter:             return "Invalid parameter"
+            case .InsufficientResources:        return "Insufficient resources"
+            case .InvalidObject:                return "Invalid object"
+            case .SignatureMismatch:            return "signature mismatch"
+            case .UnsupportedType:              return "Unsupported type"
+            case .OperationNotpermitted:        return "Operation not permitted"
+            case .OperationFailed:              return "Operation failed"
+            case .ExtendedError:                return "Extended error"
+            case .FileNotSpecified:             return "File not specified"
+            case .FileInvalid:                  return "File invalid"
+            case .ExtendedInitPacketRequired:   return "Extended init packet required"
+            case .InitPacketRequired:           return "Init packet required"
+            case .FailedToConnect:              return "Failed to connect"
+            case .DeviceDisconnected:           return "Devices disconnected"
+            case .ServiceDiscoveryFailed:       return "Service discovery failed"
+            case .DeviceNotSupported:           return "Device not supported"
+            case .ReadingVersionFailed:         return "Reading version failed"
+            case .EnablingControlPointFailed:   return "Enabling control point failed"
+            case .WritingCharacteristicFailed:  return "Writing characteristic failed"
+            case .ReceivingNotificationFailed:  return "Receiving notification failed"
+            case .UnsupportedResponse:          return "Unsupported response"
+            case .BytesLost:                    return "Bytes lost"
+            case .CharacteristicDiscoveryFailed:return "Characteristic discovery failed"
+        }
+    }
 }
 
 /**

@@ -86,7 +86,7 @@ internal class SecureDFUPacket {
     
     func sendData(withPRN aPRNVaule:UInt16, andRange aRange: NSRange, inFirmware aFirmware : DFUFirmware, andProgressHandler aProgressHandler : DFUProgressDelegate?, andCompletion aCompletion: SDFUCallback) {
         let peripheral   = characteristic.service.peripheral
-        var aData        = aFirmware.data.subdataWithRange(aRange)
+        let aData        = aFirmware.data.subdataWithRange(aRange)
         let bytesTotal   = aData.length
         let totalPackets = (bytesTotal + PacketSize - 1) / PacketSize
         let packetsSent  = (bytesSent + PacketSize - 1) / PacketSize
@@ -116,13 +116,12 @@ internal class SecureDFUPacket {
             
             // Calculate current transfer speed in bytes per second
             let now = CFAbsoluteTimeGetCurrent()
-            let currentSpeed = Double(packetLength) / (now - lastTime!)
             lastTime = now
             
             // Calculate progress for current chunk, this is not presented to progress delegate
             let currentProgress = (bytesSent * 100 / bytesTotal)
             // Calculate the total progress of the firmware, presented to the delegate
-            var totalProgress = (aRange.location + bytesSent) * 100 / (aFirmware.data).length
+            let totalProgress = (aRange.location + bytesSent) * 100 / (aFirmware.data).length
             
             // Notify progress listener only if current progress has increased since last time
             if currentProgress > progress {

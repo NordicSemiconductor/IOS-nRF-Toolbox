@@ -113,9 +113,8 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
     }
 
     func calculateFirmwareRanges() -> [NSRange]{
-        var chunkCount = ceil(Double(self.firmware.data.length) / Double(self.maxLen!))
         var totalLength = self.firmware.data.length
-        var currentMaxLen = Int(maxLen!)
+        let currentMaxLen = Int(maxLen!)
         var ranges = [NSRange]()
         
         var partIdx = 0
@@ -129,7 +128,7 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
                 totalLength = 0
             }
             ranges.append(chunkRange!)
-            partIdx++
+            partIdx += 1
         }
 
         return ranges
@@ -142,7 +141,7 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
     func verifyDataCRC(fordata data : NSData, andPacketOffset anOffset : UInt32, andperipheralCRC aCRC : UInt32) -> Bool {
         //get data form 0 up to the offset the peripheral has reproted
         let offsetData : NSData = (data.subdataWithRange(NSRange(location: 0, length: Int(anOffset))))
-        var calculatedCRC = CRC32(data: offsetData).crc
+        let calculatedCRC = CRC32(data: offsetData).crc
         
         //This returns true if the current data packet's CRC matches the current firmware's packet CRC
         return calculatedCRC == aCRC
@@ -162,14 +161,14 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
         self.peripheral.sendInitpacket(data!)
     }
     
-    func objectInfoReadCommandCompleted(var maxLen : UInt32, offset : UInt32, crc :UInt32 ) {
+    func objectInfoReadCommandCompleted(let maxLen : UInt32, offset : UInt32, crc :UInt32 ) {
         self.maxLen = maxLen
         self.offset = offset
         self.crc = crc
 
         if self.offset > 0 && self.crc > 0 {
             isResuming = true
-            var match = self.verifyDataCRC(fordata: self.firmware.initPacket!, andPacketOffset: offset, andperipheralCRC: crc)
+            let match = self.verifyDataCRC(fordata: self.firmware.initPacket!, andPacketOffset: offset, andperipheralCRC: crc)
             if match == true {
                 //Resume Init
                 if self.offset < UInt32((self.firmware.initPacket?.length)!) {
@@ -215,7 +214,7 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
             let match = self.verifyDataCRC(fordata: self.firmware.data, andPacketOffset: self.offset!, andperipheralCRC: self.crc!)
 
             if match == true {
-                var completion = Int(Double(self.offset!) / Double(self.firmware.data.length) * 100)
+                let completion = Int(Double(self.offset!) / Double(self.firmware.data.length) * 100)
                 if Double(self.offset!) == Double(self.firmware.data.length) {
                     sendingFirmware = false
                     firmwareSent    = true
@@ -243,7 +242,7 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
     }
 
     func createObjectDataForCurrentChunk() {
-        var currentRange = self.firmwareRanges![self.currentRangeIdx!]
+        let currentRange = self.firmwareRanges![self.currentRangeIdx!]
         self.initiator.logger?.logWith(.Info, message: "current firmware chunk length = \(currentRange.length)")
 
         peripheral.createObjectData(withLength: UInt32(currentRange.length))
@@ -268,12 +267,12 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
         sendCurrentChunk()
     }
 
-    func sendCurrentChunk(var resumeOffset : UInt32 = 0){
+    func sendCurrentChunk(let resumeOffset : UInt32 = 0){
         var aRange = firmwareRanges![currentRangeIdx!]
         if self.isResuming && resumeOffset > 0 {
 
             //This is a resuming chunk, recalculate location and size
-            var newLength = aRange.location + aRange.length - Int(self.offset!)
+            let newLength = aRange.location + aRange.length - Int(self.offset!)
             aRange.location = Int(resumeOffset)
             aRange.length   = newLength
         }
@@ -296,11 +295,11 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
             } else {
                 //Resume data from a given chunk offset
                 self.currentRangeIdx = 0
-                for var chunkRange in self.firmwareRanges! {
+                for chunkRange in self.firmwareRanges! {
                     if NSLocationInRange(Int(self.offset!), chunkRange) {
                         break
                     }
-                    self.currentRangeIdx!++
+                    self.currentRangeIdx! += 1
                 }
                 dispatch_async(dispatch_get_main_queue(), {
                     self.delegate?.didStateChangedTo(DFUState.Uploading)
@@ -324,8 +323,8 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
         //Firmware is still being sent!
         if sendingFirmware == true {
             //verify CRC
-            var chunkData = self.firmware.data.subdataWithRange(NSRange(location: 0, length:Int(self.offset!)))
-            var crc = CRC32.init(data: chunkData).crc
+            let chunkData = self.firmware.data.subdataWithRange(NSRange(location: 0, length:Int(self.offset!)))
+            let crc = CRC32.init(data: chunkData).crc
             if self.crc == crc {
                 self.initiator.logger?.logWith(.Info, message: "Chunk CRC matches, exetuce!")
                 peripheral.sendExecuteCommand()
@@ -338,7 +337,7 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
 
         if initPacketSent == true && firmwareSent == false {
             if offset == UInt32((firmware.initPacket?.length)!) {
-                var calculatedCRC = CRC32(data: self.firmware.initPacket!).crc
+                let calculatedCRC = CRC32(data: self.firmware.initPacket!).crc
                 if calculatedCRC == self.crc {
                     self.initiator.logger?.logWith(.Info, message: "CRC match, send execute command")
                     peripheral.sendExecuteCommand()
@@ -354,7 +353,7 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
     func executeCommandCompleted() {
         if sendingFirmware && !firmwareSent {
             if(currentRangeIdx! < (firmwareRanges?.count)! - 1) {
-                currentRangeIdx!++
+                currentRangeIdx! += 1
                 createObjectDataForCurrentChunk()
                 return
             }else{

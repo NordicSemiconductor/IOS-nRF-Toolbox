@@ -148,7 +148,7 @@ internal typealias SDFUErrorCallback = (error:SecureDFUError, withMessage:String
                 self.logger.a("Received Extended error data: \(responseData!)")
                 successCallback(responseData: responseData)
             }, onError: { (anError, aMessage) in
-                self.logger.a("Failed to read Extended with error: \(anError), and message: \(aMessage)")
+                self.logger.e("Failed to read Extended with error: \(anError), and message: \(aMessage)")
                 reportCallback(error: anError, withMessage: aMessage)
         })
     }
@@ -197,7 +197,7 @@ internal typealias SDFUErrorCallback = (error:SecureDFUError, withMessage:String
         self.chunkRange                         = chunkRange
         self.progressDelegate                   = progressDelegate
 
-        var successHandler : SDFUCallback = { (responseData) in
+        let successHandler : SDFUCallback = { (responseData) in
             self.dfuControlPointCharacteristic?.uploadFinished()
             completionHandler(responseData: nil)
         }
@@ -254,7 +254,7 @@ internal typealias SDFUErrorCallback = (error:SecureDFUError, withMessage:String
         if error != nil {
             logger.e("Characteristics discovery failed")
             logger.e(error!)
-            _report?(error: SecureDFUError.ServiceDiscoveryFailed, withMessage: "Characteristics discovery failed")
+            _report?(error: SecureDFUError.CharacteristicDiscoveryFailed, withMessage:SecureDFUError.CharacteristicDiscoveryFailed.description)
         } else {
             logger.i("DFU characteristics discovered")
             
@@ -271,13 +271,13 @@ internal typealias SDFUErrorCallback = (error:SecureDFUError, withMessage:String
             if dfuControlPointCharacteristic == nil {
                 logger.e("DFU Control Point characteristics not found")
                 // DFU Control Point characteristic is required
-                _report?(error: SecureDFUError.DeviceNotSupported, withMessage: "DFU Control Point characteristic not found")
+                _report?(error: SecureDFUError.DeviceNotSupported, withMessage: SecureDFUError.DeviceNotSupported.description)
                 return
             }
             if !dfuControlPointCharacteristic!.valid {
                 logger.e("DFU Control Point characteristics must have Write and Notify properties")
                 // DFU Control Point characteristic must have Write and Notify properties
-                _report?(error: SecureDFUError.DeviceNotSupported, withMessage: "DFU Control Point characteristic does not have the Write and Notify properties")
+                _report?(error: SecureDFUError.DeviceNotSupported, withMessage: SecureDFUError.DeviceNotSupported.description)
                 return
             }
             

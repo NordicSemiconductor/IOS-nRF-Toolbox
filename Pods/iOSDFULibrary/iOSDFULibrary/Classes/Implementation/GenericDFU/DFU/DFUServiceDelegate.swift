@@ -79,6 +79,22 @@
     case SignatureMismatch
     case OperationNotPermitted
     case Failed
+    
+    public func description() -> String {
+        switch self {
+        case .Connecting: return "Connecting"
+        case .Starting: return "Starting"
+        case .EnablingDfuMode: return "Enabling DFU Mode"
+        case .Uploading: return "Uploading"
+        case .Validating: return "Validating"
+        case .Disconnecting: return "Disconnecting"
+        case .Completed: return "Completed"
+        case .Aborted: return "Aborted"
+        case .SignatureMismatch: return "Signature mismatch"
+        case .OperationNotPermitted: return "Operation not permitted"
+        case .Failed: return "Failed"
+        }
+    }
 }
 
 //This will take over as soon as all developers have migrated from State to DFUState
@@ -95,6 +111,22 @@
     case SignatureMismatch
     case OperationNotPermitted
     case Failed
+    
+    public func description() -> String {
+        switch self {
+            case .Connecting: return "Connecting"
+            case .Starting: return "Starting"
+            case .EnablingDfuMode: return "Enabling DFU Mode"
+            case .Uploading: return "Uploading"
+            case .Validating: return "Validating"
+            case .Disconnecting: return "Disconnecting"
+            case .Completed: return "Completed"
+            case .Aborted: return "Aborted"
+            case .SignatureMismatch: return "Signature mismatch"
+            case .OperationNotPermitted: return "Operation not permitted"
+            case .Failed: return "Failed"
+        }
+    }
 }
 
 /**

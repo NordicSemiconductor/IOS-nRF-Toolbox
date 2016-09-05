@@ -37,12 +37,31 @@ internal enum SecureDFUOpCode : UInt8 {
     var code:UInt8 {
         return rawValue
     }
+    
+    var description: String{
+        switch self {
+            case .CreateObject:         return "Create Object"
+            case .SetPRNValue:          return "Set PRN Value"
+            case .CalculateChecksum:    return "Calculate Checksum"
+            case .Execute:              return "Execute"
+            case .ReadError:            return "Read Error"
+            case .ReadObjectInfo:       return "Read Object Info"
+            case .ResponseCode:         return "Response Code"
+        }
+    }
 }
 
 @available(iOS, introduced=0.1.9)
 internal enum SecureDFUProcedureType : UInt8 {
     case Command = 0x01
     case Data    = 0x02
+    
+    var description: String{
+        switch self{
+            case .Command:  return "Command"
+            case .Data:     return "Data"
+        }
+    }
 }
 
 @available(iOS, introduced=0.1.9)
@@ -178,7 +197,7 @@ internal struct SecureDFUResponse {
     }
 
     var description:String {
-        return "Response (Op Code = \(requestOpCode), Status = \(status))"
+        return "Response (Op Code = \(requestOpCode!.description), Status = \(status!.description))"
     }
 }
 
@@ -204,15 +223,15 @@ internal struct SecureDFUPacketReceiptNotification {
         self.resultCode     = SecureDFUResultCode(rawValue: resultCode)
 
         if self.opCode != SecureDFUOpCode.ResponseCode {
-            print("wrong opcode \(self.opCode)")
+            print("wrong opcode \(self.opCode?.description)")
             return nil
         }
         if self.requestOpCode != SecureDFUOpCode.CalculateChecksum {
-            print("wrong request code \(self.requestOpCode)")
+            print("wrong request code \(self.requestOpCode?.description)")
             return nil
         }
         if self.resultCode != SecureDFUResultCode.Success {
-            print("Failed with eror: \(self.resultCode)")
+            print("Failed with eror: \(self.resultCode?.description)")
             return nil
         }
 
@@ -260,7 +279,7 @@ internal class SecureDFUControlPoint : NSObject, CBPeripheralDelegate {
         return characteristic.value
     }
 
-    public func uploadFinished() {
+    func uploadFinished() {
         self.proceed         = nil
     }
 
@@ -303,32 +322,18 @@ internal class SecureDFUControlPoint : NSObject, CBPeripheralDelegate {
         peripheral.delegate = self
         
         switch request {
-        case .ReadObjectInfoCommand():
-            logger.a("Writing \(request.description)...")
-            break
-        case .ReadObjectInfoData():
-            logger.a("Writing \(request.description)...")
-            break
-        case .CreateData(let size):
-            logger.a("Writing \(request.description), \(size/8) bytes")
-            break
-        case .CreateCommand(let size):
-            logger.a("Writing \(request.description), \(size/8) bytes")
-            break
-        case .SetPacketReceiptNotification(let size):
-            logger.a("Writing \(request.description), \(size) packets")
-            break
-        case .CalculateChecksumCommand():
-            logger.a("Writing \(request.description)")
-            break
-        case .ReadError():
-            logger.a("Writing \(request.description)")
-            break
-        case .ExecuteCommand():
-            logger.a("Writing \(request.description)")
-            break
-        default:
-            break
+            case .CreateData(let size):
+                logger.a("Writing \(request.description), \(size/8) bytes")
+                break
+            case .CreateCommand(let size):
+                logger.a("Writing \(request.description), \(size/8) bytes")
+                break
+            case .SetPacketReceiptNotification(let size):
+                logger.a("Writing \(request.description), \(size) packets")
+                break
+            default:
+                logger.a("Writing \(request.description)...")
+                break
         }
         
         logger.v("Writing to characteristic \(SecureDFUControlPoint.UUID.UUIDString)...")
@@ -378,7 +383,7 @@ internal class SecureDFUControlPoint : NSObject, CBPeripheralDelegate {
             // This characteristic is never read, the error may only pop up when notification is received
             logger.e("Receiving notification failed")
             logger.e(error!)
-            report?(error:SecureDFUError.ReceivingNotificationFailed, withMessage:"Receiving notification failed")
+            report?(error:SecureDFUError.ReceivingNotificationFailed, withMessage:SecureDFUError.ReceivingNotificationFailed.description)
             return
         }
 
@@ -423,12 +428,12 @@ internal class SecureDFUControlPoint : NSObject, CBPeripheralDelegate {
                     break
                 }
             } else {
-                logger.e("Error \(response.status!.code): \(response.status!.description)")
+                logger.e("Error \(response.status?.description): \(response.status?.description)")
                 report?(error: SecureDFUError(rawValue: Int(response.status!.rawValue))!, withMessage: response.status!.description)
             }
         } else {
             logger.e("Unknown response received: 0x\(characteristic.value!.hexString)")
-            report?(error:SecureDFUError.UnsupportedResponse, withMessage:"Writing to characteristic failed")
+            report?(error:SecureDFUError.UnsupportedResponse, withMessage:SecureDFUError.UnsupportedResponse.description)
         }
     }
 }

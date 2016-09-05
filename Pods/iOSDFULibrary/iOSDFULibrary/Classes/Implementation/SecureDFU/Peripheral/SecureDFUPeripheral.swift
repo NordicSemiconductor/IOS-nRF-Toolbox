@@ -46,7 +46,7 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
     /// Maxmimum length reported by peripheral
     private var maxWtireLength : UInt32 = 0
     /// Resetting flag, when the peripheral disconnects to reconncet
-    public var isResetting = false
+    internal var isResetting = false
     
     // MARK: - Initialization
     
@@ -139,7 +139,7 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
             //Parse resonpes data
             let count = (responseData?.length)! / sizeof(UInt32)
             var array = [UInt32](count: count, repeatedValue:0)
-            var range = count * sizeof(UInt32)
+            let range = count * sizeof(UInt32)
             responseData?.getBytes(&array, length: range)
             self.logger.i("Read Object Info Command : received data : MaxLen:\(array[0]), Offset:\(array[1]), CRC: \(array[2]))")
             self.delegate?.objectInfoReadCommandCompleted(array[0], offset: array[1], crc: array[2])
@@ -157,7 +157,7 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
             //Parse resonpes data
             let count = (responseData?.length)! / sizeof(UInt32)
             var array = [UInt32](count: count, repeatedValue:0)
-            var range = count * sizeof(UInt32)
+            let range = count * sizeof(UInt32)
             responseData?.getBytes(&array, length: range)
             self.logger.i("Read Object Info Data : received data : MaxLen:\(array[0]), Offset:\(array[1]), CRC: \(array[2]))")
             self.delegate?.objectInfoReadDataCompleted(array[0], offset: array[1], crc: array[2])
@@ -249,7 +249,7 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
             //Parse resonpse data
             let count = (responseData?.length)! / sizeof(UInt32)
             var array = [UInt32](count: count, repeatedValue:0)
-            var range = count * sizeof(UInt32)
+            let range = count * sizeof(UInt32)
             responseData?.getBytes(&array, length: range)
             self.delegate?.calculateChecksumCompleted(array[0], CRC: array[1])
             }, onError: { (error, message) in

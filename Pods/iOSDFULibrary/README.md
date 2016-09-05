@@ -5,9 +5,10 @@
 #### Method 1: Via Cocoapods (Recommended method)
 
   - Open up a terminal window and **cd** to your project's root directory
-  - Create a **Podfile** with the following content
+  - Create a **Podfile** with the following content. Replace "YourAppTargetName" with the name of the main target in your app.
 
-        use_frameworks!
+        target 'YourAppTargetName' do
+            use_frameworks!
             pod 'iOSDFULibrary'
         end
 

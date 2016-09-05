@@ -33,7 +33,7 @@ internal typealias ErrorCallback = (error:DFUError, withMessage:String) -> Void
     }
     
     /// The target DFU Peripheral
-    public var targetPeripheral : LegacyDFUPeripheral?
+    var targetPeripheral : LegacyDFUPeripheral?
 
     /// The logger helper.
     private var logger:LoggerHelper
