@@ -13,9 +13,10 @@ Implementation for Equatable ==
 
 - parameter lhs: The object at the left side of the ==
 - parameter rhs: The object at the right side of the ==
-:returns: True if the objects are the same, otherwise false.
+
+ - returns: True if the objects are the same, otherwise false.
 */
-public func ==(lhs: EVObject, rhs: EVObject) -> Bool {
+public func == (lhs: EVObject, rhs: EVObject) -> Bool {
     return EVReflection.areEqual(lhs, rhs: rhs)
 }
 
@@ -24,9 +25,10 @@ Implementation for Equatable !=
 
 - parameter lhs: The object at the left side of the ==
 - parameter rhs: The object at the right side of the ==
-:returns: False if the objects are the the same, otherwise true.
+
+ - returns: False if the objects are the the same, otherwise true.
 */
-public func !=(lhs: EVObject, rhs: EVObject) -> Bool {
+public func != (lhs: EVObject, rhs: EVObject) -> Bool {
     return !EVReflection.areEqual(lhs, rhs: rhs)
 }
 
@@ -34,67 +36,91 @@ public func !=(lhs: EVObject, rhs: EVObject) -> Bool {
 /**
 Extending Array with an initializer with a json string
 */
-public extension Array {
+public extension Array where Element: NSObject {
     
     /**
     Initialize an array based on a json string
     
-    :parameter: json The json string
-    
-    :returns: The array of objects
+    - parameter json: The json string
+    - parameter conversionOptions: Option set for the various conversion options.
     */
-    public init(json:String?){
+    public init(json: String?, conversionOptions: ConversionOptions = .DefaultDeserialize) {
         self.init()
         let arrayTypeInstance = getArrayTypeInstance(self)
-        let newArray = EVReflection.arrayFromJson(arrayTypeInstance, json: json)
+        let newArray = EVReflection.arrayFromJson(nil, type:arrayTypeInstance, json: json, conversionOptions: conversionOptions)
         for item in newArray {
             self.append(item)
+        }
+    }
+
+    /**
+     Initialize an array based on a dictionary
+     
+     - parameter json: The json string
+     - parameter conversionOptions: Option set for the various conversion options.
+     */
+    public init(dictionaryArray: [NSDictionary], conversionOptions: ConversionOptions = .DefaultDeserialize) {
+        self.init()
+        for item in dictionaryArray {
+            let arrayTypeInstance = getArrayTypeInstance(self)
+            if arrayTypeInstance is EVObject {
+                EVReflection.setPropertiesfromDictionary(item, anyObject: arrayTypeInstance as! EVObject)
+                self.append(arrayTypeInstance)
+            }
         }
     }
     
     /**
     Get the type of the object where this array is for
     
-    :parameter: arr this array
+    - parameter arr: this array
     
-    :returns: The object type
+    - returns: The object type
     */
-    public func getArrayTypeInstance<T>(arr:Array<T>) -> T {
+    public func getArrayTypeInstance<T: NSObject>(arr: Array<T>) -> T {
         return arr.getTypeInstance()
     }
     
     /**
     Get the type of the object where this array is for
     
-    :returns: The object type
+    - returns: The object type
     */
-    public func getTypeInstance<T>(
+    public func getTypeInstance<T: NSObject>(
         ) -> T {
-            let nsobjectype : NSObject.Type = T.self as! NSObject.Type
+        if let nsobjectype: NSObject.Type = T.self {
             let nsobject: NSObject = nsobjectype.init()
-            return nsobject as! T
+            if let obj =  nsobject as? T {
+                return obj
+            }
+            // Could not instantiate array item instance. will crash
+            return (nsobject as? T)!
+        }
+        // Could not instantiate array item instance. will crash
+        assert(false, "You can only instantiate an array of objects that have EVObject (or NSObject) as its base class. Please make this change to your object: \(T.self)")
+
+        return (NSObject() as? T)!
     }
     
     /**
     Convert this array to a json string
     
-    :parameter: performKeyCleanup set to true if you want to cleanup the keys
+    - parameter conversionOptions: Option set for the various conversion options.
     
-    :returns: The json string
+    - returns: The json string
     */
-    public func toJsonString(performKeyCleanup:Bool = false) -> String {
-        return "[\n" + self.map({($0 as! EVObject).toJsonString(performKeyCleanup)}).joinWithSeparator(", \n") + "\n]"
+    public func toJsonString(conversionOptions: ConversionOptions = .DefaultSerialize) -> String {
+        return "[\n" + self.map({($0 as? EVObject ?? EVObject()).toJsonString(conversionOptions)}).joinWithSeparator(", \n") + "\n]"
     }
     
     /**
      Returns the dictionary representation of this array.
      
-     :parameter: performKeyCleanup set to true if you want to cleanup the keys
+     - parameter conversionOptions: Option set for the various conversion options.
      
-     :returns: The array of dictionaries
+     - returns: The array of dictionaries
      */
-    public func toDictionaryArray(performKeyCleanup:Bool = false) -> NSArray {
-        return self.map({($0 as! EVObject).toDictionary(performKeyCleanup)})
+    public func toDictionaryArray(conversionOptions: ConversionOptions = .DefaultSerialize) -> NSArray {
+        return self.map({($0 as? EVObject ?? EVObject()).toDictionary(conversionOptions)})
     }
-    
 }

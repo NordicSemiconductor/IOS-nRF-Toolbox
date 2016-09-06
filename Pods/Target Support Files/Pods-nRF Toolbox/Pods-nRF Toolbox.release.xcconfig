@@ -1,0 +1,12 @@
+ALWAYS_SEARCH_USER_PATHS = YES
+EMBEDDED_CONTENT_CONTAINS_SWIFT = YES
+FRAMEWORK_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/CorePlot" "$PODS_CONFIGURATION_BUILD_DIR/EVReflection" "$PODS_CONFIGURATION_BUILD_DIR/SWRevealViewController" "$PODS_CONFIGURATION_BUILD_DIR/Zip" "$PODS_CONFIGURATION_BUILD_DIR/iOSDFULibrary"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private/CorePlot/ios"
+LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
+OTHER_CFLAGS = $(inherited) -iquote "$PODS_CONFIGURATION_BUILD_DIR/CorePlot/CorePlot.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/EVReflection/EVReflection.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/SWRevealViewController/SWRevealViewController.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/Zip/Zip.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/iOSDFULibrary/iOSDFULibrary.framework/Headers"
+OTHER_LDFLAGS = $(inherited) -framework "CorePlot" -framework "EVReflection" -framework "SWRevealViewController" -framework "Zip" -framework "iOSDFULibrary"
+OTHER_SWIFT_FLAGS = $(inherited) "-D" "COCOAPODS"
+PODS_BUILD_DIR = $BUILD_DIR
+PODS_CONFIGURATION_BUILD_DIR = $PODS_BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+PODS_ROOT = ${SRCROOT}/Pods
