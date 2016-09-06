@@ -5,8 +5,8 @@
  -->
 [![Build Status](https://travis-ci.org/evermeer/EVReflection.svg?style=flat)](https://travis-ci.org/evermeer/EVReflection)
 [![Issues](https://img.shields.io/github/issues-raw/evermeer/EVReflection.svg?style=flat)](https://github.com/evermeer/EVReflection/issues)
-[![Coverage](https://img.shields.io/badge/coverage-99%-brightgreen.svg?style=flat)](https://raw.githubusercontent.com/evermeer/EVReflection/master/EVReflection/coverage.png)
-[![Documentation](https://img.shields.io/badge/documented-100%-brightgreen.svg?style=flat)](http://cocoadocs.org/docsets/EVReflection)
+[![Coverage](https://img.shields.io/badge/coverage-91%-yellow.svg?style=flat)](https://raw.githubusercontent.com/evermeer/EVReflection/master/EVReflection/coverage.png)
+[![Documentation](https://img.shields.io/badge/documented-97%-green.svg?style=flat)](http://cocoadocs.org/docsets/EVReflection)
 [![Stars](https://img.shields.io/github/stars/evermeer/EVReflection.svg?style=flat)](https://github.com/evermeer/EVReflection/stargazers)
 
 [![Version](https://img.shields.io/cocoapods/v/EVReflection.svg?style=flat)](http://cocoadocs.org/docsets/EVReflection)
@@ -26,12 +26,36 @@ Run the unit tests to see EVReflection in action.
 
 EVReflection is used extensively in [EVCloudKitDao](https://github.com/evermeer/EVCloudKitDao), [AlamofireJsonToObjects](https://github.com/evermeer/AlamofireJsonToObjects) and [AlamofireXmlToObjects](https://github.com/evermeer/AlamofireXmlToObjects)
 
+In most cases EVReflection is verry easy to use. Just take a look at the [YouTube tutorial](https://www.youtube.com/watch?v=LPWsQD2nxqg) or the section [It's easy to use](https://github.com/evermeer/EVReflection#its-easy-to-use). But if you do want to do non standard specific things, then EVReflection will offer you an extensive range of functionality. For more information see:
+
+- [Main features of EVReflection](https://github.com/evermeer/EVReflection#main-features-of-evreflection)
+- [Quick start](https://github.com/evermeer/EVReflection#quick-start)
+- [It's easy to use](https://github.com/evermeer/EVReflection#its-easy-to-use)
+- [If you have XML instead of JSON](https://github.com/evermeer/EVReflection#if-you-have-xml-instead-of-json)
+- [Using EVReflection in your own App](https://github.com/evermeer/EVReflection#using-evreflection-in-your-own-app)
+- [More Sample code](https://github.com/evermeer/EVReflection#more-sample-code)
+- [Conversion options](https://github.com/evermeer/EVReflection#conversion-options)
+- [Automatic keyword mapping for Swift keywords](https://github.com/evermeer/EVReflection#automatic-keyword-mapping-for-swift-keywords)
+- [Automatic keyword mapping PascalCase or camelCase to snake_case](https://github.com/evermeer/EVReflection#automatic-keyword-mapping-pascalcase-or-camelcase-to-snake_case)
+- [Custom keyword mapping](https://github.com/evermeer/EVReflection#custom-keyword-mapping)
+- [Custom property converters](https://github.com/evermeer/EVReflection#custom-property-converters)
+- [Skip the serialisaton or deserialisation of specific values](https://github.com/evermeer/EVReflection#skip-the-serialisaton-or-deserialisation-of-specific-values)
+- [Property validators](https://github.com/evermeer/EVReflection#property-validators)
+- [Deserialisaton class level validations](https://github.com/evermeer/EVReflection#deserialisaton-class-level-validations)
+- [What to do when you use object enheritance](https://github.com/evermeer/EVReflection#what-to-do-when-you-use-object-enheritance)
+- [Known issues](https://github.com/evermeer/EVReflection#known-issues)
+- [License](https://github.com/evermeer/EVReflection#license)
+- [My other libraries](https://github.com/evermeer/EVReflection#my-other-libraries)
+
 ## Main features of EVReflection:
 - Parsing objects based on NSObject to and from a dictionary.
 - Parsing objects to and from a JSON string.
-- Support NSCoding methods encodeWithCoder and decodeObjectWithCoder
+- Support NSCoding function encodeWithCoder and decodeObjectWithCoder
 - Supporting Printable, Hashable and Equatable while using all properties. (Support for Set in Swift 1.2)
 - Mapping objects from one type to an other
+
+## Quick start
+For a quick start have a look at this [YouTube tutorial](https://www.youtube.com/watch?v=LPWsQD2nxqg).
 
 ## It's easy to use:
 
@@ -98,10 +122,10 @@ use_frameworks!
 pod "EVReflection"
 ```
 
-I have now moved on to Swift 2. If you want to use EVReflection, then get that version by using the podfile command:
+Now there is also a Swift 3 branch (also a 2.3 version). If you want to use EVReflection, then get that version by using the podfile command:
 ```
 use_frameworks!
-pod "EVReflection", '~> 2.6'
+pod "EVReflection", :branch => 'Swift3'
 ```
 
 Version 0.36 of cocoapods will make a dynamic framework of all the pods that you use. Because of that it's only supported in iOS 8.0 or later. When using a framework, you also have to add an import at the top of your swift file like this:
@@ -110,7 +134,7 @@ Version 0.36 of cocoapods will make a dynamic framework of all the pods that you
 import EVReflection
 ```
 
-If you want support for older versions than iOS 8.0, then you can also just copy the files from the pod folder to your project 
+If you want support for older versions than iOS 8.0, then you can also just copy the files from the pod folder to your project. You do have to use the Swift2.3 version or older. iOS 7 support is dropped from Swift 3.
 
 
 ## More Sample code 
@@ -140,27 +164,54 @@ func testPrintable() {
     theObject.objectValue = "value1"
     NSLog("theObject = \(theObject)")
 }
+
+func testArrayFunctions() {
+    let dictionaryArray: [NSDictionary] = yourGetDictionaryArrayFunction()
+    let userArray = [User](dictionaryArray: dictionaryArray)
+    let newDictionaryArray = userArray.toDictionaryArray()
+}
 ```
 
 ## Extra information:
+
+### Conversion options
+With almost any EVReflection function you can specify what kind of conversion options should be used. This is done using an option set. You can use the following conversion options:
+
+- None - Do not use any conversion function.
+- [PropertyConverter](https://github.com/evermeer/EVReflection#custom-property-converters) : If specified the function propertyConverters on the EVObject will be called
+- [PropertyMapping](https://github.com/evermeer/EVReflection#custom-keyword-mapping) : If specified the function propertyMapping on the EVObject will be called
+- [SkipPropertyValue](https://github.com/evermeer/EVReflection#skip-the-serialisaton-or-deserialisation-of-specific-values) : If specified the function skipPropertyValue on the EVObject will be called
+- [KeyCleanup](https://github.com/evermeer/EVReflection#automatic-keyword-mapping-pascalcase-or-camelcase-to-snake_case) : If specified the automatic pascalCase and snake_case property key mapping will be called.
+
+In EVReflection all functions will use a default conversion option specific to it's function. The following 4 default conversion types are used: 
+- DefaultNSCoding = [None]
+- DefaultComparing = [PropertyConverter, PropertyMapping, SkipPropertyValue]
+- DefaultDeserialize = [PropertyConverter, PropertyMapping, SkipPropertyValue, KeyCleanup]
+- DefaultSerialize = [PropertyConverter, PropertyMapping, SkipPropertyValue]
+
+If you want to change one of the default conversion types, then you can do that using something like:
+```
+ConversionOptions.DefaultNSCoding = [.PropertyMapping]
+```
+
 
 ### Automatic keyword mapping for Swift keywords
 If you have JSON fields that are Swift keywords, then prefix the property with an underscore. So the JSON value for self will be stored in the property _self. At this moment the folowing keywords are handled:
 "self", "description", "class", "deinit", "enum", "extension", "func", "import", "init", "let", "protocol", "static", "struct", "subscript", "typealias", "var", "break", "case", "continue", "default", "do", "else", "fallthrough", "if", "in", "for", "return", "switch", "where", "while", "as", "dynamicType", "is", "new", "super", "Self", "Type", "__COLUMN__", "__FILE__", "__FUNCTION__", "__LINE__", "associativity", "didSet", "get", "infix", "inout", "left", "mutating", "none", "nonmutating", "operator", "override", "postfix", "precedence", "prefix", "right", "set", "unowned", "unowned", "safe", "unowned", "unsafe", "weak", "willSet", "private", "public"
 
 ### Automatic keyword mapping PascalCase or camelCase to snake_case
-When creating objects from JSON EVReflection will automatically detect if snake_case (keys are all lowercase and words are separated by an underscore) should be converted to PascalCase or camelCase property names. 
+When creating objects from JSON EVReflection will automatically detect if snake_case (keys are all lowercase and words are separated by an underscore) should be converted to PascalCase or camelCase property names. See [Conversion options](https://github.com/evermeer/EVReflection#conversion-options) for when this function will be called.
 
-When exporting object to a dictionary or JSON string you will have an option to specify that you want a conversion to snace_case or not. The default is yes.
+When exporting object to a dictionary or JSON string you will have an option to specify that you want a conversion to snace_case or not. The default is .DefaultDeserialize which will also convert to snake case.
 
 ```
-let jsonString = myObject.toJsonString(performKeyCleanup:false)
-let dict = myObject.toDictionary(performKeyCleanup:false)
+let jsonString = myObject.toJsonString([.DefaultSerialize])
+let dict = myObject.toDictionary([PropertyConverter, PropertyMapping, SkipPropertyValue])
 ```
 
 
 ### Custom keyword mapping
-It's also possible to create a custom property mapping. You can define if an import should be ignored, if an export should be ignored or you can map a property name to another key name (for the dictionary and json). For this you only need to implement the propertyMapping method in the object like this:
+It's also possible to create a custom property mapping. You can define if an import should be ignored, if an export should be ignored or you can map a property name to another key name (for the dictionary and json). For this you only need to implement the propertyMapping function in the object. See [Conversion options](https://github.com/evermeer/EVReflection#conversion-options) for when this function will be called.
 
 ```
 public class TestObject5: EVObject {
@@ -175,7 +226,7 @@ public class TestObject5: EVObject {
 ```
 
 ### Custom property converters
-You can also use your own property converters. For this you need to implement the propertyConverters method in your object. For each property you can create a custom getter and setter that will then be used by EVReflection. In the sample below the JSON texts 'Sure' and 'Nah' will be converted to true or false for the property isGreat.
+You can also use your own property converters. For this you need to implement the propertyConverters function in your object. For each property you can create a custom getter and setter that will then be used by EVReflection. In the sample below the JSON texts 'Sure' and 'Nah' will be converted to true or false for the property isGreat. See [Conversion options](https://github.com/evermeer/EVReflection#conversion-options) for when this function will be called.
 ```
 public class TestObject6: EVObject {
     var isGreat: Bool = false
@@ -190,6 +241,93 @@ public class TestObject6: EVObject {
               , { return self.isGreat ? "Sure": "Nah"})
         ]
     }
+}
+```
+
+### Skip the serialisaton or deserialisation of specific values
+When there is a need to not (de)serialize specific values like nil NSNull or empty strings you can implement the skipPropertyValue function and return true if the value needs to be skipped. See [Conversion options](https://github.com/evermeer/EVReflection#conversion-options) for when this function will be called.
+
+```
+class TestObjectSkipValues: EVObject {
+   var value1: String? 
+   var value2: [String]?
+   var value3: NSNumber?
+
+   override func skipPropertyValue(value: Any, key: String) -> Bool {
+      if let value = value as? String where value.characters.count == 0 || value == "null" {
+         print("Ignoring empty string for key \(key)")
+         return true
+      } else if let value = value as? NSArray where value.count == 0 {
+         print("Ignoring empty NSArray for key\(key)")
+         return true
+      } else if value is NSNull {
+         print("Ignoring NSNull for key \(key)")
+         return true
+      }
+      return false
+   }
+}
+```
+
+### Property validators
+Before setting a value the value will always be validated using the standard validateValue KVO function. This means that for every property you can also create a validation function for that property. See the sample below where there is a validateName function for the name property.
+
+```
+enum MyValidationError: ErrorType {
+   case TypeError,
+   LengthError
+}
+
+public class GameUser: EVObject {
+   var name: String?
+   var memberSince: NSDate?
+   var objectIsNotAValue: TestObject?
+
+   func validateName(value:AutoreleasingUnsafeMutablePointer<AnyObject?>) throws {
+      if let theValue = value.memory as? String {
+         if theValue.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) < 3 {
+            NSLog("Validating name is not long enough \(theValue)")
+            throw MyValidationError.LengthError
+         }
+         NSLog("Validating name OK \(theValue)")
+      } else {
+         NSLog("Validating name is not a string: \(value.memory)")
+         throw MyValidationError.TypeError
+     }
+   }
+}
+```
+
+### Deserialisaton class level validations
+There is also support for class level validation when deserialising to an object. There are helper functions for making keys required or not allowed. You can also add custom messages. Here is some sample code about how you can implement such a validation
+
+```
+public class ValidateObject: EVObject {
+   var requiredKey1: String?
+   var requiredKey2: String?
+   var optionalKey1: String?
+
+   override public func initValidation(dict: NSDictionary) {
+      self.initMayNotContainKeys(["error"], dict: dict)
+      self.initMustContainKeys(["requiredKey1", "requiredKey2"], dict: dict)
+      if dict.valueForKey("requiredKey1") as? String == dict.valueForKey("optionalKey1") as? String {
+         // this could also be called in your property specific validators
+         self.addStatusMessage(.Custom, message: "optionalKey1 should not be the same as requiredKey1")
+      }
+   }
+}
+```
+You could then test this validation with code like:
+```
+func testValidation() {
+   // Test missing required key
+   let json = "{\"requiredKey1\": \"Value1\"}"
+   let test = ValidateObject(json: json)
+   XCTAssertNotEqual(test.evReflectionStatus(), .None, "We should have a not .None status")
+   XCTAssertEqual(test.evReflectionStatuses.count, 1, "We should have 1 validation result")
+   for (status, message) in test.evReflectionStatuses {
+      print("Validation result: Status = \(status), Message = \(message)")
+   }
 }
 ```
 
@@ -234,6 +372,7 @@ EVReflection is trying to handle all types. With some types there are limitation
 - nullable type fields like Int? 
 - properties based on an enum
 - an Array of nullable objects like [MyObject?] 
+- a Set like Set<MyObject>
 - generic properties like var myVal:T = T()
 - structs like CGRect or CGPoint
 
@@ -241,6 +380,7 @@ For all these issues there are workarounds. The easiest workaround is just using
 
 - Instead of an Int? you could use NSNumber?
 - Instead of [MyObject?] use [MyObject]
+- Instead of Set<MyObject> use [MyObject]
 - Instead of 'var status: StatysType' use 'var status:Int' and save the rawValue
 - Instead of a generic property use a specific property that can hold the data (a dictionary?)
 - Instead of using a struct, create your own object model for that struct
@@ -250,8 +390,8 @@ If you want to keep on using the same type, You can override the setValue forUnd
 ####Generic properties
 For generic properties the protocol EVGenericsKVC is required. see WorkaroundSwiftGenericsTests.swift 
 
-####Arrays with nullable objects
-For arrays with nullable objects like [MyObj?] the protocol EVArrayConvertable is required. see WorkaroundsTests.swift
+####Arrays with nullable objects or Set's
+For arrays with nullable objects or Set's like [MyObj?] or Set<MyObj> the protocol EVArrayConvertable is required. see WorkaroundsTests.swift
 
 ####Swift Dictionaries
 For Swift Dictionaries (and not NSDictionary) the protocol EVDictionaryConvertable is required. See WorkaroundsTests.swift
@@ -272,3 +412,6 @@ Also see my other open source iOS libraries:
 - [AlamofireOauth2](https://github.com/evermeer/AlamofireOauth2) - A swift implementation of OAuth2 using Alamofire
 - [EVWordPressAPI](https://github.com/evermeer/EVWordPressAPI) - Swift Implementation of the WordPress (Jetpack) API using AlamofireOauth2, AlomofireJsonToObjects and EVReflection (work in progress)
 - [PassportScanner](https://github.com/evermeer/PassportScanner) - Scan the MRZ code of a passport and extract the firstname, lastname, passport number, nationality, date of birth, expiration date and personal numer.
+
+## Evolution of EVReflection (Gource Visualization)
+[![Evolution of EVReflection (Gource Visualization)](https://img.youtube.com/vi/FIETlttIFh8/0.jpg)](https://www.youtube.com/watch?v=FIETlttIFh8)

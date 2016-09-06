@@ -42,7 +42,7 @@ Log level. Logger application may filter log entries based on their level. Level
 /**
  *  The Logger delegate.
  */
-@objc public protocol LoggerDelegate {
+@objc public protocol LoggerDelegate : class {
     /**
      This method is called whenever a new log entry is to be saved. The logger implementation should save this or present it to the user.
      

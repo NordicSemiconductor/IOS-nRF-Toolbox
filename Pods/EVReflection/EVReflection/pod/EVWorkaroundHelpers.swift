@@ -17,6 +17,11 @@ public protocol EVGenericsKVC {
      Implement this protocol in a class with generic properties so that we can still use a standard mechanism for setting property values.
      */
     func setValue(value: AnyObject!, forUndefinedKey key: String)
+    
+    /**
+     Add a function so that we can get an instance of T
+     */
+    func getGenericType() -> NSObject
 }
 
 /**
@@ -59,13 +64,6 @@ public protocol EVArrayConvertable {
     func convertArray(key: String, array: Any) -> NSArray
 }
 
-public protocol EVDictionaryConvertable {
-    /**
-     For implementing a function for converting a Swift dictionary to a NSDictionary.
-     */
-    func convertDictionary(key: String, dict: Any) -> NSDictionary
-}
-
 
 /**
  Add a property to an enum to get the associated value
@@ -82,7 +80,7 @@ public extension EVAssociated {
      
      :returns: The label of the enum plus the associated value
      */
-    public var associated: (label:String, value: Any?) {
+    public var associated: (label: String, value: Any?) {
         get {
             let mirror = Mirror(reflecting: self)
             if let associated = mirror.children.first {
@@ -94,6 +92,7 @@ public extension EVAssociated {
     }
 }
 
+
 /**
  Dictionary extension for creating a dictionary from an array of enum values
  */
@@ -103,13 +102,12 @@ public extension Dictionary {
      
      - parameter associated: array of dictionairy values which have an associated value
      
-     - returns: A dictionairy of all enum values and associated values
      */
-    init<T :EVAssociated>(associated: [T]?) {
+    init<T: EVAssociated>(associated: [T]?) {
         self.init()
         if associated != nil {
             for myEnum in associated! {
-                self[myEnum.associated.label as! Key] = myEnum.associated.value as? Value
+                self[(myEnum.associated.label as? Key)!] = myEnum.associated.value as? Value
             }
         }
     }
