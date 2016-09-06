@@ -375,18 +375,18 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
         switch  BGMViewActions(rawValue: buttonIndex)! {
         case .Refresh:
             if readings?.count > 0 {
-                let reading = readings?.objectAtIndex((readings?.count)! - 1) as! NORGlucoseReading
-//                param.value.singleParam = NORBGMAccessSingleParam(filterType: NORBGMFilterType.SEQUENCE_NUMBER, paramLE: CFSwapInt16HostToLittle(reading.sequenceNumber!))
+                let reading = readings?.objectAtIndex(0) as! NORGlucoseReading
                 accessParam.append(NORBGMOpCode.REPORT_STORED_RECORDS.rawValue)
                 accessParam.append(NORBGMOPerator.GREATER_THAN_OR_EQUAL.rawValue)
                 accessParam.append(NORBGMFilterType.SEQUENCE_NUMBER.rawValue)
+                //Convert Endianess
                 accessParam.append(UInt8(reading.sequenceNumber! & 0xFF))
                 accessParam.append(UInt8(reading.sequenceNumber! >> 8))
-                clearList = false
+                clearList = true
                 
                 break
             }else{
-                //Fall through
+                break
             }
         case .AllRecords:
             accessParam.append(NORBGMOpCode.REPORT_STORED_RECORDS.rawValue)
