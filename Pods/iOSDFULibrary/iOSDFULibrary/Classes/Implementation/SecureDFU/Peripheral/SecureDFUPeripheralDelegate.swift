@@ -36,22 +36,22 @@ internal protocol SecureDFUPeripheralDelegate {
     /**
      Callback when Object info command read is completed
      */
-    func objectInfoReadCommandCompleted(maxLen : UInt32, offset : UInt32, crc :UInt32 )
+    func objectInfoReadCommandCompleted(_ maxLen : UInt32, offset : UInt32, crc :UInt32 )
 
     /**
      Callback when Object info data read is completed
      */
-    func objectInfoReadDataCompleted(maxLen : UInt32, offset : UInt32, crc :UInt32 )
+    func objectInfoReadDataCompleted(_ maxLen : UInt32, offset : UInt32, crc :UInt32 )
 
     /**
      Callback when Object Command is created
      */
-    func objectCreateCommandCompleted(data : NSData?)
+    func objectCreateCommandCompleted(_ data : Data?)
 
     /**
      Callback when Object Data is created
      */
-    func objectCreateDataCompleted(data : NSData?)
+    func objectCreateDataCompleted(_ data : Data?)
     
     /**
      Callback when PRN is set
@@ -66,7 +66,7 @@ internal protocol SecureDFUPeripheralDelegate {
     /**
      Callback when Checksum command is completed
     */
-    func calculateChecksumCompleted(offset: UInt32, CRC: UInt32)
+    func calculateChecksumCompleted(_ offset: UInt32, CRC: UInt32)
 
     /**
      Callback when Execute last object command completes

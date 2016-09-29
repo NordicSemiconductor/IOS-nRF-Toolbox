@@ -27,27 +27,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        let defaults = NSDictionary(objects: ["2.3", NSNumber(int:12), NSNumber(bool: false)], forKeys: ["key_diameter", "dfu_number_of_packets", "dfu_force_dfu"])
-        NSUserDefaults.standardUserDefaults().registerDefaults(defaults as! [String : AnyObject])
+        let defaults = NSDictionary(objects: ["2.3", NSNumber(value: 12 as Int32), NSNumber(value: false as Bool)], forKeys: ["key_diameter" as NSCopying, "dfu_number_of_packets" as NSCopying, "dfu_force_dfu" as NSCopying])
+        UserDefaults.standard.register(defaults: defaults as! [String : AnyObject])
      
         //Setting colors of UIPageControlViewController Page Indicator
         let pageControl = UIPageControl.appearance()
-        pageControl.pageIndicatorTintColor = UIColor.lightGrayColor()
-        pageControl.currentPageIndicatorTintColor = UIColor.blackColor()
-        pageControl.backgroundColor = UIColor.whiteColor()
+        pageControl.pageIndicatorTintColor = UIColor.lightGray
+        pageControl.currentPageIndicatorTintColor = UIColor.black
+        pageControl.backgroundColor = UIColor.white
         return true
     }
     
-    func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
         print("URL for file from Email: \(url)")
         let navigationController = self.window?.rootViewController as! UINavigationController
         
-        navigationController.popToRootViewControllerAnimated(true)
+        navigationController.popToRootViewController(animated: true)
         
         let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let dfuViewController = mainStoryboard.instantiateViewControllerWithIdentifier("DFUViewController") as! NORDFUViewController
+        let dfuViewController = mainStoryboard.instantiateViewController(withIdentifier: "DFUViewController") as! NORDFUViewController
         dfuViewController.onFileSelected(withURL: url)
         navigationController.pushViewController(dfuViewController, animated: true)
         

@@ -603,6 +603,7 @@
 				TargetAttributes = {
 					5217F3E11859EE0000F2D5BB = {
 						DevelopmentTeam = P3R8YQEV4L;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -610,6 +611,7 @@
 						};
 					};
 					5217F4021859EE0000F2D5BB = {
+						LastSwiftMigration = 0800;
 						TestTargetID = 5217F3E11859EE0000F2D5BB;
 					};
 				};
@@ -937,6 +939,7 @@
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "$(VALID_ARCHS)";
 				WRAPPER_EXTENSION = app;
@@ -985,6 +988,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "$(VALID_ARCHS)";
 				WRAPPER_EXTENSION = app;
@@ -1012,6 +1016,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "no.nordicsemi.ios.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -1033,6 +1038,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "no.nordicsemi.ios.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};

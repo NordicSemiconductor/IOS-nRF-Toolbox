@@ -41,13 +41,13 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     @IBOutlet weak var wheelToCrankRatio    : UILabel!
     
     //MARK: - ViewController Actions
-    @IBAction func connectionButtonTapped(sender: AnyObject) {
+    @IBAction func connectionButtonTapped(_ sender: AnyObject) {
         if cyclePeripheral != nil {
             bluetoothManager?.cancelPeripheralConnection(cyclePeripheral!)
         }
     }
-    @IBAction func aboutButtonTapped(sender: AnyObject) {
-        self.showAbout(message: NORAppUtilities.getHelpTextForService(service: .CSC))
+    @IBAction func aboutButtonTapped(_ sender: AnyObject) {
+        self.showAbout(message: NORAppUtilities.getHelpTextForService(service: .csc))
     }
 
     //MARK: - UIViewController delegate
@@ -62,7 +62,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     override func viewDidLoad() {
         super.viewDidLoad()
         // Rotate the vertical label
-        verticalLabel.transform = CGAffineTransformRotate(CGAffineTransformMakeTranslation(-150.0, 0.0), CGFloat(-M_PI_2))
+        verticalLabel.transform = CGAffineTransform(translationX: -150.0, y: 0.0).rotated(by: CGFloat(-M_PI_2))
         oldWheelEventTime = 0.0
         oldWheelRevolution = 0
         travelDistance = 0.0
@@ -70,33 +70,33 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         oldCrankEventTime = 0
         oldCrankRevolution = 0
         isBackButtonPressed = true
-        wheelCircumference = NSUserDefaults.standardUserDefaults().valueForKey("key_diameter")?.doubleValue
+        wheelCircumference = (UserDefaults.standard.value(forKey: "key_diameter") as AnyObject).doubleValue
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if cyclePeripheral != nil && isBackButtonPressed == true {
             bluetoothManager?.cancelPeripheralConnection(cyclePeripheral!)
         }
         super.viewWillAppear(animated)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         isBackButtonPressed = true
     }
     
     //MARK: - Segue methods
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         return identifier != "scan" || cyclePeripheral == nil
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == "scan" else {
             return
         }
 
-        let navigationController = segue.destinationViewController
-        let scannerViewController = navigationController.childViewControllerForStatusBarHidden() as! NORScannerViewController
+        let navigationController = segue.destination
+        let scannerViewController = navigationController.childViewControllerForStatusBarHidden as! NORScannerViewController
         scannerViewController.filterUUID = cscServiceUUID
         scannerViewController.delegate = self
     }
@@ -110,52 +110,52 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         // The sensor has been selected, connect to it
         cyclePeripheral = aPeripheral;
         cyclePeripheral!.delegate = self;
-        let options = NSDictionary(object: NSNumber(bool: true), forKey: CBConnectPeripheralOptionNotifyOnConnectionKey)
-        bluetoothManager?.connectPeripheral(cyclePeripheral!, options: options as? [String : AnyObject])
+        let options = NSDictionary(object: NSNumber(value: true as Bool), forKey: CBConnectPeripheralOptionNotifyOnConnectionKey as NSCopying)
+        bluetoothManager?.connect(cyclePeripheral!, options: options as? [String : AnyObject])
     }
     
     //MARK: - CentralManagerDelegate
-    func centralManagerDidUpdateState(central: CBCentralManager) {
-        if central.state == CBCentralManagerState.PoweredOn{
+    func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        if central.state == CBCentralManagerState.poweredOn{
         }else{
             print("Bluetooth is not porewed on!")
         }
     }
 
-    func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {
+    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        dispatch_async(dispatch_get_main_queue()) { 
+        DispatchQueue.main.async { 
             self.deviceName.text = peripheral.name
-            self.connectionButton.setTitle("DISCONNECT", forState: UIControlState.Normal)
+            self.connectionButton.setTitle("DISCONNECT", for: UIControlState())
         }
         
-        if UIApplication.instancesRespondToSelector(#selector(UIApplication.registerUserNotificationSettings(_:))) {
-            UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [.Alert, .Sound], categories: nil))
+        if UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))) {
+            UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .sound], categories: nil))
         }
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.didEnterBackgroundHandler), name: UIApplicationDidEnterBackgroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.didBecomeActiveHandler), name: UIApplicationDidBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackgroundHandler), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didBecomeActiveHandler), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         cyclePeripheral?.discoverServices([cscServiceUUID!, batteryServiceUUID!])
     }
     
-    func centralManager(central: CBCentralManager, didFailToConnectPeripheral peripheral: CBPeripheral, error: NSError?) {
+    func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
         print("did fail to connect")
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async(execute: {
             NORAppUtilities.showAlert(title: "Error", andMessage:"Connecting to the peripheral failed. Try again")
             self.cyclePeripheral = nil
             self.clearUI()
         })
     }
     
-    func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
+    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         print("Disconnected \(peripheral)")
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async(execute: {
             if NORAppUtilities.isApplicationInactive() {
                 NORAppUtilities.showBackgroundNotification(message: String(format: "%@ is disconnected", peripheral.name!))
             }
-            NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidBecomeActiveNotification, object: nil)
-            NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidEnterBackgroundNotification, object: nil)
+            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
             
             self.cyclePeripheral = nil
             self.clearUI()
@@ -168,12 +168,12 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     }
     
     func didBecomeActiveHandler() {
-        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        UIApplication.shared.cancelAllLocalNotifications()
     }
     
     func clearUI() {
-        connectionButton.setTitle("CONNECT", forState: UIControlState.Normal)
-        battery.setTitle("n/a", forState: UIControlState.Disabled)
+        connectionButton.setTitle("CONNECT", for: UIControlState())
+        battery.setTitle("n/a", for: UIControlState.disabled)
         deviceName.text         = "DEFAULT CSC"
         battery.tag             = 0
         speed.text              = "-"
@@ -189,9 +189,9 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         totalTravelDistance     = 0
     }
     
-    func decodeCSC(withData data : NSData) {
+    func decodeCSC(withData data : Data) {
 
-        let value = UnsafeMutablePointer<UInt8>(data.bytes)
+        let value = UnsafeMutablePointer<UInt8>(mutating: (data as NSData).bytes.bindMemory(to: UInt8.self, capacity: data.count))
         var wheelRevDiff :Double = 0
         var crankRevDiff :Double = 0
         var ratio        :Double = 0
@@ -213,7 +213,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         }
     }
     
-    func processWheelData(withData data :NSData) -> Double {
+    func processWheelData(withData data :Data) -> Double {
         /* wheel Revolution Data Present
          * 4 bytes (1 to 4) uint32 are Cummulative Wheel Revolutions
          * next 2 bytes (5 to 6) uint16 are Last Wheel Event Time in seconds and
@@ -226,7 +226,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         var wheelEventTimeDiff  :Double = 0
         var travelSpeed         :Double = 0
         
-        let value = UnsafeMutablePointer<UInt8>(data.bytes)
+        let value = UnsafeMutablePointer<UInt8>(mutating: (data as NSData).bytes.bindMemory(to: UInt8.self, capacity: data.count))
         
         wheelRevolution = UInt8(CFSwapInt32LittleToHost(UInt32(value[1])))
         wheelEventTime  = Double((UInt16(value[6]) * 0xFF) + UInt16(value[5]))
@@ -253,7 +253,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         return wheelRevolutionDiff
     }
   
-    func processCrankData(withData data : NSData, andCrankRevolutionIndex index : Int) -> Double {
+    func processCrankData(withData data : Data, andCrankRevolutionIndex index : Int) -> Double {
         /* Crank Revolution data present
          * if Wheel Revolution data present then
          * Crank Revolution data starts from index 7 else from index 1
@@ -268,7 +268,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         var crankRevolution     : Int    = 0
         var travelCadence       : Int    = 0
         
-        let value = UnsafeMutablePointer<UInt8>(data.bytes)
+        let value = UnsafeMutablePointer<UInt8>(mutating: (data as NSData).bytes.bindMemory(to: UInt8.self, capacity: data.count))
 
         crankRevolution = Int(CFSwapInt16LittleToHost(UInt16(value[index])))
         crankEventTime  = Double((UInt16(value[index+3]) * 0xFF) + UInt16(value[index+2]))+1.0
@@ -293,60 +293,60 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     }
     
     //MARK: - CBPeripheralDelegate methods
-    func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         guard error == nil else {
             print(String(format:"error in discovering services on device: %@", (cyclePeripheral?.name)!))
             return
         }
         for aService : CBService in peripheral.services! {
-            if aService.UUID == cscServiceUUID {
-                cyclePeripheral?.discoverCharacteristics(nil, forService: aService)
-            }else if aService.UUID == batteryServiceUUID {
-                cyclePeripheral?.discoverCharacteristics(nil, forService: aService)
+            if aService.uuid == cscServiceUUID {
+                cyclePeripheral?.discoverCharacteristics(nil, for: aService)
+            }else if aService.uuid == batteryServiceUUID {
+                cyclePeripheral?.discoverCharacteristics(nil, for: aService)
             }
         }
         
     }
     
-    func peripheral(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?) {
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         guard error == nil else {
             print(String(format:"error in discovering characteristic on device: %@",(cyclePeripheral?.name)!))
             return
         }
-        if service.UUID == cscServiceUUID {
+        if service.uuid == cscServiceUUID {
             for aCharacteristic : CBCharacteristic in service.characteristics! {
-                if aCharacteristic.UUID == cscMeasurementCharacteristicUUID{
-                    cyclePeripheral?.setNotifyValue(true, forCharacteristic: aCharacteristic)
+                if aCharacteristic.uuid == cscMeasurementCharacteristicUUID{
+                    cyclePeripheral?.setNotifyValue(true, for: aCharacteristic)
                 }
             }
-        } else if service.UUID == batteryServiceUUID {
+        } else if service.uuid == batteryServiceUUID {
             for aCharacteristic : CBCharacteristic in service.characteristics! {
-                if aCharacteristic.UUID == batteryLevelCharacteristicUUID{
-                    cyclePeripheral?.readValueForCharacteristic(aCharacteristic)
+                if aCharacteristic.uuid == batteryLevelCharacteristicUUID{
+                    cyclePeripheral?.readValue(for: aCharacteristic)
                 }
             }
         }
     }
     
-    func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
+    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         guard error == nil else {
             print("Error while updating CSC value")
             return
         }
-        if characteristic.UUID == cscMeasurementCharacteristicUUID {
-            dispatch_async(dispatch_get_main_queue()) {
+        if characteristic.uuid == cscMeasurementCharacteristicUUID {
+            DispatchQueue.main.async {
                 self.decodeCSC(withData: characteristic.value!)
             }
-        }else if characteristic.UUID == batteryLevelCharacteristicUUID {
-            dispatch_async(dispatch_get_main_queue()) {
-                let array = UnsafeMutablePointer<UInt8>((characteristic.value?.bytes)!)
+        }else if characteristic.uuid == batteryLevelCharacteristicUUID {
+            DispatchQueue.main.async {
+                let array = UnsafeMutablePointer<UInt8>(((characteristic.value as NSData?)?.bytes)!)
                 let batteryLevel = array[0]
                 let text = String(format: "%d%%", batteryLevel)
-                self.battery.setTitle(text, forState: UIControlState.Disabled)
+                self.battery.setTitle(text, for: UIControlState.disabled)
                 if self.battery.tag == 0{
-                    if characteristic.properties.rawValue & CBCharacteristicProperties.Notify.rawValue > 0 {
+                    if characteristic.properties.rawValue & CBCharacteristicProperties.notify.rawValue > 0 {
                         self.battery.tag = 1
-                        peripheral.setNotifyValue(true, forCharacteristic: characteristic)
+                        peripheral.setNotifyValue(true, for: characteristic)
                     }
                 }
             }

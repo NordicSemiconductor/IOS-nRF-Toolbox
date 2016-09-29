@@ -13,7 +13,7 @@ class NORMainViewController: UIViewController, UICollectionViewDataSource, UIAle
     // MARK: - Outlets & Actions
     @IBOutlet weak var collectionView: UICollectionView!
 
-    @IBAction func aboutButtonTapped(sender: AnyObject) {
+    @IBAction func aboutButtonTapped(_ sender: AnyObject) {
         showAboutAlertView()
     }
     
@@ -23,35 +23,35 @@ class NORMainViewController: UIViewController, UICollectionViewDataSource, UIAle
         collectionView.dataSource = self;
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.lightContent, animated: true)
     }
     
     func showAboutAlertView() {
-        let appVersion = NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String
+        let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
         //Note: The character \u{2022} found here is a unicode bullet, used just for styling purposes
         let aboutMessage = String("The nRF Toolbox works with the most popular Bluetooth Low Energy accessories that use standard BLE profiles. Additionaly, it supports Nordic Semiconductor's proprietary profiles:\n\n\u{2022}UART (Universal Asynchronous Receiver/Transmitter),\n\n\u{2022}DFU (Device Firmware Update).\n\nMore information and the source code may be found on GitHub.\n\nVersion \(appVersion)")
         
-        let alertView = UIAlertView.init(title: "About", message: aboutMessage, delegate: self, cancelButtonTitle: "Ok", otherButtonTitles:"GitHub")
+        let alertView = UIAlertView.init(title: "About", message: aboutMessage!, delegate: self, cancelButtonTitle: "Ok", otherButtonTitles:"GitHub")
         alertView.show()
     }
 
     // MARK: - UIalertViewDelegate
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+    func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
         if buttonIndex == 1 {
-            UIApplication.sharedApplication().openURL(NSURL(string: "https://github.com/NordicSemiconductor/IOS-nRF-Toolbox")!)
+            UIApplication.shared.openURL(URL(string: "https://github.com/NordicSemiconductor/IOS-nRF-Toolbox")!)
         }
     }
     
     // MARK: - UICollectionViewDataSource
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 10
     }
 
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cellName = String(format: "profile_%d", indexPath.item)
-        return collectionView.dequeueReusableCellWithReuseIdentifier(cellName, forIndexPath: indexPath)
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cellName = String(format: "profile_%d", (indexPath as NSIndexPath).item)
+        return collectionView.dequeueReusableCell(withReuseIdentifier: cellName, for: indexPath)
     }
 
 }

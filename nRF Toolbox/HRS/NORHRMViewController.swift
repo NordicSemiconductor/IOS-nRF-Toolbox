@@ -9,6 +9,35 @@
 import UIKit
 import CoreBluetooth
 import CorePlot
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
+fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l >= r
+  default:
+    return !(lhs < rhs)
+  }
+}
+
 
 class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, NORScannerDelegate, CPTPlotDataSource, CPTPlotSpaceDelegate {
 
@@ -44,14 +73,14 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     @IBOutlet weak var graphView: CPTGraphHostingView!
     
     //MARK: - UIVIewController Actions
-    @IBAction func connectionButtonTapped(sender: AnyObject) {
+    @IBAction func connectionButtonTapped(_ sender: AnyObject) {
         if peripheral != nil
         {
             bluetoothManager?.cancelPeripheralConnection(peripheral!)
         }
     }
-    @IBAction func aboutButtonTapped(sender: AnyObject) {
-        self.showAbout(message: NORAppUtilities.getHelpTextForService(service: .HRM))
+    @IBAction func aboutButtonTapped(_ sender: AnyObject) {
+        self.showAbout(message: NORAppUtilities.getHelpTextForService(service: .hrm))
     }
     //MARK: - UIViewController delegate
     required init?(coder aDecoder: NSCoder) {
@@ -66,7 +95,7 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     override func viewDidLoad() {
         super.viewDidLoad()
         // Rotate the vertical label
-        verticalLabel.transform = CGAffineTransformRotate(CGAffineTransformMakeTranslation(-120.0, 0.0), CGFloat(-M_PI_2))
+        verticalLabel.transform = CGAffineTransform(translationX: -120.0, y: 0.0).rotated(by: CGFloat(-M_PI_2))
         isBluetoothOn           = false
         isDeviceConnected       = false
         isBackButtonPressed     = false
@@ -78,7 +107,7 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         initLinePlot()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if peripheral != nil && isBackButtonPressed == true
         {
@@ -86,7 +115,7 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         isBackButtonPressed = true
     }
@@ -99,12 +128,12 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         self.graphView.hostedGraph = self.graph;
         
         //apply styling to Graph
-        graph?.applyTheme(CPTTheme(named: kCPTPlainWhiteTheme))
+        graph?.apply(CPTTheme(named: CPTThemeName.plainWhiteTheme))
         
         //set graph backgound area transparent
-        graph?.fill = CPTFill(color: CPTColor.clearColor())
-        graph?.plotAreaFrame?.fill = CPTFill(color: CPTColor.clearColor())
-        graph?.plotAreaFrame?.fill = CPTFill(color: CPTColor.clearColor())
+        graph?.fill = CPTFill(color: CPTColor.clear())
+        graph?.plotAreaFrame?.fill = CPTFill(color: CPTColor.clear())
+        graph?.plotAreaFrame?.fill = CPTFill(color: CPTColor.clear())
         
         //This removes top and right lines of graph
         graph?.plotAreaFrame?.borderLineStyle = CPTLineStyle(style: nil)
@@ -127,15 +156,15 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         
         let axisSet = graph?.axisSet as! CPTXYAxisSet;
         
-        let axisLabelFormatter = NSNumberFormatter()
+        let axisLabelFormatter = NumberFormatter()
         axisLabelFormatter.generatesDecimalNumbers = false
-        axisLabelFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+        axisLabelFormatter.numberStyle = NumberFormatter.Style.decimal
         
         
         //Define x-axis properties
         //x-axis intermediate interval 2
         let xAxis = axisSet.xAxis
-        xAxis?.majorIntervalLength = plotXInterval
+        xAxis?.majorIntervalLength = plotXInterval as NSNumber?
         xAxis?.minorTicksPerInterval = 4;
         xAxis?.minorTickLength = 5;
         xAxis?.majorTickLength = 7;
@@ -145,7 +174,7 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         
         //Define y-axis properties
         let yAxis = axisSet.yAxis
-        yAxis?.majorIntervalLength = plotYInterval
+        yAxis?.majorIntervalLength = plotYInterval as NSNumber?
         yAxis?.minorTicksPerInterval = 4
         yAxis?.minorTickLength = 5
         yAxis?.majorTickLength = 7
@@ -157,25 +186,25 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         //Define line plot and set line properties
         linePlot = CPTScatterPlot()
         linePlot?.dataSource = self
-        graph?.addPlot(linePlot!, toPlotSpace: plotSpace)
+        graph?.add(linePlot!, to: plotSpace)
         
         //set line plot style
         let lineStyle = linePlot?.dataLineStyle!.mutableCopy() as! CPTMutableLineStyle
         lineStyle.lineWidth = 2
-        lineStyle.lineColor = CPTColor.blackColor()
+        lineStyle.lineColor = CPTColor.black()
         linePlot!.dataLineStyle = lineStyle;
         
         let symbolLineStyle = CPTMutableLineStyle(style: lineStyle)
-        symbolLineStyle.lineColor = CPTColor.blackColor()
-        let symbol = CPTPlotSymbol.ellipsePlotSymbol()
-        symbol.fill = CPTFill(color: CPTColor.blackColor())
+        symbolLineStyle.lineColor = CPTColor.black()
+        let symbol = CPTPlotSymbol.ellipse()
+        symbol.fill = CPTFill(color: CPTColor.black())
         symbol.lineStyle = symbolLineStyle
-        symbol.size = CGSizeMake(3.0, 3.0)
+        symbol.size = CGSize(width: 3.0, height: 3.0)
         linePlot?.plotSymbol = symbol;
         
         //set graph grid lines
         let gridLineStyle = CPTMutableLineStyle()
-        gridLineStyle.lineColor = CPTColor.grayColor()
+        gridLineStyle.lineColor = CPTColor.gray()
         gridLineStyle.lineWidth = 0.5
         xAxis?.majorGridLineStyle = gridLineStyle
         yAxis?.majorGridLineStyle = gridLineStyle
@@ -190,13 +219,13 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         plotYInterval = 50
          
         let plotSpace = graph?.defaultPlotSpace as! CPTXYPlotSpace
-        plotSpace.xRange = CPTPlotRange(location: NSNumber(integer: plotXMinRange!), length: NSNumber(integer: plotXMaxRange!))
-        plotSpace.yRange = CPTPlotRange(location: NSNumber(integer: plotYMinRange!), length: NSNumber(integer: plotYMaxRange!))
+        plotSpace.xRange = CPTPlotRange(location: NSNumber(value: plotXMinRange!), length: NSNumber(value: plotXMaxRange!))
+        plotSpace.yRange = CPTPlotRange(location: NSNumber(value: plotYMinRange!), length: NSNumber(value: plotYMaxRange!))
     }
     
     func clearUI() {
         deviceName.text = "DEFAULT HRM";
-        battery.setTitle("N/A", forState: UIControlState.Normal)
+        battery.setTitle("N/A", for: UIControlState())
         battery.tag = 0;
         hrLocation.text = "n/a";
         hrValue.text = "-";
@@ -210,7 +239,7 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     
     func addHRvalueToGraph(data value: Int) {
         // In this method the new value is added to hrValues array
-        hrValues?.addObject(NSDecimalNumber(integer: value))
+        hrValues?.add(NSDecimalNumber(value: value as Int))
         
         // Also, we save the time when the data was received
         // 'Last' and 'previous' values are timestamps of those values. We calculate them to know whether we should automatically scroll the graph
@@ -225,11 +254,11 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
             firstValue = 0
         }
         
-        let previous : Double = lastValue.decimalNumberBySubtracting(firstValue).doubleValue
-        xValues?.addObject(NORHRMViewController.longUnixEpoch())
+        let previous : Double = lastValue.subtracting(firstValue).doubleValue
+        xValues?.add(NORHRMViewController.longUnixEpoch())
         lastValue  = xValues?.lastObject as! NSDecimalNumber
         firstValue = xValues?.firstObject as! NSDecimalNumber
-        let last : Double = lastValue.decimalNumberBySubtracting(firstValue).doubleValue
+        let last : Double = lastValue.subtracting(firstValue).doubleValue
         
         // Here we calculate the max value visible on the graph
         let plotSpace = graph!.defaultPlotSpace as! CPTXYPlotSpace
@@ -237,7 +266,7 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         
         if last > max && previous <= max {
             let location = Int(last) - plotXMaxRange! + 1
-            plotSpace.xRange = CPTPlotRange(location: NSNumber(integer: (location)), length: NSNumber(integer: plotXMaxRange!))
+            plotSpace.xRange = CPTPlotRange(location: NSNumber(value: (location)), length: NSNumber(value: plotXMaxRange!))
         }
         
         // Rescale Y axis to display higher values
@@ -247,7 +276,7 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                 plotYMaxRange = plotYMaxRange! + 50
             }
             
-            plotSpace.yRange = CPTPlotRange(location: NSNumber(integer: plotYMinRange!), length: NSNumber(integer: plotYMaxRange!))
+            plotSpace.yRange = CPTPlotRange(location: NSNumber(value: plotYMinRange!), length: NSNumber(value: plotYMaxRange!))
         }
         graph?.reloadData()
     }
@@ -261,39 +290,39 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         // The sensor has been selected, connect to it
         peripheral = aPeripheral;
         peripheral!.delegate = self;
-        let options = NSDictionary(object: NSNumber(bool: true), forKey: CBConnectPeripheralOptionNotifyOnNotificationKey)
-        bluetoothManager?.connectPeripheral(peripheral!, options: options as? [String : AnyObject])
+        let options = NSDictionary(object: NSNumber(value: true as Bool), forKey: CBConnectPeripheralOptionNotifyOnNotificationKey as NSCopying)
+        bluetoothManager?.connect(peripheral!, options: options as? [String : AnyObject])
     }
     
     
     //MARK: - CPTPlotDataSource
     
-    func numberOfRecordsForPlot(plot :CPTPlot) -> UInt {
+    func numberOfRecords(for plot :CPTPlot) -> UInt {
         return UInt(hrValues!.count)
     }
     
-    func numberForPlot(plot: CPTPlot, field fieldEnum: UInt, recordIndex idx: UInt) -> AnyObject? {
+    func numberForPlot(_ plot: CPTPlot, field fieldEnum: UInt, recordIndex idx: UInt) -> AnyObject? {
         let fieldVal = NSInteger(fieldEnum)
         let scatterPlotField = CPTScatterPlotField(rawValue: fieldVal)
         switch (scatterPlotField!) {
             case .X:
                 // The xValues stores timestamps. To show them starting from 0 we have to subtract the first one.
-                return (xValues?.objectAtIndex(Int(idx)) as! NSDecimalNumber).decimalNumberBySubtracting(xValues?.firstObject as! NSDecimalNumber)
+                return (xValues?.object(at: Int(idx)) as! NSDecimalNumber).subtracting(xValues?.firstObject as! NSDecimalNumber)
             case .Y:
-                return hrValues?.objectAtIndex(Int(idx))
+                return hrValues?.object(at: Int(idx)) as AnyObject?
         }
     }
 
     //MARK: - CPRPlotSpaceDelegate
-    func plotSpace(space: CPTPlotSpace, shouldScaleBy interactionScale: CGFloat, aboutPoint interactionPoint: CGPoint) -> Bool {
+    func plotSpace(_ space: CPTPlotSpace, shouldScaleBy interactionScale: CGFloat, aboutPoint interactionPoint: CGPoint) -> Bool {
         return false
     }
 
-    func plotSpace(space: CPTPlotSpace, willDisplaceBy proposedDisplacementVector: CGPoint) -> CGPoint {
+    func plotSpace(_ space: CPTPlotSpace, willDisplaceBy proposedDisplacementVector: CGPoint) -> CGPoint {
         return CGPointMake(proposedDisplacementVector.x, 0)
     }
     
-    func plotSpace(space: CPTPlotSpace, willChangePlotRangeTo newRange: CPTPlotRange, forCoordinate coordinate: CPTCoordinate) -> CPTPlotRange? {
+    func plotSpace(_ space: CPTPlotSpace, willChangePlotRangeTo newRange: CPTPlotRange, for coordinate: CPTCoordinate) -> CPTPlotRange? {
         // The Y range does not change here
         if coordinate == CPTCoordinate.Y {
             return newRange;
@@ -302,20 +331,20 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         // Adjust axis on scrolling
         let axisSet = space.graph?.axisSet as! CPTXYAxisSet
         
-        if newRange.location.integerValue >= plotXMinRange! {
+        if newRange.location.intValue >= plotXMinRange! {
             // Adjust axis to keep them in view at the left and bottom;
             // adjust scale-labels to match the scroll.
-            axisSet.yAxis!.orthogonalPosition = NSNumber(double: newRange.locationDouble - Double(plotXMinRange!))
+            axisSet.yAxis!.orthogonalPosition = NSNumber(value: newRange.locationDouble - Double(plotXMinRange!))
             return newRange
         }
         axisSet.yAxis!.orthogonalPosition = 0
-        return CPTPlotRange(location: plotXMinRange!, length: plotXMaxRange!)
+        return CPTPlotRange(location: NSNumber(plotXMinRange!), length: plotXMaxRange!)
     }
     
     //MARK: - CBCentralManagerDelegate
     
-    func centralManagerDidUpdateState(central: CBCentralManager) {
-        if central.state == CBCentralManagerState.PoweredOn {
+    func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        if central.state == CBCentralManagerState.poweredOn {
             // TODO
         }else{
             // TODO
@@ -323,118 +352,118 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         }
     }
 
-    func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {
+    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             self.deviceName.text = peripheral.name
-            self.connectionButton.setTitle("DISCONNECT", forState: UIControlState.Normal)
+            self.connectionButton.setTitle("DISCONNECT", for: UIControlState())
             self.hrValues?.removeAllObjects()
             self.xValues?.removeAllObjects()
             self.resetPlotRange()
         }
         
-        if UIApplication.instancesRespondToSelector(#selector(UIApplication.registerUserNotificationSettings(_:))){
-            UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [.Alert, .Sound], categories: nil))
+        if UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))){
+            UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .sound], categories: nil))
         }
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NORHRMViewController.appDidEnterBackgroundCallback), name: UIApplicationDidEnterBackgroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NORHRMViewController.appDidBecomeActiveCallback), name: UIApplicationDidBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(NORHRMViewController.appDidEnterBackgroundCallback), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(NORHRMViewController.appDidBecomeActiveCallback), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         
         // Peripheral has connected. Discover required services
         peripheral.discoverServices([hrServiceUUID!,batteryServiceUUID!])
         peripheral.discoverServices(nil)
     }
     
-    func centralManager(central: CBCentralManager, didFailToConnectPeripheral peripheral: CBPeripheral, error: NSError?) {
+    func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async(execute: {
             NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to peripheral failed. Try again")
-            self.connectionButton.setTitle("CONNCECT", forState: UIControlState.Normal)
+            self.connectionButton.setTitle("CONNCECT", for: UIControlState())
             self.peripheral = nil
             self.clearUI()
         });
     }
     
-    func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
+    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        dispatch_async(dispatch_get_main_queue(), {
-            self.connectionButton.setTitle("CONNECT", forState: UIControlState.Normal)
+        DispatchQueue.main.async(execute: {
+            self.connectionButton.setTitle("CONNECT", for: UIControlState())
             self.peripheral = nil;
             self.clearUI()
             
             if NORAppUtilities.isApplicationInactive() {
                 NORAppUtilities.showBackgroundNotification(message: String(format: "%@ peripheral is disconnected.", peripheral.name!))
             }
-            NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidBecomeActiveNotification, object: nil)
-            NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidEnterBackgroundNotification, object: nil)
+            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
         });
     }
     
     //MARK: - CBPeripheralDelegate
-    func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         guard error == nil else {
             print(String(format: "An error occured while discovering services: %@", (error?.localizedDescription)!))
             return
         }
         for aService : CBService in peripheral.services! {
-            if aService.UUID.isEqual(hrServiceUUID){
+            if aService.uuid.isEqual(hrServiceUUID){
                 print("HRM Service found")
-                peripheral.discoverCharacteristics(nil, forService: aService)
-            } else if aService.UUID.isEqual(batteryServiceUUID) {
+                peripheral.discoverCharacteristics(nil, for: aService)
+            } else if aService.uuid.isEqual(batteryServiceUUID) {
               print("Battery service found")
-                peripheral.discoverCharacteristics(nil, forService: aService)
+                peripheral.discoverCharacteristics(nil, for: aService)
             }
         }
     }
 
-    func peripheral(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?) {
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
 
         guard error == nil else {
             print(String(format:"Error occurred while discovering characteristic: %@", (error?.localizedDescription)!))
             return
         }
         
-        if service.UUID.isEqual(hrServiceUUID) {
+        if service.uuid.isEqual(hrServiceUUID) {
             for aCharactersistic : CBCharacteristic in service.characteristics! {
-                if aCharactersistic.UUID.isEqual(hrMeasurementCharacteristicUUID) {
+                if aCharactersistic.uuid.isEqual(hrMeasurementCharacteristicUUID) {
                     print("Heart rate measurement characteristic found")
-                    peripheral.setNotifyValue(true, forCharacteristic: aCharactersistic)
-                }else if aCharactersistic.UUID.isEqual(hrLocationCharacteristicUUID) {
+                    peripheral.setNotifyValue(true, for: aCharactersistic)
+                }else if aCharactersistic.uuid.isEqual(hrLocationCharacteristicUUID) {
                     print("Heart rate sensor location characteristic found")
-                    peripheral.readValueForCharacteristic(aCharactersistic)
+                    peripheral.readValue(for: aCharactersistic)
                 }
             }
-        } else if service.UUID.isEqual(batteryServiceUUID) {
+        } else if service.uuid.isEqual(batteryServiceUUID) {
             for aCharacteristic : CBCharacteristic in service.characteristics! {
-                if aCharacteristic.UUID.isEqual(batteryLevelCharacteristicUUID) {
+                if aCharacteristic.uuid.isEqual(batteryLevelCharacteristicUUID) {
                     print("Battery level characteristic found")
-                    peripheral.readValueForCharacteristic(aCharacteristic)
+                    peripheral.readValue(for: aCharacteristic)
                 }
             }
         }
     }
     
-    func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
+    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         guard error == nil else {
             print(String(format: "Error occurred while updating characteristic value: %@", (error?.localizedDescription)!))
             return
         }
-        dispatch_async(dispatch_get_main_queue()) {
-            if characteristic.UUID.isEqual(self.hrMeasurementCharacteristicUUID) {
+        DispatchQueue.main.async {
+            if characteristic.uuid.isEqual(self.hrMeasurementCharacteristicUUID) {
                 let value = self.decodeHRValue(withData: characteristic.value!)
                 self.addHRvalueToGraph(data: Int(value))
                 self.hrValue.text = String(format: "%d", value)
-            } else if characteristic.UUID.isEqual(self.hrLocationCharacteristicUUID) {
+            } else if characteristic.uuid.isEqual(self.hrLocationCharacteristicUUID) {
                 self.hrLocation.text = self.decodeHRLocation(withData: characteristic.value!)
-            } else if characteristic.UUID.isEqual(self.batteryLevelCharacteristicUUID) {
-                let array : UnsafePointer<UInt8> = UnsafePointer<UInt8>((characteristic.value?.bytes)!)
+            } else if characteristic.uuid.isEqual(self.batteryLevelCharacteristicUUID) {
+                let array : UnsafePointer<UInt8> = UnsafePointer<UInt8>(((characteristic.value as NSData?)?.bytes)!)
                 let batteryLevel : UInt8 = array[0]
                 let text = String(format: "%d%%", batteryLevel)
-                self.battery.setTitle(text, forState: UIControlState.Disabled)
+                self.battery.setTitle(text, for: UIControlState.disabled)
                 
                 if self.battery.tag == 0 {
-                    if characteristic.properties.rawValue & CBCharacteristicProperties.Notify.rawValue > 0 {
+                    if characteristic.properties.rawValue & CBCharacteristicProperties.notify.rawValue > 0 {
                        self.battery.tag = 1 // Mark that we have enabled notifications
-                       peripheral.setNotifyValue(true, forCharacteristic: characteristic)
+                       peripheral.setNotifyValue(true, for: characteristic)
                     }
                 }
             }
@@ -447,20 +476,20 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     }
     
     func appDidBecomeActiveCallback() {
-        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        UIApplication.shared.cancelAllLocalNotifications()
     }
     
     //MARK: - Segue management
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         // The 'scan' seque will be performed only if connectedPeripheral == nil (if we are not connected already).
         return identifier != "scan" || peripheral == nil
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "scan" {
             // Set this contoller as scanner delegate
-            let nc                = segue.destinationViewController as! UINavigationController
-            let controller        = nc.childViewControllerForStatusBarHidden() as! NORScannerViewController
+            let nc                = segue.destination as! UINavigationController
+            let controller        = nc.childViewControllerForStatusBarHidden as! NORScannerViewController
             controller.filterUUID = hrServiceUUID
             controller.delegate   = self
         }
@@ -468,13 +497,13 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     
     //MARK: - Helpers
     static func longUnixEpoch() -> NSDecimalNumber {
-        return NSDecimalNumber(double: NSDate().timeIntervalSince1970)
+        return NSDecimalNumber(value: Date().timeIntervalSince1970 as Double)
     }
 
-    func decodeHRValue(withData data: NSData) -> Int {
-        let count = data.length / sizeof(UInt8)
-        var array = [UInt8](count: count, repeatedValue: 0)
-        data.getBytes(&array, length:count * sizeof(UInt8))
+    func decodeHRValue(withData data: Data) -> Int {
+        let count = data.count / MemoryLayout<UInt8>.size
+        var array = [UInt8](repeating: 0, count: count)
+        (data as NSData).getBytes(&array, length:count * MemoryLayout<UInt8>.size)
         
         var bpmValue : Int = 0;
         if ((array[0] & 0x01) == 0) {
@@ -486,8 +515,8 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         return bpmValue
     }
     
-    func decodeHRLocation(withData data:NSData) -> String {
-        let location = UnsafePointer<UInt16>(data.bytes)
+    func decodeHRLocation(withData data:Data) -> String {
+        let location = (data as NSData).bytes.bindMemory(to: UInt16.self, capacity: data.count)
         switch (location[0]) {
             case 0:
                 return "Other"

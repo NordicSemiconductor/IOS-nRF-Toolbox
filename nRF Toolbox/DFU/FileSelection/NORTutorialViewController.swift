@@ -12,14 +12,14 @@ class NORTutorialViewController: UIViewController {
 
     //MARK: - View Actions
     
-    @IBAction func openURLButtonTapped(sender: AnyObject) {
+    @IBAction func openURLButtonTapped(_ sender: AnyObject) {
         self.hanleOpenURLButtonTapped()
     }
     
     
     //MARK: - NORTutorialViewController
     func hanleOpenURLButtonTapped() {
-        let url = NSURL(string: "https://github.com/NordicSemiconductor/pc-nrfutil")!
-        UIApplication.sharedApplication().openURL(url)
+        let url = URL(string: "https://github.com/NordicSemiconductor/pc-nrfutil")!
+        UIApplication.shared.openURL(url)
     }
 }

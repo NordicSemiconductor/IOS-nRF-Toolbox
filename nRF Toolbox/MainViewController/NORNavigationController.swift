@@ -9,12 +9,12 @@
 import UIKit
 
 class NORNavigationController: UINavigationController {
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationBar.tintColor = UIColor.whiteColor()
+        self.navigationBar.tintColor = UIColor.white
         let navBackgroundImage = UIImage(named: "BluetoothLogo")
         let navbackgroundImageView = UIImageView(image: navBackgroundImage)
-        navbackgroundImageView.center = CGPointMake(self.navigationBar.frame.size.width/2, self.navigationBar.frame.size.height/2)
+        navbackgroundImageView.center = CGPoint(x: self.navigationBar.frame.size.width/2, y: self.navigationBar.frame.size.height/2)
         self.navigationBar.addSubview(navbackgroundImageView)
     }
 }

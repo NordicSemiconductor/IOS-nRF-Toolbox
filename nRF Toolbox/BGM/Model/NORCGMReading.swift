@@ -9,51 +9,51 @@
 import UIKit
 
 enum  CGMMeasurementUnit : UInt8 {
-    case MG_DL = 0
+    case mg_DL = 0
 }
 
 enum CGMFlags : UInt8 {
-    case CGMTrendInfoPresent                 = 0
-    case CGMQualityInfoPresent               = 1
-    case CGMSesnorStatusWarningPresent       = 5
-    case CGMSensorStatusCalTempOctetPresent  = 6
-    case CGMSensorStatusStatusOctetPresent   = 7
+    case cgmTrendInfoPresent                 = 0
+    case cgmQualityInfoPresent               = 1
+    case cgmSesnorStatusWarningPresent       = 5
+    case cgmSensorStatusCalTempOctetPresent  = 6
+    case cgmSensorStatusStatusOctetPresent   = 7
 }
 
 enum CGMSensorAnnuciation : UInt8 {
-    case CGMSessionStopped 								= 0
-    case CGMDeviceBatteryLow 							= 1
-    case CGMSensorTypeIncorrectForDevice 				= 2
-    case CGMSensorMalfunction 							= 3
-    case CGMDeviceSpecificAlert 						= 4
-    case CGMGeneralDeviceFaultOccurredInSensor 			= 5
-    case CGMTimeSynchronizationRequired 				= 8
-    case CGMCalibrationNotAllowed 						= 9
-    case CGMCalibrationRecommended 						= 10
-    case CGMCalibrationRequired 						= 11
-    case CGMSensorTemperatureTooHighForValidMeasurement = 12
-    case CGMSensorTemperatureTooLowForValidMeasurement	= 13
-    case CGMSensorResultLowerThanPatientLowLevel 		= 16
-    case CGMSensorResultHigherThanPatientHighLevel 		= 17
-    case CGMSensorResultLowerThanHypoLevel 				= 18
-    case CGMSensorResultHigherThanHyperLevel 			= 19
-    case CGMSensorRateOfDecreaseExceeded 				= 20
-    case CGMSensorRateOfIncreaseExceeded 				= 21
-    case CGMSensorResultLowerThanTheDeviceCanProcess 	= 22
-    case CGMSensorResultHigherThanTheDeviceCanProcess 	= 23
+    case cgmSessionStopped 								= 0
+    case cgmDeviceBatteryLow 							= 1
+    case cgmSensorTypeIncorrectForDevice 				= 2
+    case cgmSensorMalfunction 							= 3
+    case cgmDeviceSpecificAlert 						= 4
+    case cgmGeneralDeviceFaultOccurredInSensor 			= 5
+    case cgmTimeSynchronizationRequired 				= 8
+    case cgmCalibrationNotAllowed 						= 9
+    case cgmCalibrationRecommended 						= 10
+    case cgmCalibrationRequired 						= 11
+    case cgmSensorTemperatureTooHighForValidMeasurement = 12
+    case cgmSensorTemperatureTooLowForValidMeasurement	= 13
+    case cgmSensorResultLowerThanPatientLowLevel 		= 16
+    case cgmSensorResultHigherThanPatientHighLevel 		= 17
+    case cgmSensorResultLowerThanHypoLevel 				= 18
+    case cgmSensorResultHigherThanHyperLevel 			= 19
+    case cgmSensorRateOfDecreaseExceeded 				= 20
+    case cgmSensorRateOfIncreaseExceeded 				= 21
+    case cgmSensorResultLowerThanTheDeviceCanProcess 	= 22
+    case cgmSensorResultHigherThanTheDeviceCanProcess 	= 23
 }
 
 class NORCGMReading : NSObject {
     // Glucose Measurement values
     var cgmFeatureData                  : NORCGMFeatureData?
     var measurementSize                 : UInt8 = 0
-    var timeStamp                       : NSDate?
+    var timeStamp                       : Date?
     var timeOffsetSinceSessionStart     : Int16 = 0
     var glucoseConcentration            : Float32 = 0.0
     var trendInfo                       : Float32 = 0.0
     var quality                         : Float32 = 0.0
     var sensorStatusAnnunciation        : UInt32 = 0
-    var unit                            : CGMMeasurementUnit  = .MG_DL
+    var unit                            : CGMMeasurementUnit  = .mg_DL
     var sensorStatusAnnunciationPresent : Bool = false
     var sensorTrendInfoPresent          : Bool = false
     var sensorWarningPresent            : Bool = false
@@ -66,7 +66,7 @@ class NORCGMReading : NSObject {
         self.updateFromBytes(bytes)
     }
 
-    func updateFromBytes(bytes: UnsafeMutablePointer<UInt8>) {
+    func updateFromBytes(_ bytes: UnsafeMutablePointer<UInt8>) {
         var pointer = bytes;
         
         // Read measurement Length
@@ -83,7 +83,7 @@ class NORCGMReading : NSObject {
         
         self.measurementSize             = currentMeasurementSize;
         self.glucoseConcentration        = NORCharacteristicReader.readSFloatValue(ptr: &pointer)
-        self.unit                        = .MG_DL
+        self.unit                        = .mg_DL
         self.timeOffsetSinceSessionStart = NORCharacteristicReader.readSInt16Value(ptr: &pointer)
         self.sensorCalTempPresent        = statusCalTempPsesent;
         self.sensorWarningPresent        = statusWarningPsesent;
@@ -121,7 +121,7 @@ class NORCGMReading : NSObject {
         return (self.cgmFeatureData?.locationAsString())!
     }
     
-    override func isEqual(object: AnyObject?) -> Bool {
+    override func isEqual(_ object: Any?) -> Bool {
         //TODO: Thought about using time offset as unique identifiers
         //But this is pretty unsafe in situations where the readings are restarted
         //In that case the time offsets will be equal again (0s,1s,2s,etc..)

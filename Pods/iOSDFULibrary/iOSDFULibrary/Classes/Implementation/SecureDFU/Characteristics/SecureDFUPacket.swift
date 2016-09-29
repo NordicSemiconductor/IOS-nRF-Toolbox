@@ -23,27 +23,27 @@
 import CoreBluetooth
 
 internal class SecureDFUPacket {
-    static private let UUID = CBUUID(string: "8EC90002-F315-4F60-9FB8-838830DAEA50")
+    static fileprivate let UUID = CBUUID(string: "8EC90002-F315-4F60-9FB8-838830DAEA50")
     
-    static func matches(characteristic:CBCharacteristic) -> Bool {
-        return characteristic.UUID.isEqual(UUID)
+    static func matches(_ characteristic:CBCharacteristic) -> Bool {
+        return characteristic.uuid.isEqual(UUID)
     }
     
-    private let PacketSize = 20
+    fileprivate let PacketSize = 20
     
-    private var characteristic:CBCharacteristic
-    private var logger:LoggerHelper
+    fileprivate var characteristic:CBCharacteristic
+    fileprivate var logger:LoggerHelper
     
     /// Number of bytes of firmware already sent.
-    private(set) var bytesSent = 0
+    fileprivate(set) var bytesSent = 0
 
     /// Current progress in percents (0-99).
-    private var progress = 0
-    private var startTime:CFAbsoluteTime?
-    private var lastTime:CFAbsoluteTime?
+    fileprivate var progress = 0
+    fileprivate var startTime:CFAbsoluteTime?
+    fileprivate var lastTime:CFAbsoluteTime?
 
     var valid:Bool {
-        return characteristic.properties.contains(CBCharacteristicProperties.WriteWithoutResponse)
+        return characteristic.properties.contains(CBCharacteristicProperties.writeWithoutResponse)
     }
     
     init(_ characteristic:CBCharacteristic, _ logger:LoggerHelper) {
@@ -52,29 +52,29 @@ internal class SecureDFUPacket {
     }
     
     // MARK: - Characteristic API methods
-    func sendInitPacket(initPacketData : NSData){
+    func sendInitPacket(_ initPacketData : Data){
         // Get the peripheral object
         let peripheral = characteristic.service.peripheral
         
         // Data may be sent in up-to-20-bytes packets
         var offset = 0
-        var bytesToSend = initPacketData.length
+        var bytesToSend = initPacketData.count
         
         repeat {
 
             let packetLength = min(bytesToSend, PacketSize)
-            let packet = initPacketData.subdataWithRange(NSRange(location: offset, length: packetLength))
+            let packet = initPacketData.subdata(in: offset..<offset + packetLength)
             
-            logger.v("Writing to characteristic \(SecureDFUPacket.UUID.UUIDString)...")
-            logger.d("peripheral.writeValue(0x\(packet.hexString), forCharacteristic: \(SecureDFUPacket.UUID.UUIDString), type: WithoutResponse)")
-            peripheral.writeValue(packet, forCharacteristic: characteristic, type: CBCharacteristicWriteType.WithoutResponse)
+            logger.v("Writing to characteristic \(SecureDFUPacket.UUID.uuidString)...")
+            logger.d("peripheral.writeValue(0x\(packet.hexString), forCharacteristic: \(SecureDFUPacket.UUID.uuidString), type: WithoutResponse)")
+            peripheral.writeValue(packet, for: characteristic, type: CBCharacteristicWriteType.withoutResponse)
             
             offset += packetLength
             bytesToSend -= packetLength
         } while bytesToSend > 0
     }
     
-    func resumeFromOffset(anOffset : UInt32) {
+    func resumeFromOffset(_ anOffset : UInt32) {
         self.bytesSent = Int(anOffset)
         startTime = CFAbsoluteTimeGetCurrent()
         lastTime = startTime
@@ -84,10 +84,10 @@ internal class SecureDFUPacket {
      Sends data over packet characteristic
     */
     
-    func sendData(withPRN aPRNVaule:UInt16, andRange aRange: NSRange, inFirmware aFirmware : DFUFirmware, andProgressHandler aProgressHandler : DFUProgressDelegate?, andCompletion aCompletion: SDFUCallback) {
+    func sendData(withPRN aPRNVaule:UInt16, andRange aRange: Range<Int>, inFirmware aFirmware : DFUFirmware, andProgressHandler aProgressHandler : DFUProgressDelegate?, andCompletion aCompletion: @escaping SDFUCallback) {
         let peripheral   = characteristic.service.peripheral
-        let aData        = aFirmware.data.subdataWithRange(aRange)
-        let bytesTotal   = aData.length
+        let aData        = aFirmware.data.subdata(in: aRange)
+        let bytesTotal   = aData.count
         let totalPackets = (bytesTotal + PacketSize - 1) / PacketSize
         let packetsSent  = (bytesSent + PacketSize - 1) / PacketSize
         let packetsLeft  = totalPackets - packetsSent
@@ -108,8 +108,11 @@ internal class SecureDFUPacket {
         while packetsToSendNow > 0 {
             let bytesLeft = bytesTotal - bytesSent
             let packetLength = min(bytesLeft, PacketSize)
-            let packet = aData.subdataWithRange(NSRange(location: bytesSent, length: packetLength))
-            peripheral.writeValue(packet, forCharacteristic: characteristic, type: CBCharacteristicWriteType.WithoutResponse)
+            let range:Range<Int> = bytesSent..<(packetLength+bytesSent)
+            let packet = aData.subdata(in: range)
+            print("### total:\(bytesSent)")
+            print("### Nxt packet size:\(packetLength)")
+            peripheral.writeValue(packet, for: characteristic, type: CBCharacteristicWriteType.withoutResponse)
             
             bytesSent += packetLength
             packetsToSendNow -= 1
@@ -121,7 +124,7 @@ internal class SecureDFUPacket {
             // Calculate progress for current chunk, this is not presented to progress delegate
             let currentProgress = (bytesSent * 100 / bytesTotal)
             // Calculate the total progress of the firmware, presented to the delegate
-            let totalProgress = (aRange.location + bytesSent) * 100 / (aFirmware.data).length
+            let totalProgress = (aRange.lowerBound + bytesSent) * 100 / (aFirmware.data).count
             
             // Notify progress listener only if current progress has increased since last time
             if currentProgress > progress {
@@ -131,15 +134,15 @@ internal class SecureDFUPacket {
                 let currentSpeed = Double(packetLength) / (now - lastTime!)
                 lastTime = now
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     //Notify handler of current chunk progress
                     //to start sending next chunk
                     if currentProgress == 100 {
-                        aCompletion(responseData: nil)
+                        aCompletion(nil)
                     }
                     
                     //Notify progrsess delegate of overall progress
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         aProgressHandler?.onUploadProgress(aFirmware.currentPart,
                             totalParts: aFirmware.parts,
                             progress: totalProgress,

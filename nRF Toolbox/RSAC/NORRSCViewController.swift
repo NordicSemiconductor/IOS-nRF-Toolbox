@@ -8,13 +8,33 @@
 
 import UIKit
 import CoreBluetooth
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, NORScannerDelegate {
 
     //MARK: - Class properties
     var bluetoothManager    : CBCentralManager?
     var connectedPeripheral : CBPeripheral?
-    var timer               : NSTimer? //The timer is used to periodically update strides number
+    var timer               : Timer? //The timer is used to periodically update strides number
     var stepsNumber         : UInt32?  //Number of steps counted during the current connection session. Calculated based on cadence and time intervals
     var cadenceValue        : UInt8?   //Number of steps counted during the current connection session. Calculated based on cadence and time intervals
     var stripLength         : UInt8?   //The last strip length obtained from the device
@@ -43,15 +63,15 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
 
     
     //MARK: - UIView Actions
-    @IBAction func connectionButtonTapped(sender: AnyObject) {
+    @IBAction func connectionButtonTapped(_ sender: AnyObject) {
         if connectedPeripheral != nil
         {
             bluetoothManager?.cancelPeripheralConnection(connectedPeripheral!)
         }
     }
     
-    @IBAction func aboutButtonTapped(sender: AnyObject) {
-        self.showAbout(message: NORAppUtilities.getHelpTextForService(service: .RSC))
+    @IBAction func aboutButtonTapped(_ sender: AnyObject) {
+        self.showAbout(message: NORAppUtilities.getHelpTextForService(service: .rsc))
     }
 
     //MARK: - UIViewDelegate
@@ -68,10 +88,10 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     override func viewDidLoad() {
         super.viewDidLoad()
         // Rotate the vertical label
-        self.verticalLabel.transform = CGAffineTransformRotate(CGAffineTransformMakeTranslation(-170.0, 0.0), CGFloat(-M_PI_2))
+        self.verticalLabel.transform = CGAffineTransform(translationX: -170.0, y: 0.0).rotated(by: CGFloat(-M_PI_2))
         isBackButtonPressed = false
     }
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if connectedPeripheral != nil && isBackButtonPressed==true
         {
@@ -79,27 +99,27 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         isBackButtonPressed = true
     }
 
     //MARK: - Segue methods
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         return identifier != "scan" || connectedPeripheral == nil
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "scan" {
             // Set this contoller as scanner delegate
-            let nc = segue.destinationViewController as! UINavigationController
-            let scanController = nc.childViewControllerForStatusBarHidden() as! NORScannerViewController
+            let nc = segue.destination as! UINavigationController
+            let scanController = nc.childViewControllerForStatusBarHidden as! NORScannerViewController
             scanController.filterUUID = rscServiceUUID
             scanController.delegate = self
         }
     }
     //MARK: - NORRSCViewController implementation
-    func timerFired(timer aTimer : NSTimer) {
+    func timerFired(timer aTimer : Timer) {
         // Here we will update the stride count.
         // If a device has been disconnected, abort. There is nothing to do.
         guard connectedPeripheral != nil else {
@@ -134,8 +154,8 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         
         // If cadence is greater than 0 we have to reschedule the timer with new time interval
         if cadenceValue > 0 {
-            let timeInterval = NSTimeInterval(65.0 / Float(cadenceValue!)) // 60 second + 5 for calibration
-            timer = NSTimer.scheduledTimerWithTimeInterval(timeInterval, target: self, selector: #selector(self.timerFired(timer:)), userInfo: nil, repeats: false)
+            let timeInterval = TimeInterval(65.0 / Float(cadenceValue!)) // 60 second + 5 for calibration
+            timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(self.timerFired(timer:)), userInfo: nil, repeats: false)
         } else {
             timer?.invalidate()
             timer = nil
@@ -147,7 +167,7 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     }
     
     func applicationDidBecomeActiveCallback() {
-        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        UIApplication.shared.cancelAllLocalNotifications()
     }
     
     func clearUI() {
@@ -157,7 +177,7 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         timer = nil
         deviceName.text = "DEFAULT RSC"
         battery.tag = 0
-        battery.setTitle("n/a", forState: UIControlState.Disabled)
+        battery.setTitle("n/a", for: UIControlState.disabled)
         speed.text = "-"
         cadence.text = "-"
         distance.text = "-"
@@ -166,62 +186,62 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         activity.text = "n/a"
     }
     //MARK: - CBCentralManagerDelegate
-    func centralManagerDidUpdateState(central: CBCentralManager) {
-        if central.state == CBCentralManagerState.PoweredOn {
+    func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        if central.state == CBCentralManagerState.poweredOn {
             // TODO
         }else{
             print("Bluetooth not powered ON!")
         }
     }
     
-    func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {
+    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async(execute: {
             self.deviceName.text = peripheral.name
-            self.connectionButton.setTitle("DISCONNECT", forState: UIControlState.Normal)
+            self.connectionButton.setTitle("DISCONNECT", for: UIControlState())
         })
         
         //Following if condition display user permission alert for background notification
-        if UIApplication.instancesRespondToSelector(#selector(UIApplication.registerUserNotificationSettings(_:))){
+        if UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))){
          //[[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound categories:nil]];
-            UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [.Sound, .Alert], categories: nil))
+            UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert], categories: nil))
         }
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.applicationDidEnterBackgroundCallback), name: UIApplicationDidEnterBackgroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.applicationDidBecomeActiveCallback), name: UIApplicationDidBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterBackgroundCallback), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidBecomeActiveCallback), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
 
         // Peripheral has connected. Discover required services
         connectedPeripheral = peripheral
         peripheral.discoverServices([rscServiceUUID!, batteryServiceUUID!])
     }
     
-    func centralManager(central: CBCentralManager, didFailToConnectPeripheral peripheral: CBPeripheral, error: NSError?) {
+    func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async(execute: {
             NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to peripheral failed. Try again")
-            self.connectionButton.setTitle("CONNECT", forState: UIControlState.Normal)
+            self.connectionButton.setTitle("CONNECT", for: UIControlState())
             self.connectedPeripheral = nil
             self.clearUI()
         })
     }
     
-    func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
+    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        dispatch_async(dispatch_get_main_queue(), {
-            self.connectionButton.setTitle("CONNECT", forState: UIControlState.Normal)
+        DispatchQueue.main.async(execute: {
+            self.connectionButton.setTitle("CONNECT", for: UIControlState())
             if NORAppUtilities.isApplicationInactive(){
                 NORAppUtilities.showBackgroundNotification(message: "Peripheral \(peripheral.name) is disconnected")
             }
             self.connectedPeripheral = nil
             self.clearUI()
-            NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidBecomeActiveNotification, object: nil)
-            NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidEnterBackgroundNotification, object: nil)
+            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
         })
     }
     
     //MARK: - CBPeripheralDelegate
     
-    func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         guard error == nil else {
             print("Error discovering service: \(error?.localizedDescription)")
             bluetoothManager?.cancelPeripheralConnection(peripheral)
@@ -230,54 +250,54 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
 
         for aService : CBService in peripheral.services! {
             // Discovers the characteristics for a given service
-            if aService.UUID == rscServiceUUID {
-                connectedPeripheral?.discoverCharacteristics([rscMeasurementCharacteristicUUID!], forService: aService)
-            }else if aService.UUID == batteryServiceUUID {
-                connectedPeripheral?.discoverCharacteristics([batteryLevelCharacteristicUUID!], forService: aService)
+            if aService.uuid == rscServiceUUID {
+                connectedPeripheral?.discoverCharacteristics([rscMeasurementCharacteristicUUID!], for: aService)
+            }else if aService.uuid == batteryServiceUUID {
+                connectedPeripheral?.discoverCharacteristics([batteryLevelCharacteristicUUID!], for: aService)
             }
         }
     }
     
-    func peripheral(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?) {
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         // Characteristics for one of those services has been found
-        if service.UUID == rscServiceUUID {
+        if service.uuid == rscServiceUUID {
             for aCharacteristic : CBCharacteristic in service.characteristics! {
-                if aCharacteristic.UUID == rscMeasurementCharacteristicUUID {
-                    peripheral.setNotifyValue(true, forCharacteristic: aCharacteristic)
+                if aCharacteristic.uuid == rscMeasurementCharacteristicUUID {
+                    peripheral.setNotifyValue(true, for: aCharacteristic)
                     break
                 }
             }
-        } else if service.UUID == batteryServiceUUID {
+        } else if service.uuid == batteryServiceUUID {
             for aCharacteristic : CBCharacteristic in service.characteristics! {
-                if aCharacteristic.UUID == batteryLevelCharacteristicUUID {
-                    peripheral.readValueForCharacteristic(aCharacteristic)
+                if aCharacteristic.uuid == batteryLevelCharacteristicUUID {
+                    peripheral.readValue(for: aCharacteristic)
                     break
                 }
             }
         }
     }
 
-    func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
+    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async(execute: {
             // Decode the characteristic data
             let data = characteristic.value
-            var array = UnsafeMutablePointer<UInt8>(data!.bytes)
+            var array = UnsafeMutablePointer<UInt8>(mutating: (data! as NSData).bytes.bindMemory(to: UInt8.self, capacity: data!.count))
             
-            if characteristic.UUID == self.batteryLevelCharacteristicUUID! {
+            if characteristic.uuid == self.batteryLevelCharacteristicUUID! {
                 let batteryLevel = NORCharacteristicReader.readUInt8Value(ptr: &array)
                 let text = String(format:"%d%%", batteryLevel)
-                self.battery.setTitle(text , forState: UIControlState.Disabled)
+                self.battery.setTitle(text , for: UIControlState.disabled)
 
                 if self.battery.tag == 0 {
                     // If battery level notifications are available, enable them
-                    if characteristic.properties.rawValue & CBCharacteristicProperties.Notify.rawValue > 0 {
+                    if characteristic.properties.rawValue & CBCharacteristicProperties.notify.rawValue > 0 {
                         self.battery.tag = 1
                         // Enable notification on data characteristic
-                        peripheral.setNotifyValue(true, forCharacteristic: characteristic)
+                        peripheral.setNotifyValue(true, for: characteristic)
                     }
                 }
-            }else if characteristic.UUID == self.rscMeasurementCharacteristicUUID! {
+            }else if characteristic.uuid == self.rscMeasurementCharacteristicUUID! {
                 let flags = NORCharacteristicReader.readUInt8Value(ptr: &array)
                 let strideLengthPresent  = (flags & 0x01) > 0
                 let totalDistancePresent = (flags & 0x02) > 0
@@ -297,7 +317,7 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                 if self.cadenceValue! > 0 && self.timer == nil {
                     self.strides.text = String(format: "%d", self.stepsNumber!)
                     let timeInterval = 65.0 / Double(self.cadenceValue!) // 60 seconds + 5 for calibration
-                    self.timer = NSTimer.scheduledTimerWithTimeInterval(timeInterval, target: self, selector: #selector(self.timerFired(timer:)), userInfo: nil, repeats: false)
+                    self.timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(self.timerFired(timer:)), userInfo: nil, repeats: false)
                 }
 
                 if strideLengthPresent == true {
@@ -328,6 +348,6 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         bluetoothManager!.delegate = self
         // The sensor has been selected, connect to it
         aPeripheral.delegate = self
-        bluetoothManager?.connectPeripheral(aPeripheral, options: [CBConnectPeripheralOptionNotifyOnNotificationKey : NSNumber(bool: true)])
+        bluetoothManager?.connect(aPeripheral, options: [CBConnectPeripheralOptionNotifyOnNotificationKey : NSNumber(value: true as Bool)])
     }
 }

@@ -16,10 +16,10 @@ class ManifestFirmwareInfo: NSObject {
     
     init(withDictionary aDictionary : Dictionary<String, AnyObject>) {
         if aDictionary.keys.contains("bin_file") {
-            binFile = String(aDictionary["bin_file"]!)
+            binFile = String(describing: aDictionary["bin_file"]!)
         }
         if aDictionary.keys.contains("dat_file") {
-            datFile = String(aDictionary["dat_file"]!)
+            datFile = String(describing: aDictionary["dat_file"]!)
         }
     }
 }
