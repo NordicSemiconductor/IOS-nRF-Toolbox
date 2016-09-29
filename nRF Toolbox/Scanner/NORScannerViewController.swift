@@ -182,7 +182,8 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
         bluetoothManager?.stopScan()
         self.dismiss(animated: true, completion: nil)
         // Call delegate method
-        self.delegate?.centralManagerDidSelectPeripheral(withManager: bluetoothManager!, andPeripheral: ((peripherals?.object(at: (indexPath as NSIndexPath).row) as AnyObject).peripheral)!)
+        let peripheral = (peripherals?.object(at: indexPath.row) as? NORScannedPeripheral)?.peripheral
+        self.delegate?.centralManagerDidSelectPeripheral(withManager: bluetoothManager!, andPeripheral: peripheral!)
 
     }
     
@@ -201,17 +202,15 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        // Scanner uses other queue to send events. We must edit UI in the main queue
-        if (advertisementData[CBAdvertisementDataIsConnectable] as AnyObject).boolValue == true {
-            DispatchQueue.main.async(execute: { 
-                var sensor = NORScannedPeripheral(withPeripheral: peripheral, andRSSI: RSSI.int32Value, andIsConnected: false)
-                if ((self.peripherals?.contains(sensor)) == false) {
-                    self.peripherals?.add(sensor)
-                }else{
-                    sensor = (self.peripherals?.object(at: (self.peripherals?.index(of: sensor))!))! as! NORScannedPeripheral
-                    sensor.RSSI = RSSI.int32Value
-                }
-            })
-        }
+        // Scanner uses other queue to send events. We must edit UI in the main queue        
+        DispatchQueue.main.async(execute: {
+            var sensor = NORScannedPeripheral(withPeripheral: peripheral, andRSSI: RSSI.int32Value, andIsConnected: false)
+            if ((self.peripherals?.contains(sensor)) == false) {
+                self.peripherals?.add(sensor)
+            }else{
+                sensor = (self.peripherals?.object(at: (self.peripherals?.index(of: sensor))!))! as! NORScannedPeripheral
+                sensor.RSSI = RSSI.int32Value
+            }
+        })
     }
 }
