@@ -218,7 +218,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        var array = UnsafeMutablePointer<UInt8>(((characteristic.value as NSData?)?.bytes)!)
+        var array = UnsafeMutablePointer<UInt8>(OpaquePointer(((characteristic.value as NSData?)?.bytes)!))
         
         if characteristic.uuid.isEqual(batteryLevelCharacteristicUUID) {
             let batteryLevel = NORCharacteristicReader.readUInt8Value(ptr: &array)
@@ -301,7 +301,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     }
     //MARK: - CBCentralManagerDelegate Methdos
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        if central.state != CBCentralManagerState.poweredOn {
+        if central.state != .poweredOn {
             print("Bluetooth is not on!")
         }
     }

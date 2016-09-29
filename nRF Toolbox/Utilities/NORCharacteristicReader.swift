@@ -47,35 +47,35 @@ struct NORCharacteristicReader {
     }
 
     static func readUInt16Value(ptr aPointer : inout UnsafeMutablePointer<UInt8>) -> UInt16 {
-        let anUInt16Pointer = UnsafeMutablePointer<UInt16>(aPointer)
+        let anUInt16Pointer = UnsafeMutablePointer<UInt16>(OpaquePointer(aPointer))
         let val = CFSwapInt16LittleToHost(anUInt16Pointer.pointee)
         aPointer = aPointer.advanced(by: 2)
         return val
     }
     
     static func readSInt16Value(ptr aPointer : inout UnsafeMutablePointer<UInt8>) -> Int16 {
-        let anInt16Pointer = UnsafeMutablePointer<Int16>(aPointer)
-        let val = CFSwapInt16LittleToHost(UnsafeMutablePointer<UInt16>(anInt16Pointer).pointee)
+        let anInt16Pointer = UnsafeMutablePointer<Int16>(OpaquePointer(aPointer))
+        let val = CFSwapInt16LittleToHost(UnsafeMutablePointer<UInt16>(OpaquePointer(anInt16Pointer)).pointee)
         aPointer = aPointer.advanced(by: 2)
         return Int16(val)
     }
     
     static func readUInt32Value(ptr aPointer : inout UnsafeMutablePointer<UInt8>) -> UInt32 {
-        let anInt32Pointer = UnsafeMutablePointer<UInt32>(aPointer)
-        let val = CFSwapInt32LittleToHost(UnsafeMutablePointer<UInt32>(anInt32Pointer).pointee)
+        let anInt32Pointer = UnsafeMutablePointer<UInt32>(OpaquePointer(aPointer))
+        let val = CFSwapInt32LittleToHost(UnsafeMutablePointer<UInt32>(OpaquePointer(anInt32Pointer)).pointee)
         aPointer = aPointer.advanced(by: 4)
         return UInt32(val)
     }
     
     static func readSInt32Value(ptr aPointer : inout UnsafeMutablePointer<UInt8>) -> Int32 {
-        let anInt32Pointer = UnsafeMutablePointer<UInt32>(aPointer)
-        let val  = CFSwapInt32LittleToHost(UnsafeMutablePointer<UInt32>(anInt32Pointer).pointee)
+        let anInt32Pointer = UnsafeMutablePointer<UInt32>(OpaquePointer(aPointer))
+        let val  = CFSwapInt32LittleToHost(UnsafeMutablePointer<UInt32>(OpaquePointer(anInt32Pointer)).pointee)
         aPointer = aPointer.advanced(by: 4)
         return Int32(val)
     }
     
     static func readSFloatValue(ptr aPointer : inout UnsafeMutablePointer<UInt8>) -> Float32 {
-        let tempData = CFSwapInt16LittleToHost(UnsafeMutablePointer<UInt16>(aPointer).pointee)
+        let tempData = CFSwapInt16LittleToHost(UnsafeMutablePointer<UInt16>(OpaquePointer(aPointer)).pointee)
         var mantissa = Int16(tempData & 0x0FFF)
         var exponent = Int8(tempData >> 12)
         if exponent >= 0x0008 {

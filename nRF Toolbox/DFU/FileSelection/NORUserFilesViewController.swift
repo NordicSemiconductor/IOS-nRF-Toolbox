@@ -180,7 +180,7 @@ class NORUserFilesViewController: UIViewController, NORFilePreselectionDelegate,
                 tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
                 
                 if filePath == selectedPath {
-                    onFilePreselected(withURL: URL())
+                    onFilePreselected(withURL: filePath!)
                 }
             }catch{
                 print("An error occured while deleting file\(error)")

@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreBluetooth
+
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -31,12 +32,17 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
+    required init?(coder aDecoder: NSCoder) {
+        delegate = nil
+        super.init(coder: aDecoder)
+    }
+
     let dfuServiceUUIDString  = "00001530-1212-EFDE-1523-785FEABCD123"
     let ANCSServiceUUIDString = "7905F431-B5CE-4E99-A40F-4B1E122D00D0"
 
     //MARK: - ViewController Properties
     var bluetoothManager : CBCentralManager?
-    var delegate         : NORScannerDelegate
+    var delegate         : NORScannerDelegate?
     var filterUUID       : CBUUID?
     var peripherals      : NSMutableArray?
     var timer            : Timer?
@@ -91,7 +97,7 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
      * @return true if success, false if Bluetooth Manager is not in CBCentralManagerStatePoweredOn state.
      */
     func scanForPeripherals(_ enable:Bool) -> Bool {
-        guard bluetoothManager?.state == CBCentralManagerState.poweredOn else {
+        guard bluetoothManager?.state == .poweredOn else {
             return false
         }
         
@@ -176,13 +182,13 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
         bluetoothManager?.stopScan()
         self.dismiss(animated: true, completion: nil)
         // Call delegate method
-        self.delegate.centralManagerDidSelectPeripheral(withManager: bluetoothManager!, andPeripheral: ((peripherals?.object(at: (indexPath as NSIndexPath).row) as AnyObject).peripheral)!)
+        self.delegate?.centralManagerDidSelectPeripheral(withManager: bluetoothManager!, andPeripheral: ((peripherals?.object(at: (indexPath as NSIndexPath).row) as AnyObject).peripheral)!)
 
     }
     
     //MARK: - CBCentralManagerDelgate
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        guard central.state == CBCentralManagerState.poweredOn else {
+        guard central.state == .poweredOn else {
             print("Bluetooth is porewed off")
             return
         }

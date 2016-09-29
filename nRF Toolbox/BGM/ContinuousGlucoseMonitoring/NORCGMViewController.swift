@@ -142,8 +142,8 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
         }
 
         let data       = cgmFeatureCharacteristic!.value
-        let arrayBytes = UnsafeMutablePointer<UInt8>(((data as NSData?)?.bytes)!)
-        cgmFeatureData = NORCGMFeatureData(withBytes: arrayBytes)
+        let arrayBytes = ((data as NSData?)?.bytes)!.assumingMemoryBound(to: UInt8.self)
+        cgmFeatureData = NORCGMFeatureData(withBytes: UnsafeMutablePointer<UInt8>(mutating:arrayBytes))
     }
 
     func enableRecordButton() {
@@ -281,7 +281,8 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
         }
         
         if size > 0 {
-            let data = Data(bytes: UnsafePointer<UInt8>(&accessParam), count: size)
+            
+            let data = Data(bytes: &accessParam, count: size)
             print("Writing data: \(data) to \(targetCharacteristic!)")
             connectedPeripheral?.writeValue(data, for: targetCharacteristic!, type:.withResponse)
         }
@@ -294,7 +295,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
             let timeValue = Int(alertView.textField(at: 0)!.text!)
             accessParam.append(NORCGMOpCode.set_COMMUNICATION_INTERVAL.rawValue)
             accessParam.append(UInt8(timeValue!))
-            let data = Data(bytes: UnsafePointer<UInt8>(&accessParam), count: 2)
+            let data = Data(bytes: &accessParam, count: 2)
             print("Writing data : \(data) to characteristic: \(cgmSpecificOpsControlPointCharacteristic)")
             connectedPeripheral?.writeValue(data, for: cgmSpecificOpsControlPointCharacteristic!, type: .withResponse)
         }

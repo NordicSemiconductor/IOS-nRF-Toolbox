@@ -56,7 +56,10 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
         super.viewDidDisappear(animated)
         //if DFU peripheral is connected and user press Back button then disconnect it
         if self.isMovingFromParentViewController && dfuController != nil {
-            dfuController?.abort()
+            let aborted = dfuController?.abort()
+            if aborted! == false {
+                logWith(.application, message: "Aborting DFU process failed")
+            }
         }
     }
 
@@ -78,13 +81,13 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
             fileSize.text = String(format: "%d bytes", (content?.count)!)
             
             switch  aType {
-            case .Application:
+            case .application:
                 fileType.text = "Application"
                 break
-            case .Bootloader:
+            case .bootloader:
                 fileType.text = "Bootloader"
                 break
-            case .Softdevice:
+            case .softdevice:
                 fileType.text = "SoftDevice"
                 break
             default:
@@ -141,22 +144,22 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
     func logWith(_ level:LogLevel, message:String){
         var levelString : String?
         switch(level) {
-            case .Application:
+            case .application:
                 levelString = "Application"
                 break
-            case .Debug:
+            case .debug:
                 levelString = "Debug"
                 break
-            case .Error:
+            case .error:
                 levelString = "Error"
                 break
-            case .Info:
+            case .info:
                 levelString = "Info"
                 break
-            case .Verbose:
+            case .verbose:
                 levelString = "Verbose"
                 break
-            case .Warning:
+            case .warning:
                 levelString = "Warning"
         }
         print("\(levelString!): \(message)")
@@ -166,45 +169,45 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
     func didStateChangedTo(_ state: DFUState) {
         
         switch state {
-            case .Connecting:
+            case .connecting:
                 uploadStatus.text = "Connecting..."
                 break
-            case .Starting:
+            case .starting:
                 uploadStatus.text = "Starting DFU..."
                 break
-            case .EnablingDfuMode:
+            case .enablingDfuMode:
                 uploadStatus.text = "Enabling DFU Bootloader..."
                 break
-            case .Uploading:
+            case .uploading:
                 uploadStatus.text = "Uploading..."
                 break
-            case .Validating:
+            case .validating:
                 uploadStatus.text = "Validating..."
                 break
-            case .Disconnecting:
+            case .disconnecting:
                 uploadStatus.text = "Disconnecting..."
                 break
-            case .Completed:
+            case .completed:
                 NORDFUConstantsUtility.showAlert(message: "Upload complete")
                 if NORDFUConstantsUtility.isApplicationStateInactiveOrBackgrounded() {
                     NORDFUConstantsUtility.showBackgroundNotification(message: "Upload complete")
                 }
                 self.clearUI()
                 break
-            case .Aborted:
+            case .aborted:
                 NORDFUConstantsUtility.showAlert(message: "Upload aborted")
                 if NORDFUConstantsUtility.isApplicationStateInactiveOrBackgrounded(){
                     NORDFUConstantsUtility.showBackgroundNotification(message: "Upload aborted")
                 }
                 self.clearUI()
                 break
-            case .SignatureMismatch:
+            case .signatureMismatch:
                 uploadStatus.text = "Signature mismatch..."
                 break
-            case .OperationNotPermitted:
+            case .operationNotPermitted:
                 uploadStatus.text = "Operation not permitted..."
                 break
-            case .Failed:
+            case .failed:
                 uploadStatus.text = "Connection Failure"
                 break
         }
@@ -300,7 +303,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
     }
 
     func updateUploadButtonState() {
-        uploadButton.enabled = selectedFirmware != nil && selectedPeripheral != nil
+        uploadButton.isEnabled = selectedFirmware != nil && selectedPeripheral != nil
     }
     
     func disableOtherButtons() {
@@ -345,8 +348,8 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
         // To start the DFU operation the DFUServiceInitiator must be used
         let initiator = DFUServiceInitiator(centralManager: centralManager!, target: selectedPeripheral!)
         initiator.withFirmwareFile(selectedFirmware!)
-        initiator.forceDfu = UserDefaults.standardUserDefaults().valueForKey("dfu_force_dfu")!.boolValue
-        initiator.packetReceiptNotificationParameter = UInt16((UserDefaults.standardUserDefaults().valueForKey("dfu_number_of_packets")?.intValue)!)
+        initiator.forceDfu = UserDefaults.standard.bool(forKey: "dfu_force_dfu")
+        initiator.packetReceiptNotificationParameter = UInt16(UserDefaults.standard.integer(forKey: "dfu_number_of_packets"))
         initiator.logger = self
         initiator.delegate = self
         initiator.progressDelegate = self

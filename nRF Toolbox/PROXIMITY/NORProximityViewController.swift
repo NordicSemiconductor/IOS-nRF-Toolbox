@@ -145,7 +145,7 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
     func immidiateAlertOn() {
         if self.immidiateAlertCharacteristic != nil {
             var val : UInt8 = 2
-            let data = Data(bytes: UnsafePointer<UInt8>(&val), count: 1)
+            let data = Data(bytes: &val, count: 1)
             proximityPeripheral?.writeValue(data, for: immidiateAlertCharacteristic!, type: CBCharacteristicWriteType.withoutResponse)
             isImmidiateAlertOn = true
             findmeButton.setTitle("SilentMe", for: UIControlState())
@@ -155,7 +155,7 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
     func immidiateAlertOff() {
         if self.immidiateAlertCharacteristic != nil {
             var val : UInt8 = 0
-            let data = Data(bytes: UnsafePointer<UInt8>(&val), count: 1)
+            let data = Data(bytes: &val, count: 1)
             proximityPeripheral?.writeValue(data, for: immidiateAlertCharacteristic!, type: CBCharacteristicWriteType.withoutResponse)
             isImmidiateAlertOn = false
             findmeButton.setTitle("FindMe", for: UIControlState())
@@ -222,7 +222,7 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
     
     //MARK: - CBCentralManagerDelegate
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        if central.state == CBCentralManagerState.poweredOn {
+        if central.state == .poweredOn {
         } else {
             print("Bluetooth not ON")
         }
@@ -310,7 +310,7 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
             for aCharacteristic : CBCharacteristic in service.characteristics! {
                 if aCharacteristic.uuid == CBUUID(string: "2A06"){
                     var val = UInt8(1)
-                    let data = Data(bytes: UnsafePointer<UInt8>(&val), count: 1)
+                    let data = Data(bytes: &val, count: 1)
                     proximityPeripheral?.writeValue(data, for: aCharacteristic, type: CBCharacteristicWriteType.withResponse)
                 }
             }
@@ -358,10 +358,10 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
     //MARK: - CBPeripheralManagerDelegate
     func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
         switch (peripheral.state) {
-        case CBPeripheralManagerState.poweredOff:
+        case .poweredOff:
             print("PeripheralManagerState is Off")
             break;
-        case CBPeripheralManagerState.poweredOn:
+        case .poweredOn:
             print("PeripheralManagerState is on");
             self.addServices()
             break;

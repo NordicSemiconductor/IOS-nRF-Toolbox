@@ -107,7 +107,7 @@ class NORFolderFilesViewController: UIViewController, UITableViewDataSource, UIT
     
         if filePath == selectedPath {
             selectedPath = nil
-            self.preselectionDelegate?.onFilePreselected(withURL: URL())
+            self.preselectionDelegate?.onFilePreselected(withURL: filePath!)
             self.navigationItem.rightBarButtonItem?.isEnabled = false
         }
 

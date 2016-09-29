@@ -147,7 +147,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         DispatchQueue.main.async(execute: {
             // Decode the characteristic data
             let data = characteristic.value
-            var array = UnsafeMutablePointer<UInt8>(((data as NSData?)?.bytes)!)
+            var array = UnsafeMutablePointer<UInt8>(OpaquePointer(((data as NSData?)?.bytes)!))
             
             if characteristic.uuid == self.batteryLevelCharacteristicUUID {
                 let batteryLevel = NORCharacteristicReader.readUInt8Value(ptr: &array)
@@ -253,7 +253,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     }
     //MARK: - CBCentralManagerDelegate
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        if central.state != CBCentralManagerState.poweredOn {
+        if central.state != .poweredOn {
             print("Bluetooth not porwerd on!")
         }
     }

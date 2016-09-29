@@ -301,7 +301,7 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         return UInt(hrValues!.count)
     }
     
-    func numberForPlot(_ plot: CPTPlot, field fieldEnum: UInt, recordIndex idx: UInt) -> AnyObject? {
+    private func numberForPlot(_ plot: CPTPlot, field fieldEnum: UInt, recordIndex idx: UInt) -> AnyObject? {
         let fieldVal = NSInteger(fieldEnum)
         let scatterPlotField = CPTScatterPlotField(rawValue: fieldVal)
         switch (scatterPlotField!) {
@@ -319,7 +319,7 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     }
 
     func plotSpace(_ space: CPTPlotSpace, willDisplaceBy proposedDisplacementVector: CGPoint) -> CGPoint {
-        return CGPointMake(proposedDisplacementVector.x, 0)
+        return CGPoint(x: proposedDisplacementVector.x, y: 0)
     }
     
     func plotSpace(_ space: CPTPlotSpace, willChangePlotRangeTo newRange: CPTPlotRange, for coordinate: CPTCoordinate) -> CPTPlotRange? {
@@ -338,13 +338,13 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
             return newRange
         }
         axisSet.yAxis!.orthogonalPosition = 0
-        return CPTPlotRange(location: NSNumber(plotXMinRange!), length: plotXMaxRange!)
+        return CPTPlotRange(location: NSNumber(value: plotXMinRange!), length: NSNumber(value: plotXMaxRange!))
     }
     
     //MARK: - CBCentralManagerDelegate
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        if central.state == CBCentralManagerState.poweredOn {
+        if central.state == .poweredOn {
             // TODO
         }else{
             // TODO
@@ -455,7 +455,8 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
             } else if characteristic.uuid.isEqual(self.hrLocationCharacteristicUUID) {
                 self.hrLocation.text = self.decodeHRLocation(withData: characteristic.value!)
             } else if characteristic.uuid.isEqual(self.batteryLevelCharacteristicUUID) {
-                let array : UnsafePointer<UInt8> = UnsafePointer<UInt8>(((characteristic.value as NSData?)?.bytes)!)
+                let data = characteristic.value as NSData?
+                let array : UnsafePointer<UInt8> = (data?.bytes)!.assumingMemoryBound(to: UInt8.self)
                 let batteryLevel : UInt8 = array[0]
                 let text = String(format: "%d%%", batteryLevel)
                 self.battery.setTitle(text, for: UIControlState.disabled)

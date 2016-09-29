@@ -116,7 +116,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     
     //MARK: - CentralManagerDelegate
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        if central.state == CBCentralManagerState.poweredOn{
+        if central.state == .poweredOn{
         }else{
             print("Bluetooth is not porewed on!")
         }
@@ -208,7 +208,11 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
             }
         }else{
             if flag & CRANK_REVOLUTION_FLAG == 2 {
-                self.processCrankData(withData: data, andCrankRevolutionIndex: 1)
+                crankRevDiff = self.processCrankData(withData: data, andCrankRevolutionIndex: 1)
+                if crankRevDiff > 0 {
+                    ratio = wheelRevDiff / crankRevDiff
+                    wheelToCrankRatio.text = String(format: "%.2f", ratio)
+                }
             }
         }
     }
@@ -339,7 +343,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
             }
         }else if characteristic.uuid == batteryLevelCharacteristicUUID {
             DispatchQueue.main.async {
-                let array = UnsafeMutablePointer<UInt8>(((characteristic.value as NSData?)?.bytes)!)
+                let array = UnsafeMutablePointer<UInt8>(OpaquePointer(((characteristic.value as NSData?)?.bytes)!))
                 let batteryLevel = array[0]
                 let text = String(format: "%d%%", batteryLevel)
                 self.battery.setTitle(text, for: UIControlState.disabled)

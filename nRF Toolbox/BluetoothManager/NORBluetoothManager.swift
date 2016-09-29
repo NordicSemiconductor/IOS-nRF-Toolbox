@@ -113,10 +113,9 @@ class NORBluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDeleg
         
         // The following code will split the text to packets
         var buffer = UnsafeMutablePointer<CChar>(mutating: aText.cString(using: String.Encoding.utf8)!)
-        print(buffer)
         var len = aText.data(using: String.Encoding.utf8)?.count
         
-        while(buffer != nil){
+        while(len != 0){
             var part : String
             if len > 20 && (type == CBCharacteristicWriteType.withoutResponse || longWriteSupported == false) {
                 // If the text contains national letters they may be 2-byte long. It may happen that only 19 bytes can be send so that non of them is splited into 2 packets.
@@ -135,7 +134,7 @@ class NORBluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDeleg
                 part = String(describing: builder)
             } else {
                 part = String(describing: buffer)
-                buffer = nil
+                len = 0
             }
             self.send(text: part, withType: type)
         }

@@ -100,7 +100,7 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     //MARK: - CBCentralManagerDelegate
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        if central.state == CBCentralManagerState.poweredOff {
+        if central.state == .poweredOff {
             print("Bluetooth powered off")
         }else{
             print("Bluetooth powered on")

@@ -52,11 +52,11 @@ class NORFileTypeViewController: UIViewController, UITableViewDelegate, UITableV
     func pathToType(path aPath : NSIndexPath) -> DFUFirmwareType {
         switch aPath.row {
         case 0:
-            return DFUFirmwareType.Softdevice
+            return DFUFirmwareType.softdevice
         case 1:
-            return DFUFirmwareType.Bootloader
+            return DFUFirmwareType.bootloader
         default:
-            return DFUFirmwareType.Application
+            return DFUFirmwareType.application
         }
     }
 
@@ -77,7 +77,7 @@ class NORFileTypeViewController: UIViewController, UITableViewDelegate, UITableV
         
         //Configure cell
         aCell.textLabel?.text = cellType
-        if chosenFirmwareType == self.pathToType(path: indexPath) {
+        if chosenFirmwareType == self.pathToType(path: indexPath as NSIndexPath) {
             aCell.accessoryType = UITableViewCellAccessoryType.checkmark
         }else{
             aCell.accessoryType = UITableViewCellAccessoryType.none
@@ -87,7 +87,7 @@ class NORFileTypeViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        chosenFirmwareType = self.pathToType(path: indexPath)
+        chosenFirmwareType = self.pathToType(path: indexPath as NSIndexPath)
         tableView.reloadData()
         self.navigationItem.rightBarButtonItem?.isEnabled = true
     }
