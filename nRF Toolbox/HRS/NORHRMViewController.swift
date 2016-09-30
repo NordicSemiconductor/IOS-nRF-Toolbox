@@ -213,7 +213,7 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     func resetPlotRange() {
         plotXMaxRange = 121
         plotXMinRange = -1
-        plotYMaxRange = 201
+        plotYMaxRange = 310
         plotYMinRange = -1
         plotXInterval = 20
         plotYInterval = 50
@@ -301,7 +301,7 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         return UInt(hrValues!.count)
     }
     
-    private func numberForPlot(_ plot: CPTPlot, field fieldEnum: UInt, recordIndex idx: UInt) -> AnyObject? {
+    func numberForPlot(_ plot: CPTPlot, field fieldEnum: UInt, recordIndex idx: UInt) -> AnyObject? {
         let fieldVal = NSInteger(fieldEnum)
         let scatterPlotField = CPTScatterPlotField(rawValue: fieldVal)
         switch (scatterPlotField!) {
