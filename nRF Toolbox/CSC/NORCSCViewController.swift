@@ -70,7 +70,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         oldCrankEventTime = 0
         oldCrankRevolution = 0
         isBackButtonPressed = true
-        wheelCircumference = (UserDefaults.standard.value(forKey: "key_diameter") as AnyObject).doubleValue
+        wheelCircumference = UserDefaults.standard.double(forKey: "key_diameter")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
