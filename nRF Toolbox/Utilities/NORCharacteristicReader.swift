@@ -100,7 +100,7 @@ struct NORCharacteristicReader {
     
     static func readFloatValue(ptr aPointer : inout UnsafeMutablePointer<UInt8>) -> Float32 {
         let tempData = CFSwapInt32LittleToHost(UInt32(aPointer.pointee))
-        var mantissa = Int32(tempData & 0xFFFFff)
+        var mantissa = Int32(tempData & 0xFFFFFF)
         let exponent = Int8(tempData >> 24)
         
         var output : Float32 = 0
