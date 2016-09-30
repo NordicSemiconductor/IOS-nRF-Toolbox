@@ -26,12 +26,10 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+
+        self.updateUserDefaults(withDefaults: UserDefaults.standard)
         
-        let defaults = NSDictionary(objects: ["2.3", NSNumber(value: 12 as Int32), NSNumber(value: false as Bool)], forKeys: ["key_diameter" as NSCopying, "dfu_number_of_packets" as NSCopying, "dfu_force_dfu" as NSCopying])
-        UserDefaults.standard.register(defaults: defaults as! [String : AnyObject])
-     
         //Setting colors of UIPageControlViewController Page Indicator
         let pageControl = UIPageControl.appearance()
         pageControl.pageIndicatorTintColor = UIColor.lightGray
@@ -52,5 +50,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationController.pushViewController(dfuViewController, animated: true)
         
         return true
+    }
+
+    fileprivate func updateUserDefaults(withDefaults defaults : UserDefaults) {
+        defaults.set(2.4,   forKey: "key_diameter")
+        defaults.set(12,    forKey: "dfu_number_of_packets")
+        defaults.set(false, forKey: "dfu_force_dfu")
+        defaults.synchronize()
     }
 }
