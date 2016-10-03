@@ -39,16 +39,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
-        print("URL for file from Email: \(url)")
         let navigationController = self.window?.rootViewController as! UINavigationController
-        
+
         navigationController.popToRootViewController(animated: true)
-        
+
         let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let dfuViewController = mainStoryboard.instantiateViewController(withIdentifier: "DFUViewController") as! NORDFUViewController
-        dfuViewController.onFileSelected(withURL: url)
         navigationController.pushViewController(dfuViewController, animated: true)
-        
+        dfuViewController.onFileImported(withURL: url)
         return true
     }
 

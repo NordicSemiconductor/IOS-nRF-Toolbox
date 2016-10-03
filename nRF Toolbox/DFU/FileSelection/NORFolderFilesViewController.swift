@@ -11,7 +11,7 @@ import UIKit
 class NORFolderFilesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     //MARK: - Class Properties
-    var files                   : NSMutableArray?
+    var files                   : Array<URL>?
     var directoryPath           : String?
     var directoryName           : String?
     var fileDelegate            : NORFileSelectionDelegate?
@@ -30,13 +30,22 @@ class NORFolderFilesViewController: UIViewController, UITableViewDataSource, UIT
     //MARK: - UIViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = directoryName!
+        if directoryName != nil {
+            self.navigationItem.title = directoryName!
+        }else{
+            self.navigationItem.title = "Files"
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let enabled = (selectedPath != nil)
         self.navigationItem.rightBarButtonItem?.isEnabled = enabled
+        do {
+        try self.files = FileManager.default.contentsOfDirectory(at: selectedPath!, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+        }catch{
+            print(error)
+        }
         self.ensureDirectoryNotEmpty()
     }
 
@@ -51,7 +60,7 @@ class NORFolderFilesViewController: UIViewController, UITableViewDataSource, UIT
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let aCell = tableView.dequeueReusableCell(withIdentifier: "FolderFilesCell", for:indexPath)
-        let aFilePath = files?.object(at: (indexPath as NSIndexPath).row) as? URL
+        let aFilePath = files?[indexPath.row]
         let fileName = aFilePath?.lastPathComponent
         
         //Configuring the cell
@@ -77,7 +86,7 @@ class NORFolderFilesViewController: UIViewController, UITableViewDataSource, UIT
 
     //MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let filePath = files?.object(at: (indexPath as NSIndexPath).row) as? URL
+        let filePath = files?[indexPath.row]
         selectedPath = filePath
         tableView.reloadData()
         navigationItem.rightBarButtonItem!.isEnabled = true
@@ -94,7 +103,7 @@ class NORFolderFilesViewController: UIViewController, UITableViewDataSource, UIT
             return
         }
 
-        let filePath = files?.object(at: (indexPath as NSIndexPath).row) as? URL
+        let filePath = files?[indexPath.row]
         do{
             try FileManager.default.removeItem(at: filePath!)
         }catch{
@@ -102,7 +111,7 @@ class NORFolderFilesViewController: UIViewController, UITableViewDataSource, UIT
             return
         }
 
-        files?.removeObject(at: (indexPath as NSIndexPath).row)
+        files?.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
     
         if filePath == selectedPath {
