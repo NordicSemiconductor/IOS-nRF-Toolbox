@@ -9,5 +9,5 @@
 import Foundation
 
 @objc protocol NORFileSelectionDelegate {
-    func onFileSelected(withURL aFileURL : NSURL)
+    func onFileSelected(withURL aFileURL : URL)
 }

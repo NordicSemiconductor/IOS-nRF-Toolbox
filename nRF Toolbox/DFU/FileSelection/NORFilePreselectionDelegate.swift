@@ -8,5 +8,5 @@
 import Foundation
 
 protocol NORFilePreselectionDelegate {
-    func onFilePreselected(withURL aFileURL : NSURL)
+    func onFilePreselected(withURL aFileURL : URL)
 }

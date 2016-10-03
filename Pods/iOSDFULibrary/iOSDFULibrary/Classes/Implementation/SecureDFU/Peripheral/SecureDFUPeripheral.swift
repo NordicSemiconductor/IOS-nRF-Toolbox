@@ -24,27 +24,27 @@ import CoreBluetooth
 
 internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate {
     /// Bluetooth Central Manager used to scan for the peripheral.
-    private let centralManager:CBCentralManager
+    fileprivate let centralManager:CBCentralManager
     /// The DFU Target peripheral.
-    private var peripheral:CBPeripheral?
+    fileprivate var peripheral:CBPeripheral?
     
     /// The optional logger delegate.
-    private var logger:LoggerHelper
+    fileprivate var logger:LoggerHelper
     /// The peripheral delegate.
     internal var delegate:SecureDFUPeripheralDelegate?
     /// Selector used to find the advertising peripheral in DFU Bootloader mode.
-    private var peripheralSelector:DFUPeripheralSelector?
+    fileprivate var peripheralSelector:DFUPeripheralSelector?
     
     // MARK: - DFU properties
     
     /// The DFU Service instance. Not nil when found on the peripheral.
-    private var dfuService:SecureDFUService?
+    fileprivate var dfuService:SecureDFUService?
     /// A flag set when upload has been paused.
-    private var paused = false
+    fileprivate var paused = false
     /// A flag set when upload has been aborted.
-    private var aborted = false
+    fileprivate var aborted = false
     /// Maxmimum length reported by peripheral
-    private var maxWtireLength : UInt32 = 0
+    fileprivate var maxWtireLength : UInt32 = 0
     /// Resetting flag, when the peripheral disconnects to reconncet
     internal var isResetting = false
     
@@ -70,7 +70,7 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
         let name = peripheral!.name ?? "Unknown device"
         logger.v("Connecting to \(name)...")
         logger.d("centralManager.connectPeripheral(peripheral, options:nil)")
-        centralManager.connectPeripheral(peripheral!, options: nil)
+        centralManager.connect(peripheral!, options: nil)
     }
     
     /**
@@ -136,11 +136,11 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
     */
     func ReadObjectInfoCommand() {
         dfuService?.readObjectInfoCommand(onSuccess: { (responseData) in
-            //Parse resonpes data
-            let count = (responseData?.length)! / sizeof(UInt32)
-            var array = [UInt32](count: count, repeatedValue:0)
-            let range = count * sizeof(UInt32)
-            responseData?.getBytes(&array, length: range)
+            //Parse response data
+            let count = (responseData?.count)! / MemoryLayout<UInt32>.size
+            var array = [UInt32](repeating: 0, count: count)
+            let range = count * MemoryLayout<UInt32>.size
+            (responseData as NSData?)?.getBytes(&array, length: range)
             self.logger.i("Read Object Info Command : received data : MaxLen:\(array[0]), Offset:\(array[1]), CRC: \(array[2]))")
             self.delegate?.objectInfoReadCommandCompleted(array[0], offset: array[1], crc: array[2])
             }, onError: { (error, message) in
@@ -155,10 +155,10 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
     func ReadObjectInfoData() {
         dfuService?.readObjectInfoData(onSuccess: { (responseData) in
             //Parse resonpes data
-            let count = (responseData?.length)! / sizeof(UInt32)
-            var array = [UInt32](count: count, repeatedValue:0)
-            let range = count * sizeof(UInt32)
-            responseData?.getBytes(&array, length: range)
+            let count = (responseData?.count)! / MemoryLayout<UInt32>.size
+            var array = [UInt32](repeating: 0, count: count)
+            let range = count * MemoryLayout<UInt32>.size
+            (responseData as NSData?)?.getBytes(&array, length: range)
             self.logger.i("Read Object Info Data : received data : MaxLen:\(array[0]), Offset:\(array[1]), CRC: \(array[2]))")
             self.delegate?.objectInfoReadDataCompleted(array[0], offset: array[1], crc: array[2])
             }, onError: { (error, message) in
@@ -181,14 +181,14 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
     /**
      ExtendedError completion
     */
-    func readExtendedErrorCompleted(message : String) {
+    func readExtendedErrorCompleted(_ message : String) {
         //TODO: implement
     }
 
     /**
      Send firmware data
     */
-    func sendFirmwareChunk(firmware: DFUFirmware, andChunkRange aRange : NSRange, andPacketCount aCount : UInt16, andProgressDelegate aProgressDelegate : DFUProgressDelegate) {
+    func sendFirmwareChunk(_ firmware: DFUFirmware, andChunkRange aRange : Range<Int>, andPacketCount aCount : UInt16, andProgressDelegate aProgressDelegate : DFUProgressDelegate) {
 
         self.dfuService?.sendFirmwareChunk(aRange, inFirmware: firmware, andPacketReceiptCount: aCount, andProgressDelegate: aProgressDelegate, andCompletionHandler: { (responseData) in
             self.delegate?.firmwareChunkSendcomplete()
@@ -213,7 +213,7 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
     /**
     Creates an object command
     */
-    func createObjectCommand(length: UInt32) {
+    func createObjectCommand(_ length: UInt32) {
         dfuService?.createObjectCommand(withLength: length, onSuccess: { (responseData) in
             self.delegate?.objectCreateCommandCompleted(responseData)
             }, onError: { (error, message) in
@@ -224,7 +224,7 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
     /**
      Set PRN Value
     */
-    func setPRNValue(aValue : UInt16 = 0) {
+    func setPRNValue(_ aValue : UInt16 = 0) {
         dfuService?.setPacketReceiptNotificationValue(aValue, onSuccess: { (responseData) in
             self.delegate?.setPRNValueCompleted()
             }, onError: { (error, message) in
@@ -236,7 +236,7 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
     /**
      Send Init packet
     */
-    func sendInitpacket(packetData : NSData){
+    func sendInitpacket(_ packetData : Data){
         dfuService?.sendInitPacket(withdata: packetData)
         self.delegate?.initPacketSendCompleted()
     }
@@ -247,10 +247,11 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
     func sendCalculateChecksumCommand() {
         dfuService?.calculateChecksumCommand(onSuccess: { (responseData) in
             //Parse resonpse data
-            let count = (responseData?.length)! / sizeof(UInt32)
-            var array = [UInt32](count: count, repeatedValue:0)
-            let range = count * sizeof(UInt32)
-            responseData?.getBytes(&array, length: range)
+            //Stopped work here !
+            let count = (responseData?.count)! / MemoryLayout<UInt32>.size
+            var array = [UInt32](repeating: 0, count: count)
+            let range = count * MemoryLayout<UInt32>.size
+            (responseData as NSData?)?.getBytes(&array, length: range)
             self.delegate?.calculateChecksumCompleted(array[0], CRC: array[1])
             }, onError: { (error, message) in
                 self.logger.e("Error occured: \(error), \(message)")
@@ -265,7 +266,7 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
         dfuService?.executeCommand(onSuccess: { (responseData) in
                 self.delegate?.executeCommandCompleted()
             }, onError: { (error, message) in
-                if error == SecureDFUError.ExtendedError {
+                if error == SecureDFUError.extendedError {
                     self.logger.e("Extended error occured, attempting to read.")
                     self.readExtendedError()
                 }else{
@@ -274,15 +275,16 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
                 }
         })
     }
+
     /**
-     Calculates whether the target device is in application mode and must be switched to the DFU mode.
+     Checks whether the target device is in application mode and must be switched to the DFU mode.
      
      - parameter forceDfu: should the service assume the device is in DFU Bootloader mode when 
      DFU Version characteristic does not exist and at least one other service has been found on the device.
      
      - returns: true if device needs buttonless jump to DFU Bootloader mode
      */
-    func isInApplicationMode(forceDfu:Bool) -> Bool {
+    func isInApplicationMode(_ forceDfu:Bool) -> Bool {
         let applicationMode = dfuService!.isInApplicationMode() ?? !forceDfu
         
         if applicationMode {
@@ -301,13 +303,13 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
      
      - parameter selector: a selector used to select a device in DFU Bootloader mode
      */
-    func switchToNewPeripheralAndConnect(selector:DFUPeripheralSelector) {
+    func switchToNewPeripheralAndConnect(_ selector:DFUPeripheralSelector) {
         // Release the previous peripheral
         self.peripheral!.delegate = nil
         self.peripheral = nil
         self.peripheralSelector = selector
         logger.v("Scanning for the DFU Bootloader...")
-        centralManager.scanForPeripheralsWithServices(selector.filterBy(), options: nil)
+        centralManager.scanForPeripherals(withServices: selector.filterBy(), options: nil)
     }
 
    /**
@@ -321,12 +323,13 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
     }
     
     // MARK: - Central Manager methods
-    
-    func centralManagerDidUpdateState(central: CBCentralManager) {
-        logCentralManagerState(central.state)
+
+    func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        //TODO: verify this is okay
+        logCentralManagerState(CBCentralManagerState(rawValue: central.state.rawValue)!)
     }
     
-    func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {
+    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         cleanUp()
         
         logger.d("[Callback] Central Manager did connect peripheral")
@@ -341,7 +344,7 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
         peripheral.discoverServices(nil)
     }
     
-    func centralManager(central: CBCentralManager, didFailToConnectPeripheral peripheral: CBPeripheral, error: NSError?) {
+    func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         cleanUp()
         
         if let error = error {
@@ -354,7 +357,7 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
         delegate?.didDeviceFailToConnect()
     }
     
-    func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
+    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         if isResetting == true {
             if error != nil {
                 logger.i("Resetting peripheral")
@@ -371,17 +374,21 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
             return
         }
         if error != nil {
-            if error!.code == CBError.PeripheralDisconnected.rawValue ||
-                error!.code == CBError.ConnectionTimeout.rawValue {
-                logger.i("Disconnected by the remote device")
-            }else{
-                logger.d("[Callback] Central Manager did disconnect peripheral without error")
-                delegate?.peripheralDisconnected()
+            if let anError = error as? CBError {
+                if anError.code == CBError.Code.peripheralDisconnected ||
+                    anError.code == CBError.Code.connectionTimeout {
+                    logger.i("Disconnected by the remote device")
+                }else{
+                    logger.d("[Callback] Central Manager did disconnect peripheral without error")
+                    delegate?.peripheralDisconnected()
+                    return
+                }
             }
+            //Unable to cast error
             logger.d("[Callback] Central Manager did disconnect peripheral")
             logger.i("Disconnected")
             logger.e(error!)
-            delegate?.peripheralDisconnected(withError: error!)
+            delegate?.peripheralDisconnected(withError: error! as NSError)
         } else {
             logger.d("[Callback] Central Manager did disconnect peripheral without error")
             logger.i("Disconnected")
@@ -389,10 +396,10 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
         }
     }
     
-    func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
+    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         if let peripheralSelector = peripheralSelector {
             // Is this a device we are looking for?
-            if peripheralSelector.select(peripheral, advertisementData: advertisementData, RSSI: RSSI) {
+            if peripheralSelector.select(peripheral, advertisementData: advertisementData as [String : AnyObject], RSSI: RSSI) {
                 // Hurray!
                 centralManager.stopScan()
                 
@@ -414,11 +421,11 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
     
     // MARK: - Peripheral Delegate methods
     
-    func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if error != nil {
             logger.e("Services discovery failed")
             logger.e(error!)
-            delegate?.onErrorOccured(withError: SecureDFUError.ServiceDiscoveryFailed, andMessage: "Service discovery failed")
+            delegate?.onErrorOccured(withError: SecureDFUError.serviceDiscoveryFailed, andMessage: "Service discovery failed")
         } else {
             logger.i("Services discovered")
             
@@ -440,42 +447,42 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
             if dfuService == nil {
                 logger.e("Secure DFU Service not found")
                 // The device does not support DFU, nor buttonless jump
-                delegate?.onErrorOccured(withError:SecureDFUError.DeviceNotSupported, andMessage: "Secure DFU Service not found")
+                delegate?.onErrorOccured(withError:SecureDFUError.deviceNotSupported, andMessage: "Secure DFU Service not found")
             }
         }
     }
     
     // MARK: - Private methods
     
-    private func cleanUp() {
+    fileprivate func cleanUp() {
         dfuService = nil
     }
     
-    private func logCentralManagerState(state:CBCentralManagerState) {
+    fileprivate func logCentralManagerState(_ state:CBCentralManagerState) {
         var stateAsString:String
         
         switch (state) {
-        case .PoweredOn:
+        case .poweredOn:
             stateAsString = "Powered ON"
             break
             
-        case .PoweredOff:
+        case .poweredOff:
             stateAsString = "Powered OFF"
             break
             
-        case .Resetting:
+        case .resetting:
             stateAsString = "Resetting"
             break
             
-        case .Unauthorized:
+        case .unauthorized:
             stateAsString = "Unauthorized"
             break
             
-        case .Unsupported:
+        case .unsupported:
             stateAsString = "Unsupported"
             break
             
-        case .Unknown:
+        case .unknown:
             stateAsString = "Unknown"
             break
         }

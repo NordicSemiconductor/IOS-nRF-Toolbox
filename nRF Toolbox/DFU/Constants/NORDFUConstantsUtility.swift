@@ -18,7 +18,7 @@ class NORDFUConstantsUtility: NSObject {
     }
     
     static func showAlert(message aMessage : String) {
-        dispatch_async(dispatch_get_main_queue()) { 
+        DispatchQueue.main.async { 
             let alert = UIAlertView(title: "DFU", message: aMessage, delegate: nil, cancelButtonTitle: "OK")
             alert.show()
         }
@@ -30,15 +30,15 @@ class NORDFUConstantsUtility: NSObject {
         notification.alertAction = "Show"
         notification.alertBody = aMessage
         notification.hasAction = false
-        notification.fireDate = NSDate(timeIntervalSinceNow: 1)
-        notification.timeZone = NSTimeZone.defaultTimeZone()
+        notification.fireDate = Date(timeIntervalSinceNow: 1)
+        notification.timeZone = TimeZone.current
         notification.soundName = UILocalNotificationDefaultSoundName
-        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        UIApplication.shared.scheduleLocalNotification(notification)
     }
     
     static func isApplicationStateInactiveOrBackgrounded () -> Bool {
-        let appState = UIApplication.sharedApplication().applicationState
-        return appState == UIApplicationState.Inactive || appState == UIApplicationState.Background
+        let appState = UIApplication.shared.applicationState
+        return appState == UIApplicationState.inactive || appState == UIApplicationState.background
     }
 
 }

@@ -12,7 +12,7 @@ class NORGlucoseReading: NSObject {
 
     //MARK: - Properties
     var sequenceNumber                              : UInt16?
-    var timestamp                                   : NSDate?
+    var timestamp                                   : Date?
     var timeOffset                                  : Int16?
     var glucoseConcentrationTypeAndLocationPresent  : Bool?
     var glucoseConcentration                        : Float32?
@@ -25,31 +25,31 @@ class NORGlucoseReading: NSObject {
 
     //MARK: - Enum Definitions
     enum BGMUnit : UInt8 {
-        case KG_L                       = 0
-        case MOL_L                      = 1
+        case kg_L                       = 0
+        case mol_L                      = 1
     }
     
     enum BGMType : UInt8{
-        case RESERVED_TYPE              = 0
-        case CAPILLARY_WHOLE_BLOOD      = 1
-        case CAPILLARY_PLASMA           = 2
-        case VENOUS_WHOLE_BLOOD         = 3
-        case VENOUS_PLASMA              = 4
-        case ARTERIAL_WHOLE_BLOOD       = 5
-        case ARTERIAL_PLASMA            = 6
-        case UNDETERMINED_WHOLE_BLOOD   = 7
-        case UNDETERMINED_PLASMA        = 8
-        case INTERSTITIAL_FLUID         = 9
-        case CONTROL_SOLUTION_TYPE      = 10
+        case reserved_TYPE              = 0
+        case capillary_WHOLE_BLOOD      = 1
+        case capillary_PLASMA           = 2
+        case venous_WHOLE_BLOOD         = 3
+        case venous_PLASMA              = 4
+        case arterial_WHOLE_BLOOD       = 5
+        case arterial_PLASMA            = 6
+        case undetermined_WHOLE_BLOOD   = 7
+        case undetermined_PLASMA        = 8
+        case interstitial_FLUID         = 9
+        case control_SOLUTION_TYPE      = 10
     }
 
     enum BGMLocation : UInt8 {
-        case RESERVED_LOCATION          = 0
-        case FINGER                     = 1
-        case ALTERNATE_SITE_TEST        = 2
-        case EARLOBE                    = 3
-        case CONTROL_SOLUTION_LOCATION  = 4
-        case LOCATION_NOT_AVAILABLE     = 15
+        case reserved_LOCATION          = 0
+        case finger                     = 1
+        case alternate_SITE_TEST        = 2
+        case earlobe                    = 3
+        case control_SOLUTION_LOCATION  = 4
+        case location_NOT_AVAILABLE     = 15
     }
 
 
@@ -61,51 +61,51 @@ class NORGlucoseReading: NSObject {
 
     func locationAsString() -> String {
         switch self.location! {
-        case .ALTERNATE_SITE_TEST:
+        case .alternate_SITE_TEST:
             return "Alternate site test"
-        case .CONTROL_SOLUTION_LOCATION:
+        case .control_SOLUTION_LOCATION:
             return "Control solution"
-        case .EARLOBE:
+        case .earlobe:
             return "Earlobe"
-        case .FINGER:
+        case .finger:
             return "Finger"
-        case .LOCATION_NOT_AVAILABLE:
+        case .location_NOT_AVAILABLE:
             return "Not available"
-        case .RESERVED_LOCATION:
+        case .reserved_LOCATION:
             return "Reserved value"
         }
     }
     
     func typeAsString() -> String {
         switch self.type!{
-        case .ARTERIAL_PLASMA:
+        case .arterial_PLASMA:
             return "Arterial plasma"
-        case .ARTERIAL_WHOLE_BLOOD:
+        case .arterial_WHOLE_BLOOD:
             return "Arterial whole blood"
-        case .CAPILLARY_PLASMA:
+        case .capillary_PLASMA:
             return "Capillary plasma"
-        case .CAPILLARY_WHOLE_BLOOD:
+        case .capillary_WHOLE_BLOOD:
             return "Capillary whole blood"
-        case .CONTROL_SOLUTION_TYPE:
+        case .control_SOLUTION_TYPE:
             return "Control solution"
-        case .INTERSTITIAL_FLUID:
+        case .interstitial_FLUID:
             return "Interstitial fluid"
-        case .UNDETERMINED_PLASMA:
+        case .undetermined_PLASMA:
             return "Undetermined plasma"
-        case .UNDETERMINED_WHOLE_BLOOD:
+        case .undetermined_WHOLE_BLOOD:
             return "Undetermined whole blood"
-        case .VENOUS_PLASMA:
+        case .venous_PLASMA:
             return "Venous plasma"
-        case .VENOUS_WHOLE_BLOOD:
+        case .venous_WHOLE_BLOOD:
             return "Venous whole blood"
-        case .RESERVED_TYPE:
+        case .reserved_TYPE:
             return "Reserved value"
         }
     }
     
-    func updateFromBytes(bytes : UnsafePointer<UInt8>) {
+    func updateFromBytes(_ bytes : UnsafePointer<UInt8>) {
         
-        var pointer = UnsafeMutablePointer<UInt8>(bytes)
+        var pointer = UnsafeMutablePointer<UInt8>(mutating: bytes)
         
         //Parse falgs
         let flags = NORCharacteristicReader.readUInt8Value(ptr: &pointer)
@@ -130,8 +130,8 @@ class NORGlucoseReading: NSObject {
             self.type       = BGMType(rawValue: typeAndLocation.first)
             self.location   = BGMLocation(rawValue: typeAndLocation.second)
         } else {
-            self.type       = BGMType.RESERVED_TYPE
-            self.location   = BGMLocation.RESERVED_LOCATION
+            self.type       = BGMType.reserved_TYPE
+            self.location   = BGMLocation.reserved_LOCATION
         }
 
         self.sensorStatusAnnunciationPresent = statusAnnuciationPresent
@@ -141,7 +141,7 @@ class NORGlucoseReading: NSObject {
     }
     
     //MARK: - Static methods
-    static func readingFromBytes(bytes: UnsafePointer<UInt8>) -> NORGlucoseReading {
+    static func readingFromBytes(_ bytes: UnsafePointer<UInt8>) -> NORGlucoseReading {
         let aReading = NORGlucoseReading()
         aReading.updateFromBytes(bytes)
         return aReading

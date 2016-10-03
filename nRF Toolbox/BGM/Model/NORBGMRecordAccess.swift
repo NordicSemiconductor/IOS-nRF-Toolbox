@@ -8,43 +8,43 @@
 
 
 enum NORBGMOpCode : UInt8 {
-    case RESERVED                      = 0
-    case REPORT_STORED_RECORDS         = 1
-    case DELETE_STORED_RECORDS         = 2
-    case ABORT_OPERATION               = 3
-    case REPORT_STORED_RECORD_COUNT    = 4
-    case NUMBER_OF_STORED_RECODRDS     = 5
-    case RESPONSE_CODE                 = 6
+    case reserved                      = 0
+    case report_STORED_RECORDS         = 1
+    case delete_STORED_RECORDS         = 2
+    case abort_OPERATION               = 3
+    case report_STORED_RECORD_COUNT    = 4
+    case number_OF_STORED_RECODRDS     = 5
+    case response_CODE                 = 6
     // Values outside this range are reserved
 }
 
 enum NORBGMOPerator : UInt8 {
-    case NULL_OPERATOR                 = 0
-    case ALL_RECORDS                   = 1
-    case LESS_THAN_OR_EQUAL            = 2
-    case GREATER_THAN_OR_EQUAL         = 3
-    case WITHIN_RANGE_INCLUSIVE        = 4
-    case FIRST_RECORD                  = 5
-    case LAST_RECORD                   = 6
+    case null_OPERATOR                 = 0
+    case all_RECORDS                   = 1
+    case less_THAN_OR_EQUAL            = 2
+    case greater_THAN_OR_EQUAL         = 3
+    case within_RANGE_INCLUSIVE        = 4
+    case first_RECORD                  = 5
+    case last_RECORD                   = 6
     // Values outside this range are reserved
 }
 
 enum NORBGMFilterType : UInt8 {
-    case RESERVED_FILTER_TYPE          = 0
-    case SEQUENCE_NUMBER               = 1
-    case USER_FACING_TIME              = 2
+    case reserved_FILTER_TYPE          = 0
+    case sequence_NUMBER               = 1
+    case user_FACING_TIME              = 2
 }
 
 enum NORBGMResponseCode : UInt8 {
-    case RESERVED                      = 0
-    case SUCCESS                       = 1
-    case OP_CODE_NOT_SUPPORTED         = 2
-    case INVALID_OPERATOR              = 3
-    case OPERATOR_NOT_SUPPORTED        = 4
-    case INVALID_OPERAND               = 5
-    case NO_RECORDS_FOUND              = 6
-    case ABORT_UNSUCCESSFUL            = 7
-    case PROCEDURE_NOT_COMPLETED       = 8
-    case OPERAND_NOT_SUPPORTED         = 9
+    case reserved                      = 0
+    case success                       = 1
+    case op_CODE_NOT_SUPPORTED         = 2
+    case invalid_OPERATOR              = 3
+    case operator_NOT_SUPPORTED        = 4
+    case invalid_OPERAND               = 5
+    case no_RECORDS_FOUND              = 6
+    case abort_UNSUCCESSFUL            = 7
+    case procedure_NOT_COMPLETED       = 8
+    case operand_NOT_SUPPORTED         = 9
     // Values outside this range are reserved
 }

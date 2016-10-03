@@ -32,66 +32,66 @@ class NORGlucoseReadingContext: NSObject {
  
     //MARK: - Enums
     enum BgmCarbohydrateId: UInt8 {
-        case RESERVED_CARBOHYDRATE  = 0
-        case BREAKFEST              = 1
-        case LUNCH                  = 2
-        case DINNER                 = 3
-        case SNACK                  = 4
-        case DRINK                  = 5
-        case SUPPER                 = 6
-        case BRUNCH                 = 7
+        case reserved_CARBOHYDRATE  = 0
+        case breakfest              = 1
+        case lunch                  = 2
+        case dinner                 = 3
+        case snack                  = 4
+        case drink                  = 5
+        case supper                 = 6
+        case brunch                 = 7
     }
     
     enum BgmMeal : UInt8 {
-        case RESERVED_MEAL  = 0
-        case PREPRANDIAL    = 1
-        case POSTPRANDIAL   = 2
-        case FASTING        = 3
-        case CASUAL         = 4
-        case BEDTIME        = 5
+        case reserved_MEAL  = 0
+        case preprandial    = 1
+        case postprandial   = 2
+        case fasting        = 3
+        case casual         = 4
+        case bedtime        = 5
     }
     
     enum BgmTester : UInt8 {
-        case RESERVED_TESTER            = 0
-        case SELF                       = 1
-        case HEALTH_CARE_PROFESSIONAL   = 2
-        case LAB_TEST                   = 3
-        case TESTER_NOT_AVAILABLE       = 15
+        case reserved_TESTER            = 0
+        case `self`                       = 1
+        case health_CARE_PROFESSIONAL   = 2
+        case lab_TEST                   = 3
+        case tester_NOT_AVAILABLE       = 15
     }
     
     enum BgmHealth : UInt8 {
-        case RESERVED_HEALTH        = 0
-        case MINOR_HEALTH_ISSUES    = 1
-        case MAJOR_HEALTH_ISSUES    = 2
-        case DURING_MENSES          = 3
-        case UNDER_STRESS           = 4
-        case NO_HEALTH_ISSUES       = 5
-        case HEALTH_NOT_AVAILABLE   = 15
+        case reserved_HEALTH        = 0
+        case minor_HEALTH_ISSUES    = 1
+        case major_HEALTH_ISSUES    = 2
+        case during_MENSES          = 3
+        case under_STRESS           = 4
+        case no_HEALTH_ISSUES       = 5
+        case health_NOT_AVAILABLE   = 15
     }
     
     enum BgmMedicationId : UInt8 {
-        case RESERVED_MEDICATON             = 0
-        case RAPID_ACTING_INSULIN           = 1
-        case SHORT_ACTING_INSULIN           = 2
-        case INTERMEDIATE_ACTING_INSULIN    = 3
-        case LONG_ACTING_INSULINE           = 4
-        case PRE_MIXED_INSULINE             = 5
+        case reserved_MEDICATON             = 0
+        case rapid_ACTING_INSULIN           = 1
+        case short_ACTING_INSULIN           = 2
+        case intermediate_ACTING_INSULIN    = 3
+        case long_ACTING_INSULINE           = 4
+        case pre_MIXED_INSULINE             = 5
     }
     
     enum BgmMedicationUnit : UInt8 {
-        case KILOGRAMS  = 0
-        case LITERS     = 1
+        case kilograms  = 0
+        case liters     = 1
     }
   
     //MARK: - Implementation
-    static func readingContextFromBytes(bytes: UnsafePointer<UInt8>) -> NORGlucoseReadingContext {
+    static func readingContextFromBytes(_ bytes: UnsafePointer<UInt8>) -> NORGlucoseReadingContext {
         let context = NORGlucoseReadingContext()
         context.updateFromBytes(bytes)
         return context;
     }
     
-    func updateFromBytes(bytes: UnsafePointer<UInt8>){
-        var pointer = UnsafeMutablePointer<UInt8>(bytes)
+    func updateFromBytes(_ bytes: UnsafePointer<UInt8>){
+        var pointer = UnsafeMutablePointer<UInt8>(mutating: bytes)
         
         // Parse flags
         let flags = NORCharacteristicReader.readUInt8Value(ptr: &pointer)
@@ -157,19 +157,19 @@ class NORGlucoseReadingContext: NSObject {
 
     func carbohydrateIdAsString() -> String {
         switch(self.carbohydrateId!){
-        case .BREAKFEST:
+        case .breakfest:
             return "Breakfast"
-        case .BRUNCH:
+        case .brunch:
             return "Brunch"
-        case .DINNER:
+        case .dinner:
             return "Dinner"
-        case .DRINK:
+        case .drink:
             return "Drink"
-        case .LUNCH:
+        case .lunch:
             return "Lunch"
-        case .SNACK:
+        case .snack:
             return "Snack"
-        case .SUPPER:
+        case .supper:
             return "Supper"
         default:
             return String(format: "Reserved: %d", (self.carbohydrateId?.rawValue)!)
@@ -178,15 +178,15 @@ class NORGlucoseReadingContext: NSObject {
     
     func mealIdAsString() -> String {
         switch (self.meal!) {
-        case .BEDTIME:
+        case .bedtime:
             return "Bedtime"
-        case .CASUAL:
+        case .casual:
             return "Casual"
-        case .FASTING:
+        case .fasting:
             return "Fasting"
-        case .POSTPRANDIAL:
+        case .postprandial:
             return "Postprandial"
-        case .PREPRANDIAL:
+        case .preprandial:
             return "Preprandial"
         default:
             return String(format:"Reserved: %d", (self.meal?.rawValue)!)
@@ -195,13 +195,13 @@ class NORGlucoseReadingContext: NSObject {
     
     func testerAsString() -> String {
         switch (self.tester!) {
-        case .HEALTH_CARE_PROFESSIONAL:
+        case .health_CARE_PROFESSIONAL:
             return "Healthcare professional"
-        case .LAB_TEST:
+        case .lab_TEST:
             return "Lab test"
-        case .SELF:
+        case .`self`:
             return "Self"
-        case .TESTER_NOT_AVAILABLE:
+        case .tester_NOT_AVAILABLE:
             return "Not available"
         default:
             return String(format:"Reserved: %d", (self.tester?.rawValue)!)
@@ -210,17 +210,17 @@ class NORGlucoseReadingContext: NSObject {
     
     func healthAsString() -> String {
         switch (self.health!) {
-        case .DURING_MENSES:
+        case .during_MENSES:
             return "During menses"
-        case .MINOR_HEALTH_ISSUES:
+        case .minor_HEALTH_ISSUES:
             return "Minor health issue"
-        case .MAJOR_HEALTH_ISSUES:
+        case .major_HEALTH_ISSUES:
             return "Major health issue"
-        case .UNDER_STRESS:
+        case .under_STRESS:
             return "Under stress"
-        case .NO_HEALTH_ISSUES:
+        case .no_HEALTH_ISSUES:
             return "No health issues"
-        case .HEALTH_NOT_AVAILABLE:
+        case .health_NOT_AVAILABLE:
             return "Not availabel"
         default:
             return String(format:"RESERVED: %d", (self.health?.rawValue)!)
@@ -229,22 +229,22 @@ class NORGlucoseReadingContext: NSObject {
     
     func medicationIdAsString() -> String {
         switch (self.medicationId!) {
-        case .INTERMEDIATE_ACTING_INSULIN:
+        case .intermediate_ACTING_INSULIN:
             return "Intermediate acting insulin"
-        case .LONG_ACTING_INSULINE:
+        case .long_ACTING_INSULINE:
             return "Long acting insulin"
-        case .PRE_MIXED_INSULINE:
+        case .pre_MIXED_INSULINE:
             return "Pre-mixed insulin"
-        case .RAPID_ACTING_INSULIN:
+        case .rapid_ACTING_INSULIN:
             return "Rapid acting insulin"
-        case .SHORT_ACTING_INSULIN:
+        case .short_ACTING_INSULIN:
             return "Short acting insulin"
         default:
             return String(format:"Reserved: %d", (self.medicationId?.rawValue)!)
         }
     }
     
-    override func isEqual(object: AnyObject?) -> Bool {
+    override func isEqual(_ object: Any?) -> Bool {
         let reading = object as! NORGlucoseReadingContext
         return self.sequenceNumber == reading.sequenceNumber!
     }

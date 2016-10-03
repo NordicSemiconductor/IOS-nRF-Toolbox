@@ -10,12 +10,12 @@ import CoreBluetooth
 
 class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
-    private var delegate:DFUServiceDelegate? {
+    fileprivate var delegate:DFUServiceDelegate? {
         // The delegate may change during DFU operation (setting a new one in the initiator). Let's allways use the current one.
         return initiator.delegate
     }
 
-    private var progressDelegate:DFUProgressDelegate? {
+    fileprivate var progressDelegate:DFUProgressDelegate? {
         // The delegate may change during DFU operation (setting a new one in the initiator). Let's allways use the current one.
         return initiator.progressDelegate
     }
@@ -53,57 +53,60 @@ class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         }
     }
     
-    func didDiscoverDFUService(secureDFU : Bool) {
+    func didDiscoverDFUService(_ secureDFU : Bool) {
         self.isSecureDFU = secureDFU
         if isSecureDFU! {
-            initiator.logger?.logWith(.Verbose, message: "Did discover secure DFU service")
+            initiator.logger?.logWith(.verbose, message: "Did discover secure DFU service")
             self.startSecureDFU()
         } else {
-            initiator.logger?.logWith(.Verbose, message: "Did discover legacy DFU service")
+            initiator.logger?.logWith(.verbose, message: "Did discover legacy DFU service")
             self.startLegacyDFU()
         }
     }
 
     func startSecureDFU() {
-        initiator.logger?.logWith(.Verbose, message: "Starting Secure DFU Service initiator")
+        initiator.logger?.logWith(.verbose, message: "Starting Secure DFU Service initiator")
         self.initiator.onPeripheralDFUDiscovery(true)
         let dfuInitiator = SecureDFUServiceInitiator(centralManager: self.centralManager, target: self.peripheral)
-        dfuInitiator.withFirmwareFile(firmware)
+        _ = dfuInitiator.withFirmwareFile(firmware)
         dfuInitiator.delegate = initiator.delegate
         dfuInitiator.progressDelegate = initiator.progressDelegate
         dfuInitiator.logger = initiator.logger
+        dfuInitiator.packetReceiptNotificationParameter = self.initiator.packetReceiptNotificationParameter
         dfuInitiator.peripheralSelector = DFUPeripheralSelector(secureDFU: true)
-        initiator.logger?.logWith(.Verbose, message: "Instantiated Secure DFU peripheral selector")
+        initiator.logger?.logWith(.verbose, message: "Instantiated Secure DFU peripheral selector")
         self.secureDFUController = dfuInitiator.start()
     }
     
     func startLegacyDFU() {
-        initiator.logger?.logWith(.Verbose, message: "Starting legacy DFU Service initiator")
+        
+        initiator.logger?.logWith(.verbose, message: "Starting legacy DFU Service initiator")
         self.initiator.onPeripheralDFUDiscovery(true)
         let dfuInitiator = LegacyDFUServiceInitiator(centralManager: self.centralManager, target: self.peripheral)
-        dfuInitiator.withFirmwareFile(firmware)
+        _ = dfuInitiator.withFirmwareFile(firmware)
         dfuInitiator.delegate = initiator.delegate
         dfuInitiator.progressDelegate = initiator.progressDelegate
         dfuInitiator.logger = initiator.logger
         dfuInitiator.peripheralSelector = DFUPeripheralSelector(secureDFU: false)
-        initiator.logger?.logWith(.Verbose, message: "Instantiated Legacy DFU peripheral selector")
+        dfuInitiator.packetReceiptNotificationParameter = self.initiator.packetReceiptNotificationParameter
+        initiator.logger?.logWith(.verbose, message: "Instantiated Legacy DFU peripheral selector")
         self.legacyDFUController = dfuInitiator.start()
     }
     
     func deviceNotSupported(){
-        self.delegate?.didErrorOccur(DFUError.DeviceNotSupported, withMessage: "device does not have DFU enabled")
-        self.delegate?.didStateChangedTo(.Disconnecting)
+        self.delegate?.didErrorOccur(DFUError.deviceNotSupported, withMessage: "device does not have DFU enabled")
+        self.delegate?.didStateChangedTo(.disconnecting)
     }
     
     //MARK: - DFU Controller methods
     func start() {
-        dispatch_async(dispatch_get_main_queue(), {
-            self.delegate?.didStateChangedTo(DFUState.Connecting)
+        DispatchQueue.main.async(execute: {
+            self.delegate?.didStateChangedTo(DFUState.connecting)
         })
         
         let centralManager = self.initiator.centralManager
         centralManager.delegate = self
-        centralManager.connectPeripheral(peripheral, options: nil)
+        centralManager.connect(peripheral, options: nil)
     }
     
     func pause() -> Bool {
@@ -122,54 +125,54 @@ class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         }
     }
     
-    func abort() {
+    func abort() -> Bool {
         if self.isSecureDFU! {
-            self.secureDFUController?.abort()
+            return (self.secureDFUController?.abort())!
         }else{
-            self.legacyDFUController?.abort()
+            return (self.legacyDFUController?.abort())!
         }
     }
 
     //MARK: - CBCentralManager delegate
-    func centralManagerDidUpdateState(central: CBCentralManager){
-        if central.state != CBCentralManagerState.PoweredOn {
-            self.delegate?.didErrorOccur(DFUError.FailedToConnect, withMessage: "The bluetooth radio is powered off")
-            self.delegate?.didStateChangedTo(.Failed)
+    func centralManagerDidUpdateState(_ central: CBCentralManager){
+        if central.state != .poweredOn {
+            self.delegate?.didErrorOccur(DFUError.failedToConnect, withMessage: "The bluetooth radio is powered off")
+            self.delegate?.didStateChangedTo(.failed)
         }
     }
     
-    func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {
+    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         //Discover services as soon as we connect to peripheral
         self.peripheral = peripheral
         self.peripheral.delegate = self
         self.peripheral.discoverServices(nil) //Discover all services
-        self.initiator.logger?.logWith(.Verbose, message: "Discovering all services for peripheral \(self.peripheral)")
+        self.initiator.logger?.logWith(.verbose, message: "Discovering all services for peripheral \(self.peripheral)")
     }
     
-    func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
+    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         guard error == nil else {
-            self.delegate?.didErrorOccur(DFUError.DeviceDisconnected, withMessage: "Error while disconnecting from peripheral: \(error)")
-            self.delegate?.didStateChangedTo(.Failed)
+            self.delegate?.didErrorOccur(DFUError.deviceDisconnected, withMessage: "Error while disconnecting from peripheral: \(error)")
+            self.delegate?.didStateChangedTo(.failed)
             return
         }
     }
     
-    func centralManager(central: CBCentralManager, didFailToConnectPeripheral peripheral: CBPeripheral, error: NSError?) {
-            self.delegate?.didErrorOccur(DFUError.FailedToConnect, withMessage: "Error while connecting to peripheral: \(error)")
-            self.delegate?.didStateChangedTo(.Failed)
+    func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
+            self.delegate?.didErrorOccur(DFUError.failedToConnect, withMessage: "Error while connecting to peripheral: \(error)")
+            self.delegate?.didStateChangedTo(.failed)
     }
 
     //MARK: - CBPeripheralDelegate
-    func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         for aService in peripheral.services! {
-            initiator.logger?.logWith(.Verbose, message: "Discovered Service \(aService.UUID) on peripheral \(peripheral)")
-            if aService.UUID == SecureDFUService.UUID {
+            initiator.logger?.logWith(.verbose, message: "Discovered Service \(aService.uuid) on peripheral \(peripheral)")
+            if aService.uuid == SecureDFUService.UUID {
                 //First priority if SDFU
                 self.didDiscoverDFUService(true)
                 return
             }
             
-            if aService.UUID == LegacyDFUService.UUID {
+            if aService.uuid == LegacyDFUService.UUID {
                 //Second priority is legacy DFU
                 self.didDiscoverDFUService(false)
                 return

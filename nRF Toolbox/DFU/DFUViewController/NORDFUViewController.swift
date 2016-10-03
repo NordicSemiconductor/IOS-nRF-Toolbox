@@ -19,11 +19,11 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
     var centralManager     : CBCentralManager?
     var dfuController      : DFUServiceController?
     var selectedFirmware   : DFUFirmware?
-    var selectedFileURL    : NSURL?
-
+    var selectedFileURL    : URL?
+    var isImportingFile = false
 
     //MARK: - UIViewController Outlets
-    
+
     @IBOutlet weak var fileName: UILabel!
     @IBOutlet weak var fileSize: UILabel!
     @IBOutlet weak var fileType: UILabel!
@@ -39,24 +39,32 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
  
     //MARK: - UIViewController Actions
     
-    @IBAction func aboutButtonTapped(sender: AnyObject) {
+    @IBAction func aboutButtonTapped(_ sender: AnyObject) {
         handleAboutButtonTapped()
     }
-    @IBAction func uploadButtonTapped(sender: AnyObject) {
+    @IBAction func uploadButtonTapped(_ sender: AnyObject) {
         handleUploadButtonTapped()
     }
     
     //MARK: - UIVIewControllerDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.verticalLabel.transform = CGAffineTransformRotate(CGAffineTransformMakeTranslation(-145.0, 0.0), CGFloat(-M_PI_2))
+        self.verticalLabel.transform = CGAffineTransform(translationX: -145.0, y: 0.0).rotated(by: CGFloat(-M_PI_2))
+        
+        if isImportingFile {
+            isImportingFile = false
+            self.onFileSelected(withURL: selectedFileURL!)
+        }
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         //if DFU peripheral is connected and user press Back button then disconnect it
-        if self.isMovingFromParentViewController() && dfuController != nil {
-            dfuController?.abort()
+        if self.isMovingFromParentViewController && dfuController != nil {
+            let aborted = dfuController?.abort()
+            if aborted! == false {
+                logWith(.application, message: "Aborting DFU process failed")
+            }
         }
     }
 
@@ -74,17 +82,17 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
     
         if selectedFirmware != nil && selectedFirmware?.fileName != nil {
             fileName.text = selectedFirmware?.fileName
-            let content = NSData(contentsOfURL: selectedFileURL!)
-            fileSize.text = String(format: "%d bytes", (content?.length)!)
+            let content = try? Data(contentsOf: selectedFileURL!)
+            fileSize.text = String(format: "%d bytes", (content?.count)!)
             
             switch  aType {
-            case .Application:
+            case .application:
                 fileType.text = "Application"
                 break
-            case .Bootloader:
+            case .bootloader:
                 fileType.text = "Bootloader"
                 break
-            case .Softdevice:
+            case .softdevice:
                 fileType.text = "SoftDevice"
                 break
             default:
@@ -103,8 +111,14 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
         selectedFileURL = nil
         updateUploadButtonState()
     }
+
     //MARK: - NORFileSelectionDelegate
-    func onFileSelected(withURL aFileURL: NSURL) {
+    func onFileImported(withURL aFileURL: URL){
+        selectedFileURL = aFileURL
+        self.isImportingFile = true
+    }
+
+    func onFileSelected(withURL aFileURL: URL) {
         selectedFileURL = aFileURL
         selectedFirmware = nil
         fileName.text = nil
@@ -112,14 +126,14 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
         fileType.text = nil
         
         
-        let fileNameExtention = aFileURL.pathExtension!.lowercaseString
+        let fileNameExtention = aFileURL.pathExtension.lowercased()
         
         if fileNameExtention == "zip" {
             selectedFirmware = DFUFirmware(urlToZipFile: aFileURL)
             if selectedFirmware != nil && selectedFirmware?.fileName != nil {
                 fileName.text = selectedFirmware?.fileName
-                let content = NSData(contentsOfURL: aFileURL)
-                fileSize.text = String(format: "%lu bytes", (content?.length)!)
+                let content = try? Data(contentsOf: aFileURL)
+                fileSize.text = String(format: "%lu bytes", (content?.count)!)
                 fileType.text = "Distribution packet (ZIP)"
             }else{
                 selectedFirmware = nil
@@ -130,87 +144,87 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
         }else{
             // Show a view to select the file type
             let mainStorybord                   = UIStoryboard(name: "Main", bundle: nil)
-            let navigationController            = mainStorybord.instantiateViewControllerWithIdentifier("SelectFileType")
-            let filetTypeViewController         = navigationController.childViewControllerForStatusBarHidden() as? NORFileTypeViewController
+            let navigationController            = mainStorybord.instantiateViewController(withIdentifier: "SelectFileType")
+            let filetTypeViewController         = navigationController.childViewControllerForStatusBarHidden as? NORFileTypeViewController
             filetTypeViewController!.delegate   = self
-            self.presentViewController(navigationController, animated: true, completion:nil)
+            self.present(navigationController, animated: true, completion:nil)
         }
 
     }
     //MARK: - LoggerDelegate
-    func logWith(level:LogLevel, message:String){
+    func logWith(_ level:LogLevel, message:String){
         var levelString : String?
         switch(level) {
-            case .Application:
+            case .application:
                 levelString = "Application"
                 break
-            case .Debug:
+            case .debug:
                 levelString = "Debug"
                 break
-            case .Error:
+            case .error:
                 levelString = "Error"
                 break
-            case .Info:
+            case .info:
                 levelString = "Info"
                 break
-            case .Verbose:
+            case .verbose:
                 levelString = "Verbose"
                 break
-            case .Warning:
+            case .warning:
                 levelString = "Warning"
         }
         print("\(levelString!): \(message)")
     }
 
     //MARK: - DFUServiceDelegate
-    func didStateChangedTo(state: DFUState) {
+    func didStateChangedTo(_ state: DFUState) {
         
         switch state {
-            case .Connecting:
+            case .connecting:
                 uploadStatus.text = "Connecting..."
                 break
-            case .Starting:
+            case .starting:
                 uploadStatus.text = "Starting DFU..."
                 break
-            case .EnablingDfuMode:
+            case .enablingDfuMode:
                 uploadStatus.text = "Enabling DFU Bootloader..."
                 break
-            case .Uploading:
+            case .uploading:
                 uploadStatus.text = "Uploading..."
                 break
-            case .Validating:
+            case .validating:
                 uploadStatus.text = "Validating..."
                 break
-            case .Disconnecting:
+            case .disconnecting:
                 uploadStatus.text = "Disconnecting..."
                 break
-            case .Completed:
+            case .completed:
                 NORDFUConstantsUtility.showAlert(message: "Upload complete")
                 if NORDFUConstantsUtility.isApplicationStateInactiveOrBackgrounded() {
                     NORDFUConstantsUtility.showBackgroundNotification(message: "Upload complete")
                 }
                 self.clearUI()
                 break
-            case .Aborted:
+            case .aborted:
                 NORDFUConstantsUtility.showAlert(message: "Upload aborted")
                 if NORDFUConstantsUtility.isApplicationStateInactiveOrBackgrounded(){
                     NORDFUConstantsUtility.showBackgroundNotification(message: "Upload aborted")
                 }
                 self.clearUI()
                 break
-            case .SignatureMismatch:
+            case .signatureMismatch:
                 uploadStatus.text = "Signature mismatch..."
                 break
-            case .OperationNotPermitted:
+            case .operationNotPermitted:
                 uploadStatus.text = "Operation not permitted..."
                 break
-            case .Failed:
+            case .failed:
                 uploadStatus.text = "Connection Failure"
                 break
         }
     }
     
-    func didErrorOccur(error: DFUError, withMessage message: String) {
+    func didErrorOccur(_ error: DFUError, withMessage message: String) {
         NORDFUConstantsUtility.showAlert(message: message)
         if NORDFUConstantsUtility.isApplicationStateInactiveOrBackgrounded() {
             NORDFUConstantsUtility.showBackgroundNotification(message: message)
@@ -219,24 +233,24 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
     }
 
     //MARK: - DFUProgressDelegate
-    func onUploadProgress(part: Int, totalParts: Int, progress: Int, currentSpeedBytesPerSecond: Double, avgSpeedBytesPerSecond: Double) {
+    func onUploadProgress(_ part: Int, totalParts: Int, progress: Int, currentSpeedBytesPerSecond: Double, avgSpeedBytesPerSecond: Double) {
         self.progress.progress = Float(progress) / 100.0
         progressLabel.text = String("\(progress)% (\(part)/\(totalParts))")
     }
     
     //MARK: - Segue Navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
             if (segue.identifier == "scan") {
                 // Set this contoller as scanner delegate
-                let aNavigationController = segue.destinationViewController as? UINavigationController
-                let scannerViewController = aNavigationController?.childViewControllerForStatusBarHidden() as? NORScannerViewController
+                let aNavigationController = segue.destination as? UINavigationController
+                let scannerViewController = aNavigationController?.childViewControllerForStatusBarHidden as? NORScannerViewController
                 scannerViewController?.delegate = self
             }else if segue.identifier == "FileSegue" {
-                let aNavigationController = segue.destinationViewController as? UINavigationController
-                let barViewController = aNavigationController?.childViewControllerForStatusBarHidden() as? UITabBarController
+                let aNavigationController = segue.destination as? UINavigationController
+                let barViewController = aNavigationController?.childViewControllerForStatusBarHidden as? UITabBarController
                 let appFilecsVC = barViewController?.viewControllers?.first as? NORAppFilesViewController
                 appFilecsVC?.fileDelegate = self
-                let userFilesVC = barViewController?.viewControllers?.last as? NORAppFilesViewController
+                let userFilesVC = barViewController?.viewControllers?.last as? NORUserFilesViewController
                 userFilesVC?.fileDelegate = self
                 
                 if selectedFileURL != nil {
@@ -261,32 +275,32 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
         // but it will pause just before seding the data.
         dfuController?.pause()
         
-        let alert = UIAlertController(title: "Abort?", message: "Do you want to abort?", preferredStyle: .Alert)
-        let abort = UIAlertAction(title: "Abort", style: .Destructive, handler: { (anAction) in
+        let alert = UIAlertController(title: "Abort?", message: "Do you want to abort?", preferredStyle: .alert)
+        let abort = UIAlertAction(title: "Abort", style: .destructive, handler: { (anAction) in
             self.dfuController?.abort()
-            alert.dismissViewControllerAnimated(true, completion: nil)
+            alert.dismiss(animated: true, completion: nil)
         })
-        let cancel = UIAlertAction(title: "Cancel", style: .Default, handler: { (anAction) in
+        let cancel = UIAlertAction(title: "Cancel", style: .default, handler: { (anAction) in
             self.dfuController?.resume()
-            alert.dismissViewControllerAnimated(true, completion: nil)
+            alert.dismiss(animated: true, completion: nil)
         })
         
         alert.addAction(abort)
         alert.addAction(cancel)
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
 
     func registerObservers() {
-        if UIApplication.instancesRespondToSelector(#selector(UIApplication.registerUserNotificationSettings(_:))) {
-            UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [.Sound, .Alert], categories: nil))
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.applicationDidEnterBackgroundCallback), name: UIApplicationDidEnterBackgroundNotification, object: nil)
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.applicationDidBecomeActiveCallback), name: UIApplicationDidBecomeActiveNotification, object: nil)
+        if UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))) {
+            UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert], categories: nil))
+            NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterBackgroundCallback), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidBecomeActiveCallback), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         }
     }
     func removeObservers() {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidBecomeActiveNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name:UIApplicationDidEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.removeObserver(self, name:NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
     }
 
     func applicationDidEnterBackgroundCallback() {
@@ -296,37 +310,37 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
     }
     
     func applicationDidBecomeActiveCallback() {
-        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        UIApplication.shared.cancelAllLocalNotifications()
     }
 
     func updateUploadButtonState() {
-        uploadButton.enabled = selectedFirmware != nil && selectedPeripheral != nil
+        uploadButton.isEnabled = selectedFirmware != nil && selectedPeripheral != nil
     }
     
     func disableOtherButtons() {
-        selectFileButton.enabled = false
-        connectButton.enabled = false
+        selectFileButton.isEnabled = false
+        connectButton.isEnabled = false
     }
     
     func enableOtherButtons() {
-        selectFileButton.enabled = true
-        connectButton.enabled = true
+        selectFileButton.isEnabled = true
+        connectButton.isEnabled = true
     }
     
     func clearUI() {
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async(execute: {
             self.dfuController        = nil
             self.selectedPeripheral   = nil
 
             self.deviceName.text      = "DEFAULT DFU"
             self.uploadStatus.text    = nil
-            self.uploadStatus.hidden  = true
+            self.uploadStatus.isHidden  = true
             self.progress.progress    = 0.0
-            self.progress.hidden      = true
+            self.progress.isHidden      = true
             self.progressLabel.text   = nil
-            self.progressLabel.hidden = true
+            self.progressLabel.isHidden = true
             
-            self.uploadButton.setTitle("Upload", forState: UIControlState.Normal)
+            self.uploadButton.setTitle("Upload", for: UIControlState())
             self.updateUploadButtonState()
             self.enableOtherButtons()
             self.removeObservers()
@@ -335,24 +349,24 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
     
     func performDFU() {
         self.disableOtherButtons()
-        progress.hidden = false
-        progressLabel.hidden = false
-        uploadStatus.hidden = false
-        uploadButton.enabled = false
+        progress.isHidden = false
+        progressLabel.isHidden = false
+        uploadStatus.isHidden = false
+        uploadButton.isEnabled = false
         
         self.registerObservers()
         
         // To start the DFU operation the DFUServiceInitiator must be used
         let initiator = DFUServiceInitiator(centralManager: centralManager!, target: selectedPeripheral!)
         initiator.withFirmwareFile(selectedFirmware!)
-        initiator.forceDfu = NSUserDefaults.standardUserDefaults().valueForKey("dfu_force_dfu")!.boolValue
-        initiator.packetReceiptNotificationParameter = UInt16((NSUserDefaults.standardUserDefaults().valueForKey("dfu_number_of_packets")?.intValue)!)
+        initiator.forceDfu = UserDefaults.standard.bool(forKey: "dfu_force_dfu")
+        initiator.packetReceiptNotificationParameter = UInt16(UserDefaults.standard.integer(forKey: "dfu_number_of_packets"))
         initiator.logger = self
         initiator.delegate = self
         initiator.progressDelegate = self
         dfuController = initiator.start()
-        uploadButton.setTitle("Cancel", forState: UIControlState.Normal)
-        uploadButton.enabled = true
+        uploadButton.setTitle("Cancel", for: UIControlState())
+        uploadButton.isEnabled = true
     }
 
 }

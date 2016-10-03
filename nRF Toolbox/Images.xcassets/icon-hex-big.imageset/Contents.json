@@ -2,16 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "icon-hex-big.png"
+      "filename" : "icon-hex-big.png",
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "icon-hex-big@2x.png"
+      "filename" : "icon-hex-big@2x.png",
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "icon-hex-big@2x-1.png",
       "scale" : "3x"
     }
   ],

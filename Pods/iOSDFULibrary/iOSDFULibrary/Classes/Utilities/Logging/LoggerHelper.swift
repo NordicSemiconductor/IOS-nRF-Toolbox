@@ -21,41 +21,41 @@
 */
 
 class LoggerHelper {
-    private var logger:LoggerDelegate
+    fileprivate var logger:LoggerDelegate
     
     init(_ logger:LoggerDelegate) {
         self.logger = logger
     }
     
-    func d(message:String) {
-        logger.logWith(.Debug, message: message)
+    func d(_ message:String) {
+        logger.logWith(.debug, message: message)
     }
     
-    func v(message:String) {
-        logger.logWith(.Verbose, message: message)
+    func v(_ message:String) {
+        logger.logWith(.verbose, message: message)
     }
     
-    func i(message:String) {
-        logger.logWith(.Info, message: message)
+    func i(_ message:String) {
+        logger.logWith(.info, message: message)
     }
     
-    func a(message:String) {
-        logger.logWith(.Application, message: message)
+    func a(_ message:String) {
+        logger.logWith(.application, message: message)
     }
     
-    func w(message:String) {
-        logger.logWith(.Warning, message: message)
+    func w(_ message:String) {
+        logger.logWith(.warning, message: message)
     }
     
-    func w(error:NSError) {
-        logger.logWith(.Warning, message: "Error \(error.code): \(error.localizedDescription)");
+    func w(_ error:Error) {
+        logger.logWith(.warning, message: "Error \((error as NSError).code): \(error.localizedDescription)");
     }
     
-    func e(message:String) {
-        logger.logWith(.Error, message: message)
+    func e(_ message:String) {
+        logger.logWith(.error, message: message)
     }
     
-    func e(error:NSError) {
-        logger.logWith(.Error, message: "Error \(error.code): \(error.localizedDescription)");
+    func e(_ error:Error) {
+        logger.logWith(.error, message: "Error \((error as NSError).code): \(error.localizedDescription)");
     }
 }
