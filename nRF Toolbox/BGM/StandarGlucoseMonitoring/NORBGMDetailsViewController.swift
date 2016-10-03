@@ -61,11 +61,11 @@ class NORBGMDetailsViewController: UIViewController {
     
     //MARK: - Properties
     var reading     : NORGlucoseReading?
-    var dateFormat  : NSDateFormatter?
+    var dateFormat  : DateFormatter?
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
-        dateFormat = NSDateFormatter()
+        dateFormat = DateFormatter()
         dateFormat?.dateFormat = "dd.MM.yy, hh:mm:ss"
     }
     
@@ -73,18 +73,18 @@ class NORBGMDetailsViewController: UIViewController {
         super.viewDidLoad()
         
         sequenceNumber.text = String(format: "%d", (reading?.sequenceNumber)!)
-        timestamp.text = dateFormat?.stringFromDate((reading?.timestamp)!)
+        timestamp.text = dateFormat?.string(from: (reading?.timestamp)! as Date)
         
         if (reading?.glucoseConcentrationTypeAndLocationPresent)! == true {
             type.text       = reading?.typeAsString()
             location.text   = reading?.locationAsString()
             
             switch (reading?.unit)! {
-            case .MOL_L:
+            case .mol_L:
                 glucose.text = String(format: "%0.1f", (reading?.glucoseConcentration)! * 1000.0)  //mol/l to mmol/l conversion
                 unit.text = "mmol/l"
                 break;
-            case .KG_L:
+            case .kg_L:
                 glucose.text = String(format: "%.0f", (reading?.glucoseConcentration)! * 100000.0) //kg/l to mg/dl conversion
                 unit.text = "mg/dl"
                 break;
@@ -140,10 +140,10 @@ class NORBGMDetailsViewController: UIViewController {
                 medication.text   = String(format: "%.0f", (context?.medication)! * 1000)
                 
                     switch (context?.medicationUnit)! {
-                    case .KILOGRAMS:
+                    case .kilograms:
                         medicationUnit.text = "mg"
                         break
-                    case .LITERS:
+                    case .liters:
                         medicationUnit.text = "ml"
                         break
                     }
@@ -159,7 +159,7 @@ class NORBGMDetailsViewController: UIViewController {
     func updateView(label aLabel: UILabel, withStatus aStatus: Bool) {
         if aStatus == true {
             aLabel.text = "YES"
-            aLabel.textColor = UIColor.redColor()
+            aLabel.textColor = UIColor.red
         } else {
             aLabel.text = "NO"
         }

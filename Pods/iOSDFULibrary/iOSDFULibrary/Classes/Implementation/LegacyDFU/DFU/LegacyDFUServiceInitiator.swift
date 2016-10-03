@@ -27,7 +27,7 @@ import CoreBluetooth
  with the Nordic Semiconductor's DFU (Device Firmware Update).
  A `delegate` and `logger` may be specified to be informed about the status.
  */
-@objc public class LegacyDFUServiceInitiator : NSObject {
+@objc open class LegacyDFUServiceInitiator : NSObject {
     internal let centralManager:CBCentralManager
     internal let target:CBPeripheral
     internal var file:DFUFirmware?
@@ -36,16 +36,16 @@ import CoreBluetooth
      The service delegate is an object that will be notified about state changes of the DFU Service.
      Setting it is optional but recommended.
      */
-    public weak var delegate:DFUServiceDelegate?
+    open weak var delegate:DFUServiceDelegate?
     /**
      An optional progress delegate will be called only during upload. It notifies about current upload
      percentage and speed.
      */
-    public weak var progressDelegate:DFUProgressDelegate?
+    open weak var progressDelegate:DFUProgressDelegate?
     /**
      The logger is an object that should print given messages to the user. It is optional.
      */
-    public weak var logger:LoggerDelegate?
+    open weak var logger:LoggerDelegate?
     /**
      The selector object is used during sending a firmware containing a Softdevice (or Softdevice and Bootloader)
      and the Application. After flashing the first part (containing the Softdevice), the device restarts in the
@@ -57,7 +57,7 @@ import CoreBluetooth
      
      Ignore this property if not updating Softdevice and Application from one ZIP file.
      */
-    public var peripheralSelector:DFUPeripheralSelector
+    open var peripheralSelector:DFUPeripheralSelector
     
     /**
      The number of packets of firmware data to be received by the DFU target before sending
@@ -66,7 +66,7 @@ import CoreBluetooth
      Default value is 12. Higher values, or disabling it, may speed up the upload process,
      but also cause a buffer overflow and hang the Bluetooth adapter.
      */
-    public var packetReceiptNotificationParameter:UInt16 = 12
+    open var packetReceiptNotificationParameter:UInt16 = 12
     
     /**
      Setting this property to true will prevent from jumping to the DFU Bootloader
@@ -113,7 +113,7 @@ import CoreBluetooth
      if the only service found is the DFU Service. Setting the forceDfu to true (YES) will prevent from
      jumping in these both cases.
      */
-    public var forceDfu = false
+    open var forceDfu = false
     
     /**
      Creates the DFUServiceInitializer that will allow to send an update to the given peripheral.
@@ -146,7 +146,7 @@ import CoreBluetooth
      
      - returns: the initiator instance to allow chain use
      */
-    public func withFirmwareFile(file:DFUFirmware) -> LegacyDFUServiceInitiator {
+    open func withFirmwareFile(_ file:DFUFirmware) -> LegacyDFUServiceInitiator {
         self.file = file
         return self
     }
@@ -164,17 +164,17 @@ import CoreBluetooth
      
      - returns: n object that can be used to controll the DFU operation.
      */
-    public func start() -> LegacyDFUServiceController? {
+    open func start() -> LegacyDFUServiceController? {
         // The firmware file must be specified before calling `start()`
         if file == nil {
-            delegate?.didErrorOccur(DFUError.FileNotSpecified, withMessage: "Firmware not specified")
+            delegate?.didErrorOccur(DFUError.fileNotSpecified, withMessage: "Firmware not specified")
             return nil
         }
 
         let executor = LegacyDFUExecutor(self)
         let controller = LegacyDFUServiceController(executor)
         executor.start()
-        self.logger?.logWith(.Verbose, message: "Started Legacy DFU service controller")
+        self.logger?.logWith(.verbose, message: "Started Legacy DFU service controller")
         return controller
     }
 }

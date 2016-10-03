@@ -21,16 +21,16 @@
 */
 
 internal class DFUStreamBin : DFUStream {
-    private(set) var currentPart = 1
-    private(set) var parts = 1
-    private(set) var currentPartType:UInt8 = 0
+    fileprivate(set) var currentPart = 1
+    fileprivate(set) var parts = 1
+    fileprivate(set) var currentPartType:UInt8 = 0
     
     /// Firmware binaries
-    private var binaries:NSData
+    fileprivate var binaries:Data
     /// The init packet content
-    private var initPacketBinaries:NSData?
+    fileprivate var initPacketBinaries:Data?
     
-    private var firmwareSize:UInt32 = 0
+    fileprivate var firmwareSize:UInt32 = 0
     
     var size:DFUFirmwareSize {
         switch currentPartType {
@@ -48,22 +48,22 @@ internal class DFUStreamBin : DFUStream {
         return size
     }
     
-    init(urlToBinFile:NSURL, urlToDatFile:NSURL?, type:DFUFirmwareType) {
-        binaries = NSData.init(contentsOfURL: urlToBinFile)!
-        firmwareSize = UInt32(binaries.length)
+    init(urlToBinFile:URL, urlToDatFile:URL?, type:DFUFirmwareType) {
+        binaries = try! Data.init(contentsOf: urlToBinFile)
+        firmwareSize = UInt32(binaries.count)
         
         if let dat = urlToDatFile {
-            initPacketBinaries = NSData.init(contentsOfURL: dat)
+            initPacketBinaries = try? Data.init(contentsOf: dat)
         }
         
         self.currentPartType = type.rawValue
     }
     
-    var data:NSData {
+    var data:Data {
         return binaries
     }
     
-    var initPacket:NSData? {
+    var initPacket:Data? {
         return initPacketBinaries
     }
     

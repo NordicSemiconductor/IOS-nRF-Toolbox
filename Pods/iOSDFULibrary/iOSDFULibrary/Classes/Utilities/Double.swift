@@ -24,7 +24,7 @@
 
 extension Double {
     
-    internal func format(f: String) -> String {
+    internal func format(_ f: String) -> String {
         return String(format: "%\(f)f", self)
     }
 }

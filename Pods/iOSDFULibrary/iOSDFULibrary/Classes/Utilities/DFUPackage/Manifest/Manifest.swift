@@ -28,8 +28,8 @@ class Manifest: NSObject {
     
     init(withJsonString aString : String) {
         do {
-            let data = aString.dataUsingEncoding(NSUTF8StringEncoding)
-            let aDictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! Dictionary<String, AnyObject>
+            let data = aString.data(using: String.Encoding.utf8)
+            let aDictionary = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! Dictionary<String, AnyObject>
             
             let mainObject = aDictionary["manifest"] as! Dictionary<String, AnyObject>
             if mainObject.keys.contains("application") {

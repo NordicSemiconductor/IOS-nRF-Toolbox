@@ -28,35 +28,35 @@ The type of the BIN or HEX file.
 - Application:          Firmware file will be sent as a new application
 */
 @objc public enum DFUFirmwareType : UInt8 {
-    case Softdevice = 1
-    case Bootloader = 2
-    case Application = 4
+    case softdevice = 1
+    case bootloader = 2
+    case application = 4
     // Merged option values (due to objc - Swift compatibility).
-    case SoftdeviceBootloader = 3
-    case SoftdeviceBootloaderApplication = 7
+    case softdeviceBootloader = 3
+    case softdeviceBootloaderApplication = 7
 }
 
 /// The DFUFirmware object wraps the firmware file.
-@objc public class DFUFirmware : NSObject, DFUStream {
+@objc open class DFUFirmware : NSObject, DFUStream {
     internal let stream:DFUStream?
     
     /// The name of the firmware file.
-    public let fileName:String!
+    open let fileName:String!
     /// The URL to the firmware file.
-    public let fileUrl:NSURL!
+    open let fileUrl:URL!
     
     /// Information whether the firmware was successfully initialized.
-    public var valid:Bool {
+    open var valid:Bool {
         return stream != nil
     }
     
     /// The size of each component of the firmware.
-    public var size:DFUFirmwareSize {
+    open var size:DFUFirmwareSize {
         return stream!.size
     }
     
     /// Number of connectinos required to transfer the firmware. This does not include the connection needed to switch to the DFU mode.
-    public var parts:Int {
+    open var parts:Int {
         if stream == nil {
             return 0
         }
@@ -84,8 +84,8 @@ The type of the BIN or HEX file.
      
      - returns: the DFU firmware object or null in case of an error
      */
-    convenience public init?(urlToZipFile:NSURL) {
-        self.init(urlToZipFile: urlToZipFile, type: DFUFirmwareType.SoftdeviceBootloaderApplication)
+    convenience public init?(urlToZipFile:URL) {
+        self.init(urlToZipFile: urlToZipFile, type: DFUFirmwareType.softdeviceBootloaderApplication)
     }
     
     /**
@@ -98,13 +98,13 @@ The type of the BIN or HEX file.
      
      - returns: the DFU firmware object or null in case of an error
      */
-    public init?(urlToZipFile:NSURL, type:DFUFirmwareType) {
+    public init?(urlToZipFile:URL, type:DFUFirmwareType) {
         fileUrl = urlToZipFile
-        fileName = urlToZipFile.lastPathComponent!
+        fileName = urlToZipFile.lastPathComponent
         
         // Quickly check if it's a ZIP file
         let ext = urlToZipFile.pathExtension
-        if ext == nil || ext!.caseInsensitiveCompare("zip") != .OrderedSame {
+        if ext.caseInsensitiveCompare("zip") != .orderedSame {
             NSLog("\(self.fileName) is not a ZIP file")
             stream = nil
             super.init()
@@ -132,14 +132,14 @@ The type of the BIN or HEX file.
      
      - returns: the DFU firmware object or null in case of an error
      */
-    public init?(urlToBinOrHexFile:NSURL, urlToDatFile:NSURL?, type:DFUFirmwareType) {
+    public init?(urlToBinOrHexFile:URL, urlToDatFile:URL?, type:DFUFirmwareType) {
         self.fileUrl = urlToBinOrHexFile
-        self.fileName = urlToBinOrHexFile.lastPathComponent!
+        self.fileName = urlToBinOrHexFile.lastPathComponent
         
         // Quickly check if it's a BIN file
         let ext = urlToBinOrHexFile.pathExtension
-        let bin = ext != nil && ext!.caseInsensitiveCompare("bin") == .OrderedSame
-        let hex = ext != nil && ext!.caseInsensitiveCompare("hex") == .OrderedSame
+        let bin = ext.caseInsensitiveCompare("bin") == .orderedSame
+        let hex = ext.caseInsensitiveCompare("hex") == .orderedSame
         if !bin && !hex {
             NSLog("\(self.fileName) is not a BIN or HEX file")
             stream = nil
@@ -149,7 +149,7 @@ The type of the BIN or HEX file.
         
         if let datUrl = urlToDatFile {
             let datExt = datUrl.pathExtension
-            if datExt == nil || datExt!.caseInsensitiveCompare("dat") != .OrderedSame {
+            if datExt.caseInsensitiveCompare("dat") != .orderedSame {
                 NSLog("\(self.fileName) is not a DAT file")
                 stream = nil
                 super.init()
@@ -165,12 +165,12 @@ The type of the BIN or HEX file.
         super.init()
     }
     
-    internal var data:NSData {
-        return stream!.data
+    internal var data:Data {
+        return stream!.data as Data
     }
     
-    internal var initPacket:NSData? {
-        return stream!.initPacket
+    internal var initPacket:Data? {
+        return stream!.initPacket as Data?
     }
     
     internal func hasNextPart() -> Bool {

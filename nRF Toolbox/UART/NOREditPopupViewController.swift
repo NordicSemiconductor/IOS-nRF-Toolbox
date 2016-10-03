@@ -9,7 +9,7 @@
 import UIKit
 
 @objc protocol ButtonConfigureDelegate {
-    func didConfigureButton(aButton : UIButton, withCommand aCommand : String, andIconIndex index : Int, shouldHide hide : Bool)
+    func didConfigureButton(_ aButton : UIButton, withCommand aCommand : String, andIconIndex index : Int, shouldHide hide : Bool)
 }
 
 class NOREditPopupViewController: UIViewController, UITextFieldDelegate {
@@ -21,16 +21,16 @@ class NOREditPopupViewController: UIViewController, UITextFieldDelegate {
     var iconIndex: Int?
     
     //MARK: - View Actions
-    @IBAction func toggleVisibilityButtonPressed(sender: AnyObject) {
+    @IBAction func toggleVisibilityButtonPressed(_ sender: AnyObject) {
         self.handleToggleVisibilityButtonPressed()
     }
-    @IBAction func cancelButtonPressed(sender: AnyObject) {
+    @IBAction func cancelButtonPressed(_ sender: AnyObject) {
         self.handleCancelButtonPressed()
     }
-    @IBAction func okButtonPressed(sender: AnyObject) {
+    @IBAction func okButtonPressed(_ sender: AnyObject) {
         self.handleOkButtonPressed()
     }
-    @IBAction func iconButtonPressed(sender: AnyObject) {
+    @IBAction func iconButtonPressed(_ sender: AnyObject) {
         self.handleIconButtonPressed(sender as! UIButton)
     }
     
@@ -43,9 +43,9 @@ class NOREditPopupViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         if self.isHidden! {
-            toggleVisibilityButton.setTitle("Show", forState: UIControlState.Normal)
+            toggleVisibilityButton.setTitle("Show", for: UIControlState())
         }else{
-            toggleVisibilityButton.setTitle("Hide", forState: UIControlState.Normal)
+            toggleVisibilityButton.setTitle("Hide", for: UIControlState())
         }
 
         commandTextField.text = self.command!
@@ -54,7 +54,7 @@ class NOREditPopupViewController: UIViewController, UITextFieldDelegate {
     }
     
     //MARK: - UITextFieldDelegate
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return false
     }
@@ -62,33 +62,33 @@ class NOREditPopupViewController: UIViewController, UITextFieldDelegate {
     //MARK: - View Implementation
     
     //Swift->Obj-C Helpers
-    func setIsHidden(aValue: Bool){
+    func setIsHidden(_ aValue: Bool){
         isHidden = aValue
     }
-    func setIconIndex(anIndex : Int){
+    func setIconIndex(_ anIndex : Int){
         iconIndex = anIndex
     }
 
     func handleOkButtonPressed() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
         self.delegate?.didConfigureButton(iconButtons[self.iconIndex!], withCommand: commandTextField.text!, andIconIndex: self.iconIndex!, shouldHide: self.isHidden!)
     }
     
     func handleCancelButtonPressed() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     func handleToggleVisibilityButtonPressed() {
         if isHidden == true {
             isHidden = false
-            self.toggleVisibilityButton.setTitle("Hide", forState: UIControlState.Normal)
+            self.toggleVisibilityButton.setTitle("Hide", for: UIControlState())
         }else{
             isHidden = true
-            self.toggleVisibilityButton.setTitle("Show", forState: UIControlState.Normal)
+            self.toggleVisibilityButton.setTitle("Show", for: UIControlState())
         }
     }
     
-    func handleIconButtonPressed(sender: UIButton){
+    func handleIconButtonPressed(_ sender: UIButton){
         iconIndex = sender.tag-1
         self.setSelectedBackgroundColor()
     }

@@ -9,45 +9,45 @@
 import UIKit
 
 enum CGMFeatureFlags : UInt8 {
-    case CGMFeatureCalibrationSupport                       = 0
-    case CGMFeaturePatientHighLowAlertsSupport              = 1
-    case CGMFeatureHypoAlertsSupport                        = 2
-    case CGMFeatureHyperAlertsSupport                       = 3
-    case CGMFeatureRateofIncreaseDecreaseAlertsSupport      = 4
-    case CGMFeatureDeviceSpecificAlertSupport               = 5
-    case CGMFeatureSensorMalfunctionDetectionSupport        = 6
-    case CGMFeatureSensorTemperatureHighLowDetectionSupport = 7
-    case CGMFeatureSensorResultHighLowDetectionSupport      = 8
-    case CGMFeatureLowBatteryDetectionSupport               = 9
-    case CGMFeatureSensorTypeErrorDetectionSupport          = 10
-    case CGMFeatureGeneralDeviceFaultSupport                = 11
-    case CGMFeatureE2ECRCSupport                            = 12
-    case CGMFeatureMultipleBondSupport                      = 13
-    case CGMFeatureMultipleSessionsSupport                  = 14
-    case CGMFeatureCGMTrendInformationSupport               = 15
-    case CGMFeatureCGMQualitySupport                        = 16
+    case cgmFeatureCalibrationSupport                       = 0
+    case cgmFeaturePatientHighLowAlertsSupport              = 1
+    case cgmFeatureHypoAlertsSupport                        = 2
+    case cgmFeatureHyperAlertsSupport                       = 3
+    case cgmFeatureRateofIncreaseDecreaseAlertsSupport      = 4
+    case cgmFeatureDeviceSpecificAlertSupport               = 5
+    case cgmFeatureSensorMalfunctionDetectionSupport        = 6
+    case cgmFeatureSensorTemperatureHighLowDetectionSupport = 7
+    case cgmFeatureSensorResultHighLowDetectionSupport      = 8
+    case cgmFeatureLowBatteryDetectionSupport               = 9
+    case cgmFeatureSensorTypeErrorDetectionSupport          = 10
+    case cgmFeatureGeneralDeviceFaultSupport                = 11
+    case cgmFeatureE2ECRCSupport                            = 12
+    case cgmFeatureMultipleBondSupport                      = 13
+    case cgmFeatureMultipleSessionsSupport                  = 14
+    case cgmFeatureCGMTrendInformationSupport               = 15
+    case cgmFeatureCGMQualitySupport                        = 16
 }
 
 enum CGMType : UInt8 {
-    case CGMTypeCapillaryWholeBlood    = 1
-    case CGMTypeCapillaryPlasma        = 2
-    case CGMTypeCapillaryWholeBlood2   = 3
-    case CGMTypeVenousPlasma           = 4
-    case CGMTypeArterialWholeBlood     = 5
-    case CGMTypeArterialPlasma         = 6
-    case CGMTypeUndeterminedWholeBlood = 7
-    case CGMTypeUndeterminedPlasma     = 8
-    case CGMTypeInterstitialFluid      = 9
-    case CGMTypeControlSolution        = 10
+    case cgmTypeCapillaryWholeBlood    = 1
+    case cgmTypeCapillaryPlasma        = 2
+    case cgmTypeCapillaryWholeBlood2   = 3
+    case cgmTypeVenousPlasma           = 4
+    case cgmTypeArterialWholeBlood     = 5
+    case cgmTypeArterialPlasma         = 6
+    case cgmTypeUndeterminedWholeBlood = 7
+    case cgmTypeUndeterminedPlasma     = 8
+    case cgmTypeInterstitialFluid      = 9
+    case cgmTypeControlSolution        = 10
 }
 
 enum CGMLocation : UInt8{
-    case CGMLocationFinger             = 1
-    case CGMLocationAlternateSiteTest  = 2
-    case CGMLocationEarlobe            = 3
-    case CGMLocationControlSolution    = 4
-    case CGMLocationSubcutaneousTissue = 5
-    case CGMLocationValueNotAvailable  = 15
+    case cgmLocationFinger             = 1
+    case cgmLocationAlternateSiteTest  = 2
+    case cgmLocationEarlobe            = 3
+    case cgmLocationControlSolution    = 4
+    case cgmLocationSubcutaneousTissue = 5
+    case cgmLocationValueNotAvailable  = 15
 }
 
 
@@ -64,7 +64,7 @@ class NORCGMFeatureData: NSObject {
         self.updateFromBytes(bytes)
     }
     
-    func updateFromBytes(bytes : UnsafeMutablePointer<UInt8>) {
+    func updateFromBytes(_ bytes : UnsafeMutablePointer<UInt8>) {
 
         var pointer = bytes
         pointer += 3 //Skip flags
@@ -77,51 +77,51 @@ class NORCGMFeatureData: NSObject {
 
     func typeAsString() -> String {
         switch self.type! {
-        case .CGMTypeCapillaryWholeBlood:
+        case .cgmTypeCapillaryWholeBlood:
             return "Capillay whole blood"
             
-        case .CGMTypeCapillaryPlasma:
+        case .cgmTypeCapillaryPlasma:
             return "Capillary Plasma"
             
-        case .CGMTypeCapillaryWholeBlood2:
+        case .cgmTypeCapillaryWholeBlood2:
             return "Capillary whole blood"
             
-        case .CGMTypeVenousPlasma:
+        case .cgmTypeVenousPlasma:
             return "Venous plasma"
             
-        case .CGMTypeArterialWholeBlood:
+        case .cgmTypeArterialWholeBlood:
             return "Arterial whole blood"
             
-        case .CGMTypeArterialPlasma:
+        case .cgmTypeArterialPlasma:
             return "Arterial Plasma"
             
-        case .CGMTypeUndeterminedWholeBlood:
+        case .cgmTypeUndeterminedWholeBlood:
             return "Undetermined whole blood"
             
-        case .CGMTypeUndeterminedPlasma:
+        case .cgmTypeUndeterminedPlasma:
             return "Underetmined plasma"
             
-        case .CGMTypeInterstitialFluid:
+        case .cgmTypeInterstitialFluid:
             return "Interstitial fluid"
             
-        case .CGMTypeControlSolution:
+        case .cgmTypeControlSolution:
             return "Control Solution"
         }
     }
     
     func locationAsString() -> String {
         switch self.location! {
-            case .CGMLocationFinger :
+            case .cgmLocationFinger :
                 return "Finger"
-            case .CGMLocationAlternateSiteTest :
+            case .cgmLocationAlternateSiteTest :
                 return "Alternate site test"
-            case .CGMLocationEarlobe :
+            case .cgmLocationEarlobe :
                 return "Earlobe"
-            case .CGMLocationControlSolution :
+            case .cgmLocationControlSolution :
                 return "Control solution"
-            case .CGMLocationSubcutaneousTissue :
+            case .cgmLocationSubcutaneousTissue :
                 return "Subcutaneous tissue"
-            case .CGMLocationValueNotAvailable :
+            case .cgmLocationValueNotAvailable :
                 return "Location Not available"
         }
     }

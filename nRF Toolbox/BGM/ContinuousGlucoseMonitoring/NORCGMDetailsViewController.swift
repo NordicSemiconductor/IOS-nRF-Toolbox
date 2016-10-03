@@ -26,7 +26,7 @@ class NORCGMDetailsViewController : UIViewController {
 
     //MARK: - Class Properties
     var reading     : NORCGMReading?
-    var dateFormat  : NSDateFormatter?
+    var dateFormat  : DateFormatter?
 
     //MARK: - View Outlets/Actions
     @IBOutlet weak var backgroundImage: UIImageView!
@@ -66,14 +66,14 @@ class NORCGMDetailsViewController : UIViewController {
     //MARK: - Initializer
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        dateFormat = NSDateFormatter()
+        dateFormat = DateFormatter()
         dateFormat?.dateFormat = "dd.MM.yyy, hh:mm:ss"
     }
     
     //MARK: - UIViewController methods
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        timestamp.text = dateFormat?.stringFromDate(reading!.timeStamp!)
+        timestamp.text = dateFormat?.string(from: reading!.timeStamp! as Date)
         self.type.text = reading?.typeAsString()
         self.location.text = reading?.locationAsSting()
         self.concentration.text = String(format:"%.1f", reading!.glucoseConcentration)
@@ -101,7 +101,7 @@ class NORCGMDetailsViewController : UIViewController {
     func updateView(withLabel aLabel : UILabel, andStatus status : Bool) {
         if status == true {
             aLabel.text = "YES"
-            aLabel.textColor = UIColor.redColor()
+            aLabel.textColor = UIColor.red
         }else{
             aLabel.text = "NO"
         }

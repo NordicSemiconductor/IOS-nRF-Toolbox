@@ -17,78 +17,78 @@ class NORFileTypeViewController: UIViewController, UITableViewDelegate, UITableV
     var options             : NSArray?
 
     //MARK: - View Actions
-    @IBAction func doneButtonTapped(sender: AnyObject) {
+    @IBAction func doneButtonTapped(_ sender: AnyObject) {
         handleDoneButtonTapEvent()
     }
 
-    @IBAction func cancelButtonTapped(sender: AnyObject) {
+    @IBAction func cancelButtonTapped(_ sender: AnyObject) {
         handleCancelButtonTapEvent()
     }
     
     
     //MARK: - UIViewControllerDelgeate
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         options = ["Softdevice", "Bootloader", "Application"]
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
+        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.default, animated: true)
     }
 
-    override func viewWillDisappear(animated: Bool) {
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+    override func viewWillDisappear(_ animated: Bool) {
+        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.lightContent, animated: true)
         super.viewWillDisappear(animated)
     }
 
     //MARK: - NORFileTypeViewController implementation
     func handleDoneButtonTapEvent() {
         delegate?.onFileTypeSelected(fileType: chosenFirmwareType!)
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     func handleCancelButtonTapEvent() {
         delegate?.onFileTypeNotSelected()
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
 
     func pathToType(path aPath : NSIndexPath) -> DFUFirmwareType {
         switch aPath.row {
         case 0:
-            return DFUFirmwareType.Softdevice
+            return DFUFirmwareType.softdevice
         case 1:
-            return DFUFirmwareType.Bootloader
+            return DFUFirmwareType.bootloader
         default:
-            return DFUFirmwareType.Application
+            return DFUFirmwareType.application
         }
     }
 
     //MARK: - UITableViewDataSource
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (options?.count)!
     }
 
     //MARK: - UITableViewDelegate
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let aCell = tableView.dequeueReusableCellWithIdentifier("FileTypeCell", forIndexPath: indexPath)
-        let cellType = options?.objectAtIndex(indexPath.row) as? String
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let aCell = tableView.dequeueReusableCell(withIdentifier: "FileTypeCell", for: indexPath)
+        let cellType = options?.object(at: (indexPath as NSIndexPath).row) as? String
         
         //Configure cell
         aCell.textLabel?.text = cellType
-        if chosenFirmwareType == self.pathToType(path: indexPath) {
-            aCell.accessoryType = UITableViewCellAccessoryType.Checkmark
+        if chosenFirmwareType == self.pathToType(path: indexPath as NSIndexPath) {
+            aCell.accessoryType = UITableViewCellAccessoryType.checkmark
         }else{
-            aCell.accessoryType = UITableViewCellAccessoryType.None
+            aCell.accessoryType = UITableViewCellAccessoryType.none
         }
         
         return aCell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        chosenFirmwareType = self.pathToType(path: indexPath)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        chosenFirmwareType = self.pathToType(path: indexPath as NSIndexPath)
         tableView.reloadData()
-        self.navigationItem.rightBarButtonItem?.enabled = true
+        self.navigationItem.rightBarButtonItem?.isEnabled = true
     }
 }

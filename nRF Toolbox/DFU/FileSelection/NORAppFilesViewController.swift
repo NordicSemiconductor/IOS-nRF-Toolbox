@@ -12,7 +12,7 @@ class NORAppFilesViewController: UIViewController, UITableViewDelegate, UITableV
 
     //MARK: - Class Properties
     var fileDelegate     : NORFileSelectionDelegate?
-    var selectedPath     : NSURL?
+    var selectedPath     : URL?
     var files            : NSArray?
     var appDirectoryPath : String?
     
@@ -25,90 +25,90 @@ class NORAppFilesViewController: UIViewController, UITableViewDelegate, UITableV
 
         self.appDirectoryPath = "firmwares" // self.appDirectoryPath = [self.fileSystem getAppDirectoryPath:@"firmwares"];
         
-        let appPath = NSBundle.mainBundle().resourceURL
-        let firmwareDirectoryPath = appPath?.URLByAppendingPathComponent("firmwares")
+        let appPath = Bundle.main.resourceURL
+        let firmwareDirectoryPath = appPath?.appendingPathComponent("firmwares")
         do{
-            try self.files = NSFileManager.defaultManager().contentsOfDirectoryAtURL(firmwareDirectoryPath!, includingPropertiesForKeys: nil, options: NSDirectoryEnumerationOptions.SkipsSubdirectoryDescendants)
+            try self.files = FileManager.default.contentsOfDirectory(at: firmwareDirectoryPath!, includingPropertiesForKeys: nil, options: FileManager.DirectoryEnumerationOptions.skipsSubdirectoryDescendants) as NSArray?
         }catch{
             print("Error \(error)")
         }
 
         // The Navigation Item buttons may be initialized just once, here. They apply also to UserFilesVewController.
-        self.tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: #selector(self.doneButtonTapped))
-        self.tabBarController?.navigationItem.leftBarButtonItem  = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: #selector(self.cancelButtonTapped))
+        self.tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(self.doneButtonTapped))
+        self.tabBarController?.navigationItem.leftBarButtonItem  = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(self.cancelButtonTapped))
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.tabBarController?.navigationItem.rightBarButtonItem?.enabled = true
+        self.tabBarController?.navigationItem.rightBarButtonItem?.isEnabled = true
         if selectedPath == nil {
-            self.tabBarController?.navigationItem.rightBarButtonItem?.enabled = false
+            self.tabBarController?.navigationItem.rightBarButtonItem?.isEnabled = false
         }
         tableView.reloadData()
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated:true)
+        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.default, animated:true)
     }
     
     //MARK: - NORAppFilesViewController implementation
     func doneButtonTapped() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
         self.fileDelegate?.onFileSelected(withURL: self.selectedPath!)
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.lightContent, animated: true)
     }
     
     func cancelButtonTapped() {
-        self.dismissViewControllerAnimated(true, completion: nil)
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+        self.dismiss(animated: true, completion: nil)
+        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.lightContent, animated: true)
     }
 
     //MARK: - UITableViewDataSource
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (files?.count)!
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let aCell = tableView.dequeueReusableCellWithIdentifier("AppFilesCell", forIndexPath: indexPath)
-        let fileURL = files?.objectAtIndex(indexPath.row) as? NSURL
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let aCell = tableView.dequeueReusableCell(withIdentifier: "AppFilesCell", for: indexPath)
+        let fileURL = files?.object(at: (indexPath as NSIndexPath).row) as? URL
         let filePath = fileURL?.lastPathComponent
 
         //Cell config
         aCell.textLabel?.text = filePath
         
-        if ((filePath?.containsString(".hex")) != false) {
+        if ((filePath?.contains(".hex")) != false) {
             aCell.imageView?.image = UIImage(named: "ic_file")
-        }else if ((filePath?.containsString(".bin")) != false) {
+        }else if ((filePath?.contains(".bin")) != false) {
             aCell.imageView?.image = UIImage(named: "ic_file")
-        }else if ((filePath?.containsString(".zip")) != false) {
+        }else if ((filePath?.contains(".zip")) != false) {
             aCell.imageView?.image = UIImage(named: "ic_archive")
         }else{
             aCell.imageView?.image = UIImage(named: "ic_file")
         }
         
         if filePath == selectedPath?.lastPathComponent {
-            aCell.accessoryType = UITableViewCellAccessoryType.Checkmark
+            aCell.accessoryType = UITableViewCellAccessoryType.checkmark
         }else{
-            aCell.accessoryType = UITableViewCellAccessoryType.None
+            aCell.accessoryType = UITableViewCellAccessoryType.none
         }
         
         return aCell
     }
 
     //MARK: - UITableViewDelegate
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let filePath = files?.objectAtIndex(indexPath.row) as? NSURL
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let filePath = files?.object(at: (indexPath as NSIndexPath).row) as? URL
         selectedPath = filePath
 
         tableView.reloadData()
 
-        self.tabBarController?.navigationItem.rightBarButtonItem?.enabled = true
+        self.tabBarController?.navigationItem.rightBarButtonItem?.isEnabled = true
 //        let userFilesViewController = self.tabBarController?.viewControllers?.last as? UserFilesViewController
 //        userFilesViewController.selectedPath = selectedPath
 

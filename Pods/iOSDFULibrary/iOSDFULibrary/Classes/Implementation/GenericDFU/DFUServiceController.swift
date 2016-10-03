@@ -8,12 +8,12 @@
 
 import CoreBluetooth
 
-public class DFUServiceController : NSObject {
+open class DFUServiceController : NSObject {
 
-    private let executor:DFUExecutor
+    fileprivate let executor:DFUExecutor
     
-    private var servicePaused = false
-    private var serviceAborted = false
+    fileprivate var servicePaused = false
+    fileprivate var serviceAborted = false
     
     internal init(_ executor:DFUExecutor) {
         self.executor = executor
@@ -25,7 +25,7 @@ public class DFUServiceController : NSObject {
      next Packet Receipt Notification. Otherwise it will continue to send Op Codes and pause before sending the first bytes
      of the firmware. With Packet Receipt Notifications disabled it is the only moment when upload may be paused.
      */
-    public func pause() {
+    open func pause() {
         if !servicePaused && executor.pause() {
             servicePaused = true
         }
@@ -34,7 +34,7 @@ public class DFUServiceController : NSObject {
     /**
      Call this method to resume the paused transffer, otherwise does nothing.
      */
-    public func resume() {
+    open func resume() {
         if servicePaused && executor.resume() {
             servicePaused = false
         }
@@ -49,15 +49,15 @@ public class DFUServiceController : NSObject {
      Packet Receipt Notification. It PRM procedure is disabled it will continue until the whole
      firmware is sent and then Reset will be sent instead of Verify Firmware op code.
      */
-    public func abort() {
+    open func abort() -> Bool {
         serviceAborted = true
-        executor.abort()
+        return executor.abort()
     }
     
     /**
      Starts again aborted DFU operation.
      */
-    public func restart() {
+    open func restart() {
         // TODO needs testing
         if serviceAborted {
             serviceAborted = false
@@ -68,14 +68,14 @@ public class DFUServiceController : NSObject {
     /**
      Returns true if DFU operation has been paused.
      */
-    public var paused:Bool {
+    open var paused:Bool {
         return servicePaused
     }
     
     /**
      Returns true if DFU operation has been aborted.
      */
-    public var aborted:Bool {
+    open var aborted:Bool {
         return serviceAborted
     }
 }

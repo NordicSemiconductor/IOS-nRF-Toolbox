@@ -24,10 +24,10 @@ internal let FIRMWARE_TYPE_SOFTDEVICE:UInt8 = 0x01
 internal let FIRMWARE_TYPE_BOOTLOADER:UInt8 = 0x02
 internal let FIRMWARE_TYPE_APPLICATION:UInt8 = 0x04
 
-@objc public class DFUFirmwareSize : NSObject {
-    public private(set) var softdevice:UInt32 = 0
-    public private(set) var bootloader:UInt32 = 0
-    public private(set) var application:UInt32 = 0
+@objc open class DFUFirmwareSize : NSObject {
+    open fileprivate(set) var softdevice:UInt32 = 0
+    open fileprivate(set) var bootloader:UInt32 = 0
+    open fileprivate(set) var application:UInt32 = 0
     
     internal init(softdevice:UInt32, bootloader:UInt32, application:UInt32) {
         self.softdevice = softdevice
@@ -52,9 +52,9 @@ internal protocol DFUStream {
     var currentPartType:UInt8 { get }
     
     /// The firmware data to be sent to the DFU target.
-    var data:NSData { get }
+    var data:Data { get }
     /// The whole init packet matching the current part. Data may be longer than 20 bytes.
-    var initPacket:NSData? { get }
+    var initPacket:Data? { get }
     
     /**
      Returns true if there is another part to be send.
