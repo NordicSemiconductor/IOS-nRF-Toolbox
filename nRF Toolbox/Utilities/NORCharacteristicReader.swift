@@ -123,13 +123,25 @@ struct NORCharacteristicReader {
         let year  = NORCharacteristicReader.readUInt16Value(ptr: &aPointer)
         let month = NORCharacteristicReader.readUInt8Value(ptr: &aPointer)
         let day   = NORCharacteristicReader.readUInt8Value(ptr: &aPointer)
-        let hour  = NORCharacteristicReader.readUInt8Value(ptr: &aPointer)
+        var hour  = NORCharacteristicReader.readUInt8Value(ptr: &aPointer)
         let min   = NORCharacteristicReader.readUInt8Value(ptr: &aPointer)
         let sec   = NORCharacteristicReader.readUInt8Value(ptr: &aPointer)
         
-        let dateString = String(format: "%d %d %d %d %d %d", year, month, day, hour, min, sec)
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy MM dd HH mm ss"
+
+        var dateString : String
+        if using12hClockFormat()  == true {
+            var merediumString :String = "am"
+            if (hour > 12) {
+                hour = hour - 12;
+                merediumString = "pm"
+            }
+            dateString = String(format: "%d %d %d %d %d %d %@", year, month, day, hour, min, sec, merediumString)
+            dateFormatter.dateFormat = "yyyy MM dd HH mm ss a"
+        }else{
+            dateString = String(format: "%d %d %d %d %d %d", year, month, day, hour, min, sec)
+            dateFormatter.dateFormat = "yyyy MM dd HH mm ss"
+        }
         return dateFormatter.date(from: dateString)!
     }
     
@@ -137,5 +149,19 @@ struct NORCharacteristicReader {
         let value = NORCharacteristicReader.readUInt8Value(ptr: &aPointer)
         let nibble = NORNibble(first: value & 0xF, second: value >> 4)
         return nibble
+    }
+    
+    static func using12hClockFormat() -> Bool {
+        
+        let formatter = DateFormatter()
+        formatter.locale = Locale.current
+        formatter.dateStyle = .none
+        formatter.timeStyle = .short
+        
+        let dateString = formatter.string(from: Date())
+        let amRange = dateString.range(of: formatter.amSymbol)
+        let pmRange = dateString.range(of: formatter.pmSymbol)
+        
+        return !(pmRange == nil && amRange == nil)
     }
 }
