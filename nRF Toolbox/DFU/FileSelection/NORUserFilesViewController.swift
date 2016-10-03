@@ -97,30 +97,28 @@ class NORUserFilesViewController: UIViewController, NORFilePreselectionDelegate,
         aCell.textLabel?.text = fileName
         aCell.accessoryType = UITableViewCellAccessoryType.none
         
-        //isDirHack
         var isDirectory : ObjCBool = false
         let fileManager = FileManager.default
-        if fileManager.fileExists(atPath: filePath.absoluteString, isDirectory: &isDirectory) {
-            isDirectory = false
-        }
-
-
-        if isDirectory.boolValue {
-            aCell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
-            if (fileName == "Inbox") {
-                aCell.imageView?.image = UIImage(named:"ic_email")
-            } else {
-                aCell.imageView?.image = UIImage(named:"ic_folder")
+        if fileManager.fileExists(atPath: filePath.relativePath, isDirectory: &isDirectory) {
+            if isDirectory.boolValue {
+                aCell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+                if (fileName.lowercased() == "inbox") {
+                    aCell.imageView?.image = UIImage(named:"ic_email")
+                } else {
+                    aCell.imageView?.image = UIImage(named:"ic_folder")
+                }
             }
-        }
-        else if fileName.lowercased().contains(".hex") {
-            aCell.imageView!.image = UIImage(named:"ic_file")
-        }
-        else if fileName.lowercased().contains("bin") {
-            aCell.imageView!.image = UIImage(named:"ic_file")
-        }
-        else if fileName.lowercased().contains(".zip") {
-            aCell.imageView!.image = UIImage(named:"ic_archive")
+            else if fileName.lowercased().contains(".hex") {
+                aCell.imageView!.image = UIImage(named:"ic_file")
+            }
+            else if fileName.lowercased().contains("bin") {
+                aCell.imageView!.image = UIImage(named:"ic_file")
+            }
+            else if fileName.lowercased().contains(".zip") {
+                aCell.imageView!.image = UIImage(named:"ic_archive")
+            }
+        }else{
+            NORDFUConstantsUtility.showAlert(message: "File does not exist!")
         }
 
         if selectedPath != nil {
@@ -140,18 +138,14 @@ class NORUserFilesViewController: UIViewController, NORFilePreselectionDelegate,
             // Normal row
             let filePath = files![(indexPath as NSIndexPath).row - 1]
 
-            //isDirHack
-            var isDirectory : ObjCBool = true
+            var isDirectory : ObjCBool = false
             let fileManager = FileManager.default
-            if fileManager.fileExists(atPath: filePath.absoluteString, isDirectory: &isDirectory) {
-                isDirectory = false
-            }
-
-            if isDirectory.boolValue {
-                onFilePreselected(withURL: filePath)
-            }else{
-                // Folder clicked
-                performSegue(withIdentifier: "OpenFolder", sender: self)
+            if fileManager.fileExists(atPath: filePath.relativePath, isDirectory: &isDirectory) {
+                if isDirectory.boolValue {
+                    performSegue(withIdentifier: "OpenFolder", sender: self)
+                }else{
+                    onFilePreselected(withURL: filePath)
+                }
             }
         }
     }
@@ -164,7 +158,9 @@ class NORUserFilesViewController: UIViewController, NORFilePreselectionDelegate,
             let fileName = filePath!.lastPathComponent
             
             if fileName.lowercased() == "inbox" {
-                return UITableViewCellEditingStyle.delete
+                return .none
+            }else{
+                return .delete
             }
         }
         return UITableViewCellEditingStyle.none
@@ -180,7 +176,7 @@ class NORUserFilesViewController: UIViewController, NORFilePreselectionDelegate,
                 tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
                 
                 if filePath == selectedPath {
-                    onFilePreselected(withURL: filePath!)
+                    onFilePreselected(withURL:selectedPath!)
                 }
             }catch{
                 print("An error occured while deleting file\(error)")
@@ -195,20 +191,18 @@ class NORUserFilesViewController: UIViewController, NORFilePreselectionDelegate,
             let filePath = files![((selectionIndexPath as NSIndexPath?)?.row)! - 1]
             let fileName = filePath.lastPathComponent
 
-            //isDirHack
-            var isDirectory : ObjCBool = true
             let fileManager = FileManager.default
-            if fileManager.fileExists(atPath: filePath.absoluteString, isDirectory: &isDirectory) {
-                isDirectory = false
-            }
-            
-            if isDirectory.boolValue {
+            if fileManager.fileExists(atPath: filePath.relativePath) {
+                
                 let folderVC = segue.destination as? NORFolderFilesViewController
                 folderVC?.directoryPath = filePath.absoluteString
                 folderVC?.directoryName = fileName
                 folderVC?.fileDelegate = fileDelegate!
                 folderVC?.preselectionDelegate = self
                 folderVC?.selectedPath = filePath
+                
+            } else {
+                NORDFUConstantsUtility.showAlert(message: "File does not exist!")
             }
         }
     }

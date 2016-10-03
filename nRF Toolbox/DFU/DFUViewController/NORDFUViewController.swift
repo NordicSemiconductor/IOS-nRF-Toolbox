@@ -20,10 +20,10 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
     var dfuController      : DFUServiceController?
     var selectedFirmware   : DFUFirmware?
     var selectedFileURL    : URL?
-
+    var isImportingFile = false
 
     //MARK: - UIViewController Outlets
-    
+
     @IBOutlet weak var fileName: UILabel!
     @IBOutlet weak var fileSize: UILabel!
     @IBOutlet weak var fileType: UILabel!
@@ -50,6 +50,11 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
     override func viewDidLoad() {
         super.viewDidLoad()
         self.verticalLabel.transform = CGAffineTransform(translationX: -145.0, y: 0.0).rotated(by: CGFloat(-M_PI_2))
+        
+        if isImportingFile {
+            isImportingFile = false
+            self.onFileSelected(withURL: selectedFileURL!)
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -106,7 +111,13 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
         selectedFileURL = nil
         updateUploadButtonState()
     }
+
     //MARK: - NORFileSelectionDelegate
+    func onFileImported(withURL aFileURL: URL){
+        selectedFileURL = aFileURL
+        self.isImportingFile = true
+    }
+
     func onFileSelected(withURL aFileURL: URL) {
         selectedFileURL = aFileURL
         selectedFirmware = nil
@@ -239,7 +250,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
                 let barViewController = aNavigationController?.childViewControllerForStatusBarHidden as? UITabBarController
                 let appFilecsVC = barViewController?.viewControllers?.first as? NORAppFilesViewController
                 appFilecsVC?.fileDelegate = self
-                let userFilesVC = barViewController?.viewControllers?.last as? NORAppFilesViewController
+                let userFilesVC = barViewController?.viewControllers?.last as? NORUserFilesViewController
                 userFilesVC?.fileDelegate = self
                 
                 if selectedFileURL != nil {
