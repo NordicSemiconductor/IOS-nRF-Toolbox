@@ -2,10 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "toolbar_shadow@3x-2.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "toolbar_shadow@3x-1.png",
       "scale" : "2x"
     },
     {

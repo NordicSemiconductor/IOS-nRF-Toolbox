@@ -11,104 +11,113 @@ import UIKit
 class NORFolderFilesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     //MARK: - Class Properties
-    var files                   : NSMutableArray?
+    var files                   : Array<URL>?
     var directoryPath           : String?
     var directoryName           : String?
     var fileDelegate            : NORFileSelectionDelegate?
     var preselectionDelegate    : NORFilePreselectionDelegate?
-    var selectedPath            : NSURL?
+    var selectedPath            : URL?
     
     //MARK: - View Outlets
     @IBOutlet weak var emptyView: UIView!
     @IBOutlet weak var tableView: UITableView!
 
     //MARK: - View Actions
-    @IBAction func doneButtonTapped(sender: AnyObject) {
+    @IBAction func doneButtonTapped(_ sender: AnyObject) {
         doneButtonTappedEventHandler()
     }
 
     //MARK: - UIViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = directoryName!
+        if directoryName != nil {
+            self.navigationItem.title = directoryName!
+        }else{
+            self.navigationItem.title = "Files"
+        }
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let enabled = (selectedPath != nil)
-        self.navigationItem.rightBarButtonItem?.enabled = enabled
+        self.navigationItem.rightBarButtonItem?.isEnabled = enabled
+        do {
+        try self.files = FileManager.default.contentsOfDirectory(at: selectedPath!, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+        }catch{
+            print(error)
+        }
         self.ensureDirectoryNotEmpty()
     }
 
     //MARK: - UITableViewDataSource
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (files?.count)!
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let aCell = tableView.dequeueReusableCellWithIdentifier("FolderFilesCell", forIndexPath:indexPath)
-        let aFilePath = files?.objectAtIndex(indexPath.row) as? NSURL
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let aCell = tableView.dequeueReusableCell(withIdentifier: "FolderFilesCell", for:indexPath)
+        let aFilePath = files?[indexPath.row]
         let fileName = aFilePath?.lastPathComponent
         
         //Configuring the cell
         aCell.textLabel?.text = fileName
-        if fileName?.lowercaseString.containsString(".hex") != false {
+        if fileName?.lowercased().contains(".hex") != false {
             aCell.imageView?.image = UIImage(named: "ic_file")
-        }else if fileName?.lowercaseString.containsString(".bin") != false {
+        }else if fileName?.lowercased().contains(".bin") != false {
             aCell.imageView?.image = UIImage(named: "ic_file")
-        }else if fileName?.lowercaseString.containsString(".zip") != false {
+        }else if fileName?.lowercased().contains(".zip") != false {
             aCell.imageView?.image = UIImage(named: "ic_archive")
         }else{
             aCell.imageView?.image = UIImage(named: "ic_file")
         }
         
         if aFilePath == selectedPath {
-            aCell.accessoryType = UITableViewCellAccessoryType.Checkmark
+            aCell.accessoryType = UITableViewCellAccessoryType.checkmark
         }else{
-            aCell.accessoryType = UITableViewCellAccessoryType.None
+            aCell.accessoryType = UITableViewCellAccessoryType.none
         }
         
         return aCell
     }
 
     //MARK: - UITableViewDelegate
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let filePath = files?.objectAtIndex(indexPath.row) as? NSURL
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let filePath = files?[indexPath.row]
         selectedPath = filePath
         tableView.reloadData()
-        navigationItem.rightBarButtonItem!.enabled = true
+        navigationItem.rightBarButtonItem!.isEnabled = true
         self.preselectionDelegate?.onFilePreselected(withURL: filePath!)
     }
     
-    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        return UITableViewCellEditingStyle.Delete
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return UITableViewCellEditingStyle.delete
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
 
-        guard editingStyle == UITableViewCellEditingStyle.Delete else {
+        guard editingStyle == UITableViewCellEditingStyle.delete else {
             return
         }
 
-        let filePath = files?.objectAtIndex(indexPath.row) as? NSURL
+        let filePath = files?[indexPath.row]
         do{
-            try NSFileManager.defaultManager().removeItemAtURL(filePath!)
+            try FileManager.default.removeItem(at: filePath!)
         }catch{
             print("Error while deleting file: \(error)")
             return
         }
 
-        files?.removeObjectAtIndex(indexPath.row)
-        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+        files?.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
     
         if filePath == selectedPath {
             selectedPath = nil
-            self.preselectionDelegate?.onFilePreselected(withURL: NSURL())
-            self.navigationItem.rightBarButtonItem?.enabled = false
+            self.preselectionDelegate?.onFilePreselected(withURL: filePath!)
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
         }
 
         self.ensureDirectoryNotEmpty()
@@ -117,15 +126,15 @@ class NORFolderFilesViewController: UIViewController, UITableViewDataSource, UIT
     //MARK: - NORFolderFilesViewController Implementation
     func ensureDirectoryNotEmpty() {
         if (files?.count)! == 0 {
-            emptyView.hidden = false
+            emptyView.isHidden = false
         }
     }
 
     func doneButtonTappedEventHandler(){
         // Go back to DFUViewController
-        dismissViewControllerAnimated(true) { 
+        dismiss(animated: true) { 
             self.fileDelegate?.onFileSelected(withURL: self.selectedPath!)
         }
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.lightContent, animated: true)
     }
 }

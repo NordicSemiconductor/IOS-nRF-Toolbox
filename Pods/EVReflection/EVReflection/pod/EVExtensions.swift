@@ -64,7 +64,7 @@ public extension Array where Element: NSObject {
         for item in dictionaryArray {
             let arrayTypeInstance = getArrayTypeInstance(self)
             if arrayTypeInstance is EVObject {
-                EVReflection.setPropertiesfromDictionary(item, anyObject: arrayTypeInstance as! EVObject)
+                let _ = EVReflection.setPropertiesfromDictionary(item, anyObject: arrayTypeInstance as! EVObject)
                 self.append(arrayTypeInstance)
             }
         }
@@ -77,7 +77,7 @@ public extension Array where Element: NSObject {
     
     - returns: The object type
     */
-    public func getArrayTypeInstance<T: NSObject>(arr: Array<T>) -> T {
+    public func getArrayTypeInstance<T: NSObject>(_ arr: Array<T>) -> T {
         return arr.getTypeInstance()
     }
     
@@ -88,18 +88,13 @@ public extension Array where Element: NSObject {
     */
     public func getTypeInstance<T: NSObject>(
         ) -> T {
-        if let nsobjectype: NSObject.Type = T.self {
-            let nsobject: NSObject = nsobjectype.init()
-            if let obj =  nsobject as? T {
-                return obj
-            }
-            // Could not instantiate array item instance. will crash
-            return (nsobject as? T)!
+        let nsobjectype: NSObject.Type = T.self
+        let nsobject: NSObject = nsobjectype.init()
+        if let obj =  nsobject as? T {
+            return obj
         }
         // Could not instantiate array item instance. will crash
-        assert(false, "You can only instantiate an array of objects that have EVObject (or NSObject) as its base class. Please make this change to your object: \(T.self)")
-
-        return (NSObject() as? T)!
+        return (nsobject as? T)!
     }
     
     /**
@@ -109,8 +104,8 @@ public extension Array where Element: NSObject {
     
     - returns: The json string
     */
-    public func toJsonString(conversionOptions: ConversionOptions = .DefaultSerialize) -> String {
-        return "[\n" + self.map({($0 as? EVObject ?? EVObject()).toJsonString(conversionOptions)}).joinWithSeparator(", \n") + "\n]"
+    public func toJsonString(_ conversionOptions: ConversionOptions = .DefaultSerialize) -> String {
+        return "[\n" + self.map({($0 as? EVObject ?? EVObject()).toJsonString(conversionOptions)}).joined(separator: ", \n") + "\n]"
     }
     
     /**
@@ -120,7 +115,7 @@ public extension Array where Element: NSObject {
      
      - returns: The array of dictionaries
      */
-    public func toDictionaryArray(conversionOptions: ConversionOptions = .DefaultSerialize) -> NSArray {
-        return self.map({($0 as? EVObject ?? EVObject()).toDictionary(conversionOptions)})
+    public func toDictionaryArray(_ conversionOptions: ConversionOptions = .DefaultSerialize) -> NSArray {
+        return self.map({($0 as? EVObject ?? EVObject()).toDictionary(conversionOptions)}) as NSArray
     }
 }

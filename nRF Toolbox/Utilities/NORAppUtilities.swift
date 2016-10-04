@@ -9,15 +9,15 @@
 import UIKit
 
 enum NORServiceIds : UInt8 {
-    case UART       = 0
-    case RSC        = 1
-    case Proximity  = 2
-    case HTM        = 3
-    case HRM        = 4
-    case CSC        = 5
-    case BPM        = 6
-    case BGM        = 7
-    case CGM        = 8
+    case uart       = 0
+    case rsc        = 1
+    case proximity  = 2
+    case htm        = 3
+    case hrm        = 4
+    case csc        = 5
+    case bpm        = 6
+    case bgm        = 7
+    case cgm        = 8
 }
 
 class NORAppUtilities: NSObject {
@@ -41,15 +41,15 @@ class NORAppUtilities: NSObject {
     
     static let cgmHelpText = "The CGM (CONTINUOUS GLUCOSE MONITOR) profile allows you to connect to your continuous glucose sensor.\nTap the Start session button to begin reading records every minute (default frequency)"
     
-    static let helpText: [NORServiceIds: String] = [.UART: uartHelpText,
-                                                    .RSC: rscHelpText,
-                                                    .Proximity: proximityHelpText,
-                                                    .HTM: htmHelpText,
-                                                    .HRM: hrmHelpText,
-                                                    .CSC: cscHelpText,
-                                                    .BPM: bpmHelpText,
-                                                    .BGM: bgmHelpText,
-                                                    .CGM: cgmHelpText]
+    static let helpText: [NORServiceIds: String] = [.uart: uartHelpText,
+                                                    .rsc: rscHelpText,
+                                                    .proximity: proximityHelpText,
+                                                    .htm: htmHelpText,
+                                                    .hrm: hrmHelpText,
+                                                    .csc: cscHelpText,
+                                                    .bpm: bpmHelpText,
+                                                    .bgm: bgmHelpText,
+                                                    .cgm: cgmHelpText]
 
     static func showAlert(title aTitle : String, andMessage aMessage: String){
         let alertView = UIAlertView(title: aTitle, message: aMessage, delegate: nil, cancelButtonTitle: "OK")
@@ -61,14 +61,14 @@ class NORAppUtilities: NSObject {
         localNotification.alertAction   = "Show"
         localNotification.alertBody     = aMessage
         localNotification.hasAction     = false
-        localNotification.fireDate      = NSDate(timeIntervalSinceNow: 1)
-        localNotification.timeZone      = NSTimeZone.defaultTimeZone()
+        localNotification.fireDate      = Date(timeIntervalSinceNow: 1)
+        localNotification.timeZone      = TimeZone.current
         localNotification.soundName     = UILocalNotificationDefaultSoundName
     }
     
     static func isApplicationInactive() -> Bool {
-        let appState = UIApplication.sharedApplication().applicationState
-        return appState != UIApplicationState.Active
+        let appState = UIApplication.shared.applicationState
+        return appState != UIApplicationState.active
     }
     
     static func getHelpTextForService(service aServiceId: NORServiceIds) -> String {

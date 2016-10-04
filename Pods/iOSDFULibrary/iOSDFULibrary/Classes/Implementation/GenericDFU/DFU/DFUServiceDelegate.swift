@@ -21,37 +21,37 @@
 */
 
 @objc public enum DFUError : Int {
-    case RemoteSuccess               = 1
-    case RemoteInvalidState          = 2
-    case RemoteNotSupported          = 3
-    case RemoteDataExceedsLimit      = 4
-    case RemoteCrcError              = 5
-    case RemoteOperationFailed       = 6
+    case remoteSuccess               = 1
+    case remoteInvalidState          = 2
+    case remoteNotSupported          = 3
+    case remoteDataExceedsLimit      = 4
+    case remoteCrcError              = 5
+    case remoteOperationFailed       = 6
     
     /// Providing the DFUFirmware is required.
-    case FileNotSpecified            = 101
+    case fileNotSpecified            = 101
     /// Given firmware file is not supported.
-    case FileInvalid                 = 102
+    case fileInvalid                 = 102
     /// Since SDK 7.0.0 the DFU Bootloader requires the extended Init Packet. For more details, see:
     /// http://infocenter.nordicsemi.com/topic/com.nordic.infocenter.sdk5.v11.0.0/bledfu_example_init.html?cp=4_0_0_4_2_1_1_3
-    case ExtendedInitPacketRequired  = 103
+    case extendedInitPacketRequired  = 103
     /// Before SDK 7.0.0 the init packet could have contained only 2-byte CRC value, and was optional.
     /// Providing an extended one instead would cause CRC error during validation (the bootloader assumes that the 2 first bytes
     /// of the init packet are the firmware CRC).
-    case InitPacketRequired          = 104
+    case initPacketRequired          = 104
     
-    case FailedToConnect             = 201
-    case DeviceDisconnected          = 202
+    case failedToConnect             = 201
+    case deviceDisconnected          = 202
     
-    case ServiceDiscoveryFailed      = 301
-    case DeviceNotSupported          = 302
-    case ReadingVersionFailed        = 303
-    case EnablingControlPointFailed  = 304
-    case WritingCharacteristicFailed = 305
-    case ReceivingNotificationFailed = 306
-    case UnsupportedResponse         = 307
+    case serviceDiscoveryFailed      = 301
+    case deviceNotSupported          = 302
+    case readingVersionFailed        = 303
+    case enablingControlPointFailed  = 304
+    case writingCharacteristicFailed = 305
+    case receivingNotificationFailed = 306
+    case unsupportedResponse         = 307
     /// Error called during upload when the number of bytes sent is not equal to number of bytes confirmed in Packet Receipt Notification.
-    case BytesLost                   = 308
+    case bytesLost                   = 308
 }
 
 /**
@@ -66,65 +66,33 @@
  - Completed:       THe DFU operation is completed and successful
  - Aborted:         DFU Operation was aborted
  */
-@available (iOS, deprecated=0.2.0, renamed="DFUState", message="Please use `DFUState` instead")
-@objc public enum State : Int {
-    case Connecting
-    case Starting
-    case EnablingDfuMode
-    case Uploading
-    case Validating
-    case Disconnecting
-    case Completed
-    case Aborted
-    case SignatureMismatch
-    case OperationNotPermitted
-    case Failed
-    
-    public func description() -> String {
-        switch self {
-        case .Connecting: return "Connecting"
-        case .Starting: return "Starting"
-        case .EnablingDfuMode: return "Enabling DFU Mode"
-        case .Uploading: return "Uploading"
-        case .Validating: return "Validating"
-        case .Disconnecting: return "Disconnecting"
-        case .Completed: return "Completed"
-        case .Aborted: return "Aborted"
-        case .SignatureMismatch: return "Signature mismatch"
-        case .OperationNotPermitted: return "Operation not permitted"
-        case .Failed: return "Failed"
-        }
-    }
-}
 
-//This will take over as soon as all developers have migrated from State to DFUState
-@available(iOS, introduced=0.2.0)
 @objc public enum DFUState : Int {
-    case Connecting
-    case Starting
-    case EnablingDfuMode
-    case Uploading
-    case Validating
-    case Disconnecting
-    case Completed
-    case Aborted
-    case SignatureMismatch
-    case OperationNotPermitted
-    case Failed
+    case connecting
+    case starting
+    case enablingDfuMode
+    case uploading
+    case validating
+    case disconnecting
+    case completed
+    case aborted
+    case signatureMismatch
+    case operationNotPermitted
+    case failed
     
     public func description() -> String {
         switch self {
-            case .Connecting: return "Connecting"
-            case .Starting: return "Starting"
-            case .EnablingDfuMode: return "Enabling DFU Mode"
-            case .Uploading: return "Uploading"
-            case .Validating: return "Validating"
-            case .Disconnecting: return "Disconnecting"
-            case .Completed: return "Completed"
-            case .Aborted: return "Aborted"
-            case .SignatureMismatch: return "Signature mismatch"
-            case .OperationNotPermitted: return "Operation not permitted"
-            case .Failed: return "Failed"
+            case .connecting: return "Connecting"
+            case .starting: return "Starting"
+            case .enablingDfuMode: return "Enabling DFU Mode"
+            case .uploading: return "Uploading"
+            case .validating: return "Validating"
+            case .disconnecting: return "Disconnecting"
+            case .completed: return "Completed"
+            case .aborted: return "Aborted"
+            case .signatureMismatch: return "Signature mismatch"
+            case .operationNotPermitted: return "Operation not permitted"
+            case .failed: return "Failed"
         }
     }
 }
@@ -155,7 +123,7 @@
      - parameter currentSpeedBytesPerSecond: the current speed in bytes per second
      - parameter avgSpeedBytesPerSecond: the average speed in bytes per second
      */
-    func onUploadProgress(part:Int, totalParts:Int, progress:Int,
+    func onUploadProgress(_ part:Int, totalParts:Int, progress:Int,
         currentSpeedBytesPerSecond:Double, avgSpeedBytesPerSecond:Double)
 }
 
@@ -170,7 +138,7 @@
      
      - parameter state: the new state fo the service
      */
-    func didStateChangedTo(state:DFUState)
+    func didStateChangedTo(_ state:DFUState)
     
     /**
      Called after an error occurred.
@@ -181,6 +149,6 @@
      - parameter error:   the error code
      - parameter message: error description
      */
-    func didErrorOccur(error:DFUError, withMessage message:String)
+    func didErrorOccur(_ error:DFUError, withMessage message:String)
 
 }

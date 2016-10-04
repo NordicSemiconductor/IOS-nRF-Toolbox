@@ -22,39 +22,39 @@
 
 import CoreBluetooth
 
-internal typealias SDFUCallback = (responseData : NSData?) -> Void
-internal typealias SDFUErrorCallback = (error:SecureDFUError, withMessage:String) -> Void
+internal typealias SDFUCallback = (_ responseData : Data?) -> Void
+internal typealias SDFUErrorCallback = (_ error:SecureDFUError, _ withMessage:String) -> Void
 
 @objc internal class SecureDFUService : NSObject, CBPeripheralDelegate {
     static internal let UUID = CBUUID.init(string: "FE59")
     
-    static func matches(service:CBService) -> Bool {
-        return service.UUID.isEqual(UUID)
+    static func matches(_ service:CBService) -> Bool {
+        return service.uuid.isEqual(UUID)
     }
     
     /// The logger helper.
-    private var logger:LoggerHelper
+    fileprivate var logger:LoggerHelper
     /// The service object from CoreBluetooth used to initialize the SecureDFUService instance.
-    private let service:CBService
-    private var dfuPacketCharacteristic:SecureDFUPacket?
-    private var dfuControlPointCharacteristic:SecureDFUControlPoint?
+    fileprivate let service:CBService
+    fileprivate var dfuPacketCharacteristic:SecureDFUPacket?
+    fileprivate var dfuControlPointCharacteristic:SecureDFUControlPoint?
 
-    private var paused = false
-    private var aborted = false
+    fileprivate var paused = false
+    fileprivate var aborted = false
     
     /// A temporary callback used to report end of an operation.
-    private var success          : SDFUCallback?
+    fileprivate var success          : SDFUCallback?
     
     /// A temporary callback used to report an operation error.
-    private var report           : SDFUErrorCallback?
+    fileprivate var report           : SDFUErrorCallback?
     
     /// A temporaty callback used to report progress status.
     
     // -- Properties stored when upload started in order to resume it --
-    private var progressDelegate : DFUProgressDelegate?
-    private var firmware:DFUFirmware?
-    private var packetReceiptNotificationNumber:UInt16?
-    private var chunkRange:NSRange?
+    fileprivate var progressDelegate : DFUProgressDelegate?
+    fileprivate var firmware:DFUFirmware?
+    fileprivate var packetReceiptNotificationNumber:UInt16?
+    fileprivate var chunkRange:Range<Int>?
     // -- End --
     
     // MARK: - Initialization
@@ -69,7 +69,7 @@ internal typealias SDFUErrorCallback = (error:SecureDFUError, withMessage:String
     /**
     Discovers characteristics in the DFU Service.
     */
-    func discoverCharacteristics(onSuccess success: SDFUCallback, onError report:SDFUErrorCallback) {
+    func discoverCharacteristics(onSuccess success: @escaping SDFUCallback, onError report:@escaping SDFUErrorCallback) {
         // Save callbacks
         self.success = success
         self.report = report
@@ -83,7 +83,7 @@ internal typealias SDFUErrorCallback = (error:SecureDFUError, withMessage:String
         // Discover DFU characteristics
         logger.v("Discovering characteristics in DFU Service...")
         logger.d("peripheral.discoverCharacteristics(nil, forService:DFUService)")
-        peripheral.discoverCharacteristics(nil, forService:service)
+        peripheral.discoverCharacteristics(nil, for:service)
     }
     
     /**
@@ -116,7 +116,7 @@ internal typealias SDFUErrorCallback = (error:SecureDFUError, withMessage:String
      - parameter success: method called when notifications were enabled without a problem
      - parameter report:  method called when an error occurred
      */
-    func enableControlPoint(onSuccess success: SDFUCallback, onError report:SDFUErrorCallback) {
+    func enableControlPoint(onSuccess success: @escaping SDFUCallback, onError report:@escaping SDFUErrorCallback) {
         if !aborted {
             dfuControlPointCharacteristic?.enableNotifications(onSuccess: success, onError: report)
         } else {
@@ -128,66 +128,66 @@ internal typealias SDFUErrorCallback = (error:SecureDFUError, withMessage:String
     /**
      Reads object info command
      */
-    func readObjectInfoCommand(onSuccess successCallback: SDFUCallback, onError reportCallback:SDFUErrorCallback) {
-        dfuControlPointCharacteristic?.send(SecureDFURequest.ReadObjectInfoCommand(), onSuccess: successCallback, onError: reportCallback)
+    func readObjectInfoCommand(onSuccess successCallback: @escaping SDFUCallback, onError reportCallback:@escaping SDFUErrorCallback) {
+        dfuControlPointCharacteristic?.send(SecureDFURequest.readObjectInfoCommand(), onSuccess: successCallback, onError: reportCallback)
     }
     
     /**
      Reads object info Data
      */
-    func readObjectInfoData(onSuccess successCallback: SDFUCallback, onError reportCallback:SDFUErrorCallback) {
-        dfuControlPointCharacteristic?.send(SecureDFURequest.ReadObjectInfoData(), onSuccess: successCallback, onError: reportCallback)
+    func readObjectInfoData(onSuccess successCallback: @escaping SDFUCallback, onError reportCallback:@escaping SDFUErrorCallback) {
+        dfuControlPointCharacteristic?.send(SecureDFURequest.readObjectInfoData(), onSuccess: successCallback, onError: reportCallback)
     }
 
     /**
      Reads extended error
      */
-    func readError(onSuccess successCallback : SDFUCallback, onError reportCallback : SDFUErrorCallback) {
+    func readError(onSuccess successCallback : @escaping SDFUCallback, onError reportCallback : @escaping SDFUErrorCallback) {
         self.logger.a("Sending read execute error command")
-        dfuControlPointCharacteristic?.send(SecureDFURequest.ReadError(), onSuccess: { (responseData) in
+        dfuControlPointCharacteristic?.send(SecureDFURequest.readError(), onSuccess: { (responseData) in
                 self.logger.a("Received Extended error data: \(responseData!)")
-                successCallback(responseData: responseData)
+                successCallback(responseData)
             }, onError: { (anError, aMessage) in
                 self.logger.e("Failed to read Extended with error: \(anError), and message: \(aMessage)")
-                reportCallback(error: anError, withMessage: aMessage)
+                reportCallback(anError, aMessage)
         })
     }
     /**
      Create object data
      */
-    func createObjectData(withLength aLength : UInt32, onSuccess successCallback : SDFUCallback, onError reportCallback:SDFUErrorCallback) {
-        dfuControlPointCharacteristic?.send(SecureDFURequest.CreateData(size: aLength), onSuccess: successCallback, onError:reportCallback)
+    func createObjectData(withLength aLength : UInt32, onSuccess successCallback : @escaping SDFUCallback, onError reportCallback:@escaping SDFUErrorCallback) {
+        dfuControlPointCharacteristic?.send(SecureDFURequest.createData(size: aLength), onSuccess: successCallback, onError:reportCallback)
     }
     
     /**
      Create object command
      */
-    func createObjectCommand(withLength aLength : UInt32, onSuccess successCallback : SDFUCallback, onError reportCallback:SDFUErrorCallback) {
-        dfuControlPointCharacteristic?.send(SecureDFURequest.CreateCommand(size: aLength), onSuccess: successCallback, onError:reportCallback)
+    func createObjectCommand(withLength aLength : UInt32, onSuccess successCallback : @escaping SDFUCallback, onError reportCallback:@escaping SDFUErrorCallback) {
+        dfuControlPointCharacteristic?.send(SecureDFURequest.createCommand(size: aLength), onSuccess: successCallback, onError:reportCallback)
     }
     
     /**
      Calculate checksum
     */
-    func calculateChecksumCommand(onSuccess successCallback : SDFUCallback, onError reportCallback: SDFUErrorCallback) {
-        dfuControlPointCharacteristic?.send(SecureDFURequest.CalculateChecksumCommand(), onSuccess: successCallback, onError: reportCallback)
+    func calculateChecksumCommand(onSuccess successCallback : @escaping SDFUCallback, onError reportCallback: @escaping SDFUErrorCallback) {
+        dfuControlPointCharacteristic?.send(SecureDFURequest.calculateChecksumCommand(), onSuccess: successCallback, onError: reportCallback)
     }
     
     /**
      Send execute command
     */
-    func executeCommand(onSuccess successCallback : SDFUCallback, onError reportCallback: SDFUErrorCallback) {
-        dfuControlPointCharacteristic?.send(SecureDFURequest.ExecuteCommand(), onSuccess: successCallback, onError: reportCallback)
+    func executeCommand(onSuccess successCallback : @escaping SDFUCallback, onError reportCallback: @escaping SDFUErrorCallback) {
+        dfuControlPointCharacteristic?.send(SecureDFURequest.executeCommand(), onSuccess: successCallback, onError: reportCallback)
     }
     //MARK: - Packet commands
     /**
      Send init packet
     */
-    func sendInitPacket(withdata packetData : NSData){
+    func sendInitPacket(withdata packetData : Data){
         dfuPacketCharacteristic?.sendInitPacket(packetData)
     }
 
-    func sendFirmwareChunk(chunkRange : NSRange, inFirmware aFirmware : DFUFirmware, andPacketReceiptCount aCount : UInt16, andProgressDelegate progressDelegate : DFUProgressDelegate, andCompletionHandler completionHandler : SDFUCallback, andErrorHandler errorHandler : SDFUErrorCallback) {
+    func sendFirmwareChunk(_ chunkRange : Range<Int>, inFirmware aFirmware : DFUFirmware, andPacketReceiptCount aCount : UInt16, andProgressDelegate progressDelegate : DFUProgressDelegate, andCompletionHandler completionHandler : @escaping SDFUCallback, andErrorHandler errorHandler : @escaping SDFUErrorCallback) {
 
         //Those will be stored here in case of pause/resume
         self.success                            = completionHandler
@@ -199,14 +199,14 @@ internal typealias SDFUErrorCallback = (error:SecureDFUError, withMessage:String
 
         let successHandler : SDFUCallback = { (responseData) in
             self.dfuControlPointCharacteristic?.uploadFinished()
-            completionHandler(responseData: nil)
+            completionHandler(nil)
         }
 
         self.dfuControlPointCharacteristic!.waitUntilUploadComplete(onSuccess: successHandler, onPacketReceiptNofitication: { (bytesReceived) in
                 if !self.paused && !self.aborted {
                     self.dfuPacketCharacteristic?.sendData(withPRN: aCount, andRange: chunkRange, inFirmware: aFirmware, andProgressHandler: progressDelegate, andCompletion: successHandler)
                 } else if self.aborted {
-                    errorHandler(error: SecureDFUError.DeviceDisconnected, withMessage: "DFU operation aborted")
+                    errorHandler(SecureDFUError.deviceDisconnected, "DFU operation aborted")
                 }
             }
             , onError: errorHandler)
@@ -219,9 +219,9 @@ internal typealias SDFUErrorCallback = (error:SecureDFUError, withMessage:String
     /**
      Set PRN
     */
-    func setPacketReceiptNotificationValue(aValue : UInt16 = 0, onSuccess successCallback : SDFUCallback, onError reportCallback:SDFUErrorCallback) {
+    func setPacketReceiptNotificationValue(_ aValue : UInt16 = 0, onSuccess successCallback : @escaping SDFUCallback, onError reportCallback:@escaping SDFUErrorCallback) {
         self.packetReceiptNotificationNumber = aValue
-        dfuControlPointCharacteristic?.send(SecureDFURequest.SetPacketReceiptNotification(value: self.packetReceiptNotificationNumber!), onSuccess: successCallback, onError: reportCallback)
+        dfuControlPointCharacteristic?.send(SecureDFURequest.setPacketReceiptNotification(value: self.packetReceiptNotificationNumber!), onSuccess: successCallback, onError: reportCallback)
     }
     
     func pause() {
@@ -244,7 +244,7 @@ internal typealias SDFUErrorCallback = (error:SecureDFUError, withMessage:String
     
     // MARK: - Peripheral Delegate callbacks
 
-    func peripheral(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?) {
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         // Create local references to callback to release the global ones
         let _success = self.success
         let _report = self.report
@@ -254,7 +254,7 @@ internal typealias SDFUErrorCallback = (error:SecureDFUError, withMessage:String
         if error != nil {
             logger.e("Characteristics discovery failed")
             logger.e(error!)
-            _report?(error: SecureDFUError.CharacteristicDiscoveryFailed, withMessage:SecureDFUError.CharacteristicDiscoveryFailed.description)
+            _report?(SecureDFUError.characteristicDiscoveryFailed, SecureDFUError.characteristicDiscoveryFailed.description)
         } else {
             logger.i("DFU characteristics discovered")
             
@@ -271,19 +271,19 @@ internal typealias SDFUErrorCallback = (error:SecureDFUError, withMessage:String
             if dfuControlPointCharacteristic == nil {
                 logger.e("DFU Control Point characteristics not found")
                 // DFU Control Point characteristic is required
-                _report?(error: SecureDFUError.DeviceNotSupported, withMessage: SecureDFUError.DeviceNotSupported.description)
+                _report?(SecureDFUError.deviceNotSupported, SecureDFUError.deviceNotSupported.description)
                 return
             }
             if !dfuControlPointCharacteristic!.valid {
                 logger.e("DFU Control Point characteristics must have Write and Notify properties")
                 // DFU Control Point characteristic must have Write and Notify properties
-                _report?(error: SecureDFUError.DeviceNotSupported, withMessage: SecureDFUError.DeviceNotSupported.description)
+                _report?(SecureDFUError.deviceNotSupported, SecureDFUError.deviceNotSupported.description)
                 return
             }
             
             // Note: DFU Packet characteristic is not required in the App mode.
             //       The mbed implementation of DFU Service doesn't have such.
-            _success?(responseData: nil)
+            _success?(nil)
         }
     }
 }

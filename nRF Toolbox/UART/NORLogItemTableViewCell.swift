@@ -27,28 +27,28 @@ class NORLogItemTableViewCell: UITableViewCell {
         // Use the color based on the log level
         var color : UIColor?
         switch (anItem.level!) {
-            case .DebugLogLevel:
+            case .debugLogLevel:
                 color = UIColor(red:0x00/255.0, green:0x9C/255.0, blue:0xDE/255.0, alpha:1.0)
                 break
                 
-            case .VerboseLogLevel:
+            case .verboseLogLevel:
                 color = UIColor(red:0xB8/255.0, green:0xB0/255.0, blue:0x56/255.0, alpha:1.0)
                 break
                 
-            case .InfoLogLevel:
-                color = UIColor.blackColor()
+            case .infoLogLevel:
+                color = UIColor.black
                 break
                 
-            case .AppLogLevel:
+            case .appLogLevel:
                 color = UIColor(red:0x23/255.0, green:0x8C/255.0, blue:0x0F/255.0, alpha:1.0)
                 break
                 
-            case .WarningLogLevel:
+            case .warningLogLevel:
                 color = UIColor(red:0xD7/255.0, green:0x79/255.0, blue:0x26/255.0, alpha:1.0)
                 break
                 
-            case .ErrorLogLevel:
-                color = UIColor.redColor()
+            case .errorLogLevel:
+                color = UIColor.red
                 break
         }
 

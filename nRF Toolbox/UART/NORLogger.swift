@@ -7,12 +7,12 @@
 //
 
 enum NORLOGLevel {
-    case DebugLogLevel
-    case VerboseLogLevel
-    case InfoLogLevel
-    case AppLogLevel
-    case WarningLogLevel
-    case ErrorLogLevel
+    case debugLogLevel
+    case verboseLogLevel
+    case infoLogLevel
+    case appLogLevel
+    case warningLogLevel
+    case errorLogLevel
 }
 
 protocol NORLogger {

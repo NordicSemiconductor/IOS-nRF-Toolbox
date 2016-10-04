@@ -33,6 +33,7 @@
 		304299241CE6114000E1D2AB /* NORTutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304299231CE6114000E1D2AB /* NORTutorialViewController.swift */; };
 		3042993C1CE6154100E1D2AB /* NORBaseRevealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304299391CE6154100E1D2AB /* NORBaseRevealViewController.swift */; };
 		3042993D1CE6154100E1D2AB /* NORBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3042993A1CE6154100E1D2AB /* NORBaseViewController.swift */; };
+		30499E4B1CE4667800E0993B /* NORDFUConstantsUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E4A1CE4667800E0993B /* NORDFUConstantsUtility.swift */; };
 		30499E4D1CE4687300E0993B /* NORFileTypeSelectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E4C1CE4687300E0993B /* NORFileTypeSelectionDelegate.swift */; };
 		30499E4F1CE4688700E0993B /* NORFileTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E4E1CE4688700E0993B /* NORFileTypeViewController.swift */; };
 		30499E511CE471C500E0993B /* NORDFUViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E501CE471C500E0993B /* NORDFUViewController.swift */; };
@@ -44,7 +45,6 @@
 		304D58FD1CE34FC600148271 /* NORLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304D58FC1CE34FC600148271 /* NORLogViewController.swift */; };
 		304D58FF1CE3521900148271 /* NORLogItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304D58FE1CE3521900148271 /* NORLogItem.swift */; };
 		304D59011CE352B300148271 /* NORLogItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304D59001CE352B300148271 /* NORLogItemTableViewCell.swift */; };
-		30532D5B1D7EC25100208CC5 /* NORDFUConstantsUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30532D5A1D7EC25100208CC5 /* NORDFUConstantsUtility.swift */; };
 		3069A1D71CDC788A003869EA /* NORBluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3069A1D61CDC788A003869EA /* NORBluetoothManager.swift */; };
 		306ECD621CE61A3600E48BBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306ECD611CE61A3600E48BBD /* AppDelegate.swift */; };
 		3080C4711CE06D0E009C2D8C /* NORCSCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3080C4701CE06D0E009C2D8C /* NORCSCViewController.swift */; };
@@ -75,7 +75,6 @@
 		52BDCB191C3FD31F00E2680F /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BDCB181C3FD31F00E2680F /* Accelerate.framework */; };
 		52BDCBBE1C3FD86900E2680F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BDCBBD1C3FD86900E2680F /* QuartzCore.framework */; };
 		52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */; };
-		679FCDC81084BF79BA97DBE0 /* Pods_nRF_ToolboxTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B489CB8F89866477A46903E /* Pods_nRF_ToolboxTests.framework */; };
 		7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B422818A8DF4D006BA1BC /* high.mp3 */; };
 		980EE6BE462CDC2184B781DD /* Pods_nRF_Toolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 210BB56BD40BE6023AD766CE /* Pods_nRF_Toolbox.framework */; };
 /* End PBXBuildFile section */
@@ -106,7 +105,6 @@
 /* Begin PBXFileReference section */
 		10485F7219578AE764CD532A /* Pods-nRF Toolbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.debug.xcconfig"; path = "Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.debug.xcconfig"; sourceTree = "<group>"; };
 		210BB56BD40BE6023AD766CE /* Pods_nRF_Toolbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nRF_Toolbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		211C8B857C070A24826730D2 /* Pods-nRF ToolboxTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF ToolboxTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-nRF ToolboxTests/Pods-nRF ToolboxTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3000B2101CE317D900F64CEE /* NORUARTRevealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORUARTRevealViewController.swift; sourceTree = "<group>"; };
 		3000B2121CE3195E00F64CEE /* NOREditPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NOREditPopupViewController.swift; sourceTree = "<group>"; };
 		3000B2141CE32A9200F64CEE /* NORUARTViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORUARTViewController.swift; sourceTree = "<group>"; };
@@ -132,6 +130,7 @@
 		304299231CE6114000E1D2AB /* NORTutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORTutorialViewController.swift; sourceTree = "<group>"; };
 		304299391CE6154100E1D2AB /* NORBaseRevealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBaseRevealViewController.swift; sourceTree = "<group>"; };
 		3042993A1CE6154100E1D2AB /* NORBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBaseViewController.swift; sourceTree = "<group>"; };
+		30499E4A1CE4667800E0993B /* NORDFUConstantsUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORDFUConstantsUtility.swift; sourceTree = "<group>"; };
 		30499E4C1CE4687300E0993B /* NORFileTypeSelectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORFileTypeSelectionDelegate.swift; path = FileSelection/NORFileTypeSelectionDelegate.swift; sourceTree = "<group>"; };
 		30499E4E1CE4688700E0993B /* NORFileTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORFileTypeViewController.swift; path = FileSelection/NORFileTypeViewController.swift; sourceTree = "<group>"; };
 		30499E501CE471C500E0993B /* NORDFUViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORDFUViewController.swift; sourceTree = "<group>"; };
@@ -143,7 +142,6 @@
 		304D58FC1CE34FC600148271 /* NORLogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORLogViewController.swift; sourceTree = "<group>"; };
 		304D58FE1CE3521900148271 /* NORLogItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORLogItem.swift; sourceTree = "<group>"; };
 		304D59001CE352B300148271 /* NORLogItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORLogItemTableViewCell.swift; sourceTree = "<group>"; };
-		30532D5A1D7EC25100208CC5 /* NORDFUConstantsUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORDFUConstantsUtility.swift; sourceTree = "<group>"; };
 		3069A1D61CDC788A003869EA /* NORBluetoothManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBluetoothManager.swift; sourceTree = "<group>"; };
 		306ECD611CE61A3600E48BBD /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3080C4701CE06D0E009C2D8C /* NORCSCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORCSCViewController.swift; sourceTree = "<group>"; };
@@ -181,8 +179,6 @@
 		7E6ED10A196ED482008010B6 /* firmwares */ = {isa = PBXFileReference; lastKnownFileType = folder; path = firmwares; sourceTree = "<group>"; };
 		80046CCC58A5D00193AE05B1 /* Pods-nRF Toolbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.release.xcconfig"; path = "Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.release.xcconfig"; sourceTree = "<group>"; };
 		89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9B489CB8F89866477A46903E /* Pods_nRF_ToolboxTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nRF_ToolboxTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DC05EDAED7947668C33A2E7D /* Pods-nRF ToolboxTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF ToolboxTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-nRF ToolboxTests/Pods-nRF ToolboxTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,7 +203,6 @@
 			files = (
 				5217F4071859EE0000F2D5BB /* UIKit.framework in Frameworks */,
 				5217F4061859EE0000F2D5BB /* Foundation.framework in Frameworks */,
-				679FCDC81084BF79BA97DBE0 /* Pods_nRF_ToolboxTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,8 +251,6 @@
 			children = (
 				10485F7219578AE764CD532A /* Pods-nRF Toolbox.debug.xcconfig */,
 				80046CCC58A5D00193AE05B1 /* Pods-nRF Toolbox.release.xcconfig */,
-				211C8B857C070A24826730D2 /* Pods-nRF ToolboxTests.debug.xcconfig */,
-				DC05EDAED7947668C33A2E7D /* Pods-nRF ToolboxTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -265,7 +258,6 @@
 		5214D0CF18881D0200460637 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				30532D5A1D7EC25100208CC5 /* NORDFUConstantsUtility.swift */,
 				300143261CEC4B9D008379DF /* NORAppUtilities.swift */,
 				300143281CEC59F4008379DF /* NORServiceIdentifiers.swift */,
 				3001432C1CECADFB008379DF /* NORCharacteristicReader.swift */,
@@ -306,7 +298,6 @@
 				5217F3E91859EE0000F2D5BB /* UIKit.framework */,
 				89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */,
 				210BB56BD40BE6023AD766CE /* Pods_nRF_Toolbox.framework */,
-				9B489CB8F89866477A46903E /* Pods_nRF_ToolboxTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -454,6 +445,7 @@
 			isa = PBXGroup;
 			children = (
 				A85667E21B2230CA004A6D3C /* DFUViewController */,
+				7E996869197FB8FD0092E69E /* Constants */,
 				522636281C5261C90054A550 /* File Type Selection */,
 				7E6ED10C197D1D40008010B6 /* File Selection */,
 				7E6ED10A196ED482008010B6 /* firmwares */,
@@ -500,6 +492,14 @@
 			);
 			name = "File Selection";
 			path = FileSelection;
+			sourceTree = "<group>";
+		};
+		7E996869197FB8FD0092E69E /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				30499E4A1CE4667800E0993B /* NORDFUConstantsUtility.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 		A85667DD1B222AA7004A6D3C /* AppImages */ = {
@@ -578,12 +578,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5217F4171859EE0000F2D5BB /* Build configuration list for PBXNativeTarget "nRF ToolboxTests" */;
 			buildPhases = (
-				F6C9E39EA6485644A5470700 /* [CP] Check Pods Manifest.lock */,
 				5217F3FF1859EE0000F2D5BB /* Sources */,
 				5217F4001859EE0000F2D5BB /* Frameworks */,
 				5217F4011859EE0000F2D5BB /* Resources */,
-				6EC63B637CD8C067D20635EA /* [CP] Embed Pods Frameworks */,
-				B5D28EC0C778BC516155BE32 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -601,11 +598,12 @@
 		5217F3DA1859EE0000F2D5BB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Nordic Semiconductor";
 				TargetAttributes = {
 					5217F3E11859EE0000F2D5BB = {
 						DevelopmentTeam = P3R8YQEV4L;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -613,6 +611,7 @@
 						};
 					};
 					5217F4021859EE0000F2D5BB = {
+						LastSwiftMigration = 0800;
 						TestTargetID = 5217F3E11859EE0000F2D5BB;
 					};
 				};
@@ -681,21 +680,6 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		6EC63B637CD8C067D20635EA /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-nRF ToolboxTests/Pods-nRF ToolboxTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		8623E8FC53C27E914EEBA1FB /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -726,36 +710,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B5D28EC0C778BC516155BE32 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-nRF ToolboxTests/Pods-nRF ToolboxTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F6C9E39EA6485644A5470700 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -776,6 +730,7 @@
 				3001432B1CEC6D2A008379DF /* NORBGMRecordAccess.swift in Sources */,
 				304D58FF1CE3521900148271 /* NORLogItem.swift in Sources */,
 				3042993C1CE6154100E1D2AB /* NORBaseRevealViewController.swift in Sources */,
+				30499E4B1CE4667800E0993B /* NORDFUConstantsUtility.swift in Sources */,
 				3001432D1CECADFB008379DF /* NORCharacteristicReader.swift in Sources */,
 				3010F6051CDCB4F900CB285A /* NORBPMViewController.swift in Sources */,
 				3000B2131CE3195E00F64CEE /* NOREditPopupViewController.swift in Sources */,
@@ -784,7 +739,6 @@
 				304D59011CE352B300148271 /* NORLogItemTableViewCell.swift in Sources */,
 				3001EBC51D1C153C008C5C37 /* NORCGMDetailsViewController.swift in Sources */,
 				3080C4711CE06D0E009C2D8C /* NORCSCViewController.swift in Sources */,
-				30532D5B1D7EC25100208CC5 /* NORDFUConstantsUtility.swift in Sources */,
 				308EE1781CE0CBF700F2A854 /* NORHTSViewController.swift in Sources */,
 				304D58FB1CE34EE600148271 /* NORLogger.swift in Sources */,
 				304299241CE6114000E1D2AB /* NORTutorialViewController.swift in Sources */,
@@ -862,6 +816,7 @@
 		5217F4121859EE0000F2D5BB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				"ARCHS[sdk=*]" = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -873,16 +828,20 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -907,6 +866,7 @@
 		5217F4131859EE0000F2D5BB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				"ARCHS[sdk=*]" = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -918,15 +878,19 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -937,6 +901,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
@@ -946,11 +911,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 10485F7219578AE764CD532A /* Pods-nRF Toolbox.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = NO;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -984,6 +950,7 @@
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "$(VALID_ARCHS)";
 				WRAPPER_EXTENSION = app;
@@ -994,11 +961,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 80046CCC58A5D00193AE05B1 /* Pods-nRF Toolbox.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = NO;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1031,6 +999,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "$(VALID_ARCHS)";
 				WRAPPER_EXTENSION = app;
@@ -1039,7 +1008,6 @@
 		};
 		5217F4181859EE0000F2D5BB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 211C8B857C070A24826730D2 /* Pods-nRF ToolboxTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox.app/nRF Toolbox";
 				CLANG_ENABLE_MODULES = YES;
@@ -1059,6 +1027,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "no.nordicsemi.ios.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -1066,7 +1035,6 @@
 		};
 		5217F4191859EE0000F2D5BB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DC05EDAED7947668C33A2E7D /* Pods-nRF ToolboxTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox.app/nRF Toolbox";
 				CLANG_ENABLE_MODULES = YES;
@@ -1081,6 +1049,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "no.nordicsemi.ios.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};

@@ -2,10 +2,11 @@
 
 The nRF Toolbox is a container app that stores your Nordic Semiconductor apps for Bluetooth Smart in one location. 
 
-New in v4.0.4:
-* The application now fully supports Secure DFU
-* Fixed potential memory leaks
-* Full support of the Continuous Glucose monitor
+New in v4.1:
+* The application is now Fully migrated to Swift3.0
+* Bugfix: Importing of distribution packets via email no longer crashes
+* Bugfix: Glucose monitor demo no longer crashes/displays incorrect timestamps when the device uses the 12 hour format locale
+* Bugfix: Glucose monitor demo no longer duplicates data on the last row when refresh button is tapped
 
 New in v4.0:
 * The application is fully migrated to Swift2.2

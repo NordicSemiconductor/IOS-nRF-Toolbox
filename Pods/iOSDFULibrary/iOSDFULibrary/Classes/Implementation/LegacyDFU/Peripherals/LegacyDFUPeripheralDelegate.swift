@@ -110,7 +110,7 @@ internal protocol DFUPeripheralDelegate {
      - parameter error: the error returned by 
      `centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?)`
      */
-    func didDeviceDisconnectWithError(error:NSError)
+    func didDeviceDisconnectWithError(_ error:Error)
     
     /**
      Method called when an error occurred during the last operation.
@@ -118,5 +118,5 @@ internal protocol DFUPeripheralDelegate {
      - parameter error:   the error type
      - parameter message: details
      */
-    func didErrorOccur(error:DFUError, withMessage message:String)
+    func didErrorOccur(_ error:DFUError, withMessage message:String)
 }

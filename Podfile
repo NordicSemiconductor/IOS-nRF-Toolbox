@@ -1,13 +1,7 @@
-target 'nRF Toolbox' do
-  use_frameworks!
-  
-  pod 'iOSDFULibrary', '~> 1.0'
-  pod 'SWRevealViewController', '~> 2.3'
-  pod 'CorePlot', '~> 2.1'
-  pod 'EVReflection'
-
-  target 'nRF ToolboxTests' do
-    inherit! :search_paths
-  end
-  
+use_frameworks!
+target "nRF Toolbox" do
+    pod 'iOSDFULibrary', '~> 2.1'
+    pod 'EVReflection', :git => 'https://github.com/evermeer/EVReflection.git', :branch => 'Swift3'
+    pod 'SWRevealViewController'
+    pod 'CorePlot', '~> 2.2'
 end

@@ -30,7 +30,7 @@ import CoreBluetooth
         }
     }
     
-    override func isEqual(object: AnyObject?) -> Bool {
+    override func isEqual(_ object: Any?) -> Bool {
         let otherPeripheral : NORScannedPeripheral = object as! NORScannedPeripheral
         return peripheral == otherPeripheral.peripheral
     }

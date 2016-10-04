@@ -84,11 +84,11 @@ private let crcTable: [UInt32] = [
     0x5d681b02, 0x2a6f2b94, 0xb40bbe37, 0xc30c8ea1, 0x5a05df1b,
     0x2d02ef8d]
 
-func crc32(crc: UInt32, data: NSData?) -> UInt32 {
+func crc32(_ crc: UInt32, data: Data?) -> UInt32 {
     guard let data = data else {
         return crc32(0, buffer: nil, length: 0)
     }
-    return crc32(crc, buffer: UnsafePointer<UInt8>(data.bytes), length: data.length)
+    return crc32(crc, buffer: (data as NSData).bytes.bindMemory(to: UInt8.self, capacity: data.count), length: data.count)
 }
 
 /**
@@ -104,7 +104,7 @@ func crc32(crc: UInt32, data: NSData?) -> UInt32 {
  }
  if (crc != original_crc) error();
  */
-func crc32(crc: UInt32, buffer: UnsafePointer<UInt8>, length: Int) -> UInt32 {
+func crc32(_ crc: UInt32, buffer: UnsafePointer<UInt8>?, length: Int) -> UInt32 {
     if buffer == nil {
         return 0
     }
@@ -112,9 +112,9 @@ func crc32(crc: UInt32, buffer: UnsafePointer<UInt8>, length: Int) -> UInt32 {
     var len = length
     var buf = buffer
     func DO1() {
-        let toBuf = buf.memory
-        buf += 1
-        crc1 = crcTable[Int((crc1 ^ UInt32(toBuf)) & 0xFF)] ^ crc1 >> 8
+        let toBuf = buf?.pointee
+        buf = buf! + 1
+        crc1 = crcTable[Int((crc1 ^ UInt32(toBuf!)) & 0xFF)] ^ crc1 >> 8
     }
     func DO2() { DO1(); DO1(); }
     func DO4() { DO2(); DO2(); }
@@ -139,8 +139,8 @@ func ==(lhs: CRC32, rhs: CRC32) -> Bool {
 }
 
 final class CRC32: Hashable {
-    private var initialized = false
-    private(set) var crc: UInt32 = 0
+    fileprivate var initialized = false
+    fileprivate(set) var crc: UInt32 = 0
     
     var hashValue: Int {
         return Int(crc)
@@ -148,18 +148,18 @@ final class CRC32: Hashable {
     
     init() {}
     
-    convenience init(data: NSData) {
+    convenience init(data: Data) {
         self.init()
         crc = crc32(crc, data: data)
         initialized = true
     }
     
-    func run(buffer buffer: UnsafePointer<UInt8>, length: Int) {
+    func run(buffer: UnsafePointer<UInt8>, length: Int) {
         crc = crc32(crc, buffer: buffer, length: length)
         initialized = true
     }
     
-    func run(data data: NSData) {
+    func run(data: Data) {
         crc = crc32(crc, data: data)
         initialized = true
     }

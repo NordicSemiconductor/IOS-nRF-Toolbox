@@ -26,31 +26,34 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
-    
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+
+        self.updateUserDefaults(withDefaults: UserDefaults.standard)
         
-        let defaults = NSDictionary(objects: ["2.3", NSNumber(int:12), NSNumber(bool: false)], forKeys: ["key_diameter", "dfu_number_of_packets", "dfu_force_dfu"])
-        NSUserDefaults.standardUserDefaults().registerDefaults(defaults as! [String : AnyObject])
-     
         //Setting colors of UIPageControlViewController Page Indicator
         let pageControl = UIPageControl.appearance()
-        pageControl.pageIndicatorTintColor = UIColor.lightGrayColor()
-        pageControl.currentPageIndicatorTintColor = UIColor.blackColor()
-        pageControl.backgroundColor = UIColor.whiteColor()
+        pageControl.pageIndicatorTintColor = UIColor.lightGray
+        pageControl.currentPageIndicatorTintColor = UIColor.black
+        pageControl.backgroundColor = UIColor.white
         return true
     }
     
-    func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
-        print("URL for file from Email: \(url)")
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
         let navigationController = self.window?.rootViewController as! UINavigationController
-        
-        navigationController.popToRootViewControllerAnimated(true)
-        
+
+        navigationController.popToRootViewController(animated: true)
+
         let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let dfuViewController = mainStoryboard.instantiateViewControllerWithIdentifier("DFUViewController") as! NORDFUViewController
-        dfuViewController.onFileSelected(withURL: url)
+        let dfuViewController = mainStoryboard.instantiateViewController(withIdentifier: "DFUViewController") as! NORDFUViewController
         navigationController.pushViewController(dfuViewController, animated: true)
-        
+        dfuViewController.onFileImported(withURL: url)
         return true
+    }
+
+    fileprivate func updateUserDefaults(withDefaults defaults : UserDefaults) {
+        defaults.set(2.4,   forKey: "key_diameter")
+        defaults.set(12,    forKey: "dfu_number_of_packets")
+        defaults.set(false, forKey: "dfu_force_dfu")
+        defaults.synchronize()
     }
 }
