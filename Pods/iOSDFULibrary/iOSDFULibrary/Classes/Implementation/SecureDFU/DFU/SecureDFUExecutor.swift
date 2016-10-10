@@ -142,11 +142,15 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
     }
     
     func verifyDataCRC(fordata data : Data, andPacketOffset anOffset : UInt32, andperipheralCRC aCRC : UInt32) -> Bool {
+        
+        //Edge case where a different objcet might be flashed with a biger init file
+        if anOffset > UInt32(data.count) {
+            return false
+        }
         //get data form 0 up to the offset the peripheral has reproted
-        //TODO: Verify this is correct
         let offsetData : Data = (data.subdata(in: 0..<Int(anOffset)))
         let calculatedCRC = CRC32(data: offsetData).crc
-        
+
         //This returns true if the current data packet's CRC matches the current firmware's packet CRC
         return calculatedCRC == aCRC
     }
@@ -190,15 +194,19 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
                 //Start new flash, we either are flashing a different firmware
                 //or we are resuming from a BL/SD + App and need to start all over again.
                 self.initiator.logger?.logWith(.info, message: "firmare init packet doesn't match, will overwrite and start again")
-                self.initPacketSent = false
-                self.firmwareSent = false
-                self.sendingFirmware = false
-                self.isResuming = false //We're no longer resuming, but starting from scratch.
-                peripheral.createObjectCommand(UInt32((self.firmware.initPacket?.count)!))
+                self.startDFUIgnoringState()
             }
         }else{
             peripheral.createObjectCommand(UInt32((self.firmware.initPacket?.count)!))
         }
+    }
+    
+    func startDFUIgnoringState() {
+        self.initPacketSent = false
+        self.firmwareSent = false
+        self.sendingFirmware = false
+        self.isResuming = false //We're no longer resuming, but starting from scratch.
+        peripheral.createObjectCommand(UInt32((self.firmware.initPacket?.count)!))
     }
     
     func objectInfoReadDataCompleted(_ maxLen : UInt32, offset : UInt32, crc :UInt32 ) {
@@ -233,7 +241,9 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
                     peripheral.setPRNValue(12)
                 }
             } else {
-                self.initiator.logger?.logWith(.error, message: "Data object does not match")
+                self.initiator.logger?.logWith(.error, message: "Data object CRC does not match")
+                self.initiator.logger?.logWith(.error, message: "Will fallback to starting from scratch")
+                self.startDFUIgnoringState()
             }
         } else {
             DispatchQueue.main.async(execute: {
@@ -248,7 +258,7 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
 
     func createObjectDataForCurrentChunk() {
         let currentRange = self.firmwareRanges![self.currentRangeIdx!]
-        self.initiator.logger?.logWith(.info, message: "current firmware chunk length = \(currentRange.upperBound - currentRange.lowerBound)")
+        self.initiator.logger?.logWith(.info, message: "Current Object data chunk size = \(currentRange.upperBound - currentRange.lowerBound)")
 
         peripheral.createObjectData(withLength: UInt32(currentRange.upperBound - currentRange.lowerBound))
     }
@@ -263,7 +273,7 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
     }
 
     func firmwareChunkSendcomplete() {
-        self.initiator.logger?.logWith(.application, message: "Chunk sent!")
+        self.initiator.logger?.logWith(.application, message: "Object data chunk sent")
         peripheral.sendCalculateChecksumCommand()
     }
 
@@ -275,10 +285,14 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
     func sendCurrentChunk(_ resumeOffset : UInt32 = 0){
         var aRange = firmwareRanges![currentRangeIdx!]
         if self.isResuming && resumeOffset > 0 {
-            //TODO: verify this is correct!
             //This is a resuming chunk, recalculate location and size
             let newLength = aRange.lowerBound + (aRange.upperBound - aRange.lowerBound) - Int(self.offset!)
             aRange = Int(resumeOffset)..<newLength + Int(resumeOffset)
+            
+            if UInt32(aRange.lowerBound) == resumeOffset {
+                self.createObjectDataForCurrentChunk()
+                return
+            }
         }
         peripheral.sendFirmwareChunk(self.firmware, andChunkRange: aRange, andPacketCount: 12, andProgressDelegate: self.progressDelegate!)
     }
@@ -327,26 +341,23 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
         //Firmware is still being sent!
         if sendingFirmware == true {
             //verify CRC
-            let chunkData = self.firmware.data.subdata(in: 0..<Int(self.offset!))
-            let crc = CRC32.init(data: chunkData).crc
-            if self.crc == crc {
-                self.initiator.logger?.logWith(.info, message: "Chunk CRC matches, exetuce!")
+            if verifyDataCRC(fordata: self.firmware.data, andPacketOffset: self.offset!, andperipheralCRC: self.crc!) {
+                self.initiator.logger?.logWith(.info, message: "Data checksum matches, exetuce!")
                 peripheral.sendExecuteCommand()
                 return
             }else{
-                self.initiator.logger?.logWith(.error, message: "Chunk CRC mismatch!")
+                self.initiator.logger?.logWith(.error, message: "Data checksum mismatch!")
                 return
             }
         }
 
         if initPacketSent == true && firmwareSent == false {
             if offset == UInt32((firmware.initPacket?.count)!) {
-                let calculatedCRC = CRC32(data: self.firmware.initPacket!).crc
-                if calculatedCRC == self.crc {
-                    self.initiator.logger?.logWith(.info, message: "CRC match, send execute command")
+                if verifyDataCRC(fordata: self.firmware.initPacket!, andPacketOffset: UInt32((self.firmware.initPacket?.count)!), andperipheralCRC: self.crc!) {
+                    self.initiator.logger?.logWith(.info, message: "Init packet checksum match, sending execute command")
                     peripheral.sendExecuteCommand()
                 }else{
-                    self.initiator.logger?.logWith(.error, message: "CRC for init packet does not match, local = \(calculatedCRC), reported = \(self.crc!)")
+                    self.initiator.logger?.logWith(.error, message: "Init packet checksum mismatch")
                 }
             } else {
                 self.initiator.logger?.logWith(.error, message: "Offset doesn't match packet size!")
