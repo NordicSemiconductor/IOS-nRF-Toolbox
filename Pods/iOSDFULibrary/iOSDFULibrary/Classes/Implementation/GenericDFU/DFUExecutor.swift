@@ -110,6 +110,9 @@ class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     }
     
     func pause() -> Bool {
+        if self.isSecureDFU == nil {
+            return false
+        }
         if self.isSecureDFU! {
             return (self.secureDFUController?.pause())!
         }else{

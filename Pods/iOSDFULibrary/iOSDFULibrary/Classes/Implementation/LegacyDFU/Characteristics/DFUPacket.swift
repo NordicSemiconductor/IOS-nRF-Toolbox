@@ -126,7 +126,6 @@ internal class DFUPacket {
         
         repeat {
             let packetLength = min(bytesToSend, PacketSize)
-            //TODO:Verify this is correct
             let packet = data.subdata(in: offset..<(offset + packetLength))
             logger.v("Writing to characteristic \(DFUPacket.UUID.uuidString)...")
             logger.d("peripheral.writeValue(0x\(packet.hexString), forCharacteristic: \(DFUPacket.UUID.uuidString), type: WithoutResponse)")
@@ -172,7 +171,6 @@ internal class DFUPacket {
         while packetsToSendNow > 0 {
             let bytesLeft = bytesTotal - bytesSent
             let packetLength = min(bytesLeft, PacketSize)
-            //TODO: Verify this is correct
             let packet = firmware.data.subdata(in: bytesSent..<(bytesSent + packetLength))
             peripheral.writeValue(packet, for: characteristic, type: CBCharacteristicWriteType.withoutResponse)
             

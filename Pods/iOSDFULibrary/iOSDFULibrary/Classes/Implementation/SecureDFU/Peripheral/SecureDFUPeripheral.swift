@@ -53,7 +53,7 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
     init(_ initiator:SecureDFUServiceInitiator) {
         self.centralManager = initiator.centralManager
         self.peripheral = initiator.target
-        self.logger = LoggerHelper(initiator.logger!)
+        self.logger = LoggerHelper(initiator.logger)
         super.init()
         
         // self.peripheral.delegate = self // this is set when device got connected
@@ -77,9 +77,11 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
      Disconnects the target device.
      */
     func disconnect() {
-        logger.v("Disconnecting...")
-        logger.d("centralManager.cancelPeripheralConnection(peripheral)")
-        centralManager.cancelPeripheralConnection(peripheral!)
+        if peripheral != nil {
+            logger.v("Disconnecting...")
+            logger.d("centralManager.cancelPeripheralConnection(peripheral)")
+            centralManager.cancelPeripheralConnection(peripheral!)
+        }
     }
     
     func pause() -> Bool {
@@ -247,7 +249,6 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
     func sendCalculateChecksumCommand() {
         dfuService?.calculateChecksumCommand(onSuccess: { (responseData) in
             //Parse resonpse data
-            //Stopped work here !
             let count = (responseData?.count)! / MemoryLayout<UInt32>.size
             var array = [UInt32](repeating: 0, count: count)
             let range = count * MemoryLayout<UInt32>.size
@@ -325,7 +326,6 @@ internal class SecureDFUPeripheral: NSObject, CBPeripheralDelegate, CBCentralMan
     // MARK: - Central Manager methods
 
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        //TODO: verify this is okay
         logCentralManagerState(CBCentralManagerState(rawValue: central.state.rawValue)!)
     }
     

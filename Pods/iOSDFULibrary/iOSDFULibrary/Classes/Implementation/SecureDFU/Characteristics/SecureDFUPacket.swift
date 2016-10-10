@@ -110,8 +110,6 @@ internal class SecureDFUPacket {
             let packetLength = min(bytesLeft, PacketSize)
             let range:Range<Int> = bytesSent..<(packetLength+bytesSent)
             let packet = aData.subdata(in: range)
-            print("### total:\(bytesSent)")
-            print("### Nxt packet size:\(packetLength)")
             peripheral.writeValue(packet, for: characteristic, type: CBCharacteristicWriteType.withoutResponse)
             
             bytesSent += packetLength

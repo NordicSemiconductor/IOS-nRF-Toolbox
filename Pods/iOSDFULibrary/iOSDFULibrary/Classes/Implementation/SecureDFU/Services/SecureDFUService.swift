@@ -119,9 +119,6 @@ internal typealias SDFUErrorCallback = (_ error:SecureDFUError, _ withMessage:St
     func enableControlPoint(onSuccess success: @escaping SDFUCallback, onError report:@escaping SDFUErrorCallback) {
         if !aborted {
             dfuControlPointCharacteristic?.enableNotifications(onSuccess: success, onError: report)
-        } else {
-            //TODO: Not implemented
-//            self.sendReset(onError: report)
         }
     }
     
