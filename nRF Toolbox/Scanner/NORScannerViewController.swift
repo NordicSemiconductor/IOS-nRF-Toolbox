@@ -165,7 +165,7 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
         let aCell = tableView.dequeueReusableCell(withIdentifier: "Cell")
         
         //Update cell content
-        let scannedPeripheral = peripherals?.object(at: (indexPath as NSIndexPath).row) as! NORScannedPeripheral
+        let scannedPeripheral = peripherals?.object(at: indexPath.row) as! NORScannedPeripheral
         aCell?.textLabel?.text = scannedPeripheral.name()
         if scannedPeripheral.isConnected == true {
             aCell?.imageView?.image = UIImage(named: "Connected")
