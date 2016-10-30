@@ -48,7 +48,7 @@ class NORLogViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     }
     
     func scrollDisplayViewDown() {
-        displayLogTextTable.scrollToRow(at: IndexPath(row: logItems!.count-1, section: 0), at: UITableViewScrollPosition.bottom, animated: true)
+        displayLogTextTable.scrollToRow(at: IndexPath(row: displayLogTextTable.numberOfRows(inSection: 0) - 1, section: 0), at: UITableViewScrollPosition.bottom, animated: true)
     }
 
 //    func setManager(aManager : NORBluetoothManager?) {
