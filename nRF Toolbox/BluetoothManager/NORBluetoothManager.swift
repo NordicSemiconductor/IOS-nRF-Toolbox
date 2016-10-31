@@ -30,12 +30,10 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 
 protocol NORBluetoothManagerDelegate {
-    
-    func didConnectPeripheral(deviceName aName : String)
+    func didConnectPeripheral(deviceName aName : String?)
     func didDisconnectPeripheral()
     func peripheralReady()
     func peripheralNotSupported()
-    
 }
 
 class NORBluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate {
@@ -91,16 +89,15 @@ class NORBluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDeleg
         } else {
             log(withLevel: .verboseLogLevel, andMessage: "Cancelling connection...")
         }
-        log(withLevel: .debugLogLevel, andMessage: "centralManager.cancelPeriphralConnection(peripheral)")
+        log(withLevel: .debugLogLevel, andMessage: "centralManager.cancelPeripheralConnection(peripheral)")
         centralManager?.cancelPeripheralConnection(bluetoothPeripheral!)
         
-        // In case there was no connection and the pending connection was cancelled
+        // In case the previous connection attempt failed before establishing a connection
         if !connected {
             bluetoothPeripheral = nil
             delegate?.didDisconnectPeripheral()
         }
     }
-    
     
     func isConnected() -> Bool {
         return connected
@@ -120,7 +117,7 @@ class NORBluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDeleg
         
         // Check what kind of Write Type is supported. By default it will try Without Response.
         var type = CBCharacteristicWriteType.withoutResponse
-        if (self.uartRXCharacteristic?.properties.rawValue)! & CBCharacteristicProperties.write.rawValue > 0 {
+        if (self.uartRXCharacteristic!.properties.rawValue & CBCharacteristicProperties.write.rawValue) > 0 {
             type = CBCharacteristicWriteType.withResponse
         }
 
@@ -158,7 +155,7 @@ class NORBluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDeleg
         }
     }
     
-    /*!
+    /**
      * Sends the given text to the UART RX characteristic using the given write type.
      */
     func send(text aText : String, withType aType : CBCharacteristicWriteType) {
@@ -168,7 +165,7 @@ class NORBluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDeleg
         }
         
         var typeAsString = "CBCharacteristicWriteWithoutResponse"
-        if self.uartRXCharacteristic!.properties.rawValue & CBCharacteristicProperties.write.rawValue > 0 {
+        if (self.uartRXCharacteristic!.properties.rawValue & CBCharacteristicProperties.write.rawValue) > 0 {
             typeAsString = "CBCharacteristicWriteWithResponse"
         }
         
@@ -315,13 +312,13 @@ class NORBluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDeleg
                 if aCharacteristic.uuid.isEqual(UARTTXCharacteristicUUID) {
                     log(withLevel: .verboseLogLevel, andMessage: "TX Characteristic found")
                     uartTXCharacteristic = aCharacteristic
-                }else if aCharacteristic.uuid.isEqual(UARTRXCharacteristicUUID) {
+                } else if aCharacteristic.uuid.isEqual(UARTRXCharacteristicUUID) {
                     log(withLevel: .verboseLogLevel, andMessage: "RX Characteristic found")
                     uartRXCharacteristic = aCharacteristic
                 }
             }
             //Enable notifications on TX Characteristic
-            if(uartTXCharacteristic != nil && uartRXCharacteristic != nil) {
+            if (uartTXCharacteristic != nil && uartRXCharacteristic != nil) {
                 log(withLevel: .verboseLogLevel, andMessage: "Enabling notifications for \(uartTXCharacteristic!.uuid.uuidString)")
                 log(withLevel: .debugLogLevel, andMessage: "peripheral.setNotifyValue(true, forCharacteristic: \(uartTXCharacteristic!.uuid.uuidString)")
                 bluetoothPeripheral?.setNotifyValue(true, for: uartTXCharacteristic!)
@@ -346,7 +343,6 @@ class NORBluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDeleg
         } else {
             log(withLevel: .infoLogLevel, andMessage: "Notifications disabled for characteristic : \(characteristic.uuid.uuidString)")
         }
-        
     }
     
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {

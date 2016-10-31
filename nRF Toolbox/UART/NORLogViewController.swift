@@ -12,7 +12,7 @@ class NORLogViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     
     //MARK: - Properties
     var bluetoothManager : NORBluetoothManager?
-    var logItems         : NSMutableArray?
+    var logItems         : NSMutableArray
     
     //MARK: - View Outlets
     @IBOutlet weak var displayLogTextTable : UITableView!
@@ -22,8 +22,8 @@ class NORLogViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     
     //MARK: - UIViewDelegate
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
         logItems = NSMutableArray()
+        super.init(coder: aDecoder)
     }
     
     override func viewDidLoad() {
@@ -37,6 +37,11 @@ class NORLogViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         commandTextField.delegate = self
     }
     
+    func clearLog() {
+        logItems.removeAllObjects()
+        displayLogTextTable?.reloadData() // The table may not be initialized here
+    }
+    
     //MARK: - NORLoggerViewController implementation
     func getCurrentTime() -> String {
         let now = Date()
@@ -48,24 +53,24 @@ class NORLogViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     }
     
     func scrollDisplayViewDown() {
-        displayLogTextTable.scrollToRow(at: IndexPath(row: logItems!.count-1, section: 0), at: UITableViewScrollPosition.bottom, animated: true)
+        displayLogTextTable.scrollToRow(at: IndexPath(row: logItems.count - 1, section: 0), at: UITableViewScrollPosition.bottom, animated: true)
     }
 
-//    func setManager(aManager : NORBluetoothManager?) {
-//        bluetoothManager = aManager
-//        
-//        if bluetoothManager != nil {
-//            commandTextField.placeholder = "Write command"
-//            commandTextField.text = ""
-//        }else{
-//            commandTextField.placeholder = "No UART service connected"
-//            commandTextField.text = ""
-//        }
-//    }
+    func setManager(aManager : NORBluetoothManager?) {
+        bluetoothManager = aManager
+        
+        if bluetoothManager != nil {
+            commandTextField.placeholder = "Write command"
+            commandTextField.text = ""
+        } else {
+            commandTextField.placeholder = "No UART service connected"
+            commandTextField.text = ""
+        }
+    }
 
     //MARK: - UITextViewDelegate
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        //Only shows the keyboard when a UART peripheral is connected
+        // Only shows the keyboard when a UART peripheral is connected
         return bluetoothManager != nil
     }
     
@@ -78,13 +83,13 @@ class NORLogViewController: UIViewController, UITextFieldDelegate, UITableViewDa
 
     //MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (logItems?.count)!
+        return logItems.count
     }
     
     //MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "logCell") as! NORLogItemTableViewCell
-        let item = logItems?.object(at: (indexPath as NSIndexPath).row) as! NORLogItem
+        let item = logItems.object(at: (indexPath as NSIndexPath).row) as! NORLogItem
         cell.setItem(item: item)
         return cell
     }
@@ -95,7 +100,7 @@ class NORLogViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         item.level = aLevel
         item.message = aMessage
         item.timestamp = getCurrentTime()
-        logItems?.add(item)
+        logItems.add(item)
         
         DispatchQueue.main.async {
             //TODO: this is a bad fix to get things done, do not release!

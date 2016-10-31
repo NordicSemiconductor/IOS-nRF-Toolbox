@@ -168,7 +168,7 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
         aCell?.textLabel?.text = scannedPeripheral.name()
         if scannedPeripheral.isConnected == true {
             aCell?.imageView?.image = UIImage(named: "Connected")
-        }else{
+        } else {
             let RSSIImage = self.getRSSIImage(RSSI: scannedPeripheral.RSSI)
             aCell?.imageView?.image = RSSIImage
         }
@@ -183,7 +183,6 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
         // Call delegate method
         let peripheral = (peripherals?.object(at: indexPath.row) as? NORScannedPeripheral)?.peripheral
         self.delegate?.centralManagerDidSelectPeripheral(withManager: bluetoothManager!, andPeripheral: peripheral!)
-
     }
     
     //MARK: - CBCentralManagerDelgate
@@ -201,15 +200,18 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        // Scanner uses other queue to send events. We must edit UI in the main queue        
-        DispatchQueue.main.async(execute: {
-            var sensor = NORScannedPeripheral(withPeripheral: peripheral, andRSSI: RSSI.int32Value, andIsConnected: false)
-            if ((self.peripherals?.contains(sensor)) == false) {
-                self.peripherals?.add(sensor)
-            }else{
-                sensor = (self.peripherals?.object(at: (self.peripherals?.index(of: sensor))!))! as! NORScannedPeripheral
-                sensor.RSSI = RSSI.int32Value
-            }
-        })
+        let connectable = advertisementData[CBAdvertisementDataIsConnectable] as! NSNumber
+        if connectable != 0 {
+            // Scanner uses other queue to send events. We must edit UI in the main queue
+            DispatchQueue.main.async(execute: {
+                var sensor = NORScannedPeripheral(withPeripheral: peripheral, andRSSI: RSSI.int32Value, andIsConnected: false)
+                if ((self.peripherals?.contains(sensor)) == false) {
+                    self.peripherals?.add(sensor)
+                } else {
+                    sensor = (self.peripherals?.object(at: (self.peripherals?.index(of: sensor))!))! as! NORScannedPeripheral
+                    sensor.RSSI = RSSI.int32Value
+                }
+            })
+        }
     }
 }

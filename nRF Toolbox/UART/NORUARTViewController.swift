@@ -103,9 +103,19 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
     func centralManagerDidSelectPeripheral(withManager aManager: CBCentralManager, andPeripheral aPeripheral: CBPeripheral) {
         // We may not use more than one Central Manager instance. Let's just take the one returned from Scanner View Controller
         bluetoothManager = NORBluetoothManager(withManager: aManager)
-        bluetoothManager?.delegate = self
-        bluetoothManager?.logger = logger
-        bluetoothManager?.connectPeripheral(peripheral: aPeripheral)
+        bluetoothManager!.delegate = self
+        bluetoothManager!.logger = logger
+        logger!.clearLog()
+        
+        if let name = aPeripheral.name {
+            self.uartPeripheralName = name
+            self.deviceName.text = name
+        } else {
+            self.uartPeripheralName = "device"
+            self.deviceName.text = "No name"
+        }
+        self.connectionButton.setTitle("CANCEL", for: UIControlState())
+        bluetoothManager!.connectPeripheral(peripheral: aPeripheral)
     }
     //MARK: - BluetoothManagerDelegate
     func peripheralReady() {
@@ -115,14 +125,11 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
         print("Peripheral is not supported")
     }
     
-    func didConnectPeripheral(deviceName aName: String) {
+    func didConnectPeripheral(deviceName aName: String?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async(execute: {
             self.logger!.bluetoothManager = self.bluetoothManager
-            self.uartPeripheralName = aName
-            self.deviceName.text = aName
             self.connectionButton.setTitle("DISCONNECT", for: UIControlState())
-            
         })
         
         //Following if condition display user permission alert for background notification
@@ -142,7 +149,7 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
                 self.deviceName.text = "DEFAULT UART"
                 
                 if NORAppUtilities.isApplicationInactive() {
-                    NORAppUtilities.showBackgroundNotification(message: "Peripheral \(self.uartPeripheralName) is disconnected")
+                    NORAppUtilities.showBackgroundNotification(message: "Peripheral \(self.uartPeripheralName!) is disconnected")
                 }
 
                 self.uartPeripheralName = nil
@@ -243,7 +250,7 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
     }
 
     func applicationDidEnterBackgroundCallback(){
-        NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(uartPeripheralName)")
+        NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(self.uartPeripheralName!)")
     }
     
     func applicationDidBecomeActiveCallback(){
