@@ -76,7 +76,7 @@
 		52BDCBBE1C3FD86900E2680F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BDCBBD1C3FD86900E2680F /* QuartzCore.framework */; };
 		52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */; };
 		7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B422818A8DF4D006BA1BC /* high.mp3 */; };
-		980EE6BE462CDC2184B781DD /* Pods_nRF_Toolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 210BB56BD40BE6023AD766CE /* Pods_nRF_Toolbox.framework */; };
+		9989D1FF5018421BE4160C50 /* Pods_nRF_Toolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24D84A6CFE99FD917A7222B7 /* Pods_nRF_Toolbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,8 +103,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		10485F7219578AE764CD532A /* Pods-nRF Toolbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.debug.xcconfig"; path = "Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.debug.xcconfig"; sourceTree = "<group>"; };
-		210BB56BD40BE6023AD766CE /* Pods_nRF_Toolbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nRF_Toolbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A455719E4780A53A451F09C /* Pods-nRF Toolbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.debug.xcconfig"; path = "Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.debug.xcconfig"; sourceTree = "<group>"; };
+		24D84A6CFE99FD917A7222B7 /* Pods_nRF_Toolbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nRF_Toolbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		28F7349095038A3F55F27F8C /* Pods-nRF Toolbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.release.xcconfig"; path = "Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.release.xcconfig"; sourceTree = "<group>"; };
 		3000B2101CE317D900F64CEE /* NORUARTRevealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORUARTRevealViewController.swift; sourceTree = "<group>"; };
 		3000B2121CE3195E00F64CEE /* NOREditPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NOREditPopupViewController.swift; sourceTree = "<group>"; };
 		3000B2141CE32A9200F64CEE /* NORUARTViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORUARTViewController.swift; sourceTree = "<group>"; };
@@ -177,7 +178,6 @@
 		52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		7E1B422818A8DF4D006BA1BC /* high.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = high.mp3; sourceTree = "<group>"; };
 		7E6ED10A196ED482008010B6 /* firmwares */ = {isa = PBXFileReference; lastKnownFileType = folder; path = firmwares; sourceTree = "<group>"; };
-		80046CCC58A5D00193AE05B1 /* Pods-nRF Toolbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.release.xcconfig"; path = "Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.release.xcconfig"; sourceTree = "<group>"; };
 		89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -193,7 +193,7 @@
 				5217F3E81859EE0000F2D5BB /* CoreGraphics.framework in Frameworks */,
 				5217F3EA1859EE0000F2D5BB /* UIKit.framework in Frameworks */,
 				5217F3E61859EE0000F2D5BB /* Foundation.framework in Frameworks */,
-				980EE6BE462CDC2184B781DD /* Pods_nRF_Toolbox.framework in Frameworks */,
+				9989D1FF5018421BE4160C50 /* Pods_nRF_Toolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,6 +209,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		022A9DC491EC95659788F163 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0A455719E4780A53A451F09C /* Pods-nRF Toolbox.debug.xcconfig */,
+				28F7349095038A3F55F27F8C /* Pods-nRF Toolbox.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		3001EBB21D1BE1FB008C5C37 /* ContinuousGlucoseMonitoring */ = {
 			isa = PBXGroup;
 			children = (
@@ -246,15 +255,6 @@
 			path = BluetoothManager;
 			sourceTree = "<group>";
 		};
-		33A64560CF9923BFDA33479F /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				10485F7219578AE764CD532A /* Pods-nRF Toolbox.debug.xcconfig */,
-				80046CCC58A5D00193AE05B1 /* Pods-nRF Toolbox.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		5214D0CF18881D0200460637 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -273,7 +273,7 @@
 				5217F40A1859EE0000F2D5BB /* nRF ToolboxTests */,
 				5217F3E41859EE0000F2D5BB /* Frameworks */,
 				5217F3E31859EE0000F2D5BB /* Products */,
-				33A64560CF9923BFDA33479F /* Pods */,
+				022A9DC491EC95659788F163 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -297,7 +297,7 @@
 				5217F3E71859EE0000F2D5BB /* CoreGraphics.framework */,
 				5217F3E91859EE0000F2D5BB /* UIKit.framework */,
 				89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */,
-				210BB56BD40BE6023AD766CE /* Pods_nRF_Toolbox.framework */,
+				24D84A6CFE99FD917A7222B7 /* Pods_nRF_Toolbox.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -557,13 +557,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5217F4141859EE0000F2D5BB /* Build configuration list for PBXNativeTarget "nRF Toolbox" */;
 			buildPhases = (
-				10D50A7C2893C9E7420FD491 /* [CP] Check Pods Manifest.lock */,
+				ED33C8D3ED1984AAE7F51DD3 /* [CP] Check Pods Manifest.lock */,
 				5217F3DE1859EE0000F2D5BB /* Sources */,
 				5217F3DF1859EE0000F2D5BB /* Frameworks */,
 				5217F3E01859EE0000F2D5BB /* Resources */,
 				0E645A0E1CBF943000D36AD0 /* Embed Frameworks */,
-				A0C8A1420351C7C12894DF31 /* [CP] Embed Pods Frameworks */,
-				8623E8FC53C27E914EEBA1FB /* [CP] Copy Pods Resources */,
+				0ED4FF3762A1B098595E6093 /* [CP] Embed Pods Frameworks */,
+				48275A682DFCE468F90A906C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -665,22 +665,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		10D50A7C2893C9E7420FD491 /* [CP] Check Pods Manifest.lock */ = {
+		0ED4FF3762A1B098595E6093 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8623E8FC53C27E914EEBA1FB /* [CP] Copy Pods Resources */ = {
+		48275A682DFCE468F90A906C /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -695,19 +695,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A0C8A1420351C7C12894DF31 /* [CP] Embed Pods Frameworks */ = {
+		ED33C8D3ED1984AAE7F51DD3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run \'pod install\' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -909,7 +909,7 @@
 		};
 		5217F4151859EE0000F2D5BB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 10485F7219578AE764CD532A /* Pods-nRF Toolbox.debug.xcconfig */;
+			baseConfigurationReference = 0A455719E4780A53A451F09C /* Pods-nRF Toolbox.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = "$(inherited)";
@@ -959,7 +959,7 @@
 		};
 		5217F4161859EE0000F2D5BB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 80046CCC58A5D00193AE05B1 /* Pods-nRF Toolbox.release.xcconfig */;
+			baseConfigurationReference = 28F7349095038A3F55F27F8C /* Pods-nRF Toolbox.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = "$(inherited)";

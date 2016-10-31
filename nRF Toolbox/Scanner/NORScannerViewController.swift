@@ -61,16 +61,15 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
     }
     
     func getRSSIImage(RSSI anRSSIValue: Int32) -> UIImage {
-        
         var image: UIImage
         
         if (anRSSIValue < -90) {
             image = UIImage(named: "Signal_0")!
-        }else if (anRSSIValue < -70) {
+        } else if (anRSSIValue < -70) {
             image = UIImage(named: "Signal_1")!
-        }else if (anRSSIValue < -50) {
+        } else if (anRSSIValue < -50) {
             image = UIImage(named: "Signal_2")!
-        }else{
+        } else {
             image = UIImage(named: "Signal_3")!
         }
         
@@ -91,10 +90,10 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
         return retreivedPeripherals
     }
     
-    /*!
-     * @brief Starts scanning for peripherals with rscServiceUUID
-     * @param enable If YES, this method will enable scanning for bridge devices, if NO it will stop scanning
-     * @return true if success, false if Bluetooth Manager is not in CBCentralManagerStatePoweredOn state.
+    /**
+     * Starts scanning for peripherals with rscServiceUUID.
+     * - parameter enable: If YES, this method will enable scanning for bridge devices, if NO it will stop scanning
+     * - returns: true if success, false if Bluetooth Manager is not in CBCentralManagerStatePoweredOn state.
      */
     func scanForPeripherals(_ enable:Bool) -> Bool {
         guard bluetoothManager?.state == .poweredOn else {
@@ -137,8 +136,8 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
         bluetoothManager = CBCentralManager(delegate: self, queue: centralQueue)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.default, animated: true)
     }
     

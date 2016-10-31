@@ -103,7 +103,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
         super.viewDidLoad()
 
         // Rotate the vertical label
-        self.verticalLabel.transform = CGAffineTransform(translationX: -145.0, y: 0.0).rotated(by: CGFloat(-M_PI_2))
+        self.verticalLabel.transform = CGAffineTransform(translationX: -185.0, y: 0.0).rotated(by: CGFloat(-M_PI_2))
         cbgmTableView.dataSource = self
     }
     
