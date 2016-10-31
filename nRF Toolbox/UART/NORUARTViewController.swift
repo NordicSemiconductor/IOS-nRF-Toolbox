@@ -24,7 +24,7 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
 
     //MARK: - View Actions
     @IBAction func connectionButtonTapped(_ sender: AnyObject) {
-        bluetoothManager?.cancelPeriphralConnection()
+        bluetoothManager?.cancelPeripheralConnection()
     }
     @IBAction func editButtonTapped(_ sender: AnyObject) {
         let currentEditMode = editMode!
@@ -202,7 +202,7 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
                 aButton.backgroundColor = UIColor(red: 200.0/255.0, green: 200.0/255.0, blue: 200.0/255.0, alpha: 1.0)
                 aButton.setImage(nil, for: UIControlState())
                 aButton.isEnabled = false
-            }else{
+            } else {
                 aButton.backgroundColor = UIColor(red: 0.0/255.0, green:156.0/255.0, blue:222.0/255.0, alpha: 1.0)
                 aButton.setImage(UIImage(named: buttonsImageNames![aButton.tag-1] as! String), for: UIControlState())
                 aButton.isEnabled = true
