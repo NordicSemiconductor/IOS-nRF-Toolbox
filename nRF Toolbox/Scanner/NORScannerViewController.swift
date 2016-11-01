@@ -161,19 +161,19 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let aCell = tableView.dequeueReusableCell(withIdentifier: "Cell")
+        let aCell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
         //Update cell content
         let scannedPeripheral = peripherals?.object(at: indexPath.row) as! NORScannedPeripheral
-        aCell?.textLabel?.text = scannedPeripheral.name()
+        aCell.textLabel!.text = scannedPeripheral.name()
         if scannedPeripheral.isConnected == true {
-            aCell?.imageView?.image = UIImage(named: "Connected")
+            aCell.imageView!.image = UIImage(named: "Connected")
         } else {
             let RSSIImage = self.getRSSIImage(RSSI: scannedPeripheral.RSSI)
-            aCell?.imageView?.image = RSSIImage
+            aCell.imageView!.image = RSSIImage
         }
         
-        return aCell!
+        return aCell
     }
 
     //MARK: - UITableViewDelegate
