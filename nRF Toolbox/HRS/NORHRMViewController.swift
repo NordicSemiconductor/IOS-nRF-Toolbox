@@ -301,7 +301,7 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         return UInt(hrValues!.count)
     }
     
-    func numberForPlot(_ plot: CPTPlot, field fieldEnum: UInt, recordIndex idx: UInt) -> AnyObject? {
+    func number(for plot: CPTPlot, field fieldEnum: UInt, record idx: UInt) -> Any? {
         let fieldVal = NSInteger(fieldEnum)
         let scatterPlotField = CPTScatterPlotField(rawValue: fieldVal)
         switch (scatterPlotField!) {
@@ -416,7 +416,6 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     }
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-
         guard error == nil else {
             print(String(format:"Error occurred while discovering characteristic: %@", (error?.localizedDescription)!))
             return
