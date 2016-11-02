@@ -88,10 +88,15 @@
 				<string>16</string>
 				<string>18</string>
 				<string>20</string>
-				<string>22 (works on iPhone 7)</string>
-				<string>23 (may not work)</string>
-				<string>24 (may not work)</string>
-				<string>25 (may not work)</string>
+				<string>22 (max for iPhone 7 iOS 10.1)</string>
+				<string>23</string>
+				<string>24</string>
+				<string>25</string>
+				<string>26</string>
+				<string>27</string>
+				<string>28</string>
+				<string>29 (max for iPhone 6+ iOS 10.1)</string>
+				<string>30</string>
 			</array>
 			<key>Values</key>
 			<array>
@@ -108,6 +113,11 @@
 				<string>23</string>
 				<string>24</string>
 				<string>25</string>
+				<string>26</string>
+				<string>27</string>
+				<string>28</string>
+				<string>29</string>
+				<string>30</string>
 			</array>
 		</dict>
 		<dict>
