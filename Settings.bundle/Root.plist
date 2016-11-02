@@ -79,14 +79,19 @@
 			<integer>12</integer>
 			<key>Titles</key>
 			<array>
-				<string>Disabled</string>
+				<string>Disabled (may not work)</string>
 				<string>1</string>
 				<string>2</string>
 				<string>6</string>
 				<string>12</string>
-				<string>25</string>
-				<string>50</string>
-				<string>100</string>
+				<string>14</string>
+				<string>16</string>
+				<string>18</string>
+				<string>20</string>
+				<string>22 (works on iPhone 7)</string>
+				<string>23 (may not work)</string>
+				<string>24 (may not work)</string>
+				<string>25 (may not work)</string>
 			</array>
 			<key>Values</key>
 			<array>
@@ -95,9 +100,14 @@
 				<integer>2</integer>
 				<integer>6</integer>
 				<integer>12</integer>
-				<integer>25</integer>
-				<integer>50</integer>
-				<integer>100</integer>
+				<integer>14</integer>
+				<string>16</string>
+				<integer>18</integer>
+				<integer>20</integer>
+				<string>22</string>
+				<string>23</string>
+				<string>24</string>
+				<string>25</string>
 			</array>
 		</dict>
 		<dict>
