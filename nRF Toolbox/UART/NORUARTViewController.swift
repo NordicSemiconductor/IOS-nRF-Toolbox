@@ -117,10 +117,12 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
         self.connectionButton.setTitle("CANCEL", for: UIControlState())
         bluetoothManager!.connectPeripheral(peripheral: aPeripheral)
     }
+    
     //MARK: - BluetoothManagerDelegate
     func peripheralReady() {
         print("Peripheral is ready")
     }
+    
     func peripheralNotSupported() {
         print("Peripheral is not supported")
     }
@@ -180,6 +182,7 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
         userDefaults.set(self.buttonsCommands, forKey: "buttonsCommands")
         userDefaults.synchronize()
     }
+    
     //MARK: - NORUArtViewController Implementation
     func retrieveButtonsConfiguration() {
         let userDefaults = UserDefaults.standard

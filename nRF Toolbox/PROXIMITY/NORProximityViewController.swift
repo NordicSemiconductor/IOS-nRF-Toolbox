@@ -14,11 +14,11 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
     
     //MARK: - Class Properties
     var bluetoothManager                        : CBCentralManager?
-    var proximityImmediateAlertServiceUUID      : CBUUID?
-    var proximityLinkLossServiceUUID            : CBUUID?
-    var proximityAlertLevelCharacteristicUUID   : CBUUID?
-    var batteryServiceUUID                      : CBUUID?
-    var batteryLevelCharacteristicUUID          : CBUUID?
+    var proximityImmediateAlertServiceUUID      : CBUUID
+    var proximityLinkLossServiceUUID            : CBUUID
+    var proximityAlertLevelCharacteristicUUID   : CBUUID
+    var batteryServiceUUID                      : CBUUID
+    var batteryLevelCharacteristicUUID          : CBUUID
     var isImmidiateAlertOn                      : Bool?
     var isBackButtonPressed                     : Bool?
     var proximityPeripheral                     : CBPeripheral?
@@ -58,13 +58,13 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
     
     //MARK: - UIVIew Delegate
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
         // Custom initialization
         proximityImmediateAlertServiceUUID      = CBUUID(string: NORServiceIdentifiers.proximityImmediateAlertServiceUUIDString)
         proximityLinkLossServiceUUID            = CBUUID(string: NORServiceIdentifiers.proximityLinkLossServiceUUIDString)
         proximityAlertLevelCharacteristicUUID   = CBUUID(string: NORServiceIdentifiers.proximityAlertLevelCharacteristicUUIDString)
         batteryServiceUUID                      = CBUUID(string: NORServiceIdentifiers.batteryServiceUUIDString)
         batteryLevelCharacteristicUUID          = CBUUID(string: NORServiceIdentifiers.batteryLevelCharacteristicUUIDString)
+        super.init(coder: aDecoder)
     }
     
     override func viewDidLoad() {
@@ -183,9 +183,10 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
         isImmidiateAlertOn = false
         self.immidiateAlertCharacteristic = nil
     }
-
+    
     func applicationDidEnterBackgroundCallback() {
-        NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(proximityPeripheral?.name)")
+        let name = proximityPeripheral?.name ?? "peripheral"
+        NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(name).")
     }
     
     func applicationDidBecomeActiveCallback() {
@@ -222,9 +223,10 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
     
     //MARK: - CBCentralManagerDelegate
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        if central.state == .poweredOn {
+        if central.state == .poweredOff {
+            print("Bluetooth powered off")
         } else {
-            print("Bluetooth not ON")
+            print("Bluetooth powered on")
         }
     }
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
@@ -245,7 +247,7 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
             NORAppUtilities.showBackgroundNotification(message: "\(self.proximityPeripheral?.name) is within range!")
         }
         
-        self.proximityPeripheral?.discoverServices([proximityLinkLossServiceUUID!, proximityImmediateAlertServiceUUID!, batteryServiceUUID!])
+        peripheral.discoverServices([proximityLinkLossServiceUUID, proximityImmediateAlertServiceUUID, batteryServiceUUID])
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
@@ -262,22 +264,22 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         print("Peripheral disconnected or out of range!")
         DispatchQueue.main.async(execute: {
-            let message = "\(self.proximityPeripheral?.name) is out of range!"
+            let name = peripheral.name ?? "Peripheral"
             if error != nil {
-                print("Error while disconnecting or link loss")
                 self.lockImage.isHighlighted = false
                 self.disableFindmeButton()
-                self.bluetoothManager?.connect(self.proximityPeripheral!, options: [CBConnectPeripheralOptionNotifyOnNotificationKey : NSNumber(value: true as Bool)])
+                self.bluetoothManager?.connect(peripheral, options: [CBConnectPeripheralOptionNotifyOnNotificationKey : NSNumber(value: true as Bool)])
+                let message = "\(name) is out of range!"
                 if NORAppUtilities.isApplicationInactive() {
                     NORAppUtilities.showBackgroundNotification(message: message)
-                }else{
+                } else {
                     NORAppUtilities.showAlert(title: "PROXIMITY", andMessage: message)
                 }
                 self.playSoundOnce()
-            }else{
+            } else {
                 self.connectionButton.setTitle("CONNECT", for: UIControlState())
                 if NORAppUtilities.isApplicationInactive() {
-                    NORAppUtilities.showBackgroundNotification(message: "Peripheral \(peripheral.name)  is disconnected")
+                    NORAppUtilities.showBackgroundNotification(message: "\(name) is disconnected.")
                 }
                 
                 self.proximityPeripheral = nil
@@ -291,39 +293,51 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
     //MARK: - CBPeripheralDelegate
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+        guard error == nil else {
+            print("An error occured while discovering services: \(error!.localizedDescription)")
+            bluetoothManager!.cancelPeripheralConnection(peripheral)
+            return;
+        }
+        
         for aService : CBService in (peripheral.services)! {
-            if aService.uuid == CBUUID(string: "1803") {
+            if aService.uuid == proximityLinkLossServiceUUID {
                 print("Link loss service is found")
-                proximityPeripheral?.discoverCharacteristics([CBUUID(string: "2A06")], for: aService)
-            } else if aService.uuid == CBUUID(string: "1802") {
+                peripheral.discoverCharacteristics([proximityAlertLevelCharacteristicUUID], for: aService)
+            } else if aService.uuid == proximityImmediateAlertServiceUUID {
                 print("Immediate alert service is found")
-                proximityPeripheral?.discoverCharacteristics([CBUUID(string: "2A06")], for: aService)
+                peripheral.discoverCharacteristics([proximityAlertLevelCharacteristicUUID], for: aService)
             }else if aService.uuid == batteryServiceUUID {
                 print("Battery service is found")
-                proximityPeripheral?.discoverCharacteristics(nil, for: aService)
+                peripheral.discoverCharacteristics([batteryLevelCharacteristicUUID], for: aService)
             }
         }
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-        if service.uuid == CBUUID(string:"1803") {
+        guard error == nil else {
+            print("Error occurred while discovering characteristic: \(error!.localizedDescription)")
+            bluetoothManager!.cancelPeripheralConnection(peripheral)
+            return
+        }
+        
+        if service.uuid == proximityLinkLossServiceUUID {
             for aCharacteristic : CBCharacteristic in service.characteristics! {
-                if aCharacteristic.uuid == CBUUID(string: "2A06"){
+                if aCharacteristic.uuid == proximityAlertLevelCharacteristicUUID {
                     var val = UInt8(1)
                     let data = Data(bytes: &val, count: 1)
-                    proximityPeripheral?.writeValue(data, for: aCharacteristic, type: CBCharacteristicWriteType.withResponse)
+                    peripheral.writeValue(data, for: aCharacteristic, type: CBCharacteristicWriteType.withResponse)
                 }
             }
-        } else if service.uuid == CBUUID(string:"1802") {
+        } else if service.uuid == proximityImmediateAlertServiceUUID {
             for aCharacteristic : CBCharacteristic in service.characteristics! {
-                if aCharacteristic.uuid == CBUUID(string: "2A06"){
+                if aCharacteristic.uuid == proximityAlertLevelCharacteristicUUID {
                     immidiateAlertCharacteristic = aCharacteristic
                 }
             }
         } else if service.uuid == batteryServiceUUID {
             for aCharacteristic : CBCharacteristic in service.characteristics! {
                 if aCharacteristic.uuid == batteryLevelCharacteristicUUID {
-                    proximityPeripheral?.readValue(for: aCharacteristic)
+                    peripheral.readValue(for: aCharacteristic)
                 }
             }
         }
@@ -331,16 +345,17 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         guard error == nil else {
-            print("Error while reading battery value")
+            print("Error occurred while updating characteristic value: \(error!.localizedDescription)")
             return
         }
+        
         print(characteristic.uuid)
         DispatchQueue.main.async(execute: {
             if characteristic.uuid == self.batteryLevelCharacteristicUUID {
                 let value = characteristic.value!
                 let array = UnsafeMutablePointer<UInt8>(mutating: (value as NSData).bytes.bindMemory(to: UInt8.self, capacity: value.count))
                 let batteryLevel = UInt8(array[0])
-                let text = String(format:"%d%%", batteryLevel)
+                let text = "\(batteryLevel)%"
                 self.battery.setTitle(text, for: UIControlState.disabled)
 
                 if self.battery.tag == 0 {
@@ -372,10 +387,10 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
 
     func peripheralManager(_ peripheral: CBPeripheralManager, didAdd service: CBService, error: Error?) {
         guard error == nil else {
-            print("Error while adding peripheral service")
+            print("Error while adding peripheral service: \(error!.localizedDescription)")
             return
         }
-        print("PeripheralManager added sercvice successfulyy")
+        print("PeripheralManager added sercvice successfully")
     }
     
     func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveWrite requests: [CBATTRequest]) {
@@ -401,7 +416,6 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
                 break
             default:
                 break
-                
             }
         }
 

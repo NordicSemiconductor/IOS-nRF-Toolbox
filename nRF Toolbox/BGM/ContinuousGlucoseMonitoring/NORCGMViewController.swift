@@ -108,7 +108,8 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
     }
     
     func appdidEnterBackground() {
-        NORAppUtilities.showBackgroundNotification(message: String(format: "You are still connected to %@ peripheral. It will collect data also in background.", connectedPeripheral!.name!))
+        let name = connectedPeripheral?.name ?? "peripheral"
+        NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(name). It will collect data also in background.")
     }
     
     func appDidBecomeActiveBackground(_ aNotification : Notification) {
@@ -200,14 +201,14 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let aReading = readings?.object(at: (indexPath as NSIndexPath).row) as? NORCGMReading
-        let aCell = tableView.dequeueReusableCell(withIdentifier: "CGMCell", for: indexPath) as? NORCGMItemCell
+        let aCell = tableView.dequeueReusableCell(withIdentifier: "CGMCell", for: indexPath) as! NORCGMItemCell
 
-        aCell?.type.text = aReading?.typeAsString()
-        aCell?.timestamp.text = dateFormat.string(from: Date.init(timeIntervalSinceNow: Double((aReading?.timeOffsetSinceSessionStart)!)))
-        aCell?.value.text = String(format: "%.0f", (aReading?.glucoseConcentration)!)
-        aCell?.unit.text = "mg/DL"
+        aCell.type.text = aReading?.typeAsString()
+        aCell.timestamp.text = dateFormat.string(from: Date.init(timeIntervalSinceNow: Double((aReading?.timeOffsetSinceSessionStart)!)))
+        aCell.value.text = String(format: "%.0f", (aReading?.glucoseConcentration)!)
+        aCell.unit.text = "mg/DL"
         
-        return aCell!
+        return aCell
     }
 
     func showUserInputAlert(withMessage aMessage: String) {
@@ -233,22 +234,21 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
         if segue.identifier == "scan" {
             // Set this contoller as scanner delegate
             let nc = segue.destination
-            let controller = nc.childViewControllerForStatusBarHidden as? NORScannerViewController
+            let controller = nc.childViewControllerForStatusBarHidden as! NORScannerViewController
 
-            controller?.filterUUID = cbgmServiceUUID
-            controller?.delegate = self
+            controller.filterUUID = cbgmServiceUUID
+            controller.delegate = self
         }
         
         if segue.identifier == "details" {
-            let controller = segue.destination as? NORCGMDetailsViewController
+            let controller = segue.destination as! NORCGMDetailsViewController
             let aReading = readings!.object(at: ((cbgmTableView.indexPathForSelectedRow as NSIndexPath?)?.row)!)
-            controller?.reading = aReading as? NORCGMReading
+            controller.reading = aReading as? NORCGMReading
         }
     }
 
     //MARK: - Action Sheet delegate methods
     func actionSheet(_ actionSheet: UIActionSheet, clickedButtonAt buttonIndex: Int) {
-
         var accessParam : [UInt8] = []
         var size  : NSInteger = 0
         var clearList :Bool = true
@@ -303,8 +303,10 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
     //MARK: - Central Manager delegate methods
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        if central.state != .poweredOn {
-            print("Central manager not powered on!")
+        if central.state == .poweredOff {
+            print("Bluetooth powered off")
+        } else {
+            print("Bluetooth powered on")
         }
     }
     
@@ -325,7 +327,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
         
         // Peripheral has connected. Discover required services
         connectedPeripheral = peripheral
-        connectedPeripheral?.discoverServices([cbgmServiceUUID, batteryServiceUUID])
+        peripheral.discoverServices([cbgmServiceUUID, batteryServiceUUID])
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
@@ -344,7 +346,8 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
         DispatchQueue.main.async(execute: {
             self.connectionButton.setTitle("CONNECT", for: UIControlState())
             if NORAppUtilities.isApplicationInactive() {
-                NORAppUtilities.showBackgroundNotification(message: String(format: "Peripheral %s is disconnected", peripheral.name!))
+                let name = peripheral.name ?? "Peripheral"
+                NORAppUtilities.showBackgroundNotification(message: "\(name) is disconnected.")
             }
             
             self.connectedPeripheral = nil
@@ -359,16 +362,16 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
     //MARK: - CBPeripheralDelegate methods
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         guard error == nil else {
-            print("Error discovering service: %@", error!.localizedDescription)
-            self.bluetoothManager?.cancelPeripheralConnection(self.connectedPeripheral!)
+            print("An error occured while discovering services: \(error!.localizedDescription)")
+            bluetoothManager!.cancelPeripheralConnection(peripheral)
             return
         }
+        
         for aService in peripheral.services! {
             // Discovers the characteristics for a given service
             if  aService.uuid == cbgmServiceUUID {
-                connectedPeripheral?.discoverCharacteristics(
-                    [
-                        cgmGlucoseMeasurementCharacteristicUUID,
+                peripheral.discoverCharacteristics(
+                    [   cgmGlucoseMeasurementCharacteristicUUID,
                         cgmGlucoseMeasurementContextCharacteristicUUID,
                         cgmRecordAccessControlPointCharacteristicUUID,
                         cgmFeatureCharacteristicUUID,
@@ -377,14 +380,19 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
                         cgmSessionRunTimeCharacteristicUUID,
                         cgmSpecificOpsControlPointCharacteristicUUID
                     ], for: aService)
-            }
-            else if aService.uuid == batteryServiceUUID {
-                connectedPeripheral?.discoverCharacteristics([batteryLevelCharacteristicUUID], for: aService)
+            } else if aService.uuid == batteryServiceUUID {
+                peripheral.discoverCharacteristics([batteryLevelCharacteristicUUID], for: aService)
             }
         }
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+        guard error == nil else {
+            print("Error occurred while discovering characteristic: \(error!.localizedDescription)")
+            bluetoothManager!.cancelPeripheralConnection(peripheral)
+            return
+        }
+        
         // Characteristics for one of those services has been found
         if service.uuid == cbgmServiceUUID {
             for characteristic in service.characteristics! {
@@ -401,10 +409,10 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
                     cgmSpecificOpsControlPointCharacteristic = characteristic
                 }
             }
-        }else if service.uuid == batteryServiceUUID {
+        } else if service.uuid == batteryServiceUUID {
             for characteristic in service.characteristics! {
                 if characteristic.uuid == batteryLevelCharacteristicUUID {
-                    connectedPeripheral?.readValue(for: characteristic)
+                    peripheral.readValue(for: characteristic)
                     break
                 }
             }
@@ -412,12 +420,17 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        guard error == nil else {
+            print("Error occurred while updating characteristic value: \(error!.localizedDescription)")
+            return
+        }
+        
         // Decode the characteristic data
         let data = characteristic.value
         var array = UnsafeMutablePointer<UInt8>(mutating: (data! as NSData).bytes.bindMemory(to: UInt8.self, capacity: data!.count))
         if characteristic.uuid == batteryLevelCharacteristicUUID {
             let batteryLevel = NORCharacteristicReader.readUInt8Value(ptr: &array)
-            let text = String(format:"%d%%", batteryLevel)
+            let text = "\(batteryLevel)%"
             
             // Scanner uses other queue to send events. We must edit UI in the main queue
             DispatchQueue.main.async(execute: {

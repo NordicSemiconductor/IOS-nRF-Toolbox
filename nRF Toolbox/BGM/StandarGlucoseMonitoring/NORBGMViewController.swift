@@ -36,13 +36,13 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     var connectedPeripheral                             : CBPeripheral?
     var bgmRecordAccessControlPointCharacteristic       : CBCharacteristic?
     var readings                                        : NSMutableArray?
-    var dateFormatter                                   : DateFormatter?
-    var bgmServiceUUID                                  : CBUUID?
-    var bgmGlucoseMeasurementCharacteristicUUID         : CBUUID?
-    var bgmGlucoseMeasurementContextCharacteristicUUID  : CBUUID?
-    var bgmRecordAccessControlPointCharacteristicUUID   : CBUUID?
-    var batteryServiceUUID                              : CBUUID?
-    var batteryLevelCharacteristicUUID                  : CBUUID?
+    var dateFormatter                                   : DateFormatter
+    var bgmServiceUUID                                  : CBUUID
+    var bgmGlucoseMeasurementCharacteristicUUID         : CBUUID
+    var bgmGlucoseMeasurementContextCharacteristicUUID  : CBUUID
+    var bgmRecordAccessControlPointCharacteristicUUID   : CBUUID
+    var batteryServiceUUID                              : CBUUID
+    var batteryLevelCharacteristicUUID                  : CBUUID
 
     enum BGMViewActions : Int {
         case refresh            = 0
@@ -76,10 +76,9 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     
     //MARK: - UIViewController Methods
     required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)!
         readings = NSMutableArray(capacity: 20)
         dateFormatter = DateFormatter()
-        dateFormatter?.dateFormat = "dd.MM.yyyy, hh:mm"
+        dateFormatter.dateFormat = "dd.MM.yyyy, hh:mm"
         
         bgmServiceUUID                                  = CBUUID(string: NORServiceIdentifiers.bgmServiceUUIDString)
         bgmGlucoseMeasurementCharacteristicUUID         = CBUUID(string: NORServiceIdentifiers.bgmGlucoseMeasurementCharacteristicUUIDString)
@@ -87,6 +86,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
         bgmRecordAccessControlPointCharacteristicUUID   = CBUUID(string: NORServiceIdentifiers.bgmRecordAccessControlPointCharacteristicUUIDString)
         batteryServiceUUID                              = CBUUID(string: NORServiceIdentifiers.batteryServiceUUIDString)
         batteryLevelCharacteristicUUID                  = CBUUID(string: NORServiceIdentifiers.batteryLevelCharacteristicUUIDString)
+        super.init(coder: aDecoder)!
     }
 
     override func viewDidLoad() {
@@ -170,7 +170,8 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     }
     
     func applicationDidEnterBackgroundHandler() {
-        NORAppUtilities.showBackgroundNotification(message: String(format: "You are still connected to %s peripheral. It will collect data also in background.", (connectedPeripheral?.name)!))
+        let name = connectedPeripheral?.name ?? "peripheral"
+        NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(name). It will collect data also in background.")
     }
     
     func applicationDidBecomeActiveHandler(){
@@ -180,34 +181,41 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     //MARK: - CBPeripheralDelegate Methods
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         guard error == nil else {
-            print(String(format: "Error discovering service: %s", (error?.localizedDescription)!))
-            bluetoothManager?.cancelPeripheralConnection(connectedPeripheral!)
+            print("An error occured while discovering services: \(error!.localizedDescription)")
+            bluetoothManager!.cancelPeripheralConnection(peripheral)
             return
         }
         
         for aService: CBService in peripheral.services! {
             if aService.uuid.isEqual(bgmServiceUUID) {
-                connectedPeripheral?.discoverCharacteristics([bgmGlucoseMeasurementCharacteristicUUID!,bgmGlucoseMeasurementContextCharacteristicUUID!, bgmRecordAccessControlPointCharacteristicUUID!],
+                peripheral.discoverCharacteristics(
+                    [bgmGlucoseMeasurementCharacteristicUUID, bgmGlucoseMeasurementContextCharacteristicUUID, bgmRecordAccessControlPointCharacteristicUUID],
                     for: aService)
             }else if aService.uuid.isEqual(batteryServiceUUID){
-                connectedPeripheral?.discoverCharacteristics([batteryLevelCharacteristicUUID!], for: aService)
+                peripheral.discoverCharacteristics([batteryLevelCharacteristicUUID], for: aService)
             }
         }
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+        guard error == nil else {
+            print("Error occurred while discovering characteristic: \(error!.localizedDescription)")
+            bluetoothManager!.cancelPeripheralConnection(peripheral)
+            return
+        }
+        
         if service.uuid.isEqual(bgmServiceUUID) {
             for aCharacteristic : CBCharacteristic in service.characteristics! {
                 if aCharacteristic.uuid.isEqual(bgmGlucoseMeasurementCharacteristicUUID){
                     peripheral.setNotifyValue(true, for: aCharacteristic)
-                }else if aCharacteristic.uuid.isEqual(bgmGlucoseMeasurementContextCharacteristicUUID){
+                } else if aCharacteristic.uuid.isEqual(bgmGlucoseMeasurementContextCharacteristicUUID) {
                     peripheral.setNotifyValue(true, for: aCharacteristic)
-                }else if aCharacteristic.uuid.isEqual(bgmRecordAccessControlPointCharacteristicUUID) {
+                } else if aCharacteristic.uuid.isEqual(bgmRecordAccessControlPointCharacteristicUUID) {
                     bgmRecordAccessControlPointCharacteristic = aCharacteristic
                     peripheral.setNotifyValue(true, for: aCharacteristic)
                 }
             }
-        }else if service.uuid.isEqual(batteryServiceUUID) {
+        } else if service.uuid.isEqual(batteryServiceUUID) {
             for aCharacteristic : CBCharacteristic in service.characteristics! {
                 if aCharacteristic.uuid.isEqual(batteryLevelCharacteristicUUID){
                     peripheral.readValue(for: aCharacteristic)
@@ -218,11 +226,16 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        guard error == nil else {
+            print("Error occurred while updating characteristic value: \(error!.localizedDescription)")
+            return
+        }
+        
         var array = UnsafeMutablePointer<UInt8>(OpaquePointer(((characteristic.value as NSData?)?.bytes)!))
         
         if characteristic.uuid.isEqual(batteryLevelCharacteristicUUID) {
             let batteryLevel = NORCharacteristicReader.readUInt8Value(ptr: &array)
-            let text = String(format: "%d%%", batteryLevel)
+            let text = "\(batteryLevel)%"
             
             DispatchQueue.main.async(execute: {
                 self.battery.setTitle(text, for: UIControlState.disabled)
@@ -251,8 +264,8 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
             if index != NSNotFound {
                 let reading = readings?.object(at: index!) as! NORGlucoseReading
                 reading.context = context
-            }else{
-                print("Glucose measurement with sequence number: %d not found", context.sequenceNumber)
+            } else {
+                print("Glucose measurement with sequence number: \(context.sequenceNumber) not found")
             }
         } else if characteristic.uuid.isEqual(bgmRecordAccessControlPointCharacteristicUUID) {
             print("OpCode: \(array[0]), Operator: \(array[2])")
@@ -301,8 +314,10 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     }
     //MARK: - CBCentralManagerDelegate Methdos
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        if central.state != .poweredOn {
-            print("Bluetooth is not on!")
+        if central.state == .poweredOff {
+            print("Bluetooth powered off")
+        } else {
+            print("Bluetooth powered on")
         }
     }
     
@@ -323,7 +338,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
             self.setupNotifications()
         }
         connectedPeripheral = peripheral
-        connectedPeripheral?.discoverServices([bgmServiceUUID!, batteryServiceUUID!])
+        connectedPeripheral?.discoverServices([bgmServiceUUID, batteryServiceUUID])
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
@@ -341,7 +356,8 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
             self.connectButton.setTitle("CONNECT", for: UIControlState())
             
             if NORAppUtilities.isApplicationInactive() == true {
-                NORAppUtilities.showBackgroundNotification(message: String(format: "%s peripheral is disconnected", peripheral.name!))
+                let name = peripheral.name ?? "Peripheral"
+                NORAppUtilities.showBackgroundNotification(message: "\(name) is disconnected.")
             }
             self.disableActionButton()
             self.clearUI()
@@ -359,7 +375,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
         let cell = tableView.dequeueReusableCell(withIdentifier: "BGMCell") as! NORBGMItemCell
         
         let reading = (readings?.object(at: (indexPath as NSIndexPath).row))! as! NORGlucoseReading
-        cell.timestamp.text = dateFormatter?.string(from: reading.timestamp! as Date)
+        cell.timestamp.text = dateFormatter.string(from: reading.timestamp! as Date)
         
         if reading.glucoseConcentrationTypeAndLocationPresent == true {
             cell.type.text = reading.typeAsString()
