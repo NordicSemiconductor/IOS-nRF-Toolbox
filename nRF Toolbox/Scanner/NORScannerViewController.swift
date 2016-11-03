@@ -31,11 +31,6 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 
 class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITableViewDelegate, UITableViewDataSource {
-    
-    required init?(coder aDecoder: NSCoder) {
-        delegate = nil
-        super.init(coder: aDecoder)
-    }
 
     let dfuServiceUUIDString  = "00001530-1212-EFDE-1523-785FEABCD123"
     let ANCSServiceUUIDString = "7905F431-B5CE-4E99-A40F-4B1E122D00D0"
@@ -44,7 +39,7 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
     var bluetoothManager : CBCentralManager?
     var delegate         : NORScannerDelegate?
     var filterUUID       : CBUUID?
-    var peripherals      : NSMutableArray?
+    let peripherals      : NSMutableArray
     var timer            : Timer?
     
     @IBOutlet weak var devicesTable: UITableView!
@@ -54,10 +49,15 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
     }
 
     @objc func timerFire() {
-        if peripherals?.count > 0 {
+        if peripherals.count > 0 {
             emptyView.isHidden = true
             devicesTable.reloadData()
         }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        peripherals = NSMutableArray(capacity: 8)
+        super.init(coder: aDecoder)
     }
     
     func getRSSIImage(RSSI anRSSIValue: Int32) -> UIImage {
@@ -76,18 +76,21 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
         return image
     }
     
-    func getConnectedPeripherals() -> NSArray {
-        var retreivedPeripherals : NSArray
+    func loadConnectedPeripherals() {
+        var retreivedPeripherals : [CBPeripheral]
 
         if filterUUID == nil {
             let dfuServiceUUID       = CBUUID(string: dfuServiceUUIDString)
             let ancsServiceUUID      = CBUUID(string: ANCSServiceUUIDString)
-            retreivedPeripherals     = (bluetoothManager?.retrieveConnectedPeripherals(withServices: [dfuServiceUUID, ancsServiceUUID]))! as NSArray
+            retreivedPeripherals     = bluetoothManager!.retrieveConnectedPeripherals(withServices: [dfuServiceUUID, ancsServiceUUID])
         } else {
-            retreivedPeripherals     = (bluetoothManager?.retrieveConnectedPeripherals(withServices: [filterUUID!]))! as NSArray
+            retreivedPeripherals     = bluetoothManager!.retrieveConnectedPeripherals(withServices: [filterUUID!])
         }
 
-        return retreivedPeripherals
+        for peripheral in retreivedPeripherals {
+            let connectedPeripheral = NORScannedPeripheral(withPeripheral: peripheral, andRSSI: 0, andIsConnected: true)
+            peripherals.add(connectedPeripheral)
+        }
     }
     
     /**
@@ -122,7 +125,6 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
     //MARK: - ViewController Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        peripherals = NSMutableArray(capacity: 8)
         devicesTable.delegate = self
         devicesTable.dataSource = self
         
@@ -153,18 +155,14 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
 
     //MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard peripherals != nil else {
-            return 0
-        }
-
-        return peripherals!.count
+        return peripherals.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let aCell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
         //Update cell content
-        let scannedPeripheral = peripherals?.object(at: indexPath.row) as! NORScannedPeripheral
+        let scannedPeripheral = peripherals.object(at: indexPath.row) as! NORScannedPeripheral
         aCell.textLabel!.text = scannedPeripheral.name()
         if scannedPeripheral.isConnected == true {
             aCell.imageView!.image = UIImage(named: "Connected")
@@ -178,10 +176,10 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
 
     //MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        bluetoothManager?.stopScan()
+        bluetoothManager!.stopScan()
         self.dismiss(animated: true, completion: nil)
         // Call delegate method
-        let peripheral = (peripherals?.object(at: indexPath.row) as? NORScannedPeripheral)?.peripheral
+        let peripheral = (peripherals.object(at: indexPath.row) as? NORScannedPeripheral)?.peripheral
         self.delegate?.centralManagerDidSelectPeripheral(withManager: bluetoothManager!, andPeripheral: peripheral!)
     }
     
@@ -192,7 +190,7 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
             return
         }
 
-        peripherals = NSMutableArray(array: self.getConnectedPeripherals())
+        loadConnectedPeripherals()
         let success = self.scanForPeripherals(true)
         if !success {
             print("Bluetooth is powered off!")
@@ -205,10 +203,10 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
             // Scanner uses other queue to send events. We must edit UI in the main queue
             DispatchQueue.main.async(execute: {
                 var sensor = NORScannedPeripheral(withPeripheral: peripheral, andRSSI: RSSI.int32Value, andIsConnected: false)
-                if ((self.peripherals?.contains(sensor)) == false) {
-                    self.peripherals?.add(sensor)
+                if ((self.peripherals.contains(sensor)) == false) {
+                    self.peripherals.add(sensor)
                 } else {
-                    sensor = (self.peripherals?.object(at: (self.peripherals?.index(of: sensor))!))! as! NORScannedPeripheral
+                    sensor = self.peripherals.object(at: self.peripherals.index(of: sensor)) as! NORScannedPeripheral
                     sensor.RSSI = RSSI.int32Value
                 }
             })

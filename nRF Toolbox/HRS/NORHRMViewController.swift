@@ -369,7 +369,6 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         
         // Peripheral has connected. Discover required services
         peripheral.discoverServices([hrServiceUUID, batteryServiceUUID])
-        peripheral.discoverServices(nil)
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {

@@ -128,7 +128,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         }
         NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackgroundHandler), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.didBecomeActiveHandler), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
-        cyclePeripheral?.discoverServices([cscServiceUUID, batteryServiceUUID])
+        peripheral.discoverServices([cscServiceUUID, batteryServiceUUID])
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {

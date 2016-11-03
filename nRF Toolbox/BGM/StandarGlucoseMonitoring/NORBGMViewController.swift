@@ -191,7 +191,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
                 peripheral.discoverCharacteristics(
                     [bgmGlucoseMeasurementCharacteristicUUID, bgmGlucoseMeasurementContextCharacteristicUUID, bgmRecordAccessControlPointCharacteristicUUID],
                     for: aService)
-            }else if aService.uuid.isEqual(batteryServiceUUID){
+            } else if aService.uuid.isEqual(batteryServiceUUID){
                 peripheral.discoverCharacteristics([batteryLevelCharacteristicUUID], for: aService)
             }
         }
@@ -338,7 +338,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
             self.setupNotifications()
         }
         connectedPeripheral = peripheral
-        connectedPeripheral?.discoverServices([bgmServiceUUID, batteryServiceUUID])
+        peripheral.discoverServices([bgmServiceUUID, batteryServiceUUID])
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
@@ -419,11 +419,8 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
                 accessParam.append(UInt8(reading.sequenceNumber! & 0xFF))
                 accessParam.append(UInt8(reading.sequenceNumber! >> 8))
                 clearList = true
-                
-                break
-            }else{
-                break
             }
+            break
         case .allRecords:
             accessParam.append(NORBGMOpCode.report_STORED_RECORDS.rawValue)
             accessParam.append(NORBGMOPerator.all_RECORDS.rawValue)
@@ -469,7 +466,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
             let controller = navigationController.childViewControllerForStatusBarHidden as! NORScannerViewController
             controller.filterUUID = bgmServiceUUID
             controller.delegate = self
-        }else if segue.identifier == "details" {
+        } else if segue.identifier == "details" {
             let controller = segue.destination as! NORBGMDetailsViewController
             controller.reading = readings?.object(at: ((bgmTableView.indexPathForSelectedRow as NSIndexPath?)?.row)!) as? NORGlucoseReading
         }
