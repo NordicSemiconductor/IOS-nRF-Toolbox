@@ -25,7 +25,7 @@ import CoreBluetooth
  does not advertise with any service UUIDs, or this is not enough, you may select a target device
  by their advertising packet or RSSI.
  */
-public protocol DFUPeripheralSelectorDelegate : class {
+@objc public protocol DFUPeripheralSelectorDelegate : class {
     /**
      Returns whether the given peripheral is a device in DFU Bootloader mode.
      

@@ -28,40 +28,35 @@ class LoggerHelper {
     }
     
     func d(_ message:String) {
-        log(withLevel: .debug, andMessage: message)
+        logger?.logWith(.debug, message: message)
     }
     
     func v(_ message:String) {
-        log(withLevel: .verbose, andMessage: message)
+        logger?.logWith(.verbose, message: message)
     }
     
     func i(_ message:String) {
-        log(withLevel: .info, andMessage: message)
+        logger?.logWith(.info, message: message)
     }
     
     func a(_ message:String) {
-        log(withLevel: .application, andMessage: message)
+        logger?.logWith(.application, message: message)
     }
     
     func w(_ message:String) {
-        log(withLevel: .warning, andMessage: message)
+        logger?.logWith(.warning, message: message)
     }
     
     func e(_ message:String) {
-        log(withLevel: .error, andMessage: message)
+        logger?.logWith(.error, message: message)
     }
     
     func w(_ error:Error) {
-        log(withLevel: .warning, andMessage: "Error \((error as NSError).code): \(error.localizedDescription)")
+        logger?.logWith(.warning, message: "Error \((error as NSError).code): \(error.localizedDescription)")
     }
     
     func e(_ error:Error) {
-        log(withLevel: .error, andMessage: "Error \((error as NSError).code): \(error.localizedDescription)")
+        logger?.logWith(.error, message: "Error \((error as NSError).code): \(error.localizedDescription)")
     }
-    
-    fileprivate func log(withLevel aLevel: LogLevel, andMessage aMessage: String) {
-        if self.logger != nil {
-            logger!.logWith(aLevel, message: aMessage)
-        }
-    }
+
 }

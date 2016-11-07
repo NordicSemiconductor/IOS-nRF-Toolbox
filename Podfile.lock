@@ -1,7 +1,7 @@
 PODS:
   - CorePlot (2.2)
-  - EVReflection (3.0.3)
-  - iOSDFULibrary (2.1.2):
+  - EVReflection (3.1.2)
+  - iOSDFULibrary (2.1.6):
     - Zip (~> 0.6)
   - SWRevealViewController (2.3.0)
   - Zip (0.6.0)
@@ -19,13 +19,13 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   EVReflection:
-    :commit: ad676ba078b4d41742d0f1678127e4d564bb30ac
+    :commit: a1c0d785d3df90de27a52135d8071ea1bb7defc7
     :git: https://github.com/evermeer/EVReflection.git
 
 SPEC CHECKSUMS:
   CorePlot: cbe0c6e14220705e32e06a89c7d6a5a908b7d7d8
-  EVReflection: affca845a5584b102b84a9568f7a4cb65ad4b8e1
-  iOSDFULibrary: c9f04463e630ab4f44f3c2de2731260a7ed753df
+  EVReflection: 102d8ca777db55200f48b80d9628c8d50fb4109d
+  iOSDFULibrary: 1d597b90fed43a68aba886443a0045d900e622d9
   SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
   Zip: 805fc2fa9d2f05bbb7762d982d7a42ccdcc51f42
 

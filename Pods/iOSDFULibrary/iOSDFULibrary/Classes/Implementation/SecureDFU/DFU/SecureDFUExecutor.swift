@@ -54,7 +54,7 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
     fileprivate var firmwareSent    : Bool = false
     fileprivate var sendingFirmware : Bool = false
     fileprivate var isResuming      : Bool = false
-
+    
     // MARK: - Initialization
     init(_ initiator:SecureDFUServiceInitiator) {
         self.initiator = initiator
@@ -116,7 +116,7 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
         var totalLength = self.firmware.data.count
         let currentMaxLen = Int(maxLen!)
         var ranges = [Range<Int>]()
-        
+
         var partIdx = 0
         while(totalLength > 0) {
             var chunkRange : Range<Int>?
@@ -238,7 +238,7 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
                         self.delegate?.didStateChangedTo(DFUState.uploading)
                     })
                     self.initiator.logger?.logWith(.info, message: String(format:"Data object info CRC matches, resuming from %d%%..",completion))
-                    peripheral.setPRNValue(12)
+                    peripheral.setPRNValue(self.initiator.packetReceiptNotificationParameter)
                 }
             } else {
                 self.initiator.logger?.logWith(.error, message: "Data object CRC does not match")
@@ -270,11 +270,13 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
         self.firmwareSent    = true
         self.sendingFirmware = false
         peripheral.sendCalculateChecksumCommand()
+        
     }
 
     func firmwareChunkSendcomplete() {
         self.initiator.logger?.logWith(.application, message: "Object data chunk sent")
         peripheral.sendCalculateChecksumCommand()
+        
     }
 
     func objectCreateDataCompleted(_ data: Data?) {
@@ -294,7 +296,8 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
                 return
             }
         }
-        peripheral.sendFirmwareChunk(self.firmware, andChunkRange: aRange, andPacketCount: 12, andProgressDelegate: self.progressDelegate!)
+
+        peripheral.sendFirmwareChunk(self.firmware, andChunkRange: aRange, andPacketCount: self.initiator.packetReceiptNotificationParameter, andProgressDelegate: self.progressDelegate!)
     }
 
     func objectCreateCommandCompleted(_ data: Data?) {
@@ -335,14 +338,14 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
     }
 
     func calculateChecksumCompleted(_ offset: UInt32, CRC: UInt32) {
+
         self.crc    = CRC
         self.offset = offset
-        
         //Firmware is still being sent!
         if sendingFirmware == true {
             //verify CRC
             if verifyDataCRC(fordata: self.firmware.data, andPacketOffset: self.offset!, andperipheralCRC: self.crc!) {
-                self.initiator.logger?.logWith(.info, message: "Data checksum matches, exetuce!")
+                self.initiator.logger?.logWith(.info, message: "Data checksum matches.")
                 peripheral.sendExecuteCommand()
                 return
             }else{
@@ -371,14 +374,14 @@ internal class SecureDFUExecutor : SecureDFUPeripheralDelegate {
                 currentRangeIdx! += 1
                 createObjectDataForCurrentChunk()
                 return
-            }else{
-                sendingFirmware = false
+            } else {
+                sendingFirmware = true
                 firmwareSent    = true
             }
         }
         
         if initPacketSent == true && firmwareSent == false {
-            peripheral.setPRNValue(12) //Enable PRN at 12 packets
+            peripheral.setPRNValue(self.initiator.packetReceiptNotificationParameter)
         } else {
             self.firmwareSent    = false
             self.sendingFirmware = false

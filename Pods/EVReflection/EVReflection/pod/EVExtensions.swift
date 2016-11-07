@@ -64,7 +64,7 @@ public extension Array where Element: NSObject {
         for item in dictionaryArray {
             let arrayTypeInstance = getArrayTypeInstance(self)
             if arrayTypeInstance is EVObject {
-                let _ = EVReflection.setPropertiesfromDictionary(item, anyObject: arrayTypeInstance as! EVObject)
+                EVReflection.setPropertiesfromDictionary(item, anyObject: arrayTypeInstance as! EVObject)
                 self.append(arrayTypeInstance)
             }
         }
@@ -93,8 +93,18 @@ public extension Array where Element: NSObject {
         if let obj =  nsobject as? T {
             return obj
         }
-        // Could not instantiate array item instance. will crash
-        return (nsobject as? T)!
+        // Could not instantiate array item instance.
+        return T()
+    }
+    
+    /**
+     Get the string representation of the type of the object where this array is for
+     
+     - returns: The object type
+     */
+    public func getTypeAsString() -> String {
+        let item = self.getTypeInstance()
+        return NSStringFromClass(type(of:item))
     }
     
     /**

@@ -106,7 +106,13 @@ class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         
         let centralManager = self.initiator.centralManager
         centralManager.delegate = self
-        centralManager.connect(peripheral, options: nil)
+        if peripheral.state == .connected {
+            self.initiator.logger?.logWith(.verbose, message: "\(self.peripheral.name!) is already connected, starting DFU Process")
+            setConnectedPeripheral(peripheral: peripheral)
+        }else{
+            self.initiator.logger?.logWith(.verbose, message: "Connecting to \(self.peripheral.name!)")
+            centralManager.connect(peripheral, options: nil)
+        }
     }
     
     func pause() -> Bool {
@@ -136,6 +142,13 @@ class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         }
     }
 
+    func setConnectedPeripheral(peripheral : CBPeripheral) {
+        self.peripheral = peripheral
+        self.peripheral.delegate = self
+        self.peripheral.discoverServices(nil) //Discover all services
+        self.initiator.logger?.logWith(.verbose, message: "Discovering all services for peripheral \(self.peripheral.name!)")
+    }
+
     //MARK: - CBCentralManager delegate
     func centralManagerDidUpdateState(_ central: CBCentralManager){
         if central.state != .poweredOn {
@@ -146,10 +159,7 @@ class DFUExecutor : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         //Discover services as soon as we connect to peripheral
-        self.peripheral = peripheral
-        self.peripheral.delegate = self
-        self.peripheral.discoverServices(nil) //Discover all services
-        self.initiator.logger?.logWith(.verbose, message: "Discovering all services for peripheral \(self.peripheral)")
+        setConnectedPeripheral(peripheral: peripheral)
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {

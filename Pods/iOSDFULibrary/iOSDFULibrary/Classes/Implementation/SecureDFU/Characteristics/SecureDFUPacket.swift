@@ -99,12 +99,20 @@ internal class SecureDFUPacket {
             packetsToSendNow = totalPackets
         }
         
+        // This is called when we no longer have data to send (PRN received after the whole object was sent)
+        // Fixes issue IDFU-9
+        if packetsToSendNow == 0 {
+            aCompletion(nil)
+            return
+        }
+
         // Initialize timers
         if bytesSent == 0 {
             startTime = CFAbsoluteTimeGetCurrent()
             lastTime = startTime
         }
         
+        let originalPacketsToSendNow = packetsToSendNow
         while packetsToSendNow > 0 {
             let bytesLeft = bytesTotal - bytesSent
             let packetLength = min(bytesLeft, PacketSize)
@@ -133,13 +141,22 @@ internal class SecureDFUPacket {
                 lastTime = now
                 
                 DispatchQueue.main.async(execute: {
-                    //Notify handler of current chunk progress
-                    //to start sending next chunk
+                    // Notify handler of current chunk progress
+                    // to start sending next chunk
                     if currentProgress == 100 {
-                        aCompletion(nil)
+                        if aPRNVaule == 0 || originalPacketsToSendNow < Int(aPRNVaule) {
+                            aCompletion(nil)
+                        } else {
+                            // The whole object has been sent but the DFU target will
+                            // send a PRN notification as expected.
+                            // The sendData method will be called again
+                            // with packetsLeft = 0
+                            
+                            // Do nothing
+                        }
                     }
-                    
-                    //Notify progrsess delegate of overall progress
+                
+                    // Notify progrsess delegate of overall progress
                     DispatchQueue.main.async(execute: {
                         aProgressHandler?.onUploadProgress(aFirmware.currentPart,
                             totalParts: aFirmware.parts,
