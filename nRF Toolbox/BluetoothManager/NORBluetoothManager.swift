@@ -237,7 +237,7 @@ class NORBluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDeleg
         bluetoothPeripheral!.delegate = self
         delegate?.didConnectPeripheral(deviceName: peripheral.name!)
         log(withLevel: .verboseLogLevel, andMessage: "Discovering services...")
-        log(withLevel: .debugLogLevel, andMessage: "peripheral.discoverServices([\(UARTServiceUUID!.uuidString))]")
+        log(withLevel: .debugLogLevel, andMessage: "peripheral.discoverServices([\(UARTServiceUUID!.uuidString)])")
         peripheral.discoverServices([UARTServiceUUID!])
     }
     
