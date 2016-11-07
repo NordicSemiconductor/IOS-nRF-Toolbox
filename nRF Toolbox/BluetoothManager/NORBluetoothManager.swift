@@ -112,31 +112,35 @@ class NORBluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDeleg
         let longWriteSupported = false
         
         // The following code will split the text to packets
-        var buffer = UnsafeMutablePointer<CChar>(mutating: aText.cString(using: String.Encoding.utf8)!)
-        var len = aText.data(using: String.Encoding.utf8)?.count
-        
-        while(len != 0){
-            var part : String
-            if len > 20 && (type == CBCharacteristicWriteType.withoutResponse || longWriteSupported == false) {
-                // If the text contains national letters they may be 2-byte long. It may happen that only 19 bytes can be send so that non of them is splited into 2 packets.
-                var builder = NSMutableString(bytes: buffer, length: 20, encoding: String.Encoding.utf8.rawValue)
-                if builder != nil {
-                    // A 20-bute string has been created successfully
-                    buffer  = buffer + 20
-                    len     = len! - 20
+        let textData = aText.data(using: String.Encoding.utf8)!
+        textData.withUnsafeBytes { (u8Ptr: UnsafePointer<CChar>) in
+            var buffer = UnsafeMutableRawPointer(mutating: UnsafeRawPointer(u8Ptr))
+            var len = textData.count
+            
+            while(len != 0){
+                var part : String
+                if len > 20 && (type == CBCharacteristicWriteType.withoutResponse || longWriteSupported == false) {
+                    // If the text contains national letters they may be 2-byte long. It may happen that only 19 bytes can be send so that non of them is splited into 2 packets.
+                    var builder = NSMutableString(bytes: buffer, length: 20, encoding: String.Encoding.utf8.rawValue)
+                    if builder != nil {
+                        // A 20-bute string has been created successfully
+                        buffer  = buffer + 20
+                        len     = len - 20
+                    } else {
+                        // We have to create 19-byte string. Let's ignore some stranger UTF-8 characters that have more than 2 bytes...
+                        builder = NSMutableString(bytes: buffer, length: 19, encoding: String.Encoding.utf8.rawValue)
+                        buffer = buffer + 19
+                        len    = len - 19
+                    }
+                    
+                    part = String(describing: builder!)
                 } else {
-                    // We have to create 19-byte string. Let's ignore some stranger UTF-8 characters that have more than 2 bytes...
-                    builder = NSMutableString(bytes: buffer, length: 19, encoding: String.Encoding.utf8.rawValue)
-                    buffer = buffer + 19
-                    len    = len! - 19
+                    let builder = NSMutableString(bytes: buffer, length: len, encoding: String.Encoding.utf8.rawValue)
+                    part = String(describing: builder!)
+                    len = 0
                 }
-                
-                part = String(describing: builder)
-            } else {
-                part = String(describing: buffer)
-                len = 0
+                self.send(text: part, withType: type)
             }
-            self.send(text: part, withType: type)
         }
     }
     
@@ -343,8 +347,28 @@ class NORBluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDeleg
             logError(error: error! as NSError)
             return
         }
-        log(withLevel: .infoLogLevel, andMessage: "Notification received from: \(characteristic.uuid.uuidString), with value: \(characteristic.value)")
-        log(withLevel: .appLogLevel, andMessage: "\(characteristic.value) received")
+        
+        // try to print a friendly string of received bytes if they can be parsed as UTF8
+        guard let bytesReceived = characteristic.value else {
+            log(withLevel: .infoLogLevel, andMessage: "Notification received from: \(characteristic.uuid.uuidString), with value: \(characteristic.value)")
+            log(withLevel: .appLogLevel, andMessage: "\(characteristic.value) received")
+            return
+        }
+        bytesReceived.withUnsafeBytes { (utf8Bytes: UnsafePointer<CChar>) in
+            var len = bytesReceived.count
+            if utf8Bytes[len - 1] == 0 {
+                len -= 1 // if the string is null terminated, don't pass null terminator into NSMutableString constructor
+            }
+            
+            guard let validUTF8String = NSMutableString(bytes: utf8Bytes, length: len, encoding: String.Encoding.utf8.rawValue) else {
+                log(withLevel: .infoLogLevel, andMessage: "Notification received from: \(characteristic.uuid.uuidString), with value: \(bytesReceived)")
+                log(withLevel: .appLogLevel, andMessage: "\(bytesReceived) raw bytes received")
+                return
+            }
+            log(withLevel: .infoLogLevel, andMessage: "Notification received from: \(characteristic.uuid.uuidString), with value: \(validUTF8String)")
+            log(withLevel: .appLogLevel, andMessage: "\(validUTF8String) received")
+        }
+        
     }
 
 //    //MARK: - NORBluetoothManagerDelegate

@@ -4,3 +4,4 @@
 
 ### Contributors:
 * [Nikolaus Wittenstein](https://github.com/adzenith) CocoaPods 1.0.1 upgrade
+* [Michael Petrov](https://github.com/michaelpetrov) UART sending fixes for Swift 3
