@@ -14,10 +14,10 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     //MARK: - ViewController properties
     var bluetoothManager                 : CBCentralManager?
     var connectedPeripheral              : CBPeripheral?
-    var htsServiceUUID                   : CBUUID?
-    var htsMeasurementCharacteristicUUID : CBUUID?
-    var batteryServiceUUID               : CBUUID?
-    var batteryLevelCharacteristicUUID   : CBUUID?
+    var htsServiceUUID                   : CBUUID
+    var htsMeasurementCharacteristicUUID : CBUUID
+    var batteryServiceUUID               : CBUUID
+    var batteryLevelCharacteristicUUID   : CBUUID
     var temperatureValueFahrenheit       : Bool?
     var temperatureValue                 : Double?
 
@@ -67,7 +67,6 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         if connectedPeripheral != nil {
             self.temperature.text = String(format:"%.2f", temperatureValue!)
         }
-
     }
 
     //MARK: - Segue handling
@@ -88,12 +87,12 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
 
     //MARK: - UIViewControllerDelegate
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
         // Custom initialization
         htsServiceUUID                   = CBUUID(string: NORServiceIdentifiers.htsServiceUUIDString)
         htsMeasurementCharacteristicUUID = CBUUID(string: NORServiceIdentifiers.htsMeasurementCharacteristicUUIDString)
         batteryServiceUUID               = CBUUID(string: NORServiceIdentifiers.batteryServiceUUIDString)
         batteryLevelCharacteristicUUID   = CBUUID(string: NORServiceIdentifiers.batteryLevelCharacteristicUUIDString)
+        super.init(coder: aDecoder)
     }
     
     override func viewDidLoad() {
@@ -104,27 +103,30 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
 
     //MARK: - CBPeripheralDelegate
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        guard error == nil else
-        {
-            print("Error discovering service: %@", error?.localizedDescription)
-            bluetoothManager?.cancelPeripheralConnection(connectedPeripheral!)
+        guard error == nil else {
+            print("An error occured while discovering services: \(error!.localizedDescription)")
+            bluetoothManager!.cancelPeripheralConnection(peripheral)
             return;
         }
         
         for aService : CBService in peripheral.services! {
             // Discovers the characteristics for a given service
             if aService.uuid == htsServiceUUID {
-                connectedPeripheral?.discoverCharacteristics([htsMeasurementCharacteristicUUID!], for: aService)
+                peripheral.discoverCharacteristics([htsMeasurementCharacteristicUUID], for: aService)
             }else if aService.uuid == batteryServiceUUID {
-                connectedPeripheral?.discoverCharacteristics([batteryLevelCharacteristicUUID!], for: aService)
+               peripheral.discoverCharacteristics([batteryLevelCharacteristicUUID], for: aService)
             }
         }
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-
-        // Characteristics for one of those services has been found
+        guard error == nil else {
+            print("Error occurred while discovering characteristic: \(error!.localizedDescription)")
+            bluetoothManager!.cancelPeripheralConnection(peripheral)
+            return
+        }
         
+        // Characteristics for one of those services has been found
         if service.uuid == htsServiceUUID {
             for aCharacteristic : CBCharacteristic in service.characteristics! {
                 if aCharacteristic.uuid == htsMeasurementCharacteristicUUID {
@@ -143,6 +145,11 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        guard error == nil else {
+            print("Error occurred while updating characteristic value: \(error!.localizedDescription)")
+            return
+        }
+        
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async(execute: {
             // Decode the characteristic data
@@ -152,7 +159,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
             if characteristic.uuid == self.batteryLevelCharacteristicUUID {
                 let batteryLevel = NORCharacteristicReader.readUInt8Value(ptr: &array)
                 
-                let text = String(format: "%d%%", batteryLevel)
+                let text = "\(batteryLevel)%"
                 self.battery.setTitle(text, for: UIControlState.disabled)
                 
                 if self.battery.tag == 0 {
@@ -164,7 +171,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                         peripheral.setNotifyValue(true, for: characteristic)
                     }
                 }
-            }else if characteristic.uuid == self.htsMeasurementCharacteristicUUID {
+            } else if characteristic.uuid == self.htsMeasurementCharacteristicUUID {
                 let flags = NORCharacteristicReader.readUInt8Value(ptr: &array)
                 let tempInFahrenheit : Bool = (flags & 0x01) > 0
                 let timestampPresent : Bool = (flags & 0x02) > 0
@@ -231,14 +238,11 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                         break;
                     }
                     self.type.text = String(format: "Location: %@", location)
-                }
-                else
-                {
+                } else {
                     self.type.text = "Location: n/a";
                 }
                 
-                if  NORAppUtilities.isApplicationInactive()
-                {
+                if  NORAppUtilities.isApplicationInactive() {
                     var message : String = ""
                     if (self.temperatureValueFahrenheit == true) {
                         message = String(format:"New temperature reading: %.2f°F", tempValue)
@@ -253,10 +257,13 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     }
     //MARK: - CBCentralManagerDelegate
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        if central.state != .poweredOn {
-            print("Bluetooth not porwerd on!")
+        if central.state == .poweredOff {
+            print("Bluetooth powered off")
+        } else {
+            print("Bluetooth powered on")
         }
     }
+    
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async(execute: {
@@ -269,7 +276,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
 
         // Peripheral has connected. Discover required services
         connectedPeripheral = peripheral;
-        peripheral.discoverServices([htsServiceUUID!, batteryServiceUUID!])
+        peripheral.discoverServices([htsServiceUUID, batteryServiceUUID])
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
@@ -287,7 +294,8 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         DispatchQueue.main.async(execute: {
             self.connectionButon.setTitle("CONNECT", for: UIControlState())
             if NORAppUtilities.isApplicationInactive() {
-                NORAppUtilities.showBackgroundNotification(message: "Peripheral \(peripheral.name) is disconnected")
+                let name = peripheral.name ?? "Peripheral"
+                NORAppUtilities.showBackgroundNotification(message: "\(name) is disconnected.")
             }
             self.connectedPeripheral = nil
             self.clearUI()
@@ -300,12 +308,12 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     func centralManagerDidSelectPeripheral(withManager aManager: CBCentralManager, andPeripheral aPeripheral: CBPeripheral) {
         // We may not use more than one Central Manager instance. Let's just take the one returned from Scanner View Controller
         bluetoothManager = aManager
-        bluetoothManager?.delegate = self
+        bluetoothManager!.delegate = self
         
         // The sensor has been selected, connect to it
         aPeripheral.delegate = self
         let options = [CBConnectPeripheralOptionNotifyOnNotificationKey : NSNumber(value: true as Bool)]
-        bluetoothManager?.connect(aPeripheral, options: options)
+        bluetoothManager!.connect(aPeripheral, options: options)
     }
     
     //MARK: - NORHTSViewController implementation
@@ -321,7 +329,8 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     }
     
     func didEnterBackrgoundCallback() {
-        NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(connectedPeripheral?.name) peripheral. It will collect data also in background.")
+        let name = connectedPeripheral?.name ?? "peripheral"
+        NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(name). It will collect data also in background.")
     }
     
     func didBecomeActiveCallback() {

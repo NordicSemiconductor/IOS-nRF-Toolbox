@@ -12,11 +12,11 @@ import CoreBluetooth
 class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, NORScannerDelegate {
     
     //MARK: - ViewController Properties
-    var bpmServiceUUID                                : CBUUID?
-    var bpmBloodPressureMeasurementCharacteristicUUID : CBUUID?
-    var bpmIntermediateCuffPressureCharacteristicUUID : CBUUID?
-    var batteryServiceUUID                            : CBUUID?
-    var batteryLevelCharacteristicUUID                : CBUUID?
+    var bpmServiceUUID                                : CBUUID
+    var bpmBloodPressureMeasurementCharacteristicUUID : CBUUID
+    var bpmIntermediateCuffPressureCharacteristicUUID : CBUUID
+    var batteryServiceUUID                            : CBUUID
+    var batteryLevelCharacteristicUUID                : CBUUID
     var bluetoothManager                              : CBCentralManager?
     var connectedPeripheral                           : CBPeripheral?
     
@@ -46,12 +46,12 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
 
     //MARK: - UIViewController methods
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
         bpmServiceUUID                                = CBUUID(string: NORServiceIdentifiers.bpmServiceUUIDString)
         bpmBloodPressureMeasurementCharacteristicUUID = CBUUID(string: NORServiceIdentifiers.bpmBloodPressureMeasurementCharacteristicUUIDString)
         bpmIntermediateCuffPressureCharacteristicUUID = CBUUID(string: NORServiceIdentifiers.bpmIntermediateCuffPressureCharacteristicUUIDString)
         batteryServiceUUID                            = CBUUID(string: NORServiceIdentifiers.batteryServiceUUIDString)
         batteryLevelCharacteristicUUID                = CBUUID(string: NORServiceIdentifiers.batteryLevelCharacteristicUUIDString)
+        super.init(coder: aDecoder)
     }
     
     override func viewDidLoad() {
@@ -62,7 +62,8 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     //MARK: - NORBPMViewController Implementation
     
     func didEnterBackgroundCallback(notification aNotification: Notification) {
-        NORAppUtilities.showBackgroundNotification(message: "You are still connected to peripheral \(connectedPeripheral?.name), the app will continue to collect data in the backrgound")
+        let name = connectedPeripheral?.name ?? "peripheral"
+        NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(name). It will collect data also in background.")
     }
     
     func didBecomeActiveCallback(notification aNotification: Notification) {
@@ -102,7 +103,7 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if central.state == .poweredOff {
             print("Bluetooth powered off")
-        }else{
+        } else {
             print("Bluetooth powered on")
         }
     }
@@ -121,7 +122,7 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         NotificationCenter.default.addObserver(self, selector: #selector(self.didBecomeActiveCallback(notification:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         
         connectedPeripheral = peripheral
-        peripheral.discoverServices([bpmServiceUUID!, batteryServiceUUID!])
+        peripheral.discoverServices([bpmServiceUUID, batteryServiceUUID])
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
@@ -141,7 +142,8 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
             self.connectedPeripheral = nil
             
             if NORAppUtilities.isApplicationInactive() {
-                NORAppUtilities.showBackgroundNotification(message: "Peripheral \(peripheral.name) is isconnected")
+                let name = peripheral.name ?? "Peripheral"
+                NORAppUtilities.showBackgroundNotification(message: "\(name) is disconnected.")
             }
             
             NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
@@ -152,21 +154,29 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     //MARK: - CBPeripheralDelegate
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         guard error == nil else {
-            print("Error discovering services, \(error?.localizedDescription)")
-            bluetoothManager?.cancelPeripheralConnection(peripheral)
+            print("An error occured while discovering services: \(error!.localizedDescription)")
+            bluetoothManager!.cancelPeripheralConnection(peripheral)
             return
         }
         
         for aService : CBService in peripheral.services! {
             if aService.uuid == batteryServiceUUID {
-                connectedPeripheral?.discoverCharacteristics([batteryLevelCharacteristicUUID!], for: aService)
-            }else if aService.uuid == bpmServiceUUID {
-                connectedPeripheral?.discoverCharacteristics([bpmBloodPressureMeasurementCharacteristicUUID!,bpmIntermediateCuffPressureCharacteristicUUID!], for: aService)
+                peripheral.discoverCharacteristics([batteryLevelCharacteristicUUID], for: aService)
+            } else if aService.uuid == bpmServiceUUID {
+                peripheral.discoverCharacteristics(
+                    [bpmBloodPressureMeasurementCharacteristicUUID,bpmIntermediateCuffPressureCharacteristicUUID],
+                    for: aService)
             }
         }
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+        guard error == nil else {
+            print("Error occurred while discovering characteristic: \(error!.localizedDescription)")
+            bluetoothManager!.cancelPeripheralConnection(peripheral)
+            return
+        }
+        
         if service.uuid == bpmServiceUUID {
             for aCharacteristic :CBCharacteristic in service.characteristics! {
                 if aCharacteristic.uuid == bpmBloodPressureMeasurementCharacteristicUUID ||
@@ -176,7 +186,7 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
             }
         } else if service.uuid == batteryServiceUUID {
             for aCharacteristic :CBCharacteristic in service.characteristics! {
-                if aCharacteristic.uuid == batteryLevelCharacteristicUUID{
+                if aCharacteristic.uuid == batteryLevelCharacteristicUUID {
                     peripheral.readValue(for: aCharacteristic)
                     break
                 }
@@ -185,6 +195,11 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        guard error == nil else {
+            print("Error occurred while updating characteristic value: \(error!.localizedDescription)")
+            return
+        }
+        
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async(execute: {
             if characteristic.uuid == self.batteryLevelCharacteristicUUID {
@@ -192,7 +207,7 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                 let data = characteristic.value;
                 var pointer = UnsafeMutablePointer<UInt8>(mutating: (data! as NSData).bytes.bindMemory(to: UInt8.self, capacity: data!.count))
                 let batteryLevel = NORCharacteristicReader.readUInt8Value(ptr: &pointer)
-                let text = String(format: "%d%%", batteryLevel)
+                let text = "\(batteryLevel)%"
                 self.battery.setTitle(text, for: UIControlState.disabled)
                 
                 if self.battery.tag == 0 {
@@ -201,7 +216,7 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                         self.battery.tag = 1
                     }
                 }
-            }else if characteristic.uuid == self.bpmBloodPressureMeasurementCharacteristicUUID ||
+            } else if characteristic.uuid == self.bpmBloodPressureMeasurementCharacteristicUUID ||
                 characteristic.uuid == self.bpmIntermediateCuffPressureCharacteristicUUID {
                 let data = characteristic.value
                 var pointer = UnsafeMutablePointer<UInt8>(mutating: (data! as NSData).bytes.bindMemory(to: UInt8.self, capacity: data!.count))
@@ -234,7 +249,6 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                     self.diastolicUnit.isHidden   = false
                     self.meanApUnit.isHidden      = false
                 } else {
-                    
                     let systolicValue = NORCharacteristicReader.readSFloatValue(ptr: &pointer)
                     pointer += 4
                     
@@ -254,7 +268,7 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                     dateFormatter.dateFormat = "dd.MM.yyy, hh:mm"
                     let dateformattedString = dateFormatter.string(from: date)
                     self.timestamp.text = dateformattedString
-                }else{
+                } else {
                     self.timestamp.text = "n/a"
                 }
 
@@ -262,7 +276,7 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                 if pulseRatePresent {
                     let pulseValue = NORCharacteristicReader.readSFloatValue(ptr: &pointer)
                     self.pulse.text = String(format: "%.1f", pulseValue)
-                }else{
+                } else {
                     self.pulse.text = "-"
                 }
             }

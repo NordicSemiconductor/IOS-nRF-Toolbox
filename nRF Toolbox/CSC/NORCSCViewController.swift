@@ -15,10 +15,10 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     let WHEEL_REVOLUTION_FLAG               : UInt8 = 0x01
     let CRANK_REVOLUTION_FLAG               : UInt8 = 0x02
     var bluetoothManager                    : CBCentralManager?
-    var cscServiceUUID                      : CBUUID?
-    var cscMeasurementCharacteristicUUID    : CBUUID?
-    var batteryServiceUUID                  : CBUUID?
-    var batteryLevelCharacteristicUUID      : CBUUID?
+    var cscServiceUUID                      : CBUUID
+    var cscMeasurementCharacteristicUUID    : CBUUID
+    var batteryServiceUUID                  : CBUUID
+    var batteryLevelCharacteristicUUID      : CBUUID
     var oldWheelRevolution                  : Int?
     var oldCrankRevolution                  : Int?
     var travelDistance                      : Double?
@@ -26,7 +26,6 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     var totalTravelDistance                 : Double?
     var oldCrankEventTime                   : Double?
     var wheelCircumference                  : Double?
-    var isBackButtonPressed                 : Bool?
     var cyclePeripheral                     : CBPeripheral?
 
     //MARK: - ViewController Outlets
@@ -52,11 +51,11 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
 
     //MARK: - UIViewController delegate
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
         cscServiceUUID                   = CBUUID(string: NORServiceIdentifiers.cscServiceUUIDString)
         cscMeasurementCharacteristicUUID = CBUUID(string: NORServiceIdentifiers.cscMeasurementCharacteristicUUIDString)
         batteryServiceUUID               = CBUUID(string: NORServiceIdentifiers.batteryServiceUUIDString)
         batteryLevelCharacteristicUUID   = CBUUID(string: NORServiceIdentifiers.batteryLevelCharacteristicUUIDString)
+        super.init(coder: aDecoder)
     }
     
     override func viewDidLoad() {
@@ -69,20 +68,14 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         totalTravelDistance = 0.0
         oldCrankEventTime = 0
         oldCrankRevolution = 0
-        isBackButtonPressed = true
         wheelCircumference = UserDefaults.standard.double(forKey: "key_diameter")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        if cyclePeripheral != nil && isBackButtonPressed == true {
+        if cyclePeripheral != nil {
             bluetoothManager?.cancelPeripheralConnection(cyclePeripheral!)
         }
         super.viewWillAppear(animated)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        isBackButtonPressed = true
     }
     
     //MARK: - Segue methods
@@ -109,16 +102,17 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         
         // The sensor has been selected, connect to it
         cyclePeripheral = aPeripheral;
-        cyclePeripheral!.delegate = self;
+        aPeripheral.delegate = self;
         let options = NSDictionary(object: NSNumber(value: true as Bool), forKey: CBConnectPeripheralOptionNotifyOnConnectionKey as NSCopying)
-        bluetoothManager?.connect(cyclePeripheral!, options: options as? [String : AnyObject])
+        bluetoothManager!.connect(aPeripheral, options: options as? [String : AnyObject])
     }
     
     //MARK: - CentralManagerDelegate
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        if central.state == .poweredOn{
-        }else{
-            print("Bluetooth is not porewed on!")
+        if central.state == .poweredOff {
+            print("Bluetooth powered off")
+        } else {
+            print("Bluetooth powered on")
         }
     }
 
@@ -134,7 +128,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         }
         NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackgroundHandler), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.didBecomeActiveHandler), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
-        cyclePeripheral?.discoverServices([cscServiceUUID!, batteryServiceUUID!])
+        peripheral.discoverServices([cscServiceUUID, batteryServiceUUID])
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
@@ -152,7 +146,8 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async(execute: {
             if NORAppUtilities.isApplicationInactive() {
-                NORAppUtilities.showBackgroundNotification(message: String(format: "%@ is disconnected", peripheral.name!))
+                let name = peripheral.name ?? "Peripheral"
+                NORAppUtilities.showBackgroundNotification(message: "\(name) is disconnected.")
             }
             NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
             NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
@@ -164,7 +159,8 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     
     //MARK: -  NORCSCViewController implementation
     func didEnterBackgroundHandler() {
-        NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(cyclePeripheral!.name), it will collect data in the background")
+        let name = cyclePeripheral?.name ?? "peripheral"
+        NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(name). It will collect data also in background.")
     }
     
     func didBecomeActiveHandler() {
@@ -190,7 +186,6 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     }
     
     func decodeCSC(withData data : Data) {
-
         let value = UnsafeMutablePointer<UInt8>(mutating: (data as NSData).bytes.bindMemory(to: UInt8.self, capacity: data.count))
         var wheelRevDiff :Double = 0
         var crankRevDiff :Double = 0
@@ -206,7 +201,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                     wheelToCrankRatio.text = String(format: "%.2f", ratio)
                 }
             }
-        }else{
+        } else {
             if flag & CRANK_REVOLUTION_FLAG == 2 {
                 crankRevDiff = self.processCrankData(withData: data, andCrankRevolutionIndex: 1)
                 if crankRevDiff > 0 {
@@ -292,41 +287,44 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         
         oldCrankRevolution = crankRevolution
         oldCrankEventTime = crankEventTime
-        cadence.text = String(format: "%d", travelCadence)
+        cadence.text = "\(travelCadence)"
         return crankRevolutionDiff
     }
     
     //MARK: - CBPeripheralDelegate methods
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         guard error == nil else {
-            print(String(format:"error in discovering services on device: %@", (cyclePeripheral?.name)!))
+            print("An error occured while discovering services: \(error!.localizedDescription)")
+            bluetoothManager!.cancelPeripheralConnection(peripheral)
             return
         }
+        
         for aService : CBService in peripheral.services! {
             if aService.uuid == cscServiceUUID {
-                cyclePeripheral?.discoverCharacteristics(nil, for: aService)
-            }else if aService.uuid == batteryServiceUUID {
-                cyclePeripheral?.discoverCharacteristics(nil, for: aService)
+                peripheral.discoverCharacteristics(nil, for: aService)
+            } else if aService.uuid == batteryServiceUUID {
+                peripheral.discoverCharacteristics(nil, for: aService)
             }
         }
-        
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         guard error == nil else {
-            print(String(format:"error in discovering characteristic on device: %@",(cyclePeripheral?.name)!))
+            print("Error occurred while discovering characteristic: \(error!.localizedDescription)")
+            bluetoothManager!.cancelPeripheralConnection(peripheral)
             return
         }
+        
         if service.uuid == cscServiceUUID {
             for aCharacteristic : CBCharacteristic in service.characteristics! {
-                if aCharacteristic.uuid == cscMeasurementCharacteristicUUID{
-                    cyclePeripheral?.setNotifyValue(true, for: aCharacteristic)
+                if aCharacteristic.uuid == cscMeasurementCharacteristicUUID {
+                    peripheral.setNotifyValue(true, for: aCharacteristic)
                 }
             }
         } else if service.uuid == batteryServiceUUID {
             for aCharacteristic : CBCharacteristic in service.characteristics! {
-                if aCharacteristic.uuid == batteryLevelCharacteristicUUID{
-                    cyclePeripheral?.readValue(for: aCharacteristic)
+                if aCharacteristic.uuid == batteryLevelCharacteristicUUID {
+                    peripheral.readValue(for: aCharacteristic)
                 }
             }
         }
@@ -334,20 +332,21 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         guard error == nil else {
-            print("Error while updating CSC value")
+            print("Error occurred while updating characteristic value: \(error!.localizedDescription)")
             return
         }
+        
         if characteristic.uuid == cscMeasurementCharacteristicUUID {
             DispatchQueue.main.async {
                 self.decodeCSC(withData: characteristic.value!)
             }
-        }else if characteristic.uuid == batteryLevelCharacteristicUUID {
+        } else if characteristic.uuid == batteryLevelCharacteristicUUID {
             DispatchQueue.main.async {
                 let array = UnsafeMutablePointer<UInt8>(OpaquePointer(((characteristic.value as NSData?)?.bytes)!))
                 let batteryLevel = array[0]
-                let text = String(format: "%d%%", batteryLevel)
+                let text = "\(batteryLevel)%"
                 self.battery.setTitle(text, for: UIControlState.disabled)
-                if self.battery.tag == 0{
+                if self.battery.tag == 0 {
                     if characteristic.properties.rawValue & CBCharacteristicProperties.notify.rawValue > 0 {
                         self.battery.tag = 1
                         peripheral.setNotifyValue(true, for: characteristic)

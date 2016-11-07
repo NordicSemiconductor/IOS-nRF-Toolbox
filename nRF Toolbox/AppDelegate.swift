@@ -27,7 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-
         self.updateUserDefaults(withDefaults: UserDefaults.standard)
         
         //Setting colors of UIPageControlViewController Page Indicator
@@ -51,9 +50,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     fileprivate func updateUserDefaults(withDefaults defaults : UserDefaults) {
-        defaults.set(2.4,   forKey: "key_diameter")
-        defaults.set(12,    forKey: "dfu_number_of_packets")
-        defaults.set(false, forKey: "dfu_force_dfu")
-        defaults.synchronize()
+        let dict = [ "key_diameter" : 2.4,
+                     "dfu_number_of_packets" : 12,
+                     "dfu_force_dfu" : false] as [String : Any]
+        defaults.register(defaults: dict)
+        //defaults.synchronize()
     }
 }
