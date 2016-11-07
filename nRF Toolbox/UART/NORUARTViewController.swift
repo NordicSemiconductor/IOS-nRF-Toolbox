@@ -91,6 +91,7 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
         // Set this contoller as scanner delegate
         let nc = segue.destination as! UINavigationController
         let controller = nc.childViewControllerForStatusBarHidden as! NORScannerViewController
+        // controller.filterUUID = CBUUID.init(string: NORServiceIdentifiers.uartServiceUUIDString)
         controller.delegate = self
     }
     
