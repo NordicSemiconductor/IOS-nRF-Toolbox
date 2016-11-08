@@ -45,26 +45,27 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     
     @IBAction func degreeHasChanged(_ sender: AnyObject) {
         let control = sender as! UISegmentedControl
-        if (control.selectedSegmentIndex == 0)
-        {
+        if (control.selectedSegmentIndex == 0) {
             // Celsius
             temperatureValueFahrenheit = false
             UserDefaults.standard.set(false, forKey: "fahrenheit")
             self.temperatureUnit.text = "°C"
-            temperatureValue = (temperatureValue! - 32.0) * 5.0 / 9.0
-        }
-        else
-        {
+            if temperatureValue != nil {
+                temperatureValue = (temperatureValue! - 32.0) * 5.0 / 9.0
+            }
+        } else {
             // Fahrenheit
             temperatureValueFahrenheit = true
             UserDefaults.standard.set(true, forKey: "fahrenheit")
             self.temperatureUnit.text = "°F"
-            temperatureValue = temperatureValue! * 9.0 / 5.0 + 32.0;
+            if temperatureValue != nil {
+                temperatureValue = temperatureValue! * 9.0 / 5.0 + 32.0
+            }
         }
         
         UserDefaults.standard.synchronize()
         
-        if connectedPeripheral != nil {
+        if temperatureValue != nil {
             self.temperature.text = String(format:"%.2f", temperatureValue!)
         }
     }
@@ -271,8 +272,8 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
             self.connectionButon.setTitle("DISCONNECT", for: UIControlState())
         })
 
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackrgoundCallback), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didBecomeActiveCallback), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.appDidEnterBackrgoundCallback), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.appDidBecomeActiveCallback), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
 
         // Peripheral has connected. Discover required services
         connectedPeripheral = peripheral;
@@ -321,19 +322,19 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         temperatureValueFahrenheit = UserDefaults.standard.bool(forKey: "fahrenheit")
         if temperatureValueFahrenheit == true {
             degreeControl.selectedSegmentIndex = 1
-            self.temperature.text = "°F"
+            self.temperatureUnit.text = "°F"
         } else {
             degreeControl.selectedSegmentIndex = 0
-            self.temperature.text = "°C"
+            self.temperatureUnit.text = "°C"
         }
     }
     
-    func didEnterBackrgoundCallback() {
+    func appDidEnterBackrgoundCallback() {
         let name = connectedPeripheral?.name ?? "peripheral"
         NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(name). It will collect data also in background.")
     }
     
-    func didBecomeActiveCallback() {
+    func appDidBecomeActiveCallback() {
         UIApplication.shared.cancelAllLocalNotifications()
         self.updateUnits()
     }
