@@ -194,9 +194,8 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
         let connectedPeripherals = self.getConnectedPeripherals()
         var newScannedPeripherals: [NORScannedPeripheral] = []
         connectedPeripherals.forEach { (connectedPeripheral: CBPeripheral) in
-            let rssi = connectedPeripheral.rssi ?? 0
             let connected = connectedPeripheral.state == .connected
-            let scannedPeripheral = NORScannedPeripheral(withPeripheral: connectedPeripheral, andRSSI: rssi.int32Value, andIsConnected: connected )
+            let scannedPeripheral = NORScannedPeripheral(withPeripheral: connectedPeripheral, andIsConnected: connected )
             newScannedPeripherals.append(scannedPeripheral)
         }
         peripherals = newScannedPeripherals
