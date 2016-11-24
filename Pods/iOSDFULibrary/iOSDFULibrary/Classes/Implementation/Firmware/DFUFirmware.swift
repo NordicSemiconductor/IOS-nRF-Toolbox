@@ -37,26 +37,26 @@ The type of the BIN or HEX file.
 }
 
 /// The DFUFirmware object wraps the firmware file.
-@objc open class DFUFirmware : NSObject, DFUStream {
+@objc public class DFUFirmware : NSObject, DFUStream {
     internal let stream:DFUStream?
     
     /// The name of the firmware file.
-    open let fileName:String!
+    public let fileName:String!
     /// The URL to the firmware file.
-    open let fileUrl:URL!
+    public let fileUrl:URL!
     
     /// Information whether the firmware was successfully initialized.
-    open var valid:Bool {
+    public var valid:Bool {
         return stream != nil
     }
     
     /// The size of each component of the firmware.
-    open var size:DFUFirmwareSize {
+    public var size:DFUFirmwareSize {
         return stream!.size
     }
     
     /// Number of connectinos required to transfer the firmware. This does not include the connection needed to switch to the DFU mode.
-    open var parts:Int {
+    public var parts:Int {
         if stream == nil {
             return 0
         }

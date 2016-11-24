@@ -20,99 +20,74 @@
 * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-internal protocol SecureDFUPeripheralDelegate {
-    /**
-     Callback called when the target device got connected and DFU Service and DFU Characteristics were found.
-     If DFU Version characteristic were found among them it has also been read.
-     */
-    func onDeviceReady()
+internal protocol SecureDFUPeripheralDelegate : DFUPeripheralDelegate {
     
     /**
      Callback called when DFU Control Point notifications were enabled successfully.
-     The delegate should now decide whether to jump to the DFU Bootloader mode or to proceed with DFU operation.
      */
-    func onControlPointEnabled()
+    func peripheralDidEnableControlPoint()
     
     /**
-     Callback when Object info command read is completed
+     Callback when Command Object Info has been received from the peripheral.
+     - parameter maxLen: the maximum size of the Init Packet in bytes
+     - parameter offset: number of bytes of Init Packet already sent, for example during last DFU operation. 
+     This resets to 0 on Create Command Object or when the DFU operation completes.
+     - parameter crc: the CRC-32 calculated from the 'offset' bytes. This may be used to calculate if
+     the stored Init packet matches the one being sent now. If crc matches the operation may be resumed,
+     if not a new Command Object should be created and DFU should start over.
      */
-    func objectInfoReadCommandCompleted(_ maxLen : UInt32, offset : UInt32, crc :UInt32 )
+    func peripheralDidSendCommandObjectInfo(maxLen: UInt32, offset: UInt32, crc:UInt32)
 
     /**
-     Callback when Object info data read is completed
+     Callback when Data Object Info has been received from the peripheral.
+     - parameter maxLen: the maximum size of a single data object in bytes. A firmware may be sent in multiple objects.
+     - parameter offset: number of bytes of data already sent (in total, not only the last object),
+     for example during last DFU operation.
+     Sending Create Data will rewind the offset to the last executed data object. This resets to 0 on
+     Create Command Object or when the DFU operation completes.
+     - parameter crc: the CRC-32 calculated from the 'offset' bytes. This may be used to calculate if
+     the stored data matches the firmware being sent now. If crc matches the operation may be resumed,
+     if not a new Command Object should be created and DFU should start over.
      */
-    func objectInfoReadDataCompleted(_ maxLen : UInt32, offset : UInt32, crc :UInt32 )
+    func peripheralDidSendDataObjectInfo(maxLen: UInt32, offset: UInt32, crc:UInt32)
 
     /**
-     Callback when Object Command is created
+     Callback when Command Object was created.
      */
-    func objectCreateCommandCompleted(_ data : Data?)
+    func peripheralDidCreateCommandObject()
 
     /**
-     Callback when Object Data is created
+     Callback when Data Object was created.
      */
-    func objectCreateDataCompleted(_ data : Data?)
+    func peripheralDidCreateDataObject()
     
     /**
-     Callback when PRN is set
+     Callback when Packet Receipt Notifications were set or disabled.
      */
-    func setPRNValueCompleted()
+    func peripheralDidSetPRNValue()
 
     /**
-     Callback when init packet is sent
+     Callback when init packet is sent. Actually this method is called when Init packet data were added
+     to the outgoing buffer on iDevice and will be sent as soon as possible, not when the peripheral
+     actually received them, as they are called with Write Without Response and no such callback is generated.
      */
-    func initPacketSendCompleted()
+    func peripheralDidReceiveInitPacket()
     
     /**
-     Callback when Checksum command is completed
+     Callback when Checksum was received after sending Calculate Checksum request.
+     - parameter offset: number of bytes of the current objecy received by the peripheral.
+     - parameter crc: CRC-32 calculated rom those received bytes.
     */
-    func calculateChecksumCompleted(_ offset: UInt32, CRC: UInt32)
+    func peripheralDidSendChecksum(offset: UInt32, crc: UInt32)
 
     /**
-     Callback when Execute last object command completes
+     Callback when Execute Object command completes with status success. After receiving this callback the device
+     may reset if the whole firmware was sent.
      */
-    func executeCommandCompleted()
+    func peripheralDidExecuteObject()
 
     /**
-     Callback when firmware is successfully sent
+     Callback when Data Object was successfully sent.
      */
-    func firmwareSendComplete()
-
-    /**
-     Method called after the DFU operation was aborted and the device got disconnected.
-     */
-    func onAborted()
-
-    /**
-     Callback when firmware chunk is successfully sent
-     */
-    func firmwareChunkSendcomplete()
-    
-    /**
-     Method called when the iDevice failed to connect to the given peripheral.
-     The DFU operation will be aborter as nothing can be done.
-     */
-    func didDeviceFailToConnect()
-    
-    /**
-     Method called after the device got disconnected after sending the whole firmware,
-     or was disconnected after an error occurred.
-     */
-    func peripheralDisconnected()
-    
-    /**
-     Method called when the device got unexpectadly disconnected with an error.
-     
-     - parameter error: the error returned by 
-     `centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?)`
-     */
-    func peripheralDisconnected(withError anError : NSError)
-    
-    /**
-     Method called when an error occurrs in the last operation.
-     
-     - parameter error:   the error type
-     - parameter message: details
-     */
-    func onErrorOccured(withError anError:SecureDFUError, andMessage aMessage:String)
+    func peripheralDidReceiveObject()
 }

@@ -25,27 +25,30 @@ import CoreBluetooth
 internal class DFUPacket {
     static fileprivate let UUID = CBUUID(string: "00001532-1212-EFDE-1523-785FEABCD123")
     
-    static func matches(_ characteristic:CBCharacteristic) -> Bool {
+    static func matches(_ characteristic: CBCharacteristic) -> Bool {
         return characteristic.uuid.isEqual(UUID)
     }
     
-    fileprivate let PacketSize = 20
+    private let PacketSize: UInt32 = 20
     
-    fileprivate var characteristic:CBCharacteristic
-    fileprivate var logger:LoggerHelper
+    private var characteristic: CBCharacteristic
+    private var logger: LoggerHelper
     
     /// Number of bytes of firmware already sent.
-    fileprivate(set) var bytesSent = 0
-    /// Current progress in percents (0-99).
-    fileprivate var progress = 0
-    fileprivate var startTime:CFAbsoluteTime?
-    fileprivate var lastTime:CFAbsoluteTime?
+    private(set) var bytesSent: UInt32 = 0
+    /// Number of bytes sent at the last progress notification. This value is used to calculate the current speed.
+    private var bytesSentSinceProgessNotification: UInt32 = 0
     
-    var valid:Bool {
+    /// Current progress in percents (0-99).
+    private var progress:  UInt8 = 0
+    private var startTime: CFAbsoluteTime?
+    private var lastTime:  CFAbsoluteTime?
+    
+    internal var valid: Bool {
         return characteristic.properties.contains(CBCharacteristicProperties.writeWithoutResponse)
     }
     
-    init(_ characteristic:CBCharacteristic, _ logger:LoggerHelper) {
+    init(_ characteristic: CBCharacteristic, _ logger: LoggerHelper) {
         self.characteristic = characteristic
         self.logger = logger
     }
@@ -57,32 +60,31 @@ internal class DFUPacket {
     
     - parameter size: sizes of firmware in the current part
     */
-    func sendFirmwareSize(_ size:DFUFirmwareSize) {
+    func sendFirmwareSize(_ size: DFUFirmwareSize) {
         // Get the peripheral object
         let peripheral = characteristic.service.peripheral
         
-        var data = Data(capacity: 12)
-        let sdSize = size.softdevice.littleEndian
-        let blSize = size.bootloader.littleEndian
-        let appSize = size.application.littleEndian
-        let sdArray     = self.convertLittleEndianToByteArray(littleEndian: sdSize)
-        let blArray     = self.convertLittleEndianToByteArray(littleEndian: blSize)
-        let appArray    = self.convertLittleEndianToByteArray(littleEndian: appSize)
+        var data     = Data(capacity: 12)
+        let sdSize   = size.softdevice.littleEndian
+        let blSize   = size.bootloader.littleEndian
+        let appSize  = size.application.littleEndian
+        let sdArray  = convertLittleEndianToByteArray(littleEndian: sdSize)
+        let blArray  = convertLittleEndianToByteArray(littleEndian: blSize)
+        let appArray = convertLittleEndianToByteArray(littleEndian: appSize)
         data.append(sdArray, count:4)
         data.append(blArray, count:4)
         data.append(appArray, count:4)
 
         logger.v("Writing image sizes (\(size.softdevice)b, \(size.bootloader)b, \(size.application)b) to characteristic \(DFUPacket.UUID.uuidString)...")
-        logger.d("peripheral.writeValue(0x\(data.hexString), forCharacteristic: \(DFUPacket.UUID.uuidString), type: WithoutResponse)")
-        peripheral.writeValue(data as Data, for: characteristic, type: CBCharacteristicWriteType.withoutResponse)
+        logger.d("peripheral.writeValue(0x\(data.hexString), for: \(DFUPacket.UUID.uuidString), type: .withoutResponse)")
+        peripheral.writeValue(data, for: characteristic, type: .withoutResponse)
     }
     
     /**
-     +     Converts an UInt32 variable to an array of 4 UInt8 entries
-     +
-     +     - parameter UInt32: The littleEndian value to convers
-     +     */
-    fileprivate func convertLittleEndianToByteArray( littleEndian : UInt32) -> [UInt8] {
+     Converts an UInt32 variable to an array of 4 UInt8 entries
+     - parameter UInt32: The littleEndian value to convers
+     */
+    private func convertLittleEndianToByteArray(littleEndian : UInt32) -> [UInt8] {
         var littleEndian = littleEndian
         let count = MemoryLayout<UInt32>.size
         let bytePtr = withUnsafePointer(to: &littleEndian) {
@@ -102,13 +104,13 @@ internal class DFUPacket {
         // Get the peripheral object
         let peripheral = characteristic.service.peripheral
         
-        var data = Data(capacity: 4)
-        let appSize = size.application.littleEndian
-        let appArray = self.convertLittleEndianToByteArray(littleEndian: appSize)
+        var data     = Data(capacity: 4)
+        let appSize  = size.application.littleEndian
+        let appArray = convertLittleEndianToByteArray(littleEndian: appSize)
         data.append(appArray, count:4)
         logger.v("Writing image size (\(size.application)b) to characteristic \(DFUPacket.UUID.uuidString)...")
-        logger.d("peripheral.writeValue(0x\(data.hexString), forCharacteristic: \(DFUPacket.UUID.uuidString), type: WithoutResponse)")
-        peripheral.writeValue(data as Data, for: characteristic, type: CBCharacteristicWriteType.withoutResponse)
+        logger.d("peripheral.writeValue(0x\(data.hexString), for: \(DFUPacket.UUID.uuidString), type: .withoutResponse)")
+        peripheral.writeValue(data, for: characteristic, type: .withoutResponse)
     }
     
     /**
@@ -121,15 +123,15 @@ internal class DFUPacket {
         let peripheral = characteristic.service.peripheral
         
         // Data may be sent in up-to-20-bytes packets
-        var offset = 0
-        var bytesToSend = data.count
+        var offset: UInt32 = 0
+        var bytesToSend = UInt32(data.count)
         
         repeat {
             let packetLength = min(bytesToSend, PacketSize)
-            let packet = data.subdata(in: offset..<(offset + packetLength))
+            let packet = data.subdata(in: Int(offset) ..< Int(offset + packetLength))
             logger.v("Writing to characteristic \(DFUPacket.UUID.uuidString)...")
-            logger.d("peripheral.writeValue(0x\(packet.hexString), forCharacteristic: \(DFUPacket.UUID.uuidString), type: WithoutResponse)")
-            peripheral.writeValue(packet, for: characteristic, type: CBCharacteristicWriteType.withoutResponse)
+            logger.d("peripheral.writeValue(0x\(packet.hexString), for: \(DFUPacket.UUID.uuidString), type: .withoutResponse)")
+            peripheral.writeValue(packet, for: characteristic, type: .withoutResponse)
             
             offset += packetLength
             bytesToSend -= packetLength
@@ -142,60 +144,70 @@ internal class DFUPacket {
      
      - parameter number:           number of packets to be sent before a Packet Receipt Notification is expected.
      Set to 0 to disable Packet Receipt Notification procedure (not recommended)
-     - parameter firmware:         the firmware to be sent
-     - parameter progressDelegate: an optional progress delegate
+     - parameter aFirmware:         the firmware to be sent
+     - parameter aProgressDelegate: an optional progress delegate
      */
-    func sendNext(_ number:UInt16, packetsOf firmware:DFUFirmware, andReportProgressTo progressDelegate:DFUProgressDelegate?) {
+    func sendNext(_ number:UInt16, packetsOf aFirmware:DFUFirmware, andReportProgressTo aProgressDelegate:DFUProgressDelegate?) {
         // Get the peripheral object
         let peripheral = characteristic.service.peripheral
         
         // Some super complicated computations...
-        let bytesTotal = firmware.data.count
+        let bytesTotal   = UInt32(aFirmware.data.count)
         let totalPackets = (bytesTotal + PacketSize - 1) / PacketSize
         let packetsSent  = (bytesSent + PacketSize - 1) / PacketSize
-        let packetsLeft = totalPackets - packetsSent
+        let packetsLeft  = totalPackets - packetsSent
         
         // Calculate how many packets should be sent before EOF or next receipt notification
-        var packetsToSendNow = min(Int(number), packetsLeft)
+        var packetsToSendNow = min(UInt32(number), packetsLeft)
         if number == 0 {
             // When Packet Receipt Notification procedure is disabled, the service will send all data here
             packetsToSendNow = totalPackets
         }
         
         // Initialize timers
-        if bytesSent == 0 {
+        if startTime == nil {
             startTime = CFAbsoluteTimeGetCurrent()
             lastTime = startTime
+            
+            // Notify progress delegate that upload has started (0%)
+            DispatchQueue.main.async(execute: {
+                aProgressDelegate?.dfuProgressDidChange(
+                    for:   aFirmware.currentPart,
+                    outOf: aFirmware.parts,
+                    to:    0,
+                    currentSpeedBytesPerSecond: 0.0,
+                    avgSpeedBytesPerSecond:     0.0)
+            })
         }
         
         while packetsToSendNow > 0 {
-            let bytesLeft = bytesTotal - bytesSent
+            let bytesLeft    = bytesTotal - bytesSent
             let packetLength = min(bytesLeft, PacketSize)
-            let packet = firmware.data.subdata(in: bytesSent..<(bytesSent + packetLength))
-            peripheral.writeValue(packet, for: characteristic, type: CBCharacteristicWriteType.withoutResponse)
+            let packet       = aFirmware.data.subdata(in: Int(bytesSent) ..< Int(bytesSent + packetLength))
+            peripheral.writeValue(packet, for: characteristic, type: .withoutResponse)
             
             bytesSent += packetLength
             packetsToSendNow -= 1
             
-            // Calculate current transfer speed in bytes per second
-            let now = CFAbsoluteTimeGetCurrent()
-            let currentSpeed = Double(packetLength) / (now - lastTime!)
-            lastTime = now
-            
             // Calculate progress
-            let currentProgress = (bytesSent * 100 / bytesTotal) // in percantage (0-100)
+            let currentProgress = UInt8(bytesSent * 100 / bytesTotal) // in percantage (0-100)
             
             // Notify progress listener
             if currentProgress > progress {
+                // Calculate current transfer speed in bytes per second
+                let now = CFAbsoluteTimeGetCurrent()
+                let currentSpeed = Double(bytesSent - bytesSentSinceProgessNotification) / (now - lastTime!)
                 let avgSpeed = Double(bytesSent) / (now - startTime!)
+                lastTime = now
+                bytesSentSinceProgessNotification = bytesSent
                 
                 DispatchQueue.main.async(execute: {
-                    progressDelegate?.onUploadProgress(
-                        firmware.currentPart,
-                        totalParts: firmware.parts,
-                        progress: currentProgress,
+                    aProgressDelegate?.dfuProgressDidChange(
+                        for:   aFirmware.currentPart,
+                        outOf: aFirmware.parts,
+                        to:    Int(currentProgress),
                         currentSpeedBytesPerSecond: currentSpeed,
-                        avgSpeedBytesPerSecond: avgSpeed)
+                        avgSpeedBytesPerSecond:     avgSpeed)
                 })
                 progress = currentProgress
             }
