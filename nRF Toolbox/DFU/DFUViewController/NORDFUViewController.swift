@@ -157,19 +157,14 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
         switch(level) {
             case .application:
                 levelString = "Application"
-                break
             case .debug:
                 levelString = "Debug"
-                break
             case .error:
                 levelString = "Error"
-                break
             case .info:
                 levelString = "Info"
-                break
             case .verbose:
                 levelString = "Verbose"
-                break
             case .warning:
                 levelString = "Warning"
         }
@@ -177,55 +172,36 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
     }
 
     //MARK: - DFUServiceDelegate
-    func didStateChangedTo(_ state: DFUState) {
-        
+    func dfuStateDidChange(to state: DFUState) {
         switch state {
-            case .connecting:
-                uploadStatus.text = "Connecting..."
-                break
-            case .starting:
-                uploadStatus.text = "Starting DFU..."
-                break
-            case .enablingDfuMode:
-                uploadStatus.text = "Enabling DFU Bootloader..."
-                break
-            case .uploading:
-                uploadStatus.text = "Uploading..."
-                break
-            case .validating:
-                uploadStatus.text = "Validating..."
-                break
-            case .disconnecting:
-                uploadStatus.text = "Disconnecting..."
-                break
-            case .completed:
-                NORDFUConstantsUtility.showAlert(message: "Upload complete")
-                if NORDFUConstantsUtility.isApplicationStateInactiveOrBackgrounded() {
-                    NORDFUConstantsUtility.showBackgroundNotification(message: "Upload complete")
-                }
-                self.clearUI()
-                break
-            case .aborted:
-                NORDFUConstantsUtility.showAlert(message: "Upload aborted")
-                if NORDFUConstantsUtility.isApplicationStateInactiveOrBackgrounded(){
-                    NORDFUConstantsUtility.showBackgroundNotification(message: "Upload aborted")
-                }
-                self.clearUI()
-                break
-            case .signatureMismatch:
-                uploadStatus.text = "Signature mismatch..."
-                break
-            case .operationNotPermitted:
-                uploadStatus.text = "Operation not permitted..."
-                break
-            case .failed:
-                uploadStatus.text = "Connection Failure"
-                break
+        case .connecting:
+            uploadStatus.text = "Connecting..."
+        case .starting:
+            uploadStatus.text = "Starting DFU..."
+        case .enablingDfuMode:
+            uploadStatus.text = "Enabling DFU Bootloader..."
+        case .uploading:
+            uploadStatus.text = "Uploading..."
+        case .validating:
+            uploadStatus.text = "Validating..."
+        case .disconnecting:
+            uploadStatus.text = "Disconnecting..."
+        case .completed:
+            NORDFUConstantsUtility.showAlert(message: "Upload complete")
+            if NORDFUConstantsUtility.isApplicationStateInactiveOrBackgrounded() {
+                NORDFUConstantsUtility.showBackgroundNotification(message: "Upload complete")
+            }
+            self.clearUI()
+        case .aborted:
+            NORDFUConstantsUtility.showAlert(message: "Upload aborted")
+            if NORDFUConstantsUtility.isApplicationStateInactiveOrBackgrounded(){
+                NORDFUConstantsUtility.showBackgroundNotification(message: "Upload aborted")
+            }
+            self.clearUI()
         }
     }
-    
-    func didErrorOccur(_ error: DFUError, withMessage message: String) {
-        NORDFUConstantsUtility.showAlert(message: message)
+
+    func dfuError(_ error: DFUError, didOccurWithMessage message: String) {
         if NORDFUConstantsUtility.isApplicationStateInactiveOrBackgrounded() {
             NORDFUConstantsUtility.showBackgroundNotification(message: message)
         }
@@ -233,7 +209,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
     }
 
     //MARK: - DFUProgressDelegate
-    func onUploadProgress(_ part: Int, totalParts: Int, progress: Int, currentSpeedBytesPerSecond: Double, avgSpeedBytesPerSecond: Double) {
+    func dfuProgressDidChange(for part: Int, outOf totalParts: Int, to progress: Int, currentSpeedBytesPerSecond: Double, avgSpeedBytesPerSecond: Double) {
         self.progress.progress = Float(progress) / 100.0
         progressLabel.text = String("\(progress)% (\(part)/\(totalParts))")
     }
@@ -277,7 +253,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
         
         let alert = UIAlertController(title: "Abort?", message: "Do you want to abort?", preferredStyle: .alert)
         let abort = UIAlertAction(title: "Abort", style: .destructive, handler: { (anAction) in
-            self.dfuController?.abort()
+            _ = self.dfuController?.abort()
             alert.dismiss(animated: true, completion: nil)
         })
         let cancel = UIAlertAction(title: "Cancel", style: .default, handler: { (anAction) in
@@ -358,13 +334,12 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
         
         // To start the DFU operation the DFUServiceInitiator must be used
         let initiator = DFUServiceInitiator(centralManager: centralManager!, target: selectedPeripheral!)
-        initiator.withFirmwareFile(selectedFirmware!)
         initiator.forceDfu = UserDefaults.standard.bool(forKey: "dfu_force_dfu")
         initiator.packetReceiptNotificationParameter = UInt16(UserDefaults.standard.integer(forKey: "dfu_number_of_packets"))
         initiator.logger = self
         initiator.delegate = self
         initiator.progressDelegate = self
-        dfuController = initiator.start()
+        dfuController = initiator.with(firmware: selectedFirmware!).start()
         uploadButton.setTitle("Cancel", for: UIControlState())
         uploadButton.isEnabled = true
     }
