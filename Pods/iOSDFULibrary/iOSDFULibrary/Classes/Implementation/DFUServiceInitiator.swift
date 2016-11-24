@@ -1,57 +1,88 @@
-//
-//  DFUServiceInitiator.swift
-//  Pods
-//
-//  Created by Mostafa Berg on 17/06/16.
-//
-//
+/*
+ * Copyright (c) 2016, Nordic Semiconductor
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this
+ * software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+ * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 import CoreBluetooth
 
-
-open class DFUServiceInitiator : NSObject {
+/**
+ The DFUServiceInitiator object should be used to send a firmware update to a remote BLE target compatible
+ with the Nordic Semiconductor's DFU (Device Firmware Update).
+ A `delegate`, `progressDelegate` and `logger` may be specified in order to receive status information.
+ */
+@objc public class DFUServiceInitiator : NSObject {
+    
+    //MARK: - Internal variables
     
     internal let centralManager : CBCentralManager
     internal let target         : CBPeripheral
     internal var file           : DFUFirmware?
     
+    //MARK: - Public variables
+    
     /**
      The service delegate is an object that will be notified about state changes of the DFU Service.
      Setting it is optional but recommended.
      */
-    open weak var delegate:DFUServiceDelegate?
+    public weak var delegate: DFUServiceDelegate?
+    
     /**
      An optional progress delegate will be called only during upload. It notifies about current upload
      percentage and speed.
      */
-    open weak var progressDelegate:DFUProgressDelegate?
+    public weak var progressDelegate: DFUProgressDelegate?
+    
     /**
      The logger is an object that should print given messages to the user. It is optional.
      */
-    open weak var logger:LoggerDelegate?
+    public weak var logger: LoggerDelegate?
+    
     /**
-     The selector object is used during sending a firmware containing a Softdevice (or Softdevice and Bootloader)
-     and the Application. After flashing the first part (containing the Softdevice), the device restarts in the
+     The selector object is used when the device needs to disconnect and start advertising with a different address
+     to avodi caching problems, for example after switching to the Bootloader mode, or during sending a firmware
+     containing a Softdevice (or Softdevice and Bootloader) and the Application. 
+     After flashing the first part (containing the Softdevice), the device restarts in the
      DFU Bootloader mode and may (since SDK 8.0.0) start advertising with an address incremented by 1.
      The peripheral specified in the `init` may no longer be used as there is no device advertising with its address.
      The DFU Service will scan for a new device and connect to the first device returned by the selector.
      
-     The default selecter returns the first device with the DFU Service UUID in the advertising packet.
+     The default selecter returns the first device with the required DFU Service UUID in the advertising packet
+     (Secure or Legacy DFU Service UUID).
      
-     Ignore this property if not updating Softdevice and Application from one ZIP file.
+     Ignore this property if not updating Softdevice and Application from one ZIP file or your 
      */
-    open var peripheralSelector:DFUPeripheralSelector?
+    public var peripheralSelector: DFUPeripheralSelectorDelegate
 
     /**
      The number of packets of firmware data to be received by the DFU target before sending
-     a new Packet Receipt Notification (control point notification with Op Code = 7).
+     a new Packet Receipt Notification.
      If this value is 0, the packet receipt notification will be disabled by the DFU target.
-     Default value is 12. Higher values, or disabling it, may speed up the upload process,
+     Default value is 12. Higher values (~20+), or disabling it, may speed up the upload process,
      but also cause a buffer overflow and hang the Bluetooth adapter.
+     Maximum verified values were 29 for iPhone 6 Plus or 22 for iPhone 7, both iOS 10.1.
      */
-    open var packetReceiptNotificationParameter:UInt16 = 12
+    public var packetReceiptNotificationParameter: UInt16 = 12
     
     /**
+     **Legacy DFU only.**
+     
      Setting this property to true will prevent from jumping to the DFU Bootloader
      mode in case there is no DFU Version characteristic. Use it if the DFU operation can be handled by your
      device running in the application mode. If the DFU Version characteristic exists, the
@@ -96,7 +127,46 @@ open class DFUServiceInitiator : NSObject {
      if the only service found is the DFU Service. Setting the forceDfu to true (YES) will prevent from
      jumping in these both cases.
      */
-    open var forceDfu = false
+    public var forceDfu = false
+    
+    /**
+     Set this flag to true to enable experimental buttonless feature in Secure DFU. When the 
+     experimental Buttonless DFU Service is found on a device, the service will use it to
+     switch the device to the bootloader mode, connect to it in that mode and proceed with DFU.
+     
+     **Please, read the information below before setting it to true.**
+     
+     In the SDK 12.x the Buttonless DFU feature for Secure DFU was experimental.
+     It is NOT recommended to use it: it was not properly tested, had implementation bugs 
+     (e.g. https://devzone.nordicsemi.com/question/100609/sdk-12-bootloader-erased-after-programming/) and
+     does not required encryption and therefore may lead to DOS attack (anyone can use it to switch the device
+     to bootloader mode). However, as there is no other way to trigger bootloader mode on devices
+     without a button, this DFU Library supports this service, but the feature must be explicitly enabled here.
+     Be aware, that setting this flag to false will no protect your devices from this kind of attacks, as
+     an attacker may use another app for that purpose. To be sure your device is secure remove this
+     experimental service from your device.
+     
+     Spec:
+     
+     Buttonless DFU Service UUID: 8E400001-F315-4F60-9FB8-838830DAEA50
+     
+     Buttonless DFU characteristic UUID: 8E400001-F315-4F60-9FB8-838830DAEA50 (the same)
+     
+     Enter Bootloader Op Code: 0x01
+     
+     Correct return value: 0x20-01-01 , where:
+       0x20 - Response Op Code
+       0x01 - Request Code
+       0x01 - Success
+     The device should disconnect and restart in DFU mode after sending the notification.
+     
+     In SDK 13 this issue will be fixed by a proper implementation (bonding required,
+     passing bond information to the bootloader, encryption, well tested). It is recommended to use this 
+     new service when SDK 13 (or later) is out. TODO: fix the docs when SDK 13 is out.
+     */
+    public var enableUnsafeExperimentalButtonlessServiceInSecureDfu = false
+    
+    //MARK: - Public API
     
     /**
      Creates the DFUServiceInitializer that will allow to send an update to the given peripheral.
@@ -113,18 +183,13 @@ open class DFUServiceInitiator : NSObject {
      - seeAlso: peripheralSelector property - a selector used when scanning for a device in DFU Bootloader mode
      in case you want to update a Softdevice and Application from a single ZIP Distribution Packet.
      */
-//    init(withCentralManager aCentralManager : CBCentralManager, andTarget aTarget : CBPeripheral) {
-//        centralManager     = aCentralManager
-//        target             = aTarget
-//        peripheralSelector = DFUPeripheralSelector(secureDFU: false)
-//        super.init()
-//    }
-    
-    public init(centralManager:CBCentralManager, target:CBPeripheral) {
+    public init(centralManager: CBCentralManager, target: CBPeripheral) {
         self.centralManager = centralManager
         // Just to be sure that manager is not scanning
         self.centralManager.stopScan()
         self.target = target
+        // Default peripheral selector will choose the service UUID as a filter
+        self.peripheralSelector = DFUPeripheralSelector()
         super.init()
     }
     
@@ -136,7 +201,7 @@ open class DFUServiceInitiator : NSObject {
      
      - returns: the initiator instance to allow chain use
      */
-    open func withFirmwareFile(_ file:DFUFirmware) -> DFUServiceInitiator {
+    public func with(firmware file: DFUFirmware) -> DFUServiceInitiator {
         self.file = file
         return self
     }
@@ -154,22 +219,18 @@ open class DFUServiceInitiator : NSObject {
      
      - returns: A DFUServiceController object that can be used to control the DFU operation.
      */
-    open func start() -> DFUServiceController? {
+    public func start() -> DFUServiceController? {
         // The firmware file must be specified before calling `start()`
         if file == nil {
-            delegate?.didErrorOccur(DFUError.fileNotSpecified, withMessage: "Firmare not specified")
+            delegate?.dfuError(.fileNotSpecified, didOccurWithMessage: "Firmare not specified")
             return nil
         }
 
-        let executor = DFUExecutor(self)
-        let controller = DFUServiceController(executor)
-        executor.start()
+        let controller = DFUServiceController()
+        let selector = DFUServiceSelector(initiator: self, controller: controller)
+        controller.executor = selector
+        selector.start()
         
         return controller
     }
-    
-    open func onPeripheralDFUDiscovery(_ isSecureDFU : Bool) {
-        self.peripheralSelector = DFUPeripheralSelector(secureDFU: isSecureDFU)    
-    }
-
 }

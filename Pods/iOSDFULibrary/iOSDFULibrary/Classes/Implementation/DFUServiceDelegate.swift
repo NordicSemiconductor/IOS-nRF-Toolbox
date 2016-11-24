@@ -20,73 +20,94 @@
 * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-public enum SecureDFUError : Int {
-    case invalidCode                    = 0
-    case success                        = 1
-    case opCodeNotSupported             = 2
-    case invalidParameter               = 3
-    case insufficientResources          = 4
-    case invalidObject                  = 5
-    case signatureMismatch              = 6
-    case unsupportedType                = 7
-    case operationNotpermitted          = 8
-    case operationFailed                = 10
-    case extendedError                  = 11
+@objc public enum DFUError : Int {
+    // Legacy DFU errors
+    case remoteLegacyDFUSuccess               = 1
+    case remoteLegacyDFUInvalidState          = 2
+    case remoteLegacyDFUNotSupported          = 3
+    case remoteLegacyDFUDataExceedsLimit      = 4
+    case remoteLegacyDFUCrcError              = 5
+    case remoteLegacyDFUOperationFailed       = 6
+    
+    // Secure DFU errors (received value + 10 as they overlap legacy errors)
+    case remoteSecureDFUSuccess               = 11 // 10 + 1
+    case remoteSecureDFUOpCodeNotSupported    = 12 // 10 + 2
+    case remoteSecureDFUInvalidParameter      = 13 // 10 + 3
+    case remoteSecureDFUInsufficientResources = 14 // 10 + 4
+    case remoteSecureDFUInvalidObject         = 15 // 10 + 5
+    case remoteSecureDFUSignatureMismatch     = 16 // 10 + 6
+    case remoteSecureDFUUnsupportedType       = 17 // 10 + 7
+    case remoteSecureDFUOperationNotpermitted = 18 // 10 + 8
+    case remoteSecureDFUOperationFailed       = 20 // 10 + 10
+    case remoteSecureDFUExtendedError         = 21 // 10 + 11
+    
+    // Experimental DFU errors (received value + 9000 as they overlap legacy errors)
+    case remoteExperimentalBootlonlessDFUSuccess               = 9001 // 9000 + 1
+    case remoteExperimentalBootlonlessDFUOpCodeNotSupported    = 9002 // 9000 + 2
+    case remoteExperimentalBootlonlessDFUOperationFailed       = 9004 // 9000 + 4
     
     /// Providing the DFUFirmware is required.
-    case fileNotSpecified               = 101
+    case fileNotSpecified                     = 101
     /// Given firmware file is not supported.
-    case fileInvalid                    = 102
+    case fileInvalid                          = 102
     /// Since SDK 7.0.0 the DFU Bootloader requires the extended Init Packet. For more details, see:
     /// http://infocenter.nordicsemi.com/topic/com.nordic.infocenter.sdk5.v11.0.0/bledfu_example_init.html?cp=4_0_0_4_2_1_1_3
-    case extendedInitPacketRequired     = 103
+    case extendedInitPacketRequired           = 103
     /// Before SDK 7.0.0 the init packet could have contained only 2-byte CRC value, and was optional.
     /// Providing an extended one instead would cause CRC error during validation (the bootloader assumes that the 2 first bytes
     /// of the init packet are the firmware CRC).
-    case initPacketRequired             = 104
+    case initPacketRequired                   = 104
     
-    case failedToConnect                = 201
-    case deviceDisconnected             = 202
+    case failedToConnect                      = 201
+    case deviceDisconnected                   = 202
+    case bluetoothDisabled                    = 203
     
-    case serviceDiscoveryFailed         = 301
-    case deviceNotSupported             = 302
-    case readingVersionFailed           = 303
-    case enablingControlPointFailed     = 304
-    case writingCharacteristicFailed    = 305
-    case receivingNotificationFailed    = 306
-    case unsupportedResponse            = 307
-    /// Error called during upload when the number of bytes sent is not equal to number of bytes confirmed in Packet Receipt Notification.
-    case bytesLost                      = 308
-    case characteristicDiscoveryFailed  = 309
+    case serviceDiscoveryFailed               = 301
+    case deviceNotSupported                   = 302
+    case readingVersionFailed                 = 303
+    case enablingControlPointFailed           = 304
+    case writingCharacteristicFailed          = 305
+    case receivingNotificationFailed          = 306
+    case unsupportedResponse                  = 307
+    /// Error raised during upload when the number of bytes sent is not equal to number of bytes confirmed in Packet Receipt Notification.
+    case bytesLost                            = 308
+    /// Error raised when the CRC reported by the remote device does not match. Service has done 3 tries to send the data.
+    case crcError                             = 309
+}
+
+/**
+ The state of the DFU Service.
+ 
+ - connecting:      Service is connecting to the DFU target
+ - starting:        DFU Service is initializing DFU operation
+ - enablingDfuMode: Service is switching the device to DFU mode
+ - uploading:       Service is uploading the firmware
+ - validating:      The DFU target is validating the firmware
+ - disconnecting:   The iDevice is disconnecting or waiting for disconnection
+ - completed:       DFU operation is completed and successful
+ - aborted:         DFU Operation was aborted
+ */
+
+@objc public enum DFUState : Int {
+    case connecting
+    case starting
+    case enablingDfuMode
+    case uploading
+    case validating
+    case disconnecting
+    case completed
+    case aborted
     
-    var description:String {
+    public func description() -> String {
         switch self {
-            case .invalidCode:                  return "Invalid code"
-            case .success:                      return "Success"
-            case .opCodeNotSupported:           return "OpCode not supported"
-            case .invalidParameter:             return "Invalid parameter"
-            case .insufficientResources:        return "Insufficient resources"
-            case .invalidObject:                return "Invalid object"
-            case .signatureMismatch:            return "signature mismatch"
-            case .unsupportedType:              return "Unsupported type"
-            case .operationNotpermitted:        return "Operation not permitted"
-            case .operationFailed:              return "Operation failed"
-            case .extendedError:                return "Extended error"
-            case .fileNotSpecified:             return "File not specified"
-            case .fileInvalid:                  return "File invalid"
-            case .extendedInitPacketRequired:   return "Extended init packet required"
-            case .initPacketRequired:           return "Init packet required"
-            case .failedToConnect:              return "Failed to connect"
-            case .deviceDisconnected:           return "Devices disconnected"
-            case .serviceDiscoveryFailed:       return "Service discovery failed"
-            case .deviceNotSupported:           return "Device not supported"
-            case .readingVersionFailed:         return "Reading version failed"
-            case .enablingControlPointFailed:   return "Enabling control point failed"
-            case .writingCharacteristicFailed:  return "Writing characteristic failed"
-            case .receivingNotificationFailed:  return "Receiving notification failed"
-            case .unsupportedResponse:          return "Unsupported response"
-            case .bytesLost:                    return "Bytes lost"
-            case .characteristicDiscoveryFailed:return "Characteristic discovery failed"
+        case .connecting:      return "Connecting"
+        case .starting:        return "Starting"
+        case .enablingDfuMode: return "Enabling DFU Mode"
+        case .uploading:       return "Uploading"
+        case .validating:      return "Validating"  // this state occurs only in Legacy DFU
+        case .disconnecting:   return "Disconnecting"
+        case .completed:       return "Completed"
+        case .aborted:         return "Aborted"
         }
     }
 }
@@ -95,7 +116,7 @@ public enum SecureDFUError : Int {
  *  The progress delegates may be used to notify user about progress updates.
  *  The only method of the delegate is only called when the service is in the Uploading state.
  */
-public protocol SecureDFUProgressDelegate : class {
+@objc public protocol DFUProgressDelegate {
     /**
      Callback called in the `State.Uploading` state. Gives detailed information about the progress
      and speed of transmission. This method is always called at least two times (for 0% and 100%)
@@ -117,14 +138,14 @@ public protocol SecureDFUProgressDelegate : class {
      - parameter currentSpeedBytesPerSecond: the current speed in bytes per second
      - parameter avgSpeedBytesPerSecond: the average speed in bytes per second
      */
-    func onUploadProgress(_ part:Int, totalParts:Int, progress:Int,
-        currentSpeedBytesPerSecond:Double, avgSpeedBytesPerSecond:Double)
+    func dfuProgressDidChange(for part: Int, outOf totalParts: Int, to progress: Int,
+        currentSpeedBytesPerSecond: Double, avgSpeedBytesPerSecond: Double)
 }
 
 /**
  *  The service delegate reports about state changes and errors.
  */
-public protocol SecureDFUServiceDelegate : class {
+@objc public protocol DFUServiceDelegate {
     /**
      Callback called when state of the DFU Service has changed.
      
@@ -132,7 +153,7 @@ public protocol SecureDFUServiceDelegate : class {
      
      - parameter state: the new state fo the service
      */
-    func didStateChangedTo(_ state:DFUState)
+    func dfuStateDidChange(to state: DFUState)
     
     /**
      Called after an error occurred.
@@ -143,5 +164,6 @@ public protocol SecureDFUServiceDelegate : class {
      - parameter error:   the error code
      - parameter message: error description
      */
-    func OnErrorOccured(withError anError : SecureDFUError, andMessage aMessage:String)
+    func dfuError(_ error: DFUError, didOccurWithMessage message: String)
+
 }
