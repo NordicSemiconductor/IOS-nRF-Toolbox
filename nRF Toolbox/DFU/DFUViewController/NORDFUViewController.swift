@@ -24,6 +24,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
 
     //MARK: - UIViewController Outlets
 
+    @IBOutlet weak var dfuLibraryVersionLabel: UILabel!
     @IBOutlet weak var fileName: UILabel!
     @IBOutlet weak var fileSize: UILabel!
     @IBOutlet weak var fileType: UILabel!
@@ -55,6 +56,8 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
             isImportingFile = false
             self.onFileSelected(withURL: selectedFileURL!)
         }
+
+        self.dfuLibraryVersionLabel.text = "DFU Library version \(NORAppUtilities.iOSDFULibraryVersion)"
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -339,6 +342,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
         initiator.logger = self
         initiator.delegate = self
         initiator.progressDelegate = self
+        initiator.enableUnsafeExperimentalButtonlessServiceInSecureDfu = true
         dfuController = initiator.with(firmware: selectedFirmware!).start()
         uploadButton.setTitle("Cancel", for: UIControlState())
         uploadButton.isEnabled = true
