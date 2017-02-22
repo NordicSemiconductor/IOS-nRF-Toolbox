@@ -213,7 +213,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
 
     //MARK: - DFUProgressDelegate
     func dfuProgressDidChange(for part: Int, outOf totalParts: Int, to progress: Int, currentSpeedBytesPerSecond: Double, avgSpeedBytesPerSecond: Double) {
-        self.progress.progress = Float(progress) / 100.0
+        self.progress.setProgress(Float(progress) / 100.0, animated: true)
         progressLabel.text = String("\(progress)% (\(part)/\(totalParts))")
     }
     
