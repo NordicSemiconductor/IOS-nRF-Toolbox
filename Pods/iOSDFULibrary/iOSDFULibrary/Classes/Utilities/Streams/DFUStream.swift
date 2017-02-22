@@ -20,16 +20,16 @@
 * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-internal let FIRMWARE_TYPE_SOFTDEVICE:UInt8 = 0x01
-internal let FIRMWARE_TYPE_BOOTLOADER:UInt8 = 0x02
-internal let FIRMWARE_TYPE_APPLICATION:UInt8 = 0x04
+internal let FIRMWARE_TYPE_SOFTDEVICE  : UInt8 = 0x01
+internal let FIRMWARE_TYPE_BOOTLOADER  : UInt8 = 0x02
+internal let FIRMWARE_TYPE_APPLICATION : UInt8 = 0x04
 
 @objc open class DFUFirmwareSize : NSObject {
-    open fileprivate(set) var softdevice:UInt32 = 0
-    open fileprivate(set) var bootloader:UInt32 = 0
-    open fileprivate(set) var application:UInt32 = 0
+    open fileprivate(set) var softdevice  : UInt32 = 0
+    open fileprivate(set) var bootloader  : UInt32 = 0
+    open fileprivate(set) var application : UInt32 = 0
     
-    internal init(softdevice:UInt32, bootloader:UInt32, application:UInt32) {
+    internal init(softdevice: UInt32, bootloader: UInt32, application: UInt32) {
         self.softdevice = softdevice
         self.bootloader = bootloader
         self.application = application
@@ -41,20 +41,20 @@ internal let FIRMWARE_TYPE_APPLICATION:UInt8 = 0x04
  */
 internal protocol DFUStream {
     /// Returns the 1-based number of the current part.
-    var currentPart:Int { get }
+    var currentPart: Int { get }
     /// Number of parts to be sent.
-    var parts:Int { get }
+    var parts: Int { get }
     /// The size of each component of the firmware.
-    var size:DFUFirmwareSize { get }
+    var size: DFUFirmwareSize { get }
     /// The size of each component of the firmware from the current part.
-    var currentPartSize:DFUFirmwareSize { get }
+    var currentPartSize: DFUFirmwareSize { get }
     /// The type of the current part. See FIRMWARE_TYPE_* constants.
-    var currentPartType:UInt8 { get }
+    var currentPartType: UInt8 { get }
     
     /// The firmware data to be sent to the DFU target.
-    var data:Data { get }
+    var data: Data { get }
     /// The whole init packet matching the current part. Data may be longer than 20 bytes.
-    var initPacket:Data? { get }
+    var initPacket: Data? { get }
     
     /**
      Returns true if there is another part to be send.

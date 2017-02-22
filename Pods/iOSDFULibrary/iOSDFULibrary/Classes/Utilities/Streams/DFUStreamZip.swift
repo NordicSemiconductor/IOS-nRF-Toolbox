@@ -27,46 +27,46 @@ internal enum DFUStreamZipError : Error {
     case fileNotFound
     case typeNotFound
     
-    var description:String {
+    var description: String {
         switch self {
-        case .noManifest: return NSLocalizedString("No manifest file found", comment: "")
+        case .noManifest:      return NSLocalizedString("No manifest file found", comment: "")
         case .invalidManifest: return NSLocalizedString("Invalid manifest.json file", comment: "")
-        case .fileNotFound: return NSLocalizedString("File specified in manifest.json not found in ZIP", comment: "")
-        case .typeNotFound: return NSLocalizedString("Specified type not found in manifest.json", comment: "")
+        case .fileNotFound:    return NSLocalizedString("File specified in manifest.json not found in ZIP", comment: "")
+        case .typeNotFound:    return NSLocalizedString("Specified type not found in manifest.json", comment: "")
         }
     }
 }
 
 internal class DFUStreamZip : DFUStream {
-    fileprivate static let MANIFEST_FILE = "manifest.json"
+    private static let MANIFEST_FILE = "manifest.json"
     
-    fileprivate(set) var currentPart = 1
-    fileprivate(set) var parts = 1
-    fileprivate(set) var currentPartType:UInt8 = 0
+    private(set) var currentPart = 1
+    private(set) var parts       = 1
+    private(set) var currentPartType: UInt8 = 0
     
     /// The parsed manifest file if such found, nil otherwise.
-    fileprivate var manifest:Manifest?
+    private var manifest: Manifest?
     /// Binaries with softdevice and bootloader.
-    fileprivate var systemBinaries:Data?
+    private var systemBinaries: Data?
     /// Binaries with an app.
-    fileprivate var appBinaries:Data?
+    private var appBinaries: Data?
     /// System init packet.
-    fileprivate var systemInitPacket:Data?
+    private var systemInitPacket: Data?
     /// Application init packet.
-    fileprivate var appInitPacket:Data?
+    private var appInitPacket: Data?
     
-    fileprivate var currentBinaries:Data?
-    fileprivate var currentInitPacket:Data?
+    private var currentBinaries: Data?
+    private var currentInitPacket: Data?
     
-    fileprivate var softdeviceSize:UInt32 = 0
-    fileprivate var bootloaderSize:UInt32 = 0
-    fileprivate var applicationSize:UInt32 = 0
+    private var softdeviceSize  : UInt32 = 0
+    private var bootloaderSize  : UInt32 = 0
+    private var applicationSize : UInt32 = 0
     
-    var size:DFUFirmwareSize {
+    var size: DFUFirmwareSize {
         return DFUFirmwareSize(softdevice: softdeviceSize, bootloader: bootloaderSize, application: applicationSize)
     }
     
-    var currentPartSize:DFUFirmwareSize {
+    var currentPartSize: DFUFirmwareSize {
         // If the ZIP file will be transferred in one part, return all sizes. Two of them will be 0.
         if parts == 1 {
             return DFUFirmwareSize(softdevice: softdeviceSize, bootloader: bootloaderSize, application: applicationSize)
@@ -88,7 +88,7 @@ internal class DFUStreamZip : DFUStream {
      
      - returns: the stream
      */
-    convenience init(urlToZipFile:URL) throws {
+    convenience init(urlToZipFile: URL) throws {
         let allTypes = FIRMWARE_TYPE_SOFTDEVICE | FIRMWARE_TYPE_BOOTLOADER | FIRMWARE_TYPE_APPLICATION
         try self.init(urlToZipFile: urlToZipFile, type: allTypes)
     }
@@ -103,7 +103,7 @@ internal class DFUStreamZip : DFUStream {
      
      - returns: the stream
      */
-    init(urlToZipFile:URL, type:UInt8) throws {
+    init(urlToZipFile: URL, type: UInt8) throws {
         // Try to unzip the file. This may throw an exception
         let contentUrls = try ZipArchive.unzip(urlToZipFile)
         
@@ -223,14 +223,14 @@ internal class DFUStreamZip : DFUStream {
      
      - returns: content bin and dat files
      */
-    fileprivate func getContentOf(_ info:ManifestFirmwareInfo, from contentUrls:[URL]) throws -> (Data, Data?) {
+    fileprivate func getContentOf(_ info: ManifestFirmwareInfo, from contentUrls: [URL]) throws -> (Data, Data?) {
         if !info.valid {
             throw DFUStreamZipError.invalidManifest
         }
         
         // Get the URLs to the bin and dat files specified in the FirmwareInfo
         let bin = ZipArchive.findFile(info.binFile!, inside: contentUrls)
-        var dat:URL? = nil
+        var dat: URL? = nil
         if let datFile = info.datFile {
             dat = ZipArchive.findFile(datFile, inside: contentUrls)
         }
@@ -242,7 +242,7 @@ internal class DFUStreamZip : DFUStream {
         
         // Read content of those files
         let binData = try! Data(contentsOf: bin!)
-        var datData:Data? = nil
+        var datData: Data? = nil
         if let dat = dat {
             datData = try! Data(contentsOf: dat)
         }
@@ -250,11 +250,11 @@ internal class DFUStreamZip : DFUStream {
         return (binData, datData)
     }
     
-    var data:Data {
+    var data: Data {
         return currentBinaries!
     }
     
-    var initPacket:Data? {
+    var initPacket: Data? {
         return currentInitPacket
     }
     

@@ -32,13 +32,13 @@ import CoreBluetooth
     /// The target DFU Peripheral
     internal var targetPeripheral: DFUPeripheralAPI?
     /// The logger helper.
-    private var logger:LoggerHelper
+    private var logger: LoggerHelper
     /// The service object from CoreBluetooth used to initialize the SecureDFUService instance.
-    private let service:CBService
-    private var dfuPacketCharacteristic:SecureDFUPacket?
-    private var dfuControlPointCharacteristic:SecureDFUControlPoint?
+    private let service                       : CBService
+    private var dfuPacketCharacteristic       : SecureDFUPacket?
+    private var dfuControlPointCharacteristic : SecureDFUControlPoint?
 
-    private var paused = false
+    private var paused  = false
     private var aborted = false
     
     /// A temporary callback used to report end of an operation.
@@ -49,9 +49,9 @@ import CoreBluetooth
     private var progressDelegate : DFUProgressDelegate?
     
     // -- Properties stored when upload started in order to resume it --
-    private var firmware:DFUFirmware?
-    private var packetReceiptNotificationNumber:UInt16 = 0
-    private var range:Range<Int>?
+    private var firmware: DFUFirmware?
+    private var packetReceiptNotificationNumber: UInt16 = 0
+    private var range: Range<Int>?
     // -- End --
     
     // MARK: - Initialization
@@ -82,7 +82,7 @@ import CoreBluetooth
         if !aborted && paused && firmware != nil {
             paused = false
             dfuPacketCharacteristic!.sendNext(packetReceiptNotificationNumber, bytesFrom: range!, of: firmware!,
-                                                   andReportProgressTo: progressDelegate, andCompletionTo: success!)
+                                              andReportProgressTo: progressDelegate, andCompletionTo: success!)
             return paused
         }
         paused = false
@@ -110,7 +110,10 @@ import CoreBluetooth
     // MARK: - Service API methods
     
     /**
-    Discovers characteristics in the DFU Service.
+     Discovers characteristics in the DFU Service. Result it reported using callbacks.
+     
+     - parameter success: method called when required DFU characteristics were discovered
+     - parameter report:  method called when an error occurred
     */
     func discoverCharacteristics(onSuccess success: @escaping Callback, onError report: @escaping ErrorCallback) {
         // Save callbacks
@@ -150,7 +153,10 @@ import CoreBluetooth
     }
     
     /**
-     Reads Command Object Info
+     Reads Command Object Info. Result it reported using callbacks.
+     
+     - parameter response: method called when the response was received
+     - parameter report:   method called when an error occurred
      */
     func readCommandObjectInfo(onReponse response: @escaping SecureDFUResponseCallback, onError report: @escaping ErrorCallback) {
         if !aborted {
@@ -161,7 +167,10 @@ import CoreBluetooth
     }
     
     /**
-     Reads object info Data
+     Reads object info Data. Result it reported using callbacks.
+     
+     - parameter response: method called when the response was received
+     - parameter report:   method called when an error occurred
      */
     func readDataObjectInfo(onReponse response: @escaping SecureDFUResponseCallback, onError report: @escaping ErrorCallback) {
         if !aborted {
@@ -172,9 +181,14 @@ import CoreBluetooth
     }
     
     /**
-     Create object command
+     Creates object command. Result it reported using callbacks.
+     
+     - parameter aLength: exact size of the object
+     - parameter success: method called when the object has been created
+     - parameter report:  method called when an error occurred
+     
      */
-    func createCommandObject(withLength aLength: UInt32, onSuccess success : @escaping Callback, onError report: @escaping ErrorCallback) {
+    func createCommandObject(withLength aLength: UInt32, onSuccess success: @escaping Callback, onError report: @escaping ErrorCallback) {
         if !aborted {
             dfuControlPointCharacteristic!.send(SecureDFURequest.createCommandObject(withSize: aLength), onSuccess: success, onError:report)
         } else {
@@ -183,9 +197,13 @@ import CoreBluetooth
     }
     
     /**
-     Create object data
+     Creates object data. Result it reported using callbacks.
+     
+     - parameter aLength: exact size of the object
+     - parameter success: method called when the object has been created
+     - parameter report:  method called when an error occurred
      */
-    func createDataObject(withLength aLength: UInt32, onSuccess success : @escaping Callback, onError report: @escaping ErrorCallback) {
+    func createDataObject(withLength aLength: UInt32, onSuccess success: @escaping Callback, onError report: @escaping ErrorCallback) {
         if !aborted {
             dfuControlPointCharacteristic!.send(SecureDFURequest.createDataObject(withSize: aLength), onSuccess: success, onError:report)
         } else {
@@ -194,7 +212,11 @@ import CoreBluetooth
     }
     
     /**
-     Sends a Packet Receipt Notification request eith given value.
+     Sends a Packet Receipt Notification request with given value. Result it reported using callbacks.
+     
+     - parameter aValue:  Packet Receipt Notification value (0 to disable PRNs)
+     - parameter success: method called when the PRN value has been set
+     - parameter report:  method called when an error occurred
      */
     func setPacketReceiptNotificationValue(_ aValue: UInt16 = 0, onSuccess success: @escaping Callback, onError report: @escaping ErrorCallback) {
         self.packetReceiptNotificationNumber = aValue
@@ -212,18 +234,24 @@ import CoreBluetooth
     }
     
     /**
-     Sends Calculate checksum request
+     Sends Calculate checksum request. Result it reported using callbacks.
+     
+     - parameter response: method called when the response was received
+     - parameter report:   method called when an error occurred
      */
-    func calculateChecksumCommand(onSuccess success: @escaping SecureDFUResponseCallback, onError report: @escaping ErrorCallback) {
+    func calculateChecksumCommand(onSuccess response: @escaping SecureDFUResponseCallback, onError report: @escaping ErrorCallback) {
         if !aborted {
-            dfuControlPointCharacteristic!.send(SecureDFURequest.calculateChecksumCommand, onResponse: success, onError: report)
+            dfuControlPointCharacteristic!.send(SecureDFURequest.calculateChecksumCommand, onResponse: response, onError: report)
         } else {
             sendReset(onError: report)
         }
     }
     
     /**
-     Sends execute command request
+     Sends Execute command request. Result it reported using callbacks.
+     
+     - parameter success: method called when the object was executed without an error
+     - parameter report:  method called when an error occurred
      */
     func executeCommand(onSuccess success: @escaping Callback, onError report: @escaping ErrorCallback) {
         if !aborted {
@@ -249,14 +277,25 @@ import CoreBluetooth
     /**
      Sends the init packet. This method is synchronous and will terminate when all data were written.
      The init data file should not have more than ~16 packets of data as the buffer overflow error may occur.
+     
+     - parameter packetData: data to be sent as Init Packet
      */
-    func sendInitPacket(withdata packetData : Data){
+    func sendInitPacket(withdata packetData: Data){
         dfuPacketCharacteristic!.sendInitPacket(packetData)
     }
 
+    /**
+     Sends the next object of firmware. Result it reported using callbacks.
+     
+     - parameter aRange:           given range of the firmware will be sent
+     - parameter aFirmware:        the firmware from with part is to be sent
+     - parameter progressDelegate: an optional progress delegate
+     - parameter success:          method called when the object was sent
+     - parameter report:           method called when an error occurred
+     */
     func sendNextObject(from aRange: Range<Int>, of aFirmware: DFUFirmware, andReportProgressTo progressDelegate: DFUProgressDelegate?,
-                            onSuccess success: @escaping Callback, onError report: @escaping ErrorCallback) {
-        if aborted {
+                        onSuccess success: @escaping Callback, onError report: @escaping ErrorCallback) {
+        guard !aborted else {
             sendReset(onError: report)
             return
         }
@@ -389,7 +428,7 @@ import CoreBluetooth
         return service.uuid.isEqual(ExperimentalButtonlessDfuUUID)
     }
     
-    private var experimentalButtonlessDfuCharacteristic:ExperimentalButtonlessDFU?
+    private var experimentalButtonlessDfuCharacteristic: ExperimentalButtonlessDFU?
     
     /**
      This method tries to estimate whether the DFU target device is in Application mode which supports
@@ -403,16 +442,16 @@ import CoreBluetooth
     }
     
     var newAddressExpected: Bool {
-        // The experimental Buttonless DFU will cause the device to advertise with address +1
+        // Using experimental Buttonless DFU feature will cause the device to advertise with address +1.
         return experimentalButtonlessDfuCharacteristic != nil
     }
     
     /**
      Triggers a switch to DFU Bootloader mode on the remote target by sending DFU Start command.
      
-     - parameter report:  method called when an error occurred
+     - parameter report: method called when an error occurred
      */
-    func jumpToBootloaderMode(onError report:@escaping ErrorCallback) {
+    func jumpToBootloaderMode(onError report: @escaping ErrorCallback) {
         if !aborted {
             experimentalButtonlessDfuCharacteristic!.send(ExperimentalButtonlessDFURequest.enterBootloader, onSuccess: nil, onError: report)
         } else {

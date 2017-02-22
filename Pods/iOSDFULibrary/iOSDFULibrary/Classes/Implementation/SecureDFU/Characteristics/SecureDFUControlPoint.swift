@@ -30,7 +30,7 @@ internal enum SecureDFUOpCode : UInt8 {
     case readObjectInfo       = 0x06
     case responseCode         = 0x60
 
-    var code:UInt8 {
+    var code: UInt8 {
         return rawValue
     }
 }
@@ -50,7 +50,7 @@ internal enum SecureDFUExtendedErrorCode : UInt8 {
     case verificationFailed   = 0x0C
     case insufficientSpace    = 0x0D
     
-    var code:UInt8 {
+    var code: UInt8 {
         return rawValue
     }
     
@@ -159,7 +159,7 @@ internal enum SecureDFUResultCode : UInt8 {
     case operationFailed       = 0x0A
     case extendedError         = 0x0B
     
-    var description:String {
+    var description: String {
         switch self {
             case .invalidCode:           return "Invalid code"
             case .success:               return "Success"
@@ -175,7 +175,7 @@ internal enum SecureDFUResultCode : UInt8 {
         }
     }
     
-    var code:UInt8 {
+    var code: UInt8 {
         return rawValue
     }
 }
@@ -191,7 +191,7 @@ internal struct SecureDFUResponse {
     let crc           : UInt32?
     let error         : SecureDFUExtendedErrorCode?
     
-    init?(_ data:Data) {
+    init?(_ data: Data) {
         var opCode        : UInt8 = 0
         var requestOpCode : UInt8 = 0
         var status        : UInt8 = 0
@@ -271,7 +271,7 @@ internal struct SecureDFUResponse {
         }
     }
 
-    var description:String {
+    var description: String {
         if status == .success {
             switch requestOpCode {
             case .some(.readObjectInfo):
@@ -287,7 +287,7 @@ internal struct SecureDFUResponse {
             if let error = error {
                 return "Response (Op Code = \(requestOpCode!.rawValue), Status = \(status!.rawValue), Extended Error \(error.rawValue) = \(error.description))"
             } else {
-               "Response (Op Code = \(requestOpCode!.rawValue), Status = \(status!.rawValue), Unsupported Extended Error value)"
+                return "Response (Op Code = \(requestOpCode!.rawValue), Status = \(status!.rawValue), Unsupported Extended Error value)"
             }
         }
         return "Response (Op Code = \(requestOpCode!.rawValue), Status = \(status!.rawValue))"
@@ -301,7 +301,7 @@ internal struct SecureDFUPacketReceiptNotification {
     let offset        : UInt32
     let crc           : UInt32
 
-    init?(_ data:Data) {
+    init?(_ data: Data) {
         var opCode        : UInt8 = 0
         var requestOpCode : UInt8 = 0
         var resultCode    : UInt8 = 0
@@ -324,11 +324,11 @@ internal struct SecureDFUPacketReceiptNotification {
             return nil
         }
 
-        var offsetResult:UInt32 = 0
+        var offsetResult: UInt32 = 0
         (data as NSData).getBytes(&offsetResult, range: NSRange(location: 3, length: 4))
         self.offset = offsetResult
         
-        var crcResult:UInt32 = 0
+        var crcResult: UInt32 = 0
         (data as NSData).getBytes(&crcResult, range: NSRange(location: 7, length: 4))
         self.crc = crcResult
     }
@@ -478,7 +478,7 @@ internal class SecureDFUControlPoint : NSObject, CBPeripheralDelegate {
         // This method, according to the iOS documentation, should be called only after writing with response to a characteristic.
         // However, on iOS 10 this method is called even after writing without response, which is a bug.
         // The DFU Control Point characteristic always writes with response, in oppose to the DFU Packet, which uses write without response.
-        if characteristic.uuid.isEqual(SecureDFUControlPoint.UUID) == false {
+        guard characteristic.uuid.isEqual(SecureDFUControlPoint.UUID) else {
             return
         }
         
@@ -492,52 +492,56 @@ internal class SecureDFUControlPoint : NSObject, CBPeripheralDelegate {
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        guard error == nil else {
+        // Ignore updates received for other characteristics
+        guard characteristic.uuid.isEqual(SecureDFUControlPoint.UUID) else {
+            return
+        }
+        
+        if error != nil {
             // This characteristic is never read, the error may only pop up when notification is received
             logger.e("Receiving notification failed")
             logger.e(error!)
             report?(.receivingNotificationFailed, "Receiving notification failed")
-            return
-        }
-        
-        // During the upload we may get either a Packet Receipt Notification, or a Response with status code
-        if proceed != nil {
-            if let prn = SecureDFUPacketReceiptNotification(characteristic.value!) {
-                proceed!(prn.offset) // The CRC is not verified after receiving a PRN, only the offset is
-                return
-            }
-        }
-        //Otherwise...    
-        logger.i("Notification received from \(characteristic.uuid.uuidString), value (0x):\(characteristic.value!.hexString)")
-
-        // Parse response received
-        let dfuResponse = SecureDFUResponse(characteristic.value!)
-        if let dfuResponse = dfuResponse {
-            if dfuResponse.status == .success {
-                switch dfuResponse.requestOpCode! {
-                case .readObjectInfo, .calculateChecksum:
-                    logger.a("\(dfuResponse.description) received")
-                    response?(dfuResponse)
-                case .createObject, .setPRNValue, .execute:
-                    // Don't log, executor or service will do it for us
-                    success?()
-                default:
-                    logger.a("\(dfuResponse.description) received")
-                    success?()
-                }
-            } else if dfuResponse.status == .extendedError {
-                // An extended error was received
-                logger.e("Error \(dfuResponse.error!.code): \(dfuResponse.error!.description)")
-                // The returned errod code is incremented by 10 to match Secure DFU remote codes
-                report?(DFUError(rawValue: Int(dfuResponse.status!.code) + 10)!, dfuResponse.error!.description)
-            } else {
-                logger.e("Error \(dfuResponse.status!.code): \(dfuResponse.status!.description)")
-                // The returned errod code is incremented by 10 to match Secure DFU remote codes
-                report?(DFUError(rawValue: Int(dfuResponse.status!.code) + 10)!, dfuResponse.status!.description)
-            }
         } else {
-            logger.e("Unknown response received: 0x\(characteristic.value!.hexString)")
-            report?(.unsupportedResponse, "Unsupported response received: 0x\(characteristic.value!.hexString)")
+            // During the upload we may get either a Packet Receipt Notification, or a Response with status code
+            if proceed != nil {
+                if let prn = SecureDFUPacketReceiptNotification(characteristic.value!) {
+                    proceed!(prn.offset) // The CRC is not verified after receiving a PRN, only the offset is
+                    return
+                }
+            }
+            //Otherwise...    
+            logger.i("Notification received from \(characteristic.uuid.uuidString), value (0x): \(characteristic.value!.hexString)")
+
+            // Parse response received
+            let dfuResponse = SecureDFUResponse(characteristic.value!)
+            if let dfuResponse = dfuResponse {
+                if dfuResponse.status == .success {
+                    switch dfuResponse.requestOpCode! {
+                    case .readObjectInfo, .calculateChecksum:
+                        logger.a("\(dfuResponse.description) received")
+                        response?(dfuResponse)
+                    case .createObject, .setPRNValue, .execute:
+                        // Don't log, executor or service will do it for us
+                        success?()
+                    default:
+                        logger.a("\(dfuResponse.description) received")
+                        success?()
+                    }
+                } else if dfuResponse.status == .extendedError {
+                    // An extended error was received
+                    logger.e("Error \(dfuResponse.error!.code): \(dfuResponse.error!.description)")
+                    // The returned errod code is incremented by 10 to match Secure DFU remote codes
+                    report?(DFUError(rawValue: Int(dfuResponse.status!.code) + 10)!, dfuResponse.error!.description)
+                } else {
+                    logger.e("Error \(dfuResponse.status!.code): \(dfuResponse.status!.description)")
+                    // The returned errod code is incremented by 10 to match Secure DFU remote codes
+                    report?(DFUError(rawValue: Int(dfuResponse.status!.code) + 10)!, dfuResponse.status!.description)
+                }
+            } else {
+                logger.e("Unknown response received: 0x\(characteristic.value!.hexString)")
+                report?(.unsupportedResponse, "Unsupported response received: 0x\(characteristic.value!.hexString)")
+            }
         }
     }
 }

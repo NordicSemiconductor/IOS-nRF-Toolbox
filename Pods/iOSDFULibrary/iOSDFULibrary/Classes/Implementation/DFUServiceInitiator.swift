@@ -175,7 +175,7 @@ import CoreBluetooth
      service (return a delegate callback if does not have such), jump to the DFU Bootloader mode
      if necessary and perform the DFU. Proper delegate methods will be called during the process.
      
-     - parameter central manager that will be used to connect to the peripheral
+     - parameter centralManager: manager that will be used to connect to the peripheral
      - parameter target: the DFU target peripheral
      
      - returns: the initiator instance
@@ -227,7 +227,7 @@ import CoreBluetooth
         }
 
         let controller = DFUServiceController()
-        let selector = DFUServiceSelector(initiator: self, controller: controller)
+        let selector   = DFUServiceSelector(initiator: self, controller: controller)
         controller.executor = selector
         selector.start()
         

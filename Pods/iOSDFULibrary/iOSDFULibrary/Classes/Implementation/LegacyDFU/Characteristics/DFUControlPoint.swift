@@ -34,7 +34,7 @@ internal enum DFUOpCode : UInt8 {
     case responseCode                       = 16
     case packetReceiptNotification          = 17
     
-    var code:UInt8 {
+    var code: UInt8 {
         return rawValue
     }
 }
@@ -43,14 +43,14 @@ internal enum InitDfuParametersRequest : UInt8 {
     case receiveInitPacket  = 0
     case initPacketComplete = 1
     
-    var code:UInt8 {
+    var code: UInt8 {
         return rawValue
     }
 }
 
 internal enum Request {
     case jumpToBootloader
-    case startDfu(type:UInt8)
+    case startDfu(type: UInt8)
     case startDfu_v1
     case initDfuParameters(req: InitDfuParametersRequest)
     case initDfuParameters_v1
@@ -126,7 +126,7 @@ internal enum DFUResultCode : UInt8 {
     case crcError             = 5
     case operationFailed      = 6
     
-    var description:String {
+    var description: String {
         switch self {
         case .success:              return "Success"
         case .invalidState:         return "Device is in invalid state"
@@ -137,7 +137,7 @@ internal enum DFUResultCode : UInt8 {
         }
     }
     
-    var code:UInt8 {
+    var code: UInt8 {
         return rawValue
     }
 }
@@ -147,7 +147,7 @@ internal struct Response {
     let requestOpCode : DFUOpCode?
     let status        : DFUResultCode?
     
-    init?(_ data:Data) {
+    init?(_ data: Data) {
         var opCode        : UInt8 = 0
         var requestOpCode : UInt8 = 0
         var status        : UInt8 = 0
@@ -165,7 +165,7 @@ internal struct Response {
         }
     }
     
-    var description:String {
+    var description: String {
         return "Response (Op Code = \(requestOpCode!.rawValue), Status = \(status!.rawValue))"
     }
 }
@@ -174,7 +174,7 @@ internal struct PacketReceiptNotification {
     let opCode        : DFUOpCode?
     let bytesReceived : UInt32
     
-    init?(_ data:Data) {
+    init?(_ data: Data) {
         var opCode: UInt8 = 0
         (data as NSData).getBytes(&opCode, range: NSRange(location: 0, length: 1))
         self.opCode = DFUOpCode(rawValue: opCode)
@@ -183,6 +183,11 @@ internal struct PacketReceiptNotification {
             return nil
         }
         
+        // According to https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library/issues/54
+        // in SDK 5.2.0.39364 the bytesReveived value in a PRN packet is 16-bit long, instad of 32-bit.
+        // However, the packet is still 5 bytes long and the two last bytes are 0x00-00.
+        // This has to be taken under consideration when comparing number of bytes sent and received as
+        // the latter counter may rewind if fw size is > 0xFFFF bytes (LegacyDFUService:L372).
         var bytesReceived: UInt32 = 0
         (data as NSData).getBytes(&bytesReceived, range: NSRange(location: 1, length: 4))
         self.bytesReceived = bytesReceived
@@ -325,7 +330,7 @@ internal struct PacketReceiptNotification {
         // This method, according to the iOS documentation, should be called only after writing with response to a characteristic.
         // However, on iOS 10 this method is called even after writing without response, which is a bug.
         // The DFU Control Point characteristic always writes with response, in oppose to the DFU Packet, which uses write without response.
-        if characteristic.uuid.isEqual(DFUControlPoint.UUID) == false {
+        guard characteristic.uuid.isEqual(DFUControlPoint.UUID) else {
             return
         }
         
@@ -368,6 +373,11 @@ internal struct PacketReceiptNotification {
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        // Ignore updates received for other characteristics
+        guard characteristic.uuid.isEqual(DFUControlPoint.UUID) else {
+            return
+        }
+        
         if error != nil {
             // This characteristic is never read, the error may only pop up when notification is received
             logger.e("Receiving notification failed")
@@ -382,7 +392,7 @@ internal struct PacketReceiptNotification {
                 }
             }
             // Otherwise...
-            logger.i("Notification received from \(characteristic.uuid.uuidString), value (0x):\(characteristic.value!.hexString)")
+            logger.i("Notification received from \(characteristic.uuid.uuidString), value (0x): \(characteristic.value!.hexString)")
             
             // Parse response received
             let response = Response(characteristic.value!)

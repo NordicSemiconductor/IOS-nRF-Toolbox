@@ -24,7 +24,7 @@ import Zip
 
 internal class ZipArchive {
     
-    fileprivate init() {
+    private init() {
         // Forbid creating instance of this class
         // Use this class only in static way
     }
@@ -39,12 +39,12 @@ internal class ZipArchive {
      
      - returns: list of URLs to unzipped files in the tmp folder
      */
-    internal static func unzip(_ url:URL) throws -> [URL] {
+    internal static func unzip(_ url: URL) throws -> [URL] {
         let fileName = url.lastPathComponent
         let destinationPath = try createTemporaryFolderPath(fileName)
         
         // Unzip file to the destination folder
-        let destination = URL.init(fileURLWithPath: destinationPath)
+        let destination = URL(fileURLWithPath: destinationPath)
         try Zip.unzipFile(url, destination: destination, overwrite: true, password: nil, progress: nil)
         
         // Get folder content
@@ -65,7 +65,7 @@ internal class ZipArchive {
      
      - returns: a path to the tmp folder
      */
-    internal static func createTemporaryFolderPath(_ name:String) throws -> String {
+    internal static func createTemporaryFolderPath(_ name: String) throws -> String {
         // Build the temp folder path. Content of the ZIP file will be copied into it
         let tempPath = NSTemporaryDirectory() + ".dfu/unzip/" + name + "/"
         
@@ -100,7 +100,7 @@ internal class ZipArchive {
      
      - returns: list of paths to files from the directory at given path
      */
-    internal static func getFilesFromDirectory(_ path:String) throws -> [String] {
+    internal static func getFilesFromDirectory(_ path: String) throws -> [String] {
         let fileManager = FileManager.default
         
         do {
@@ -119,7 +119,7 @@ internal class ZipArchive {
      
      - returns: URL to a file or nil
      */
-    internal static func findFile(_ name:String, inside urls:[URL]) -> URL? {
+    internal static func findFile(_ name: String, inside urls: [URL]) -> URL? {
         for url in urls {
             if url.lastPathComponent == name {
                 return url

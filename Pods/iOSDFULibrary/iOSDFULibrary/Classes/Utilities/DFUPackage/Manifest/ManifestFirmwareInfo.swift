@@ -7,10 +7,10 @@
 //
 
 class ManifestFirmwareInfo: NSObject {
-    var binFile:String? = nil
-    var datFile:String? = nil
+    var binFile: String? = nil
+    var datFile: String? = nil
     
-    var valid:Bool {
+    var valid: Bool {
         return binFile != nil // && datFile != nil The init packet was not required before SDK 7.1
     }
     

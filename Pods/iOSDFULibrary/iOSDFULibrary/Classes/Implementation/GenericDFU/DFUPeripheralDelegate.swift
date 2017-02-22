@@ -39,7 +39,7 @@ internal protocol BasePeripheralDelegate : class {
      - parameter error: the error returned by
      `centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?)`
      */
-    func peripheralDidDisconnect(withError error:Error)
+    func peripheralDidDisconnect(withError error: Error)
     
     /**
      Method called after the DFU operation was aborted and the device got disconnected.

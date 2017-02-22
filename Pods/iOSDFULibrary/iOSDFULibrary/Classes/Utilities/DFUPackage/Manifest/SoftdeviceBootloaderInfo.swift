@@ -7,8 +7,8 @@
 //
 
 class SoftdeviceBootloaderInfo: ManifestFirmwareInfo {
-    var blSize:UInt32 = 0
-    var sdSize:UInt32 = 0
+    var blSize: UInt32 = 0
+    var sdSize: UInt32 = 0
     
     override init(withDictionary aDictionary : Dictionary<String, AnyObject>) {
         super.init(withDictionary: aDictionary)

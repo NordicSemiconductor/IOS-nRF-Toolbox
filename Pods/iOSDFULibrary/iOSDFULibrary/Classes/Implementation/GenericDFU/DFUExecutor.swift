@@ -22,39 +22,34 @@
 
 import CoreBluetooth
 
-internal protocol BaseExecutorAPI : class, BasePeripheralDelegate, DFUController {
+internal protocol BaseExecutorAPI : class, DFUController {
     /**
      Starts the DFU operation.
      */
     func start()
 }
 
-internal protocol BaseDFUExecutor : BaseExecutorAPI {
+internal protocol BaseDFUExecutor : BaseExecutorAPI, BasePeripheralDelegate {
     associatedtype DFUPeripheralType : BaseDFUPeripheralAPI
     /// Target peripheral object
-    var peripheral:DFUPeripheralType { get }
+    var peripheral: DFUPeripheralType { get }
     /// The DFU Service Initiator instance that was used to start the service.
-    var initiator:DFUServiceInitiator { get }
+    var initiator: DFUServiceInitiator { get }
     /// If an error occurred it is set as this variable. It will be reported to the user when the device gets disconnected.
-    var error:(error:DFUError, message:String)? { set get }
+    var error: (error: DFUError, message: String)? { set get }
 }
 
 extension BaseDFUExecutor {
     /// The service delegate will be informed about status changes and errors.
-    internal var delegate:DFUServiceDelegate? {
+    internal var delegate: DFUServiceDelegate? {
         // The delegate may change during DFU operation (by setting a new one in the initiator). Let's always use the current one.
         return initiator.delegate
     }
     
     /// The progress delegate will be informed about current upload progress.
-    internal var progressDelegate:DFUProgressDelegate? {
+    internal var progressDelegate: DFUProgressDelegate? {
         // The delegate may change during DFU operation (by setting a new one in the initiator). Let's always use the current one.
         return initiator.progressDelegate
-    }
-    
-    func start() {
-        self.error = nil
-        peripheral.start()
     }
     
     // MARK: - DFU Controller API
@@ -110,7 +105,7 @@ extension BaseDFUExecutor {
         peripheral.destroy()
     }
     
-    func error(_ error:DFUError, didOccurWithMessage message:String) {
+    func error(_ error: DFUError, didOccurWithMessage message: String) {
         // Save the error. It will be reported when the device disconnects
         if self.error == nil {
             self.error = (error, message)
@@ -129,13 +124,13 @@ extension BaseDFUExecutor {
 
 internal protocol DFUExecutorAPI : BaseExecutorAPI {
     /// Required constructor
-    init(_ initiator:DFUServiceInitiator)
+    init(_ initiator: DFUServiceInitiator)
 }
 
 internal protocol DFUExecutor : DFUExecutorAPI, BaseDFUExecutor, DFUPeripheralDelegate {
     associatedtype DFUPeripheralType : DFUPeripheralAPI
     /// The firmware to be sent over-the-air
-    var firmware:DFUFirmware { get }
+    var firmware: DFUFirmware { get }
 }
 
 extension DFUExecutor {

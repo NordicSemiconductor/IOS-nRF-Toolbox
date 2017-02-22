@@ -23,10 +23,10 @@
 import CoreBluetooth
 
 internal enum ExperimentalButtonlessDFUOpCode : UInt8 {
-    case enterBootloader      = 0x01
-    case responseCode         = 0x20
+    case enterBootloader = 0x01
+    case responseCode    = 0x20
     
-    var code:UInt8 {
+    var code: UInt8 {
         return rawValue
     }
 }
@@ -37,15 +37,15 @@ internal enum ExperimentalButtonlessDFUResultCode : UInt8 {
     case opCodeNotSupported = 0x02
     case operationFailed    = 0x04
     
-    var description:String {
+    var description: String {
         switch self {
         case .success:            return "Success"
         case .opCodeNotSupported: return "Operation not supported"
-        case .operationFailed :   return "Operation failed"
+        case .operationFailed:    return "Operation failed"
         }
     }
     
-    var code:UInt8 {
+    var code: UInt8 {
         return rawValue
     }
 }
@@ -56,7 +56,7 @@ internal enum ExperimentalButtonlessDFURequest {
     var data : Data {
         switch self {
         case .enterBootloader:
-            let byteArray:[UInt8] = [ExperimentalButtonlessDFUOpCode.enterBootloader.code]
+            let byteArray: [UInt8] = [ExperimentalButtonlessDFUOpCode.enterBootloader.code]
             return Data(bytes: UnsafePointer<UInt8>(byteArray), count: byteArray.count)
         }
     }
@@ -67,7 +67,7 @@ internal struct ExperimentalButtonlessDFUResponse {
     let requestOpCode : ExperimentalButtonlessDFUOpCode?
     let status        : ExperimentalButtonlessDFUResultCode?
 
-    init?(_ data:Data) {
+    init?(_ data: Data) {
         var opCode        : UInt8 = 0
         var requestOpCode : UInt8 = 0
         var status        : UInt8 = 0
@@ -88,7 +88,7 @@ internal struct ExperimentalButtonlessDFUResponse {
         }
     }
         
-    var description:String {
+    var description: String {
         return "Response (Op Code = \(requestOpCode!.rawValue), Status = \(status!.rawValue))"
     }
 }
@@ -190,30 +190,34 @@ internal class ExperimentalButtonlessDFU : NSObject, CBPeripheralDelegate {
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        guard error == nil else {
+        // Ignore updates received for other characteristics
+        guard characteristic.uuid.isEqual(ExperimentalButtonlessDFU.UUID) else {
+            return
+        }
+        
+        if error != nil {
             // This characteristic is never read, the error may only pop up when notification is received
             logger.e("Receiving notification failed")
             logger.e(error!)
             report?(.receivingNotificationFailed, "Receiving notification failed")
-            return
-        }
-        //Otherwise...
-        logger.i("Notification received from \(characteristic.uuid.uuidString), value (0x):\(characteristic.value!.hexString)")
-        
-        // Parse response received
-        let dfuResponse = ExperimentalButtonlessDFUResponse(characteristic.value!)
-        if let dfuResponse = dfuResponse {
-            if dfuResponse.status == .success {
-                logger.a("\(dfuResponse.description) received")
-                success?()
-            } else {
-                logger.e("Error \(dfuResponse.status!.code): \(dfuResponse.status!.description)")
-                // The returned errod code is incremented by 9000 to match experimental Buttonless DFU remote codes
-                report?(DFUError(rawValue: Int(dfuResponse.status!.code) + 9000)!, dfuResponse.status!.description)
-            }
         } else {
-            logger.e("Unknown response received: 0x\(characteristic.value!.hexString)")
-            report?(.unsupportedResponse, "Unsupported response received: 0x\(characteristic.value!.hexString)")
+            logger.i("Notification received from \(characteristic.uuid.uuidString), value (0x):\(characteristic.value!.hexString)")
+            
+            // Parse response received
+            let dfuResponse = ExperimentalButtonlessDFUResponse(characteristic.value!)
+            if let dfuResponse = dfuResponse {
+                if dfuResponse.status == .success {
+                    logger.a("\(dfuResponse.description) received")
+                    success?()
+                } else {
+                    logger.e("Error \(dfuResponse.status!.code): \(dfuResponse.status!.description)")
+                    // The returned errod code is incremented by 9000 to match experimental Buttonless DFU remote codes
+                    report?(DFUError(rawValue: Int(dfuResponse.status!.code) + 9000)!, dfuResponse.status!.description)
+                }
+            } else {
+                logger.e("Unknown response received: 0x\(characteristic.value!.hexString)")
+                report?(.unsupportedResponse, "Unsupported response received: 0x\(characteristic.value!.hexString)")
+            }
         }
     }
 }

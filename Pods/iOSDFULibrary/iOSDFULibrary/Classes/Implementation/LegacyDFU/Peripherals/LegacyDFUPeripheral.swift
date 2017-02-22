@@ -22,7 +22,8 @@
 
 import CoreBluetooth
 
-internal class LegacyDFUPeripheral: BaseCommonDFUPeripheral<LegacyDFUExecutor, LegacyDFUService> {
+internal class LegacyDFUPeripheral : BaseCommonDFUPeripheral<LegacyDFUExecutor, LegacyDFUService> {
+    
     // MARK: - Peripheral API
     
     override var requiredServices: [CBUUID]? {
@@ -55,7 +56,7 @@ internal class LegacyDFUPeripheral: BaseCommonDFUPeripheral<LegacyDFUExecutor, L
         )
     }
     
-    override func isInApplicationMode(_ forceDfu:Bool) -> Bool {
+    override func isInApplicationMode(_ forceDfu: Bool) -> Bool {
         let applicationMode = dfuService!.isInApplicationMode() ?? !forceDfu
         
         if applicationMode {
@@ -72,7 +73,10 @@ internal class LegacyDFUPeripheral: BaseCommonDFUPeripheral<LegacyDFUExecutor, L
         jumpingToBootloader = true
         dfuService!.jumpToBootloaderMode(
             // onSuccess the device gets disconnected and centralManager(_:didDisconnectPeripheral:error) will be called
-            onError: defaultErrorCallback
+            onError: { (error, message) in
+                self.jumpingToBootloader = false
+                self.delegate?.error(error, didOccurWithMessage: message)
+            }
         )
     }
     
@@ -87,7 +91,7 @@ internal class LegacyDFUPeripheral: BaseCommonDFUPeripheral<LegacyDFUExecutor, L
      - parameter type: the firmware type bitfield. See FIRMWARE_TYPE_* constants
      - parameter size: the size of all parts of the firmware
      */
-    func sendStartDfu(withFirmwareType type:UInt8, andSize size:DFUFirmwareSize) {
+    func sendStartDfu(withFirmwareType type: UInt8, andSize size: DFUFirmwareSize) {
         dfuService!.sendDfuStart(withFirmwareType: type, andSize: size,
             onSuccess: { self.delegate?.peripheralDidStartDfu() },
             onError: { error, message in
@@ -108,7 +112,7 @@ internal class LegacyDFUPeripheral: BaseCommonDFUPeripheral<LegacyDFUExecutor, L
      
      - parameter size: the size of all parts of the firmware, where size of softdevice and bootloader are 0
      */
-    func sendStartDfu(withFirmwareSize size:DFUFirmwareSize) {
+    func sendStartDfu(withFirmwareSize size: DFUFirmwareSize) {
         logger.v("Switching to DFU v.1")
         dfuService!.sendStartDfu(withFirmwareSize: size,
             onSuccess: { self.delegate?.peripheralDidStartDfu() },
@@ -122,7 +126,7 @@ internal class LegacyDFUPeripheral: BaseCommonDFUPeripheral<LegacyDFUExecutor, L
      
      - parameter data: Init Packet data
      */
-    func sendInitPacket(_ data:Data) {
+    func sendInitPacket(_ data: Data) {
         dfuService!.sendInitPacket(data,
             onSuccess: { self.delegate?.peripheralDidReceiveInitPacket() },
             onError: defaultErrorCallback
@@ -139,7 +143,7 @@ internal class LegacyDFUPeripheral: BaseCommonDFUPeripheral<LegacyDFUExecutor, L
      before sending a new Packet Receipt Notification. Set 0 to disable PRNs (not recommended)
      - parameter progressDelegate: the deleagate that will be informed about progress changes
      */
-    func sendFirmware(_ aFirmware:DFUFirmware, withPacketReceiptNotificationNumber aPRNValue:UInt16, andReportProgressTo progressDelegate:DFUProgressDelegate?) {
+    func sendFirmware(_ aFirmware: DFUFirmware, withPacketReceiptNotificationNumber aPRNValue: UInt16, andReportProgressTo progressDelegate: DFUProgressDelegate?) {
         dfuService!.sendPacketReceiptNotificationRequest(aPRNValue,
             onSuccess: {
                 // Now the service is ready to send the firmware
@@ -175,10 +179,10 @@ internal class LegacyDFUPeripheral: BaseCommonDFUPeripheral<LegacyDFUExecutor, L
     }
     
     override func resetDevice() {
-        if let dfuService = dfuService {
-            dfuService.sendReset(onError: defaultErrorCallback)
-        } else {
+        guard let dfuService = dfuService, dfuService.supportsReset() else {
             super.resetDevice()
+            return
         }
+        dfuService.sendReset(onError: defaultErrorCallback)
     }
 }

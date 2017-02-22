@@ -36,7 +36,7 @@ internal protocol SecureDFUPeripheralDelegate : DFUPeripheralDelegate {
      the stored Init packet matches the one being sent now. If crc matches the operation may be resumed,
      if not a new Command Object should be created and DFU should start over.
      */
-    func peripheralDidSendCommandObjectInfo(maxLen: UInt32, offset: UInt32, crc:UInt32)
+    func peripheralDidSendCommandObjectInfo(maxLen: UInt32, offset: UInt32, crc: UInt32)
 
     /**
      Callback when Data Object Info has been received from the peripheral.
@@ -49,7 +49,7 @@ internal protocol SecureDFUPeripheralDelegate : DFUPeripheralDelegate {
      the stored data matches the firmware being sent now. If crc matches the operation may be resumed,
      if not a new Command Object should be created and DFU should start over.
      */
-    func peripheralDidSendDataObjectInfo(maxLen: UInt32, offset: UInt32, crc:UInt32)
+    func peripheralDidSendDataObjectInfo(maxLen: UInt32, offset: UInt32, crc: UInt32)
 
     /**
      Callback when Command Object was created.

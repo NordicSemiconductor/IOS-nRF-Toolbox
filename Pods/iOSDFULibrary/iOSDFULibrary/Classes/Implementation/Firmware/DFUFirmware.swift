@@ -38,40 +38,40 @@ The type of the BIN or HEX file.
 
 /// The DFUFirmware object wraps the firmware file.
 @objc public class DFUFirmware : NSObject, DFUStream {
-    internal let stream:DFUStream?
+    internal let stream: DFUStream?
     
     /// The name of the firmware file.
-    public let fileName:String!
+    public let fileName: String!
     /// The URL to the firmware file.
-    public let fileUrl:URL!
+    public let fileUrl: URL!
     
     /// Information whether the firmware was successfully initialized.
-    public var valid:Bool {
+    public var valid: Bool {
         return stream != nil
     }
     
     /// The size of each component of the firmware.
-    public var size:DFUFirmwareSize {
+    public var size: DFUFirmwareSize {
         return stream!.size
     }
     
     /// Number of connectinos required to transfer the firmware. This does not include the connection needed to switch to the DFU mode.
-    public var parts:Int {
+    public var parts: Int {
         if stream == nil {
             return 0
         }
         return stream!.parts
     }
     
-    internal var currentPartSize:DFUFirmwareSize {
+    internal var currentPartSize: DFUFirmwareSize {
         return stream!.currentPartSize
     }
     
-    internal var currentPartType:UInt8 {
+    internal var currentPartType: UInt8 {
         return stream!.currentPartType
     }
     
-    internal var currentPart:Int {
+    internal var currentPart: Int {
         return stream!.currentPart
     }
     
@@ -84,7 +84,7 @@ The type of the BIN or HEX file.
      
      - returns: the DFU firmware object or null in case of an error
      */
-    convenience public init?(urlToZipFile:URL) {
+    convenience public init?(urlToZipFile: URL) {
         self.init(urlToZipFile: urlToZipFile, type: DFUFirmwareType.softdeviceBootloaderApplication)
     }
     
@@ -98,7 +98,7 @@ The type of the BIN or HEX file.
      
      - returns: the DFU firmware object or null in case of an error
      */
-    public init?(urlToZipFile:URL, type:DFUFirmwareType) {
+    public init?(urlToZipFile: URL, type: DFUFirmwareType) {
         fileUrl = urlToZipFile
         fileName = urlToZipFile.lastPathComponent
         
@@ -132,7 +132,7 @@ The type of the BIN or HEX file.
      
      - returns: the DFU firmware object or null in case of an error
      */
-    public init?(urlToBinOrHexFile:URL, urlToDatFile:URL?, type:DFUFirmwareType) {
+    public init?(urlToBinOrHexFile: URL, urlToDatFile: URL?, type: DFUFirmwareType) {
         self.fileUrl = urlToBinOrHexFile
         self.fileName = urlToBinOrHexFile.lastPathComponent
         
@@ -165,11 +165,11 @@ The type of the BIN or HEX file.
         super.init()
     }
     
-    internal var data:Data {
+    internal var data: Data {
         return stream!.data as Data
     }
     
-    internal var initPacket:Data? {
+    internal var initPacket: Data? {
         return stream!.initPacket as Data?
     }
     

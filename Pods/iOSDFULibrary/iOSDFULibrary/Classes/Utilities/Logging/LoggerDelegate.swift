@@ -39,28 +39,21 @@ Log level. Logger application may filter log entries based on their level. Level
     case error       = 20
     
     public func name() -> String {
-        var readableName : String
+        var readableName: String
         switch (self) {
         case .debug:
             readableName = "D"
-            break
         case .verbose:
             readableName = "V"
-            break
         case .info:
             readableName = "I"
-            break
         case .application:
             readableName = "A"
-            break
         case .warning:
             readableName = "W"
-            break
         case .error:
             readableName = "E"
-            break
         }
-        
         return readableName
     }
 }
@@ -69,6 +62,7 @@ Log level. Logger application may filter log entries based on their level. Level
  *  The Logger delegate.
  */
 @objc public protocol LoggerDelegate : class {
+    
     /**
      This method is called whenever a new log entry is to be saved. The logger implementation should save this or present it to the user.
      
@@ -77,5 +71,5 @@ Log level. Logger application may filter log entries based on their level. Level
      - parameter level:   the log level
      - parameter message: the message
      */
-    func logWith(_ level:LogLevel, message:String)
+    func logWith(_ level: LogLevel, message: String)
 }

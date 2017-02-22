@@ -35,8 +35,8 @@ extension Data {
         }
     }
 
-    fileprivate func getByteArray(_ pointer: UnsafePointer<UInt8>) -> [UInt8] {
+    private func getByteArray(_ pointer: UnsafePointer<UInt8>) -> [UInt8] {
         let buffer = UnsafeBufferPointer<UInt8>(start: pointer, count: count)
-            return [UInt8](buffer)
+        return [UInt8](buffer)
     }
 }

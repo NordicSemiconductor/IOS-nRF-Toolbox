@@ -23,10 +23,10 @@
 internal class LegacyDFUExecutor : DFUExecutor, LegacyDFUPeripheralDelegate {
     typealias DFUPeripheralType = LegacyDFUPeripheral
     
-    internal let initiator:DFUServiceInitiator
-    internal let peripheral:LegacyDFUPeripheral
-    internal var firmware:DFUFirmware
-    internal var error:(error:DFUError, message:String)?
+    internal let initiator  : DFUServiceInitiator
+    internal let peripheral : LegacyDFUPeripheral
+    internal var firmware   : DFUFirmware
+    internal var error      : (error: DFUError, message: String)?
     
     /// Retry counter for peripheral invalid state issue
     private let MaxRetryCount = 1
@@ -34,13 +34,18 @@ internal class LegacyDFUExecutor : DFUExecutor, LegacyDFUPeripheralDelegate {
     
     // MARK: - Initialization
     
-    required init(_ initiator:DFUServiceInitiator) {
-        self.initiator = initiator
+    required init(_ initiator: DFUServiceInitiator) {
+        self.initiator  = initiator
         self.peripheral = LegacyDFUPeripheral(initiator)
-        self.firmware = initiator.file!
+        self.firmware   = initiator.file!
         
         self.invalidStateRetryCount = MaxRetryCount
-        self.peripheral.delegate = self
+    }
+    
+    func start() {
+        error = nil
+        peripheral.delegate = self
+        peripheral.start()
     }
     
     // MARK: - DFU Peripheral Delegate methods
@@ -114,7 +119,7 @@ internal class LegacyDFUExecutor : DFUExecutor, LegacyDFUPeripheralDelegate {
         if invalidStateRetryCount > 0 {
             logWith(.warning, message: "Retrying...")
             invalidStateRetryCount -= 1
-            peripheral.connect()
+            peripheral.start()
         } else {
             error(.remoteLegacyDFUInvalidState, didOccurWithMessage: "Peripheral is in an invalid state, please try to reset and start over again.")
         }

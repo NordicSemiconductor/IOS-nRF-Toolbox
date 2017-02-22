@@ -23,10 +23,10 @@
 internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
     typealias DFUPeripheralType = SecureDFUPeripheral
     
-    internal let initiator:DFUServiceInitiator
-    internal let peripheral:SecureDFUPeripheral
-    internal var firmware:DFUFirmware
-    internal var error:(error:DFUError, message:String)?
+    internal let initiator  : DFUServiceInitiator
+    internal let peripheral : SecureDFUPeripheral
+    internal var firmware   : DFUFirmware
+    internal var error      : (error: DFUError, message: String)?
     
     private var firmwareRanges  : [Range<Int>]?
     private var currentRangeIdx : Int = 0
@@ -44,14 +44,21 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
     private var retryCount: Int
     
     // MARK: - Initialization
-    required init(_ initiator:DFUServiceInitiator) {
-        self.initiator = initiator
-        self.firmware = initiator.file!
+    required init(_ initiator: DFUServiceInitiator) {
+        self.initiator  = initiator
+        self.firmware   = initiator.file!
         self.peripheral = SecureDFUPeripheral(initiator)
         
         self.retryCount = MaxRetryCount
-        self.peripheral.delegate = self
     }
+    
+    func start() {
+        error = nil
+        peripheral.delegate = self
+        peripheral.start()
+    }
+    
+    // MARK: - DFU Peripheral Delegate methods
     
     func peripheralDidBecomeReady() {
         if firmware.initPacket == nil && peripheral.isInitPacketRequired() {
@@ -125,7 +132,7 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
     }
     
     func peripheralDidReceiveInitPacket() {
-        logWith(.application, message: String(format:"Command object sent (CRC = %08X)", CRC32(data: firmware.initPacket!).crc))
+        logWith(.application, message: String(format: "Command object sent (CRC = %08X)", CRC32(data: firmware.initPacket!).crc))
         peripheral.sendCalculateChecksumCommand()
     }
     
@@ -283,9 +290,9 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
      */
     private func resetFirmwareRanges() {
         currentRangeIdx = 0
-        firmwareRanges = nil
-        initPacketSent = false
-        firmwareSent = false
+        firmwareRanges  = nil
+        initPacketSent  = false
+        firmwareSent    = false
         uploadStartTime = CFAbsoluteTimeGetCurrent()
     }
     
@@ -295,7 +302,7 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
      This method creates a list of ranges that will be used to send data to the peripheral, for example:
      0 ..< 4096, 4096 ..< 5000 in case the firmware was 5000 bytes long.
      */
-    private func calculateFirmwareRanges(_ maxLen:Int) -> [Range<Int>] {
+    private func calculateFirmwareRanges(_ maxLen: Int) -> [Range<Int>] {
         var totalLength = firmware.data.count
         var ranges = [Range<Int>]()
         
@@ -352,7 +359,7 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
      Creates the new data object with length equal to the length of the range with given index.
      The ranges were calculated using `calculateFirmwareRanges()`.
      */
-    private func createDataObject(_ rangeIdx:Int) {
+    private func createDataObject(_ rangeIdx: Int) {
         let currentRange = firmwareRanges![rangeIdx]
         peripheral.createDataObject(withLength: UInt32(currentRange.upperBound - currentRange.lowerBound))
     }
@@ -366,7 +373,7 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
      - parameter resumeOffset: if set, this method will send only the part of firmware from the range. The offset must
      be inside the given range.
      */
-    private func sendDataObject(_ rangeIdx:Int, from resumeOffset: UInt32? = nil) {
+    private func sendDataObject(_ rangeIdx: Int, from resumeOffset: UInt32? = nil) {
         var aRange = firmwareRanges![rangeIdx]
         
         if let resumeOffset = resumeOffset {

@@ -21,18 +21,18 @@
 */
 
 internal class DFUStreamHex : DFUStream {
-    fileprivate(set) var currentPart = 1
-    fileprivate(set) var parts = 1
-    fileprivate(set) var currentPartType:UInt8 = 0
+    private(set) var currentPart = 1
+    private(set) var parts       = 1
+    private(set) var currentPartType: UInt8 = 0
     
     /// Firmware binaries
-    fileprivate var binaries:Data
+    private var binaries: Data
     /// The init packet content
-    fileprivate var initPacketBinaries:Data?
+    private var initPacketBinaries: Data?
     
-    fileprivate var firmwareSize:UInt32 = 0
+    private var firmwareSize: UInt32 = 0
     
-    var size:DFUFirmwareSize {
+    var size: DFUFirmwareSize {
         switch currentPartType {
         case FIRMWARE_TYPE_SOFTDEVICE:
             return DFUFirmwareSize(softdevice: firmwareSize, bootloader: 0, application: 0)
@@ -44,27 +44,27 @@ internal class DFUStreamHex : DFUStream {
         }
     }
     
-    var currentPartSize:DFUFirmwareSize {
+    var currentPartSize: DFUFirmwareSize {
         return size
     }
     
-    init(urlToHexFile:URL, urlToDatFile:URL?, type:DFUFirmwareType) {
-        let hexData = try? Data.init(contentsOf: urlToHexFile)
+    init(urlToHexFile: URL, urlToDatFile: URL?, type: DFUFirmwareType) {
+        let hexData = try? Data(contentsOf: urlToHexFile)
         binaries = IntelHex2BinConverter.convert(hexData)
         firmwareSize = UInt32(binaries.count)
         
         if let dat = urlToDatFile {
-            initPacketBinaries = try? Data.init(contentsOf: dat)
+            initPacketBinaries = try? Data(contentsOf: dat)
         }
         
         self.currentPartType = type.rawValue
     }
     
-    var data:Data {
+    var data: Data {
         return binaries
     }
     
-    var initPacket:Data? {
+    var initPacket: Data? {
         return initPacketBinaries
     }
     

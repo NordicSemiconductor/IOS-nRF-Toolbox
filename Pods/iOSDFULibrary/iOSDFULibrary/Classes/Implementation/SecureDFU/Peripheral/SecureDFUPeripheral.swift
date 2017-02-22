@@ -22,7 +22,8 @@
 
 import CoreBluetooth
 
-internal class SecureDFUPeripheral: BaseCommonDFUPeripheral<SecureDFUExecutor, SecureDFUService> {
+internal class SecureDFUPeripheral : BaseCommonDFUPeripheral<SecureDFUExecutor, SecureDFUService> {
+    
     // MARK: - Peripheral API
     
     override var requiredServices: [CBUUID]? {
@@ -46,7 +47,7 @@ internal class SecureDFUPeripheral: BaseCommonDFUPeripheral<SecureDFUExecutor, S
         )
     }
     
-    override func isInApplicationMode(_ forceDfu:Bool) -> Bool {
+    override func isInApplicationMode(_ forceDfu: Bool) -> Bool {
         let applicationMode = dfuService!.isInApplicationMode() ?? !forceDfu
         
         if applicationMode {
@@ -66,7 +67,10 @@ internal class SecureDFUPeripheral: BaseCommonDFUPeripheral<SecureDFUExecutor, S
         newAddressExpected = dfuService!.newAddressExpected
         dfuService!.jumpToBootloaderMode(
             // onSuccess the device gets disconnected and centralManager(_:didDisconnectPeripheral:error) will be called
-            onError: defaultErrorCallback
+            onError: { (error, message) in
+                self.jumpingToBootloader = false
+                self.delegate?.error(error, didOccurWithMessage: message)
+            }
         )
     }
     
@@ -96,9 +100,11 @@ internal class SecureDFUPeripheral: BaseCommonDFUPeripheral<SecureDFUExecutor, S
     
     /**
      Creates data object with given length.
+     
+     - parameter aLength: exact size of the object
      */
-    func createDataObject(withLength length: UInt32) {
-        dfuService!.createDataObject(withLength: length,
+    func createDataObject(withLength aLength: UInt32) {
+        dfuService!.createDataObject(withLength: aLength,
              onSuccess: { self.delegate?.peripheralDidCreateDataObject() },
              onError: defaultErrorCallback
         )
@@ -106,9 +112,11 @@ internal class SecureDFUPeripheral: BaseCommonDFUPeripheral<SecureDFUExecutor, S
     
     /**
      Creates command object with given length.
+     
+     - parameter aLength: exact size of the object
      */
-    func createCommandObject(withLength length: UInt32) {
-        dfuService!.createCommandObject(withLength: length,
+    func createCommandObject(withLength aLength: UInt32) {
+        dfuService!.createCommandObject(withLength: aLength,
             onSuccess: { self.delegate?.peripheralDidCreateCommandObject() },
             onError: defaultErrorCallback
         )
@@ -116,8 +124,12 @@ internal class SecureDFUPeripheral: BaseCommonDFUPeripheral<SecureDFUExecutor, S
     
     /**
      Sends a given range of data from the firmware.
+     
+     - parameter aRange:            given range of the firmware will be sent
+     - parameter aFirmware:         the firmware from with part is to be sent
+     - parameter aProgressDelegate: an optional progress delegate
      */
-    func sendNextObject(from aRange:Range<Int>, of aFirmware: DFUFirmware, andReportProgressTo aProgressDelegate: DFUProgressDelegate?) {
+    func sendNextObject(from aRange: Range<Int>, of aFirmware: DFUFirmware, andReportProgressTo aProgressDelegate: DFUProgressDelegate?) {
         dfuService!.sendNextObject(from: aRange, of: aFirmware, andReportProgressTo: aProgressDelegate,
             onSuccess: { self.delegate?.peripheralDidReceiveObject() },
             onError: defaultErrorCallback
@@ -128,6 +140,8 @@ internal class SecureDFUPeripheral: BaseCommonDFUPeripheral<SecureDFUExecutor, S
      Sets the Packet Receipt Notification value. 0 disables the PRN procedure. On iOS the value may not be greater than ~20 or equal to 0
      if more than ~20 are to be sent or a buffer overflow error may occur.
      This library sends the Init packet without PRNs, but that's only because of the Init packet is small enough.
+     
+     - parameter aValue:  Packet Receipt Notification value (0 to disable PRNs)
      */
     func setPRNValue(_ aValue: UInt16 = 0) {
         dfuService!.setPacketReceiptNotificationValue(aValue,
@@ -138,6 +152,7 @@ internal class SecureDFUPeripheral: BaseCommonDFUPeripheral<SecureDFUExecutor, S
     
     /**
      Sends Init packet. This method is synchronuous and calls delegate's peripheralDidReceiveInitPacket() method ater the given data are sent.
+     
      - parameter packetData: data to be sent as Init Packet
      */
     func sendInitPacket(_ packetData: Data){
@@ -160,11 +175,12 @@ internal class SecureDFUPeripheral: BaseCommonDFUPeripheral<SecureDFUExecutor, S
     
     /**
      Sends Execute command.
+     
      - parameter activating: if the parameter is set to true the service will assume that the whole firmware was sent
      and the device will disconnect on its own on Execute command. Delegate's onTransferComplete event will be called when
      the disconnect event is receviced.
      */
-    func sendExecuteCommand(andActivateIf activating:Bool = false) {
+    func sendExecuteCommand(andActivateIf activating: Bool = false) {
         self.activating = activating
         dfuService!.executeCommand(
             onSuccess: { self.delegate?.peripheralDidExecuteObject() },

@@ -7,12 +7,12 @@
 //
 
 class Manifest: NSObject {
-    var application:ManifestFirmwareInfo?
-    var softdevice:ManifestFirmwareInfo?
-    var bootloader:ManifestFirmwareInfo?
-    var softdeviceBootloader:SoftdeviceBootloaderInfo?
+    var application: ManifestFirmwareInfo?
+    var softdevice:  ManifestFirmwareInfo?
+    var bootloader:  ManifestFirmwareInfo?
+    var softdeviceBootloader: SoftdeviceBootloaderInfo?
     
-    var valid:Bool {
+    var valid: Bool {
         // The manifest.json file may specify only:
         // 1. a softdevice, a bootloader, or both combined (with, or without an app)
         // 2. only the app
@@ -51,7 +51,6 @@ class Manifest: NSObject {
 
         } catch {
             print("an error occured while parsing manifest.json \(error)")
-        }
-        
+        }        
     }
 }

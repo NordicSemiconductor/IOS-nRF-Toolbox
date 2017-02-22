@@ -25,7 +25,7 @@ import CoreBluetooth
 internal class SecureDFUPacket {
     static fileprivate let UUID = CBUUID(string: "8EC90002-F315-4F60-9FB8-838830DAEA50")
     
-    static func matches(_ characteristic:CBCharacteristic) -> Bool {
+    static func matches(_ characteristic: CBCharacteristic) -> Bool {
         return characteristic.uuid.isEqual(UUID)
     }
     
@@ -81,7 +81,7 @@ internal class SecureDFUPacket {
      Sends a given range of data from given firmware over DFU Packet characteristic. If the whole object is
      completed the completition callback will be called.
      */
-    func sendNext(_ aPRNValue:UInt16, bytesFrom aRange: Range<Int>, of aFirmware : DFUFirmware,
+    func sendNext(_ aPRNValue: UInt16, bytesFrom aRange: Range<Int>, of aFirmware : DFUFirmware,
                   andReportProgressTo aProgressDelegate : DFUProgressDelegate?, andCompletionTo aCompletion: @escaping Callback) {
         let peripheral          = characteristic.service.peripheral
         let objectData          = aFirmware.data.subdata(in: aRange)
