@@ -18,6 +18,7 @@ enum NORServiceIds : UInt8 {
     case bpm        = 6
     case bgm        = 7
     case cgm        = 8
+    case homekit    = 9
 }
 
 class NORAppUtilities: NSObject {
@@ -43,6 +44,8 @@ class NORAppUtilities: NSObject {
     
     static let cgmHelpText = "The CGM (CONTINUOUS GLUCOSE MONITOR) profile allows you to connect to your continuous glucose sensor.\nTap the Start session button to begin reading records every minute (default frequency)"
     
+    static let homeKitHelpText = "HomeKit description"
+    
     static let helpText: [NORServiceIds: String] = [.uart: uartHelpText,
                                                     .rsc: rscHelpText,
                                                     .proximity: proximityHelpText,
@@ -51,7 +54,8 @@ class NORAppUtilities: NSObject {
                                                     .csc: cscHelpText,
                                                     .bpm: bpmHelpText,
                                                     .bgm: bgmHelpText,
-                                                    .cgm: cgmHelpText]
+                                                    .cgm: cgmHelpText,
+                                                    .homekit: homeKitHelpText]
 
     static func showAlert(title aTitle : String, andMessage aMessage: String){
         let alertView = UIAlertView(title: aTitle, message: aMessage, delegate: nil, cancelButtonTitle: "OK")
