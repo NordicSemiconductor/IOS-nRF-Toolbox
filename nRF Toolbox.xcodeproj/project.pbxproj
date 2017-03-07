@@ -55,6 +55,8 @@
 		309F08651E6D6A5500B7546A /* NORHKViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F08641E6D6A5500B7546A /* NORHKViewController.swift */; };
 		309F08681E6D706B00B7546A /* HomeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 309F08671E6D706B00B7546A /* HomeKit.framework */; };
 		309F086A1E6D9EAA00B7546A /* NORHKHomeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F08691E6D9EAA00B7546A /* NORHKHomeStore.swift */; };
+		309F086C1E6EA0F800B7546A /* NORHKScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F086B1E6EA0F800B7546A /* NORHKScannerViewController.swift */; };
+		309F086E1E6ED44F00B7546A /* NORHKScannerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F086D1E6ED44F00B7546A /* NORHKScannerDelegate.swift */; };
 		30A114561CD2367C000F0F02 /* NORScannedPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A114551CD2367C000F0F02 /* NORScannedPeripheral.swift */; };
 		30A1145A1CD2426B000F0F02 /* NORScannerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A114591CD2426B000F0F02 /* NORScannerDelegate.swift */; };
 		30A1145C1CD24611000F0F02 /* NORScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A1145B1CD24611000F0F02 /* NORScannerViewController.swift */; };
@@ -158,6 +160,8 @@
 		309F08661E6D706B00B7546A /* nRF Toolbox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "nRF Toolbox.entitlements"; sourceTree = "<group>"; };
 		309F08671E6D706B00B7546A /* HomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HomeKit.framework; path = System/Library/Frameworks/HomeKit.framework; sourceTree = SDKROOT; };
 		309F08691E6D9EAA00B7546A /* NORHKHomeStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORHKHomeStore.swift; sourceTree = "<group>"; };
+		309F086B1E6EA0F800B7546A /* NORHKScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORHKScannerViewController.swift; sourceTree = "<group>"; };
+		309F086D1E6ED44F00B7546A /* NORHKScannerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORHKScannerDelegate.swift; sourceTree = "<group>"; };
 		30A114551CD2367C000F0F02 /* NORScannedPeripheral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORScannedPeripheral.swift; sourceTree = "<group>"; };
 		30A114591CD2426B000F0F02 /* NORScannerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORScannerDelegate.swift; sourceTree = "<group>"; };
 		30A1145B1CD24611000F0F02 /* NORScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORScannerViewController.swift; sourceTree = "<group>"; };
@@ -270,6 +274,8 @@
 			children = (
 				309F08641E6D6A5500B7546A /* NORHKViewController.swift */,
 				309F08691E6D9EAA00B7546A /* NORHKHomeStore.swift */,
+				309F086B1E6EA0F800B7546A /* NORHKScannerViewController.swift */,
+				309F086D1E6ED44F00B7546A /* NORHKScannerDelegate.swift */,
 			);
 			path = HomeKit;
 			sourceTree = "<group>";
@@ -767,6 +773,7 @@
 				304D59011CE352B300148271 /* NORLogItemTableViewCell.swift in Sources */,
 				3001EBC51D1C153C008C5C37 /* NORCGMDetailsViewController.swift in Sources */,
 				3080C4711CE06D0E009C2D8C /* NORCSCViewController.swift in Sources */,
+				309F086E1E6ED44F00B7546A /* NORHKScannerDelegate.swift in Sources */,
 				308EE1781CE0CBF700F2A854 /* NORHTSViewController.swift in Sources */,
 				304D58FB1CE34EE600148271 /* NORLogger.swift in Sources */,
 				304299241CE6114000E1D2AB /* NORTutorialViewController.swift in Sources */,
@@ -774,6 +781,7 @@
 				3001EBBB1D1BE306008C5C37 /* NORCGMReading.swift in Sources */,
 				3001EBB11D1BE1F3008C5C37 /* NORGlucoseReading.swift in Sources */,
 				3000B2151CE32A9200F64CEE /* NORUARTViewController.swift in Sources */,
+				309F086C1E6EA0F800B7546A /* NORHKScannerViewController.swift in Sources */,
 				300508951CE2078A00D93BE0 /* NORRSCViewController.swift in Sources */,
 				30A1145A1CD2426B000F0F02 /* NORScannerDelegate.swift in Sources */,
 				3069A1D71CDC788A003869EA /* NORBluetoothManager.swift in Sources */,
