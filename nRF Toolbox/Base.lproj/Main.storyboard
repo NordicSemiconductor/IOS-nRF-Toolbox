@@ -480,8 +480,8 @@
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Plq-6x-mnA">
                                                     <rect key="frame" x="0.0" y="0.0" width="78" height="78"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal" image="FeatureHK" backgroundImage="FeatureBackground"/>
-                                                    <state key="highlighted" image="FeatureHK" backgroundImage="FeatureBackgroundPressed"/>
+                                                    <state key="normal" image="FeatureHomeKit" backgroundImage="FeatureBackground"/>
+                                                    <state key="highlighted" image="FeatureHomeKit" backgroundImage="FeatureBackgroundPressed"/>
                                                     <connections>
                                                         <segue destination="Mk7-F6-tao" kind="show" id="aVq-xU-tp1"/>
                                                     </connections>
@@ -5871,9 +5871,9 @@
         <image name="FeatureCGM" width="78" height="78"/>
         <image name="FeatureCSC" width="78" height="78"/>
         <image name="FeatureDFU" width="78" height="78"/>
-        <image name="FeatureHK" width="78" height="78"/>
         <image name="FeatureHRS" width="78" height="78"/>
         <image name="FeatureHTS" width="78" height="78"/>
+        <image name="FeatureHomeKit" width="78" height="78"/>
         <image name="FeatureProximity" width="78" height="78"/>
         <image name="FeatureRSAC" width="78" height="78"/>
         <image name="FeatureUART" width="78" height="78"/>
