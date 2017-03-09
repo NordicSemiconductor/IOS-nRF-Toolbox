@@ -11,7 +11,7 @@ import CoreBluetooth
 import HomeKit
 
 public let homeKitScannerSegue = "show_hk_scanner_view"
-
+public let homeKitAcessorySegue = "show_hk_accessory_view"
 class NORHKViewController: NORBaseViewController, HMHomeDelegate, NORHKScannerDelegate, UITableViewDataSource, UITableViewDelegate {
 
     //MARK: - Properties
@@ -119,7 +119,23 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, NORHKScannerDe
     //MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        print(homeAccessories[indexPath.row].name)
+        
+        let accessory = homeAccessories[indexPath.row]
+        self.performSegue(withIdentifier: homeKitAcessorySegue, sender: accessory)
+//        for aService in accessory.services {
+//            for aCharacteristic in aService.characteristics {
+//                if #available(iOS 9.0, *) {homeKitAcessorySegue//                    if aCharacteristic.uniqueIdentifier.uuidString == "885F1F87-7CEB-5767-B70F-FB6D0D5C1A48" {
+//                        aCharacteristic.writeValue(0x01, completionHandler: { (anError) in
+//                            if anError != nil {
+//                                print(anError)
+//                            }
+//                        })
+//                    }
+//                } else {
+//                    // Fallback on earlier versions
+//                }
+//            }
+//        }
     }
 
     //MARK: - NORHKScannerDelegate
@@ -136,6 +152,13 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, NORHKScannerDe
             let navigationController = segue.destination as? UINavigationController
             let scannerView = navigationController?.topViewController as? NORHKScannerViewController
             scannerView?.delegate = self
+        } else if segue.identifier == homeKitAcessorySegue {
+            let accessoryView = segue.destination as? NORHKAccessoryViewController
+            if let targetAccessory = sender as? HMAccessory {
+                accessoryView?.setTargetAccessory(targetAccessory)
+            } else {
+                print("Error: No accessory found")
+            }
         }
     }
 }

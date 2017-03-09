@@ -57,6 +57,7 @@
 		309F086A1E6D9EAA00B7546A /* NORHKHomeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F08691E6D9EAA00B7546A /* NORHKHomeStore.swift */; };
 		309F086C1E6EA0F800B7546A /* NORHKScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F086B1E6EA0F800B7546A /* NORHKScannerViewController.swift */; };
 		309F086E1E6ED44F00B7546A /* NORHKScannerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F086D1E6ED44F00B7546A /* NORHKScannerDelegate.swift */; };
+		309F08701E6FF1F900B7546A /* NORHKAccessoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F086F1E6FF1F900B7546A /* NORHKAccessoryViewController.swift */; };
 		30A114561CD2367C000F0F02 /* NORScannedPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A114551CD2367C000F0F02 /* NORScannedPeripheral.swift */; };
 		30A1145A1CD2426B000F0F02 /* NORScannerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A114591CD2426B000F0F02 /* NORScannerDelegate.swift */; };
 		30A1145C1CD24611000F0F02 /* NORScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A1145B1CD24611000F0F02 /* NORScannerViewController.swift */; };
@@ -162,6 +163,7 @@
 		309F08691E6D9EAA00B7546A /* NORHKHomeStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORHKHomeStore.swift; sourceTree = "<group>"; };
 		309F086B1E6EA0F800B7546A /* NORHKScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORHKScannerViewController.swift; sourceTree = "<group>"; };
 		309F086D1E6ED44F00B7546A /* NORHKScannerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORHKScannerDelegate.swift; sourceTree = "<group>"; };
+		309F086F1E6FF1F900B7546A /* NORHKAccessoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORHKAccessoryViewController.swift; sourceTree = "<group>"; };
 		30A114551CD2367C000F0F02 /* NORScannedPeripheral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORScannedPeripheral.swift; sourceTree = "<group>"; };
 		30A114591CD2426B000F0F02 /* NORScannerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORScannerDelegate.swift; sourceTree = "<group>"; };
 		30A1145B1CD24611000F0F02 /* NORScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORScannerViewController.swift; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 				309F08691E6D9EAA00B7546A /* NORHKHomeStore.swift */,
 				309F086B1E6EA0F800B7546A /* NORHKScannerViewController.swift */,
 				309F086D1E6ED44F00B7546A /* NORHKScannerDelegate.swift */,
+				309F086F1E6FF1F900B7546A /* NORHKAccessoryViewController.swift */,
 			);
 			path = HomeKit;
 			sourceTree = "<group>";
@@ -789,6 +792,7 @@
 				30921FD31CD0E7A5009CBDDE /* NORNavigationController.swift in Sources */,
 				3042993D1CE6154100E1D2AB /* NORBaseViewController.swift in Sources */,
 				30A114561CD2367C000F0F02 /* NORScannedPeripheral.swift in Sources */,
+				309F08701E6FF1F900B7546A /* NORHKAccessoryViewController.swift in Sources */,
 				3001EBC31D1C1430008C5C37 /* NORCGMItemCell.swift in Sources */,
 				3001EBB91D1BE1FB008C5C37 /* NORBGMViewController.swift in Sources */,
 				30499E4D1CE4687300E0993B /* NORFileTypeSelectionDelegate.swift in Sources */,
