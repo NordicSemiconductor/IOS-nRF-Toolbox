@@ -83,6 +83,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
     func onFileTypeSelected(fileType aType: DFUFirmwareType) {
         selectedFirmware = DFUFirmware(urlToBinOrHexFile: selectedFileURL!, urlToDatFile: nil, type: aType)
     
+        print(selectedFirmware?.fileUrl ?? "None")
         if selectedFirmware != nil && selectedFirmware?.fileName != nil {
             fileName.text = selectedFirmware?.fileName
             let content = try? Data(contentsOf: selectedFileURL!)

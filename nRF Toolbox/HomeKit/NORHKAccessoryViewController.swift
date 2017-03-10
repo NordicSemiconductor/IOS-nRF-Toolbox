@@ -43,9 +43,6 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
     private var targetAccessory: HMAccessory?
     private var hasDFUControlPoint: Bool = false
     private var dfuControlPointCharacteristic: HMCharacteristic?
-    private var hasPressedDFUButton = false //This is a flag to indicate that the user has pressed the DFU button
-                                            //The only purpose is to know when the accessory disconnects if it's because of
-                                            //Jumping into DFU mode or if the connection was interrupted for another reason
     
     //MARK: - Implementation
     public func setTargetAccessory(_ anAccessory: HMAccessory) {
@@ -71,10 +68,9 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func ShowBootloaderWarning() {
-        let controller = UIAlertController(title: "Acessorry will restart!", message: "Jumping to bootloader will restart this accessory in DFU mode, you will need to go to the DFU page to resume the process.", preferredStyle: .alert)
+        let controller = UIAlertController(title: "Accessorry will restart!", message: "DFU mode requires restarting this accessory, after restarting, open the DFU page to continue.", preferredStyle: .alert)
         controller.addAction(UIAlertAction(title: "Restart in DFU mode", style: .destructive, handler: { (anAction) in
             self.JumpToBootloaderMode()
-            self.hasPressedDFUButton = true
         }))
         
         controller.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (anAction) in
@@ -92,7 +88,7 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
             characteristicName = aCharacteristic.metadata?.manufacturerDescription ?? characteristicName
         }
 
-        let controller = UIAlertController(title: characteristicName, message: "Value: \(aCharacteristic.value ?? "Nil")", preferredStyle: .alert)
+        let controller = UIAlertController(title: characteristicName, message: "Value: \(aCharacteristic.value ?? "Not available")", preferredStyle: .alert)
         if aCharacteristic.value != nil {
             controller.addAction(UIAlertAction(title: "Copy Value", style: .default, handler: { (anAction) in
                 UIPasteboard.general.string = aCharacteristic.value as? String
@@ -110,9 +106,9 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
             return
         }
 
-        firmwareVersionLabel.text = "Reading.."
-        hardwareVersionLabel.text = "Reading.."
-        accessoryDFUSupportLabel.text = "Reading.."
+        firmwareVersionLabel.text = "Reading..."
+        hardwareVersionLabel.text = "Reading..."
+        accessoryDFUSupportLabel.text = "Reading..."
         dfuModeButton.isEnabled = false
         accessoryNameTitle.text = targetAccessory?.name
         homeNameTitle.text = targetAccessory?.room?.name
@@ -150,9 +146,7 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
                         }
                     }
                 } else if aService.uniqueIdentifier.uuidString == dFUServiceIdentifier {
-                    print ("\(aService.uniqueIdentifier.uuidString) : \(aService.serviceType)")
                     for aCharacteristic in aService.characteristics {
-                        
                         if aCharacteristic.uniqueIdentifier.uuidString == dFUControlPointIdentifier {
                             dfuControlPointCharacteristic = aCharacteristic
                             hasDFUControlPoint = true
@@ -195,10 +189,10 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
             }
         }
         if hasDFUControlPoint == true {
-            accessoryDFUSupportLabel.text = "True"
+            accessoryDFUSupportLabel.text = "Yes"
             dfuModeButton.isEnabled = true
         } else {
-            accessoryDFUSupportLabel.text = "False"
+            accessoryDFUSupportLabel.text = "No"
             dfuModeButton.isEnabled = false
         }
     }
@@ -211,6 +205,23 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
     }
 
     //MARK: - UITableViewDataSoruce
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: CGRect(x: 15, y: 0, width: tableView.bounds.width - 15, height: 30))
+        headerView.backgroundColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+        let titleLabel = UILabel(frame: CGRect(x: 15, y: 0, width: tableView.bounds.width - 15, height: 30))
+        headerView.addSubview(titleLabel)
+        headerView.bringSubview(toFront: titleLabel)
+        
+        if #available(iOS 9.0, *) {
+            titleLabel.text = targetAccessory?.services[section].localizedDescription
+        } else {
+            titleLabel.text = targetAccessory?.services[section].description
+        }
+        
+        
+        return headerView
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let aCell = tableView.dequeueReusableCell(withIdentifier: "hk_characteristic_cell")
         let aCharacteristic = targetAccessory?.services[indexPath.section].characteristics[indexPath.row] ?? nil
@@ -233,16 +244,16 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
         return targetAccessory?.services[section].characteristics.count ?? 0
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return targetAccessory?.services.count ?? 0
+    }
+
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if #available(iOS 9.0, *) {
             return targetAccessory?.services[section].localizedDescription
         } else {
             return targetAccessory?.services[section].description
         }
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return targetAccessory?.services.count ?? 0
     }
 
     //MARK: - UITableViewDelegate

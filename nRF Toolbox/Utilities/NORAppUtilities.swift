@@ -44,7 +44,7 @@ class NORAppUtilities: NSObject {
     
     static let cgmHelpText = "The CGM (CONTINUOUS GLUCOSE MONITOR) profile allows you to connect to your continuous glucose sensor.\nTap the Start session button to begin reading records every minute (default frequency)"
     
-    static let homeKitHelpText = "HomeKit description"
+    static let homeKitHelpText = "The HomeKit profile allows you to connect to your HomeKit compatible accessories.\nTap the Add Accessory button to browse new accessories or select an accessory from the ones already configured. you will be able to browse the services and characteristics for this accessory and put in OTA DFU mode."
     
     static let helpText: [NORServiceIds: String] = [.uart: uartHelpText,
                                                     .rsc: rscHelpText,
