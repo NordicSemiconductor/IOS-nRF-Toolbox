@@ -1450,9 +1450,6 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BackgroundImage" translatesAutoresizingMaskIntoConstraints="NO" id="7AQ-gK-QtB">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eke-vs-tIX">
                                 <rect key="frame" x="35" y="15" width="39" height="19"/>
                                 <constraints>
@@ -1688,12 +1685,11 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.96067994830000003" green="0.96084433790000001" blue="0.96066969629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="C0q-uT-7rO" firstAttribute="centerX" secondItem="3UX-f1-CG4" secondAttribute="centerX" id="2fh-ae-Ufe"/>
                             <constraint firstItem="Eke-vs-tIX" firstAttribute="leading" secondItem="3UX-f1-CG4" secondAttribute="leadingMargin" constant="19" id="2lD-lO-rVd"/>
                             <constraint firstAttribute="trailingMargin" secondItem="CK9-HQ-KtY" secondAttribute="trailing" constant="14" id="5ea-we-I3T"/>
-                            <constraint firstItem="7AQ-gK-QtB" firstAttribute="top" secondItem="MDw-8r-L7v" secondAttribute="bottom" id="677-59-eaP"/>
                             <constraint firstItem="rq2-kP-nkH" firstAttribute="leading" secondItem="3UX-f1-CG4" secondAttribute="leadingMargin" constant="19" id="7Tx-8Q-A1t"/>
                             <constraint firstItem="bRv-DF-w2k" firstAttribute="top" secondItem="quu-O8-7wP" secondAttribute="bottom" id="7V7-5f-NLX"/>
                             <constraint firstItem="eaJ-DI-U0E" firstAttribute="leading" secondItem="Eke-vs-tIX" secondAttribute="trailing" constant="8" id="BPZ-WG-Imv"/>
@@ -1702,7 +1698,6 @@
                             <constraint firstItem="HxW-Mq-0BG" firstAttribute="top" secondItem="MDw-8r-L7v" secondAttribute="bottom" id="Fj6-nn-Rcl"/>
                             <constraint firstItem="rq2-kP-nkH" firstAttribute="top" secondItem="azs-IJ-ne7" secondAttribute="bottom" id="H3H-Tc-MW2"/>
                             <constraint firstAttribute="centerY" secondItem="ece-Hb-vkc" secondAttribute="centerY" id="Jnv-k6-4hz"/>
-                            <constraint firstItem="7AQ-gK-QtB" firstAttribute="leading" secondItem="3UX-f1-CG4" secondAttribute="leading" id="KBt-zn-AP6"/>
                             <constraint firstItem="CK9-HQ-KtY" firstAttribute="leading" secondItem="3UX-f1-CG4" secondAttribute="leadingMargin" constant="19" id="OHX-Q9-NnV"/>
                             <constraint firstItem="CK9-HQ-KtY" firstAttribute="top" secondItem="AIV-as-efC" secondAttribute="bottom" id="QrA-h9-JCT"/>
                             <constraint firstItem="5Yf-ZI-KyQ" firstAttribute="top" secondItem="C0q-uT-7rO" secondAttribute="bottom" constant="8" id="U1o-9h-hkW"/>
@@ -1722,12 +1717,10 @@
                             <constraint firstAttribute="trailingMargin" secondItem="azs-IJ-ne7" secondAttribute="trailing" constant="14" id="ice-nu-fbm"/>
                             <constraint firstItem="azs-IJ-ne7" firstAttribute="top" secondItem="CK9-HQ-KtY" secondAttribute="bottom" constant="8" id="pQu-WH-bWV"/>
                             <constraint firstItem="AIV-as-efC" firstAttribute="leading" secondItem="3UX-f1-CG4" secondAttribute="leadingMargin" constant="19" id="pzT-gC-NqV"/>
-                            <constraint firstAttribute="trailing" secondItem="7AQ-gK-QtB" secondAttribute="trailing" id="qXO-Dg-Pb0"/>
                             <constraint firstAttribute="trailing" secondItem="HxW-Mq-0BG" secondAttribute="trailing" id="r9w-eZ-W00"/>
                             <constraint firstAttribute="trailingMargin" secondItem="AIV-as-efC" secondAttribute="trailing" constant="14" id="rGC-03-53k"/>
                             <constraint firstItem="AIV-as-efC" firstAttribute="top" secondItem="bRv-DF-w2k" secondAttribute="bottom" constant="8" id="uYO-aK-I2m"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eaJ-DI-U0E" secondAttribute="trailing" constant="14" id="xr3-uF-Zua"/>
-                            <constraint firstItem="5Yf-ZI-KyQ" firstAttribute="top" secondItem="7AQ-gK-QtB" secondAttribute="bottom" id="yIM-Pj-fg5"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -5879,7 +5872,7 @@
         <image name="userIcon" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="eeF-P4-72I"/>
+        <segue reference="YqS-rM-m7i"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.60392159219999997" blue="0.85490196939999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
