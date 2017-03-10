@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Feature_bpm.png",
+      "filename" : "BP_blood-pressure.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Feature_bpm@2x.png",
+      "filename" : "2x_BP_blood-pressure.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Feature_bpm@2x-1.png",
+      "filename" : "3x_BP_blood-pressure.png",
       "scale" : "3x"
     }
   ],
