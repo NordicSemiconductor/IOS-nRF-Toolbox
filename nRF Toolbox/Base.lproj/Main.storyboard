@@ -180,9 +180,6 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BackgroundImage" translatesAutoresizingMaskIntoConstraints="NO" id="6u2-b9-1zJ">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
-                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BackgroundTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Rv9-E3-Iiv">
                                 <rect key="frame" x="127.5" y="581" width="120" height="14"/>
                                 <constraints>
@@ -510,26 +507,22 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.96067994830000003" green="0.96084433790000001" blue="0.96066969629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Rv9-E3-Iiv" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="1Dy-cw-uQa"/>
                             <constraint firstAttribute="trailingMargin" secondItem="4j9-U2-dDx" secondAttribute="trailing" constant="40" id="6u8-cD-Hkd"/>
                             <constraint firstItem="4j9-U2-dDx" firstAttribute="top" secondItem="rJI-9B-D0e" secondAttribute="bottom" priority="750" id="BpW-72-NrK"/>
-                            <constraint firstAttribute="trailing" secondItem="6u2-b9-1zJ" secondAttribute="trailing" id="MXl-V8-QdI"/>
                             <constraint firstItem="4j9-U2-dDx" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailing" priority="750" id="NH5-o3-2Mo"/>
-                            <constraint firstItem="mAl-4b-q30" firstAttribute="top" secondItem="6u2-b9-1zJ" secondAttribute="bottom" id="Na5-Hr-rnK"/>
                             <constraint firstItem="4j9-U2-dDx" firstAttribute="top" secondItem="rJI-9B-D0e" secondAttribute="bottom" constant="20" id="OFb-um-vWR">
                                 <variation key="widthClass=regular" constant="60"/>
                             </constraint>
                             <constraint firstItem="4j9-U2-dDx" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" priority="750" id="PI8-Kc-fHo"/>
                             <constraint firstItem="4j9-U2-dDx" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="40" id="ai8-s5-PP9"/>
                             <constraint firstItem="tgT-UN-Phi" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="ayh-xb-9Xd"/>
-                            <constraint firstItem="6u2-b9-1zJ" firstAttribute="top" secondItem="rJI-9B-D0e" secondAttribute="bottom" id="bAN-Oo-auy"/>
                             <constraint firstItem="mAl-4b-q30" firstAttribute="top" secondItem="4j9-U2-dDx" secondAttribute="bottom" id="cFJ-zO-Lj0"/>
                             <constraint firstItem="tgT-UN-Phi" firstAttribute="top" secondItem="rJI-9B-D0e" secondAttribute="bottom" id="hP8-k4-9fP"/>
                             <constraint firstAttribute="trailing" secondItem="tgT-UN-Phi" secondAttribute="trailing" id="mqV-5o-Xng"/>
                             <constraint firstItem="mAl-4b-q30" firstAttribute="top" secondItem="Rv9-E3-Iiv" secondAttribute="bottom" constant="8" id="oii-JL-He7"/>
-                            <constraint firstItem="6u2-b9-1zJ" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="pr3-ib-Vre"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
