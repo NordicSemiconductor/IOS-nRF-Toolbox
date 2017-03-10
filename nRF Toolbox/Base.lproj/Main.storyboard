@@ -146,7 +146,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.96067994830000003" green="0.96084433790000001" blue="0.96066969629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="A5Z-T2-ip6" firstAttribute="leading" secondItem="kjT-Ys-qPf" secondAttribute="leading" id="DyF-VL-4h8"/>
                             <constraint firstItem="A5Z-T2-ip6" firstAttribute="top" secondItem="Sft-YD-j8G" secondAttribute="bottom" id="HaH-so-1ae"/>
@@ -2102,9 +2102,6 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BackgroundImage" translatesAutoresizingMaskIntoConstraints="NO" id="3gr-Jp-YnC">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
-                            </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DEFAULT DFU" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fT7-zC-dbm">
                                 <rect key="frame" x="35" y="11" width="310" height="27"/>
                                 <constraints>
@@ -2333,12 +2330,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.96067994830000003" green="0.96084433790000001" blue="0.96066969629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="8K8-0E-rYV" firstAttribute="top" secondItem="fT7-zC-dbm" secondAttribute="bottom" constant="31" id="4hW-MH-sNR"/>
                             <constraint firstItem="lJA-6J-NbQ" firstAttribute="leading" secondItem="dWV-qC-ez4" secondAttribute="leading" id="72k-9W-2bu"/>
                             <constraint firstAttribute="trailingMargin" secondItem="8K8-0E-rYV" secondAttribute="trailing" constant="14" id="Ham-tb-mDc"/>
-                            <constraint firstItem="3gr-Jp-YnC" firstAttribute="leading" secondItem="dWV-qC-ez4" secondAttribute="leading" id="IQK-ej-Yj8"/>
                             <constraint firstItem="fT7-zC-dbm" firstAttribute="leading" secondItem="dWV-qC-ez4" secondAttribute="leadingMargin" constant="19" id="JKO-DP-DqH"/>
                             <constraint firstItem="lJA-6J-NbQ" firstAttribute="top" secondItem="YvG-V7-6cx" secondAttribute="bottom" id="KLJ-MM-tk2"/>
                             <constraint firstAttribute="centerX" secondItem="hGd-vQ-1ZP" secondAttribute="centerX" id="KPm-8k-QM1"/>
@@ -2350,7 +2346,6 @@
                             <constraint firstAttribute="trailingMargin" secondItem="zgI-eq-aFb" secondAttribute="trailing" constant="14" id="Qmu-a8-WPo"/>
                             <constraint firstAttribute="trailing" secondItem="lJA-6J-NbQ" secondAttribute="trailing" id="S73-V8-UzA"/>
                             <constraint firstItem="5CN-hP-sI7" firstAttribute="leading" secondItem="dWV-qC-ez4" secondAttribute="leading" id="T3n-o2-Paa"/>
-                            <constraint firstAttribute="trailing" secondItem="3gr-Jp-YnC" secondAttribute="trailing" id="T5M-Sq-gq8"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fT7-zC-dbm" secondAttribute="trailing" constant="14" id="TNe-hY-bhM"/>
                             <constraint firstItem="N7E-Zl-a8K" firstAttribute="centerX" secondItem="dWV-qC-ez4" secondAttribute="centerX" id="UG1-NV-hBm"/>
                             <constraint firstItem="JLD-Gd-zCF" firstAttribute="leading" secondItem="dWV-qC-ez4" secondAttribute="leadingMargin" constant="19" id="WOy-xU-iuO"/>
@@ -2359,11 +2354,9 @@
                             <constraint firstItem="K6u-bL-u5j" firstAttribute="top" secondItem="hGd-vQ-1ZP" secondAttribute="bottom" constant="30" id="fcg-iD-faM"/>
                             <constraint firstItem="K6u-bL-u5j" firstAttribute="top" secondItem="N7E-Zl-a8K" secondAttribute="bottom" constant="8" id="gbB-hF-ay7"/>
                             <constraint firstItem="zgI-eq-aFb" firstAttribute="leading" secondItem="dWV-qC-ez4" secondAttribute="leadingMargin" constant="19" id="hQe-Pp-moP"/>
-                            <constraint firstItem="3gr-Jp-YnC" firstAttribute="top" secondItem="YvG-V7-6cx" secondAttribute="bottom" id="hnk-u0-VSo"/>
                             <constraint firstAttribute="trailingMargin" secondItem="O9u-7t-r4K" secondAttribute="trailing" constant="14" id="kcD-uy-LlL"/>
                             <constraint firstAttribute="trailingMargin" secondItem="JLD-Gd-zCF" secondAttribute="trailing" constant="14" id="knJ-U6-IaV"/>
                             <constraint firstItem="8K8-0E-rYV" firstAttribute="leading" secondItem="dWV-qC-ez4" secondAttribute="leadingMargin" constant="19" id="nYZ-Po-tzD"/>
-                            <constraint firstItem="K6u-bL-u5j" firstAttribute="top" secondItem="3gr-Jp-YnC" secondAttribute="bottom" id="q1g-Vs-PCZ"/>
                             <constraint firstItem="spa-sH-2kC" firstAttribute="top" secondItem="fT7-zC-dbm" secondAttribute="bottom" constant="11" id="tBP-DX-HF2"/>
                             <constraint firstAttribute="trailingMargin" secondItem="spa-sH-2kC" secondAttribute="trailing" constant="14" id="zGo-jZ-0pu"/>
                         </constraints>
@@ -3371,7 +3364,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.96067994830000003" green="0.96084433790000001" blue="0.96066969629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="W5D-0X-jiM" firstAttribute="leading" secondItem="nOP-Xb-nUv" secondAttribute="leading" id="9g7-0m-imy"/>
                             <constraint firstAttribute="trailing" secondItem="W5D-0X-jiM" secondAttribute="trailing" id="BTJ-m7-vso"/>
@@ -3463,7 +3456,7 @@
                                 <items/>
                             </tabBar>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.96067994830000003" green="0.96084433790000001" blue="0.96066969629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="WyQ-6E-ZcW" firstAttribute="centerY" secondItem="cUm-89-ZK2" secondAttribute="centerY" id="9ny-Gh-QM6"/>
                             <constraint firstAttribute="trailing" secondItem="2fM-BE-Key" secondAttribute="trailing" id="Iy3-gI-qDp"/>
@@ -3508,10 +3501,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kZB-0R-CUC">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="579.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="580.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What is a Distribution packet (ZIP)?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Els-5C-clH">
-                                                <rect key="frame" x="16" y="16" width="343" height="20.5"/>
+                                                <rect key="frame" x="16" y="16" width="343" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="21" id="Hgr-Nl-VoD"/>
                                                     <constraint firstAttribute="width" constant="288" id="VQ9-Ya-NTh"/>
@@ -3527,34 +3520,34 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y0d-Qh-JXw">
-                                                <rect key="frame" x="16" y="52.5" width="343" height="223.5"/>
+                                                <rect key="frame" x="16" y="53" width="343" height="223.5"/>
                                                 <string key="text">Distribution packet (ZIP) is a unified way to distribute firmware updates for DFU. It contains one or more files with firmware (BIN), their Init packets files (containing metadata relevant for the update process) and a manifest file. The manifest file contains the same data as Init packet files but in human redable form and is used by applications, such as nRF Toolbox, to determine the content of a Distribution packet.</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How to create a Distribution packet (ZIP)?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zni-ak-bps">
-                                                <rect key="frame" x="16" y="300" width="343" height="20.5"/>
+                                                <rect key="frame" x="16" y="300.5" width="343" height="21"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gf4-Gb-NxI">
-                                                <rect key="frame" x="16" y="336.5" width="343" height="81.5"/>
+                                                <rect key="frame" x="16" y="337.5" width="343" height="81.5"/>
                                                 <string key="text">To create a Distribution packet use the 'nrfutil' application. You may find it, as well as some documentation how to use it on GitHub:</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cWF-vT-awt">
-                                                <rect key="frame" x="16" y="434" width="343" height="30"/>
+                                                <rect key="frame" x="16" y="435" width="343" height="30"/>
                                                 <state key="normal" title="https://github.com/NordicSemiconductor/pc-nrfutil"/>
                                                 <connections>
                                                     <action selector="openURLButtonTapped:" destination="h5f-4T-1jh" eventType="touchUpInside" id="VL5-yz-8an"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5QN-tc-q3p">
-                                                <rect key="frame" x="16" y="480" width="343" height="81.5"/>
+                                                <rect key="frame" x="16" y="481" width="343" height="81.5"/>
                                                 <string key="text">It is available as a Python script, or as a standalone executable for Windows, installed together with the Master Control Panel application.</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -3594,7 +3587,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.96067994830000003" green="0.96084433790000001" blue="0.96066969629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="UTy-5Q-hqa" firstAttribute="top" secondItem="UTE-x7-pg0" secondAttribute="bottom" id="6I9-9K-DX3"/>
                             <constraint firstItem="UTy-5Q-hqa" firstAttribute="leading" secondItem="TJg-gu-NcQ" secondAttribute="leading" id="RhO-GY-2dc"/>
@@ -3615,7 +3608,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="56" sectionHeaderHeight="28" sectionFooterHeight="28" id="ayx-y4-wpJ">
                         <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.96067994830000003" green="0.96084433790000001" blue="0.96066969629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="uiU-OY-h27" userLabel="Footer">
                             <rect key="frame" x="0.0" y="168" width="375" height="0.0"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -3816,7 +3809,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.96067994830000003" green="0.96084433790000001" blue="0.96066969629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="amv-Xt-2pl" firstAttribute="top" secondItem="2JE-qx-fwA" secondAttribute="bottom" id="7kH-zJ-qXu"/>
                             <constraint firstItem="2JE-qx-fwA" firstAttribute="leading" secondItem="GNG-S9-kQx" secondAttribute="leading" id="HVi-T7-qER"/>
@@ -5865,7 +5858,7 @@
         <image name="userIcon" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="QaF-as-tpw"/>
+        <segue reference="0i8-Ot-uid"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.60392159219999997" blue="0.85490196939999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
