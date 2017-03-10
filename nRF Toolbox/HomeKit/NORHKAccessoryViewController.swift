@@ -101,8 +101,7 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
     }
 
     func updateViewContents() {
-
-        guard targetAccessory != nil else {
+        guard let targetAccessory = targetAccessory else {
             return
         }
 
@@ -110,16 +109,16 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
         hardwareVersionLabel.text = "Reading..."
         accessoryDFUSupportLabel.text = "Reading..."
         dfuModeButton.isEnabled = false
-        accessoryNameTitle.text = targetAccessory?.name
-        homeNameTitle.text = targetAccessory?.room?.name
+        accessoryNameTitle.text = targetAccessory.name
+        homeNameTitle.text = targetAccessory.room?.name
         
         if #available(iOS 9.0, *) {
-            accessoryCategoryLabel.text = targetAccessory?.category.localizedDescription
+            accessoryCategoryLabel.text = targetAccessory.category.localizedDescription
         } else {
             accessoryCategoryLabel.text = "Unknown"
         }
 
-        for aService in targetAccessory!.services {
+        for aService in targetAccessory.services {
             if #available(iOS 9.0, *) {
                 if aService.uniqueIdentifier.uuidString == accessoryInformationService {
                     for aCharacteristic in aService.characteristics {
@@ -217,27 +216,26 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
         } else {
             titleLabel.text = targetAccessory?.services[section].description
         }
-        
-        
+
         return headerView
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let aCell = tableView.dequeueReusableCell(withIdentifier: "hk_characteristic_cell")
+        let aCell = tableView.dequeueReusableCell(withIdentifier: "hk_characteristic_cell", for: indexPath)
         let aCharacteristic = targetAccessory?.services[indexPath.section].characteristics[indexPath.row] ?? nil
         
         if aCharacteristic != nil {
             if #available(iOS 9.0, *) {
-                aCell?.textLabel?.text = aCharacteristic?.localizedDescription ?? ""
+                aCell.textLabel?.text = aCharacteristic?.localizedDescription ?? ""
             } else {
                 // Fallback on earlier versions
-                aCell?.textLabel?.text = aCharacteristic?.metadata?.manufacturerDescription ?? ""
+                aCell.textLabel?.text = aCharacteristic?.metadata?.manufacturerDescription ?? ""
             }
         } else {
-            aCell?.textLabel?.text = "Unknown"
+            aCell.textLabel?.text = "Unknown"
         }
-        aCell?.detailTextLabel?.text = ""
-        return aCell!
+        aCell.detailTextLabel?.text = ""
+        return aCell
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

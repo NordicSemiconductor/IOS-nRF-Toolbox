@@ -15,7 +15,7 @@ public let homeKitAccessorySegue = "show_hk_accessory_view"
 class NORHKViewController: NORBaseViewController, HMHomeDelegate, NORHKScannerDelegate, UITableViewDataSource, UITableViewDelegate {
 
     //MARK: - Properties
-    private var accessoryBrowser: HMAccessoryBrowser?
+    private var accessoryBrowser: HMAccessoryBrowser!
     private var homeAccessories = [HMAccessory]()
     private var currentAccessory: HMAccessory?
     private var homeStore: NORHKHomeStore!
@@ -78,7 +78,7 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, NORHKScannerDe
             //Browser needs to be released after adding accessory to the home.
             //Releasing the browser before adding the accessory will result in a HomeKit error 2 (Object not found.)
             //as the selected HMAccessory object becomes invalid.
-            self.accessoryBrowser?.stopSearchingForNewAccessories()
+            self.accessoryBrowser.stopSearchingForNewAccessories()
             self.accessoryBrowser = nil
         }
     }
@@ -102,14 +102,15 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, NORHKScannerDe
 
     //MARK: - UITableViewDataSoruce
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let aCell = tableView.dequeueReusableCell(withIdentifier: "HKAccessoryCell")
-        aCell?.textLabel?.text = homeAccessories[indexPath.row].name
+        
+        let aCell = tableView.dequeueReusableCell(withIdentifier: "HKAccessoryCell", for: indexPath)
+        aCell.textLabel?.text = homeAccessories[indexPath.row].name
         if #available(iOS 9.0, *) {
-            aCell?.detailTextLabel?.text = homeAccessories[indexPath.row].category.localizedDescription
+            aCell.detailTextLabel?.text = homeAccessories[indexPath.row].category.localizedDescription
         } else {
-            aCell?.detailTextLabel?.text = ""
+            aCell.detailTextLabel?.text = ""
         }
-        return aCell!
+        return aCell
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -121,15 +122,15 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, NORHKScannerDe
         tableView.deselectRow(at: indexPath, animated: true)
         
         let accessory = homeAccessories[indexPath.row]
-        self.performSegue(withIdentifier: homeKitAccessorySegue, sender: accessory)
+        performSegue(withIdentifier: homeKitAccessorySegue, sender: accessory)
     }
 
     //MARK: - NORHKScannerDelegate
     func browser(aBrowser: HMAccessoryBrowser, didSelectAccessory anAccessory: HMAccessory) {
-        self.accessoryBrowser = aBrowser
-        self.currentAccessory = anAccessory
-        self.accessoryBrowser?.delegate = nil
-        self.pair(anAccessory: anAccessory, withHome: homeStore.homeManager.primaryHome!)
+        accessoryBrowser = aBrowser
+        currentAccessory = anAccessory
+        accessoryBrowser.delegate = nil
+        pair(anAccessory: anAccessory, withHome: homeStore.homeManager.primaryHome!)
     }
 
     //MARK: - Segue

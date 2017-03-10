@@ -56,14 +56,15 @@ class NORHKScannerViewController: UIViewController, UITableViewDelegate, UITable
     
     //MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let aCell = tableView.dequeueReusableCell(withIdentifier: "HKAccessoryCell")
-        aCell?.textLabel?.text = discoveredAccessories[indexPath.row].name
+
+        let aCell = tableView.dequeueReusableCell(withIdentifier: "HKAccessoryCell", for: indexPath)
+        aCell.textLabel?.text = discoveredAccessories[indexPath.row].name
         if #available(iOS 9.0, *) {
-            aCell?.detailTextLabel?.text = discoveredAccessories[indexPath.row].category.localizedDescription
+            aCell.detailTextLabel?.text = discoveredAccessories[indexPath.row].category.localizedDescription
         } else {
-            aCell?.detailTextLabel?.text = ""
+            aCell.detailTextLabel?.text = ""
         }
-        return aCell!
+        return aCell
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
