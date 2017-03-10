@@ -68,7 +68,7 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func ShowBootloaderWarning() {
-        let controller = UIAlertController(title: "Accessorry will restart!", message: "DFU mode requires restarting this accessory, after restarting, open the DFU page to continue.", preferredStyle: .alert)
+        let controller = UIAlertController(title: "Accessory will restart", message: "Updating requires restarting this accessory into DFU mode.\r\nAfter restarting, open the DFU page to continue.", preferredStyle: .alert)
         controller.addAction(UIAlertAction(title: "Restart in DFU mode", style: .destructive, handler: { (anAction) in
             self.JumpToBootloaderMode()
         }))
