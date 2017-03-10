@@ -1775,9 +1775,6 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BackgroundImage" translatesAutoresizingMaskIntoConstraints="NO" id="tUU-9s-Knd">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
-                            </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SPEED AND CADENCE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N7n-YB-4Ra">
                                 <rect key="frame" x="35" y="49" width="310" height="21"/>
                                 <color key="backgroundColor" red="0.0" green="0.60392156860000001" blue="0.85490196080000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1981,7 +1978,7 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.96067994830000003" green="0.96084433790000001" blue="0.96066969629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="JII-IE-2IK" secondAttribute="centerY" id="0Pr-de-crt"/>
                             <constraint firstItem="WOd-6c-8D0" firstAttribute="centerX" secondItem="fCM-Pg-Aee" secondAttribute="centerX" id="0kp-rQ-WDG"/>
@@ -1989,17 +1986,13 @@
                             <constraint firstItem="7Li-Yu-dEL" firstAttribute="top" secondItem="rbV-BS-rOZ" secondAttribute="bottom" constant="11" id="4IH-Q3-p92"/>
                             <constraint firstItem="7Li-Yu-dEL" firstAttribute="leading" secondItem="LJg-mH-nw1" secondAttribute="trailing" constant="8" id="5sk-ug-udV"/>
                             <constraint firstItem="N7n-YB-4Ra" firstAttribute="leading" secondItem="fCM-Pg-Aee" secondAttribute="leadingMargin" constant="19" id="65b-iQ-tsM"/>
-                            <constraint firstItem="cZc-RY-S1l" firstAttribute="top" secondItem="tUU-9s-Knd" secondAttribute="bottom" id="ArW-iO-oBd"/>
                             <constraint firstItem="lUF-Mj-fS4" firstAttribute="leading" secondItem="fCM-Pg-Aee" secondAttribute="leading" id="B3I-A3-mS8"/>
-                            <constraint firstItem="tUU-9s-Knd" firstAttribute="leading" secondItem="fCM-Pg-Aee" secondAttribute="leading" id="COw-rB-UD0"/>
                             <constraint firstItem="Ywp-mc-yHj" firstAttribute="leading" secondItem="fCM-Pg-Aee" secondAttribute="leadingMargin" constant="19" id="DuM-TB-wbP"/>
-                            <constraint firstAttribute="trailing" secondItem="tUU-9s-Knd" secondAttribute="trailing" id="E5S-Vc-xvG"/>
                             <constraint firstItem="N7n-YB-4Ra" firstAttribute="top" secondItem="7Li-Yu-dEL" secondAttribute="bottom" constant="11" id="LE7-tb-acu"/>
                             <constraint firstItem="Ywp-mc-yHj" firstAttribute="top" secondItem="N7n-YB-4Ra" secondAttribute="bottom" id="MGT-eW-2dL"/>
                             <constraint firstItem="lUF-Mj-fS4" firstAttribute="top" secondItem="rbV-BS-rOZ" secondAttribute="bottom" id="O1p-n9-Eac"/>
                             <constraint firstItem="LJg-mH-nw1" firstAttribute="top" secondItem="rbV-BS-rOZ" secondAttribute="bottom" constant="15" id="Q3D-1v-YvD"/>
                             <constraint firstItem="LJg-mH-nw1" firstAttribute="leading" secondItem="fCM-Pg-Aee" secondAttribute="leadingMargin" constant="19" id="QNV-lF-mac"/>
-                            <constraint firstItem="tUU-9s-Knd" firstAttribute="top" secondItem="rbV-BS-rOZ" secondAttribute="bottom" id="R0V-5v-luh"/>
                             <constraint firstItem="cZc-RY-S1l" firstAttribute="top" secondItem="WOd-6c-8D0" secondAttribute="bottom" constant="8" id="TeM-gi-hFb"/>
                             <constraint firstAttribute="centerX" secondItem="vxe-SV-MEc" secondAttribute="centerX" id="Znx-nV-hiR"/>
                             <constraint firstItem="JII-IE-2IK" firstAttribute="leading" secondItem="fCM-Pg-Aee" secondAttribute="leading" id="b9W-nj-hHj"/>
@@ -5872,7 +5865,7 @@
         <image name="userIcon" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="YqS-rM-m7i"/>
+        <segue reference="QaF-as-tpw"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.60392159219999997" blue="0.85490196939999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
