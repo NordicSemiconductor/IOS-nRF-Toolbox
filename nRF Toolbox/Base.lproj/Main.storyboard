@@ -3024,9 +3024,6 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BackgroundImage" translatesAutoresizingMaskIntoConstraints="NO" id="Rm2-I5-24q">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Jo-d7-TXR">
                                 <rect key="frame" x="106" y="525" width="163" height="48"/>
                                 <constraints>
@@ -3126,21 +3123,17 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.96067994830000003" green="0.96084433790000001" blue="0.96066969629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="6Jo-d7-TXR" secondAttribute="centerX" id="6Qt-Gf-qt2"/>
-                            <constraint firstAttribute="trailing" secondItem="Rm2-I5-24q" secondAttribute="trailing" id="7as-DE-wRo"/>
                             <constraint firstItem="BPN-NK-B0s" firstAttribute="centerX" secondItem="N53-1k-Cvu" secondAttribute="centerX" id="9yk-M2-eyO"/>
                             <constraint firstAttribute="centerX" secondItem="INv-xI-bMa" secondAttribute="centerX" id="AWa-pS-oAB"/>
                             <constraint firstItem="Wam-fs-VZ9" firstAttribute="top" secondItem="T94-QK-E2E" secondAttribute="bottom" constant="15" id="DD1-Tc-aIP"/>
                             <constraint firstAttribute="centerX" secondItem="f9A-mi-kTN" secondAttribute="centerX" id="DqO-PF-HsM"/>
                             <constraint firstAttribute="trailing" secondItem="15k-UV-Shi" secondAttribute="trailing" id="Eh2-9h-fiO"/>
                             <constraint firstItem="JiL-3x-kLK" firstAttribute="leading" secondItem="N53-1k-Cvu" secondAttribute="leading" id="Eqf-U0-xh1"/>
-                            <constraint firstItem="DJs-M6-HDi" firstAttribute="top" secondItem="Rm2-I5-24q" secondAttribute="bottom" id="IWW-hR-2m1"/>
                             <constraint firstItem="5vH-Kr-uQc" firstAttribute="leading" secondItem="Wam-fs-VZ9" secondAttribute="trailing" constant="8" id="JdO-mz-DIu"/>
                             <constraint firstAttribute="centerX" secondItem="1Jb-0V-4z9" secondAttribute="centerX" id="P3U-5O-QRz"/>
-                            <constraint firstItem="Rm2-I5-24q" firstAttribute="leading" secondItem="N53-1k-Cvu" secondAttribute="leading" id="QmP-nq-YJf"/>
-                            <constraint firstItem="Rm2-I5-24q" firstAttribute="top" secondItem="T94-QK-E2E" secondAttribute="bottom" id="ZGW-eM-da6"/>
                             <constraint firstItem="15k-UV-Shi" firstAttribute="leading" secondItem="N53-1k-Cvu" secondAttribute="leading" id="adq-9S-Xek"/>
                             <constraint firstItem="15k-UV-Shi" firstAttribute="top" secondItem="T94-QK-E2E" secondAttribute="bottom" id="gUd-Ae-6ib"/>
                             <constraint firstAttribute="centerY" secondItem="reN-43-V3D" secondAttribute="centerY" constant="25" id="iC5-n5-pfU"/>
@@ -5844,7 +5837,7 @@
         <image name="userIcon" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ydJ-CZ-Xyf"/>
+        <segue reference="lAt-L9-EDs"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.60392159219999997" blue="0.85490196939999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
