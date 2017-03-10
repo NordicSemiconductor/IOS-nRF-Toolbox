@@ -2566,9 +2566,6 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BackgroundImage" translatesAutoresizingMaskIntoConstraints="NO" id="38l-wA-r3P">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gaj-JM-U3X">
                                 <rect key="frame" x="106" y="525" width="163" height="48"/>
                                 <constraints>
@@ -2650,7 +2647,7 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.96067994830000003" green="0.96084433790000001" blue="0.96066969629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="cnp-vw-eJ7" firstAttribute="centerX" secondItem="jxL-cL-gIv" secondAttribute="centerX" id="5Rh-BW-nfI"/>
                             <constraint firstItem="lfp-Jx-yxE" firstAttribute="top" secondItem="Yh6-cp-Qdf" secondAttribute="bottom" id="8Lx-iG-D2f"/>
@@ -2665,15 +2662,11 @@
                             <constraint firstItem="lfp-Jx-yxE" firstAttribute="leading" secondItem="jxL-cL-gIv" secondAttribute="leading" id="UqF-UQ-CqE"/>
                             <constraint firstItem="2yw-Oj-cR7" firstAttribute="top" secondItem="gaj-JM-U3X" secondAttribute="bottom" constant="30" id="b57-sD-U7A"/>
                             <constraint firstItem="DqQ-Re-kja" firstAttribute="top" secondItem="Yh6-cp-Qdf" secondAttribute="bottom" constant="11" id="dvV-36-bbl"/>
-                            <constraint firstItem="38l-wA-r3P" firstAttribute="leading" secondItem="jxL-cL-gIv" secondAttribute="leading" id="dzQ-cx-D3D"/>
                             <constraint firstItem="qTV-NK-Xvx" firstAttribute="centerX" secondItem="jxL-cL-gIv" secondAttribute="centerX" id="jxa-mV-ZXl"/>
                             <constraint firstItem="DqQ-Re-kja" firstAttribute="leading" secondItem="lLl-5r-leZ" secondAttribute="trailing" constant="8" id="kqz-et-1H3"/>
                             <constraint firstAttribute="centerY" secondItem="Vwl-LW-QSC" secondAttribute="centerY" id="nIJ-bT-C8t"/>
-                            <constraint firstItem="38l-wA-r3P" firstAttribute="top" secondItem="Yh6-cp-Qdf" secondAttribute="bottom" id="p9c-0f-Yur"/>
                             <constraint firstItem="lLl-5r-leZ" firstAttribute="top" secondItem="Yh6-cp-Qdf" secondAttribute="bottom" constant="15" id="pqd-l6-LGc"/>
-                            <constraint firstItem="2yw-Oj-cR7" firstAttribute="top" secondItem="38l-wA-r3P" secondAttribute="bottom" id="sa1-x1-sL9"/>
                             <constraint firstAttribute="trailing" secondItem="lfp-Jx-yxE" secondAttribute="trailing" id="vig-Em-ph2"/>
-                            <constraint firstAttribute="trailing" secondItem="38l-wA-r3P" secondAttribute="trailing" id="wpm-Wi-JOS"/>
                             <constraint firstItem="qTV-NK-Xvx" firstAttribute="top" secondItem="DqQ-Re-kja" secondAttribute="bottom" constant="16" id="xAV-7E-2jn"/>
                         </constraints>
                         <variation key="default">
@@ -5851,7 +5844,7 @@
         <image name="userIcon" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="MGB-6U-Gsz"/>
+        <segue reference="ydJ-CZ-Xyf"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.60392159219999997" blue="0.85490196939999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
