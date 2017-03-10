@@ -2715,9 +2715,6 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BackgroundImage" translatesAutoresizingMaskIntoConstraints="NO" id="GKA-vM-4ZI">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
-                            </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RUNNING SPEED AND CADENCE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wGI-MU-Ps9">
                                 <rect key="frame" x="0.0" y="285.5" width="368" height="32"/>
                                 <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="27"/>
@@ -2944,13 +2941,11 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.96067994830000003" green="0.96084433790000001" blue="0.96066969629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="5AJ-vh-XED" firstAttribute="top" secondItem="GKA-vM-4ZI" secondAttribute="bottom" id="2PW-jW-8GR"/>
                             <constraint firstItem="oJa-vK-eMc" firstAttribute="leading" secondItem="muv-tX-KBW" secondAttribute="leadingMargin" constant="19" id="3SX-Jb-XTq"/>
                             <constraint firstAttribute="trailingMargin" secondItem="5Rp-Z5-8xw" secondAttribute="trailing" constant="14" id="3lI-Iz-bj0"/>
                             <constraint firstItem="RxL-hn-oFh" firstAttribute="leading" secondItem="gaD-Kn-n30" secondAttribute="trailing" constant="8" id="5nd-Sk-CKY"/>
-                            <constraint firstAttribute="trailing" secondItem="GKA-vM-4ZI" secondAttribute="trailing" id="7pt-L9-NzM"/>
                             <constraint firstAttribute="trailingMargin" secondItem="RxL-hn-oFh" secondAttribute="trailing" constant="14" id="8s4-GD-0M3"/>
                             <constraint firstAttribute="centerX" secondItem="0sc-b2-qkX" secondAttribute="centerX" id="9tf-hB-4df"/>
                             <constraint firstItem="5AJ-vh-XED" firstAttribute="top" secondItem="fRy-tR-VR2" secondAttribute="bottom" constant="8" id="Hvx-lj-nIq"/>
@@ -2961,7 +2956,6 @@
                             <constraint firstItem="fRy-tR-VR2" firstAttribute="centerX" secondItem="muv-tX-KBW" secondAttribute="centerX" id="Mcy-xb-tNO"/>
                             <constraint firstAttribute="trailingMargin" secondItem="oJa-vK-eMc" secondAttribute="trailing" constant="14" id="QXf-p6-PZr"/>
                             <constraint firstAttribute="trailing" secondItem="Vxt-ap-W3X" secondAttribute="trailing" id="QhY-cZ-d1y"/>
-                            <constraint firstItem="GKA-vM-4ZI" firstAttribute="leading" secondItem="muv-tX-KBW" secondAttribute="leading" id="RUS-Vh-gsG"/>
                             <constraint firstItem="oWI-ap-hWw" firstAttribute="leading" secondItem="muv-tX-KBW" secondAttribute="leadingMargin" constant="19" id="Soy-5B-aUy"/>
                             <constraint firstItem="5AJ-vh-XED" firstAttribute="top" secondItem="0sc-b2-qkX" secondAttribute="bottom" constant="30" id="U7D-vc-Gtc"/>
                             <constraint firstItem="oWI-ap-hWw" firstAttribute="top" secondItem="RxL-hn-oFh" secondAttribute="bottom" constant="11" id="Uaw-Hg-j7Z"/>
@@ -2972,7 +2966,6 @@
                             <constraint firstItem="5Rp-Z5-8xw" firstAttribute="leading" secondItem="muv-tX-KBW" secondAttribute="leadingMargin" constant="19" id="hlO-Mw-MJk"/>
                             <constraint firstItem="gaD-Kn-n30" firstAttribute="top" secondItem="SxC-wS-ZqA" secondAttribute="bottom" constant="15" id="kIo-pi-kgL"/>
                             <constraint firstAttribute="centerY" secondItem="wGI-MU-Ps9" secondAttribute="centerY" id="kYN-HK-4eQ"/>
-                            <constraint firstItem="GKA-vM-4ZI" firstAttribute="top" secondItem="SxC-wS-ZqA" secondAttribute="bottom" id="l4z-QT-o39"/>
                             <constraint firstItem="Vxt-ap-W3X" firstAttribute="leading" secondItem="muv-tX-KBW" secondAttribute="leading" id="r4A-E0-PBO"/>
                             <constraint firstAttribute="trailingMargin" secondItem="wCT-bd-9bN" secondAttribute="trailing" constant="14" id="sYK-N5-sFG"/>
                             <constraint firstItem="5Rp-Z5-8xw" firstAttribute="top" secondItem="oWI-ap-hWw" secondAttribute="bottom" id="tYg-U7-9iM"/>
@@ -5837,7 +5830,7 @@
         <image name="userIcon" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="lAt-L9-EDs"/>
+        <segue reference="RA7-fe-CKE"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.60392159219999997" blue="0.85490196939999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
