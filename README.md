@@ -48,7 +48,8 @@ New in v2.5:
 * Bug fixes
 
 It contains applications demonstrating Bluetooth Smart profiles: 
-* **Cycling Speed and Cadence** 
+
+* **Cycling Speed and Cadence**
 * **Running Speed and Cadence** 
 * **Heart Rate Monitor**
 * **Blood Pressure Monitor**
