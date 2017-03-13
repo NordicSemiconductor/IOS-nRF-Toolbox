@@ -50,7 +50,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
     //MARK: - UIVIewControllerDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.verticalLabel.transform = CGAffineTransform(translationX: -145.0, y: 0.0).rotated(by: CGFloat(-M_PI_2))
+        self.verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: CGFloat(-M_PI_2))
         
         if isImportingFile {
             isImportingFile = false
@@ -83,6 +83,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
     func onFileTypeSelected(fileType aType: DFUFirmwareType) {
         selectedFirmware = DFUFirmware(urlToBinOrHexFile: selectedFileURL!, urlToDatFile: nil, type: aType)
     
+        print(selectedFirmware?.fileUrl ?? "None")
         if selectedFirmware != nil && selectedFirmware?.fileName != nil {
             fileName.text = selectedFirmware?.fileName
             let content = try? Data(contentsOf: selectedFileURL!)
