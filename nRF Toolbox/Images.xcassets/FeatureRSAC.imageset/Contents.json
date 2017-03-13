@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Feature_rsac.png",
+      "filename" : "Running.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Feature_rsac@2x.png",
+      "filename" : "2x_Running.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Feature_rsac@2x-1.png",
+      "filename" : "3x_Running.png",
       "scale" : "3x"
     }
   ],
