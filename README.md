@@ -2,6 +2,11 @@
 
 The nRF Toolbox is a container app that stores your Nordic Semiconductor apps for Bluetooth Smart in one location. 
 
+New in V4.4.1:
+
+* Fixed an issue introduced in V4.4.0 causing the HomeKit accessory service to not be readable
+* Enhanced HomeKit profile view by notifying of any HomeKit related errors instead of logging to console
+
 New in V4.4.0:
 
 * Adds HomeKit profile, allowing browsing and adding HomeKit accessories.
