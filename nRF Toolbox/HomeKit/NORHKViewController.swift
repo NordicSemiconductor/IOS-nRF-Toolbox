@@ -49,13 +49,24 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, NORHKScannerDe
                 self.homeStore.homeManager.updatePrimaryHome(aHome!, completionHandler: { (anError) in
                     if anError == nil {
                         print("Primary home upadted")
+                        self.connectionButton.isEnabled = true
                     } else {
+                        self.connectionButton.isEnabled = false
                         print("Errow hile updating primary home! \(anError)")
                     }
                 })
                 self.updateUIForHome(aHome: aHome!)
             } else {
-                print("Error, home not created: \(anError!)")
+                self.connectionButton.isEnabled = false
+                if (anError as? HMError)?.code == .keychainSyncNotEnabled {
+                    self.showError(message: "iCloud Keychain sync is disabled")
+                }else{
+                    if anError?.localizedDescription != nil {
+                        self.showError(message: (anError?.localizedDescription)!)
+                    }else{
+                        self.showError(message: "Cannot create home, make sure the nRF Toolbox has permission to access your home data.")
+                    }
+                }
             }
         }
     }
