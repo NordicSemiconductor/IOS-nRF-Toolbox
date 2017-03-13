@@ -9,19 +9,12 @@
 import UIKit
 import HomeKit
 
-//HomeKit Identifiers for iOS 9 and above
-let dFUServiceIdentifier                = "023359FF-D394-5E20-8316-772D576942F6"
-let dFUControlPointIdentifier           = "885F1F87-7CEB-5767-B70F-FB6D0D5C1A48"
-let accessoryInformationService         = "2C74F5D7-D7F1-5684-8F99-B30828BB78B6"
-let fwVersionCharacteristic             = "C7933E08-FE35-5C19-83C3-172DB0257BD9"
-let hwVersionCharacteristic             = "C85164DD-F505-564B-AFF3-822BFE220751"
-
-//Types are used prior to iOS 9
-let dFUServiceTypeId                    = "00001530-1212-EFDE-1523-785FEABCD123"
-let dFUControlPointTypeId               = "00001531-1212-EFDE-1523-785FEABCD123"
-let accessoryInformationServiceTypeId   = "0000003E-0000-1000-8000-0026BB765291"
-let hwVersionCharacteristicTypeId       = "00000053-0000-1000-8000-0026BB765291"
-let fwVersionCharacteristicTypeId       = "00000052-0000-1000-8000-0026BB765291"
+//Identifiers
+let dfuServiceIdentifier            = "00001530-1212-EFDE-1523-785FEABCD123"
+let dfuControlPointIdentifier       = "00001531-1212-EFDE-1523-785FEABCD123"
+let accessoryInformationIdentifier  = "0000003E-0000-1000-8000-0026BB765291"
+let hwVersionIdentifier             = "00000053-0000-1000-8000-0026BB765291"
+let fwVersionIdentifier             = "00000052-0000-1000-8000-0026BB765291"
 
 class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -107,7 +100,7 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
 
         firmwareVersionLabel.text = "Reading..."
         hardwareVersionLabel.text = "Reading..."
-        accessoryDFUSupportLabel.text = "Reading..."
+        accessoryDFUSupportLabel.text = "Checking..."
         dfuModeButton.isEnabled = false
         accessoryNameTitle.text = targetAccessory.name
         homeNameTitle.text = targetAccessory.room?.name
@@ -119,74 +112,40 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
         }
 
         for aService in targetAccessory.services {
-            if #available(iOS 9.0, *) {
-                if aService.uniqueIdentifier.uuidString == accessoryInformationService {
-                    for aCharacteristic in aService.characteristics {
-                        if aCharacteristic.uniqueIdentifier.uuidString == fwVersionCharacteristic {
-                            aCharacteristic.readValue(completionHandler: { (error) in
-                                DispatchQueue.main.async {
-                                    if error == nil {
-                                        self.firmwareVersionLabel.text = aCharacteristic.value as? String ?? "N/A"
-                                    } else {
-                                        self.firmwareVersionLabel.text = "N/A"
-                                    }
+            if aService.serviceType == accessoryInformationIdentifier {
+                for aCharacteristic in aService.characteristics {
+                    if aCharacteristic.characteristicType == fwVersionIdentifier {
+                        aCharacteristic.readValue(completionHandler: { (error) in
+                            DispatchQueue.main.async {
+                                if error == nil {
+                                    self.firmwareVersionLabel.text = aCharacteristic.value as? String ?? "N/A"
+                                } else {
+                                    self.firmwareVersionLabel.text = "N/A"
                                 }
-                            })
-                        } else if aCharacteristic.uniqueIdentifier.uuidString == hwVersionCharacteristic {
-                            aCharacteristic.readValue(completionHandler: { (error) in
-                                DispatchQueue.main.async {
-                                    if error == nil {
-                                        self.hardwareVersionLabel.text = aCharacteristic.value as? String ?? "N/A"
-                                    } else {
-                                        self.hardwareVersionLabel.text = "N/A"
-                                    }
+                            }
+                        })
+                    } else if aCharacteristic.characteristicType == hwVersionIdentifier {
+                        aCharacteristic.readValue(completionHandler: { (error) in
+                            DispatchQueue.main.async {
+                                if error == nil {
+                                    self.hardwareVersionLabel.text = aCharacteristic.value as? String ?? "N/A"
+                                } else {
+                                    self.hardwareVersionLabel.text = "N/A"
                                 }
-                            })
-                        }
-                    }
-                } else if aService.uniqueIdentifier.uuidString == dFUServiceIdentifier {
-                    for aCharacteristic in aService.characteristics {
-                        if aCharacteristic.uniqueIdentifier.uuidString == dFUControlPointIdentifier {
-                            dfuControlPointCharacteristic = aCharacteristic
-                            hasDFUControlPoint = true
-                        }
+                            }
+                        })
                     }
                 }
-            } else {
-                if aService.serviceType == accessoryInformationServiceTypeId {
-                    for aCharacteristic in aService.characteristics {
-                        if aCharacteristic.characteristicType == fwVersionCharacteristicTypeId {
-                            aCharacteristic.readValue(completionHandler: { (error) in
-                                DispatchQueue.main.async {
-                                    if error == nil {
-                                        self.firmwareVersionLabel.text = aCharacteristic.value as? String ?? "N/A"
-                                    } else {
-                                        self.firmwareVersionLabel.text = "N/A"
-                                    }
-                                }
-                            })
-                        } else if aCharacteristic.characteristicType == hwVersionCharacteristicTypeId {
-                            aCharacteristic.readValue(completionHandler: { (error) in
-                                DispatchQueue.main.async {
-                                    if error == nil {
-                                        self.hardwareVersionLabel.text = aCharacteristic.value as? String ?? "N/A"
-                                    } else {
-                                        self.hardwareVersionLabel.text = "N/A"
-                                    }
-                                }
-                            })
-                        }
-                    }
-                } else if aService.serviceType == dFUServiceTypeId {
-                    for aCharactersitic in aService.characteristics {
-                        if aCharactersitic.characteristicType == dFUControlPointTypeId {
-                            hasDFUControlPoint = true
-                            dfuControlPointCharacteristic = aCharactersitic
-                        }
+            } else if aService.serviceType == dfuServiceIdentifier {
+                for aCharacteristic in aService.characteristics {
+                    if aCharacteristic.characteristicType == dfuControlPointIdentifier {
+                        dfuControlPointCharacteristic = aCharacteristic
+                        hasDFUControlPoint = true
                     }
                 }
             }
         }
+
         if hasDFUControlPoint == true {
             accessoryDFUSupportLabel.text = "Yes"
             dfuModeButton.isEnabled = true

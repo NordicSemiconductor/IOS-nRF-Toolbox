@@ -10,19 +10,23 @@ import UIKit
 
 class NORBaseViewController: UIViewController, UIAlertViewDelegate {
     
-    func showAbout(message aMessage : String, otherButtonTitle aButtonTitle : String?) {
+    func showMessage(message aMessage: String, title aTitle: String, otherButtonTitle aButtonTitle : String?) {
         var alertView : UIAlertView?
 
-        if aButtonTitle == nil {
-            alertView = UIAlertView(title: "About", message: aMessage, delegate: self, cancelButtonTitle: "OK")
-        }else{
-            alertView = UIAlertView(title: "About", message: aMessage, delegate: self, cancelButtonTitle: "OK", otherButtonTitles: aButtonTitle!)
+        if aButtonTitle != nil {
+            alertView = UIAlertView(title: aTitle, message: aMessage, delegate: self, cancelButtonTitle: "OK", otherButtonTitles: aButtonTitle!)
+        } else {
+            alertView = UIAlertView(title: aTitle, message: aMessage, delegate: self, cancelButtonTitle: "OK")
         }
 
         alertView?.show()
     }
     
-    func showAbout(message aMessage : String){
-        self.showAbout(message: aMessage, otherButtonTitle: nil)
+    func showAbout(message aMessage : String) {
+        self.showMessage(message: aMessage, title: "About", otherButtonTitle: nil)
+    }
+    
+    func showError(message aMessage: String) {
+        self.showMessage(message: aMessage, title: "Error", otherButtonTitle: nil)
     }
 }
