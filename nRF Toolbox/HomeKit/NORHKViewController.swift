@@ -47,12 +47,12 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, NORHKScannerDe
         homeStore.homeManager.addHome(withName: "MyHome") { (aHome, anError) in
             if anError == nil {
                 self.homeStore.homeManager.updatePrimaryHome(aHome!, completionHandler: { (anError) in
-                    if anError == nil {
-                        print("Primary home upadted")
-                        self.connectionButton.isEnabled = true
-                    } else {
+                    if let anError = anError {
                         self.connectionButton.isEnabled = false
                         print("Errow hile updating primary home! \(anError)")
+                    } else {
+                        print("Primary home upadted")
+                        self.connectionButton.isEnabled = true
                     }
                 })
                 self.updateUIForHome(aHome: aHome!)
@@ -60,10 +60,10 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, NORHKScannerDe
                 self.connectionButton.isEnabled = false
                 if (anError as? HMError)?.code == .keychainSyncNotEnabled {
                     self.showError(message: "iCloud Keychain sync is disabled")
-                }else{
+                } else {
                     if anError?.localizedDescription != nil {
                         self.showError(message: (anError?.localizedDescription)!)
-                    }else{
+                    } else {
                         self.showError(message: "Cannot create home, make sure the nRF Toolbox has permission to access your home data.")
                     }
                 }
@@ -80,10 +80,10 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, NORHKScannerDe
     func pair(anAccessory: HMAccessory, withHome aHome: HMHome) {
         print(aHome, anAccessory)
         aHome.addAccessory(anAccessory) { (error) in
-            if error != nil {
-                print ("Error in adding accessory \(error)")
+            if let error = error {
+                print("Error in adding accessory \(error)")
             } else {
-                NSLog("Accessory is added successfully, attemting to add to main room")
+                print("Accessory is added successfully, attemting to add to main room")
             }
             
             //Browser needs to be released after adding accessory to the home.
@@ -98,7 +98,7 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, NORHKScannerDe
         super.viewDidLoad()
         homeStore = NORHKHomeStore.sharedHomeStore
 
-        verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: (CGFloat)(-M_PI_2))
+        verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: -.pi)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -149,7 +149,7 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, NORHKScannerDe
         if identifier == homeKitAccessorySegue {
             if let _ = sender as? HMAccessory {
                 return true
-            } else{
+            } else {
                 let alertView = UIAlertView(title: "No accessory", message: "The selected accessory was not found, please try scanning again and reselecting it.\r\nIf the problem persists, try unpairing that accessory and adding it again to your home.", delegate: nil, cancelButtonTitle: "Ok")
                 alertView.show()
                 return false

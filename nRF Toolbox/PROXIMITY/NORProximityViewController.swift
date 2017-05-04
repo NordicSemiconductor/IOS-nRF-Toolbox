@@ -70,7 +70,7 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         // Rotate the vertical label
-        self.verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: CGFloat(-M_PI_2))
+        self.verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: -.pi)
         self.immidiateAlertCharacteristic = nil
         isImmidiateAlertOn = false
         isBackButtonPressed = false;
@@ -229,6 +229,7 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
             print("Bluetooth powered on")
         }
     }
+    
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async(execute: {
@@ -244,7 +245,7 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
         NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterBackgroundCallback), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidBecomeActiveCallback), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         if NORAppUtilities.isApplicationInactive() {
-            NORAppUtilities.showBackgroundNotification(message: "\(self.proximityPeripheral?.name) is within range!")
+            NORAppUtilities.showBackgroundNotification(message: "\(peripheral.name ?? "Device") is within range!")
         }
         
         peripheral.discoverServices([proximityLinkLossServiceUUID, proximityImmediateAlertServiceUUID, batteryServiceUUID])

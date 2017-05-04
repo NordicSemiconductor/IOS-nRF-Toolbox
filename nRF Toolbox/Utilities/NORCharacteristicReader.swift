@@ -32,7 +32,7 @@ enum NORReservedFloatValues : UInt32 {
 
 let FIRST_S_RESERVED_VALUE = NORReservedSFloatValues.mder_S_POSITIVE_INFINITY
 let FIRST_RESERVED_VALUE   = NORReservedFloatValues.mder_POSITIVE_INFINITY
-let RESERVED_FLOAT_VALUES : Array<Double> = [Double.infinity, Double.nan,Double.nan,Double.nan, -Double.infinity]
+let RESERVED_FLOAT_VALUES  = [Double.infinity, Double.nan, Double.nan, Double.nan, -Double.infinity]
 
 struct NORCharacteristicReader {
 
@@ -85,8 +85,8 @@ struct NORCharacteristicReader {
         var output : Float32 = 0
         
         if mantissa >= FIRST_S_RESERVED_VALUE.rawValue && mantissa <= NORReservedSFloatValues.mder_S_NEGATIVE_INFINITY.rawValue {
-            output = Float32(RESERVED_FLOAT_VALUES[mantissa - FIRST_S_RESERVED_VALUE.rawValue])
-        }else{
+            output = Float32(RESERVED_FLOAT_VALUES[Int(mantissa - FIRST_S_RESERVED_VALUE.rawValue)])
+        } else {
             if mantissa > 0x0800 {
                 mantissa = -((0x0FFF + 1) - mantissa)
             }
@@ -101,13 +101,13 @@ struct NORCharacteristicReader {
     static func readFloatValue(ptr aPointer : inout UnsafeMutablePointer<UInt8>) -> Float32 {
         let tempData = CFSwapInt32LittleToHost(UnsafeMutablePointer<UInt32>(OpaquePointer(aPointer)).pointee)
         var mantissa = Int32(tempData & 0x00FFFFFF)
-        let exponent = unsafeBitCast(UInt8(tempData >> 24), to: Int8.self)
+        let exponent = Int8(bitPattern: UInt8(tempData >> 24))
         
         var output : Float32 = 0
         
         if mantissa >= Int32(FIRST_RESERVED_VALUE.rawValue) && mantissa <= Int32(NORReservedFloatValues.mder_NEGATIVE_INFINITY.rawValue) {
-            output = Float32(RESERVED_FLOAT_VALUES[mantissa - Int32(FIRST_S_RESERVED_VALUE.rawValue)])
-        }else{
+            output = Float32(RESERVED_FLOAT_VALUES[Int(mantissa - Int32(FIRST_S_RESERVED_VALUE.rawValue))])
+        } else {
             if mantissa >= 0x800000 {
                 mantissa = -((0xFFFFFF + 1) - mantissa)
             }
