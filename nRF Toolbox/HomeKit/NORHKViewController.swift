@@ -98,7 +98,7 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, NORHKScannerDe
         super.viewDidLoad()
         homeStore = NORHKHomeStore.sharedHomeStore
 
-        verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: -.pi)
+        verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: -.pi / 2)
     }
 
     override func viewDidAppear(_ animated: Bool) {

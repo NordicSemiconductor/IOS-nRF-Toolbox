@@ -91,7 +91,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: -.pi)
+        verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: -.pi / 2)
         bgmTableView.dataSource = self
     }
     

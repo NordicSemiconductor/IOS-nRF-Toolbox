@@ -70,7 +70,7 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         // Rotate the vertical label
-        self.verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: -.pi)
+        self.verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: -.pi / 2)
         self.immidiateAlertCharacteristic = nil
         isImmidiateAlertOn = false
         isBackButtonPressed = false;
