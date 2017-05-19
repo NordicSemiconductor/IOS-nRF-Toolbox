@@ -91,7 +91,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: (CGFloat)(-M_PI_2))
+        verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: -.pi / 2)
         bgmTableView.dataSource = self
     }
     
@@ -265,7 +265,11 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
                 let reading = readings?.object(at: index!) as! NORGlucoseReading
                 reading.context = context
             } else {
-                print("Glucose measurement with sequence number: \(context.sequenceNumber) not found")
+                if let sn = context.sequenceNumber {
+                    print("Glucose measurement with sequence number: \(sn) not found")
+                } else {
+                    print("Glucose measurement with unknown sequence number not found")
+                }
             }
         } else if characteristic.uuid.isEqual(bgmRecordAccessControlPointCharacteristicUUID) {
             print("OpCode: \(array[0]), Operator: \(array[2])")
