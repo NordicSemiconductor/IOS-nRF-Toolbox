@@ -41,10 +41,15 @@
     case remoteSecureDFUOperationFailed       = 20 // 10 + 10
     case remoteSecureDFUExtendedError         = 21 // 10 + 11
     
-    // Experimental DFU errors (received value + 9000 as they overlap legacy errors)
+    // Experimental Buttonless DFU errors (received value + 9000 as they overlap legacy and secure DFU errors)
     case remoteExperimentalBootlonlessDFUSuccess               = 9001 // 9000 + 1
     case remoteExperimentalBootlonlessDFUOpCodeNotSupported    = 9002 // 9000 + 2
     case remoteExperimentalBootlonlessDFUOperationFailed       = 9004 // 9000 + 4
+    
+    // Buttonless DFU errors (received value + 9000 as they overlap legacy and secure DFU errors)
+    case remoteBootlonlessDFUSuccess            = 31 // 30 + 1
+    case remoteBootlonlessDFUOpCodeNotSupported = 32 // 30 + 2
+    case remoteBootlonlessDFUOperationFailed    = 34 // 30 + 4
     
     /// Providing the DFUFirmware is required.
     case fileNotSpecified                     = 101

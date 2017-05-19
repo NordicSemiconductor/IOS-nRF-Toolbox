@@ -5,31 +5,43 @@
 
 ## Installation
 
-**For Cocoapods:**
-  - Create/Update your **Podfile** with the following contents
+**For Cocoapods(Swift):** ***Using Obj-C?*** [Use these instructions instead](README_OBJC.md)
 
-        target 'YourAppTargetName' do
-            use_frameworks!
-            pod 'iOSDFULibrary'
-        end
+- Create/Update your **Podfile** with the following contents
 
-  - Install dependencies
+    ```
+    target 'YourAppTargetName' do
+        use_frameworks!
+        pod 'iOSDFULibrary'
+    end
+    ```
 
-        pod install
+- Install dependencies
 
-  - Open the newly created `.xcworkspace` and begin working on your project.
+    ```
+    pod install
+    ```
+
+- Open the newly created `.xcworkspace`
+
+- Import the library to any of your classes by using `import iOSDFULibrary` and begin working on your project
+
 
 **For Carthage:**
 
-   - Create a new **Cartfile** in your project's root with the following contents
+- Create a new **Cartfile** in your project's root with the following contents
 
-         github "NordicSemiconductor/IOS-Pods-DFU-Library" ~> x.y //Replace x.y with your required version
+    ```
+    github "NordicSemiconductor/IOS-Pods-DFU-Library" ~> x.y //Replace x.y with your required version
+    ```
 
-   - Build with carthage
+- Build with carthage
 
-         carthage update --platform iOS //also OSX platform is available for macOS builds
+    ```
+    carthage update --platform iOS //also OSX platform is available for macOS builds
+    ```
 
-   - Carthage will build the **iOSDFULibrary.framework** and **Zip.framework** files in **Carthag/Build/**, you may now copy all those files to your project and use the library, additionally, carthade also builds **\*.dsym** files if you need to resymbolicate crash logs. you may want to keep those files bundled with your builds for future use.
+- Carthage will build the **iOSDFULibrary.framework** and **Zip.framework** files in **Carthag/Build/**, you may now copy all those files to your project and use the library, additionally, carthade also builds **\*.dsym** files if you need to resymbolicate crash logs. you may want to keep those files bundled with your builds for future use.
 
 ---
 
@@ -87,8 +99,8 @@ The library is compatible with nRF51 and nRF52 devices with S-Series Soft Device
 * **SDK 7.0.0** - The extended init packet is required. The init packet contains additional validation information: device type and revision, application version, compatible Soft Devices and the firmware CRC.
 * **SDK 8.0.0** - The bond information may be preserved after an application update. The new application, when first started, will send the Service Change indication to the phone to refresh the services. New features:
 
-    - Buttonless update support for bonded devices 
-    - sharing the LTK between an app and the bootloader.
+- Buttonless update support for bonded devices 
+- sharing the LTK between an app and the bootloader.
 
 #### Secure DFU
 

@@ -140,9 +140,9 @@ import CoreBluetooth
      */
     func enableControlPoint(onSuccess success: @escaping Callback, onError report: @escaping ErrorCallback) {
         if !aborted {
-            // Support for experimental Buttonless DFU Service from SDK 12.x
-            if experimentalButtonlessDfuCharacteristic != nil {
-                experimentalButtonlessDfuCharacteristic!.enableNotifications(onSuccess: success, onError: report)
+            // Support for Buttonless DFU Service
+            if buttonlessDfuCharacteristic != nil {
+                buttonlessDfuCharacteristic!.enable(onSuccess: success, onError: report)
                 return
             }
             // End
@@ -385,9 +385,11 @@ import CoreBluetooth
                 } else if SecureDFUControlPoint.matches(characteristic) {
                     dfuControlPointCharacteristic = SecureDFUControlPoint(characteristic, logger)
                 }
-                // Support for experimental Buttonless DFU Service from SDK 12.x
-                else if ExperimentalButtonlessDFU.matches(characteristic) {
-                    experimentalButtonlessDfuCharacteristic = ExperimentalButtonlessDFU(characteristic, logger)
+                // Support for Buttonless DFU Service from SDK 12.x (as experimental).
+                // SDK 13 added a new characteristic in Secure DFU Service with buttonless feature without bond sharing (bootloader uses different device address).
+                // SDK 14 will add a new characteristic with buttonless service for bonded devices with bond information sharing between app and the bootloader.
+                else if ButtonlessDFU.matches(characteristic) {
+                    buttonlessDfuCharacteristic = ButtonlessDFU(characteristic, logger)
                     _success?()
                     return
                 }
@@ -418,7 +420,7 @@ import CoreBluetooth
         }
     }
     
-    // MARK: - Support for experimental Buttonless DFU Service from SDK 12.x
+    // MARK: - Support for Buttonless DFU Service
     
     /// The buttonless jump feature was experimental in SDK 12. It did not support passing bond information to the DFU bootloader,
     /// was not safe (possible DOS attack) and had bugs. This is the service UUID used by this service.
@@ -428,7 +430,7 @@ import CoreBluetooth
         return service.uuid.isEqual(ExperimentalButtonlessDfuUUID)
     }
     
-    private var experimentalButtonlessDfuCharacteristic: ExperimentalButtonlessDFU?
+    private var buttonlessDfuCharacteristic: ButtonlessDFU?
     
     /**
      This method tries to estimate whether the DFU target device is in Application mode which supports
@@ -437,13 +439,21 @@ import CoreBluetooth
      - returns: true, if it is for sure in the Application more, false, if definitely is not, nil if uknown
      */
     func isInApplicationMode() -> Bool? {
-        // If the experimental buttonless DFU characteristic is not nil it means that the device is in app mode
-        return experimentalButtonlessDfuCharacteristic != nil
+        // If the buttonless DFU characteristic is not nil it means that the device is in app mode.
+        return buttonlessDfuCharacteristic != nil
     }
     
+    /**
+     Returns whether the bootloader is expected to advertise with the same address on one incremented by 1.
+     In the latter case the library needs to scan for a new advertising device and select it by filtering the adv packet,
+     as device address is not available through iOS API.
+     */
     var newAddressExpected: Bool {
-        // Using experimental Buttonless DFU feature will cause the device to advertise with address +1.
-        return experimentalButtonlessDfuCharacteristic != nil
+        // The bootloader will advertise with address +1 if the experimental Buttonless DFU Service from SDK 12.x
+        // or Buttonless DFU service from SDK 13 were found.
+        // The Buttonless DFU Service from SDK 14 supports bond sharing between app and the bootlaoder, thus the bootloader
+        // will use the same address after jump and the connection will be encrypted.
+        return buttonlessDfuCharacteristic?.newAddressExpected ?? false
     }
     
     /**
@@ -453,7 +463,7 @@ import CoreBluetooth
      */
     func jumpToBootloaderMode(onError report: @escaping ErrorCallback) {
         if !aborted {
-            experimentalButtonlessDfuCharacteristic!.send(ExperimentalButtonlessDFURequest.enterBootloader, onSuccess: nil, onError: report)
+            buttonlessDfuCharacteristic!.send(ButtonlessDFURequest.enterBootloader, onSuccess: nil, onError: report)
         } else {
             sendReset(onError: report)
         }

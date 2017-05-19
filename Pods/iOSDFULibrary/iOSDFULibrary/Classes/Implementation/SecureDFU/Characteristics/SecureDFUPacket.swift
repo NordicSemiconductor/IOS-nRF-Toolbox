@@ -46,7 +46,7 @@ internal class SecureDFUPacket {
     private var lastTime:  CFAbsoluteTime?
 
     internal var valid: Bool {
-        return characteristic.properties.contains(CBCharacteristicProperties.writeWithoutResponse)
+        return characteristic.properties.contains(.writeWithoutResponse)
     }
     
     init(_ characteristic: CBCharacteristic, _ logger: LoggerHelper) {
@@ -61,7 +61,7 @@ internal class SecureDFUPacket {
         let peripheral = characteristic.service.peripheral
         
         // Data may be sent in up-to-20-bytes packets
-        var offset : UInt32 = 0
+        var offset: UInt32 = 0
         var bytesToSend = UInt32(initPacketData.count)
         
         repeat {

@@ -22,7 +22,7 @@
 
 import CoreBluetooth
 
-internal enum ExperimentalButtonlessDFUOpCode : UInt8 {
+internal enum ButtonlessDFUOpCode : UInt8 {
     case enterBootloader = 0x01
     case responseCode    = 0x20
     
@@ -32,7 +32,7 @@ internal enum ExperimentalButtonlessDFUOpCode : UInt8 {
 }
 
 
-internal enum ExperimentalButtonlessDFUResultCode : UInt8 {
+internal enum ButtonlessDFUResultCode : UInt8 {
     case success            = 0x01
     case opCodeNotSupported = 0x02
     case operationFailed    = 0x04
@@ -50,38 +50,31 @@ internal enum ExperimentalButtonlessDFUResultCode : UInt8 {
     }
 }
 
-internal enum ExperimentalButtonlessDFURequest {
+internal enum ButtonlessDFURequest {
     case enterBootloader
     
     var data : Data {
         switch self {
         case .enterBootloader:
-            let byteArray: [UInt8] = [ExperimentalButtonlessDFUOpCode.enterBootloader.code]
-            return Data(bytes: UnsafePointer<UInt8>(byteArray), count: byteArray.count)
+            return Data(bytes: [ButtonlessDFUOpCode.enterBootloader.code])
         }
     }
 }
 
-internal struct ExperimentalButtonlessDFUResponse {
-    let opCode        : ExperimentalButtonlessDFUOpCode?
-    let requestOpCode : ExperimentalButtonlessDFUOpCode?
-    let status        : ExperimentalButtonlessDFUResultCode?
+internal struct ButtonlessDFUResponse {
+    let opCode        : ButtonlessDFUOpCode?
+    let requestOpCode : ButtonlessDFUOpCode?
+    let status        : ButtonlessDFUResultCode?
 
     init?(_ data: Data) {
-        var opCode        : UInt8 = 0
-        var requestOpCode : UInt8 = 0
-        var status        : UInt8 = 0
-        
         // The correct response is always 3 bytes long: Response Op Code, Request Op Code and Status
-        if data.count == 3 {
-            (data as NSData).getBytes(&opCode, range: NSRange(location: 0, length: 1))
-            (data as NSData).getBytes(&requestOpCode, range: NSRange(location: 1, length: 1))
-            (data as NSData).getBytes(&status, range: NSRange(location: 2, length: 1))
-        }
+        let opCode        : UInt8 = data[0]
+        let requestOpCode : UInt8 = data[1]
+        let status        : UInt8 = data[2]
         
-        self.opCode = ExperimentalButtonlessDFUOpCode(rawValue: opCode)
-        self.requestOpCode = ExperimentalButtonlessDFUOpCode(rawValue: requestOpCode)
-        self.status = ExperimentalButtonlessDFUResultCode(rawValue: status)
+        self.opCode        = ButtonlessDFUOpCode(rawValue: opCode)
+        self.requestOpCode = ButtonlessDFUOpCode(rawValue: requestOpCode)
+        self.status        = ButtonlessDFUResultCode(rawValue: status)
         
         if self.opCode != .responseCode || self.requestOpCode == nil || self.status == nil {
             return nil
@@ -93,11 +86,15 @@ internal struct ExperimentalButtonlessDFUResponse {
     }
 }
 
-internal class ExperimentalButtonlessDFU : NSObject, CBPeripheralDelegate {
-    static let UUID = CBUUID(string: "8E400001-F315-4F60-9FB8-838830DAEA50") // the same UUID as the service
+internal class ButtonlessDFU : NSObject, CBPeripheralDelegate {
+    static let EXPERIMENTAL_UUID         = CBUUID(string: "8E400001-F315-4F60-9FB8-838830DAEA50") // the same UUID as the service
+    static let WITHOUT_BOND_SHARING_UUID = CBUUID(string: "8EC90003-F315-4F60-9FB8-838830DAEA50")
+    static let WITH_BOND_SHARING_UUID    = CBUUID(string: "8EC90004-F315-4F60-9FB8-838830DAEA50")
     
     static func matches(_ characteristic: CBCharacteristic) -> Bool {
-        return characteristic.uuid.isEqual(UUID)
+        return characteristic.uuid.isEqual(WITHOUT_BOND_SHARING_UUID) ||
+            characteristic.uuid.isEqual(WITH_BOND_SHARING_UUID) ||
+            characteristic.uuid.isEqual(EXPERIMENTAL_UUID)
     }
     
     private var characteristic: CBCharacteristic
@@ -107,7 +104,12 @@ internal class ExperimentalButtonlessDFU : NSObject, CBPeripheralDelegate {
     private var report:  ErrorCallback?
     
     internal var valid: Bool {
-        return characteristic.properties.isSuperset(of: [CBCharacteristicProperties.write, CBCharacteristicProperties.notify])
+        return (characteristic.properties.isSuperset(of: [.write, .notify]) && characteristic.uuid.isEqual(ButtonlessDFU.EXPERIMENTAL_UUID)) ||
+                characteristic.properties.isSuperset(of: [.write, .indicate])
+    }
+    
+    internal var newAddressExpected: Bool {
+        return characteristic.uuid.isEqual(ButtonlessDFU.EXPERIMENTAL_UUID) || characteristic.uuid.isEqual(ButtonlessDFU.WITHOUT_BOND_SHARING_UUID)
     }
     
     // MARK: - Initialization
@@ -119,13 +121,13 @@ internal class ExperimentalButtonlessDFU : NSObject, CBPeripheralDelegate {
     // MARK: - Characteristic API methods
     
     /**
-     Enables notifications for the DFU Control Point characteristics. Reports success or an error
-     using callbacks.
+     Enables notifications or indications for the DFU Control Point characteristics, depending on the characteristic property.
+     Reports success or an error using callbacks.
      
      - parameter success: method called when notifications were successfully enabled
      - parameter report:  method called in case of an error
      */
-    func enableNotifications(onSuccess success: Callback?, onError report: ErrorCallback?) {
+    func enable(onSuccess success: Callback?, onError report: ErrorCallback?) {
         // Save callbacks
         self.success = success
         self.report  = report
@@ -136,20 +138,24 @@ internal class ExperimentalButtonlessDFU : NSObject, CBPeripheralDelegate {
         // Set the peripheral delegate to self
         peripheral.delegate = self
         
-        logger.v("Enabling notifications for \(characteristic.uuid.uuidString)...")
+        if characteristic.properties.contains(.indicate) {
+            logger.v("Enabling indications for \(characteristic.uuid.uuidString)...")
+        } else {
+            logger.v("Enabling notifications for \(characteristic.uuid.uuidString)...")
+        }
         logger.d("peripheral.setNotifyValue(true, for: \(characteristic.uuid.uuidString))")
         peripheral.setNotifyValue(true, for: characteristic)
     }
     
     /**
-     Sends given request to the Experimental Buttonless DFU characteristic. Reports success or an error
+     Sends given request to the Buttonless DFU characteristic. Reports success or an error
      using callbacks.
      
      - parameter request: request to be sent
      - parameter success: method called when peripheral reported with status success
      - parameter report:  method called in case of an error
      */
-    func send(_ request: ExperimentalButtonlessDFURequest, onSuccess success: Callback?, onError report: ErrorCallback?) {
+    func send(_ request: ButtonlessDFURequest, onSuccess success: Callback?, onError report: ErrorCallback?) {
         // Save callbacks and parameter
         self.success = success
         self.report  = report
@@ -169,12 +175,23 @@ internal class ExperimentalButtonlessDFU : NSObject, CBPeripheralDelegate {
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
         if error != nil {
-            logger.e("Enabling notifications failed")
-            logger.e(error!)
-            report?(.enablingControlPointFailed, "Enabling notifications failed")
+            if characteristic.properties.contains(.indicate) {
+                logger.e("Enabling indications failed")
+                logger.e(error!)
+                report?(.enablingControlPointFailed, "Enabling indications failed")
+            } else {
+                logger.e("Enabling notifications failed")
+                logger.e(error!)
+                report?(.enablingControlPointFailed, "Enabling notifications failed")
+            }
         } else {
-            logger.v("Notifications enabled for \(characteristic.uuid.uuidString)")
-            logger.a("Buttonless DFU notifications enabled")
+            if characteristic.properties.contains(.indicate) {
+                logger.v("Indications enabled for \(characteristic.uuid.uuidString)")
+                logger.a("Buttonless DFU indications enabled")
+            } else {
+                logger.v("Notifications enabled for \(characteristic.uuid.uuidString)")
+                logger.a("Buttonless DFU notifications enabled")
+            }
             success?()
         }
     }
@@ -191,28 +208,34 @@ internal class ExperimentalButtonlessDFU : NSObject, CBPeripheralDelegate {
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         // Ignore updates received for other characteristics
-        guard characteristic.uuid.isEqual(ExperimentalButtonlessDFU.UUID) else {
+        guard ButtonlessDFU.matches(characteristic) else {
             return
         }
         
         if error != nil {
-            // This characteristic is never read, the error may only pop up when notification is received
-            logger.e("Receiving notification failed")
+            // This characteristic is never read, the error may only pop up when notification/indication is received
+            logger.e("Receiving response failed")
             logger.e(error!)
-            report?(.receivingNotificationFailed, "Receiving notification failed")
+            report?(.receivingNotificationFailed, "Receiving response failed")
         } else {
-            logger.i("Notification received from \(characteristic.uuid.uuidString), value (0x):\(characteristic.value!.hexString)")
+            if characteristic.properties.contains(.indicate) {
+                logger.i("Indication received from \(characteristic.uuid.uuidString), value (0x):\(characteristic.value!.hexString)")
+            } else {
+                logger.i("Notification received from \(characteristic.uuid.uuidString), value (0x):\(characteristic.value!.hexString)")
+            }
             
             // Parse response received
-            let dfuResponse = ExperimentalButtonlessDFUResponse(characteristic.value!)
+            let dfuResponse = ButtonlessDFUResponse(characteristic.value!)
             if let dfuResponse = dfuResponse {
                 if dfuResponse.status == .success {
                     logger.a("\(dfuResponse.description) received")
                     success?()
                 } else {
                     logger.e("Error \(dfuResponse.status!.code): \(dfuResponse.status!.description)")
-                    // The returned errod code is incremented by 9000 to match experimental Buttonless DFU remote codes
-                    report?(DFUError(rawValue: Int(dfuResponse.status!.code) + 9000)!, dfuResponse.status!.description)
+                    // The returned errod code is incremented by 30 or 9000 to match Buttonless DFU or Experimental Buttonless DFU remote codes
+                    // See DFUServiceDelegate.swift -> DFUError
+                    let offset = characteristic.uuid.isEqual(ButtonlessDFU.EXPERIMENTAL_UUID) ? 9000 : 30
+                    report?(DFUError(rawValue: Int(dfuResponse.status!.code) + offset)!, dfuResponse.status!.description)
                 }
             } else {
                 logger.e("Unknown response received: 0x\(characteristic.value!.hexString)")

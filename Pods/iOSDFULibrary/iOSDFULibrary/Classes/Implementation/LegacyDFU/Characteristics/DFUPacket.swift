@@ -45,7 +45,7 @@ internal class DFUPacket {
     private var lastTime:  CFAbsoluteTime?
     
     internal var valid: Bool {
-        return characteristic.properties.contains(CBCharacteristicProperties.writeWithoutResponse)
+        return characteristic.properties.contains(.writeWithoutResponse)
     }
     
     init(_ characteristic: CBCharacteristic, _ logger: LoggerHelper) {
@@ -65,34 +65,13 @@ internal class DFUPacket {
         let peripheral = characteristic.service.peripheral
         
         var data     = Data(capacity: 12)
-        let sdSize   = size.softdevice.littleEndian
-        let blSize   = size.bootloader.littleEndian
-        let appSize  = size.application.littleEndian
-        let sdArray  = convertLittleEndianToByteArray(littleEndian: sdSize)
-        let blArray  = convertLittleEndianToByteArray(littleEndian: blSize)
-        let appArray = convertLittleEndianToByteArray(littleEndian: appSize)
-        data.append(sdArray, count:4)
-        data.append(blArray, count:4)
-        data.append(appArray, count:4)
-
+        data += size.softdevice.littleEndian
+        data += size.bootloader.littleEndian
+        data += size.application.littleEndian
+        
         logger.v("Writing image sizes (\(size.softdevice)b, \(size.bootloader)b, \(size.application)b) to characteristic \(DFUPacket.UUID.uuidString)...")
         logger.d("peripheral.writeValue(0x\(data.hexString), for: \(DFUPacket.UUID.uuidString), type: .withoutResponse)")
         peripheral.writeValue(data, for: characteristic, type: .withoutResponse)
-    }
-    
-    /**
-     Converts an UInt32 variable to an array of 4 UInt8 entries
-     - parameter UInt32: The littleEndian value to convers
-     */
-    private func convertLittleEndianToByteArray(littleEndian : UInt32) -> [UInt8] {
-        var littleEndian = littleEndian
-        let count = MemoryLayout<UInt32>.size
-        let bytePtr = withUnsafePointer(to: &littleEndian) {
-            $0.withMemoryRebound(to: UInt8.self, capacity: count) {
-                UnsafeBufferPointer(start: $0, count: count)
-            }
-        }
-        return Array(bytePtr)
     }
 
     /**
@@ -105,9 +84,8 @@ internal class DFUPacket {
         let peripheral = characteristic.service.peripheral
         
         var data     = Data(capacity: 4)
-        let appSize  = size.application.littleEndian
-        let appArray = convertLittleEndianToByteArray(littleEndian: appSize)
-        data.append(appArray, count:4)
+        data += size.application.littleEndian
+        
         logger.v("Writing image size (\(size.application)b) to characteristic \(DFUPacket.UUID.uuidString)...")
         logger.d("peripheral.writeValue(0x\(data.hexString), for: \(DFUPacket.UUID.uuidString), type: .withoutResponse)")
         peripheral.writeValue(data, for: characteristic, type: .withoutResponse)

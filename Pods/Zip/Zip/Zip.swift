@@ -145,6 +145,7 @@ public class Zip {
 
             unzGetCurrentFileInfo64(zip, &fileInfo, fileName, UInt(fileNameSize), nil, 0, nil, 0)
             fileName[Int(fileInfo.size_filename)] = 0
+
             var pathString = String(cString: fileName)
             
             guard pathString.characters.count > 0 else {
@@ -190,11 +191,26 @@ public class Zip {
                     break
                 }
             }
+
             fclose(filePointer)
             crc_ret = unzCloseCurrentFile(zip)
             if crc_ret == UNZ_CRCERROR {
                 throw ZipError.unzipFail
             }
+
+            //Set file permissions from current fileInfo
+            if fileInfo.external_fa != 0 {
+                let permissions = (fileInfo.external_fa >> 16) & 0x1FF
+                //We will devifne a valid permission range between Owner read only to full access
+                if permissions >= 0o400 && permissions <= 0o777 {
+                    do {
+                        try fileManager.setAttributes([.posixPermissions : permissions], ofItemAtPath: fullPath)
+                    } catch {
+                        print("Failed to set permissions to file \(fullPath), error: \(error)")
+                    }
+                }
+            }
+
             ret = unzGoToNextFile(zip)
             
             // Update progress handler
