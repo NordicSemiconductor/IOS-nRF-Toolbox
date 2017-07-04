@@ -11,7 +11,7 @@ import UIKit
 class NORFolderFilesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     //MARK: - Class Properties
-    var files                   : Array<URL>?
+    var files                   : [URL]?
     var directoryPath           : String?
     var directoryName           : String?
     var fileDelegate            : NORFileSelectionDelegate?
@@ -32,7 +32,7 @@ class NORFolderFilesViewController: UIViewController, UITableViewDataSource, UIT
         super.viewDidLoad()
         if directoryName != nil {
             self.navigationItem.title = directoryName!
-        }else{
+        } else {
             self.navigationItem.title = "Files"
         }
     }
@@ -42,8 +42,8 @@ class NORFolderFilesViewController: UIViewController, UITableViewDataSource, UIT
         let enabled = (selectedPath != nil)
         self.navigationItem.rightBarButtonItem?.isEnabled = enabled
         do {
-        try self.files = FileManager.default.contentsOfDirectory(at: selectedPath!, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
-        }catch{
+            try self.files = FileManager.default.contentsOfDirectory(at: selectedPath!, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+        } catch {
             print(error)
         }
         self.ensureDirectoryNotEmpty()
@@ -67,17 +67,17 @@ class NORFolderFilesViewController: UIViewController, UITableViewDataSource, UIT
         aCell.textLabel?.text = fileName
         if fileName?.lowercased().contains(".hex") != false {
             aCell.imageView?.image = UIImage(named: "ic_file")
-        }else if fileName?.lowercased().contains(".bin") != false {
+        } else if fileName?.lowercased().contains(".bin") != false {
             aCell.imageView?.image = UIImage(named: "ic_file")
-        }else if fileName?.lowercased().contains(".zip") != false {
+        } else if fileName?.lowercased().contains(".zip") != false {
             aCell.imageView?.image = UIImage(named: "ic_archive")
-        }else{
+        } else {
             aCell.imageView?.image = UIImage(named: "ic_file")
         }
         
         if aFilePath == selectedPath {
             aCell.accessoryType = UITableViewCellAccessoryType.checkmark
-        }else{
+        } else {
             aCell.accessoryType = UITableViewCellAccessoryType.none
         }
         
@@ -98,15 +98,14 @@ class NORFolderFilesViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-
         guard editingStyle == UITableViewCellEditingStyle.delete else {
             return
         }
 
         let filePath = files?[indexPath.row]
-        do{
+        do {
             try FileManager.default.removeItem(at: filePath!)
-        }catch{
+        } catch {
             print("Error while deleting file: \(error)")
             return
         }

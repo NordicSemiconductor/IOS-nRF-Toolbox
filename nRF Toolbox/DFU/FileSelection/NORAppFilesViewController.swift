@@ -27,9 +27,9 @@ class NORAppFilesViewController: UIViewController, UITableViewDelegate, UITableV
         
         let appPath = Bundle.main.resourceURL
         let firmwareDirectoryPath = appPath?.appendingPathComponent("firmwares")
-        do{
+        do {
             try self.files = FileManager.default.contentsOfDirectory(at: firmwareDirectoryPath!, includingPropertiesForKeys: nil, options: FileManager.DirectoryEnumerationOptions.skipsSubdirectoryDescendants) as NSArray?
-        }catch{
+        } catch {
             print("Error \(error)")
         }
 
@@ -82,19 +82,19 @@ class NORAppFilesViewController: UIViewController, UITableViewDelegate, UITableV
         //Cell config
         aCell.textLabel?.text = filePath
         
-        if ((filePath?.contains(".hex")) != false) {
+        if filePath?.contains(".hex") != false {
             aCell.imageView?.image = UIImage(named: "ic_file")
-        }else if ((filePath?.contains(".bin")) != false) {
+        } else if filePath?.contains(".bin") != false {
             aCell.imageView?.image = UIImage(named: "ic_file")
-        }else if ((filePath?.contains(".zip")) != false) {
+        } else if filePath?.contains(".zip") != false {
             aCell.imageView?.image = UIImage(named: "ic_archive")
-        }else{
+        } else{
             aCell.imageView?.image = UIImage(named: "ic_file")
         }
         
         if filePath == selectedPath?.lastPathComponent {
             aCell.accessoryType = UITableViewCellAccessoryType.checkmark
-        }else{
+        } else {
             aCell.accessoryType = UITableViewCellAccessoryType.none
         }
         

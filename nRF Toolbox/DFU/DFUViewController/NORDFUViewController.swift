@@ -225,7 +225,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
                 let aNavigationController = segue.destination as? UINavigationController
                 let scannerViewController = aNavigationController?.childViewControllerForStatusBarHidden as? NORScannerViewController
                 scannerViewController?.delegate = self
-            }else if segue.identifier == "FileSegue" {
+            } else if segue.identifier == "FileSegue" {
                 let aNavigationController = segue.destination as? UINavigationController
                 let barViewController = aNavigationController?.childViewControllerForStatusBarHidden as? UITabBarController
                 let appFilecsVC = barViewController?.viewControllers?.first as? NORAppFilesViewController
