@@ -740,7 +740,7 @@
                             <constraint firstItem="0Z4-c8-a3I" firstAttribute="leading" secondItem="kQi-nT-dUG" secondAttribute="leadingMargin" constant="19" id="E3K-hO-n0G"/>
                             <constraint firstItem="JUf-tA-Tqz" firstAttribute="leading" secondItem="kQi-nT-dUG" secondAttribute="leading" id="JEu-57-bAh"/>
                             <constraint firstItem="4Yk-Uu-b8k" firstAttribute="top" secondItem="lex-q3-aPx" secondAttribute="bottom" constant="30" id="Jvy-nj-zVN"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bjg-zK-RVR" secondAttribute="trailing" constant="10" id="L5F-EM-aBp"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bjg-zK-RVR" secondAttribute="trailing" constant="-20" id="L5F-EM-aBp"/>
                             <constraint firstItem="LHc-JP-qOQ" firstAttribute="top" secondItem="uCY-Rg-kB4" secondAttribute="bottom" constant="36" id="NNn-rx-DXg"/>
                             <constraint firstItem="bjg-zK-RVR" firstAttribute="leading" secondItem="kQi-nT-dUG" secondAttribute="leading" id="Ne3-2Y-n3n"/>
                             <constraint firstItem="uCY-Rg-kB4" firstAttribute="top" secondItem="0Z4-c8-a3I" secondAttribute="bottom" id="P1W-i1-0q6"/>
@@ -5747,7 +5747,7 @@
         <image name="userIcon" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="0i8-Ot-uid"/>
+        <segue reference="eeF-P4-72I"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.60392159219999997" blue="0.85490196939999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
