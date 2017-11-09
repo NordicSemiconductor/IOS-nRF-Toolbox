@@ -22,6 +22,18 @@
 
 import Zip
 
+
+// Errors
+internal enum ZipError : Error {
+    case fileError
+    
+    var description: String {
+        switch self {
+        case .fileError:      return NSLocalizedString("File could not be created", comment: "")
+        }
+    }
+}
+
 internal class ZipArchive {
     
     private init() {
@@ -56,6 +68,28 @@ internal class ZipArchive {
             urls.append(URL(fileURLWithPath: destinationPath + file))
         }
         return urls
+    }
+    
+    /**
+     Creates a temporary file and writes the content of the data to it.
+ 
+     - parameter data: file content
+     
+     - throws: an error if creating temporary file failed
+     
+     - returns: a URL to the temporary file
+     */
+    internal static func createTemporaryFile(_ data: Data) throws -> URL {
+        // Build the temp folder path. Content of the ZIP file will be copied into it
+        let tempPath = NSTemporaryDirectory() + "ios-dfu-data.zip"
+        
+        // Create a new file and save the data in it
+        let success = FileManager.default.createFile(atPath: tempPath, contents: data, attributes: nil)
+        guard success else {
+            throw ZipError.fileError
+        }
+        
+        return URL(fileURLWithPath: tempPath)
     }
     
     /**

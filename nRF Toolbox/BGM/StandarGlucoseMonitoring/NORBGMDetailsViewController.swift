@@ -66,7 +66,7 @@ class NORBGMDetailsViewController: UIViewController {
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
         dateFormat = DateFormatter()
-        dateFormat?.dateFormat = "dd.MM.yy, hh:mm:ss"
+        dateFormat?.dateFormat = "dd.MM.yy, HH:mm:ss"
     }
     
     override func viewDidLoad() {

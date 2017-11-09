@@ -22,7 +22,7 @@
 
 import CoreBluetooth
 
-internal typealias Callback = (Void) -> Void
+internal typealias Callback = () -> Void
 internal typealias ErrorCallback = (_ error: DFUError, _ withMessage: String) -> Void
 internal typealias ProgressCallback = (_ bytesReceived: UInt32) -> Void
 

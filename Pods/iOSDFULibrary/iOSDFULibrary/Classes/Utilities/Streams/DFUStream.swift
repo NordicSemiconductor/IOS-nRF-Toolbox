@@ -25,8 +25,13 @@ internal let FIRMWARE_TYPE_BOOTLOADER  : UInt8 = 0x02
 internal let FIRMWARE_TYPE_APPLICATION : UInt8 = 0x04
 
 @objc open class DFUFirmwareSize : NSObject {
+    /// Size of the softdevice in bytes.
+    /// If not even, add it to the bootloader size to get size of softdevice_bootloader.bin.
     open fileprivate(set) var softdevice  : UInt32 = 0
+    /// Size of the bootloader in bytes. 
+    /// If equal to 1 the ZIP contains SD+BL and size of SD or BL is not known exactly, but their sum is known.
     open fileprivate(set) var bootloader  : UInt32 = 0
+    /// Size of the application in bytes.
     open fileprivate(set) var application : UInt32 = 0
     
     internal init(softdevice: UInt32, bootloader: UInt32, application: UInt32) {

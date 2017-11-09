@@ -120,6 +120,7 @@ class NORGlucoseReading: NSObject {
         
         if timeOffsetPresent {
             self.timeOffset = NORCharacteristicReader.readSInt16Value(ptr: &pointer)
+            timestamp?.addTimeInterval(Double(self.timeOffset!) * 60.0)
         }
         
         self.glucoseConcentrationTypeAndLocationPresent = glucoseConcentrationTypeAndLocationPresent

@@ -28,6 +28,7 @@ public extension Array where Element: NSObject {
         }
     }
 
+
     /**
      Initialize an array based on a json string
      
@@ -68,7 +69,7 @@ public extension Array where Element: NSObject {
         self.init()
         
         guard let dictionaryArray = dictionary.value(forKeyPath: forKeyPath) as? [NSDictionary] else {
-            print("ERROR: The forKeyPath '\(forKeyPath)' resulted in an empty array")
+            evPrint(.UnknownKeypath, "ERROR: The forKeyPath '\(forKeyPath)' resulted in an empty array")
             return
         }
         

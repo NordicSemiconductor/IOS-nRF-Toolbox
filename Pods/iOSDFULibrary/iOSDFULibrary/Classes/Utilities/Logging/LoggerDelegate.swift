@@ -71,5 +71,5 @@ Log level. Logger application may filter log entries based on their level. Level
      - parameter level:   the log level
      - parameter message: the message
      */
-    func logWith(_ level: LogLevel, message: String)
+    @objc func logWith(_ level: LogLevel, message: String)
 }

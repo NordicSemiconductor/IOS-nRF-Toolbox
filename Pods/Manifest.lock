@@ -1,26 +1,26 @@
 PODS:
   - CorePlot (2.2)
-  - EVReflection (4.5.0):
-    - EVReflection/Core (= 4.5.0)
-  - EVReflection/Core (4.5.0)
-  - iOSDFULibrary (3.0.6):
-    - Zip (~> 0.6)
+  - EVReflection (5.1.5):
+    - EVReflection/Core (= 5.1.5)
+  - EVReflection/Core (5.1.5)
+  - iOSDFULibrary (4.0.2):
+    - Zip (~> 1.0)
   - SWRevealViewController (2.3.0)
-  - Zip (0.6.0)
+  - Zip (1.0.0)
 
 DEPENDENCIES:
   - CorePlot (~> 2.2)
-  - EVReflection (~> 4.5)
-  - iOSDFULibrary (~> 3.0)
+  - EVReflection (~> 5.0)
+  - iOSDFULibrary (~> 4.0)
   - SWRevealViewController (~> 2.3)
 
 SPEC CHECKSUMS:
   CorePlot: cbe0c6e14220705e32e06a89c7d6a5a908b7d7d8
-  EVReflection: f3ef628809585feefa72bf6a8b1ffd3a7a619bdb
-  iOSDFULibrary: e9f7838a54eed84228669c7739d8d7ed98d3da31
+  EVReflection: a80157a584cf0b977f5cada98988a3f4e828b863
+  iOSDFULibrary: 739d3b5f2c99120b4e9b93ca165d9e451e3c8dec
   SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
-  Zip: 805fc2fa9d2f05bbb7762d982d7a42ccdcc51f42
+  Zip: 115a122433829a1bbf33f5575fa84047438dcc12
 
-PODFILE CHECKSUM: 04952fbe2bcb7bb9893a38aae5bee36c631e4f22
+PODFILE CHECKSUM: 27aaa69ef26831a42d969fc2d11fc0913adbff1e
 
-COCOAPODS: 1.2.0.rc.1
+COCOAPODS: 1.4.0.beta.2

@@ -8,6 +8,11 @@
 
 import Foundation
 
+// Protocol that can be used for sub objects to define that parsing will be done in the parent using the 'setValue forKey' function
+public protocol EVCustomReflectable {
+    func constructWith(value: Any?)
+    func toCodableValue() -> Any
+}
 
 // MARK: - Protocol with the overridable functions. All functionality is added to this in the extension below.
 public protocol EVReflectable: class, NSObjectProtocol  {
@@ -47,6 +52,26 @@ public protocol EVReflectable: class, NSObjectProtocol  {
     func skipPropertyValue(_ value: Any, key: String) -> Bool
     
     /**
+     You can add general value decoding to an object when you implement this function. You can for instance use it to base64 decode, url decode, html decode, unicode, etc.
+     
+     - parameter value:  The value that we will be decoded
+     - parameter key: The key for the value
+     
+     - returns: The decoded value
+     */
+    func decodePropertyValue(value: Any, key: String) -> Any?
+
+    /**
+     You can add general value encoding to an object when you implement this function. You can for instance use it to base64 encode, url encode, html encode, unicode, etc.
+     
+     - parameter value:  The value that we will be encoded
+     - parameter key: The key for the value
+     
+     - returns: The encoded value.
+     */
+    func encodePropertyValue(value: Any, key: String) -> Any
+    
+    /**
      Get the type of this object.
      
      - parameter dict: The dictionary for the specific type
@@ -54,7 +79,7 @@ public protocol EVReflectable: class, NSObjectProtocol  {
      - returns: The specific type
      */
     func getType(_ dict: NSDictionary) -> EVReflectable
-
+    
     /**
      When a property is declared as a base type for multiple inherited classes, then this function will let you pick the right specific type based on the suplied dictionary.
      
@@ -123,30 +148,38 @@ extension EVReflectable where Self: NSObject {
     
     
     /**
-    init for creating an object whith the property values of a dictionary.
+     init for creating an object whith the property values of a dictionary.
      
      - parameter dictionary: The dictionary that will be used to create this object
      - parameter conversionOptions: Option set for the various conversion options.
      */
     public init(dictionary: NSDictionary, conversionOptions: ConversionOptions = .DefaultDeserialize, forKeyPath: String? = nil) {
         self.init()
-        EVReflection.setPropertiesfromDictionary(dictionary, anyObject: self, conversionOptions: conversionOptions)
+        if let v = self as? EVCustomReflectable {
+            v.constructWith(value: dictionary)
+        } else {
+            EVReflection.setPropertiesfromDictionary(dictionary, anyObject: self, conversionOptions: conversionOptions, forKeyPath: forKeyPath)
+        }
     }
     
     /**
-    init for creating an object whith the contents of a json string.
+     init for creating an object whith the contents of a json string.
      
      - parameter json: The json string that will be used to create this object
      - parameter conversionOptions: Option set for the various conversion options.
      */
     public init(json: String?, conversionOptions: ConversionOptions = .DefaultDeserialize, forKeyPath: String? = nil) {
         self.init()
-        let jsonDict = EVReflection.dictionaryFromJson(json)
-        EVReflection.setPropertiesfromDictionary(jsonDict, anyObject: self, conversionOptions: conversionOptions)
+        let dictionary = EVReflection.dictionaryFromJson(json)
+        if let v = self as? EVCustomReflectable {
+            v.constructWith(value: dictionary)
+        } else {
+            EVReflection.setPropertiesfromDictionary(dictionary, anyObject: self, conversionOptions: conversionOptions, forKeyPath: forKeyPath)
+        }
     }
     
     /**
-    init for creating an object whith the property values of json Data.
+     init for creating an object whith the property values of json Data.
      
      - parameter dictionary: The dictionary that will be used to create this object
      - parameter conversionOptions: Option set for the various conversion options.
@@ -154,7 +187,11 @@ extension EVReflectable where Self: NSObject {
     public init(data: Data, conversionOptions: ConversionOptions = .DefaultDeserialize, forKeyPath: String? = nil) {
         self.init()
         let dictionary: NSDictionary = (((try! JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary))  ?? NSDictionary())!
-        EVReflection.setPropertiesfromDictionary(dictionary, anyObject: self, conversionOptions: conversionOptions)
+        if let v = self as? EVCustomReflectable {
+            v.constructWith(value: dictionary)
+        } else {
+            EVReflection.setPropertiesfromDictionary(dictionary, anyObject: self, conversionOptions: conversionOptions, forKeyPath: forKeyPath)
+        }
     }
     
     
@@ -168,7 +205,12 @@ extension EVReflectable where Self: NSObject {
         self.init()
         let filePath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileNameInTemp)
         if let temp = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as? EVReflectable {
-            EVReflection.setPropertiesfromDictionary( temp.toDictionary(conversionOptions), anyObject: self, conversionOptions: conversionOptions)
+            if let v = self as? EVCustomReflectable {
+                let dictionary = temp.toDictionary(conversionOptions)
+                v.constructWith(value: dictionary)
+            } else {
+                EVReflection.setPropertiesfromDictionary( temp.toDictionary(conversionOptions), anyObject: self, conversionOptions: conversionOptions)
+            }
         }
     }
     
@@ -182,12 +224,17 @@ extension EVReflectable where Self: NSObject {
         self.init()
         let filePath = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent(fileNameInDocuments)
         if let temp = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as? EVReflectable {
-            EVReflection.setPropertiesfromDictionary( temp.toDictionary(conversionOptions), anyObject: self, conversionOptions: conversionOptions)
+            if let v = self as? EVCustomReflectable {
+                let dictionary = temp.toDictionary(conversionOptions)
+                v.constructWith(value: dictionary)
+            } else {
+                EVReflection.setPropertiesfromDictionary( temp.toDictionary(conversionOptions), anyObject: self, conversionOptions: conversionOptions)
+            }
         }
     }
     
     /**
-    init for creating an object whith the property values of an other object.
+     init for creating an object whith the property values of an other object.
      
      - parameter usingValuesFrom: The object of whicht the values will be used to create this object
      - parameter conversionOptions: Option set for the various conversion options.
@@ -195,10 +242,13 @@ extension EVReflectable where Self: NSObject {
     public init(usingValuesFrom: EVReflectable, conversionOptions: ConversionOptions = .None) {
         self.init()
         let dict = usingValuesFrom.toDictionary()
-        let _ = EVReflection.setPropertiesfromDictionary(dict, anyObject: self, conversionOptions: conversionOptions)
+        if let v = self as? EVCustomReflectable {
+            v.constructWith(value: dict)
+        } else {
+            EVReflection.setPropertiesfromDictionary(dict, anyObject: self, conversionOptions: conversionOptions)
+        }
+        
     }
-    
-    
     
     /**
      Returns the hashvalue of this object
@@ -252,15 +302,15 @@ extension EVReflectable {
      
      - returns: False if the objects are the the same, otherwise true.
      */
-     static public func != (lhs: EVReflectable, rhs: EVReflectable) -> Bool {
+    static public func != (lhs: EVReflectable, rhs: EVReflectable) -> Bool {
         if let lhso = lhs as? NSObject, let rhso = rhs as? NSObject {
             return !EVReflection.areEqual(lhso, rhs: rhso)
         }
         return !lhs.isEqual(rhs)
     }
-
+    
     // MARK: - extending the base implementation for the overridable functions
-
+    
     
     /**
      By default there is no aditional validation. Override this function to add your own class level validation rules
@@ -305,6 +355,39 @@ extension EVReflectable {
     }
     
     /**
+     You can add general value decoding to an object when you implement this function. You can for instance use it to base64 decode, url decode, html decode, unicode, etc.
+     
+     - parameter value:  The value that we will be decoded
+     - parameter key: The key for the value
+     
+     - returns: The decoded value
+     */
+    public func decodePropertyValue(value: Any, key: String) -> Any? {
+        return value
+    }
+    
+    /**
+     You can add general value encoding to an object when you implement this function. You can for instance use it to base64 encode, url encode, html encode, unicode, etc.
+     
+     - parameter value:  The value that we will be encoded
+     - parameter key: The key for the value
+     
+     - returns: The encoded value.
+     */
+    public func encodePropertyValue(value: Any, key: String) -> Any {
+        return value
+    }
+    
+    /**
+     Return a custom object for the object
+     
+     - returns: The custom object that will be parsed (single value, dictionary or array)
+     */
+    public func customConverter() -> AnyObject? {
+        return nil
+    }
+    
+    /**
      Get the type of this object
      
      - parameter dict: The dictionary for the specific type
@@ -314,7 +397,7 @@ extension EVReflectable {
     public func getType(_ dict: NSDictionary) -> EVReflectable {
         return self
     }
-
+    
     /**
      When a property is declared as a base type for multiple inherited classes, then this function will let you pick the right specific type based on the suplied dictionary.
      
@@ -325,9 +408,9 @@ extension EVReflectable {
     public func getSpecificType(_ dict: NSDictionary) -> EVReflectable? {
         return nil
     }
-
+    
     // MARK: - extension methods
-
+    
     
     /**
      Save this object to a file in the temp directory
@@ -374,7 +457,7 @@ extension EVReflectable {
             let (reflected, _) = EVReflection.toDictionary(obj, conversionOptions: conversionOptions)
             return reflected
         }
-        print("ERROR: You should only extend object with EVReflectable that are derived from NSObject!")
+        evPrint(.ShouldExtendNSObject, "ERROR: You should only extend object with EVReflectable that are derived from NSObject!")
         return NSDictionary()
     }
     
@@ -386,13 +469,10 @@ extension EVReflectable {
      - returns: The json string
      */
     public func toJsonString(_ conversionOptions: ConversionOptions = .DefaultSerialize, prettyPrinted: Bool = false) -> String {
-        if let obj = self as? NSObject {
-            return EVReflection.toJsonString(obj, conversionOptions: conversionOptions, prettyPrinted: prettyPrinted)
-        }
-        print("ERROR: You should only extend object with EVReflectable that are derived from NSObject!")
-        return "{}"
+        let data = self.toJsonData(conversionOptions, prettyPrinted: prettyPrinted)
+        return String(data: data, encoding: .utf8) ?? "{}"
     }
-
+    
     /**
      Convert this object to a json Data
      
@@ -401,16 +481,31 @@ extension EVReflectable {
      - returns: The json Data
      */
     public func toJsonData(_ conversionOptions: ConversionOptions = .DefaultSerialize, prettyPrinted: Bool = false) -> Data {
-        if let obj = self as? NSObject {
-            return EVReflection.toJsonData(obj, conversionOptions: conversionOptions, prettyPrinted: prettyPrinted)
+        var dict: NSDictionary
+        
+        // Custom or standard toDictionary
+        if let v = self as? EVCustomReflectable {
+            dict = v.toCodableValue() as? NSDictionary ?? NSDictionary()
+        } else {
+            dict = self.toDictionary(conversionOptions)
         }
-        print("ERROR: You should only extend object with EVReflectable that are derived from NSObject!")
+        
+        if let v = self as? NSObject {
+            dict = EVReflection.convertDictionaryForJsonSerialization(dict, theObject: v)
+        }
+        
+        do {
+            if prettyPrinted {
+                return try JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted)
+            }
+            return try JSONSerialization.data(withJSONObject: dict, options: [])
+        } catch { }
         return Data()
     }
-
+    
     
     /**
-    method for instantiating an array from a json string.
+     method for instantiating an array from a json string.
      
      - parameter json: The json string
      - parameter conversionOptions: Option set for the various conversion options.
@@ -539,12 +634,12 @@ extension EVReflectable {
     }
     
     /**
-    function for adding a new status message to the evReflectionStatus array
+     function for adding a new status message to the evReflectionStatus array
      
      - parameter type:    A string to specify the message type
      - parameter message: The message for the status.
      */
     public func addStatusMessage(_ type: DeserializationStatus, message: String) {
-        self.evReflectionStatuses.append(type, message)
+        self.evReflectionStatuses.append((type, message))
     }    
 }
