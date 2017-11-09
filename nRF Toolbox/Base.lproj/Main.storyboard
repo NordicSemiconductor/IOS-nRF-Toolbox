@@ -546,8 +546,11 @@
                     </view>
                     <navigationItem key="navigationItem" title="nRF Toolbox" id="O0a-sh-2l2">
                         <barButtonItem key="backBarButtonItem" title="Back" id="lGw-te-Jv2"/>
-                        <barButtonItem key="rightBarButtonItem" image="ic_info" landscapeImage="ic_info" id="aYH-F1-i3A">
+                        <barButtonItem key="rightBarButtonItem" image="ic_info" landscapeImage="ic_info" id="aYH-F1-i3A" userLabel="About">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="aboutButtonTapped:" destination="vXZ-lx-hvc" id="i5E-s3-uTC"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -758,8 +761,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Glucose Monitor" id="KIG-8R-Oiv">
-                        <barButtonItem key="rightBarButtonItem" image="ic_info" landscapeImage="ic_info" id="gFN-9E-erq">
+                        <barButtonItem key="rightBarButtonItem" image="ic_info" landscapeImage="ic_info" id="gFN-9E-erq" userLabel="About">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="aboutButtonTapped:" destination="K6D-kg-QBM" id="rE9-Nr-po1"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -1712,8 +1718,11 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Blood Pressure" id="1nR-kB-wTH">
-                        <barButtonItem key="rightBarButtonItem" image="ic_info" landscapeImage="ic_info" id="sNZ-sw-JmP">
+                        <barButtonItem key="rightBarButtonItem" image="ic_info" landscapeImage="ic_info" id="sNZ-sw-JmP" userLabel="About">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="aboutButtonTapped:" destination="Kc0-JV-b23" id="jBI-sM-SE9"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -1975,8 +1984,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Cycling Sensor" id="Fgj-nj-x6L">
-                        <barButtonItem key="rightBarButtonItem" title="Ite" image="ic_info" landscapeImage="ic_info" id="dTI-cU-K7l">
+                        <barButtonItem key="rightBarButtonItem" title="Ite" image="ic_info" landscapeImage="ic_info" id="dTI-cU-K7l" userLabel="About">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="aboutButtonTapped:" destination="VtK-t5-9C8" id="l1z-JT-5Qn"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -2325,8 +2337,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Firmware Update" id="XbP-HK-cP2">
-                        <barButtonItem key="rightBarButtonItem" image="ic_info" landscapeImage="ic_info" id="Rnz-rE-xZN">
+                        <barButtonItem key="rightBarButtonItem" image="ic_info" landscapeImage="ic_info" id="Rnz-rE-xZN" userLabel="About">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="aboutButtonTapped:" destination="ZfZ-xR-bsT" id="OmK-Xh-eq0"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -2482,8 +2497,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Heart Rate Monitor" id="AKN-DC-Ov8">
-                        <barButtonItem key="rightBarButtonItem" image="ic_info" landscapeImage="ic_info" id="WiS-Yv-4zb">
+                        <barButtonItem key="rightBarButtonItem" image="ic_info" landscapeImage="ic_info" id="WiS-Yv-4zb" userLabel="About">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="aboutButtonTapped:" destination="9ph-JI-A6G" id="bt8-Iz-n8G"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -2622,8 +2640,11 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Proximity" id="GO1-Sd-mHd">
-                        <barButtonItem key="rightBarButtonItem" image="ic_info" landscapeImage="ic_info" id="PyI-U9-uNW">
+                        <barButtonItem key="rightBarButtonItem" image="ic_info" landscapeImage="ic_info" id="PyI-U9-uNW" userLabel="About">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="aboutButtonTapped:" destination="inG-0b-px5" id="haT-Na-7RP"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -2908,8 +2929,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Running Sensor" id="JKi-BT-EYV">
-                        <barButtonItem key="rightBarButtonItem" image="ic_info" landscapeImage="ic_info" id="4nx-O9-LZC">
+                        <barButtonItem key="rightBarButtonItem" image="ic_info" landscapeImage="ic_info" id="4nx-O9-LZC" userLabel="About">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="aboutButtonTapped:" destination="ajK-NB-gff" id="SQb-8W-ueN"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -3071,8 +3095,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Health Thermometer" id="lhS-3A-AM3">
-                        <barButtonItem key="rightBarButtonItem" image="ic_info" landscapeImage="ic_info" id="ohv-hA-PgG">
+                        <barButtonItem key="rightBarButtonItem" image="ic_info" landscapeImage="ic_info" id="ohv-hA-PgG" userLabel="About">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="aboutButtonTapped:" destination="Rl2-Gx-bqg" id="430-Cz-8y1"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -4505,7 +4532,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.96067994830000003" green="0.96084433790000001" blue="0.96066969629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" title="UART" id="9gz-1j-WHs"/>
+                    <navigationItem key="navigationItem" title="UART" id="9gz-1j-WHs">
+                        <barButtonItem key="rightBarButtonItem" image="ic_info" landscapeImage="ic_info" id="QCa-Fq-ZKg" userLabel="About">
+                            <connections>
+                                <action selector="aboutButtonTapped:" destination="0VH-j9-Lgb" id="JbY-bb-OsX"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="H5O-PI-o2R" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="Qfd-c6-Kja"/>
                         <segue destination="y8v-dl-m9e" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="DyF-8T-N11"/>
@@ -4674,8 +4707,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="HomeKit DFU" id="g1Q-gy-Swk">
-                        <barButtonItem key="rightBarButtonItem" image="ic_info" landscapeImage="ic_info" id="zLi-FQ-C4U">
+                        <barButtonItem key="rightBarButtonItem" image="ic_info" landscapeImage="ic_info" id="zLi-FQ-C4U" userLabel="About">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="aboutButtonTapped:" destination="Mk7-F6-tao" id="ekF-4l-6CF"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -4750,7 +4786,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CONTINUOUS GLUCOSE MONITOR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DXK-xJ-iG3">
-                                <rect key="frame" x="0.0" y="259.5" width="365" height="32"/>
+                                <rect key="frame" x="0.0" y="259.5" width="396" height="32"/>
                                 <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="27"/>
                                 <color key="textColor" red="0.66666666669999997" green="0.6705882353" blue="0.68627450980000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -4876,7 +4912,7 @@
                             <constraint firstItem="1lx-e3-yha" firstAttribute="leading" secondItem="Wjh-0S-B1J" secondAttribute="leadingMargin" constant="19" id="F6S-vw-FRD"/>
                             <constraint firstItem="wCR-7w-mDp" firstAttribute="leading" secondItem="Yxf-88-jLg" secondAttribute="trailing" constant="8" id="FRl-Bi-CCW"/>
                             <constraint firstItem="1lx-e3-yha" firstAttribute="top" secondItem="ZEW-67-jIS" secondAttribute="bottom" constant="15" id="IaK-P5-bxT"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="DXK-xJ-iG3" secondAttribute="trailing" constant="10" id="K59-ry-5X5"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="DXK-xJ-iG3" secondAttribute="trailing" constant="-200" id="K59-ry-5X5"/>
                             <constraint firstItem="jXh-bb-WDr" firstAttribute="leading" secondItem="Wjh-0S-B1J" secondAttribute="leadingMargin" constant="19" id="SRE-Em-7NB"/>
                             <constraint firstAttribute="trailingMargin" secondItem="3T0-aC-p71" secondAttribute="trailing" constant="14" id="Zt5-c7-Tri"/>
                             <constraint firstAttribute="centerX" secondItem="uz9-v1-z1J" secondAttribute="centerX" id="cXP-Dt-rSh"/>
@@ -4898,8 +4934,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Continuous Glucose" id="AhH-3s-fxJ">
-                        <barButtonItem key="rightBarButtonItem" image="ic_info" landscapeImage="ic_info" id="Lao-xL-xaK">
+                        <barButtonItem key="rightBarButtonItem" image="ic_info" landscapeImage="ic_info" id="Lao-xL-xaK" userLabel="About">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="aboutButtonTapped:" destination="5Ta-i6-8fT" id="lrc-9d-4Ot"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -5709,7 +5748,7 @@
         <image name="userIcon" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ydJ-CZ-Xyf"/>
+        <segue reference="9aU-2l-xWz"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.60392159219999997" blue="0.85490196939999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
