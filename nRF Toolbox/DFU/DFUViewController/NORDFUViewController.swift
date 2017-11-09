@@ -283,13 +283,13 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
         NotificationCenter.default.removeObserver(self, name:NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
     }
 
-    func applicationDidEnterBackgroundCallback() {
+    @objc func applicationDidEnterBackgroundCallback() {
         if dfuController != nil {
             NORDFUConstantsUtility.showBackgroundNotification(message: "Uploading firmware...")
         }
     }
     
-    func applicationDidBecomeActiveCallback() {
+    @objc func applicationDidBecomeActiveCallback() {
         UIApplication.shared.cancelAllLocalNotifications()
     }
 

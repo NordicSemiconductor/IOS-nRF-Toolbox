@@ -1984,7 +1984,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Cycling Sensor" id="Fgj-nj-x6L">
-                        <barButtonItem key="rightBarButtonItem" title="Ite" image="ic_info" landscapeImage="ic_info" id="dTI-cU-K7l" userLabel="About">
+                        <barButtonItem key="rightBarButtonItem" image="ic_info" landscapeImage="ic_info" id="dTI-cU-K7l" userLabel="About">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="aboutButtonTapped:" destination="VtK-t5-9C8" id="l1z-JT-5Qn"/>

@@ -331,12 +331,12 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         }
     }
     
-    func appDidEnterBackrgoundCallback() {
+    @objc func appDidEnterBackrgoundCallback() {
         let name = connectedPeripheral?.name ?? "peripheral"
         NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(name). It will collect data also in background.")
     }
     
-    func appDidBecomeActiveCallback() {
+    @objc func appDidBecomeActiveCallback() {
         UIApplication.shared.cancelAllLocalNotifications()
         self.updateUnits()
     }

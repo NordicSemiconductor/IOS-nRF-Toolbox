@@ -253,11 +253,11 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
         }
     }
 
-    func applicationDidEnterBackgroundCallback(){
+    @objc func applicationDidEnterBackgroundCallback(){
         NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(self.uartPeripheralName!)")
     }
     
-    func applicationDidBecomeActiveCallback(){
+    @objc func applicationDidBecomeActiveCallback(){
         UIApplication.shared.cancelAllLocalNotifications()
     }
     

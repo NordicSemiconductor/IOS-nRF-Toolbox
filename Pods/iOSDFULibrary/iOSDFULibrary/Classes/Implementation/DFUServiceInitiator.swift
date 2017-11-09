@@ -41,18 +41,18 @@ import CoreBluetooth
      The service delegate is an object that will be notified about state changes of the DFU Service.
      Setting it is optional but recommended.
      */
-    public weak var delegate: DFUServiceDelegate?
+    @objc public weak var delegate: DFUServiceDelegate?
     
     /**
      An optional progress delegate will be called only during upload. It notifies about current upload
      percentage and speed.
      */
-    public weak var progressDelegate: DFUProgressDelegate?
+    @objc public weak var progressDelegate: DFUProgressDelegate?
     
     /**
      The logger is an object that should print given messages to the user. It is optional.
      */
-    public weak var logger: LoggerDelegate?
+    @objc public weak var logger: LoggerDelegate?
     
     /**
      The selector object is used when the device needs to disconnect and start advertising with a different address
@@ -68,7 +68,7 @@ import CoreBluetooth
      
      Ignore this property if not updating Softdevice and Application from one ZIP file or your 
      */
-    public var peripheralSelector: DFUPeripheralSelectorDelegate
+    @objc public var peripheralSelector: DFUPeripheralSelectorDelegate
 
     /**
      The number of packets of firmware data to be received by the DFU target before sending
@@ -78,7 +78,7 @@ import CoreBluetooth
      but also cause a buffer overflow and hang the Bluetooth adapter.
      Maximum verified values were 29 for iPhone 6 Plus or 22 for iPhone 7, both iOS 10.1.
      */
-    public var packetReceiptNotificationParameter: UInt16 = 12
+    @objc public var packetReceiptNotificationParameter: UInt16 = 12
     
     /**
      **Legacy DFU only.**
@@ -127,7 +127,7 @@ import CoreBluetooth
      if the only service found is the DFU Service. Setting the forceDfu to true (YES) will prevent from
      jumping in these both cases.
      */
-    public var forceDfu = false
+    @objc public var forceDfu = false
     
     /**
      Set this flag to true to enable experimental buttonless feature in Secure DFU. When the 
@@ -164,7 +164,7 @@ import CoreBluetooth
      passing bond information to the bootloader, encryption, well tested). It is recommended to use this 
      new service when SDK 13 (or later) is out. TODO: fix the docs when SDK 13 is out.
      */
-    public var enableUnsafeExperimentalButtonlessServiceInSecureDfu = false
+    @objc public var enableUnsafeExperimentalButtonlessServiceInSecureDfu = false
     
     //MARK: - Public API
     
@@ -183,7 +183,7 @@ import CoreBluetooth
      - seeAlso: peripheralSelector property - a selector used when scanning for a device in DFU Bootloader mode
      in case you want to update a Softdevice and Application from a single ZIP Distribution Packet.
      */
-    public init(centralManager: CBCentralManager, target: CBPeripheral) {
+    @objc public init(centralManager: CBCentralManager, target: CBPeripheral) {
         self.centralManager = centralManager
         // Just to be sure that manager is not scanning
         self.centralManager.stopScan()
@@ -201,7 +201,7 @@ import CoreBluetooth
      
      - returns: the initiator instance to allow chain use
      */
-    public func with(firmware file: DFUFirmware) -> DFUServiceInitiator {
+    @objc public func with(firmware file: DFUFirmware) -> DFUServiceInitiator {
         self.file = file
         return self
     }
@@ -219,7 +219,7 @@ import CoreBluetooth
      
      - returns: A DFUServiceController object that can be used to control the DFU operation.
      */
-    public func start() -> DFUServiceController? {
+    @objc public func start() -> DFUServiceController? {
         // The firmware file must be specified before calling `start()`
         if file == nil {
             delegate?.dfuError(.fileNotSpecified, didOccurWithMessage: "Firmare not specified")

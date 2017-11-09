@@ -474,12 +474,12 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     }
     
     //MARK: - UIApplicationDelegate callbacks
-    func appDidEnterBackgroundCallback() {
+    @objc func appDidEnterBackgroundCallback() {
         let name = peripheral?.name ?? "peripheral"
         NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(name). It will collect data also in background.")
     }
     
-    func appDidBecomeActiveCallback() {
+    @objc func appDidBecomeActiveCallback() {
         UIApplication.shared.cancelAllLocalNotifications()
     }
     

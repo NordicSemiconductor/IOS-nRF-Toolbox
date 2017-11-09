@@ -158,12 +158,12 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     }
     
     //MARK: -  NORCSCViewController implementation
-    func didEnterBackgroundHandler() {
+    @objc func didEnterBackgroundHandler() {
         let name = cyclePeripheral?.name ?? "peripheral"
         NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(name). It will collect data also in background.")
     }
     
-    func didBecomeActiveHandler() {
+    @objc func didBecomeActiveHandler() {
         UIApplication.shared.cancelAllLocalNotifications()
     }
     

@@ -24,6 +24,7 @@ import CoreBluetooth
 
 internal enum ButtonlessDFUOpCode : UInt8 {
     case enterBootloader = 0x01
+    case setName         = 0x02
     case responseCode    = 0x20
     
     var code: UInt8 {
@@ -52,11 +53,17 @@ internal enum ButtonlessDFUResultCode : UInt8 {
 
 internal enum ButtonlessDFURequest {
     case enterBootloader
+    case set(name : String)
     
     var data : Data {
         switch self {
         case .enterBootloader:
             return Data(bytes: [ButtonlessDFUOpCode.enterBootloader.code])
+        case .set(let name):
+            var data = Data(bytes: [ButtonlessDFUOpCode.setName.code])
+            data += UInt8(name.lengthOfBytes(using: String.Encoding.utf8))
+            data += name.utf8
+            return data
         }
     }
 }
@@ -110,6 +117,18 @@ internal class ButtonlessDFU : NSObject, CBPeripheralDelegate {
     
     internal var newAddressExpected: Bool {
         return characteristic.uuid.isEqual(ButtonlessDFU.EXPERIMENTAL_UUID) || characteristic.uuid.isEqual(ButtonlessDFU.WITHOUT_BOND_SHARING_UUID)
+    }
+    
+    /**
+     Returns true for a buttonless DFU characteristic that may support setting
+     bootloader's name. This feature has been added in SDK 14.0 to Buttonless
+     service without bond sharing (the one with bond sharing does not change 
+     device address so this feature is not needed). 
+     The same characteristic from SDK 13.0 does not support it. Sending this 
+     command to that characteristic will end with ButtonlessDFUResultCode.opCodeNotSupported.
+     */
+    internal var maySupportSettingName: Bool {
+        return characteristic.uuid.isEqual(ButtonlessDFU.WITHOUT_BOND_SHARING_UUID)
     }
     
     // MARK: - Initialization

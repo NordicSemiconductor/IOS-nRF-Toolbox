@@ -81,7 +81,7 @@ import CoreBluetooth
     func resume() -> Bool {
         if !aborted && paused && firmware != nil {
             paused = false
-            dfuPacketCharacteristic!.sendNext(packetReceiptNotificationNumber, bytesFrom: range!, of: firmware!,
+            dfuPacketCharacteristic!.sendNext(packetReceiptNotificationNumber, packetsFrom: range!, of: firmware!,
                                               andReportProgressTo: progressDelegate, andCompletionTo: success!)
             return paused
         }
@@ -322,13 +322,13 @@ import CoreBluetooth
             self.progressDelegate = nil
             self.dfuControlPointCharacteristic!.peripheralDidReceiveObject()
             success()
-        }
+        } as Callback
 
         dfuControlPointCharacteristic!.waitUntilUploadComplete(onSuccess: self.success!, onPacketReceiptNofitication: { bytesReceived in
                 if !self.paused && !self.aborted {
                     let bytesSent = self.dfuPacketCharacteristic!.bytesSent + UInt32(aRange.lowerBound)
                     if bytesSent == bytesReceived {
-                        self.dfuPacketCharacteristic!.sendNext(self.packetReceiptNotificationNumber, bytesFrom: aRange, of: aFirmware,
+                        self.dfuPacketCharacteristic!.sendNext(self.packetReceiptNotificationNumber, packetsFrom: aRange, of: aFirmware,
                                                                andReportProgressTo: progressDelegate, andCompletionTo: self.success!)
                     } else {
                         // Target device deported invalid number of bytes received
@@ -350,7 +350,7 @@ import CoreBluetooth
         
         if !paused && !aborted {
             // ...and start sending firmware if
-            dfuPacketCharacteristic!.sendNext(packetReceiptNotificationNumber, bytesFrom: aRange, of: aFirmware,
+            dfuPacketCharacteristic!.sendNext(packetReceiptNotificationNumber, packetsFrom: aRange, of: aFirmware,
                                                    andReportProgressTo: progressDelegate, andCompletionTo: self.success!)
         } else if aborted {
             self.firmware = nil
@@ -463,7 +463,35 @@ import CoreBluetooth
      */
     func jumpToBootloaderMode(onError report: @escaping ErrorCallback) {
         if !aborted {
-            buttonlessDfuCharacteristic!.send(ButtonlessDFURequest.enterBootloader, onSuccess: nil, onError: report)
+            func enterBootloader() {
+                self.buttonlessDfuCharacteristic!.send(ButtonlessDFURequest.enterBootloader, onSuccess: nil, onError: report)
+            }
+            
+            // If the characteristic may support changing bootloader's name, try it
+            if buttonlessDfuCharacteristic!.maySupportSettingName {
+                // Generate a random 8-character long name
+                let name = String(format: "Dfu%05d", arc4random_uniform(100000))
+                
+                logger.v("Trying setting bootloader name to \(name)")
+                buttonlessDfuCharacteristic!.send(ButtonlessDFURequest.set(name: name), onSuccess: {
+                    // Success. The buttonless service is from SDK 14.0+. The bootloader, after jumping to it, will advertise with this name.
+                    self.targetPeripheral!.bootloaderName = name
+                    self.logger.a("Bootloader name changed successfully")
+                    enterBootloader()
+                }, onError: {
+                    error, message in
+                    if error == .remoteButtonlessDFUOpCodeNotSupported {
+                        // Setting name is not supported. Looks like it's buttonless service from SDK 13. We can't rely on bootloader's name.
+                        self.logger.w("Setting bootloader name not supported")
+                        enterBootloader()
+                    } else {
+                        // Something else got wrong
+                        report(error, message)
+                    }
+                })
+            } else {
+                enterBootloader()
+            }
         } else {
             sendReset(onError: report)
         }

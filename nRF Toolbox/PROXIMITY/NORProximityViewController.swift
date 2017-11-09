@@ -184,12 +184,12 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
         self.immidiateAlertCharacteristic = nil
     }
     
-    func applicationDidEnterBackgroundCallback() {
+    @objc func applicationDidEnterBackgroundCallback() {
         let name = proximityPeripheral?.name ?? "peripheral"
         NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(name).")
     }
     
-    func applicationDidBecomeActiveCallback() {
+    @objc func applicationDidBecomeActiveCallback() {
         UIApplication.shared.cancelAllLocalNotifications()
     }
 

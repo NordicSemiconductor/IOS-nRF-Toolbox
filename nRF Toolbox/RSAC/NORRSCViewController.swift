@@ -120,7 +120,7 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         }
     }
     //MARK: - NORRSCViewController implementation
-    func timerFired(timer aTimer : Timer) {
+    @objc func timerFired(timer aTimer : Timer) {
         // Here we will update the stride count.
         // If a device has been disconnected, abort. There is nothing to do.
         guard connectedPeripheral != nil else {
@@ -163,12 +163,12 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         }
     }
     
-    func applicationDidEnterBackgroundCallback() {
+    @objc func applicationDidEnterBackgroundCallback() {
         let name = connectedPeripheral?.name ?? "peripheral"
         NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(name). It will collect data also in background.")
     }
     
-    func applicationDidBecomeActiveCallback() {
+    @objc func applicationDidBecomeActiveCallback() {
         UIApplication.shared.cancelAllLocalNotifications()
     }
     

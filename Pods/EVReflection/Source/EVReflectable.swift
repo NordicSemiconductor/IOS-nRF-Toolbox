@@ -52,6 +52,26 @@ public protocol EVReflectable: class, NSObjectProtocol  {
     func skipPropertyValue(_ value: Any, key: String) -> Bool
     
     /**
+     You can add general value decoding to an object when you implement this function. You can for instance use it to base64 decode, url decode, html decode, unicode, etc.
+     
+     - parameter value:  The value that we will be decoded
+     - parameter key: The key for the value
+     
+     - returns: The decoded value
+     */
+    func decodePropertyValue(value: Any, key: String) -> Any?
+
+    /**
+     You can add general value encoding to an object when you implement this function. You can for instance use it to base64 encode, url encode, html encode, unicode, etc.
+     
+     - parameter value:  The value that we will be encoded
+     - parameter key: The key for the value
+     
+     - returns: The encoded value.
+     */
+    func encodePropertyValue(value: Any, key: String) -> Any
+    
+    /**
      Get the type of this object.
      
      - parameter dict: The dictionary for the specific type
@@ -230,8 +250,6 @@ extension EVReflectable where Self: NSObject {
         
     }
     
-    
-    
     /**
      Returns the hashvalue of this object
      
@@ -337,6 +355,30 @@ extension EVReflectable {
     }
     
     /**
+     You can add general value decoding to an object when you implement this function. You can for instance use it to base64 decode, url decode, html decode, unicode, etc.
+     
+     - parameter value:  The value that we will be decoded
+     - parameter key: The key for the value
+     
+     - returns: The decoded value
+     */
+    public func decodePropertyValue(value: Any, key: String) -> Any? {
+        return value
+    }
+    
+    /**
+     You can add general value encoding to an object when you implement this function. You can for instance use it to base64 encode, url encode, html encode, unicode, etc.
+     
+     - parameter value:  The value that we will be encoded
+     - parameter key: The key for the value
+     
+     - returns: The encoded value.
+     */
+    public func encodePropertyValue(value: Any, key: String) -> Any {
+        return value
+    }
+    
+    /**
      Return a custom object for the object
      
      - returns: The custom object that will be parsed (single value, dictionary or array)
@@ -415,7 +457,7 @@ extension EVReflectable {
             let (reflected, _) = EVReflection.toDictionary(obj, conversionOptions: conversionOptions)
             return reflected
         }
-        print("ERROR: You should only extend object with EVReflectable that are derived from NSObject!")
+        evPrint(.ShouldExtendNSObject, "ERROR: You should only extend object with EVReflectable that are derived from NSObject!")
         return NSDictionary()
     }
     
@@ -427,11 +469,8 @@ extension EVReflectable {
      - returns: The json string
      */
     public func toJsonString(_ conversionOptions: ConversionOptions = .DefaultSerialize, prettyPrinted: Bool = false) -> String {
-        if let obj = self as? NSObject {
-            return EVReflection.toJsonString(obj, conversionOptions: conversionOptions, prettyPrinted: prettyPrinted)
-        }
-        print("ERROR: You should only extend object with EVReflectable that are derived from NSObject!")
-        return "{}"
+        let data = self.toJsonData(conversionOptions, prettyPrinted: prettyPrinted)
+        return String(data: data, encoding: .utf8) ?? "{}"
     }
     
     /**
@@ -442,10 +481,25 @@ extension EVReflectable {
      - returns: The json Data
      */
     public func toJsonData(_ conversionOptions: ConversionOptions = .DefaultSerialize, prettyPrinted: Bool = false) -> Data {
-        if let obj = self as? NSObject {
-            return EVReflection.toJsonData(obj, conversionOptions: conversionOptions, prettyPrinted: prettyPrinted)
+        var dict: NSDictionary
+        
+        // Custom or standard toDictionary
+        if let v = self as? EVCustomReflectable {
+            dict = v.toCodableValue() as? NSDictionary ?? NSDictionary()
+        } else {
+            dict = self.toDictionary(conversionOptions)
         }
-        print("ERROR: You should only extend object with EVReflectable that are derived from NSObject!")
+        
+        if let v = self as? NSObject {
+            dict = EVReflection.convertDictionaryForJsonSerialization(dict, theObject: v)
+        }
+        
+        do {
+            if prettyPrinted {
+                return try JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted)
+            }
+            return try JSONSerialization.data(withJSONObject: dict, options: [])
+        } catch { }
         return Data()
     }
     
@@ -586,6 +640,6 @@ extension EVReflectable {
      - parameter message: The message for the status.
      */
     public func addStatusMessage(_ type: DeserializationStatus, message: String) {
-        self.evReflectionStatuses.append(type, message)
+        self.evReflectionStatuses.append((type, message))
     }    
 }

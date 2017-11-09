@@ -399,6 +399,8 @@ internal protocol DFUPeripheralAPI : BaseDFUPeripheralAPI {
     var activating: Bool { get set }
     /// A flag set when the library should try again connecting to the device (it may be then in a correct state).
     var shouldReconnect: Bool { get set }
+    /// A unique name that the bootloader will use in advertisement packets (used since SDK 14)
+    var bootloaderName: String? { get set }
 }
 
 internal protocol DFUPeripheral : DFUPeripheralAPI {
@@ -432,6 +434,7 @@ internal class BaseCommonDFUPeripheral<TD : DFUPeripheralDelegate, TS : DFUServi
     /// This flag must be set to true if the device will advertise with a new device address after it resets.
     /// The service will scan and use specified peripheral selector in order to connect to the new peripheral.
     internal var newAddressExpected  : Bool = false
+    internal var bootloaderName      : String?
     
     override init(_ initiator: DFUServiceInitiator) {
         self.peripheralSelector = initiator.peripheralSelector
@@ -516,11 +519,11 @@ internal class BaseCommonDFUPeripheral<TD : DFUPeripheralDelegate, TS : DFUServi
     
     override func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         // Is this a device we are looking for?
-        if peripheralSelector.select(peripheral, advertisementData: advertisementData as [String : AnyObject], RSSI: RSSI) {
+        if peripheralSelector.select(peripheral, advertisementData: advertisementData as [String : AnyObject], RSSI: RSSI, hint: bootloaderName) {
             // Hurray!
             central.stopScan()
             
-            if let name = peripheral.name {
+            if let name = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
                 logger.i("DFU Bootloader found with name \(name)")
             } else {
                 logger.i("DFU Bootloader found")

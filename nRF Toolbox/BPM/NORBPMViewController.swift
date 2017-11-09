@@ -61,12 +61,12 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     
     //MARK: - NORBPMViewController Implementation
     
-    func didEnterBackgroundCallback(notification aNotification: Notification) {
+    @objc func didEnterBackgroundCallback(notification aNotification: Notification) {
         let name = connectedPeripheral?.name ?? "peripheral"
         NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(name). It will collect data also in background.")
     }
     
-    func didBecomeActiveCallback(notification aNotification: Notification) {
+    @objc func didBecomeActiveCallback(notification aNotification: Notification) {
         UIApplication.shared.cancelAllLocalNotifications()
     }
     

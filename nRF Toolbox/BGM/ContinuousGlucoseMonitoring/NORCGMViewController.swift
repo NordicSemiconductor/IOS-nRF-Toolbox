@@ -107,12 +107,12 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
         cbgmTableView.dataSource = self
     }
     
-    func appdidEnterBackground() {
+    @objc func appdidEnterBackground() {
         let name = connectedPeripheral?.name ?? "peripheral"
         NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(name). It will collect data also in background.")
     }
     
-    func appDidBecomeActiveBackground(_ aNotification : Notification) {
+    @objc func appDidBecomeActiveBackground(_ aNotification : Notification) {
         UIApplication.shared.cancelAllLocalNotifications()
     }
     

@@ -54,13 +54,13 @@ class NORAppFilesViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     //MARK: - NORAppFilesViewController implementation
-    func doneButtonTapped() {
+    @objc func doneButtonTapped() {
         self.dismiss(animated: true, completion: nil)
         self.fileDelegate?.onFileSelected(withURL: self.selectedPath!)
         UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.lightContent, animated: true)
     }
     
-    func cancelButtonTapped() {
+    @objc func cancelButtonTapped() {
         self.dismiss(animated: true, completion: nil)
         UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.lightContent, animated: true)
     }

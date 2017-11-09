@@ -171,12 +171,12 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
                                                             object: nil)
     }
     
-    func applicationDidEnterBackgroundHandler() {
+    @objc func applicationDidEnterBackgroundHandler() {
         let name = connectedPeripheral?.name ?? "peripheral"
         NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(name). It will collect data also in background.")
     }
     
-    func applicationDidBecomeActiveHandler(){
+    @objc func applicationDidBecomeActiveHandler(){
         UIApplication.shared.cancelAllLocalNotifications()
     }
     
