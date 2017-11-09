@@ -114,7 +114,7 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         if segue.identifier == "scan" {
             // Set this contoller as scanner delegate
             let nc = segue.destination as! UINavigationController
-            let scanController = nc.childViewControllerForStatusBarHidden as! NORScannerViewController
+            let scanController = nc.childViewControllers.first as! NORScannerViewController
             scanController.filterUUID = rscServiceUUID
             scanController.delegate = self
         }
@@ -361,7 +361,8 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         bluetoothManager = aManager
         bluetoothManager!.delegate = self
         // The sensor has been selected, connect to it
-        aPeripheral.delegate = self
+        connectedPeripheral = aPeripheral
+        connectedPeripheral?.delegate = self
         bluetoothManager?.connect(aPeripheral, options: [CBConnectPeripheralOptionNotifyOnNotificationKey : NSNumber(value: true as Bool)])
     }
 }

@@ -493,7 +493,7 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         if segue.identifier == "scan" {
             // Set this contoller as scanner delegate
             let nc                = segue.destination as! UINavigationController
-            let controller        = nc.childViewControllerForStatusBarHidden as! NORScannerViewController
+            let controller        = nc.childViewControllers.first as! NORScannerViewController
             controller.filterUUID = hrServiceUUID
             controller.delegate   = self
         }

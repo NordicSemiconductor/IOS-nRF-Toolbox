@@ -90,10 +90,11 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     
     func centralManagerDidSelectPeripheral(withManager aManager: CBCentralManager, andPeripheral aPeripheral: CBPeripheral) {
         clearUI()
+        connectedPeripheral = aPeripheral
+        connectedPeripheral?.delegate = self
         bluetoothManager = aManager
         bluetoothManager?.delegate = self
-        
-        aPeripheral.delegate = self
+
         let connectionOptions = NSDictionary(object: NSNumber(value: true as Bool), forKey: CBConnectPeripheralOptionNotifyOnNotificationKey as NSCopying)
         bluetoothManager?.connect(aPeripheral, options: connectionOptions as? [String : AnyObject])
     }
@@ -291,7 +292,7 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "scan" {
             let nc = segue.destination as! UINavigationController
-            let controller = nc.childViewControllerForStatusBarHidden as! NORScannerViewController
+            let controller = nc.childViewControllers.first as! NORScannerViewController
             controller.filterUUID = bpmServiceUUID
             controller.delegate = self
         }

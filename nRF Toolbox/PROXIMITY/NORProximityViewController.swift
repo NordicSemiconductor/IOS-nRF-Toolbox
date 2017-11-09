@@ -203,7 +203,7 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
         if segue.identifier == "scan" {
             // Set this contoller as scanner delegate
             let nc = segue.destination as! UINavigationController
-            let controller = nc.childViewControllerForStatusBarHidden as! NORScannerViewController
+            let controller = nc.childViewControllers.first as! NORScannerViewController
             controller.filterUUID = proximityLinkLossServiceUUID
             controller.delegate = self
         }

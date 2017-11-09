@@ -50,7 +50,6 @@
 		3080C4711CE06D0E009C2D8C /* NORCSCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3080C4701CE06D0E009C2D8C /* NORCSCViewController.swift */; };
 		308AA57A1CD8DD4300CC9857 /* NORGlucoseReadingContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308AA5791CD8DD4300CC9857 /* NORGlucoseReadingContext.swift */; };
 		308EE1781CE0CBF700F2A854 /* NORHTSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308EE1771CE0CBF700F2A854 /* NORHTSViewController.swift */; };
-		30921FD31CD0E7A5009CBDDE /* NORNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30921FD21CD0E7A5009CBDDE /* NORNavigationController.swift */; };
 		30921FD51CD0EB55009CBDDE /* NORMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30921FD41CD0EB55009CBDDE /* NORMainViewController.swift */; };
 		309F08651E6D6A5500B7546A /* NORHKViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F08641E6D6A5500B7546A /* NORHKViewController.swift */; };
 		309F08681E6D706B00B7546A /* HomeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 309F08671E6D706B00B7546A /* HomeKit.framework */; };
@@ -118,7 +117,7 @@
 		3000B2141CE32A9200F64CEE /* NORUARTViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORUARTViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		300143261CEC4B9D008379DF /* NORAppUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORAppUtilities.swift; sourceTree = "<group>"; };
 		300143281CEC59F4008379DF /* NORServiceIdentifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORServiceIdentifiers.swift; sourceTree = "<group>"; };
-		3001432A1CEC6D2A008379DF /* NORBGMRecordAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORBGMRecordAccess.swift; path = Model/NORBGMRecordAccess.swift; sourceTree = "<group>"; };
+		3001432A1CEC6D2A008379DF /* NORBGMRecordAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBGMRecordAccess.swift; sourceTree = "<group>"; };
 		3001432C1CECADFB008379DF /* NORCharacteristicReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORCharacteristicReader.swift; sourceTree = "<group>"; };
 		3001432E1CEDAD04008379DF /* NORCharacteristicReaderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORCharacteristicReaderTests.swift; sourceTree = "<group>"; };
 		3001EBB01D1BE1F3008C5C37 /* NORGlucoseReading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORGlucoseReading.swift; path = Model/NORGlucoseReading.swift; sourceTree = "<group>"; };
@@ -155,7 +154,6 @@
 		3080C4701CE06D0E009C2D8C /* NORCSCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORCSCViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		308AA5791CD8DD4300CC9857 /* NORGlucoseReadingContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORGlucoseReadingContext.swift; path = Model/NORGlucoseReadingContext.swift; sourceTree = "<group>"; };
 		308EE1771CE0CBF700F2A854 /* NORHTSViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORHTSViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		30921FD21CD0E7A5009CBDDE /* NORNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORNavigationController.swift; sourceTree = "<group>"; };
 		30921FD41CD0EB55009CBDDE /* NORMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORMainViewController.swift; sourceTree = "<group>"; };
 		309F08641E6D6A5500B7546A /* NORHKViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORHKViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		309F08661E6D706B00B7546A /* nRF Toolbox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "nRF Toolbox.entitlements"; sourceTree = "<group>"; };
@@ -445,12 +443,12 @@
 		524F2CDC18897D18008A8555 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3001432A1CEC6D2A008379DF /* NORBGMRecordAccess.swift */,
 				3001EBB01D1BE1F3008C5C37 /* NORGlucoseReading.swift */,
 				3001EBBA1D1BE306008C5C37 /* NORCGMReading.swift */,
 				3001EBBE1D1BE727008C5C37 /* NORCGMSpecificOperations.swift */,
 				3001EBBC1D1BE695008C5C37 /* NORCGMFeatureData.swift */,
 				308AA5791CD8DD4300CC9857 /* NORGlucoseReadingContext.swift */,
-				3001432A1CEC6D2A008379DF /* NORBGMRecordAccess.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -556,7 +554,6 @@
 		A85667E31B2233A3004A6D3C /* MainViewController */ = {
 			isa = PBXGroup;
 			children = (
-				30921FD21CD0E7A5009CBDDE /* NORNavigationController.swift */,
 				30921FD41CD0EB55009CBDDE /* NORMainViewController.swift */,
 			);
 			path = MainViewController;
@@ -789,7 +786,6 @@
 				30A1145A1CD2426B000F0F02 /* NORScannerDelegate.swift in Sources */,
 				3069A1D71CDC788A003869EA /* NORBluetoothManager.swift in Sources */,
 				300508931CE1D75800D93BE0 /* NORProximityViewController.swift in Sources */,
-				30921FD31CD0E7A5009CBDDE /* NORNavigationController.swift in Sources */,
 				3042993D1CE6154100E1D2AB /* NORBaseViewController.swift in Sources */,
 				30A114561CD2367C000F0F02 /* NORScannedPeripheral.swift in Sources */,
 				309F08701E6FF1F900B7546A /* NORHKAccessoryViewController.swift in Sources */,

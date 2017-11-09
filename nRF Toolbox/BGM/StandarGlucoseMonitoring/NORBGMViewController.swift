@@ -78,7 +78,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     required init(coder aDecoder: NSCoder) {
         readings = NSMutableArray(capacity: 20)
         dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy, hh:mm"
+        dateFormatter.dateFormat = "dd.MM.yyyy, HH:mm"
         
         bgmServiceUUID                                  = CBUUID(string: NORServiceIdentifiers.bgmServiceUUIDString)
         bgmGlucoseMeasurementCharacteristicUUID         = CBUUID(string: NORServiceIdentifiers.bgmGlucoseMeasurementCharacteristicUUIDString)
@@ -125,10 +125,12 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     
     func clearUI() {
         readings?.removeAllObjects()
-        bgmTableView.reloadData()
-        deviceName.text = "DEFAULT_BGM"
-        battery.tag = 0
-        battery.setTitle("n/a", for: UIControlState.disabled)
+        DispatchQueue.main.async {
+            self.bgmTableView.reloadData()
+            self.deviceName.text = "DEFAULT_BGM"
+            self.battery.tag = 0
+            self.battery.setTitle("n/a", for: UIControlState.disabled)
+        }
     }
     
     func enableActionButton() {
@@ -239,15 +241,15 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
             
             DispatchQueue.main.async(execute: {
                 self.battery.setTitle(text, for: UIControlState.disabled)
-            })
-            if battery.tag == 0 {
-                // If battery level notifications are available, enable them
-                if characteristic.properties.contains(CBCharacteristicProperties.notify)
-                {
-                    battery.tag = 1; // mark that we have enabled notifications
-                    peripheral.setNotifyValue(true, for: characteristic)
+                if self.battery.tag == 0 {
+                    // If battery level notifications are available, enable them
+                    if characteristic.properties.contains(CBCharacteristicProperties.notify)
+                    {
+                        self.battery.tag = 1; // mark that we have enabled notifications
+                        peripheral.setNotifyValue(true, for: characteristic)
+                    }
                 }
-            }
+            })
             
         } else if characteristic.uuid.isEqual(bgmGlucoseMeasurementCharacteristicUUID) {
             print("New glucose reading")
@@ -326,23 +328,23 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     }
     
     func centralManagerDidSelectPeripheral(withManager aManager: CBCentralManager, andPeripheral aPeripheral: CBPeripheral) {
+        connectedPeripheral = aPeripheral
+        connectedPeripheral?.delegate = self
         bluetoothManager = aManager
         bluetoothManager?.delegate = self
-        
-        aPeripheral.delegate = self
         let options = NSDictionary(object: NSNumber(value: true as Bool), forKey: CBConnectPeripheralOptionNotifyOnNotificationKey as NSCopying)
         bluetoothManager?.connect(aPeripheral, options: options as? [String : AnyObject])
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+        connectedPeripheral = peripheral
+        peripheral.discoverServices([bgmServiceUUID, batteryServiceUUID])
         DispatchQueue.main.async {
             self.deviceName.text = peripheral.name
             self.connectButton.setTitle("DISCONNECT", for: UIControlState())
             self.enableActionButton()
             self.setupNotifications()
         }
-        connectedPeripheral = peripheral
-        peripheral.discoverServices([bgmServiceUUID, batteryServiceUUID])
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
@@ -467,7 +469,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "scan" {
             let navigationController = segue.destination as! UINavigationController
-            let controller = navigationController.childViewControllerForStatusBarHidden as! NORScannerViewController
+            let controller = navigationController.childViewControllers.first as! NORScannerViewController
             controller.filterUUID = bgmServiceUUID
             controller.delegate = self
         } else if segue.identifier == "details" {

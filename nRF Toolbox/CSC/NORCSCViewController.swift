@@ -89,7 +89,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         }
 
         let navigationController = segue.destination
-        let scannerViewController = navigationController.childViewControllerForStatusBarHidden as! NORScannerViewController
+        let scannerViewController = navigationController.childViewControllers.first as! NORScannerViewController
         scannerViewController.filterUUID = cscServiceUUID
         scannerViewController.delegate = self
     }

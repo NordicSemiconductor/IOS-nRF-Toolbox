@@ -149,7 +149,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
             // Show a view to select the file type
             let mainStorybord                   = UIStoryboard(name: "Main", bundle: nil)
             let navigationController            = mainStorybord.instantiateViewController(withIdentifier: "SelectFileType")
-            let filetTypeViewController         = navigationController.childViewControllerForStatusBarHidden as? NORFileTypeViewController
+            let filetTypeViewController         = navigationController.childViewControllers.first as? NORFileTypeViewController
             filetTypeViewController!.delegate   = self
             self.present(navigationController, animated: true, completion:nil)
         }
@@ -223,11 +223,11 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
             if (segue.identifier == "scan") {
                 // Set this contoller as scanner delegate
                 let aNavigationController = segue.destination as? UINavigationController
-                let scannerViewController = aNavigationController?.childViewControllerForStatusBarHidden as? NORScannerViewController
+                let scannerViewController = aNavigationController?.childViewControllers.first as? NORScannerViewController
                 scannerViewController?.delegate = self
             } else if segue.identifier == "FileSegue" {
                 let aNavigationController = segue.destination as? UINavigationController
-                let barViewController = aNavigationController?.childViewControllerForStatusBarHidden as? UITabBarController
+                let barViewController = aNavigationController?.childViewControllers.first as? UITabBarController
                 let appFilecsVC = barViewController?.viewControllers?.first as? NORAppFilesViewController
                 appFilecsVC?.fileDelegate = self
                 let userFilesVC = barViewController?.viewControllers?.last as? NORUserFilesViewController

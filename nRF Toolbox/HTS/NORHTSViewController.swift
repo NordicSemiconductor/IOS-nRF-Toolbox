@@ -80,7 +80,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         if segue.identifier == "scan" {
             // Set this contoller as scanner delegate
             let navigationController = segue.destination as! UINavigationController
-            let scannerController    = navigationController.childViewControllerForStatusBarHidden as! NORScannerViewController
+            let scannerController    = navigationController.childViewControllers.first as! NORScannerViewController
             scannerController.filterUUID = htsServiceUUID
             scannerController.delegate = self
         }
@@ -312,7 +312,9 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         bluetoothManager!.delegate = self
         
         // The sensor has been selected, connect to it
-        aPeripheral.delegate = self
+        connectedPeripheral = aPeripheral
+        connectedPeripheral?.delegate = self
+
         let options = [CBConnectPeripheralOptionNotifyOnNotificationKey : NSNumber(value: true as Bool)]
         bluetoothManager!.connect(aPeripheral, options: options)
     }
