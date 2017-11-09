@@ -2103,7 +2103,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DEVICE FIRMWARE UPDATE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5CN-hP-sI7">
-                                <rect key="frame" x="0.0" y="231" width="318" height="89"/>
+                                <rect key="frame" x="0.0" y="231" width="318" height="32"/>
                                 <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="27"/>
                                 <color key="textColor" red="0.66666666669999997" green="0.6705882353" blue="0.68627450980000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -2314,8 +2314,7 @@
                             <constraint firstAttribute="centerX" secondItem="hGd-vQ-1ZP" secondAttribute="centerX" id="KPm-8k-QM1"/>
                             <constraint firstItem="O9u-7t-r4K" firstAttribute="top" secondItem="zgI-eq-aFb" secondAttribute="bottom" constant="11" id="KSq-zU-Qky"/>
                             <constraint firstItem="spa-sH-2kC" firstAttribute="leading" secondItem="dWV-qC-ez4" secondAttribute="leadingMargin" constant="19" id="Kpn-D5-gOT"/>
-                            <constraint firstItem="O9u-7t-r4K" firstAttribute="top" secondItem="5CN-hP-sI7" secondAttribute="bottom" constant="3.5" id="KvB-EY-ccY"/>
-                            <constraint firstAttribute="centerY" secondItem="5CN-hP-sI7" secondAttribute="centerY" id="MO8-XY-kNG"/>
+                            <constraint firstAttribute="centerY" secondItem="5CN-hP-sI7" secondAttribute="centerY" constant="28.5" id="MO8-XY-kNG"/>
                             <constraint firstItem="zgI-eq-aFb" firstAttribute="top" secondItem="JLD-Gd-zCF" secondAttribute="bottom" id="NJF-zN-Ejb"/>
                             <constraint firstItem="fT7-zC-dbm" firstAttribute="top" secondItem="qcu-dM-eMJ" secondAttribute="bottom" constant="11" id="OAM-9q-goj"/>
                             <constraint firstAttribute="trailingMargin" secondItem="zgI-eq-aFb" secondAttribute="trailing" constant="14" id="Qmu-a8-WPo"/>
@@ -5748,7 +5747,7 @@
         <image name="userIcon" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="9aU-2l-xWz"/>
+        <segue reference="0i8-Ot-uid"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.60392159219999997" blue="0.85490196939999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
