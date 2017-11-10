@@ -63,7 +63,7 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
     override func viewDidLoad() {
         super.viewDidLoad()
         // Rotate the vertical label
-        self.verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: CGFloat(-M_PI_2));
+        self.verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: -.pi / 2);
         
         // Retrieve three arrays (icons names (NSString), commands (NSString), visibility(Bool)) from NSUserDefaults
         retrieveButtonsConfiguration()
@@ -90,7 +90,7 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
         
         // Set this contoller as scanner delegate
         let nc = segue.destination as! UINavigationController
-        let controller = nc.childViewControllerForStatusBarHidden as! NORScannerViewController
+        let controller = nc.childViewControllers.first as! NORScannerViewController
         // controller.filterUUID = CBUUID.init(string: NORServiceIdentifiers.uartServiceUUIDString)
         controller.delegate = self
     }
@@ -253,11 +253,11 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
         }
     }
 
-    func applicationDidEnterBackgroundCallback(){
+    @objc func applicationDidEnterBackgroundCallback(){
         NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(self.uartPeripheralName!)")
     }
     
-    func applicationDidBecomeActiveCallback(){
+    @objc func applicationDidBecomeActiveCallback(){
         UIApplication.shared.cancelAllLocalNotifications()
     }
     

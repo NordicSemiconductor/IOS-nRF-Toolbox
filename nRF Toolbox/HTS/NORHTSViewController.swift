@@ -80,7 +80,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         if segue.identifier == "scan" {
             // Set this contoller as scanner delegate
             let navigationController = segue.destination as! UINavigationController
-            let scannerController    = navigationController.childViewControllerForStatusBarHidden as! NORScannerViewController
+            let scannerController    = navigationController.childViewControllers.first as! NORScannerViewController
             scannerController.filterUUID = htsServiceUUID
             scannerController.delegate = self
         }
@@ -98,7 +98,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: CGFloat(-M_PI_2))
+        self.verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: -.pi / 2)
         self.updateUnits()
     }
 
@@ -312,7 +312,9 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         bluetoothManager!.delegate = self
         
         // The sensor has been selected, connect to it
-        aPeripheral.delegate = self
+        connectedPeripheral = aPeripheral
+        connectedPeripheral?.delegate = self
+
         let options = [CBConnectPeripheralOptionNotifyOnNotificationKey : NSNumber(value: true as Bool)]
         bluetoothManager!.connect(aPeripheral, options: options)
     }
@@ -329,12 +331,12 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         }
     }
     
-    func appDidEnterBackrgoundCallback() {
+    @objc func appDidEnterBackrgoundCallback() {
         let name = connectedPeripheral?.name ?? "peripheral"
         NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(name). It will collect data also in background.")
     }
     
-    func appDidBecomeActiveCallback() {
+    @objc func appDidBecomeActiveCallback() {
         UIApplication.shared.cancelAllLocalNotifications()
         self.updateUnits()
     }

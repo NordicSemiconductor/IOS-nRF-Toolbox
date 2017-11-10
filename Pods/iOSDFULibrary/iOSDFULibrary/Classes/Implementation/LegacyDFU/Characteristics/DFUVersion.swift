@@ -22,7 +22,7 @@
 
 import CoreBluetooth
 
-internal typealias VersionCallback = (_ major: Int, _ minor: Int) -> Void
+internal typealias VersionCallback = (_ major: UInt8, _ minor: UInt8) -> Void
 
 @objc internal class DFUVersion : NSObject, CBPeripheralDelegate {
     static let UUID = CBUUID(string: "00001534-1212-EFDE-1523-785FEABCD123")
@@ -38,7 +38,7 @@ internal typealias VersionCallback = (_ major: Int, _ minor: Int) -> Void
     private var report: ErrorCallback?
     
     internal var valid: Bool {
-        return characteristic.properties.contains(CBCharacteristicProperties.read)
+        return characteristic.properties.contains(.read)
     }
     
     // MARK: - Initialization
@@ -97,10 +97,8 @@ internal typealias VersionCallback = (_ major: Int, _ minor: Int) -> Void
             }
             
             // Read major and minor
-            var minor: Int = 0
-            var major: Int = 0
-            (data as NSData?)?.getBytes(&minor, range: NSRange(location: 0, length: 1))
-            (data as NSData?)?.getBytes(&major, range: NSRange(location: 1, length: 1))
+            let minor: UInt8 = data![0]
+            let major: UInt8 = data![1]
             
             logger.a("Version number read: \(major).\(minor)")
             success?(major, minor)

@@ -50,7 +50,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
     //MARK: - UIVIewControllerDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: CGFloat(-M_PI_2))
+        self.verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: -.pi / 2)
         
         if isImportingFile {
             isImportingFile = false
@@ -149,7 +149,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
             // Show a view to select the file type
             let mainStorybord                   = UIStoryboard(name: "Main", bundle: nil)
             let navigationController            = mainStorybord.instantiateViewController(withIdentifier: "SelectFileType")
-            let filetTypeViewController         = navigationController.childViewControllerForStatusBarHidden as? NORFileTypeViewController
+            let filetTypeViewController         = navigationController.childViewControllers.first as? NORFileTypeViewController
             filetTypeViewController!.delegate   = self
             self.present(navigationController, animated: true, completion:nil)
         }
@@ -223,11 +223,11 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
             if (segue.identifier == "scan") {
                 // Set this contoller as scanner delegate
                 let aNavigationController = segue.destination as? UINavigationController
-                let scannerViewController = aNavigationController?.childViewControllerForStatusBarHidden as? NORScannerViewController
+                let scannerViewController = aNavigationController?.childViewControllers.first as? NORScannerViewController
                 scannerViewController?.delegate = self
-            }else if segue.identifier == "FileSegue" {
+            } else if segue.identifier == "FileSegue" {
                 let aNavigationController = segue.destination as? UINavigationController
-                let barViewController = aNavigationController?.childViewControllerForStatusBarHidden as? UITabBarController
+                let barViewController = aNavigationController?.childViewControllers.first as? UITabBarController
                 let appFilecsVC = barViewController?.viewControllers?.first as? NORAppFilesViewController
                 appFilecsVC?.fileDelegate = self
                 let userFilesVC = barViewController?.viewControllers?.last as? NORUserFilesViewController
@@ -283,13 +283,13 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
         NotificationCenter.default.removeObserver(self, name:NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
     }
 
-    func applicationDidEnterBackgroundCallback() {
+    @objc func applicationDidEnterBackgroundCallback() {
         if dfuController != nil {
             NORDFUConstantsUtility.showBackgroundNotification(message: "Uploading firmware...")
         }
     }
     
-    func applicationDidBecomeActiveCallback() {
+    @objc func applicationDidBecomeActiveCallback() {
         UIApplication.shared.cancelAllLocalNotifications()
     }
 

@@ -67,7 +67,7 @@ class NORCGMDetailsViewController : UIViewController {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         dateFormat = DateFormatter()
-        dateFormat?.dateFormat = "dd.MM.yyy, hh:mm:ss"
+        dateFormat?.dateFormat = "dd.MM.yyy, HH:mm:ss"
     }
     
     //MARK: - UIViewController methods

@@ -98,50 +98,38 @@ internal enum SecureDFURequest {
     var data : Data {
         switch self {
         case .createDataObject(let aSize):
-            //Split to UInt8
-            let byteArray = stride(from: 24, through: 0, by: -8).map {
-                UInt8(truncatingBitPattern: aSize >> UInt32($0))
-            }
-            //Size is converted to Little Endian (0123 -> 3210)
-            let bytes:[UInt8] = [SecureDFUOpCode.createObject.code, SecureDFUProcedureType.data.rawValue, byteArray[3], byteArray[2], byteArray[1], byteArray[0]]
-            return Data(bytes: UnsafePointer<UInt8>(bytes), count: bytes.count)
+            var data = Data(bytes: [SecureDFUOpCode.createObject.code, SecureDFUProcedureType.data.rawValue])
+            data += aSize.littleEndian
+            return data
         case .createCommandObject(let aSize):
-            //Split to UInt8
-            let byteArray = stride(from: 24, through: 0, by: -8).map {
-                UInt8(truncatingBitPattern: aSize >> UInt32($0))
-            }
-            //Size is converted to Little Endian (0123 -> 3210)
-            let bytes:[UInt8] = [SecureDFUOpCode.createObject.code, SecureDFUProcedureType.command.rawValue, byteArray[3], byteArray[2], byteArray[1], byteArray[0]]
-            return Data(bytes: UnsafePointer<UInt8>(bytes), count: bytes.count)
+            var data = Data(bytes: [SecureDFUOpCode.createObject.code, SecureDFUProcedureType.command.rawValue])
+            data += aSize.littleEndian
+            return data
         case .readCommandObjectInfo:
-            let bytes:[UInt8] = [SecureDFUOpCode.readObjectInfo.code, SecureDFUProcedureType.command.rawValue]
-            return Data(bytes: UnsafePointer<UInt8>(bytes), count: bytes.count)
+            return Data(bytes: [SecureDFUOpCode.readObjectInfo.code, SecureDFUProcedureType.command.rawValue])
         case .readDataObjectInfo:
-            let bytes:[UInt8] = [SecureDFUOpCode.readObjectInfo.code, SecureDFUProcedureType.data.rawValue]
-            return Data(bytes: UnsafePointer<UInt8>(bytes), count: bytes.count)
+            return Data(bytes: [SecureDFUOpCode.readObjectInfo.code, SecureDFUProcedureType.data.rawValue])
         case .setPacketReceiptNotification(let aSize):
-            let byteArary:[UInt8] = [UInt8(aSize>>8), UInt8(aSize & 0x00FF)]
-            let bytes:[UInt8] = [SecureDFUOpCode.setPRNValue.code, byteArary[1], byteArary[0]]
-            return Data(bytes: UnsafePointer<UInt8>(bytes), count: bytes.count)
+            var data = Data(bytes: [SecureDFUOpCode.setPRNValue.code])
+            data += aSize.littleEndian
+            return data
         case .calculateChecksumCommand:
-            let byteArray:[UInt8] = [SecureDFUOpCode.calculateChecksum.code]
-            return Data(bytes: UnsafePointer<UInt8>(byteArray), count: byteArray.count)
+            return Data(bytes: [SecureDFUOpCode.calculateChecksum.code])
         case .executeCommand:
-            let byteArray:[UInt8] = [SecureDFUOpCode.execute.code]
-            return Data(bytes: UnsafePointer<UInt8>(byteArray), count: byteArray.count)
+            return Data(bytes: [SecureDFUOpCode.execute.code])
         }
     }
 
     var description : String {
         switch self {
-        case .createCommandObject(let size):  return "Create Command Object (Op Code = 1, Type = 1, Size: \(size)b)"
-        case .createDataObject(let size):     return "Create Data Object (Op Code = 1, Type = 2, Size: \(size)b)"
-        case .readCommandObjectInfo:        return "Read Command Object Info (Op Code = 6, Type = 1)"
-        case .readDataObjectInfo:           return "Read Data Object Info (Op Code = 6, Type = 2)"
+        case .createCommandObject(let size): return "Create Command Object (Op Code = 1, Type = 1, Size: \(size)b)"
+        case .createDataObject(let size):    return "Create Data Object (Op Code = 1, Type = 2, Size: \(size)b)"
+        case .readCommandObjectInfo:         return "Read Command Object Info (Op Code = 6, Type = 1)"
+        case .readDataObjectInfo:            return "Read Data Object Info (Op Code = 6, Type = 2)"
         case .setPacketReceiptNotification(let number):
-                                              return "Packet Receipt Notif Req (Op Code = 2, Value = \(number))"
-        case .calculateChecksumCommand:     return "Calculate Checksum (Op Code = 3)"
-        case .executeCommand:               return "Execute Object (Op Code = 4)"
+                                             return "Packet Receipt Notif Req (Op Code = 2, Value = \(number))"
+        case .calculateChecksumCommand:      return "Calculate Checksum (Op Code = 3)"
+        case .executeCommand:                return "Execute Object (Op Code = 4)"
         }
     }
 }
@@ -192,16 +180,9 @@ internal struct SecureDFUResponse {
     let error         : SecureDFUExtendedErrorCode?
     
     init?(_ data: Data) {
-        var opCode        : UInt8 = 0
-        var requestOpCode : UInt8 = 0
-        var status        : UInt8 = 0
-        
-        // The correct response is at least 3 bytes long: Response Op Code, Request Op Code and Status
-        if data.count >= 3 {
-            (data as NSData).getBytes(&opCode, range: NSRange(location: 0, length: 1))
-            (data as NSData).getBytes(&requestOpCode, range: NSRange(location: 1, length: 1))
-            (data as NSData).getBytes(&status, range: NSRange(location: 2, length: 1))
-        }
+        let opCode        : UInt8 = data[0]
+        let requestOpCode : UInt8 = data[1]
+        let status        : UInt8 = data[2]
         
         self.opCode        = SecureDFUOpCode(rawValue: opCode)
         self.requestOpCode = SecureDFUOpCode(rawValue: requestOpCode)
@@ -211,30 +192,19 @@ internal struct SecureDFUResponse {
         if self.status == .success {
             switch self.requestOpCode {
             case .some(.readObjectInfo):
-                var maxSize : UInt32 = 0
-                var offset  : UInt32 = 0
-                var crc     : UInt32 = 0
-                
                 // The correct reponse for Read Object Info has additional 12 bytes: Max Object Size, Offset and CRC
-                if data.count == 3 + 3 * 4 {
-                    (data as NSData).getBytes(&maxSize, range: NSRange(location: 3, length: 4))
-                    (data as NSData).getBytes(&offset, range: NSRange(location: 7, length: 4))
-                    (data as NSData).getBytes(&crc, range: NSRange(location: 11, length: 4))
-                }
+                let maxSize : UInt32 = data.subdata(in: 3  ..<  7).withUnsafeBytes { $0.pointee }
+                let offset  : UInt32 = data.subdata(in: 7  ..< 11).withUnsafeBytes { $0.pointee }
+                let crc     : UInt32 = data.subdata(in: 11 ..< 15).withUnsafeBytes { $0.pointee }
                 
                 self.maxSize = maxSize
                 self.offset  = offset
                 self.crc     = crc
                 self.error   = nil
             case .some(.calculateChecksum):
-                var offset : UInt32 = 0
-                var crc    : UInt32 = 0
-                
                 // The correct reponse for Calculate Checksum has additional 8 bytes: Offset and CRC
-                if data.count == 3 + 2 * 4 {
-                    (data as NSData).getBytes(&offset, range: NSRange(location: 3, length: 4))
-                    (data as NSData).getBytes(&crc, range: NSRange(location: 7, length: 4))
-                }
+                let offset : UInt32 = data.subdata(in: 3  ..<  7).withUnsafeBytes { $0.pointee }
+                let crc    : UInt32 = data.subdata(in: 7  ..< 11).withUnsafeBytes { $0.pointee }
                 
                 self.maxSize = 0
                 self.offset  = offset
@@ -248,12 +218,8 @@ internal struct SecureDFUResponse {
             }
         } else if self.status == .extendedError {
             // If extended error was received, parse the extended error code
-            var error : UInt8 = 0
-            
             // The correct response for Read Error request has 4 bytes. The 4th byte is the extended error code
-            if data.count == 4 {
-                (data as NSData).getBytes(&error, range: NSRange(location: 3, length: 1))
-            }
+            let error : UInt8 = data[3]
             
             self.maxSize = 0
             self.offset  = 0
@@ -302,13 +268,9 @@ internal struct SecureDFUPacketReceiptNotification {
     let crc           : UInt32
 
     init?(_ data: Data) {
-        var opCode        : UInt8 = 0
-        var requestOpCode : UInt8 = 0
-        var resultCode    : UInt8 = 0
-
-        (data as NSData).getBytes(&opCode, range: NSRange(location: 0, length: 1))
-        (data as NSData).getBytes(&requestOpCode, range: NSRange(location: 1, length: 1))
-        (data as NSData).getBytes(&resultCode, range: NSRange(location: 2, length: 1))
+        let opCode        : UInt8 = data[0]
+        let requestOpCode : UInt8 = data[1]
+        let resultCode    : UInt8 = data[2]
 
         self.opCode         = SecureDFUOpCode(rawValue: opCode)
         self.requestOpCode  = SecureDFUOpCode(rawValue: requestOpCode)
@@ -323,14 +285,12 @@ internal struct SecureDFUPacketReceiptNotification {
         if self.resultCode != .success {
             return nil
         }
-
-        var offsetResult: UInt32 = 0
-        (data as NSData).getBytes(&offsetResult, range: NSRange(location: 3, length: 4))
-        self.offset = offsetResult
         
-        var crcResult: UInt32 = 0
-        (data as NSData).getBytes(&crcResult, range: NSRange(location: 7, length: 4))
-        self.crc = crcResult
+        let offset : UInt32 = data.subdata(in: 3  ..<  7).withUnsafeBytes { $0.pointee }
+        let crc    : UInt32 = data.subdata(in: 7  ..< 11).withUnsafeBytes { $0.pointee }
+
+        self.offset = offset
+        self.crc = crc
     }
 }
 
@@ -350,7 +310,7 @@ internal class SecureDFUControlPoint : NSObject, CBPeripheralDelegate {
     private var report:   ErrorCallback?
 
     internal var valid: Bool {
-        return characteristic.properties.isSuperset(of: [CBCharacteristicProperties.write, CBCharacteristicProperties.notify])
+        return characteristic.properties.isSuperset(of: [.write, .notify])
     }
     
     // MARK: - Initialization

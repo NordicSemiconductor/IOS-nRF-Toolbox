@@ -14,21 +14,21 @@
 
 [![Version](https://img.shields.io/cocoapods/v/EVReflection.svg?style=flat)](http://cocoadocs.org/docsets/EVReflection)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Language](https://img.shields.io/badge/language-swift 3-f48041.svg?style=flat)](https://developer.apple.com/swift)
+[![Language](https://img.shields.io/badge/language-swift%204-f48041.svg?style=flat)](https://developer.apple.com/swift)
 [![Platform](https://img.shields.io/cocoapods/p/EVReflection.svg?style=flat)](http://cocoadocs.org/docsets/EVReflection)
 [![License](https://img.shields.io/cocoapods/l/EVReflection.svg?style=flat)](http://cocoadocs.org/docsets/EVReflection)
 
 [![Git](https://img.shields.io/badge/GitHub-evermeer-blue.svg?style=flat)](https://github.com/evermeer)
 [![Twitter](https://img.shields.io/badge/twitter-@evermeer-blue.svg?style=flat)](http://twitter.com/evermeer)
-[![LinkedIn](https://img.shields.io/badge/linkedin-Edwin Vermeer-blue.svg?style=flat)](http://nl.linkedin.com/in/evermeer/en)
+[![LinkedIn](https://img.shields.io/badge/linkedin-Edwin%20Vermeer-blue.svg?style=flat)](http://nl.linkedin.com/in/evermeer/en)
 [![Website](https://img.shields.io/badge/website-evict.nl-blue.svg?style=flat)](http://evict.nl)
-[![eMail](https://img.shields.io/badge/email-edwin@evict.nl-blue.svg?style=flat)](mailto:edwin@evict.nl?SUBJECT=About EVReflection)
+[![eMail](https://img.shields.io/badge/email-edwin@evict.nl-blue.svg?style=flat)](mailto:edwin@evict.nl?SUBJECT=About%20EVReflection)
 
 # General information
 
 If you have a question and don't want to create an issue, then we can [![Join the chat at https://gitter.im/evermeer/EVReflection](https://badges.gitter.im/evermeer/EVReflection.svg)](https://gitter.im/evermeer/EVReflection?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-At this moment the master branch is for Swift 3. If you want to continue using EVReflection in Swift 2.2 (or 2.3) then switch to the Swift2.2 or Swift2.3 branch.
+At this moment the master branch is for Swift 4.0 If you want to continue using EVReflection in an older version, then use the corresponding branch.
 Run the unit tests to see EVReflection in action.
 
 EVReflection is used in [EVCloudKitDao](https://github.com/evermeer/EVCloudKitDao) and [EVWordPressAPI](https://github.com/evermeer/EVWordPressAPI)
@@ -40,6 +40,8 @@ There are extension available for using EVReflection with [XMLDictionairy](https
 
 - [XML](https://github.com/evermeer/EVReflection/tree/master/Source/XML)
 - [CloudKit](https://github.com/evermeer/EVReflection/tree/master/Source/CloudKit)
+- [CoreData](https://github.com/evermeer/EVReflection/tree/master/Source/CoreData)
+- [Realm](https://github.com/evermeer/EVReflection/tree/master/Source/Realm)
 - [Alamofire](https://github.com/evermeer/EVReflection/tree/master/Source/Alamofire)
 - [AlamofireXML](https://github.com/evermeer/EVReflection/tree/master/Source/XML)
 - [Moya](https://github.com/evermeer/EVReflection/tree/master/Source/Alamofire/Moya)
@@ -52,7 +54,14 @@ There are extension available for using EVReflection with [XMLDictionairy](https
 All these extens can be installed by adding something like this in your podfile:
 
 ```
-pod 'EVReflection/MoyaRxSwift'
+pod 'EVReflection/MoyaRxSwift', :git => 'https://github.com/evermeer/EVReflection.git'
+```
+
+
+p.s. When using Moya, then for the moment you need to specify a version 10 branch to use in your podfile like this:
+
+```
+pod 'Moya', :git => 'https://github.com/Moya/Moya.git', :branch => '10.0.0-dev'
 ```
 
 ## Index
@@ -70,8 +79,11 @@ pod 'EVReflection/MoyaRxSwift'
 - [Custom keyword mapping](https://github.com/evermeer/EVReflection#custom-keyword-mapping)
 - [Custom property converters](https://github.com/evermeer/EVReflection#custom-property-converters)
 - [Custom object converter](https://github.com/evermeer/EVReflection#custom-object-converter)
+- [Custom type converters](https://github.com/evermeer/EVReflection#custom-type-converter)
+- [Encoding and Decoding](https://github.com/evermeer/EVReflection#encoding-and-decoding)
 - [Skip the serialization or deserialization of specific values](https://github.com/evermeer/EVReflection#skip-the-serialization-or-deserialization-of-specific-values)
 - [Property validators](https://github.com/evermeer/EVReflection#property-validators)
+- [Print options](https://github.com/evermeer/EVReflection#print-options)
 - [Deserialization class level validations](https://github.com/evermeer/EVReflection#deserialization-class-level-validations)
 - [What to do when you use object inheritance](https://github.com/evermeer/EVReflection#what-to-do-when-you-use-object-inheritance)
 - [Known issues](https://github.com/evermeer/EVReflection#known-issues)
@@ -252,13 +264,12 @@ If you want to parse XML, then you can use the pod subxpec EVReflection/XML
 ```
 
 ## Extending existing objects:
-It is possible to extend other objects with the EVReflectable protocol instead of changing the base class to EVObject. This will let you add the power of EVReflection to objects that also need another framework. If for instance you are using Realm, you can extend all your Object classes with the power of EVReflection by only adding these lines of code:
+It is possible to extend other objects with the EVReflectable protocol instead of changing the base class to EVObject. This will let you add the power of EVReflection to objects that also need another framework. In some cases you still need some aditional code. For a sample see the Realm and NSManagedObject subspecs. The most basic way to extend your objects is like this:
 
 ```swift
 import EVReflection
-extension Object : EVReflectable { }
+extension MyObject : EVReflectable { }
 ```
-You can do the same with NSManagedObject
 
 ## Extra information:
 
@@ -270,12 +281,14 @@ With almost any EVReflection function you can specify what kind of conversion op
 - [PropertyMapping](https://github.com/evermeer/EVReflection#custom-keyword-mapping) : If specified the function propertyMapping on the EVObject will be called
 - [SkipPropertyValue](https://github.com/evermeer/EVReflection#skip-the-serialization-or-deserialization-of-specific-values) : If specified the function skipPropertyValue on the EVObject will be called
 - [KeyCleanup](https://github.com/evermeer/EVReflection#automatic-keyword-mapping-pascalcase-or-camelcase-to-snake_case) : If specified the automatic pascalCase and snake_case property key mapping will be called.
+- [Encoding](https://github.com/evermeer/EVReflection#encoding-and-decoding) : For if you want class level functionality for encoding values (like base64, unicode, encription, ...)
+- [Decoding](https://github.com/evermeer/EVReflection#encoding-and-decoding) : For if you want class level functionality for decoding values (like base64, unicode, encription, ...)
 
 In EVReflection all functions will use a default conversion option specific to it's function. The following 4 default conversion types are used: 
 - DefaultNSCoding = [None]
 - DefaultComparing = [PropertyConverter, PropertyMapping, SkipPropertyValue]
-- DefaultDeserialize = [PropertyConverter, PropertyMapping, SkipPropertyValue, KeyCleanup]
-- DefaultSerialize = [PropertyConverter, PropertyMapping, SkipPropertyValue]
+- DefaultDeserialize = [PropertyConverter, PropertyMapping, SkipPropertyValue, KeyCleanup, Decoding]
+- DefaultSerialize = [PropertyConverter, PropertyMapping, SkipPropertyValue, Encoding]
 
 If you want to change one of the default conversion types, then you can do that using something like:
 ```swift
@@ -291,7 +304,7 @@ If you have JSON fields that are Swift keywords, then prefix the property with a
 ### Automatic keyword mapping PascalCase or camelCase to snake_case
 When creating objects from JSON EVReflection will automatically detect if snake_case (keys are all lowercase and words are separated by an underscore) should be converted to PascalCase or camelCase property names. See [Conversion options](https://github.com/evermeer/EVReflection#conversion-options) for when this function will be called.
 
-When exporting object to a dictionary or JSON string you will have an option to specify that you want a conversion to snace_case or not. The default is .DefaultDeserialize which will also convert to snake case.
+When exporting object to a dictionary or JSON string you will have an option to specify that you want a conversion to snake_case or not. The default is .DefaultDeserialize which will also convert to snake case.
 
 ```swift
 let jsonString = myObject.toJsonString([.DefaultSerialize])
@@ -333,6 +346,39 @@ public class TestObject6: EVObject {
 }
 ```
 
+### Encoding and decoding
+You can add generic cod to encode or decode multiple or all properties in an object. This can be used for instance for base64, unicode and encription. Here is a base64 sample:
+
+```swift
+class SimleEncodingDecodingObject : EVObject{
+    var firstName: String?
+    var lastName: String?
+    var street: String?
+    var city: String?
+
+    override func decodePropertyValue(value: Any, key: String) -> Any? {
+        return (value as? String)?.base64Decoded?.string ?? value
+    }
+
+    override func encodePropertyValue(value: Any, key: String) -> Any {
+        return (value as? String)?.base64Encoded.string ?? value
+    }
+}
+
+
+extension String {
+var data:          Data  { return Data(utf8) }
+var base64Encoded: Data  { return data.base64EncodedData() }
+var base64Decoded: Data? { return Data(base64Encoded: self) }
+}
+
+extension Data {
+var string: String? { return String(data: self, encoding: .utf8) }
+}
+```
+
+
+
 ### Custom object converter
 If you want to serialize an object to a dictionary or json but the structure should be different than the object itself, then instead of using propertyConverers, you can also convert the entire object by implementing the customConverter function. In the example below the entire object will be serialized to just a string. You could also return a dictionary that represents the custom structure or an array if the object should have been an array
 
@@ -341,6 +387,31 @@ override func customConverter() -> AnyObject? {
     return "Object not serialized"
 }
 ```
+
+
+### Custom type converter
+If you have a custom type that requires special conversion, then you can extend it with the EVCustomReflectable protocol. A good implementation for this can be found in the Realm subspec for the List type. The converter is implemented like this:
+
+```swift
+extension List : EVCustomReflectable {
+    public func constructWith(value: Any?) {
+        if let array = value as? [NSDictionary] {
+            self.removeAll()
+            for dict in array {
+                if let element: T = EVReflection.fromDictionary(dict, anyobjectTypeString: _rlmArray.objectClassName) as? T {
+                    self.append(element)
+                }
+            }
+        }
+    }
+    public func toCodableValue() -> Any {
+        return self.enumerated().map { ($0.element as? EVReflectable)?.toDictionary() ?? NSDictionary() }
+    }
+}
+```
+
+For the usage, please have a look at [the Realm unittest](https://github.com/evermeer/EVReflection/blob/master/UnitTests/RealmTests/RealmTests.swift)
+
 
 ### Skip the serialization or deserialization of specific values
 When there is a need to not (de)serialize specific values like nil NSNull or empty strings you can implement the skipPropertyValue function and return true if the value needs to be skipped. See [Conversion options](https://github.com/evermeer/EVReflection#conversion-options) for when this function will be called.
@@ -396,6 +467,26 @@ public class GameUser: EVObject {
 }
 ```
 
+### Print options
+You should be able to solve all problems with parsing your json to an object. If you get warnings and you know they don't matter and you want to stop them from printin you can suppress all print warings by calling the followin line of code:
+
+```swift
+PrintOptions.Active = .None
+```
+
+If you then want to turn on the print output, then just call:
+
+```
+PrintOptions.Active = .All
+```
+
+It's also possible to enable printing for specific warning types. Here is the line of code that is equal to setting it to .All. Just leave out the type that you want to suppress.
+
+```
+PrintOptions.Active = [.UnknownKeypath, .IncorrectKey, .ShouldExtendNSObject, .IsInvalidJson, .MissingProtocol, .MissingKey, .InvalidType, .InvalidValue, .InvalidClass, .EnumWithoutAssociatedValue]
+```
+
+
 ### Deserialization class level validations
 There is also support for class level validation when deserializing to an object. There are helper functions for making keys required or not allowed. You can also add custom messages. Here is some sample code about how you can implement such a validation
 
@@ -443,7 +534,7 @@ class Foo: EVObject {
     var allFoo: String = "all Foo"
 
     // What you need to do to get the correct type for when you deserialize inherited classes
-    override func getSpecificType(dict: NSDictionary) -> EVObject {
+    override func getSpecificType(_ dict: NSDictionary) -> EVReflectable {
         if dict["justBar"] != nil {
             return Bar()
         } else if dict["justBaz"] != nil {
@@ -466,7 +557,7 @@ class Baz: Foo {
 ### Known issues
 EVReflection is trying to handle all types. With some types there are limitations in Swift. So far there is a workaround for any of these limitations. Here is an overview:
 
-####It's not possible in Swift to use .setObjectForKey for:
+#### It's not possible in Swift to use .setObjectForKey for:
 - nullable type fields like Int? 
 - properties based on an enum
 - an Array of nullable objects like [MyObject?] 
@@ -485,13 +576,13 @@ For all these issues there are workarounds. The easiest workaround is just using
 
 If you want to keep on using the same type, You can override the setValue forUndefinedKey in the object itself. See WorkaroundsTests.swift and WorkaroundSwiftGenericsTests.swift to see the workaround for all these types in action. 
 
-####Generic properties
+#### Generic properties
 For generic properties the protocol EVGenericsKVC is required. see WorkaroundSwiftGenericsTests.swift 
 
-####Arrays with nullable objects or Set's
+#### Arrays with nullable objects or Set's
 For arrays with nullable objects or Set's like [MyObj?] or Set<MyObj> the protocol EVArrayConvertable is required. see WorkaroundsTests.swift
 
-####Swift Dictionaries
+#### Swift Dictionaries
 For Swift Dictionaries (and not NSDictionary) the protocol EVDictionaryConvertable is required. See WorkaroundsTests.swift
 
 ## License

@@ -39,7 +39,7 @@ import CoreBluetooth
      next Packet Receipt Notification. Otherwise it will continue to send Op Codes and pause before sending the first bytes
      of the firmware. With Packet Receipt Notifications disabled it is the only moment when upload may be paused.
      */
-    public func pause() {
+    @objc public func pause() {
         guard let executor = executor, !servicePaused, !serviceAborted else { return }
         if executor.pause() {
             servicePaused = true
@@ -49,7 +49,7 @@ import CoreBluetooth
     /**
      Call this method to resume the paused transffer, otherwise does nothing.
      */
-    public func resume() {
+    @objc public func resume() {
         guard let executor = executor, servicePaused, !serviceAborted else { return }
         if executor.resume() {
             servicePaused = false
@@ -67,7 +67,7 @@ import CoreBluetooth
      
      - returns: true if DFU has been aborted.
      */
-    public func abort() -> Bool {
+    @objc public func abort() -> Bool {
         guard let executor = executor, !serviceAborted else { return serviceAborted }
         serviceAborted = true
         servicePaused = false
@@ -77,7 +77,7 @@ import CoreBluetooth
     /**
      Starts again aborted DFU operation.
      */
-    public func restart() {
+    @objc public func restart() {
         guard let executor = executor, serviceAborted else { return }
         serviceAborted = false
         servicePaused = false
@@ -87,14 +87,14 @@ import CoreBluetooth
     /**
      Returns true if DFU operation has been paused.
      */
-    public var paused: Bool {
+    @objc public var paused: Bool {
         return servicePaused
     }
     
     /**
      Returns true if DFU operation has been aborted.
      */
-    public var aborted: Bool {
+    @objc public var aborted: Bool {
         return serviceAborted
     }
 }
