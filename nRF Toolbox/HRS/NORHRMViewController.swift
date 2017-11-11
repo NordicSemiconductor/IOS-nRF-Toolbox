@@ -95,7 +95,7 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     override func viewDidLoad() {
         super.viewDidLoad()
         // Rotate the vertical label
-        verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: CGFloat(-M_PI_2))
+        verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: -.pi / 2)
         isBluetoothOn           = false
         isDeviceConnected       = false
         isBackButtonPressed     = false
@@ -474,12 +474,12 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     }
     
     //MARK: - UIApplicationDelegate callbacks
-    func appDidEnterBackgroundCallback() {
+    @objc func appDidEnterBackgroundCallback() {
         let name = peripheral?.name ?? "peripheral"
         NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(name). It will collect data also in background.")
     }
     
-    func appDidBecomeActiveCallback() {
+    @objc func appDidBecomeActiveCallback() {
         UIApplication.shared.cancelAllLocalNotifications()
     }
     
@@ -493,7 +493,7 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         if segue.identifier == "scan" {
             // Set this contoller as scanner delegate
             let nc                = segue.destination as! UINavigationController
-            let controller        = nc.childViewControllerForStatusBarHidden as! NORScannerViewController
+            let controller        = nc.childViewControllers.first as! NORScannerViewController
             controller.filterUUID = hrServiceUUID
             controller.delegate   = self
         }

@@ -245,7 +245,10 @@ class NORGlucoseReadingContext: NSObject {
     }
     
     override func isEqual(_ object: Any?) -> Bool {
-        let reading = object as! NORGlucoseReadingContext
-        return self.sequenceNumber == reading.sequenceNumber!
+        if object is NORGlucoseReading {
+            return (object as? NORGlucoseReading)?.sequenceNumber == self.sequenceNumber
+        } else {
+            return (object as? NORGlucoseReadingContext)?.sequenceNumber == self.sequenceNumber
+        }
     }
 }

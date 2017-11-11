@@ -29,7 +29,7 @@ internal class DFUPacket {
         return characteristic.uuid.isEqual(UUID)
     }
     
-    private let PacketSize: UInt32 = 20
+    private let packetSize: UInt32 = 20 // Legacy DFU does not support higher MTUs
     
     private var characteristic: CBCharacteristic
     private var logger: LoggerHelper
@@ -45,7 +45,7 @@ internal class DFUPacket {
     private var lastTime:  CFAbsoluteTime?
     
     internal var valid: Bool {
-        return characteristic.properties.contains(CBCharacteristicProperties.writeWithoutResponse)
+        return characteristic.properties.contains(.writeWithoutResponse)
     }
     
     init(_ characteristic: CBCharacteristic, _ logger: LoggerHelper) {
@@ -64,35 +64,14 @@ internal class DFUPacket {
         // Get the peripheral object
         let peripheral = characteristic.service.peripheral
         
-        var data     = Data(capacity: 12)
-        let sdSize   = size.softdevice.littleEndian
-        let blSize   = size.bootloader.littleEndian
-        let appSize  = size.application.littleEndian
-        let sdArray  = convertLittleEndianToByteArray(littleEndian: sdSize)
-        let blArray  = convertLittleEndianToByteArray(littleEndian: blSize)
-        let appArray = convertLittleEndianToByteArray(littleEndian: appSize)
-        data.append(sdArray, count:4)
-        data.append(blArray, count:4)
-        data.append(appArray, count:4)
-
+        var data = Data(capacity: 12)
+        data += size.softdevice.littleEndian
+        data += size.bootloader.littleEndian
+        data += size.application.littleEndian
+        
         logger.v("Writing image sizes (\(size.softdevice)b, \(size.bootloader)b, \(size.application)b) to characteristic \(DFUPacket.UUID.uuidString)...")
         logger.d("peripheral.writeValue(0x\(data.hexString), for: \(DFUPacket.UUID.uuidString), type: .withoutResponse)")
         peripheral.writeValue(data, for: characteristic, type: .withoutResponse)
-    }
-    
-    /**
-     Converts an UInt32 variable to an array of 4 UInt8 entries
-     - parameter UInt32: The littleEndian value to convers
-     */
-    private func convertLittleEndianToByteArray(littleEndian : UInt32) -> [UInt8] {
-        var littleEndian = littleEndian
-        let count = MemoryLayout<UInt32>.size
-        let bytePtr = withUnsafePointer(to: &littleEndian) {
-            $0.withMemoryRebound(to: UInt8.self, capacity: count) {
-                UnsafeBufferPointer(start: $0, count: count)
-            }
-        }
-        return Array(bytePtr)
     }
 
     /**
@@ -104,10 +83,9 @@ internal class DFUPacket {
         // Get the peripheral object
         let peripheral = characteristic.service.peripheral
         
-        var data     = Data(capacity: 4)
-        let appSize  = size.application.littleEndian
-        let appArray = convertLittleEndianToByteArray(littleEndian: appSize)
-        data.append(appArray, count:4)
+        var data = Data(capacity: 4)
+        data += size.application.littleEndian
+        
         logger.v("Writing image size (\(size.application)b) to characteristic \(DFUPacket.UUID.uuidString)...")
         logger.d("peripheral.writeValue(0x\(data.hexString), for: \(DFUPacket.UUID.uuidString), type: .withoutResponse)")
         peripheral.writeValue(data, for: characteristic, type: .withoutResponse)
@@ -127,7 +105,7 @@ internal class DFUPacket {
         var bytesToSend = UInt32(data.count)
         
         repeat {
-            let packetLength = min(bytesToSend, PacketSize)
+            let packetLength = min(bytesToSend, packetSize)
             let packet = data.subdata(in: Int(offset) ..< Int(offset + packetLength))
             logger.v("Writing to characteristic \(DFUPacket.UUID.uuidString)...")
             logger.d("peripheral.writeValue(0x\(packet.hexString), for: \(DFUPacket.UUID.uuidString), type: .withoutResponse)")
@@ -142,24 +120,24 @@ internal class DFUPacket {
      Sends next number of packets from given firmware data and reports a progress.
      This method does not notify progress delegate twice about the same percentage.
      
-     - parameter number:           number of packets to be sent before a Packet Receipt Notification is expected.
+     - parameter aPRNValue:         number of packets to be sent before a Packet Receipt Notification is expected
      Set to 0 to disable Packet Receipt Notification procedure (not recommended)
      - parameter aFirmware:         the firmware to be sent
      - parameter aProgressDelegate: an optional progress delegate
      */
-    func sendNext(_ number: UInt16, packetsOf aFirmware: DFUFirmware, andReportProgressTo aProgressDelegate: DFUProgressDelegate?) {
+    func sendNext(_ aPRNValue: UInt16, packetsOf aFirmware: DFUFirmware, andReportProgressTo aProgressDelegate: DFUProgressDelegate?) {
         // Get the peripheral object
         let peripheral = characteristic.service.peripheral
         
         // Some super complicated computations...
         let bytesTotal   = UInt32(aFirmware.data.count)
-        let totalPackets = (bytesTotal + PacketSize - 1) / PacketSize
-        let packetsSent  = (bytesSent + PacketSize - 1) / PacketSize
+        let totalPackets = (bytesTotal + packetSize - 1) / packetSize
+        let packetsSent  = (bytesSent + packetSize - 1) / packetSize
         let packetsLeft  = totalPackets - packetsSent
         
         // Calculate how many packets should be sent before EOF or next receipt notification
-        var packetsToSendNow = min(UInt32(number), packetsLeft)
-        if number == 0 {
+        var packetsToSendNow = min(UInt32(aPRNValue), packetsLeft)
+        if aPRNValue == 0 {
             // When Packet Receipt Notification procedure is disabled, the service will send all data here
             packetsToSendNow = totalPackets
         }
@@ -182,7 +160,7 @@ internal class DFUPacket {
         
         while packetsToSendNow > 0 {
             let bytesLeft    = bytesTotal - bytesSent
-            let packetLength = min(bytesLeft, PacketSize)
+            let packetLength = min(bytesLeft, packetSize)
             let packet       = aFirmware.data.subdata(in: Int(bytesSent) ..< Int(bytesSent + packetLength))
             peripheral.writeValue(packet, for: characteristic, type: .withoutResponse)
             

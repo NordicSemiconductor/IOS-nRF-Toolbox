@@ -56,17 +56,17 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: CGFloat(-M_PI_2));
+        self.verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: -.pi / 2);
     }
     
     //MARK: - NORBPMViewController Implementation
     
-    func didEnterBackgroundCallback(notification aNotification: Notification) {
+    @objc func didEnterBackgroundCallback(notification aNotification: Notification) {
         let name = connectedPeripheral?.name ?? "peripheral"
         NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(name). It will collect data also in background.")
     }
     
-    func didBecomeActiveCallback(notification aNotification: Notification) {
+    @objc func didBecomeActiveCallback(notification aNotification: Notification) {
         UIApplication.shared.cancelAllLocalNotifications()
     }
     
@@ -90,10 +90,11 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     
     func centralManagerDidSelectPeripheral(withManager aManager: CBCentralManager, andPeripheral aPeripheral: CBPeripheral) {
         clearUI()
+        connectedPeripheral = aPeripheral
+        connectedPeripheral?.delegate = self
         bluetoothManager = aManager
         bluetoothManager?.delegate = self
-        
-        aPeripheral.delegate = self
+
         let connectionOptions = NSDictionary(object: NSNumber(value: true as Bool), forKey: CBConnectPeripheralOptionNotifyOnNotificationKey as NSCopying)
         bluetoothManager?.connect(aPeripheral, options: connectionOptions as? [String : AnyObject])
     }
@@ -291,7 +292,7 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "scan" {
             let nc = segue.destination as! UINavigationController
-            let controller = nc.childViewControllerForStatusBarHidden as! NORScannerViewController
+            let controller = nc.childViewControllers.first as! NORScannerViewController
             controller.filterUUID = bpmServiceUUID
             controller.delegate = self
         }

@@ -81,7 +81,7 @@ import CoreBluetooth
     func resume() -> Bool {
         if !aborted && paused && firmware != nil {
             paused = false
-            dfuPacketCharacteristic!.sendNext(packetReceiptNotificationNumber, bytesFrom: range!, of: firmware!,
+            dfuPacketCharacteristic!.sendNext(packetReceiptNotificationNumber, packetsFrom: range!, of: firmware!,
                                               andReportProgressTo: progressDelegate, andCompletionTo: success!)
             return paused
         }
@@ -140,9 +140,9 @@ import CoreBluetooth
      */
     func enableControlPoint(onSuccess success: @escaping Callback, onError report: @escaping ErrorCallback) {
         if !aborted {
-            // Support for experimental Buttonless DFU Service from SDK 12.x
-            if experimentalButtonlessDfuCharacteristic != nil {
-                experimentalButtonlessDfuCharacteristic!.enableNotifications(onSuccess: success, onError: report)
+            // Support for Buttonless DFU Service
+            if buttonlessDfuCharacteristic != nil {
+                buttonlessDfuCharacteristic!.enable(onSuccess: success, onError: report)
                 return
             }
             // End
@@ -322,13 +322,13 @@ import CoreBluetooth
             self.progressDelegate = nil
             self.dfuControlPointCharacteristic!.peripheralDidReceiveObject()
             success()
-        }
+        } as Callback
 
         dfuControlPointCharacteristic!.waitUntilUploadComplete(onSuccess: self.success!, onPacketReceiptNofitication: { bytesReceived in
                 if !self.paused && !self.aborted {
                     let bytesSent = self.dfuPacketCharacteristic!.bytesSent + UInt32(aRange.lowerBound)
                     if bytesSent == bytesReceived {
-                        self.dfuPacketCharacteristic!.sendNext(self.packetReceiptNotificationNumber, bytesFrom: aRange, of: aFirmware,
+                        self.dfuPacketCharacteristic!.sendNext(self.packetReceiptNotificationNumber, packetsFrom: aRange, of: aFirmware,
                                                                andReportProgressTo: progressDelegate, andCompletionTo: self.success!)
                     } else {
                         // Target device deported invalid number of bytes received
@@ -350,7 +350,7 @@ import CoreBluetooth
         
         if !paused && !aborted {
             // ...and start sending firmware if
-            dfuPacketCharacteristic!.sendNext(packetReceiptNotificationNumber, bytesFrom: aRange, of: aFirmware,
+            dfuPacketCharacteristic!.sendNext(packetReceiptNotificationNumber, packetsFrom: aRange, of: aFirmware,
                                                    andReportProgressTo: progressDelegate, andCompletionTo: self.success!)
         } else if aborted {
             self.firmware = nil
@@ -385,9 +385,11 @@ import CoreBluetooth
                 } else if SecureDFUControlPoint.matches(characteristic) {
                     dfuControlPointCharacteristic = SecureDFUControlPoint(characteristic, logger)
                 }
-                // Support for experimental Buttonless DFU Service from SDK 12.x
-                else if ExperimentalButtonlessDFU.matches(characteristic) {
-                    experimentalButtonlessDfuCharacteristic = ExperimentalButtonlessDFU(characteristic, logger)
+                // Support for Buttonless DFU Service from SDK 12.x (as experimental).
+                // SDK 13 added a new characteristic in Secure DFU Service with buttonless feature without bond sharing (bootloader uses different device address).
+                // SDK 14 will add a new characteristic with buttonless service for bonded devices with bond information sharing between app and the bootloader.
+                else if ButtonlessDFU.matches(characteristic) {
+                    buttonlessDfuCharacteristic = ButtonlessDFU(characteristic, logger)
                     _success?()
                     return
                 }
@@ -418,7 +420,7 @@ import CoreBluetooth
         }
     }
     
-    // MARK: - Support for experimental Buttonless DFU Service from SDK 12.x
+    // MARK: - Support for Buttonless DFU Service
     
     /// The buttonless jump feature was experimental in SDK 12. It did not support passing bond information to the DFU bootloader,
     /// was not safe (possible DOS attack) and had bugs. This is the service UUID used by this service.
@@ -428,7 +430,7 @@ import CoreBluetooth
         return service.uuid.isEqual(ExperimentalButtonlessDfuUUID)
     }
     
-    private var experimentalButtonlessDfuCharacteristic: ExperimentalButtonlessDFU?
+    private var buttonlessDfuCharacteristic: ButtonlessDFU?
     
     /**
      This method tries to estimate whether the DFU target device is in Application mode which supports
@@ -437,13 +439,21 @@ import CoreBluetooth
      - returns: true, if it is for sure in the Application more, false, if definitely is not, nil if uknown
      */
     func isInApplicationMode() -> Bool? {
-        // If the experimental buttonless DFU characteristic is not nil it means that the device is in app mode
-        return experimentalButtonlessDfuCharacteristic != nil
+        // If the buttonless DFU characteristic is not nil it means that the device is in app mode.
+        return buttonlessDfuCharacteristic != nil
     }
     
+    /**
+     Returns whether the bootloader is expected to advertise with the same address on one incremented by 1.
+     In the latter case the library needs to scan for a new advertising device and select it by filtering the adv packet,
+     as device address is not available through iOS API.
+     */
     var newAddressExpected: Bool {
-        // Using experimental Buttonless DFU feature will cause the device to advertise with address +1.
-        return experimentalButtonlessDfuCharacteristic != nil
+        // The bootloader will advertise with address +1 if the experimental Buttonless DFU Service from SDK 12.x
+        // or Buttonless DFU service from SDK 13 were found.
+        // The Buttonless DFU Service from SDK 14 supports bond sharing between app and the bootlaoder, thus the bootloader
+        // will use the same address after jump and the connection will be encrypted.
+        return buttonlessDfuCharacteristic?.newAddressExpected ?? false
     }
     
     /**
@@ -453,7 +463,35 @@ import CoreBluetooth
      */
     func jumpToBootloaderMode(onError report: @escaping ErrorCallback) {
         if !aborted {
-            experimentalButtonlessDfuCharacteristic!.send(ExperimentalButtonlessDFURequest.enterBootloader, onSuccess: nil, onError: report)
+            func enterBootloader() {
+                self.buttonlessDfuCharacteristic!.send(ButtonlessDFURequest.enterBootloader, onSuccess: nil, onError: report)
+            }
+            
+            // If the characteristic may support changing bootloader's name, try it
+            if buttonlessDfuCharacteristic!.maySupportSettingName {
+                // Generate a random 8-character long name
+                let name = String(format: "Dfu%05d", arc4random_uniform(100000))
+                
+                logger.v("Trying setting bootloader name to \(name)")
+                buttonlessDfuCharacteristic!.send(ButtonlessDFURequest.set(name: name), onSuccess: {
+                    // Success. The buttonless service is from SDK 14.0+. The bootloader, after jumping to it, will advertise with this name.
+                    self.targetPeripheral!.bootloaderName = name
+                    self.logger.a("Bootloader name changed successfully")
+                    enterBootloader()
+                }, onError: {
+                    error, message in
+                    if error == .remoteButtonlessDFUOpCodeNotSupported {
+                        // Setting name is not supported. Looks like it's buttonless service from SDK 13. We can't rely on bootloader's name.
+                        self.logger.w("Setting bootloader name not supported")
+                        enterBootloader()
+                    } else {
+                        // Something else got wrong
+                        report(error, message)
+                    }
+                })
+            } else {
+                enterBootloader()
+            }
         } else {
             sendReset(onError: report)
         }

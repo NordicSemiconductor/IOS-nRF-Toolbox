@@ -145,6 +145,12 @@
       "scale" : "2x"
     },
     {
+      "size" : "1024x1024",
+      "idiom" : "ios-marketing",
+      "filename" : "appstore.png",
+      "scale" : "1x"
+    },
+    {
       "size" : "60x60",
       "idiom" : "car",
       "filename" : "Icon-App-60x60@2x.png",

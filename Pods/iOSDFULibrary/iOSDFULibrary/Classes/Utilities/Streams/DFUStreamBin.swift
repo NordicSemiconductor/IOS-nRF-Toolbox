@@ -56,7 +56,16 @@ internal class DFUStreamBin : DFUStream {
             initPacketBinaries = try? Data(contentsOf: dat)
         }
         
-        self.currentPartType = type.rawValue
+        currentPartType = type.rawValue
+    }
+    
+    init(binFile: Data, datFile: Data?, type: DFUFirmwareType) {
+        binaries = binFile
+        firmwareSize = UInt32(binaries.count)
+        
+        initPacketBinaries = datFile
+        
+        currentPartType = type.rawValue
     }
     
     var data: Data {

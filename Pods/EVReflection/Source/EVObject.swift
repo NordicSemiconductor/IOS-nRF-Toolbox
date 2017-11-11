@@ -12,6 +12,7 @@ import Foundation
  Object that implements EVReflectable and NSCoding. Use this object as your base class
  instead of NSObject and you wil automatically have support for all these protocols.
  */
+@objcMembers
 open class EVObject: NSObject, NSCoding, EVReflectable  {
     // These are redundant in Swift 2+: CustomDebugStringConvertible, CustomStringConvertible, Hashable, Equatable
     
@@ -28,7 +29,7 @@ open class EVObject: NSObject, NSCoding, EVReflectable  {
             kvc.setGenericValue(value as AnyObject!, forUndefinedKey: key)
         } else {
             self.addStatusMessage(.IncorrectKey, message: "The class '\(EVReflection.swiftStringFromClass(self))' is not key value coding-compliant for the key '\(key)'")
-            print("\nWARNING: The class '\(EVReflection.swiftStringFromClass(self))' is not key value coding-compliant for the key '\(key)'\n There is no support for optional type, array of optionals or enum properties.\nAs a workaround you can implement the function 'setValue forUndefinedKey' for this. See the unit tests for more information\n")
+            evPrint(.IncorrectKey, "\nWARNING: The class '\(EVReflection.swiftStringFromClass(self))' is not key value coding-compliant for the key '\(key)'\n There is no support for optional type, array of optionals or enum properties.\nAs a workaround you can implement the function 'setValue forUndefinedKey' for this. See the unit tests for more information\n")
             
         }
     }
@@ -134,6 +135,30 @@ open class EVObject: NSObject, NSCoding, EVReflectable  {
      */
     open func propertyConverters() -> [(key: String, decodeConverter: ((Any?)->()), encodeConverter: (() -> Any?))] {
         return []
+    }
+    
+    /**
+     You can add general value decoding to an object when you implement this function. You can for instance use it to base64 decode, url decode, html decode, unicode, etc.
+     
+     - parameter value:  The value that we will be decoded
+     - parameter key: The key for the value
+     
+     - returns: The decoded value
+     */
+    open func decodePropertyValue(value: Any, key: String) -> Any? {
+        return value
+    }
+    
+    /**
+     You can add general value encoding to an object when you implement this function. You can for instance use it to base64 encode, url encode, html encode, unicode, etc.
+     
+     - parameter value:  The value that we will be encoded
+     - parameter key: The key for the value
+     
+     - returns: The encoded value.
+     */
+    open func encodePropertyValue(value: Any, key: String) -> Any {
+        return value
     }
     
     /**

@@ -88,7 +88,7 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     override func viewDidLoad() {
         super.viewDidLoad()
         // Rotate the vertical label
-        self.verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: CGFloat(-M_PI_2))
+        self.verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: -.pi / 2)
         isBackButtonPressed = false
     }
     
@@ -114,13 +114,13 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         if segue.identifier == "scan" {
             // Set this contoller as scanner delegate
             let nc = segue.destination as! UINavigationController
-            let scanController = nc.childViewControllerForStatusBarHidden as! NORScannerViewController
+            let scanController = nc.childViewControllers.first as! NORScannerViewController
             scanController.filterUUID = rscServiceUUID
             scanController.delegate = self
         }
     }
     //MARK: - NORRSCViewController implementation
-    func timerFired(timer aTimer : Timer) {
+    @objc func timerFired(timer aTimer : Timer) {
         // Here we will update the stride count.
         // If a device has been disconnected, abort. There is nothing to do.
         guard connectedPeripheral != nil else {
@@ -163,12 +163,12 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         }
     }
     
-    func applicationDidEnterBackgroundCallback() {
+    @objc func applicationDidEnterBackgroundCallback() {
         let name = connectedPeripheral?.name ?? "peripheral"
         NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(name). It will collect data also in background.")
     }
     
-    func applicationDidBecomeActiveCallback() {
+    @objc func applicationDidBecomeActiveCallback() {
         UIApplication.shared.cancelAllLocalNotifications()
     }
     
@@ -361,7 +361,8 @@ class NORRSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         bluetoothManager = aManager
         bluetoothManager!.delegate = self
         // The sensor has been selected, connect to it
-        aPeripheral.delegate = self
+        connectedPeripheral = aPeripheral
+        connectedPeripheral?.delegate = self
         bluetoothManager?.connect(aPeripheral, options: [CBConnectPeripheralOptionNotifyOnNotificationKey : NSNumber(value: true as Bool)])
     }
 }

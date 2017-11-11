@@ -127,8 +127,8 @@ internal protocol DFUExecutorAPI : BaseExecutorAPI {
     init(_ initiator: DFUServiceInitiator)
 }
 
-internal protocol DFUExecutor : DFUExecutorAPI, BaseDFUExecutor, DFUPeripheralDelegate {
-    associatedtype DFUPeripheralType : DFUPeripheralAPI
+internal protocol DFUExecutor : DFUExecutorAPI, BaseDFUExecutor, DFUPeripheralDelegate where DFUPeripheralType: DFUPeripheralAPI {
+    
     /// The firmware to be sent over-the-air
     var firmware: DFUFirmware { get }
 }

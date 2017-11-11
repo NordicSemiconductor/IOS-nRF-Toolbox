@@ -63,41 +63,27 @@ internal enum Request {
     var data : Data {
         switch self {
         case .jumpToBootloader:
-            let bytes:[UInt8] = [DFUOpCode.startDfu.code, FIRMWARE_TYPE_APPLICATION]
-            return Data(bytes: UnsafePointer<UInt8>(bytes), count: 2)
+            return Data(bytes: [DFUOpCode.startDfu.code, FIRMWARE_TYPE_APPLICATION])
         case .startDfu(let type):
-            let bytes:[UInt8] = [DFUOpCode.startDfu.code, type]
-            return Data(bytes: UnsafePointer<UInt8>(bytes), count: 2)
+            return Data(bytes: [DFUOpCode.startDfu.code, type])
         case .startDfu_v1:
-            let bytes:[UInt8] = [DFUOpCode.startDfu.code]
-            return Data(bytes: UnsafePointer<UInt8>(bytes), count: 1)
+            return Data(bytes: [DFUOpCode.startDfu.code])
         case .initDfuParameters(let req):
-            let bytes:[UInt8] = [DFUOpCode.initDfuParameters.code, req.code]
-            return Data(bytes: UnsafePointer<UInt8>(bytes), count: 2)
+            return Data(bytes: [DFUOpCode.initDfuParameters.code, req.code])
         case .initDfuParameters_v1:
-            let bytes:[UInt8] = [DFUOpCode.initDfuParameters.code]
-            return Data(bytes: UnsafePointer<UInt8>(bytes), count: 1)
+            return Data(bytes: [DFUOpCode.initDfuParameters.code])
         case .receiveFirmwareImage:
-            let bytes:[UInt8] = [DFUOpCode.receiveFirmwareImage.code]
-            return Data(bytes: UnsafePointer<UInt8>(bytes), count: 1)
+            return Data(bytes: [DFUOpCode.receiveFirmwareImage.code])
         case .validateFirmware:
-            let bytes:[UInt8] = [DFUOpCode.validateFirmware.code]
-            return Data(bytes: UnsafePointer<UInt8>(bytes), count: 1)
+            return Data(bytes: [DFUOpCode.validateFirmware.code])
         case .activateAndReset:
-            let bytes:[UInt8] = [DFUOpCode.activateAndReset.code]
-            return Data(bytes: UnsafePointer<UInt8>(bytes), count: 1)
+            return Data(bytes: [DFUOpCode.activateAndReset.code])
         case .reset:
-            let bytes:[UInt8] = [DFUOpCode.reset.code]
-            return Data(bytes: UnsafePointer<UInt8>(bytes), count: 1)
+            return Data(bytes: [DFUOpCode.reset.code])
         case .packetReceiptNotificationRequest(let number):
-            let data = NSMutableData(capacity: 5)!
-            let bytes:[UInt8] = [DFUOpCode.packetReceiptNotificationRequest.code]
-            data.append(bytes, length: 1)
-            var n = number.littleEndian
-            withUnsafePointer(to: &n) {
-                data.append(UnsafeRawPointer($0), length: 2)
-            }
-            return (NSData(data: data as Data) as Data)
+            var data = Data(bytes: [DFUOpCode.packetReceiptNotificationRequest.code])
+            data += number.littleEndian
+            return data
         }
     }
     
@@ -148,13 +134,9 @@ internal struct Response {
     let status        : DFUResultCode?
     
     init?(_ data: Data) {
-        var opCode        : UInt8 = 0
-        var requestOpCode : UInt8 = 0
-        var status        : UInt8 = 0
-        
-        (data as NSData).getBytes(&opCode, range: NSRange(location: 0, length: 1))
-        (data as NSData).getBytes(&requestOpCode, range: NSRange(location: 1, length: 1))
-        (data as NSData).getBytes(&status, range: NSRange(location: 2, length: 1))
+        let opCode        : UInt8 = data[0]
+        let requestOpCode : UInt8 = data[1]
+        let status        : UInt8 = data[2]
         
         self.opCode        = DFUOpCode(rawValue: opCode)
         self.requestOpCode = DFUOpCode(rawValue: requestOpCode)
@@ -175,8 +157,8 @@ internal struct PacketReceiptNotification {
     let bytesReceived : UInt32
     
     init?(_ data: Data) {
-        var opCode: UInt8 = 0
-        (data as NSData).getBytes(&opCode, range: NSRange(location: 0, length: 1))
+        let opCode: UInt8 = data[0]
+        
         self.opCode = DFUOpCode(rawValue: opCode)
         
         if self.opCode != .packetReceiptNotification {
@@ -188,8 +170,7 @@ internal struct PacketReceiptNotification {
         // However, the packet is still 5 bytes long and the two last bytes are 0x00-00.
         // This has to be taken under consideration when comparing number of bytes sent and received as
         // the latter counter may rewind if fw size is > 0xFFFF bytes (LegacyDFUService:L372).
-        var bytesReceived: UInt32 = 0
-        (data as NSData).getBytes(&bytesReceived, range: NSRange(location: 1, length: 4))
+        let bytesReceived: UInt32 = data.subdata(in: 1 ..< 4).withUnsafeBytes { $0.pointee }
         self.bytesReceived = bytesReceived
     }
 }
@@ -212,7 +193,7 @@ internal struct PacketReceiptNotification {
     private var resetSent = false
     
     internal var valid: Bool {
-        return characteristic.properties.isSuperset(of: [CBCharacteristicProperties.write, CBCharacteristicProperties.notify])
+        return characteristic.properties.isSuperset(of: [.write, .notify])
     }
     
     // MARK: - Initialization
@@ -309,7 +290,7 @@ internal struct PacketReceiptNotification {
         peripheral.delegate = self
         
         logger.a("Uploading firmware...")
-        logger.v("Sending firmware DFU Packet characteristic...")
+        logger.v("Sending firmware to DFU Packet characteristic...")
     }
     
     // MARK: - Peripheral Delegate callbacks

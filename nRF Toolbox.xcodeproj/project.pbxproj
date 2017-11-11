@@ -15,7 +15,6 @@
 		300143291CEC59F4008379DF /* NORServiceIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300143281CEC59F4008379DF /* NORServiceIdentifiers.swift */; };
 		3001432B1CEC6D2A008379DF /* NORBGMRecordAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001432A1CEC6D2A008379DF /* NORBGMRecordAccess.swift */; };
 		3001432D1CECADFB008379DF /* NORCharacteristicReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001432C1CECADFB008379DF /* NORCharacteristicReader.swift */; };
-		3001432F1CEDAD04008379DF /* NORCharacteristicReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001432E1CEDAD04008379DF /* NORCharacteristicReaderTests.swift */; };
 		3001EBB11D1BE1F3008C5C37 /* NORGlucoseReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBB01D1BE1F3008C5C37 /* NORGlucoseReading.swift */; };
 		3001EBB71D1BE1FB008C5C37 /* NORBGMDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBB41D1BE1FB008C5C37 /* NORBGMDetailsViewController.swift */; };
 		3001EBB81D1BE1FB008C5C37 /* NORBGMItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBB51D1BE1FB008C5C37 /* NORBGMItemCell.swift */; };
@@ -50,7 +49,6 @@
 		3080C4711CE06D0E009C2D8C /* NORCSCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3080C4701CE06D0E009C2D8C /* NORCSCViewController.swift */; };
 		308AA57A1CD8DD4300CC9857 /* NORGlucoseReadingContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308AA5791CD8DD4300CC9857 /* NORGlucoseReadingContext.swift */; };
 		308EE1781CE0CBF700F2A854 /* NORHTSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308EE1771CE0CBF700F2A854 /* NORHTSViewController.swift */; };
-		30921FD31CD0E7A5009CBDDE /* NORNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30921FD21CD0E7A5009CBDDE /* NORNavigationController.swift */; };
 		30921FD51CD0EB55009CBDDE /* NORMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30921FD41CD0EB55009CBDDE /* NORMainViewController.swift */; };
 		309F08651E6D6A5500B7546A /* NORHKViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F08641E6D6A5500B7546A /* NORHKViewController.swift */; };
 		309F08681E6D706B00B7546A /* HomeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 309F08671E6D706B00B7546A /* HomeKit.framework */; };
@@ -73,9 +71,6 @@
 		5217F3F01859EE0000F2D5BB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5217F3EE1859EE0000F2D5BB /* InfoPlist.strings */; };
 		5217F3F91859EE0000F2D5BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5217F3F71859EE0000F2D5BB /* Main.storyboard */; };
 		5217F3FE1859EE0000F2D5BB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5217F3FD1859EE0000F2D5BB /* Images.xcassets */; };
-		5217F4061859EE0000F2D5BB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5217F3E51859EE0000F2D5BB /* Foundation.framework */; };
-		5217F4071859EE0000F2D5BB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5217F3E91859EE0000F2D5BB /* UIKit.framework */; };
-		5217F40F1859EE0000F2D5BB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5217F40D1859EE0000F2D5BB /* InfoPlist.strings */; };
 		5217F41B1859EEF400F2D5BB /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5217F41A1859EEF400F2D5BB /* CoreBluetooth.framework */; };
 		522636371C60FFB00054A550 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 522636361C60FFB00054A550 /* libz.tbd */; };
 		52BDCB191C3FD31F00E2680F /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BDCB181C3FD31F00E2680F /* Accelerate.framework */; };
@@ -83,18 +78,8 @@
 		52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */; };
 		52D9BC9E1DD0CB760030E824 /* NORData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9BC9D1DD0CB760030E824 /* NORData.swift */; };
 		7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B422818A8DF4D006BA1BC /* high.mp3 */; };
-		9989D1FF5018421BE4160C50 /* Pods_nRF_Toolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24D84A6CFE99FD917A7222B7 /* Pods_nRF_Toolbox.framework */; };
+		DCBF9D003D5AA175E9F24910 /* Pods_nRF_Toolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 302004489406AEA824DCF86D /* Pods_nRF_Toolbox.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		5217F4081859EE0000F2D5BB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5217F3DA1859EE0000F2D5BB /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5217F3E11859EE0000F2D5BB;
-			remoteInfo = "nRF Toolbox";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		0E645A0E1CBF943000D36AD0 /* Embed Frameworks */ = {
@@ -110,30 +95,28 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0A455719E4780A53A451F09C /* Pods-nRF Toolbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.debug.xcconfig"; path = "Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.debug.xcconfig"; sourceTree = "<group>"; };
-		24D84A6CFE99FD917A7222B7 /* Pods_nRF_Toolbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nRF_Toolbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		28F7349095038A3F55F27F8C /* Pods-nRF Toolbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.release.xcconfig"; path = "Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.release.xcconfig"; sourceTree = "<group>"; };
 		3000B2101CE317D900F64CEE /* NORUARTRevealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORUARTRevealViewController.swift; sourceTree = "<group>"; };
 		3000B2121CE3195E00F64CEE /* NOREditPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NOREditPopupViewController.swift; sourceTree = "<group>"; };
-		3000B2141CE32A9200F64CEE /* NORUARTViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORUARTViewController.swift; sourceTree = "<group>"; };
+		3000B2141CE32A9200F64CEE /* NORUARTViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORUARTViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		300143261CEC4B9D008379DF /* NORAppUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORAppUtilities.swift; sourceTree = "<group>"; };
 		300143281CEC59F4008379DF /* NORServiceIdentifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORServiceIdentifiers.swift; sourceTree = "<group>"; };
-		3001432A1CEC6D2A008379DF /* NORBGMRecordAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORBGMRecordAccess.swift; path = Model/NORBGMRecordAccess.swift; sourceTree = "<group>"; };
+		3001432A1CEC6D2A008379DF /* NORBGMRecordAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBGMRecordAccess.swift; sourceTree = "<group>"; };
 		3001432C1CECADFB008379DF /* NORCharacteristicReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORCharacteristicReader.swift; sourceTree = "<group>"; };
 		3001432E1CEDAD04008379DF /* NORCharacteristicReaderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORCharacteristicReaderTests.swift; sourceTree = "<group>"; };
 		3001EBB01D1BE1F3008C5C37 /* NORGlucoseReading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORGlucoseReading.swift; path = Model/NORGlucoseReading.swift; sourceTree = "<group>"; };
 		3001EBB41D1BE1FB008C5C37 /* NORBGMDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBGMDetailsViewController.swift; sourceTree = "<group>"; };
 		3001EBB51D1BE1FB008C5C37 /* NORBGMItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBGMItemCell.swift; sourceTree = "<group>"; };
-		3001EBB61D1BE1FB008C5C37 /* NORBGMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBGMViewController.swift; sourceTree = "<group>"; };
+		3001EBB61D1BE1FB008C5C37 /* NORBGMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORBGMViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		3001EBBA1D1BE306008C5C37 /* NORCGMReading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORCGMReading.swift; path = Model/NORCGMReading.swift; sourceTree = "<group>"; };
 		3001EBBC1D1BE695008C5C37 /* NORCGMFeatureData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORCGMFeatureData.swift; path = Model/NORCGMFeatureData.swift; sourceTree = "<group>"; };
 		3001EBBE1D1BE727008C5C37 /* NORCGMSpecificOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORCGMSpecificOperations.swift; path = Model/NORCGMSpecificOperations.swift; sourceTree = "<group>"; };
 		3001EBC01D1C12E4008C5C37 /* NORCGMItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORCGMItemCell.swift; sourceTree = "<group>"; };
 		3001EBC41D1C153C008C5C37 /* NORCGMDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORCGMDetailsViewController.swift; sourceTree = "<group>"; };
-		3001EBC61D1C1BAA008C5C37 /* NORCGMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORCGMViewController.swift; sourceTree = "<group>"; };
-		300508921CE1D75800D93BE0 /* NORProximityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORProximityViewController.swift; sourceTree = "<group>"; };
-		300508941CE2078A00D93BE0 /* NORRSCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORRSCViewController.swift; sourceTree = "<group>"; };
-		3010F6041CDCB4F900CB285A /* NORBPMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBPMViewController.swift; sourceTree = "<group>"; };
+		3001EBC61D1C1BAA008C5C37 /* NORCGMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORCGMViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		300508921CE1D75800D93BE0 /* NORProximityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORProximityViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		300508941CE2078A00D93BE0 /* NORRSCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORRSCViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		3010F6041CDCB4F900CB285A /* NORBPMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORBPMViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		302004489406AEA824DCF86D /* Pods_nRF_Toolbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nRF_Toolbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		304299211CE5DE8E00E1D2AB /* NORUserFilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORUserFilesViewController.swift; sourceTree = "<group>"; };
 		304299231CE6114000E1D2AB /* NORTutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORTutorialViewController.swift; sourceTree = "<group>"; };
 		304299391CE6154100E1D2AB /* NORBaseRevealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBaseRevealViewController.swift; sourceTree = "<group>"; };
@@ -141,7 +124,7 @@
 		30499E4A1CE4667800E0993B /* NORDFUConstantsUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORDFUConstantsUtility.swift; sourceTree = "<group>"; };
 		30499E4C1CE4687300E0993B /* NORFileTypeSelectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORFileTypeSelectionDelegate.swift; path = FileSelection/NORFileTypeSelectionDelegate.swift; sourceTree = "<group>"; };
 		30499E4E1CE4688700E0993B /* NORFileTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORFileTypeViewController.swift; path = FileSelection/NORFileTypeViewController.swift; sourceTree = "<group>"; };
-		30499E501CE471C500E0993B /* NORDFUViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORDFUViewController.swift; sourceTree = "<group>"; };
+		30499E501CE471C500E0993B /* NORDFUViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORDFUViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		30499E541CE4732200E0993B /* NORFileSelectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORFileSelectionDelegate.swift; sourceTree = "<group>"; };
 		30499E561CE4736500E0993B /* NORFilePreselectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORFilePreselectionDelegate.swift; sourceTree = "<group>"; };
 		30499E581CE4A07700E0993B /* NORAppFilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORAppFilesViewController.swift; sourceTree = "<group>"; };
@@ -152,12 +135,11 @@
 		304D59001CE352B300148271 /* NORLogItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORLogItemTableViewCell.swift; sourceTree = "<group>"; };
 		3069A1D61CDC788A003869EA /* NORBluetoothManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBluetoothManager.swift; sourceTree = "<group>"; };
 		306ECD611CE61A3600E48BBD /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3080C4701CE06D0E009C2D8C /* NORCSCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORCSCViewController.swift; sourceTree = "<group>"; };
+		3080C4701CE06D0E009C2D8C /* NORCSCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORCSCViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		308AA5791CD8DD4300CC9857 /* NORGlucoseReadingContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORGlucoseReadingContext.swift; path = Model/NORGlucoseReadingContext.swift; sourceTree = "<group>"; };
-		308EE1771CE0CBF700F2A854 /* NORHTSViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORHTSViewController.swift; sourceTree = "<group>"; };
-		30921FD21CD0E7A5009CBDDE /* NORNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORNavigationController.swift; sourceTree = "<group>"; };
+		308EE1771CE0CBF700F2A854 /* NORHTSViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORHTSViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		30921FD41CD0EB55009CBDDE /* NORMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORMainViewController.swift; sourceTree = "<group>"; };
-		309F08641E6D6A5500B7546A /* NORHKViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORHKViewController.swift; sourceTree = "<group>"; };
+		309F08641E6D6A5500B7546A /* NORHKViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORHKViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		309F08661E6D706B00B7546A /* nRF Toolbox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "nRF Toolbox.entitlements"; sourceTree = "<group>"; };
 		309F08671E6D706B00B7546A /* HomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HomeKit.framework; path = System/Library/Frameworks/HomeKit.framework; sourceTree = SDKROOT; };
 		309F08691E6D9EAA00B7546A /* NORHKHomeStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORHKHomeStore.swift; sourceTree = "<group>"; };
@@ -167,7 +149,9 @@
 		30A114551CD2367C000F0F02 /* NORScannedPeripheral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORScannedPeripheral.swift; sourceTree = "<group>"; };
 		30A114591CD2426B000F0F02 /* NORScannerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORScannerDelegate.swift; sourceTree = "<group>"; };
 		30A1145B1CD24611000F0F02 /* NORScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORScannerViewController.swift; sourceTree = "<group>"; };
-		30F92D4A1CD9CF0700C73285 /* NORHRMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORHRMViewController.swift; sourceTree = "<group>"; };
+		30F92D4A1CD9CF0700C73285 /* NORHRMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORHRMViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		4394EAC53F8A0FF797E7CA7A /* Pods-nRF Toolbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.release.xcconfig"; path = "Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.release.xcconfig"; sourceTree = "<group>"; };
+		51E9CFCBE6C75A89E5780FE4 /* Pods-nRF Toolbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.debug.xcconfig"; path = "Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.debug.xcconfig"; sourceTree = "<group>"; };
 		5211EFAA1885642F007CC40D /* icon-dfu-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-64.png"; sourceTree = "<group>"; };
 		5211EFAB1885642F007CC40D /* icon-dfu-320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-320.png"; sourceTree = "<group>"; };
 		5211EFAC1885642F007CC40D /* icon-hex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-hex.png"; sourceTree = "<group>"; };
@@ -182,7 +166,6 @@
 		5217F3F31859EE0000F2D5BB /* nRF Toolbox-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "nRF Toolbox-Prefix.pch"; sourceTree = "<group>"; };
 		5217F3F81859EE0000F2D5BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5217F3FD1859EE0000F2D5BB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		5217F4031859EE0000F2D5BB /* nRF ToolboxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "nRF ToolboxTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5217F40C1859EE0000F2D5BB /* nRF ToolboxTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "nRF ToolboxTests-Info.plist"; sourceTree = "<group>"; };
 		5217F40E1859EE0000F2D5BB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5217F41A1859EEF400F2D5BB /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
@@ -209,31 +192,13 @@
 				5217F3E81859EE0000F2D5BB /* CoreGraphics.framework in Frameworks */,
 				5217F3EA1859EE0000F2D5BB /* UIKit.framework in Frameworks */,
 				5217F3E61859EE0000F2D5BB /* Foundation.framework in Frameworks */,
-				9989D1FF5018421BE4160C50 /* Pods_nRF_Toolbox.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5217F4001859EE0000F2D5BB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5217F4071859EE0000F2D5BB /* UIKit.framework in Frameworks */,
-				5217F4061859EE0000F2D5BB /* Foundation.framework in Frameworks */,
+				DCBF9D003D5AA175E9F24910 /* Pods_nRF_Toolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		022A9DC491EC95659788F163 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				0A455719E4780A53A451F09C /* Pods-nRF Toolbox.debug.xcconfig */,
-				28F7349095038A3F55F27F8C /* Pods-nRF Toolbox.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		3001EBB21D1BE1FB008C5C37 /* ContinuousGlucoseMonitoring */ = {
 			isa = PBXGroup;
 			children = (
@@ -302,7 +267,7 @@
 				5217F40A1859EE0000F2D5BB /* nRF ToolboxTests */,
 				5217F3E41859EE0000F2D5BB /* Frameworks */,
 				5217F3E31859EE0000F2D5BB /* Products */,
-				022A9DC491EC95659788F163 /* Pods */,
+				6D243D2956D29EBCF8A45C2A /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -310,7 +275,6 @@
 			isa = PBXGroup;
 			children = (
 				5217F3E21859EE0000F2D5BB /* nRF Toolbox.app */,
-				5217F4031859EE0000F2D5BB /* nRF ToolboxTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -327,7 +291,7 @@
 				5217F3E71859EE0000F2D5BB /* CoreGraphics.framework */,
 				5217F3E91859EE0000F2D5BB /* UIKit.framework */,
 				89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */,
-				24D84A6CFE99FD917A7222B7 /* Pods_nRF_Toolbox.framework */,
+				302004489406AEA824DCF86D /* Pods_nRF_Toolbox.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -445,12 +409,12 @@
 		524F2CDC18897D18008A8555 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3001432A1CEC6D2A008379DF /* NORBGMRecordAccess.swift */,
 				3001EBB01D1BE1F3008C5C37 /* NORGlucoseReading.swift */,
 				3001EBBA1D1BE306008C5C37 /* NORCGMReading.swift */,
 				3001EBBE1D1BE727008C5C37 /* NORCGMSpecificOperations.swift */,
 				3001EBBC1D1BE695008C5C37 /* NORCGMFeatureData.swift */,
 				308AA5791CD8DD4300CC9857 /* NORGlucoseReadingContext.swift */,
-				3001432A1CEC6D2A008379DF /* NORBGMRecordAccess.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -512,6 +476,15 @@
 			name = Logger;
 			sourceTree = "<group>";
 		};
+		6D243D2956D29EBCF8A45C2A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				51E9CFCBE6C75A89E5780FE4 /* Pods-nRF Toolbox.debug.xcconfig */,
+				4394EAC53F8A0FF797E7CA7A /* Pods-nRF Toolbox.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		7E6ED10C197D1D40008010B6 /* File Selection */ = {
 			isa = PBXGroup;
 			children = (
@@ -556,7 +529,6 @@
 		A85667E31B2233A3004A6D3C /* MainViewController */ = {
 			isa = PBXGroup;
 			children = (
-				30921FD21CD0E7A5009CBDDE /* NORNavigationController.swift */,
 				30921FD41CD0EB55009CBDDE /* NORMainViewController.swift */,
 			);
 			path = MainViewController;
@@ -589,13 +561,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5217F4141859EE0000F2D5BB /* Build configuration list for PBXNativeTarget "nRF Toolbox" */;
 			buildPhases = (
-				ED33C8D3ED1984AAE7F51DD3 /* [CP] Check Pods Manifest.lock */,
+				8B80C1585542D2D10E73CB3A /* [CP] Check Pods Manifest.lock */,
 				5217F3DE1859EE0000F2D5BB /* Sources */,
 				5217F3DF1859EE0000F2D5BB /* Frameworks */,
 				5217F3E01859EE0000F2D5BB /* Resources */,
 				0E645A0E1CBF943000D36AD0 /* Embed Frameworks */,
-				0ED4FF3762A1B098595E6093 /* [CP] Embed Pods Frameworks */,
-				48275A682DFCE468F90A906C /* [CP] Copy Pods Resources */,
+				1C633273D176F0D847977108 /* [CP] Embed Pods Frameworks */,
+				443450C8244E84C1AFFCA266 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -606,36 +578,18 @@
 			productReference = 5217F3E21859EE0000F2D5BB /* nRF Toolbox.app */;
 			productType = "com.apple.product-type.application";
 		};
-		5217F4021859EE0000F2D5BB /* nRF ToolboxTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5217F4171859EE0000F2D5BB /* Build configuration list for PBXNativeTarget "nRF ToolboxTests" */;
-			buildPhases = (
-				5217F3FF1859EE0000F2D5BB /* Sources */,
-				5217F4001859EE0000F2D5BB /* Frameworks */,
-				5217F4011859EE0000F2D5BB /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				5217F4091859EE0000F2D5BB /* PBXTargetDependency */,
-			);
-			name = "nRF ToolboxTests";
-			productName = "nRF ToolboxTests";
-			productReference = 5217F4031859EE0000F2D5BB /* nRF ToolboxTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		5217F3DA1859EE0000F2D5BB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = "Nordic Semiconductor";
 				TargetAttributes = {
 					5217F3E11859EE0000F2D5BB = {
 						DevelopmentTeam = P3R8YQEV4L;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0910;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -644,10 +598,6 @@
 								enabled = 1;
 							};
 						};
-					};
-					5217F4021859EE0000F2D5BB = {
-						LastSwiftMigration = 0800;
-						TestTargetID = 5217F3E11859EE0000F2D5BB;
 					};
 				};
 			};
@@ -665,7 +615,6 @@
 			projectRoot = "";
 			targets = (
 				5217F3E11859EE0000F2D5BB /* nRF Toolbox */,
-				5217F4021859EE0000F2D5BB /* nRF ToolboxTests */,
 			);
 		};
 /* End PBXProject section */
@@ -689,33 +638,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5217F4011859EE0000F2D5BB /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5217F40F1859EE0000F2D5BB /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0ED4FF3762A1B098595E6093 /* [CP] Embed Pods Frameworks */ = {
+		1C633273D176F0D847977108 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CorePlot/CorePlot.framework",
+				"${BUILT_PRODUCTS_DIR}/EVReflection/EVReflection.framework",
+				"${BUILT_PRODUCTS_DIR}/SWRevealViewController/SWRevealViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/Zip/Zip.framework",
+				"${BUILT_PRODUCTS_DIR}/iOSDFULibrary/iOSDFULibrary.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePlot.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EVReflection.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SWRevealViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Zip.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSDFULibrary.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		48275A682DFCE468F90A906C /* [CP] Copy Pods Resources */ = {
+		443450C8244E84C1AFFCA266 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -730,19 +682,22 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		ED33C8D3ED1984AAE7F51DD3 /* [CP] Check Pods Manifest.lock */ = {
+		8B80C1585542D2D10E73CB3A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-nRF Toolbox-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -789,7 +744,6 @@
 				30A1145A1CD2426B000F0F02 /* NORScannerDelegate.swift in Sources */,
 				3069A1D71CDC788A003869EA /* NORBluetoothManager.swift in Sources */,
 				300508931CE1D75800D93BE0 /* NORProximityViewController.swift in Sources */,
-				30921FD31CD0E7A5009CBDDE /* NORNavigationController.swift in Sources */,
 				3042993D1CE6154100E1D2AB /* NORBaseViewController.swift in Sources */,
 				30A114561CD2367C000F0F02 /* NORScannedPeripheral.swift in Sources */,
 				309F08701E6FF1F900B7546A /* NORHKAccessoryViewController.swift in Sources */,
@@ -808,23 +762,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5217F3FF1859EE0000F2D5BB /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3001432F1CEDAD04008379DF /* NORCharacteristicReaderTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		5217F4091859EE0000F2D5BB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5217F3E11859EE0000F2D5BB /* nRF Toolbox */;
-			targetProxy = 5217F4081859EE0000F2D5BB /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		5217F3EE1859EE0000F2D5BB /* InfoPlist.strings */ = {
@@ -864,14 +802,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -914,14 +858,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -950,10 +900,10 @@
 		};
 		5217F4151859EE0000F2D5BB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0A455719E4780A53A451F09C /* Pods-nRF Toolbox.debug.xcconfig */;
+			baseConfigurationReference = 51E9CFCBE6C75A89E5780FE4 /* Pods-nRF Toolbox.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
-				ALWAYS_SEARCH_USER_PATHS = "$(inherited)";
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "nRF Toolbox/nRF Toolbox.entitlements";
@@ -992,7 +942,8 @@
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "$(VALID_ARCHS)";
 				WRAPPER_EXTENSION = app;
@@ -1001,10 +952,10 @@
 		};
 		5217F4161859EE0000F2D5BB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 28F7349095038A3F55F27F8C /* Pods-nRF Toolbox.release.xcconfig */;
+			baseConfigurationReference = 4394EAC53F8A0FF797E7CA7A /* Pods-nRF Toolbox.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
-				ALWAYS_SEARCH_USER_PATHS = "$(inherited)";
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "nRF Toolbox/nRF Toolbox.entitlements";
@@ -1042,59 +993,11 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "$(VALID_ARCHS)";
 				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
-		5217F4181859EE0000F2D5BB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox.app/nRF Toolbox";
-				CLANG_ENABLE_MODULES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "nRF Toolbox/nRF Toolbox-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "nRF ToolboxTests/nRF ToolboxTests-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "no.nordicsemi.ios.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		5217F4191859EE0000F2D5BB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox.app/nRF Toolbox";
-				CLANG_ENABLE_MODULES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "nRF Toolbox/nRF Toolbox-Prefix.pch";
-				INFOPLIST_FILE = "nRF ToolboxTests/nRF ToolboxTests-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "no.nordicsemi.ios.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
 		};
@@ -1115,15 +1018,6 @@
 			buildConfigurations = (
 				5217F4151859EE0000F2D5BB /* Debug */,
 				5217F4161859EE0000F2D5BB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5217F4171859EE0000F2D5BB /* Build configuration list for PBXNativeTarget "nRF ToolboxTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5217F4181859EE0000F2D5BB /* Debug */,
-				5217F4191859EE0000F2D5BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

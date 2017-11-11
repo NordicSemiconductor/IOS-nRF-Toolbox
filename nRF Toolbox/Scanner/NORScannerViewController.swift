@@ -178,10 +178,10 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
     //MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         bluetoothManager!.stopScan()
-        self.dismiss(animated: true, completion: nil)
         // Call delegate method
         let peripheral = peripherals[indexPath.row].peripheral
         self.delegate?.centralManagerDidSelectPeripheral(withManager: bluetoothManager!, andPeripheral: peripheral)
+        self.dismiss(animated: true, completion: nil)
     }
     
     //MARK: - CBCentralManagerDelgate

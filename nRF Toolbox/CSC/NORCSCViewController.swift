@@ -61,7 +61,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     override func viewDidLoad() {
         super.viewDidLoad()
         // Rotate the vertical label
-        verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: CGFloat(-M_PI_2))
+        verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: -.pi / 2)
         oldWheelEventTime = 0.0
         oldWheelRevolution = 0
         travelDistance = 0.0
@@ -89,7 +89,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         }
 
         let navigationController = segue.destination
-        let scannerViewController = navigationController.childViewControllerForStatusBarHidden as! NORScannerViewController
+        let scannerViewController = navigationController.childViewControllers.first as! NORScannerViewController
         scannerViewController.filterUUID = cscServiceUUID
         scannerViewController.delegate = self
     }
@@ -158,12 +158,12 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     }
     
     //MARK: -  NORCSCViewController implementation
-    func didEnterBackgroundHandler() {
+    @objc func didEnterBackgroundHandler() {
         let name = cyclePeripheral?.name ?? "peripheral"
         NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(name). It will collect data also in background.")
     }
     
-    func didBecomeActiveHandler() {
+    @objc func didBecomeActiveHandler() {
         UIApplication.shared.cancelAllLocalNotifications()
     }
     

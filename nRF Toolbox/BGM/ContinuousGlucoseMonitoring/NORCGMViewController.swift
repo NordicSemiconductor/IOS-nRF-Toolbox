@@ -84,7 +84,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
     required init?(coder aDecoder: NSCoder) {
         readings = NSMutableArray(capacity: 20)
         dateFormat = DateFormatter()
-        dateFormat.dateFormat = "dd.MM.yyyy, hh:mm"
+        dateFormat.dateFormat = "dd.MM.yyyy, HH:mm"
         cbgmServiceUUID = CBUUID(string: NORServiceIdentifiers.cgmServiceUUIDString)
         cgmGlucoseMeasurementCharacteristicUUID = CBUUID(string: NORServiceIdentifiers.cgmGlucoseMeasurementCharacteristicUUIDString)
         cgmGlucoseMeasurementContextCharacteristicUUID = CBUUID(string: NORServiceIdentifiers.bgmGlucoseMeasurementContextCharacteristicUUIDString)
@@ -103,16 +103,16 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
         super.viewDidLoad()
 
         // Rotate the vertical label
-        self.verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: CGFloat(-M_PI_2))
+        self.verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: -.pi / 2)
         cbgmTableView.dataSource = self
     }
     
-    func appdidEnterBackground() {
+    @objc func appdidEnterBackground() {
         let name = connectedPeripheral?.name ?? "peripheral"
         NORAppUtilities.showBackgroundNotification(message: "You are still connected to \(name). It will collect data also in background.")
     }
     
-    func appDidBecomeActiveBackground(_ aNotification : Notification) {
+    @objc func appDidBecomeActiveBackground(_ aNotification : Notification) {
         UIApplication.shared.cancelAllLocalNotifications()
     }
     
@@ -179,10 +179,13 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
     
     func centralManagerDidSelectPeripheral(withManager aManager: CBCentralManager, andPeripheral aPeripheral: CBPeripheral) {
         // We may not use more than one Central Manager instance. Let's just take the one returned from Scanner View Controller
+        connectedPeripheral = aPeripheral
+        connectedPeripheral?.delegate = self
         bluetoothManager = aManager
         bluetoothManager?.delegate = self
         
         // The sensor has been selected, connect to it
+        
         aPeripheral.delegate = self
         let connectionOptions = NSDictionary(object: NSNumber(value: true as Bool), forKey: CBConnectPeripheralOptionNotifyOnNotificationKey as NSCopying)
 
@@ -234,7 +237,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
         if segue.identifier == "scan" {
             // Set this contoller as scanner delegate
             let nc = segue.destination
-            let controller = nc.childViewControllerForStatusBarHidden as! NORScannerViewController
+            let controller = nc.childViewControllers.first as! NORScannerViewController
 
             controller.filterUUID = cbgmServiceUUID
             controller.delegate = self
@@ -280,10 +283,8 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
             cbgmTableView.reloadData()
         }
         
-        if size > 0 {
-            
+        if size > 0 {            
             let data = Data(bytes: &accessParam, count: size)
-            print("Writing data: \(data) to \(targetCharacteristic!)")
             connectedPeripheral?.writeValue(data, for: targetCharacteristic!, type:.withResponse)
         }
     }
@@ -296,7 +297,6 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
             accessParam.append(NORCGMOpCode.set_COMMUNICATION_INTERVAL.rawValue)
             accessParam.append(UInt8(timeValue!))
             let data = Data(bytes: &accessParam, count: 2)
-            print("Writing data : \(data) to characteristic: \(cgmSpecificOpsControlPointCharacteristic)")
             connectedPeripheral?.writeValue(data, for: cgmSpecificOpsControlPointCharacteristic!, type: .withResponse)
         }
     }
