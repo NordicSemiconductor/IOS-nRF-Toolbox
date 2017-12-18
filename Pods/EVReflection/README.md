@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.org/evermeer/EVReflection.svg?style=flat)](https://travis-ci.org/evermeer/EVReflection)
  -->
 [![Issues](https://img.shields.io/github/issues-raw/evermeer/EVReflection.svg?style=flat)](https://github.com/evermeer/EVReflection/issues)
-[![Coverage](https://img.shields.io/badge/coverage-78%25-yellow.svg?style=flat)](https://raw.githubusercontent.com/evermeer/EVReflection/master/UnitTests/coverage.png)
+[![Coverage](https://img.shields.io/badge/coverage-74%25-yellow.svg?style=flat)](https://raw.githubusercontent.com/evermeer/EVReflection/master/UnitTests/coverage.png)
 [![Documentation](https://img.shields.io/badge/documented-97%25-green.svg?style=flat)](http://cocoadocs.org/docsets/EVReflection/3.7.0/)
 [![Stars](https://img.shields.io/github/stars/evermeer/EVReflection.svg?style=flat)](https://github.com/evermeer/EVReflection/stargazers)
 [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/matteocrippa/awesome-swift#json)
@@ -54,14 +54,7 @@ There are extension available for using EVReflection with [XMLDictionairy](https
 All these extens can be installed by adding something like this in your podfile:
 
 ```
-pod 'EVReflection/MoyaRxSwift', :git => 'https://github.com/evermeer/EVReflection.git'
-```
-
-
-p.s. When using Moya, then for the moment you need to specify a version 10 branch to use in your podfile like this:
-
-```
-pod 'Moya', :git => 'https://github.com/Moya/Moya.git', :branch => '10.0.0-dev'
+pod 'EVReflection/MoyaRxSwift'
 ```
 
 ## Index
@@ -150,7 +143,7 @@ If you want to do the same but you have XML, then you can achieve that using the
 
 ```swift
 let xml = "<user><id>27</id><name>Bob</name><friends><user><id>20</id><name>Jen</name></user></friends></user>"
-let user = User(xml: xml)
+let user = User(xmlString: xml)
 ```
 
 ## Using EVReflection in your own App 

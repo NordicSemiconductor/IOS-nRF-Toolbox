@@ -44,7 +44,7 @@ import CoreBluetooth
  In SDK 14.0.0 a new feature was added to the Buttonless DFU for non-bonded devices which allows to send a unique name
  to the device before it is switched to bootloader mode. After jump, the bootloader will advertise with this name
  as the Complete Local Name making it easy to select proper device. In this case you don't have to override the default
- peripheral selector.
+ peripheral selector. More: http://infocenter.nordicsemi.com/topic/com.nordic.infocenter.sdk5.v14.0.0/service_dfu.html
  */
 @objc public protocol DFUPeripheralSelectorDelegate : class {
     /**

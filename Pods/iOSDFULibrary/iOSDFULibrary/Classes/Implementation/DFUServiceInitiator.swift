@@ -74,8 +74,18 @@ import CoreBluetooth
      The number of packets of firmware data to be received by the DFU target before sending
      a new Packet Receipt Notification.
      If this value is 0, the packet receipt notification will be disabled by the DFU target.
-     Default value is 12. Higher values (~20+), or disabling it, may speed up the upload process,
-     but also cause a buffer overflow and hang the Bluetooth adapter.
+     Default value is 12.
+     
+     PRNs are no longer required on iOS 11 and MacOS 10.13 or newer, but make sure
+     your device is able to be updated without. Old SDKs, before SDK 7 had very slow
+     memory management and could not handle packets that fast. If your device
+     is based on such SDK it is recommended to leave the default value.
+     
+     Disabling PRNs on iPhone 8 with iOS 11.1.2 increased the speed from 1.7 KB/s to 2.7 KB/s
+     on DFU from SDK 14.1 where packet size is 20 bytes (higher MTU not supported yet).
+     
+     On older versions, higher values of PRN (~20+), or disabling it, may speed up
+     the upload process, but also cause a buffer overflow and hang the Bluetooth adapter.
      Maximum verified values were 29 for iPhone 6 Plus or 22 for iPhone 7, both iOS 10.1.
      */
     @objc public var packetReceiptNotificationParameter: UInt16 = 12
@@ -128,6 +138,25 @@ import CoreBluetooth
      jumping in these both cases.
      */
     @objc public var forceDfu = false
+    
+    /**
+     In SDK 14.0.0 a new feature was added to the Buttonless DFU for non-bonded devices which allows to send a unique name
+     to the device before it is switched to bootloader mode. After jump, the bootloader will advertise with this name
+     as the Complete Local Name making it easy to select proper device. In this case you don't have to override the default
+     peripheral selector.
+     
+     Read more: http://infocenter.nordicsemi.com/topic/com.nordic.infocenter.sdk5.v14.0.0/service_dfu.html
+     
+     Setting this flag to false you will disable this feature. iOS DFU Library will not send the 0x02-[len]-[new name]
+     command prior jumping and will rely on the DfuPeripheralSelectorDelegate just like it used to in previous SDK.
+     
+     This flag is ignored in Legacy DFU.
+     
+     **It is recommended to keep this flag set to true unless necessary.**
+     
+     For more information read: https://github.com/NordicSemiconductor/IOS-nRF-Connect/issues/16
+     */
+    @objc public var alternativeAdvertisingNameEnabled = true
     
     /**
      Set this flag to true to enable experimental buttonless feature in Secure DFU. When the 

@@ -2,6 +2,12 @@
 
 The nRF Toolbox is a container app that stores your Nordic Semiconductor apps for Bluetooth Smart in one location. 
 
+New in V4.4.3:
+
+* Fixed a bug causing DFU errors not to be displayed properly on the DFU screen.
+* Added ability to flash SoftDevice + Bootloader Hex files.
+* Updated iOSDFULibrary to version 4.1.0.
+
 New in V4.4.2:
 
 * Fixed an issue with glucose monitors context reading that caused a crash or missing data from the reading context

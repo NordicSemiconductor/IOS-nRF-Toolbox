@@ -504,4 +504,11 @@ internal class SecureDFUControlPoint : NSObject, CBPeripheralDelegate {
             }
         }
     }
+    
+    func peripheralIsReady(toSendWriteWithoutResponse peripheral: CBPeripheral) {
+        // On iOS 11 and MacOS 10.13 or newer PRS are no longer required. Instead,
+        // the service checks if it can write write without response before writing
+        // and it will get this callback if the buffer is ready again.
+        proceed?(nil) // no offset available
+    }
 }

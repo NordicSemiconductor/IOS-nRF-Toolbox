@@ -108,7 +108,7 @@ internal class SecureDFUPacket {
         var packetsToSendNow = min(UInt32(aPRNValue), packetsLeft)
         
         if aPRNValue == 0 {
-            packetsToSendNow = objectSizeInPackets
+            packetsToSendNow = packetsLeft
         }
         
         // This is called when we no longer have data to send (PRN received after the whole object was sent)
@@ -138,6 +138,17 @@ internal class SecureDFUPacket {
         
         let originalPacketsToSendNow = packetsToSendNow
         while packetsToSendNow > 0 {
+            // Starting from iOS 11 and MacOS 10.13 the PRNs are no longer required due to new API
+            var canSendPacket = true
+            if #available(iOS 11.0, macOS 10.13, *) {
+                // The peripheral.canSendWriteWithoutResponse often returns false before even we start sending, let's do a workaround
+                canSendPacket = bytesSent == 0 || peripheral.canSendWriteWithoutResponse
+            }
+            // If PRNs are enabled we will ignore the new API and base synchronization on PRNs only
+            guard canSendPacket || aPRNValue > 0 else {
+                break
+            }
+            
             let bytesLeft = objectSizeInBytes - bytesSent
             let packetLength = min(bytesLeft, packetSize)
             let packet = objectData.subdata(in: Int(bytesSent) ..< Int(packetLength + bytesSent))
