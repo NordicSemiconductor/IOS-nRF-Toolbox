@@ -14,7 +14,7 @@ class NORDFUConstantsUtility: NSObject {
     let ancSServiceUUIDString   = "7905F431-B5CE-4E99-A40F-4B1E122D00D0"
 
     static func getDFUHelpText() -> String {
-        return "The Device Firmware Update (DFU) profile allows to upload a new application, Soft Device or bootloader onto the device over-the-air (OTA). It is compatible with nRF5x devices, from Nordic Semiconductor, that have the S110, S130 or S132 SoftDevice and the DFU bootloader enabled. \n\nDefault number of Packet Receipt Notification is 10 and can changed in the Settings. For more information about the DFU check the documentation."
+        return "The Device Firmware Update (DFU) profile allows to upload a new application, Soft Device or bootloader onto the device over-the-air (OTA). It is compatible with nRF5x devices, from Nordic Semiconductor, that have the S110, S130 or S132 SoftDevice and the DFU bootloader enabled. \n\nDefault number of Packet Receipt Notification is 10 and can be changed in the Settings. For more information about the DFU check the documentation."
     }
     
     static func showAlert(message aMessage : String) {
