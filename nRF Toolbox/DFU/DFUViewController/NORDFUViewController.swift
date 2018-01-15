@@ -76,6 +76,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
         selectedPeripheral = aPeripheral
         centralManager = aManager
         deviceName.text = aPeripheral.name
+        progressLabel.text = nil
         self.updateUploadButtonState()
     }
 
@@ -90,30 +91,32 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
             fileSize.text = String(format: "%d bytes", (content?.count)!)
             
             switch  aType {
-            case .application:
-                fileType.text = "Application"
-                break
-            case .bootloader:
-                fileType.text = "Bootloader"
-                break
-            case .softdevice:
-                fileType.text = "SoftDevice"
-                break
-            default:
-                fileType.text = "Not implemented yet"
+                case .application:
+                    fileType.text = "Application"
+
+                case .bootloader:
+                    fileType.text = "Bootloader"
+
+                case .softdevice:
+                    fileType.text = "SoftDevice"
+
+                case .softdeviceBootloader:
+                    fileType.text = "SD + BL"
+                default:
+                    fileType.text = "Application"
             }
         }else{
             selectedFileURL = nil
-            selectedFileURL = nil
             NORDFUConstantsUtility.showAlert(message: "Selected file is not supported")
         }
-    
+        progressLabel.text = nil
         updateUploadButtonState()
     }
     
     func onFileTypeNotSelected() {
         selectedFileURL = nil
         updateUploadButtonState()
+        progressLabel.text = nil
     }
 
     //MARK: - NORFileSelectionDelegate
@@ -209,7 +212,11 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
         if NORDFUConstantsUtility.isApplicationStateInactiveOrBackgrounded() {
             NORDFUConstantsUtility.showBackgroundNotification(message: message)
         }
-        self.clearUI()
+        clearUI()
+        DispatchQueue.main.async {
+            self.progressLabel.text = "Error: \(message)"
+            self.progressLabel.isHidden = false
+        }
     }
 
     //MARK: - DFUProgressDelegate
@@ -308,32 +315,33 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
     }
     
     func clearUI() {
-        DispatchQueue.main.async(execute: {
-            self.dfuController        = nil
-            self.selectedPeripheral   = nil
-
-            self.deviceName.text      = "DEFAULT DFU"
-            self.uploadStatus.text    = nil
+        DispatchQueue.main.async {
+            self.dfuController          = nil
+            self.selectedPeripheral     = nil
+            
+            self.deviceName.text        = "DEFAULT DFU"
+            self.uploadStatus.text      = nil
             self.uploadStatus.isHidden  = true
-            self.progress.progress    = 0.0
+            self.progress.progress      = 0.0
             self.progress.isHidden      = true
-            self.progressLabel.text   = nil
+            self.progressLabel.text     = nil
             self.progressLabel.isHidden = true
             
-            self.uploadButton.setTitle("Upload", for: UIControlState())
+            self.uploadButton.setTitle("Upload", for: .normal)
             self.updateUploadButtonState()
             self.enableOtherButtons()
             self.removeObservers()
-        })
+        }
     }
     
     func performDFU() {
         self.disableOtherButtons()
         progress.isHidden = false
+        progressLabel.text = nil
         progressLabel.isHidden = false
         uploadStatus.isHidden = false
         uploadButton.isEnabled = false
-        
+
         self.registerObservers()
         
         // To start the DFU operation the DFUServiceInitiator must be used

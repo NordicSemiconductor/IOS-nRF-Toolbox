@@ -139,7 +139,7 @@ internal class DFUPacket {
         var packetsToSendNow = min(UInt32(aPRNValue), packetsLeft)
         if aPRNValue == 0 {
             // When Packet Receipt Notification procedure is disabled, the service will send all data here
-            packetsToSendNow = totalPackets
+            packetsToSendNow = packetsLeft
         }
         
         // Initialize timers
@@ -159,6 +159,17 @@ internal class DFUPacket {
         }
         
         while packetsToSendNow > 0 {
+            // Starting from iOS 11 and MacOS 10.13 the PRNs are no longer required due to new API
+            var canSendPacket = true
+            if #available(iOS 11.0, macOS 10.13, *) {
+                // The peripheral.canSendWriteWithoutResponse often returns false before even we start sending, let's do a workaround
+                canSendPacket = bytesSent == 0 || peripheral.canSendWriteWithoutResponse
+            }
+            // If PRNs are enabled we will ignore the new API and base synchronization on PRNs only
+            guard canSendPacket || aPRNValue > 0 else {
+                break
+            }
+            
             let bytesLeft    = bytesTotal - bytesSent
             let packetLength = min(bytesLeft, packetSize)
             let packet       = aFirmware.data.subdata(in: Int(bytesSent) ..< Int(bytesSent + packetLength))

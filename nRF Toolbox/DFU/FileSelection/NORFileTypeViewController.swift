@@ -29,7 +29,7 @@ class NORFileTypeViewController: UIViewController, UITableViewDelegate, UITableV
     //MARK: - UIViewControllerDelgeate
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        options = ["Softdevice", "Bootloader", "Application"]
+        options = ["SoftDevice", "Bootloader", "Application", "SoftDevice + Bootloader"]
         UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.default, animated: true)
     }
 
@@ -55,6 +55,10 @@ class NORFileTypeViewController: UIViewController, UITableViewDelegate, UITableV
             return DFUFirmwareType.softdevice
         case 1:
             return DFUFirmwareType.bootloader
+        case 2:
+            return DFUFirmwareType.application
+        case 3:
+            return DFUFirmwareType.softdeviceBootloader
         default:
             return DFUFirmwareType.application
         }

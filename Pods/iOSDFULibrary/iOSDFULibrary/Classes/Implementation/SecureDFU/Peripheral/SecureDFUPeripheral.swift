@@ -24,6 +24,9 @@ import CoreBluetooth
 
 internal class SecureDFUPeripheral : BaseCommonDFUPeripheral<SecureDFUExecutor, SecureDFUService> {
     
+    /// A flag indicating whether setting alternative advertising name is enabled (SDK 14+) (true by default)
+    internal let alternativeAdvertisingNameEnabled: Bool
+    
     // MARK: - Peripheral API
     
     override var requiredServices: [CBUUID]? {
@@ -36,6 +39,11 @@ internal class SecureDFUPeripheral : BaseCommonDFUPeripheral<SecureDFUExecutor, 
     }
     
     // MARK: - Implementation
+    
+    override init(_ initiator: DFUServiceInitiator) {
+        self.alternativeAdvertisingNameEnabled = initiator.alternativeAdvertisingNameEnabled
+        super.init(initiator)
+    }
     
     /**
      Enables notifications on DFU Control Point characteristic.
@@ -65,7 +73,7 @@ internal class SecureDFUPeripheral : BaseCommonDFUPeripheral<SecureDFUExecutor, 
     func jumpToBootloader() {
         jumpingToBootloader = true
         newAddressExpected = dfuService!.newAddressExpected
-        dfuService!.jumpToBootloaderMode(
+        dfuService!.jumpToBootloaderMode(withAlternativeAdvertisingName: alternativeAdvertisingNameEnabled,
             // onSuccess the device gets disconnected and centralManager(_:didDisconnectPeripheral:error) will be called
             onError: { (error, message) in
                 self.jumpingToBootloader = false

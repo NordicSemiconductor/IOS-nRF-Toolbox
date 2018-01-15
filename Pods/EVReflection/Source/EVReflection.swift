@@ -591,6 +591,11 @@ final public class EVReflection {
             appName = appName.characters.split(whereSeparator: {$0 == "."}).map({ String($0) }).last ?? ""
         }
         
+        // First character may not be a number
+        if appName.prefix(1) >= "0" && appName.prefix(1) <= "9" {
+            appName = "_" + String(appName.characters.dropFirst())
+        }
+        
         // Clean up special characters
         return appName.components(separatedBy: illegalCharacterSet).joined(separator: "_")
     }
@@ -1573,7 +1578,7 @@ extension Date {
         let pattern = "\\\\?/Date\\((\\d+)(([+-]\\d{2})(\\d{2}))?\\)\\\\?/"
         let regex = try! NSRegularExpression(pattern: pattern)
         guard let match = regex.firstMatch(in: fromDateTimeString, range: NSRange(location: 0, length: fromDateTimeString.utf16.count)) else {
-            //            Rosewood.info("Failed to find a match")
+            //            evPrint("Failed to find a match")
             return nil
         }
         
