@@ -79,7 +79,7 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, HMHomeManagerD
                 self.connectionButton.isEnabled = false
                 let errorCode = (anError as! HMError).code
                 if errorCode == .keychainSyncNotEnabled {
-                    self.showError(message: "iCloud Keychain sync is disabled. to use HomeKit please enable it form settings.", title: "iCloud Required")
+                    self.showError(message: "iCloud Keychain sync is disabled.\n\nTo use HomeKit please enable it form settings.", title: "iCloud Required")
                 } else if errorCode == .homeAccessNotAuthorized {
                     self.showError(message: "Cannot create home, make sure nRF Toolbox has permission to access your home data.", title: "HomeKit Error")
                 } else {

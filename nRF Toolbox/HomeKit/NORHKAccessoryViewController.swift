@@ -48,7 +48,6 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
         
         guard dfuControlPointCharacteristic != nil else {
             UIAlertView(title: "Missing feature", message: "\"\(targetAccessory!.name)\" Does not seem to have the DFU control point characteristic, please try pairing it again or make sure it does support buttonless DFU.", delegate: nil, cancelButtonTitle: "Ok").show()
-            print("DFU Control point charcateristic not found, please try again")
             return
         }
         
@@ -83,8 +82,9 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func showRestartAlertWithAccessoryName(_ aName: String) {
-        UIAlertView(title: "Restart initiating", message: "\"\(aName)\" should now disconnect and restart in DFU mode. to continue the flashing process please head towards the DFU option in the main menu, scan and find the new DFU peripheral and start the flashing process." , delegate: nil, cancelButtonTitle: "Ok").show()
+        UIAlertView(title: "Restart initiating", message: "\"\(aName)\" should now disconnect and restart in DFU mode.\n\nTo continue the flashing process please head towards the DFU option in the main menu, scan and find the new DFU peripheral and start the flashing process." , delegate: nil, cancelButtonTitle: "Ok").show()
     }
+
     func ShowBootloaderWarning() {
         let controller = UIAlertController(title: "Accessory will restart", message: "Updating requires restarting this accessory into DFU mode.\r\nAfter restarting, open the DFU page to continue.", preferredStyle: .alert)
         controller.addAction(UIAlertAction(title: "Restart in DFU mode", style: .destructive, handler: { (anAction) in
