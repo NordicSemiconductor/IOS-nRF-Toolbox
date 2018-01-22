@@ -5671,11 +5671,30 @@
                             <constraint firstItem="res-a9-nzD" firstAttribute="leading" secondItem="Ngl-Bo-tNz" secondAttribute="leadingMargin" constant="17" id="zcZ-r1-bsI"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Accessory name" id="bgi-QO-vwz">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="Eel-bl-4dB">
+                            <view key="customView" contentMode="scaleToFill" id="A8a-IS-ZNU">
+                                <rect key="frame" x="276" y="0.0" width="83" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="ly1-PX-kjv">
+                                        <rect key="frame" x="63" y="12" width="20" height="20"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="ly1-PX-kjv" secondAttribute="trailing" id="HAF-oE-C28"/>
+                                    <constraint firstItem="ly1-PX-kjv" firstAttribute="centerY" secondItem="A8a-IS-ZNU" secondAttribute="centerY" id="abv-wd-PSM"/>
+                                </constraints>
+                            </view>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="accessoryCategoryLabel" destination="gkX-Fz-smf" id="Lhe-XD-HZc"/>
                         <outlet property="accessoryDFUSupportLabel" destination="GLy-uD-wAK" id="2Tm-Qj-09F"/>
                         <outlet property="accessoryNameTitle" destination="QYh-eH-e78" id="GAL-fg-lwc"/>
                         <outlet property="accessoryServicesTableView" destination="VvQ-ZD-9NU" id="Bnd-UL-OGY"/>
+                        <outlet property="activityIndicator" destination="ly1-PX-kjv" id="Vgm-PA-VCe"/>
                         <outlet property="dfuModeButton" destination="5ct-bt-wwr" id="Jm5-o4-yaQ"/>
                         <outlet property="firmwareVersionLabel" destination="mpS-aM-zCm" id="Hur-tf-M34"/>
                         <outlet property="hardwareVersionLabel" destination="hcT-Os-s4I" id="eYE-jo-CVb"/>

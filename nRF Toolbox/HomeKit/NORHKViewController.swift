@@ -139,11 +139,11 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, HMHomeManagerD
             self.homeStore.home = primaryHome
         }
         if manager.homes.count == 0 {
-            changeHomeButton.setTitle("Create new home", for: .normal)
+            changeHomeButton.setTitle("Create home", for: .normal)
             changeHomeButton.isEnabled = true
         } else {
             if manager.homes.count > 1 {
-                changeHomeButton.setTitle("Switch homes", for: .normal)
+                changeHomeButton.setTitle("Change home", for: .normal)
                 changeHomeButton.isEnabled = true
             } else {
                 changeHomeButton.isEnabled = false
@@ -174,7 +174,7 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, HMHomeManagerD
                 homeStore.home = primaryHome
                 updateUIForHome(aHome: primaryHome)
                 if homeStore.homeManager.homes.count > 1 {
-                    changeHomeButton.setTitle("Switch home", for: .normal)
+                    changeHomeButton.setTitle("Change home", for: .normal)
                     changeHomeButton.isEnabled = true
                 } else {
                     changeHomeButton.setTitle("Create home", for: .normal)
