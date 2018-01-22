@@ -12,7 +12,7 @@ import HomeKit
 
 public let homeKitScannerSegue = "show_hk_scanner_view"
 public let homeKitAccessorySegue = "show_hk_accessory_view"
-class NORHKViewController: NORBaseViewController, HMHomeDelegate, NORHKScannerDelegate, UITableViewDataSource, UITableViewDelegate {
+class NORHKViewController: NORBaseViewController, HMHomeDelegate, HMHomeManagerDelegate, NORHKScannerDelegate, UITableViewDataSource, UITableViewDelegate {
 
     //MARK: - Properties
     private var accessoryBrowser: HMAccessoryBrowser!
@@ -22,19 +22,38 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, NORHKScannerDe
 
     //MARK: - Outlets and actions
     @IBOutlet weak var verticalLabel: UILabel!
+    @IBOutlet weak var changeHomeButton: UIButton!
     @IBOutlet weak var connectionButton: UIButton!
     @IBOutlet weak var homeTitle: UILabel!
     @IBOutlet weak var accessoryTableView: UITableView!
 
+    @IBAction func changeHomeButtonTapped(_ sender: Any) {
+        handleChangeHomesButtonTapped()
+    }
     @IBAction func aboutButtonTapped(_ sender: Any) {
-        self.showAbout(message: NORAppUtilities.getHelpTextForService(service: .homekit))
+        handleAboutButtonTapped()
     }
 
     @IBAction func connectionButtonTapped(_ sender: Any) {
-            self.performSegue(withIdentifier: homeKitScannerSegue, sender: nil)
+        handleConnectionButtonTapped()
     }
 
     //MARK: - Implementation
+    func handleChangeHomesButtonTapped() {
+        if homeStore.homeManager.homes.count == 0 {
+            //Create home, no homes available
+            createPrimaryHome()
+        } else if homeStore.homeManager.homes.count > 1 {
+            showHomeSwitcherUI()
+        }
+    }
+
+    func handleAboutButtonTapped() {
+        self.showAbout(message: NORAppUtilities.getHelpTextForService(service: .homekit))
+    }
+    func handleConnectionButtonTapped() {
+        self.performSegue(withIdentifier: homeKitScannerSegue, sender: nil)
+    }
     func getAccessoriesForHome(aHome: HMHome) -> [HMAccessory] {
         return aHome.accessories
     }
@@ -58,13 +77,16 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, NORHKScannerDe
                 self.updateUIForHome(aHome: aHome!)
             } else {
                 self.connectionButton.isEnabled = false
-                if (anError as? HMError)?.code == .keychainSyncNotEnabled {
-                    self.showError(message: "iCloud Keychain sync is disabled")
+                let errorCode = (anError as! HMError).code
+                if errorCode == .keychainSyncNotEnabled {
+                    self.showError(message: "iCloud Keychain sync is disabled. to use HomeKit please enable it form settings.", title: "iCloud Required")
+                } else if errorCode == .homeAccessNotAuthorized {
+                    self.showError(message: "Cannot create home, make sure nRF Toolbox has permission to access your home data.", title: "HomeKit Error")
                 } else {
                     if anError?.localizedDescription != nil {
-                        self.showError(message: (anError?.localizedDescription)!)
+                        self.showError(message: (anError?.localizedDescription)!, title: "HomeKit Error")
                     } else {
-                        self.showError(message: "Cannot create home, make sure the nRF Toolbox has permission to access your home data.")
+                        self.showError(message: "An unknown error occured.", title: "HomeKit Error")
                     }
                 }
             }
@@ -75,6 +97,22 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, NORHKScannerDe
         homeTitle.text = aHome.name.uppercased()
         homeAccessories = getAccessoriesForHome(aHome: aHome)
         accessoryTableView.reloadData()
+    }
+
+    func didSelectNewHome(_ aHome: HMHome) {
+        homeStore.home = aHome
+        homesDidChange()
+    }
+
+    func showHomeSwitcherUI() {
+        let selectionAlertView = UIAlertController(title: "Select Home", message: "Select new home", preferredStyle: .actionSheet)
+        for aHome in homeStore.homeManager.homes {
+            let aHomeAction = UIAlertAction(title: aHome.name, style: .default, handler: { (action) in
+                self.didSelectNewHome(aHome)
+            })
+            selectionAlertView.addAction(aHomeAction)
+        }
+        present(selectionAlertView, animated: true, completion: nil)
     }
 
     func pair(anAccessory: HMAccessory, withHome aHome: HMHome) {
@@ -93,27 +131,64 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, NORHKScannerDe
             self.accessoryBrowser = nil
         }
     }
+
+    //MARK: - HMHomeManagerDelegate
+    public func homeManagerDidUpdateHomes(_ manager: HMHomeManager) {
+        if let primaryHome = manager.primaryHome {
+            self.updateUIForHome(aHome: primaryHome)
+            self.homeStore.home = primaryHome
+        }
+        if manager.homes.count == 0 {
+            changeHomeButton.setTitle("Create new home", for: .normal)
+            changeHomeButton.isEnabled = true
+        } else {
+            if manager.homes.count > 1 {
+                changeHomeButton.setTitle("Switch homes", for: .normal)
+                changeHomeButton.isEnabled = true
+            } else {
+                changeHomeButton.isEnabled = false
+            }
+        }
+        homesDidChange()
+    }
+
     //MARK: - UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         homeStore = NORHKHomeStore.sharedHomeStore
+        homeStore.homeManager.delegate = self
 
         verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: -.pi / 2)
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if homeStore.homeManager.primaryHome != nil {
-            homeStore.home = homeStore.homeManager.primaryHome
-            updateUIForHome(aHome: homeStore.home!)
-        } else {
-            createPrimaryHome()
-        }
+        homesDidChange()
     }
 
+    func homesDidChange() {
+        if let newHome = homeStore.home {
+            updateUIForHome(aHome: newHome)
+        } else {
+            if let primaryHome = homeStore.homeManager.primaryHome {
+                homeStore.home = primaryHome
+                updateUIForHome(aHome: primaryHome)
+                if homeStore.homeManager.homes.count > 1 {
+                    changeHomeButton.setTitle("Switch home", for: .normal)
+                    changeHomeButton.isEnabled = true
+                } else {
+                    changeHomeButton.setTitle("Create home", for: .normal)
+                    changeHomeButton.isEnabled = false
+                }
+            } else {
+                changeHomeButton.setTitle("Create home", for: .normal)
+                changeHomeButton.isEnabled = true
+            }
+        }
+    }
+    
     //MARK: - UITableViewDataSoruce
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let aCell = tableView.dequeueReusableCell(withIdentifier: "HKAccessoryCell", for: indexPath)
         aCell.textLabel?.text = homeAccessories[indexPath.row].name
         if #available(iOS 9.0, *) {
@@ -157,6 +232,7 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, NORHKScannerDe
         }
         return true
     }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == homeKitScannerSegue {
             let navigationController = segue.destination as? UINavigationController
