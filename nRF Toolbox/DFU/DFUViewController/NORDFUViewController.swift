@@ -142,7 +142,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileSe
     }
 
     func showFileTypeSelectionAlert() {
-        let fileTypeAlert = UIAlertController(title: "Firmware type", message: "Please select the type of this firmware", preferredStyle: .actionSheet)
+        let fileTypeAlert = UIAlertController(title: "Firmware type", message: "Please select the firmware type.", preferredStyle: .actionSheet)
         
         let softdeviceAction = UIAlertAction(title: "Softdevice", style: .default) { (anAction) in
             self.didSelectFirmwareType(.softdevice)
@@ -178,7 +178,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileSe
     }
 
     func showFirmwarePartSelectionAlert(withChoices choices: [DFUFirmwareType]) {
-        let firmwarePartAlert = UIAlertController(title: "Firmware part", message: "Please select the parts of this firmware to flash", preferredStyle: .actionSheet)
+        let firmwarePartAlert = UIAlertController(title: "Scope", message: "Please select the component(s) to be uploaded.", preferredStyle: .actionSheet)
         for aChoice in choices {
             let choiceAction = UIAlertAction(title: firmwarePartToString(aChoice), style: .default, handler: { (alertAction) in
                 self.didSelectFirmwarePart(aChoice)
@@ -368,7 +368,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileSe
         // but it will pause just before seding the data.
         dfuController?.pause()
         
-        let alert = UIAlertController(title: "Abort?", message: "Do you want to abort?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Warning", message: "Are you sure you want to abort?", preferredStyle: .alert)
         let abort = UIAlertAction(title: "Abort", style: .destructive, handler: { (anAction) in
             _ = self.dfuController?.abort()
             alert.dismiss(animated: true, completion: nil)
