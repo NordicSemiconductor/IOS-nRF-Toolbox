@@ -2,6 +2,16 @@
 
 The nRF Toolbox is a container app that stores your Nordic Semiconductor apps for Bluetooth Smart in one location. 
 
+New in V4.4.4:
+
+* Improvet HomeKit view, allowing user to switch homes, and create a home if none exists.
+* Fixed issuew with HomeKit showing permission error as soon as the permission was given.
+* Removed automatic home creation in HomeKit view, now user can manually create the home.
+* Improved error handling to show the user actual parsed messages from homekit errors instead of showing generic errors
+* Updated DFULibrary to version 4.1.1
+* Improved fieltype selection UI
+* Added an option to allow users to select the DFU scope when flashing distribution packages.
+
 New in V4.4.3:
 
 * Fixed a bug causing DFU errors not to be displayed properly on the DFU screen.
