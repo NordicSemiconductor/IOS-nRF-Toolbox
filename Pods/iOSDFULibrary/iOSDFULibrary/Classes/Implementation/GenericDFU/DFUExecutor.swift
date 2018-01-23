@@ -137,15 +137,14 @@ extension DFUExecutor {
     
     // MARK: - BasePeripheralDelegate API
     
-    func peripheralDidDisconnectAfterFirmwarePartSent() {
+    func peripheralDidDisconnectAfterFirmwarePartSent() -> Bool {
         // Check if there is another part of the firmware that has to be sent
         if firmware.hasNextPart() {
             firmware.switchToNextPart()
             DispatchQueue.main.async(execute: {
                 self.delegate?.dfuStateDidChange(to: .connecting)
             })
-            peripheral.switchToNewPeripheralAndConnect()
-            return
+            return true
         }
         // If not, we are done here. Congratulations!
         DispatchQueue.main.async(execute: {
@@ -155,5 +154,6 @@ extension DFUExecutor {
             
         // Release the cyclic reference
         peripheral.destroy()
+        return false
     }
 }

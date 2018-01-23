@@ -26,7 +26,7 @@ class NORBaseViewController: UIViewController, UIAlertViewDelegate {
         self.showMessage(message: aMessage, title: "About", otherButtonTitle: nil)
     }
     
-    func showError(message aMessage: String) {
-        self.showMessage(message: aMessage, title: "Error", otherButtonTitle: nil)
+    func showError(message aMessage: String, title aTitle: String) {
+        self.showMessage(message: aMessage, title: aTitle, otherButtonTitle: nil)
     }
 }
