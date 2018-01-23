@@ -33,8 +33,6 @@
 		3042993C1CE6154100E1D2AB /* NORBaseRevealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304299391CE6154100E1D2AB /* NORBaseRevealViewController.swift */; };
 		3042993D1CE6154100E1D2AB /* NORBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3042993A1CE6154100E1D2AB /* NORBaseViewController.swift */; };
 		30499E4B1CE4667800E0993B /* NORDFUConstantsUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E4A1CE4667800E0993B /* NORDFUConstantsUtility.swift */; };
-		30499E4D1CE4687300E0993B /* NORFileTypeSelectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E4C1CE4687300E0993B /* NORFileTypeSelectionDelegate.swift */; };
-		30499E4F1CE4688700E0993B /* NORFileTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E4E1CE4688700E0993B /* NORFileTypeViewController.swift */; };
 		30499E511CE471C500E0993B /* NORDFUViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E501CE471C500E0993B /* NORDFUViewController.swift */; };
 		30499E551CE4732200E0993B /* NORFileSelectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E541CE4732200E0993B /* NORFileSelectionDelegate.swift */; };
 		30499E571CE4736500E0993B /* NORFilePreselectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E561CE4736500E0993B /* NORFilePreselectionDelegate.swift */; };
@@ -122,8 +120,6 @@
 		304299391CE6154100E1D2AB /* NORBaseRevealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBaseRevealViewController.swift; sourceTree = "<group>"; };
 		3042993A1CE6154100E1D2AB /* NORBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBaseViewController.swift; sourceTree = "<group>"; };
 		30499E4A1CE4667800E0993B /* NORDFUConstantsUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORDFUConstantsUtility.swift; sourceTree = "<group>"; };
-		30499E4C1CE4687300E0993B /* NORFileTypeSelectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORFileTypeSelectionDelegate.swift; path = FileSelection/NORFileTypeSelectionDelegate.swift; sourceTree = "<group>"; };
-		30499E4E1CE4688700E0993B /* NORFileTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORFileTypeViewController.swift; path = FileSelection/NORFileTypeViewController.swift; sourceTree = "<group>"; };
 		30499E501CE471C500E0993B /* NORDFUViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORDFUViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		30499E541CE4732200E0993B /* NORFileSelectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORFileSelectionDelegate.swift; sourceTree = "<group>"; };
 		30499E561CE4736500E0993B /* NORFilePreselectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORFilePreselectionDelegate.swift; sourceTree = "<group>"; };
@@ -353,15 +349,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		522636281C5261C90054A550 /* File Type Selection */ = {
-			isa = PBXGroup;
-			children = (
-				30499E4C1CE4687300E0993B /* NORFileTypeSelectionDelegate.swift */,
-				30499E4E1CE4688700E0993B /* NORFileTypeViewController.swift */,
-			);
-			name = "File Type Selection";
-			sourceTree = "<group>";
-		};
 		5226362B1C5A5FE10054A550 /* Tutorial */ = {
 			isa = PBXGroup;
 			children = (
@@ -442,7 +429,6 @@
 			children = (
 				A85667E21B2230CA004A6D3C /* DFUViewController */,
 				7E996869197FB8FD0092E69E /* Constants */,
-				522636281C5261C90054A550 /* File Type Selection */,
 				7E6ED10C197D1D40008010B6 /* File Selection */,
 				7E6ED10A196ED482008010B6 /* firmwares */,
 			);
@@ -749,7 +735,6 @@
 				309F08701E6FF1F900B7546A /* NORHKAccessoryViewController.swift in Sources */,
 				3001EBC31D1C1430008C5C37 /* NORCGMItemCell.swift in Sources */,
 				3001EBB91D1BE1FB008C5C37 /* NORBGMViewController.swift in Sources */,
-				30499E4D1CE4687300E0993B /* NORFileTypeSelectionDelegate.swift in Sources */,
 				30921FD51CD0EB55009CBDDE /* NORMainViewController.swift in Sources */,
 				3001EBBD1D1BE695008C5C37 /* NORCGMFeatureData.swift in Sources */,
 				3001EBB81D1BE1FB008C5C37 /* NORBGMItemCell.swift in Sources */,
@@ -757,7 +742,6 @@
 				309F086A1E6D9EAA00B7546A /* NORHKHomeStore.swift in Sources */,
 				30499E591CE4A07700E0993B /* NORAppFilesViewController.swift in Sources */,
 				3001EBBF1D1BE727008C5C37 /* NORCGMSpecificOperations.swift in Sources */,
-				30499E4F1CE4688700E0993B /* NORFileTypeViewController.swift in Sources */,
 				3000B2111CE317D900F64CEE /* NORUARTRevealViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

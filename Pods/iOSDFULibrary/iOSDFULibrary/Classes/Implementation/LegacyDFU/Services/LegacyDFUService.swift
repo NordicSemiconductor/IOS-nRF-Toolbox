@@ -172,6 +172,20 @@ import CoreBluetooth
     }
     
     /**
+     Returns whether the bootloader is expected to advertise with the same address on one incremented by 1.
+     In the latter case the library needs to scan for a new advertising device and select it by filtering the adv packet,
+     as device address is not available through iOS API.
+     */
+    var newAddressExpected: Bool {
+        // See https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library/issues/170 and
+        // https://github.com/NordicSemiconductor/Android-DFU-Library/pull/45
+        // The legacy bootloader will advertise with address +1 only in SDK 6.1. Future implementations
+        // of legacy DFU will advertise directly with the same address no matter whether the device was
+        // bonded or not. In SDK 6.1 there was no DFU Version characteristic.
+        return version == nil
+    }
+    
+    /**
      Enables notifications for DFU Control Point characteristic. Result it reported using callbacks.
      
      - parameter success: method called when notifications were enabled without a problem

@@ -2007,63 +2007,6 @@
             </objects>
             <point key="canvasLocation" x="2531" y="-1362"/>
         </scene>
-        <!--Select File Type-->
-        <scene sceneID="uMY-1J-jO5">
-            <objects>
-                <viewController id="MZc-IT-Uk4" customClass="NORFileTypeViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="prp-jB-ehp"/>
-                        <viewControllerLayoutGuide type="bottom" id="Lyo-Z2-Fjy"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="4aO-k7-U4L">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aKb-wc-UXG">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FileTypeCell" id="QGh-3s-SZG">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QGh-3s-SZG" id="Xci-iq-hky">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </tableViewCell>
-                                </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="MZc-IT-Uk4" id="7kC-5P-M1S"/>
-                                    <outlet property="delegate" destination="MZc-IT-Uk4" id="Cuw-8P-e0U"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="aKb-wc-UXG" firstAttribute="leading" secondItem="4aO-k7-U4L" secondAttribute="leading" id="SfP-0T-vL1"/>
-                            <constraint firstItem="aKb-wc-UXG" firstAttribute="top" secondItem="prp-jB-ehp" secondAttribute="bottom" id="fig-xd-TzS"/>
-                            <constraint firstItem="Lyo-Z2-Fjy" firstAttribute="top" secondItem="aKb-wc-UXG" secondAttribute="bottom" id="g68-XH-Zh4"/>
-                            <constraint firstAttribute="trailing" secondItem="aKb-wc-UXG" secondAttribute="trailing" id="nlq-g3-cP6"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Select File Type" id="6Dz-n0-Ckv">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="ItP-5K-ScT">
-                            <connections>
-                                <action selector="cancelButtonTapped:" destination="MZc-IT-Uk4" id="2t8-hX-8Iz"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="0iS-7C-TUh">
-                            <connections>
-                                <action selector="doneButtonTapped:" destination="MZc-IT-Uk4" id="JF6-P1-8pc"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fqi-hg-CT1" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4371" y="-1362"/>
-        </scene>
         <!--View Controller - DFU-->
         <scene sceneID="jQp-94-O02">
             <objects>
@@ -4566,24 +4509,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jAT-rL-YJx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3611" y="123"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="Sx3-3C-IYn">
-            <objects>
-                <navigationController storyboardIdentifier="SelectFileType" automaticallyAdjustsScrollViewInsets="NO" id="Fcn-6b-dF4" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="B78-ho-AWz">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="MZc-IT-Uk4" kind="relationship" relationship="rootViewController" id="lP7-Vg-WDb"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WNe-6F-MJh" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3611" y="-1362"/>
         </scene>
         <!--ViewController - HK-->
         <scene sceneID="9th-2n-jLw">
