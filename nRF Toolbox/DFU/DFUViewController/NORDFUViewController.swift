@@ -10,9 +10,7 @@ import UIKit
 import CoreBluetooth
 import iOSDFULibrary
 
-
-
-class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTypeSelectionDelegate, NORFileSelectionDelegate, LoggerDelegate, DFUServiceDelegate, DFUProgressDelegate {
+class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileSelectionDelegate, LoggerDelegate, DFUServiceDelegate, DFUProgressDelegate {
     
     //MARK: - Class properties
     var selectedPeripheral : CBPeripheral?
@@ -80,45 +78,6 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
         self.updateUploadButtonState()
     }
 
-    //MARK: - NORFileTypeSelectionDelegate
-    func onFileTypeSelected(fileType aType: DFUFirmwareType) {
-        selectedFirmware = DFUFirmware(urlToBinOrHexFile: selectedFileURL!, urlToDatFile: nil, type: aType)
-    
-        print(selectedFirmware?.fileUrl ?? "None")
-        if selectedFirmware != nil && selectedFirmware?.fileName != nil {
-            fileName.text = selectedFirmware?.fileName
-            let content = try? Data(contentsOf: selectedFileURL!)
-            fileSize.text = String(format: "%d bytes", (content?.count)!)
-            
-            switch  aType {
-                case .application:
-                    fileType.text = "Application"
-
-                case .bootloader:
-                    fileType.text = "Bootloader"
-
-                case .softdevice:
-                    fileType.text = "SoftDevice"
-
-                case .softdeviceBootloader:
-                    fileType.text = "SD + BL"
-                default:
-                    fileType.text = "Application"
-            }
-        }else{
-            selectedFileURL = nil
-            NORDFUConstantsUtility.showAlert(message: "Selected file is not supported")
-        }
-        progressLabel.text = nil
-        updateUploadButtonState()
-    }
-    
-    func onFileTypeNotSelected() {
-        selectedFileURL = nil
-        updateUploadButtonState()
-        progressLabel.text = nil
-    }
-
     //MARK: - NORFileSelectionDelegate
     func onFileImported(withURL aFileURL: URL){
         selectedFileURL = aFileURL
@@ -131,33 +90,180 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
         fileName.text = nil
         fileSize.text = nil
         fileType.text = nil
+
+        let fileNameExtension = aFileURL.pathExtension.lowercased()
         
-        
-        let fileNameExtention = aFileURL.pathExtension.lowercased()
-        
-        if fileNameExtention == "zip" {
+        if fileNameExtension == "zip" {
             selectedFirmware = DFUFirmware(urlToZipFile: aFileURL)
-            if selectedFirmware != nil && selectedFirmware?.fileName != nil {
-                fileName.text = selectedFirmware?.fileName
-                let content = try? Data(contentsOf: aFileURL)
-                fileSize.text = String(format: "%lu bytes", (content?.count)!)
-                fileType.text = "Distribution packet (ZIP)"
-            }else{
-                selectedFirmware = nil
-                selectedFileURL = nil
-                NORDFUConstantsUtility.showAlert(message: "Seleted file is not supported")
+            var appPresent         = false
+            var softDevicePresent  = false
+            var bootloaderPresent  = false
+            if let appSize = selectedFirmware?.size.application {
+                if appSize > 0 {
+                    appPresent = true
+                }
             }
-            self.updateUploadButtonState()
-        }else{
-            // Show a view to select the file type
-            let mainStorybord                   = UIStoryboard(name: "Main", bundle: nil)
-            let navigationController            = mainStorybord.instantiateViewController(withIdentifier: "SelectFileType")
-            let filetTypeViewController         = navigationController.childViewControllers.first as? NORFileTypeViewController
-            filetTypeViewController!.delegate   = self
-            self.present(navigationController, animated: true, completion:nil)
+            if let sdSize = selectedFirmware?.size.softdevice {
+                if sdSize > 0 {
+                    softDevicePresent = true
+                }
+            }
+            if let blSize = selectedFirmware?.size.bootloader {
+                if blSize > 0 {
+                    bootloaderPresent = true
+                }
+            }
+            
+            if bootloaderPresent && softDevicePresent && appPresent {
+                showFirmwarePartSelectionAlert(withChoices: [.softdeviceBootloaderApplication, .softdeviceBootloader, .application])
+                return
+            } else {
+                updateViewForSelectedDistributionPacketWithType(aType: .softdeviceBootloaderApplication, andFileURL: aFileURL)
+            }
+        } else {
+            showFileTypeSelectionAlert()
         }
 
     }
+
+    func updateViewForSelectedDistributionPacketWithType(aType: DFUFirmwareType, andFileURL aFileURL: URL) {
+        selectedFirmware = DFUFirmware(urlToZipFile: aFileURL, type: aType)
+        if selectedFirmware != nil && selectedFirmware?.fileName != nil {
+            fileName.text = selectedFirmware?.fileName
+            let content = try? Data(contentsOf: aFileURL)
+            fileSize.text = String(format: "%lu bytes", (content?.count)!)
+            fileType.text = "Distribution packet"
+        } else {
+            selectedFirmware = nil
+            selectedFileURL  = nil
+            NORDFUConstantsUtility.showAlert(message: "Seleted file is not supported")
+        }
+        self.updateUploadButtonState()
+    }
+
+    func showFileTypeSelectionAlert() {
+        let fileTypeAlert = UIAlertController(title: "Firmware type", message: "Please select the type of this firmware", preferredStyle: .actionSheet)
+        
+        let softdeviceAction = UIAlertAction(title: "Softdevice", style: .default) { (anAction) in
+            self.didSelectFirmwareType(.softdevice)
+        }
+        
+        let bootloaderAction = UIAlertAction(title: "Bootloader", style: .default) { (anAction) in
+            self.didSelectFirmwareType(.bootloader)
+        }
+        
+        let applicationAction = UIAlertAction(title: "Application", style: .default) { (anAction) in
+            self.didSelectFirmwareType(.application)
+        }
+        
+        let softdeviceBootloaderAction = UIAlertAction(title: "Softdevice + Bootloader", style: .default) { (anAction) in
+            self.didSelectFirmwareType(.softdeviceBootloader)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (anAction) in
+            DispatchQueue.main.async {
+                self.selectedFileURL = nil
+                self.updateUploadButtonState()
+                self.progressLabel.text = nil
+            }
+        }
+        
+        fileTypeAlert.addAction(applicationAction)
+        fileTypeAlert.addAction(softdeviceAction)
+        fileTypeAlert.addAction(bootloaderAction)
+        fileTypeAlert.addAction(softdeviceBootloaderAction)
+        fileTypeAlert.addAction(cancelAction)
+        
+        present(fileTypeAlert, animated: true, completion: nil)
+    }
+
+    func showFirmwarePartSelectionAlert(withChoices choices: [DFUFirmwareType]) {
+        let firmwarePartAlert = UIAlertController(title: "Firmware part", message: "Please select the parts of this firmware to flash", preferredStyle: .actionSheet)
+        for aChoice in choices {
+            let choiceAction = UIAlertAction(title: firmwarePartToString(aChoice), style: .default, handler: { (alertAction) in
+                self.didSelectFirmwarePart(aChoice)
+            })
+            firmwarePartAlert.addAction(choiceAction)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (anAction) in
+            DispatchQueue.main.async {
+                self.selectedFirmware = nil
+                self.selectedFileURL = nil
+                self.updateUploadButtonState()
+                self.progressLabel.text = nil
+            }
+        }
+        firmwarePartAlert.addAction(cancelAction)
+        present(firmwarePartAlert, animated: true, completion: nil)
+    }
+
+    func didSelectFirmwarePart(_ aPart: DFUFirmwareType) {
+        if let selectedFileURL = selectedFileURL {
+            updateViewForSelectedDistributionPacketWithType(aType: aPart, andFileURL: selectedFileURL)
+        }else{
+            print("No file selected")
+        }
+    }
+
+    func didSelectFirmwareType(_ aFileType: DFUFirmwareType) {
+        selectedFirmware = DFUFirmware(urlToBinOrHexFile: selectedFileURL!, urlToDatFile: nil, type: aFileType)
+        print(selectedFirmware?.fileUrl ?? "None")
+        if selectedFirmware != nil && selectedFirmware?.fileName != nil {
+            fileName.text = selectedFirmware?.fileName
+            let content = try? Data(contentsOf: selectedFileURL!)
+            fileSize.text = String(format: "%d bytes", (content?.count)!)
+            DispatchQueue.main.async {
+                self.fileType.text = self.firmwareTypeToString(aFileType)
+            }
+        } else {
+            selectedFileURL = nil
+            NORDFUConstantsUtility.showAlert(message: "Selected file is not supported")
+        }
+        DispatchQueue.main.async {
+            self.progressLabel.text = nil
+            self.updateUploadButtonState()
+        }
+    }
+
+    func firmwareTypeToString(_ aType: DFUFirmwareType) -> String {
+        switch  aType {
+            case .application:
+                return "Application"
+            
+            case .bootloader:
+                return "Bootloader"
+            
+            case .softdevice:
+                return "SoftDevice"
+            
+            case .softdeviceBootloader:
+                return "SD + BL"
+            
+            case .softdeviceBootloaderApplication:
+                return "APP + SD + BL"
+        }
+    }
+    
+    func firmwarePartToString(_ aType: DFUFirmwareType) -> String {
+        switch  aType {
+        case .application:
+            return "Application only"
+            
+        case .bootloader:
+            return "Bootloader only"
+            
+        case .softdevice:
+            return "SoftDevice only"
+            
+        case .softdeviceBootloader:
+            return "System components only"
+            
+        case .softdeviceBootloaderApplication:
+            return "All"
+        }
+    }
+
     //MARK: - LoggerDelegate
     func logWith(_ level:LogLevel, message:String){
         var levelString : String?
@@ -285,6 +391,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
             NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidBecomeActiveCallback), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         }
     }
+
     func removeObservers() {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.removeObserver(self, name:NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
@@ -295,7 +402,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
             NORDFUConstantsUtility.showBackgroundNotification(message: "Uploading firmware...")
         }
     }
-    
+
     @objc func applicationDidBecomeActiveCallback() {
         UIApplication.shared.cancelAllLocalNotifications()
     }
@@ -303,17 +410,17 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
     func updateUploadButtonState() {
         uploadButton.isEnabled = selectedFirmware != nil && selectedPeripheral != nil
     }
-    
+
     func disableOtherButtons() {
         selectFileButton.isEnabled = false
         connectButton.isEnabled = false
     }
-    
+
     func enableOtherButtons() {
         selectFileButton.isEnabled = true
         connectButton.isEnabled = true
     }
-    
+
     func clearUI() {
         DispatchQueue.main.async {
             self.dfuController          = nil
@@ -333,7 +440,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileTy
             self.removeObservers()
         }
     }
-    
+
     func performDFU() {
         self.disableOtherButtons()
         progress.isHidden = false

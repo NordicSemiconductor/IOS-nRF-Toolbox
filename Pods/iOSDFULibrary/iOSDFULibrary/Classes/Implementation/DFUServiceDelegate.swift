@@ -20,6 +20,8 @@
 * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+import Foundation
+
 @objc public enum DFUError : Int {
     // Legacy DFU errors
     case remoteLegacyDFUSuccess               = 1
