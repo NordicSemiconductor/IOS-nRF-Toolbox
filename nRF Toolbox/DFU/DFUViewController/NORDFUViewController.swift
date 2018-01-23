@@ -143,7 +143,8 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileSe
 
     func showFileTypeSelectionAlert() {
         let fileTypeAlert = UIAlertController(title: "Firmware type", message: "Please select the firmware type.", preferredStyle: .actionSheet)
-        
+        fileTypeAlert.popoverPresentationController?.sourceView = selectFileButton
+        fileTypeAlert.popoverPresentationController?.sourceRect = selectFileButton.bounds
         let softdeviceAction = UIAlertAction(title: "Softdevice", style: .default) { (anAction) in
             self.didSelectFirmwareType(.softdevice)
         }
@@ -179,6 +180,8 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileSe
 
     func showFirmwarePartSelectionAlert(withChoices choices: [DFUFirmwareType]) {
         let firmwarePartAlert = UIAlertController(title: "Scope", message: "Please select the component(s) to be uploaded.", preferredStyle: .actionSheet)
+        firmwarePartAlert.popoverPresentationController?.sourceView = selectFileButton
+        firmwarePartAlert.popoverPresentationController?.sourceRect = selectFileButton.bounds
         for aChoice in choices {
             let choiceAction = UIAlertAction(title: firmwarePartToString(aChoice), style: .default, handler: { (alertAction) in
                 self.didSelectFirmwarePart(aChoice)
