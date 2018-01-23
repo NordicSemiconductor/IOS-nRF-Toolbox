@@ -201,7 +201,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileSe
     func didSelectFirmwarePart(_ aPart: DFUFirmwareType) {
         if let selectedFileURL = selectedFileURL {
             updateViewForSelectedDistributionPacketWithType(aType: aPart, andFileURL: selectedFileURL)
-        }else{
+        } else {
             print("No file selected")
         }
     }
