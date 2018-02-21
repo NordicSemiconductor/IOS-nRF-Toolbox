@@ -5,6 +5,7 @@
 //  Created by Mostafa Berg on 28/07/16.
 //
 //
+import Foundation
 
 class Manifest: NSObject {
     var application: ManifestFirmwareInfo?

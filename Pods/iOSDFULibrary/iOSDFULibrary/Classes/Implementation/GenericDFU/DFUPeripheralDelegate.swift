@@ -70,5 +70,5 @@ internal protocol DFUPeripheralDelegate : BasePeripheralDelegate {
      a device advertising in DFU Bootloader mode, connect to it. The `peripheralDidBecomeReady()`
      callback will be called again when DFU service will be found in its database.
      */
-    func peripheralDidDisconnectAfterFirmwarePartSent()
+    func peripheralDidDisconnectAfterFirmwarePartSent() -> Bool
 }

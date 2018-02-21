@@ -28,6 +28,7 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet weak var firmwareVersionLabel: UILabel!
     @IBOutlet weak var dfuModeButton: UIButton!
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBAction func dfuButtonTapped(_ sender: Any) {
         ShowBootloaderWarning()
     }
@@ -43,23 +44,47 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func JumpToBootloaderMode() {
-
+        var commandCompleted = false
+        
         guard dfuControlPointCharacteristic != nil else {
             UIAlertView(title: "Missing feature", message: "\"\(targetAccessory!.name)\" Does not seem to have the DFU control point characteristic, please try pairing it again or make sure it does support buttonless DFU.", delegate: nil, cancelButtonTitle: "Ok").show()
-            print("DFU Control point charcateristic not found, please try again")
             return
         }
         
+        activityIndicator.startAnimating()
+        //Display wait message after 500ms, to prevent multiple windows in case the completion
+        //Alert has already been displayed.
+        let waitAlertView = UIAlertView(title: "Please wait...", message: "Sending DFU command to target accessory.\n\nThis might take a few seconds if the accessory is unreachable." , delegate: nil, cancelButtonTitle: nil)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            if commandCompleted == false {
+                waitAlertView.show()
+            }
+        }
+        
         dfuControlPointCharacteristic?.writeValue(0x01, completionHandler: { (error) in
-            if error != nil {
-                if (error as? HMError)?.code == HMError.readWriteFailure {
-                    UIAlertView(title: "Restart initiating", message: "\"\(self.targetAccessory!.name)\" Should now disconnect and restart in DFU mode. to continue the flashing process please head towards the DFU option in the main menu, scan and find the new DFU peripheral and start the flashing process.", delegate: nil, cancelButtonTitle: "Ok").show()
-                    print("Jump to bootloader")
+            DispatchQueue.main.async {
+                self.activityIndicator.stopAnimating()
+                commandCompleted = true
+                if waitAlertView.isVisible {
+                    waitAlertView.dismiss(withClickedButtonIndex: 0, animated: true)
+                }
+                if error != nil {
+                    self.showFailAlertWithFailMessage((error as! HMError).localizedDescription)
+                } else {
+                    self.showRestartAlertWithAccessoryName(self.targetAccessory!.name)
                 }
             }
         })
     }
     
+    func showFailAlertWithFailMessage(_ aMessage: String) {
+        UIAlertView(title: "HomeKit error", message: aMessage , delegate: nil, cancelButtonTitle: "Ok").show()
+    }
+    
+    func showRestartAlertWithAccessoryName(_ aName: String) {
+        UIAlertView(title: "Restart initiating", message: "\"\(aName)\" should now disconnect and restart in DFU mode.\n\nTo continue the flashing process please head towards the DFU option in the main menu, scan and find the new DFU peripheral and start the flashing process." , delegate: nil, cancelButtonTitle: "Ok").show()
+    }
+
     func ShowBootloaderWarning() {
         let controller = UIAlertController(title: "Accessory will restart", message: "Updating requires restarting this accessory into DFU mode.\r\nAfter restarting, open the DFU page to continue.", preferredStyle: .alert)
         controller.addAction(UIAlertAction(title: "Restart in DFU mode", style: .destructive, handler: { (anAction) in
@@ -154,10 +179,11 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
             dfuModeButton.isEnabled = false
         }
     }
-    
+
     //MARK: - UIVIewController
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        activityIndicator.stopAnimating()
         self.updateViewContents()
         accessoryServicesTableView.reloadData()
     }

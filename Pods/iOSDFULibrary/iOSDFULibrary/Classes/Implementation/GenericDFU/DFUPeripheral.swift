@@ -476,8 +476,10 @@ internal class BaseCommonDFUPeripheral<TD : DFUPeripheralDelegate, TS : DFUServi
             }
         } else if activating {
             activating = false
-            // This part of firmware has been successfully
-            delegate?.peripheralDidDisconnectAfterFirmwarePartSent()
+            // This part of firmware has been successfully sent
+            if (delegate?.peripheralDidDisconnectAfterFirmwarePartSent() ?? false) {
+                connect()
+            }
         } else {
             super.peripheralDidDisconnect()
         }

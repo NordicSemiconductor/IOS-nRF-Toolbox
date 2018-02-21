@@ -71,6 +71,7 @@ internal class LegacyDFUPeripheral : BaseCommonDFUPeripheral<LegacyDFUExecutor, 
      */
     func jumpToBootloader() {
         jumpingToBootloader = true
+        newAddressExpected = dfuService!.newAddressExpected
         dfuService!.jumpToBootloaderMode(
             // onSuccess the device gets disconnected and centralManager(_:didDisconnectPeripheral:error) will be called
             onError: { (error, message) in
