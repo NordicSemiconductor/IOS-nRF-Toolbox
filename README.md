@@ -1,15 +1,15 @@
 # IOS-nRF-Toolbox
 
-The nRF Toolbox is a container app that stores your Nordic Semiconductor apps for Bluetooth Smart in one location. 
+The nRF Toolbox is a container app that stores your Nordic Semiconductor apps for Bluetooth Smart in one location.
 
 New in V4.4.4:
 
-* Improvet HomeKit view, allowing user to switch homes, and create a home if none exists.
-* Fixed issuew with HomeKit showing permission error as soon as the permission was given.
+* Improved HomeKit view, allowing user to switch homes, and create a home if none exists.
+* Fixed issues with HomeKit showing permission error as soon as the permission was given.
 * Removed automatic home creation in HomeKit view, now user can manually create the home.
-* Improved error handling to show the user actual parsed messages from homekit errors instead of showing generic errors
+* Improved error handling to show the user actual parsed messages from HomeKit errors instead of showing generic errors
 * Updated DFULibrary to version 4.1.1
-* Improved fieltype selection UI
+* Improved fieldtype selection UI
 * Added an option to allow users to select the DFU scope when flashing distribution packages.
 
 New in V4.4.3:
@@ -25,7 +25,7 @@ New in V4.4.2:
 * iOS11 Support (Large navigation bar)
 * Swift 4 migration
 * iOSDFULibrary V4.0.2 updated within app
-* UI improvements for smaller screens, and improvemetns for newer lagers screens
+* UI improvements for smaller screens, and improvements for newer lagers screens
 
 New in V4.4.1:
 
@@ -77,21 +77,21 @@ New in v2.5:
 * Better user experience in DFU and UART profiles
 * Bug fixes
 
-It contains applications demonstrating Bluetooth Smart profiles: 
+It contains applications demonstrating Bluetooth Smart profiles:
 
 * **Cycling Speed and Cadence**
-* **Running Speed and Cadence** 
+* **Running Speed and Cadence**
 * **Heart Rate Monitor**
 * **Blood Pressure Monitor**
-* **Health Thermometer Monitor** 
+* **Health Thermometer Monitor**
 * **Glucose Monitor**
-* **Proximity Monitor** 
+* **Proximity Monitor**
 
 ### Device Firmware Update (DFU)
 
 The **Device Firmware Update (DFU)** profile allows you to update the application, bootloader and/or the Soft Device image over-the-air (OTA). It is compatible with Nordic Semiconductor nRF5x devices that have the S-Series SoftDevice and bootloader enabled. From version 1.5 onward, the nRF Toolbox has allowed to send the required init packet. More information about the init packet may be found here: [init packet handling](https://github.com/NordicSemiconductor/nRF-Master-Control-Panel/tree/master/init%20packet%20handling).
 
-nRF Toolbox is using the iOSDFULibrary framework, available here: [IOS-Pods-DFU-Library](https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library). The library is packaged with the project so no extra work is needed, if you would like to manually update it or modify it, it is bundled via cocoapods so a simple `pod update` will handle updating the library for you. 
+nRF Toolbox is using the iOSDFULibrary framework, available here: [IOS-Pods-DFU-Library](https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library). The library is packaged with the project so no extra work is needed, if you would like to manually update it or modify it, it is bundled via cocoapods so a simple `pod update` will handle updating the library for you.
 
 The DFU profile has the following features:
 - Scans for devices that are in DFU mode.
@@ -107,7 +107,7 @@ The **Secure Device Firmware Update (Secure DFU)** profile allows you to **secur
 This works by verifying that your firmware files are signed by the vendor that released the code and has not been tampered with, also this means that the peripherals will only accept updates from
 the intended developers and reject any firmwares that are not properly signed with the matching key.
 
-As an applications developer, the frontend for the DFU Library is agnostic of the DFU protocol in use, so there are no changes to be done on the mobile application's side to support Secure DFU. 
+As an applications developer, the frontend for the DFU Library is agnostic of the DFU protocol in use, so there are no changes to be done on the mobile application's side to support Secure DFU.
 
 ### Requirements
 
