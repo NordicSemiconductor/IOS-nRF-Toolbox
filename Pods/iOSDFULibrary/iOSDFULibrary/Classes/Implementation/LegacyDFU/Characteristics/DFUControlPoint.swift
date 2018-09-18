@@ -288,17 +288,18 @@ internal struct PacketReceiptNotification {
         
         // Set the peripheral delegate to self
         peripheral.delegate = self
-        
-        logger.a("Uploading firmware...")
-        logger.v("Sending firmware to DFU Packet characteristic...")
     }
     
     // MARK: - Peripheral Delegate callbacks
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
         if error != nil {
-            logger.e("Enabling notifications failed")
+            logger.e("Enabling notifications failed. Check if Service Changed service is enabled.")
             logger.e(error!)
+            // Note:
+            // Error 253: Unknown ATT error.
+            // This most proably is caching issue. Check if your device had Service Changed characteristic (for non-bonded devices)
+            // in both app and bootloader modes. For bonded devices make sure it sends the Service Changed indication after connecting.
             report?(.enablingControlPointFailed, "Enabling notifications failed")
         } else {
             logger.v("Notifications enabled for \(characteristic.uuid.uuidString)")
@@ -317,8 +318,12 @@ internal struct PacketReceiptNotification {
         
         if error != nil {
             if !resetSent {
-                logger.e("Writing to characteristic failed")
+                logger.e("Writing to characteristic failed. Check if Service Changed service is enabled.")
                 logger.e(error!)
+                // Note:
+                // Error 3: Writing is not permitted
+                // This most proably is caching issue. Check if your device had Service Changed characteristic (for non-bonded devices)
+                // in both app and bootloader modes. For bonded devices make sure it sends the Service Changed indication after connecting.
                 report?(.writingCharacteristicFailed, "Writing to characteristic failed")
             } else {
                 // When a 'JumpToBootloader', 'Activate and Reset' or 'Reset' command is sent the device may reset before sending the acknowledgement.

@@ -48,7 +48,7 @@ import Foundation
     case remoteExperimentalButtonlessDFUOpCodeNotSupported    = 9002 // 9000 + 2
     case remoteExperimentalButtonlessDFUOperationFailed       = 9004 // 9000 + 4
     
-    // Buttonless DFU errors (received value + 9000 as they overlap legacy and secure DFU errors)
+    // Buttonless DFU errors (received value + 30 as they overlap legacy and secure DFU errors)
     case remoteButtonlessDFUSuccess            = 31 // 30 + 1
     case remoteButtonlessDFUOpCodeNotSupported = 32 // 30 + 2
     case remoteButtonlessDFUOperationFailed    = 34 // 30 + 4

@@ -66,9 +66,14 @@ internal protocol DFUPeripheralDelegate : BasePeripheralDelegate {
      Callback called when the device got disconencted after the current part of
      the firmware has been sent, verified and activated. The iDevice is no longer
      conneted to the target device.
-     When there is another part of the firmware to be sent, the delegate should scan for
-     a device advertising in DFU Bootloader mode, connect to it. The `peripheralDidBecomeReady()`
-     callback will be called again when DFU service will be found in its database.
+     The delegate should return true if there is another part of the firmware to be sent
+     or false if upload has been completed.
+     When true is returned, the DFU service will reconnect to the same peripheral
+     or scan for the bootloader using the DFUPeripheralSelector specified in the
+     DFUServiceInitiator and continue with second part. The `peripheralDidBecomeReady()`
+     callback will be called again when DFU service is be found in its database.
+     
+     - returns: true if there is another part to be sent, false otherwise.
      */
     func peripheralDidDisconnectAfterFirmwarePartSent() -> Bool
 }

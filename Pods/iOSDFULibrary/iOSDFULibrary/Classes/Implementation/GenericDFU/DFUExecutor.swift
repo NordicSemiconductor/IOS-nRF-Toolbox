@@ -135,7 +135,7 @@ internal protocol DFUExecutor : DFUExecutorAPI, BaseDFUExecutor, DFUPeripheralDe
 
 extension DFUExecutor {
     
-    // MARK: - BasePeripheralDelegate API
+    // MARK: - DFUPeripheralDelegate API
     
     func peripheralDidDisconnectAfterFirmwarePartSent() -> Bool {
         // Check if there is another part of the firmware that has to be sent

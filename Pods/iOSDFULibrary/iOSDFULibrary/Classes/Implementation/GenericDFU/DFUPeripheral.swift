@@ -179,6 +179,10 @@ internal class BaseDFUPeripheral<TD : BasePeripheralDelegate> : NSObject, BaseDF
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+        guard peripheral.isEqual(self.peripheral) else {
+            return
+        }
+        
         cleanUp()
         
         logger.d("[Callback] Central Manager did connect peripheral")
@@ -194,6 +198,10 @@ internal class BaseDFUPeripheral<TD : BasePeripheralDelegate> : NSObject, BaseDF
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
+        guard peripheral.isEqual(self.peripheral) else {
+            return
+        }
+        
         cleanUp()
         
         if let error = error {
@@ -207,6 +215,10 @@ internal class BaseDFUPeripheral<TD : BasePeripheralDelegate> : NSObject, BaseDF
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+        guard peripheral.isEqual(self.peripheral) else {
+            return
+        }
+        
         cleanUp()
         
         // We may expect an error with 
@@ -477,8 +489,21 @@ internal class BaseCommonDFUPeripheral<TD : DFUPeripheralDelegate, TS : DFUServi
         } else if activating {
             activating = false
             // This part of firmware has been successfully sent
+            
+            // Check if there is another part to be sent
             if (delegate?.peripheralDidDisconnectAfterFirmwarePartSent() ?? false) {
-                connect()
+                if newAddressExpected {
+                    newAddressExpected = false
+                    // Scan for a new device and connect to it
+                    switchToNewPeripheralAndConnect()
+                } else {
+                    // The same device can be used
+                    connect()
+                }
+            } else {
+                // Upload is completed.
+                // Peripheral has been destroyed and state is now .completed.
+                // There is nothing to be done here.
             }
         } else {
             super.peripheralDidDisconnect()

@@ -384,13 +384,12 @@ import CoreBluetooth
      Sends the firmware data to the DFU target device.
      
      - parameter aFirmware: the firmware to be sent
-     - parameter aPRNValue: number of packets of firmware data to be received by the DFU target before
-     sending a new Packet Receipt Notification
+     - parameter delay: if true, upload will be delayed by 1000ms
      - parameter progressDelegate: a progress delagate that will be informed about transfer progress
      - parameter success:   a callback called when a response with status Success is received
      - parameter report:    a callback called when a response with an error status is received
      */
-    func sendFirmware(_ aFirmware: DFUFirmware, andReportProgressTo progressDelegate: DFUProgressDelegate?,
+    func sendFirmware(_ aFirmware: DFUFirmware, withDelay delay: Bool, andReportProgressTo progressDelegate: DFUProgressDelegate?,
                       onSuccess success: @escaping Callback, onError report: @escaping ErrorCallback) {
         guard !aborted else {
             sendReset(onError: report)
@@ -456,7 +455,18 @@ import CoreBluetooth
                 )
                 // ...and start sending firmware
                 if !self.paused && !self.aborted {
-                    self.dfuPacketCharacteristic!.sendNext(self.packetReceiptNotificationNumber, packetsOf: aFirmware, andReportProgressTo: progressDelegate)
+                    let start = {
+                        self.logger.a("Uploading firmware...")
+                        self.logger.v("Sending firmware to DFU Packet characteristic...")
+                        self.dfuPacketCharacteristic!.sendNext(self.packetReceiptNotificationNumber, packetsOf: aFirmware, andReportProgressTo: progressDelegate)
+                    }
+                    // On devices running SDK 6.0 or older a delay is required before the device is ready to receive data
+                    if delay {
+                        self.logger.d("wait(1000)")
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1000), execute: start)
+                    } else {
+                        start()
+                    }
                 } else if self.aborted {
                     // Upload has been aborted. Reset the target device. It will disconnect automatically
                     self.firmware = nil

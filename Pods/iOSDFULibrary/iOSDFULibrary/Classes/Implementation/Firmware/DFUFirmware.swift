@@ -231,7 +231,7 @@ import Foundation
      Creates the DFU Firmware object from a HEX data. Setting the DAT file with an Init packet is optional,
      but may be required by the bootloader (SDK 7.0.0+).
      
-     - parameter binFile: Content of the HEX file containing new firmware
+     - parameter hexFile: Content of the HEX file containing new firmware
      - parameter datFile: An optional DAT file data with the Init packet
      - parameter type:    The type of the firmware
      

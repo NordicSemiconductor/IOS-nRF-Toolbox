@@ -424,8 +424,12 @@ internal class SecureDFUControlPoint : NSObject, CBPeripheralDelegate {
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
         if error != nil {
-            logger.e("Enabling notifications failed")
+            logger.e("Enabling notifications failed. Check if Service Changed service is enabled.")
             logger.e(error!)
+            // Note:
+            // Error 253: Unknown ATT error.
+            // This most proably is caching issue. Check if your device had Service Changed characteristic (for non-bonded devices)
+            // in both app and bootloader modes. For bonded devices make sure it sends the Service Changed indication after connecting.
             report?(.enablingControlPointFailed, "Enabling notifications failed")
         } else {
             logger.v("Notifications enabled for \(characteristic.uuid.uuidString)")
@@ -443,8 +447,13 @@ internal class SecureDFUControlPoint : NSObject, CBPeripheralDelegate {
         }
         
         if error != nil {
-            logger.e("Writing to characteristic failed")
+            logger.e("Writing to characteristic failed. Check if Service Changed service is enabled.")
             logger.e(error!)
+            // Note:
+            // Error 3: Writing is not permitted.
+            // This most proably is caching issue. Check if your device had Service Changed characteristic (for non-bonded devices)
+            // in both app and bootloader modes. This is a specially a case in SDK 12.x, where it was disabled by default.
+            // For bonded devices make sure it sends the Service Changed indication after connecting.
             report?(.writingCharacteristicFailed, "Writing to characteristic failed")
         } else {
             logger.i("Data written to \(characteristic.uuid.uuidString)")
