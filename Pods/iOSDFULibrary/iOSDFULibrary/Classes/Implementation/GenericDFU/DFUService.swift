@@ -27,22 +27,20 @@ internal typealias ErrorCallback = (_ error: DFUError, _ withMessage: String) ->
 internal typealias ProgressCallback = (_ bytesReceived: UInt32?) -> Void
 
 internal protocol DFUService : DFUController {
-    /// The UUID of the service
-    static var UUID: CBUUID { get }
-    /// The target DFU Peripheral
+
+    /// The target DFU Peripheral.
     var targetPeripheral: DFUPeripheralAPI? { get set }
     
-    /**
-     Returns true if given service matches this service UUID
-     - parameter service: the service to check
-     - returns: true if the service can be insanced based on the given service, false otherwise
-     */
-    static func matches(_ service: CBService) -> Bool
+    /// UUID Helper.
+    var uuidHelper: DFUUuidHelper { get }
     
+    /// Returns the service UUID based on the UUID helper.
+    static func serviceUuid(from uuidHelper: DFUUuidHelper) -> CBUUID
+
     /**
      Required constructor of a service.
      */
-    init(_ service: CBService, _ logger: LoggerHelper)
+    init(_ service: CBService, _ logger: LoggerHelper, _ dfuHelper: DFUUuidHelper)
     
     /**
      Discovers characteristics in the DFU Service. This method also reads the DFU Version characteristic if such found.

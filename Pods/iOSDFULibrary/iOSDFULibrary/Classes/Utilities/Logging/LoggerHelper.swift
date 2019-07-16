@@ -22,7 +22,7 @@
 import Foundation
 
 class LoggerHelper {
-    private var logger: LoggerDelegate?
+    private weak var logger: LoggerDelegate?
     
     init(_ logger: LoggerDelegate?) {
         self.logger = logger

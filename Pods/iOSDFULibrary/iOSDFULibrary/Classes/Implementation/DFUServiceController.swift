@@ -30,7 +30,7 @@ import CoreBluetooth
     private var serviceAborted = false
     
     internal override init() {
-        // empty internal constructor
+        // Empty internal constructor
     }
     
     /**

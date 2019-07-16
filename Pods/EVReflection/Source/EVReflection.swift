@@ -78,9 +78,14 @@ final public class EVReflection {
                     (dictValue, valid) = dictionaryAndArrayConversion(anyObject, key: keyInObject!, fieldType: types[dictKey] as? String ?? types[keyInObject!] as? String, original: original, theDictValue: v as Any?, conversionOptions: conversionOptions)
                 }
                 
-                if let value: Any = valid ? dictValue : (v as Any) {
-                    if let custom = original as? EVCustomReflectable {
-                        custom.constructWith(value: value)
+                if var value: Any = valid ? dictValue : (v as Any) {
+                    if let type: String = types[k as! String] as? String {
+                        let t: AnyClass? = swiftClassTypeFromString(type)
+                        if let c = t as? EVCustomReflectable.Type {
+                            if let v = c.constructWith(value: value) {
+                                value = v
+                            }
+                        }
                     }
                     setObjectValue(anyObject, key: keyInObject!, theValue: value, typeInObject: types[keyInObject!] as? String, valid: valid, conversionOptions: conversionOptions)
                 }
@@ -730,9 +735,9 @@ final public class EVReflection {
             if let value = theValue as? EVRaw {
                 theValue = value.anyRawValue
             } else if let value = theValue as? EVAssociated {
-                let (enumValue, enumType, _) = valueForAny(theValue, key: value.associated.label, anyValue: value.associated.value as Any, conversionOptions: conversionOptions, isCachable: isCachable, parents: parents)
-                valueType = enumType
-                theValue = enumValue
+                //let (enumValue, enumType, _) = valueForAny(theValue, key: value.associated.label, anyValue: value.associated.value as Any, conversionOptions: conversionOptions, isCachable: isCachable, parents: parents)
+                valueType = "Array<Any>"
+                theValue = value.associated.values
             } else if valueType.hasPrefix("Swift.ImplicitlyUnwrappedOptional<") { // Implicitly Unwrapped Optionals are actually fancy enums
                 var subtype: String = String(valueType[(valueType.components(separatedBy: "<") [0] + "<").endIndex...])
                 subtype = String(subtype[..<subtype.index(before: subtype.endIndex)])
@@ -797,9 +802,9 @@ final public class EVReflection {
     }
     
     public class func convertToInternalSwiftRepresentation(type: String) -> String {
-        if type.components(separatedBy: "<").count > 1 {
+        if type.split(separator: "<").count > 1 {
             // Remove the Array or Set prefix
-            let prefix = type.components(separatedBy: "<") [0] + "<"
+            let prefix = type.split(separator: "<") [0] + "<"
             var subtype = String(type[prefix.endIndex...])
             subtype = String(subtype[..<subtype.index(before: subtype.endIndex)])
             return prefix + convertToInternalSwiftRepresentation(type: subtype) + ">"
@@ -980,7 +985,10 @@ final public class EVReflection {
             do {
                 if !(value is NSNull) {
                     var setValue: AnyObject? = value as AnyObject?
-                    try anyObject.validateValue(&setValue, forKey: key)
+                    let validateFunction = "validate" + key.prefix(1).uppercased() + key.dropFirst() + ":error:"
+                    if (anyObject as AnyObject).responds(to: Selector(validateFunction)) {
+                        try anyObject.validateValue(&setValue, forKey: key)
+                    }
                     anyObject.setValue(setValue, forKey: key)
                 }
             } catch _ {
@@ -1191,9 +1199,9 @@ final public class EVReflection {
         //Swift.Array<Swift.Array<Swift.Array<A81>>>
         let dictValue: NSArray? = theDictValue as? NSArray
         if fieldType?.hasPrefix("Swift.Array<Swift.Array<") ?? false && theDictValue is NSArray {
+            evPrint(.UseWorkaround, "TODO: You have to implement a workaround for double nested arrays. See https://github.com/evermeer/EVReflection/issues/212")
             for item in dictValue! {
-                print("Have to convert here... NSArray to \(fieldType ?? "") \(item)")
-                
+                evPrint(.UseWorkaround, "TODO: Have to convert here... NSArray to \(fieldType ?? "") \(item)")
             }
         }
         return dictValue!
@@ -1434,7 +1442,7 @@ final public class EVReflection {
 
                     if let v = value as? EVCustomReflectable {
                         unboxedValue = v.toCodableValue() as AnyObject
-                        valueType = "String"
+                        valueType = String(describing: type(of: v))
                         isObject = false
                     }
 
@@ -1564,6 +1572,8 @@ final public class EVReflection {
             return convertDictionaryForJsonSerialization(reflectable.toDictionary(), theObject: theObject)
         case let ok as NSDictionary:
             return convertDictionaryForJsonSerialization(ok, theObject: theObject)
+        case let d as Data:
+            return d.base64EncodedString() as AnyObject
         default:
             (theObject as? EVReflectable)?.addStatusMessage(.InvalidType, message: "Unexpected type while converting value for JsonSerialization: \(value)")
             evPrint(.InvalidType, "ERROR: Unexpected type while converting value for JsonSerialization: \(value)")
@@ -1584,7 +1594,7 @@ extension Date {
             dateString = (fromDateTimeString as NSString).substring(with: match)     // Extract milliseconds
         }
         let substrings = dateString.components(separatedBy: CharacterSet.decimalDigits.inverted)
-        guard let timeStamp = (substrings.flatMap { Double($0) }.first) else { return nil }
+        guard let timeStamp = (substrings.compactMap { Double($0) }.first) else { return nil }
         self.init(timeIntervalSince1970: timeStamp / 1000.0) // Create Date from timestamp
     }
 }

@@ -23,16 +23,22 @@
 import CoreBluetooth
 
 internal protocol DFUStarterPeripheralDelegate : BasePeripheralDelegate {
+    
     /**
      Callback called when a DFU service has been found on a remote device.
-     - returns: The executor type based on the found DFU Service: SecureDFUExecutor or LegacyDFUExecutor
+     
+     - parameter ExecutorType: The type of the seleceted executor.
+     
+     - returns: The executor type based on the found DFU Service:
+                SecureDFUExecutor or LegacyDFUExecutor.
      */
     func peripheralDidSelectedExecutor(_ ExecutorType: DFUExecutorAPI.Type)
 }
 
 /**
- This class has a responsibility to connect to a given peripheral and determin which DFU implementation should be used
- based on the services found on the device.
+ This class has a responsibility to connect to a given peripheral and
+ determin which DFU implementation should be used based on the services
+ found on the device.
  */
 internal class DFUServiceSelector : BaseDFUExecutor, DFUStarterPeripheralDelegate {
     typealias DFUPeripheralType = DFUStarterPeripheral

@@ -47,15 +47,16 @@ import CoreBluetooth
  peripheral selector. More: http://infocenter.nordicsemi.com/topic/com.nordic.infocenter.sdk5.v14.0.0/service_dfu.html
  */
 @objc public protocol DFUPeripheralSelectorDelegate : class {
+    
     /**
      Returns whether the given peripheral is a device in DFU Bootloader mode.
      
-     - parameter peripheral:        the peripheral to be checked
-     - parameter advertisementData: scanned advertising data
-     - parameter RSSI:              received signal strength indication in dBm
-     - parameter name:              an optional name to look for in the advertisement packet (see Buttonless DFU in SDK 14)
+     - parameter peripheral:        The peripheral to be checked.
+     - parameter advertisementData: Scanned advertising data.
+     - parameter RSSI:              Received signal strength indication in dBm.
+     - parameter name:              An optional name to look for in the advertisement packet (see Buttonless DFU in SDK 14).
      
-     - returns: true (YES) if given peripheral is what service is looking for
+     - returns: True (YES) if given peripheral is what service is looking for.
      */
     @objc func select(_ peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber, hint name: String?) -> Bool
     
@@ -64,13 +65,13 @@ import CoreBluetooth
      when scanning for a device in DFU Bootloader mode. To find out what UUID you should return,
      switch your device to DFU Bootloader mode (with a button!) and check the advertisment packet.
      The result of this method will be applied to
-     `centralManager.scanForPeripheralsWithServices([CBUUID]?, options: [String : AnyObject]?)`
+     `centralManager.scanForPeripheralsWithServices([CBUUID]?, options: [String : AnyObject]?)`.
      
-     - parameter dfuServiceUUID: the UUID of the DFU service that was used to flash SoftDevice and/or Bootloader.
+     - parameter dfuServiceUUID: The UUID of the DFU service that was used to flash SoftDevice and/or Bootloader.
      Usually this service UUID is present in the DFU Bootloader's advertising packet. Then this method may simply
      return [dfuServiceUUID].
      
-     - returns: an optional list of services or nil
+     - returns: An optional list of services or nil.
      */
     @objc func filterBy(hint dfuServiceUUID: CBUUID) -> [CBUUID]?
 }

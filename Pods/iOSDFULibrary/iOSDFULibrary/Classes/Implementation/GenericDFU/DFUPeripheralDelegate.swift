@@ -21,6 +21,7 @@
  */
 
 internal protocol BasePeripheralDelegate : class {
+    
     /**
      Method called when the iDevice failed to connect to the given peripheral.
      The DFU operation will be aborter as nothing can be done.
@@ -36,8 +37,8 @@ internal protocol BasePeripheralDelegate : class {
     /**
      Method called when the device got unexpectadly disconnected with an error.
      
-     - parameter error: the error returned by
-     `centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?)`
+     - parameter error: The error returned by
+     `centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?)`.
      */
     func peripheralDidDisconnect(withError error: Error)
     
@@ -49,13 +50,14 @@ internal protocol BasePeripheralDelegate : class {
     /**
      Method called when an error occurred during the last operation.
      
-     - parameter error:   the error type
-     - parameter message: details
+     - parameter error:   The error type.
+     - parameter message: Details.
      */
     func error(_ error: DFUError, didOccurWithMessage message: String)
 }
 
 internal protocol DFUPeripheralDelegate : BasePeripheralDelegate {
+    
     /**
      Callback called when the target device got connected and DFU Service and DFU Characteristics were found.
      If DFU Version characteristic were found among them it has also been read.
@@ -66,9 +68,14 @@ internal protocol DFUPeripheralDelegate : BasePeripheralDelegate {
      Callback called when the device got disconencted after the current part of
      the firmware has been sent, verified and activated. The iDevice is no longer
      conneted to the target device.
-     When there is another part of the firmware to be sent, the delegate should scan for
-     a device advertising in DFU Bootloader mode, connect to it. The `peripheralDidBecomeReady()`
-     callback will be called again when DFU service will be found in its database.
+     The delegate should return true if there is another part of the firmware to be sent
+     or false if upload has been completed.
+     When true is returned, the DFU service will reconnect to the same peripheral
+     or scan for the bootloader using the DFUPeripheralSelector specified in the
+     DFUServiceInitiator and continue with second part. The `peripheralDidBecomeReady()`
+     callback will be called again when DFU service is be found in its database.
+     
+     - returns: True if there is another part to be sent, false otherwise.
      */
     func peripheralDidDisconnectAfterFirmwarePartSent() -> Bool
 }

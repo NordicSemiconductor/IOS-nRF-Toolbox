@@ -40,22 +40,14 @@ Log level. Logger application may filter log entries based on their level. Level
     case error       = 20
     
     public func name() -> String {
-        var readableName: String
-        switch (self) {
-        case .debug:
-            readableName = "D"
-        case .verbose:
-            readableName = "V"
-        case .info:
-            readableName = "I"
-        case .application:
-            readableName = "A"
-        case .warning:
-            readableName = "W"
-        case .error:
-            readableName = "E"
+        switch self {
+        case .debug:       return "D"
+        case .verbose:     return "V"
+        case .info:        return "I"
+        case .application: return "A"
+        case .warning:     return "W"
+        case .error:       return "E"
         }
-        return readableName
     }
 }
 

@@ -30,7 +30,7 @@ internal class LegacyDFUExecutor : DFUExecutor, LegacyDFUPeripheralDelegate {
     internal var firmware   : DFUFirmware
     internal var error      : (error: DFUError, message: String)?
     
-    /// Retry counter for peripheral invalid state issue
+    /// Retry counter for peripheral invalid state issue.
     private let MaxRetryCount = 1
     private var invalidStateRetryCount: Int
     
@@ -139,6 +139,8 @@ internal class LegacyDFUExecutor : DFUExecutor, LegacyDFUPeripheralDelegate {
         // First the service will send the number of packets of firmware data to be received
         // by the DFU target before sending a new Packet Receipt Notification.
         // After receiving status Success it will send the firmware.
-        peripheral.sendFirmware(firmware, withPacketReceiptNotificationNumber: initiator.packetReceiptNotificationParameter, andReportProgressTo: progressDelegate)
+        peripheral.sendFirmware(firmware,
+                                withPacketReceiptNotificationNumber: initiator.packetReceiptNotificationParameter,
+                                andReportProgressTo: progressDelegate)
     }
 }
