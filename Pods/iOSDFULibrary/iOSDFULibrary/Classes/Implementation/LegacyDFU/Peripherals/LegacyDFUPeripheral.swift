@@ -23,11 +23,12 @@
 import CoreBluetooth
 
 internal class LegacyDFUPeripheral : BaseCommonDFUPeripheral<LegacyDFUExecutor, LegacyDFUService> {
+    var slowDfuMode = false
     
     // MARK: - Peripheral API
     
     override var requiredServices: [CBUUID]? {
-        return [LegacyDFUService.UUID]
+        return [LegacyDFUService.serviceUuid(from: uuidHelper)]
     }
     
     override func isInitPacketRequired() -> Bool {
@@ -89,8 +90,8 @@ internal class LegacyDFUPeripheral : BaseCommonDFUPeripheral<LegacyDFUExecutor, 
      updating Softdevice or Bootloader and the old Start DFU command needs to be used. The old command
      (without a type) allowed to send only an application firmware.
      
-     - parameter type: the firmware type bitfield. See FIRMWARE_TYPE_* constants
-     - parameter size: the size of all parts of the firmware
+     - parameter type: The firmware type bitfield. See FIRMWARE_TYPE_* constants.
+     - parameter size: The size of all parts of the firmware.
      */
     func sendStartDfu(withFirmwareType type: UInt8, andSize size: DFUFirmwareSize) {
         dfuService!.sendDfuStart(withFirmwareType: type, andSize: size,
@@ -111,10 +112,15 @@ internal class LegacyDFUPeripheral : BaseCommonDFUPeripheral<LegacyDFUExecutor, 
      the application update only. Try this method if `sendStartDfuWithFirmwareType(_:andSize:)` 
      returned NotSupported and the firmware contains only the application.
      
-     - parameter size: the size of all parts of the firmware, where size of softdevice and bootloader are 0
+     - parameter size: The size of all parts of the firmware, where size of softdevice and bootloader are 0.
      */
     func sendStartDfu(withFirmwareSize size: DFUFirmwareSize) {
         logger.v("Switching to DFU v.1")
+        
+        // Flash operation in DFU Bootloaders from SDK 6.0 and older were too slow for modern iDevices, so PRNs
+        // must be enabled to slow the transfer down. Also, a 1000ms delay is required before starting sending data.
+        slowDfuMode = true
+        
         dfuService!.sendStartDfu(withFirmwareSize: size,
             onSuccess: { self.delegate?.peripheralDidStartDfu() },
             onError: defaultErrorCallback
@@ -125,7 +131,7 @@ internal class LegacyDFUPeripheral : BaseCommonDFUPeripheral<LegacyDFUExecutor, 
      Sends the Init Packet with firmware metadata. When complete, the `delegate.peripheralDidReceiveInitPacket()`
      callback is called.
      
-     - parameter data: Init Packet data
+     - parameter data: Init Packet data.
      */
     func sendInitPacket(_ data: Data) {
         dfuService!.sendInitPacket(data,
@@ -139,16 +145,20 @@ internal class LegacyDFUPeripheral : BaseCommonDFUPeripheral<LegacyDFUExecutor, 
      packets to be received before sending a new Packet Receipt Notification.
      When the whole firmware is transferred the `delegate.peripheralDidReceiveFirmware()` callback is invoked.
      
-     - parameter aFirmware: the firmware
-     - parameter aPRNValue: number of packets of firmware data to be received by the DFU target
-     before sending a new Packet Receipt Notification. Set 0 to disable PRNs (not recommended)
-     - parameter progressDelegate: the deleagate that will be informed about progress changes
+     - parameter firmware: The firmware to be sent.
+     - parameter prnValue: Number of packets of firmware data to be received by the DFU target
+     before sending a new Packet Receipt Notification. Set 0 to disable PRNs (not recommended).
+     - parameter progress: The deleagate that will be informed about progress changes.
      */
-    func sendFirmware(_ aFirmware: DFUFirmware, withPacketReceiptNotificationNumber aPRNValue: UInt16, andReportProgressTo progressDelegate: DFUProgressDelegate?) {
-        dfuService!.sendPacketReceiptNotificationRequest(aPRNValue,
+    func sendFirmware(_ firmware: DFUFirmware, withPacketReceiptNotificationNumber prnValue: UInt16, andReportProgressTo progress: DFUProgressDelegate?) {
+        var prn = prnValue
+        if slowDfuMode && (prn == 0 || prn > 2) {
+            prn = 2
+        }
+        dfuService!.sendPacketReceiptNotificationRequest(prn,
             onSuccess: {
                 // Now the service is ready to send the firmware
-                self.dfuService!.sendFirmware(aFirmware, andReportProgressTo: progressDelegate,
+                self.dfuService!.sendFirmware(firmware, withDelay: self.slowDfuMode, andReportProgressTo: progress,
                     onSuccess: { self.delegate?.peripheralDidReceiveFirmware() },
                     onError: self.defaultErrorCallback
                 )
@@ -173,9 +183,18 @@ internal class LegacyDFUPeripheral : BaseCommonDFUPeripheral<LegacyDFUExecutor, 
      */
     func activateAndReset() {
         activating = true
+        
+        // In Legacy DFU the Buttonless service does not increment the device address.
+        // However, after sending the first part of the firmware, the device reboots
+        // and may use incremented MAC address to receive the second part.
+        newAddressExpected = true
+        
         dfuService!.sendActivateAndResetRequest(
             // onSuccess the device gets disconnected and centralManager(_:didDisconnectPeripheral:error) will be called
-            onError: defaultErrorCallback
+            onError: { (error, message) in
+                self.activating = false
+                self.delegate?.error(error, didOccurWithMessage: message)
+            }
         )
     }
     

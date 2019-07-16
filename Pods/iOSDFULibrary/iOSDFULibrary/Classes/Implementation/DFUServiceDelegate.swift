@@ -48,7 +48,7 @@ import Foundation
     case remoteExperimentalButtonlessDFUOpCodeNotSupported    = 9002 // 9000 + 2
     case remoteExperimentalButtonlessDFUOperationFailed       = 9004 // 9000 + 4
     
-    // Buttonless DFU errors (received value + 9000 as they overlap legacy and secure DFU errors)
+    // Buttonless DFU errors (received value + 30 as they overlap legacy and secure DFU errors)
     case remoteButtonlessDFUSuccess            = 31 // 30 + 1
     case remoteButtonlessDFUOpCodeNotSupported = 32 // 30 + 2
     case remoteButtonlessDFUOperationFailed    = 34 // 30 + 4
@@ -85,14 +85,14 @@ import Foundation
 /**
  The state of the DFU Service.
  
- - connecting:      Service is connecting to the DFU target
- - starting:        DFU Service is initializing DFU operation
- - enablingDfuMode: Service is switching the device to DFU mode
- - uploading:       Service is uploading the firmware
- - validating:      The DFU target is validating the firmware
- - disconnecting:   The iDevice is disconnecting or waiting for disconnection
- - completed:       DFU operation is completed and successful
- - aborted:         DFU Operation was aborted
+ - connecting:      Service is connecting to the DFU target.
+ - starting:        DFU Service is initializing DFU operation.
+ - enablingDfuMode: Service is switching the device to DFU mode.
+ - uploading:       Service is uploading the firmware.
+ - validating:      The DFU target is validating the firmware.
+ - disconnecting:   The iDevice is disconnecting or waiting for disconnection.
+ - completed:       DFU operation is completed and successful.
+ - aborted:         DFU Operation was aborted.
  */
 
 @objc public enum DFUState : Int {
@@ -124,6 +124,7 @@ import Foundation
  *  The only method of the delegate is only called when the service is in the Uploading state.
  */
 @objc public protocol DFUProgressDelegate {
+    
     /**
      Callback called in the `State.Uploading` state. Gives detailed information about the progress
      and speed of transmission. This method is always called at least two times (for 0% and 100%)
@@ -131,19 +132,19 @@ import Foundation
      
      This method is called in the main thread and is safe to update any UI.
      
-     - parameter part: number of part that is currently being transmitted. Parts start from 1
+     - parameter part: Number of part that is currently being transmitted. Parts start from 1
      and may have value either 1 or 2. Part 2 is used only when there were Soft Device and/or
      Bootloader AND an Application in the Distribution Packet and the DFU target does not
      support sending all files in a single connection. First the SD and/or BL will be sent, then
      the service will disconnect, reconnect again to the (new) bootloader and send the Application.
-     - parameter totalParts: total number of parts that are to be send (this is always equal to 1 or 2).
-     - parameter progress: the current progress of uploading the current part in percentage (values 0-100).
+     - parameter totalParts: Total number of parts that are to be send (this is always equal to 1 or 2).
+     - parameter progress: The current progress of uploading the current part in percentage (values 0-100).
      Each value will be called at most once - in case of a large file a value e.g. 3% will be called only once,
      despite that it will take more than one packet to reach 4%. In case of a small firmware file
      some values may be ommited. For example, if firmware file would be only 20 bytes you would get
      a callback 0% (called always) and then 100% when done.
-     - parameter currentSpeedBytesPerSecond: the current speed in bytes per second
-     - parameter avgSpeedBytesPerSecond: the average speed in bytes per second
+     - parameter currentSpeedBytesPerSecond: The current speed in bytes per second.
+     - parameter avgSpeedBytesPerSecond: The average speed in bytes per second.
      */
     @objc func dfuProgressDidChange(for part: Int, outOf totalParts: Int, to progress: Int,
         currentSpeedBytesPerSecond: Double, avgSpeedBytesPerSecond: Double)
@@ -153,6 +154,7 @@ import Foundation
  *  The service delegate reports about state changes and errors.
  */
 @objc public protocol DFUServiceDelegate {
+    
     /**
      Callback called when state of the DFU Service has changed.
      

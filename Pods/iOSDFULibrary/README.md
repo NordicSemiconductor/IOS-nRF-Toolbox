@@ -41,7 +41,7 @@
     carthage update --platform iOS //also OSX platform is available for macOS builds
     ```
 
-- Carthage will build the **iOSDFULibrary.framework** and **Zip.framework** files in **Carthag/Build/**, you may now copy all those files to your project and use the library, additionally, carthade also builds **\*.dsym** files if you need to resymbolicate crash logs. you may want to keep those files bundled with your builds for future use.
+- Carthage will build the **iOSDFULibrary.framework** and **Zip.framework** files in **Carthage/Build/**, you may now copy all those files to your project and use the library, additionally, carthade also builds **\*.dsym** files if you need to resymbolicate crash logs. you may want to keep those files bundled with your builds for future use.
 
 ---
 
@@ -109,8 +109,15 @@ The library is compatible with nRF51 and nRF52 devices with S-Series Soft Device
 * **SDK 12.0.0** - New Secure DFU has been released. This library is fully backwards compatible so supports both the new and legacy DFU.
 * **SDK 13.0.0** - Buttonless DFU (still experimental) uses different UUIDs. No bond sharing supported. Bootloader will use address +1.
 * **SDK 14.0.0** - Buttonless DFU no longer experimental. New buttonless characteristic added for bonded devices (requires bond, cache cleaning relies on Service Changed indication).
+* **SDK 15.0.0** - Support for higher MTUs will be added (may be postponed).
+
+This library is fully backwards compatible and supports both the new and legacy DFU. The experimental buttonless DFU service from SDK 12 is supported since version 1.1.0. Due to the fact, that this experimental service from SDK 12 is not safe, you have to call [dfuInitiator.enableUnsafeExperimentalButtonlessServiceInSecureDfu = true](https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library/blob/master/iOSDFULibrary/Classes/Implementation/DFUServiceInitiator.swift#L196) to enable it, this is off by default. Read the method documentation for details. It is recommended to use the Buttonless service from SDK 13 (for non-bonded devices, or 14 for bonded). Both are supported since DFU Library 1.3.0.
 
 Check platform folders for mode details about compatibility for each library.
+
+### React Native
+
+An unofficial library for both iOS and Android that is based on this library is available for React Native: [react-native-nordic-dfu](https://github.com/Pilloxa/react-native-nordic-dfu)
 
 ---
 

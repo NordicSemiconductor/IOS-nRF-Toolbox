@@ -56,7 +56,7 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
     func start() {
         error = nil
         peripheral.delegate = self
-        peripheral.start()
+        peripheral.start() // -> peripheralDidBecomeReady() will be called when the device is connected and DFU services was found
     }
     
     // MARK: - DFU Peripheral Delegate methods
@@ -71,7 +71,7 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
         DispatchQueue.main.async(execute: {
             self.delegate?.dfuStateDidChange(to: .starting)
         })
-        peripheral.enableControlPoint()
+        peripheral.enableControlPoint() // -> peripheralDidEnableControlPoint() will be called when done
     }
     
     func peripheralDidEnableControlPoint() {
@@ -80,12 +80,12 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
             DispatchQueue.main.async(execute: {
                 self.delegate?.dfuStateDidChange(to: .enablingDfuMode)
             })
-            peripheral.jumpToBootloader()
+            peripheral.jumpToBootloader() // -> peripheralDidBecomeReady() will be called again, when connected to the Bootloader
         } else {
             // The device is ready to proceed with DFU
             
             // Start by reading command object info to get the maximum write size.
-            peripheral.readCommandObjectInfo()
+            peripheral.readCommandObjectInfo() // -> peripheralDidSendCommandObjectInfo(...) will be called when object received
         }
     }
     
@@ -94,47 +94,54 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
         self.offset = offset
         self.crc = crc
         
+        // Was Init packet sent, at least partially, before?
         if offset > 0 {
-            let match = verifyCRC(for: firmware.initPacket!, andPacketOffset: offset, matches: crc)
-            if match {
+            // Verify CRC of the part that was sent before
+            if verifyCRC(for: firmware.initPacket!, andPacketOffset: offset, matches: crc) {
                 // Resume sending Init Packet
                 if offset < UInt32(firmware.initPacket!.count) {
                     logWith(.application, message: "Resuming sending Init packet...")
                     
                     // We need to send rest of the Init packet, but before that let's make sure the PRNs are disabled
-                    peripheral.setPRNValue(0)
+                    peripheral.setPRNValue(0) // -> peripheralDidSetPRNValue() will be called
                 } else {
+                    // The same Init Packet was already sent. We must execute it, as it may have not been executed before.
                     logWith(.application, message: "Received CRC match Init packet")
-                    peripheral.sendExecuteCommand()
+                    peripheral.sendExecuteCommand() // -> peripheralDidExecuteObject() will be called
                 }
             } else {
-                // Start new flash, we either are flashing a different firmware
+                // Start new update. We are either flashing a different firmware,
                 // or we are resuming from a BL/SD + App and need to start all over again.
                 self.offset = 0
                 self.crc = 0
-                peripheral.createCommandObject(withLength: UInt32(firmware.initPacket!.count))
+                peripheral.createCommandObject(withLength: UInt32(firmware.initPacket!.count)) // -> peripheralDidCreateCommandObject()
             }
         } else {
-            peripheral.createCommandObject(withLength: UInt32(firmware.initPacket!.count))
+            // No Init Packet was sent before. Create the Command object.
+            peripheral.createCommandObject(withLength: UInt32(firmware.initPacket!.count)) // -> peripheralDidCreateCommandObject()
         }
     }
     
     func peripheralDidCreateCommandObject() {
         // Disable PRNs for first time while we write Init file
-        peripheral.setPRNValue(0)
+        peripheral.setPRNValue(0) // -> peripheralDidSetPRNValue() will be called
     }
     
     func peripheralDidSetPRNValue() {
         if initPacketSent == false {
-            sendInitPacket(fromOffset: offset!)
+            // PRNs are disabled, we may sent Init Packet data.
+            sendInitPacket(fromOffset: offset!) // -> peripheralDidReceiveInitPacket() will be called
         } else {
-            sendDataObject(currentRangeIdx, from: offset!)
+            // PRNs are ready, check out the Data object.
+            peripheral.readDataObjectInfo() // -> peripheralDidSendDataObjectInfo(...) will be called
         }
     }
     
     func peripheralDidReceiveInitPacket() {
         logWith(.application, message: String(format: "Command object sent (CRC = %08X)", CRC32(data: firmware.initPacket!).crc))
-        peripheral.sendCalculateChecksumCommand()
+        
+        // Init Packet sent. Let's check the CRC before executing it.
+        peripheral.sendCalculateChecksumCommand() // -> peripheralDidSendChecksum(...) will be called
     }
     
     func peripheralDidSendChecksum(offset: UInt32, crc: UInt32) {
@@ -142,24 +149,33 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
         self.offset = offset
         
         if initPacketSent == false {
+            // Verify CRC
             if verifyCRC(for: firmware.initPacket!, andPacketOffset: UInt32(firmware.initPacket!.count), matches: crc) {
+                // Init Packet sent correctly.
                 crcOk()
-                peripheral.sendExecuteCommand()
+                
+                // It must be now executed.
+                peripheral.sendExecuteCommand() // -> peripheralDidExecuteObject() will be called
             } else {
-                // The CRC does not match, let's start from the beginning
+                // The CRC does not match, let's start from the beginning.
                 retryOrReportCrcError({
-                    peripheral.createCommandObject(withLength: UInt32(firmware.initPacket!.count))
+                    self.offset = 0
+                    self.crc = 0
+                    peripheral.createCommandObject(withLength: UInt32(firmware.initPacket!.count)) // -> peripheralDidCreateCommandObject()
                 })
             }
         } else {
             // Verify CRC
             if verifyCRC(for: firmware.data, andPacketOffset: offset, matches: crc) {
+                // Data object sent correctly.
                 crcOk()
+                
+                // It must be now executed.
                 firmwareSent = offset == UInt32(firmware.data.count)
-                peripheral.sendExecuteCommand(andActivateIf: firmwareSent)
+                peripheral.sendExecuteCommand(andActivateIf: firmwareSent) // -> peripheralDidExecuteObject()
             } else {
                 retryOrReportCrcError({
-                    createDataObject(currentRangeIdx)
+                    createDataObject(currentRangeIdx) // -> peripheralDidCreateDataObject() will be called
                 })
             }
         }
@@ -169,13 +185,16 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
         if initPacketSent == false {
             logWith(.application, message: "Command object executed")
             initPacketSent = true
-            peripheral.readDataObjectInfo()
+            // Set the correct PRN value. If initiator.packetReceiptNotificationParameter is 0
+            // and PRNs were already disabled to send the Init packet, this method will immediately
+            // call peripheralDidSetPRNValue() callback.
+            peripheral.setPRNValue(initiator.packetReceiptNotificationParameter) // -> peripheralDidSetPRNValue() will be called
         } else {
             logWith(.application, message: "Data object executed")
             
             if firmwareSent == false {
                 currentRangeIdx += 1
-                createDataObject(currentRangeIdx)
+                createDataObject(currentRangeIdx) // -> peripheralDidCreateDataObject() will be called
             } else {
                 // The last data object was sent
                 // Now the device will reset itself and onTransferCompleted() method will ba called (from the extension)
@@ -207,7 +226,7 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
         })
         
         if offset > 0 {
-            // Find the current range index
+            // Find the current range index.
             currentRangeIdx = 0
             for range in firmwareRanges! {
                 if range.contains(Int(offset)) {
@@ -216,24 +235,23 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
                 currentRangeIdx += 1
             }
             
-            let match = verifyCRC(for: firmware.data, andPacketOffset: offset, matches: crc)
-            if match {
+            if verifyCRC(for: firmware.data, andPacketOffset: offset, matches: crc) {
                 logWith(.info, message: "\(offset) bytes of data sent before, CRC match")
                 // Did we sent the whole firmware?
                 if offset == UInt32(firmware.data.count) {
                     firmwareSent = true
-                    peripheral.sendExecuteCommand(andActivateIf: firmwareSent)
+                    peripheral.sendExecuteCommand(andActivateIf: firmwareSent) // -> peripheralDidExecuteObject() will be called
                 } else {
                     logWith(.info, message: "Resuming uploading firmware...")
-                    // If the PRNs are enabled the value must be sent to the target
-                    if initiator.packetReceiptNotificationParameter > 0 {
-                        peripheral.setPRNValue(initiator.packetReceiptNotificationParameter)
+                    
+                    // If the whole object was sent before, make sure it's executed
+                    if (offset % maxLen) == 0 {
+                        // currentRangeIdx won't go below 0 because offset > 0 and offset % maxLen == 0
+                        currentRangeIdx -= 1
+                        peripheral.sendExecuteCommand() // -> peripheralDidExecuteObject() will be called
                     } else {
-                        // Otherwise we can just start by creating the first object. PRNs were set to 0 before, to send the init packet.
-                        // Note: setting PRNs to 0 (disabling them) will not work!
-                        
-                        // Otherwise create current object
-                        sendDataObject(currentRangeIdx, from: offset)
+                        // Otherwise, continue sending the current object from given offset
+                        sendDataObject(currentRangeIdx, from: offset) // -> peripheralDidReceiveObject() will be called
                     }
                 }
             } else {
@@ -243,30 +261,22 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
                     currentRangeIdx -= 1
                 }
                 retryOrReportCrcError({
-                    createDataObject(currentRangeIdx)
+                    createDataObject(currentRangeIdx) // -> peripheralDidCreateDataObject() will be called
                 })
             }
         } else {
-            // If the PRNs are enabled the value must be sent to the target
-            if initiator.packetReceiptNotificationParameter > 0 {
-                peripheral.setPRNValue(initiator.packetReceiptNotificationParameter)
-            } else {
-                // Otherwise we can just start by creating the first object. PRNs were set to 0 before, to send the init packet.
-                // Note: setting PRNs to 0 (disabling them) will not work!
-                
-                // Create the first data object
-                createDataObject(currentRangeIdx)
-            }
+            // Create the first data object
+            createDataObject(currentRangeIdx) // -> peripheralDidCreateDataObject() will be called
         }
     }
     
     func peripheralDidCreateDataObject() {
         logWith(.info, message: "Data object \(currentRangeIdx + 1)/\(firmwareRanges!.count) created")
-        sendDataObject(currentRangeIdx)
+        sendDataObject(currentRangeIdx) // -> peripheralDidReceiveObject() will be called
     }
     
     func peripheralDidReceiveObject() {
-        peripheral.sendCalculateChecksumCommand()
+        peripheral.sendCalculateChecksumCommand() // -> peripheralDidSendChecksum(...) will be called
     }
     
     // MARK: - Private methods
@@ -325,11 +335,13 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
     }
     
     /**
-     Verifies if the CRC-32 of the data for byte 0 to given offset matches the given CRC value.
-     - parameter data: firmware or Init packet data
-     - parameter offset: number of bytes that should be used for CRC calculation
-     - parameter crc: the CRC obtained from the DFU Target to be matched
-     - returns: true if CRCs are identical, false otherwise
+     Verifies if the CRC-32 of the data from byte 0 to given offset matches the given CRC value.
+     
+     - parameter data:   Firmware or Init packet data.
+     - parameter offset: Number of bytes that should be used for CRC calculation.
+     - parameter crc:    The CRC obtained from the DFU Target to be matched.
+     
+     - returns: True if CRCs are identical, false otherwise.
      */
     private func verifyCRC(for data: Data, andPacketOffset offset: UInt32, matches crc: UInt32) -> Bool {
         // Edge case where a different objcet might be flashed with a biger init file
@@ -345,24 +357,30 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
     }
     
     /**
-     Sends the Init packet starting from the given offset. This method is synchronous, however it calls 
+     Sends the Init packet starting from the given offset. This method is asynchronous, it calls
      peripheralDidReceiveInitPacket() callback when done.
+     
+     - parameter offset: The starting offset from which the Init Packet should be sent.
+     This allows resuming uploading the Init Packet.
      */
     private func sendInitPacket(fromOffset offset: UInt32) {
         let initPacketLength = UInt32(firmware.initPacket!.count)
         let data = firmware.initPacket!.subdata(in: Int(offset) ..< Int(initPacketLength - offset))
         
         // Send following bytes of init packet (offset may be 0)
-        peripheral.sendInitPacket(data)
+        peripheral.sendInitPacket(data) // -> peripheralDidReceiveInitPacket() will be called
     }
     
     /**
      Creates the new data object with length equal to the length of the range with given index.
      The ranges were calculated using `calculateFirmwareRanges()`.
+     
+     - parameter rangeIdx: Index of a range of the firmware.
      */
     private func createDataObject(_ rangeIdx: Int) {
         let currentRange = firmwareRanges![rangeIdx]
         peripheral.createDataObject(withLength: UInt32(currentRange.upperBound - currentRange.lowerBound))
+        // -> peripheralDidCreateDataObject() will be called
     }
     
     /**
@@ -370,8 +388,9 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
      If the resumeOffset is set and equal to lower bound of the given range it will create the object instead.
      When created, a onObjectCreated() method will be called which will call this method again, now with the offset
      parameter equal nil.
-     - parameter rangeIdx: index of the range to be sent. The ranges were calculated using `calculateFirmwareRanges()`.
-     - parameter resumeOffset: if set, this method will send only the part of firmware from the range. The offset must
+     
+     - parameter rangeIdx:     Index of the range to be sent. The ranges were calculated using `calculateFirmwareRanges()`.
+     - parameter resumeOffset: If set, this method will send only the part of firmware from the range. The offset must
      be inside the given range.
      */
     private func sendDataObject(_ rangeIdx: Int, from resumeOffset: UInt32? = nil) {
@@ -390,5 +409,6 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
         }
         
         peripheral.sendNextObject(from: aRange, of: firmware, andReportProgressTo: progressDelegate)
+        // -> peripheralDidReceiveObject() will be called
     }
 }

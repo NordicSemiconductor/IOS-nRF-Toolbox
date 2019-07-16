@@ -32,7 +32,7 @@ import CoreBluetooth
     //MARK: - Internal variables
     
     internal let centralManager : CBCentralManager
-    internal let target         : CBPeripheral
+    internal var target         : CBPeripheral!
     internal var file           : DFUFirmware?
     
     //MARK: - Public variables
@@ -194,24 +194,36 @@ import CoreBluetooth
      new service when SDK 13 (or later) is out. TODO: fix the docs when SDK 13 is out.
      */
     @objc public var enableUnsafeExperimentalButtonlessServiceInSecureDfu = false
-    
+
+    /**
+     UUIDs used during the DFU Process.
+     This allows you to pass in Custom UUIDs for the DFU Service/Characteristics.
+    */
+    @objc public var uuidHelper: DFUUuidHelper
+
     //MARK: - Public API
     
     /**
      Creates the DFUServiceInitializer that will allow to send an update to the given peripheral.
-     The peripheral should be disconnected prior to calling start() method.
-     The DFU service will automatically connect to the device, check if it has required DFU
-     service (return a delegate callback if does not have such), jump to the DFU Bootloader mode
-     if necessary and perform the DFU. Proper delegate methods will be called during the process.
      
-     - parameter centralManager: manager that will be used to connect to the peripheral
-     - parameter target: the DFU target peripheral
+     This constructor takes control over the central manager and peripheral objects.
+     Their delegates will be set to internal library objects and will NOT be reverted to
+     original objects, instead they will be set to nil when DFU is complete, aborted or
+     has failed with an error. An app should restore the delegates (if needed) after
+     receiving .completed or .aborted DFUState, or receiving an error.
      
-     - returns: the initiator instance
+     - important: This constructor has been deprecated in favor of `init(target: CBPeripheral)`,
+     which does not take control over the give peripheral, and is using a copy instead.
+     
+     - parameter centralManager: Manager that will be used to connect to the peripheral
+     - parameter target: The DFU target peripheral.
+     
+     - returns: The initiator instance.
      
      - seeAlso: peripheralSelector property - a selector used when scanning for a device in DFU Bootloader mode
      in case you want to update a Softdevice and Application from a single ZIP Distribution Packet.
      */
+    @available(*, deprecated, message: "Use init(queue: DispatchQueue?) instead.")
     @objc public init(centralManager: CBCentralManager, target: CBPeripheral) {
         self.centralManager = centralManager
         // Just to be sure that manager is not scanning
@@ -219,16 +231,41 @@ import CoreBluetooth
         self.target = target
         // Default peripheral selector will choose the service UUID as a filter
         self.peripheralSelector = DFUPeripheralSelector()
+        // Default UUID helper with standard set of UUIDs
+        self.uuidHelper = DFUUuidHelper()
+
         super.init()
     }
     
     /**
-     Sets the file with the firmware. The file must be specified before calling `start()` method,
-     and must not be nil.
+     Creates the DFUServiceInitializer that will allow to send an update to peripherals.
      
-     - parameter file: The firmware wrapper object
+     - parameter queue: The dispatch queue to run BLE operations on.
      
-     - returns: the initiator instance to allow chain use
+     - returns: The initiator instance.
+     
+     - version: Added in version 4.2 of the iOS DFU Library.
+     - seeAlso: peripheralSelector property - a selector used when scanning for a device in DFU Bootloader mode
+     in case you want to update a Softdevice and Application from a single ZIP Distribution Packet.
+     */
+    @objc public init(queue: DispatchQueue? = nil) {
+        // Create a new instance of CBCentralManager
+        self.centralManager = CBCentralManager(delegate: nil, queue: queue)
+        // Default peripheral selector will choose the service UUID as a filter
+        self.peripheralSelector = DFUPeripheralSelector()
+        // Default UUID helper with standard set of UUIDs
+        self.uuidHelper = DFUUuidHelper()
+        
+        super.init()
+    }
+    
+    /**
+     Sets the file with the firmware. The file must be specified before calling
+     `start(...)` method.
+     
+     - parameter file: The firmware wrapper object.
+     
+     - returns: The initiator instance to allow chain use.
      */
     @objc public func with(firmware file: DFUFirmware) -> DFUServiceInitiator {
         self.file = file
@@ -236,25 +273,110 @@ import CoreBluetooth
     }
     
     /**
-     Starts sending the specified firmware to the DFU target.
+     Starts sending the specified firmware to the DFU target specified in `init(centralManager:target)`.
      When started, the service will automatically connect to the target, switch to DFU Bootloader mode
      (if necessary), and send all the content of the specified firmware file in one or two connections.
      Two connections will be used if a ZIP file contains a Soft Device and/or Bootloader and an Application.
-     First the Soft Device and/or Bootloader will be transferred, then the service will disconnect, reconnect to
-     the (new) Bootloader again and send the Application (unless the target supports receiving all files in a single
-     connection).
+     First the Soft Device and/or Bootloader will be transferred, then the service will disconnect, reconnect
+     to the (new) Bootloader again and send the Application (unless the target supports receiving all files
+     in a single connection). The peripheral will NOT be reconnected after the DFU is completed, aborted
+     or has failed.
      
-     The current version of the DFU Bootloader, due to memory limitations, may receive together only a Softdevice and Bootloader.
+     The current version of the DFU Bootloader, due to memory limitations, may receive together only
+     a Softdevice and Bootloader.
      
-     - returns: A DFUServiceController object that can be used to control the DFU operation.
+     - important: Use `start(target: CBPeripheral)` instead.
+     
+     - returns: A DFUServiceController object that can be used to control the DFU operation,
+     or nil, if the file was not set, or the target peripheral was not set.
      */
+    @available(*, deprecated, message: "Use start(target: CBPeripheral) instead.")
     @objc public func start() -> DFUServiceController? {
-        // The firmware file must be specified before calling `start()`
+        // The firmware file must be specified before calling `start()`.
         if file == nil {
-            delegate?.dfuError(.fileNotSpecified, didOccurWithMessage: "Firmare not specified")
+            delegate?.dfuError(.fileNotSpecified, didOccurWithMessage: "Firmware not specified")
             return nil
         }
-
+        
+        // Make sure the target was set by the deprecated init.
+        guard let _ = target else {
+            delegate?.dfuError(.failedToConnect, didOccurWithMessage: "Target not specified: use start(target) instead")
+            return nil
+        }
+        
+        let controller = DFUServiceController()
+        let selector   = DFUServiceSelector(initiator: self, controller: controller)
+        controller.executor = selector
+        selector.start()
+        
+        return controller
+    }
+    
+    /**
+     Starts sending the specified firmware to the given DFU target.
+     When started, the service will automatically connect to the target, switch to DFU Bootloader mode
+     (if necessary), and send all the content of the specified firmware file in one or two connections.
+     Two connections will be used if a ZIP file contains a Soft Device and/or Bootloader and an Application.
+     First the Soft Device and/or Bootloader will be transferred, then the service will disconnect, reconnect
+     to the (new) Bootloader again and send the Application (unless the target supports receiving all files
+     in a single connection). The peripheral will NOT be reconnected after the DFU is completed, aborted
+     or has failed.
+     
+     This method does not take control over the peripheral.
+     A new central manager is used, from which a copy of the peripheral is retrieved. Be warned,
+     that the original peripheral delegate may receive a lot of calls, and it will restart during
+     the process. The app should not send any data to DFU characteristics when DFU is in progress.
+     
+     The current version of the DFU Bootloader, due to memory limitations, may receive together only
+     a Softdevice and Bootloader.
+     
+     - parameter target: The DFU target peripheral.
+     
+     - returns: A DFUServiceController object that can be used to control the DFU operation,
+     or nil, if the file was not set, or the peripheral instance could not be retrieved.
+     */
+    @objc public func start(target: CBPeripheral) -> DFUServiceController? {
+        return start(targetWithIdentifier: target.identifier)
+    }
+    
+    /**
+     Starts sending the specified firmware to the DFU target with given identifier.
+     When started, the service will automatically connect to the target, switch to DFU Bootloader mode
+     (if necessary), and send all the content of the specified firmware file in one or two connections.
+     Two connections will be used if a ZIP file contains a Soft Device and/or Bootloader and an Application.
+     First the Soft Device and/or Bootloader will be transferred, then the service will disconnect, reconnect
+     to the (new) Bootloader again and send the Application (unless the target supports receiving all files
+     in a single connection). The peripheral will NOT be reconnected after the DFU is completed, aborted
+     or has failed.
+     
+     This method does not take control over the peripheral.
+     A new central manager is used, from which a copy of the peripheral is retrieved. Be warned,
+     that the original peripheral delegate may receive a lot of calls, and it will restart during
+     the process. The app should not send any data to DFU characteristics when DFU is in progress.
+     
+     The current version of the DFU Bootloader, due to memory limitations, may receive together only
+     a Softdevice and Bootloader.
+     
+     - parameter uuid: The UUID associated with the peer.
+     
+     - returns: A DFUServiceController object that can be used to control the DFU operation,
+     or nil, if the file was not set, or the peripheral instance could not be retrieved.
+     */
+    @objc public func start(targetWithIdentifier uuid: UUID) -> DFUServiceController? {
+        // The firmware file must be specified before calling `start(...)`.
+        if file == nil {
+            delegate?.dfuError(.fileNotSpecified, didOccurWithMessage: "Firmware not specified")
+            return nil
+        }
+        
+        // As the given peripheral was obtained using a different central manager,
+        // its new instance must be obtained from the new manager.
+        guard let peripheral = self.centralManager.retrievePeripherals(withIdentifiers: [uuid]).first else {
+            delegate?.dfuError(.bluetoothDisabled, didOccurWithMessage: "Could not obtain peripheral instance")
+            return nil
+        }
+        target = peripheral
+        
         let controller = DFUServiceController()
         let selector   = DFUServiceSelector(initiator: self, controller: controller)
         controller.executor = selector

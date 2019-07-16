@@ -27,11 +27,11 @@ import Foundation
  only application). This works as a filter. If you have SD+BL+App in the ZIP, but want to send
  only App, you may set the type to .application.
 
- - softdevice:           Firmware file will be sent as a new Softdevice
- - bootloader:           Firmware file will be sent as a new Bootloader
- - application:          Firmware file will be sent as a new application
- - softdeviceBootloader: Firmware file will be sent as a new Softdevice + Bootloader
- - softdeviceBootloaderApplication: All content of the ZIP file will be sent
+ - softdevice:           Firmware file will be sent as a new Softdevice.
+ - bootloader:           Firmware file will be sent as a new Bootloader.
+ - application:          Firmware file will be sent as a new application.
+ - softdeviceBootloader: Firmware file will be sent as a new Softdevice + Bootloader.
+ - softdeviceBootloaderApplication: All content of the ZIP file will be sent.
 */
 @objc public enum DFUFirmwareType : UInt8 {
     case softdevice = 1
@@ -86,9 +86,9 @@ import Foundation
      with firmware metadata and at least one firmware binaries. Read more about the Distribution packet on
      the DFU documentation.
      
-     - parameter urlToZipFile: URL to the Distribution packet (ZIP)
+     - parameter urlToZipFile: URL to the Distribution packet (ZIP).
      
-     - returns: the DFU firmware object or null in case of an error
+     - returns: The DFU firmware object or null in case of an error.
      */
     @objc convenience public init?(urlToZipFile: URL) {
         self.init(urlToZipFile: urlToZipFile, type: DFUFirmwareType.softdeviceBootloaderApplication)
@@ -99,10 +99,10 @@ import Foundation
      with firmware metadata and at least one firmware binaries. Read more about the Distribution packet on
      the DFU documentation.
      
-     - parameter urlToZipFile: URL to the Distribution packet (ZIP)
-     - parameter type:         The type of the firmware to use
+     - parameter urlToZipFile: URL to the Distribution packet (ZIP).
+     - parameter type:         The type of the firmware to use.
      
-     - returns: the DFU firmware object or null in case of an error
+     - returns: The DFU firmware object or null in case of an error.
      */
     @objc public init?(urlToZipFile: URL, type: DFUFirmwareType) {
         fileUrl = urlToZipFile
@@ -133,9 +133,9 @@ import Foundation
      with firmware metadata and at least one firmware binaries. Read more about the Distribution packet on
      the DFU documentation.
      
-     - parameter zipFile: The Distribution packet (ZIP) data
+     - parameter zipFile: The Distribution packet (ZIP) data.
      
-     - returns: the DFU firmware object or null in case of an error
+     - returns: The DFU firmware object or null in case of an error.
      */
     @objc convenience public init?(zipFile: Data) {
         self.init(zipFile: zipFile, type: DFUFirmwareType.softdeviceBootloaderApplication)
@@ -146,10 +146,10 @@ import Foundation
      with firmware metadata and at least one firmware binaries. Read more about the Distribution packet on
      the DFU documentation.
      
-     - parameter zipFile: The Distribution packet (ZIP) data
-     - parameter type:    The type of the firmware to use
+     - parameter zipFile: The Distribution packet (ZIP) data.
+     - parameter type:    The type of the firmware to use.
      
-     - returns: the DFU firmware object or null in case of an error
+     - returns: The DFU firmware object or null in case of an error.
      */
     @objc public init?(zipFile: Data, type: DFUFirmwareType) {
         fileUrl = nil
@@ -170,11 +170,11 @@ import Foundation
      Creates the DFU Firmware object from a BIN or HEX file. Setting the DAT file with an Init packet is optional,
      but may be required by the bootloader (SDK 7.0.0+).
      
-     - parameter urlToBinOrHexFile: URL to a BIN or HEX file with the firmware
-     - parameter urlToDatFile:      An optional URL to a DAT file with the Init packet
-     - parameter type:              The type of the firmware
+     - parameter urlToBinOrHexFile: URL to a BIN or HEX file with the firmware.
+     - parameter urlToDatFile:      An optional URL to a DAT file with the Init packet.
+     - parameter type:              The type of the firmware.
      
-     - returns: the DFU firmware object or null in case of an error
+     - returns: The DFU firmware object or null in case of an error.
      */
     @objc public init?(urlToBinOrHexFile: URL, urlToDatFile: URL?, type: DFUFirmwareType) {
         fileUrl = urlToBinOrHexFile
@@ -213,11 +213,11 @@ import Foundation
      Creates the DFU Firmware object from a BIN data. Setting the DAT file with an Init packet is optional,
      but may be required by the bootloader (SDK 7.0.0+).
      
-     - parameter binFile: Content of the new firmware as BIN
-     - parameter datFile: An optional DAT file data with the Init packet
-     - parameter type:    The type of the firmware
+     - parameter binFile: Content of the new firmware as BIN.
+     - parameter datFile: An optional DAT file data with the Init packet.
+     - parameter type:    The type of the firmware.
      
-     - returns: the DFU firmware object or null in case of an error
+     - returns: The DFU firmware object or null in case of an error.
      */
     @objc public init?(binFile: Data, datFile: Data?, type: DFUFirmwareType) {
         fileUrl = nil
@@ -231,11 +231,11 @@ import Foundation
      Creates the DFU Firmware object from a HEX data. Setting the DAT file with an Init packet is optional,
      but may be required by the bootloader (SDK 7.0.0+).
      
-     - parameter binFile: Content of the HEX file containing new firmware
-     - parameter datFile: An optional DAT file data with the Init packet
-     - parameter type:    The type of the firmware
+     - parameter hexFile: Content of the HEX file containing new firmware.
+     - parameter datFile: An optional DAT file data with the Init packet.
+     - parameter type:    The type of the firmware.
      
-     - returns: the DFU firmware object or null in case of an error
+     - returns: The DFU firmware object or null in case of an error.
      */
     @objc public init?(hexFile: Data, datFile: Data?, type: DFUFirmwareType) {
         fileUrl = nil

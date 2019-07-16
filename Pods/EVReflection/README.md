@@ -5,16 +5,15 @@
 [![Build Status](https://travis-ci.org/evermeer/EVReflection.svg?style=flat)](https://travis-ci.org/evermeer/EVReflection)
  -->
 [![Issues](https://img.shields.io/github/issues-raw/evermeer/EVReflection.svg?style=flat)](https://github.com/evermeer/EVReflection/issues)
-[![Coverage](https://img.shields.io/badge/coverage-74%25-yellow.svg?style=flat)](https://raw.githubusercontent.com/evermeer/EVReflection/master/UnitTests/coverage.png)
+[![Coverage](https://img.shields.io/badge/coverage-80%25-yellow.svg?style=flat)](https://raw.githubusercontent.com/evermeer/EVReflection/master/UnitTests/coverage.png)
 [![Documentation](https://img.shields.io/badge/documented-97%25-green.svg?style=flat)](http://cocoadocs.org/docsets/EVReflection/3.7.0/)
 [![Stars](https://img.shields.io/github/stars/evermeer/EVReflection.svg?style=flat)](https://github.com/evermeer/EVReflection/stargazers)
 [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/matteocrippa/awesome-swift#json)
-[![Downloads](https://img.shields.io/cocoapods/dt/EVReflection.svg?style=flat)](https://cocoapods.org/pods/EVReflection)
 
 
 [![Version](https://img.shields.io/cocoapods/v/EVReflection.svg?style=flat)](http://cocoadocs.org/docsets/EVReflection)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Language](https://img.shields.io/badge/language-swift%204-f48041.svg?style=flat)](https://developer.apple.com/swift)
+[![Language](https://img.shields.io/badge/language-swift%204%20&%205-f48041.svg?style=flat)](https://developer.apple.com/swift)
 [![Platform](https://img.shields.io/cocoapods/p/EVReflection.svg?style=flat)](http://cocoadocs.org/docsets/EVReflection)
 [![License](https://img.shields.io/cocoapods/l/EVReflection.svg?style=flat)](http://cocoadocs.org/docsets/EVReflection)
 
@@ -26,9 +25,7 @@
 
 # General information
 
-If you have a question and don't want to create an issue, then we can [![Join the chat at https://gitter.im/evermeer/EVReflection](https://badges.gitter.im/evermeer/EVReflection.svg)](https://gitter.im/evermeer/EVReflection?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-At this moment the master branch is for Swift 4.0 If you want to continue using EVReflection in an older version, then use the corresponding branch.
+At this moment the master branch is tested with Swift 4.2 and 5.0 beta If you want to continue using EVReflection in an older version, then use the corresponding branch.
 Run the unit tests to see EVReflection in action.
 
 EVReflection is used in [EVCloudKitDao](https://github.com/evermeer/EVCloudKitDao) and [EVWordPressAPI](https://github.com/evermeer/EVWordPressAPI)
@@ -36,7 +33,7 @@ EVReflection is used in [EVCloudKitDao](https://github.com/evermeer/EVCloudKitDa
 In most cases EVReflection is very easy to use. Just take a look the section [It's easy to use](https://github.com/evermeer/EVReflection#its-easy-to-use). But if you do want to do non standard specific things, then EVReflection will offer you an extensive range of functionality. 
 
 ### Available extensions
-There are extension available for using EVReflection with [XMLDictionairy](https://github.com/nicklockwood/XMLDictionary), [CloudKit](https://developer.apple.com/library/content/documentation/DataManagement/Conceptual/CloudKitQuickStart/Introduction/Introduction.html), [Alamofire](https://github.com/Alamofire/Alamofire) and [Moya](https://github.com/Moya/Moya) with [RxSwift](https://github.com/ReactiveX/RxSwift) or [ReactiveSwift](https://github.com/ReactiveSwift/ReactiveSwift)
+There are extension available for using EVReflection with [XMLDictionairy](https://github.com/nicklockwood/XMLDictionary), [Realm](https://realm.io), [CloudKit](https://developer.apple.com/library/content/documentation/DataManagement/Conceptual/CloudKitQuickStart/Introduction/Introduction.html), [Alamofire](https://github.com/Alamofire/Alamofire) and [Moya](https://github.com/Moya/Moya) with [RxSwift](https://github.com/ReactiveX/RxSwift) or [ReactiveSwift](https://github.com/ReactiveSwift/ReactiveSwift)
 
 - [XML](https://github.com/evermeer/EVReflection/tree/master/Source/XML)
 - [CloudKit](https://github.com/evermeer/EVReflection/tree/master/Source/CloudKit)
@@ -57,10 +54,15 @@ All these extens can be installed by adding something like this in your podfile:
 pod 'EVReflection/MoyaRxSwift'
 ```
 
+For Carthage there is not (yet) an extension for all above extension. If needed, please let me know. For carthage you can use:
+
+```
+github "evermeer/EVReflection" 
+```
+
 ## Index
 
 - [Main features of EVReflection](https://github.com/evermeer/EVReflection#main-features-of-evreflection)
-- [Quick start](https://github.com/evermeer/EVReflection#quick-start)
 - [It's easy to use](https://github.com/evermeer/EVReflection#its-easy-to-use)
 - [If you have XML instead of JSON](https://github.com/evermeer/EVReflection#if-you-have-xml-instead-of-json)
 - [Using EVReflection in your own App](https://github.com/evermeer/EVReflection#using-evreflection-in-your-own-app)
@@ -90,9 +92,6 @@ pod 'EVReflection/MoyaRxSwift'
 - Supporting Printable, Hashable and Equatable while using all properties.
 - Mapping objects from one type to an other
 - Support for property mapping, converters, validators and key cleanup
-
-## Quick start
-For a quick start have a look at this [YouTube tutorial](https://www.youtube.com/watch?v=LPWsQD2nxqg).
 
 ## It's easy to use:
 
@@ -387,7 +386,7 @@ If you have a custom type that requires special conversion, then you can extend 
 
 ```swift
 extension List : EVCustomReflectable {
-    public func constructWith(value: Any?) {
+    public func constructWith(value: Any?) -> EVCustomReflectable {
         if let array = value as? [NSDictionary] {
             self.removeAll()
             for dict in array {
@@ -396,6 +395,7 @@ extension List : EVCustomReflectable {
                 }
             }
         }
+        return self
     }
     public func toCodableValue() -> Any {
         return self.enumerated().map { ($0.element as? EVReflectable)?.toDictionary() ?? NSDictionary() }

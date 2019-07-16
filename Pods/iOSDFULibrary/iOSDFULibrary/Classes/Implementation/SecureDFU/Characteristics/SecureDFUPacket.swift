@@ -22,18 +22,13 @@
 
 import CoreBluetooth
 
-internal class SecureDFUPacket {
-    static fileprivate let UUID = CBUUID(string: "8EC90002-F315-4F60-9FB8-838830DAEA50")
-    
-    static func matches(_ characteristic: CBCharacteristic) -> Bool {
-        return characteristic.uuid.isEqual(UUID)
-    }
+internal class SecureDFUPacket: DFUCharacteristic {
     
     private let packetSize: UInt32
     
-    private var characteristic: CBCharacteristic
-    private var logger: LoggerHelper
-    
+    internal var characteristic: CBCharacteristic
+    internal var logger: LoggerHelper
+
     /// Number of bytes of firmware already sent.
     private(set) var bytesSent: UInt32 = 0
     /// Number of bytes sent at the last progress notification. This value is used to calculate the current speed.
@@ -41,7 +36,7 @@ internal class SecureDFUPacket {
     private var totalBytesSentWhenDfuStarted: UInt32 = 0
 
     /// Current progress in percents (0-99).
-    private var progress:  UInt8 = 0
+    private var progressReported: UInt8 = 0
     private var startTime: CFAbsoluteTime?
     private var lastTime:  CFAbsoluteTime?
 
@@ -49,7 +44,7 @@ internal class SecureDFUPacket {
         return characteristic.properties.contains(.writeWithoutResponse)
     }
     
-    init(_ characteristic: CBCharacteristic, _ logger: LoggerHelper) {
+    required init(_ characteristic: CBCharacteristic, _ logger: LoggerHelper) {
         self.characteristic = characteristic
         self.logger = logger
         
@@ -68,7 +63,7 @@ internal class SecureDFUPacket {
     /**
      Sends the whole content of the data object.
      
-     - parameter data: the data to be sent
+     - parameter data: The data to be sent.
      */
     func sendInitPacket(_ data: Data){
         // Get the peripheral object
@@ -78,12 +73,13 @@ internal class SecureDFUPacket {
         var offset: UInt32 = 0
         var bytesToSend = UInt32(data.count)
         
+        let packetUUID = characteristic.uuid.uuidString
         repeat {
             let packetLength = min(bytesToSend, packetSize)
             let packet = data.subdata(in: Int(offset) ..< Int(offset + packetLength))
             
-            logger.v("Writing to characteristic \(characteristic.uuid.uuidString)...")
-            logger.d("peripheral.writeValue(0x\(packet.hexString), for: \(characteristic.uuid.uuidString), type: .withoutResponse)")
+            logger.v("Writing to characteristic \(packetUUID)...")
+            logger.d("peripheral.writeValue(0x\(packet.hexString), for: \(packetUUID), type: .withoutResponse)")
             peripheral.writeValue(packet, for: characteristic, type: .withoutResponse)
             
             offset += packetLength
@@ -92,29 +88,36 @@ internal class SecureDFUPacket {
     }
 
     /**
-     Sends a given range of data from given firmware over DFU Packet characteristic. If the whole object is
-     completed the completition callback will be called.
+     Sends a given range of data from given firmware over DFU Packet characteristic.
+     If the whole object is completed the completition callback will be called.
+     
+     - parameters:
+       - prnValue: Packet Receipt Notification value used in the process. 0 to disable PRNs.
+       - range:    The range of the firmware that is to be sent in this object.
+       - firmware: The whole firmware to be sent in this part.
+       - progress: An optional progress delegate.
+       - complete: The completon callback.
      */
-    func sendNext(_ aPRNValue: UInt16, packetsFrom aRange: Range<Int>, of aFirmware: DFUFirmware,
-                  andReportProgressTo aProgressDelegate: DFUProgressDelegate?, andCompletionTo aCompletion: @escaping Callback) {
+    func sendNext(_ prnValue: UInt16, packetsFrom range: Range<Int>, of firmware: DFUFirmware,
+                  andReportProgressTo progress: DFUProgressDelegate?, andCompletionTo complete: @escaping Callback) {
         let peripheral          = characteristic.service.peripheral
-        let objectData          = aFirmware.data.subdata(in: aRange)
+        let objectData          = firmware.data.subdata(in: range)
         let objectSizeInBytes   = UInt32(objectData.count)
         let objectSizeInPackets = (objectSizeInBytes + packetSize - 1) / packetSize
         let packetsSent         = (bytesSent + packetSize - 1) / packetSize
         let packetsLeft         = objectSizeInPackets - packetsSent
 
         // Calculate how many packets should be sent before EOF or next receipt notification
-        var packetsToSendNow = min(UInt32(aPRNValue), packetsLeft)
+        var packetsToSendNow = min(UInt32(prnValue), packetsLeft)
         
-        if aPRNValue == 0 {
+        if prnValue == 0 {
             packetsToSendNow = packetsLeft
         }
         
         // This is called when we no longer have data to send (PRN received after the whole object was sent)
         // Fixes issue IDFU-9
         if packetsToSendNow == 0 {
-            aCompletion()
+            complete()
             return
         }
 
@@ -122,14 +125,14 @@ internal class SecureDFUPacket {
         if startTime == nil {
             startTime = CFAbsoluteTimeGetCurrent()
             lastTime = startTime
-            totalBytesSentWhenDfuStarted = UInt32(aRange.lowerBound)
+            totalBytesSentWhenDfuStarted = UInt32(range.lowerBound)
             totalBytesSentSinceProgessNotification = totalBytesSentWhenDfuStarted
             
             // Notify progress delegate that upload has started (0%)
             DispatchQueue.main.async(execute: {
-                aProgressDelegate?.dfuProgressDidChange(
-                    for:   aFirmware.currentPart,
-                    outOf: aFirmware.parts,
+                progress?.dfuProgressDidChange(
+                    for:   firmware.currentPart,
+                    outOf: firmware.parts,
                     to:    0,
                     currentSpeedBytesPerSecond: 0.0,
                     avgSpeedBytesPerSecond:     0.0)
@@ -145,7 +148,7 @@ internal class SecureDFUPacket {
                 canSendPacket = bytesSent == 0 || peripheral.canSendWriteWithoutResponse
             }
             // If PRNs are enabled we will ignore the new API and base synchronization on PRNs only
-            guard canSendPacket || aPRNValue > 0 else {
+            guard canSendPacket || prnValue > 0 else {
                 break
             }
             
@@ -158,11 +161,11 @@ internal class SecureDFUPacket {
             packetsToSendNow -= 1
             
             // Calculate the total progress of the firmware, presented to the delegate
-            let totalBytesSent = UInt32(aRange.lowerBound) + bytesSent
-            let totalProgress = UInt8(totalBytesSent * 100 / UInt32(aFirmware.data.count))
+            let totalBytesSent = UInt32(range.lowerBound) + bytesSent
+            let currentProgress = UInt8(totalBytesSent * 100 / UInt32(firmware.data.count)) // in percantage (0-100)
             
             // Notify progress listener only if current progress has increased since last time
-            if totalProgress > progress {
+            if currentProgress > progressReported {
                 // Calculate current transfer speed in bytes per second
                 let now = CFAbsoluteTimeGetCurrent()
                 let currentSpeed = Double(totalBytesSent - totalBytesSentSinceProgessNotification) / (now - lastTime!)
@@ -172,20 +175,20 @@ internal class SecureDFUPacket {
                 
                 // Notify progress delegate of overall progress
                 DispatchQueue.main.async(execute: {
-                    aProgressDelegate?.dfuProgressDidChange(
-                        for:   aFirmware.currentPart,
-                        outOf: aFirmware.parts,
-                        to:    Int(totalProgress),
+                    progress?.dfuProgressDidChange(
+                        for:   firmware.currentPart,
+                        outOf: firmware.parts,
+                        to:    Int(currentProgress),
                         currentSpeedBytesPerSecond: currentSpeed,
                         avgSpeedBytesPerSecond:     avgSpeed)
                 })
-                progress = totalProgress
+                progressReported = currentProgress
             }
             
             // Notify handler of current object progress to start sending next one
             if bytesSent == objectSizeInBytes {
-                if aPRNValue == 0 || originalPacketsToSendNow < UInt32(aPRNValue) {
-                    aCompletion()
+                if prnValue == 0 || originalPacketsToSendNow < UInt32(prnValue) {
+                    complete()
                 } else {
                     // The whole object has been sent but the DFU target will
                     // send a PRN notification as expected.

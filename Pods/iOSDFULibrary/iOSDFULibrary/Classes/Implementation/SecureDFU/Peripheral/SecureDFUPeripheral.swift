@@ -25,12 +25,12 @@ import CoreBluetooth
 internal class SecureDFUPeripheral : BaseCommonDFUPeripheral<SecureDFUExecutor, SecureDFUService> {
     
     /// A flag indicating whether setting alternative advertising name is enabled (SDK 14+) (true by default)
-    internal let alternativeAdvertisingNameEnabled: Bool
+    let alternativeAdvertisingNameEnabled: Bool
     
     // MARK: - Peripheral API
     
     override var requiredServices: [CBUUID]? {
-        return [SecureDFUService.UUID]
+        return [SecureDFUService.serviceUuid(from: uuidHelper)]
     }
     
     override func isInitPacketRequired() -> Bool {
@@ -64,7 +64,7 @@ internal class SecureDFUPeripheral : BaseCommonDFUPeripheral<SecureDFUExecutor, 
         
         return applicationMode
     }
-    
+
     /**
      Switches target device to the DFU Bootloader mode using either the 
      experimental or final Buttonless DFU feature. The experimental buttonless DFU from SDK 12 must be
@@ -109,10 +109,10 @@ internal class SecureDFUPeripheral : BaseCommonDFUPeripheral<SecureDFUExecutor, 
     /**
      Creates data object with given length.
      
-     - parameter aLength: exact size of the object
+     - parameter length: Exact size of the object.
      */
-    func createDataObject(withLength aLength: UInt32) {
-        dfuService!.createDataObject(withLength: aLength,
+    func createDataObject(withLength length: UInt32) {
+        dfuService!.createDataObject(withLength: length,
              onSuccess: { self.delegate?.peripheralDidCreateDataObject() },
              onError: defaultErrorCallback
         )
@@ -121,10 +121,10 @@ internal class SecureDFUPeripheral : BaseCommonDFUPeripheral<SecureDFUExecutor, 
     /**
      Creates command object with given length.
      
-     - parameter aLength: exact size of the object
+     - parameter length: Exact size of the object.
      */
-    func createCommandObject(withLength aLength: UInt32) {
-        dfuService!.createCommandObject(withLength: aLength,
+    func createCommandObject(withLength length: UInt32) {
+        dfuService!.createCommandObject(withLength: length,
             onSuccess: { self.delegate?.peripheralDidCreateCommandObject() },
             onError: defaultErrorCallback
         )
@@ -133,35 +133,36 @@ internal class SecureDFUPeripheral : BaseCommonDFUPeripheral<SecureDFUExecutor, 
     /**
      Sends a given range of data from the firmware.
      
-     - parameter aRange:            given range of the firmware will be sent
-     - parameter aFirmware:         the firmware from with part is to be sent
-     - parameter aProgressDelegate: an optional progress delegate
+     - parameter range:    Given range of the firmware will be sent.
+     - parameter firmware: The firmware from with part is to be sent.
+     - parameter progress: An optional progress delegate.
      */
-    func sendNextObject(from aRange: Range<Int>, of aFirmware: DFUFirmware, andReportProgressTo aProgressDelegate: DFUProgressDelegate?) {
-        dfuService!.sendNextObject(from: aRange, of: aFirmware, andReportProgressTo: aProgressDelegate,
+    func sendNextObject(from range: Range<Int>, of firmware: DFUFirmware, andReportProgressTo progress: DFUProgressDelegate?) {
+        dfuService!.sendNextObject(from: range, of: firmware, andReportProgressTo: progress,
             onSuccess: { self.delegate?.peripheralDidReceiveObject() },
             onError: defaultErrorCallback
         )
     }
     
     /**
-     Sets the Packet Receipt Notification value. 0 disables the PRN procedure. On iOS the value may not be greater than ~20 or equal to 0
-     if more than ~20 are to be sent or a buffer overflow error may occur.
+     Sets the Packet Receipt Notification value. 0 disables the PRN procedure.
+     On older version of iOS the value may not be greater than ~20 or equal to 0, otherwise a buffer overflow error may occur.
      This library sends the Init packet without PRNs, but that's only because of the Init packet is small enough.
      
-     - parameter aValue:  Packet Receipt Notification value (0 to disable PRNs)
+     - parameter newValue: Packet Receipt Notification value (0 to disable PRNs).
      */
-    func setPRNValue(_ aValue: UInt16 = 0) {
-        dfuService!.setPacketReceiptNotificationValue(aValue,
+    func setPRNValue(_ newValue: UInt16 = 0) {
+        dfuService!.setPacketReceiptNotificationValue(newValue,
             onSuccess: { self.delegate?.peripheralDidSetPRNValue() },
             onError: defaultErrorCallback
         )
     }
     
     /**
-     Sends Init packet. This method is synchronuous and calls delegate's peripheralDidReceiveInitPacket() method ater the given data are sent.
+     Sends Init packet. This method is synchronuous and calls delegate's
+     `peripheralDidReceiveInitPacket()` method ater the given data are sent.
      
-     - parameter packetData: data to be sent as Init Packet
+     - parameter packetData: Data to be sent as Init Packet.
      */
     func sendInitPacket(_ packetData: Data){
         // This method is synchronuous.
@@ -184,15 +185,18 @@ internal class SecureDFUPeripheral : BaseCommonDFUPeripheral<SecureDFUExecutor, 
     /**
      Sends Execute command.
      
-     - parameter activating: if the parameter is set to true the service will assume that the whole firmware was sent
+     - parameter activating: If the parameter is set to true the service will assume that the whole firmware was sent
      and the device will disconnect on its own on Execute command. Delegate's onTransferComplete event will be called when
      the disconnect event is receviced.
      */
-    func sendExecuteCommand(andActivateIf activating: Bool = false) {
-        self.activating = activating
+    func sendExecuteCommand(andActivateIf complete: Bool = false) {
+        activating = complete
         dfuService!.executeCommand(
             onSuccess: { self.delegate?.peripheralDidExecuteObject() },
-            onError: defaultErrorCallback
+            onError: { (error, message) in
+                self.activating = false
+                self.delegate?.error(error, didOccurWithMessage: message)
+            }
         )
     }
 }

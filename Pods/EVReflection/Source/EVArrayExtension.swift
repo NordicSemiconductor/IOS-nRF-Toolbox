@@ -19,7 +19,7 @@ public extension Array where Element: NSObject {
     - parameter json: The json string
     - parameter conversionOptions: Option set for the various conversion options.
     */
-    public init(json: String?, conversionOptions: ConversionOptions = .DefaultDeserialize, forKeyPath: String? = nil) {
+    init(json: String?, conversionOptions: ConversionOptions = .DefaultDeserialize, forKeyPath: String? = nil) {
         self.init()
         let arrayTypeInstance = getArrayTypeInstance(self)
         let newArray = EVReflection.arrayFromJson(type: arrayTypeInstance, json: json, conversionOptions: conversionOptions, forKeyPath: forKeyPath)
@@ -35,7 +35,7 @@ public extension Array where Element: NSObject {
      - parameter json: The json string
      - parameter conversionOptions: Option set for the various conversion options.
      */
-    public init(data: Data?, conversionOptions: ConversionOptions = .DefaultDeserialize, forKeyPath: String? = nil) {
+    init(data: Data?, conversionOptions: ConversionOptions = .DefaultDeserialize, forKeyPath: String? = nil) {
         self.init()
         let arrayTypeInstance = getArrayTypeInstance(self)
         let newArray = EVReflection.arrayFromData(nil, type:arrayTypeInstance, data: data, conversionOptions: conversionOptions, forKeyPath: forKeyPath)
@@ -50,7 +50,7 @@ public extension Array where Element: NSObject {
      - parameter json: The json string
      - parameter conversionOptions: Option set for the various conversion options.
      */
-    public init(dictionaryArray: [NSDictionary], conversionOptions: ConversionOptions = .DefaultDeserialize) {
+    init(dictionaryArray: [NSDictionary], conversionOptions: ConversionOptions = .DefaultDeserialize) {
         self.init()
         for item in dictionaryArray {
             let arrayTypeInstance = getArrayTypeInstance(self)
@@ -65,7 +65,7 @@ public extension Array where Element: NSObject {
      - parameter json: The json string
      - parameter conversionOptions: Option set for the various conversion options.
      */
-    public init(dictionary: NSDictionary, forKeyPath: String, conversionOptions: ConversionOptions = .DefaultDeserialize) {
+    init(dictionary: NSDictionary, forKeyPath: String, conversionOptions: ConversionOptions = .DefaultDeserialize) {
         self.init()
         
         guard let dictionaryArray = dictionary.value(forKeyPath: forKeyPath) as? [NSDictionary] else {
@@ -88,7 +88,7 @@ public extension Array where Element: NSObject {
     
     - returns: The object type
     */
-    public func getArrayTypeInstance<T: NSObject>(_ arr: Array<T>) -> T {
+    func getArrayTypeInstance<T: NSObject>(_ arr: Array<T>) -> T {
         return arr.getTypeInstance()
     }
     
@@ -97,7 +97,7 @@ public extension Array where Element: NSObject {
     
     - returns: The object type
     */
-    public func getTypeInstance<T: NSObject>(
+    func getTypeInstance<T: NSObject>(
         ) -> T {
         let nsobjectype: NSObject.Type = T.self
         let nsobject: NSObject = nsobjectype.init()
@@ -113,7 +113,7 @@ public extension Array where Element: NSObject {
      
      - returns: The object type
      */
-    public func getTypeAsString() -> String {
+    func getTypeAsString() -> String {
         let item = self.getTypeInstance()
         return NSStringFromClass(type(of:item))
     }
@@ -128,13 +128,27 @@ public extension Array where Element: EVReflectable {
      Convert this array to a json string
      
      - parameter conversionOptions: Option set for the various conversion options.
-     
+     - parameter prettyPrinted: Define if you want enters and indents
+
      - returns: The json string
      */
-    public func toJsonString(_ conversionOptions: ConversionOptions = .DefaultSerialize, prettyPrinted: Bool = false) -> String {
+    func toJsonString(_ conversionOptions: ConversionOptions = .DefaultSerialize, prettyPrinted: Bool = false) -> String {
         return "[\n" + self.map({($0).toJsonString(conversionOptions, prettyPrinted: prettyPrinted)}).joined(separator: ", \n") + "\n]"
     }
 
+    /**
+     Convert this array to a json data
+     
+     - parameter conversionOptions: Option set for the various conversion options.
+     - parameter prettyPrinted: Define if you want enters and indents
+     - parameter encoding: The string encoding defaulsts to .utf8
+     
+     - returns: The json data
+     */
+    func toJsonData(_ conversionOptions: ConversionOptions = .DefaultSerialize, prettyPrinted: Bool = false, encoding: String.Encoding = .utf8) -> Data {
+        return self.toJsonString(conversionOptions, prettyPrinted: prettyPrinted).data(using: encoding) ?? Data()
+    }
+    
     /**
      Returns the dictionary representation of this array.
      
@@ -142,7 +156,7 @@ public extension Array where Element: EVReflectable {
      
      - returns: The array of dictionaries
      */
-    public func toDictionaryArray(_ conversionOptions: ConversionOptions = .DefaultSerialize) -> NSArray {
+    func toDictionaryArray(_ conversionOptions: ConversionOptions = .DefaultSerialize) -> NSArray {
         return self.map({($0).toDictionary(conversionOptions)}) as NSArray
     }
 }
@@ -158,7 +172,7 @@ public extension Array where Element: NSDictionary {
      
      - parameter json: The json string
      */
-    public init(jsonArray: String) {
+    init(jsonArray: String) {
         self.init()
 
         let dictArray = EVReflection.dictionaryArrayFromJson(jsonArray)
@@ -173,7 +187,7 @@ public extension Array where Element: NSDictionary {
      
      - parameter json: The json string
      */
-    public init(dataArray: Data) {
+    init(dataArray: Data) {
         self.init(jsonArray: String(data: dataArray, encoding: .utf8) ?? "")
     }
     
@@ -184,9 +198,53 @@ public extension Array where Element: NSDictionary {
      
      - returns: The json string
      */
-    public func toJsonStringArray(prettyPrinted: Bool = false) -> String {
+    func toJsonStringArray(prettyPrinted: Bool = false) -> String {
         let jsonArray: [String] = self.map { ($0 as NSDictionary).toJsonString(prettyPrinted: prettyPrinted) as String }
         return "[\n" + jsonArray.joined(separator: ", \n") + "\n]"
     }
 
+}
+
+public extension NSArray {
+    func nestedArrayMap<T>(_ element: (NSDictionary)->T) -> [[T]] {
+        return (self.map {
+            (($0 as? NSArray)?.map {
+                element($0 as? NSDictionary ?? NSDictionary())
+                }) ?? []
+        })
+    }
+    
+    func doubleNestedArrayMap<T>(_ element: (NSDictionary)->T) -> [[[T]]] {
+        return (self.map {
+            (($0 as? NSArray)?.nestedArrayMap { element($0) }) ?? [[]]
+        })
+    }
+    
+    func tripleNestedArrayMap<T>(_ element: (NSDictionary)->T) -> [[[[T]]]] {
+        return (self.map {
+            (($0 as? NSArray)?.doubleNestedArrayMap { element($0) }) ?? [[[]]]
+        })
+    }
+    
+    func quadrupleNestedArrayMap<T>(_ element: (NSDictionary)->T) -> [[[[[T]]]]] {
+        return (self.map {
+            (($0 as? NSArray)?.tripleNestedArrayMap { element($0) }) ?? [[[[]]]]
+        })
+    }
+    
+    func quintupleNestedArrayMap<T>(_ element: (NSDictionary)->T) -> [[[[[[T]]]]]] {
+        return (self.map {
+            (($0 as? NSArray)?.quadrupleNestedArrayMap { element($0) }) ?? [[[[[]]]]]
+        })
+    }
+    
+    func sextupleNestedArrayMap<T>(_ element: (NSDictionary)->T) -> [[[[[[[T]]]]]]] {
+        return (self.map {
+            (($0 as? NSArray)?.quintupleNestedArrayMap { element($0) }) ?? [[[[[[]]]]]]
+        })
+    }
+    
+    // If you need deeper nesting, whell, then you probably see the pattern above that you need to implement :-)
+    // just name them septuple, octuple, nonuple and decuple
+    // I'm not sure how far swift can handle it, but you should not want something like that.
 }

@@ -2,11 +2,10 @@ ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
 ALWAYS_SEARCH_USER_PATHS = YES
 FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/CorePlot" "${PODS_CONFIGURATION_BUILD_DIR}/EVReflection" "${PODS_CONFIGURATION_BUILD_DIR}/SWRevealViewController" "${PODS_CONFIGURATION_BUILD_DIR}/Zip" "${PODS_CONFIGURATION_BUILD_DIR}/iOSDFULibrary"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private/CorePlot/ios"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/CorePlot/CorePlot.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/EVReflection/EVReflection.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/SWRevealViewController/SWRevealViewController.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/Zip/Zip.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/iOSDFULibrary/iOSDFULibrary.framework/Headers" "${PODS_ROOT}/Headers/Private/CorePlot/ios"
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
-OTHER_CFLAGS = $(inherited) -iquote "${PODS_CONFIGURATION_BUILD_DIR}/CorePlot/CorePlot.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/EVReflection/EVReflection.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/SWRevealViewController/SWRevealViewController.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/Zip/Zip.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/iOSDFULibrary/iOSDFULibrary.framework/Headers"
-OTHER_LDFLAGS = $(inherited) -framework "CorePlot" -framework "EVReflection" -framework "SWRevealViewController" -framework "Zip" -framework "iOSDFULibrary"
-OTHER_SWIFT_FLAGS = $(inherited) "-D" "COCOAPODS"
+OTHER_LDFLAGS = $(inherited) -l"z" -framework "Accelerate" -framework "CoreGraphics" -framework "CorePlot" -framework "EVReflection" -framework "Foundation" -framework "QuartzCore" -framework "SWRevealViewController" -framework "UIKit" -framework "Zip" -framework "iOSDFULibrary"
+OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
