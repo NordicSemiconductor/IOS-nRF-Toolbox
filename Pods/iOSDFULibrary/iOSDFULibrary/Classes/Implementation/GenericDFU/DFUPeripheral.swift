@@ -50,6 +50,7 @@ internal protocol BaseDFUPeripheralAPI : class, DFUController {
 internal class BaseDFUPeripheral<TD : BasePeripheralDelegate> : NSObject, BaseDFUPeripheralAPI, CBPeripheralDelegate, CBCentralManagerDelegate {
     /// Bluetooth Central Manager used to scan for the peripheral.
     internal let centralManager: CBCentralManager
+    internal let queue: DispatchQueue
     /// The DFU Target peripheral.
     internal var peripheral: CBPeripheral?
     /// The peripheral delegate.
@@ -86,9 +87,10 @@ internal class BaseDFUPeripheral<TD : BasePeripheralDelegate> : NSObject, BaseDF
     /// A flag set when upload has been aborted.
     fileprivate var aborted: Bool = false
     
-    init(_ initiator: DFUServiceInitiator) {
+    init(_ initiator: DFUServiceInitiator, _ logger: LoggerHelper) {
         self.centralManager = initiator.centralManager
-        self.logger = LoggerHelper(initiator.logger)
+        self.queue = initiator.queue
+        self.logger = logger
         self.experimentalButtonlessServiceInSecureDfuEnabled = initiator.enableUnsafeExperimentalButtonlessServiceInSecureDfu
         self.uuidHelper = initiator.uuidHelper
 
@@ -140,7 +142,9 @@ internal class BaseDFUPeripheral<TD : BasePeripheralDelegate> : NSObject, BaseDF
     func destroy() {
         centralManager.delegate = nil
         peripheral?.delegate = nil
-        peripheral = nil
+        // Peripheral can't be cleared here to make restart() possible.
+        // See https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library/issues/269
+        // peripheral = nil
         delegate = nil
     }
     
@@ -180,7 +184,7 @@ internal class BaseDFUPeripheral<TD : BasePeripheralDelegate> : NSObject, BaseDF
             stateAsString = "Unauthorized"
         case .unsupported:
             stateAsString = "Unsupported"
-        case .unknown:
+        default:
             stateAsString = "Unknown"
         }
         logger.d("[Callback] Central Manager did update state to: \(stateAsString)")
@@ -485,15 +489,15 @@ internal class BaseCommonDFUPeripheral<TD : DFUPeripheralDelegate, TS : DFUServi
     internal var newAddressExpected  : Bool = false
     internal var bootloaderName      : String?
     
-    override init(_ initiator: DFUServiceInitiator) {
+    override init(_ initiator: DFUServiceInitiator, _ logger: LoggerHelper) {
         self.peripheralSelector = initiator.peripheralSelector
-        super.init(initiator)
+        super.init(initiator, logger)
     }
     
     // MARK: - Base DFU Peripheral API
     
     override func peripheralDidDiscoverDfuService(_ service: CBService) {
-        dfuService = DFUServiceType(service, logger, uuidHelper)
+        dfuService = DFUServiceType(service, logger, uuidHelper, queue)
         dfuService!.targetPeripheral = self
         dfuService!.discoverCharacteristics(
             onSuccess: { self.delegate?.peripheralDidBecomeReady() },

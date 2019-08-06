@@ -35,6 +35,11 @@ import CoreBluetooth
     internal var target         : CBPeripheral!
     internal var file           : DFUFirmware?
     
+    internal var queue                 : DispatchQueue
+    internal var delegateQueue         : DispatchQueue
+    internal var progressDelegateQueue : DispatchQueue
+    internal var loggerQueue           : DispatchQueue
+    
     //MARK: - Public variables
     
     /**
@@ -201,6 +206,11 @@ import CoreBluetooth
     */
     @objc public var uuidHelper: DFUUuidHelper
 
+    /**
+     Disable the ability for the DFU process to resume from where it was.
+    */
+    @objc public var disableResume: Bool = false
+
     //MARK: - Public API
     
     /**
@@ -234,6 +244,10 @@ import CoreBluetooth
         // Default UUID helper with standard set of UUIDs
         self.uuidHelper = DFUUuidHelper()
 
+        self.queue = DispatchQueue.main
+        self.delegateQueue = DispatchQueue.main
+        self.progressDelegateQueue = DispatchQueue.main
+        self.loggerQueue = DispatchQueue.main
         super.init()
     }
     
@@ -241,14 +255,20 @@ import CoreBluetooth
      Creates the DFUServiceInitializer that will allow to send an update to peripherals.
      
      - parameter queue: The dispatch queue to run BLE operations on.
+     - parameter callbackQueue: The dispatch queue to invoke all delegate callbacks on.
+     - parameter progressQueue: The dispatch queue to invoke all progress delegate callbacks on.
+     - parameter loggerQueue: The dispatch queue to invoke all logger events on.
      
      - returns: The initiator instance.
      
-     - version: Added in version 4.2 of the iOS DFU Library.
+     - version: Added in version 4.2 of the iOS DFU Library. Extended in 4.3 to allow setting delegate queues.
      - seeAlso: peripheralSelector property - a selector used when scanning for a device in DFU Bootloader mode
      in case you want to update a Softdevice and Application from a single ZIP Distribution Packet.
      */
-    @objc public init(queue: DispatchQueue? = nil) {
+    @objc public init(queue:         DispatchQueue? = nil,
+                      delegateQueue: DispatchQueue = DispatchQueue.main,
+                      progressQueue: DispatchQueue = DispatchQueue.main,
+                      loggerQueue:   DispatchQueue = DispatchQueue.main) {
         // Create a new instance of CBCentralManager
         self.centralManager = CBCentralManager(delegate: nil, queue: queue)
         // Default peripheral selector will choose the service UUID as a filter
@@ -256,6 +276,10 @@ import CoreBluetooth
         // Default UUID helper with standard set of UUIDs
         self.uuidHelper = DFUUuidHelper()
         
+        self.queue = queue ?? DispatchQueue.main
+        self.delegateQueue = delegateQueue
+        self.progressDelegateQueue = progressQueue
+        self.loggerQueue = loggerQueue
         super.init()
     }
     

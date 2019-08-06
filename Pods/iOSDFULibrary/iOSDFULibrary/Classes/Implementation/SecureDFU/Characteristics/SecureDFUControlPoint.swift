@@ -98,25 +98,25 @@ internal enum SecureDFURequest {
     var data : Data {
         switch self {
         case .createDataObject(let aSize):
-            var data = Data(bytes: [SecureDFUOpCode.createObject.code, SecureDFUProcedureType.data.rawValue])
+            var data = Data([SecureDFUOpCode.createObject.code, SecureDFUProcedureType.data.rawValue])
             data += aSize.littleEndian
             return data
         case .createCommandObject(let aSize):
-            var data = Data(bytes: [SecureDFUOpCode.createObject.code, SecureDFUProcedureType.command.rawValue])
+            var data = Data([SecureDFUOpCode.createObject.code, SecureDFUProcedureType.command.rawValue])
             data += aSize.littleEndian
             return data
         case .readCommandObjectInfo:
-            return Data(bytes: [SecureDFUOpCode.readObjectInfo.code, SecureDFUProcedureType.command.rawValue])
+            return Data([SecureDFUOpCode.readObjectInfo.code, SecureDFUProcedureType.command.rawValue])
         case .readDataObjectInfo:
-            return Data(bytes: [SecureDFUOpCode.readObjectInfo.code, SecureDFUProcedureType.data.rawValue])
+            return Data([SecureDFUOpCode.readObjectInfo.code, SecureDFUProcedureType.data.rawValue])
         case .setPacketReceiptNotification(let aSize):
-            var data = Data(bytes: [SecureDFUOpCode.setPRNValue.code])
+            var data = Data([SecureDFUOpCode.setPRNValue.code])
             data += aSize.littleEndian
             return data
         case .calculateChecksumCommand:
-            return Data(bytes: [SecureDFUOpCode.calculateChecksum.code])
+            return Data([SecureDFUOpCode.calculateChecksum.code])
         case .executeCommand:
-            return Data(bytes: [SecureDFUOpCode.execute.code])
+            return Data([SecureDFUOpCode.execute.code])
         }
     }
 
@@ -193,9 +193,9 @@ internal struct SecureDFUResponse {
             switch self.requestOpCode {
             case .some(.readObjectInfo):
                 // The correct reponse for Read Object Info has additional 12 bytes: Max Object Size, Offset and CRC
-                let maxSize : UInt32 = data.subdata(in: 3  ..<  7).withUnsafeBytes { $0.pointee }
-                let offset  : UInt32 = data.subdata(in: 7  ..< 11).withUnsafeBytes { $0.pointee }
-                let crc     : UInt32 = data.subdata(in: 11 ..< 15).withUnsafeBytes { $0.pointee }
+                let maxSize : UInt32 = data.asValue(offset: 3)
+                let offset  : UInt32 = data.asValue(offset: 7)
+                let crc     : UInt32 = data.asValue(offset: 11)
                 
                 self.maxSize = maxSize
                 self.offset  = offset
@@ -203,8 +203,8 @@ internal struct SecureDFUResponse {
                 self.error   = nil
             case .some(.calculateChecksum):
                 // The correct reponse for Calculate Checksum has additional 8 bytes: Offset and CRC
-                let offset : UInt32 = data.subdata(in: 3  ..<  7).withUnsafeBytes { $0.pointee }
-                let crc    : UInt32 = data.subdata(in: 7  ..< 11).withUnsafeBytes { $0.pointee }
+                let offset : UInt32 = data.asValue(offset: 3)
+                let crc    : UInt32 = data.asValue(offset: 7)
                 
                 self.maxSize = 0
                 self.offset  = offset
@@ -286,8 +286,8 @@ internal struct SecureDFUPacketReceiptNotification {
             return nil
         }
         
-        let offset : UInt32 = data.subdata(in: 3  ..<  7).withUnsafeBytes { $0.pointee }
-        let crc    : UInt32 = data.subdata(in: 7  ..< 11).withUnsafeBytes { $0.pointee }
+        let offset : UInt32 = data.asValue(offset: 3)
+        let crc    : UInt32 = data.asValue(offset: 7)
 
         self.offset = offset
         self.crc = crc
@@ -505,8 +505,8 @@ internal class SecureDFUControlPoint : NSObject, CBPeripheralDelegate, DFUCharac
                 } else if dfuResponse.status == .extendedError {
                     // An extended error was received
                     logger.e("Error \(dfuResponse.error!.code): \(dfuResponse.error!.description)")
-                    // The returned errod code is incremented by 10 to match Secure DFU remote codes
-                    report?(DFUError(rawValue: Int(dfuResponse.status!.code) + 10)!, dfuResponse.error!.description)
+                    // The returned errod code is incremented by 20 to match Secure DFU remote codes
+                    report?(DFUError(rawValue: Int(dfuResponse.error!.code) + 20)!, dfuResponse.error!.description)
                 } else {
                     logger.e("Error \(dfuResponse.status!.code): \(dfuResponse.status!.description)")
                     // The returned errod code is incremented by 10 to match Secure DFU remote codes

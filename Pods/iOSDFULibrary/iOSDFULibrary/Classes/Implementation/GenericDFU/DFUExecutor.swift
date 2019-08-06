@@ -22,6 +22,8 @@
 
 import CoreBluetooth
 
+typealias DelegateCallback = (DFUServiceDelegate) -> Void
+
 internal protocol BaseExecutorAPI : class, DFUController {
     
     /**
@@ -33,27 +35,17 @@ internal protocol BaseExecutorAPI : class, DFUController {
 internal protocol BaseDFUExecutor : BaseExecutorAPI, BasePeripheralDelegate {
     associatedtype DFUPeripheralType : BaseDFUPeripheralAPI
     
-    /// Target peripheral object
+    /// Target peripheral object.
     var peripheral: DFUPeripheralType { get }
     /// The DFU Service Initiator instance that was used to start the service.
     var initiator: DFUServiceInitiator { get }
+    /// The optional logger delegate.
+    var logger: LoggerHelper { get }
     /// If an error occurred it is set as this variable. It will be reported to the user when the device gets disconnected.
     var error: (error: DFUError, message: String)? { set get }
 }
 
 extension BaseDFUExecutor {
-    
-    /// The service delegate will be informed about status changes and errors.
-    internal var delegate: DFUServiceDelegate? {
-        // The delegate may change during DFU operation (by setting a new one in the initiator). Let's always use the current one.
-        return initiator.delegate
-    }
-    
-    /// The progress delegate will be informed about current upload progress.
-    internal var progressDelegate: DFUProgressDelegate? {
-        // The delegate may change during DFU operation (by setting a new one in the initiator). Let's always use the current one.
-        return initiator.progressDelegate
-    }
     
     // MARK: - DFU Controller API
     
@@ -72,38 +64,38 @@ extension BaseDFUExecutor {
     // MARK: - BasePeripheralDelegate API
     
     func peripheralDidFailToConnect() {
-        DispatchQueue.main.async(execute: {
-            self.delegate?.dfuError(.failedToConnect, didOccurWithMessage: "Device failed to connect")
-        })
+        delegate {
+            $0.dfuError(.failedToConnect, didOccurWithMessage: "Device failed to connect")
+        }
         // Release the cyclic reference
         peripheral.destroy()
     }
     
     func peripheralDidDisconnect() {
         // The device is now disconnected. Check if there was an error that needs to be reported now
-        DispatchQueue.main.async(execute: {
+        delegate {
             if let error = self.error {
-                self.delegate?.dfuError(error.error, didOccurWithMessage: error.message)
+                $0.dfuError(error.error, didOccurWithMessage: error.message)
             } else {
-                self.delegate?.dfuError(.deviceDisconnected, didOccurWithMessage: "Device disconnected unexpectedly")
+                $0.dfuError(.deviceDisconnected, didOccurWithMessage: "Device disconnected unexpectedly")
             }
-        })
+        }
         // Release the cyclic reference
         peripheral.destroy()
     }
     
     func peripheralDidDisconnect(withError error: Error) {
-        DispatchQueue.main.async(execute: {
-            self.delegate?.dfuError(.deviceDisconnected, didOccurWithMessage: "\(error.localizedDescription) (code: \((error as NSError).code))")
-        })
+        delegate {
+            $0.dfuError(.deviceDisconnected, didOccurWithMessage: "\(error.localizedDescription) (code: \((error as NSError).code))")
+        }
         // Release the cyclic reference
         peripheral.destroy()
     }
     
     func peripheralDidDisconnectAfterAborting() {
-        DispatchQueue.main.async(execute: {
-            self.delegate?.dfuStateDidChange(to: .aborted)
-        })
+        delegate {
+            $0.dfuStateDidChange(to: .aborted)
+        }
         // Release the cyclic reference
         peripheral.destroy()
     }
@@ -118,21 +110,27 @@ extension BaseDFUExecutor {
     
     // MARK: - Helper functions
     
-    func logWith(_ level: LogLevel, message: String) {
-        initiator.logger?.logWith(level, message: message)
+    /// Calls the delegate method on the delegate queue given in the initiator.
+    func delegate(callback: @escaping DelegateCallback) {
+        if let delegate = initiator.delegate {
+            initiator.delegateQueue.async {
+                callback(delegate)
+            }
+        }
     }
 }
 
 // MARK: -
 
 internal protocol DFUExecutorAPI : BaseExecutorAPI {
-    /// Required constructor
-    init(_ initiator: DFUServiceInitiator)
+    
+    /// Required constructor.
+    init(_ initiator: DFUServiceInitiator, _ logger: LoggerHelper)
 }
 
 internal protocol DFUExecutor : DFUExecutorAPI, BaseDFUExecutor, DFUPeripheralDelegate where DFUPeripheralType: DFUPeripheralAPI {
     
-    /// The firmware to be sent over-the-air
+    /// The firmware to be sent over-the-air.
     var firmware: DFUFirmware { get }
 }
 
@@ -144,16 +142,15 @@ extension DFUExecutor {
         // Check if there is another part of the firmware that has to be sent
         if firmware.hasNextPart() {
             firmware.switchToNextPart()
-            DispatchQueue.main.async(execute: {
-                self.delegate?.dfuStateDidChange(to: .connecting)
-            })
+            delegate {
+                $0.dfuStateDidChange(to: .connecting)
+            }
             return true
         }
         // If not, we are done here. Congratulations!
-        DispatchQueue.main.async(execute: {
-            // If no, the DFU operation is complete
-            self.delegate?.dfuStateDidChange(to: .completed)
-        })
+        delegate {
+            $0.dfuStateDidChange(to: .completed)
+        }
             
         // Release the cyclic reference
         peripheral.destroy()

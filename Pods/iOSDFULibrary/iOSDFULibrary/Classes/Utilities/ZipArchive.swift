@@ -20,8 +20,7 @@
 * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import Zip
-
+import ZIPFoundation
 
 // Errors
 internal enum ZipError : Error {
@@ -57,7 +56,8 @@ internal class ZipArchive {
         
         // Unzip file to the destination folder
         let destination = URL(fileURLWithPath: destinationPath)
-        try Zip.unzipFile(url, destination: destination, overwrite: true, password: nil, progress: nil)
+        let fileManager = FileManager()
+        try fileManager.unzipItem(at: url, to: destination)
         
         // Get folder content
         let files = try getFilesFromDirectory(destinationPath)

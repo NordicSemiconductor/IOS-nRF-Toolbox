@@ -84,6 +84,19 @@ private let crcTable: [UInt32] = [
     0x5d681b02, 0x2a6f2b94, 0xb40bbe37, 0xc30c8ea1, 0x5a05df1b,
     0x2d02ef8d]
 
+/// Calculates CRC32 value from the given Data.
+///
+/// - parameter data: Data to calculate CRC from.
+/// - returns: The CRC32 calculated over the whole Data object.
+func crc32(data: Data?) -> UInt32 {
+    return crc32(0, data: data)
+}
+
+/// Updates the running crc with the bytes from given Data.
+///
+/// - parameter crc:  The crc to be updated.
+/// - parameter data: Data to calculate CRC from.
+/// - returns: The CRC32 updated using whole Data object.
 func crc32(_ crc: UInt32, data: Data?) -> UInt32 {
     guard let data = data else {
         return crc32(0, buffer: nil, length: 0)
@@ -134,17 +147,14 @@ func crc32(_ crc: UInt32, buffer: UnsafePointer<UInt8>?, length: Int) -> UInt32 
     return crc1 ^ 0xffffffff;
 }
 
-func ==(lhs: CRC32, rhs: CRC32) -> Bool {
+/*
+func ==(lhs: CRC32Calculator, rhs: CRC32Calculator) -> Bool {
     return lhs.initialized == rhs.initialized && lhs.crc == rhs.crc
 }
 
-final class CRC32: Hashable {
+final class CRC32Calculator: Hashable {
     fileprivate var initialized = false
     fileprivate(set) var crc: UInt32 = 0
-    
-    var hashValue: Int {
-        return Int(crc)
-    }
     
     init() {}
     
@@ -163,4 +173,8 @@ final class CRC32: Hashable {
         crc = crc32(crc, data: data)
         initialized = true
     }
-}
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(crc)
+    }
+}*/

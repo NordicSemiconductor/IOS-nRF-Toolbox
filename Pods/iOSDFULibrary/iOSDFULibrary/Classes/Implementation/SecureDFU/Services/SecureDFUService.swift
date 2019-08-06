@@ -24,6 +24,7 @@ import CoreBluetooth
 
 @objc internal class SecureDFUService : NSObject, CBPeripheralDelegate, DFUService {
 
+    internal let queue: DispatchQueue
     internal var targetPeripheral: DFUPeripheralAPI?
     internal var uuidHelper: DFUUuidHelper
     
@@ -47,6 +48,7 @@ import CoreBluetooth
     private var report           : ErrorCallback?
     /// A temporaty callback used to report progress status.
     private var progressDelegate : DFUProgressDelegate?
+    private var progressQueue    : DispatchQueue?
     
     // -- Properties stored when upload started in order to resume it --
     private var firmware: DFUFirmware?
@@ -56,10 +58,11 @@ import CoreBluetooth
     
     // MARK: - Initialization
     
-    required init(_ service: CBService, _ logger: LoggerHelper, _ uuidHelper: DFUUuidHelper) {
+    required init(_ service: CBService, _ logger: LoggerHelper, _ uuidHelper: DFUUuidHelper, _ queue: DispatchQueue) {
         self.service = service
         self.logger = logger
         self.uuidHelper = uuidHelper
+        self.queue = queue
 
         super.init()
         self.logger.v("Secure DFU Service found")
@@ -84,7 +87,8 @@ import CoreBluetooth
         if !aborted && paused && firmware != nil {
             paused = false
             dfuPacketCharacteristic!.sendNext(packetReceiptNotificationNumber ?? 0, packetsFrom: range!, of: firmware!,
-                                              andReportProgressTo: progressDelegate, andCompletionTo: success!)
+                                              andReportProgressTo: progressDelegate, on: progressQueue!,
+                                              andCompletionTo: success!)
             return paused
         }
         paused = false
@@ -102,6 +106,7 @@ import CoreBluetooth
             success  = nil
             report   = nil
             progressDelegate = nil
+            progressQueue = nil
             // Upload has been aborted. Reset the target device. It will disconnect automatically
             sendReset(onError: _report)
         }
@@ -294,13 +299,15 @@ import CoreBluetooth
     /**
      Sends the next object of firmware. Result it reported using callbacks.
      
-     - parameter aRange:           Given range of the firmware will be sent.
-     - parameter aFirmware:        The firmware from with part is to be sent.
+     - parameter range:            Given range of the firmware will be sent.
+     - parameter firmware:         The firmware from with part is to be sent.
      - parameter progressDelegate: An optional progress delegate.
+     - parameter queue:            The queue to dispatch progress events on.
      - parameter success:          Method called when the object was sent.
      - parameter report:           Method called when an error occurred.
      */
-    func sendNextObject(from aRange: Range<Int>, of aFirmware: DFUFirmware, andReportProgressTo progressDelegate: DFUProgressDelegate?,
+    func sendNextObject(from range: Range<Int>, of firmware: DFUFirmware,
+                        andReportProgressTo progressDelegate: DFUProgressDelegate?, on queue: DispatchQueue,
                         onSuccess success: @escaping Callback, onError report: @escaping ErrorCallback) {
         guard !aborted else {
             sendReset(onError: report)
@@ -308,9 +315,10 @@ import CoreBluetooth
         }
         
         // Those will be stored here in case of pause/resume
-        self.firmware         = aFirmware
-        self.range            = aRange
+        self.firmware         = firmware
+        self.range            = range
         self.progressDelegate = progressDelegate
+        self.progressQueue    = queue
         
         self.report = {
             error, message in
@@ -319,6 +327,7 @@ import CoreBluetooth
             self.success  = nil
             self.report   = nil
             self.progressDelegate = nil
+            self.progressQueue = nil
             report(error, message)
         }
         self.success = {
@@ -327,6 +336,7 @@ import CoreBluetooth
             self.success  = nil
             self.report   = nil
             self.progressDelegate = nil
+            self.progressQueue = nil
             self.dfuControlPointCharacteristic!.peripheralDidReceiveObject()
             success()
         } as Callback
@@ -341,10 +351,11 @@ import CoreBluetooth
                 }
             
                 if !self.paused && !self.aborted {
-                    let bytesSent = self.dfuPacketCharacteristic!.bytesSent + UInt32(aRange.lowerBound)
+                    let bytesSent = self.dfuPacketCharacteristic!.bytesSent + UInt32(range.lowerBound)
                     if peripheralIsReadyToSendWriteWithoutRequest || bytesSent == bytesReceived! {
-                        self.dfuPacketCharacteristic!.sendNext(self.packetReceiptNotificationNumber ?? 0, packetsFrom: aRange, of: aFirmware,
-                                                               andReportProgressTo: progressDelegate, andCompletionTo: self.success!)
+                        self.dfuPacketCharacteristic!.sendNext(self.packetReceiptNotificationNumber ?? 0, packetsFrom: range, of: firmware,
+                                                               andReportProgressTo: progressDelegate, on: queue,
+                                                               andCompletionTo: self.success!)
                     } else {
                         // Target device deported invalid number of bytes received
                         report(.bytesLost, "\(bytesSent) bytes were sent while \(bytesReceived!) bytes were reported as received")
@@ -365,8 +376,9 @@ import CoreBluetooth
         
         if !paused && !aborted {
             // ...and start sending firmware if
-            dfuPacketCharacteristic!.sendNext(packetReceiptNotificationNumber ?? 0, packetsFrom: aRange, of: aFirmware,
-                                                   andReportProgressTo: progressDelegate, andCompletionTo: self.success!)
+            dfuPacketCharacteristic!.sendNext(packetReceiptNotificationNumber ?? 0, packetsFrom: range, of: firmware,
+                                              andReportProgressTo: progressDelegate, on: queue,
+                                              andCompletionTo: self.success!)
         } else if aborted {
             self.firmware = nil
             self.range    = nil
