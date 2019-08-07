@@ -126,7 +126,7 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, HMHomeManagerD
             //Browser needs to be released after adding accessory to the home.
             //Releasing the browser before adding the accessory will result in a HomeKit error 2 (Object not found.)
             //as the selected HMAccessory object becomes invalid.
-            self.accessoryBrowser.stopSearchingForNewAccessories()
+            self.accessoryBrowser?.stopSearchingForNewAccessories()
             self.accessoryBrowser = nil
         }
     }
