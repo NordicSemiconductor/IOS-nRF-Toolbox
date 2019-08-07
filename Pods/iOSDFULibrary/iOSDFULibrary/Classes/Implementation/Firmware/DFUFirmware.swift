@@ -184,7 +184,7 @@ import Foundation
         let ext = urlToBinOrHexFile.pathExtension
         let bin = ext.caseInsensitiveCompare("bin") == .orderedSame
         let hex = ext.caseInsensitiveCompare("hex") == .orderedSame
-        if !bin && !hex {
+        guard bin || hex else {
             NSLog("\(fileName!) is not a BIN or HEX file")
             stream = nil
             super.init()
@@ -193,7 +193,7 @@ import Foundation
         
         if let datUrl = urlToDatFile {
             let datExt = datUrl.pathExtension
-            if datExt.caseInsensitiveCompare("dat") != .orderedSame {
+            guard datExt.caseInsensitiveCompare("dat") == .orderedSame else {
                 NSLog("\(fileName!) is not a DAT file")
                 stream = nil
                 super.init()
@@ -204,7 +204,10 @@ import Foundation
         if bin {
             stream = DFUStreamBin(urlToBinFile: urlToBinOrHexFile, urlToDatFile: urlToDatFile, type: type)
         } else {
-            stream = DFUStreamHex(urlToHexFile: urlToBinOrHexFile, urlToDatFile: urlToDatFile, type: type)
+            guard let s = DFUStreamHex(urlToHexFile: urlToBinOrHexFile, urlToDatFile: urlToDatFile, type: type) else {
+                return nil
+            }
+            stream = s
         }
         super.init()
     }
@@ -241,7 +244,10 @@ import Foundation
         fileUrl = nil
         fileName = nil
         
-        stream = DFUStreamHex(hexFile: hexFile, datFile: datFile, type: type)
+        guard let s = DFUStreamHex(hexFile: hexFile, datFile: datFile, type: type) else {
+            return nil
+        }
+        stream = s
         super.init()
     }
     

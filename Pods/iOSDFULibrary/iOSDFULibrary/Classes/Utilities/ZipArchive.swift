@@ -21,6 +21,7 @@
 */
 
 import ZIPFoundation
+import Foundation
 
 // Errors
 internal enum ZipError : Error {

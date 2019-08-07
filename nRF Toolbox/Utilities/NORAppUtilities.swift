@@ -23,9 +23,9 @@ enum NORServiceIds : UInt8 {
 
 class NORAppUtilities: NSObject {
 
-    static let iOSDFULibraryVersion = "4.1.1"
+    static let iOSDFULibraryVersion = "4.5.0"
 
-    static let uartHelpText = "This profile allows you to connect to a device that support Nordic's UART service. The service allows you to send and receive short messages of 20 bytes in total.\n\nThe main screen contains 9 programmable buttons. Use the Edit button to edit a command or an icon assigned to each button. Unused buttons may be hidden.\n\nTap the Show Log button to see the conversation or to send a custom message."
+    static let uartHelpText = "This profile allows you to connect to a device that support Nordic's UART service. The service allows you to send and receive String messages.\n\nThe main screen contains 9 programmable buttons. Use the Edit button to edit a command or an icon assigned to each button. Unused buttons may be hidden.\n\nTap the Show Log button to see the conversation or to send a custom message."
     
     static let rscHelpText  = "The RSC (Running Speed and Cadence) profile allows you to connect to your activity sensor. It reads speed and cadence values from the sensor and calculates trip distance if stride length is supported. Strides count is calculated by using cadence and the time."
     

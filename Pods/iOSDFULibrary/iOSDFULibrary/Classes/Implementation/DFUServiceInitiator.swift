@@ -162,6 +162,12 @@ import CoreBluetooth
      For more information read: https://github.com/NordicSemiconductor/IOS-nRF-Connect/issues/16
      */
     @objc public var alternativeAdvertisingNameEnabled = true
+
+    /**
+     If `alternativeAdvertisingNameEnabled` is `true` then this specifies the alternative name to use. If nil (default)
+     then a random name is generated.
+     */
+    @objc public var alternativeAdvertisingName: String? = nil
     
     /**
      Set this flag to true to enable experimental buttonless feature in Secure DFU. When the 
@@ -255,7 +261,7 @@ import CoreBluetooth
      Creates the DFUServiceInitializer that will allow to send an update to peripherals.
      
      - parameter queue: The dispatch queue to run BLE operations on.
-     - parameter callbackQueue: The dispatch queue to invoke all delegate callbacks on.
+     - parameter delegateQueue: The dispatch queue to invoke all delegate callbacks on.
      - parameter progressQueue: The dispatch queue to invoke all progress delegate callbacks on.
      - parameter loggerQueue: The dispatch queue to invoke all logger events on.
      

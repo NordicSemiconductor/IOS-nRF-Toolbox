@@ -507,17 +507,14 @@ import CoreBluetooth
      
      - parameter report: Method called when an error occurred.
      */
-    func jumpToBootloaderMode(withAlternativeAdvertisingName rename: Bool, onError report: @escaping ErrorCallback) {
+    func jumpToBootloaderMode(withAlternativeAdvertisingName name: String?, onError report: @escaping ErrorCallback) {
         if !aborted {
             func enterBootloader() {
                 self.buttonlessDfuCharacteristic!.send(ButtonlessDFURequest.enterBootloader, onSuccess: nil, onError: report)
             }
             
             // If the device may support setting alternative advertising name in the bootloader mode, try it
-            if rename && buttonlessDfuCharacteristic!.maySupportSettingName {
-                // Generate a random 8-character long name
-                let name = String(format: "Dfu%05d", arc4random_uniform(100000))
-                
+            if let name = name, buttonlessDfuCharacteristic!.maySupportSettingName {
                 logger.v("Trying setting bootloader name to \(name)")
                 buttonlessDfuCharacteristic!.send(ButtonlessDFURequest.set(name: name), onSuccess: {
                     // Success. The buttonless service is from SDK 14.0+. The bootloader, after jumping to it, will advertise with this name.

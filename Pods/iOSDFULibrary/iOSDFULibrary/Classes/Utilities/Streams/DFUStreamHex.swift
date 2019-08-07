@@ -49,9 +49,12 @@ internal class DFUStreamHex : DFUStream {
         return size
     }
     
-    init(urlToHexFile: URL, urlToDatFile: URL?, type: DFUFirmwareType) {
+    init?(urlToHexFile: URL, urlToDatFile: URL?, type: DFUFirmwareType) {
         let hexData = try! Data(contentsOf: urlToHexFile)
-        binaries = IntelHex2BinConverter.convert(hexData)
+        guard let bin = IntelHex2BinConverter.convert(hexData, mbrSize: 0x1000) else {
+            return nil
+        }
+        binaries = bin
         firmwareSize = UInt32(binaries.count)
         
         if let dat = urlToDatFile {
@@ -61,8 +64,11 @@ internal class DFUStreamHex : DFUStream {
         currentPartType = type.rawValue
     }
     
-    init(hexFile: Data, datFile: Data?, type: DFUFirmwareType) {
-        binaries = IntelHex2BinConverter.convert(hexFile)
+    init?(hexFile: Data, datFile: Data?, type: DFUFirmwareType) {
+        guard let bin = IntelHex2BinConverter.convert(hexFile, mbrSize: 0x1000) else {
+            return nil
+        }
+        binaries = bin
         firmwareSize = UInt32(binaries.count)
         
         initPacketBinaries = datFile

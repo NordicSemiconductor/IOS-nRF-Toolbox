@@ -45,6 +45,24 @@
 you may now copy all those files to your project and use the library, additionally, carthade also builds **\*.dsym** files 
 if you need to resymbolicate crash logs. you may want to keep those files bundled with your builds for future use.
 
+**For Swift Package Manager:**
+
+```swift
+// swift-tools-version:5.0
+import PackageDescription
+
+let package = Package(
+  name: "<Your Product Name>",
+  dependencies: [
+    .package(
+      url: "https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library/", 
+      .upToNextMajor(from: "4.5.0")
+    )
+  ],
+  targets: [.target(name: "<Your Target Name>", dependencies: ["NordicDFU"])]
+)
+```
+
 ---
 
 ### Device Firmware Update (DFU)
@@ -153,3 +171,5 @@ A library for both iOS and Android that is based on this library is available fo
 - [nRF51 Development Kit (DK)](https://www.nordicsemi.com/Software-and-Tools/Development-Kits/nRF51-DK "nRF51 DK") (compatible with Arduino Uno Revision 3)
 - [nRF52 Development Kit (DK)](https://www.nordicsemi.com/Software-and-Tools/Development-Kits/nRF52-DK "nRF52 DK") (compatible with Arduino Uno Revision 3)
 - [nRF52840 Development Kit (DK)](https://www.nordicsemi.com/Software-and-Tools/Development-Kits/nRF52840-DK "nRF52840 DK") (compatible with Arduino Uno Revision 3)
+
+
