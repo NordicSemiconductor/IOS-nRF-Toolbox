@@ -129,7 +129,7 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
         devicesTable.delegate = self
         devicesTable.dataSource = self
         
-        let activityIndicatorView              = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+        let activityIndicatorView              = UIActivityIndicatorView(style: .gray)
         activityIndicatorView.hidesWhenStopped = true
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activityIndicatorView)
         
@@ -205,8 +205,8 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
             var sensor = NORScannedPeripheral(withPeripheral: peripheral, andRSSI: RSSI.int32Value, andIsConnected: false)
             if ((self.peripherals.contains(sensor)) == false) {
                 self.peripherals.append(sensor)
-            }else{
-                sensor = self.peripherals[self.peripherals.index(of: sensor)!]
+            } else {
+                sensor = self.peripherals[self.peripherals.firstIndex(of: sensor)!]
                 sensor.RSSI = RSSI.int32Value
             }
         })

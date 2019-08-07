@@ -43,9 +43,9 @@ class NOREditPopupViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         if self.isHidden! {
-            toggleVisibilityButton.setTitle("Show", for: UIControlState())
+            toggleVisibilityButton.setTitle("Show", for: UIControl.State())
         }else{
-            toggleVisibilityButton.setTitle("Hide", for: UIControlState())
+            toggleVisibilityButton.setTitle("Hide", for: UIControl.State())
         }
 
         commandTextField.text = self.command!
@@ -81,10 +81,10 @@ class NOREditPopupViewController: UIViewController, UITextFieldDelegate {
     func handleToggleVisibilityButtonPressed() {
         if isHidden == true {
             isHidden = false
-            self.toggleVisibilityButton.setTitle("Hide", for: UIControlState())
+            self.toggleVisibilityButton.setTitle("Hide", for: UIControl.State())
         }else{
             isHidden = true
-            self.toggleVisibilityButton.setTitle("Show", for: UIControlState())
+            self.toggleVisibilityButton.setTitle("Show", for: UIControl.State())
         }
     }
     

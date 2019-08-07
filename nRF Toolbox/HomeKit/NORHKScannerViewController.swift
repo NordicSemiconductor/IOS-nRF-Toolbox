@@ -32,7 +32,7 @@ class NORHKScannerViewController: UIViewController, UITableViewDelegate, UITable
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let activityIndicatorView              = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+        let activityIndicatorView              = UIActivityIndicatorView(style: .gray)
         activityIndicatorView.hidesWhenStopped = true
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activityIndicatorView)
         activityIndicatorView.startAnimating()
@@ -84,7 +84,7 @@ class NORHKScannerViewController: UIViewController, UITableViewDelegate, UITable
         guard discoveredAccessories.contains(accessory) == true else {
             return
         }
-        discoveredAccessories.remove(at: discoveredAccessories.index(of: accessory)!)
+        discoveredAccessories.remove(at: discoveredAccessories.firstIndex(of: accessory)!)
         devicesTable.reloadData()
     }
 }

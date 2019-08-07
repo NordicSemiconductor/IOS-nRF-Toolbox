@@ -61,7 +61,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileSe
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         //if DFU peripheral is connected and user press Back button then disconnect it
-        if self.isMovingFromParentViewController && dfuController != nil {
+        if self.isMovingFromParent && dfuController != nil {
             let aborted = dfuController?.abort()
             if aborted! == false {
                 logWith(.application, message: "Aborting DFU process failed")
@@ -339,11 +339,11 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileSe
             if (segue.identifier == "scan") {
                 // Set this contoller as scanner delegate
                 let aNavigationController = segue.destination as? UINavigationController
-                let scannerViewController = aNavigationController?.childViewControllers.first as? NORScannerViewController
+                let scannerViewController = aNavigationController?.children.first as? NORScannerViewController
                 scannerViewController?.delegate = self
             } else if segue.identifier == "FileSegue" {
                 let aNavigationController = segue.destination as? UINavigationController
-                let barViewController = aNavigationController?.childViewControllers.first as? UITabBarController
+                let barViewController = aNavigationController?.children.first as? UITabBarController
                 let appFilecsVC = barViewController?.viewControllers?.first as? NORAppFilesViewController
                 appFilecsVC?.fileDelegate = self
                 let userFilesVC = barViewController?.viewControllers?.last as? NORUserFilesViewController
@@ -390,14 +390,14 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileSe
     func registerObservers() {
         if UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))) {
             UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert], categories: nil))
-            NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterBackgroundCallback), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidBecomeActiveCallback), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterBackgroundCallback), name: UIApplication.didEnterBackgroundNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidBecomeActiveCallback), name: UIApplication.didBecomeActiveNotification, object: nil)
         }
     }
 
     func removeObservers() {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
-        NotificationCenter.default.removeObserver(self, name:NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name:UIApplication.didEnterBackgroundNotification, object: nil)
     }
 
     @objc func applicationDidEnterBackgroundCallback() {
@@ -463,7 +463,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileSe
         initiator.progressDelegate = self
         initiator.enableUnsafeExperimentalButtonlessServiceInSecureDfu = true
         dfuController = initiator.with(firmware: selectedFirmware!).start(target: selectedPeripheral!)
-        uploadButton.setTitle("Cancel", for: UIControlState())
+        uploadButton.setTitle("Cancel", for: UIControl.State())
         uploadButton.isEnabled = true
     }
 

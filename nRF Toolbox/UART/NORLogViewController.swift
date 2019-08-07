@@ -30,7 +30,7 @@ class NORLogViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         super.viewDidLoad()
         displayLogTextTable.delegate = self
         displayLogTextTable.dataSource = self
-        displayLogTextTable.rowHeight = UITableViewAutomaticDimension
+        displayLogTextTable.rowHeight = UITableView.automaticDimension
         displayLogTextTable.estimatedRowHeight = 25
         displayLogTextTable.reloadData()
         commandTextField.placeholder = "No UART connected"
@@ -53,7 +53,7 @@ class NORLogViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     }
     
     func scrollDisplayViewDown() {
-        displayLogTextTable.scrollToRow(at: IndexPath(row: displayLogTextTable.numberOfRows(inSection: 0) - 1, section: 0), at: UITableViewScrollPosition.bottom, animated: true)
+        displayLogTextTable.scrollToRow(at: IndexPath(row: displayLogTextTable.numberOfRows(inSection: 0) - 1, section: 0), at: .bottom, animated: true)
     }
 
     func setManager(aManager : NORBluetoothManager?) {

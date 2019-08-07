@@ -34,8 +34,8 @@ class NORAppFilesViewController: UIViewController, UITableViewDelegate, UITableV
         }
 
         // The Navigation Item buttons may be initialized just once, here. They apply also to UserFilesVewController.
-        self.tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(self.doneButtonTapped))
-        self.tabBarController?.navigationItem.leftBarButtonItem  = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(self.cancelButtonTapped))
+        self.tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.doneButtonTapped))
+        self.tabBarController?.navigationItem.leftBarButtonItem  = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancelButtonTapped))
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -86,9 +86,9 @@ class NORAppFilesViewController: UIViewController, UITableViewDelegate, UITableV
         }
         
         if filePath == selectedPath?.lastPathComponent {
-            aCell.accessoryType = UITableViewCellAccessoryType.checkmark
+            aCell.accessoryType = UITableViewCell.AccessoryType.checkmark
         } else {
-            aCell.accessoryType = UITableViewCellAccessoryType.none
+            aCell.accessoryType = UITableViewCell.AccessoryType.none
         }
         
         return aCell

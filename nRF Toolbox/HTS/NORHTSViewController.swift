@@ -80,7 +80,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         if segue.identifier == "scan" {
             // Set this contoller as scanner delegate
             let navigationController = segue.destination as! UINavigationController
-            let scannerController    = navigationController.childViewControllers.first as! NORScannerViewController
+            let scannerController    = navigationController.children.first as! NORScannerViewController
             scannerController.filterUUID = htsServiceUUID
             scannerController.delegate = self
         }
@@ -161,7 +161,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                 let batteryLevel = NORCharacteristicReader.readUInt8Value(ptr: &array)
                 
                 let text = "\(batteryLevel)%"
-                self.battery.setTitle(text, for: UIControlState.disabled)
+                self.battery.setTitle(text, for: .disabled)
                 
                 if self.battery.tag == 0 {
                     // If battery level notifications are available, enable them
@@ -269,11 +269,11 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async(execute: {
             self.deviceName.text = peripheral.name
-            self.connectionButon.setTitle("DISCONNECT", for: UIControlState())
+            self.connectionButon.setTitle("DISCONNECT", for: UIControl.State())
         })
 
-        NotificationCenter.default.addObserver(self, selector: #selector(self.appDidEnterBackrgoundCallback), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.appDidBecomeActiveCallback), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.appDidEnterBackrgoundCallback), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.appDidBecomeActiveCallback), name: UIApplication.didBecomeActiveNotification, object: nil)
 
         // Peripheral has connected. Discover required services
         connectedPeripheral = peripheral;
@@ -284,7 +284,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async(execute: {
             NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to peripheral failed. Try again", from: self)
-            self.connectionButon.setTitle("CONNECT", for: UIControlState())
+            self.connectionButon.setTitle("CONNECT", for: UIControl.State())
             self.connectedPeripheral = nil
             self.clearUI()
         })
@@ -293,15 +293,15 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async(execute: {
-            self.connectionButon.setTitle("CONNECT", for: UIControlState())
+            self.connectionButon.setTitle("CONNECT", for: UIControl.State())
             if NORAppUtilities.isApplicationInactive() {
                 let name = peripheral.name ?? "Peripheral"
                 NORAppUtilities.showBackgroundNotification(message: "\(name) is disconnected.")
             }
             self.connectedPeripheral = nil
             self.clearUI()
-            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
-            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+            NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+            NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
         })
     }
     
@@ -344,7 +344,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     func clearUI() {
         deviceName.text = "DEFAULT HTM"
         battery.tag = 0
-        battery.setTitle("n/a", for: UIControlState.disabled)
+        battery.setTitle("n/a", for: .disabled)
         self.temperature.text = "-"
         self.timestamp.text = ""
         self.type.text = ""

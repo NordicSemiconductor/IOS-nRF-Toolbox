@@ -156,20 +156,20 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
             self.bgmTableView.reloadData()
             self.deviceName.text = "DEFAULT_BGM"
             self.battery.tag = 0
-            self.battery.setTitle("n/a", for: UIControlState.disabled)
+            self.battery.setTitle("n/a", for: .disabled)
         }
     }
     
     func enableActionButton() {
         recordsButton.isEnabled = true
         recordsButton.backgroundColor = UIColor.black
-        recordsButton.setTitleColor(UIColor.white, for: UIControlState())
+        recordsButton.setTitleColor(UIColor.white, for: UIControl.State())
     }
 
     func disableActionButton() {
         recordsButton.isEnabled = false
         recordsButton.backgroundColor = UIColor.lightGray
-        recordsButton.setTitleColor(UIColor.lightText, for: UIControlState())
+        recordsButton.setTitleColor(UIColor.lightText, for: UIControl.State())
     }
     
     func setupNotifications() {
@@ -181,20 +181,20 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     func addNotificationObservers() {
         NotificationCenter.default.addObserver(self,
                                                          selector: #selector(self.applicationDidEnterBackgroundHandler),
-                                                         name: NSNotification.Name.UIApplicationDidEnterBackground,
+                                                         name: UIApplication.didEnterBackgroundNotification,
                                                          object: nil)
         NotificationCenter.default.addObserver(self,
                                                          selector: #selector(self.applicationDidBecomeActiveHandler),
-                                                         name: NSNotification.Name.UIApplicationDidBecomeActive,
+                                                         name: UIApplication.didBecomeActiveNotification,
                                                          object: nil)
     }
     
     func removeNotificationObservers() {
         NotificationCenter.default.removeObserver(self,
-                                                            name: NSNotification.Name.UIApplicationDidBecomeActive,
+                                                            name: UIApplication.didBecomeActiveNotification,
                                                             object: nil)
         NotificationCenter.default.removeObserver(self,
-                                                            name: NSNotification.Name.UIApplicationDidEnterBackground,
+                                                            name: UIApplication.didEnterBackgroundNotification,
                                                             object: nil)
     }
     
@@ -267,7 +267,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
             let text = "\(batteryLevel)%"
             
             DispatchQueue.main.async(execute: {
-                self.battery.setTitle(text, for: UIControlState.disabled)
+                self.battery.setTitle(text, for: UIControl.State.disabled)
                 if self.battery.tag == 0 {
                     // If battery level notifications are available, enable them
                     if characteristic.properties.contains(CBCharacteristicProperties.notify)
@@ -352,7 +352,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
         peripheral.discoverServices([bgmServiceUUID, batteryServiceUUID])
         DispatchQueue.main.async {
             self.deviceName.text = peripheral.name
-            self.connectButton.setTitle("DISCONNECT", for: UIControlState())
+            self.connectButton.setTitle("DISCONNECT", for: UIControl.State())
             self.enableActionButton()
             self.setupNotifications()
         }
@@ -361,7 +361,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         DispatchQueue.main.async {
             NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to peripheral failed. Please Try again", from: self)
-            self.connectButton.setTitle("CONNECT", for: UIControlState())
+            self.connectButton.setTitle("CONNECT", for: UIControl.State())
             self.connectedPeripheral = nil
             self.disableActionButton()
             self.clearUI()
@@ -370,7 +370,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         DispatchQueue.main.async { 
-            self.connectButton.setTitle("CONNECT", for: UIControlState())
+            self.connectButton.setTitle("CONNECT", for: UIControl.State())
             
             if NORAppUtilities.isApplicationInactive() == true {
                 let name = peripheral.name ?? "Peripheral"
@@ -424,7 +424,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "scan" {
             let navigationController = segue.destination as! UINavigationController
-            let controller = navigationController.childViewControllers.first as! NORScannerViewController
+            let controller = navigationController.children.first as! NORScannerViewController
             controller.filterUUID = bgmServiceUUID
             controller.delegate = self
         } else if segue.identifier == "details" {

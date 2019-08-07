@@ -199,7 +199,7 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
         headerView.backgroundColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
         let titleLabel = UILabel(frame: CGRect(x: 15, y: 0, width: tableView.bounds.width - 15, height: 30))
         headerView.addSubview(titleLabel)
-        headerView.bringSubview(toFront: titleLabel)
+        headerView.bringSubviewToFront(titleLabel)
         
         if #available(iOS 9.0, *) {
             titleLabel.text = targetAccessory?.services[section].localizedDescription

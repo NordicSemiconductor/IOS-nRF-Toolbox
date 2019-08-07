@@ -93,13 +93,13 @@ class NORUserFilesViewController: UIViewController, NORFilePreselectionDelegate,
         let fileName = filePath.lastPathComponent
 
         aCell.textLabel?.text = fileName
-        aCell.accessoryType = UITableViewCellAccessoryType.none
+        aCell.accessoryType = .none
         
         var isDirectory : ObjCBool = false
         let fileManager = FileManager.default
         if fileManager.fileExists(atPath: filePath.relativePath, isDirectory: &isDirectory) {
             if isDirectory.boolValue {
-                aCell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+                aCell.accessoryType = .disclosureIndicator
                 if fileName.lowercased() == "inbox" {
                     aCell.imageView?.image = UIImage(named: "ic_email")
                 } else {
@@ -118,7 +118,7 @@ class NORUserFilesViewController: UIViewController, NORFilePreselectionDelegate,
 
         if selectedPath != nil {
             if filePath == selectedPath! {
-                aCell.accessoryType = UITableViewCellAccessoryType.checkmark
+                aCell.accessoryType = .checkmark
             }
         }
         return aCell;
@@ -145,7 +145,7 @@ class NORUserFilesViewController: UIViewController, NORFilePreselectionDelegate,
         }
     }
     
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         if (indexPath as NSIndexPath).row > 0 {
             // Inbox folder can't be deleted
             let filePath = files[(indexPath as NSIndexPath).row - 1]
@@ -157,17 +157,17 @@ class NORUserFilesViewController: UIViewController, NORFilePreselectionDelegate,
                 return .delete
             }
         }
-        return UITableViewCellEditingStyle.none
+        return UITableViewCell.EditingStyle.none
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == UITableViewCellEditingStyle.delete {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
             let filePath = files[(indexPath as NSIndexPath).row - 1]
             
             do {
                 try FileManager.default.removeItem(at: filePath)
                 files.remove(at: (indexPath as NSIndexPath).row - 1)
-                tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
                 
                 if filePath == selectedPath {
                     onFilePreselected(withURL:selectedPath!)

@@ -89,7 +89,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         }
 
         let navigationController = segue.destination
-        let scannerViewController = navigationController.childViewControllers.first as! NORScannerViewController
+        let scannerViewController = navigationController.children.first as! NORScannerViewController
         scannerViewController.filterUUID = cscServiceUUID
         scannerViewController.delegate = self
     }
@@ -120,14 +120,14 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async { 
             self.deviceName.text = peripheral.name
-            self.connectionButton.setTitle("DISCONNECT", for: UIControlState())
+            self.connectionButton.setTitle("DISCONNECT", for: UIControl.State())
         }
         
         if UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))) {
             UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .sound], categories: nil))
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackgroundHandler), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didBecomeActiveHandler), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackgroundHandler), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didBecomeActiveHandler), name: UIApplication.didBecomeActiveNotification, object: nil)
         peripheral.discoverServices([cscServiceUUID, batteryServiceUUID])
     }
     
@@ -149,8 +149,8 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                 let name = peripheral.name ?? "Peripheral"
                 NORAppUtilities.showBackgroundNotification(message: "\(name) is disconnected.")
             }
-            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
-            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+            NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+            NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
             
             self.cyclePeripheral = nil
             self.clearUI()
@@ -168,8 +168,8 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     }
     
     func clearUI() {
-        connectionButton.setTitle("CONNECT", for: UIControlState())
-        battery.setTitle("n/a", for: UIControlState.disabled)
+        connectionButton.setTitle("CONNECT", for: UIControl.State())
+        battery.setTitle("n/a", for: UIControl.State.disabled)
         deviceName.text         = "DEFAULT CSC"
         battery.tag             = 0
         speed.text              = "-"
@@ -345,7 +345,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                 let array = UnsafeMutablePointer<UInt8>(OpaquePointer(((characteristic.value as NSData?)?.bytes)!))
                 let batteryLevel = array[0]
                 let text = "\(batteryLevel)%"
-                self.battery.setTitle(text, for: UIControlState.disabled)
+                self.battery.setTitle(text, for: UIControl.State.disabled)
                 if self.battery.tag == 0 {
                     if characteristic.properties.rawValue & CBCharacteristicProperties.notify.rawValue > 0 {
                         self.battery.tag = 1
