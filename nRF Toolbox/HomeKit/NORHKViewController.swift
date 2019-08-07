@@ -116,7 +116,7 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, HMHomeManagerD
 
     func pair(anAccessory: HMAccessory, withHome aHome: HMHome) {
         print(aHome, anAccessory)
-        aHome.addAccessory(anAccessory) { (error) in
+        aHome.addAccessory(anAccessory) { error in
             if let error = error {
                 print("Error in adding accessory \(error)")
             } else {

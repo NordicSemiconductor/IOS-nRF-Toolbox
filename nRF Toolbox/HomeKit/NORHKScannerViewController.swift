@@ -15,7 +15,7 @@ class NORHKScannerViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var devicesTable: UITableView!
     @IBOutlet weak var emptyView: UIView!
     @IBAction func cancelButtonTapped(_ sender: Any) {
-        self.dismiss(animated: true)
+        dismiss(animated: true)
     }
     
     //MARK: - Scanner implementation
@@ -34,7 +34,7 @@ class NORHKScannerViewController: UIViewController, UITableViewDelegate, UITable
         
         let activityIndicatorView              = UIActivityIndicatorView(style: .gray)
         activityIndicatorView.hidesWhenStopped = true
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activityIndicatorView)
+        navigationItem.rightBarButtonItem      = UIBarButtonItem(customView: activityIndicatorView)
         activityIndicatorView.startAnimating()
         
         startScanning()
@@ -50,14 +50,9 @@ class NORHKScannerViewController: UIViewController, UITableViewDelegate, UITable
     
     //MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
         let aCell = tableView.dequeueReusableCell(withIdentifier: "HKAccessoryCell", for: indexPath)
         aCell.textLabel?.text = discoveredAccessories[indexPath.row].name
-        if #available(iOS 9.0, *) {
-            aCell.detailTextLabel?.text = discoveredAccessories[indexPath.row].category.localizedDescription
-        } else {
-            aCell.detailTextLabel?.text = ""
-        }
+        aCell.detailTextLabel?.text = discoveredAccessories[indexPath.row].category.localizedDescription
         return aCell
     }
 
