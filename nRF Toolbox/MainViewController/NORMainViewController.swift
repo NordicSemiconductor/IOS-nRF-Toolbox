@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NORMainViewController: UIViewController, UICollectionViewDataSource, UIAlertViewDelegate {
+class NORMainViewController: UIViewController, UICollectionViewDataSource {
 
     // MARK: - Outlets & Actions
     @IBOutlet weak var collectionView: UICollectionView!
@@ -23,25 +23,17 @@ class NORMainViewController: UIViewController, UICollectionViewDataSource, UIAle
         collectionView.dataSource = self;
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.lightContent, animated: true)
-    }
-    
     func showAboutAlertView() {
         let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
         //Note: The character \u{2022} found here is a unicode bullet, used just for styling purposes
         let aboutMessage = String("The nRF Toolbox works with the most popular Bluetooth Low Energy accessories that use standard BLE profiles. Additionaly, it supports Nordic Semiconductor's proprietary profiles:\n\n\u{2022}UART (Universal Asynchronous Receiver/Transmitter),\n\n\u{2022}DFU (Device Firmware Update).\n\nMore information and the source code may be found on GitHub.\n\nVersion \(appVersion)")
         
-        let alertView = UIAlertView.init(title: "About", message: aboutMessage, delegate: self, cancelButtonTitle: "Ok", otherButtonTitles:"GitHub")
-        alertView.show()
-    }
-
-    // MARK: - UIalertViewDelegate
-    func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
-        if buttonIndex == 1 {
+        let alertView = UIAlertController(title: "About", message: aboutMessage, preferredStyle: .alert)
+        alertView.addAction(UIAlertAction(title: "OK", style: .cancel))
+        alertView.addAction(UIAlertAction(title: "GitHub", style: .default) { _ in
             UIApplication.shared.openURL(URL(string: "https://github.com/NordicSemiconductor/IOS-nRF-Toolbox")!)
-        }
+        })
+        present(alertView, animated: true)
     }
     
     // MARK: - UICollectionViewDataSource

@@ -136,7 +136,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileSe
         } else {
             selectedFirmware = nil
             selectedFileURL  = nil
-            NORDFUConstantsUtility.showAlert(message: "Seleted file is not supported")
+            NORDFUConstantsUtility.showAlert(message: "Seleted file is not supported", from: self)
         }
         self.updateUploadButtonState()
     }
@@ -221,7 +221,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileSe
             }
         } else {
             selectedFileURL = nil
-            NORDFUConstantsUtility.showAlert(message: "Selected file is not supported")
+            NORDFUConstantsUtility.showAlert(message: "Selected file is not supported", from: self)
         }
         DispatchQueue.main.async {
             self.progressLabel.text = nil
@@ -303,13 +303,13 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileSe
         case .disconnecting:
             uploadStatus.text = "Disconnecting..."
         case .completed:
-            NORDFUConstantsUtility.showAlert(message: "Upload complete")
+            NORDFUConstantsUtility.showAlert(message: "Upload complete", from: self)
             if NORDFUConstantsUtility.isApplicationStateInactiveOrBackgrounded() {
                 NORDFUConstantsUtility.showBackgroundNotification(message: "Upload complete")
             }
             self.clearUI()
         case .aborted:
-            NORDFUConstantsUtility.showAlert(message: "Upload aborted")
+            NORDFUConstantsUtility.showAlert(message: "Upload aborted", from: self)
             if NORDFUConstantsUtility.isApplicationStateInactiveOrBackgrounded(){
                 NORDFUConstantsUtility.showBackgroundNotification(message: "Upload aborted")
             }
@@ -455,14 +455,14 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileSe
         self.registerObservers()
         
         // To start the DFU operation the DFUServiceInitiator must be used
-        let initiator = DFUServiceInitiator(centralManager: centralManager!, target: selectedPeripheral!)
+        let initiator = DFUServiceInitiator()
         initiator.forceDfu = UserDefaults.standard.bool(forKey: "dfu_force_dfu")
         initiator.packetReceiptNotificationParameter = UInt16(UserDefaults.standard.integer(forKey: "dfu_number_of_packets"))
         initiator.logger = self
         initiator.delegate = self
         initiator.progressDelegate = self
         initiator.enableUnsafeExperimentalButtonlessServiceInSecureDfu = true
-        dfuController = initiator.with(firmware: selectedFirmware!).start()
+        dfuController = initiator.with(firmware: selectedFirmware!).start(target: selectedPeripheral!)
         uploadButton.setTitle("Cancel", for: UIControlState())
         uploadButton.isEnabled = true
     }

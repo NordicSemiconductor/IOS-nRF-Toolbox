@@ -31,7 +31,6 @@ class NORHKScannerViewController: UIViewController, UITableViewDelegate, UITable
     //MARK: - UIViewControllerw Flow
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.default, animated: true)
         
         let activityIndicatorView              = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
         activityIndicatorView.hidesWhenStopped = true
@@ -39,11 +38,6 @@ class NORHKScannerViewController: UIViewController, UITableViewDelegate, UITable
         activityIndicatorView.startAnimating()
         
         startScanning()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.lightContent, animated: true)
-        super.viewWillDisappear(animated)
     }
     
     //MARK: - UITableViewDelegate

@@ -23,14 +23,13 @@
 import UIKit
 import CoreBluetooth
 
-
 enum viewActionTypes : Int {
     case action_START_SESSION = 0
     case action_STOP_SESSION  = 1
     case action_SET_TIME      = 2
 }
 
-class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, NORScannerDelegate, UITableViewDataSource, UIActionSheetDelegate {
+class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, NORScannerDelegate, UITableViewDataSource {
 
     //MARK: - Class porperties
     var bluetoothManager : CBCentralManager?
@@ -72,8 +71,8 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
     @IBAction func connectionButtonTapped(_ sender: AnyObject) {
         self.handleConnectionButtonTapped()
     }
-    @IBAction func actionButtonTapped(_ sender: AnyObject) {
-        self.handleActionButtonTapped()
+    @IBAction func actionButtonTapped(_ sender: UIButton) {
+        self.handleActionButtonTapped(from: sender)
     }
     @IBAction func aboutButtonTapped(_ sender: AnyObject) {
         self.handleAboutButtonTapped()
@@ -116,15 +115,23 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
         UIApplication.shared.cancelAllLocalNotifications()
     }
     
-    func handleActionButtonTapped() {
-        let actionSheet = UIActionSheet()
-        actionSheet.delegate = self
-        actionSheet.addButton(withTitle: "Start Session")
-        actionSheet.addButton(withTitle: "Stop Session")
-        actionSheet.addButton(withTitle: "Set Update Interval")
-        actionSheet.destructiveButtonIndex = 1
-        
-        actionSheet.show(in: self.view)
+    func handleActionButtonTapped(from view: UIView) {
+        let alertView = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alertView.addAction(UIAlertAction(title: "Start Session", style: .default) { _ in
+            self.cgmActivityIndicator.startAnimating()
+            let data = Data([NORCGMOpCode.start_SESSION.rawValue])
+            self.connectedPeripheral?.writeValue(data, for: self.cgmSpecificOpsControlPointCharacteristic!, type:.withResponse)
+        })
+        alertView.addAction(UIAlertAction(title: "Stop Session", style: .destructive) { _ in
+            self.cgmActivityIndicator.stopAnimating()
+            let data = Data([NORCGMOpCode.stop_SESSION.rawValue])
+            self.connectedPeripheral?.writeValue(data, for: self.cgmSpecificOpsControlPointCharacteristic!, type:.withResponse)
+        })
+        alertView.addAction(UIAlertAction(title: "Set Update Interval", style: .default) { _ in
+            self.showUserInputAlert(withMessage: "Enter update interval in minutes")
+        })
+        alertView.popoverPresentationController?.sourceView = view
+        present(alertView, animated: true)
     }
     
     func handleAboutButtonTapped() {
@@ -168,11 +175,10 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
         battery.setTitle("n/a", for:UIControlState())
     }
     
-    func showErrorAlert(withMessage aMessage : String) {
-        DispatchQueue.main.async(execute: {
-            let alertView = UIAlertView(title: "Error", message: aMessage, delegate: nil, cancelButtonTitle: "Ok")
-            alertView.show()
-        })
+    func showErrorAlert(withMessage aMessage: String) {
+        DispatchQueue.main.async {
+            NORAppUtilities.showAlert(title: "Error", andMessage: aMessage, from: self)
+        }
     }
     
     //MARK: - Scanner Delegate methods
@@ -216,10 +222,20 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
 
     func showUserInputAlert(withMessage aMessage: String) {
         DispatchQueue.main.async(execute: {
-            let alert = UIAlertView(title: "Input", message: aMessage, delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Set")
-            alert.alertViewStyle = .plainTextInput
-            alert.textField(at: 0)!.keyboardType = .numberPad
-            alert.show()
+            let alert = UIAlertController(title: "Input", message: aMessage, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Set", style: .default) { action in
+                var accessParam : [UInt8] = []
+                let timeValue = UInt8(alert.textFields!.first!.text!)!
+                accessParam.append(NORCGMOpCode.set_COMMUNICATION_INTERVAL.rawValue)
+                accessParam.append(timeValue)
+                let data = Data(bytes: &accessParam, count: 2)
+                self.connectedPeripheral?.writeValue(data, for: self.cgmSpecificOpsControlPointCharacteristic!, type: .withResponse)
+            })
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            alert.addTextField() { field in
+                field.keyboardType = .numberPad
+            }
+            self.present(alert, animated: true)
         })
     }
     
@@ -250,56 +266,6 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
         }
     }
 
-    //MARK: - Action Sheet delegate methods
-    func actionSheet(_ actionSheet: UIActionSheet, clickedButtonAt buttonIndex: Int) {
-        var accessParam : [UInt8] = []
-        var size  : NSInteger = 0
-        var clearList :Bool = true
-        var targetCharacteristic : CBCharacteristic?
-        
-        switch viewActionTypes(rawValue:buttonIndex)! {
-        case .action_START_SESSION:
-            accessParam.append(NORCGMOpCode.start_SESSION.rawValue)
-            size = 1
-            targetCharacteristic = cgmSpecificOpsControlPointCharacteristic
-            cgmActivityIndicator.startAnimating()
-            clearList = false
-            break
-        case .action_STOP_SESSION:
-            accessParam.append(NORCGMOpCode.stop_SESSION.rawValue)
-            size = 1
-            targetCharacteristic = cgmSpecificOpsControlPointCharacteristic
-            cgmActivityIndicator.stopAnimating()
-            clearList = false
-            break
-        case .action_SET_TIME:
-            self.showUserInputAlert(withMessage: "Enter update interval in minutes")
-            clearList = false
-            break
-        }
-        
-        if clearList {
-            readings!.removeAllObjects()
-            cbgmTableView.reloadData()
-        }
-        
-        if size > 0 {            
-            let data = Data(bytes: &accessParam, count: size)
-            connectedPeripheral?.writeValue(data, for: targetCharacteristic!, type:.withResponse)
-        }
-    }
-
-    //MARK: - UIAlertViewDelegate / Helpers
-    func alertView(_ alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-        if buttonIndex != 0 {
-            var accessParam : [UInt8] = []
-            let timeValue = Int(alertView.textField(at: 0)!.text!)
-            accessParam.append(NORCGMOpCode.set_COMMUNICATION_INTERVAL.rawValue)
-            accessParam.append(UInt8(timeValue!))
-            let data = Data(bytes: &accessParam, count: 2)
-            connectedPeripheral?.writeValue(data, for: cgmSpecificOpsControlPointCharacteristic!, type: .withResponse)
-        }
-    }
     //MARK: - Central Manager delegate methods
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
@@ -333,7 +299,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async(execute: {
-            NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to the peripheral failed. Try again")
+            NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to the peripheral failed. Try again", from: self)
             self.connectionButton.setTitle("CONNCET", for: UIControlState())
             self.connectedPeripheral = nil
             self.disableRecordButton()

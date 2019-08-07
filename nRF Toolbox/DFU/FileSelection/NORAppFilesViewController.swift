@@ -47,22 +47,15 @@ class NORAppFilesViewController: UIViewController, UITableViewDelegate, UITableV
         }
         tableView.reloadData()
     }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.default, animated:true)
-    }
     
     //MARK: - NORAppFilesViewController implementation
     @objc func doneButtonTapped() {
         self.dismiss(animated: true, completion: nil)
         self.fileDelegate?.onFileSelected(withURL: self.selectedPath!)
-        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.lightContent, animated: true)
     }
     
     @objc func cancelButtonTapped() {
         self.dismiss(animated: true, completion: nil)
-        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.lightContent, animated: true)
     }
 
     //MARK: - UITableViewDataSource

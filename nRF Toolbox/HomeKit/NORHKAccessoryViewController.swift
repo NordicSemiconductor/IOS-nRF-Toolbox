@@ -47,17 +47,20 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
         var commandCompleted = false
         
         guard dfuControlPointCharacteristic != nil else {
-            UIAlertView(title: "Missing feature", message: "\"\(targetAccessory!.name)\" Does not seem to have the DFU control point characteristic, please try pairing it again or make sure it does support buttonless DFU.", delegate: nil, cancelButtonTitle: "Ok").show()
+            let alertView = UIAlertController(title: "Missing feature", message: "\"\(targetAccessory!.name)\" Does not seem to have the DFU control point characteristic, please try pairing it again or make sure it does support buttonless DFU.", preferredStyle: .alert)
+            alertView.addAction(UIAlertAction(title: "OK", style: .cancel))
+            present(alertView, animated: true)
             return
         }
         
         activityIndicator.startAnimating()
         //Display wait message after 500ms, to prevent multiple windows in case the completion
         //Alert has already been displayed.
-        let waitAlertView = UIAlertView(title: "Please wait...", message: "Sending DFU command to target accessory.\n\nThis might take a few seconds if the accessory is unreachable." , delegate: nil, cancelButtonTitle: nil)
+        let waitAlertView = UIAlertController(title: "Please wait...", message: "Sending DFU command to target accessory.\n\nThis might take a few seconds if the accessory is unreachable.", preferredStyle: .alert)
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             if commandCompleted == false {
-                waitAlertView.show()
+                self.present(waitAlertView, animated: true)
             }
         }
         
@@ -65,9 +68,7 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
             DispatchQueue.main.async {
                 self.activityIndicator.stopAnimating()
                 commandCompleted = true
-                if waitAlertView.isVisible {
-                    waitAlertView.dismiss(withClickedButtonIndex: 0, animated: true)
-                }
+                waitAlertView.dismiss(animated: true)
                 if error != nil {
                     self.showFailAlertWithFailMessage((error as! HMError).localizedDescription)
                 } else {
@@ -78,11 +79,15 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func showFailAlertWithFailMessage(_ aMessage: String) {
-        UIAlertView(title: "HomeKit error", message: aMessage , delegate: nil, cancelButtonTitle: "Ok").show()
+        let alertView = UIAlertController(title: "HomeKit error", message: aMessage, preferredStyle: .alert)
+        alertView.addAction(UIAlertAction(title: "OK", style: .cancel))
+        present(alertView, animated: true)
     }
     
     func showRestartAlertWithAccessoryName(_ aName: String) {
-        UIAlertView(title: "Restart initiating", message: "\"\(aName)\" should now disconnect and restart in DFU mode.\n\nTo continue the flashing process please head towards the DFU option in the main menu, scan and find the new DFU peripheral and start the flashing process." , delegate: nil, cancelButtonTitle: "Ok").show()
+        let alertView = UIAlertController(title: "Restart initiating", message: "\"\(aName)\" should now disconnect and restart in DFU mode.\n\nTo continue the flashing process please head towards the DFU option in the main menu, scan and find the new DFU peripheral and start the flashing process.", preferredStyle: .alert)
+        alertView.addAction(UIAlertAction(title: "OK", style: .cancel))
+        present(alertView, animated: true)
     }
 
     func ShowBootloaderWarning() {

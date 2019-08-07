@@ -254,7 +254,7 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async(execute: {
-            NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to the peripheral failed. Try again")
+            NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to the peripheral failed. Try again", from: self)
             self.connectionButton.setTitle("CONNECT", for: UIControlState())
             self.proximityPeripheral = nil
             self.disableFindmeButton()
@@ -274,7 +274,7 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
                 if NORAppUtilities.isApplicationInactive() {
                     NORAppUtilities.showBackgroundNotification(message: message)
                 } else {
-                    NORAppUtilities.showAlert(title: "PROXIMITY", andMessage: message)
+                    NORAppUtilities.showAlert(title: "PROXIMITY", andMessage: message, from: self)
                 }
                 self.playSoundOnce()
             } else {

@@ -57,9 +57,10 @@ class NORAppUtilities: NSObject {
                                                     .cgm: cgmHelpText,
                                                     .homekit: homeKitHelpText]
 
-    static func showAlert(title aTitle : String, andMessage aMessage: String){
-        let alertView = UIAlertView(title: aTitle, message: aMessage, delegate: nil, cancelButtonTitle: "OK")
-        alertView.show()
+    static func showAlert(title aTitle : String, andMessage aMessage: String, from viewController: UIViewController) {
+        let alertView = UIAlertController(title: aTitle, message: aMessage, preferredStyle: .alert)
+        alertView.addAction(UIAlertAction(title: "OK", style: .default))
+        viewController.present(alertView, animated: true)
     }
 
     static func showBackgroundNotification(message aMessage : String){

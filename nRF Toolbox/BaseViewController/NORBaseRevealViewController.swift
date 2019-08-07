@@ -12,7 +12,8 @@ import SWRevealViewController
 class NORBaseRevealViewController: SWRevealViewController, UIAlertViewDelegate {
 
     func ShowAbout(message aMessage : String){
-        let alertView = UIAlertView(title: "About", message: aMessage, delegate: self, cancelButtonTitle: "OK")
-        alertView.show()
+        let alertView = UIAlertController(title: "About", message: aMessage, preferredStyle: .alert)
+        alertView.addAction(UIAlertAction(title: "OK", style: .cancel))
+        present(alertView, animated: true)
     }
 }

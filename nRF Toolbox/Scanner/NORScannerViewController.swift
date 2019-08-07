@@ -139,18 +139,12 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
         bluetoothManager = CBCentralManager(delegate: self, queue: centralQueue)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.default, animated: true)
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         let success = self.scanForPeripherals(false)
         if !success {
             print("Bluetooth is powered off!")
         }
 
-        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.lightContent, animated: true)
         super.viewWillDisappear(animated)
     }
 

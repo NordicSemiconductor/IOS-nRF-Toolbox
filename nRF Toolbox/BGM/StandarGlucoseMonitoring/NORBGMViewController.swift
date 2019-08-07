@@ -29,7 +29,7 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 
-class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBPeripheralDelegate, NORScannerDelegate, UITableViewDataSource, UIActionSheetDelegate {
+class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBPeripheralDelegate, NORScannerDelegate, UITableViewDataSource {
     var bluetoothManager : CBCentralManager?
     
     //MARK: - Class properties
@@ -66,8 +66,8 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
         handleAboutButtonTapped()
     }
     
-    @IBAction func actionButtonTapped(_ sender: AnyObject) {
-        handleActionButtonTapped()
+    @IBAction func actionButtonTapped(_ sender: UIButton) {
+        handleActionButtonTapped(from: sender)
     }
     
     @IBAction func connectionButtonTapped(_ sender: AnyObject) {
@@ -95,20 +95,47 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
         bgmTableView.dataSource = self
     }
     
-    func handleActionButtonTapped() {
-        let actionSheet = UIActionSheet()
-        actionSheet.delegate = self
-        actionSheet.addButton(withTitle: "Refresh")
-        actionSheet.addButton(withTitle: "All")
-        actionSheet.addButton(withTitle: "First")
-        actionSheet.addButton(withTitle: "Last")
-        actionSheet.addButton(withTitle: "Clear")
-        actionSheet.addButton(withTitle: "Delete All")
-        actionSheet.addButton(withTitle: "Cancel")
-        actionSheet.destructiveButtonIndex = BGMViewActions.deleteAllRecords.rawValue
-        actionSheet.cancelButtonIndex      = BGMViewActions.cancel.rawValue
-        
-        actionSheet.show(in: self.view)
+    func handleActionButtonTapped(from view: UIView) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Refresh", style: .default) { _ in
+            if let reading = self.readings?.firstObject as? NORGlucoseReading {
+                let data = Data(
+                    [NORBGMOpCode.report_STORED_RECORDS.rawValue,
+                    NORBGMOPerator.greater_THAN_OR_EQUAL.rawValue,
+                    NORBGMFilterType.sequence_NUMBER.rawValue,
+                    //Convert Endianess
+                    UInt8(reading.sequenceNumber! & 0xFF),
+                    UInt8(reading.sequenceNumber! >> 8)]
+                )
+                self.readings?.removeAllObjects()
+                self.bgmTableView.reloadData()
+                
+                self.connectedPeripheral?.writeValue(data, for: self.bgmRecordAccessControlPointCharacteristic!, type: .withResponse)
+            }
+        })
+        alert.addAction(UIAlertAction(title: "All", style: .default) { _ in
+            let data = Data([NORBGMOpCode.report_STORED_RECORDS.rawValue, NORBGMOPerator.all_RECORDS.rawValue])
+            self.connectedPeripheral?.writeValue(data, for: self.bgmRecordAccessControlPointCharacteristic!, type: .withResponse)
+        })
+        alert.addAction(UIAlertAction(title: "First", style: .default) { _ in
+            let data = Data([NORBGMOpCode.report_STORED_RECORDS.rawValue, NORBGMOPerator.first_RECORD.rawValue])
+            self.connectedPeripheral?.writeValue(data, for: self.bgmRecordAccessControlPointCharacteristic!, type: .withResponse)
+        })
+        alert.addAction(UIAlertAction(title: "Last", style: .default) { _ in
+            let data = Data([NORBGMOpCode.report_STORED_RECORDS.rawValue, NORBGMOPerator.last_RECORD.rawValue])
+            self.connectedPeripheral?.writeValue(data, for: self.bgmRecordAccessControlPointCharacteristic!, type: .withResponse)
+        })
+        alert.addAction(UIAlertAction(title: "Clear", style: .default) { _ in
+            self.readings?.removeAllObjects()
+            self.bgmTableView.reloadData()
+        })
+        alert.addAction(UIAlertAction(title: "Delete All", style: .destructive) { _ in
+            let data = Data([NORBGMOpCode.delete_STORED_RECORDS.rawValue, NORBGMOPerator.all_RECORDS.rawValue])
+            self.connectedPeripheral?.writeValue(data, for: self.bgmRecordAccessControlPointCharacteristic!, type: .withResponse)
+        })
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.popoverPresentationController?.sourceView = view
+        present(alert, animated: true)
     }
 
     func handleAboutButtonTapped() {
@@ -281,37 +308,21 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
                     self.bgmTableView.reloadData()
                     break
                 case .op_CODE_NOT_SUPPORTED:
-                    let alert = UIAlertView.init(title: "Error", message: "Operation not supported", delegate: nil, cancelButtonTitle: "OK")
-                    alert.show()
-                    break
+                    NORAppUtilities.showAlert(title: "Error", andMessage: "Operation not supported", from: self)
                 case .no_RECORDS_FOUND:
-                    let alert = UIAlertView.init(title: "Error", message: "No records found", delegate: nil, cancelButtonTitle: "OK")
-                    alert.show()
-                    break
+                    NORAppUtilities.showAlert(title: "Error", andMessage: "No records found", from: self)
                 case .operator_NOT_SUPPORTED:
-                    let alert = UIAlertView.init(title: "Error", message: "Operator not supported", delegate: nil, cancelButtonTitle: "OK")
-                    alert.show()
-                    break
+                    NORAppUtilities.showAlert(title: "Error", andMessage: "Operator not supported", from: self)
                 case .invalid_OPERATOR:
-                    let alert = UIAlertView.init(title: "Error", message: "Invalid operator", delegate: nil, cancelButtonTitle: "OK")
-                    alert.show()
-                    break
+                    NORAppUtilities.showAlert(title: "Error", andMessage: "Invalid operator", from: self)
                 case .operand_NOT_SUPPORTED:
-                    let alert = UIAlertView.init(title: "Error", message: "Operand not supported", delegate: nil, cancelButtonTitle: "OK")
-                    alert.show()
-                    break
+                    NORAppUtilities.showAlert(title: "Error", andMessage: "Operand not supported", from: self)
                 case .invalid_OPERAND:
-                    let alert = UIAlertView.init(title: "Error", message: "Invalid operand", delegate: nil, cancelButtonTitle: "OK")
-                    alert.show()
-                    break
+                    NORAppUtilities.showAlert(title: "Error", andMessage: "Invalid operand", from: self)
                 case .abort_UNSUCCESSFUL:
-                    let alert = UIAlertView.init(title: "Error", message: "Abort unsuccessful", delegate: nil, cancelButtonTitle: "OK")
-                    alert.show()
-                    break
+                    NORAppUtilities.showAlert(title: "Error", andMessage: "Abort unsuccessful", from: self)
                 case .procedure_NOT_COMPLETED:
-                    let alert = UIAlertView.init(title: "Error", message: "Procedure not completed", delegate: nil, cancelButtonTitle: "OK")
-                    alert.show()
-                    break
+                    NORAppUtilities.showAlert(title: "Error", andMessage: "Procedure not completed", from: self)
                 case .reserved:
                     break
                 }
@@ -349,7 +360,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         DispatchQueue.main.async {
-            NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to peripheral failed. Please Try again")
+            NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to peripheral failed. Please Try again", from: self)
             self.connectButton.setTitle("CONNECT", for: UIControlState())
             self.connectedPeripheral = nil
             self.disableActionButton()
@@ -403,62 +414,6 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
         }
         
         return cell
-    }
-    
-    //MARK: - UIActionSheetDelegate Methods
-    func actionSheet(_ actionSheet: UIActionSheet, clickedButtonAt buttonIndex: Int) {
-        guard buttonIndex != BGMViewActions.cancel.rawValue else {
-            return
-        }
-
-        var accessParam : [UInt8] = []
-        var clearList : Bool = true
-        
-        switch  BGMViewActions(rawValue: buttonIndex)! {
-        case .refresh:
-            if readings?.count > 0 {
-                let reading = readings?.object(at: 0) as! NORGlucoseReading
-                accessParam.append(NORBGMOpCode.report_STORED_RECORDS.rawValue)
-                accessParam.append(NORBGMOPerator.greater_THAN_OR_EQUAL.rawValue)
-                accessParam.append(NORBGMFilterType.sequence_NUMBER.rawValue)
-                //Convert Endianess
-                accessParam.append(UInt8(reading.sequenceNumber! & 0xFF))
-                accessParam.append(UInt8(reading.sequenceNumber! >> 8))
-                clearList = true
-            }
-            break
-        case .allRecords:
-            accessParam.append(NORBGMOpCode.report_STORED_RECORDS.rawValue)
-            accessParam.append(NORBGMOPerator.all_RECORDS.rawValue)
-            break
-        case .firstRecord:
-            accessParam.append(NORBGMOpCode.report_STORED_RECORDS.rawValue)
-            accessParam.append(NORBGMOPerator.first_RECORD.rawValue)
-            break
-        case .lastRecord:
-            accessParam.append(NORBGMOpCode.report_STORED_RECORDS.rawValue)
-            accessParam.append(NORBGMOPerator.last_RECORD.rawValue)
-            break
-        case .clear:
-            //NOOP
-            break
-        case .deleteAllRecords:
-            accessParam.append(NORBGMOpCode.delete_STORED_RECORDS.rawValue)
-            accessParam.append(NORBGMOPerator.all_RECORDS.rawValue)
-            break
-        default:
-            break
-        }
-        
-        if clearList == true {
-            readings?.removeAllObjects()
-            bgmTableView.reloadData()
-        }
-        
-        if accessParam.count > 0 {
-            let data = Data(bytes: UnsafePointer<UInt8>(accessParam), count: accessParam.count)
-            connectedPeripheral?.writeValue(data, for: bgmRecordAccessControlPointCharacteristic!, type: CBCharacteristicWriteType.withResponse)
-        }
     }
     
     //MARK: - Segue methods

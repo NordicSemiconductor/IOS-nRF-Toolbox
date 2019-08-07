@@ -134,6 +134,5 @@ class NORFolderFilesViewController: UIViewController, UITableViewDataSource, UIT
         dismiss(animated: true) { 
             self.fileDelegate?.onFileSelected(withURL: self.selectedPath!)
         }
-        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.lightContent, animated: true)
     }
 }

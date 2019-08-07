@@ -113,7 +113,7 @@ class NORUserFilesViewController: UIViewController, NORFilePreselectionDelegate,
                 aCell.imageView!.image = UIImage(named: "ic_archive")
             }
         } else {
-            NORDFUConstantsUtility.showAlert(message: "File does not exist!")
+            NORDFUConstantsUtility.showAlert(message: "File does not exist!", from: self)
         }
 
         if selectedPath != nil {
@@ -195,7 +195,7 @@ class NORUserFilesViewController: UIViewController, NORFilePreselectionDelegate,
                 folderVC?.preselectionDelegate = self
                 folderVC?.selectedPath = filePath
             } else {
-                NORDFUConstantsUtility.showAlert(message: "File does not exist!")
+                NORDFUConstantsUtility.showAlert(message: "File does not exist!", from: self)
             }
         }
     }

@@ -283,7 +283,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async(execute: {
-            NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to peripheral failed. Try again")
+            NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to peripheral failed. Try again", from: self)
             self.connectionButon.setTitle("CONNECT", for: UIControlState())
             self.connectedPeripheral = nil
             self.clearUI()

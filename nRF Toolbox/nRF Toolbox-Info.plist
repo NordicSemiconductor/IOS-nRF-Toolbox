@@ -63,6 +63,8 @@
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<false/>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>We use this feature in order to be able to correctly communicate with your bluetooth peripherals, we do not save, log nor send any of the data used and the app will fully function with no internet connection</string>
 	<key>NSHomeKitUsageDescription</key>
@@ -97,6 +99,8 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
+	<key>UISupportsDocumentBrowser</key>
+	<false/>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>UTImportedTypeDeclarations</key>

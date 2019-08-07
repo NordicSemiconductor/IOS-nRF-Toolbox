@@ -135,7 +135,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         // Scanner uses other queue to send events. We must edit UI in the main queue
         print("did fail to connect")
         DispatchQueue.main.async(execute: {
-            NORAppUtilities.showAlert(title: "Error", andMessage:"Connecting to the peripheral failed. Try again")
+            NORAppUtilities.showAlert(title: "Error", andMessage:"Connecting to the peripheral failed. Try again", from: self)
             self.cyclePeripheral = nil
             self.clearUI()
         })

@@ -225,8 +225,9 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, HMHomeManagerD
             if let _ = sender as? HMAccessory {
                 return true
             } else {
-                let alertView = UIAlertView(title: "No accessory", message: "The selected accessory was not found, please try scanning again and reselecting it.\r\nIf the problem persists, try unpairing that accessory and adding it again to your home.", delegate: nil, cancelButtonTitle: "Ok")
-                alertView.show()
+                let alertView = UIAlertController(title: "No accessory", message: "The selected accessory was not found, please try scanning again and reselecting it.\r\nIf the problem persists, try unpairing that accessory and adding it again to your home.", preferredStyle: .alert)
+                alertView.addAction(UIAlertAction(title: "OK", style: .cancel))
+                present(alertView, animated: true)
                 return false
             }
         }
