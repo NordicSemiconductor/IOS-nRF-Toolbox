@@ -269,22 +269,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileSe
 
     //MARK: - LoggerDelegate
     func logWith(_ level:LogLevel, message:String){
-        var levelString : String?
-        switch(level) {
-            case .application:
-                levelString = "Application"
-            case .debug:
-                levelString = "Debug"
-            case .error:
-                levelString = "Error"
-            case .info:
-                levelString = "Info"
-            case .verbose:
-                levelString = "Verbose"
-            case .warning:
-                levelString = "Warning"
-        }
-        print("\(levelString!): \(message)")
+        print("\(level.name()): \(message)")
     }
 
     //MARK: - DFUServiceDelegate
