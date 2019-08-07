@@ -72,6 +72,7 @@
 		5217F41B1859EEF400F2D5BB /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5217F41A1859EEF400F2D5BB /* CoreBluetooth.framework */; };
 		522636371C60FFB00054A550 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 522636361C60FFB00054A550 /* libz.tbd */; };
 		5231403022FB07820074325A /* RootNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5231402F22FB07820074325A /* RootNavigationController.swift */; };
+		5231403222FB1E130074325A /* UIColor+Nordic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5231403122FB1E130074325A /* UIColor+Nordic.swift */; };
 		52BDCB191C3FD31F00E2680F /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BDCB181C3FD31F00E2680F /* Accelerate.framework */; };
 		52BDCBBE1C3FD86900E2680F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BDCBBD1C3FD86900E2680F /* QuartzCore.framework */; };
 		52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */; };
@@ -168,6 +169,7 @@
 		5217F41A1859EEF400F2D5BB /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		522636361C60FFB00054A550 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		5231402F22FB07820074325A /* RootNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationController.swift; sourceTree = "<group>"; };
+		5231403122FB1E130074325A /* UIColor+Nordic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Nordic.swift"; sourceTree = "<group>"; };
 		52BDCB181C3FD31F00E2680F /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		52BDCBBD1C3FD86900E2680F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 				300143261CEC4B9D008379DF /* NORAppUtilities.swift */,
 				300143281CEC59F4008379DF /* NORServiceIdentifiers.swift */,
 				3001432C1CECADFB008379DF /* NORCharacteristicReader.swift */,
+				5231403122FB1E130074325A /* UIColor+Nordic.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -715,6 +718,7 @@
 				3000B2151CE32A9200F64CEE /* NORUARTViewController.swift in Sources */,
 				309F086C1E6EA0F800B7546A /* NORHKScannerViewController.swift in Sources */,
 				300508951CE2078A00D93BE0 /* NORRSCViewController.swift in Sources */,
+				5231403222FB1E130074325A /* UIColor+Nordic.swift in Sources */,
 				30A1145A1CD2426B000F0F02 /* NORScannerDelegate.swift in Sources */,
 				3069A1D71CDC788A003869EA /* NORBluetoothManager.swift in Sources */,
 				300508931CE1D75800D93BE0 /* NORProximityViewController.swift in Sources */,

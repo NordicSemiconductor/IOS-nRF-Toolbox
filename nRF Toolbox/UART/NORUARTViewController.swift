@@ -115,7 +115,7 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
             self.uartPeripheralName = "device"
             self.deviceName.text = "No name"
         }
-        self.connectionButton.setTitle("CANCEL", for: UIControl.State())
+        self.connectionButton.setTitle("CANCEL", for: .normal)
         bluetoothManager!.connectPeripheral(peripheral: aPeripheral)
     }
     
@@ -132,7 +132,7 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async(execute: {
             self.logger!.bluetoothManager = self.bluetoothManager
-            self.connectionButton.setTitle("DISCONNECT", for: UIControl.State())
+            self.connectionButton.setTitle("DISCONNECT", for: .normal)
         })
         
         //Following if condition display user permission alert for background notification
@@ -148,7 +148,7 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
             // Scanner uses other queue to send events. We must edit UI in the main queue
             DispatchQueue.main.async(execute: {
                 self.logger!.bluetoothManager = nil
-                self.connectionButton.setTitle("CONNECT", for: UIControl.State())
+                self.connectionButton.setTitle("CONNECT", for: .normal)
                 self.deviceName.text = "DEFAULT UART"
                 
                 if NORAppUtilities.isApplicationInactive() {
@@ -170,10 +170,10 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
         
         userDefaults.set(buttonsHiddenStatus, forKey: "buttonsHiddenStatus")
         if hide == true {
-            selectedButton?.setImage(nil, for: UIControl.State())
+            selectedButton?.setImage(nil, for: .normal)
         }else{
             let image = UIImage(named: buttonIcons![index] as! String)
-            selectedButton?.setImage(image, for: UIControl.State())
+            selectedButton?.setImage(image, for: .normal)
         }
         
         buttonsImageNames![buttonTag] = buttonIcons![index]
@@ -210,12 +210,12 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
     func showButtonsWithSavedConfiguration() {
         for aButton : UIButton in buttons! {
             if (buttonsHiddenStatus![aButton.tag-1] as AnyObject).boolValue == true {
-                aButton.backgroundColor = UIColor(red: 200.0/255.0, green: 200.0/255.0, blue: 200.0/255.0, alpha: 1.0)
-                aButton.setImage(nil, for: UIControl.State())
+                aButton.backgroundColor = .nordicLightGray
+                aButton.setImage(nil, for: .normal)
                 aButton.isEnabled = false
             } else {
-                aButton.backgroundColor = UIColor(red: 0.0/255.0, green:156.0/255.0, blue:222.0/255.0, alpha: 1.0)
-                aButton.setImage(UIImage(named: buttonsImageNames![aButton.tag-1] as! String), for: UIControl.State())
+                aButton.backgroundColor = .nordicLake
+                aButton.setImage(UIImage(named: buttonsImageNames![aButton.tag-1] as! String), for: .normal)
                 aButton.isEnabled = true
             }
         }
@@ -230,7 +230,7 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
         popOverViewController.setIconIndex((buttonIcons?.index(of: buttonImageName))!)
         popOverViewController.modalPresentationStyle = UIModalPresentationStyle.popover
         popOverViewController.popoverPresentationController?.delegate = self
-        self.present(popOverViewController, animated: true, completion: nil)
+        present(popOverViewController, animated: true, completion: nil)
 
         popOverViewController.popoverPresentationController?.sourceView = self.view!
         popOverViewController.popoverPresentationController?.sourceRect = self.view.bounds
@@ -242,13 +242,13 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
         editMode = aMode
         
         if editMode == true {
-            editButton.setTitle("Done", for: UIControl.State())
+            editButton.setTitle("Done", for: .normal)
             for aButton : UIButton in buttons {
-                aButton.backgroundColor = UIColor(red: 222.0/255.0, green: 74.0/266.0, blue: 19.0/255.0, alpha: 1.0)
+                aButton.backgroundColor = .nordicFall
                 aButton.isEnabled = true
             }
         } else {
-            editButton.setTitle("Edit", for: UIControl.State())
+            editButton.setTitle("Edit", for: .normal)
             showButtonsWithSavedConfiguration()
         }
     }

@@ -269,7 +269,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async(execute: {
             self.deviceName.text = peripheral.name
-            self.connectionButon.setTitle("DISCONNECT", for: UIControl.State())
+            self.connectionButon.setTitle("DISCONNECT", for: .normal)
         })
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.appDidEnterBackrgoundCallback), name: UIApplication.didEnterBackgroundNotification, object: nil)
@@ -284,7 +284,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async(execute: {
             NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to peripheral failed. Try again", from: self)
-            self.connectionButon.setTitle("CONNECT", for: UIControl.State())
+            self.connectionButon.setTitle("CONNECT", for: .normal)
             self.connectedPeripheral = nil
             self.clearUI()
         })
@@ -293,7 +293,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async(execute: {
-            self.connectionButon.setTitle("CONNECT", for: UIControl.State())
+            self.connectionButon.setTitle("CONNECT", for: .normal)
             if NORAppUtilities.isApplicationInactive() {
                 let name = peripheral.name ?? "Peripheral"
                 NORAppUtilities.showBackgroundNotification(message: "\(name) is disconnected.")

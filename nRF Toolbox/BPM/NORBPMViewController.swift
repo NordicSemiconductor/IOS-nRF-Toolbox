@@ -112,7 +112,7 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         DispatchQueue.main.async {
             self.deviceName.text = peripheral.name
-            self.connectionButton.setTitle("DISCONNECT", for: UIControl.State())
+            self.connectionButton.setTitle("DISCONNECT", for: .normal)
         }
         
         //Following if condition display user permission alert for background notification
@@ -130,7 +130,7 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async(execute: {
             NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to peripheral failed. Try again", from: self)
-            self.connectionButton.setTitle("CONNECT", for: UIControl.State())
+            self.connectionButton.setTitle("CONNECT", for: .normal)
             self.connectedPeripheral = nil
             self.clearUI()
         });
@@ -139,7 +139,7 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async(execute: {
-            self.connectionButton.setTitle("CONNECT", for: UIControl.State())
+            self.connectionButton.setTitle("CONNECT", for: .normal)
             self.connectedPeripheral = nil
             
             if NORAppUtilities.isApplicationInactive() {

@@ -157,13 +157,13 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
     func enableRecordButton() {
         recordButton.isEnabled = true
         recordButton.backgroundColor = UIColor.black
-        recordButton.setTitleColor(UIColor.white, for: UIControl.State())
+        recordButton.setTitleColor(UIColor.white, for: .normal)
     }
     
     func disableRecordButton() {
         recordButton.isEnabled = false
         recordButton.backgroundColor = UIColor.lightGray
-        recordButton.setTitleColor(UIColor.lightText, for: UIControl.State())
+        recordButton.setTitleColor(UIColor.lightText, for: .normal)
     }
 
     func clearUI() {
@@ -172,7 +172,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
         deviceName.text = "DEFAULT CGM"
         
         battery.tag = 0
-        battery.setTitle("n/a", for: UIControl.State())
+        battery.setTitle("n/a", for: .normal)
     }
     
     func showErrorAlert(withMessage aMessage: String) {
@@ -280,7 +280,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async(execute: {
             self.deviceName.text = peripheral.name
-            self.connectionButton.setTitle("DISCONNECT", for: UIControl.State())
+            self.connectionButton.setTitle("DISCONNECT", for: .normal)
             self.enableRecordButton()
             //Following if condition display user permission alert for background notification
             if UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))) {
@@ -300,7 +300,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async(execute: {
             NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to the peripheral failed. Try again", from: self)
-            self.connectionButton.setTitle("CONNCET", for: UIControl.State())
+            self.connectionButton.setTitle("CONNCET", for: .normal)
             self.connectedPeripheral = nil
             self.disableRecordButton()
             self.clearUI()
@@ -310,7 +310,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async(execute: {
-            self.connectionButton.setTitle("CONNECT", for: UIControl.State())
+            self.connectionButton.setTitle("CONNECT", for: .normal)
             if NORAppUtilities.isApplicationInactive() {
                 let name = peripheral.name ?? "Peripheral"
                 NORAppUtilities.showBackgroundNotification(message: "\(name) is disconnected.")

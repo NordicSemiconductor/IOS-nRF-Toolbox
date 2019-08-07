@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -14,59 +14,30 @@
         <scene sceneID="EHf-IW-A2E">
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
-                        <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BackgroundTitle" translatesAutoresizingMaskIntoConstraints="NO" id="KT3-SI-RG3">
-                                <rect key="frame" x="127.66666666666669" y="756" width="120" height="14"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="120" id="Qtq-TU-jR9"/>
-                                    <constraint firstAttribute="height" constant="14" id="fGa-BJ-u0E"/>
-                                </constraints>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nordic_logo" translatesAutoresizingMaskIntoConstraints="NO" id="tzl-Xm-8rS">
-                                <rect key="frame" x="96.666666666666686" y="163.33333333333337" width="182" height="242"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" priority="750" constant="182" id="3P6-NS-sak"/>
-                                    <constraint firstAttribute="height" priority="750" constant="242" id="VZX-R1-3bz"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="288" id="n6U-TS-GWl"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="382" id="ohw-bZ-YSK"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="n6U-TS-GWl"/>
-                                        <exclude reference="ohw-bZ-YSK"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=regular">
-                                    <mask key="constraints">
-                                        <include reference="n6U-TS-GWl"/>
-                                        <include reference="ohw-bZ-YSK"/>
-                                    </mask>
-                                </variation>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashscreen" translatesAutoresizingMaskIntoConstraints="NO" id="VJl-YK-5UE">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.96067994830000003" green="0.96084433790000001" blue="0.96066969629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="KT3-SI-RG3" secondAttribute="bottom" constant="8" id="Q8p-a8-sqv"/>
-                            <constraint firstItem="tzl-Xm-8rS" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="RmZ-rE-Ipg"/>
-                            <constraint firstItem="tzl-Xm-8rS" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" multiplier="0.7" id="ZLR-bL-L28"/>
-                            <constraint firstItem="KT3-SI-RG3" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="gI6-My-T0c"/>
+                            <constraint firstAttribute="bottom" secondItem="VJl-YK-5UE" secondAttribute="bottom" id="AhW-Hv-8ey"/>
+                            <constraint firstItem="VJl-YK-5UE" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="UCl-fG-lxJ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="VJl-YK-5UE" secondAttribute="trailing" id="Wsb-2j-FhM"/>
+                            <constraint firstItem="VJl-YK-5UE" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="fem-vb-HBu"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="76.5" y="435.75"/>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
     <resources>
-        <image name="BackgroundTitle" width="120" height="11"/>
-        <image name="nordic_logo" width="181" height="241"/>
+        <image name="splashscreen" width="910.66668701171875" height="910.66668701171875"/>
     </resources>
 </document>

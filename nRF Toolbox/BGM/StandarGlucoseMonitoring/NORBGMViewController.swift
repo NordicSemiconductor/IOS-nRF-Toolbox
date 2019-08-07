@@ -163,13 +163,13 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     func enableActionButton() {
         recordsButton.isEnabled = true
         recordsButton.backgroundColor = UIColor.black
-        recordsButton.setTitleColor(UIColor.white, for: UIControl.State())
+        recordsButton.setTitleColor(UIColor.white, for: .normal)
     }
 
     func disableActionButton() {
         recordsButton.isEnabled = false
         recordsButton.backgroundColor = UIColor.lightGray
-        recordsButton.setTitleColor(UIColor.lightText, for: UIControl.State())
+        recordsButton.setTitleColor(UIColor.lightText, for: .normal)
     }
     
     func setupNotifications() {
@@ -352,7 +352,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
         peripheral.discoverServices([bgmServiceUUID, batteryServiceUUID])
         DispatchQueue.main.async {
             self.deviceName.text = peripheral.name
-            self.connectButton.setTitle("DISCONNECT", for: UIControl.State())
+            self.connectButton.setTitle("DISCONNECT", for: .normal)
             self.enableActionButton()
             self.setupNotifications()
         }
@@ -361,7 +361,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         DispatchQueue.main.async {
             NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to peripheral failed. Please Try again", from: self)
-            self.connectButton.setTitle("CONNECT", for: UIControl.State())
+            self.connectButton.setTitle("CONNECT", for: .normal)
             self.connectedPeripheral = nil
             self.disableActionButton()
             self.clearUI()
@@ -370,7 +370,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         DispatchQueue.main.async { 
-            self.connectButton.setTitle("CONNECT", for: UIControl.State())
+            self.connectButton.setTitle("CONNECT", for: .normal)
             
             if NORAppUtilities.isApplicationInactive() == true {
                 let name = peripheral.name ?? "Peripheral"

@@ -225,7 +225,7 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     
     func clearUI() {
         deviceName.text = "DEFAULT HRM";
-        battery.setTitle("N/A", for: UIControl.State())
+        battery.setTitle("N/A", for: .normal)
         battery.tag = 0;
         hrLocation.text = "n/a";
         hrValue.text = "-";
@@ -357,7 +357,7 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async {
             self.deviceName.text = peripheral.name
-            self.connectionButton.setTitle("DISCONNECT", for: UIControl.State())
+            self.connectionButton.setTitle("DISCONNECT", for: .normal)
             self.hrValues?.removeAllObjects()
             self.xValues?.removeAllObjects()
             self.resetPlotRange()
@@ -377,7 +377,7 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async(execute: {
             NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to peripheral failed. Try again", from: self)
-            self.connectionButton.setTitle("CONNCECT", for: UIControl.State())
+            self.connectionButton.setTitle("CONNCECT", for: .normal)
             self.peripheral = nil
             self.clearUI()
         });
@@ -386,7 +386,7 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async(execute: {
-            self.connectionButton.setTitle("CONNECT", for: UIControl.State())
+            self.connectionButton.setTitle("CONNECT", for: .normal)
             self.peripheral = nil;
             self.clearUI()
             

@@ -39,18 +39,18 @@ class NOREditPopupViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var commandTextField: UITextField!
     @IBOutlet weak var toggleVisibilityButton: UIButton!
     
-    //MARK: - UIVIewDelegate
+    //MARK: - UIViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
-        if self.isHidden! {
-            toggleVisibilityButton.setTitle("Show", for: UIControl.State())
+        if isHidden! {
+            toggleVisibilityButton.setTitle("Show", for: .normal)
         }else{
-            toggleVisibilityButton.setTitle("Hide", for: UIControl.State())
+            toggleVisibilityButton.setTitle("Hide", for: .normal)
         }
 
         commandTextField.text = self.command!
         let button = iconButtons[self.iconIndex!]
-        button.backgroundColor = UIColor(red: 222.0/255.0, green: 74.0/255.0, blue: 19.0/255.0, alpha: 1.0)
+        button.backgroundColor = .nordicLake
     }
     
     //MARK: - UITextFieldDelegate
@@ -70,8 +70,8 @@ class NOREditPopupViewController: UIViewController, UITextFieldDelegate {
     }
 
     func handleOkButtonPressed() {
-        self.dismiss(animated: true, completion: nil)
-        self.delegate?.didConfigureButton(iconButtons[self.iconIndex!], withCommand: commandTextField.text!, andIconIndex: self.iconIndex!, shouldHide: self.isHidden!)
+        dismiss(animated: true, completion: nil)
+        delegate?.didConfigureButton(iconButtons[iconIndex!], withCommand: commandTextField.text!, andIconIndex: iconIndex!, shouldHide: isHidden!)
     }
     
     func handleCancelButtonPressed() {
@@ -81,23 +81,23 @@ class NOREditPopupViewController: UIViewController, UITextFieldDelegate {
     func handleToggleVisibilityButtonPressed() {
         if isHidden == true {
             isHidden = false
-            self.toggleVisibilityButton.setTitle("Hide", for: UIControl.State())
+            toggleVisibilityButton.setTitle("Hide", for: .normal)
         }else{
             isHidden = true
-            self.toggleVisibilityButton.setTitle("Show", for: UIControl.State())
+            toggleVisibilityButton.setTitle("Show", for: .normal)
         }
     }
     
     func handleIconButtonPressed(_ sender: UIButton){
         iconIndex = sender.tag-1
-        self.setSelectedBackgroundColor()
+        setSelectedBackgroundColor()
     }
     
     func setSelectedBackgroundColor() {
-        for aButton :UIButton in self.iconButtons {
-            aButton.backgroundColor = UIColor(red: 127.0/255.0, green: 127.0/255.0, blue: 127.0/255.0, alpha: 1.0)
+        for aButton: UIButton in self.iconButtons {
+            aButton.backgroundColor = .nordicMediumGray
         }
-        iconButtons[self.iconIndex!].backgroundColor = UIColor(red: 222.0/255.0, green: 74.0/255.0, blue: 19.0/255.0, alpha: 1.0)
+        iconButtons[iconIndex!].backgroundColor = .nordicLake
     }
 
 }

@@ -120,7 +120,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async { 
             self.deviceName.text = peripheral.name
-            self.connectionButton.setTitle("DISCONNECT", for: UIControl.State())
+            self.connectionButton.setTitle("DISCONNECT", for: .normal)
         }
         
         if UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))) {
@@ -168,7 +168,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     }
     
     func clearUI() {
-        connectionButton.setTitle("CONNECT", for: UIControl.State())
+        connectionButton.setTitle("CONNECT", for: .normal)
         battery.setTitle("n/a", for: UIControl.State.disabled)
         deviceName.text         = "DEFAULT CSC"
         battery.tag             = 0

@@ -448,7 +448,7 @@ class NORDFUViewController: NORBaseViewController, NORScannerDelegate, NORFileSe
         initiator.progressDelegate = self
         initiator.enableUnsafeExperimentalButtonlessServiceInSecureDfu = true
         dfuController = initiator.with(firmware: selectedFirmware!).start(target: selectedPeripheral!)
-        uploadButton.setTitle("Cancel", for: UIControl.State())
+        uploadButton.setTitle("Cancel", for: .normal)
         uploadButton.isEnabled = true
     }
 

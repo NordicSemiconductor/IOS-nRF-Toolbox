@@ -113,13 +113,13 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
     func enableFindmeButton() {
         findmeButton.isEnabled         = true
         findmeButton.backgroundColor = UIColor.black
-        findmeButton.setTitleColor(UIColor.white, for: UIControl.State())
+        findmeButton.setTitleColor(UIColor.white, for: .normal)
     }
     
     func disableFindmeButton() {
         findmeButton.isEnabled = false
         findmeButton.backgroundColor = UIColor.lightGray
-        findmeButton.setTitleColor(UIColor.lightText, for: UIControl.State())
+        findmeButton.setTitleColor(UIColor.lightText, for: .normal)
     }
 
     func initGattServer() {
@@ -148,7 +148,7 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
             let data = Data(bytes: &val, count: 1)
             proximityPeripheral?.writeValue(data, for: immidiateAlertCharacteristic!, type: CBCharacteristicWriteType.withoutResponse)
             isImmidiateAlertOn = true
-            findmeButton.setTitle("SilentMe", for: UIControl.State())
+            findmeButton.setTitle("SilentMe", for: .normal)
         }
     }
     
@@ -158,7 +158,7 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
             let data = Data(bytes: &val, count: 1)
             proximityPeripheral?.writeValue(data, for: immidiateAlertCharacteristic!, type: CBCharacteristicWriteType.withoutResponse)
             isImmidiateAlertOn = false
-            findmeButton.setTitle("FindMe", for: UIControl.State())
+            findmeButton.setTitle("FindMe", for: .normal)
         }
     }
     
@@ -234,7 +234,7 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async(execute: {
             self.deviceName.text = peripheral.name
-            self.connectionButton.setTitle("DISCONNECT", for: UIControl.State())
+            self.connectionButton.setTitle("DISCONNECT", for: .normal)
             self.lockImage.isHighlighted = true
             self.enableFindmeButton()
         })
@@ -255,7 +255,7 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async(execute: {
             NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to the peripheral failed. Try again", from: self)
-            self.connectionButton.setTitle("CONNECT", for: UIControl.State())
+            self.connectionButton.setTitle("CONNECT", for: .normal)
             self.proximityPeripheral = nil
             self.disableFindmeButton()
             self.clearUI()
@@ -278,7 +278,7 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
                 }
                 self.playSoundOnce()
             } else {
-                self.connectionButton.setTitle("CONNECT", for: UIControl.State())
+                self.connectionButton.setTitle("CONNECT", for: .normal)
                 if NORAppUtilities.isApplicationInactive() {
                     NORAppUtilities.showBackgroundNotification(message: "\(name) is disconnected.")
                 }
