@@ -270,10 +270,10 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         DispatchQueue.main.async(execute: {
             self.deviceName.text = peripheral.name
             self.connectionButon.setTitle("DISCONNECT", for: .normal)
-        })
 
-        NotificationCenter.default.addObserver(self, selector: #selector(self.appDidEnterBackrgoundCallback), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.appDidBecomeActiveCallback), name: UIApplication.didBecomeActiveNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(self.appDidEnterBackrgoundCallback), name: UIApplication.didEnterBackgroundNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(self.appDidBecomeActiveCallback), name: UIApplication.didBecomeActiveNotification, object: nil)
+        })
 
         // Peripheral has connected. Discover required services
         connectedPeripheral = peripheral;
