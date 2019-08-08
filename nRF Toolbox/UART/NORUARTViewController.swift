@@ -17,10 +17,10 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
     var buttonsCommands     : NSMutableArray?
     var buttonsHiddenStatus : NSMutableArray?
     var buttonsImageNames   : NSMutableArray?
-    var buttonIcons         : NSArray?
+    var buttonIcons         : NSArray
     var selectedButton      : UIButton?
     var logger              : NORLogViewController?
-    var editMode            : Bool?
+    var editMode            : Bool!
 
     //MARK: - View Actions
     @IBAction func connectionButtonTapped(_ sender: AnyObject) {
@@ -31,18 +31,15 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
         setEditMode(mode: !currentEditMode)
     }
     @IBAction func showLogButtonTapped(_ sender: AnyObject) {
-        self.revealViewController().revealToggle(animated: true)
+        revealViewController().revealToggle(animated: true)
     }
     @IBAction func buttonTapped(_ sender: AnyObject){
-        if editMode == true
-        {
-            self.selectedButton = sender as? UIButton;
-            self.showPopoverOnButton()
-        }
-        else
-        {
+        if editMode {
+            selectedButton = sender as? UIButton;
+            showPopoverOnButton()
+        } else {
             let command = buttonsCommands![sender.tag-1]
-            self.send(value: String(describing: command))
+            send(value: String(describing: command))
         }
     }
 
@@ -55,15 +52,15 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
     
     //MARK: - UIViewControllerDelegate
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
         buttonIcons = ["Stop","Play","Pause","FastForward","Rewind","End","Start","Shuffle","Record","Number_1",
         "Number_2","Number_3","Number_4","Number_5","Number_6","Number_7","Number_8","Number_9",]
+        super.init(coder: aDecoder)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Rotate the vertical label
-        self.verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: -.pi / 2);
+        verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: -.pi / 2);
         
         // Retrieve three arrays (icons names (NSString), commands (NSString), visibility(Bool)) from NSUserDefaults
         retrieveButtonsConfiguration()
@@ -72,7 +69,7 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
         // Configure the SWRevealViewController
         let revealViewController = self.revealViewController()
         if revealViewController != nil {
-            self.view.addGestureRecognizer((revealViewController?.panGestureRecognizer())!)
+            view.addGestureRecognizer(revealViewController!.panGestureRecognizer())
             logger = revealViewController?.rearViewController as? NORLogViewController
         }
     }
@@ -80,7 +77,7 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
     //MARK: - Segue methods
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         // The 'scan' seque will be performed only if bluetoothManager == nil (if we are not connected already).
-        return identifier != "scan" || self.bluetoothManager == nil
+        return identifier != "scan" || bluetoothManager == nil
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -109,13 +106,13 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
         logger!.clearLog()
         
         if let name = aPeripheral.name {
-            self.uartPeripheralName = name
-            self.deviceName.text = name
+            uartPeripheralName = name
+            deviceName.text = name
         } else {
-            self.uartPeripheralName = "device"
-            self.deviceName.text = "No name"
+            uartPeripheralName = "device"
+            deviceName.text = "No name"
         }
-        self.connectionButton.setTitle("CANCEL", for: .normal)
+        connectionButton.setTitle("CANCEL", for: .normal)
         bluetoothManager!.connectPeripheral(peripheral: aPeripheral)
     }
     
@@ -130,35 +127,35 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
     
     func didConnectPeripheral(deviceName aName: String?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             self.logger!.bluetoothManager = self.bluetoothManager
             self.connectionButton.setTitle("DISCONNECT", for: .normal)
-        })
         
-        //Following if condition display user permission alert for background notification
-        if UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))){
-            UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert], categories: nil))
-        }
+            //Following if condition display user permission alert for background notification
+            if UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))){
+                UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert], categories: nil))
+            }
 
-        NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterBackgroundCallback), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidBecomeActiveCallback), name: UIApplication.didBecomeActiveNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterBackgroundCallback), name: UIApplication.didEnterBackgroundNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidBecomeActiveCallback), name: UIApplication.didBecomeActiveNotification, object: nil)
+        }
     }
 
     func didDisconnectPeripheral() {
-            // Scanner uses other queue to send events. We must edit UI in the main queue
-            DispatchQueue.main.async(execute: {
-                self.logger!.bluetoothManager = nil
-                self.connectionButton.setTitle("CONNECT", for: .normal)
-                self.deviceName.text = "DEFAULT UART"
-                
-                if NORAppUtilities.isApplicationInactive() {
-                    NORAppUtilities.showBackgroundNotification(message: "Peripheral \(self.uartPeripheralName!) is disconnected")
-                }
+        // Scanner uses other queue to send events. We must edit UI in the main queue
+        DispatchQueue.main.async {
+            self.logger!.bluetoothManager = nil
+            self.connectionButton.setTitle("CONNECT", for: .normal)
+            self.deviceName.text = "DEFAULT UART"
+            
+            if NORAppUtilities.isApplicationInactive() {
+                NORAppUtilities.showBackgroundNotification(message: "Peripheral \(self.uartPeripheralName!) is disconnected")
+            }
 
-                self.uartPeripheralName = nil
-            })
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
+            self.uartPeripheralName = nil
+            NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+            NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
+        }
         bluetoothManager = nil
     }
 
@@ -172,11 +169,11 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
         if hide == true {
             selectedButton?.setImage(nil, for: .normal)
         }else{
-            let image = UIImage(named: buttonIcons![index] as! String)
+            let image = UIImage(named: buttonIcons[index] as! String)
             selectedButton?.setImage(image, for: .normal)
         }
         
-        buttonsImageNames![buttonTag] = buttonIcons![index]
+        buttonsImageNames![buttonTag] = buttonIcons[index]
         buttonsCommands![buttonTag] = aCommand
         
         userDefaults.set(buttonsImageNames, forKey: "buttonsImageNames")
@@ -193,13 +190,13 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
             buttonsCommands = NSMutableArray(array: userDefaults.object(forKey: "buttonsCommands") as! NSArray)
             buttonsHiddenStatus = NSMutableArray(array: userDefaults.object(forKey: "buttonsHiddenStatus") as! NSArray)
             buttonsImageNames   = NSMutableArray(array: userDefaults.object(forKey: "buttonsImageNames") as! NSArray)
-            self.showButtonsWithSavedConfiguration()
+             showButtonsWithSavedConfiguration()
         } else {
             //First time viewcontroller is loaded and there is no saved buttons configurations in NSUserDefaults
             //Setting up the default values for the first time
-            self.buttonsCommands = NSMutableArray(array: ["","","","","","","","",""])
-            self.buttonsHiddenStatus = NSMutableArray(array: [true,true,true,true,true,true,true,true,true])
-            self.buttonsImageNames = NSMutableArray(array: ["Play","Play","Play","Play","Play","Play","Play","Play","Play"])
+            buttonsCommands = NSMutableArray(array: ["","","","","","","","",""])
+            buttonsHiddenStatus = NSMutableArray(array: [true,true,true,true,true,true,true,true,true])
+            buttonsImageNames = NSMutableArray(array: ["Play","Play","Play","Play","Play","Play","Play","Play","Play"])
             userDefaults.set(buttonsCommands, forKey: "buttonsCommands")
             userDefaults.set(buttonsHiddenStatus, forKey: "buttonsHiddenStatus")
             userDefaults.set(buttonsImageNames, forKey: "buttonsImageNames")
@@ -208,8 +205,8 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
     }
     
     func showButtonsWithSavedConfiguration() {
-        for aButton : UIButton in buttons! {
-            if (buttonsHiddenStatus![aButton.tag-1] as AnyObject).boolValue == true {
+        for aButton: UIButton in buttons {
+            if (buttonsHiddenStatus![aButton.tag - 1] as AnyObject).boolValue == true {
                 aButton.backgroundColor = .nordicLightGray
                 aButton.setImage(nil, for: .normal)
                 aButton.isEnabled = false
@@ -227,7 +224,7 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
         popOverViewController.isHidden = false
         popOverViewController.command = buttonsCommands![(selectedButton?.tag)!-1] as? String
         let buttonImageName = buttonsImageNames![(selectedButton?.tag)!-1]
-        popOverViewController.setIconIndex((buttonIcons?.index(of: buttonImageName))!)
+        popOverViewController.setIconIndex(buttonIcons.index(of: buttonImageName))
         popOverViewController.modalPresentationStyle = UIModalPresentationStyle.popover
         popOverViewController.popoverPresentationController?.delegate = self
         present(popOverViewController, animated: true, completion: nil)
@@ -238,10 +235,10 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
         popOverViewController.preferredContentSize = CGSize(width: 300.0, height: 300.0)
     }
 
-    func setEditMode(mode aMode : Bool){
+    func setEditMode(mode aMode: Bool){
         editMode = aMode
         
-        if editMode == true {
+        if aMode {
             editButton.setTitle("Done", for: .normal)
             for aButton : UIButton in buttons {
                 aButton.backgroundColor = .nordicFall
@@ -263,8 +260,6 @@ class NORUARTViewController: UIViewController, NORBluetoothManagerDelegate, NORS
     
     //MARK: - UART API
     func send(value aValue : String) {
-        if self.bluetoothManager != nil {
-            bluetoothManager?.send(text: aValue)
-        }
+        bluetoothManager?.send(text: aValue)
     }
 }

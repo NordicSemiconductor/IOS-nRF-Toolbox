@@ -22,16 +22,16 @@ class NOREditPopupViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: - View Actions
     @IBAction func toggleVisibilityButtonPressed(_ sender: AnyObject) {
-        self.handleToggleVisibilityButtonPressed()
+        handleToggleVisibilityButtonPressed()
     }
     @IBAction func cancelButtonPressed(_ sender: AnyObject) {
-        self.handleCancelButtonPressed()
+        handleCancelButtonPressed()
     }
     @IBAction func okButtonPressed(_ sender: AnyObject) {
-        self.handleOkButtonPressed()
+        handleOkButtonPressed()
     }
     @IBAction func iconButtonPressed(_ sender: AnyObject) {
-        self.handleIconButtonPressed(sender as! UIButton)
+        handleIconButtonPressed(sender as! UIButton)
     }
     
     //MARK: - View Outlets
@@ -44,7 +44,7 @@ class NOREditPopupViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         if isHidden! {
             toggleVisibilityButton.setTitle("Show", for: .normal)
-        }else{
+        } else {
             toggleVisibilityButton.setTitle("Hide", for: .normal)
         }
 
@@ -70,12 +70,15 @@ class NOREditPopupViewController: UIViewController, UITextFieldDelegate {
     }
 
     func handleOkButtonPressed() {
-        dismiss(animated: true, completion: nil)
-        delegate?.didConfigureButton(iconButtons[iconIndex!], withCommand: commandTextField.text!, andIconIndex: iconIndex!, shouldHide: isHidden!)
+        dismiss(animated: true)
+        delegate?.didConfigureButton(iconButtons[iconIndex!],
+                                     withCommand: commandTextField.text!,
+                                     andIconIndex: iconIndex!,
+                                     shouldHide: isHidden!)
     }
     
     func handleCancelButtonPressed() {
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true)
     }
     
     func handleToggleVisibilityButtonPressed() {
@@ -89,12 +92,12 @@ class NOREditPopupViewController: UIViewController, UITextFieldDelegate {
     }
     
     func handleIconButtonPressed(_ sender: UIButton){
-        iconIndex = sender.tag-1
+        iconIndex = sender.tag - 1
         setSelectedBackgroundColor()
     }
     
     func setSelectedBackgroundColor() {
-        for aButton: UIButton in self.iconButtons {
+        for aButton: UIButton in iconButtons {
             aButton.backgroundColor = .nordicMediumGray
         }
         iconButtons[iconIndex!].backgroundColor = .nordicLake

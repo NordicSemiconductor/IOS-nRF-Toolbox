@@ -12,7 +12,7 @@ class NORLogViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     
     //MARK: - Properties
     var bluetoothManager : NORBluetoothManager?
-    var logItems         : NSMutableArray
+    var logItems         : [NORLogItem]
     
     //MARK: - View Outlets
     @IBOutlet weak var displayLogTextTable : UITableView!
@@ -22,7 +22,7 @@ class NORLogViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     
     //MARK: - UIViewDelegate
     required init?(coder aDecoder: NSCoder) {
-        logItems = NSMutableArray()
+        logItems = []
         super.init(coder: aDecoder)
     }
     
@@ -38,7 +38,7 @@ class NORLogViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     }
     
     func clearLog() {
-        logItems.removeAllObjects()
+        logItems.removeAll()
         displayLogTextTable?.reloadData() // The table may not be initialized here
     }
     
@@ -53,7 +53,8 @@ class NORLogViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     }
     
     func scrollDisplayViewDown() {
-        displayLogTextTable.scrollToRow(at: IndexPath(row: displayLogTextTable.numberOfRows(inSection: 0) - 1, section: 0), at: .bottom, animated: true)
+        displayLogTextTable?.scrollToRow(at: IndexPath(row: displayLogTextTable.numberOfRows(inSection: 0) - 1, section: 0),
+                                         at: .bottom, animated: true)
     }
 
     func setManager(aManager : NORBluetoothManager?) {
@@ -75,9 +76,9 @@ class NORLogViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.commandTextField.resignFirstResponder()
-        bluetoothManager!.send(text: self.commandTextField.text!)
-        self.commandTextField.text = ""
+        commandTextField.resignFirstResponder()
+        bluetoothManager?.send(text: self.commandTextField.text!)
+        commandTextField.text = ""
         return true
     }
 
@@ -89,7 +90,7 @@ class NORLogViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     //MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "logCell") as! NORLogItemTableViewCell
-        let item = logItems.object(at: indexPath.row) as! NORLogItem
+        let item = logItems[indexPath.row]
         cell.setItem(item: item)
         return cell
     }
@@ -100,14 +101,12 @@ class NORLogViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         item.level = aLevel
         item.message = aMessage
         item.timestamp = getCurrentTime()
-        logItems.add(item)
+        logItems.append(item)
         
         DispatchQueue.main.async {
             //TODO: this is a bad fix to get things done, do not release!
-            if self.displayLogTextTable != nil {
-                self.displayLogTextTable!.reloadData()
-                self.scrollDisplayViewDown()
-            }
+            self.displayLogTextTable?.reloadData()
+            self.scrollDisplayViewDown()
         }
     }
 }
