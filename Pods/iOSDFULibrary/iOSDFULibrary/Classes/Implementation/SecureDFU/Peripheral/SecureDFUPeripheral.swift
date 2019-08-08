@@ -26,6 +26,9 @@ internal class SecureDFUPeripheral : BaseCommonDFUPeripheral<SecureDFUExecutor, 
     
     /// A flag indicating whether setting alternative advertising name is enabled (SDK 14+) (true by default)
     let alternativeAdvertisingNameEnabled: Bool
+
+    /// The alternative advertising name to use specified by the user, if nil then use a randomly generated name.
+    var alternativeAdvertisingName: String? = nil
     
     // MARK: - Peripheral API
     
@@ -40,9 +43,10 @@ internal class SecureDFUPeripheral : BaseCommonDFUPeripheral<SecureDFUExecutor, 
     
     // MARK: - Implementation
     
-    override init(_ initiator: DFUServiceInitiator) {
+    override init(_ initiator: DFUServiceInitiator, _ logger: LoggerHelper) {
         self.alternativeAdvertisingNameEnabled = initiator.alternativeAdvertisingNameEnabled
-        super.init(initiator)
+        self.alternativeAdvertisingName = initiator.alternativeAdvertisingName
+        super.init(initiator, logger)
     }
     
     /**
@@ -73,7 +77,19 @@ internal class SecureDFUPeripheral : BaseCommonDFUPeripheral<SecureDFUExecutor, 
     func jumpToBootloader() {
         jumpingToBootloader = true
         newAddressExpected = dfuService!.newAddressExpected
-        dfuService!.jumpToBootloaderMode(withAlternativeAdvertisingName: alternativeAdvertisingNameEnabled,
+
+        var name: String?
+        if alternativeAdvertisingNameEnabled {
+            if let userSuppliedName = alternativeAdvertisingName {
+                // Use the user supplied name
+                name = userSuppliedName
+            } else {
+                // Generate a random 8-character long name
+                name = String(format: "Dfu%05d", arc4random_uniform(100000))
+            }
+        }
+
+        dfuService!.jumpToBootloaderMode(withAlternativeAdvertisingName: name,
             // onSuccess the device gets disconnected and centralManager(_:didDisconnectPeripheral:error) will be called
             onError: { (error, message) in
                 self.jumpingToBootloader = false
@@ -136,9 +152,12 @@ internal class SecureDFUPeripheral : BaseCommonDFUPeripheral<SecureDFUExecutor, 
      - parameter range:    Given range of the firmware will be sent.
      - parameter firmware: The firmware from with part is to be sent.
      - parameter progress: An optional progress delegate.
+     - parameter queue:    The queue to dispatch progress events on.
      */
-    func sendNextObject(from range: Range<Int>, of firmware: DFUFirmware, andReportProgressTo progress: DFUProgressDelegate?) {
-        dfuService!.sendNextObject(from: range, of: firmware, andReportProgressTo: progress,
+    func sendNextObject(from range: Range<Int>, of firmware: DFUFirmware,
+                        andReportProgressTo progress: DFUProgressDelegate?, on queue: DispatchQueue) {
+        dfuService!.sendNextObject(from: range, of: firmware,
+            andReportProgressTo: progress, on: queue,
             onSuccess: { self.delegate?.peripheralDidReceiveObject() },
             onError: defaultErrorCallback
         )
@@ -185,16 +204,35 @@ internal class SecureDFUPeripheral : BaseCommonDFUPeripheral<SecureDFUExecutor, 
     /**
      Sends Execute command.
      
+     - parameter isCommandObject: True, when it is the Command Object executed, false if a Data Object.
      - parameter activating: If the parameter is set to true the service will assume that the whole firmware was sent
      and the device will disconnect on its own on Execute command. Delegate's onTransferComplete event will be called when
      the disconnect event is receviced.
      */
-    func sendExecuteCommand(andActivateIf complete: Bool = false) {
+    func sendExecuteCommand(forCommandObject isCommandObject: Bool = false, andActivateIf complete: Bool = false) {
         activating = complete
         dfuService!.executeCommand(
             onSuccess: { self.delegate?.peripheralDidExecuteObject() },
             onError: { (error, message) in
                 self.activating = false
+                
+                // In SDK 15.2 (and perhaps 15.x), the DFU target may reoprt only full pages
+                // when reconnected after interrupted DFU. In such case Executing object will fail
+                // with Operation Not Permitted error. Instead, we have to create the new object
+                // and continue sending data assuming the last object executed.
+                if isCommandObject == false && error == DFUError.remoteSecureDFUOperationNotPermitted {
+                    self.delegate?.peripheralDidExecuteObject()
+                    return
+                }
+                
+                // When a remote error is return from a Command Object execution, the library
+                // may still be able to continue with second part of the Firmware, if such exist.
+                if isCommandObject == true && error.isRemote {
+                    self.delegate?.peripheralRejectedCommandObject(withError: error, andMessage: message)
+                    return
+                }
+                
+                // Default action for an error
                 self.delegate?.error(error, didOccurWithMessage: message)
             }
         )

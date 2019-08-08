@@ -73,7 +73,7 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     func clearUI() {
         deviceName.text = "DEFAULT BPM"
         battery.tag = 0
-        battery.setTitle("n/a", for: UIControlState.disabled)
+        battery.setTitle("n/a", for: .disabled)
         
         systolicUnit.isHidden     = true
         diastolicUnit.isHidden    = true
@@ -112,15 +112,15 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         DispatchQueue.main.async {
             self.deviceName.text = peripheral.name
-            self.connectionButton.setTitle("DISCONNECT", for: UIControlState())
-        }
+            self.connectionButton.setTitle("DISCONNECT", for: .normal)
         
-        //Following if condition display user permission alert for background notification
-        if UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))) {
-            UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .sound], categories: nil))
+            //Following if condition display user permission alert for background notification
+            if UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))) {
+                UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .sound], categories: nil))
+            }
+            NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackgroundCallback(notification:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(self.didBecomeActiveCallback(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackgroundCallback(notification:)), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didBecomeActiveCallback(notification:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         
         connectedPeripheral = peripheral
         peripheral.discoverServices([bpmServiceUUID, batteryServiceUUID])
@@ -128,18 +128,18 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        DispatchQueue.main.async(execute: {
-            NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to peripheral failed. Try again")
-            self.connectionButton.setTitle("CONNECT", for: UIControlState())
+        DispatchQueue.main.async {
+            NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to peripheral failed. Try again", from: self)
+            self.connectionButton.setTitle("CONNECT", for: .normal)
             self.connectedPeripheral = nil
             self.clearUI()
-        });
+        }
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        DispatchQueue.main.async(execute: {
-            self.connectionButton.setTitle("CONNECT", for: UIControlState())
+        DispatchQueue.main.async {
+            self.connectionButton.setTitle("CONNECT", for: .normal)
             self.connectedPeripheral = nil
             
             if NORAppUtilities.isApplicationInactive() {
@@ -147,9 +147,9 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                 NORAppUtilities.showBackgroundNotification(message: "\(name) is disconnected.")
             }
             
-            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
-            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
-        })
+            NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+            NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
+        }
     }
 
     //MARK: - CBPeripheralDelegate
@@ -179,14 +179,14 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         }
         
         if service.uuid == bpmServiceUUID {
-            for aCharacteristic :CBCharacteristic in service.characteristics! {
+            for aCharacteristic: CBCharacteristic in service.characteristics! {
                 if aCharacteristic.uuid == bpmBloodPressureMeasurementCharacteristicUUID ||
                     aCharacteristic.uuid == bpmIntermediateCuffPressureCharacteristicUUID {
                     peripheral.setNotifyValue(true, for: aCharacteristic)
                 }
             }
         } else if service.uuid == batteryServiceUUID {
-            for aCharacteristic :CBCharacteristic in service.characteristics! {
+            for aCharacteristic: CBCharacteristic in service.characteristics! {
                 if aCharacteristic.uuid == batteryLevelCharacteristicUUID {
                     peripheral.readValue(for: aCharacteristic)
                     break
@@ -202,14 +202,14 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         }
         
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             if characteristic.uuid == self.batteryLevelCharacteristicUUID {
                 // Decode the characteristic data
                 let data = characteristic.value;
                 var pointer = UnsafeMutablePointer<UInt8>(mutating: (data! as NSData).bytes.bindMemory(to: UInt8.self, capacity: data!.count))
                 let batteryLevel = NORCharacteristicReader.readUInt8Value(ptr: &pointer)
                 let text = "\(batteryLevel)%"
-                self.battery.setTitle(text, for: UIControlState.disabled)
+                self.battery.setTitle(text, for: .disabled)
                 
                 if self.battery.tag == 0 {
                     if characteristic.properties.rawValue & CBCharacteristicProperties.notify.rawValue > 0 {
@@ -281,7 +281,7 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                     self.pulse.text = "-"
                 }
             }
-        })
+        }
     }
 
     //MARK: - Segue handling
@@ -292,7 +292,7 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "scan" {
             let nc = segue.destination as! UINavigationController
-            let controller = nc.childViewControllers.first as! NORScannerViewController
+            let controller = nc.children.first as! NORScannerViewController
             controller.filterUUID = bpmServiceUUID
             controller.delegate = self
         }

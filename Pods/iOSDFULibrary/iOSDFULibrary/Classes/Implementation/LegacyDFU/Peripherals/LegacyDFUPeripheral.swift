@@ -149,8 +149,10 @@ internal class LegacyDFUPeripheral : BaseCommonDFUPeripheral<LegacyDFUExecutor, 
      - parameter prnValue: Number of packets of firmware data to be received by the DFU target
      before sending a new Packet Receipt Notification. Set 0 to disable PRNs (not recommended).
      - parameter progress: The deleagate that will be informed about progress changes.
+     - parameter queue:    The queue to dispatch progress delegate events.
      */
-    func sendFirmware(_ firmware: DFUFirmware, withPacketReceiptNotificationNumber prnValue: UInt16, andReportProgressTo progress: DFUProgressDelegate?) {
+    func sendFirmware(_ firmware: DFUFirmware, withPacketReceiptNotificationNumber prnValue: UInt16,
+                      andReportProgressTo progress: DFUProgressDelegate?, on queue: DispatchQueue) {
         var prn = prnValue
         if slowDfuMode && (prn == 0 || prn > 2) {
             prn = 2
@@ -158,7 +160,8 @@ internal class LegacyDFUPeripheral : BaseCommonDFUPeripheral<LegacyDFUExecutor, 
         dfuService!.sendPacketReceiptNotificationRequest(prn,
             onSuccess: {
                 // Now the service is ready to send the firmware
-                self.dfuService!.sendFirmware(firmware, withDelay: self.slowDfuMode, andReportProgressTo: progress,
+                self.dfuService!.sendFirmware(firmware, withDelay: self.slowDfuMode,
+                    andReportProgressTo: progress, on: queue,
                     onSuccess: { self.delegate?.peripheralDidReceiveFirmware() },
                     onError: self.defaultErrorCallback
                 )

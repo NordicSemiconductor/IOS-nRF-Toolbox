@@ -11,100 +11,50 @@ import UIKit
 class NORGlucoseReading: NSObject {
 
     //MARK: - Properties
-    var sequenceNumber                              : UInt16?
-    var timestamp                                   : Date?
+    var sequenceNumber                              : UInt16
+    var timestamp                                   : Date
     var timeOffset                                  : Int16?
-    var glucoseConcentrationTypeAndLocationPresent  : Bool?
+    var glucoseConcentrationTypeAndLocationPresent  : Bool
     var glucoseConcentration                        : Float32?
     var unit                                        : BGMUnit?
     var type                                        : BGMType?
     var location                                    : BGMLocation?
-    var sensorStatusAnnunciationPresent             : Bool?
+    var sensorStatusAnnunciationPresent             : Bool
     var sensorStatusAnnunciation                    : UInt16?
     var context                                     : NORGlucoseReadingContext?
 
     //MARK: - Enum Definitions
     enum BGMUnit : UInt8 {
-        case kg_L                       = 0
-        case mol_L                      = 1
+        case kg_L                    = 0
+        case mol_L                   = 1
     }
     
     enum BGMType : UInt8{
-        case reserved_TYPE              = 0
-        case capillary_WHOLE_BLOOD      = 1
-        case capillary_PLASMA           = 2
-        case venous_WHOLE_BLOOD         = 3
-        case venous_PLASMA              = 4
-        case arterial_WHOLE_BLOOD       = 5
-        case arterial_PLASMA            = 6
-        case undetermined_WHOLE_BLOOD   = 7
-        case undetermined_PLASMA        = 8
-        case interstitial_FLUID         = 9
-        case control_SOLUTION_TYPE      = 10
+        case reserved                = 0
+        case capillaryWholeBlood     = 1
+        case capillaryPlasma         = 2
+        case venousWholeBlood        = 3
+        case venousPlasma            = 4
+        case arterialWholeBlood      = 5
+        case arterialPlasma          = 6
+        case undeterminedWholeBlood  = 7
+        case undeterminedPlasma      = 8
+        case interstitialFluid       = 9
+        case controlSolution         = 10
     }
 
     enum BGMLocation : UInt8 {
-        case reserved_LOCATION          = 0
-        case finger                     = 1
-        case alternate_SITE_TEST        = 2
-        case earlobe                    = 3
-        case control_SOLUTION_LOCATION  = 4
-        case location_NOT_AVAILABLE     = 15
+        case reserved          = 0
+        case finger            = 1
+        case alternateSiteTest = 2
+        case earlobe           = 3
+        case controlSolution   = 4
+        case notAvailable      = 15
     }
-
 
     //MARK: - Implementation
-    //TODO: Remove me, this is a quick fix to help with Swift->Objc bridging
-    func sequneceNumber() -> UInt16 {
-        return self.sequenceNumber!
-    }
-
-    func locationAsString() -> String {
-        switch self.location! {
-        case .alternate_SITE_TEST:
-            return "Alternate site test"
-        case .control_SOLUTION_LOCATION:
-            return "Control solution"
-        case .earlobe:
-            return "Earlobe"
-        case .finger:
-            return "Finger"
-        case .location_NOT_AVAILABLE:
-            return "Not available"
-        case .reserved_LOCATION:
-            return "Reserved value"
-        }
-    }
     
-    func typeAsString() -> String {
-        switch self.type!{
-        case .arterial_PLASMA:
-            return "Arterial plasma"
-        case .arterial_WHOLE_BLOOD:
-            return "Arterial whole blood"
-        case .capillary_PLASMA:
-            return "Capillary plasma"
-        case .capillary_WHOLE_BLOOD:
-            return "Capillary whole blood"
-        case .control_SOLUTION_TYPE:
-            return "Control solution"
-        case .interstitial_FLUID:
-            return "Interstitial fluid"
-        case .undetermined_PLASMA:
-            return "Undetermined plasma"
-        case .undetermined_WHOLE_BLOOD:
-            return "Undetermined whole blood"
-        case .venous_PLASMA:
-            return "Venous plasma"
-        case .venous_WHOLE_BLOOD:
-            return "Venous whole blood"
-        case .reserved_TYPE:
-            return "Reserved value"
-        }
-    }
-    
-    func updateFromBytes(_ bytes : UnsafePointer<UInt8>) {
-        
+    init(_ bytes : UnsafePointer<UInt8>) {
         var pointer = UnsafeMutablePointer<UInt8>(mutating: bytes)
         
         //Parse falgs
@@ -119,8 +69,8 @@ class NORGlucoseReading: NSObject {
         self.timestamp      = NORCharacteristicReader.readDateTime(ptr: &pointer)
         
         if timeOffsetPresent {
-            self.timeOffset = NORCharacteristicReader.readSInt16Value(ptr: &pointer)
-            timestamp?.addTimeInterval(Double(self.timeOffset!) * 60.0)
+            timeOffset = NORCharacteristicReader.readSInt16Value(ptr: &pointer)
+            timestamp.addTimeInterval(Double(timeOffset!) * 60.0)
         }
         
         self.glucoseConcentrationTypeAndLocationPresent = glucoseConcentrationTypeAndLocationPresent
@@ -128,23 +78,73 @@ class NORGlucoseReading: NSObject {
             self.glucoseConcentration = NORCharacteristicReader.readSFloatValue(ptr: &pointer)
             self.unit = glucoseConcentrationUnit
             let typeAndLocation = NORCharacteristicReader.readNibble(ptr: &pointer)
-            self.type       = BGMType(rawValue: typeAndLocation.first)
-            self.location   = BGMLocation(rawValue: typeAndLocation.second)
+            self.type       = BGMType(rawValue: typeAndLocation.first) ?? .reserved
+            self.location   = BGMLocation(rawValue: typeAndLocation.second) ?? .notAvailable
         } else {
-            self.type       = BGMType.reserved_TYPE
-            self.location   = BGMLocation.reserved_LOCATION
+            self.type       = BGMType.reserved
+            self.location   = BGMLocation.notAvailable
         }
 
         self.sensorStatusAnnunciationPresent = statusAnnuciationPresent
-        if statusAnnuciationPresent == true {
+        if statusAnnuciationPresent {
             self.sensorStatusAnnunciation = NORCharacteristicReader.readUInt16Value(ptr: &pointer)
         }
     }
     
     //MARK: - Static methods
     static func readingFromBytes(_ bytes: UnsafePointer<UInt8>) -> NORGlucoseReading {
-        let aReading = NORGlucoseReading()
-        aReading.updateFromBytes(bytes)
-        return aReading
+        return NORGlucoseReading(bytes)
     }
+}
+
+extension NORGlucoseReading.BGMLocation: CustomStringConvertible {
+    
+    var description: String {
+        switch self {
+        case .alternateSiteTest:
+            return "Alternate site test"
+        case .controlSolution:
+            return "Control solution"
+        case .earlobe:
+            return "Earlobe"
+        case .finger:
+            return "Finger"
+        case .notAvailable:
+            return "Not available"
+        case .reserved:
+            return "Reserved value"
+        }
+    }
+    
+}
+
+extension NORGlucoseReading.BGMType: CustomStringConvertible {
+    
+    var description: String {
+        switch self {
+        case .arterialPlasma:
+            return "Arterial plasma"
+        case .arterialWholeBlood:
+            return "Arterial whole blood"
+        case .capillaryPlasma:
+            return "Capillary plasma"
+        case .capillaryWholeBlood:
+            return "Capillary whole blood"
+        case .controlSolution:
+            return "Control solution"
+        case .interstitialFluid:
+            return "Interstitial fluid (ISF)"
+        case .undeterminedPlasma:
+            return "Undetermined plasma"
+        case .undeterminedWholeBlood:
+            return "Undetermined whole blood"
+        case .venousPlasma:
+            return "Venous plasma"
+        case .venousWholeBlood:
+            return "Venous whole blood"
+        case .reserved:
+            return "Reserved value"
+        }
+    }
+    
 }

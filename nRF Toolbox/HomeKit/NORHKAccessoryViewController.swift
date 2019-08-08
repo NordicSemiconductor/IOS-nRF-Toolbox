@@ -47,17 +47,20 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
         var commandCompleted = false
         
         guard dfuControlPointCharacteristic != nil else {
-            UIAlertView(title: "Missing feature", message: "\"\(targetAccessory!.name)\" Does not seem to have the DFU control point characteristic, please try pairing it again or make sure it does support buttonless DFU.", delegate: nil, cancelButtonTitle: "Ok").show()
+            let alertView = UIAlertController(title: "Missing feature", message: "\"\(targetAccessory!.name)\" Does not seem to have the DFU control point characteristic, please try pairing it again or make sure it does support buttonless DFU.", preferredStyle: .alert)
+            alertView.addAction(UIAlertAction(title: "OK", style: .cancel))
+            present(alertView, animated: true)
             return
         }
         
         activityIndicator.startAnimating()
         //Display wait message after 500ms, to prevent multiple windows in case the completion
         //Alert has already been displayed.
-        let waitAlertView = UIAlertView(title: "Please wait...", message: "Sending DFU command to target accessory.\n\nThis might take a few seconds if the accessory is unreachable." , delegate: nil, cancelButtonTitle: nil)
+        let waitAlertView = UIAlertController(title: "Please wait...", message: "Sending DFU command to target accessory.\n\nThis might take a few seconds if the accessory is unreachable.", preferredStyle: .alert)
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             if commandCompleted == false {
-                waitAlertView.show()
+                self.present(waitAlertView, animated: true)
             }
         }
         
@@ -65,9 +68,7 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
             DispatchQueue.main.async {
                 self.activityIndicator.stopAnimating()
                 commandCompleted = true
-                if waitAlertView.isVisible {
-                    waitAlertView.dismiss(withClickedButtonIndex: 0, animated: true)
-                }
+                waitAlertView.dismiss(animated: true)
                 if error != nil {
                     self.showFailAlertWithFailMessage((error as! HMError).localizedDescription)
                 } else {
@@ -78,44 +79,24 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func showFailAlertWithFailMessage(_ aMessage: String) {
-        UIAlertView(title: "HomeKit error", message: aMessage , delegate: nil, cancelButtonTitle: "Ok").show()
+        let alertView = UIAlertController(title: "HomeKit error", message: aMessage, preferredStyle: .alert)
+        alertView.addAction(UIAlertAction(title: "OK", style: .cancel))
+        present(alertView, animated: true)
     }
     
     func showRestartAlertWithAccessoryName(_ aName: String) {
-        UIAlertView(title: "Restart initiating", message: "\"\(aName)\" should now disconnect and restart in DFU mode.\n\nTo continue the flashing process please head towards the DFU option in the main menu, scan and find the new DFU peripheral and start the flashing process." , delegate: nil, cancelButtonTitle: "Ok").show()
+        let alertView = UIAlertController(title: "Restart initiating", message: "\"\(aName)\" should now disconnect and restart in DFU mode.\n\nTo continue the flashing process please head towards the DFU option in the main menu, scan and find the new DFU peripheral and start the flashing process.", preferredStyle: .alert)
+        alertView.addAction(UIAlertAction(title: "OK", style: .cancel))
+        present(alertView, animated: true)
     }
 
     func ShowBootloaderWarning() {
         let controller = UIAlertController(title: "Accessory will restart", message: "Updating requires restarting this accessory into DFU mode.\r\nAfter restarting, open the DFU page to continue.", preferredStyle: .alert)
-        controller.addAction(UIAlertAction(title: "Restart in DFU mode", style: .destructive, handler: { (anAction) in
+        controller.addAction(UIAlertAction(title: "Restart in DFU mode", style: .destructive) { _ in
             self.JumpToBootloaderMode()
-        }))
-        
-        controller.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (anAction) in
-            controller.dismiss(animated: true)
-        }))
-        
-        self.present(controller, animated: true)
-    }
-    
-    func showInfo(forCharactersitic aCharacteristic: HMCharacteristic) {
-        var characteristicName = "Characteristic"
-        if #available(iOS 9.0, *) {
-            characteristicName = aCharacteristic.localizedDescription
-        } else {
-            characteristicName = aCharacteristic.metadata?.manufacturerDescription ?? characteristicName
-        }
-
-        let controller = UIAlertController(title: characteristicName, message: "Value: \(aCharacteristic.value ?? "Not available")", preferredStyle: .alert)
-        if aCharacteristic.value != nil {
-            controller.addAction(UIAlertAction(title: "Copy Value", style: .default, handler: { (anAction) in
-                UIPasteboard.general.string = aCharacteristic.value as? String
-            }))
-        }
-        controller.addAction(UIAlertAction(title: "Done", style: .default, handler: { (anAction) in
-            controller.dismiss(animated: true)
-        }))
-        self.present(controller, animated: true)
+        })
+        controller.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(controller, animated: true)
     }
 
     func updateViewContents() {
@@ -128,14 +109,10 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
         accessoryDFUSupportLabel.text = "Checking..."
         dfuModeButton.isEnabled = false
         accessoryNameTitle.text = targetAccessory.name
-        homeNameTitle.text = targetAccessory.room?.name
+        homeNameTitle.text = targetAccessory.room?.name ?? "Unknown"
         
-        if #available(iOS 9.0, *) {
-            accessoryCategoryLabel.text = targetAccessory.category.localizedDescription
-        } else {
-            accessoryCategoryLabel.text = "Unknown"
-        }
-
+        accessoryCategoryLabel.text = targetAccessory.category.localizedDescription
+        
         for aService in targetAccessory.services {
             if aService.serviceType == accessoryInformationIdentifier {
                 for aCharacteristic in aService.characteristics {
@@ -184,7 +161,7 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         activityIndicator.stopAnimating()
-        self.updateViewContents()
+        updateViewContents()
         accessoryServicesTableView.reloadData()
     }
 
@@ -194,14 +171,10 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
         headerView.backgroundColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
         let titleLabel = UILabel(frame: CGRect(x: 15, y: 0, width: tableView.bounds.width - 15, height: 30))
         headerView.addSubview(titleLabel)
-        headerView.bringSubview(toFront: titleLabel)
+        headerView.bringSubviewToFront(titleLabel)
         
-        if #available(iOS 9.0, *) {
-            titleLabel.text = targetAccessory?.services[section].localizedDescription
-        } else {
-            titleLabel.text = targetAccessory?.services[section].description
-        }
-
+        titleLabel.text = targetAccessory?.services[section].localizedDescription
+        
         return headerView
     }
 
@@ -210,16 +183,11 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
         let aCharacteristic = targetAccessory?.services[indexPath.section].characteristics[indexPath.row] ?? nil
         
         if aCharacteristic != nil {
-            if #available(iOS 9.0, *) {
-                aCell.textLabel?.text = aCharacteristic?.localizedDescription ?? ""
-            } else {
-                // Fallback on earlier versions
-                aCell.textLabel?.text = aCharacteristic?.metadata?.manufacturerDescription ?? ""
-            }
+            aCell.textLabel?.text = aCharacteristic?.localizedDescription ?? ""
         } else {
             aCell.textLabel?.text = "Unknown"
         }
-        aCell.detailTextLabel?.text = ""
+        aCell.detailTextLabel?.text = aCharacteristic?.value as? String ?? "Unknown"
         return aCell
     }
 
@@ -232,16 +200,7 @@ class NORHKAccessoryViewController: UIViewController, UITableViewDataSource, UIT
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if #available(iOS 9.0, *) {
-            return targetAccessory?.services[section].localizedDescription
-        } else {
-            return targetAccessory?.services[section].description
-        }
+        return targetAccessory?.services[section].localizedDescription
     }
-
-    //MARK: - UITableViewDelegate
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        self.showInfo(forCharactersitic: targetAccessory!.services[indexPath.section].characteristics[indexPath.row])
-    }
+    
 }

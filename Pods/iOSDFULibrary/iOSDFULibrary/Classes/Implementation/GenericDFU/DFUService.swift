@@ -40,7 +40,7 @@ internal protocol DFUService : DFUController {
     /**
      Required constructor of a service.
      */
-    init(_ service: CBService, _ logger: LoggerHelper, _ dfuHelper: DFUUuidHelper)
+    init(_ service: CBService, _ logger: LoggerHelper, _ dfuHelper: DFUUuidHelper, _ queue: DispatchQueue)
     
     /**
      Discovers characteristics in the DFU Service. This method also reads the DFU Version characteristic if such found.

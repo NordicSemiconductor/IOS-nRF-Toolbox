@@ -27,7 +27,7 @@ import CoreBluetooth
 /// UUID Types for DFU.
 @objc public enum DFUUuidType: Int {
     /// Legacy DFU Service.
-    case lagacyService                  = 0
+    case legacyService                  = 0
     /// Legacy DFU Control Point Characteristic.
     case legacyControlPoint             = 1
     /// Legacy DFU Packet Characteristic.
@@ -142,7 +142,7 @@ import CoreBluetooth
 
         for uuid in uuids {
             switch uuid.type {
-            case .lagacyService:
+            case .legacyService:
                 self.legacyDFUService = uuid.uuid
             case .legacyControlPoint:
                 self.legacyDFUControlPoint = uuid.uuid

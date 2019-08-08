@@ -12,8 +12,8 @@ import CoreBluetooth
 class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, NORScannerDelegate {
 
     //MARK: - ViewController properties
-    let WHEEL_REVOLUTION_FLAG               : UInt8 = 0x01
-    let CRANK_REVOLUTION_FLAG               : UInt8 = 0x02
+    let wheelRevolutionFlag                 : UInt8 = 0x01
+    let crankRevolutionFlag                 : UInt8 = 0x02
     var bluetoothManager                    : CBCentralManager?
     var cscServiceUUID                      : CBUUID
     var cscMeasurementCharacteristicUUID    : CBUUID
@@ -89,7 +89,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         }
 
         let navigationController = segue.destination
-        let scannerViewController = navigationController.childViewControllers.first as! NORScannerViewController
+        let scannerViewController = navigationController.children.first as! NORScannerViewController
         scannerViewController.filterUUID = cscServiceUUID
         scannerViewController.delegate = self
     }
@@ -120,41 +120,41 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async { 
             self.deviceName.text = peripheral.name
-            self.connectionButton.setTitle("DISCONNECT", for: UIControlState())
-        }
+            self.connectionButton.setTitle("DISCONNECT", for: .normal)
         
-        if UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))) {
-            UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .sound], categories: nil))
+            if UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))) {
+                UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .sound], categories: nil))
+            }
+            NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackgroundHandler), name: UIApplication.didEnterBackgroundNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(self.didBecomeActiveHandler), name: UIApplication.didBecomeActiveNotification, object: nil)
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackgroundHandler), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didBecomeActiveHandler), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         peripheral.discoverServices([cscServiceUUID, batteryServiceUUID])
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
         print("did fail to connect")
-        DispatchQueue.main.async(execute: {
-            NORAppUtilities.showAlert(title: "Error", andMessage:"Connecting to the peripheral failed. Try again")
+        DispatchQueue.main.async {
+            NORAppUtilities.showAlert(title: "Error", andMessage:"Connecting to the peripheral failed. Try again", from: self)
             self.cyclePeripheral = nil
             self.clearUI()
-        })
+        }
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         print("Disconnected \(peripheral)")
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             if NORAppUtilities.isApplicationInactive() {
                 let name = peripheral.name ?? "Peripheral"
                 NORAppUtilities.showBackgroundNotification(message: "\(name) is disconnected.")
             }
-            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
-            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+            NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+            NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
             
             self.cyclePeripheral = nil
             self.clearUI()
-        })
+        }
     }
     
     //MARK: -  NORCSCViewController implementation
@@ -168,8 +168,8 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     }
     
     func clearUI() {
-        connectionButton.setTitle("CONNECT", for: UIControlState())
-        battery.setTitle("n/a", for: UIControlState.disabled)
+        connectionButton.setTitle("CONNECT", for: .normal)
+        battery.setTitle("n/a", for: UIControl.State.disabled)
         deviceName.text         = "DEFAULT CSC"
         battery.tag             = 0
         speed.text              = "-"
@@ -192,7 +192,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         var ratio        :Double = 0
         let flag = value[0]
         
-        if flag & WHEEL_REVOLUTION_FLAG == 1 {
+        if flag & wheelRevolutionFlag == 1 {
             wheelRevDiff = self.processWheelData(withData: data)
             if flag & 0x02 == 2 {
                 crankRevDiff = self.processCrankData(withData: data, andCrankRevolutionIndex: 7)
@@ -202,7 +202,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                 }
             }
         } else {
-            if flag & CRANK_REVOLUTION_FLAG == 2 {
+            if flag & crankRevolutionFlag == 2 {
                 crankRevDiff = self.processCrankData(withData: data, andCrankRevolutionIndex: 1)
                 if crankRevDiff > 0 {
                     ratio = wheelRevDiff / crankRevDiff
@@ -229,7 +229,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         
         wheelRevolution = UInt8(CFSwapInt32LittleToHost(UInt32(value[1])))
         wheelEventTime  = Double((UInt16(value[6]) * 0xFF) + UInt16(value[5]))
-        if oldWheelRevolution != 0 {
+        if oldWheelRevolution != 0, wheelRevolution > oldWheelRevolution! {
             wheelRevolutionDiff = Double(wheelRevolution) - Double(oldWheelRevolution!)
             travelDistance = travelDistance! + ((wheelRevolutionDiff * wheelCircumference!)/1000.0)
             totalTravelDistance = (Double(wheelRevolution) * Double(wheelCircumference!)) / 1000.0
@@ -345,7 +345,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                 let array = UnsafeMutablePointer<UInt8>(OpaquePointer(((characteristic.value as NSData?)?.bytes)!))
                 let batteryLevel = array[0]
                 let text = "\(batteryLevel)%"
-                self.battery.setTitle(text, for: UIControlState.disabled)
+                self.battery.setTitle(text, for: UIControl.State.disabled)
                 if self.battery.tag == 0 {
                     if characteristic.properties.rawValue & CBCharacteristicProperties.notify.rawValue > 0 {
                         self.battery.tag = 1

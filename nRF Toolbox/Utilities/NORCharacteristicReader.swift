@@ -15,23 +15,23 @@ struct NORNibble {
 
 
 enum NORReservedSFloatValues : Int16 {
-    case mder_S_POSITIVE_INFINITY = 0x07FE
-    case mder_S_NaN = 0x07FF
-    case mder_S_NRes = 0x0800
-    case mder_S_RESERVED_VALUE = 0x0801
-    case mder_S_NEGATIVE_INFINITY = 0x0802
+    case positiveInfinity = 0x07FE
+    case nan = 0x07FF
+    case nres = 0x0800
+    case reserved = 0x0801
+    case negativeInfinity = 0x0802
 }
 
 enum NORReservedFloatValues : UInt32 {
-    case mder_POSITIVE_INFINITY = 0x007FFFFE
-    case mder_NaN = 0x007FFFFF
-    case mder_NRes = 0x00800000
-    case mder_RESERVED_VALUE = 0x00800001
-    case mder_NEGATIVE_INFINITY = 0x00800002
+    case positiveInfinity = 0x007FFFFE
+    case nan = 0x007FFFFF
+    case nres = 0x00800000
+    case reserved = 0x00800001
+    case negativeInfinity = 0x00800002
 }
 
-let FIRST_S_RESERVED_VALUE = NORReservedSFloatValues.mder_S_POSITIVE_INFINITY
-let FIRST_RESERVED_VALUE   = NORReservedFloatValues.mder_POSITIVE_INFINITY
+let FIRST_S_RESERVED_VALUE = NORReservedSFloatValues.positiveInfinity
+let FIRST_RESERVED_VALUE   = NORReservedFloatValues.positiveInfinity
 let RESERVED_FLOAT_VALUES  = [Double.infinity, Double.nan, Double.nan, Double.nan, -Double.infinity]
 
 struct NORCharacteristicReader {
@@ -84,7 +84,7 @@ struct NORCharacteristicReader {
 
         var output : Float32 = 0
         
-        if mantissa >= FIRST_S_RESERVED_VALUE.rawValue && mantissa <= NORReservedSFloatValues.mder_S_NEGATIVE_INFINITY.rawValue {
+        if mantissa >= FIRST_S_RESERVED_VALUE.rawValue && mantissa <= NORReservedSFloatValues.negativeInfinity.rawValue {
             output = Float32(RESERVED_FLOAT_VALUES[Int(mantissa - FIRST_S_RESERVED_VALUE.rawValue)])
         } else {
             if mantissa > 0x0800 {
@@ -105,7 +105,7 @@ struct NORCharacteristicReader {
         
         var output : Float32 = 0
         
-        if mantissa >= Int32(FIRST_RESERVED_VALUE.rawValue) && mantissa <= Int32(NORReservedFloatValues.mder_NEGATIVE_INFINITY.rawValue) {
+        if mantissa >= Int32(FIRST_RESERVED_VALUE.rawValue) && mantissa <= Int32(NORReservedFloatValues.negativeInfinity.rawValue) {
             output = Float32(RESERVED_FLOAT_VALUES[Int(mantissa - Int32(FIRST_S_RESERVED_VALUE.rawValue))])
         } else {
             if mantissa >= 0x800000 {

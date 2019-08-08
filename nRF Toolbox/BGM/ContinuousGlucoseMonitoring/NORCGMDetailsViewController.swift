@@ -25,13 +25,12 @@ import UIKit
 class NORCGMDetailsViewController : UIViewController {
 
     //MARK: - Class Properties
-    var reading     : NORCGMReading?
-    var dateFormat  : DateFormatter?
+    var reading: NORCGMReading!
+    var sessionStartTime: Date!
+    var dateFormat: DateFormatter
 
     //MARK: - View Outlets/Actions
-    @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var sequenceNumber: UILabel!
     @IBOutlet weak var timestamp: UILabel!
     @IBOutlet weak var type: UILabel!
     @IBOutlet weak var location: UILabel!
@@ -49,37 +48,25 @@ class NORCGMDetailsViewController : UIViewController {
     @IBOutlet weak var stripPulledTooSoonStatus: UILabel!
     @IBOutlet weak var deviceFaultStatus: UILabel!
     @IBOutlet weak var timeStatus: UILabel!
-    @IBOutlet weak var contextPresentStatus: UILabel!
-    @IBOutlet weak var carbohydrateId: UILabel!
-    @IBOutlet weak var carbohydrate: UILabel!
-    @IBOutlet weak var meal: UILabel!
-    @IBOutlet weak var tester: UILabel!
-    @IBOutlet weak var health: UILabel!
-    @IBOutlet weak var exerciseDuration: UILabel!
-    @IBOutlet weak var exerciseIntensity: UILabel!
-    @IBOutlet weak var medication: UILabel!
-    @IBOutlet weak var medicationUnit: UILabel!
-    @IBOutlet weak var medicationId: UILabel!
-    @IBOutlet weak var HbA1c: UILabel!
     
     
     //MARK: - Initializer
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
         dateFormat = DateFormatter()
-        dateFormat?.dateFormat = "dd.MM.yyy, HH:mm:ss"
+        dateFormat.dateFormat = "dd.MM.yyy, HH:mm"
+        super.init(coder: aDecoder)
     }
     
     //MARK: - UIViewController methods
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        timestamp.text = dateFormat?.string(from: reading!.timeStamp! as Date)
-        self.type.text = reading?.typeAsString()
-        self.location.text = reading?.locationAsSting()
-        self.concentration.text = String(format:"%.1f", reading!.glucoseConcentration)
-        self.unit.text = "mg/dL";
+        timestamp.text = dateFormat.string(from: Date(timeInterval: Double(reading.timeOffsetSinceSessionStart), since: sessionStartTime))
+        type.text = reading.typeAsString()
+        location.text = reading.locationAsSting()
+        concentration.text = String(format:"%.1f", reading.glucoseConcentration)
+        unit.text = "mg/dL";
         
-        if (reading?.sensorStatusAnnunciationPresent)! {
+        if reading.sensorStatusAnnunciationPresent {
             print("Sensor annuciation is not fully implemented, updates will be ignored")
             //        UInt16 status = reading.sensorStatusAnnunciation;
             //        [self updateView:self.lowBatteryStatus withStatus:(status & 0x0001) > 0];
@@ -102,7 +89,7 @@ class NORCGMDetailsViewController : UIViewController {
         if status == true {
             aLabel.text = "YES"
             aLabel.textColor = UIColor.red
-        }else{
+        } else {
             aLabel.text = "NO"
         }
     }

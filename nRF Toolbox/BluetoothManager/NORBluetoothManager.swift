@@ -43,7 +43,6 @@ class NORBluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDeleg
     var logger   : NORLogger?
     
     //MARK: - Class Properties
-    fileprivate let MTU = 20
     fileprivate let UARTServiceUUID             : CBUUID
     fileprivate let UARTRXCharacteristicUUID    : CBUUID
     fileprivate let UARTTXCharacteristicUUID    : CBUUID
@@ -126,55 +125,23 @@ class NORBluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDeleg
      * - parameter aText: text to be sent to the peripheral using Nordic UART Service
      */
     func send(text aText : String) {
-        guard self.uartRXCharacteristic != nil else {
+        guard let uartRXCharacteristic = uartRXCharacteristic else {
             log(withLevel: .warningLogLevel, andMessage: "UART RX Characteristic not found")
             return
         }
         
         // Check what kind of Write Type is supported. By default it will try Without Response.
         // If the RX charactereisrtic have Write property the Write Request type will be used.
-        var type = CBCharacteristicWriteType.withoutResponse
-        if (self.uartRXCharacteristic!.properties.rawValue & CBCharacteristicProperties.write.rawValue) > 0 {
-            type = CBCharacteristicWriteType.withResponse
+        var type: CBCharacteristicWriteType = .withoutResponse
+        var MTU = bluetoothPeripheral?.maximumWriteValueLength(for: .withoutResponse) ?? 20
+        if uartRXCharacteristic.properties.contains(.write) {
+            type = .withResponse
+            MTU = bluetoothPeripheral?.maximumWriteValueLength(for: .withResponse) ?? 20
         }
         
-        // In case of Write Without Response the text needs to be splited in up-to 20-bytes packets.
-        // When Write Request (with response) is used, the Long Write may be used. 
-        // It will be handled automatically by the iOS, but must be supported on the device side.
-        // If your device does support Long Write, change the flag below to true.
-        let longWriteSupported = false
-        
-        // The following code will split the text to packets
-        let textData = aText.data(using: String.Encoding.utf8)!
-        textData.withUnsafeBytes { (u8Ptr: UnsafePointer<CChar>) in
-            var buffer = UnsafeMutableRawPointer(mutating: UnsafeRawPointer(u8Ptr))
-            var len = textData.count
-            
-            while(len != 0){
-                var part : String
-                if len > MTU && (type == CBCharacteristicWriteType.withoutResponse || longWriteSupported == false) {
-                    // If the text contains national letters they may be 2-byte long. 
-                    // It may happen that only 19 (MTU) bytes can be send so that not of them is splited into 2 packets.
-                    var builder = NSMutableString(bytes: buffer, length: MTU, encoding: String.Encoding.utf8.rawValue)
-                    if builder != nil {
-                        // A 20-byte string has been created successfully
-                        buffer  = buffer + MTU
-                        len     = len - MTU
-                    } else {
-                        // We have to create 19-byte string. Let's ignore some stranger UTF-8 characters that have more than 2 bytes...
-                        builder = NSMutableString(bytes: buffer, length: (MTU - 1), encoding: String.Encoding.utf8.rawValue)
-                        buffer = buffer + (MTU - 1)
-                        len    = len - (MTU - 1)
-                    }
-                    
-                    part = String(describing: builder!)
-                } else {
-                    let builder = NSMutableString(bytes: buffer, length: len, encoding: String.Encoding.utf8.rawValue)
-                    part = String(describing: builder!)
-                    len = 0
-                }
-                send(text: part, withType: type)
-            }
+        // The following code will split the text into packets
+        aText.split(by: MTU).forEach {
+            send(text: $0, withType: type)
         }
     }
     
@@ -188,7 +155,7 @@ class NORBluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDeleg
      *     - aType: write type to be used
      */
     func send(text aText : String, withType aType : CBCharacteristicWriteType) {
-        guard self.uartRXCharacteristic != nil else {
+        guard uartRXCharacteristic != nil else {
             log(withLevel: .warningLogLevel, andMessage: "UART RX Characteristic not found")
             return
         }
@@ -196,10 +163,10 @@ class NORBluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDeleg
         let typeAsString = aType == .withoutResponse ? ".withoutResponse" : ".withResponse"
         let data = aText.data(using: String.Encoding.utf8)!
         
-        //do some logging
+        // Do some logging
         log(withLevel: .verboseLogLevel, andMessage: "Writing to characteristic: \(uartRXCharacteristic!.uuid.uuidString)")
         log(withLevel: .debugLogLevel, andMessage: "peripheral.writeValue(0x\(data.hexString), for: \(uartRXCharacteristic!.uuid.uuidString), type: \(typeAsString))")
-        self.bluetoothPeripheral!.writeValue(data, for: self.uartRXCharacteristic!, type: aType)
+        bluetoothPeripheral!.writeValue(data, for: uartRXCharacteristic!, type: aType)
         // The transmitted data is not available after the method returns. We have to log the text here.
         // The callback peripheral:didWriteValueForCharacteristic:error: is called only when the Write Request type was used,
         // but even if, the data is not available there.
@@ -224,25 +191,19 @@ class NORBluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDeleg
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         var state : String
-        switch(central.state){
+        switch central.state {
         case .poweredOn:
             state = "Powered ON"
-            break
         case .poweredOff:
             state = "Powered OFF"
-            break
         case .resetting:
             state = "Resetting"
-            break
         case .unauthorized:
             state = "Unautthorized"
-            break
         case .unsupported:
             state = "Unsupported"
-            break
-        case .unknown:
+        default:
             state = "Unknown"
-            break
         }
         
         log(withLevel: .debugLogLevel, andMessage: "[Callback] Central Manager did update state to: \(state)")
@@ -399,18 +360,29 @@ class NORBluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDeleg
             log(withLevel: .appLogLevel, andMessage: "Empty packet received")
             return
         }
-        bytesReceived.withUnsafeBytes { (utf8Bytes: UnsafePointer<CChar>) in
-            var len = bytesReceived.count
-            if utf8Bytes[len - 1] == 0 {
-                len -= 1 // if the string is null terminated, don't pass null terminator into NSMutableString constructor
-            }
-            
-            log(withLevel: .infoLogLevel, andMessage: "Notification received from: \(characteristic.uuid.uuidString), with value: 0x\(bytesReceived.hexString)")
-            if let validUTF8String = String(utf8String: utf8Bytes) {//  NSMutableString(bytes: utf8Bytes, length: len, encoding: String.Encoding.utf8.rawValue) {
-                log(withLevel: .appLogLevel, andMessage: "\"\(validUTF8String)\" received")
-            } else {
-                log(withLevel: .appLogLevel, andMessage: "\"0x\(bytesReceived.hexString)\" received")
-            }
+        
+        log(withLevel: .infoLogLevel, andMessage: "Notification received from: \(characteristic.uuid.uuidString), with value: 0x\(bytesReceived.hexString)")
+        if let validUTF8String = String(data: bytesReceived, encoding: .utf8) {
+            log(withLevel: .appLogLevel, andMessage: "\"\(validUTF8String)\" received")
+        } else {
+            log(withLevel: .appLogLevel, andMessage: "\"0x\(bytesReceived.hexString)\" received")
         }
     }
+}
+
+private extension String {
+    
+    func split(by length: Int) -> [String] {
+        var startIndex = self.startIndex
+        var results = [Substring]()
+        
+        while startIndex < endIndex {
+            let endIndex = index(startIndex, offsetBy: length, limitedBy: self.endIndex) ?? self.endIndex
+            results.append(self[startIndex..<endIndex])
+            startIndex = endIndex
+        }
+        
+        return results.map { String($0) }
+    }
+    
 }

@@ -31,7 +31,8 @@ import CoreBluetooth
             return nil
         }
         
-        let executor = SecureDFUExecutor(self)
+        let logger     = LoggerHelper(self.logger, loggerQueue)
+        let executor   = SecureDFUExecutor(self, logger)
         let controller = DFUServiceController()
         controller.executor = executor
         executor.start()

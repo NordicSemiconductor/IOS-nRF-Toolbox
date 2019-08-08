@@ -26,7 +26,6 @@ import UIKit
 
 class NORBGMDetailsViewController: UIViewController {
     //MARK: - Referencing outlets
-    @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var carbohydrateId: UILabel!
     @IBOutlet weak var carbohydrate: UILabel!
     @IBOutlet weak var glucose: UILabel!
@@ -60,7 +59,7 @@ class NORBGMDetailsViewController: UIViewController {
     @IBOutlet weak var unit: UILabel!
     
     //MARK: - Properties
-    var reading     : NORGlucoseReading?
+    var reading     : NORGlucoseReading!
     var dateFormat  : DateFormatter?
     
     required init(coder aDecoder: NSCoder) {
@@ -72,12 +71,12 @@ class NORBGMDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        sequenceNumber.text = String(format: "%d", (reading?.sequenceNumber)!)
-        timestamp.text = dateFormat?.string(from: (reading?.timestamp)! as Date)
+        sequenceNumber.text = String(format: "%d", reading.sequenceNumber)
+        timestamp.text = dateFormat?.string(from: reading.timestamp)
         
-        if (reading?.glucoseConcentrationTypeAndLocationPresent)! == true {
-            type.text       = reading?.typeAsString()
-            location.text   = reading?.locationAsString()
+        if reading.glucoseConcentrationTypeAndLocationPresent {
+            type.text       = "\(reading.type!)"
+            location.text   = "\(reading.location!)"
             
             switch (reading?.unit)! {
             case .mol_L:
@@ -96,8 +95,7 @@ class NORBGMDetailsViewController: UIViewController {
             unit.text = ""
         }
         
-        if reading?.sensorStatusAnnunciationPresent == true {
-            let status = (reading?.sensorStatusAnnunciation)!
+        if let status = reading.sensorStatusAnnunciation {
             updateView(label: lowBatteryStatus,          withStatus: (status & 0x0001) > 0)
             updateView(label: sensorMalfunctionStatus,   withStatus: (status & 0x0002) > 0)
             updateView(label: insufficcientSampleStatus, withStatus: (status & 0x0004) > 0)
@@ -112,34 +110,33 @@ class NORBGMDetailsViewController: UIViewController {
             updateView(label: timeFaultStatus,           withStatus: (status & 0x0800) > 0)
         }
         
-        if reading?.context != nil {
-            let context = reading?.context
+        if let context = reading.context {
             contextPresentStatus.text = "Available"
             
-            if context?.carbohydratePresent == true {
-                carbohydrateId.text = context?.carbohydrateIdAsString()
-                carbohydrate.text   = String(format: "%.1f", (context?.carbohydrate)! * 1000)
+            if context.carbohydratePresent {
+                carbohydrateId.text = "\(context.carbohydrateId!)"
+                carbohydrate.text   = String(format: "%.1f", (context.carbohydrate)! * 1000)
             }
             
-            if context?.mealPresent == true {
-                meal.text = context?.mealIdAsString()
+            if context.mealPresent {
+                meal.text = "\(context.meal!)"
             }
             
-            if context?.testerAndHealthPresent == true {
-                tester.text = context?.testerAsString()
-                health.text = context?.healthAsString()
+            if context.testerAndHealthPresent {
+                tester.text = "\(context.tester!)"
+                health.text = "\(context.health!)"
             }
             
-            if context?.exercisePresent == true {
-                exerciseDuration.text   = String(format: "%d", (context?.exerciseDuration)! / 60)
-                exerciseIntensity.text  = String(format: "%d", (context?.exerciseIntensity)!)
+            if context.exercisePresent {
+                exerciseDuration.text   = String(format: "%d", (context.exerciseDuration)! / 60)
+                exerciseIntensity.text  = String(format: "%d", (context.exerciseIntensity)!)
             }
             
-            if context?.medicationPresent == true {
-                medicationId.text = context?.medicationIdAsString()
-                medication.text   = String(format: "%.0f", (context?.medication)! * 1000)
+            if context.medicationPresent {
+                medicationId.text = "\(context.medicationId!)"
+                medication.text   = String(format: "%.0f", (context.medication)! * 1000)
                 
-                    switch (context?.medicationUnit)! {
+                    switch (context.medicationUnit)! {
                     case .kilograms:
                         medicationUnit.text = "mg"
                         break
@@ -149,8 +146,8 @@ class NORBGMDetailsViewController: UIViewController {
                     }
             }
             
-            if context?.HbA1cPresent == true {
-                hbA1c.text = String(format: "%.2f", (context?.HbA1c)!)
+            if context.HbA1cPresent == true {
+                hbA1c.text = String(format: "%.2f", (context.HbA1c)!)
             }
         }
     }

@@ -129,7 +129,7 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
         devicesTable.delegate = self
         devicesTable.dataSource = self
         
-        let activityIndicatorView              = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+        let activityIndicatorView              = UIActivityIndicatorView(style: .gray)
         activityIndicatorView.hidesWhenStopped = true
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activityIndicatorView)
         
@@ -139,18 +139,12 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
         bluetoothManager = CBCentralManager(delegate: self, queue: centralQueue)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.default, animated: true)
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         let success = self.scanForPeripherals(false)
         if !success {
             print("Bluetooth is powered off!")
         }
 
-        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.lightContent, animated: true)
         super.viewWillDisappear(animated)
     }
 
@@ -207,14 +201,14 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             var sensor = NORScannedPeripheral(withPeripheral: peripheral, andRSSI: RSSI.int32Value, andIsConnected: false)
-            if ((self.peripherals.contains(sensor)) == false) {
-                self.peripherals.append(sensor)
-            }else{
-                sensor = self.peripherals[self.peripherals.index(of: sensor)!]
+            if let index = self.peripherals.firstIndex(of: sensor) {
+                sensor = self.peripherals[index]
                 sensor.RSSI = RSSI.int32Value
+            } else {
+                self.peripherals.append(sensor)
             }
-        })
+        }
     }
 }

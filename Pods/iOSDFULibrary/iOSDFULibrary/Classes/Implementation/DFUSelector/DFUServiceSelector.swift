@@ -44,22 +44,24 @@ internal class DFUServiceSelector : BaseDFUExecutor, DFUStarterPeripheralDelegat
     typealias DFUPeripheralType = DFUStarterPeripheral
     
     internal let initiator:  DFUServiceInitiator
+    internal let logger:     LoggerHelper
     internal let controller: DFUServiceController
     internal let peripheral: DFUStarterPeripheral
     internal var error: (error: DFUError, message: String)?
     
     init(initiator: DFUServiceInitiator, controller: DFUServiceController) {
         self.initiator  = initiator
+        self.logger     = LoggerHelper(initiator.logger, initiator.loggerQueue)
         self.controller = controller
-        self.peripheral = DFUStarterPeripheral(initiator)
+        self.peripheral = DFUStarterPeripheral(initiator, logger)
         
         self.peripheral.delegate = self
     }
     
     func start() {
-        DispatchQueue.main.async(execute: {
-            self.delegate?.dfuStateDidChange(to: .connecting)
-        })
+        delegate {
+            $0.dfuStateDidChange(to: .connecting)
+        }
         peripheral.start()
     }
     
@@ -67,7 +69,7 @@ internal class DFUServiceSelector : BaseDFUExecutor, DFUStarterPeripheralDelegat
         // Release the cyclic reference
         peripheral.destroy()
         
-        let executor = ExecutorType.init(initiator)
+        let executor = ExecutorType.init(initiator, logger)
         controller.executor = executor
         executor.start()
     }

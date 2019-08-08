@@ -23,40 +23,50 @@ import Foundation
 
 class LoggerHelper {
     private weak var logger: LoggerDelegate?
+    private var queue: DispatchQueue
     
-    init(_ logger: LoggerDelegate?) {
+    init(_ logger: LoggerDelegate?, _ queue: DispatchQueue) {
         self.logger = logger
+        self.queue = queue
     }
     
     func d(_ message: String) {
-        logger?.logWith(.debug, message: message)
+        log(with: .debug, message: message)
     }
     
     func v(_ message: String) {
-        logger?.logWith(.verbose, message: message)
+        log(with: .verbose, message: message)
     }
     
     func i(_ message: String) {
-        logger?.logWith(.info, message: message)
+        log(with: .info, message: message)
     }
     
     func a(_ message: String) {
-        logger?.logWith(.application, message: message)
+        log(with: .application, message: message)
     }
     
     func w(_ message: String) {
-        logger?.logWith(.warning, message: message)
+        log(with: .warning, message: message)
     }
     
     func e(_ message: String) {
-        logger?.logWith(.error, message: message)
+        log(with: .error, message: message)
     }
     
     func w(_ error: Error) {
-        logger?.logWith(.warning, message: "Error \((error as NSError).code): \(error.localizedDescription)")
+        log(with: .warning, message: "Error \((error as NSError).code): \(error.localizedDescription)")
     }
     
     func e(_ error: Error) {
-        logger?.logWith(.error, message: "Error \((error as NSError).code): \(error.localizedDescription)")
+        log(with: .error, message: "Error \((error as NSError).code): \(error.localizedDescription)")
+    }
+
+    private func log(with level: LogLevel, message: String) {
+        if let logger = logger {
+            queue.async {
+                logger.logWith(level, message: message)
+            }
+        }
     }
 }

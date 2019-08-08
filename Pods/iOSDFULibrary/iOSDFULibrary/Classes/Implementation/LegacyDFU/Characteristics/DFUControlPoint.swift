@@ -63,25 +63,25 @@ internal enum Request {
     var data : Data {
         switch self {
         case .jumpToBootloader:
-            return Data(bytes: [DFUOpCode.startDfu.code, FIRMWARE_TYPE_APPLICATION])
+            return Data([DFUOpCode.startDfu.code, FIRMWARE_TYPE_APPLICATION])
         case .startDfu(let type):
-            return Data(bytes: [DFUOpCode.startDfu.code, type])
+            return Data([DFUOpCode.startDfu.code, type])
         case .startDfu_v1:
-            return Data(bytes: [DFUOpCode.startDfu.code])
+            return Data([DFUOpCode.startDfu.code])
         case .initDfuParameters(let req):
-            return Data(bytes: [DFUOpCode.initDfuParameters.code, req.code])
+            return Data([DFUOpCode.initDfuParameters.code, req.code])
         case .initDfuParameters_v1:
-            return Data(bytes: [DFUOpCode.initDfuParameters.code])
+            return Data([DFUOpCode.initDfuParameters.code])
         case .receiveFirmwareImage:
-            return Data(bytes: [DFUOpCode.receiveFirmwareImage.code])
+            return Data([DFUOpCode.receiveFirmwareImage.code])
         case .validateFirmware:
-            return Data(bytes: [DFUOpCode.validateFirmware.code])
+            return Data([DFUOpCode.validateFirmware.code])
         case .activateAndReset:
-            return Data(bytes: [DFUOpCode.activateAndReset.code])
+            return Data([DFUOpCode.activateAndReset.code])
         case .reset:
-            return Data(bytes: [DFUOpCode.reset.code])
+            return Data([DFUOpCode.reset.code])
         case .packetReceiptNotificationRequest(let number):
-            var data = Data(bytes: [DFUOpCode.packetReceiptNotificationRequest.code])
+            var data = Data([DFUOpCode.packetReceiptNotificationRequest.code])
             data += number.littleEndian
             return data
         }
@@ -169,8 +169,8 @@ internal struct PacketReceiptNotification {
         // in SDK 5.2.0.39364 the bytesReveived value in a PRN packet is 16-bit long, instad of 32-bit.
         // However, the packet is still 5 bytes long and the two last bytes are 0x00-00.
         // This has to be taken under consideration when comparing number of bytes sent and received as
-        // the latter counter may rewind if fw size is > 0xFFFF bytes (LegacyDFUService:L372).
-        let bytesReceived: UInt32 = data.subdata(in: 1 ..< 4).withUnsafeBytes { $0.pointee }
+        // the latter counter may rewind if fw size is > 0xFFFF bytes (LegacyDFUService:L446).
+        let bytesReceived: UInt32 = data.asValue(offset: 1)
         self.bytesReceived = bytesReceived
     }
 }

@@ -96,10 +96,12 @@ internal class SecureDFUPacket: DFUCharacteristic {
        - range:    The range of the firmware that is to be sent in this object.
        - firmware: The whole firmware to be sent in this part.
        - progress: An optional progress delegate.
+       - queue:    The queue to dispatch progress events on.
        - complete: The completon callback.
      */
     func sendNext(_ prnValue: UInt16, packetsFrom range: Range<Int>, of firmware: DFUFirmware,
-                  andReportProgressTo progress: DFUProgressDelegate?, andCompletionTo complete: @escaping Callback) {
+                  andReportProgressTo progress: DFUProgressDelegate?, on queue: DispatchQueue,
+                  andCompletionTo complete: @escaping Callback) {
         let peripheral          = characteristic.service.peripheral
         let objectData          = firmware.data.subdata(in: range)
         let objectSizeInBytes   = UInt32(objectData.count)
@@ -129,7 +131,7 @@ internal class SecureDFUPacket: DFUCharacteristic {
             totalBytesSentSinceProgessNotification = totalBytesSentWhenDfuStarted
             
             // Notify progress delegate that upload has started (0%)
-            DispatchQueue.main.async(execute: {
+            queue.async(execute: {
                 progress?.dfuProgressDidChange(
                     for:   firmware.currentPart,
                     outOf: firmware.parts,
@@ -174,7 +176,7 @@ internal class SecureDFUPacket: DFUCharacteristic {
                 totalBytesSentSinceProgessNotification = totalBytesSent
                 
                 // Notify progress delegate of overall progress
-                DispatchQueue.main.async(execute: {
+                queue.async(execute: {
                     progress?.dfuProgressDidChange(
                         for:   firmware.currentPart,
                         outOf: firmware.parts,

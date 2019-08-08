@@ -17,10 +17,11 @@ class NORDFUConstantsUtility: NSObject {
         return "The Device Firmware Update (DFU) profile allows to upload a new application, Soft Device or bootloader onto the device over-the-air (OTA). It is compatible with nRF5x devices, from Nordic Semiconductor, that have the S110, S130 or S132 SoftDevice and the DFU bootloader enabled. \n\nDefault number of Packet Receipt Notification is 10 and can be changed in the Settings. For more information about the DFU check the documentation."
     }
     
-    static func showAlert(message aMessage : String) {
-        DispatchQueue.main.async { 
-            let alert = UIAlertView(title: "DFU", message: aMessage, delegate: nil, cancelButtonTitle: "OK")
-            alert.show()
+    static func showAlert(message aMessage : String, from viewController: UIViewController) {
+        DispatchQueue.main.async {
+            let alertView = UIAlertController(title: "DFU", message: aMessage, preferredStyle: .alert)
+            alertView.addAction(UIAlertAction(title: "OK", style: .cancel))
+            viewController.present(alertView, animated: true)
         }
         
     }
@@ -38,7 +39,7 @@ class NORDFUConstantsUtility: NSObject {
     
     static func isApplicationStateInactiveOrBackgrounded () -> Bool {
         let appState = UIApplication.shared.applicationState
-        return appState == UIApplicationState.inactive || appState == UIApplicationState.background
+        return appState == .inactive || appState == .background
     }
 
 }

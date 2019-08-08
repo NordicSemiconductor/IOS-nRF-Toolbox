@@ -24,6 +24,7 @@ import CoreBluetooth
 
 @objc internal class LegacyDFUService : NSObject, CBPeripheralDelegate, DFUService {
 
+    internal let queue: DispatchQueue
     internal var targetPeripheral: DFUPeripheralAPI?
     internal var uuidHelper: DFUUuidHelper
     
@@ -57,6 +58,7 @@ import CoreBluetooth
     private var report:  ErrorCallback?
     /// A temporaty callback used to report progress status.
     private var progressDelegate: DFUProgressDelegate?
+    private var progressQueue: DispatchQueue?
     
     // -- Properties stored when upload started in order to resume it --
     private var firmware: DFUFirmware?
@@ -65,10 +67,11 @@ import CoreBluetooth
     
     // MARK: - Initialization
     
-    required init(_ service: CBService, _ logger: LoggerHelper, _ uuidHelper: DFUUuidHelper) {
+    required init(_ service: CBService, _ logger: LoggerHelper, _ uuidHelper: DFUUuidHelper, _ queue: DispatchQueue) {
         self.service = service
         self.logger = logger
         self.uuidHelper = uuidHelper
+        self.queue = queue
         
         super.init()
         self.logger.v("Legacy DFU Service found")
@@ -95,7 +98,8 @@ import CoreBluetooth
         if !aborted && paused && firmware != nil {
             paused = false
             // onSuccess and onError callbacks are still kept by dfuControlPointCharacteristic
-            dfuPacketCharacteristic!.sendNext(packetReceiptNotificationNumber, packetsOf: firmware!, andReportProgressTo: progressDelegate)
+            dfuPacketCharacteristic!.sendNext(packetReceiptNotificationNumber, packetsOf: firmware!,
+                                              andReportProgressTo: progressDelegate, on: progressQueue!)
             return paused
         }
         paused = false
@@ -112,6 +116,7 @@ import CoreBluetooth
             success  = nil
             report   = nil
             progressDelegate = nil
+            progressQueue = nil
             // Upload has been aborted. Reset the target device. It will disconnect automatically
             sendReset(onError: _report)
         }
@@ -260,7 +265,7 @@ import CoreBluetooth
         } else {
             // DFU Version characteristic did not exist in SDK 6.1 or before. Delay is required as stated above.
             logger.d("wait(1000)")
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1000), execute: sendStartDfu)
+            queue.asyncAfter(deadline: .now() + .milliseconds(1000), execute: sendStartDfu)
         }
     }
     
@@ -280,7 +285,7 @@ import CoreBluetooth
         
         // See comment in sendDfuStart(withFirmwareType:andSize:onSuccess:onError) above
         logger.d("wait(1000)")
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1000)) {
+        queue.asyncAfter(deadline: .now() + .milliseconds(1000)) {
             // 1. Sends the Start DFU command with the firmware type to the DFU Control Point characteristic
             // 2. Sends firmware sizes to the DFU Packet characteristic
             // 3. Receives response notification and calls onSuccess or onError
@@ -391,10 +396,12 @@ import CoreBluetooth
      - parameter firmware: The firmware to be sent.
      - parameter delay:    If true, upload will be delayed by 1000ms.
      - parameter progress: A progress delagate that will be informed about transfer progress.
+     - parameter queue:    The queue to dispatch progress events on.
      - parameter success:  A callback called when a response with status Success is received.
      - parameter report:   A callback called when a response with an error status is received.
      */
-    func sendFirmware(_ firmware: DFUFirmware, withDelay delay: Bool, andReportProgressTo progress: DFUProgressDelegate?,
+    func sendFirmware(_ firmware: DFUFirmware, withDelay delay: Bool,
+                      andReportProgressTo progress: DFUProgressDelegate?, on queue: DispatchQueue,
                       onSuccess success: @escaping Callback, onError report: @escaping ErrorCallback) {
         guard !aborted else {
             sendReset(onError: report)
@@ -405,6 +412,7 @@ import CoreBluetooth
         self.firmware         = firmware
         self.report           = report
         self.progressDelegate = progress
+        self.progressQueue    = queue
         
         // 1. Sends the Receive Firmware Image command to the DFU Control Point characteristic
         // 2. Sends firmware to the DFU Packet characteristic. If number > 0 it will receive Packet Receit Notifications
@@ -419,6 +427,7 @@ import CoreBluetooth
                         self.firmware = nil
                         self.report   = nil
                         self.progressDelegate = nil
+                        self.progressQueue = nil
                         success()
                     },
                     onPacketReceiptNofitication: {
@@ -436,7 +445,8 @@ import CoreBluetooth
                             let bytesSent = self.dfuPacketCharacteristic!.bytesSent
                             // Due to https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library/issues/54 only 16 least significant bits are verified
                             if peripheralIsReadyToSendWriteWithoutRequest || (bytesSent & 0xFFFF) == (bytesReceived! & 0xFFFF) {
-                                self.dfuPacketCharacteristic!.sendNext(self.packetReceiptNotificationNumber, packetsOf: firmware, andReportProgressTo: progress)
+                                self.dfuPacketCharacteristic!.sendNext(self.packetReceiptNotificationNumber, packetsOf: firmware,
+                                                                       andReportProgressTo: progress, on: queue)
                             } else {
                                 // Target device deported invalid number of bytes received
                                 report(.bytesLost, "\(bytesSent) bytes were sent while \(bytesReceived!) bytes were reported as received")
@@ -446,6 +456,7 @@ import CoreBluetooth
                             self.firmware = nil
                             self.report   = nil
                             self.progressDelegate = nil
+                            self.progressQueue = nil
                             self.sendReset(onError: report)
                         }
                     },
@@ -455,6 +466,7 @@ import CoreBluetooth
                         self.firmware = nil
                         self.report   = nil
                         self.progressDelegate = nil
+                        self.progressQueue = nil
                         report(error, message)
                     }
                 )
@@ -463,12 +475,13 @@ import CoreBluetooth
                     let start = {
                         self.logger.a("Uploading firmware...")
                         self.logger.v("Sending firmware to DFU Packet characteristic...")
-                        self.dfuPacketCharacteristic!.sendNext(self.packetReceiptNotificationNumber, packetsOf: firmware, andReportProgressTo: progress)
+                        self.dfuPacketCharacteristic!.sendNext(self.packetReceiptNotificationNumber, packetsOf: firmware,
+                                                               andReportProgressTo: progress, on: queue)
                     }
                     // On devices running SDK 6.0 or older a delay is required before the device is ready to receive data
                     if delay {
                         self.logger.d("wait(1000)")
-                        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1000), execute: start)
+                        queue.asyncAfter(deadline: .now() + .milliseconds(1000), execute: start)
                     } else {
                         start()
                     }
@@ -477,6 +490,7 @@ import CoreBluetooth
                     self.firmware = nil
                     self.report   = nil
                     self.progressDelegate = nil
+                    self.progressQueue = nil
                     self.sendReset(onError: report)
                 }
             },

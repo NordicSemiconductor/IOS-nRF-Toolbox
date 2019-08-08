@@ -15,7 +15,7 @@ class NORHKScannerViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var devicesTable: UITableView!
     @IBOutlet weak var emptyView: UIView!
     @IBAction func cancelButtonTapped(_ sender: Any) {
-        self.dismiss(animated: true)
+        dismiss(animated: true)
     }
     
     //MARK: - Scanner implementation
@@ -31,19 +31,13 @@ class NORHKScannerViewController: UIViewController, UITableViewDelegate, UITable
     //MARK: - UIViewControllerw Flow
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.default, animated: true)
         
-        let activityIndicatorView              = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+        let activityIndicatorView              = UIActivityIndicatorView(style: .gray)
         activityIndicatorView.hidesWhenStopped = true
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activityIndicatorView)
+        navigationItem.rightBarButtonItem      = UIBarButtonItem(customView: activityIndicatorView)
         activityIndicatorView.startAnimating()
         
         startScanning()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.lightContent, animated: true)
-        super.viewWillDisappear(animated)
     }
     
     //MARK: - UITableViewDelegate
@@ -56,14 +50,9 @@ class NORHKScannerViewController: UIViewController, UITableViewDelegate, UITable
     
     //MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
         let aCell = tableView.dequeueReusableCell(withIdentifier: "HKAccessoryCell", for: indexPath)
         aCell.textLabel?.text = discoveredAccessories[indexPath.row].name
-        if #available(iOS 9.0, *) {
-            aCell.detailTextLabel?.text = discoveredAccessories[indexPath.row].category.localizedDescription
-        } else {
-            aCell.detailTextLabel?.text = ""
-        }
+        aCell.detailTextLabel?.text = discoveredAccessories[indexPath.row].category.localizedDescription
         return aCell
     }
 
@@ -90,7 +79,7 @@ class NORHKScannerViewController: UIViewController, UITableViewDelegate, UITable
         guard discoveredAccessories.contains(accessory) == true else {
             return
         }
-        discoveredAccessories.remove(at: discoveredAccessories.index(of: accessory)!)
+        discoveredAccessories.remove(at: discoveredAccessories.firstIndex(of: accessory)!)
         devicesTable.reloadData()
     }
 }

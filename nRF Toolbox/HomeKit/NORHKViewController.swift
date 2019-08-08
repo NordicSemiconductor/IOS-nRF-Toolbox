@@ -43,16 +43,16 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, HMHomeManagerD
         if homeStore.homeManager.homes.count == 0 {
             //Create home, no homes available
             createPrimaryHome()
-        } else if homeStore.homeManager.homes.count > 1 {
+        } else {
             showHomeSwitcherUI()
         }
     }
 
     func handleAboutButtonTapped() {
-        self.showAbout(message: NORAppUtilities.getHelpTextForService(service: .homekit))
+        showAbout(message: NORAppUtilities.getHelpTextForService(service: .homekit))
     }
     func handleConnectionButtonTapped() {
-        self.performSegue(withIdentifier: homeKitScannerSegue, sender: nil)
+        performSegue(withIdentifier: homeKitScannerSegue, sender: nil)
     }
     func getAccessoriesForHome(aHome: HMHome) -> [HMAccessory] {
         return aHome.accessories
@@ -63,7 +63,7 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, HMHomeManagerD
     }
 
     func createPrimaryHome() {
-        homeStore.homeManager.addHome(withName: "MyHome") { (aHome, anError) in
+        homeStore.homeManager.addHome(withName: "My Home") { (aHome, anError) in
             if anError == nil {
                 self.homeStore.homeManager.updatePrimaryHome(aHome!, completionHandler: { (anError) in
                     if let anError = anError {
@@ -107,17 +107,16 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, HMHomeManagerD
     func showHomeSwitcherUI() {
         let selectionAlertView = UIAlertController(title: "Select Home", message: "Select new home", preferredStyle: .actionSheet)
         for aHome in homeStore.homeManager.homes {
-            let aHomeAction = UIAlertAction(title: aHome.name, style: .default, handler: { (action) in
+            selectionAlertView.addAction(UIAlertAction(title: aHome.name, style: .default) { (action) in
                 self.didSelectNewHome(aHome)
             })
-            selectionAlertView.addAction(aHomeAction)
         }
-        present(selectionAlertView, animated: true, completion: nil)
+        present(selectionAlertView, animated: true)
     }
 
     func pair(anAccessory: HMAccessory, withHome aHome: HMHome) {
         print(aHome, anAccessory)
-        aHome.addAccessory(anAccessory) { (error) in
+        aHome.addAccessory(anAccessory) { error in
             if let error = error {
                 print("Error in adding accessory \(error)")
             } else {
@@ -127,7 +126,7 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, HMHomeManagerD
             //Browser needs to be released after adding accessory to the home.
             //Releasing the browser before adding the accessory will result in a HomeKit error 2 (Object not found.)
             //as the selected HMAccessory object becomes invalid.
-            self.accessoryBrowser.stopSearchingForNewAccessories()
+            self.accessoryBrowser?.stopSearchingForNewAccessories()
             self.accessoryBrowser = nil
         }
     }
@@ -138,16 +137,16 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, HMHomeManagerD
             self.updateUIForHome(aHome: primaryHome)
             self.homeStore.home = primaryHome
         }
-        if manager.homes.count == 0 {
+        switch manager.homes.count {
+        case let count where count == 0:
             changeHomeButton.setTitle("Create home", for: .normal)
             changeHomeButton.isEnabled = true
-        } else {
-            if manager.homes.count > 1 {
-                changeHomeButton.setTitle("Change home", for: .normal)
-                changeHomeButton.isEnabled = true
-            } else {
-                changeHomeButton.isEnabled = false
-            }
+        case let count where count == 1:
+            changeHomeButton.setTitle("Change home", for: .normal)
+            changeHomeButton.isEnabled = false
+        default:
+            changeHomeButton.setTitle("Change home", for: .normal)
+            changeHomeButton.isEnabled = true
         }
         homesDidChange()
     }
@@ -191,11 +190,7 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, HMHomeManagerD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let aCell = tableView.dequeueReusableCell(withIdentifier: "HKAccessoryCell", for: indexPath)
         aCell.textLabel?.text = homeAccessories[indexPath.row].name
-        if #available(iOS 9.0, *) {
-            aCell.detailTextLabel?.text = homeAccessories[indexPath.row].category.localizedDescription
-        } else {
-            aCell.detailTextLabel?.text = ""
-        }
+        aCell.detailTextLabel?.text = homeAccessories[indexPath.row].category.localizedDescription
         return aCell
     }
 
@@ -225,8 +220,9 @@ class NORHKViewController: NORBaseViewController, HMHomeDelegate, HMHomeManagerD
             if let _ = sender as? HMAccessory {
                 return true
             } else {
-                let alertView = UIAlertView(title: "No accessory", message: "The selected accessory was not found, please try scanning again and reselecting it.\r\nIf the problem persists, try unpairing that accessory and adding it again to your home.", delegate: nil, cancelButtonTitle: "Ok")
-                alertView.show()
+                let alertView = UIAlertController(title: "No accessory", message: "The selected accessory was not found, please try scanning again and reselecting it.\r\nIf the problem persists, try unpairing that accessory and adding it again to your home.", preferredStyle: .alert)
+                alertView.addAction(UIAlertAction(title: "OK", style: .cancel))
+                present(alertView, animated: true)
                 return false
             }
         }

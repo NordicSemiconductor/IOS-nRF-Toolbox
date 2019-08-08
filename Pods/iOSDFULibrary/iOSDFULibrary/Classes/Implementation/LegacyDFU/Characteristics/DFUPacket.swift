@@ -129,8 +129,10 @@ internal class DFUPacket: DFUCharacteristic {
      Set to 0 to disable Packet Receipt Notification procedure (not recommended).
      - parameter firmware: The firmware to be sent.
      - parameter progress: An optional progress delegate.
+     - parameter queue:    The queue to dispatch progress events on.
      */
-    func sendNext(_ prnValue: UInt16, packetsOf firmware: DFUFirmware, andReportProgressTo progress: DFUProgressDelegate?) {
+    func sendNext(_ prnValue: UInt16, packetsOf firmware: DFUFirmware,
+                  andReportProgressTo progress: DFUProgressDelegate?, on queue: DispatchQueue) {
         // Get the peripheral object
         let peripheral = characteristic.service.peripheral
         
@@ -153,7 +155,7 @@ internal class DFUPacket: DFUCharacteristic {
             lastTime = startTime
             
             // Notify progress delegate that upload has started (0%)
-            DispatchQueue.main.async(execute: {
+            queue.async(execute: {
                 progress?.dfuProgressDidChange(
                     for:   firmware.currentPart,
                     outOf: firmware.parts,
@@ -195,7 +197,7 @@ internal class DFUPacket: DFUCharacteristic {
                 lastTime = now
                 bytesSentSinceProgessNotification = bytesSent
                 
-                DispatchQueue.main.async(execute: {
+                queue.async(execute: {
                     progress?.dfuProgressDidChange(
                         for:   firmware.currentPart,
                         outOf: firmware.parts,

@@ -225,7 +225,7 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     
     func clearUI() {
         deviceName.text = "DEFAULT HRM";
-        battery.setTitle("N/A", for: UIControlState())
+        battery.setTitle("N/A", for: .normal)
         battery.tag = 0;
         hrLocation.text = "n/a";
         hrValue.text = "-";
@@ -304,12 +304,14 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     func number(for plot: CPTPlot, field fieldEnum: UInt, record idx: UInt) -> Any? {
         let fieldVal = NSInteger(fieldEnum)
         let scatterPlotField = CPTScatterPlotField(rawValue: fieldVal)
-        switch (scatterPlotField!) {
-            case .X:
-                // The xValues stores timestamps. To show them starting from 0 we have to subtract the first one.
-                return (xValues?.object(at: Int(idx)) as! NSDecimalNumber).subtracting(xValues?.firstObject as! NSDecimalNumber)
-            case .Y:
-                return hrValues?.object(at: Int(idx)) as AnyObject?
+        switch scatterPlotField! {
+        case .X:
+            // The xValues stores timestamps. To show them starting from 0 we have to subtract the first one.
+            return (xValues?.object(at: Int(idx)) as! NSDecimalNumber).subtracting(xValues?.firstObject as! NSDecimalNumber)
+        case .Y:
+            return hrValues?.object(at: Int(idx)) as AnyObject?
+        default:
+            return nil
         }
     }
 
@@ -355,17 +357,17 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async {
             self.deviceName.text = peripheral.name
-            self.connectionButton.setTitle("DISCONNECT", for: UIControlState())
+            self.connectionButton.setTitle("DISCONNECT", for: .normal)
             self.hrValues?.removeAllObjects()
             self.xValues?.removeAllObjects()
             self.resetPlotRange()
-        }
         
-        if UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))){
-            UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .sound], categories: nil))
+            if UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))){
+                UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .sound], categories: nil))
+            }
+            NotificationCenter.default.addObserver(self, selector: #selector(NORHRMViewController.appDidEnterBackgroundCallback), name: UIApplication.didEnterBackgroundNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(NORHRMViewController.appDidBecomeActiveCallback), name: UIApplication.didBecomeActiveNotification, object: nil)
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(NORHRMViewController.appDidEnterBackgroundCallback), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(NORHRMViewController.appDidBecomeActiveCallback), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         
         // Peripheral has connected. Discover required services
         peripheral.discoverServices([hrServiceUUID, batteryServiceUUID])
@@ -373,18 +375,18 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        DispatchQueue.main.async(execute: {
-            NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to peripheral failed. Try again")
-            self.connectionButton.setTitle("CONNCECT", for: UIControlState())
+        DispatchQueue.main.async {
+            NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to peripheral failed. Try again", from: self)
+            self.connectionButton.setTitle("CONNCECT", for: .normal)
             self.peripheral = nil
             self.clearUI()
-        });
+        }
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        DispatchQueue.main.async(execute: {
-            self.connectionButton.setTitle("CONNECT", for: UIControlState())
+        DispatchQueue.main.async {
+            self.connectionButton.setTitle("CONNECT", for: .normal)
             self.peripheral = nil;
             self.clearUI()
             
@@ -392,9 +394,9 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                 let name = peripheral.name ?? "Peripheral"
                 NORAppUtilities.showBackgroundNotification(message: "\(name) is disconnected.")
             }
-            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
-            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
-        });
+            NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+            NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
+        }
     }
     
     //MARK: - CBPeripheralDelegate
@@ -461,7 +463,7 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                 let array : UnsafePointer<UInt8> = (data?.bytes)!.assumingMemoryBound(to: UInt8.self)
                 let batteryLevel : UInt8 = array[0]
                 let text = "\(batteryLevel)%"
-                self.battery.setTitle(text, for: UIControlState.disabled)
+                self.battery.setTitle(text, for: UIControl.State.disabled)
                 
                 if self.battery.tag == 0 {
                     if characteristic.properties.rawValue & CBCharacteristicProperties.notify.rawValue > 0 {
@@ -493,7 +495,7 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         if segue.identifier == "scan" {
             // Set this contoller as scanner delegate
             let nc                = segue.destination as! UINavigationController
-            let controller        = nc.childViewControllers.first as! NORScannerViewController
+            let controller        = nc.children.first as! NORScannerViewController
             controller.filterUUID = hrServiceUUID
             controller.delegate   = self
         }

@@ -93,7 +93,7 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
     //MARK: - Class Implementation
     func initSound() {
         do{
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category(rawValue: convertFromAVAudioSessionCategory(.playback)))
             try AVAudioSession.sharedInstance().setActive(true)
         } catch _ {
             print("Could not init AudioSession!")
@@ -111,15 +111,15 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
     }
     
     func enableFindmeButton() {
-        findmeButton.isEnabled         = true
-        findmeButton.backgroundColor = UIColor.black
-        findmeButton.setTitleColor(UIColor.white, for: UIControlState())
+        findmeButton.isEnabled       = true
+        findmeButton.backgroundColor = .black
+        findmeButton.setTitleColor(.white, for: .normal)
     }
     
     func disableFindmeButton() {
         findmeButton.isEnabled = false
-        findmeButton.backgroundColor = UIColor.lightGray
-        findmeButton.setTitleColor(UIColor.lightText, for: UIControlState())
+        findmeButton.backgroundColor = .lightGray
+        findmeButton.setTitleColor(.lightText, for: .normal)
     }
 
     func initGattServer() {
@@ -148,7 +148,7 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
             let data = Data(bytes: &val, count: 1)
             proximityPeripheral?.writeValue(data, for: immidiateAlertCharacteristic!, type: CBCharacteristicWriteType.withoutResponse)
             isImmidiateAlertOn = true
-            findmeButton.setTitle("SilentMe", for: UIControlState())
+            findmeButton.setTitle("Silent Me", for: .normal)
         }
     }
     
@@ -158,7 +158,7 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
             let data = Data(bytes: &val, count: 1)
             proximityPeripheral?.writeValue(data, for: immidiateAlertCharacteristic!, type: CBCharacteristicWriteType.withoutResponse)
             isImmidiateAlertOn = false
-            findmeButton.setTitle("FindMe", for: UIControlState())
+            findmeButton.setTitle("Find Me", for: .normal)
         }
     }
     
@@ -177,11 +177,11 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
 
     func clearUI() {
         deviceName.text = "DEFAULT PROXIMITY"
-        battery.setTitle("n/a", for:UIControlState.disabled)
+        battery.setTitle("n/a", for: .disabled)
         battery.tag = 0
         lockImage.isHighlighted = false
         isImmidiateAlertOn = false
-        self.immidiateAlertCharacteristic = nil
+        immidiateAlertCharacteristic = nil
     }
     
     @objc func applicationDidEnterBackgroundCallback() {
@@ -203,7 +203,7 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
         if segue.identifier == "scan" {
             // Set this contoller as scanner delegate
             let nc = segue.destination as! UINavigationController
-            let controller = nc.childViewControllers.first as! NORScannerViewController
+            let controller = nc.children.first as! NORScannerViewController
             controller.filterUUID = proximityLinkLossServiceUUID
             controller.delegate = self
         }
@@ -232,20 +232,20 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             self.deviceName.text = peripheral.name
-            self.connectionButton.setTitle("DISCONNECT", for: UIControlState())
+            self.connectionButton.setTitle("DISCONNECT", for: .normal)
             self.lockImage.isHighlighted = true
             self.enableFindmeButton()
-        })
-        //Following if condition display user permission alert for background notification
-        if UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))){
-            UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .sound], categories: nil))
-        }
-        NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterBackgroundCallback), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidBecomeActiveCallback), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
-        if NORAppUtilities.isApplicationInactive() {
-            NORAppUtilities.showBackgroundNotification(message: "\(peripheral.name ?? "Device") is within range!")
+            //Following if condition display user permission alert for background notification
+            if UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))){
+                UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .sound], categories: nil))
+            }
+            NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterBackgroundCallback), name: UIApplication.didEnterBackgroundNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidBecomeActiveCallback), name: UIApplication.didBecomeActiveNotification, object: nil)
+            if NORAppUtilities.isApplicationInactive() {
+                NORAppUtilities.showBackgroundNotification(message: "\(peripheral.name ?? "Device") is within range!")
+            }
         }
         
         peripheral.discoverServices([proximityLinkLossServiceUUID, proximityImmediateAlertServiceUUID, batteryServiceUUID])
@@ -253,18 +253,18 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        DispatchQueue.main.async(execute: {
-            NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to the peripheral failed. Try again")
-            self.connectionButton.setTitle("CONNECT", for: UIControlState())
+        DispatchQueue.main.async {
+            NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to the peripheral failed. Try again", from: self)
+            self.connectionButton.setTitle("CONNECT", for: .normal)
             self.proximityPeripheral = nil
             self.disableFindmeButton()
             self.clearUI()
-        })
+        }
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         print("Peripheral disconnected or out of range!")
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             let name = peripheral.name ?? "Peripheral"
             if error != nil {
                 self.lockImage.isHighlighted = false
@@ -274,21 +274,21 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
                 if NORAppUtilities.isApplicationInactive() {
                     NORAppUtilities.showBackgroundNotification(message: message)
                 } else {
-                    NORAppUtilities.showAlert(title: "PROXIMITY", andMessage: message)
+                    NORAppUtilities.showAlert(title: "PROXIMITY", andMessage: message, from: self)
                 }
                 self.playSoundOnce()
             } else {
-                self.connectionButton.setTitle("CONNECT", for: UIControlState())
+                self.connectionButton.setTitle("CONNECT", for: .normal)
                 if NORAppUtilities.isApplicationInactive() {
                     NORAppUtilities.showBackgroundNotification(message: "\(name) is disconnected.")
                 }
                 
                 self.proximityPeripheral = nil
                 self.clearUI()
-                NotificationCenter.default.removeObserver(self, name:NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
-                NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+                NotificationCenter.default.removeObserver(self, name:UIApplication.didBecomeActiveNotification, object: nil)
+                NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
             }
-        })
+        }
     }
 
     //MARK: - CBPeripheralDelegate
@@ -351,13 +351,13 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
         }
         
         print(characteristic.uuid)
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             if characteristic.uuid == self.batteryLevelCharacteristicUUID {
                 let value = characteristic.value!
                 let array = UnsafeMutablePointer<UInt8>(mutating: (value as NSData).bytes.bindMemory(to: UInt8.self, capacity: value.count))
                 let batteryLevel = UInt8(array[0])
                 let text = "\(batteryLevel)%"
-                self.battery.setTitle(text, for: UIControlState.disabled)
+                self.battery.setTitle(text, for: .disabled)
 
                 if self.battery.tag == 0 {
                     // If battery level notifications are available, enable them
@@ -369,18 +369,16 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
                     }
                 }
             }
-        })
+        }
     }
     //MARK: - CBPeripheralManagerDelegate
     func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
         switch (peripheral.state) {
         case .poweredOff:
             print("PeripheralManagerState is Off")
-            break;
         case .poweredOn:
             print("PeripheralManagerState is on");
-            self.addServices()
-            break;
+            addServices()
         default:
             break;
         }
@@ -406,19 +404,21 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
             case 0:
                 print("No Alert")
                 stopSound()
-                break
             case 1:
                 print("Low Alert")
                 playLoopingSound()
-                break
             case 2:
                 print("High Alert")
                 playSoundOnce()
-                break
             default:
                 break
             }
         }
 
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromAVAudioSessionCategory(_ input: AVAudioSession.Category) -> String {
+	return input.rawValue
 }

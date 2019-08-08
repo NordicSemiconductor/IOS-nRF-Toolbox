@@ -22,23 +22,10 @@
 
 import Foundation
 
-// Source: http://stackoverflow.com/a/35201226/2115352
-
 extension Data {
 
     internal var hexString: String {
-        let pointer = self.withUnsafeBytes { (bytes: UnsafePointer<UInt8>) -> UnsafePointer<UInt8> in
-            return bytes
-        }
-        let array = getByteArray(pointer)
-        
-        return array.reduce("") { (result, byte) -> String in
-            result + String(format: "%02x", byte)
-        }
+        return map { String(format: "%02X", $0) }.joined()
     }
-
-    fileprivate func getByteArray(_ pointer: UnsafePointer<UInt8>) -> [UInt8] {
-        let buffer = UnsafeBufferPointer<UInt8>(start: pointer, count: count)
-            return [UInt8](buffer)
-    }
+    
 }
