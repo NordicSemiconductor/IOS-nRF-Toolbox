@@ -2,6 +2,13 @@
 
 The nRF Toolbox is a container app that stores your Nordic Semiconductor apps for Bluetooth Smart in one location. 
 
+New in V4.5.0:
+
+* Migrated to Swift 5
+* DFU Library 4.5.0
+* Lots of issues fixed
+* New Nordic look&feel
+
 New in V4.4.4:
 
 * Improvet HomeKit view, allowing user to switch homes, and create a home if none exists.
