@@ -23,12 +23,15 @@
 import UIKit
 import CoreBluetooth
 
-class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, NORScannerDelegate, UITableViewDataSource {
+class NORCGMViewController: NORBaseViewController, NORScannerDelegate,
+                            CBCentralManagerDelegate, CBPeripheralDelegate,
+                            UITableViewDataSource, UITableViewDelegate {
 
     //MARK: - Class porperties
     var bluetoothManager : CBCentralManager?
 
     var dateFormat : DateFormatter
+    var sessionStartTime: Date?
 
     var cbgmServiceUUID : CBUUID
     var cgmGlucoseMeasurementCharacteristicUUID : CBUUID
@@ -98,6 +101,8 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
         // Rotate the vertical label
         verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: -.pi / 2)
         cbgmTableView.dataSource = self
+        cbgmTableView.delegate = self
+        sessionStartTime = Date()
     }
     
     @objc func appdidEnterBackground() {
@@ -113,6 +118,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
         let alertView = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alertView.addAction(UIAlertAction(title: "Start Session", style: .default) { _ in
             self.cgmActivityIndicator.startAnimating()
+            self.sessionStartTime = Date()
             let data = Data([NORCGMOpCode.startSession.rawValue])
             self.connectedPeripheral?.writeValue(data, for: self.cgmSpecificOpsControlPointCharacteristic!, type:.withResponse)
         })
@@ -206,11 +212,15 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
         let aCell = tableView.dequeueReusableCell(withIdentifier: "CGMCell", for: indexPath) as! NORCGMItemCell
 
         aCell.type.text = aReading.typeAsString()
-        aCell.timestamp.text = dateFormat.string(from: Date(timeIntervalSinceNow: Double(aReading.timeOffsetSinceSessionStart)))
+        aCell.timestamp.text = dateFormat.string(from: Date(timeInterval: Double(aReading.timeOffsetSinceSessionStart), since: self.sessionStartTime!))
         aCell.value.text = String(format: "%.0f", aReading.glucoseConcentration)
         aCell.unit.text = "mg/dL"
         
         return aCell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 
     func showUserInputAlert(withMessage aMessage: String) {
@@ -235,7 +245,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
     //MARK: - Segue navigation
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         // The 'scan' seque will be performed only if connectedPeripheral == nil (if we are not connected already).
-        return identifier == "scan" && connectedPeripheral == nil
+        return identifier != "scan" || connectedPeripheral == nil
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -252,6 +262,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
             let controller = segue.destination as! NORCGMDetailsViewController
             let aReading = readings[cbgmTableView.indexPathForSelectedRow!.row]
             controller.reading = aReading
+            controller.sessionStartTime = sessionStartTime
         }
     }
 
@@ -411,11 +422,12 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
                     // If the reading has been found (the same reading has the same sequence number), replace it with the new one
                     // The indexIfObjext method uses isEqual method from GlucodeReading (comparing by sequence number only)
                     self.readings[index] = reading
+                    self.cbgmTableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
                 } else {
                     // If not, just add the new one to the array
                     self.readings.append(reading)
+                    self.cbgmTableView.insertRows(at: [IndexPath(row: self.readings.count - 1, section: 0)], with: .automatic)
                 }
-                self.cbgmTableView.reloadData()
             }
         }
         if characteristic.uuid == cgmSpecificOpsControlPointCharacteristicUUID {

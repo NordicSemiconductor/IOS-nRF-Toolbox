@@ -35,7 +35,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     //MARK: - Class properties
     var connectedPeripheral                             : CBPeripheral?
     var bgmRecordAccessControlPointCharacteristic       : CBCharacteristic?
-    var readings                                        : NSMutableArray
+    var readings                                        : [NORGlucoseReading]
     var dateFormatter                                   : DateFormatter
     var bgmServiceUUID                                  : CBUUID
     var bgmGlucoseMeasurementCharacteristicUUID         : CBUUID
@@ -43,16 +43,6 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     var bgmRecordAccessControlPointCharacteristicUUID   : CBUUID
     var batteryServiceUUID                              : CBUUID
     var batteryLevelCharacteristicUUID                  : CBUUID
-
-    enum BGMViewActions : Int {
-        case refresh            = 0
-        case allRecords         = 1
-        case firstRecord        = 2
-        case lastRecord         = 3
-        case clear              = 4
-        case deleteAllRecords   = 5
-        case cancel             = 6
-    }
     
     //MARK: - ViewController outlets
     @IBOutlet weak var battery: UIButton!
@@ -76,7 +66,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     
     //MARK: - UIViewController Methods
     required init(coder aDecoder: NSCoder) {
-        readings = NSMutableArray(capacity: 20)
+        readings = []
         dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy, HH:mm"
         
@@ -98,16 +88,16 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     func handleActionButtonTapped(from view: UIView) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Refresh", style: .default) { _ in
-            if let reading = self.readings.lastObject as? NORGlucoseReading {
+            if let reading = self.readings.last {
                 let nextSequence = reading.sequenceNumber + 1
-                let data = Data(
-                    [NORBGMOpCode.reportStoredRecords.rawValue,
+                let data = Data([
+                    NORBGMOpCode.reportStoredRecords.rawValue,
                     NORBGMOperator.greaterThanOrEqual.rawValue,
                     NORBGMFilterType.sequenceNumber.rawValue,
                     //Convert Endianess
                     UInt8(nextSequence & 0xFF),
-                    UInt8(nextSequence >> 8)]
-                )
+                    UInt8(nextSequence >> 8)
+                ])
                 self.connectedPeripheral?.writeValue(data, for: self.bgmRecordAccessControlPointCharacteristic!, type: .withResponse)
             } else {
                 let data = Data([NORBGMOpCode.reportStoredRecords.rawValue, NORBGMOperator.allRecords.rawValue])
@@ -115,29 +105,29 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
             }
         })
         alert.addAction(UIAlertAction(title: "All", style: .default) { _ in
-            self.readings.removeAllObjects()
+            self.readings.removeAll()
             self.bgmTableView.reloadData()
             let data = Data([NORBGMOpCode.reportStoredRecords.rawValue, NORBGMOperator.allRecords.rawValue])
             self.connectedPeripheral?.writeValue(data, for: self.bgmRecordAccessControlPointCharacteristic!, type: .withResponse)
         })
         alert.addAction(UIAlertAction(title: "First", style: .default) { _ in
-            self.readings.removeAllObjects()
+            self.readings.removeAll()
             self.bgmTableView.reloadData()
             let data = Data([NORBGMOpCode.reportStoredRecords.rawValue, NORBGMOperator.first.rawValue])
             self.connectedPeripheral?.writeValue(data, for: self.bgmRecordAccessControlPointCharacteristic!, type: .withResponse)
         })
         alert.addAction(UIAlertAction(title: "Last", style: .default) { _ in
-            self.readings.removeAllObjects()
+            self.readings.removeAll()
             self.bgmTableView.reloadData()
             let data = Data([NORBGMOpCode.reportStoredRecords.rawValue, NORBGMOperator.last.rawValue])
             self.connectedPeripheral?.writeValue(data, for: self.bgmRecordAccessControlPointCharacteristic!, type: .withResponse)
         })
         alert.addAction(UIAlertAction(title: "Clear", style: .default) { _ in
-            self.readings.removeAllObjects()
+            self.readings.removeAll()
             self.bgmTableView.reloadData()
         })
         alert.addAction(UIAlertAction(title: "Delete All", style: .destructive) { _ in
-            self.readings.removeAllObjects()
+            self.readings.removeAll()
             self.bgmTableView.reloadData()
             let data = Data([NORBGMOpCode.deleteStoredRecords.rawValue, NORBGMOperator.allRecords.rawValue])
             self.connectedPeripheral?.writeValue(data, for: self.bgmRecordAccessControlPointCharacteristic!, type: .withResponse)
@@ -152,15 +142,14 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     }
     
     func handleConnectionButtonTapped() {
-        guard connectedPeripheral != nil else {
+        guard let manager = bluetoothManager, let peripheral = connectedPeripheral else {
             return
         }
-
-        bluetoothManager?.cancelPeripheralConnection(connectedPeripheral!)
+        manager.cancelPeripheralConnection(peripheral)
     }
     
     func clearUI() {
-        readings.removeAllObjects()
+        readings.removeAll()
         DispatchQueue.main.async {
             self.bgmTableView.reloadData()
             self.deviceName.text = "DEFAULT_BGM"
@@ -287,24 +276,23 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
             print("New glucose reading")
             let reading = NORGlucoseReading.readingFromBytes(UnsafeMutablePointer(array))
             
-            if (readings.contains(reading) != false) {
-                readings.replaceObject(at: readings.index(of: reading), with: reading)
+            if let index = readings.firstIndex(of: reading) {
+                readings[index] = reading
             } else {
-                readings.add(reading)
+                readings.append(reading)
             }
         } else if characteristic.uuid.isEqual(bgmGlucoseMeasurementContextCharacteristicUUID) {
             let context = NORGlucoseReadingContext.readingContextFromBytes(UnsafeMutablePointer(array))
-            let index = readings.index(of: context)
-            if index != NSNotFound {
-                let reading = readings.object(at: index) as! NORGlucoseReading
-                reading.context = context
+            
+            if let index = readings.firstIndex(where: { $0.sequenceNumber == context.sequenceNumber }) {
+                readings[index].context = context
             } else {
                 print("Glucose measurement with sequence number: \(context.sequenceNumber) not found")
             }
         } else if characteristic.uuid.isEqual(bgmRecordAccessControlPointCharacteristicUUID) {
             print("OpCode: \(array[0]), Operator: \(array[2])")
             DispatchQueue.main.async {
-                switch(NORBGMResponseCode(rawValue:array[2])!){
+                switch NORBGMResponseCode(rawValue:array[2])! {
                 case .success:
                     self.bgmTableView.reloadData()
                 case .opCodeNotSupported:
@@ -392,7 +380,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BGMCell") as! NORBGMItemCell
         
-        let reading = readings.object(at: indexPath.row) as! NORGlucoseReading
+        let reading = readings[indexPath.row]
         cell.timestamp.text = dateFormatter.string(from: reading.timestamp as Date)
         
         if reading.glucoseConcentrationTypeAndLocationPresent {
@@ -430,7 +418,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
             controller.delegate = self
         } else if segue.identifier == "details" {
             let controller = segue.destination as! NORBGMDetailsViewController
-            controller.reading = readings.object(at: ((bgmTableView.indexPathForSelectedRow as NSIndexPath?)?.row)!) as? NORGlucoseReading
+            controller.reading = readings[bgmTableView.indexPathForSelectedRow!.row]
         }
     }
 }

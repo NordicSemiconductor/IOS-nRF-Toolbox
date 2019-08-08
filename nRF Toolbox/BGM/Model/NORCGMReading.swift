@@ -47,7 +47,6 @@ class NORCGMReading : NSObject {
     // Glucose Measurement values
     var cgmFeatureData                  : NORCGMFeatureData?
     var measurementSize                 : UInt8 = 0
-    var timeStamp                       : Date?
     var timeOffsetSinceSessionStart     : Int16 = 0
     var glucoseConcentration            : Float32 = 0.0
     var trendInfo                       : Float32 = 0.0
@@ -89,19 +88,17 @@ class NORCGMReading : NSObject {
         self.sensorWarningPresent        = statusWarningPsesent;
         
         self.sensorStatusAnnunciationPresent = statusAnnunciationPresent;
-        if (self.sensorStatusAnnunciationPresent)
-        {
+        if self.sensorStatusAnnunciationPresent {
             self.sensorStatusAnnunciation = NORCharacteristicReader.readUInt32Value(ptr: &pointer)
         }
         
         self.sensorTrendInfoPresent = trendInfoPresent;
-        if(self.sensorTrendInfoPresent)
-        {
+        if self.sensorTrendInfoPresent {
             self.trendInfo = NORCharacteristicReader.readSFloatValue(ptr: &pointer)
         }
         self.sensorQualityPresent = qualityPresent;
         
-        if(self.sensorQualityPresent){
+        if self.sensorQualityPresent {
             self.quality = NORCharacteristicReader.readSFloatValue(ptr: &pointer)
         }
         self.e2eCrcPresent = false;
