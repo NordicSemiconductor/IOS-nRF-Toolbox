@@ -31,7 +31,7 @@ enum CGMFeatureFlags : UInt8 {
 enum CGMType : UInt8 {
     case cgmTypeCapillaryWholeBlood    = 1
     case cgmTypeCapillaryPlasma        = 2
-    case cgmTypeCapillaryWholeBlood2   = 3
+    case cgmTypeVenousWholeBlood       = 3
     case cgmTypeVenousPlasma           = 4
     case cgmTypeArterialWholeBlood     = 5
     case cgmTypeArterialPlasma         = 6
@@ -56,73 +56,66 @@ enum CGMLocation : UInt8{
 
 class NORCGMFeatureData: NSObject {
     // Glucose Measurement values
-    var type     : CGMType?
-    var location : CGMLocation?
-
-    required init(withBytes bytes: UnsafeMutablePointer<UInt8>) {
-        super.init()
-        self.updateFromBytes(bytes)
-    }
+    var type     : CGMType
+    var location : CGMLocation
     
-    func updateFromBytes(_ bytes : UnsafeMutablePointer<UInt8>) {
-
+    init(_ bytes: UnsafeMutablePointer<UInt8>) {
         var pointer = bytes
         pointer += 3 //Skip flags
 
         let typeAndLocation = NORCharacteristicReader.readNibble(ptr: &pointer)
-        self.type = CGMType(rawValue: typeAndLocation.second)!
-        self.location = CGMLocation(rawValue: typeAndLocation.first)!
-
+        type = CGMType(rawValue: typeAndLocation.second)!
+        location = CGMLocation(rawValue: typeAndLocation.first)!
     }
 
-    func typeAsString() -> String {
-        switch self.type! {
+}
+
+extension CGMType: CustomStringConvertible {
+    
+    var description: String {
+        switch self {
         case .cgmTypeCapillaryWholeBlood:
             return "Capillay whole blood"
-            
         case .cgmTypeCapillaryPlasma:
             return "Capillary Plasma"
-            
-        case .cgmTypeCapillaryWholeBlood2:
-            return "Capillary whole blood"
-            
+        case .cgmTypeVenousWholeBlood:
+            return "Venous whole blood"
         case .cgmTypeVenousPlasma:
             return "Venous plasma"
-            
         case .cgmTypeArterialWholeBlood:
             return "Arterial whole blood"
-            
         case .cgmTypeArterialPlasma:
             return "Arterial Plasma"
-            
         case .cgmTypeUndeterminedWholeBlood:
             return "Undetermined whole blood"
-            
         case .cgmTypeUndeterminedPlasma:
             return "Underetmined plasma"
-            
         case .cgmTypeInterstitialFluid:
             return "Interstitial fluid"
-            
         case .cgmTypeControlSolution:
             return "Control Solution"
         }
     }
     
-    func locationAsString() -> String {
-        switch self.location! {
-            case .cgmLocationFinger :
-                return "Finger"
-            case .cgmLocationAlternateSiteTest :
-                return "Alternate site test"
-            case .cgmLocationEarlobe :
-                return "Earlobe"
-            case .cgmLocationControlSolution :
-                return "Control solution"
-            case .cgmLocationSubcutaneousTissue :
-                return "Subcutaneous tissue"
-            case .cgmLocationValueNotAvailable :
-                return "Location Not available"
+}
+
+extension CGMLocation: CustomStringConvertible {
+    
+    var description: String {
+        switch self {
+        case .cgmLocationFinger :
+            return "Finger"
+        case .cgmLocationAlternateSiteTest :
+            return "Alternate site test"
+        case .cgmLocationEarlobe :
+            return "Earlobe"
+        case .cgmLocationControlSolution :
+            return "Control solution"
+        case .cgmLocationSubcutaneousTissue :
+            return "Subcutaneous tissue"
+        case .cgmLocationValueNotAvailable :
+            return "Location not available"
         }
     }
+    
 }

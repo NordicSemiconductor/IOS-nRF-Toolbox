@@ -42,7 +42,7 @@ class NORMainViewController: UIViewController, UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cellName = String(format: "profile_%d", (indexPath as NSIndexPath).item)
+        let cellName = String(format: "profile_%d", indexPath.item)
         return collectionView.dequeueReusableCell(withReuseIdentifier: cellName, for: indexPath)
     }
 

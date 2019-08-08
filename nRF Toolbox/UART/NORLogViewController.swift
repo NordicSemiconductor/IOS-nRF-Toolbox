@@ -89,7 +89,7 @@ class NORLogViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     //MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "logCell") as! NORLogItemTableViewCell
-        let item = logItems.object(at: (indexPath as NSIndexPath).row) as! NORLogItem
+        let item = logItems.object(at: indexPath.row) as! NORLogItem
         cell.setItem(item: item)
         return cell
     }

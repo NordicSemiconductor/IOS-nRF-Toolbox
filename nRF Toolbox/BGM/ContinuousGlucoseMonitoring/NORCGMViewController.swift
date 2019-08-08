@@ -23,12 +23,6 @@
 import UIKit
 import CoreBluetooth
 
-enum viewActionTypes : Int {
-    case action_START_SESSION = 0
-    case action_STOP_SESSION  = 1
-    case action_SET_TIME      = 2
-}
-
 class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, NORScannerDelegate, UITableViewDataSource {
 
     //MARK: - Class porperties
@@ -56,7 +50,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
     var cgmRecordAccessControlPointCharacteristic : CBCharacteristic?
     var cgmFeatureCharacteristic : CBCharacteristic?
     var cgmSpecificOpsControlPointCharacteristic : CBCharacteristic?
-    var readings : NSMutableArray?
+    var readings : NSMutableArray
     var cgmFeatureData : NORCGMFeatureData?
 
     //MARK: View Outlets / Actions
@@ -69,13 +63,13 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
     @IBOutlet weak var cgmActivityIndicator : UIActivityIndicatorView!
     
     @IBAction func connectionButtonTapped(_ sender: AnyObject) {
-        self.handleConnectionButtonTapped()
+        handleConnectionButtonTapped()
     }
     @IBAction func actionButtonTapped(_ sender: UIButton) {
-        self.handleActionButtonTapped(from: sender)
+        handleActionButtonTapped(from: sender)
     }
     @IBAction func aboutButtonTapped(_ sender: AnyObject) {
-        self.handleAboutButtonTapped()
+        handleAboutButtonTapped()
     }
 
     //MARK: - UIViewController methods
@@ -119,12 +113,12 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
         let alertView = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alertView.addAction(UIAlertAction(title: "Start Session", style: .default) { _ in
             self.cgmActivityIndicator.startAnimating()
-            let data = Data([NORCGMOpCode.start_SESSION.rawValue])
+            let data = Data([NORCGMOpCode.startSession.rawValue])
             self.connectedPeripheral?.writeValue(data, for: self.cgmSpecificOpsControlPointCharacteristic!, type:.withResponse)
         })
         alertView.addAction(UIAlertAction(title: "Stop Session", style: .destructive) { _ in
             self.cgmActivityIndicator.stopAnimating()
-            let data = Data([NORCGMOpCode.stop_SESSION.rawValue])
+            let data = Data([NORCGMOpCode.stopStopSession.rawValue])
             self.connectedPeripheral?.writeValue(data, for: self.cgmSpecificOpsControlPointCharacteristic!, type:.withResponse)
         })
         alertView.addAction(UIAlertAction(title: "Set Update Interval", style: .default) { _ in
@@ -151,7 +145,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
 
         let data       = cgmFeatureCharacteristic!.value
         let arrayBytes = ((data as NSData?)?.bytes)!.assumingMemoryBound(to: UInt8.self)
-        cgmFeatureData = NORCGMFeatureData(withBytes: UnsafeMutablePointer<UInt8>(mutating:arrayBytes))
+        cgmFeatureData = NORCGMFeatureData(UnsafeMutablePointer<UInt8>(mutating:arrayBytes))
     }
 
     func enableRecordButton() {
@@ -167,7 +161,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
     }
 
     func clearUI() {
-        readings?.removeAllObjects()
+        readings.removeAllObjects()
         cbgmTableView.reloadData()
         deviceName.text = "DEFAULT CGM"
         
@@ -201,7 +195,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
     //MARK: - Table View Datasource delegate methods
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (readings?.count)!
+        return readings.count
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -209,7 +203,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let aReading = readings?.object(at: (indexPath as NSIndexPath).row) as? NORCGMReading
+        let aReading = readings.object(at: indexPath.row) as? NORCGMReading
         let aCell = tableView.dequeueReusableCell(withIdentifier: "CGMCell", for: indexPath) as! NORCGMItemCell
 
         aCell.type.text = aReading?.typeAsString()
@@ -226,7 +220,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
             alert.addAction(UIAlertAction(title: "Set", style: .default) { action in
                 var accessParam : [UInt8] = []
                 let timeValue = UInt8(alert.textFields!.first!.text!)!
-                accessParam.append(NORCGMOpCode.set_COMMUNICATION_INTERVAL.rawValue)
+                accessParam.append(NORCGMOpCode.setCommunicationInterval.rawValue)
                 accessParam.append(timeValue)
                 let data = Data(bytes: &accessParam, count: 2)
                 self.connectedPeripheral?.writeValue(data, for: self.cgmSpecificOpsControlPointCharacteristic!, type: .withResponse)
@@ -246,10 +240,6 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "scan" || segue.identifier == "details" else {
-            return
-        }
-        
         if segue.identifier == "scan" {
             // Set this contoller as scanner delegate
             let nc = segue.destination
@@ -261,7 +251,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
         
         if segue.identifier == "details" {
             let controller = segue.destination as! NORCGMDetailsViewController
-            let aReading = readings!.object(at: ((cbgmTableView.indexPathForSelectedRow as NSIndexPath?)?.row)!)
+            let aReading = readings.object(at: cbgmTableView.indexPathForSelectedRow!.row)
             controller.reading = aReading as? NORCGMReading
         }
     }
@@ -335,7 +325,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
         
         for aService in peripheral.services! {
             // Discovers the characteristics for a given service
-            if  aService.uuid == cbgmServiceUUID {
+            if aService.uuid == cbgmServiceUUID {
                 peripheral.discoverCharacteristics(
                     [   cgmGlucoseMeasurementCharacteristicUUID,
                         cgmGlucoseMeasurementContextCharacteristicUUID,
@@ -418,13 +408,13 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
                 if self.cgmFeatureData != nil {
                     reading.cgmFeatureData = self.cgmFeatureData
                 }
-                if self.readings!.contains(reading) {
+                if self.readings.contains(reading) {
                     // If the reading has been found (the same reading has the same sequence number), replace it with the new one
                     // The indexIfObjext method uses isEqual method from GlucodeReading (comparing by sequence number only)
-                    self.readings!.replaceObject(at: self.readings!.index(of: reading), with: reading)
+                    self.readings.replaceObject(at: self.readings.index(of: reading), with: reading)
                 } else {
                     // If not, just add the new one to the array
-                    self.readings!.add(reading)
+                    self.readings.add(reading)
                 }
                 self.cbgmTableView.reloadData()
             })
@@ -432,28 +422,23 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
         if characteristic.uuid == cgmSpecificOpsControlPointCharacteristicUUID {
             let responseCode = array[2]
             switch NORCGMOpcodeResponseCodes(rawValue: responseCode)! {
-            case .op_CODE_NOT_SUPPORTED:
-                self.showErrorAlert(withMessage:"Operation not supported")
-                break;
+            case .opCodeNotSupported:
+                showErrorAlert(withMessage:"Operation not supported")
             case .success:
                 print("Success")
-                break;
-            case .invalid_OPERAND:
-                self.showErrorAlert(withMessage:"Invalid Operand")
-                break
-            case .procedure_NOT_COMPLETED:
-                self.showErrorAlert(withMessage:"Procedure not completed")
-                break
-            case .parameter_OUT_OF_RANGE:
-                self.showErrorAlert(withMessage:"Parameter out of range")
-                break;
+            case .invalidOperand:
+                showErrorAlert(withMessage:"Invalid Operand")
+            case .procedureNotCompleted:
+                showErrorAlert(withMessage:"Procedure not completed")
+            case .parameterOutOfRange:
+                showErrorAlert(withMessage:"Parameter out of range")
             default:
                 break
             }
         }
         
         if characteristic.uuid == cgmFeatureCharacteristicUUID {
-            self.parseCGMFeatureCharacteristic()
+            parseCGMFeatureCharacteristic()
         }
         
         if characteristic.uuid == cgmSessionStartTimeCharacteristicUUID {
@@ -464,6 +449,5 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
             print("runtime did update")
         }
     }
-    
 
 }

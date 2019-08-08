@@ -2442,7 +2442,7 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="closelock" highlightedImage="openlock" translatesAutoresizingMaskIntoConstraints="NO" id="qTV-NK-Xvx">
-                                <rect key="frame" x="82.666666666666671" y="189.66666666666669" width="210.00000000000003" height="158"/>
+                                <rect key="frame" x="82.666666666666686" y="189.66666666666669" width="210" height="158"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="210" id="LEb-g5-y7w"/>
                                     <constraint firstAttribute="height" constant="158" id="U8c-If-oYl"/>
@@ -2969,7 +2969,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="Signal_3" id="aTk-hM-Imc">
-                                                    <rect key="frame" x="15" y="17" width="20" height="14.666666666666666"/>
+                                                    <rect key="frame" x="15" y="17" width="20" height="15"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>

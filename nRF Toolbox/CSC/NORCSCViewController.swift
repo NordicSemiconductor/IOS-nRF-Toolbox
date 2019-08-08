@@ -12,8 +12,8 @@ import CoreBluetooth
 class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, NORScannerDelegate {
 
     //MARK: - ViewController properties
-    let WHEEL_REVOLUTION_FLAG               : UInt8 = 0x01
-    let CRANK_REVOLUTION_FLAG               : UInt8 = 0x02
+    let wheelRevolutionFlag                 : UInt8 = 0x01
+    let crankRevolutionFlag                 : UInt8 = 0x02
     var bluetoothManager                    : CBCentralManager?
     var cscServiceUUID                      : CBUUID
     var cscMeasurementCharacteristicUUID    : CBUUID
@@ -192,7 +192,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         var ratio        :Double = 0
         let flag = value[0]
         
-        if flag & WHEEL_REVOLUTION_FLAG == 1 {
+        if flag & wheelRevolutionFlag == 1 {
             wheelRevDiff = self.processWheelData(withData: data)
             if flag & 0x02 == 2 {
                 crankRevDiff = self.processCrankData(withData: data, andCrankRevolutionIndex: 7)
@@ -202,7 +202,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                 }
             }
         } else {
-            if flag & CRANK_REVOLUTION_FLAG == 2 {
+            if flag & crankRevolutionFlag == 2 {
                 crankRevDiff = self.processCrankData(withData: data, andCrankRevolutionIndex: 1)
                 if crankRevDiff > 0 {
                     ratio = wheelRevDiff / crankRevDiff

@@ -71,7 +71,7 @@ class NORAppFilesViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let aCell = tableView.dequeueReusableCell(withIdentifier: "AppFilesCell", for: indexPath)
-        let fileURL = files?.object(at: (indexPath as NSIndexPath).row) as? URL
+        let fileURL = files?.object(at: indexPath.row) as? URL
         let filePath = fileURL?.lastPathComponent
 
         //Cell config
@@ -98,7 +98,7 @@ class NORAppFilesViewController: UIViewController, UITableViewDelegate, UITableV
 
     //MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let filePath = files?.object(at: (indexPath as NSIndexPath).row) as? URL
+        let filePath = files?.object(at: indexPath.row) as? URL
         selectedPath = filePath
 
         tableView.reloadData()

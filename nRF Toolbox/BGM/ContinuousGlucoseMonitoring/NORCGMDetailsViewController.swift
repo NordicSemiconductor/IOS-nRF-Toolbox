@@ -29,7 +29,6 @@ class NORCGMDetailsViewController : UIViewController {
     var dateFormat  : DateFormatter?
 
     //MARK: - View Outlets/Actions
-    @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var sequenceNumber: UILabel!
     @IBOutlet weak var timestamp: UILabel!

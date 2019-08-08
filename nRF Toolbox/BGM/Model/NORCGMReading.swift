@@ -108,17 +108,17 @@ class NORCGMReading : NSObject {
     }
     
     func typeAsString() ->String {
-        guard self.cgmFeatureData != nil else {
+        guard let data = cgmFeatureData else {
             return "N/A"
         }
-        return (self.cgmFeatureData?.typeAsString())!
+        return "\(data.type)"
     }
     
     func locationAsSting() -> String {
-        guard self.cgmFeatureData != nil else {
+        guard let data = cgmFeatureData else {
             return "N/A"
         }
-        return (self.cgmFeatureData?.locationAsString())!
+        return "\(data.location)"
     }
     
     override func isEqual(_ object: Any?) -> Bool {
