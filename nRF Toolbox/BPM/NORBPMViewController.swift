@@ -113,14 +113,14 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         DispatchQueue.main.async {
             self.deviceName.text = peripheral.name
             self.connectionButton.setTitle("DISCONNECT", for: .normal)
-        }
         
-        //Following if condition display user permission alert for background notification
-        if UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))) {
-            UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .sound], categories: nil))
+            //Following if condition display user permission alert for background notification
+            if UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))) {
+                UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .sound], categories: nil))
+            }
+            NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackgroundCallback(notification:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(self.didBecomeActiveCallback(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackgroundCallback(notification:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didBecomeActiveCallback(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
         
         connectedPeripheral = peripheral
         peripheral.discoverServices([bpmServiceUUID, batteryServiceUUID])
@@ -179,14 +179,14 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         }
         
         if service.uuid == bpmServiceUUID {
-            for aCharacteristic :CBCharacteristic in service.characteristics! {
+            for aCharacteristic: CBCharacteristic in service.characteristics! {
                 if aCharacteristic.uuid == bpmBloodPressureMeasurementCharacteristicUUID ||
                     aCharacteristic.uuid == bpmIntermediateCuffPressureCharacteristicUUID {
                     peripheral.setNotifyValue(true, for: aCharacteristic)
                 }
             }
         } else if service.uuid == batteryServiceUUID {
-            for aCharacteristic :CBCharacteristic in service.characteristics! {
+            for aCharacteristic: CBCharacteristic in service.characteristics! {
                 if aCharacteristic.uuid == batteryLevelCharacteristicUUID {
                     peripheral.readValue(for: aCharacteristic)
                     break
@@ -202,7 +202,7 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         }
         
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             if characteristic.uuid == self.batteryLevelCharacteristicUUID {
                 // Decode the characteristic data
                 let data = characteristic.value;
@@ -281,7 +281,7 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                     self.pulse.text = "-"
                 }
             }
-        })
+        }
     }
 
     //MARK: - Segue handling
