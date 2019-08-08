@@ -50,7 +50,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
     var cgmRecordAccessControlPointCharacteristic : CBCharacteristic?
     var cgmFeatureCharacteristic : CBCharacteristic?
     var cgmSpecificOpsControlPointCharacteristic : CBCharacteristic?
-    var readings : NSMutableArray
+    var readings: [NORCGMReading]
     var cgmFeatureData : NORCGMFeatureData?
 
     //MARK: View Outlets / Actions
@@ -75,7 +75,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
     //MARK: - UIViewController methods
     // Custom initialization
     required init?(coder aDecoder: NSCoder) {
-        readings = NSMutableArray(capacity: 20)
+        readings = []
         dateFormat = DateFormatter()
         dateFormat.dateFormat = "dd.MM.yyyy, HH:mm"
         cbgmServiceUUID = CBUUID(string: NORServiceIdentifiers.cgmServiceUUIDString)
@@ -96,7 +96,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
         super.viewDidLoad()
 
         // Rotate the vertical label
-        self.verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: -.pi / 2)
+        verticalLabel.transform = CGAffineTransform(translationX: -(verticalLabel.frame.width/2) + (verticalLabel.frame.height / 2), y: 0.0).rotated(by: -.pi / 2)
         cbgmTableView.dataSource = self
     }
     
@@ -129,7 +129,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
     }
     
     func handleAboutButtonTapped() {
-        self.showAbout(message: NORAppUtilities.cgmHelpText)
+        showAbout(message: NORAppUtilities.cgmHelpText)
     }
     
     func handleConnectionButtonTapped() {
@@ -139,29 +139,28 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
     }
 
     func parseCGMFeatureCharacteristic() {
-        guard cgmFeatureCharacteristic?.value != nil else{
+        guard let value = cgmFeatureCharacteristic?.value else{
             return
         }
 
-        let data       = cgmFeatureCharacteristic!.value
-        let arrayBytes = ((data as NSData?)?.bytes)!.assumingMemoryBound(to: UInt8.self)
+        let arrayBytes = (value as NSData).bytes.assumingMemoryBound(to: UInt8.self)
         cgmFeatureData = NORCGMFeatureData(UnsafeMutablePointer<UInt8>(mutating:arrayBytes))
     }
 
     func enableRecordButton() {
         recordButton.isEnabled = true
-        recordButton.backgroundColor = UIColor.black
-        recordButton.setTitleColor(UIColor.white, for: .normal)
+        recordButton.backgroundColor = .black
+        recordButton.setTitleColor(.white, for: .normal)
     }
     
     func disableRecordButton() {
         recordButton.isEnabled = false
-        recordButton.backgroundColor = UIColor.lightGray
-        recordButton.setTitleColor(UIColor.lightText, for: .normal)
+        recordButton.backgroundColor = .lightGray
+        recordButton.setTitleColor(.lightText, for: .normal)
     }
 
     func clearUI() {
-        readings.removeAllObjects()
+        readings.removeAll()
         cbgmTableView.reloadData()
         deviceName.text = "DEFAULT CGM"
         
@@ -203,19 +202,19 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let aReading = readings.object(at: indexPath.row) as? NORCGMReading
+        let aReading = readings[indexPath.row]
         let aCell = tableView.dequeueReusableCell(withIdentifier: "CGMCell", for: indexPath) as! NORCGMItemCell
 
-        aCell.type.text = aReading?.typeAsString()
-        aCell.timestamp.text = dateFormat.string(from: Date.init(timeIntervalSinceNow: Double((aReading?.timeOffsetSinceSessionStart)!)))
-        aCell.value.text = String(format: "%.0f", (aReading?.glucoseConcentration)!)
-        aCell.unit.text = "mg/DL"
+        aCell.type.text = aReading.typeAsString()
+        aCell.timestamp.text = dateFormat.string(from: Date(timeIntervalSinceNow: Double(aReading.timeOffsetSinceSessionStart)))
+        aCell.value.text = String(format: "%.0f", aReading.glucoseConcentration)
+        aCell.unit.text = "mg/dL"
         
         return aCell
     }
 
     func showUserInputAlert(withMessage aMessage: String) {
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             let alert = UIAlertController(title: "Input", message: aMessage, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Set", style: .default) { action in
                 var accessParam : [UInt8] = []
@@ -230,7 +229,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
                 field.keyboardType = .numberPad
             }
             self.present(alert, animated: true)
-        })
+        }
     }
     
     //MARK: - Segue navigation
@@ -251,8 +250,8 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
         
         if segue.identifier == "details" {
             let controller = segue.destination as! NORCGMDetailsViewController
-            let aReading = readings.object(at: cbgmTableView.indexPathForSelectedRow!.row)
-            controller.reading = aReading as? NORCGMReading
+            let aReading = readings[cbgmTableView.indexPathForSelectedRow!.row]
+            controller.reading = aReading
         }
     }
 
@@ -268,7 +267,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             self.deviceName.text = peripheral.name
             self.connectionButton.setTitle("DISCONNECT", for: .normal)
             self.enableRecordButton()
@@ -279,7 +278,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
 
             NotificationCenter.default.addObserver(self, selector: #selector(self.appdidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(self.appDidBecomeActiveBackground), name: UIApplication.didBecomeActiveNotification, object: nil)
-        });
+        }
         
         // Peripheral has connected. Discover required services
         connectedPeripheral = peripheral
@@ -288,18 +287,18 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to the peripheral failed. Try again", from: self)
             self.connectionButton.setTitle("CONNCET", for: .normal)
             self.connectedPeripheral = nil
             self.disableRecordButton()
             self.clearUI()
-        });
+        }
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             self.connectionButton.setTitle("CONNECT", for: .normal)
             if NORAppUtilities.isApplicationInactive() {
                 let name = peripheral.name ?? "Peripheral"
@@ -312,7 +311,7 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
             self.clearUI()
             NotificationCenter.default.removeObserver(self, name:UIApplication.didBecomeActiveNotification, object: nil)
             NotificationCenter.default.removeObserver(self, name:UIApplication.didEnterBackgroundNotification, object: nil)
-        })
+        }
     }
     
     //MARK: - CBPeripheralDelegate methods
@@ -389,35 +388,35 @@ class NORCGMViewController : NORBaseViewController, CBCentralManagerDelegate, CB
             let text = "\(batteryLevel)%"
             
             // Scanner uses other queue to send events. We must edit UI in the main queue
-            DispatchQueue.main.async(execute: {
+            DispatchQueue.main.async {
                 self.battery.setTitle(text, for: .disabled)
-            })
             
-            if battery.tag == 0 {
-                // If battery level notifications are available, enable them
-                if characteristic.properties.contains(CBCharacteristicProperties.notify) {
-                    self.battery.tag = 1 // mark that we have enabled notifications
-                    // Enable notification on data characteristic
-                    peripheral.setNotifyValue(true, for: characteristic)
+                if self.battery.tag == 0 {
+                    // If battery level notifications are available, enable them
+                    if characteristic.properties.contains(CBCharacteristicProperties.notify) {
+                        self.battery.tag = 1 // mark that we have enabled notifications
+                        // Enable notification on data characteristic
+                        peripheral.setNotifyValue(true, for: characteristic)
+                    }
                 }
             }
         }
         if characteristic.uuid == cgmGlucoseMeasurementCharacteristicUUID {
-            DispatchQueue.main.async(execute: {
+            DispatchQueue.main.async {
                 let reading = NORCGMReading(withBytes: array)
                 if self.cgmFeatureData != nil {
                     reading.cgmFeatureData = self.cgmFeatureData
                 }
-                if self.readings.contains(reading) {
+                if let index = self.readings.firstIndex(of: reading) {
                     // If the reading has been found (the same reading has the same sequence number), replace it with the new one
                     // The indexIfObjext method uses isEqual method from GlucodeReading (comparing by sequence number only)
-                    self.readings.replaceObject(at: self.readings.index(of: reading), with: reading)
+                    self.readings[index] = reading
                 } else {
                     // If not, just add the new one to the array
-                    self.readings.add(reading)
+                    self.readings.append(reading)
                 }
                 self.cbgmTableView.reloadData()
-            })
+            }
         }
         if characteristic.uuid == cgmSpecificOpsControlPointCharacteristicUUID {
             let responseCode = array[2]
