@@ -121,30 +121,30 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         DispatchQueue.main.async { 
             self.deviceName.text = peripheral.name
             self.connectionButton.setTitle("DISCONNECT", for: .normal)
-        }
         
-        if UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))) {
-            UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .sound], categories: nil))
+            if UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))) {
+                UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .sound], categories: nil))
+            }
+            NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackgroundHandler), name: UIApplication.didEnterBackgroundNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(self.didBecomeActiveHandler), name: UIApplication.didBecomeActiveNotification, object: nil)
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackgroundHandler), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didBecomeActiveHandler), name: UIApplication.didBecomeActiveNotification, object: nil)
         peripheral.discoverServices([cscServiceUUID, batteryServiceUUID])
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
         print("did fail to connect")
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             NORAppUtilities.showAlert(title: "Error", andMessage:"Connecting to the peripheral failed. Try again", from: self)
             self.cyclePeripheral = nil
             self.clearUI()
-        })
+        }
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         print("Disconnected \(peripheral)")
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             if NORAppUtilities.isApplicationInactive() {
                 let name = peripheral.name ?? "Peripheral"
                 NORAppUtilities.showBackgroundNotification(message: "\(name) is disconnected.")
@@ -154,7 +154,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
             
             self.cyclePeripheral = nil
             self.clearUI()
-        })
+        }
     }
     
     //MARK: -  NORCSCViewController implementation
@@ -229,7 +229,7 @@ class NORCSCViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         
         wheelRevolution = UInt8(CFSwapInt32LittleToHost(UInt32(value[1])))
         wheelEventTime  = Double((UInt16(value[6]) * 0xFF) + UInt16(value[5]))
-        if oldWheelRevolution != 0 {
+        if oldWheelRevolution != 0, wheelRevolution > oldWheelRevolution! {
             wheelRevolutionDiff = Double(wheelRevolution) - Double(oldWheelRevolution!)
             travelDistance = travelDistance! + ((wheelRevolutionDiff * wheelCircumference!)/1000.0)
             totalTravelDistance = (Double(wheelRevolution) * Double(wheelCircumference!)) / 1000.0
