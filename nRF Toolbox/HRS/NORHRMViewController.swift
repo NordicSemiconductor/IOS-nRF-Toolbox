@@ -361,13 +361,13 @@ class NORHRMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
             self.hrValues?.removeAllObjects()
             self.xValues?.removeAllObjects()
             self.resetPlotRange()
-        }
         
-        if UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))){
-            UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .sound], categories: nil))
+            if UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))){
+                UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .sound], categories: nil))
+            }
+            NotificationCenter.default.addObserver(self, selector: #selector(NORHRMViewController.appDidEnterBackgroundCallback), name: UIApplication.didEnterBackgroundNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(NORHRMViewController.appDidBecomeActiveCallback), name: UIApplication.didBecomeActiveNotification, object: nil)
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(NORHRMViewController.appDidEnterBackgroundCallback), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(NORHRMViewController.appDidBecomeActiveCallback), name: UIApplication.didBecomeActiveNotification, object: nil)
         
         // Peripheral has connected. Discover required services
         peripheral.discoverServices([hrServiceUUID, batteryServiceUUID])
