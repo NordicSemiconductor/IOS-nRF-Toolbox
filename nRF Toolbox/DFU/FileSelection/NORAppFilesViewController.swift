@@ -23,39 +23,41 @@ class NORAppFilesViewController: UIViewController, UITableViewDelegate, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.appDirectoryPath = "firmwares" // self.appDirectoryPath = [self.fileSystem getAppDirectoryPath:@"firmwares"];
+        appDirectoryPath = "firmwares" // self.appDirectoryPath = [self.fileSystem getAppDirectoryPath:@"firmwares"];
         
         let appPath = Bundle.main.resourceURL
         let firmwareDirectoryPath = appPath?.appendingPathComponent("firmwares")
         do {
-            try self.files = FileManager.default.contentsOfDirectory(at: firmwareDirectoryPath!, includingPropertiesForKeys: nil, options: FileManager.DirectoryEnumerationOptions.skipsSubdirectoryDescendants) as NSArray?
+            try files = FileManager.default.contentsOfDirectory(at: firmwareDirectoryPath!,
+                                                                includingPropertiesForKeys: nil,
+                                                                options: .skipsSubdirectoryDescendants) as NSArray?
         } catch {
             print("Error \(error)")
         }
 
         // The Navigation Item buttons may be initialized just once, here. They apply also to UserFilesVewController.
-        self.tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.doneButtonTapped))
-        self.tabBarController?.navigationItem.leftBarButtonItem  = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancelButtonTapped))
+        tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.doneButtonTapped))
+        tabBarController?.navigationItem.leftBarButtonItem  = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancelButtonTapped))
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.tabBarController?.navigationItem.rightBarButtonItem?.isEnabled = true
+        tabBarController?.navigationItem.rightBarButtonItem?.isEnabled = true
         if selectedPath == nil {
-            self.tabBarController?.navigationItem.rightBarButtonItem?.isEnabled = false
+            tabBarController?.navigationItem.rightBarButtonItem?.isEnabled = false
         }
         tableView.reloadData()
     }
     
     //MARK: - NORAppFilesViewController implementation
     @objc func doneButtonTapped() {
-        self.dismiss(animated: true, completion: nil)
-        self.fileDelegate?.onFileSelected(withURL: self.selectedPath!)
+        dismiss(animated: true, completion: nil)
+        fileDelegate?.onFileSelected(withURL: self.selectedPath!)
     }
     
     @objc func cancelButtonTapped() {
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 
     //MARK: - UITableViewDataSource
@@ -101,7 +103,7 @@ class NORAppFilesViewController: UIViewController, UITableViewDelegate, UITableV
 
         tableView.reloadData()
 
-        self.tabBarController?.navigationItem.rightBarButtonItem?.isEnabled = true
+        tabBarController?.navigationItem.rightBarButtonItem?.isEnabled = true
 //        let userFilesViewController = self.tabBarController?.viewControllers?.last as? UserFilesViewController
 //        userFilesViewController.selectedPath = selectedPath
 
