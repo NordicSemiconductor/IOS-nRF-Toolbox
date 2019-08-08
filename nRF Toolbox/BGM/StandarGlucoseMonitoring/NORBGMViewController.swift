@@ -271,7 +271,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
             let batteryLevel = NORCharacteristicReader.readUInt8Value(ptr: &array)
             let text = "\(batteryLevel)%"
             
-            DispatchQueue.main.async(execute: {
+            DispatchQueue.main.async {
                 self.battery.setTitle(text, for: UIControl.State.disabled)
                 if self.battery.tag == 0 {
                     // If battery level notifications are available, enable them
@@ -281,7 +281,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
                         peripheral.setNotifyValue(true, for: characteristic)
                     }
                 }
-            })
+            }
             
         } else if characteristic.uuid.isEqual(bgmGlucoseMeasurementCharacteristicUUID) {
             print("New glucose reading")
@@ -303,11 +303,10 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
             }
         } else if characteristic.uuid.isEqual(bgmRecordAccessControlPointCharacteristicUUID) {
             print("OpCode: \(array[0]), Operator: \(array[2])")
-            DispatchQueue.main.async(execute: {
+            DispatchQueue.main.async {
                 switch(NORBGMResponseCode(rawValue:array[2])!){
                 case .success:
                     self.bgmTableView.reloadData()
-                    break
                 case .opCodeNotSupported:
                     NORAppUtilities.showAlert(title: "Error", andMessage: "Operation not supported", from: self)
                 case .noRecordsFound:
@@ -327,7 +326,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
                 case .reserved:
                     break
                 }
-            })
+            }
         }
     }
     //MARK: - CBCentralManagerDelegate Methdos

@@ -351,7 +351,7 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
         }
         
         print(characteristic.uuid)
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             if characteristic.uuid == self.batteryLevelCharacteristicUUID {
                 let value = characteristic.value!
                 let array = UnsafeMutablePointer<UInt8>(mutating: (value as NSData).bytes.bindMemory(to: UInt8.self, capacity: value.count))
@@ -369,18 +369,16 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
                     }
                 }
             }
-        })
+        }
     }
     //MARK: - CBPeripheralManagerDelegate
     func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
         switch (peripheral.state) {
         case .poweredOff:
             print("PeripheralManagerState is Off")
-            break;
         case .poweredOn:
             print("PeripheralManagerState is on");
-            self.addServices()
-            break;
+            addServices()
         default:
             break;
         }
@@ -406,15 +404,12 @@ class NORProximityViewController: NORBaseViewController, CBCentralManagerDelegat
             case 0:
                 print("No Alert")
                 stopSound()
-                break
             case 1:
                 print("Low Alert")
                 playLoopingSound()
-                break
             case 2:
                 print("High Alert")
                 playSoundOnce()
-                break
             default:
                 break
             }

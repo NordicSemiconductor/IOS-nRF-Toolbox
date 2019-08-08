@@ -128,17 +128,17 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to peripheral failed. Try again", from: self)
             self.connectionButton.setTitle("CONNECT", for: .normal)
             self.connectedPeripheral = nil
             self.clearUI()
-        });
+        }
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             self.connectionButton.setTitle("CONNECT", for: .normal)
             self.connectedPeripheral = nil
             
@@ -149,7 +149,7 @@ class NORBPMViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
             
             NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
             NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
-        })
+        }
     }
 
     //MARK: - CBPeripheralDelegate

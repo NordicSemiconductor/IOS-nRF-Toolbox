@@ -152,7 +152,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
         }
         
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             // Decode the characteristic data
             let data = characteristic.value
             var array = UnsafeMutablePointer<UInt8>(OpaquePointer(((data as NSData?)?.bytes)!))
@@ -203,49 +203,38 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                 /* temperature type */
                 if typePresent == true {
                     let type = NORCharacteristicReader.readUInt8Value(ptr: &array)
-                    var location : NSString = ""
+                    var location: NSString = ""
                     
-                    switch (type)
-                    {
+                    switch type {
                     case 0x01:
-                        location = "Armpit";
-                        break;
+                        location = "Armpit"
                     case 0x02:
-                        location = "Body - general";
-                        break;
+                        location = "Body - general"
                     case 0x03:
-                        location = "Ear";
-                        break;
+                        location = "Ear"
                     case 0x04:
-                        location = "Finger";
-                        break;
+                        location = "Finger"
                     case 0x05:
-                        location = "Gastro-intenstinal Tract";
-                        break;
+                        location = "Gastro-intenstinal Tract"
                     case 0x06:
-                        location = "Mouth";
-                        break;
+                        location = "Mouth"
                     case 0x07:
-                        location = "Rectum";
-                        break;
+                        location = "Rectum"
                     case 0x08:
-                        location = "Toe";
-                        break;
+                        location = "Toe"
                     case 0x09:
-                        location = "Tympanum - ear drum";
-                        break;
+                        location = "Tympanum - ear drum"
                     default:
-                        location = "Unknown";
-                        break;
+                        location = "Unknown"
                     }
-                    self.type.text = String(format: "Location: %@", location)
+                    self.type.text = "Location: \(location)"
                 } else {
-                    self.type.text = "Location: n/a";
+                    self.type.text = "Location: N/A";
                 }
                 
                 if  NORAppUtilities.isApplicationInactive() {
                     var message : String = ""
-                    if (self.temperatureValueFahrenheit == true) {
+                    if let fahrenheit = self.temperatureValueFahrenheit, fahrenheit {
                         message = String(format:"New temperature reading: %.2f°F", tempValue)
                     } else {
                         message = String(format:"New temperature reading: %.2f°C", tempValue)
@@ -254,7 +243,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
                     NORAppUtilities.showBackgroundNotification(message: message)
                 }
             }
-            })
+            }
     }
     //MARK: - CBCentralManagerDelegate
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
@@ -267,13 +256,13 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             self.deviceName.text = peripheral.name
             self.connectionButon.setTitle("DISCONNECT", for: .normal)
 
             NotificationCenter.default.addObserver(self, selector: #selector(self.appDidEnterBackrgoundCallback), name: UIApplication.didEnterBackgroundNotification, object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(self.appDidBecomeActiveCallback), name: UIApplication.didBecomeActiveNotification, object: nil)
-        })
+        }
 
         // Peripheral has connected. Discover required services
         connectedPeripheral = peripheral;
@@ -282,17 +271,17 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             NORAppUtilities.showAlert(title: "Error", andMessage: "Connecting to peripheral failed. Try again", from: self)
             self.connectionButon.setTitle("CONNECT", for: .normal)
             self.connectedPeripheral = nil
             self.clearUI()
-        })
+        }
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             self.connectionButon.setTitle("CONNECT", for: .normal)
             if NORAppUtilities.isApplicationInactive() {
                 let name = peripheral.name ?? "Peripheral"
@@ -302,7 +291,7 @@ class NORHTSViewController: NORBaseViewController, CBCentralManagerDelegate, CBP
             self.clearUI()
             NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
             NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
-        })
+        }
     }
     
     //MARK: - NORScannerDelegate

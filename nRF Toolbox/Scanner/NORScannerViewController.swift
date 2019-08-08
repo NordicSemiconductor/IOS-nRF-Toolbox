@@ -201,14 +201,14 @@ class NORScannerViewController: UIViewController, CBCentralManagerDelegate, UITa
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             var sensor = NORScannedPeripheral(withPeripheral: peripheral, andRSSI: RSSI.int32Value, andIsConnected: false)
-            if ((self.peripherals.contains(sensor)) == false) {
-                self.peripherals.append(sensor)
-            } else {
-                sensor = self.peripherals[self.peripherals.firstIndex(of: sensor)!]
+            if let index = self.peripherals.firstIndex(of: sensor) {
+                sensor = self.peripherals[index]
                 sensor.RSSI = RSSI.int32Value
+            } else {
+                self.peripherals.append(sensor)
             }
-        })
+        }
     }
 }
