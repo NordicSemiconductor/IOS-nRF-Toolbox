@@ -20,7 +20,6 @@ class HKAccessoryViewController: UIViewController, UITableViewDataSource, UITabl
 
     //MARK: - IBOutlets
     @IBOutlet weak var accessoryServicesTableView: UITableView!
-    @IBOutlet weak var accessoryNameTitle: UILabel!
     @IBOutlet weak var homeNameTitle: UILabel!
     @IBOutlet weak var accessoryDFUSupportLabel: UILabel!
     @IBOutlet weak var accessoryCategoryLabel: UILabel!
@@ -108,7 +107,7 @@ class HKAccessoryViewController: UIViewController, UITableViewDataSource, UITabl
         hardwareVersionLabel.text = "Reading..."
         accessoryDFUSupportLabel.text = "Checking..."
         dfuModeButton.isEnabled = false
-        accessoryNameTitle.text = targetAccessory.name
+        title = targetAccessory.name
         homeNameTitle.text = targetAccessory.room?.name ?? "Unknown"
         
         accessoryCategoryLabel.text = targetAccessory.category.localizedDescription
