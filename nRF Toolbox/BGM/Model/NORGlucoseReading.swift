@@ -8,19 +8,19 @@
 
 import UIKit
 
-class NORGlucoseReading: NSObject {
+struct NORGlucoseReading {
 
     //MARK: - Properties
-    var sequenceNumber                              : UInt16
-    var timestamp                                   : Date
-    var timeOffset                                  : Int16?
-    var glucoseConcentrationTypeAndLocationPresent  : Bool
-    var glucoseConcentration                        : Float32?
-    var unit                                        : BGMUnit?
-    var type                                        : BGMType?
-    var location                                    : BGMLocation?
-    var sensorStatusAnnunciationPresent             : Bool
-    var sensorStatusAnnunciation                    : UInt16?
+    let sequenceNumber                              : UInt16
+    let timestamp                                   : Date
+    let timeOffset                                  : Int16?
+    let glucoseConcentrationTypeAndLocationPresent  : Bool
+    let glucoseConcentration                        : Float32?
+    let unit                                        : BGMUnit?
+    let type                                        : BGMType?
+    let location                                    : BGMLocation?
+    let sensorStatusAnnunciationPresent             : Bool
+    let sensorStatusAnnunciation                    : UInt16?
     var context                                     : NORGlucoseReadingContext?
 
     //MARK: - Enum Definitions
@@ -66,12 +66,15 @@ class NORGlucoseReading: NSObject {
         
         // Sequence number is used to match the reading with an optional glucose context
         self.sequenceNumber = NORCharacteristicReader.readUInt16Value(ptr: &pointer)
-        self.timestamp      = NORCharacteristicReader.readDateTime(ptr: &pointer)
+        var timestamp = NORCharacteristicReader.readDateTime(ptr: &pointer)
         
         if timeOffsetPresent {
             timeOffset = NORCharacteristicReader.readSInt16Value(ptr: &pointer)
             timestamp.addTimeInterval(Double(timeOffset!) * 60.0)
+        } else {
+            timeOffset = nil
         }
+        self.timestamp = timestamp
         
         self.glucoseConcentrationTypeAndLocationPresent = glucoseConcentrationTypeAndLocationPresent
         if self.glucoseConcentrationTypeAndLocationPresent == true {
@@ -81,20 +84,27 @@ class NORGlucoseReading: NSObject {
             self.type       = BGMType(rawValue: typeAndLocation.first) ?? .reserved
             self.location   = BGMLocation(rawValue: typeAndLocation.second) ?? .notAvailable
         } else {
-            self.type       = BGMType.reserved
-            self.location   = BGMLocation.notAvailable
+            self.glucoseConcentration = nil
+            self.unit = nil
+            self.type = nil
+            self.location = nil
         }
 
         self.sensorStatusAnnunciationPresent = statusAnnuciationPresent
         if statusAnnuciationPresent {
             self.sensorStatusAnnunciation = NORCharacteristicReader.readUInt16Value(ptr: &pointer)
+        } else {
+            self.sensorStatusAnnunciation = nil
         }
     }
+}
+
+extension NORGlucoseReading: Equatable {
     
-    //MARK: - Static methods
-    static func readingFromBytes(_ bytes: UnsafePointer<UInt8>) -> NORGlucoseReading {
-        return NORGlucoseReading(bytes)
+    static func == (lhs: NORGlucoseReading, rhs: NORGlucoseReading) -> Bool {
+        return lhs.sequenceNumber == rhs.sequenceNumber
     }
+    
 }
 
 extension NORGlucoseReading.BGMLocation: CustomStringConvertible {

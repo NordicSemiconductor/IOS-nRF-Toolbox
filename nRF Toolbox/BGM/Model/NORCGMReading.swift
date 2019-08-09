@@ -9,7 +9,7 @@
 import UIKit
 
 enum  CGMMeasurementUnit : UInt8 {
-    case mg_DL = 0
+    case mgDl = 0
 }
 
 enum CGMFlags : UInt8 {
@@ -43,29 +43,24 @@ enum CGMSensorAnnuciation : UInt8 {
     case cgmSensorResultHigherThanTheDeviceCanProcess 	= 23
 }
 
-class NORCGMReading : NSObject {
+struct NORCGMReading {
     // Glucose Measurement values
     var cgmFeatureData                  : NORCGMFeatureData?
-    var measurementSize                 : UInt8 = 0
-    var timeOffsetSinceSessionStart     : Int16 = 0
-    var glucoseConcentration            : Float32 = 0.0
-    var trendInfo                       : Float32 = 0.0
-    var quality                         : Float32 = 0.0
-    var sensorStatusAnnunciation        : UInt32 = 0
-    var unit                            : CGMMeasurementUnit  = .mg_DL
-    var sensorStatusAnnunciationPresent : Bool = false
-    var sensorTrendInfoPresent          : Bool = false
-    var sensorWarningPresent            : Bool = false
-    var sensorCalTempPresent            : Bool = false
-    var sensorQualityPresent            : Bool = false
-    var e2eCrcPresent                   : Bool = false
+    let measurementSize                 : UInt8
+    let timeOffsetSinceSessionStart     : TimeInterval
+    let glucoseConcentration            : Float32
+    let trendInfo                       : Float32?
+    let quality                         : Float32?
+    let sensorStatusAnnunciation        : UInt32?
+    let unit                            : CGMMeasurementUnit
+    let sensorStatusAnnunciationPresent : Bool
+    let sensorTrendInfoPresent          : Bool
+    let sensorWarningPresent            : Bool
+    let sensorCalTempPresent            : Bool
+    let sensorQualityPresent            : Bool
+    let e2eCrcPresent                   : Bool
     
-    required init(withBytes bytes : UnsafeMutablePointer<UInt8>) {
-        super.init()
-        self.updateFromBytes(bytes)
-    }
-
-    func updateFromBytes(_ bytes: UnsafeMutablePointer<UInt8>) {
+    init(_ bytes : UnsafeMutablePointer<UInt8>) {
         var pointer = bytes;
         
         // Read measurement Length
@@ -82,25 +77,32 @@ class NORCGMReading : NSObject {
         
         self.measurementSize             = currentMeasurementSize;
         self.glucoseConcentration        = NORCharacteristicReader.readSFloatValue(ptr: &pointer)
-        self.unit                        = .mg_DL
-        self.timeOffsetSinceSessionStart = NORCharacteristicReader.readSInt16Value(ptr: &pointer)
+        self.unit                        = .mgDl
+        self.timeOffsetSinceSessionStart = TimeInterval(60 * NORCharacteristicReader.readSInt16Value(ptr: &pointer))
         self.sensorCalTempPresent        = statusCalTempPsesent;
         self.sensorWarningPresent        = statusWarningPsesent;
         
         self.sensorStatusAnnunciationPresent = statusAnnunciationPresent;
         if self.sensorStatusAnnunciationPresent {
             self.sensorStatusAnnunciation = NORCharacteristicReader.readUInt32Value(ptr: &pointer)
+        } else {
+            self.sensorStatusAnnunciation = nil
         }
         
         self.sensorTrendInfoPresent = trendInfoPresent;
         if self.sensorTrendInfoPresent {
             self.trendInfo = NORCharacteristicReader.readSFloatValue(ptr: &pointer)
+        } else {
+            self.trendInfo = nil
         }
         self.sensorQualityPresent = qualityPresent;
         
         if self.sensorQualityPresent {
             self.quality = NORCharacteristicReader.readSFloatValue(ptr: &pointer)
+        } else {
+            self.quality = nil
         }
+        // E2E CRC is not supported.
         self.e2eCrcPresent = false;
     }
     
@@ -117,12 +119,12 @@ class NORCGMReading : NSObject {
         }
         return "\(data.location)"
     }
+}
+
+extension NORCGMReading: Equatable {
     
-    override func isEqual(_ object: Any?) -> Bool {
-        //TODO: Thought about using time offset as unique identifiers
-        //But this is pretty unsafe in situations where the readings are restarted
-        //In that case the time offsets will be equal again (0s,1s,2s,etc..)
-        //Will assume not equal for now
-        return false
+    static func == (lhs: NORCGMReading, rhs: NORCGMReading) -> Bool {
+        return lhs.timeOffsetSinceSessionStart == rhs.timeOffsetSinceSessionStart
     }
+    
 }

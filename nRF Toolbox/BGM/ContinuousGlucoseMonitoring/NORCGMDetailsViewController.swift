@@ -60,7 +60,7 @@ class NORCGMDetailsViewController : UIViewController {
     //MARK: - UIViewController methods
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        timestamp.text = dateFormat.string(from: Date(timeInterval: Double(reading.timeOffsetSinceSessionStart), since: sessionStartTime))
+        timestamp.text = dateFormat.string(from: Date(timeInterval: reading.timeOffsetSinceSessionStart, since: sessionStartTime))
         type.text = reading.typeAsString()
         location.text = reading.locationAsSting()
         concentration.text = String(format:"%.1f", reading.glucoseConcentration)

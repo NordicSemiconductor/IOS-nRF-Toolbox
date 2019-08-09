@@ -117,6 +117,9 @@ class NORCGMViewController: NORBaseViewController, NORScannerDelegate,
     func handleActionButtonTapped(from view: UIView) {
         let alertView = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alertView.addAction(UIAlertAction(title: "Start Session", style: .default) { _ in
+            self.readings.removeAll()
+            self.cbgmTableView.reloadData()
+            
             self.cgmActivityIndicator.startAnimating()
             self.sessionStartTime = Date()
             let data = Data([NORCGMOpCode.startSession.rawValue])
@@ -166,6 +169,7 @@ class NORCGMViewController: NORBaseViewController, NORScannerDelegate,
     }
 
     func clearUI() {
+        cgmActivityIndicator.stopAnimating()
         readings.removeAll()
         cbgmTableView.reloadData()
         deviceName.text = "DEFAULT CGM"
@@ -212,8 +216,8 @@ class NORCGMViewController: NORBaseViewController, NORScannerDelegate,
         let aCell = tableView.dequeueReusableCell(withIdentifier: "CGMCell", for: indexPath) as! NORCGMItemCell
 
         aCell.type.text = aReading.typeAsString()
-        aCell.timestamp.text = dateFormat.string(from: Date(timeInterval: Double(aReading.timeOffsetSinceSessionStart), since: self.sessionStartTime!))
-        aCell.value.text = String(format: "%.0f", aReading.glucoseConcentration)
+        aCell.timestamp.text = dateFormat.string(from: Date(timeInterval: aReading.timeOffsetSinceSessionStart, since: self.sessionStartTime!))
+        aCell.value.text = String(format: "%.1f", aReading.glucoseConcentration)
         aCell.unit.text = "mg/dL"
         
         return aCell
@@ -414,7 +418,7 @@ class NORCGMViewController: NORBaseViewController, NORScannerDelegate,
         }
         if characteristic.uuid == cgmGlucoseMeasurementCharacteristicUUID {
             DispatchQueue.main.async {
-                let reading = NORCGMReading(withBytes: array)
+                var reading = NORCGMReading(array)
                 if self.cgmFeatureData != nil {
                     reading.cgmFeatureData = self.cgmFeatureData
                 }

@@ -8,27 +8,27 @@
 
 import UIKit
 
-class NORGlucoseReadingContext: NSObject {
+struct NORGlucoseReadingContext {
 
     //MARK: - Properties
-    var sequenceNumber         : UInt16
-    var carbohydratePresent    : Bool
-    var carbohydrateId         : BgmCarbohydrateId?
-    var carbohydrate           : Float32?
-    var mealPresent            : Bool
-    var meal                   : BgmMeal?
-    var testerAndHealthPresent : Bool
-    var tester                 : BgmTester?
-    var health                 : BgmHealth?
-    var exercisePresent        : Bool
-    var exerciseDuration       : UInt16?
-    var exerciseIntensity      : UInt8?
-    var medicationPresent      : Bool
-    var medicationId           : BgmMedicationId?
-    var medication             : Float32?
-    var medicationUnit         : BgmMedicationUnit?
-    var HbA1cPresent           : Bool
-    var HbA1c                  : Float32?
+    let sequenceNumber         : UInt16
+    let carbohydratePresent    : Bool
+    let carbohydrateId         : BgmCarbohydrateId?
+    let carbohydrate           : Float32?
+    let mealPresent            : Bool
+    let meal                   : BgmMeal?
+    let testerAndHealthPresent : Bool
+    let tester                 : BgmTester?
+    let health                 : BgmHealth?
+    let exercisePresent        : Bool
+    let exerciseDuration       : UInt16?
+    let exerciseIntensity      : UInt8?
+    let medicationPresent      : Bool
+    let medicationId           : BgmMedicationId?
+    let medication             : Float32?
+    let medicationUnit         : BgmMedicationUnit?
+    let HbA1cPresent           : Bool
+    let HbA1c                  : Float32?
  
     //MARK: - Enums
     enum BgmCarbohydrateId: UInt8 {
@@ -84,10 +84,6 @@ class NORGlucoseReadingContext: NSObject {
     }
   
     //MARK: - Implementation
-    static func readingContextFromBytes(_ bytes: UnsafePointer<UInt8>) -> NORGlucoseReadingContext {
-        return NORGlucoseReadingContext(bytes)
-    }
-    
     init(_ bytes: UnsafePointer<UInt8>){
         var pointer = UnsafeMutablePointer<UInt8>(mutating: bytes)
         
@@ -113,11 +109,16 @@ class NORGlucoseReadingContext: NSObject {
         if carbohydrateIdPresent {
             self.carbohydrateId = BgmCarbohydrateId(rawValue: NORCharacteristicReader.readUInt8Value(ptr: &pointer))
             self.carbohydrate = NORCharacteristicReader.readSFloatValue(ptr: &pointer) / 1000
+        } else {
+            self.carbohydrateId = nil
+            self.carbohydrate = nil
         }
         
         self.mealPresent = mealPresent
         if mealPresent {
             self.meal = BgmMeal(rawValue:NORCharacteristicReader.readUInt8Value(ptr: &pointer))
+        } else {
+            self.meal = nil
         }
         
         self.testerAndHealthPresent = testerAndHelathPresent
@@ -125,12 +126,18 @@ class NORGlucoseReadingContext: NSObject {
             let nibble = NORCharacteristicReader.readNibble(ptr: &pointer)
             self.tester = BgmTester(rawValue: nibble.first)
             self.health = BgmHealth(rawValue: nibble.second)
+        } else {
+            self.tester = nil
+            self.health = nil
         }
         
         self.exercisePresent = exerciseInfoPresent
         if exerciseInfoPresent {
             self.exerciseDuration = NORCharacteristicReader.readUInt16Value(ptr: &pointer)
             self.exerciseIntensity = NORCharacteristicReader.readUInt8Value(ptr: &pointer)
+        } else {
+            self.exerciseDuration = nil
+            self.exerciseIntensity = nil
         }
         
         self.medicationPresent = medicationPresent
@@ -138,27 +145,33 @@ class NORGlucoseReadingContext: NSObject {
             self.medicationId = BgmMedicationId(rawValue:NORCharacteristicReader.readUInt8Value(ptr: &pointer));
             self.medication = NORCharacteristicReader.readSFloatValue(ptr: &pointer) / 1000000
             self.medicationUnit = medicationUnit
+        } else {
+            self.medicationId = nil
+            self.medication = nil
+            self.medicationUnit = nil
         }
         
         self.HbA1cPresent = HbA1cPresent
         if HbA1cPresent {
             self.HbA1c = NORCharacteristicReader.readSFloatValue(ptr: &pointer)
+        } else {
+            self.HbA1c = nil
         }
     }
     
-    override func isEqual(_ object: Any?) -> Bool {
-        switch object {
-        case let reading as NORGlucoseReading:
-            return sequenceNumber == reading.sequenceNumber
-        case let context as NORGlucoseReadingContext:
-            return sequenceNumber == context.sequenceNumber
-        default:
-            return false
-        }
-    }
 }
 
-
+extension NORGlucoseReadingContext: Equatable {
+    
+    static func == (lhs: NORGlucoseReadingContext, rhs: NORGlucoseReading) -> Bool {
+        return lhs.sequenceNumber == rhs.sequenceNumber
+    }
+    
+    static func == (lhs: NORGlucoseReadingContext, rhs: NORGlucoseReadingContext) -> Bool {
+        return lhs.sequenceNumber == rhs.sequenceNumber
+    }
+    
+}
 
 extension NORGlucoseReadingContext.BgmCarbohydrateId: CustomStringConvertible {
     

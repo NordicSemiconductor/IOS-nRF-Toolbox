@@ -54,10 +54,10 @@ enum CGMLocation : UInt8{
 //+ (ContinuousGlucoseFeatureData*) initWithBytes:(uint8_t*) bytes;
 //- (void) updateFromBytes:(uint8_t*) bytes;
 
-class NORCGMFeatureData: NSObject {
+struct NORCGMFeatureData {
     // Glucose Measurement values
-    var type     : CGMType
-    var location : CGMLocation
+    let type     : CGMType
+    let location : CGMLocation
     
     init(_ bytes: UnsafeMutablePointer<UInt8>) {
         var pointer = bytes

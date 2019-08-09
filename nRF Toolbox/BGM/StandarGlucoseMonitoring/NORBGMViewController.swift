@@ -261,10 +261,10 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
             let text = "\(batteryLevel)%"
             
             DispatchQueue.main.async {
-                self.battery.setTitle(text, for: UIControl.State.disabled)
+                self.battery.setTitle(text, for: .disabled)
                 if self.battery.tag == 0 {
                     // If battery level notifications are available, enable them
-                    if characteristic.properties.contains(CBCharacteristicProperties.notify)
+                    if characteristic.properties.contains(.notify)
                     {
                         self.battery.tag = 1; // mark that we have enabled notifications
                         peripheral.setNotifyValue(true, for: characteristic)
@@ -274,7 +274,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
             
         } else if characteristic.uuid.isEqual(bgmGlucoseMeasurementCharacteristicUUID) {
             print("New glucose reading")
-            let reading = NORGlucoseReading.readingFromBytes(UnsafeMutablePointer(array))
+            let reading = NORGlucoseReading(array)
             
             if let index = readings.firstIndex(of: reading) {
                 readings[index] = reading
@@ -282,7 +282,7 @@ class NORBGMViewController: NORBaseViewController ,CBCentralManagerDelegate, CBP
                 readings.append(reading)
             }
         } else if characteristic.uuid.isEqual(bgmGlucoseMeasurementContextCharacteristicUUID) {
-            let context = NORGlucoseReadingContext.readingContextFromBytes(UnsafeMutablePointer(array))
+            let context = NORGlucoseReadingContext(array)
             
             if let index = readings.firstIndex(where: { $0.sequenceNumber == context.sequenceNumber }) {
                 readings[index].context = context
