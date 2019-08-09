@@ -66,7 +66,7 @@
         <!--User Files-->
         <scene sceneID="dHY-vd-u7x">
             <objects>
-                <viewController id="Qad-SN-gjU" customClass="NORUserFilesViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Qad-SN-gjU" customClass="UserFilesViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kjT-Ys-qPf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="502"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -174,7 +174,7 @@
         <!--Main View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" userLabel="Main View Controller" customClass="NORMainViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" userLabel="Main View Controller" customClass="MainViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -550,7 +550,7 @@
         <!--View Controller - BGM-->
         <scene sceneID="hgy-MS-kOD">
             <objects>
-                <viewController id="K6D-kg-QBM" userLabel="View Controller - BGM" customClass="NORBGMViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="K6D-kg-QBM" userLabel="View Controller - BGM" customClass="BGMViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kQi-nT-dUG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -616,7 +616,7 @@
                                 <color key="separatorColor" red="0.73333334922790527" green="0.74117648601531982" blue="0.75294119119644165" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="BGMCell" id="EMf-0w-QHD" customClass="NORBGMItemCell" customModule="nRF_Toolbox" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="BGMCell" id="EMf-0w-QHD" customClass="BGMItemCell" customModule="nRF_Toolbox" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="22" width="310" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EMf-0w-QHD" id="esg-YP-CNM">
@@ -757,7 +757,7 @@
         <!--Details-->
         <scene sceneID="7EN-LX-8Kn">
             <objects>
-                <viewController id="Tpl-nT-cEd" customClass="NORBGMDetailsViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Tpl-nT-cEd" customClass="BGMDetailsViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6Du-Fg-2hJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1390,7 +1390,7 @@
         <!--View Controller - BPM-->
         <scene sceneID="knE-KG-ydc">
             <objects>
-                <viewController id="Kc0-JV-b23" userLabel="View Controller - BPM" customClass="NORBPMViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Kc0-JV-b23" userLabel="View Controller - BPM" customClass="BPMViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3UX-f1-CG4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1696,7 +1696,7 @@
         <!--View Controller - CSC-->
         <scene sceneID="Z21-8S-DTi">
             <objects>
-                <viewController id="VtK-t5-9C8" userLabel="View Controller - CSC" customClass="NORCSCViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="VtK-t5-9C8" userLabel="View Controller - CSC" customClass="CSCViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fCM-Pg-Aee">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1947,7 +1947,7 @@
         <!--View Controller - DFU-->
         <scene sceneID="jQp-94-O02">
             <objects>
-                <viewController storyboardIdentifier="DFUViewController" id="ZfZ-xR-bsT" userLabel="View Controller - DFU" customClass="NORDFUViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DFUViewController" id="ZfZ-xR-bsT" userLabel="View Controller - DFU" customClass="DFUViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dWV-qC-ez4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -2234,7 +2234,7 @@
         <!--View Controller - HRM-->
         <scene sceneID="6tG-wn-seY">
             <objects>
-                <viewController id="9ph-JI-A6G" userLabel="View Controller - HRM" customClass="NORHRMViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="9ph-JI-A6G" userLabel="View Controller - HRM" customClass="HRMViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YwY-LN-qZ3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -2376,7 +2376,7 @@
         <!--View Controller - Proximity-->
         <scene sceneID="7za-bA-dBb">
             <objects>
-                <viewController id="inG-0b-px5" userLabel="View Controller - Proximity" customClass="NORProximityViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="inG-0b-px5" userLabel="View Controller - Proximity" customClass="ProximityViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jxL-cL-gIv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -2506,7 +2506,7 @@
         <!--View Controller - RSC-->
         <scene sceneID="DOf-c9-t36">
             <objects>
-                <viewController id="ajK-NB-gff" userLabel="View Controller - RSC" customClass="NORRSCViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ajK-NB-gff" userLabel="View Controller - RSC" customClass="RSCViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="muv-tX-KBW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -2789,7 +2789,7 @@
         <!--View Controller - HTM-->
         <scene sceneID="6kq-oM-g6K">
             <objects>
-                <viewController id="Rl2-Gx-bqg" userLabel="View Controller - HTM" customClass="NORHTSViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Rl2-Gx-bqg" userLabel="View Controller - HTM" customClass="HTSViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="N53-1k-Cvu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -2940,7 +2940,7 @@
         <!--Select Device-->
         <scene sceneID="AiV-hG-UJL">
             <objects>
-                <viewController id="Day-ms-bMb" customClass="NORScannerViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Day-ms-bMb" customClass="ScannerViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EgS-jM-xp2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -3056,7 +3056,7 @@
         <!--App Files-->
         <scene sceneID="VAc-1S-DVb">
             <objects>
-                <viewController id="t2a-Jq-CNK" customClass="NORAppFilesViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="t2a-Jq-CNK" customClass="AppFilesViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nOP-Xb-nUv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="502"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3116,7 +3116,7 @@
         <!--Folder Files View Controller-->
         <scene sceneID="nro-W8-4UN">
             <objects>
-                <viewController modalTransitionStyle="flipHorizontal" id="4bI-af-War" customClass="NORFolderFilesViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalTransitionStyle="flipHorizontal" id="4bI-af-War" customClass="FolderFilesViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cUm-89-ZK2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3217,7 +3217,7 @@
         <!--How to create Distribution packet (ZIP)?-->
         <scene sceneID="Zul-pa-kwN">
             <objects>
-                <viewController id="h5f-4T-1jh" customClass="NORTutorialViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="h5f-4T-1jh" customClass="TutorialViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TJg-gu-NcQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3668,7 +3668,7 @@
         <!--View Controller - UART-->
         <scene sceneID="bnf-jV-dRu">
             <objects>
-                <viewController title="UART" id="H5O-PI-o2R" userLabel="View Controller - UART" customClass="NORUARTViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="UART" id="H5O-PI-o2R" userLabel="View Controller - UART" customClass="UARTViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VbO-N4-bO9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3882,7 +3882,7 @@
         <!--Log View Controller-->
         <scene sceneID="zCT-Jj-SHk">
             <objects>
-                <viewController id="y8v-dl-m9e" customClass="NORLogViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="y8v-dl-m9e" customClass="LogViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="75f-Im-4al">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3891,7 +3891,7 @@
                                 <rect key="frame" x="0.0" y="66" width="315" height="601"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="LogItem" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="logCell" rowHeight="25" id="ruC-cJ-Ur7" customClass="NORLogItemTableViewCell" customModule="nRF_Toolbox" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="LogItem" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="logCell" rowHeight="25" id="ruC-cJ-Ur7" customClass="LogItemTableViewCell" customModule="nRF_Toolbox" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="22" width="315" height="25"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ruC-cJ-Ur7" id="YOG-TB-x9u">
@@ -4008,7 +4008,7 @@
         <!--Edit Popup View Controller-->
         <scene sceneID="E82-2D-Kfc">
             <objects>
-                <viewController storyboardIdentifier="StoryboardIDEditPopup" id="6Px-f6-4un" customClass="NOREditPopupViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="StoryboardIDEditPopup" id="6Px-f6-4un" customClass="EditPopupViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" alpha="0.25" contentMode="scaleToFill" id="1ve-hR-O36">
                         <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -4312,7 +4312,7 @@
         <!--UART-->
         <scene sceneID="o7H-iQ-Ybv">
             <objects>
-                <viewController id="0VH-j9-Lgb" customClass="NORUARTRevealViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="0VH-j9-Lgb" customClass="UARTRevealViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="z7D-N1-ftc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -4365,7 +4365,7 @@
         <!--ViewController - HK-->
         <scene sceneID="9th-2n-jLw">
             <objects>
-                <viewController id="Mk7-F6-tao" userLabel="ViewController - HK" customClass="NORHKViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Mk7-F6-tao" userLabel="ViewController - HK" customClass="HKViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VMK-4f-wal">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
@@ -4508,7 +4508,7 @@
         <!--View Controller - CBGM-->
         <scene sceneID="m7x-mS-y3M">
             <objects>
-                <viewController id="5Ta-i6-8fT" userLabel="View Controller - CBGM" customClass="NORCGMViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="5Ta-i6-8fT" userLabel="View Controller - CBGM" customClass="CGMViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Wjh-0S-B1J">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -4574,7 +4574,7 @@
                                 <color key="separatorColor" red="0.73333334920000004" green="0.74117648599999997" blue="0.75294119120000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CGMCell" id="bgx-aV-Ogs" customClass="NORCGMItemCell" customModule="nRF_Toolbox" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CGMCell" id="bgx-aV-Ogs" customClass="CGMItemCell" customModule="nRF_Toolbox" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="22" width="310" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bgx-aV-Ogs" id="sQg-JJ-vSQ">
@@ -4722,7 +4722,7 @@
         <!--CGM Reading details-->
         <scene sceneID="Bq8-UE-fM1">
             <objects>
-                <viewController title="CGM Reading details" id="mrg-v0-oyG" customClass="NORCGMDetailsViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="CGM Reading details" id="mrg-v0-oyG" customClass="CGMDetailsViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Wve-lR-hWh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -5092,7 +5092,7 @@
         <!--Select Accessory-->
         <scene sceneID="LrB-yP-pbD">
             <objects>
-                <viewController title="Select Accessory" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="currentContext" id="reO-Ti-6rK" customClass="NORHKScannerViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Select Accessory" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="currentContext" id="reO-Ti-6rK" customClass="HKScannerViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="z7G-e3-feC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -5188,7 +5188,7 @@
         <!--Accessory Info-->
         <scene sceneID="rdq-tR-Tkg">
             <objects>
-                <viewController title="Accessory Info" automaticallyAdjustsScrollViewInsets="NO" id="Pe3-Ug-J4P" customClass="NORHKAccessoryViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Accessory Info" automaticallyAdjustsScrollViewInsets="NO" id="Pe3-Ug-J4P" customClass="HKAccessoryViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ngl-Bo-tNz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationController.popToRootViewController(animated: true)
 
         let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let dfuViewController = mainStoryboard.instantiateViewController(withIdentifier: "DFUViewController") as! NORDFUViewController
+        let dfuViewController = mainStoryboard.instantiateViewController(withIdentifier: "DFUViewController") as! DFUViewController
         navigationController.pushViewController(dfuViewController, animated: true)
         dfuViewController.onFileImported(withURL: url)
         return true

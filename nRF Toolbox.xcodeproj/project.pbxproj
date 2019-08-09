@@ -8,56 +8,56 @@
 
 /* Begin PBXBuildFile section */
 		0E645A0F1CBF957800D36AD0 /* firmwares in Resources */ = {isa = PBXBuildFile; fileRef = 7E6ED10A196ED482008010B6 /* firmwares */; };
-		3000B2111CE317D900F64CEE /* NORUARTRevealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3000B2101CE317D900F64CEE /* NORUARTRevealViewController.swift */; };
-		3000B2131CE3195E00F64CEE /* NOREditPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3000B2121CE3195E00F64CEE /* NOREditPopupViewController.swift */; };
-		3000B2151CE32A9200F64CEE /* NORUARTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3000B2141CE32A9200F64CEE /* NORUARTViewController.swift */; };
-		300143271CEC4B9D008379DF /* NORAppUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300143261CEC4B9D008379DF /* NORAppUtilities.swift */; };
-		300143291CEC59F4008379DF /* NORServiceIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300143281CEC59F4008379DF /* NORServiceIdentifiers.swift */; };
-		3001432B1CEC6D2A008379DF /* NORBGMRecordAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001432A1CEC6D2A008379DF /* NORBGMRecordAccess.swift */; };
-		3001432D1CECADFB008379DF /* NORCharacteristicReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001432C1CECADFB008379DF /* NORCharacteristicReader.swift */; };
-		3001EBB11D1BE1F3008C5C37 /* NORGlucoseReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBB01D1BE1F3008C5C37 /* NORGlucoseReading.swift */; };
-		3001EBB71D1BE1FB008C5C37 /* NORBGMDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBB41D1BE1FB008C5C37 /* NORBGMDetailsViewController.swift */; };
-		3001EBB81D1BE1FB008C5C37 /* NORBGMItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBB51D1BE1FB008C5C37 /* NORBGMItemCell.swift */; };
-		3001EBB91D1BE1FB008C5C37 /* NORBGMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBB61D1BE1FB008C5C37 /* NORBGMViewController.swift */; };
-		3001EBBB1D1BE306008C5C37 /* NORCGMReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBBA1D1BE306008C5C37 /* NORCGMReading.swift */; };
-		3001EBBD1D1BE695008C5C37 /* NORCGMFeatureData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBBC1D1BE695008C5C37 /* NORCGMFeatureData.swift */; };
-		3001EBBF1D1BE727008C5C37 /* NORCGMSpecificOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBBE1D1BE727008C5C37 /* NORCGMSpecificOperations.swift */; };
-		3001EBC31D1C1430008C5C37 /* NORCGMItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBC01D1C12E4008C5C37 /* NORCGMItemCell.swift */; };
-		3001EBC51D1C153C008C5C37 /* NORCGMDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBC41D1C153C008C5C37 /* NORCGMDetailsViewController.swift */; };
-		3001EBC71D1C1BAA008C5C37 /* NORCGMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBC61D1C1BAA008C5C37 /* NORCGMViewController.swift */; };
-		300508931CE1D75800D93BE0 /* NORProximityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300508921CE1D75800D93BE0 /* NORProximityViewController.swift */; };
-		300508951CE2078A00D93BE0 /* NORRSCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300508941CE2078A00D93BE0 /* NORRSCViewController.swift */; };
-		3010F6051CDCB4F900CB285A /* NORBPMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3010F6041CDCB4F900CB285A /* NORBPMViewController.swift */; };
-		304299221CE5DE8E00E1D2AB /* NORUserFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304299211CE5DE8E00E1D2AB /* NORUserFilesViewController.swift */; };
-		304299241CE6114000E1D2AB /* NORTutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304299231CE6114000E1D2AB /* NORTutorialViewController.swift */; };
-		3042993C1CE6154100E1D2AB /* NORBaseRevealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304299391CE6154100E1D2AB /* NORBaseRevealViewController.swift */; };
-		3042993D1CE6154100E1D2AB /* NORBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3042993A1CE6154100E1D2AB /* NORBaseViewController.swift */; };
-		30499E4B1CE4667800E0993B /* NORDFUConstantsUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E4A1CE4667800E0993B /* NORDFUConstantsUtility.swift */; };
-		30499E511CE471C500E0993B /* NORDFUViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E501CE471C500E0993B /* NORDFUViewController.swift */; };
-		30499E551CE4732200E0993B /* NORFileSelectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E541CE4732200E0993B /* NORFileSelectionDelegate.swift */; };
-		30499E571CE4736500E0993B /* NORFilePreselectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E561CE4736500E0993B /* NORFilePreselectionDelegate.swift */; };
-		30499E591CE4A07700E0993B /* NORAppFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E581CE4A07700E0993B /* NORAppFilesViewController.swift */; };
-		30499E5D1CE4C6C700E0993B /* NORFolderFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E5C1CE4C6C700E0993B /* NORFolderFilesViewController.swift */; };
-		304D58FB1CE34EE600148271 /* NORLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304D58FA1CE34EE600148271 /* NORLogger.swift */; };
-		304D58FD1CE34FC600148271 /* NORLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304D58FC1CE34FC600148271 /* NORLogViewController.swift */; };
-		304D58FF1CE3521900148271 /* NORLogItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304D58FE1CE3521900148271 /* NORLogItem.swift */; };
-		304D59011CE352B300148271 /* NORLogItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304D59001CE352B300148271 /* NORLogItemTableViewCell.swift */; };
-		3069A1D71CDC788A003869EA /* NORBluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3069A1D61CDC788A003869EA /* NORBluetoothManager.swift */; };
+		3000B2111CE317D900F64CEE /* UARTRevealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3000B2101CE317D900F64CEE /* UARTRevealViewController.swift */; };
+		3000B2131CE3195E00F64CEE /* EditPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3000B2121CE3195E00F64CEE /* EditPopupViewController.swift */; };
+		3000B2151CE32A9200F64CEE /* UARTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3000B2141CE32A9200F64CEE /* UARTViewController.swift */; };
+		300143271CEC4B9D008379DF /* AppUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300143261CEC4B9D008379DF /* AppUtilities.swift */; };
+		300143291CEC59F4008379DF /* ServiceIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300143281CEC59F4008379DF /* ServiceIdentifiers.swift */; };
+		3001432B1CEC6D2A008379DF /* RecordAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001432A1CEC6D2A008379DF /* RecordAccess.swift */; };
+		3001432D1CECADFB008379DF /* CharacteristicReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001432C1CECADFB008379DF /* CharacteristicReader.swift */; };
+		3001EBB11D1BE1F3008C5C37 /* GlucoseReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBB01D1BE1F3008C5C37 /* GlucoseReading.swift */; };
+		3001EBB71D1BE1FB008C5C37 /* BGMDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBB41D1BE1FB008C5C37 /* BGMDetailsViewController.swift */; };
+		3001EBB81D1BE1FB008C5C37 /* BGMItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBB51D1BE1FB008C5C37 /* BGMItemCell.swift */; };
+		3001EBB91D1BE1FB008C5C37 /* BGMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBB61D1BE1FB008C5C37 /* BGMViewController.swift */; };
+		3001EBBB1D1BE306008C5C37 /* CGMReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBBA1D1BE306008C5C37 /* CGMReading.swift */; };
+		3001EBBD1D1BE695008C5C37 /* CGMFeatureData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBBC1D1BE695008C5C37 /* CGMFeatureData.swift */; };
+		3001EBBF1D1BE727008C5C37 /* CGMSpecificOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBBE1D1BE727008C5C37 /* CGMSpecificOperations.swift */; };
+		3001EBC31D1C1430008C5C37 /* CGMItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBC01D1C12E4008C5C37 /* CGMItemCell.swift */; };
+		3001EBC51D1C153C008C5C37 /* CGMDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBC41D1C153C008C5C37 /* CGMDetailsViewController.swift */; };
+		3001EBC71D1C1BAA008C5C37 /* CGMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBC61D1C1BAA008C5C37 /* CGMViewController.swift */; };
+		300508931CE1D75800D93BE0 /* ProximityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300508921CE1D75800D93BE0 /* ProximityViewController.swift */; };
+		300508951CE2078A00D93BE0 /* RSCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300508941CE2078A00D93BE0 /* RSCViewController.swift */; };
+		3010F6051CDCB4F900CB285A /* BPMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3010F6041CDCB4F900CB285A /* BPMViewController.swift */; };
+		304299221CE5DE8E00E1D2AB /* UserFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304299211CE5DE8E00E1D2AB /* UserFilesViewController.swift */; };
+		304299241CE6114000E1D2AB /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304299231CE6114000E1D2AB /* TutorialViewController.swift */; };
+		3042993C1CE6154100E1D2AB /* BaseRevealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304299391CE6154100E1D2AB /* BaseRevealViewController.swift */; };
+		3042993D1CE6154100E1D2AB /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3042993A1CE6154100E1D2AB /* BaseViewController.swift */; };
+		30499E4B1CE4667800E0993B /* DFUConstantsUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E4A1CE4667800E0993B /* DFUConstantsUtility.swift */; };
+		30499E511CE471C500E0993B /* DFUViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E501CE471C500E0993B /* DFUViewController.swift */; };
+		30499E551CE4732200E0993B /* FileSelectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E541CE4732200E0993B /* FileSelectionDelegate.swift */; };
+		30499E571CE4736500E0993B /* FilePreselectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E561CE4736500E0993B /* FilePreselectionDelegate.swift */; };
+		30499E591CE4A07700E0993B /* AppFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E581CE4A07700E0993B /* AppFilesViewController.swift */; };
+		30499E5D1CE4C6C700E0993B /* FolderFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E5C1CE4C6C700E0993B /* FolderFilesViewController.swift */; };
+		304D58FB1CE34EE600148271 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304D58FA1CE34EE600148271 /* Logger.swift */; };
+		304D58FD1CE34FC600148271 /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304D58FC1CE34FC600148271 /* LogViewController.swift */; };
+		304D58FF1CE3521900148271 /* LogItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304D58FE1CE3521900148271 /* LogItem.swift */; };
+		304D59011CE352B300148271 /* LogItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304D59001CE352B300148271 /* LogItemTableViewCell.swift */; };
+		3069A1D71CDC788A003869EA /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3069A1D61CDC788A003869EA /* BluetoothManager.swift */; };
 		306ECD621CE61A3600E48BBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306ECD611CE61A3600E48BBD /* AppDelegate.swift */; };
-		3080C4711CE06D0E009C2D8C /* NORCSCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3080C4701CE06D0E009C2D8C /* NORCSCViewController.swift */; };
-		308AA57A1CD8DD4300CC9857 /* NORGlucoseReadingContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308AA5791CD8DD4300CC9857 /* NORGlucoseReadingContext.swift */; };
-		308EE1781CE0CBF700F2A854 /* NORHTSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308EE1771CE0CBF700F2A854 /* NORHTSViewController.swift */; };
-		30921FD51CD0EB55009CBDDE /* NORMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30921FD41CD0EB55009CBDDE /* NORMainViewController.swift */; };
-		309F08651E6D6A5500B7546A /* NORHKViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F08641E6D6A5500B7546A /* NORHKViewController.swift */; };
+		3080C4711CE06D0E009C2D8C /* CSCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3080C4701CE06D0E009C2D8C /* CSCViewController.swift */; };
+		308AA57A1CD8DD4300CC9857 /* GlucoseReadingContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308AA5791CD8DD4300CC9857 /* GlucoseReadingContext.swift */; };
+		308EE1781CE0CBF700F2A854 /* HTSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308EE1771CE0CBF700F2A854 /* HTSViewController.swift */; };
+		30921FD51CD0EB55009CBDDE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30921FD41CD0EB55009CBDDE /* MainViewController.swift */; };
+		309F08651E6D6A5500B7546A /* HKViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F08641E6D6A5500B7546A /* HKViewController.swift */; };
 		309F08681E6D706B00B7546A /* HomeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 309F08671E6D706B00B7546A /* HomeKit.framework */; };
-		309F086A1E6D9EAA00B7546A /* NORHKHomeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F08691E6D9EAA00B7546A /* NORHKHomeStore.swift */; };
-		309F086C1E6EA0F800B7546A /* NORHKScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F086B1E6EA0F800B7546A /* NORHKScannerViewController.swift */; };
-		309F086E1E6ED44F00B7546A /* NORHKScannerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F086D1E6ED44F00B7546A /* NORHKScannerDelegate.swift */; };
-		309F08701E6FF1F900B7546A /* NORHKAccessoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F086F1E6FF1F900B7546A /* NORHKAccessoryViewController.swift */; };
-		30A114561CD2367C000F0F02 /* NORScannedPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A114551CD2367C000F0F02 /* NORScannedPeripheral.swift */; };
-		30A1145A1CD2426B000F0F02 /* NORScannerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A114591CD2426B000F0F02 /* NORScannerDelegate.swift */; };
-		30A1145C1CD24611000F0F02 /* NORScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A1145B1CD24611000F0F02 /* NORScannerViewController.swift */; };
-		30F92D4B1CD9CF0700C73285 /* NORHRMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F92D4A1CD9CF0700C73285 /* NORHRMViewController.swift */; };
+		309F086A1E6D9EAA00B7546A /* HKHomeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F08691E6D9EAA00B7546A /* HKHomeStore.swift */; };
+		309F086C1E6EA0F800B7546A /* HKScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F086B1E6EA0F800B7546A /* HKScannerViewController.swift */; };
+		309F086E1E6ED44F00B7546A /* HKScannerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F086D1E6ED44F00B7546A /* HKScannerDelegate.swift */; };
+		309F08701E6FF1F900B7546A /* HKAccessoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F086F1E6FF1F900B7546A /* HKAccessoryViewController.swift */; };
+		30A114561CD2367C000F0F02 /* ScannedPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A114551CD2367C000F0F02 /* ScannedPeripheral.swift */; };
+		30A1145A1CD2426B000F0F02 /* ScannerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A114591CD2426B000F0F02 /* ScannerDelegate.swift */; };
+		30A1145C1CD24611000F0F02 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A1145B1CD24611000F0F02 /* ScannerViewController.swift */; };
+		30F92D4B1CD9CF0700C73285 /* HRMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F92D4A1CD9CF0700C73285 /* HRMViewController.swift */; };
 		5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAA1885642F007CC40D /* icon-dfu-64.png */; };
 		5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAB1885642F007CC40D /* icon-dfu-320.png */; };
 		5211EFB018856430007CC40D /* icon-hex.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAC1885642F007CC40D /* icon-hex.png */; };
@@ -76,7 +76,7 @@
 		52BDCB191C3FD31F00E2680F /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BDCB181C3FD31F00E2680F /* Accelerate.framework */; };
 		52BDCBBE1C3FD86900E2680F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BDCBBD1C3FD86900E2680F /* QuartzCore.framework */; };
 		52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */; };
-		52D9BC9E1DD0CB760030E824 /* NORData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9BC9D1DD0CB760030E824 /* NORData.swift */; };
+		52D9BC9E1DD0CB760030E824 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9BC9D1DD0CB760030E824 /* Data.swift */; };
 		7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B422818A8DF4D006BA1BC /* high.mp3 */; };
 		DCBF9D003D5AA175E9F24910 /* Pods_nRF_Toolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 302004489406AEA824DCF86D /* Pods_nRF_Toolbox.framework */; };
 /* End PBXBuildFile section */
@@ -95,59 +95,59 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3000B2101CE317D900F64CEE /* NORUARTRevealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORUARTRevealViewController.swift; sourceTree = "<group>"; };
-		3000B2121CE3195E00F64CEE /* NOREditPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NOREditPopupViewController.swift; sourceTree = "<group>"; };
-		3000B2141CE32A9200F64CEE /* NORUARTViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORUARTViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		300143261CEC4B9D008379DF /* NORAppUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORAppUtilities.swift; sourceTree = "<group>"; };
-		300143281CEC59F4008379DF /* NORServiceIdentifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORServiceIdentifiers.swift; sourceTree = "<group>"; };
-		3001432A1CEC6D2A008379DF /* NORBGMRecordAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBGMRecordAccess.swift; sourceTree = "<group>"; };
-		3001432C1CECADFB008379DF /* NORCharacteristicReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORCharacteristicReader.swift; sourceTree = "<group>"; };
-		3001432E1CEDAD04008379DF /* NORCharacteristicReaderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORCharacteristicReaderTests.swift; sourceTree = "<group>"; };
-		3001EBB01D1BE1F3008C5C37 /* NORGlucoseReading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORGlucoseReading.swift; path = Model/NORGlucoseReading.swift; sourceTree = "<group>"; };
-		3001EBB41D1BE1FB008C5C37 /* NORBGMDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBGMDetailsViewController.swift; sourceTree = "<group>"; };
-		3001EBB51D1BE1FB008C5C37 /* NORBGMItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBGMItemCell.swift; sourceTree = "<group>"; };
-		3001EBB61D1BE1FB008C5C37 /* NORBGMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORBGMViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		3001EBBA1D1BE306008C5C37 /* NORCGMReading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORCGMReading.swift; path = Model/NORCGMReading.swift; sourceTree = "<group>"; };
-		3001EBBC1D1BE695008C5C37 /* NORCGMFeatureData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORCGMFeatureData.swift; path = Model/NORCGMFeatureData.swift; sourceTree = "<group>"; };
-		3001EBBE1D1BE727008C5C37 /* NORCGMSpecificOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORCGMSpecificOperations.swift; path = Model/NORCGMSpecificOperations.swift; sourceTree = "<group>"; };
-		3001EBC01D1C12E4008C5C37 /* NORCGMItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORCGMItemCell.swift; sourceTree = "<group>"; };
-		3001EBC41D1C153C008C5C37 /* NORCGMDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORCGMDetailsViewController.swift; sourceTree = "<group>"; };
-		3001EBC61D1C1BAA008C5C37 /* NORCGMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORCGMViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		300508921CE1D75800D93BE0 /* NORProximityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORProximityViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		300508941CE2078A00D93BE0 /* NORRSCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORRSCViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		3010F6041CDCB4F900CB285A /* NORBPMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORBPMViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		3000B2101CE317D900F64CEE /* UARTRevealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTRevealViewController.swift; sourceTree = "<group>"; };
+		3000B2121CE3195E00F64CEE /* EditPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPopupViewController.swift; sourceTree = "<group>"; };
+		3000B2141CE32A9200F64CEE /* UARTViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = UARTViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		300143261CEC4B9D008379DF /* AppUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUtilities.swift; sourceTree = "<group>"; };
+		300143281CEC59F4008379DF /* ServiceIdentifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceIdentifiers.swift; sourceTree = "<group>"; };
+		3001432A1CEC6D2A008379DF /* RecordAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordAccess.swift; sourceTree = "<group>"; };
+		3001432C1CECADFB008379DF /* CharacteristicReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacteristicReader.swift; sourceTree = "<group>"; };
+		3001432E1CEDAD04008379DF /* CharacteristicReaderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacteristicReaderTests.swift; sourceTree = "<group>"; };
+		3001EBB01D1BE1F3008C5C37 /* GlucoseReading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GlucoseReading.swift; path = Model/GlucoseReading.swift; sourceTree = "<group>"; };
+		3001EBB41D1BE1FB008C5C37 /* BGMDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BGMDetailsViewController.swift; sourceTree = "<group>"; };
+		3001EBB51D1BE1FB008C5C37 /* BGMItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BGMItemCell.swift; sourceTree = "<group>"; };
+		3001EBB61D1BE1FB008C5C37 /* BGMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BGMViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		3001EBBA1D1BE306008C5C37 /* CGMReading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CGMReading.swift; path = Model/CGMReading.swift; sourceTree = "<group>"; };
+		3001EBBC1D1BE695008C5C37 /* CGMFeatureData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CGMFeatureData.swift; path = Model/CGMFeatureData.swift; sourceTree = "<group>"; };
+		3001EBBE1D1BE727008C5C37 /* CGMSpecificOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CGMSpecificOperations.swift; path = Model/CGMSpecificOperations.swift; sourceTree = "<group>"; };
+		3001EBC01D1C12E4008C5C37 /* CGMItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGMItemCell.swift; sourceTree = "<group>"; };
+		3001EBC41D1C153C008C5C37 /* CGMDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGMDetailsViewController.swift; sourceTree = "<group>"; };
+		3001EBC61D1C1BAA008C5C37 /* CGMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CGMViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		300508921CE1D75800D93BE0 /* ProximityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ProximityViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		300508941CE2078A00D93BE0 /* RSCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RSCViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		3010F6041CDCB4F900CB285A /* BPMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BPMViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		302004489406AEA824DCF86D /* Pods_nRF_Toolbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nRF_Toolbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		304299211CE5DE8E00E1D2AB /* NORUserFilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORUserFilesViewController.swift; sourceTree = "<group>"; };
-		304299231CE6114000E1D2AB /* NORTutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORTutorialViewController.swift; sourceTree = "<group>"; };
-		304299391CE6154100E1D2AB /* NORBaseRevealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBaseRevealViewController.swift; sourceTree = "<group>"; };
-		3042993A1CE6154100E1D2AB /* NORBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBaseViewController.swift; sourceTree = "<group>"; };
-		30499E4A1CE4667800E0993B /* NORDFUConstantsUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORDFUConstantsUtility.swift; sourceTree = "<group>"; };
-		30499E501CE471C500E0993B /* NORDFUViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORDFUViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		30499E541CE4732200E0993B /* NORFileSelectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORFileSelectionDelegate.swift; sourceTree = "<group>"; };
-		30499E561CE4736500E0993B /* NORFilePreselectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORFilePreselectionDelegate.swift; sourceTree = "<group>"; };
-		30499E581CE4A07700E0993B /* NORAppFilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORAppFilesViewController.swift; sourceTree = "<group>"; };
-		30499E5C1CE4C6C700E0993B /* NORFolderFilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORFolderFilesViewController.swift; sourceTree = "<group>"; };
-		304D58FA1CE34EE600148271 /* NORLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORLogger.swift; sourceTree = "<group>"; };
-		304D58FC1CE34FC600148271 /* NORLogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORLogViewController.swift; sourceTree = "<group>"; };
-		304D58FE1CE3521900148271 /* NORLogItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORLogItem.swift; sourceTree = "<group>"; };
-		304D59001CE352B300148271 /* NORLogItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORLogItemTableViewCell.swift; sourceTree = "<group>"; };
-		3069A1D61CDC788A003869EA /* NORBluetoothManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORBluetoothManager.swift; sourceTree = "<group>"; };
+		304299211CE5DE8E00E1D2AB /* UserFilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFilesViewController.swift; sourceTree = "<group>"; };
+		304299231CE6114000E1D2AB /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
+		304299391CE6154100E1D2AB /* BaseRevealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseRevealViewController.swift; sourceTree = "<group>"; };
+		3042993A1CE6154100E1D2AB /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		30499E4A1CE4667800E0993B /* DFUConstantsUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DFUConstantsUtility.swift; sourceTree = "<group>"; };
+		30499E501CE471C500E0993B /* DFUViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DFUViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		30499E541CE4732200E0993B /* FileSelectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileSelectionDelegate.swift; sourceTree = "<group>"; };
+		30499E561CE4736500E0993B /* FilePreselectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePreselectionDelegate.swift; sourceTree = "<group>"; };
+		30499E581CE4A07700E0993B /* AppFilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppFilesViewController.swift; sourceTree = "<group>"; };
+		30499E5C1CE4C6C700E0993B /* FolderFilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderFilesViewController.swift; sourceTree = "<group>"; };
+		304D58FA1CE34EE600148271 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		304D58FC1CE34FC600148271 /* LogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogViewController.swift; sourceTree = "<group>"; };
+		304D58FE1CE3521900148271 /* LogItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogItem.swift; sourceTree = "<group>"; };
+		304D59001CE352B300148271 /* LogItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogItemTableViewCell.swift; sourceTree = "<group>"; };
+		3069A1D61CDC788A003869EA /* BluetoothManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
 		306ECD611CE61A3600E48BBD /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3080C4701CE06D0E009C2D8C /* NORCSCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORCSCViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		308AA5791CD8DD4300CC9857 /* NORGlucoseReadingContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NORGlucoseReadingContext.swift; path = Model/NORGlucoseReadingContext.swift; sourceTree = "<group>"; };
-		308EE1771CE0CBF700F2A854 /* NORHTSViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORHTSViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		30921FD41CD0EB55009CBDDE /* NORMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORMainViewController.swift; sourceTree = "<group>"; };
-		309F08641E6D6A5500B7546A /* NORHKViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORHKViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		3080C4701CE06D0E009C2D8C /* CSCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CSCViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		308AA5791CD8DD4300CC9857 /* GlucoseReadingContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GlucoseReadingContext.swift; path = Model/GlucoseReadingContext.swift; sourceTree = "<group>"; };
+		308EE1771CE0CBF700F2A854 /* HTSViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = HTSViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		30921FD41CD0EB55009CBDDE /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		309F08641E6D6A5500B7546A /* HKViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = HKViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		309F08661E6D706B00B7546A /* nRF Toolbox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "nRF Toolbox.entitlements"; sourceTree = "<group>"; };
 		309F08671E6D706B00B7546A /* HomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HomeKit.framework; path = System/Library/Frameworks/HomeKit.framework; sourceTree = SDKROOT; };
-		309F08691E6D9EAA00B7546A /* NORHKHomeStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORHKHomeStore.swift; sourceTree = "<group>"; };
-		309F086B1E6EA0F800B7546A /* NORHKScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORHKScannerViewController.swift; sourceTree = "<group>"; };
-		309F086D1E6ED44F00B7546A /* NORHKScannerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORHKScannerDelegate.swift; sourceTree = "<group>"; };
-		309F086F1E6FF1F900B7546A /* NORHKAccessoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORHKAccessoryViewController.swift; sourceTree = "<group>"; };
-		30A114551CD2367C000F0F02 /* NORScannedPeripheral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORScannedPeripheral.swift; sourceTree = "<group>"; };
-		30A114591CD2426B000F0F02 /* NORScannerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORScannerDelegate.swift; sourceTree = "<group>"; };
-		30A1145B1CD24611000F0F02 /* NORScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORScannerViewController.swift; sourceTree = "<group>"; };
-		30F92D4A1CD9CF0700C73285 /* NORHRMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NORHRMViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		309F08691E6D9EAA00B7546A /* HKHomeStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKHomeStore.swift; sourceTree = "<group>"; };
+		309F086B1E6EA0F800B7546A /* HKScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKScannerViewController.swift; sourceTree = "<group>"; };
+		309F086D1E6ED44F00B7546A /* HKScannerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKScannerDelegate.swift; sourceTree = "<group>"; };
+		309F086F1E6FF1F900B7546A /* HKAccessoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKAccessoryViewController.swift; sourceTree = "<group>"; };
+		30A114551CD2367C000F0F02 /* ScannedPeripheral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannedPeripheral.swift; sourceTree = "<group>"; };
+		30A114591CD2426B000F0F02 /* ScannerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerDelegate.swift; sourceTree = "<group>"; };
+		30A1145B1CD24611000F0F02 /* ScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
+		30F92D4A1CD9CF0700C73285 /* HRMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = HRMViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		4394EAC53F8A0FF797E7CA7A /* Pods-nRF Toolbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.release.xcconfig"; path = "Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.release.xcconfig"; sourceTree = "<group>"; };
 		51E9CFCBE6C75A89E5780FE4 /* Pods-nRF Toolbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.debug.xcconfig"; path = "Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.debug.xcconfig"; sourceTree = "<group>"; };
 		5211EFAA1885642F007CC40D /* icon-dfu-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-64.png"; sourceTree = "<group>"; };
@@ -173,7 +173,7 @@
 		52BDCB181C3FD31F00E2680F /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		52BDCBBD1C3FD86900E2680F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
-		52D9BC9D1DD0CB760030E824 /* NORData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NORData.swift; sourceTree = "<group>"; };
+		52D9BC9D1DD0CB760030E824 /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		7E1B422818A8DF4D006BA1BC /* high.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = high.mp3; sourceTree = "<group>"; };
 		7E6ED10A196ED482008010B6 /* firmwares */ = {isa = PBXFileReference; lastKnownFileType = folder; path = firmwares; sourceTree = "<group>"; };
 		89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -202,9 +202,9 @@
 		3001EBB21D1BE1FB008C5C37 /* ContinuousGlucoseMonitoring */ = {
 			isa = PBXGroup;
 			children = (
-				3001EBC61D1C1BAA008C5C37 /* NORCGMViewController.swift */,
-				3001EBC41D1C153C008C5C37 /* NORCGMDetailsViewController.swift */,
-				3001EBC01D1C12E4008C5C37 /* NORCGMItemCell.swift */,
+				3001EBC61D1C1BAA008C5C37 /* CGMViewController.swift */,
+				3001EBC41D1C153C008C5C37 /* CGMDetailsViewController.swift */,
+				3001EBC01D1C12E4008C5C37 /* CGMItemCell.swift */,
 			);
 			path = ContinuousGlucoseMonitoring;
 			sourceTree = "<group>";
@@ -212,9 +212,9 @@
 		3001EBB31D1BE1FB008C5C37 /* StandarGlucoseMonitoring */ = {
 			isa = PBXGroup;
 			children = (
-				3001EBB41D1BE1FB008C5C37 /* NORBGMDetailsViewController.swift */,
-				3001EBB51D1BE1FB008C5C37 /* NORBGMItemCell.swift */,
-				3001EBB61D1BE1FB008C5C37 /* NORBGMViewController.swift */,
+				3001EBB41D1BE1FB008C5C37 /* BGMDetailsViewController.swift */,
+				3001EBB51D1BE1FB008C5C37 /* BGMItemCell.swift */,
+				3001EBB61D1BE1FB008C5C37 /* BGMViewController.swift */,
 			);
 			path = StandarGlucoseMonitoring;
 			sourceTree = "<group>";
@@ -222,8 +222,8 @@
 		304299361CE6154100E1D2AB /* BaseViewController */ = {
 			isa = PBXGroup;
 			children = (
-				3042993A1CE6154100E1D2AB /* NORBaseViewController.swift */,
-				304299391CE6154100E1D2AB /* NORBaseRevealViewController.swift */,
+				3042993A1CE6154100E1D2AB /* BaseViewController.swift */,
+				304299391CE6154100E1D2AB /* BaseRevealViewController.swift */,
 			);
 			path = BaseViewController;
 			sourceTree = "<group>";
@@ -231,7 +231,7 @@
 		3069A1D21CDC76FE003869EA /* BluetoothManager */ = {
 			isa = PBXGroup;
 			children = (
-				3069A1D61CDC788A003869EA /* NORBluetoothManager.swift */,
+				3069A1D61CDC788A003869EA /* BluetoothManager.swift */,
 			);
 			path = BluetoothManager;
 			sourceTree = "<group>";
@@ -239,11 +239,11 @@
 		309F08631E6D6A4300B7546A /* HomeKit */ = {
 			isa = PBXGroup;
 			children = (
-				309F08641E6D6A5500B7546A /* NORHKViewController.swift */,
-				309F08691E6D9EAA00B7546A /* NORHKHomeStore.swift */,
-				309F086B1E6EA0F800B7546A /* NORHKScannerViewController.swift */,
-				309F086D1E6ED44F00B7546A /* NORHKScannerDelegate.swift */,
-				309F086F1E6FF1F900B7546A /* NORHKAccessoryViewController.swift */,
+				309F08641E6D6A5500B7546A /* HKViewController.swift */,
+				309F08691E6D9EAA00B7546A /* HKHomeStore.swift */,
+				309F086B1E6EA0F800B7546A /* HKScannerViewController.swift */,
+				309F086D1E6ED44F00B7546A /* HKScannerDelegate.swift */,
+				309F086F1E6FF1F900B7546A /* HKAccessoryViewController.swift */,
 			);
 			path = HomeKit;
 			sourceTree = "<group>";
@@ -251,10 +251,10 @@
 		5214D0CF18881D0200460637 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				52D9BC9D1DD0CB760030E824 /* NORData.swift */,
-				300143261CEC4B9D008379DF /* NORAppUtilities.swift */,
-				300143281CEC59F4008379DF /* NORServiceIdentifiers.swift */,
-				3001432C1CECADFB008379DF /* NORCharacteristicReader.swift */,
+				52D9BC9D1DD0CB760030E824 /* Data.swift */,
+				300143261CEC4B9D008379DF /* AppUtilities.swift */,
+				300143281CEC59F4008379DF /* ServiceIdentifiers.swift */,
+				3001432C1CECADFB008379DF /* CharacteristicReader.swift */,
 				5231403122FB1E130074325A /* UIColor+Nordic.swift */,
 			);
 			path = Utilities;
@@ -339,7 +339,7 @@
 		5217F40A1859EE0000F2D5BB /* nRF ToolboxTests */ = {
 			isa = PBXGroup;
 			children = (
-				3001432E1CEDAD04008379DF /* NORCharacteristicReaderTests.swift */,
+				3001432E1CEDAD04008379DF /* CharacteristicReaderTests.swift */,
 				5217F40B1859EE0000F2D5BB /* Supporting Files */,
 			);
 			path = "nRF ToolboxTests";
@@ -357,7 +357,7 @@
 		5226362B1C5A5FE10054A550 /* Tutorial */ = {
 			isa = PBXGroup;
 			children = (
-				304299231CE6114000E1D2AB /* NORTutorialViewController.swift */,
+				304299231CE6114000E1D2AB /* TutorialViewController.swift */,
 			);
 			name = Tutorial;
 			sourceTree = "<group>";
@@ -365,7 +365,7 @@
 		5236E163187EA76B0057E974 /* RSC */ = {
 			isa = PBXGroup;
 			children = (
-				300508941CE2078A00D93BE0 /* NORRSCViewController.swift */,
+				300508941CE2078A00D93BE0 /* RSCViewController.swift */,
 			);
 			name = RSC;
 			path = RSAC;
@@ -374,7 +374,7 @@
 		5236E164187EA7850057E974 /* HRM */ = {
 			isa = PBXGroup;
 			children = (
-				30F92D4A1CD9CF0700C73285 /* NORHRMViewController.swift */,
+				30F92D4A1CD9CF0700C73285 /* HRMViewController.swift */,
 			);
 			name = HRM;
 			path = HRS;
@@ -383,7 +383,7 @@
 		5236E165187EA7930057E974 /* HTS */ = {
 			isa = PBXGroup;
 			children = (
-				308EE1771CE0CBF700F2A854 /* NORHTSViewController.swift */,
+				308EE1771CE0CBF700F2A854 /* HTSViewController.swift */,
 			);
 			path = HTS;
 			sourceTree = "<group>";
@@ -391,9 +391,9 @@
 		5236E166187EA7AA0057E974 /* Scanner */ = {
 			isa = PBXGroup;
 			children = (
-				30A114551CD2367C000F0F02 /* NORScannedPeripheral.swift */,
-				30A114591CD2426B000F0F02 /* NORScannerDelegate.swift */,
-				30A1145B1CD24611000F0F02 /* NORScannerViewController.swift */,
+				30A114551CD2367C000F0F02 /* ScannedPeripheral.swift */,
+				30A114591CD2426B000F0F02 /* ScannerDelegate.swift */,
+				30A1145B1CD24611000F0F02 /* ScannerViewController.swift */,
 			);
 			path = Scanner;
 			sourceTree = "<group>";
@@ -401,12 +401,12 @@
 		524F2CDC18897D18008A8555 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				3001432A1CEC6D2A008379DF /* NORBGMRecordAccess.swift */,
-				3001EBB01D1BE1F3008C5C37 /* NORGlucoseReading.swift */,
-				3001EBBA1D1BE306008C5C37 /* NORCGMReading.swift */,
-				3001EBBE1D1BE727008C5C37 /* NORCGMSpecificOperations.swift */,
-				3001EBBC1D1BE695008C5C37 /* NORCGMFeatureData.swift */,
-				308AA5791CD8DD4300CC9857 /* NORGlucoseReadingContext.swift */,
+				3001432A1CEC6D2A008379DF /* RecordAccess.swift */,
+				3001EBB01D1BE1F3008C5C37 /* GlucoseReading.swift */,
+				308AA5791CD8DD4300CC9857 /* GlucoseReadingContext.swift */,
+				3001EBBA1D1BE306008C5C37 /* CGMReading.swift */,
+				3001EBBE1D1BE727008C5C37 /* CGMSpecificOperations.swift */,
+				3001EBBC1D1BE695008C5C37 /* CGMFeatureData.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -424,7 +424,7 @@
 		5252A53718802B6D00EFD773 /* BPM */ = {
 			isa = PBXGroup;
 			children = (
-				3010F6041CDCB4F900CB285A /* NORBPMViewController.swift */,
+				3010F6041CDCB4F900CB285A /* BPMViewController.swift */,
 			);
 			path = BPM;
 			sourceTree = "<group>";
@@ -443,7 +443,7 @@
 		5252A53F1880307D00EFD773 /* PROXIMITY */ = {
 			isa = PBXGroup;
 			children = (
-				300508921CE1D75800D93BE0 /* NORProximityViewController.swift */,
+				300508921CE1D75800D93BE0 /* ProximityViewController.swift */,
 			);
 			path = PROXIMITY;
 			sourceTree = "<group>";
@@ -451,7 +451,7 @@
 		5285D9A61890031F00305F1D /* CSC */ = {
 			isa = PBXGroup;
 			children = (
-				3080C4701CE06D0E009C2D8C /* NORCSCViewController.swift */,
+				3080C4701CE06D0E009C2D8C /* CSCViewController.swift */,
 			);
 			path = CSC;
 			sourceTree = "<group>";
@@ -459,10 +459,10 @@
 		52BDCBE31C4F953C00E2680F /* Logger */ = {
 			isa = PBXGroup;
 			children = (
-				304D58FA1CE34EE600148271 /* NORLogger.swift */,
-				304D58FC1CE34FC600148271 /* NORLogViewController.swift */,
-				304D58FE1CE3521900148271 /* NORLogItem.swift */,
-				304D59001CE352B300148271 /* NORLogItemTableViewCell.swift */,
+				304D58FA1CE34EE600148271 /* Logger.swift */,
+				304D58FC1CE34FC600148271 /* LogViewController.swift */,
+				304D58FE1CE3521900148271 /* LogItem.swift */,
+				304D59001CE352B300148271 /* LogItemTableViewCell.swift */,
 			);
 			name = Logger;
 			sourceTree = "<group>";
@@ -479,11 +479,11 @@
 		7E6ED10C197D1D40008010B6 /* File Selection */ = {
 			isa = PBXGroup;
 			children = (
-				30499E541CE4732200E0993B /* NORFileSelectionDelegate.swift */,
-				30499E561CE4736500E0993B /* NORFilePreselectionDelegate.swift */,
-				30499E581CE4A07700E0993B /* NORAppFilesViewController.swift */,
-				30499E5C1CE4C6C700E0993B /* NORFolderFilesViewController.swift */,
-				304299211CE5DE8E00E1D2AB /* NORUserFilesViewController.swift */,
+				30499E541CE4732200E0993B /* FileSelectionDelegate.swift */,
+				30499E561CE4736500E0993B /* FilePreselectionDelegate.swift */,
+				30499E581CE4A07700E0993B /* AppFilesViewController.swift */,
+				30499E5C1CE4C6C700E0993B /* FolderFilesViewController.swift */,
+				304299211CE5DE8E00E1D2AB /* UserFilesViewController.swift */,
 				5226362B1C5A5FE10054A550 /* Tutorial */,
 			);
 			name = "File Selection";
@@ -493,7 +493,7 @@
 		7E996869197FB8FD0092E69E /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				30499E4A1CE4667800E0993B /* NORDFUConstantsUtility.swift */,
+				30499E4A1CE4667800E0993B /* DFUConstantsUtility.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -512,7 +512,7 @@
 		A85667E21B2230CA004A6D3C /* DFUViewController */ = {
 			isa = PBXGroup;
 			children = (
-				30499E501CE471C500E0993B /* NORDFUViewController.swift */,
+				30499E501CE471C500E0993B /* DFUViewController.swift */,
 			);
 			path = DFUViewController;
 			sourceTree = "<group>";
@@ -520,7 +520,7 @@
 		A85667E31B2233A3004A6D3C /* MainViewController */ = {
 			isa = PBXGroup;
 			children = (
-				30921FD41CD0EB55009CBDDE /* NORMainViewController.swift */,
+				30921FD41CD0EB55009CBDDE /* MainViewController.swift */,
 				5231402F22FB07820074325A /* RootNavigationController.swift */,
 			);
 			path = MainViewController;
@@ -530,9 +530,9 @@
 			isa = PBXGroup;
 			children = (
 				52BDCBE31C4F953C00E2680F /* Logger */,
-				3000B2101CE317D900F64CEE /* NORUARTRevealViewController.swift */,
-				3000B2121CE3195E00F64CEE /* NOREditPopupViewController.swift */,
-				3000B2141CE32A9200F64CEE /* NORUARTViewController.swift */,
+				3000B2101CE317D900F64CEE /* UARTRevealViewController.swift */,
+				3000B2121CE3195E00F64CEE /* EditPopupViewController.swift */,
+				3000B2141CE32A9200F64CEE /* UARTViewController.swift */,
 			);
 			path = UART;
 			sourceTree = "<group>";
@@ -684,58 +684,58 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				304299221CE5DE8E00E1D2AB /* NORUserFilesViewController.swift in Sources */,
-				30499E5D1CE4C6C700E0993B /* NORFolderFilesViewController.swift in Sources */,
-				30499E551CE4732200E0993B /* NORFileSelectionDelegate.swift in Sources */,
-				30F92D4B1CD9CF0700C73285 /* NORHRMViewController.swift in Sources */,
-				300143291CEC59F4008379DF /* NORServiceIdentifiers.swift in Sources */,
-				3001EBC71D1C1BAA008C5C37 /* NORCGMViewController.swift in Sources */,
-				304D58FD1CE34FC600148271 /* NORLogViewController.swift in Sources */,
-				30499E571CE4736500E0993B /* NORFilePreselectionDelegate.swift in Sources */,
-				30A1145C1CD24611000F0F02 /* NORScannerViewController.swift in Sources */,
-				308AA57A1CD8DD4300CC9857 /* NORGlucoseReadingContext.swift in Sources */,
-				3001432B1CEC6D2A008379DF /* NORBGMRecordAccess.swift in Sources */,
-				304D58FF1CE3521900148271 /* NORLogItem.swift in Sources */,
-				3042993C1CE6154100E1D2AB /* NORBaseRevealViewController.swift in Sources */,
-				30499E4B1CE4667800E0993B /* NORDFUConstantsUtility.swift in Sources */,
-				3001432D1CECADFB008379DF /* NORCharacteristicReader.swift in Sources */,
-				3010F6051CDCB4F900CB285A /* NORBPMViewController.swift in Sources */,
-				309F08651E6D6A5500B7546A /* NORHKViewController.swift in Sources */,
-				3000B2131CE3195E00F64CEE /* NOREditPopupViewController.swift in Sources */,
-				52D9BC9E1DD0CB760030E824 /* NORData.swift in Sources */,
+				304299221CE5DE8E00E1D2AB /* UserFilesViewController.swift in Sources */,
+				30499E5D1CE4C6C700E0993B /* FolderFilesViewController.swift in Sources */,
+				30499E551CE4732200E0993B /* FileSelectionDelegate.swift in Sources */,
+				30F92D4B1CD9CF0700C73285 /* HRMViewController.swift in Sources */,
+				300143291CEC59F4008379DF /* ServiceIdentifiers.swift in Sources */,
+				3001EBC71D1C1BAA008C5C37 /* CGMViewController.swift in Sources */,
+				304D58FD1CE34FC600148271 /* LogViewController.swift in Sources */,
+				30499E571CE4736500E0993B /* FilePreselectionDelegate.swift in Sources */,
+				30A1145C1CD24611000F0F02 /* ScannerViewController.swift in Sources */,
+				308AA57A1CD8DD4300CC9857 /* GlucoseReadingContext.swift in Sources */,
+				3001432B1CEC6D2A008379DF /* RecordAccess.swift in Sources */,
+				304D58FF1CE3521900148271 /* LogItem.swift in Sources */,
+				3042993C1CE6154100E1D2AB /* BaseRevealViewController.swift in Sources */,
+				30499E4B1CE4667800E0993B /* DFUConstantsUtility.swift in Sources */,
+				3001432D1CECADFB008379DF /* CharacteristicReader.swift in Sources */,
+				3010F6051CDCB4F900CB285A /* BPMViewController.swift in Sources */,
+				309F08651E6D6A5500B7546A /* HKViewController.swift in Sources */,
+				3000B2131CE3195E00F64CEE /* EditPopupViewController.swift in Sources */,
+				52D9BC9E1DD0CB760030E824 /* Data.swift in Sources */,
 				306ECD621CE61A3600E48BBD /* AppDelegate.swift in Sources */,
-				3001EBB71D1BE1FB008C5C37 /* NORBGMDetailsViewController.swift in Sources */,
-				304D59011CE352B300148271 /* NORLogItemTableViewCell.swift in Sources */,
-				3001EBC51D1C153C008C5C37 /* NORCGMDetailsViewController.swift in Sources */,
-				3080C4711CE06D0E009C2D8C /* NORCSCViewController.swift in Sources */,
-				309F086E1E6ED44F00B7546A /* NORHKScannerDelegate.swift in Sources */,
-				308EE1781CE0CBF700F2A854 /* NORHTSViewController.swift in Sources */,
-				304D58FB1CE34EE600148271 /* NORLogger.swift in Sources */,
-				304299241CE6114000E1D2AB /* NORTutorialViewController.swift in Sources */,
-				30499E511CE471C500E0993B /* NORDFUViewController.swift in Sources */,
-				3001EBBB1D1BE306008C5C37 /* NORCGMReading.swift in Sources */,
-				3001EBB11D1BE1F3008C5C37 /* NORGlucoseReading.swift in Sources */,
-				3000B2151CE32A9200F64CEE /* NORUARTViewController.swift in Sources */,
-				309F086C1E6EA0F800B7546A /* NORHKScannerViewController.swift in Sources */,
-				300508951CE2078A00D93BE0 /* NORRSCViewController.swift in Sources */,
+				3001EBB71D1BE1FB008C5C37 /* BGMDetailsViewController.swift in Sources */,
+				304D59011CE352B300148271 /* LogItemTableViewCell.swift in Sources */,
+				3001EBC51D1C153C008C5C37 /* CGMDetailsViewController.swift in Sources */,
+				3080C4711CE06D0E009C2D8C /* CSCViewController.swift in Sources */,
+				309F086E1E6ED44F00B7546A /* HKScannerDelegate.swift in Sources */,
+				308EE1781CE0CBF700F2A854 /* HTSViewController.swift in Sources */,
+				304D58FB1CE34EE600148271 /* Logger.swift in Sources */,
+				304299241CE6114000E1D2AB /* TutorialViewController.swift in Sources */,
+				30499E511CE471C500E0993B /* DFUViewController.swift in Sources */,
+				3001EBBB1D1BE306008C5C37 /* CGMReading.swift in Sources */,
+				3001EBB11D1BE1F3008C5C37 /* GlucoseReading.swift in Sources */,
+				3000B2151CE32A9200F64CEE /* UARTViewController.swift in Sources */,
+				309F086C1E6EA0F800B7546A /* HKScannerViewController.swift in Sources */,
+				300508951CE2078A00D93BE0 /* RSCViewController.swift in Sources */,
 				5231403222FB1E130074325A /* UIColor+Nordic.swift in Sources */,
-				30A1145A1CD2426B000F0F02 /* NORScannerDelegate.swift in Sources */,
-				3069A1D71CDC788A003869EA /* NORBluetoothManager.swift in Sources */,
-				300508931CE1D75800D93BE0 /* NORProximityViewController.swift in Sources */,
-				3042993D1CE6154100E1D2AB /* NORBaseViewController.swift in Sources */,
-				30A114561CD2367C000F0F02 /* NORScannedPeripheral.swift in Sources */,
-				309F08701E6FF1F900B7546A /* NORHKAccessoryViewController.swift in Sources */,
-				3001EBC31D1C1430008C5C37 /* NORCGMItemCell.swift in Sources */,
-				3001EBB91D1BE1FB008C5C37 /* NORBGMViewController.swift in Sources */,
-				30921FD51CD0EB55009CBDDE /* NORMainViewController.swift in Sources */,
-				3001EBBD1D1BE695008C5C37 /* NORCGMFeatureData.swift in Sources */,
+				30A1145A1CD2426B000F0F02 /* ScannerDelegate.swift in Sources */,
+				3069A1D71CDC788A003869EA /* BluetoothManager.swift in Sources */,
+				300508931CE1D75800D93BE0 /* ProximityViewController.swift in Sources */,
+				3042993D1CE6154100E1D2AB /* BaseViewController.swift in Sources */,
+				30A114561CD2367C000F0F02 /* ScannedPeripheral.swift in Sources */,
+				309F08701E6FF1F900B7546A /* HKAccessoryViewController.swift in Sources */,
+				3001EBC31D1C1430008C5C37 /* CGMItemCell.swift in Sources */,
+				3001EBB91D1BE1FB008C5C37 /* BGMViewController.swift in Sources */,
+				30921FD51CD0EB55009CBDDE /* MainViewController.swift in Sources */,
+				3001EBBD1D1BE695008C5C37 /* CGMFeatureData.swift in Sources */,
 				5231403022FB07820074325A /* RootNavigationController.swift in Sources */,
-				3001EBB81D1BE1FB008C5C37 /* NORBGMItemCell.swift in Sources */,
-				300143271CEC4B9D008379DF /* NORAppUtilities.swift in Sources */,
-				309F086A1E6D9EAA00B7546A /* NORHKHomeStore.swift in Sources */,
-				30499E591CE4A07700E0993B /* NORAppFilesViewController.swift in Sources */,
-				3001EBBF1D1BE727008C5C37 /* NORCGMSpecificOperations.swift in Sources */,
-				3000B2111CE317D900F64CEE /* NORUARTRevealViewController.swift in Sources */,
+				3001EBB81D1BE1FB008C5C37 /* BGMItemCell.swift in Sources */,
+				300143271CEC4B9D008379DF /* AppUtilities.swift in Sources */,
+				309F086A1E6D9EAA00B7546A /* HKHomeStore.swift in Sources */,
+				30499E591CE4A07700E0993B /* AppFilesViewController.swift in Sources */,
+				3001EBBF1D1BE727008C5C37 /* CGMSpecificOperations.swift in Sources */,
+				3000B2111CE317D900F64CEE /* UARTRevealViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
