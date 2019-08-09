@@ -963,8 +963,6 @@
 					"-framework",
 					"\"EVReflection\"",
 					"-framework",
-					"\"Zip\"",
-					"-framework",
 					"\"iOSDFULibrary\"",
 					"-ObjC",
 				);
