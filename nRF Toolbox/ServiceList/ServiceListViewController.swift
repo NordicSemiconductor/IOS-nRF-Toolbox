@@ -11,11 +11,16 @@ import UIKit
 
 class ServiceListViewController: UIViewController {
     private static func loadServices(from fileName: String) -> [Service] {
-        guard let fileUrl = Bundle.main.url(forResource: fileName, withExtension: "plist") else { return [] }
+        let errorLogger = Log(category: .ui, type: .error)
+        guard let fileUrl = Bundle.main.url(forResource: fileName, withExtension: "plist") else {
+            errorLogger.log(message: "Could not find \"\(fileName).plist\"")
+            return []
+        }
         do {
             let data = try Data(contentsOf: fileUrl, options: .mappedIfSafe)
             return try PropertyListDecoder().decode([Service].self, from: data)
         } catch let error {
+            Log(category: .ui, type: .error).log(message: "Could not load services: \(error.localizedDescription)")
             return []
         }
     }
@@ -44,10 +49,14 @@ extension ServiceListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let model = self.serviceGroups[indexPath]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ServiceTableViewCell") as! ServiceTableViewCell
+        let cell = tableView.dequeueCell(ofType: ServiceTableViewCell.self)
         cell.update(with: model)
         return cell
     }
-    
-    
+}
+
+extension ServiceListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
