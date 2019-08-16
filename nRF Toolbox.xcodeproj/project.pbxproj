@@ -8,6 +8,29 @@
 
 /* Begin PBXBuildFile section */
 		0E645A0F1CBF957800D36AD0 /* firmwares in Resources */ = {isa = PBXBuildFile; fileRef = 7E6ED10A196ED482008010B6 /* firmwares */; };
+		20C7FDFE2306BEE000B06FD8 /* Array+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FDFD2306BEE000B06FD8 /* Array+Ext.swift */; };
+		20C7FE012306C5FF00B06FD8 /* BLEServiceList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE002306C5FF00B06FD8 /* BLEServiceList.plist */; };
+		20C7FE032306C72000B06FD8 /* IoTServices.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE022306C72000B06FD8 /* IoTServices.plist */; };
+		20E07B3C2305593800FCB205 /* ServiceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E07B3A2305593800FCB205 /* ServiceListViewController.swift */; };
+		20E07B3F23055B0B00FCB205 /* InteractionServiceList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20E07B3E23055B0B00FCB205 /* InteractionServiceList.plist */; };
+		20E07B422306868F00FCB205 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E07B412306868F00FCB205 /* Service.swift */; };
+		20E07B452306882200FCB205 /* ServiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E07B432306882200FCB205 /* ServiceTableViewCell.swift */; };
+		20E07B492306885F00FCB205 /* Initial.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20E07B482306885F00FCB205 /* Initial.storyboard */; };
+		20E07B4B23068D0300FCB205 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20E07B4A23068D0300FCB205 /* Colors.xcassets */; };
+		20E07B5B2306975700FCB205 /* GT-Eesti-Display-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20E07B4D2306975600FCB205 /* GT-Eesti-Display-Thin.ttf */; };
+		20E07B5C2306975700FCB205 /* GT-Eesti-Display-UBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20E07B4E2306975600FCB205 /* GT-Eesti-Display-UBold.ttf */; };
+		20E07B5D2306975700FCB205 /* GT-Eesti-Display-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20E07B4F2306975600FCB205 /* GT-Eesti-Display-Light.ttf */; };
+		20E07B5E2306975700FCB205 /* GT-Eesti-Display-Medium-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20E07B502306975600FCB205 /* GT-Eesti-Display-Medium-Italic.ttf */; };
+		20E07B5F2306975700FCB205 /* GT-Eesti-Display-Bold-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20E07B512306975600FCB205 /* GT-Eesti-Display-Bold-Italic.ttf */; };
+		20E07B602306975700FCB205 /* GT-Eesti-Display-UBold-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20E07B522306975600FCB205 /* GT-Eesti-Display-UBold-Italic.ttf */; };
+		20E07B612306975700FCB205 /* GT-Eesti-Display-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20E07B532306975700FCB205 /* GT-Eesti-Display-Medium.ttf */; };
+		20E07B622306975700FCB205 /* GT-Eesti-Display-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20E07B542306975700FCB205 /* GT-Eesti-Display-Bold.ttf */; };
+		20E07B632306975700FCB205 /* GT-Eesti-Display-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20E07B552306975700FCB205 /* GT-Eesti-Display-Regular.ttf */; };
+		20E07B642306975700FCB205 /* GT-Eesti-Display-Thin-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20E07B562306975700FCB205 /* GT-Eesti-Display-Thin-Italic.ttf */; };
+		20E07B652306975700FCB205 /* GT-Eesti-Display-ULight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20E07B572306975700FCB205 /* GT-Eesti-Display-ULight.ttf */; };
+		20E07B662306975700FCB205 /* GT-Eesti-Display-Regular-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20E07B582306975700FCB205 /* GT-Eesti-Display-Regular-Italic.ttf */; };
+		20E07B672306975700FCB205 /* GT-Eesti-Display-Light-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20E07B592306975700FCB205 /* GT-Eesti-Display-Light-Italic.ttf */; };
+		20E07B682306975700FCB205 /* GT-Eesti-Display-ULight-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20E07B5A2306975700FCB205 /* GT-Eesti-Display-ULight-Italic.ttf */; };
 		3000B2111CE317D900F64CEE /* UARTRevealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3000B2101CE317D900F64CEE /* UARTRevealViewController.swift */; };
 		3000B2131CE3195E00F64CEE /* EditPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3000B2121CE3195E00F64CEE /* EditPopupViewController.swift */; };
 		3000B2151CE32A9200F64CEE /* UARTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3000B2141CE32A9200F64CEE /* UARTViewController.swift */; };
@@ -95,6 +118,29 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		20C7FDFD2306BEE000B06FD8 /* Array+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Ext.swift"; sourceTree = "<group>"; };
+		20C7FE002306C5FF00B06FD8 /* BLEServiceList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = BLEServiceList.plist; sourceTree = "<group>"; };
+		20C7FE022306C72000B06FD8 /* IoTServices.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = IoTServices.plist; sourceTree = "<group>"; };
+		20E07B3A2305593800FCB205 /* ServiceListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceListViewController.swift; sourceTree = "<group>"; };
+		20E07B3E23055B0B00FCB205 /* InteractionServiceList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = InteractionServiceList.plist; sourceTree = "<group>"; };
+		20E07B412306868F00FCB205 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		20E07B432306882200FCB205 /* ServiceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceTableViewCell.swift; sourceTree = "<group>"; };
+		20E07B482306885F00FCB205 /* Initial.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Initial.storyboard; sourceTree = "<group>"; };
+		20E07B4A23068D0300FCB205 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		20E07B4D2306975600FCB205 /* GT-Eesti-Display-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GT-Eesti-Display-Thin.ttf"; sourceTree = "<group>"; };
+		20E07B4E2306975600FCB205 /* GT-Eesti-Display-UBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GT-Eesti-Display-UBold.ttf"; sourceTree = "<group>"; };
+		20E07B4F2306975600FCB205 /* GT-Eesti-Display-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GT-Eesti-Display-Light.ttf"; sourceTree = "<group>"; };
+		20E07B502306975600FCB205 /* GT-Eesti-Display-Medium-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GT-Eesti-Display-Medium-Italic.ttf"; sourceTree = "<group>"; };
+		20E07B512306975600FCB205 /* GT-Eesti-Display-Bold-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GT-Eesti-Display-Bold-Italic.ttf"; sourceTree = "<group>"; };
+		20E07B522306975600FCB205 /* GT-Eesti-Display-UBold-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GT-Eesti-Display-UBold-Italic.ttf"; sourceTree = "<group>"; };
+		20E07B532306975700FCB205 /* GT-Eesti-Display-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GT-Eesti-Display-Medium.ttf"; sourceTree = "<group>"; };
+		20E07B542306975700FCB205 /* GT-Eesti-Display-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GT-Eesti-Display-Bold.ttf"; sourceTree = "<group>"; };
+		20E07B552306975700FCB205 /* GT-Eesti-Display-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GT-Eesti-Display-Regular.ttf"; sourceTree = "<group>"; };
+		20E07B562306975700FCB205 /* GT-Eesti-Display-Thin-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GT-Eesti-Display-Thin-Italic.ttf"; sourceTree = "<group>"; };
+		20E07B572306975700FCB205 /* GT-Eesti-Display-ULight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GT-Eesti-Display-ULight.ttf"; sourceTree = "<group>"; };
+		20E07B582306975700FCB205 /* GT-Eesti-Display-Regular-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GT-Eesti-Display-Regular-Italic.ttf"; sourceTree = "<group>"; };
+		20E07B592306975700FCB205 /* GT-Eesti-Display-Light-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GT-Eesti-Display-Light-Italic.ttf"; sourceTree = "<group>"; };
+		20E07B5A2306975700FCB205 /* GT-Eesti-Display-ULight-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GT-Eesti-Display-ULight-Italic.ttf"; sourceTree = "<group>"; };
 		3000B2101CE317D900F64CEE /* UARTRevealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTRevealViewController.swift; sourceTree = "<group>"; };
 		3000B2121CE3195E00F64CEE /* EditPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPopupViewController.swift; sourceTree = "<group>"; };
 		3000B2141CE32A9200F64CEE /* UARTViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = UARTViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -199,6 +245,64 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		20C7FDFF2306C52900B06FD8 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				20E07B3E23055B0B00FCB205 /* InteractionServiceList.plist */,
+				20C7FE002306C5FF00B06FD8 /* BLEServiceList.plist */,
+				20C7FE022306C72000B06FD8 /* IoTServices.plist */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		20E07B39230558B700FCB205 /* ServiceList */ = {
+			isa = PBXGroup;
+			children = (
+				20E07B472306882600FCB205 /* Cell */,
+				20E07B402306863D00FCB205 /* Model */,
+				20E07B3A2305593800FCB205 /* ServiceListViewController.swift */,
+				20E07B482306885F00FCB205 /* Initial.storyboard */,
+			);
+			path = ServiceList;
+			sourceTree = "<group>";
+		};
+		20E07B402306863D00FCB205 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				20E07B412306868F00FCB205 /* Service.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		20E07B472306882600FCB205 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				20E07B432306882200FCB205 /* ServiceTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		20E07B4C2306974000FCB205 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				20E07B512306975600FCB205 /* GT-Eesti-Display-Bold-Italic.ttf */,
+				20E07B542306975700FCB205 /* GT-Eesti-Display-Bold.ttf */,
+				20E07B592306975700FCB205 /* GT-Eesti-Display-Light-Italic.ttf */,
+				20E07B4F2306975600FCB205 /* GT-Eesti-Display-Light.ttf */,
+				20E07B502306975600FCB205 /* GT-Eesti-Display-Medium-Italic.ttf */,
+				20E07B532306975700FCB205 /* GT-Eesti-Display-Medium.ttf */,
+				20E07B582306975700FCB205 /* GT-Eesti-Display-Regular-Italic.ttf */,
+				20E07B552306975700FCB205 /* GT-Eesti-Display-Regular.ttf */,
+				20E07B562306975700FCB205 /* GT-Eesti-Display-Thin-Italic.ttf */,
+				20E07B4D2306975600FCB205 /* GT-Eesti-Display-Thin.ttf */,
+				20E07B522306975600FCB205 /* GT-Eesti-Display-UBold-Italic.ttf */,
+				20E07B4E2306975600FCB205 /* GT-Eesti-Display-UBold.ttf */,
+				20E07B5A2306975700FCB205 /* GT-Eesti-Display-ULight-Italic.ttf */,
+				20E07B572306975700FCB205 /* GT-Eesti-Display-ULight.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		3001EBB21D1BE1FB008C5C37 /* ContinuousGlucoseMonitoring */ = {
 			isa = PBXGroup;
 			children = (
@@ -256,6 +360,7 @@
 				300143281CEC59F4008379DF /* ServiceIdentifiers.swift */,
 				3001432C1CECADFB008379DF /* CharacteristicReader.swift */,
 				5231403122FB1E130074325A /* UIColor+Nordic.swift */,
+				20C7FDFD2306BEE000B06FD8 /* Array+Ext.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -300,6 +405,7 @@
 		5217F3EB1859EE0000F2D5BB /* nRF Toolbox */ = {
 			isa = PBXGroup;
 			children = (
+				20E07B39230558B700FCB205 /* ServiceList */,
 				309F08661E6D706B00B7546A /* nRF Toolbox.entitlements */,
 				A8F1142619C1B7EC007F956E /* StoryBoard */,
 				3069A1D21CDC76FE003869EA /* BluetoothManager */,
@@ -319,6 +425,7 @@
 				304299361CE6154100E1D2AB /* BaseViewController */,
 				306ECD611CE61A3600E48BBD /* AppDelegate.swift */,
 				5217F3FD1859EE0000F2D5BB /* Images.xcassets */,
+				20E07B4A23068D0300FCB205 /* Colors.xcassets */,
 				5217F3EC1859EE0000F2D5BB /* Supporting Files */,
 			);
 			path = "nRF Toolbox";
@@ -327,11 +434,13 @@
 		5217F3EC1859EE0000F2D5BB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				20E07B4C2306974000FCB205 /* Fonts */,
 				A85667DD1B222AA7004A6D3C /* AppImages */,
 				7E1B422818A8DF4D006BA1BC /* high.mp3 */,
 				5217F3ED1859EE0000F2D5BB /* nRF Toolbox-Info.plist */,
 				5217F3EE1859EE0000F2D5BB /* InfoPlist.strings */,
 				5217F3F31859EE0000F2D5BB /* nRF Toolbox-Prefix.pch */,
+				20C7FDFF2306C52900B06FD8 /* Services */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -616,16 +725,35 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20E07B4B23068D0300FCB205 /* Colors.xcassets in Resources */,
+				20C7FE012306C5FF00B06FD8 /* BLEServiceList.plist in Resources */,
+				20E07B5D2306975700FCB205 /* GT-Eesti-Display-Light.ttf in Resources */,
+				20E07B622306975700FCB205 /* GT-Eesti-Display-Bold.ttf in Resources */,
 				5214D0CE1886C02A00460637 /* Settings.bundle in Resources */,
+				20E07B682306975700FCB205 /* GT-Eesti-Display-ULight-Italic.ttf in Resources */,
 				0E645A0F1CBF957800D36AD0 /* firmwares in Resources */,
+				20E07B602306975700FCB205 /* GT-Eesti-Display-UBold-Italic.ttf in Resources */,
+				20E07B3F23055B0B00FCB205 /* InteractionServiceList.plist in Resources */,
+				20C7FE032306C72000B06FD8 /* IoTServices.plist in Resources */,
+				20E07B5B2306975700FCB205 /* GT-Eesti-Display-Thin.ttf in Resources */,
+				20E07B642306975700FCB205 /* GT-Eesti-Display-Thin-Italic.ttf in Resources */,
+				20E07B492306885F00FCB205 /* Initial.storyboard in Resources */,
+				20E07B662306975700FCB205 /* GT-Eesti-Display-Regular-Italic.ttf in Resources */,
 				5217F3FE1859EE0000F2D5BB /* Images.xcassets in Resources */,
+				20E07B5E2306975700FCB205 /* GT-Eesti-Display-Medium-Italic.ttf in Resources */,
+				20E07B5F2306975700FCB205 /* GT-Eesti-Display-Bold-Italic.ttf in Resources */,
 				7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */,
 				52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */,
 				5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */,
 				5217F3F01859EE0000F2D5BB /* InfoPlist.strings in Resources */,
+				20E07B632306975700FCB205 /* GT-Eesti-Display-Regular.ttf in Resources */,
 				5211EFB118856430007CC40D /* icon-hex@2x.png in Resources */,
+				20E07B672306975700FCB205 /* GT-Eesti-Display-Light-Italic.ttf in Resources */,
+				20E07B652306975700FCB205 /* GT-Eesti-Display-ULight.ttf in Resources */,
+				20E07B612306975700FCB205 /* GT-Eesti-Display-Medium.ttf in Resources */,
 				5217F3F91859EE0000F2D5BB /* Main.storyboard in Resources */,
 				5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */,
+				20E07B5C2306975700FCB205 /* GT-Eesti-Display-UBold.ttf in Resources */,
 				5211EFB018856430007CC40D /* icon-hex.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -689,6 +817,7 @@
 				30499E551CE4732200E0993B /* FileSelectionDelegate.swift in Sources */,
 				30F92D4B1CD9CF0700C73285 /* HRMViewController.swift in Sources */,
 				300143291CEC59F4008379DF /* ServiceIdentifiers.swift in Sources */,
+				20E07B422306868F00FCB205 /* Service.swift in Sources */,
 				3001EBC71D1C1BAA008C5C37 /* CGMViewController.swift in Sources */,
 				304D58FD1CE34FC600148271 /* LogViewController.swift in Sources */,
 				30499E571CE4736500E0993B /* FilePreselectionDelegate.swift in Sources */,
@@ -704,6 +833,7 @@
 				3000B2131CE3195E00F64CEE /* EditPopupViewController.swift in Sources */,
 				52D9BC9E1DD0CB760030E824 /* Data.swift in Sources */,
 				306ECD621CE61A3600E48BBD /* AppDelegate.swift in Sources */,
+				20C7FDFE2306BEE000B06FD8 /* Array+Ext.swift in Sources */,
 				3001EBB71D1BE1FB008C5C37 /* BGMDetailsViewController.swift in Sources */,
 				304D59011CE352B300148271 /* LogItemTableViewCell.swift in Sources */,
 				3001EBC51D1C153C008C5C37 /* CGMDetailsViewController.swift in Sources */,
@@ -720,9 +850,11 @@
 				300508951CE2078A00D93BE0 /* RSCViewController.swift in Sources */,
 				5231403222FB1E130074325A /* UIColor+Nordic.swift in Sources */,
 				30A1145A1CD2426B000F0F02 /* ScannerDelegate.swift in Sources */,
+				20E07B452306882200FCB205 /* ServiceTableViewCell.swift in Sources */,
 				3069A1D71CDC788A003869EA /* BluetoothManager.swift in Sources */,
 				300508931CE1D75800D93BE0 /* ProximityViewController.swift in Sources */,
 				3042993D1CE6154100E1D2AB /* BaseViewController.swift in Sources */,
+				20E07B3C2305593800FCB205 /* ServiceListViewController.swift in Sources */,
 				30A114561CD2367C000F0F02 /* ScannedPeripheral.swift in Sources */,
 				309F08701E6FF1F900B7546A /* HKAccessoryViewController.swift in Sources */,
 				3001EBC31D1C1430008C5C37 /* CGMItemCell.swift in Sources */,

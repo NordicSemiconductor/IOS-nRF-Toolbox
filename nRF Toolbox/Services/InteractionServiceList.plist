@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>code</key>
+		<string>UART</string>
+		<key>name</key>
+		<string>Universal Asynchronous Receiver/Transmitter</string>
+		<key>icon</key>
+		<string>FeatureUART</string>
+		<key>info</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>code</key>
+		<string>DFU</string>
+		<key>name</key>
+		<string>Device Firmware Upgrade</string>
+		<key>icon</key>
+		<string>FeatureDFU</string>
+		<key>info</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Proximity</string>
+		<key>icon</key>
+		<string>FeatureProximity</string>
+		<key>info</key>
+		<string></string>
+	</dict>
+</array>
+</plist>
