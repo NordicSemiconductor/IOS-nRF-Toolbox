@@ -13,6 +13,8 @@
 		20C7FE032306C72000B06FD8 /* IoTServices.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE022306C72000B06FD8 /* IoTServices.plist */; };
 		20C7FE052306D02400B06FD8 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE042306D02400B06FD8 /* Log.swift */; };
 		20C7FE082306EB5600B06FD8 /* UITableView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE072306EB5600B06FD8 /* UITableView+Ext.swift */; };
+		20C7FE0E230A9F9300B06FD8 /* LinkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE0D230A9F9300B06FD8 /* LinkTableViewCell.swift */; };
+		20C7FE10230A9FAB00B06FD8 /* UIFont+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE0F230A9FAB00B06FD8 /* UIFont+Ext.swift */; };
 		20E07B3C2305593800FCB205 /* ServiceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E07B3A2305593800FCB205 /* ServiceListViewController.swift */; };
 		20E07B3F23055B0B00FCB205 /* InteractionServiceList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20E07B3E23055B0B00FCB205 /* InteractionServiceList.plist */; };
 		20E07B422306868F00FCB205 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E07B412306868F00FCB205 /* Service.swift */; };
@@ -125,6 +127,8 @@
 		20C7FE022306C72000B06FD8 /* IoTServices.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = IoTServices.plist; sourceTree = "<group>"; };
 		20C7FE042306D02400B06FD8 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		20C7FE072306EB5600B06FD8 /* UITableView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Ext.swift"; sourceTree = "<group>"; };
+		20C7FE0D230A9F9300B06FD8 /* LinkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkTableViewCell.swift; sourceTree = "<group>"; };
+		20C7FE0F230A9FAB00B06FD8 /* UIFont+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Ext.swift"; sourceTree = "<group>"; };
 		20E07B3A2305593800FCB205 /* ServiceListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceListViewController.swift; sourceTree = "<group>"; };
 		20E07B3E23055B0B00FCB205 /* InteractionServiceList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = InteractionServiceList.plist; sourceTree = "<group>"; };
 		20E07B412306868F00FCB205 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
@@ -263,6 +267,7 @@
 			isa = PBXGroup;
 			children = (
 				20C7FE072306EB5600B06FD8 /* UITableView+Ext.swift */,
+				20C7FE0F230A9FAB00B06FD8 /* UIFont+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -290,6 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				20E07B432306882200FCB205 /* ServiceTableViewCell.swift */,
+				20C7FE0D230A9F9300B06FD8 /* LinkTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -850,6 +856,7 @@
 				306ECD621CE61A3600E48BBD /* AppDelegate.swift in Sources */,
 				20C7FDFE2306BEE000B06FD8 /* Array+Ext.swift in Sources */,
 				3001EBB71D1BE1FB008C5C37 /* BGMDetailsViewController.swift in Sources */,
+				20C7FE10230A9FAB00B06FD8 /* UIFont+Ext.swift in Sources */,
 				304D59011CE352B300148271 /* LogItemTableViewCell.swift in Sources */,
 				3001EBC51D1C153C008C5C37 /* CGMDetailsViewController.swift in Sources */,
 				3080C4711CE06D0E009C2D8C /* CSCViewController.swift in Sources */,
@@ -857,6 +864,7 @@
 				308EE1781CE0CBF700F2A854 /* HTSViewController.swift in Sources */,
 				304D58FB1CE34EE600148271 /* Logger.swift in Sources */,
 				304299241CE6114000E1D2AB /* TutorialViewController.swift in Sources */,
+				20C7FE0E230A9F9300B06FD8 /* LinkTableViewCell.swift in Sources */,
 				20C7FE082306EB5600B06FD8 /* UITableView+Ext.swift in Sources */,
 				30499E511CE471C500E0993B /* DFUViewController.swift in Sources */,
 				3001EBBB1D1BE306008C5C37 /* CGMReading.swift in Sources */,
