@@ -98,7 +98,7 @@ SOFTWARE.
 
 BSD 3-Clause License
 
-Copyright (c) 2016, Nordic Semiconductor
+Copyright (c) 2019, Nordic Semiconductor
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

@@ -23,7 +23,7 @@ enum ServiceIds : UInt8 {
 
 class AppUtilities: NSObject {
 
-    static let iOSDFULibraryVersion = "4.5.0"
+    static let iOSDFULibraryVersion = "4.5.1"
 
     static let uartHelpText = "This profile allows you to connect to a device that support Nordic's UART service. The service allows you to send and receive String messages.\n\nThe main screen contains 9 programmable buttons. Use the Edit button to edit a command or an icon assigned to each button. Unused buttons may be hidden.\n\nTap the Show Log button to see the conversation or to send a custom message."
     
