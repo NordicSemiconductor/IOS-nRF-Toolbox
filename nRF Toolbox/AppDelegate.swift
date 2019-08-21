@@ -22,16 +22,6 @@
 
 import UIKit
 
-func listAllFontsOnSystem2(){
-    let familyNames = UIFont.familyNames as [String]
-    for familyName in familyNames {
-        let fontNames = UIFont.fontNames(forFamilyName: familyName) as [String]
-        for fontName in fontNames {
-            print(fontName)
-        }
-    }
-}
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
@@ -44,8 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         pageControl.pageIndicatorTintColor = UIColor.lightGray
         pageControl.currentPageIndicatorTintColor = UIColor.black
         pageControl.backgroundColor = UIColor.white
-        
-        listAllFontsOnSystem2()
         
         return true
     }

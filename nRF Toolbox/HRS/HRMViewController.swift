@@ -39,7 +39,7 @@ fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 
-class HRMViewController: BaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate, CPTPlotDataSource, CPTPlotSpaceDelegate {
+class HRMViewController: BaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate, CPTPlotDataSource, CPTPlotSpaceDelegate, StoryboardInstance {
 
     //MARK: - Properties
     var bluetoothManager                : CBCentralManager?

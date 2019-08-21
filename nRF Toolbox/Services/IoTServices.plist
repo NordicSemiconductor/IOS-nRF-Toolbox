@@ -16,6 +16,8 @@
             <string>FeatureHomeKit</string>
             <key>info</key>
             <string></string>
+            <key>id</key>
+            <string>homeKit</string>
         </dict>
     </array>
 </plist>

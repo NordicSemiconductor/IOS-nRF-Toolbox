@@ -13,4 +13,5 @@ struct Service: Codable {
     let code: String?
     let icon: String
     let info: String
+    let id: String 
 }

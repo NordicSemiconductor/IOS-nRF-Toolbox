@@ -124,27 +124,11 @@
             </objects>
             <point key="canvasLocation" x="686" y="-413"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="6Ln-9T-0WS">
-            <objects>
-                <viewController id="Qwc-uA-83M" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="TSm-bQ-5MG">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="FX3-6a-uk9"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RGd-68-2Nb" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-410" y="364"/>
-        </scene>
         <!--Split View Controller-->
         <scene sceneID="RYw-6U-PNM">
             <objects>
-                <splitViewController id="lJv-eo-woF" sceneMemberID="viewController">
+                <splitViewController id="lJv-eo-woF" customClass="SplitViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
                     <connections>
-                        <segue destination="Qwc-uA-83M" kind="relationship" relationship="detailViewController" id="mds-0K-CJ3"/>
                         <segue destination="dpE-Sv-kX2" kind="relationship" relationship="masterViewController" id="2u8-2U-Wku"/>
                     </connections>
                 </splitViewController>
@@ -162,10 +146,10 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.0" green="0.66274509800000003" blue="0.80784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
-                            <color key="textColor" red="0.85098039215686272" green="0.88235294117647056" blue="0.88627450980392153" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="textColor" red="0.85505270957946777" green="0.85505270957946777" blue="0.85505270957946777" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </textAttributes>
                         <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" red="0.85098039215686272" green="0.88235294117647056" blue="0.88627450980392153" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="textColor" red="0.85505270957946777" green="0.85505270957946777" blue="0.85505270957946777" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>

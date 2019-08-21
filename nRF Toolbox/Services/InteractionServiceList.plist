@@ -11,6 +11,8 @@
 		<string>FeatureUART</string>
 		<key>info</key>
 		<string>This profile allows you to connect to a device that support Nordic&apos;s UART service. The service allows you to send and receive String messages.\n\nThe main screen contains 9 programmable buttons. Use the Edit button to edit a command or an icon assigned to each button. Unused buttons may be hidden.\n\nTap the Show Log button to see the conversation or to send a custom message.</string>
+		<key>id</key>
+		<string>uart</string>
 	</dict>
 	<dict>
 		<key>code</key>
@@ -21,6 +23,8 @@
 		<string>FeatureDFU</string>
 		<key>info</key>
 		<string></string>
+        <key>id</key>
+        <string>deviceFirmwareUpgrade</string>
 	</dict>
 	<dict>
 		<key>name</key>
@@ -29,6 +33,8 @@
 		<string>FeatureProximity</string>
 		<key>info</key>
 		<string></string>
+        <key>id</key>
+        <string>proximity</string>
 	</dict>
 </array>
 </plist>

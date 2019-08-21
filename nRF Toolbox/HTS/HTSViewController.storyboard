@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller - HTM-->
+        <scene sceneID="A6t-So-ryB">
+            <objects>
+                <viewController storyboardIdentifier="HTSViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tqi-s7-cIe" userLabel="View Controller - HTM" customClass="HTSViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vfA-tQ-MtL">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d0Q-KQ-XDg">
+                                <rect key="frame" x="125.5" y="798" width="163" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="163" id="MSz-PD-iCg"/>
+                                    <constraint firstAttribute="height" constant="48" id="roz-wX-DqJ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="17"/>
+                                <state key="normal" title="CONNECT" backgroundImage="ConnectButton">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <state key="highlighted" backgroundImage="ConnectButtonPressed">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="connectionButtonTapped:" destination="tqi-s7-cIe" eventType="touchUpInside" id="c4a-lZ-X3R"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DEFAULT HTM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KBo-mC-RGZ">
+                                <rect key="frame" x="86" y="55" width="294" height="27"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="27" id="QXc-VF-NFM"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="20"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cPb-45-ZoH">
+                                <rect key="frame" x="39" y="59" width="39" height="19"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="19" id="dSA-HJ-I7O"/>
+                                    <constraint firstAttribute="width" constant="39" id="naT-Zm-Jjw"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <state key="normal" title="n/a" backgroundImage="Battery">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HEALTH THERMOMETER MONITOR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZeJ-or-F9X">
+                                <rect key="frame" x="0.0" y="432" width="399" height="32"/>
+                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="27"/>
+                                <color key="textColor" red="0.66666666669999997" green="0.6705882353" blue="0.68627450980000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LBE-5z-Q67" userLabel="Label - Temperature">
+                                <rect key="frame" x="191.5" y="414" width="31" height="68"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="26Y-Sr-sro"/>
+                                    <constraint firstAttribute="height" constant="68" id="QcE-8w-bhQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="70"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="°C" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8YS-0r-Xi9">
+                                <rect key="frame" x="230.5" y="405" width="33" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spT-uh-CAi" userLabel="Label - Timestamp">
+                                <rect key="frame" x="207" y="490" width="0.0" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="pug-Uh-4mS">
+                                <rect key="frame" x="130.5" y="110" width="153" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="JSM-o2-z7v"/>
+                                    <constraint firstAttribute="width" constant="153" id="Zgw-FT-7rE"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Celsius"/>
+                                    <segment title="Fahrenheit"/>
+                                </segments>
+                                <color key="tintColor" red="0.0" green="0.46666666670000001" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="degreeHasChanged:" destination="tqi-s7-cIe" eventType="valueChanged" id="m0I-y0-PMf"/>
+                                </connections>
+                            </segmentedControl>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="elq-UQ-XPE" userLabel="Label - Type">
+                                <rect key="frame" x="207" y="498" width="0.0" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="toolbar_shadow" translatesAutoresizingMaskIntoConstraints="NO" id="pWW-CF-DPB" userLabel="Shadow">
+                                <rect key="frame" x="0.0" y="44" width="414" height="8"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="8" id="mpU-RX-ONm"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.96067994830000003" green="0.96084433790000001" blue="0.96066969629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="pug-Uh-4mS" firstAttribute="top" secondItem="KBo-mC-RGZ" secondAttribute="bottom" constant="28" id="4RN-Xj-ohh"/>
+                            <constraint firstItem="EZF-av-cD9" firstAttribute="trailing" secondItem="pWW-CF-DPB" secondAttribute="trailing" id="ATT-20-5tf"/>
+                            <constraint firstItem="EZF-av-cD9" firstAttribute="centerX" secondItem="d0Q-KQ-XDg" secondAttribute="centerX" id="CFP-PS-Fkw"/>
+                            <constraint firstItem="cPb-45-ZoH" firstAttribute="top" secondItem="EZF-av-cD9" secondAttribute="top" constant="15" id="ERM-pp-z3g"/>
+                            <constraint firstAttribute="centerY" secondItem="8YS-0r-Xi9" secondAttribute="centerY" constant="25" id="FkM-Ch-8Yf"/>
+                            <constraint firstItem="pug-Uh-4mS" firstAttribute="centerX" secondItem="EZF-av-cD9" secondAttribute="centerX" id="IKZ-Da-XTy"/>
+                            <constraint firstItem="EZF-av-cD9" firstAttribute="centerX" secondItem="elq-UQ-XPE" secondAttribute="centerX" id="MyG-s3-DtZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="KBo-mC-RGZ" secondAttribute="trailing" constant="14" id="N5X-AT-232"/>
+                            <constraint firstItem="elq-UQ-XPE" firstAttribute="top" secondItem="spT-uh-CAi" secondAttribute="bottom" constant="8" id="Opn-tD-x1G"/>
+                            <constraint firstItem="EZF-av-cD9" firstAttribute="centerX" secondItem="LBE-5z-Q67" secondAttribute="centerX" id="QDi-wT-bcJ"/>
+                            <constraint firstAttribute="centerY" secondItem="ZeJ-or-F9X" secondAttribute="centerY" id="Qtq-Xu-Cag"/>
+                            <constraint firstItem="pWW-CF-DPB" firstAttribute="leading" secondItem="EZF-av-cD9" secondAttribute="leading" id="RS3-MP-uDO"/>
+                            <constraint firstItem="ZeJ-or-F9X" firstAttribute="leading" secondItem="EZF-av-cD9" secondAttribute="leading" id="UMa-fV-HTh"/>
+                            <constraint firstItem="EZF-av-cD9" firstAttribute="centerX" secondItem="spT-uh-CAi" secondAttribute="centerX" id="Wh0-8a-BZM"/>
+                            <constraint firstItem="pWW-CF-DPB" firstAttribute="top" secondItem="EZF-av-cD9" secondAttribute="top" id="X0r-io-ETn"/>
+                            <constraint firstItem="spT-uh-CAi" firstAttribute="top" secondItem="LBE-5z-Q67" secondAttribute="bottom" constant="8" id="XxN-Xt-MFe"/>
+                            <constraint firstItem="KBo-mC-RGZ" firstAttribute="top" secondItem="EZF-av-cD9" secondAttribute="top" constant="11" id="gVn-JF-gri"/>
+                            <constraint firstItem="EZF-av-cD9" firstAttribute="bottom" secondItem="d0Q-KQ-XDg" secondAttribute="bottom" constant="16" id="hAl-BV-BaP"/>
+                            <constraint firstItem="8YS-0r-Xi9" firstAttribute="leading" secondItem="LBE-5z-Q67" secondAttribute="trailing" constant="8" id="hp0-xX-y7V"/>
+                            <constraint firstItem="KBo-mC-RGZ" firstAttribute="leading" secondItem="cPb-45-ZoH" secondAttribute="trailing" constant="8" id="kRi-Sn-Kq2"/>
+                            <constraint firstItem="cPb-45-ZoH" firstAttribute="leading" secondItem="vfA-tQ-MtL" secondAttribute="leadingMargin" constant="19" id="m95-Me-I8J"/>
+                            <constraint firstAttribute="centerY" secondItem="LBE-5z-Q67" secondAttribute="centerY" id="w0i-dL-RJl"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="EZF-av-cD9"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Health Thermometer" id="Npq-8b-2d6">
+                        <barButtonItem key="rightBarButtonItem" image="ic_info" landscapeImage="ic_info" id="xK9-WU-kWH" userLabel="About">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="aboutButtonTapped:" destination="tqi-s7-cIe" id="gqn-oU-wCT"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="battery" destination="cPb-45-ZoH" id="TLV-wQ-G8k"/>
+                        <outlet property="connectionButon" destination="d0Q-KQ-XDg" id="OJd-qo-0Ao"/>
+                        <outlet property="degreeControl" destination="pug-Uh-4mS" id="rEI-Bt-pb4"/>
+                        <outlet property="deviceName" destination="KBo-mC-RGZ" id="VQe-5G-zZT"/>
+                        <outlet property="temperature" destination="LBE-5z-Q67" id="PFc-iC-cyb"/>
+                        <outlet property="temperatureUnit" destination="8YS-0r-Xi9" id="Bdc-mH-0sy"/>
+                        <outlet property="timestamp" destination="spT-uh-CAi" id="HID-5C-XSw"/>
+                        <outlet property="type" destination="elq-UQ-XPE" id="0hE-Fy-6KW"/>
+                        <outlet property="verticalLabel" destination="ZeJ-or-F9X" id="W9e-jx-Qfy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tZn-Cm-xHh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1678" y="1688"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Battery" width="39" height="19"/>
+        <image name="ConnectButton" width="163" height="48"/>
+        <image name="ConnectButtonPressed" width="163" height="48"/>
+        <image name="ic_info" width="24" height="24"/>
+        <image name="toolbar_shadow" width="2.5" height="7.5"/>
+    </resources>
+</document>

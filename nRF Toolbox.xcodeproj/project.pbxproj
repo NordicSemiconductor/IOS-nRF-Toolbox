@@ -15,6 +15,20 @@
 		20C7FE082306EB5600B06FD8 /* UITableView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE072306EB5600B06FD8 /* UITableView+Ext.swift */; };
 		20C7FE0E230A9F9300B06FD8 /* LinkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE0D230A9F9300B06FD8 /* LinkTableViewCell.swift */; };
 		20C7FE10230A9FAB00B06FD8 /* UIFont+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE0F230A9FAB00B06FD8 /* UIFont+Ext.swift */; };
+		20C7FE12230ACC3E00B06FD8 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE11230ACC3E00B06FD8 /* SplitViewController.swift */; };
+		20C7FE16230ADD1E00B06FD8 /* StoryboardInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE15230ADD1E00B06FD8 /* StoryboardInstance.swift */; };
+		20C7FE18230AE38200B06FD8 /* RSCViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE17230AE38200B06FD8 /* RSCViewController.storyboard */; };
+		20C7FE1A230AE3E800B06FD8 /* ProximityViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE19230AE3E800B06FD8 /* ProximityViewController.storyboard */; };
+		20C7FE1C230BCB7D00B06FD8 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE1B230BCB7D00B06FD8 /* UIColor+Ext.swift */; };
+		20C7FE1E230BE75D00B06FD8 /* BGMViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE1D230BE75D00B06FD8 /* BGMViewController.storyboard */; };
+		20C7FE20230BE7DF00B06FD8 /* HKViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE1F230BE7DF00B06FD8 /* HKViewController.storyboard */; };
+		20C7FE22230BE9E800B06FD8 /* BPMViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE21230BE9E800B06FD8 /* BPMViewController.storyboard */; };
+		20C7FE24230BEA5B00B06FD8 /* CSCViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE23230BEA5B00B06FD8 /* CSCViewController.storyboard */; };
+		20C7FE26230BEA9D00B06FD8 /* DFUViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE25230BEA9D00B06FD8 /* DFUViewController.storyboard */; };
+		20C7FE28230BEB6300B06FD8 /* HRMViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE27230BEB6300B06FD8 /* HRMViewController.storyboard */; };
+		20C7FE2A230BEBAA00B06FD8 /* HTSViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE29230BEBAA00B06FD8 /* HTSViewController.storyboard */; };
+		20C7FE2C230BEC1800B06FD8 /* UARTViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE2B230BEC1800B06FD8 /* UARTViewController.storyboard */; };
+		20C7FE2E230BEC9D00B06FD8 /* CGMViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE2D230BEC9D00B06FD8 /* CGMViewController.storyboard */; };
 		20E07B3C2305593800FCB205 /* ServiceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E07B3A2305593800FCB205 /* ServiceListViewController.swift */; };
 		20E07B3F23055B0B00FCB205 /* InteractionServiceList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20E07B3E23055B0B00FCB205 /* InteractionServiceList.plist */; };
 		20E07B422306868F00FCB205 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E07B412306868F00FCB205 /* Service.swift */; };
@@ -129,6 +143,20 @@
 		20C7FE072306EB5600B06FD8 /* UITableView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Ext.swift"; sourceTree = "<group>"; };
 		20C7FE0D230A9F9300B06FD8 /* LinkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkTableViewCell.swift; sourceTree = "<group>"; };
 		20C7FE0F230A9FAB00B06FD8 /* UIFont+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Ext.swift"; sourceTree = "<group>"; };
+		20C7FE11230ACC3E00B06FD8 /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
+		20C7FE15230ADD1E00B06FD8 /* StoryboardInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardInstance.swift; sourceTree = "<group>"; };
+		20C7FE17230AE38200B06FD8 /* RSCViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RSCViewController.storyboard; sourceTree = "<group>"; };
+		20C7FE19230AE3E800B06FD8 /* ProximityViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProximityViewController.storyboard; sourceTree = "<group>"; };
+		20C7FE1B230BCB7D00B06FD8 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
+		20C7FE1D230BE75D00B06FD8 /* BGMViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BGMViewController.storyboard; sourceTree = "<group>"; };
+		20C7FE1F230BE7DF00B06FD8 /* HKViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HKViewController.storyboard; sourceTree = "<group>"; };
+		20C7FE21230BE9E800B06FD8 /* BPMViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BPMViewController.storyboard; sourceTree = "<group>"; };
+		20C7FE23230BEA5B00B06FD8 /* CSCViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CSCViewController.storyboard; sourceTree = "<group>"; };
+		20C7FE25230BEA9D00B06FD8 /* DFUViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DFUViewController.storyboard; sourceTree = "<group>"; };
+		20C7FE27230BEB6300B06FD8 /* HRMViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HRMViewController.storyboard; sourceTree = "<group>"; };
+		20C7FE29230BEBAA00B06FD8 /* HTSViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HTSViewController.storyboard; sourceTree = "<group>"; };
+		20C7FE2B230BEC1800B06FD8 /* UARTViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = UARTViewController.storyboard; sourceTree = "<group>"; };
+		20C7FE2D230BEC9D00B06FD8 /* CGMViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CGMViewController.storyboard; sourceTree = "<group>"; };
 		20E07B3A2305593800FCB205 /* ServiceListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceListViewController.swift; sourceTree = "<group>"; };
 		20E07B3E23055B0B00FCB205 /* InteractionServiceList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = InteractionServiceList.plist; sourceTree = "<group>"; };
 		20E07B412306868F00FCB205 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
@@ -268,6 +296,7 @@
 			children = (
 				20C7FE072306EB5600B06FD8 /* UITableView+Ext.swift */,
 				20C7FE0F230A9FAB00B06FD8 /* UIFont+Ext.swift */,
+				20C7FE1B230BCB7D00B06FD8 /* UIColor+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -279,6 +308,7 @@
 				20E07B402306863D00FCB205 /* Model */,
 				20E07B3A2305593800FCB205 /* ServiceListViewController.swift */,
 				20E07B482306885F00FCB205 /* Initial.storyboard */,
+				20C7FE11230ACC3E00B06FD8 /* SplitViewController.swift */,
 			);
 			path = ServiceList;
 			sourceTree = "<group>";
@@ -325,6 +355,7 @@
 			isa = PBXGroup;
 			children = (
 				3001EBC61D1C1BAA008C5C37 /* CGMViewController.swift */,
+				20C7FE2D230BEC9D00B06FD8 /* CGMViewController.storyboard */,
 				3001EBC41D1C153C008C5C37 /* CGMDetailsViewController.swift */,
 				3001EBC01D1C12E4008C5C37 /* CGMItemCell.swift */,
 			);
@@ -337,6 +368,7 @@
 				3001EBB41D1BE1FB008C5C37 /* BGMDetailsViewController.swift */,
 				3001EBB51D1BE1FB008C5C37 /* BGMItemCell.swift */,
 				3001EBB61D1BE1FB008C5C37 /* BGMViewController.swift */,
+				20C7FE1D230BE75D00B06FD8 /* BGMViewController.storyboard */,
 			);
 			path = StandarGlucoseMonitoring;
 			sourceTree = "<group>";
@@ -362,6 +394,7 @@
 			isa = PBXGroup;
 			children = (
 				309F08641E6D6A5500B7546A /* HKViewController.swift */,
+				20C7FE1F230BE7DF00B06FD8 /* HKViewController.storyboard */,
 				309F08691E6D9EAA00B7546A /* HKHomeStore.swift */,
 				309F086B1E6EA0F800B7546A /* HKScannerViewController.swift */,
 				309F086D1E6ED44F00B7546A /* HKScannerDelegate.swift */,
@@ -381,6 +414,7 @@
 				5231403122FB1E130074325A /* UIColor+Nordic.swift */,
 				20C7FDFD2306BEE000B06FD8 /* Array+Ext.swift */,
 				20C7FE042306D02400B06FD8 /* Log.swift */,
+				20C7FE15230ADD1E00B06FD8 /* StoryboardInstance.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -495,6 +529,7 @@
 			isa = PBXGroup;
 			children = (
 				300508941CE2078A00D93BE0 /* RSCViewController.swift */,
+				20C7FE17230AE38200B06FD8 /* RSCViewController.storyboard */,
 			);
 			name = RSC;
 			path = RSAC;
@@ -504,6 +539,7 @@
 			isa = PBXGroup;
 			children = (
 				30F92D4A1CD9CF0700C73285 /* HRMViewController.swift */,
+				20C7FE27230BEB6300B06FD8 /* HRMViewController.storyboard */,
 			);
 			name = HRM;
 			path = HRS;
@@ -513,6 +549,7 @@
 			isa = PBXGroup;
 			children = (
 				308EE1771CE0CBF700F2A854 /* HTSViewController.swift */,
+				20C7FE29230BEBAA00B06FD8 /* HTSViewController.storyboard */,
 			);
 			path = HTS;
 			sourceTree = "<group>";
@@ -554,6 +591,7 @@
 			isa = PBXGroup;
 			children = (
 				3010F6041CDCB4F900CB285A /* BPMViewController.swift */,
+				20C7FE21230BE9E800B06FD8 /* BPMViewController.storyboard */,
 			);
 			path = BPM;
 			sourceTree = "<group>";
@@ -573,6 +611,7 @@
 			isa = PBXGroup;
 			children = (
 				300508921CE1D75800D93BE0 /* ProximityViewController.swift */,
+				20C7FE19230AE3E800B06FD8 /* ProximityViewController.storyboard */,
 			);
 			path = PROXIMITY;
 			sourceTree = "<group>";
@@ -581,6 +620,7 @@
 			isa = PBXGroup;
 			children = (
 				3080C4701CE06D0E009C2D8C /* CSCViewController.swift */,
+				20C7FE23230BEA5B00B06FD8 /* CSCViewController.storyboard */,
 			);
 			path = CSC;
 			sourceTree = "<group>";
@@ -642,6 +682,7 @@
 			isa = PBXGroup;
 			children = (
 				30499E501CE471C500E0993B /* DFUViewController.swift */,
+				20C7FE25230BEA9D00B06FD8 /* DFUViewController.storyboard */,
 			);
 			path = DFUViewController;
 			sourceTree = "<group>";
@@ -662,6 +703,7 @@
 				3000B2101CE317D900F64CEE /* UARTRevealViewController.swift */,
 				3000B2121CE3195E00F64CEE /* EditPopupViewController.swift */,
 				3000B2141CE32A9200F64CEE /* UARTViewController.swift */,
+				20C7FE2B230BEC1800B06FD8 /* UARTViewController.storyboard */,
 			);
 			path = UART;
 			sourceTree = "<group>";
@@ -745,35 +787,46 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20C7FE18230AE38200B06FD8 /* RSCViewController.storyboard in Resources */,
+				20C7FE1A230AE3E800B06FD8 /* ProximityViewController.storyboard in Resources */,
 				20E07B4B23068D0300FCB205 /* Colors.xcassets in Resources */,
 				20C7FE012306C5FF00B06FD8 /* BLEServiceList.plist in Resources */,
 				20E07B5D2306975700FCB205 /* GT-Eesti-Display-Light.ttf in Resources */,
+				20C7FE28230BEB6300B06FD8 /* HRMViewController.storyboard in Resources */,
+				20C7FE26230BEA9D00B06FD8 /* DFUViewController.storyboard in Resources */,
 				20E07B622306975700FCB205 /* GT-Eesti-Display-Bold.ttf in Resources */,
 				5214D0CE1886C02A00460637 /* Settings.bundle in Resources */,
+				20C7FE22230BE9E800B06FD8 /* BPMViewController.storyboard in Resources */,
 				20E07B682306975700FCB205 /* GT-Eesti-Display-ULight-Italic.ttf in Resources */,
 				0E645A0F1CBF957800D36AD0 /* firmwares in Resources */,
 				20E07B602306975700FCB205 /* GT-Eesti-Display-UBold-Italic.ttf in Resources */,
 				20E07B3F23055B0B00FCB205 /* InteractionServiceList.plist in Resources */,
 				20C7FE032306C72000B06FD8 /* IoTServices.plist in Resources */,
+				20C7FE2C230BEC1800B06FD8 /* UARTViewController.storyboard in Resources */,
 				20E07B5B2306975700FCB205 /* GT-Eesti-Display-Thin.ttf in Resources */,
 				20E07B642306975700FCB205 /* GT-Eesti-Display-Thin-Italic.ttf in Resources */,
+				20C7FE20230BE7DF00B06FD8 /* HKViewController.storyboard in Resources */,
 				20E07B492306885F00FCB205 /* Initial.storyboard in Resources */,
 				20E07B662306975700FCB205 /* GT-Eesti-Display-Regular-Italic.ttf in Resources */,
 				5217F3FE1859EE0000F2D5BB /* Images.xcassets in Resources */,
 				20E07B5E2306975700FCB205 /* GT-Eesti-Display-Medium-Italic.ttf in Resources */,
 				20E07B5F2306975700FCB205 /* GT-Eesti-Display-Bold-Italic.ttf in Resources */,
 				7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */,
+				20C7FE1E230BE75D00B06FD8 /* BGMViewController.storyboard in Resources */,
 				52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */,
 				5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */,
 				5217F3F01859EE0000F2D5BB /* InfoPlist.strings in Resources */,
 				20E07B632306975700FCB205 /* GT-Eesti-Display-Regular.ttf in Resources */,
 				5211EFB118856430007CC40D /* icon-hex@2x.png in Resources */,
 				20E07B672306975700FCB205 /* GT-Eesti-Display-Light-Italic.ttf in Resources */,
+				20C7FE24230BEA5B00B06FD8 /* CSCViewController.storyboard in Resources */,
+				20C7FE2E230BEC9D00B06FD8 /* CGMViewController.storyboard in Resources */,
 				20E07B652306975700FCB205 /* GT-Eesti-Display-ULight.ttf in Resources */,
 				20E07B612306975700FCB205 /* GT-Eesti-Display-Medium.ttf in Resources */,
 				5217F3F91859EE0000F2D5BB /* Main.storyboard in Resources */,
 				5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */,
 				20E07B5C2306975700FCB205 /* GT-Eesti-Display-UBold.ttf in Resources */,
+				20C7FE2A230BEBAA00B06FD8 /* HTSViewController.storyboard in Resources */,
 				5211EFB018856430007CC40D /* icon-hex.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -843,6 +896,7 @@
 				30499E571CE4736500E0993B /* FilePreselectionDelegate.swift in Sources */,
 				30A1145C1CD24611000F0F02 /* ScannerViewController.swift in Sources */,
 				308AA57A1CD8DD4300CC9857 /* GlucoseReadingContext.swift in Sources */,
+				20C7FE12230ACC3E00B06FD8 /* SplitViewController.swift in Sources */,
 				3001432B1CEC6D2A008379DF /* RecordAccess.swift in Sources */,
 				304D58FF1CE3521900148271 /* LogItem.swift in Sources */,
 				3042993C1CE6154100E1D2AB /* BaseRevealViewController.swift in Sources */,
@@ -856,6 +910,7 @@
 				306ECD621CE61A3600E48BBD /* AppDelegate.swift in Sources */,
 				20C7FDFE2306BEE000B06FD8 /* Array+Ext.swift in Sources */,
 				3001EBB71D1BE1FB008C5C37 /* BGMDetailsViewController.swift in Sources */,
+				20C7FE16230ADD1E00B06FD8 /* StoryboardInstance.swift in Sources */,
 				20C7FE10230A9FAB00B06FD8 /* UIFont+Ext.swift in Sources */,
 				304D59011CE352B300148271 /* LogItemTableViewCell.swift in Sources */,
 				3001EBC51D1C153C008C5C37 /* CGMDetailsViewController.swift in Sources */,
@@ -867,6 +922,7 @@
 				20C7FE0E230A9F9300B06FD8 /* LinkTableViewCell.swift in Sources */,
 				20C7FE082306EB5600B06FD8 /* UITableView+Ext.swift in Sources */,
 				30499E511CE471C500E0993B /* DFUViewController.swift in Sources */,
+				20C7FE1C230BCB7D00B06FD8 /* UIColor+Ext.swift in Sources */,
 				3001EBBB1D1BE306008C5C37 /* CGMReading.swift in Sources */,
 				3001EBB11D1BE1F3008C5C37 /* GlucoseReading.swift in Sources */,
 				3000B2151CE32A9200F64CEE /* UARTViewController.swift in Sources */,

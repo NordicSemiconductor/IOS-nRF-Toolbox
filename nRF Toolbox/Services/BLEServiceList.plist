@@ -17,6 +17,8 @@
         <string>FeatureBGM</string>
         <key>info</key>
         <string></string>
+        <key>id</key>
+        <string>glucoseMonitoring</string>
     </dict>
     <dict>
         <key>code</key>
@@ -27,6 +29,8 @@
         <string>FeatureBPM</string>
         <key>info</key>
         <string></string>
+        <key>id</key>
+        <string>bloodPressureMonitoring</string>
     </dict>
     <dict>
         <key>code</key>
@@ -37,6 +41,8 @@
         <string>FeatureCSC</string>
         <key>info</key>
         <string></string>
+        <key>id</key>
+        <string>cyclingSensor</string>
     </dict>
     <dict>
         <key>code</key>
@@ -47,6 +53,8 @@
         <string>FeatureHRS</string>
         <key>info</key>
         <string></string>
+        <key>id</key>
+        <string>heartRateMonitor</string>
     </dict>
     <dict>
         <key>code</key>
@@ -57,6 +65,8 @@
         <string>FeatureHTS</string>
         <key>info</key>
         <string></string>
+        <key>id</key>
+        <string>healthThermometer</string>
     </dict>
     <dict>
         <key>code</key>
@@ -67,6 +77,8 @@
         <string>FeatureRSAC</string>
         <key>info</key>
         <string></string>
+        <key>id</key>
+        <string>runningSensor</string>
     </dict>
     <dict>
         <key>code</key>
@@ -77,6 +89,8 @@
         <string>FeatureCGM</string>
         <key>info</key>
         <string></string>
+        <key>id</key>
+        <string>continuousGlucoseMonitor</string>
     </dict>
     </array>
 </plist>

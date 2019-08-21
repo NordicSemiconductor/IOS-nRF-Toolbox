@@ -9,7 +9,7 @@
 import UIKit
 import CoreBluetooth
 
-class HTSViewController: BaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate {
+class HTSViewController: BaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate, StoryboardInstance {
 
     //MARK: - ViewController properties
     var bluetoothManager                 : CBCentralManager?

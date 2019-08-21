@@ -10,6 +10,9 @@ import UIKit
 
 
 class ServiceListViewController: UIViewController {
+    
+    weak var servicePresenterDelegate: ServiceSelectedDelegate?
+    
     private static func loadServices(from fileName: String) -> [Service] {
         let errorLogger = Log(category: .ui, type: .error)
         guard let fileUrl = Bundle.main.url(forResource: fileName, withExtension: "plist") else {
@@ -26,6 +29,7 @@ class ServiceListViewController: UIViewController {
     }
     
     @IBOutlet private var tableView: UITableView!
+    private (set) var selectedService: ServiceId?
     
     private let services = loadServices(from: "BLEServiceList")
     // TODO: Consider other name variants
@@ -76,5 +80,11 @@ extension ServiceListViewController: UITableViewDataSource {
 extension ServiceListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        let model = self.serviceGroups[indexPath]
+        if let serviceId = ServiceId(rawValue: model.id) {
+            self.selectedService = serviceId
+            self.servicePresenterDelegate?.openServiceController(serviceId)
+        }
     }
 }

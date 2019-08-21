@@ -9,7 +9,7 @@
 import UIKit
 import CoreBluetooth
 
-class BPMViewController: BaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate {
+class BPMViewController: BaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate, StoryboardInstance {
     
     //MARK: - ViewController Properties
     var bpmServiceUUID                                : CBUUID
