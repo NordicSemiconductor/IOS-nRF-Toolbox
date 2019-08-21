@@ -10,7 +10,7 @@ import UIKit
 import CoreBluetooth
 import iOSDFULibrary
 
-class DFUViewController: BaseViewController, ScannerDelegate, FileSelectionDelegate, LoggerDelegate, DFUServiceDelegate, DFUProgressDelegate, StoryboardInstance {
+class DFUViewController: BaseViewController, ScannerDelegate, FileSelectionDelegate, LoggerDelegate, DFUServiceDelegate, DFUProgressDelegate, StoryboardInstantiable {
     
     //MARK: - Class properties
     var selectedPeripheral : CBPeripheral?

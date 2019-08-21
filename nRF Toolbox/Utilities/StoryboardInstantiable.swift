@@ -1,5 +1,5 @@
 //
-//  StoryboardInstance.swift
+//  StoryboardInstantiable.swift
 //  nRF Toolbox
 //
 //  Created by Nick Kibysh on 19/08/2019.
@@ -8,14 +8,14 @@
 
 import UIKit
 
-protocol StoryboardInstance {
+protocol StoryboardInstantiable {
     static func instance(storyboard: UIStoryboard, storyboardId: String) -> Self
     static func instance(storyboardId: String) -> Self
     static func instance(storyboard: UIStoryboard) -> Self
     static func instance() -> Self
 }
 
-extension StoryboardInstance where Self: UIViewController {
+extension StoryboardInstantiable where Self: UIViewController {
     static func instance(storyboard: UIStoryboard, storyboardId: String) -> Self {
         return storyboard.instantiateViewController(withIdentifier: storyboardId) as! Self
     }

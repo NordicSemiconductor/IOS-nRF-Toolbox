@@ -39,19 +39,19 @@ class SplitViewController: UISplitViewController {
     
     private let serviceViewControllers: [ServiceId : UIViewController] = {
         return [
-            .glucoseMonitoring : SplitViewController.createAndWrappController(controllerClass: BGMViewController.self),
-            .bloodPressureMonitoring : SplitViewController.createAndWrappController(controllerClass: BPMViewController.self),
-            .cyclingSensor : SplitViewController.createAndWrappController(controllerClass: CSCViewController.self),
-            .heartRateMonitor : SplitViewController.createAndWrappController(controllerClass: HRMViewController.self),
-            .healthThermometer : SplitViewController.createAndWrappController(controllerClass: HTSViewController.self),
-            .runningSensor : SplitViewController.createAndWrappController(controllerClass: RSCViewController.self),
-            .continuousGlucoseMonitor : SplitViewController.createAndWrappController(controllerClass: CGMViewController.self),
-            .deviceFirmwareUpgrade : SplitViewController.createAndWrappController(controllerClass: DFUViewController.self),
-            .proximity : SplitViewController.createAndWrappController(controllerClass: ProximityViewController.self),
-            .homeKit : SplitViewController.createAndWrappController(controllerClass: HKViewController.self),
+            .glucoseMonitoring : createAndWrappController(controllerClass: BGMViewController.self),
+            .bloodPressureMonitoring : createAndWrappController(controllerClass: BPMViewController.self),
+            .cyclingSensor : createAndWrappController(controllerClass: CSCViewController.self),
+            .heartRateMonitor : createAndWrappController(controllerClass: HRMViewController.self),
+            .healthThermometer : createAndWrappController(controllerClass: HTSViewController.self),
+            .runningSensor : createAndWrappController(controllerClass: RSCViewController.self),
+            .continuousGlucoseMonitor : createAndWrappController(controllerClass: CGMViewController.self),
+            .deviceFirmwareUpgrade : createAndWrappController(controllerClass: DFUViewController.self),
+            .proximity : createAndWrappController(controllerClass: ProximityViewController.self),
+            .homeKit : createAndWrappController(controllerClass: HKViewController.self),
             //            .github : DetailsTabBarController.createAndWrappController(controllerClass: ProximityViewController.self),
             
-            .uart : SplitViewController.wrapContreller(UARTRevealViewController.instance(storyboard: UIStoryboard(name: "UARTViewController", bundle: .main)))
+            .uart : wrapContreller(UARTRevealViewController.instance(storyboard: UIStoryboard(name: "UARTViewController", bundle: .main)))
         ]
     }()
     
@@ -64,7 +64,7 @@ class SplitViewController: UISplitViewController {
 }
 
 extension SplitViewController {
-    static private func createAndWrappController<T: StoryboardInstance>(controllerClass: T.Type) -> UIViewController {
+    static private func createAndWrappController<T: StoryboardInstantiable>(controllerClass: T.Type) -> UIViewController {
         let controller = controllerClass.instance()
         return self.wrapContreller(controller as! UIViewController)
     }

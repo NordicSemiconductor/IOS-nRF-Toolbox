@@ -29,7 +29,7 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 
-class BGMViewController: BaseViewController ,CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate, UITableViewDataSource, StoryboardInstance {
+class BGMViewController: BaseViewController ,CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate, UITableViewDataSource, StoryboardInstantiable {
     var bluetoothManager : CBCentralManager?
     
     //MARK: - Class properties

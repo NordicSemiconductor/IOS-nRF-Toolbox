@@ -16,7 +16,7 @@
 		20C7FE0E230A9F9300B06FD8 /* LinkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE0D230A9F9300B06FD8 /* LinkTableViewCell.swift */; };
 		20C7FE10230A9FAB00B06FD8 /* UIFont+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE0F230A9FAB00B06FD8 /* UIFont+Ext.swift */; };
 		20C7FE12230ACC3E00B06FD8 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE11230ACC3E00B06FD8 /* SplitViewController.swift */; };
-		20C7FE16230ADD1E00B06FD8 /* StoryboardInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE15230ADD1E00B06FD8 /* StoryboardInstance.swift */; };
+		20C7FE16230ADD1E00B06FD8 /* StoryboardInstantiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE15230ADD1E00B06FD8 /* StoryboardInstantiable.swift */; };
 		20C7FE18230AE38200B06FD8 /* RSCViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE17230AE38200B06FD8 /* RSCViewController.storyboard */; };
 		20C7FE1A230AE3E800B06FD8 /* ProximityViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE19230AE3E800B06FD8 /* ProximityViewController.storyboard */; };
 		20C7FE1C230BCB7D00B06FD8 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE1B230BCB7D00B06FD8 /* UIColor+Ext.swift */; };
@@ -144,7 +144,7 @@
 		20C7FE0D230A9F9300B06FD8 /* LinkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkTableViewCell.swift; sourceTree = "<group>"; };
 		20C7FE0F230A9FAB00B06FD8 /* UIFont+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Ext.swift"; sourceTree = "<group>"; };
 		20C7FE11230ACC3E00B06FD8 /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
-		20C7FE15230ADD1E00B06FD8 /* StoryboardInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardInstance.swift; sourceTree = "<group>"; };
+		20C7FE15230ADD1E00B06FD8 /* StoryboardInstantiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardInstantiable.swift; sourceTree = "<group>"; };
 		20C7FE17230AE38200B06FD8 /* RSCViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RSCViewController.storyboard; sourceTree = "<group>"; };
 		20C7FE19230AE3E800B06FD8 /* ProximityViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProximityViewController.storyboard; sourceTree = "<group>"; };
 		20C7FE1B230BCB7D00B06FD8 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
@@ -414,7 +414,7 @@
 				5231403122FB1E130074325A /* UIColor+Nordic.swift */,
 				20C7FDFD2306BEE000B06FD8 /* Array+Ext.swift */,
 				20C7FE042306D02400B06FD8 /* Log.swift */,
-				20C7FE15230ADD1E00B06FD8 /* StoryboardInstance.swift */,
+				20C7FE15230ADD1E00B06FD8 /* StoryboardInstantiable.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -910,7 +910,7 @@
 				306ECD621CE61A3600E48BBD /* AppDelegate.swift in Sources */,
 				20C7FDFE2306BEE000B06FD8 /* Array+Ext.swift in Sources */,
 				3001EBB71D1BE1FB008C5C37 /* BGMDetailsViewController.swift in Sources */,
-				20C7FE16230ADD1E00B06FD8 /* StoryboardInstance.swift in Sources */,
+				20C7FE16230ADD1E00B06FD8 /* StoryboardInstantiable.swift in Sources */,
 				20C7FE10230A9FAB00B06FD8 /* UIFont+Ext.swift in Sources */,
 				304D59011CE352B300148271 /* LogItemTableViewCell.swift in Sources */,
 				3001EBC51D1C153C008C5C37 /* CGMDetailsViewController.swift in Sources */,

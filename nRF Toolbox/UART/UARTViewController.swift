@@ -9,7 +9,7 @@
 import UIKit
 import CoreBluetooth
 
-class UARTViewController: UIViewController, BluetoothManagerDelegate, ScannerDelegate, UIPopoverPresentationControllerDelegate, ButtonConfigureDelegate, StoryboardInstance {
+class UARTViewController: UIViewController, BluetoothManagerDelegate, ScannerDelegate, UIPopoverPresentationControllerDelegate, ButtonConfigureDelegate, StoryboardInstantiable {
     
     //MARK: - View Properties
     var bluetoothManager    : BluetoothManager?

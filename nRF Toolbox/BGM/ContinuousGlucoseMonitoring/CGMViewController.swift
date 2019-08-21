@@ -25,7 +25,7 @@ import CoreBluetooth
 
 class CGMViewController: BaseViewController, ScannerDelegate,
                             CBCentralManagerDelegate, CBPeripheralDelegate,
-                            UITableViewDataSource, UITableViewDelegate, StoryboardInstance {
+                            UITableViewDataSource, UITableViewDelegate, StoryboardInstantiable {
 
     //MARK: - Class porperties
     var bluetoothManager : CBCentralManager?

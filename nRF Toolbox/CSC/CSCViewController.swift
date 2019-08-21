@@ -9,7 +9,7 @@
 import UIKit
 import CoreBluetooth
 
-class CSCViewController: BaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate, StoryboardInstance {
+class CSCViewController: BaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate, StoryboardInstantiable {
 
     //MARK: - ViewController properties
     let wheelRevolutionFlag                 : UInt8 = 0x01

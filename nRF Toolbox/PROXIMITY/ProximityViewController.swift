@@ -10,7 +10,7 @@ import UIKit
 import CoreBluetooth
 import AVFoundation
 
-class ProximityViewController: BaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate, CBPeripheralManagerDelegate, StoryboardInstance {
+class ProximityViewController: BaseViewController, CBCentralManagerDelegate, CBPeripheralDelegate, ScannerDelegate, CBPeripheralManagerDelegate, StoryboardInstantiable {
     
     //MARK: - Class Properties
     var bluetoothManager                        : CBCentralManager?

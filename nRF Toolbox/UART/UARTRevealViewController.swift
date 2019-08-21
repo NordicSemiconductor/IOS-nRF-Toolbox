@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UARTRevealViewController: BaseRevealViewController, StoryboardInstance {
+class UARTRevealViewController: BaseRevealViewController, StoryboardInstantiable {
 
     //MARK: - ViewActions
     @IBAction func aboutButtonTapped(_ sender: AnyObject) {
