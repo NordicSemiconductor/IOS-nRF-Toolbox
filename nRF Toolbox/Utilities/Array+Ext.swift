@@ -8,8 +8,8 @@
 
 import Foundation
 
-extension Array where Element == [Service] {
-    subscript(ip: IndexPath) -> Service {
-        return self[ip.section][ip.row]
+extension Array where Element == ServiceSection {
+    subscript(ip: IndexPath) -> ServiceType {
+        return self[ip.section].services[ip.row]
     }
 }
