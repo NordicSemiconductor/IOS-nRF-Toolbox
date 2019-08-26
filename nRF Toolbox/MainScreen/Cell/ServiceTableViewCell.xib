@@ -19,11 +19,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ServiceTableViewCell" rowHeight="100" id="eoa-f2-BQZ" customClass="ServiceTableViewCell" customModule="nRF_Toolbox" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" indentationWidth="10" reuseIdentifier="ServiceTableViewCell" rowHeight="87" id="eoa-f2-BQZ" customClass="ServiceTableViewCell" customModule="nRF_Toolbox" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="87"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eoa-f2-BQZ" id="0kg-sN-dLQ">
-                <rect key="frame" x="0.0" y="0.0" width="414" height="99.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="414" height="86.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FeatureBGM" translatesAutoresizingMaskIntoConstraints="NO" id="6qF-VX-2rl">
@@ -59,11 +59,11 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="backgroundView" destination="0kg-sN-dLQ" id="yra-8i-yXD"/>
                 <outlet property="code" destination="KUS-bZ-05I" id="Nky-iw-chy"/>
                 <outlet property="icon" destination="6qF-VX-2rl" id="yWa-RL-NEl"/>
                 <outlet property="name" destination="f9w-Mp-Ob3" id="lmx-SY-vnr"/>
             </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="146.31696428571428"/>
         </tableViewCell>
     </objects>
     <resources>

@@ -49,12 +49,12 @@ class DefaultMainRouter {
         ].mapValues { UINavigationController.nordicBranded(rootViewController: $0) }
     }()
     
+    lazy private var serviceList = ServiceListViewController(serviceRouter: self)
+    
     lazy private var splitViewController: UISplitViewController = {
-        let serviceList = ServiceListViewController(serviceRouter: self)
-        let nc = UINavigationController.nordicBranded(rootViewController: serviceList)
-        
+        let nc = UINavigationController.nordicBranded(rootViewController: self.serviceList)
         let splitViewController = UISplitViewController()
-        splitViewController.viewControllers = [nc]
+        splitViewController.viewControllers = [nc, NoContentViewController()]
         splitViewController.delegate = self
         splitViewController.preferredDisplayMode = .allVisible
         
@@ -65,10 +65,9 @@ class DefaultMainRouter {
 
 extension DefaultMainRouter: UISplitViewControllerDelegate {
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
-        return true
+        return self.serviceList.selectedService == nil
     }
 }
-
 
 extension DefaultMainRouter: ServiceRouter {
     func showServiceController(with serviceId: ServiceId) {
