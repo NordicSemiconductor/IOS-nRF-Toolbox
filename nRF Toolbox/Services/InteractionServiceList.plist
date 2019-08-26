@@ -23,18 +23,8 @@
 		<string>FeatureDFU</string>
 		<key>info</key>
 		<string></string>
-        <key>id</key>
-        <string>deviceFirmwareUpgrade</string>
-	</dict>
-	<dict>
-		<key>name</key>
-		<string>Proximity</string>
-		<key>icon</key>
-		<string>FeatureProximity</string>
-		<key>info</key>
-		<string></string>
-        <key>id</key>
-        <string>proximity</string>
+		<key>id</key>
+		<string>deviceFirmwareUpgrade</string>
 	</dict>
 </array>
 </plist>
