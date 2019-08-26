@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>name</key>
+		<string>GitHub</string>
+		<key>description</key>
+		<string>More information and the source code may be found on GitHub.</string>
+		<key>id</key>
+		<string>github</string>
+		<key>url</key>
+        <dict>
+            <key>relative</key>
+            <string>https://github.com</string>
+        </dict>
+	</dict>
+</array>
+</plist>

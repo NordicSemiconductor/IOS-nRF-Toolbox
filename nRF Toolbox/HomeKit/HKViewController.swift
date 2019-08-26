@@ -12,7 +12,7 @@ import HomeKit
 
 public let homeKitScannerSegue = "show_hk_scanner_view"
 public let homeKitAccessorySegue = "show_hk_accessory_view"
-class HKViewController: BaseViewController, HMHomeDelegate, HMHomeManagerDelegate, HKScannerDelegate, UITableViewDataSource, UITableViewDelegate {
+class HKViewController: BaseViewController, HMHomeDelegate, HMHomeManagerDelegate, HKScannerDelegate, UITableViewDataSource, UITableViewDelegate, StoryboardInstantiable {
 
     //MARK: - Properties
     private var accessoryBrowser: HMAccessoryBrowser!
