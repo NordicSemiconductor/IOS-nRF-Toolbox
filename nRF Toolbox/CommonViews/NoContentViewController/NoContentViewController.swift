@@ -15,7 +15,7 @@ class NoContentViewController: UIViewController {
         
         let image = UIImage(named: "Logo_Vertical_Transparent_White")?.withRenderingMode(.alwaysTemplate)
         
-        let messageView = NoContentView.instanceWithParams(image: image)
+        let messageView = InfoActionView.instanceWithParams(image: image)
         self.view = messageView
     }
     

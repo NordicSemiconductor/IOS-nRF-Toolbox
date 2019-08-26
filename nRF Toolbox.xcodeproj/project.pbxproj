@@ -51,10 +51,9 @@
 		20E07B662306975700FCB205 /* GT-Eesti-Display-Regular-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20E07B582306975700FCB205 /* GT-Eesti-Display-Regular-Italic.ttf */; };
 		20E07B672306975700FCB205 /* GT-Eesti-Display-Light-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20E07B592306975700FCB205 /* GT-Eesti-Display-Light-Italic.ttf */; };
 		20E07B682306975700FCB205 /* GT-Eesti-Display-ULight-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20E07B5A2306975700FCB205 /* GT-Eesti-Display-ULight-Italic.ttf */; };
-		20F15C3A2313D2B9000C5503 /* NoContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F15C392313D2B9000C5503 /* NoContentView.swift */; };
-		20F15C3C2313D2C7000C5503 /* NoContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20F15C3B2313D2C7000C5503 /* NoContentView.xib */; };
+		20F15C3A2313D2B9000C5503 /* InfoActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F15C392313D2B9000C5503 /* InfoActionView.swift */; };
+		20F15C3C2313D2C7000C5503 /* InfoActionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20F15C3B2313D2C7000C5503 /* InfoActionView.xib */; };
 		20F15C3F2313D606000C5503 /* NoContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F15C3E2313D606000C5503 /* NoContentViewController.swift */; };
-		20F15C412313F80B000C5503 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F15C402313F80B000C5503 /* UIView+Ext.swift */; };
 		20F15C432313F821000C5503 /* XibInstantiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F15C422313F821000C5503 /* XibInstantiable.swift */; };
 		3000B2111CE317D900F64CEE /* UARTRevealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3000B2101CE317D900F64CEE /* UARTRevealViewController.swift */; };
 		3000B2131CE3195E00F64CEE /* EditPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3000B2121CE3195E00F64CEE /* EditPopupViewController.swift */; };
@@ -186,10 +185,9 @@
 		20E07B582306975700FCB205 /* GT-Eesti-Display-Regular-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GT-Eesti-Display-Regular-Italic.ttf"; sourceTree = "<group>"; };
 		20E07B592306975700FCB205 /* GT-Eesti-Display-Light-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GT-Eesti-Display-Light-Italic.ttf"; sourceTree = "<group>"; };
 		20E07B5A2306975700FCB205 /* GT-Eesti-Display-ULight-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GT-Eesti-Display-ULight-Italic.ttf"; sourceTree = "<group>"; };
-		20F15C392313D2B9000C5503 /* NoContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoContentView.swift; sourceTree = "<group>"; };
-		20F15C3B2313D2C7000C5503 /* NoContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoContentView.xib; sourceTree = "<group>"; };
+		20F15C392313D2B9000C5503 /* InfoActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoActionView.swift; sourceTree = "<group>"; };
+		20F15C3B2313D2C7000C5503 /* InfoActionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoActionView.xib; sourceTree = "<group>"; };
 		20F15C3E2313D606000C5503 /* NoContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoContentViewController.swift; sourceTree = "<group>"; };
-		20F15C402313F80B000C5503 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		20F15C422313F821000C5503 /* XibInstantiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XibInstantiable.swift; sourceTree = "<group>"; };
 		3000B2101CE317D900F64CEE /* UARTRevealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTRevealViewController.swift; sourceTree = "<group>"; };
 		3000B2121CE3195E00F64CEE /* EditPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPopupViewController.swift; sourceTree = "<group>"; };
@@ -312,7 +310,6 @@
 				20C7FE072306EB5600B06FD8 /* UITableView+Ext.swift */,
 				20C7FE0F230A9FAB00B06FD8 /* UIFont+Ext.swift */,
 				20C7FE5A230EAD0000B06FD8 /* UINavigationController+Ext.swift */,
-				20F15C402313F80B000C5503 /* UIView+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -388,8 +385,8 @@
 		20F15C382313D093000C5503 /* EmptyView */ = {
 			isa = PBXGroup;
 			children = (
-				20F15C392313D2B9000C5503 /* NoContentView.swift */,
-				20F15C3B2313D2C7000C5503 /* NoContentView.xib */,
+				20F15C392313D2B9000C5503 /* InfoActionView.swift */,
+				20F15C3B2313D2C7000C5503 /* InfoActionView.xib */,
 			);
 			path = EmptyView;
 			sourceTree = "<group>";
@@ -877,7 +874,7 @@
 				20C7FE2E230BEC9D00B06FD8 /* CGMViewController.storyboard in Resources */,
 				20E07B652306975700FCB205 /* GT-Eesti-Display-ULight.ttf in Resources */,
 				20E07B612306975700FCB205 /* GT-Eesti-Display-Medium.ttf in Resources */,
-				20F15C3C2313D2C7000C5503 /* NoContentView.xib in Resources */,
+				20F15C3C2313D2C7000C5503 /* InfoActionView.xib in Resources */,
 				5217F3F91859EE0000F2D5BB /* Main.storyboard in Resources */,
 				5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */,
 				20E07B5C2306975700FCB205 /* GT-Eesti-Display-UBold.ttf in Resources */,
@@ -971,7 +968,6 @@
 				3001EBC51D1C153C008C5C37 /* CGMDetailsViewController.swift in Sources */,
 				3080C4711CE06D0E009C2D8C /* CSCViewController.swift in Sources */,
 				309F086E1E6ED44F00B7546A /* HKScannerDelegate.swift in Sources */,
-				20F15C412313F80B000C5503 /* UIView+Ext.swift in Sources */,
 				308EE1781CE0CBF700F2A854 /* HTSViewController.swift in Sources */,
 				304D58FB1CE34EE600148271 /* Logger.swift in Sources */,
 				304299241CE6114000E1D2AB /* TutorialViewController.swift in Sources */,
@@ -994,7 +990,7 @@
 				20C7FE50230E789F00B06FD8 /* MainRouter.swift in Sources */,
 				20E07B3C2305593800FCB205 /* ServiceListViewController.swift in Sources */,
 				30A114561CD2367C000F0F02 /* ScannedPeripheral.swift in Sources */,
-				20F15C3A2313D2B9000C5503 /* NoContentView.swift in Sources */,
+				20F15C3A2313D2B9000C5503 /* InfoActionView.swift in Sources */,
 				20F15C3F2313D606000C5503 /* NoContentViewController.swift in Sources */,
 				309F08701E6FF1F900B7546A /* HKAccessoryViewController.swift in Sources */,
 				3001EBC31D1C1430008C5C37 /* CGMItemCell.swift in Sources */,
