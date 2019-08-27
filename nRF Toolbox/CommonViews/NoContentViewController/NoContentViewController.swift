@@ -11,8 +11,6 @@ import UIKit
 class NoContentViewController: UIViewController {
     
     override func loadView() {
-        super.loadView()
-        
         let image = UIImage(named: "Logo_Vertical_Transparent_White")?.withRenderingMode(.alwaysTemplate)
         
         let messageView = InfoActionView.instanceWithParams(image: image)
