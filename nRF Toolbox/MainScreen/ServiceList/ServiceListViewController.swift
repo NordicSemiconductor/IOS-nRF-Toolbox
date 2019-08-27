@@ -13,6 +13,8 @@ class ServiceListViewController: UITableViewController {
     let dataProvider: ServiceProvider
     let serviceRouter: ServiceRouter
     
+    private (set) var selectedService: ServiceId?
+    
     init(dataProvider: ServiceProvider = DefaultServiceProvider(), serviceRouter: ServiceRouter) {
         self.dataProvider = dataProvider
         self.serviceRouter = serviceRouter
@@ -59,7 +61,7 @@ extension ServiceListViewController {
             return cell
         default:
             let errorMessage = "Incorrect cell type for indexPath \(indexPath)"
-            Log(category: .ui, type: .error).log(message: errorMessage)
+            Log(category: .ui, type: .fault).log(message: errorMessage)
             fatalError(errorMessage)
         }
     }
@@ -67,15 +69,19 @@ extension ServiceListViewController {
 
 extension ServiceListViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        
         let model = self.dataProvider.sections[indexPath]
         if let serviceId = ServiceId(rawValue: model.id) {
+            self.selectedService = serviceId
             self.serviceRouter.showServiceController(with: serviceId)
         }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        switch traitCollection.userInterfaceIdiom {
+        case .pad:
+            return 100
+        default:
+            return 80
+        }
     }
 }
