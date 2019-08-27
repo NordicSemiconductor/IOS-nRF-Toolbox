@@ -58,5 +58,12 @@ class InfoActionView: UIView, XibInstantiable {
         self.actionButton.layer.borderWidth = 2
         self.actionButton.layer.cornerRadius = 2
         self.actionButton.contentEdgeInsets = UIEdgeInsets(top: 6, left: 8, bottom: 6, right: 8)
+        
+        #if BETA
+        if #available(iOS 13.0, *) {
+            self.backgroundColor = .systemBackground
+            self.imageView.tintColor = .systemGray3
+        }
+        #endif
     }
 }

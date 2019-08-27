@@ -17,6 +17,14 @@ class ServiceTableViewCell: UITableViewCell {
         self.name.text = model.name
         self.code.text = model.code
         self.icon.image = UIImage(named: model.icon)?.withRenderingMode(.alwaysTemplate)
+        
+        #if BETA
+        if #available(iOS 13.0, *) {
+            self.name.textColor = .label
+            self.code.textColor = .secondaryLabel
+        }
+        #endif
+        
     }
     
 }

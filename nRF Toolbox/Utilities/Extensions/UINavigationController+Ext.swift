@@ -24,6 +24,20 @@ extension UINavigationController {
             nc.navigationBar.prefersLargeTitles = true
         }
         
+        #if BETA
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.backgroundColor = UIColor.NavigationBar.barTint
+            
+            nc.navigationBar.standardAppearance = navBarAppearance
+            nc.navigationBar.scrollEdgeAppearance = navBarAppearance
+            nc.navigationBar.prefersLargeTitles = true 
+        }
+        #endif
+        
         return nc
     }
 }
