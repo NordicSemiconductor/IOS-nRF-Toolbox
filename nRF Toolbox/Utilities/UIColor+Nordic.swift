@@ -108,7 +108,7 @@ extension UIColor {
             if #available(iOS 13.0, *) {
                 dark = .systemBackground
             } else {
-                Log(category: .ui, type: .fault).fault("iOS version doesn't supported")
+                Log(category: .ui, type: .fault).fault("iOS version not supported")
             }
             #else
             dark = .black
