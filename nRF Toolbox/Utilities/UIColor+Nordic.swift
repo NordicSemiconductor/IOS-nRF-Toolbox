@@ -98,3 +98,41 @@ extension UIColor {
         }
     }()
 }
+
+// MARK: - System Colors
+extension UIColor {
+    struct NavigationBar {
+        static let barTint: UIColor = {
+            let dark: UIColor
+            #if BETA
+            if #available(iOS 13.0, *) {
+                dark = .systemBackground
+            } else {
+                Log(category: .ui, type: .fault).fault("iOS version doesn't supported")
+            }
+            #else
+            dark = .black
+            #endif
+            
+            return .dynamicColor(light: .nordicBlue, dark: dark)
+        }()
+    }
+}
+
+extension UIColor {
+    typealias RGBA = (Int, Int, Int, CGFloat)
+    
+    static func dynamicColor(light: UIColor, dark: UIColor) -> UIColor {
+        #if BETA
+        if #available(iOS 13.0, *) {
+            return UIColor { (traitCollection) -> UIColor in
+                return traitCollection.userInterfaceStyle == .light ? light : dark
+            }
+        } else {
+            return light
+        }
+        #else
+        return light
+        #endif 
+    }
+}

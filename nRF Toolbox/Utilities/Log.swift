@@ -75,4 +75,13 @@ struct Log {
             NSLog("%@", message)
         }
     }
+    
+    func fault(_ errorMessage: String) -> Never {
+        if #available(iOS 10.0, *) {
+            os_log("%@", log: self.category.osLog(), type: self.type.osLogType(), errorMessage)
+        } else {
+            NSLog("%@", errorMessage)
+        }
+        fatalError(errorMessage)
+    }
 }
