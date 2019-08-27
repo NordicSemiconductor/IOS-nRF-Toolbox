@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0E645A0F1CBF957800D36AD0 /* firmwares in Resources */ = {isa = PBXBuildFile; fileRef = 7E6ED10A196ED482008010B6 /* firmwares */; };
+		208EE4EA23155FC8008E5FE9 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208EE4E923155FC8008E5FE9 /* WebViewController.swift */; };
 		20C7FDFE2306BEE000B06FD8 /* Array+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FDFD2306BEE000B06FD8 /* Array+Ext.swift */; };
 		20C7FE012306C5FF00B06FD8 /* BLEServiceList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE002306C5FF00B06FD8 /* BLEServiceList.plist */; };
 		20C7FE032306C72000B06FD8 /* IoTServices.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE022306C72000B06FD8 /* IoTServices.plist */; };
@@ -142,6 +143,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		208EE4E923155FC8008E5FE9 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		20C7FDFD2306BEE000B06FD8 /* Array+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Ext.swift"; sourceTree = "<group>"; };
 		20C7FE002306C5FF00B06FD8 /* BLEServiceList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = BLEServiceList.plist; sourceTree = "<group>"; };
 		20C7FE022306C72000B06FD8 /* IoTServices.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = IoTServices.plist; sourceTree = "<group>"; };
@@ -294,6 +296,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		208EE4E823155F94008E5FE9 /* WebViewController */ = {
+			isa = PBXGroup;
+			children = (
+				208EE4E923155FC8008E5FE9 /* WebViewController.swift */,
+			);
+			path = WebViewController;
+			sourceTree = "<group>";
+		};
 		20C7FDFF2306C52900B06FD8 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -509,6 +519,7 @@
 		5217F3EB1859EE0000F2D5BB /* nRF Toolbox */ = {
 			isa = PBXGroup;
 			children = (
+				208EE4E823155F94008E5FE9 /* WebViewController */,
 				20F15C372313D082000C5503 /* CommonViews */,
 				20E07B39230558B700FCB205 /* MainScreen */,
 				309F08661E6D706B00B7546A /* nRF Toolbox.entitlements */,
@@ -1002,6 +1013,7 @@
 				5231403022FB07820074325A /* RootNavigationController.swift in Sources */,
 				3001EBB81D1BE1FB008C5C37 /* BGMItemCell.swift in Sources */,
 				300143271CEC4B9D008379DF /* AppUtilities.swift in Sources */,
+				208EE4EA23155FC8008E5FE9 /* WebViewController.swift in Sources */,
 				309F086A1E6D9EAA00B7546A /* HKHomeStore.swift in Sources */,
 				30499E591CE4A07700E0993B /* AppFilesViewController.swift in Sources */,
 				3001EBBF1D1BE727008C5C37 /* CGMSpecificOperations.swift in Sources */,

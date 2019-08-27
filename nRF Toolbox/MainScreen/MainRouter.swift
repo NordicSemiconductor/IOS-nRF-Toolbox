@@ -20,7 +20,6 @@ enum ServiceId: String, CaseIterable {
     case deviceFirmwareUpgrade
     case proximity
     case homeKit
-    case github
 }
 
 protocol MainRouter {
@@ -29,6 +28,7 @@ protocol MainRouter {
 
 protocol ServiceRouter {
     func showServiceController(with serviceId: ServiceId)
+    func showLinkController(_ link: LinkService)
 }
 
 class DefaultMainRouter {
@@ -76,6 +76,12 @@ extension DefaultMainRouter: ServiceRouter {
             return
         }
         self.splitViewController.showDetailViewController(viewController, sender: self)
+    }
+    
+    func showLinkController(_ link: LinkService) {
+        let webViewController = WebViewController(link: link)
+        let nc = UINavigationController.nordicBranded(rootViewController: webViewController)
+        self.splitViewController.showDetailViewController(nc, sender: self)
     }
 }
 

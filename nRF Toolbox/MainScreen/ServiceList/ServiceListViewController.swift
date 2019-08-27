@@ -69,10 +69,19 @@ extension ServiceListViewController {
 
 extension ServiceListViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let model = self.dataProvider.sections[indexPath]
-        if let serviceId = ServiceId(rawValue: model.id) {
+        
+        switch self.dataProvider.sections[indexPath] {
+        case let model as BLEService:
+            guard let serviceId = ServiceId(rawValue: model.id) else {
+                Log(category: .ui, type: .debug).log(message: "Unknown service selected with id \(model.id)")
+                break
+            }
             self.selectedService = serviceId
             self.serviceRouter.showServiceController(with: serviceId)
+        case let link as LinkService:
+            self.serviceRouter.showLinkController(link)
+        default:
+            Log(category: .ui, type: .debug).log(message: "Unknown Cell type selected")
         }
     }
     
