@@ -25,7 +25,7 @@ enum FontWeight: String {
     case thinItalic
     
     var name: String {
-        return self.rawValue.prefix(1).uppercased() + self.rawValue.dropFirst()
+        return rawValue.prefix(1).uppercased() + rawValue.dropFirst()
     }
 }
 

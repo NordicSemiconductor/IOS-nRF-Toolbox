@@ -15,24 +15,24 @@ class InfoActionView: UIView, XibInstantiable {
     
     var message: String? {
         didSet {
-            self.messageLabel.text = message
-            self.messageLabel.isHidden = message == nil
+            messageLabel.text = message
+            messageLabel.isHidden = message == nil
         }
     }
     
     var image: UIImage? {
         didSet {
-            self.imageView.image = image
-            self.imageView.isHidden = image == nil
+            imageView.image = image
+            imageView.isHidden = image == nil
         }
     }
     
     private var action: Action?
     var buttonSettings: ButtonSettings? {
         didSet {
-            self.actionButton.isHidden = buttonSettings == nil
-            self.actionButton.setTitle(buttonSettings?.0, for: .normal)
-            self.action = buttonSettings?.1
+            actionButton.isHidden = buttonSettings == nil
+            actionButton.setTitle(buttonSettings?.0, for: .normal)
+            action = buttonSettings?.1
         }
     }
     
@@ -54,15 +54,15 @@ class InfoActionView: UIView, XibInstantiable {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.actionButton.layer.borderColor = UIColor.tableViewSeparator.cgColor
-        self.actionButton.layer.borderWidth = 2
-        self.actionButton.layer.cornerRadius = 2
-        self.actionButton.contentEdgeInsets = UIEdgeInsets(top: 6, left: 8, bottom: 6, right: 8)
+        actionButton.layer.borderColor = UIColor.tableViewSeparator.cgColor
+        actionButton.layer.borderWidth = 2
+        actionButton.layer.cornerRadius = 2
+        actionButton.contentEdgeInsets = UIEdgeInsets(top: 6, left: 8, bottom: 6, right: 8)
         
         #if BETA
         if #available(iOS 13.0, *) {
-            self.backgroundColor = .systemBackground
-            self.imageView.tintColor = .systemGray3
+            backgroundColor = .systemBackground
+            imageView.tintColor = .systemGray3
         }
         #endif
     }
