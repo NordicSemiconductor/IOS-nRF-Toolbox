@@ -11,7 +11,7 @@ import UIKit
 extension UITableView {
     func dequeueCell<T: UITableViewCell>(ofType type: T.Type) -> T {
         let cellId = String(describing: type)
-        guard let cell = self.dequeueReusableCell(withIdentifier: cellId) as? T else {
+        guard let cell = dequeueReusableCell(withIdentifier: cellId) as? T else {
             Log(category: .ui, type: .error).log(message: "Can not dequeue cell of type `\(cellId)` with cell ID '\(cellId)'")
             fatalError("Can not dequeue cell")
         }
@@ -21,6 +21,6 @@ extension UITableView {
     func register<T: UITableViewCell>(cell type: T.Type) {
         let cellId = String(describing: type)
         let nib = UINib(nibName: cellId, bundle: .main)
-        self.register(nib, forCellReuseIdentifier: cellId)
+        register(nib, forCellReuseIdentifier: cellId)
     }
 }

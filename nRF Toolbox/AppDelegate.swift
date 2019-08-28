@@ -36,12 +36,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         pageControl.currentPageIndicatorTintColor = UIColor.black
         pageControl.backgroundColor = UIColor.white
         
-        let vc = self.router.rootViewController
+        let vc = router.rootViewController
         
-        self.window = UIWindow(frame: UIScreen.main.bounds)
+        window = UIWindow(frame: UIScreen.main.bounds)
         
-        self.window?.rootViewController = vc
-        self.window?.makeKeyAndVisible()
+        window?.rootViewController = vc
+        window?.makeKeyAndVisible()
         
         return true
     }

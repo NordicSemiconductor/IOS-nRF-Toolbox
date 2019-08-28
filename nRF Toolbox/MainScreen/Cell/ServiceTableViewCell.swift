@@ -14,14 +14,14 @@ class ServiceTableViewCell: UITableViewCell {
     @IBOutlet private var code: UILabel!
     
     func update(with model: BLEService) {
-        self.name.text = model.name
-        self.code.text = model.code
-        self.icon.image = UIImage(named: model.icon)?.withRenderingMode(.alwaysTemplate)
+        name.text = model.name
+        code.text = model.code
+        icon.image = UIImage(named: model.icon)?.withRenderingMode(.alwaysTemplate)
         
         #if BETA
         if #available(iOS 13.0, *) {
-            self.name.textColor = .label
-            self.code.textColor = .secondaryLabel
+            name.textColor = .label
+            code.textColor = .secondaryLabel
         }
         #endif
         

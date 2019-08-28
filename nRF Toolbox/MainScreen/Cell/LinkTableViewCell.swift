@@ -13,11 +13,11 @@ class LinkTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         
-        self.textLabel?.font = UIFont.gtEestiDisplay(.regular, size: 17)
-        self.detailTextLabel?.font = UIFont.gtEestiDisplay(.thin, size: 12)
-        self.detailTextLabel?.numberOfLines = 0
+        textLabel?.font = UIFont.gtEestiDisplay(.regular, size: 17)
+        detailTextLabel?.font = UIFont.gtEestiDisplay(.thin, size: 12)
+        detailTextLabel?.numberOfLines = 0
         
-        self.accessoryType = .disclosureIndicator
+        accessoryType = .disclosureIndicator
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -25,8 +25,8 @@ class LinkTableViewCell: UITableViewCell {
     }
     
     func update(with model: LinkService) {
-        self.textLabel?.text = model.name
-        self.detailTextLabel?.text = model.description
+        textLabel?.text = model.name
+        detailTextLabel?.text = model.description
     }
 
 }

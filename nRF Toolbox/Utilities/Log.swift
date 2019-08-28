@@ -49,7 +49,7 @@ struct LogCategory: Equatable, RawRepresentable {
     
     @available(iOS 10.0, *)
     func osLog() -> OSLog {
-        return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: self.rawValue)
+        return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: rawValue)
     }
 }
 
@@ -70,7 +70,7 @@ struct Log {
     
     func log(message: String) {
         if #available(iOS 10.0, *) {
-            os_log("%@", log: self.category.osLog(), type: self.type.osLogType(), message)
+            os_log("%@", log: category.osLog(), type: type.osLogType(), message)
         } else {
             NSLog("%@", message)
         }
@@ -78,7 +78,7 @@ struct Log {
     
     func fault(_ errorMessage: String) -> Never {
         if #available(iOS 10.0, *) {
-            os_log("%@", log: self.category.osLog(), type: self.type.osLogType(), errorMessage)
+            os_log("%@", log: category.osLog(), type: type.osLogType(), errorMessage)
         } else {
             NSLog("%@", errorMessage)
         }

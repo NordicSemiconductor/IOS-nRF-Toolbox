@@ -9,29 +9,49 @@
 import UIKit
 
 class WebViewController: UIViewController {
-    var webView: UIWebView { return self.view as! UIWebView }
+    var webView: UIWebView { return view as! UIWebView }
     let link: LinkService
     
     override func loadView() {
-        self.view = UIWebView()
+        view = UIWebView()
     }
     
     init(link: LinkService) {
         self.link = link
         super.init(nibName: nil, bundle: nil)
         let request = URLRequest(url: link.url)
-        self.webView.loadRequest(request)
+        webView.loadRequest(request)
         
-        self.navigationItem.title = link.name
+        navigationItem.title = link.name
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Open", style: .plain, target: self, action: #selector(openInSafari))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(action))
     }
     
     required init?(coder aDecoder: NSCoder) {
         Log(category: .ui, type: .fault).fault("init(coder:) has not been implemented")
     }
     
-    @objc func openInSafari() {
-        UIApplication.shared.openURL(self.link.url)
+    @objc private func action(_ sender: UIBarButtonItem) {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let openInBrowserAction = UIAlertAction(title: "Open in Safari", style: .default) { _ in
+            UIApplication.shared.openURL(self.link.url)
+        }
+        let shareAction = UIAlertAction(title: "Share", style: .default) { _ in
+            self.share(sender)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alertController.popoverPresentationController?.barButtonItem = sender
+        
+        [openInBrowserAction, shareAction, cancelAction].forEach(alertController.addAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    private func share(_ sender: UIBarButtonItem) {
+        let activityController = UIActivityViewController(activityItems: [link.url], applicationActivities: nil)
+        activityController.popoverPresentationController?.barButtonItem = sender
+        present(activityController, animated: true, completion: nil)
     }
 }
+

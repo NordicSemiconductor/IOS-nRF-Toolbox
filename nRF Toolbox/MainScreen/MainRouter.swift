@@ -52,7 +52,7 @@ class DefaultMainRouter {
     lazy private var serviceList = ServiceListViewController(serviceRouter: self)
     
     lazy private var splitViewController: UISplitViewController = {
-        let nc = UINavigationController.nordicBranded(rootViewController: self.serviceList)
+        let nc = UINavigationController.nordicBranded(rootViewController: serviceList)
         let splitViewController = UISplitViewController()
         splitViewController.viewControllers = [nc, NoContentViewController()]
         splitViewController.delegate = self
@@ -65,29 +65,29 @@ class DefaultMainRouter {
 
 extension DefaultMainRouter: UISplitViewControllerDelegate {
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
-        return self.serviceList.selectedService == nil
+        return serviceList.selectedService == nil
     }
 }
 
 extension DefaultMainRouter: ServiceRouter {
     func showServiceController(with serviceId: ServiceId) {
-        guard let viewController = self.serviceViewControllers[serviceId] else {
+        guard let viewController = serviceViewControllers[serviceId] else {
             Log(category: .ui, type: .error).log(message: "Cannot find view controller for \(serviceId) service id")
             return
         }
-        self.splitViewController.showDetailViewController(viewController, sender: self)
+        splitViewController.showDetailViewController(viewController, sender: self)
     }
     
     func showLinkController(_ link: LinkService) {
         let webViewController = WebViewController(link: link)
         let nc = UINavigationController.nordicBranded(rootViewController: webViewController)
-        self.splitViewController.showDetailViewController(nc, sender: self)
+        splitViewController.showDetailViewController(nc, sender: self)
     }
 }
 
 extension DefaultMainRouter: MainRouter {
     var rootViewController: UIViewController {
-        return self.splitViewController
+        return splitViewController
     }
 }
 

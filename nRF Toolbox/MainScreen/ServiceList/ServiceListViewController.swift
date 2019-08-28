@@ -19,7 +19,7 @@ class ServiceListViewController: UITableViewController {
         self.dataProvider = dataProvider
         self.serviceRouter = serviceRouter
         super.init(style: .grouped)
-        self.navigationItem.title = "nRF Toolbox"
+        navigationItem.title = "nRF Toolbox"
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -30,27 +30,27 @@ class ServiceListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.register(cell: ServiceTableViewCell.self)
-        self.tableView.register(LinkTableViewCell.self, forCellReuseIdentifier: "LinkTableViewCell")
+        tableView.register(cell: ServiceTableViewCell.self)
+        tableView.register(LinkTableViewCell.self, forCellReuseIdentifier: "LinkTableViewCell")
     }
     
 }
 
 extension ServiceListViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.dataProvider.sections[section].title
+        return dataProvider.sections[section].title
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return self.dataProvider.sections.count
+        return dataProvider.sections.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.dataProvider.sections[section].services.count
+        return dataProvider.sections[section].services.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch self.dataProvider.sections[indexPath] {
+        switch dataProvider.sections[indexPath] {
         case let ble as BLEService:
             let cell = tableView.dequeueCell(ofType: ServiceTableViewCell.self)
             cell.update(with: ble)
@@ -70,16 +70,16 @@ extension ServiceListViewController {
 extension ServiceListViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        switch self.dataProvider.sections[indexPath] {
+        switch dataProvider.sections[indexPath] {
         case let model as BLEService:
             guard let serviceId = ServiceId(rawValue: model.id) else {
                 Log(category: .ui, type: .debug).log(message: "Unknown service selected with id \(model.id)")
                 break
             }
-            self.selectedService = serviceId
-            self.serviceRouter.showServiceController(with: serviceId)
+            selectedService = serviceId
+            serviceRouter.showServiceController(with: serviceId)
         case let link as LinkService:
-            self.serviceRouter.showLinkController(link)
+            serviceRouter.showLinkController(link)
         default:
             Log(category: .ui, type: .debug).log(message: "Unknown Cell type selected")
         }
