@@ -28,6 +28,7 @@ protocol MainRouter {
 
 protocol ServiceRouter {
     func showServiceController(with serviceId: ServiceId)
+    func showServiceController(_ model: BLEService)
     func showLinkController(_ link: LinkService)
 }
 
@@ -35,7 +36,7 @@ class DefaultMainRouter {
     
     private let serviceViewControllers: [ServiceId : UIViewController] = {
         return [
-            .glucoseMonitoring : BGMViewController.instance(),
+//            .glucoseMonitoring : GMTableViewController(), //BGMViewController.instance(),
             .bloodPressureMonitoring : BPMViewController.instance(),
             .cyclingSensor : CSCViewController.instance(),
             .heartRateMonitor : HRMViewController.instance(),
@@ -70,6 +71,11 @@ extension DefaultMainRouter: UISplitViewControllerDelegate {
 }
 
 extension DefaultMainRouter: ServiceRouter {
+    func showServiceController(_ model: BLEService) {
+        let vc = GMTableViewController(model: model)
+        splitViewController.showDetailViewController(vc, sender: self)
+    }
+    
     func showServiceController(with serviceId: ServiceId) {
         guard let viewController = serviceViewControllers[serviceId] else {
             Log(category: .ui, type: .error).log(message: "Cannot find view controller for \(serviceId) service id")

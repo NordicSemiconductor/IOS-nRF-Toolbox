@@ -19,7 +19,8 @@ struct BLEService: Codable {
     let code: String?
     let icon: String
     let info: String
-    let id: String 
+    let id: String
+    let uuid: UUID?
 }
 
 extension BLEService: ServiceType {

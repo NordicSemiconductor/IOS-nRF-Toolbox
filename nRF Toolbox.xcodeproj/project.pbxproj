@@ -8,7 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		0E645A0F1CBF957800D36AD0 /* firmwares in Resources */ = {isa = PBXBuildFile; fileRef = 7E6ED10A196ED482008010B6 /* firmwares */; };
+		2002A000231FAFD100C43E06 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20029FFF231FAFD100C43E06 /* BLEManager.swift */; };
+		2002A002231FB8E800C43E06 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2002A001231FB8E800C43E06 /* UIImage+Ext.swift */; };
 		208EE4EA23155FC8008E5FE9 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208EE4E923155FC8008E5FE9 /* WebViewController.swift */; };
+		20B25F382319568B006AF321 /* GMTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B25F372319568B006AF321 /* GMTableViewController.swift */; };
+		20B25F3A231960CF006AF321 /* ConnectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B25F39231960CF006AF321 /* ConnectTableViewController.swift */; };
 		20C7FDFE2306BEE000B06FD8 /* Array+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FDFD2306BEE000B06FD8 /* Array+Ext.swift */; };
 		20C7FE012306C5FF00B06FD8 /* BLEServiceList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE002306C5FF00B06FD8 /* BLEServiceList.plist */; };
 		20C7FE032306C72000B06FD8 /* IoTServices.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE022306C72000B06FD8 /* IoTServices.plist */; };
@@ -143,7 +147,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		20029FFF231FAFD100C43E06 /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
+		2002A001231FB8E800C43E06 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
 		208EE4E923155FC8008E5FE9 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		20B25F372319568B006AF321 /* GMTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GMTableViewController.swift; sourceTree = "<group>"; };
+		20B25F39231960CF006AF321 /* ConnectTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectTableViewController.swift; sourceTree = "<group>"; };
 		20C7FDFD2306BEE000B06FD8 /* Array+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Ext.swift"; sourceTree = "<group>"; };
 		20C7FE002306C5FF00B06FD8 /* BLEServiceList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = BLEServiceList.plist; sourceTree = "<group>"; };
 		20C7FE022306C72000B06FD8 /* IoTServices.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = IoTServices.plist; sourceTree = "<group>"; };
@@ -304,6 +312,13 @@
 			path = WebViewController;
 			sourceTree = "<group>";
 		};
+		20B25F112317FAA3006AF321 /* BLE */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = BLE;
+			sourceTree = "<group>";
+		};
 		20C7FDFF2306C52900B06FD8 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -321,6 +336,7 @@
 				20C7FE072306EB5600B06FD8 /* UITableView+Ext.swift */,
 				20C7FE0F230A9FAB00B06FD8 /* UIFont+Ext.swift */,
 				20C7FE5A230EAD0000B06FD8 /* UINavigationController+Ext.swift */,
+				2002A001231FB8E800C43E06 /* UIImage+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -465,6 +481,7 @@
 		5214D0CF18881D0200460637 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				20B25F112317FAA3006AF321 /* BLE */,
 				20C7FE062306EB4100B06FD8 /* Extensions */,
 				52D9BC9D1DD0CB760030E824 /* Data.swift */,
 				300143261CEC4B9D008379DF /* AppUtilities.swift */,
@@ -519,16 +536,19 @@
 		5217F3EB1859EE0000F2D5BB /* nRF Toolbox */ = {
 			isa = PBXGroup;
 			children = (
+				20B25F372319568B006AF321 /* GMTableViewController.swift */,
+				20029FFF231FAFD100C43E06 /* BLEManager.swift */,
+				20B25F39231960CF006AF321 /* ConnectTableViewController.swift */,
 				208EE4E823155F94008E5FE9 /* WebViewController */,
 				20F15C372313D082000C5503 /* CommonViews */,
 				20E07B39230558B700FCB205 /* MainScreen */,
 				309F08661E6D706B00B7546A /* nRF Toolbox.entitlements */,
 				A8F1142619C1B7EC007F956E /* StoryBoard */,
 				3069A1D21CDC76FE003869EA /* BluetoothManager */,
+				5252A533188025EC00EFD773 /* BGM */,
 				A85667E31B2233A3004A6D3C /* MainViewController */,
 				5236E166187EA7AA0057E974 /* Scanner */,
 				309F08631E6D6A4300B7546A /* HomeKit */,
-				5252A533188025EC00EFD773 /* BGM */,
 				5252A53718802B6D00EFD773 /* BPM */,
 				5285D9A61890031F00305F1D /* CSC */,
 				5252A53B18802F6300EFD773 /* DFU */,
@@ -642,8 +662,8 @@
 		5252A533188025EC00EFD773 /* BGM */ = {
 			isa = PBXGroup;
 			children = (
-				3001EBB21D1BE1FB008C5C37 /* ContinuousGlucoseMonitoring */,
 				3001EBB31D1BE1FB008C5C37 /* StandarGlucoseMonitoring */,
+				3001EBB21D1BE1FB008C5C37 /* ContinuousGlucoseMonitoring */,
 				524F2CDC18897D18008A8555 /* Model */,
 			);
 			path = BGM;
@@ -956,6 +976,7 @@
 				30F92D4B1CD9CF0700C73285 /* HRMViewController.swift in Sources */,
 				300143291CEC59F4008379DF /* ServiceIdentifiers.swift in Sources */,
 				20E07B422306868F00FCB205 /* BLEService.swift in Sources */,
+				20B25F3A231960CF006AF321 /* ConnectTableViewController.swift in Sources */,
 				3001EBC71D1C1BAA008C5C37 /* CGMViewController.swift in Sources */,
 				304D58FD1CE34FC600148271 /* LogViewController.swift in Sources */,
 				30499E571CE4736500E0993B /* FilePreselectionDelegate.swift in Sources */,
@@ -971,8 +992,10 @@
 				309F08651E6D6A5500B7546A /* HKViewController.swift in Sources */,
 				3000B2131CE3195E00F64CEE /* EditPopupViewController.swift in Sources */,
 				20C7FE052306D02400B06FD8 /* Log.swift in Sources */,
+				20B25F382319568B006AF321 /* GMTableViewController.swift in Sources */,
 				52D9BC9E1DD0CB760030E824 /* Data.swift in Sources */,
 				306ECD621CE61A3600E48BBD /* AppDelegate.swift in Sources */,
+				2002A000231FAFD100C43E06 /* BLEManager.swift in Sources */,
 				20C7FDFE2306BEE000B06FD8 /* Array+Ext.swift in Sources */,
 				3001EBB71D1BE1FB008C5C37 /* BGMDetailsViewController.swift in Sources */,
 				20C7FE16230ADD1E00B06FD8 /* StoryboardInstantiable.swift in Sources */,
@@ -980,6 +1003,7 @@
 				304D59011CE352B300148271 /* LogItemTableViewCell.swift in Sources */,
 				3001EBC51D1C153C008C5C37 /* CGMDetailsViewController.swift in Sources */,
 				3080C4711CE06D0E009C2D8C /* CSCViewController.swift in Sources */,
+				2002A002231FB8E800C43E06 /* UIImage+Ext.swift in Sources */,
 				309F086E1E6ED44F00B7546A /* HKScannerDelegate.swift in Sources */,
 				308EE1781CE0CBF700F2A854 /* HTSViewController.swift in Sources */,
 				304D58FB1CE34EE600148271 /* Logger.swift in Sources */,

@@ -29,8 +29,7 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-
-class ScannerViewController: UIViewController, CBCentralManagerDelegate, UITableViewDelegate, UITableViewDataSource {
+class ScannerViewController: UITableViewController, CBCentralManagerDelegate {
 
     let dfuServiceUUIDString  = "00001530-1212-EFDE-1523-785FEABCD123"
     let ANCSServiceUUIDString = "7905F431-B5CE-4E99-A40F-4B1E122D00D0"
@@ -149,20 +148,20 @@ class ScannerViewController: UIViewController, CBCentralManagerDelegate, UITable
     }
 
     //MARK: - UITableViewDataSource
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return peripherals.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let aCell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
         //Update cell content
         let scannedPeripheral = peripherals[indexPath.row]
-        aCell.textLabel?.text = scannedPeripheral.name()
+        aCell.textLabel?.text = scannedPeripheral.name
         if scannedPeripheral.isConnected == true {
             aCell.imageView!.image = UIImage(named: "Connected")
         } else {
-            let RSSIImage = self.getRSSIImage(RSSI: scannedPeripheral.RSSI)
+            let RSSIImage = self.getRSSIImage(RSSI: scannedPeripheral.rssi)
             aCell.imageView!.image = RSSIImage
         }
         
@@ -170,7 +169,7 @@ class ScannerViewController: UIViewController, CBCentralManagerDelegate, UITable
     }
 
     //MARK: - UITableViewDelegate
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         bluetoothManager!.stopScan()
         // Call delegate method
         let peripheral = peripherals[indexPath.row].peripheral
@@ -188,8 +187,7 @@ class ScannerViewController: UIViewController, CBCentralManagerDelegate, UITable
         let connectedPeripherals = self.getConnectedPeripherals()
         var newScannedPeripherals: [ScannedPeripheral] = []
         connectedPeripherals.forEach { (connectedPeripheral: CBPeripheral) in
-            let connected = connectedPeripheral.state == .connected
-            let scannedPeripheral = ScannedPeripheral(withPeripheral: connectedPeripheral, andIsConnected: connected )
+            let scannedPeripheral = ScannedPeripheral(with: connectedPeripheral )
             newScannedPeripherals.append(scannedPeripheral)
         }
         peripherals = newScannedPeripherals
@@ -202,10 +200,10 @@ class ScannerViewController: UIViewController, CBCentralManagerDelegate, UITable
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async {
-            var sensor = ScannedPeripheral(withPeripheral: peripheral, andRSSI: RSSI.int32Value, andIsConnected: false)
+            var sensor = ScannedPeripheral(with: peripheral, RSSI: RSSI.int32Value)
             if let index = self.peripherals.firstIndex(of: sensor) {
                 sensor = self.peripherals[index]
-                sensor.RSSI = RSSI.int32Value
+                sensor.rssi = RSSI.int32Value
             } else {
                 self.peripherals.append(sensor)
             }

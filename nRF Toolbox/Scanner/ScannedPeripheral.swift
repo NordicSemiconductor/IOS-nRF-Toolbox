@@ -9,31 +9,27 @@
 import UIKit
 import CoreBluetooth
 
-@objc class ScannedPeripheral: NSObject {
+class ScannedPeripheral: Equatable {
     
-    var peripheral  : CBPeripheral
-    var RSSI        : Int32
-    var isConnected : Bool
+    let peripheral: CBPeripheral
+    var rssi: Int32
     
-    init(withPeripheral aPeripheral: CBPeripheral, andRSSI anRSSI:Int32 = 0, andIsConnected aConnectionStatus: Bool) {
-        peripheral = aPeripheral
-        RSSI = anRSSI
-        isConnected = aConnectionStatus
+    init(with peripheral: CBPeripheral, RSSI rssi:Int32 = 0) {
+        self.peripheral = peripheral
+        self.rssi = rssi
     }
 
-    func name()->String{
-        let peripheralName = peripheral.name
-        if peripheral.name == nil {
-            return "No name"
-        }else{
-            return peripheralName!
-        }
+    var name: String {
+        return peripheral.name ?? "No name"
     }
     
-    override func isEqual(_ object: Any?) -> Bool {
-        if let otherPeripheral = object as? ScannedPeripheral {
-            return peripheral == otherPeripheral.peripheral
-        }
-        return false
+    var isConnected: Bool {
+        return peripheral.state == .connected
     }
+}
+
+func ==(lhs: ScannedPeripheral, rhs: ScannedPeripheral) -> Bool {
+    return lhs.peripheral == rhs.peripheral
+        && lhs.isConnected == rhs.isConnected
+        && lhs.rssi == rhs.rssi
 }
