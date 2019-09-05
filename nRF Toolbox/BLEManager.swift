@@ -9,10 +9,19 @@
 import Foundation
 import CoreBluetooth
 
-enum BLEStatus {
+enum BLEStatus: CustomDebugStringConvertible {
+    
     case poweredOff
     case connected(CBPeripheral)
     case disconnected
+    
+    var debugDescription: String {
+        switch self {
+        case .connected(let p): return "connected to \(p.name ?? "__unnamed__")"
+        case .disconnected: return "disconnected"
+        case .poweredOff: return "powered off"
+        }
+    }
 }
 
 protocol StatusDelegate {

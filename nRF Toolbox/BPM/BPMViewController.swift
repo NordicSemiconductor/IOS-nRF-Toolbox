@@ -205,18 +205,7 @@ class BPMViewController: BaseViewController, CBCentralManagerDelegate, CBPeriphe
         DispatchQueue.main.async {
             if characteristic.uuid == self.batteryLevelCharacteristicUUID {
                 // Decode the characteristic data
-                let data = characteristic.value;
-                var pointer = UnsafeMutablePointer<UInt8>(mutating: (data! as NSData).bytes.bindMemory(to: UInt8.self, capacity: data!.count))
-                let batteryLevel = CharacteristicReader.readUInt8Value(ptr: &pointer)
-                let text = "\(batteryLevel)%"
-                self.battery.setTitle(text, for: .disabled)
                 
-                if self.battery.tag == 0 {
-                    if characteristic.properties.rawValue & CBCharacteristicProperties.notify.rawValue > 0 {
-                        peripheral.setNotifyValue(true, for: characteristic)
-                        self.battery.tag = 1
-                    }
-                }
             } else if characteristic.uuid == self.bpmBloodPressureMeasurementCharacteristicUUID ||
                 characteristic.uuid == self.bpmIntermediateCuffPressureCharacteristicUUID {
                 let data = characteristic.value
