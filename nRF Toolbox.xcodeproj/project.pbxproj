@@ -10,8 +10,9 @@
 		0E645A0F1CBF957800D36AD0 /* firmwares in Resources */ = {isa = PBXBuildFile; fileRef = 7E6ED10A196ED482008010B6 /* firmwares */; };
 		2002A000231FAFD100C43E06 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20029FFF231FAFD100C43E06 /* BLEManager.swift */; };
 		2002A002231FB8E800C43E06 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2002A001231FB8E800C43E06 /* UIImage+Ext.swift */; };
+		2002A0052322610F00C43E06 /* GlucoseMonitorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2002A0042322610F00C43E06 /* GlucoseMonitorViewController.swift */; };
 		208EE4EA23155FC8008E5FE9 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208EE4E923155FC8008E5FE9 /* WebViewController.swift */; };
-		20B25F382319568B006AF321 /* GMTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B25F372319568B006AF321 /* GMTableViewController.swift */; };
+		20B25F382319568B006AF321 /* PeripheralTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B25F372319568B006AF321 /* PeripheralTableViewController.swift */; };
 		20B25F3A231960CF006AF321 /* ConnectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B25F39231960CF006AF321 /* ConnectTableViewController.swift */; };
 		20C7FDFE2306BEE000B06FD8 /* Array+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FDFD2306BEE000B06FD8 /* Array+Ext.swift */; };
 		20C7FE012306C5FF00B06FD8 /* BLEServiceList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE002306C5FF00B06FD8 /* BLEServiceList.plist */; };
@@ -149,8 +150,9 @@
 /* Begin PBXFileReference section */
 		20029FFF231FAFD100C43E06 /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
 		2002A001231FB8E800C43E06 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
+		2002A0042322610F00C43E06 /* GlucoseMonitorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseMonitorViewController.swift; sourceTree = "<group>"; };
 		208EE4E923155FC8008E5FE9 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
-		20B25F372319568B006AF321 /* GMTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GMTableViewController.swift; sourceTree = "<group>"; };
+		20B25F372319568B006AF321 /* PeripheralTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralTableViewController.swift; sourceTree = "<group>"; };
 		20B25F39231960CF006AF321 /* ConnectTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectTableViewController.swift; sourceTree = "<group>"; };
 		20C7FDFD2306BEE000B06FD8 /* Array+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Ext.swift"; sourceTree = "<group>"; };
 		20C7FE002306C5FF00B06FD8 /* BLEServiceList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = BLEServiceList.plist; sourceTree = "<group>"; };
@@ -304,6 +306,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2002A003232260CA00C43E06 /* Glucose */ = {
+			isa = PBXGroup;
+			children = (
+				2002A0042322610F00C43E06 /* GlucoseMonitorViewController.swift */,
+			);
+			path = Glucose;
+			sourceTree = "<group>";
+		};
 		208EE4E823155F94008E5FE9 /* WebViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -536,7 +546,8 @@
 		5217F3EB1859EE0000F2D5BB /* nRF Toolbox */ = {
 			isa = PBXGroup;
 			children = (
-				20B25F372319568B006AF321 /* GMTableViewController.swift */,
+				2002A003232260CA00C43E06 /* Glucose */,
+				20B25F372319568B006AF321 /* PeripheralTableViewController.swift */,
 				20029FFF231FAFD100C43E06 /* BLEManager.swift */,
 				20B25F39231960CF006AF321 /* ConnectTableViewController.swift */,
 				208EE4E823155F94008E5FE9 /* WebViewController */,
@@ -992,7 +1003,7 @@
 				309F08651E6D6A5500B7546A /* HKViewController.swift in Sources */,
 				3000B2131CE3195E00F64CEE /* EditPopupViewController.swift in Sources */,
 				20C7FE052306D02400B06FD8 /* Log.swift in Sources */,
-				20B25F382319568B006AF321 /* GMTableViewController.swift in Sources */,
+				20B25F382319568B006AF321 /* PeripheralTableViewController.swift in Sources */,
 				52D9BC9E1DD0CB760030E824 /* Data.swift in Sources */,
 				306ECD621CE61A3600E48BBD /* AppDelegate.swift in Sources */,
 				2002A000231FAFD100C43E06 /* BLEManager.swift in Sources */,
@@ -1024,6 +1035,7 @@
 				3069A1D71CDC788A003869EA /* BluetoothManager.swift in Sources */,
 				300508931CE1D75800D93BE0 /* ProximityViewController.swift in Sources */,
 				3042993D1CE6154100E1D2AB /* BaseViewController.swift in Sources */,
+				2002A0052322610F00C43E06 /* GlucoseMonitorViewController.swift in Sources */,
 				20C7FE50230E789F00B06FD8 /* MainRouter.swift in Sources */,
 				20E07B3C2305593800FCB205 /* ServiceListViewController.swift in Sources */,
 				30A114561CD2367C000F0F02 /* ScannedPeripheral.swift in Sources */,

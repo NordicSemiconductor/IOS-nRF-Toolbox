@@ -72,7 +72,7 @@ extension DefaultMainRouter: UISplitViewControllerDelegate {
 
 extension DefaultMainRouter: ServiceRouter {
     func showServiceController(_ model: BLEService) {
-        let vc = GMTableViewController(model: model)
+        let vc = GlucoseMonitorViewController(style: .grouped)
         splitViewController.showDetailViewController(vc, sender: self)
     }
     

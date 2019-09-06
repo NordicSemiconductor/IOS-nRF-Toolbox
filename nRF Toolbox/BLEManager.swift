@@ -56,6 +56,7 @@ extension BLEManager: CBCentralManagerDelegate {
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         switch central.state {
+            
         case .poweredOff:
             delegate?.statusDidChanged(.poweredOff)
         case .poweredOn:
@@ -78,6 +79,11 @@ extension BLEManager: CBCentralManagerDelegate {
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         Log(category: .ble, type: .error).log(message: error?.localizedDescription ?? "Failed to Connect: (no message)")
+    }
+    
+    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+        Log(category: .ble, type: .debug).log(message: "Disconnected peripheral: \(peripheral)")
+        delegate?.statusDidChanged(.disconnected)
     }
 }
 

@@ -1,5 +1,5 @@
 //
-//  GMTableViewController.swift
+//  PeripheralTableViewController.swift
 //  nRF Toolbox
 //
 //  Created by Nick Kibysh on 30/08/2019.
@@ -10,10 +10,12 @@ import UIKit
 import CoreBluetooth
 
 extension CBUUID {
+    struct Profile {
+        static let bloodGlucoseMonitor = CBUUID(string: "00001808-0000-1000-8000-00805F9B34FB")
+    }
+    
     struct Service {
         static let battery = CBUUID(string: "0000180F-0000-1000-8000-00805F9B34FB")
-        // TODO: Change to correct
-        static let bloodPreasureMonitor = CBUUID(string: "0000180F-0000-1000-8000-00805F9B34FB")
     }
     
     struct Characteristics {
@@ -41,14 +43,14 @@ struct BatterySection: Section {
 }
 
 extension Array where Element == Section {
-    subscript(index: GMTableViewController.SectionIndex) -> Element {
+    subscript(index: PeripheralTableViewController.SectionIndex) -> Element {
         get { return self[index.rawValue] }
         set { self[index.rawValue] = newValue }
     }
 }
 
 extension UITableView {
-    func reloadSection(_ index: GMTableViewController.SectionIndex, with rowAnimation: UITableView.RowAnimation = .automatic) {
+    func reloadSection(_ index: PeripheralTableViewController.SectionIndex, with rowAnimation: UITableView.RowAnimation = .automatic) {
         self.reloadSections([index.rawValue], with: rowAnimation)
     }
 }
@@ -75,7 +77,7 @@ extension CBService {
     }
 }
 
-class GMTableViewController: UITableViewController {
+class PeripheralTableViewController: UITableViewController {
     
     struct SectionIndex: RawRepresentable {
         var rawValue: Int
@@ -86,7 +88,8 @@ class GMTableViewController: UITableViewController {
         static let battery = SectionIndex(rawValue: 0)!
     }
     
-    let bleManager: BLEManager
+    private lazy var bleManager = BLEManager(scanUUID: self.profileUUID )
+    
     private var tbView: UITableView!
     private var activePeripheral: CBPeripheral? {
         didSet {
@@ -94,21 +97,13 @@ class GMTableViewController: UITableViewController {
             activePeripheral?.discoverServices(nil)
         }
     }
-    let service: BLEService
     
-    var sections: [Section] = [BatterySection()]
-    
-    init(model: BLEService) {
-        self.service = model
-        let uuid = model.uuid.map { CBUUID(nsuuid: $0) }
-        self.bleManager = BLEManager(scanUUID: uuid)
-        
-        super.init(style: .grouped)
+    var sections: [Section] {
+        return [self.batterySection]
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    var profileUUID: CBUUID? { return nil }
+    private var batterySection = BatterySection()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,6 +111,19 @@ class GMTableViewController: UITableViewController {
         bleManager.delegate = self
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Battery")
+        
+        let btn = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 64))
+        btn.setTitle("Disconnect", for: .normal)
+        btn.setTitleColor(.nordicRed, for: .normal)
+        btn.addTarget(self, action: #selector(disconnect(_:)), for: .touchUpInside)
+        
+        tableView.tableFooterView = btn
+        
+    }
+    
+    @IBAction func disconnect(_ sender: Any?) {
+        guard let peripheral = activePeripheral else { return }
+        bleManager.manager.cancelPeripheralConnection(peripheral)
     }
     
     // MARK: Table View DataSource
@@ -168,16 +176,10 @@ class GMTableViewController: UITableViewController {
     
     // MARK: Bluetooth Characteristic Handling
     func handleBatteryValue(_ characteristic: CBCharacteristic) {
-        guard var batterySection = sections[.battery] as? BatterySection else {
-            Log(category: .ui, type: .error).log(message: "Cannot find battery section")
-            return
-        }
-        
         let data = characteristic.value;
         var pointer = UnsafeMutablePointer<UInt8>(mutating: (data! as NSData).bytes.bindMemory(to: UInt8.self, capacity: data!.count))
         let batteryLevel = CharacteristicReader.readUInt8Value(ptr: &pointer)
         batterySection.batteryLevel = Int(batteryLevel)
-        sections[.battery] = batterySection
         
         Log(category: .ui, type: .debug).log(message: "Battery level: \(batteryLevel)")
         
@@ -187,7 +189,7 @@ class GMTableViewController: UITableViewController {
     }
 }
 
-extension GMTableViewController: StatusDelegate {
+extension PeripheralTableViewController: StatusDelegate {
     func statusDidChanged(_ status: BLEStatus) {
         Log(category: .ble, type: .debug).log(message: "Changed Bluetooth status in \(String(describing: type(of: self))), status: \(status)")
         switch status {
@@ -213,7 +215,8 @@ extension GMTableViewController: StatusDelegate {
                 self.present(nc, animated: true, completion: nil)
                 
                 self.bleManager.deviceListDelegate = connectTableViewController
-                self.bleManager.manager.scanForPeripherals(withServices: self.service.uuid.map { [CBUUID(nsuuid: $0)] }, options: nil)
+                
+                self.bleManager.manager.scanForPeripherals(withServices: self.profileUUID.map { [$0] }, options: nil)
             })
             
             let notContent = InfoActionView.instanceWithParams(message: "Device is not connected", buttonSettings: bSettings)
@@ -226,7 +229,7 @@ extension GMTableViewController: StatusDelegate {
     }
 }
 
-extension GMTableViewController: CBPeripheralDelegate {
+extension PeripheralTableViewController: CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if let error = error {
             Log(category: .ble, type: .error).log(message: "Services discovery failed: \(error.localizedDescription)")
