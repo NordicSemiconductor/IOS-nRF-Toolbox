@@ -37,10 +37,12 @@ class BGMViewController: BaseViewController ,CBCentralManagerDelegate, CBPeriphe
     var bgmRecordAccessControlPointCharacteristic       : CBCharacteristic?
     var readings                                        : [GlucoseReading]
     var dateFormatter                                   : DateFormatter
+    
     var bgmServiceUUID                                  : CBUUID
     var bgmGlucoseMeasurementCharacteristicUUID         : CBUUID
     var bgmGlucoseMeasurementContextCharacteristicUUID  : CBUUID
     var bgmRecordAccessControlPointCharacteristicUUID   : CBUUID
+    
     var batteryServiceUUID                              : CBUUID
     var batteryLevelCharacteristicUUID                  : CBUUID
     

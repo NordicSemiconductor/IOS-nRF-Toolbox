@@ -47,4 +47,19 @@ enum BGMResponseCode : UInt8 {
     case procedureNotCompleted = 8
     case operandNotSupported   = 9
     // Values outside this range are reserved
+    
+    var error: TitledError? {
+        switch self {
+        case .opCodeNotSupported: return TitledError(message: "Operation not supported")
+        case .noRecordsFound: return TitledError(message: "No records found")
+        case .operatorNotSupported: return TitledError(message: "Operator not supported")
+        case .invalidOperator: return TitledError(message: "Invalid operator")
+        case .operandNotSupported: return TitledError(message: "Operand not supported")
+        case .invalidOperand: return TitledError(message: "Invalid operator")
+        case .abortUnsuccessful: return TitledError(message: "Abort unsuccessful")
+        case .procedureNotCompleted: return TitledError(message: "Procedure not completed")
+        default: return nil
+        }
+    }
+    
 }

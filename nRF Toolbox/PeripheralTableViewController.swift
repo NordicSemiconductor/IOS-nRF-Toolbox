@@ -9,101 +9,32 @@
 import UIKit
 import CoreBluetooth
 
-extension CBUUID {
-    struct Profile {
-        static let bloodGlucoseMonitor = CBUUID(string: "00001808-0000-1000-8000-00805F9B34FB")
-    }
-    
-    struct Service {
-        static let battery = CBUUID(string: "0000180F-0000-1000-8000-00805F9B34FB")
-    }
-    
-    struct Characteristics {
-        static let batteryLevel = CBUUID(string: "00002A19-0000-1000-8000-00805F9B34FB")
-    }
-}
-
-protocol Section {
-    func dequeCell(for index: Int, from tableView: UITableView) -> UITableViewCell
-    var numberOfItems: Int { get }
-    var sectionTitle: String { get }
-}
-
-struct BatterySection: Section {
-    let numberOfItems = 1
-    let sectionTitle = "Battery"
-    
-    func dequeCell(for index: Int, from tableView: UITableView) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Battery")
-        cell?.textLabel?.text = "Battery: \(self.batteryLevel)"
-        return cell!
-    }
-    
-    var batteryLevel: Int = 0
-}
-
-extension Array where Element == Section {
-    subscript(index: PeripheralTableViewController.SectionIndex) -> Element {
-        get { return self[index.rawValue] }
-        set { self[index.rawValue] = newValue }
-    }
-}
-
-extension UITableView {
-    func reloadSection(_ index: PeripheralTableViewController.SectionIndex, with rowAnimation: UITableView.RowAnimation = .automatic) {
-        self.reloadSections([index.rawValue], with: rowAnimation)
-    }
-}
-
-extension CBPeripheral {
-    var debugName: String {
-        return name ?? "__unnamed__"
-    }
-    
-    var debugSevicesDescription: String {
-        guard let services = self.services else { return "__no_services__" }
-        
-        return services.map { "UUID = \($0.uuid), is primary = \($0.isPrimary)" }
-            .joined(separator: "\n")
-    }
-}
-
-extension CBService {
-    var debugCharacteristicsDescription: String {
-        guard let characteristics = self.characteristics else { return "__no_characteristics__"}
-        
-        return characteristics.map { "UUID = \($0.uuid)" }
-            .joined(separator: "\n")
-    }
-}
-
 class PeripheralTableViewController: UITableViewController {
-    
-    struct SectionIndex: RawRepresentable {
-        var rawValue: Int
-        init?(rawValue: Int) {
-            self.rawValue = rawValue
-        }
-        
-        static let battery = SectionIndex(rawValue: 0)!
-    }
     
     private lazy var bleManager = BLEManager(scanUUID: self.profileUUID )
     
     private var tbView: UITableView!
-    private var activePeripheral: CBPeripheral? {
+    private (set) var activePeripheral: CBPeripheral? {
         didSet {
             activePeripheral?.delegate = self
-            activePeripheral?.discoverServices(nil)
+            activePeripheral?.discoverServices(self.scanServices)
+            Log(category: .ble, type: .debug).log(message: "Try to discover services \(self.scanServices.debugDescription)")
         }
     }
     
     var sections: [Section] {
-        return [self.batterySection]
+        return [self.batterySection] + self.internalSections + [self.deinitSection]
     }
     
+    var internalSections: [Section] { return [] }
+    
     var profileUUID: CBUUID? { return nil }
+    var scanServices: [CBUUID]? { return [CBUUID.Service.battery] }
     private var batterySection = BatterySection()
+    private lazy var deinitSection = SingleActionSection(id: "Disconnect", buttonTitle: "Disconnect", style: .destructive) {
+        guard let peripheral = self.activePeripheral else { return }
+        self.bleManager.manager.cancelPeripheralConnection(peripheral)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -111,17 +42,10 @@ class PeripheralTableViewController: UITableViewController {
         bleManager.delegate = self
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Battery")
-        
-        let btn = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 64))
-        btn.setTitle("Disconnect", for: .normal)
-        btn.setTitleColor(.nordicRed, for: .normal)
-        btn.addTarget(self, action: #selector(disconnect(_:)), for: .touchUpInside)
-        
-        tableView.tableFooterView = btn
-        
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "ActionCell")
     }
     
-    @IBAction func disconnect(_ sender: Any?) {
+    private func disconnect() {
         guard let peripheral = activePeripheral else { return }
         bleManager.manager.cancelPeripheralConnection(peripheral)
     }
@@ -135,31 +59,58 @@ class PeripheralTableViewController: UITableViewController {
         return sections[section].numberOfItems
     }
     
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return sections[indexPath.section].dequeCell(for: indexPath.row, from: tableView)
+    }
+    
     // MARK: Table View Delegate
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sections[section].sectionTitle
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return sections[indexPath.section].dequeCell(for: indexPath.row, from: tableView)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let section = self.sections[indexPath.section]
+        selected(item: indexPath.row, in: section)
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func selected(item: Int, in section: Section) {
+        switch section.id {
+        case Identifier.TableSection.disconnect:
+            self.disconnect()
+        case Identifier.TableSection.singleActionSection:
+            (section as? SingleActionSection)?.action()
+        default:
+            if let actionSection = section as? ActionSection {
+                actionSection.items[item].action()
+            } else {
+                Log(category: .ui, type: .debug).log(message: "Skipped item #\(item) in section \(section.id)")
+            }
+        }
+    }
+    
+    func reloadSection(id: Identifier, animation: UITableView.RowAnimation = .automatic) {
+        guard let index = sections.firstIndex(where: { $0.id == id }) else {
+            Log(category: .ui, type: .error).log(message: "Cannot upload section \(id)")
+            return
+        }
+        tableView.reloadSections([index], with: animation)
     }
     
     // MARK: Bluetooth events handling
     func didDiscover(service: CBService, for peripheral: CBPeripheral) {
         switch service.uuid {
         case CBUUID.Service.battery:
-            peripheral.discoverCharacteristics([CBUUID.Characteristics.batteryLevel], for: service)
+            peripheral.discoverCharacteristics([CBUUID.Characteristics.Battery.batteryLevel], for: service)
         default:
             Log(category: .ble, type: .debug).log(message: "Skipped service: \(service)")
         }
     }
     
-    func didDiscoverCharacteristics(for service: CBService) {
-        switch service.uuid {
-        case CBUUID.Service.battery:
-            service.characteristics?
-                .first(where: { $0.uuid == CBUUID.Characteristics.batteryLevel })
-                .map { self.activePeripheral?.readValue(for: $0) }
+    func didDiscover(characteristic: CBCharacteristic, for service: CBService, peripheral: CBPeripheral) {
+        switch characteristic.uuid {
+        case CBUUID.Characteristics.Battery.batteryLevel:
+            peripheral.readValue(for: characteristic)
         default:
             Log(category: .ble, type: .error).log(message: "Cannot handle characteristics in service \(service.uuid), peripheral: \(service.peripheral)")
         }
@@ -167,10 +118,10 @@ class PeripheralTableViewController: UITableViewController {
     
     func didUpdateValue(for characteristic: CBCharacteristic) {
         switch characteristic.uuid {
-        case CBUUID.Characteristics.batteryLevel:
+        case CBUUID.Characteristics.Battery.batteryLevel:
             handleBatteryValue(characteristic)
         default:
-            break
+            Log(category: .ble, type: .debug).log(message: "Cannot handle update value for characteristic \(characteristic)")
         }
     }
     
@@ -183,9 +134,56 @@ class PeripheralTableViewController: UITableViewController {
         
         Log(category: .ui, type: .debug).log(message: "Battery level: \(batteryLevel)")
         
+        let section = sections.firstIndex(where: { $0.id == Identifier.TableSection.battery })
+        
         DispatchQueue.main.async {
-            self.tableView.reloadSection(.battery)
+            section.map { self.tableView.reloadSections([$0], with: .automatic) }
         }
+    }
+}
+
+extension PeripheralTableViewController: CBPeripheralDelegate {
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+        if let error = error {
+            Log(category: .ble, type: .error).log(message: "Services discovery failed: \(error.localizedDescription)")
+            return
+        }
+        
+        Log(category: .ble, type: .debug).log(message: """
+            Found services:
+            \(peripheral.services.debugDescription)
+            in peripheral: \(peripheral)
+            """)
+        
+        peripheral.services?.forEach { [unowned peripheral] service in
+            // peripheral.discoverCharacteristics(nil, for: $0)
+            self.didDiscover(service: service, for: peripheral)
+        }
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+        if let error = error {
+            Log(category: .ble, type: .error).log(message: "Characteristic discovery failed: \(error.localizedDescription)")
+            return
+        }
+        
+        Log(category: .ble, type: .debug).log(message: "Discovered characteristics \(service.characteristics.debugDescription) for service: \(service)")
+        
+        service.characteristics?.forEach { [unowned service] ch in
+            self.didDiscover(characteristic: ch, for: service, peripheral: peripheral)
+        }
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        
+        if let error = error {
+            Log(category: .ble, type: .error).log(message: "Update value for characteristic \(characteristic) failed with error: \(error.localizedDescription). Peripheral: \(peripheral)")
+            return
+        }
+        
+        Log(category: .ble, type: .debug).log(message: "New value in characteristic: \(characteristic.debugDescription)")
+        
+        self.didUpdateValue(for: characteristic)
     }
 }
 
@@ -226,46 +224,5 @@ extension PeripheralTableViewController: StatusDelegate {
             self.activePeripheral = peripheral
             self.view = tbView
         }
-    }
-}
-
-extension PeripheralTableViewController: CBPeripheralDelegate {
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        if let error = error {
-            Log(category: .ble, type: .error).log(message: "Services discovery failed: \(error.localizedDescription)")
-            return
-        }
-        
-        Log(category: .ble, type: .debug).log(message: """
-            Found services:
-            \(peripheral.debugSevicesDescription)
-            in peripheral: \(peripheral.debugName)
-            """)
-        
-        // TODO: set required characteristics
-        peripheral.services?.forEach { peripheral.discoverCharacteristics(nil, for: $0) }
-    }
-    
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-        if let error = error {
-            Log(category: .ble, type: .error).log(message: "Characteristic discovery failed: \(error.localizedDescription)")
-            return
-        }
-        
-        Log(category: .ble, type: .debug).log(message: "Discovered characteristics \(service.debugCharacteristicsDescription) for service: \(service)")
-        
-        self.didDiscoverCharacteristics(for: service)
-    }
-    
-    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        
-        if let error = error {
-            Log(category: .ble, type: .error).log(message: "Update value for characteristic \(characteristic) failed with error: \(error.localizedDescription). Peripheral: \(peripheral)")
-            return
-        }
-        
-        Log(category: .ble, type: .debug).log(message: "New value in characteristic: \(characteristic.debugDescription)")
-        
-        self.didUpdateValue(for: characteristic)
     }
 }
