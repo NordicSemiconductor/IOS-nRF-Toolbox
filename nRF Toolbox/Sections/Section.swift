@@ -8,34 +8,18 @@
 
 import UIKit
 
-struct Identifier: Hashable {
-    let string: String
-}
-
-extension Identifier: ExpressibleByStringLiteral {
-    init(stringLiteral value: String) {
-        string = value
-    }
-}
-
-extension Identifier: CustomStringConvertible {
-    var description: String {
-        return string
-    }
-}
-
-extension Identifier {
-    struct TableSection {
-        static let battery: Identifier = "Battery"
-        static let disconnect: Identifier = "Disconnect"
-        static let bgmReadings: Identifier = "BGMReadings"
-        static let singleActionSection: Identifier = "SingleActionSection"
-    }
-}
-
 protocol Section {
     func dequeCell(for index: Int, from tableView: UITableView) -> UITableViewCell
     var numberOfItems: Int { get }
     var sectionTitle: String { get }
-    var id: Identifier { get }
+    var id: Identifier<Section> { get }
+}
+
+extension Identifier where Value == Section {
+    static let battery: Identifier<Section> = "battery"
+    static let disconnect: Identifier<Section> = "Disconnect"
+    static let bgmReadings: Identifier<Section> = "BGMReadings"
+    static let singleActionSection: Identifier<Section> = "SingleActionSection"
+    static let selectionResult: Identifier<Section> = "SelectionResultSection"
+    static let optionSelection: Identifier<Section> = "OptionSelection"
 }

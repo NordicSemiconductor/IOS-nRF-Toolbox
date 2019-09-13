@@ -25,9 +25,12 @@ struct ActionSectionItem {
 }
 
 struct ActionSection: Section {
+    
     func dequeCell(for index: Int, from tableView: UITableView) -> UITableViewCell {
         let item = items[index]
         let cell = tableView.dequeueReusableCell(withIdentifier: "ActionCell")
+        
+        cell?.textLabel?.font = UIFont.gtEestiDisplay(.regular, size: 17.0)
         cell?.textLabel?.text = item.title
         cell?.textLabel?.textColor = {
             switch item.style {
@@ -43,10 +46,10 @@ struct ActionSection: Section {
     }
     
     var sectionTitle: String
-    let id: Identifier
+    let id: Identifier<Section>
     var items: [ActionSectionItem] = []
     
-    init(id: Identifier, sectionTitle: String, items: [ActionSectionItem]) {
+    init(id: Identifier<Section>, sectionTitle: String, items: [ActionSectionItem]) {
         self.id = id
         self.sectionTitle = sectionTitle
         self.items = items

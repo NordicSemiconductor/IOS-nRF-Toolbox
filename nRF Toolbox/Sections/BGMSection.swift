@@ -9,7 +9,7 @@
 import UIKit
 
 struct BGMSection: Section {
-    let id = Identifier.TableSection.bgmReadings
+    let id: Identifier<Section> = .bgmReadings
     
     func dequeCell(for index: Int, from tableView: UITableView) -> UITableViewCell {
         let cell = tableView.dequeueCell(ofType: BGMTableViewCell.self)

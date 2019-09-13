@@ -9,7 +9,7 @@
 import UIKit
 
 class SingleActionSection: Section {
-    let id: Identifier
+    let id: Identifier<Section>
     
     func dequeCell(for index: Int, from tableView: UITableView) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ActionCell")
@@ -30,7 +30,7 @@ class SingleActionSection: Section {
     let buttonTitle: String
     let action: () -> ()
     
-    init(id: Identifier, sectionTitle: String? = nil, buttonTitle: String, style: ActionSectionItem.Style = .default, action: @escaping () -> ()) {
+    init(id: Identifier<Section>, sectionTitle: String? = nil, buttonTitle: String, style: ActionSectionItem.Style = .default, action: @escaping () -> ()) {
         self.sectionTitle = sectionTitle ?? ""
         self.buttonTitle = buttonTitle
         self.action = action

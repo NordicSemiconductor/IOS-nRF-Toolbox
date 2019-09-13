@@ -11,6 +11,7 @@
 		2002A000231FAFD100C43E06 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20029FFF231FAFD100C43E06 /* BLEManager.swift */; };
 		2002A002231FB8E800C43E06 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2002A001231FB8E800C43E06 /* UIImage+Ext.swift */; };
 		2002A0052322610F00C43E06 /* GlucoseMonitorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2002A0042322610F00C43E06 /* GlucoseMonitorViewController.swift */; };
+		203D0F06232BBEB300C0340D /* BatteryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203D0F05232BBEB300C0340D /* BatteryTableViewCell.swift */; };
 		208EE4EA23155FC8008E5FE9 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208EE4E923155FC8008E5FE9 /* WebViewController.swift */; };
 		20B25F382319568B006AF321 /* PeripheralTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B25F372319568B006AF321 /* PeripheralTableViewController.swift */; };
 		20B25F3A231960CF006AF321 /* ConnectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B25F39231960CF006AF321 /* ConnectTableViewController.swift */; };
@@ -43,6 +44,10 @@
 		20D08DFE232929A400569587 /* BGMTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20D08DFC232929A400569587 /* BGMTableViewCell.xib */; };
 		20D08E002329356700569587 /* ActionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D08DFF2329356700569587 /* ActionSection.swift */; };
 		20D08E02232A38C200569587 /* TitledError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D08E01232A38C200569587 /* TitledError.swift */; };
+		20D08E04232A4A3600569587 /* SelectionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D08E03232A4A3600569587 /* SelectionsTableViewController.swift */; };
+		20D08E06232A569B00569587 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D08E05232A569B00569587 /* Identifiable.swift */; };
+		20D08E28232B940400569587 /* OptionSelectioSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D08E27232B940400569587 /* OptionSelectioSection.swift */; };
+		20D08E2B232B95B300569587 /* DisclosureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D08E2A232B95B300569587 /* DisclosureTableViewCell.swift */; };
 		20E07B3C2305593800FCB205 /* ServiceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E07B3A2305593800FCB205 /* ServiceListViewController.swift */; };
 		20E07B3F23055B0B00FCB205 /* InteractionServiceList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20E07B3E23055B0B00FCB205 /* InteractionServiceList.plist */; };
 		20E07B422306868F00FCB205 /* BLEService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E07B412306868F00FCB205 /* BLEService.swift */; };
@@ -160,6 +165,7 @@
 		20029FFF231FAFD100C43E06 /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
 		2002A001231FB8E800C43E06 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
 		2002A0042322610F00C43E06 /* GlucoseMonitorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseMonitorViewController.swift; sourceTree = "<group>"; };
+		203D0F05232BBEB300C0340D /* BatteryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryTableViewCell.swift; sourceTree = "<group>"; };
 		208EE4E923155FC8008E5FE9 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		20B25F372319568B006AF321 /* PeripheralTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralTableViewController.swift; sourceTree = "<group>"; };
 		20B25F39231960CF006AF321 /* ConnectTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectTableViewController.swift; sourceTree = "<group>"; };
@@ -192,6 +198,10 @@
 		20D08DFC232929A400569587 /* BGMTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BGMTableViewCell.xib; sourceTree = "<group>"; };
 		20D08DFF2329356700569587 /* ActionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSection.swift; sourceTree = "<group>"; };
 		20D08E01232A38C200569587 /* TitledError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitledError.swift; sourceTree = "<group>"; };
+		20D08E03232A4A3600569587 /* SelectionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionsTableViewController.swift; sourceTree = "<group>"; };
+		20D08E05232A569B00569587 /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
+		20D08E27232B940400569587 /* OptionSelectioSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionSelectioSection.swift; sourceTree = "<group>"; };
+		20D08E2A232B95B300569587 /* DisclosureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureTableViewCell.swift; sourceTree = "<group>"; };
 		20E07B3A2305593800FCB205 /* ServiceListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceListViewController.swift; sourceTree = "<group>"; };
 		20E07B3E23055B0B00FCB205 /* InteractionServiceList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = InteractionServiceList.plist; sourceTree = "<group>"; };
 		20E07B412306868F00FCB205 /* BLEService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEService.swift; sourceTree = "<group>"; };
@@ -390,6 +400,15 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		20D08E29232B945700569587 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				20D08E2A232B95B300569587 /* DisclosureTableViewCell.swift */,
+				203D0F05232BBEB300C0340D /* BatteryTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		20E07B39230558B700FCB205 /* MainScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -443,11 +462,13 @@
 		20F0C8022327D417003111E7 /* Sections */ = {
 			isa = PBXGroup;
 			children = (
+				20D08E29232B945700569587 /* Cells */,
 				20F0C8032327D42A003111E7 /* Section.swift */,
 				20F0C8052327D439003111E7 /* BatterySection.swift */,
 				20F0C8072327D450003111E7 /* SingleActionSection.swift */,
 				20D08DFF2329356700569587 /* ActionSection.swift */,
 				20F0C80B2327DB74003111E7 /* BGMSection.swift */,
+				20D08E27232B940400569587 /* OptionSelectioSection.swift */,
 			);
 			path = Sections;
 			sourceTree = "<group>";
@@ -544,6 +565,7 @@
 				20C7FE15230ADD1E00B06FD8 /* StoryboardInstantiable.swift */,
 				20F15C422313F821000C5503 /* XibInstantiable.swift */,
 				20D08E01232A38C200569587 /* TitledError.swift */,
+				20D08E05232A569B00569587 /* Identifiable.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -593,6 +615,7 @@
 				20F0C8022327D417003111E7 /* Sections */,
 				20029FFF231FAFD100C43E06 /* BLEManager.swift */,
 				20B25F39231960CF006AF321 /* ConnectTableViewController.swift */,
+				20D08E03232A4A3600569587 /* SelectionsTableViewController.swift */,
 				208EE4E823155F94008E5FE9 /* WebViewController */,
 				20F15C372313D082000C5503 /* CommonViews */,
 				20E07B39230558B700FCB205 /* MainScreen */,
@@ -1026,6 +1049,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				20F0C8042327D42A003111E7 /* Section.swift in Sources */,
+				203D0F06232BBEB300C0340D /* BatteryTableViewCell.swift in Sources */,
 				304299221CE5DE8E00E1D2AB /* UserFilesViewController.swift in Sources */,
 				30499E5D1CE4C6C700E0993B /* FolderFilesViewController.swift in Sources */,
 				30499E551CE4732200E0993B /* FileSelectionDelegate.swift in Sources */,
@@ -1049,6 +1073,7 @@
 				3010F6051CDCB4F900CB285A /* BPMViewController.swift in Sources */,
 				309F08651E6D6A5500B7546A /* HKViewController.swift in Sources */,
 				3000B2131CE3195E00F64CEE /* EditPopupViewController.swift in Sources */,
+				20D08E28232B940400569587 /* OptionSelectioSection.swift in Sources */,
 				20C7FE052306D02400B06FD8 /* Log.swift in Sources */,
 				20B25F382319568B006AF321 /* PeripheralTableViewController.swift in Sources */,
 				52D9BC9E1DD0CB760030E824 /* Data.swift in Sources */,
@@ -1064,6 +1089,7 @@
 				3001EBC51D1C153C008C5C37 /* CGMDetailsViewController.swift in Sources */,
 				3080C4711CE06D0E009C2D8C /* CSCViewController.swift in Sources */,
 				2002A002231FB8E800C43E06 /* UIImage+Ext.swift in Sources */,
+				20D08E06232A569B00569587 /* Identifiable.swift in Sources */,
 				309F086E1E6ED44F00B7546A /* HKScannerDelegate.swift in Sources */,
 				308EE1781CE0CBF700F2A854 /* HTSViewController.swift in Sources */,
 				304D58FB1CE34EE600148271 /* Logger.swift in Sources */,
@@ -1079,6 +1105,7 @@
 				3000B2151CE32A9200F64CEE /* UARTViewController.swift in Sources */,
 				309F086C1E6EA0F800B7546A /* HKScannerViewController.swift in Sources */,
 				300508951CE2078A00D93BE0 /* RSCViewController.swift in Sources */,
+				20D08E04232A4A3600569587 /* SelectionsTableViewController.swift in Sources */,
 				20C7FE5B230EAD0000B06FD8 /* UINavigationController+Ext.swift in Sources */,
 				20F0C8062327D439003111E7 /* BatterySection.swift in Sources */,
 				5231403222FB1E130074325A /* UIColor+Nordic.swift in Sources */,
@@ -1086,6 +1113,7 @@
 				3069A1D71CDC788A003869EA /* BluetoothManager.swift in Sources */,
 				300508931CE1D75800D93BE0 /* ProximityViewController.swift in Sources */,
 				3042993D1CE6154100E1D2AB /* BaseViewController.swift in Sources */,
+				20D08E2B232B95B300569587 /* DisclosureTableViewCell.swift in Sources */,
 				2002A0052322610F00C43E06 /* GlucoseMonitorViewController.swift in Sources */,
 				20C7FE50230E789F00B06FD8 /* MainRouter.swift in Sources */,
 				20E07B3C2305593800FCB205 /* ServiceListViewController.swift in Sources */,

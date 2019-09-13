@@ -43,6 +43,8 @@ class PeripheralTableViewController: UITableViewController {
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Battery")
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "ActionCell")
+        tableView.register(DisclosureTableViewCell.self, forCellReuseIdentifier: "DisclosureTableViewCell")
+        tableView.register(BatteryTableViewCell.self, forCellReuseIdentifier: "BatteryTableViewCell")
     }
     
     private func disconnect() {
@@ -74,11 +76,12 @@ class PeripheralTableViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    // MARK: Table View Handlers
     func selected(item: Int, in section: Section) {
         switch section.id {
-        case Identifier.TableSection.disconnect:
+        case .disconnect:
             self.disconnect()
-        case Identifier.TableSection.singleActionSection:
+        case .singleActionSection:
             (section as? SingleActionSection)?.action()
         default:
             if let actionSection = section as? ActionSection {
@@ -89,7 +92,7 @@ class PeripheralTableViewController: UITableViewController {
         }
     }
     
-    func reloadSection(id: Identifier, animation: UITableView.RowAnimation = .automatic) {
+    func reloadSection(id: Identifier<Section>, animation: UITableView.RowAnimation = .automatic) {
         guard let index = sections.firstIndex(where: { $0.id == id }) else {
             Log(category: .ui, type: .error).log(message: "Cannot upload section \(id)")
             return
@@ -134,7 +137,7 @@ class PeripheralTableViewController: UITableViewController {
         
         Log(category: .ui, type: .debug).log(message: "Battery level: \(batteryLevel)")
         
-        let section = sections.firstIndex(where: { $0.id == Identifier.TableSection.battery })
+        let section = sections.firstIndex(where: { $0.id == .battery })
         
         DispatchQueue.main.async {
             section.map { self.tableView.reloadSections([$0], with: .automatic) }

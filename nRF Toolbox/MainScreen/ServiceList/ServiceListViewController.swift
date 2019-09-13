@@ -77,8 +77,8 @@ extension ServiceListViewController {
                 break
             }
             selectedService = serviceId
-//            serviceRouter.showServiceController(with: serviceId)
-            serviceRouter.showServiceController(model)
+            serviceRouter.showServiceController(with: serviceId)
+//            serviceRouter.showServiceController(model)
         case let link as LinkService:
             serviceRouter.showLinkController(link)
         default:

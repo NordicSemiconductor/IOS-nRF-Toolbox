@@ -28,7 +28,7 @@ protocol MainRouter {
 
 protocol ServiceRouter {
     func showServiceController(with serviceId: ServiceId)
-    func showServiceController(_ model: BLEService)
+//    func showServiceController(_ model: BLEService)
     func showLinkController(_ link: LinkService)
 }
 
@@ -36,7 +36,7 @@ class DefaultMainRouter {
     
     private let serviceViewControllers: [ServiceId : UIViewController] = {
         return [
-//            .glucoseMonitoring : GMTableViewController(), //BGMViewController.instance(),
+            .glucoseMonitoring : GlucoseMonitorViewController(style: .grouped),
             .bloodPressureMonitoring : BPMViewController.instance(),
             .cyclingSensor : CSCViewController.instance(),
             .heartRateMonitor : HRMViewController.instance(),
@@ -47,7 +47,7 @@ class DefaultMainRouter {
             .proximity : ProximityViewController.instance(),
             .homeKit : HKViewController.instance(),
             .uart : UARTRevealViewController.instance(storyboard: UIStoryboard(name: "UARTViewController", bundle: .main))
-        ].mapValues { UINavigationController.nordicBranded(rootViewController: $0) }
+        ].mapValues { UINavigationController(rootViewController: $0) }
     }()
     
     lazy private var serviceList = ServiceListViewController(serviceRouter: self)
@@ -71,10 +71,10 @@ extension DefaultMainRouter: UISplitViewControllerDelegate {
 }
 
 extension DefaultMainRouter: ServiceRouter {
-    func showServiceController(_ model: BLEService) {
-        let vc = GlucoseMonitorViewController(style: .grouped)
-        splitViewController.showDetailViewController(vc, sender: self)
-    }
+//    func showServiceController(_ model: BLEService) {
+//        let vc = GlucoseMonitorViewController(style: .grouped)
+//        splitViewController.showDetailViewController(vc, sender: self)
+//    }
     
     func showServiceController(with serviceId: ServiceId) {
         guard let viewController = serviceViewControllers[serviceId] else {

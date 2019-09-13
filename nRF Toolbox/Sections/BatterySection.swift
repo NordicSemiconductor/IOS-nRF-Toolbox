@@ -9,14 +9,15 @@
 import UIKit
 
 struct BatterySection: Section {
-    let id = Identifier.TableSection.battery
+    let id: Identifier<Section> = ""
     
     let numberOfItems = 1
     let sectionTitle = "Battery"
     
     func dequeCell(for index: Int, from tableView: UITableView) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Battery")
-        cell?.textLabel?.text = "Battery: \(self.batteryLevel)"
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BatteryTableViewCell")
+        cell?.textLabel?.text = "Battery"
+        cell?.detailTextLabel?.text = "\(self.batteryLevel)"
         return cell!
     }
     
