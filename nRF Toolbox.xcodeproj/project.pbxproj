@@ -11,7 +11,10 @@
 		2002A000231FAFD100C43E06 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20029FFF231FAFD100C43E06 /* BLEManager.swift */; };
 		2002A002231FB8E800C43E06 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2002A001231FB8E800C43E06 /* UIImage+Ext.swift */; };
 		2002A0052322610F00C43E06 /* GlucoseMonitorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2002A0042322610F00C43E06 /* GlucoseMonitorViewController.swift */; };
-		203D0F06232BBEB300C0340D /* BatteryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203D0F05232BBEB300C0340D /* BatteryTableViewCell.swift */; };
+		203D0F06232BBEB300C0340D /* DetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203D0F05232BBEB300C0340D /* DetailsTableViewCell.swift */; };
+		203D0F09232F782200C0340D /* CyclingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203D0F08232F782200C0340D /* CyclingTableViewController.swift */; };
+		203D0F0C232FB7D100C0340D /* DetailsTableViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203D0F0B232FB7D100C0340D /* DetailsTableViewSection.swift */; };
+		203D0F0E23325E0A00C0340D /* CyclingTableViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203D0F0D23325E0A00C0340D /* CyclingTableViewSection.swift */; };
 		208EE4EA23155FC8008E5FE9 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208EE4E923155FC8008E5FE9 /* WebViewController.swift */; };
 		20B25F382319568B006AF321 /* PeripheralTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B25F372319568B006AF321 /* PeripheralTableViewController.swift */; };
 		20B25F3A231960CF006AF321 /* ConnectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B25F39231960CF006AF321 /* ConnectTableViewController.swift */; };
@@ -165,7 +168,10 @@
 		20029FFF231FAFD100C43E06 /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
 		2002A001231FB8E800C43E06 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
 		2002A0042322610F00C43E06 /* GlucoseMonitorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseMonitorViewController.swift; sourceTree = "<group>"; };
-		203D0F05232BBEB300C0340D /* BatteryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryTableViewCell.swift; sourceTree = "<group>"; };
+		203D0F05232BBEB300C0340D /* DetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsTableViewCell.swift; sourceTree = "<group>"; };
+		203D0F08232F782200C0340D /* CyclingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingTableViewController.swift; sourceTree = "<group>"; };
+		203D0F0B232FB7D100C0340D /* DetailsTableViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsTableViewSection.swift; sourceTree = "<group>"; };
+		203D0F0D23325E0A00C0340D /* CyclingTableViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingTableViewSection.swift; sourceTree = "<group>"; };
 		208EE4E923155FC8008E5FE9 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		20B25F372319568B006AF321 /* PeripheralTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralTableViewController.swift; sourceTree = "<group>"; };
 		20B25F39231960CF006AF321 /* ConnectTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectTableViewController.swift; sourceTree = "<group>"; };
@@ -343,6 +349,23 @@
 			path = Glucose;
 			sourceTree = "<group>";
 		};
+		203D0F07232F77F300C0340D /* Cycling */ = {
+			isa = PBXGroup;
+			children = (
+				203D0F0A232FB4FB00C0340D /* Sections */,
+				203D0F08232F782200C0340D /* CyclingTableViewController.swift */,
+			);
+			path = Cycling;
+			sourceTree = "<group>";
+		};
+		203D0F0A232FB4FB00C0340D /* Sections */ = {
+			isa = PBXGroup;
+			children = (
+				203D0F0D23325E0A00C0340D /* CyclingTableViewSection.swift */,
+			);
+			path = Sections;
+			sourceTree = "<group>";
+		};
 		208EE4E823155F94008E5FE9 /* WebViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -404,7 +427,7 @@
 			isa = PBXGroup;
 			children = (
 				20D08E2A232B95B300569587 /* DisclosureTableViewCell.swift */,
-				203D0F05232BBEB300C0340D /* BatteryTableViewCell.swift */,
+				203D0F05232BBEB300C0340D /* DetailsTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -469,6 +492,7 @@
 				20D08DFF2329356700569587 /* ActionSection.swift */,
 				20F0C80B2327DB74003111E7 /* BGMSection.swift */,
 				20D08E27232B940400569587 /* OptionSelectioSection.swift */,
+				203D0F0B232FB7D100C0340D /* DetailsTableViewSection.swift */,
 			);
 			path = Sections;
 			sourceTree = "<group>";
@@ -610,6 +634,7 @@
 		5217F3EB1859EE0000F2D5BB /* nRF Toolbox */ = {
 			isa = PBXGroup;
 			children = (
+				203D0F07232F77F300C0340D /* Cycling */,
 				2002A003232260CA00C43E06 /* Glucose */,
 				20B25F372319568B006AF321 /* PeripheralTableViewController.swift */,
 				20F0C8022327D417003111E7 /* Sections */,
@@ -1049,7 +1074,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				20F0C8042327D42A003111E7 /* Section.swift in Sources */,
-				203D0F06232BBEB300C0340D /* BatteryTableViewCell.swift in Sources */,
+				203D0F06232BBEB300C0340D /* DetailsTableViewCell.swift in Sources */,
 				304299221CE5DE8E00E1D2AB /* UserFilesViewController.swift in Sources */,
 				30499E5D1CE4C6C700E0993B /* FolderFilesViewController.swift in Sources */,
 				30499E551CE4732200E0993B /* FileSelectionDelegate.swift in Sources */,
@@ -1072,6 +1097,7 @@
 				3001432D1CECADFB008379DF /* CharacteristicReader.swift in Sources */,
 				3010F6051CDCB4F900CB285A /* BPMViewController.swift in Sources */,
 				309F08651E6D6A5500B7546A /* HKViewController.swift in Sources */,
+				203D0F0E23325E0A00C0340D /* CyclingTableViewSection.swift in Sources */,
 				3000B2131CE3195E00F64CEE /* EditPopupViewController.swift in Sources */,
 				20D08E28232B940400569587 /* OptionSelectioSection.swift in Sources */,
 				20C7FE052306D02400B06FD8 /* Log.swift in Sources */,
@@ -1133,6 +1159,8 @@
 				309F086A1E6D9EAA00B7546A /* HKHomeStore.swift in Sources */,
 				30499E591CE4A07700E0993B /* AppFilesViewController.swift in Sources */,
 				3001EBBF1D1BE727008C5C37 /* CGMSpecificOperations.swift in Sources */,
+				203D0F09232F782200C0340D /* CyclingTableViewController.swift in Sources */,
+				203D0F0C232FB7D100C0340D /* DetailsTableViewSection.swift in Sources */,
 				3000B2111CE317D900F64CEE /* UARTRevealViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1246,7 +1274,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nRF Toolbox/nRF Toolbox-Prefix.pch";
 				INFOPLIST_FILE = "nRF Toolbox/nRF Toolbox-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1409,7 +1437,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nRF Toolbox/nRF Toolbox-Prefix.pch";
 				INFOPLIST_FILE = "nRF Toolbox/nRF Toolbox-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1460,7 +1488,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nRF Toolbox/nRF Toolbox-Prefix.pch";
 				INFOPLIST_FILE = "nRF Toolbox/nRF Toolbox-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

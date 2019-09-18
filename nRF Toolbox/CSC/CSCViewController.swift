@@ -30,9 +30,10 @@ class CSCViewController: BaseViewController, CBCentralManagerDelegate, CBPeriphe
 
     //MARK: - ViewController Outlets
     @IBOutlet weak var battery              : UIButton!
-    @IBOutlet weak var verticalLabel        : UILabel!
     @IBOutlet weak var deviceName           : UILabel!
     @IBOutlet weak var connectionButton     : UIButton!
+    @IBOutlet weak var verticalLabel        : UILabel!
+    
     @IBOutlet weak var speed                : UILabel!
     @IBOutlet weak var cadence              : UILabel!
     @IBOutlet weak var distance             : UILabel!

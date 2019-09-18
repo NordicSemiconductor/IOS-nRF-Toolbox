@@ -44,7 +44,7 @@ class PeripheralTableViewController: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Battery")
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "ActionCell")
         tableView.register(DisclosureTableViewCell.self, forCellReuseIdentifier: "DisclosureTableViewCell")
-        tableView.register(BatteryTableViewCell.self, forCellReuseIdentifier: "BatteryTableViewCell")
+        tableView.register(DetailsTableViewCell.self, forCellReuseIdentifier: "BatteryTableViewCell")
     }
     
     private func disconnect() {

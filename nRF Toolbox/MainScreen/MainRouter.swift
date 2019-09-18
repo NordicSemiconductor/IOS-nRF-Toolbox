@@ -38,7 +38,7 @@ class DefaultMainRouter {
         return [
             .glucoseMonitoring : GlucoseMonitorViewController(style: .grouped),
             .bloodPressureMonitoring : BPMViewController.instance(),
-            .cyclingSensor : CSCViewController.instance(),
+            .cyclingSensor : CyclingTableViewController(style: .grouped),
             .heartRateMonitor : HRMViewController.instance(),
             .healthThermometer : HTSViewController.instance(),
             .runningSensor : RSCViewController.instance(),
