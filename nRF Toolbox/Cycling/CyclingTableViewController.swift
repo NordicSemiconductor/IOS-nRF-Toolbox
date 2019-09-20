@@ -21,30 +21,8 @@ class CyclingTableViewController: PeripheralTableViewController {
         return [cyclingSection]
     }
     
-    override var profileUUID: CBUUID? {
-        return CBUUID.Profile.cyclingSpeedCadenceSensor
-    }
-    
-    override var scanServices: [CBUUID]? {
-        return (super.scanServices ?? []) + [CBUUID.Service.cyclingSpeedCadenceSensor]
-    }
-    
-    override func didDiscover(service: CBService, for peripheral: CBPeripheral) {
-        switch service.uuid {
-        case CBUUID.Service.cyclingSpeedCadenceSensor:
-            peripheral.discoverCharacteristics([CBUUID.Characteristics.CyclingSesnor.measurement], for: service)
-        default:
-            super.didDiscover(service: service, for: peripheral)
-        }
-    }
-    
-    override func didDiscover(characteristic: CBCharacteristic, for service: CBService, peripheral: CBPeripheral) {
-        switch (service.uuid, characteristic.uuid) {
-        case (CBUUID.Service.cyclingSpeedCadenceSensor, CBUUID.Characteristics.CyclingSesnor.measurement):
-            peripheral.setNotifyValue(true, for: characteristic)
-        default:
-            super.didDiscover(characteristic: characteristic, for: service, peripheral: peripheral)
-        }
+    override var peripheralDescription: Peripheral {
+        return .cyclingSpeedCadenceSensor
     }
     
     override func didUpdateValue(for characteristic: CBCharacteristic) {

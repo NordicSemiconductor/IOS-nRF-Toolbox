@@ -18,6 +18,9 @@
 		208EE4EA23155FC8008E5FE9 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208EE4E923155FC8008E5FE9 /* WebViewController.swift */; };
 		20B25F382319568B006AF321 /* PeripheralTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B25F372319568B006AF321 /* PeripheralTableViewController.swift */; };
 		20B25F3A231960CF006AF321 /* ConnectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B25F39231960CF006AF321 /* ConnectTableViewController.swift */; };
+		20B797912334FD77001328E1 /* Peripheral+BMG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B797902334FD77001328E1 /* Peripheral+BMG.swift */; };
+		20B797942334FE1B001328E1 /* Identifier+GlucoseMonitorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B797932334FE1B001328E1 /* Identifier+GlucoseMonitorViewController.swift */; };
+		20B7979823350584001328E1 /* Peripheral+Cycling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B7979723350584001328E1 /* Peripheral+Cycling.swift */; };
 		20C7FDFE2306BEE000B06FD8 /* Array+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FDFD2306BEE000B06FD8 /* Array+Ext.swift */; };
 		20C7FE012306C5FF00B06FD8 /* BLEServiceList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE002306C5FF00B06FD8 /* BLEServiceList.plist */; };
 		20C7FE032306C72000B06FD8 /* IoTServices.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE022306C72000B06FD8 /* IoTServices.plist */; };
@@ -175,6 +178,9 @@
 		208EE4E923155FC8008E5FE9 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		20B25F372319568B006AF321 /* PeripheralTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralTableViewController.swift; sourceTree = "<group>"; };
 		20B25F39231960CF006AF321 /* ConnectTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectTableViewController.swift; sourceTree = "<group>"; };
+		20B797902334FD77001328E1 /* Peripheral+BMG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Peripheral+BMG.swift"; sourceTree = "<group>"; };
+		20B797932334FE1B001328E1 /* Identifier+GlucoseMonitorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Identifier+GlucoseMonitorViewController.swift"; sourceTree = "<group>"; };
+		20B7979723350584001328E1 /* Peripheral+Cycling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Peripheral+Cycling.swift"; sourceTree = "<group>"; };
 		20C7FDFD2306BEE000B06FD8 /* Array+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Array+Ext.swift"; path = "../Array+Ext.swift"; sourceTree = "<group>"; };
 		20C7FE002306C5FF00B06FD8 /* BLEServiceList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = BLEServiceList.plist; sourceTree = "<group>"; };
 		20C7FE022306C72000B06FD8 /* IoTServices.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = IoTServices.plist; sourceTree = "<group>"; };
@@ -343,6 +349,9 @@
 		2002A003232260CA00C43E06 /* Glucose */ = {
 			isa = PBXGroup;
 			children = (
+				20B797922334FDF3001328E1 /* Identifier */,
+				20B7978D2334FD4C001328E1 /* Peripheral */,
+				20B7978C2334FD3C001328E1 /* Sections */,
 				20D08DFA2329298A00569587 /* Cell */,
 				2002A0042322610F00C43E06 /* GlucoseMonitorViewController.swift */,
 			);
@@ -352,6 +361,7 @@
 		203D0F07232F77F300C0340D /* Cycling */ = {
 			isa = PBXGroup;
 			children = (
+				20B7979623350325001328E1 /* Peripheral */,
 				203D0F0A232FB4FB00C0340D /* Sections */,
 				203D0F08232F782200C0340D /* CyclingTableViewController.swift */,
 			);
@@ -379,6 +389,37 @@
 			children = (
 			);
 			path = BLE;
+			sourceTree = "<group>";
+		};
+		20B7978C2334FD3C001328E1 /* Sections */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Sections;
+			sourceTree = "<group>";
+		};
+		20B7978D2334FD4C001328E1 /* Peripheral */ = {
+			isa = PBXGroup;
+			children = (
+				20B797902334FD77001328E1 /* Peripheral+BMG.swift */,
+			);
+			path = Peripheral;
+			sourceTree = "<group>";
+		};
+		20B797922334FDF3001328E1 /* Identifier */ = {
+			isa = PBXGroup;
+			children = (
+				20B797932334FE1B001328E1 /* Identifier+GlucoseMonitorViewController.swift */,
+			);
+			path = Identifier;
+			sourceTree = "<group>";
+		};
+		20B7979623350325001328E1 /* Peripheral */ = {
+			isa = PBXGroup;
+			children = (
+				20B7979723350584001328E1 /* Peripheral+Cycling.swift */,
+			);
+			path = Peripheral;
 			sourceTree = "<group>";
 		};
 		20C7FDFF2306C52900B06FD8 /* Services */ = {
@@ -1109,6 +1150,7 @@
 				20C7FDFE2306BEE000B06FD8 /* Array+Ext.swift in Sources */,
 				3001EBB71D1BE1FB008C5C37 /* BGMDetailsViewController.swift in Sources */,
 				20C7FE16230ADD1E00B06FD8 /* StoryboardInstantiable.swift in Sources */,
+				20B797912334FD77001328E1 /* Peripheral+BMG.swift in Sources */,
 				20D08E002329356700569587 /* ActionSection.swift in Sources */,
 				20C7FE10230A9FAB00B06FD8 /* UIFont+Ext.swift in Sources */,
 				304D59011CE352B300148271 /* LogItemTableViewCell.swift in Sources */,
@@ -1155,7 +1197,9 @@
 				20F0C80C2327DB74003111E7 /* BGMSection.swift in Sources */,
 				3001EBB81D1BE1FB008C5C37 /* BGMItemCell.swift in Sources */,
 				300143271CEC4B9D008379DF /* AppUtilities.swift in Sources */,
+				20B7979823350584001328E1 /* Peripheral+Cycling.swift in Sources */,
 				208EE4EA23155FC8008E5FE9 /* WebViewController.swift in Sources */,
+				20B797942334FE1B001328E1 /* Identifier+GlucoseMonitorViewController.swift in Sources */,
 				309F086A1E6D9EAA00B7546A /* HKHomeStore.swift in Sources */,
 				30499E591CE4A07700E0993B /* AppFilesViewController.swift in Sources */,
 				3001EBBF1D1BE727008C5C37 /* CGMSpecificOperations.swift in Sources */,

@@ -9,16 +9,6 @@
 import UIKit
 import CoreBluetooth
 
-extension Identifier: CaseIterable where Value == GlucoseMonitorViewController {
-    static var allCases: [Identifier<GlucoseMonitorViewController>] {
-        return [.all, .first, .last]
-    }
-    
-    static let all: Identifier<GlucoseMonitorViewController> = "All"
-    static let first: Identifier<GlucoseMonitorViewController> = "First"
-    static let last: Identifier<GlucoseMonitorViewController> = "Last"
-}
-
 class GlucoseMonitorViewController: PeripheralTableViewController {
     private var bgmSection = BGMSection()
     private var recordAccessControlPoint: CBCharacteristic?
@@ -62,39 +52,15 @@ class GlucoseMonitorViewController: PeripheralTableViewController {
         return [selectionSection, bgmSection, actionSection]
     }
     
-    override var profileUUID: CBUUID? {
-        return CBUUID.Profile.bloodGlucoseMonitor
-    }
-    
-    override var scanServices: [CBUUID]? {
-        return (super.scanServices ?? []) + [CBUUID.Service.bloodGlucoseMonitor]
-    }
-    
-    override func didDiscover(service: CBService, for peripheral: CBPeripheral) {
-        switch service.uuid {
-        case CBUUID.Service.bloodGlucoseMonitor:
-            peripheral.discoverCharacteristics([
-                CBUUID.Characteristics.BloodGlucoseMonitor.glucoseMeasurement,
-                CBUUID.Characteristics.BloodGlucoseMonitor.glucoseMeasurementContext,
-                CBUUID.Characteristics.BloodGlucoseMonitor.recordAccessControlPoint
-            ], for: service)
-        default:
-            super.didDiscover(service: service, for: peripheral)
-        }
+    override var peripheralDescription: Peripheral {
+        return .bloodGlucoseMonitor
     }
     
     override func didDiscover(characteristic: CBCharacteristic, for service: CBService, peripheral: CBPeripheral) {
-        switch characteristic.uuid {
-        case CBUUID.Characteristics.BloodGlucoseMonitor.glucoseMeasurement:
-            peripheral.setNotifyValue(true, for: characteristic)
-        case CBUUID.Characteristics.BloodGlucoseMonitor.glucoseMeasurementContext:
-            peripheral.setNotifyValue(true, for: characteristic)
-        case CBUUID.Characteristics.BloodGlucoseMonitor.recordAccessControlPoint:
-            peripheral.setNotifyValue(true, for: characteristic)
+        super.didDiscover(characteristic: characteristic, for: service, peripheral: peripheral)
+        if characteristic.uuid == CBUUID.Characteristics.BloodGlucoseMonitor.recordAccessControlPoint {
             recordAccessControlPoint = characteristic
             updateDisplayedItems(.all)
-        default:
-            super.didDiscover(characteristic: characteristic, for: service, peripheral: peripheral)
         }
     }
     

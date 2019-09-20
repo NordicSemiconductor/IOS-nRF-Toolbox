@@ -83,6 +83,7 @@ extension BLEManager: CBCentralManagerDelegate {
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         Log(category: .ble, type: .debug).log(message: "Disconnected peripheral: \(peripheral)")
+        error.map { Log(category: .ble, type: .error).log(message: "Disconnected peripheral with error: \($0.localizedDescription)") }
         delegate?.statusDidChanged(.disconnected)
     }
 }
