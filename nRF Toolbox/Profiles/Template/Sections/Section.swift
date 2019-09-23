@@ -19,7 +19,6 @@ extension Identifier where Value == Section {
     static let battery: Identifier<Section> = "battery"
     static let disconnect: Identifier<Section> = "Disconnect"
     static let bgmReadings: Identifier<Section> = "BGMReadings"
-    static let singleActionSection: Identifier<Section> = "SingleActionSection"
     static let selectionResult: Identifier<Section> = "SelectionResultSection"
     static let optionSelection: Identifier<Section> = "OptionSelection"
     static let details: Identifier<Section> = "DetailsSection"

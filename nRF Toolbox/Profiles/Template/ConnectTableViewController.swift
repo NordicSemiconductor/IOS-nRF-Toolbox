@@ -10,10 +10,10 @@ import UIKit
 import CoreBluetooth
 
 class ConnectTableViewController: UITableViewController {
-    let connectDelegate: ConnectDelegate
-    private var peripherals: [ScannedPeripheral] = []
+    let connectDelegate: PeripheralConnectionDelegate
+    private var peripherals: [DiscoveredPeripheral] = []
     
-    init(connectDelegate: ConnectDelegate) {
+    init(connectDelegate: PeripheralConnectionDelegate) {
         self.connectDelegate = connectDelegate
         super.init(style: .grouped)
     }
@@ -25,6 +25,13 @@ class ConnectTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        
+        navigationItem.title = "Connnect"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.close))
+    }
+    
+    @objc private func close() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -49,8 +56,8 @@ class ConnectTableViewController: UITableViewController {
     
 }
 
-extension ConnectTableViewController: DeviceListDelegate {
-    func peripheralsFound(_ peripherals: [ScannedPeripheral]) {
+extension ConnectTableViewController: PeripheralListDelegate {
+    func peripheralsFound(_ peripherals: [DiscoveredPeripheral]) {
         self.peripherals = peripherals
         tableView.reloadData()
     }

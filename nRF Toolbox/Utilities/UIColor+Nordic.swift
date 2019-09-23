@@ -123,7 +123,7 @@ extension UIColor {
             if #available(iOS 13.0, *) {
                 dark = .systemBlue
             } else {
-                Log(category: .ui, type: .fault).fault("iOS version not supported")
+                dark = .black
             }
             
             return .dynamicColor(light: .nordicLake, dark: dark)
@@ -134,7 +134,7 @@ extension UIColor {
             if #available(iOS 13.0, *) {
                 dark = .systemRed
             } else {
-                Log(category: .ui, type: .fault).fault("iOS version not supported")
+                dark = .black 
             }
             
             return .dynamicColor(light: .nordicRedDark, dark: dark)

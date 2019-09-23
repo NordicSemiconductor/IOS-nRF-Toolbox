@@ -20,6 +20,7 @@ extension Identifier where Value == DetailsTableViewCellModel {
 struct CyclingTableViewSection: Section {
     private let wheelRevolutionFlag: UInt8 = 0x01
     private let crankRevolutionFlag: UInt8 = 0x02
+    // TODO: Load value from settings
     private let wheelCircumference: Double = 2.6//UserDefaults.standard.double(forKey: "key_diameter")
     
     private var oldWheelRevolution: Int = 0
@@ -55,19 +56,17 @@ struct CyclingTableViewSection: Section {
     
     private func update(_ item: DefaultDetailsTableViewCellModel) -> DefaultDetailsTableViewCellModel {
         var item = item
-        let measurementFormatter = MeasurementFormatter()
-        let numberFormatter = NumberFormatter()
-        numberFormatter.maximumFractionDigits = 1
-        numberFormatter.minimumIntegerDigits = 1
-        measurementFormatter.numberFormatter = numberFormatter
+        
+        let speeedFormatter = MeasurementFormatter.numeric(maximumFractionDigits: 1)
+        let distanceFormatter = MeasurementFormatter.numeric(maximumFractionDigits: 2)
         
         switch item.identifier {
         case .speed:
-            item.value = measurementFormatter.string(from: speed)
+            item.value = speeedFormatter.string(from: speed)
         case .distance:
-            item.value = measurementFormatter.string(from: travelDistance)
+            item.value = distanceFormatter.string(from: travelDistance)
         case .totalDistance:
-            item.value = measurementFormatter.string(from: totalTravelDistance)
+            item.value = distanceFormatter.string(from: totalTravelDistance)
         case .cadence:
             item.value = "\(cadence) RPM"
         case .gearRatio:

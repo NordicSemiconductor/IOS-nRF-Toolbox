@@ -1,5 +1,5 @@
 //
-//  BLEManager.swift
+//  PeripheralManager.swift
 //  nRF Toolbox
 //
 //  Created by Nick Kibysh on 04/09/2019.
@@ -9,7 +9,7 @@
 import Foundation
 import CoreBluetooth
 
-enum BLEStatus: CustomDebugStringConvertible {
+enum PeripheralStatus: CustomDebugStringConvertible {
     
     case poweredOff
     case connected(CBPeripheral)
@@ -25,38 +25,38 @@ enum BLEStatus: CustomDebugStringConvertible {
 }
 
 protocol StatusDelegate {
-    func statusDidChanged(_ status: BLEStatus)
+    func statusDidChanged(_ status: PeripheralStatus)
 }
 
-protocol DeviceListDelegate {
-    func peripheralsFound(_ peripherals: [ScannedPeripheral])
+protocol PeripheralListDelegate {
+    func peripheralsFound(_ peripherals: [DiscoveredPeripheral])
 }
 
-protocol ConnectDelegate {
-    func connect(peripheral: ScannedPeripheral)
+protocol PeripheralConnectionDelegate {
+    func scan(peripheral: Peripheral)
+    func connect(peripheral: DiscoveredPeripheral)
+    func closeConnection(peripheral: CBPeripheral)
 }
 
-class BLEManager: NSObject {
+class PeripheralManager: NSObject {
     
-    let manager: CBCentralManager
-    let scannUUID: [CBUUID]?
-    var delegate: StatusDelegate?
-    var deviceListDelegate: DeviceListDelegate?
+    private let manager: CBCentralManager
     private var peripherals: Set<CBPeripheral> = []
     
-    init(scanUUID: CBUUID?, manager: CBCentralManager = CBCentralManager()) {
+    var delegate: StatusDelegate?
+    var peripheralListDelegate: PeripheralListDelegate?
+    
+    init(peripheral: Peripheral, manager: CBCentralManager = CBCentralManager()) {
         self.manager = manager
-        self.scannUUID = scanUUID.map { [$0] }
         super.init()
         self.manager.delegate = self
     }
 }
 
-extension BLEManager: CBCentralManagerDelegate {
+extension PeripheralManager: CBCentralManagerDelegate {
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         switch central.state {
-            
         case .poweredOff:
             delegate?.statusDidChanged(.poweredOff)
         case .poweredOn:
@@ -69,7 +69,7 @@ extension BLEManager: CBCentralManagerDelegate {
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         Log(category: .ble, type: .debug).log(message: "Discovered peripheral: \(peripheral.name ?? "__unnamed__")")
         self.peripherals.insert(peripheral)
-        deviceListDelegate?.peripheralsFound(peripherals.map { ScannedPeripheral(with: $0, RSSI: RSSI.int32Value) } )
+        peripheralListDelegate?.peripheralsFound(peripherals.map { DiscoveredPeripheral(with: $0, RSSI: RSSI.int32Value) } )
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
@@ -88,8 +88,16 @@ extension BLEManager: CBCentralManagerDelegate {
     }
 }
 
-extension BLEManager: ConnectDelegate {
-    func connect(peripheral: ScannedPeripheral) {
+extension PeripheralManager: PeripheralConnectionDelegate {
+    func scan(peripheral: Peripheral) {
+        manager.scanForPeripherals(withServices: [peripheral.uuid], options: nil)
+    }
+    
+    func closeConnection(peripheral: CBPeripheral) {
+        manager.cancelPeripheralConnection(peripheral)
+    }
+    
+    func connect(peripheral: DiscoveredPeripheral) {
         self.manager.connect(peripheral.peripheral, options: nil)
     }
 }

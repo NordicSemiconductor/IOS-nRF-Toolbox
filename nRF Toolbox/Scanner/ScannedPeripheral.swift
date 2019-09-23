@@ -9,7 +9,7 @@
 import UIKit
 import CoreBluetooth
 
-class ScannedPeripheral: Equatable {
+class DiscoveredPeripheral: Equatable {
     
     let peripheral: CBPeripheral
     var rssi: Int32
@@ -28,7 +28,7 @@ class ScannedPeripheral: Equatable {
     }
 }
 
-func ==(lhs: ScannedPeripheral, rhs: ScannedPeripheral) -> Bool {
+func ==(lhs: DiscoveredPeripheral, rhs: DiscoveredPeripheral) -> Bool {
     return lhs.peripheral == rhs.peripheral
         && lhs.isConnected == rhs.isConnected
         && lhs.rssi == rhs.rssi

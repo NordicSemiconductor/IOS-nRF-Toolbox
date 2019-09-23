@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0E645A0F1CBF957800D36AD0 /* firmwares in Resources */ = {isa = PBXBuildFile; fileRef = 7E6ED10A196ED482008010B6 /* firmwares */; };
-		2002A000231FAFD100C43E06 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20029FFF231FAFD100C43E06 /* BLEManager.swift */; };
+		2002A000231FAFD100C43E06 /* PeripheralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20029FFF231FAFD100C43E06 /* PeripheralManager.swift */; };
 		2002A002231FB8E800C43E06 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2002A001231FB8E800C43E06 /* UIImage+Ext.swift */; };
 		2002A0052322610F00C43E06 /* GlucoseMonitorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2002A0042322610F00C43E06 /* GlucoseMonitorViewController.swift */; };
 		203D0F06232BBEB300C0340D /* DetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203D0F05232BBEB300C0340D /* DetailsTableViewCell.swift */; };
@@ -75,7 +75,6 @@
 		20F0C8012327D207003111E7 /* CBUUID+IDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F0C8002327D207003111E7 /* CBUUID+IDs.swift */; };
 		20F0C8042327D42A003111E7 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F0C8032327D42A003111E7 /* Section.swift */; };
 		20F0C8062327D439003111E7 /* BatterySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F0C8052327D439003111E7 /* BatterySection.swift */; };
-		20F0C8082327D450003111E7 /* SingleActionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F0C8072327D450003111E7 /* SingleActionSection.swift */; };
 		20F0C80C2327DB74003111E7 /* BGMSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F0C80B2327DB74003111E7 /* BGMSection.swift */; };
 		20F15C3A2313D2B9000C5503 /* InfoActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F15C392313D2B9000C5503 /* InfoActionView.swift */; };
 		20F15C3C2313D2C7000C5503 /* InfoActionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20F15C3B2313D2C7000C5503 /* InfoActionView.xib */; };
@@ -167,7 +166,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		20029FFF231FAFD100C43E06 /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
+		20029FFF231FAFD100C43E06 /* PeripheralManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralManager.swift; sourceTree = "<group>"; };
 		2002A001231FB8E800C43E06 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
 		2002A0042322610F00C43E06 /* GlucoseMonitorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseMonitorViewController.swift; sourceTree = "<group>"; };
 		203D0F05232BBEB300C0340D /* DetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsTableViewCell.swift; sourceTree = "<group>"; };
@@ -234,7 +233,6 @@
 		20F0C8002327D207003111E7 /* CBUUID+IDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CBUUID+IDs.swift"; sourceTree = "<group>"; };
 		20F0C8032327D42A003111E7 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		20F0C8052327D439003111E7 /* BatterySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatterySection.swift; sourceTree = "<group>"; };
-		20F0C8072327D450003111E7 /* SingleActionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleActionSection.swift; sourceTree = "<group>"; };
 		20F0C80B2327DB74003111E7 /* BGMSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGMSection.swift; sourceTree = "<group>"; };
 		20F15C392313D2B9000C5503 /* InfoActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoActionView.swift; sourceTree = "<group>"; };
 		20F15C3B2313D2C7000C5503 /* InfoActionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoActionView.xib; sourceTree = "<group>"; };
@@ -420,6 +418,28 @@
 			path = Peripheral;
 			sourceTree = "<group>";
 		};
+		20B7979B2338EC59001328E1 /* Profiles */ = {
+			isa = PBXGroup;
+			children = (
+				20B7979C2338EC63001328E1 /* Template */,
+				203D0F07232F77F300C0340D /* Cycling */,
+				2002A003232260CA00C43E06 /* Glucose */,
+			);
+			path = Profiles;
+			sourceTree = "<group>";
+		};
+		20B7979C2338EC63001328E1 /* Template */ = {
+			isa = PBXGroup;
+			children = (
+				20B25F372319568B006AF321 /* PeripheralTableViewController.swift */,
+				20F0C8022327D417003111E7 /* Sections */,
+				20029FFF231FAFD100C43E06 /* PeripheralManager.swift */,
+				20B25F39231960CF006AF321 /* ConnectTableViewController.swift */,
+				20D08E03232A4A3600569587 /* SelectionsTableViewController.swift */,
+			);
+			path = Template;
+			sourceTree = "<group>";
+		};
 		20C7FDFF2306C52900B06FD8 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -528,7 +548,6 @@
 				20D08E29232B945700569587 /* Cells */,
 				20F0C8032327D42A003111E7 /* Section.swift */,
 				20F0C8052327D439003111E7 /* BatterySection.swift */,
-				20F0C8072327D450003111E7 /* SingleActionSection.swift */,
 				20D08DFF2329356700569587 /* ActionSection.swift */,
 				20F0C80B2327DB74003111E7 /* BGMSection.swift */,
 				20D08E27232B940400569587 /* OptionSelectioSection.swift */,
@@ -674,13 +693,7 @@
 		5217F3EB1859EE0000F2D5BB /* nRF Toolbox */ = {
 			isa = PBXGroup;
 			children = (
-				203D0F07232F77F300C0340D /* Cycling */,
-				2002A003232260CA00C43E06 /* Glucose */,
-				20B25F372319568B006AF321 /* PeripheralTableViewController.swift */,
-				20F0C8022327D417003111E7 /* Sections */,
-				20029FFF231FAFD100C43E06 /* BLEManager.swift */,
-				20B25F39231960CF006AF321 /* ConnectTableViewController.swift */,
-				20D08E03232A4A3600569587 /* SelectionsTableViewController.swift */,
+				20B7979B2338EC59001328E1 /* Profiles */,
 				208EE4E823155F94008E5FE9 /* WebViewController */,
 				20F15C372313D082000C5503 /* CommonViews */,
 				20E07B39230558B700FCB205 /* MainScreen */,
@@ -1121,7 +1134,6 @@
 				304D58FF1CE3521900148271 /* LogItem.swift in Sources */,
 				3042993C1CE6154100E1D2AB /* BaseRevealViewController.swift in Sources */,
 				30499E4B1CE4667800E0993B /* DFUConstantsUtility.swift in Sources */,
-				20F0C8082327D450003111E7 /* SingleActionSection.swift in Sources */,
 				20F15C432313F821000C5503 /* XibInstantiable.swift in Sources */,
 				3001432D1CECADFB008379DF /* CharacteristicReader.swift in Sources */,
 				3010F6051CDCB4F900CB285A /* BPMViewController.swift in Sources */,
@@ -1133,7 +1145,7 @@
 				20B25F382319568B006AF321 /* PeripheralTableViewController.swift in Sources */,
 				52D9BC9E1DD0CB760030E824 /* Data.swift in Sources */,
 				306ECD621CE61A3600E48BBD /* AppDelegate.swift in Sources */,
-				2002A000231FAFD100C43E06 /* BLEManager.swift in Sources */,
+				2002A000231FAFD100C43E06 /* PeripheralManager.swift in Sources */,
 				20F0C8012327D207003111E7 /* CBUUID+IDs.swift in Sources */,
 				20C7FDFE2306BEE000B06FD8 /* Array+Ext.swift in Sources */,
 				3001EBB71D1BE1FB008C5C37 /* BGMDetailsViewController.swift in Sources */,

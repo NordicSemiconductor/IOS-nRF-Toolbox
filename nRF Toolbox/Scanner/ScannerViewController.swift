@@ -38,7 +38,7 @@ class ScannerViewController: UITableViewController, CBCentralManagerDelegate {
     var bluetoothManager : CBCentralManager?
     var delegate         : ScannerDelegate?
     var filterUUID       : CBUUID?
-    var peripherals      : [ScannedPeripheral]
+    var peripherals      : [DiscoveredPeripheral]
     var timer            : Timer?
     
     @IBOutlet weak var devicesTable: UITableView!
@@ -185,9 +185,9 @@ class ScannerViewController: UITableViewController, CBCentralManagerDelegate {
         }
 
         let connectedPeripherals = self.getConnectedPeripherals()
-        var newScannedPeripherals: [ScannedPeripheral] = []
+        var newScannedPeripherals: [DiscoveredPeripheral] = []
         connectedPeripherals.forEach { (connectedPeripheral: CBPeripheral) in
-            let scannedPeripheral = ScannedPeripheral(with: connectedPeripheral )
+            let scannedPeripheral = DiscoveredPeripheral(with: connectedPeripheral )
             newScannedPeripherals.append(scannedPeripheral)
         }
         peripherals = newScannedPeripherals
@@ -200,7 +200,7 @@ class ScannerViewController: UITableViewController, CBCentralManagerDelegate {
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         // Scanner uses other queue to send events. We must edit UI in the main queue
         DispatchQueue.main.async {
-            var sensor = ScannedPeripheral(with: peripheral, RSSI: RSSI.int32Value)
+            var sensor = DiscoveredPeripheral(with: peripheral, RSSI: RSSI.int32Value)
             if let index = self.peripherals.firstIndex(of: sensor) {
                 sensor = self.peripherals[index]
                 sensor.rssi = RSSI.int32Value
