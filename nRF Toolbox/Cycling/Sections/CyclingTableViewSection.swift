@@ -51,7 +51,7 @@ struct CyclingTableViewSection: Section {
     
     let sectionTitle: String = "Speed and Cadence"
     
-    var id: Identifier<Section> = "cycling"
+    var id: Identifier<Section> = .cycling
     
     private func update(_ item: DefaultDetailsTableViewCellModel) -> DefaultDetailsTableViewCellModel {
         var item = item
@@ -87,15 +87,15 @@ struct CyclingTableViewSection: Section {
         var crankRevDiff: Double = 0
         
         if flag & wheelRevolutionFlag == 1 {
-            wheelRevDiff = self.processWheelData(value)
+            wheelRevDiff = processWheelData(value)
             if flag & 0x02 == 2 {
-                crankRevDiff = self.processCrankData(value, revolutionIndex: 7)
+                crankRevDiff = processCrankData(value, revolutionIndex: 7)
                 if crankRevDiff > 0 {
                     gearRatio = wheelRevDiff / crankRevDiff
                 }
             }
         } else if flag & crankRevolutionFlag == 2 {
-            crankRevDiff = self.processCrankData(value, revolutionIndex: 1)
+            crankRevDiff = processCrankData(value, revolutionIndex: 1)
             if crankRevDiff > 0 {
                 gearRatio = wheelRevDiff / crankRevDiff
             }

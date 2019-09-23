@@ -23,4 +23,5 @@ extension Identifier where Value == Section {
     static let selectionResult: Identifier<Section> = "SelectionResultSection"
     static let optionSelection: Identifier<Section> = "OptionSelection"
     static let details: Identifier<Section> = "DetailsSection"
+    static let cycling: Identifier<Section> = "Cycling"
 }

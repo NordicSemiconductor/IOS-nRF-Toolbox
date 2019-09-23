@@ -9,7 +9,7 @@
 import UIKit
 
 struct BatterySection: Section {
-    let id: Identifier<Section> = ""
+    let id: Identifier<Section> = .battery
     
     let numberOfItems = 1
     let sectionTitle = "Battery"

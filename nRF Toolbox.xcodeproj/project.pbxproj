@@ -21,6 +21,7 @@
 		20B797912334FD77001328E1 /* Peripheral+BMG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B797902334FD77001328E1 /* Peripheral+BMG.swift */; };
 		20B797942334FE1B001328E1 /* Identifier+GlucoseMonitorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B797932334FE1B001328E1 /* Identifier+GlucoseMonitorViewController.swift */; };
 		20B7979823350584001328E1 /* Peripheral+Cycling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B7979723350584001328E1 /* Peripheral+Cycling.swift */; };
+		20B7979A2338B8C0001328E1 /* MeasurementFormatter+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B797992338B8C0001328E1 /* MeasurementFormatter+Ext.swift */; };
 		20C7FDFE2306BEE000B06FD8 /* Array+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FDFD2306BEE000B06FD8 /* Array+Ext.swift */; };
 		20C7FE012306C5FF00B06FD8 /* BLEServiceList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE002306C5FF00B06FD8 /* BLEServiceList.plist */; };
 		20C7FE032306C72000B06FD8 /* IoTServices.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE022306C72000B06FD8 /* IoTServices.plist */; };
@@ -34,7 +35,6 @@
 		20C7FE1E230BE75D00B06FD8 /* BGMViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE1D230BE75D00B06FD8 /* BGMViewController.storyboard */; };
 		20C7FE20230BE7DF00B06FD8 /* HKViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE1F230BE7DF00B06FD8 /* HKViewController.storyboard */; };
 		20C7FE22230BE9E800B06FD8 /* BPMViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE21230BE9E800B06FD8 /* BPMViewController.storyboard */; };
-		20C7FE24230BEA5B00B06FD8 /* CSCViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE23230BEA5B00B06FD8 /* CSCViewController.storyboard */; };
 		20C7FE26230BEA9D00B06FD8 /* DFUViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE25230BEA9D00B06FD8 /* DFUViewController.storyboard */; };
 		20C7FE28230BEB6300B06FD8 /* HRMViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE27230BEB6300B06FD8 /* HRMViewController.storyboard */; };
 		20C7FE2A230BEBAA00B06FD8 /* HTSViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE29230BEBAA00B06FD8 /* HTSViewController.storyboard */; };
@@ -117,7 +117,6 @@
 		304D59011CE352B300148271 /* LogItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304D59001CE352B300148271 /* LogItemTableViewCell.swift */; };
 		3069A1D71CDC788A003869EA /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3069A1D61CDC788A003869EA /* BluetoothManager.swift */; };
 		306ECD621CE61A3600E48BBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306ECD611CE61A3600E48BBD /* AppDelegate.swift */; };
-		3080C4711CE06D0E009C2D8C /* CSCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3080C4701CE06D0E009C2D8C /* CSCViewController.swift */; };
 		308AA57A1CD8DD4300CC9857 /* GlucoseReadingContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308AA5791CD8DD4300CC9857 /* GlucoseReadingContext.swift */; };
 		308EE1781CE0CBF700F2A854 /* HTSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308EE1771CE0CBF700F2A854 /* HTSViewController.swift */; };
 		30921FD51CD0EB55009CBDDE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30921FD41CD0EB55009CBDDE /* MainViewController.swift */; };
@@ -181,6 +180,7 @@
 		20B797902334FD77001328E1 /* Peripheral+BMG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Peripheral+BMG.swift"; sourceTree = "<group>"; };
 		20B797932334FE1B001328E1 /* Identifier+GlucoseMonitorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Identifier+GlucoseMonitorViewController.swift"; sourceTree = "<group>"; };
 		20B7979723350584001328E1 /* Peripheral+Cycling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Peripheral+Cycling.swift"; sourceTree = "<group>"; };
+		20B797992338B8C0001328E1 /* MeasurementFormatter+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeasurementFormatter+Ext.swift"; sourceTree = "<group>"; };
 		20C7FDFD2306BEE000B06FD8 /* Array+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Array+Ext.swift"; path = "../Array+Ext.swift"; sourceTree = "<group>"; };
 		20C7FE002306C5FF00B06FD8 /* BLEServiceList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = BLEServiceList.plist; sourceTree = "<group>"; };
 		20C7FE022306C72000B06FD8 /* IoTServices.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = IoTServices.plist; sourceTree = "<group>"; };
@@ -194,7 +194,6 @@
 		20C7FE1D230BE75D00B06FD8 /* BGMViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BGMViewController.storyboard; sourceTree = "<group>"; };
 		20C7FE1F230BE7DF00B06FD8 /* HKViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HKViewController.storyboard; sourceTree = "<group>"; };
 		20C7FE21230BE9E800B06FD8 /* BPMViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BPMViewController.storyboard; sourceTree = "<group>"; };
-		20C7FE23230BEA5B00B06FD8 /* CSCViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CSCViewController.storyboard; sourceTree = "<group>"; };
 		20C7FE25230BEA9D00B06FD8 /* DFUViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DFUViewController.storyboard; sourceTree = "<group>"; };
 		20C7FE27230BEB6300B06FD8 /* HRMViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HRMViewController.storyboard; sourceTree = "<group>"; };
 		20C7FE29230BEBAA00B06FD8 /* HTSViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HTSViewController.storyboard; sourceTree = "<group>"; };
@@ -279,7 +278,6 @@
 		304D59001CE352B300148271 /* LogItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogItemTableViewCell.swift; sourceTree = "<group>"; };
 		3069A1D61CDC788A003869EA /* BluetoothManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
 		306ECD611CE61A3600E48BBD /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3080C4701CE06D0E009C2D8C /* CSCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CSCViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		308AA5791CD8DD4300CC9857 /* GlucoseReadingContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GlucoseReadingContext.swift; path = Model/GlucoseReadingContext.swift; sourceTree = "<group>"; };
 		308EE1771CE0CBF700F2A854 /* HTSViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = HTSViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		30921FD41CD0EB55009CBDDE /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -442,6 +440,7 @@
 				20C7FE5A230EAD0000B06FD8 /* UINavigationController+Ext.swift */,
 				2002A001231FB8E800C43E06 /* UIImage+Ext.swift */,
 				20F0C8002327D207003111E7 /* CBUUID+IDs.swift */,
+				20B797992338B8C0001328E1 /* MeasurementFormatter+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -693,7 +692,6 @@
 				5236E166187EA7AA0057E974 /* Scanner */,
 				309F08631E6D6A4300B7546A /* HomeKit */,
 				5252A53718802B6D00EFD773 /* BPM */,
-				5285D9A61890031F00305F1D /* CSC */,
 				5252A53B18802F6300EFD773 /* DFU */,
 				5236E164187EA7850057E974 /* HRM */,
 				5236E165187EA7930057E974 /* HTS */,
@@ -839,15 +837,6 @@
 				20C7FE19230AE3E800B06FD8 /* ProximityViewController.storyboard */,
 			);
 			path = PROXIMITY;
-			sourceTree = "<group>";
-		};
-		5285D9A61890031F00305F1D /* CSC */ = {
-			isa = PBXGroup;
-			children = (
-				3080C4701CE06D0E009C2D8C /* CSCViewController.swift */,
-				20C7FE23230BEA5B00B06FD8 /* CSCViewController.storyboard */,
-			);
-			path = CSC;
 			sourceTree = "<group>";
 		};
 		52BDCBE31C4F953C00E2680F /* Logger */ = {
@@ -1047,7 +1036,6 @@
 				20E07B632306975700FCB205 /* GT-Eesti-Display-Regular.ttf in Resources */,
 				5211EFB118856430007CC40D /* icon-hex@2x.png in Resources */,
 				20E07B672306975700FCB205 /* GT-Eesti-Display-Light-Italic.ttf in Resources */,
-				20C7FE24230BEA5B00B06FD8 /* CSCViewController.storyboard in Resources */,
 				20C7FE2E230BEC9D00B06FD8 /* CGMViewController.storyboard in Resources */,
 				20E07B652306975700FCB205 /* GT-Eesti-Display-ULight.ttf in Resources */,
 				20E07B612306975700FCB205 /* GT-Eesti-Display-Medium.ttf in Resources */,
@@ -1155,7 +1143,6 @@
 				20C7FE10230A9FAB00B06FD8 /* UIFont+Ext.swift in Sources */,
 				304D59011CE352B300148271 /* LogItemTableViewCell.swift in Sources */,
 				3001EBC51D1C153C008C5C37 /* CGMDetailsViewController.swift in Sources */,
-				3080C4711CE06D0E009C2D8C /* CSCViewController.swift in Sources */,
 				2002A002231FB8E800C43E06 /* UIImage+Ext.swift in Sources */,
 				20D08E06232A569B00569587 /* Identifiable.swift in Sources */,
 				309F086E1E6ED44F00B7546A /* HKScannerDelegate.swift in Sources */,
@@ -1194,6 +1181,7 @@
 				30921FD51CD0EB55009CBDDE /* MainViewController.swift in Sources */,
 				3001EBBD1D1BE695008C5C37 /* CGMFeatureData.swift in Sources */,
 				5231403022FB07820074325A /* RootNavigationController.swift in Sources */,
+				20B7979A2338B8C0001328E1 /* MeasurementFormatter+Ext.swift in Sources */,
 				20F0C80C2327DB74003111E7 /* BGMSection.swift in Sources */,
 				3001EBB81D1BE1FB008C5C37 /* BGMItemCell.swift in Sources */,
 				300143271CEC4B9D008379DF /* AppUtilities.swift in Sources */,

@@ -15,6 +15,7 @@ class CyclingTableViewController: PeripheralTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(DetailsTableViewCell.self, forCellReuseIdentifier: "DetailsTableViewCell")
+        navigationItem.title = "Cycling Speed and Cadence Sensor"
     }
     
     override var internalSections: [Section] {
@@ -39,7 +40,7 @@ class CyclingTableViewController: PeripheralTableViewController {
     
     private func handleCycling(value: Data) {
         cyclingSection.update(with: value)
-        reloadSection(id: "cycling")
+        reloadSection(id: .cycling)
     }
 }
 

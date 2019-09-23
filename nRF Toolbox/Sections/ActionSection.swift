@@ -34,8 +34,8 @@ struct ActionSection: Section {
         cell?.textLabel?.text = item.title
         cell?.textLabel?.textColor = {
             switch item.style {
-            case .default: return .nordicLake
-            case .destructive: return .nordicRed
+            case .default: return UIColor.Button.action
+            case .destructive: return UIColor.Button.destructive
             }
         }()
         return cell!

@@ -9,7 +9,7 @@
 import UIKit
 
 extension UINavigationController {
-    static func nordicBranded(rootViewController: UIViewController) -> UINavigationController {
+    static func nordicBranded(rootViewController: UIViewController, prefersLargeTitles: Bool = false) -> UINavigationController {
         let nc = UINavigationController(rootViewController: rootViewController)
         nc.navigationBar.tintColor = .almostWhite
         nc.navigationBar.barTintColor = .nordicBlue
@@ -21,10 +21,9 @@ extension UINavigationController {
             
             nc.navigationBar.titleTextAttributes = attributes
             nc.navigationBar.largeTitleTextAttributes = attributes
-            nc.navigationBar.prefersLargeTitles = true
+            nc.navigationBar.prefersLargeTitles = prefersLargeTitles
         }
         
-        #if BETA
         if #available(iOS 13.0, *) {
             let navBarAppearance = UINavigationBarAppearance()
             navBarAppearance.configureWithOpaqueBackground()
@@ -34,9 +33,7 @@ extension UINavigationController {
             
             nc.navigationBar.standardAppearance = navBarAppearance
             nc.navigationBar.scrollEdgeAppearance = navBarAppearance
-            nc.navigationBar.prefersLargeTitles = true 
         }
-        #endif
         
         return nc
     }

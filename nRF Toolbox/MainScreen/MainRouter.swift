@@ -47,13 +47,13 @@ class DefaultMainRouter {
             .proximity : ProximityViewController.instance(),
             .homeKit : HKViewController.instance(),
             .uart : UARTRevealViewController.instance(storyboard: UIStoryboard(name: "UARTViewController", bundle: .main))
-        ].mapValues { UINavigationController(rootViewController: $0) }
+            ].mapValues { UINavigationController.nordicBranded(rootViewController: $0) }
     }()
     
     lazy private var serviceList = ServiceListViewController(serviceRouter: self)
     
     lazy private var splitViewController: UISplitViewController = {
-        let nc = UINavigationController.nordicBranded(rootViewController: serviceList)
+        let nc = UINavigationController.nordicBranded(rootViewController: serviceList, prefersLargeTitles: true)
         let splitViewController = UISplitViewController()
         splitViewController.viewControllers = [nc, NoContentViewController()]
         splitViewController.delegate = self
@@ -71,11 +71,6 @@ extension DefaultMainRouter: UISplitViewControllerDelegate {
 }
 
 extension DefaultMainRouter: ServiceRouter {
-//    func showServiceController(_ model: BLEService) {
-//        let vc = GlucoseMonitorViewController(style: .grouped)
-//        splitViewController.showDetailViewController(vc, sender: self)
-//    }
-    
     func showServiceController(with serviceId: ServiceId) {
         guard let viewController = serviceViewControllers[serviceId] else {
             Log(category: .ui, type: .error).log(message: "Cannot find view controller for \(serviceId) service id")

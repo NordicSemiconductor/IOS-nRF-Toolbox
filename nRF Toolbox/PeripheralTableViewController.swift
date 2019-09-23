@@ -45,18 +45,18 @@ class PeripheralTableViewController: UITableViewController {
     
     var internalSections: [Section] { return [] }
     
-//    var profileUUID: CBUUID? { return nil }
-//    var scanServices: [CBUUID]? { return [CBUUID.Service.battery] }
-    
     var peripheralDescription: Peripheral {
         return Peripheral(uuid: CBUUID.Profile.bloodGlucoseMonitor, services: [.battery])
     }
     
     private var batterySection = BatterySection()
-    private lazy var deinitSection = SingleActionSection(id: "Disconnect", buttonTitle: "Disconnect", style: .destructive) {
-        guard let peripheral = self.activePeripheral else { return }
-        self.bleManager.manager.cancelPeripheralConnection(peripheral)
-    }
+    
+    private lazy var deinitSection = ActionSection(id: .disconnect, sectionTitle: "Disconnect", items: [
+        ActionSectionItem(title: "Disconnect", style: .destructive) {
+            guard let peripheral = self.activePeripheral else { return }
+            self.bleManager.manager.cancelPeripheralConnection(peripheral)
+        }
+    ])
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -119,7 +119,7 @@ class PeripheralTableViewController: UITableViewController {
             Log(category: .ui, type: .error).log(message: "Cannot upload section \(id)")
             return
         }
-        tableView.reloadSections([index], with: animation)
+        tableView.reloadSections([index], with: .none)
     }
     
     // MARK: Bluetooth events handling
@@ -163,9 +163,7 @@ class PeripheralTableViewController: UITableViewController {
         
         Log(category: .ui, type: .debug).log(message: "Battery level: \(batteryLevel)")
         
-        DispatchQueue.main.async {
-            self.reloadSection(id: .battery)
-        }
+        self.reloadSection(id: .battery)
     }
 }
 
