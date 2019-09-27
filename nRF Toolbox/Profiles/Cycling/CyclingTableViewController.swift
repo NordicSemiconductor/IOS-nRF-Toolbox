@@ -18,13 +18,8 @@ class CyclingTableViewController: PeripheralTableViewController {
         navigationItem.title = "Cycling Speed and Cadence Sensor"
     }
     
-    override var internalSections: [Section] {
-        return [cyclingSection]
-    }
-    
-    override var peripheralDescription: Peripheral {
-        return .cyclingSpeedCadenceSensor
-    }
+    override var internalSections: [Section] { [cyclingSection] }
+    override var peripheralDescription: Peripheral { .cyclingSpeedCadenceSensor }
     
     override func didUpdateValue(for characteristic: CBCharacteristic) {
         switch characteristic.uuid {

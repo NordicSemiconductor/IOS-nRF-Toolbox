@@ -13,12 +13,14 @@ extension CBUUID {
     struct Profile {
         static let bloodGlucoseMonitor = CBUUID(string: "00001808-0000-1000-8000-00805F9B34FB")
         static let cyclingSpeedCadenceSensor = CBUUID(string: "00001816-0000-1000-8000-00805F9B34FB")
+        static let runningSpeedCadenceSensor = CBUUID(string: "00001814-0000-1000-8000-00805F9B34FB")
     }
     
     struct Service {
         static let battery = CBUUID(string: "0000180F-0000-1000-8000-00805F9B34FB")
         static let bloodGlucoseMonitor = CBUUID(string: "00001808-0000-1000-8000-00805F9B34FB")
         static let cyclingSpeedCadenceSensor = CBUUID(string: "00001816-0000-1000-8000-00805F9B34FB")
+        static let runningSpeedCadenceSensor = CBUUID(string: "00001814-0000-1000-8000-00805F9B34FB")
     }
     
     struct Characteristics {
@@ -34,6 +36,10 @@ extension CBUUID {
         
         struct CyclingSesnor {
             static let measurement = CBUUID(string: "00002A5B-0000-1000-8000-00805F9B34FB")
+        }
+        
+        struct Running {
+            static let measurement = CBUUID(string: "00002A53-0000-1000-8000-00805F9B34FB")
         }
     }
 }

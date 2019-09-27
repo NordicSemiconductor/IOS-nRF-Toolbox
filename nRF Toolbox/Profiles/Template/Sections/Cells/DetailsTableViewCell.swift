@@ -20,6 +20,12 @@ struct DefaultDetailsTableViewCellModel: DetailsTableViewCellModel {
     var value: String = "-"
     
     var details: CustomStringConvertible { return value }
+    
+    init(title: String, value: String = "-", identifier: Identifier<DetailsTableViewCellModel> = "") {
+        self.title = title
+        self.value = value
+        self.identifier = identifier
+    }
 }
 
 class DetailsTableViewCell: UITableViewCell {

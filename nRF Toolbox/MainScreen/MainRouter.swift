@@ -41,7 +41,7 @@ class DefaultMainRouter {
             .cyclingSensor : CyclingTableViewController(style: .grouped),
             .heartRateMonitor : HRMViewController.instance(),
             .healthThermometer : HTSViewController.instance(),
-            .runningSensor : RSCViewController.instance(),
+            .runningSensor : RunningTableViewController(style: .grouped),
             .continuousGlucoseMonitor : CGMViewController.instance(),
             .deviceFirmwareUpgrade : DFUViewController.instance(),
             .proximity : ProximityViewController.instance(),

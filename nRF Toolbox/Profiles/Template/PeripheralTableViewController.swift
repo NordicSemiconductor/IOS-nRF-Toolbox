@@ -49,7 +49,7 @@ class PeripheralTableViewController: UITableViewController {
         return Peripheral(uuid: CBUUID.Profile.bloodGlucoseMonitor, services: [.battery])
     }
     
-    private var batterySection = BatterySection()
+    private var batterySection = BatterySection(id: .battery)
     
     private lazy var deinitSection = ActionSection(id: .disconnect, sectionTitle: "Disconnect", items: [
         ActionSectionItem(title: "Disconnect", style: .destructive) {
@@ -66,7 +66,7 @@ class PeripheralTableViewController: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Battery")
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "ActionCell")
         tableView.register(DisclosureTableViewCell.self, forCellReuseIdentifier: "DisclosureTableViewCell")
-        tableView.register(DetailsTableViewCell.self, forCellReuseIdentifier: "BatteryTableViewCell")
+        tableView.register(DetailsTableViewCell.self, forCellReuseIdentifier: "DetailsTableViewCell")
     }
     
     private func disconnect() {
@@ -120,6 +120,20 @@ class PeripheralTableViewController: UITableViewController {
         tableView.reloadSections([index], with: .none)
     }
     
+    func reloadItemInSection(_ sectionId: Identifier<Section>, itemId: Identifier<DetailsTableViewCellModel>, animation: UITableView.RowAnimation = .automatic) {
+        guard let section = sections
+                .enumerated()
+                .first(where: { $0.element.id == sectionId && $0.element is DetailsTableViewSection }),
+            let itemIndex = (section.element as? DetailsTableViewSection)?.items
+                .firstIndex(where: { $0.identifier == itemId })
+            else {
+                Log(category: .ui, type: .error).log(message: "Cannot upload section \(sectionId)")
+            return
+        }
+        
+        tableView.reloadRows(at: [IndexPath(row: itemIndex, section: section.offset)], with: animation)
+    }
+    
     // MARK: Bluetooth events handling
     func didDiscover(service: CBService, for peripheral: CBPeripheral) {
         let characteristics: [CBUUID]? = self.peripheralDescription
@@ -154,14 +168,8 @@ class PeripheralTableViewController: UITableViewController {
     
     // MARK: Bluetooth Characteristic Handling
     func handleBatteryValue(_ characteristic: CBCharacteristic) {
-        let data = characteristic.value;
-        var pointer = UnsafeMutablePointer<UInt8>(mutating: (data! as NSData).bytes.bindMemory(to: UInt8.self, capacity: data!.count))
-        let batteryLevel = CharacteristicReader.readUInt8Value(ptr: &pointer)
-        batterySection.batteryLevel = Int(batteryLevel)
-        
-        Log(category: .ui, type: .debug).log(message: "Battery level: \(batteryLevel)")
-        
-        self.reloadSection(id: .battery)
+        batterySection.update(with: characteristic.value!)
+        reloadSection(id: .battery)
     }
 }
 

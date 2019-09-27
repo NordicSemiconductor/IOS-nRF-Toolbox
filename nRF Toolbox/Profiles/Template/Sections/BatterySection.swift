@@ -8,18 +8,10 @@
 
 import UIKit
 
-struct BatterySection: Section {
-    let id: Identifier<Section> = .battery
-    
-    let numberOfItems = 1
-    let sectionTitle = "Battery"
-    
-    func dequeCell(for index: Int, from tableView: UITableView) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "BatteryTableViewCell")
-        cell?.textLabel?.text = "Battery"
-        cell?.detailTextLabel?.text = "\(self.batteryLevel)"
-        return cell!
+class BatterySection: DetailsTableViewSection {
+    override func update(with data: Data) {
+        let batteryLevel: UInt8 = data.read()
+        let item = DefaultDetailsTableViewCellModel(title: "Battery", value: "\(batteryLevel)")
+        items = [item]
     }
-    
-    var batteryLevel: Int = 0
 }
