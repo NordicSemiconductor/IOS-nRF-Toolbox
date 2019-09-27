@@ -30,7 +30,6 @@ struct OptionSelectioSection<T>: Section {
         return cell
     }
     
-    
-    
+    func reset() { }
     
 }

@@ -40,7 +40,7 @@ class PeripheralTableViewController: UITableViewController {
     private (set) var activePeripheral: CBPeripheral?
     
     var sections: [Section] {
-        return self.internalSections + [self.batterySection, self.deinitSection]
+        return self.internalSections + [self.batterySection, self.disconnectSection]
     }
     
     var internalSections: [Section] { return [] }
@@ -51,7 +51,7 @@ class PeripheralTableViewController: UITableViewController {
     
     private var batterySection = BatterySection(id: .battery)
     
-    private lazy var deinitSection = ActionSection(id: .disconnect, sectionTitle: "Disconnect", items: [
+    private lazy var disconnectSection = ActionSection(id: .disconnect, sectionTitle: "Disconnect", items: [
         ActionSectionItem(title: "Disconnect", style: .destructive) {
             guard let peripheral = self.activePeripheral else { return }
             self.peripheralManager.closeConnection(peripheral: peripheral)
@@ -118,6 +118,14 @@ class PeripheralTableViewController: UITableViewController {
             return
         }
         tableView.reloadSections([index], with: .none)
+    }
+    
+    func reloadSections(ids: [Identifier<Section>], animation: UITableView.RowAnimation = .automatic) {
+        let indexes = sections.enumerated()
+            .filter { ids.contains($0.element.id) }
+            .map { $0.offset }
+        
+        tableView.reloadSections(IndexSet(indexes), with: animation)
     }
     
     func reloadItemInSection(_ sectionId: Identifier<Section>, itemId: Identifier<DetailsTableViewCellModel>, animation: UITableView.RowAnimation = .automatic) {
@@ -226,6 +234,8 @@ extension PeripheralTableViewController: StatusDelegate {
         Log(category: .ble, type: .debug).log(message: "Changed Bluetooth status in \(String(describing: type(of: self))), status: \(status)")
         switch status {
         case .poweredOff:
+            activePeripheral = nil
+            
             let bSettings: InfoActionView.ButtonSettings = ("Settings", {
                 let url = URL(string: "App-Prefs:root=Bluetooth") //for bluetooth setting
                 let app = UIApplication.shared
@@ -236,6 +246,13 @@ extension PeripheralTableViewController: StatusDelegate {
             let notContent = InfoActionView.instanceWithParams(message: "Bluetooth is powered off", buttonSettings: bSettings)
             view = notContent
         case .disconnected:
+            activePeripheral = nil
+            
+            for var section in sections {
+                section.reset()
+            }
+            tableView.reloadData()
+            
             let bSettings: InfoActionView.ButtonSettings = ("Connect", {
                 
                 let connectTableViewController = ConnectTableViewController(connectDelegate: self.peripheralManager)
@@ -254,13 +271,15 @@ extension PeripheralTableViewController: StatusDelegate {
             let notContent = InfoActionView.instanceWithParams(message: "Device is not connected", buttonSettings: bSettings)
             view = notContent
         case .connected(let peripheral):
-            self.dismiss(animated: true, completion: nil)
-            self.activePeripheral = peripheral
+            dismiss(animated: true, completion: nil)
+            activePeripheral = peripheral
             
             activePeripheral?.delegate = self
             activePeripheral?.discoverServices(peripheralDescription.services?.map { $0.uuid } )
             
             view = tbView
+//            tbView.reloadData()
+//            reloadSection(id: .disconnect)
         }
     }
 }

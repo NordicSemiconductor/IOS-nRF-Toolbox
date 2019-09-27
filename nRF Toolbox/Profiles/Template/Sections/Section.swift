@@ -10,6 +10,7 @@ import UIKit
 
 protocol Section {
     func dequeCell(for index: Int, from tableView: UITableView) -> UITableViewCell
+    mutating func reset()
     var numberOfItems: Int { get }
     var sectionTitle: String { get }
     var id: Identifier<Section> { get }

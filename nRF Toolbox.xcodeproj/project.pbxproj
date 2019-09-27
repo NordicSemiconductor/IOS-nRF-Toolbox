@@ -443,6 +443,7 @@
 		20B7978C2334FD3C001328E1 /* Sections */ = {
 			isa = PBXGroup;
 			children = (
+				20F0C80B2327DB74003111E7 /* BGMSection.swift */,
 			);
 			path = Sections;
 			sourceTree = "<group>";
@@ -604,7 +605,6 @@
 				20F0C8032327D42A003111E7 /* Section.swift */,
 				20F0C8052327D439003111E7 /* BatterySection.swift */,
 				20D08DFF2329356700569587 /* ActionSection.swift */,
-				20F0C80B2327DB74003111E7 /* BGMSection.swift */,
 				20D08E27232B940400569587 /* OptionSelectioSection.swift */,
 				203D0F0B232FB7D100C0340D /* DetailsTableViewSection.swift */,
 			);

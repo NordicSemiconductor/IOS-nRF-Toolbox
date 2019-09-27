@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct BGMSection: Section {
+class BGMSection: Section {
     let id: Identifier<Section> = .bgmReadings
     
     func dequeCell(for index: Int, from tableView: UITableView) -> UITableViewCell {
@@ -16,6 +16,10 @@ struct BGMSection: Section {
         let reading = items[index]
         cell.update(with: reading)
         return cell
+    }
+    
+    func reset() {
+        items = []
     }
     
     var numberOfItems: Int {
@@ -26,11 +30,11 @@ struct BGMSection: Section {
     
     private (set) var items: [GlucoseReading] = []
     
-    mutating func clearReadings() {
+    func clearReadings() {
         items.removeAll()
     }
     
-    mutating func update(reading: GlucoseReading) {
+    func update(reading: GlucoseReading) {
         guard let index = items.firstIndex(where: { $0 == reading }) else {
             items.append(reading)
             return
@@ -38,7 +42,7 @@ struct BGMSection: Section {
         items[index] = reading
     }
     
-    mutating func update(context: GlucoseReadingContext) {
+    func update(context: GlucoseReadingContext) {
         guard let index = items.firstIndex(where: { $0.sequenceNumber == context.sequenceNumber }) else {
             Log(category: .ble, type: .error).log(message: "Glucose measurement with sequence number: \(context.sequenceNumber) not found")
             return

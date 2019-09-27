@@ -41,6 +41,8 @@ struct ActionSection: Section {
         return cell!
     }
     
+    mutating func reset() { }
+    
     var numberOfItems: Int {
         return items.count
     }

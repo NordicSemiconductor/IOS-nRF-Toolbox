@@ -20,6 +20,12 @@ class RunningSpeedSection: DetailsTableViewSection {
     
     override var sectionTitle: String { "Speed and Cadence" }
     
+    override func reset() {
+        timer?.invalidate()
+        numberOfSteps = 0
+        super.reset()
+    }
+    
     deinit {
         timer?.invalidate()
     }
@@ -62,5 +68,7 @@ class RunningSpeedSection: DetailsTableViewSection {
             }
         }
     }
+    
+    
     
 }

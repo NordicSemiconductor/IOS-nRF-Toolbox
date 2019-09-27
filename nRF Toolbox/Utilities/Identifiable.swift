@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Identifier<Value> {
+struct Identifier<Value>: Equatable {
     let string: String
 }
 

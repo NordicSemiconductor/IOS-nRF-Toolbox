@@ -14,4 +14,6 @@ class BatterySection: DetailsTableViewSection {
         let item = DefaultDetailsTableViewCellModel(title: "Battery", value: "\(batteryLevel)")
         items = [item]
     }
+    
+    override func reset() { }
 }

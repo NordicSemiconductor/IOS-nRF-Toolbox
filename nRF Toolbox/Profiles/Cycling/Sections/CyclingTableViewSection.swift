@@ -48,6 +48,12 @@ struct CyclingTableViewSection: Section {
         return detailsCell
     }
     
+    mutating func reset() {
+        for i in items.enumerated() {
+            items[i.offset].value = "-"
+        }
+    }
+    
     var numberOfItems: Int { return items.count }
     
     let sectionTitle: String = "Speed and Cadence"

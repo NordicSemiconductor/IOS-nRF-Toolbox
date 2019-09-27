@@ -14,11 +14,14 @@ class DetailsTableViewSection: Section {
 
     let id: Identifier<Section>
     
-    
     func dequeCell(for index: Int, from tableView: UITableView) -> UITableViewCell {
         let detailsCell = tableView.dequeueCell(ofType: DetailsTableViewCell.self)
         detailsCell.update(with: items[index])
         return detailsCell
+    }
+    
+    func reset() {
+        items = [] 
     }
     
     var numberOfItems: Int {
