@@ -18,15 +18,10 @@ extension Identifier where Value == DetailsTableViewCellModel {
 }
 
 struct CyclingTableViewSection: Section {
-    private let wheelRevolutionFlag: UInt8 = 0x01
-    private let crankRevolutionFlag: UInt8 = 0x02
     // TODO: Load value from settings
     private let wheelCircumference: Double = 2.6//UserDefaults.standard.double(forKey: "key_diameter")
     
-    private var oldWheelRevolution: Int = 0
-    private var oldCrankRevolution: Int = 0
-    private var oldWheelEventTime: Double = 0
-    private var oldCrankEventTime: Double = 0
+    private var oldCharacteristic: CyclingCharacteristic = .zero
     
     private var travelDistance = Measurement<UnitLength>(value: 0, unit: .kilometers)
     private var totalTravelDistance = Measurement<UnitLength>(value: 0, unit: .kilometers)
@@ -52,6 +47,13 @@ struct CyclingTableViewSection: Section {
         for i in items.enumerated() {
             items[i.offset].value = "-"
         }
+        
+        oldCharacteristic = .zero 
+        totalTravelDistance = Measurement<UnitLength>(value: 0, unit: .meters)
+        travelDistance = Measurement<UnitLength>(value: 0, unit: .meters)
+        speed = Measurement<UnitSpeed>(value: 0, unit: .milesPerHour)
+        gearRatio = 0
+        cadence = 0
     }
     
     var numberOfItems: Int { return items.count }
@@ -63,12 +65,12 @@ struct CyclingTableViewSection: Section {
     private func update(_ item: DefaultDetailsTableViewCellModel) -> DefaultDetailsTableViewCellModel {
         var item = item
         
-        let speeedFormatter = MeasurementFormatter.numeric(maximumFractionDigits: 1)
+        let speedFormatter = MeasurementFormatter.numeric(maximumFractionDigits: 1)
         let distanceFormatter = MeasurementFormatter.numeric(maximumFractionDigits: 2)
         
         switch item.identifier {
         case .speed:
-            item.value = speeedFormatter.string(from: speed)
+            item.value = speedFormatter.string(from: speed)
         case .distance:
             item.value = distanceFormatter.string(from: travelDistance)
         case .totalDistance:
@@ -84,81 +86,24 @@ struct CyclingTableViewSection: Section {
     }
     
     mutating func update(with data: Data) {
-        let value = UnsafeMutablePointer<UInt8>(mutating: (data as NSData).bytes.bindMemory(to: UInt8.self, capacity: data.count))
         
-        let flag = value[0]
+        let characteristic = CyclingCharacteristic(data: data)
         
-        var wheelRevDiff: Double = 0
-        var crankRevDiff: Double = 0
+        characteristic.travelDistance(with: wheelCircumference)
+            .flatMap { self.totalTravelDistance = $0 }
+        characteristic.distance(oldCharacteristic, wheelCircumference: wheelCircumference)
+            .flatMap { self.travelDistance = self.travelDistance + $0 }
+        characteristic.gearRatio(oldCharacteristic)
+            .flatMap { self.gearRatio = $0 }
+        characteristic.speed(oldCharacteristic, wheelCircumference: wheelCircumference)
+            .flatMap { self.speed = $0 }
+        characteristic.cadence(oldCharacteristic)
+            .flatMap { self.cadence = $0 }
         
-        if flag & wheelRevolutionFlag == 1 {
-            wheelRevDiff = processWheelData(value)
-            if flag & 0x02 == 2 {
-                crankRevDiff = processCrankData(value, revolutionIndex: 7)
-                if crankRevDiff > 0 {
-                    gearRatio = wheelRevDiff / crankRevDiff
-                }
-            }
-        } else if flag & crankRevolutionFlag == 2 {
-            crankRevDiff = processCrankData(value, revolutionIndex: 1)
-            if crankRevDiff > 0 {
-                gearRatio = wheelRevDiff / crankRevDiff
-            }
-        }
+        oldCharacteristic = characteristic
         
         items = items.map(self.update)
     }
     
-    private mutating func processWheelData(_ value: UnsafeMutablePointer<UInt8>) -> Double {
-        let wheelRevolution = UInt8(CFSwapInt32LittleToHost(UInt32(value[1])))
-        let wheelEventTime  = Double((UInt16(value[6]) * 0xFF) + UInt16(value[5]))
-        
-        var wheelRevolutionDiff: Double = 0
-        var wheelEventTimeDiff: Double = 0
-        if oldWheelRevolution != 0, wheelRevolution > oldWheelRevolution {
-            wheelRevolutionDiff = Double(wheelRevolution) - Double(oldWheelRevolution)
-            
-            travelDistance = travelDistance + Measurement<UnitLength>(value: (wheelRevolutionDiff * wheelCircumference), unit: .meters)
-            totalTravelDistance = Measurement<UnitLength>(value: Double(wheelRevolution) * Double(wheelCircumference), unit: .meters)
-        }
-        
-        if oldWheelEventTime != 0 {
-            wheelEventTimeDiff = wheelEventTime - oldWheelEventTime
-        }
-        if wheelEventTimeDiff > 0 {
-            wheelEventTimeDiff = wheelEventTimeDiff / 1024.0
-            speed = Measurement<UnitSpeed>.init(value: ((wheelRevolutionDiff * wheelCircumference) / wheelEventTimeDiff), unit: .milesPerHour)
-        }
-        
-        oldWheelRevolution = Int(wheelRevolution)
-        oldWheelEventTime = Double((UInt16(value[6]) * 0xFF) + UInt16(value[5]))
-        
-        return wheelRevolutionDiff
-    }
-    
-    private mutating func processCrankData(_ value: UnsafeMutablePointer<UInt8>, revolutionIndex index : Int) -> Double {
-        let crankRevolution = Int(CFSwapInt16LittleToHost(UInt16(value[index])))
-        let crankEventTime  = Double((UInt16(value[index+3]) * 0xFF) + UInt16(value[index+2]))+1.0
-        var crankEventTimeDiff: Double = 0
-        var crankRevolutionDiff: Double = 0
-        
-        if oldCrankEventTime != 0 {
-            crankEventTimeDiff = crankEventTime - oldCrankEventTime
-        }
-        
-        if oldCrankRevolution != 0 {
-            crankRevolutionDiff = Double(crankRevolution - oldCrankRevolution)
-        }
-        
-        if crankEventTimeDiff > 0 {
-            crankEventTimeDiff = crankEventTimeDiff / 1024.0
-            cadence = Int(Double(crankRevolutionDiff / crankEventTimeDiff) * Double(60))
-        }
-        
-        oldCrankRevolution = crankRevolution
-        oldCrankEventTime = crankEventTime
-        
-        return crankRevolutionDiff
-    }
     
 }

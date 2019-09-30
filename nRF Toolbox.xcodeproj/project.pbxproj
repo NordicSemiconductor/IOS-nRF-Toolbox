@@ -12,6 +12,7 @@
 		2002A000231FAFD100C43E06 /* PeripheralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20029FFF231FAFD100C43E06 /* PeripheralManager.swift */; };
 		2002A002231FB8E800C43E06 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2002A001231FB8E800C43E06 /* UIImage+Ext.swift */; };
 		2002A0052322610F00C43E06 /* GlucoseMonitorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2002A0042322610F00C43E06 /* GlucoseMonitorViewController.swift */; };
+		200973D32341DBAB0091951B /* CyclingCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200973D22341DBAB0091951B /* CyclingCharacteristic.swift */; };
 		203D0F06232BBEB300C0340D /* DetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203D0F05232BBEB300C0340D /* DetailsTableViewCell.swift */; };
 		203D0F09232F782200C0340D /* CyclingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203D0F08232F782200C0340D /* CyclingTableViewController.swift */; };
 		203D0F0C232FB7D100C0340D /* DetailsTableViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203D0F0B232FB7D100C0340D /* DetailsTableViewSection.swift */; };
@@ -174,6 +175,7 @@
 		20029FFF231FAFD100C43E06 /* PeripheralManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralManager.swift; sourceTree = "<group>"; };
 		2002A001231FB8E800C43E06 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
 		2002A0042322610F00C43E06 /* GlucoseMonitorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseMonitorViewController.swift; sourceTree = "<group>"; };
+		200973D22341DBAB0091951B /* CyclingCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingCharacteristic.swift; sourceTree = "<group>"; };
 		203D0F05232BBEB300C0340D /* DetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsTableViewCell.swift; sourceTree = "<group>"; };
 		203D0F08232F782200C0340D /* CyclingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingTableViewController.swift; sourceTree = "<group>"; };
 		203D0F0B232FB7D100C0340D /* DetailsTableViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsTableViewSection.swift; sourceTree = "<group>"; };
@@ -362,9 +364,18 @@
 			path = Glucose;
 			sourceTree = "<group>";
 		};
+		200973D12341DB940091951B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				200973D22341DBAB0091951B /* CyclingCharacteristic.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		203D0F07232F77F300C0340D /* Cycling */ = {
 			isa = PBXGroup;
 			children = (
+				200973D12341DB940091951B /* Models */,
 				20B7979623350325001328E1 /* Peripheral */,
 				203D0F0A232FB4FB00C0340D /* Sections */,
 				203D0F08232F782200C0340D /* CyclingTableViewController.swift */,
@@ -1182,6 +1193,7 @@
 				3001432D1CECADFB008379DF /* CharacteristicReader.swift in Sources */,
 				3010F6051CDCB4F900CB285A /* BPMViewController.swift in Sources */,
 				204485E4233A14BC00A8A3A3 /* Identifier.swift in Sources */,
+				200973D32341DBAB0091951B /* CyclingCharacteristic.swift in Sources */,
 				309F08651E6D6A5500B7546A /* HKViewController.swift in Sources */,
 				203D0F0E23325E0A00C0340D /* CyclingTableViewSection.swift in Sources */,
 				3000B2131CE3195E00F64CEE /* EditPopupViewController.swift in Sources */,
