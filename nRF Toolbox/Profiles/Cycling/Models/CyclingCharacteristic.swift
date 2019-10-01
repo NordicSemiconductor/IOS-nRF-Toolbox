@@ -8,6 +8,11 @@
 
 import Foundation
 
+private extension Flag {
+    static let wheelData: Flag = 0x01
+    static let crankData: Flag = 0x02
+}
+
 struct CyclingCharacteristic {
     
     typealias WheelRevolutionAndTime = (revolution: Int, time: Double)
@@ -25,16 +30,16 @@ struct CyclingCharacteristic {
     init(data: Data) {
         let flags: UInt8 = data.read()
         
-        wheelRevolutionsAndTime = flags & 0x01 ? {
+        wheelRevolutionsAndTime = Flag.isAvailable(bits: flags, flag: .wheelData) ? {
                 (
                     Int(data.read(fromOffset: 1) as UInt32),
                     Double(data.read(fromOffset: 5) as UInt16)
                 )
             }() : nil
         
-        let crankOffset: (Int, Int) = flags & 0x01 ? (7, 9) : (1, 3)
+        let crankOffset: (Int, Int) = Flag.isAvailable(bits: flags, flag: .wheelData) ? (7, 9) : (1, 3)
         
-        crankRevolutionsAndTime = flags & 0x02 ? {
+        crankRevolutionsAndTime = Flag.isAvailable(bits: flags, flag: .crankData) ? {
                 (
                     Int(data.read(fromOffset: crankOffset.0) as UInt16),
                     Double(data.read(fromOffset: crankOffset.1) as UInt16)

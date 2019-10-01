@@ -13,6 +13,8 @@
 		2002A002231FB8E800C43E06 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2002A001231FB8E800C43E06 /* UIImage+Ext.swift */; };
 		2002A0052322610F00C43E06 /* GlucoseMonitorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2002A0042322610F00C43E06 /* GlucoseMonitorViewController.swift */; };
 		200973D32341DBAB0091951B /* CyclingCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200973D22341DBAB0091951B /* CyclingCharacteristic.swift */; };
+		200973D523433A120091951B /* Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200973D423433A120091951B /* Flag.swift */; };
+		200973D723433A5E0091951B /* PaceMeasurementFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200973D623433A5E0091951B /* PaceMeasurementFormatter.swift */; };
 		203D0F06232BBEB300C0340D /* DetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203D0F05232BBEB300C0340D /* DetailsTableViewCell.swift */; };
 		203D0F09232F782200C0340D /* CyclingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203D0F08232F782200C0340D /* CyclingTableViewController.swift */; };
 		203D0F0C232FB7D100C0340D /* DetailsTableViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203D0F0B232FB7D100C0340D /* DetailsTableViewSection.swift */; };
@@ -176,6 +178,8 @@
 		2002A001231FB8E800C43E06 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
 		2002A0042322610F00C43E06 /* GlucoseMonitorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseMonitorViewController.swift; sourceTree = "<group>"; };
 		200973D22341DBAB0091951B /* CyclingCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingCharacteristic.swift; sourceTree = "<group>"; };
+		200973D423433A120091951B /* Flag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flag.swift; sourceTree = "<group>"; };
+		200973D623433A5E0091951B /* PaceMeasurementFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaceMeasurementFormatter.swift; sourceTree = "<group>"; };
 		203D0F05232BBEB300C0340D /* DetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsTableViewCell.swift; sourceTree = "<group>"; };
 		203D0F08232F782200C0340D /* CyclingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingTableViewController.swift; sourceTree = "<group>"; };
 		203D0F0B232FB7D100C0340D /* DetailsTableViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsTableViewSection.swift; sourceTree = "<group>"; };
@@ -714,6 +718,8 @@
 				20F15C422313F821000C5503 /* XibInstantiable.swift */,
 				20D08E01232A38C200569587 /* TitledError.swift */,
 				20D08E05232A569B00569587 /* Identifiable.swift */,
+				200973D423433A120091951B /* Flag.swift */,
+				200973D623433A5E0091951B /* PaceMeasurementFormatter.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1169,6 +1175,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				20F0C8042327D42A003111E7 /* Section.swift in Sources */,
+				200973D523433A120091951B /* Flag.swift in Sources */,
 				203D0F06232BBEB300C0340D /* DetailsTableViewCell.swift in Sources */,
 				304299221CE5DE8E00E1D2AB /* UserFilesViewController.swift in Sources */,
 				204485E7233A172800A8A3A3 /* Peripheral+Running.swift in Sources */,
@@ -1176,6 +1183,7 @@
 				30499E551CE4732200E0993B /* FileSelectionDelegate.swift in Sources */,
 				30F92D4B1CD9CF0700C73285 /* HRMViewController.swift in Sources */,
 				204485EA233A38E900A8A3A3 /* RunningSpeedSection.swift in Sources */,
+				200973D723433A5E0091951B /* PaceMeasurementFormatter.swift in Sources */,
 				300143291CEC59F4008379DF /* ServiceIdentifiers.swift in Sources */,
 				20E07B422306868F00FCB205 /* BLEService.swift in Sources */,
 				20B25F3A231960CF006AF321 /* ConnectTableViewController.swift in Sources */,

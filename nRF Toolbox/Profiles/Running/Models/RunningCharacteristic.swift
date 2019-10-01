@@ -8,24 +8,10 @@
 
 import Foundation
 
-func &(lhs: UInt8, rhs: UInt8) -> Bool {
-    return (lhs & rhs) > 0
-}
-
-class PaceMeasurementFormatter: MeasurementFormatter {
-    func paceString(from measurement: Measurement<UnitSpeed>) -> String {
-        let distanceUnit: UnitLength = locale.usesMetricSystem ? .kilometers : .miles
-        let metersInUnit = Measurement<UnitLength>(value: 1, unit: distanceUnit).converted(to: .meters).value
-        
-        let mpsValue = measurement.converted(to: .metersPerSecond).value
-        let paceValue = 1 / (mpsValue / metersInUnit)
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "mm:ss"
-        let timeStr = dateFormatter.string(from: Date(timeIntervalSinceReferenceDate: paceValue))
-        
-        return "\(timeStr) min/\(distanceUnit.symbol)"
-    }
+private extension Flag {
+    static let strideLength: Flag = 0x01
+    static let totalDistance: Flag = 0x02
+    static let isRunning: Flag = 0x04
 }
 
 struct RunningCharacteristic {
@@ -41,16 +27,16 @@ struct RunningCharacteristic {
         instantaneousSpeed = Measurement(value: instantaneousSpeedValue, unit: .metersPerSecond)
         instantaneousCadence = Int(data.read(fromOffset: 3) as UInt8)
         
-        let flags: UInt8 = data.read(fromOffset: 0)
+        let bitFlags: UInt8 = data.read(fromOffset: 0)
         
-        isRunning = flags & 0x04
+        isRunning = Flag.isAvailable(bits: bitFlags, flag: .isRunning)
         
-        instantaneousStrideLength = flags & 0x01 ? {
+        instantaneousStrideLength = Flag.isAvailable(bits: bitFlags, flag: .strideLength) ? {
                 let strideLengthValue: UInt16 = data.read(fromOffset: 4)
                 return Measurement(value: Double(strideLengthValue), unit: .centimeters)
             }() : nil
         
-        totalDistance = flags & 0x02 ? {
+        totalDistance = Flag.isAvailable(bits: bitFlags, flag: .totalDistance) ? {
                 let totalDistanceValue: UInt32 = data.read(fromOffset: 6)
                 return Measurement(value: Double(totalDistanceValue), unit: .decameters)
             }() : nil
