@@ -13,6 +13,8 @@
 		<string></string>
 		<key>id</key>
 		<string>glucoseMonitoring</string>
+		<key>uuid</key>
+		<string>00001808-0000-1000-8000-00805F9B34FB</string>
 	</dict>
 	<dict>
 		<key>code</key>
@@ -25,6 +27,8 @@
 		<string></string>
 		<key>id</key>
 		<string>bloodPressureMonitoring</string>
+		<key>uuid</key>
+		<string>00001810-0000-1000-8000-00805F9B34FB</string>
 	</dict>
 	<dict>
 		<key>code</key>
@@ -37,6 +41,8 @@
 		<string></string>
 		<key>id</key>
 		<string>cyclingSensor</string>
+		<key>uuid</key>
+		<string>00001816-0000-1000-8000-00805F9B34FB</string>
 	</dict>
 	<dict>
 		<key>code</key>
@@ -49,6 +55,8 @@
 		<string></string>
 		<key>id</key>
 		<string>heartRateMonitor</string>
+		<key>uuid</key>
+		<string>0000180D-0000-1000-8000-00805F9B34FB</string>
 	</dict>
 	<dict>
 		<key>code</key>
@@ -61,6 +69,8 @@
 		<string></string>
 		<key>id</key>
 		<string>healthThermometer</string>
+		<key>uuid</key>
+		<string>00001809-0000-1000-8000-00805F9B34FB</string>
 	</dict>
 	<dict>
 		<key>code</key>
@@ -73,6 +83,8 @@
 		<string></string>
 		<key>id</key>
 		<string>runningSensor</string>
+		<key>uuid</key>
+		<string>00001814-0000-1000-8000-00805F9B34FB</string>
 	</dict>
 	<dict>
 		<key>code</key>
@@ -85,6 +97,8 @@
 		<string></string>
 		<key>id</key>
 		<string>continuousGlucoseMonitor</string>
+		<key>uuid</key>
+		<string>0000181F-0000-1000-8000-00805F9B34FB</string>
 	</dict>
 	<dict>
 		<key>name</key>
@@ -95,6 +109,8 @@
 		<string></string>
 		<key>id</key>
 		<string>proximity</string>
+		<key>uuid</key>
+		<string>00001802-0000-1000-8000-00805F9B34FB</string>
 	</dict>
 </array>
 </plist>

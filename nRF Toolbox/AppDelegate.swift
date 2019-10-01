@@ -65,4 +65,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         defaults.register(defaults: dict)
         //defaults.synchronize()
     }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        Log(category: .app, type: .fault).log(message: "Applications will terminate")
+    }
 }

@@ -57,6 +57,7 @@ extension LogCategory {
     static let ui = LogCategory(rawValue: "ui")!
     static let ble = LogCategory(rawValue: "ble")!
     static let util = LogCategory(rawValue: "util")!
+    static let app = LogCategory(rawValue: "application")!
 }
 
 struct Log {

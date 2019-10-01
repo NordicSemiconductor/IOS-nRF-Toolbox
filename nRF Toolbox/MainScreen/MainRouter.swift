@@ -28,6 +28,7 @@ protocol MainRouter {
 
 protocol ServiceRouter {
     func showServiceController(with serviceId: ServiceId)
+//    func showServiceController(_ model: BLEService)
     func showLinkController(_ link: LinkService)
 }
 
@@ -35,24 +36,24 @@ class DefaultMainRouter {
     
     private let serviceViewControllers: [ServiceId : UIViewController] = {
         return [
-            .glucoseMonitoring : BGMViewController.instance(),
+            .glucoseMonitoring : GlucoseMonitorViewController(style: .grouped),
             .bloodPressureMonitoring : BPMViewController.instance(),
-            .cyclingSensor : CSCViewController.instance(),
+            .cyclingSensor : CyclingTableViewController(style: .grouped),
             .heartRateMonitor : HRMViewController.instance(),
             .healthThermometer : HTSViewController.instance(),
-            .runningSensor : RSCViewController.instance(),
+            .runningSensor : RunningTableViewController(style: .grouped),
             .continuousGlucoseMonitor : CGMViewController.instance(),
             .deviceFirmwareUpgrade : DFUViewController.instance(),
             .proximity : ProximityViewController.instance(),
             .homeKit : HKViewController.instance(),
             .uart : UARTRevealViewController.instance(storyboard: UIStoryboard(name: "UARTViewController", bundle: .main))
-        ].mapValues { UINavigationController.nordicBranded(rootViewController: $0) }
+            ].mapValues { UINavigationController.nordicBranded(rootViewController: $0) }
     }()
     
     lazy private var serviceList = ServiceListViewController(serviceRouter: self)
     
     lazy private var splitViewController: UISplitViewController = {
-        let nc = UINavigationController.nordicBranded(rootViewController: serviceList)
+        let nc = UINavigationController.nordicBranded(rootViewController: serviceList, prefersLargeTitles: true)
         let splitViewController = UISplitViewController()
         splitViewController.viewControllers = [nc, NoContentViewController()]
         splitViewController.delegate = self

@@ -104,17 +104,40 @@ extension UIColor {
     struct NavigationBar {
         static let barTint: UIColor = {
             let dark: UIColor
-            #if BETA
             if #available(iOS 13.0, *) {
                 dark = .systemBackground
             } else {
                 Log(category: .ui, type: .fault).fault("iOS version not supported")
             }
-            #else
-            dark = .black
-            #endif
             
             return .dynamicColor(light: .nordicBlue, dark: dark)
+        }()
+    }
+}
+
+// MARK: - Buttons
+extension UIColor {
+    struct Button {
+        static let action: UIColor = {
+            let dark: UIColor
+            if #available(iOS 13.0, *) {
+                dark = .systemBlue
+            } else {
+                dark = .black
+            }
+            
+            return .dynamicColor(light: .nordicLake, dark: dark)
+        }()
+        
+        static let destructive: UIColor = {
+            let dark: UIColor
+            if #available(iOS 13.0, *) {
+                dark = .systemRed
+            } else {
+                dark = .black 
+            }
+            
+            return .dynamicColor(light: .nordicRedDark, dark: dark)
         }()
     }
 }
@@ -123,7 +146,6 @@ extension UIColor {
     typealias RGBA = (Int, Int, Int, CGFloat)
     
     static func dynamicColor(light: UIColor, dark: UIColor) -> UIColor {
-        #if BETA
         if #available(iOS 13.0, *) {
             return UIColor { (traitCollection) -> UIColor in
                 return traitCollection.userInterfaceStyle == .light ? light : dark
@@ -131,8 +153,5 @@ extension UIColor {
         } else {
             return light
         }
-        #else
-        return light
-        #endif 
     }
 }

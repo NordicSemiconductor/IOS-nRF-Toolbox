@@ -147,5 +147,7 @@
 			</dict>
 		</dict>
 	</array>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>We need access to Bluetooth to connect to nRF DevKit</string>
 </dict>
 </plist>

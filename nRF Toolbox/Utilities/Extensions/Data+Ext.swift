@@ -28,4 +28,10 @@ extension Data {
         return map { String(format: "%02X", $0) }.joined()
     }
     
+    func read<R: FixedWidthInteger>(fromOffset offset: Int = 0) -> R {
+        let length = MemoryLayout<R>.size
+        
+        return subdata(in: offset ..< offset + length).withUnsafeBytes { $0.load(as: R.self) }
+    }
+    
 }
