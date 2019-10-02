@@ -37,12 +37,12 @@ class DefaultMainRouter {
     private let serviceViewControllers: [ServiceId : UIViewController] = {
         return [
             .glucoseMonitoring : GlucoseMonitorViewController(style: .grouped),
-            .bloodPressureMonitoring : BPMViewController.instance(),
+            .bloodPressureMonitoring : BloodPressureTableViewController(style: .grouped),
             .cyclingSensor : CyclingTableViewController(style: .grouped),
-            .heartRateMonitor : HRMViewController.instance(),
-            .healthThermometer : HTSViewController.instance(),
+            .heartRateMonitor : HeartRateMonitorTableViewController(style: .grouped),
+            .healthThermometer : HealthTermometerTableViewController(style: .grouped),
             .runningSensor : RunningTableViewController(style: .grouped),
-            .continuousGlucoseMonitor : CGMViewController.instance(),
+            .continuousGlucoseMonitor : ContinuousGlucoseMonitor(style: .grouped),
             .deviceFirmwareUpgrade : DFUViewController.instance(),
             .proximity : ProximityViewController.instance(),
             .homeKit : HKViewController.instance(),

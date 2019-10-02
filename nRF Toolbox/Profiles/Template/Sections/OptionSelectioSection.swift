@@ -9,6 +9,8 @@
 import UIKit
 
 struct OptionSelectioSection<T>: Section {
+    var isHidden: Bool { items.count == 0 }
+    
     struct Item {
         let option: String
         var selectedCase: Identifier<T>

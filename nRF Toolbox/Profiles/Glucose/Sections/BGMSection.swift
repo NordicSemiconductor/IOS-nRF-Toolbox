@@ -9,6 +9,8 @@
 import UIKit
 
 class BGMSection: Section {
+    var isHidden: Bool { numberOfItems == 0 }
+    
     let id: Identifier<Section> = .bgmReadings
     
     func dequeCell(for index: Int, from tableView: UITableView) -> UITableViewCell {

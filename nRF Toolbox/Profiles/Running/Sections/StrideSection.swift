@@ -8,12 +8,11 @@
 
 import Foundation
 
-class ActivitySection: DetailsTableViewSection {
+class ActivitySection: DetailsTableViewSection<RunningCharacteristic> {
     override var sectionTitle: String { "Activity type" } 
     
-    override func update(with data: Data) {
-        let runningData = RunningCharacteristic(data: data)
-        self.items = [DefaultDetailsTableViewCellModel(title: "Activity", value: runningData.isRunning ? "Running" : "Walking")]
-        super.update(with: data)
+    override func update(with characteristic: RunningCharacteristic) {
+        self.items = [DefaultDetailsTableViewCellModel(title: "Activity", value: characteristic.isRunning ? "Running" : "Walking")]
+        super.update(with: characteristic)
     }
 }

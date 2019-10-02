@@ -42,6 +42,7 @@ class CGMViewController: BaseViewController, ScannerDelegate,
     var cgmSessionStartTimeCharacteristicUUID : CBUUID
     var cgmSessionRunTimeCharacteristicUUID : CBUUID
     var cgmSpecificOpsControlPointCharacteristicUUID : CBUUID
+    
     var batteryServiceUUID : CBUUID
     var batteryLevelCharacteristicUUID : CBUUID
 
@@ -90,6 +91,7 @@ class CGMViewController: BaseViewController, ScannerDelegate,
         cgmSessionStartTimeCharacteristicUUID = CBUUID(string: ServiceIdentifiers.cgmSessionStartTimeCharacteristicUUIDString)
         cgmSessionRunTimeCharacteristicUUID = CBUUID(string: ServiceIdentifiers.cgmSessionRunTimeCharacteristicUUIDString)
         cgmSpecificOpsControlPointCharacteristicUUID = CBUUID(string: ServiceIdentifiers.cgmSpecificOpsControlPointCharacteristicUUIDString)
+
         batteryServiceUUID = CBUUID(string: ServiceIdentifiers.batteryServiceUUIDString)
         batteryLevelCharacteristicUUID = CBUUID(string: ServiceIdentifiers.batteryLevelCharacteristicUUIDString)
         super.init(coder: aDecoder)
