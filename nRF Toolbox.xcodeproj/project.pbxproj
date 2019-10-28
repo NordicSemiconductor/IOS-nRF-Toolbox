@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		01006201234D08700078CEFA /* LinearChartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01006200234D08700078CEFA /* LinearChartTableViewCell.swift */; };
-		01468B052361A30A00C29E4C /* SliderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B032361A30A00C29E4C /* SliderTableViewCell.swift */; };
-		01468B062361A30A00C29E4C /* SliderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01468B042361A30A00C29E4C /* SliderTableViewCell.xib */; };
-		01468B082361C5ED00C29E4C /* TimeSliderSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B072361C5ED00C29E4C /* TimeSliderSection.swift */; };
+		01468B052361A30A00C29E4C /* StepperTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B032361A30A00C29E4C /* StepperTableViewCell.swift */; };
+		01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01468B042361A30A00C29E4C /* StepperTableViewCell.xib */; };
+		01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */; };
 		0162BA91234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0162BA90234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift */; };
 		01B6D3D3234C7538000942C4 /* HeartRateMonitorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3D2234C7538000942C4 /* HeartRateMonitorTableViewController.swift */; };
 		01B6D3D8234CB533000942C4 /* HeartRateMeasurementCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3D7234CB533000942C4 /* HeartRateMeasurementCharacteristic.swift */; };
@@ -18,7 +18,7 @@
 		01B6D3DC234CB755000942C4 /* HeartRateLocationCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3DB234CB755000942C4 /* HeartRateLocationCharacteristic.swift */; };
 		01B6D3DE234CBBE5000942C4 /* SernsorLocationSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3DD234CBBE5000942C4 /* SernsorLocationSection.swift */; };
 		01B6D3E0234CC090000942C4 /* Peripheral+HeartRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3DF234CC090000942C4 /* Peripheral+HeartRate.swift */; };
-		01B6D3E2234CCC9F000942C4 /* ChartSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3E1234CCC9F000942C4 /* ChartSection.swift */; };
+		01B6D3E2234CCC9F000942C4 /* HeartRateChartSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3E1234CCC9F000942C4 /* HeartRateChartSection.swift */; };
 		01BE094F2349F71B006ACF06 /* HealthTermometerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE094E2349F71B006ACF06 /* HealthTermometerTableViewController.swift */; };
 		01BE0953234A1C48006ACF06 /* HealthTermometerCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE0952234A1C48006ACF06 /* HealthTermometerCharacteristic.swift */; };
 		01BE0955234A7500006ACF06 /* HealthTemperatureSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE0954234A7500006ACF06 /* HealthTemperatureSection.swift */; };
@@ -154,15 +154,17 @@
 		30A114561CD2367C000F0F02 /* ScannedPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A114551CD2367C000F0F02 /* ScannedPeripheral.swift */; };
 		30A1145A1CD2426B000F0F02 /* ScannerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A114591CD2426B000F0F02 /* ScannerDelegate.swift */; };
 		30A1145C1CD24611000F0F02 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A1145B1CD24611000F0F02 /* ScannerViewController.swift */; };
-		339760590518A5C121166F46 /* TimeIntervalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3397620F961E268512E8BBA8 /* TimeIntervalSection.swift */; };
 		339761A6176917F548C7B465 /* ContinuousGlucoseMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976F60C5BCE60DE33DFA31 /* ContinuousGlucoseMonitor.swift */; };
 		339762F1FAFD0B4E24D99501 /* GlucoseValueList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339768FF6079F23B5AA31CD9 /* GlucoseValueList.swift */; };
 		339763D0A0642AF6C7E7AA85 /* StartStopSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339769F5B71FA2B56A4AEE3C /* StartStopSection.swift */; };
 		339763D41402CC5D9773F46F /* Peripheral+ContinuousGlucoseMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339767C9A62A86751137B1CA /* Peripheral+ContinuousGlucoseMonitor.swift */; };
 		339764F85119305F6958B516 /* LastDataSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976856F7CFDAFCC9A665D2 /* LastDataSection.swift */; };
 		3397653E200A1711DC0AA009 /* ContinuousGlucoseMonitorMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3397654C348DA2769B9E4B1D /* ContinuousGlucoseMonitorMeasurement.swift */; };
+		339765E57CA5E940D960B675 /* ChartDataSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339763237234E5CAE47F8DBB /* ChartDataSection.swift */; };
 		33976843D672C14301E9C917 /* SessionStartTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976AA5771775F23255C2BD /* SessionStartTime.swift */; };
-		33976F79FE2EA20D94F68B69 /* GlucoseChartSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976B66D7A581F01631AE52 /* GlucoseChartSection.swift */; };
+		33976B2C1CE8194EFAEB7341 /* Randomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3397618F9EA9546991CF4ED2 /* Randomizer.swift */; };
+		33976C75E25FBF443EB251CD /* Bool+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976AF182818B9C448C61CE /* Bool+Ext.swift */; };
+		33976F79FE2EA20D94F68B69 /* ContinuousGlucoseChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976B66D7A581F01631AE52 /* ContinuousGlucoseChartData.swift */; };
 		5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAA1885642F007CC40D /* icon-dfu-64.png */; };
 		5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAB1885642F007CC40D /* icon-dfu-320.png */; };
 		5211EFB018856430007CC40D /* icon-hex.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAC1885642F007CC40D /* icon-hex.png */; };
@@ -201,9 +203,9 @@
 
 /* Begin PBXFileReference section */
 		01006200234D08700078CEFA /* LinearChartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearChartTableViewCell.swift; sourceTree = "<group>"; };
-		01468B032361A30A00C29E4C /* SliderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderTableViewCell.swift; sourceTree = "<group>"; };
-		01468B042361A30A00C29E4C /* SliderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SliderTableViewCell.xib; sourceTree = "<group>"; };
-		01468B072361C5ED00C29E4C /* TimeSliderSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSliderSection.swift; sourceTree = "<group>"; };
+		01468B032361A30A00C29E4C /* StepperTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperTableViewCell.swift; sourceTree = "<group>"; };
+		01468B042361A30A00C29E4C /* StepperTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StepperTableViewCell.xib; sourceTree = "<group>"; };
+		01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalSection.swift; sourceTree = "<group>"; };
 		0162BA90234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTemperatureAditionalSection.swift; sourceTree = "<group>"; };
 		01B6D3D2234C7538000942C4 /* HeartRateMonitorTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateMonitorTableViewController.swift; sourceTree = "<group>"; };
 		01B6D3D7234CB533000942C4 /* HeartRateMeasurementCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateMeasurementCharacteristic.swift; sourceTree = "<group>"; };
@@ -211,7 +213,7 @@
 		01B6D3DB234CB755000942C4 /* HeartRateLocationCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateLocationCharacteristic.swift; sourceTree = "<group>"; };
 		01B6D3DD234CBBE5000942C4 /* SernsorLocationSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SernsorLocationSection.swift; sourceTree = "<group>"; };
 		01B6D3DF234CC090000942C4 /* Peripheral+HeartRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Peripheral+HeartRate.swift"; sourceTree = "<group>"; };
-		01B6D3E1234CCC9F000942C4 /* ChartSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartSection.swift; sourceTree = "<group>"; };
+		01B6D3E1234CCC9F000942C4 /* HeartRateChartSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateChartSection.swift; sourceTree = "<group>"; };
 		01BE094E2349F71B006ACF06 /* HealthTermometerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTermometerTableViewController.swift; sourceTree = "<group>"; };
 		01BE0952234A1C48006ACF06 /* HealthTermometerCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTermometerCharacteristic.swift; sourceTree = "<group>"; };
 		01BE0954234A7500006ACF06 /* HealthTemperatureSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTemperatureSection.swift; sourceTree = "<group>"; };
@@ -349,14 +351,16 @@
 		30A114551CD2367C000F0F02 /* ScannedPeripheral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannedPeripheral.swift; sourceTree = "<group>"; };
 		30A114591CD2426B000F0F02 /* ScannerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerDelegate.swift; sourceTree = "<group>"; };
 		30A1145B1CD24611000F0F02 /* ScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
-		3397620F961E268512E8BBA8 /* TimeIntervalSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeIntervalSection.swift; sourceTree = "<group>"; };
+		3397618F9EA9546991CF4ED2 /* Randomizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Randomizer.swift; sourceTree = "<group>"; };
+		339763237234E5CAE47F8DBB /* ChartDataSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartDataSection.swift; sourceTree = "<group>"; };
 		3397654C348DA2769B9E4B1D /* ContinuousGlucoseMonitorMeasurement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinuousGlucoseMonitorMeasurement.swift; sourceTree = "<group>"; };
 		339767C9A62A86751137B1CA /* Peripheral+ContinuousGlucoseMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Peripheral+ContinuousGlucoseMonitor.swift"; sourceTree = "<group>"; };
 		33976856F7CFDAFCC9A665D2 /* LastDataSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastDataSection.swift; sourceTree = "<group>"; };
 		339768FF6079F23B5AA31CD9 /* GlucoseValueList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlucoseValueList.swift; sourceTree = "<group>"; };
 		339769F5B71FA2B56A4AEE3C /* StartStopSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartStopSection.swift; sourceTree = "<group>"; };
 		33976AA5771775F23255C2BD /* SessionStartTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionStartTime.swift; sourceTree = "<group>"; };
-		33976B66D7A581F01631AE52 /* GlucoseChartSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlucoseChartSection.swift; sourceTree = "<group>"; };
+		33976AF182818B9C448C61CE /* Bool+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bool+Ext.swift"; sourceTree = "<group>"; };
+		33976B66D7A581F01631AE52 /* ContinuousGlucoseChartData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinuousGlucoseChartData.swift; sourceTree = "<group>"; };
 		33976F60C5BCE60DE33DFA31 /* ContinuousGlucoseMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinuousGlucoseMonitor.swift; sourceTree = "<group>"; };
 		4394EAC53F8A0FF797E7CA7A /* Pods-nRF Toolbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.release.xcconfig"; path = "Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.release.xcconfig"; sourceTree = "<group>"; };
 		51E9CFCBE6C75A89E5780FE4 /* Pods-nRF Toolbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.debug.xcconfig"; path = "Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.debug.xcconfig"; sourceTree = "<group>"; };
@@ -421,8 +425,8 @@
 		01468B022361A23300C29E4C /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				01468B032361A30A00C29E4C /* SliderTableViewCell.swift */,
-				01468B042361A30A00C29E4C /* SliderTableViewCell.xib */,
+				01468B032361A30A00C29E4C /* StepperTableViewCell.swift */,
+				01468B042361A30A00C29E4C /* StepperTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -472,7 +476,7 @@
 				010061FF234D084C0078CEFA /* Cells */,
 				01B6D3D9234CB6B3000942C4 /* HeartRateSection.swift */,
 				01B6D3DD234CBBE5000942C4 /* SernsorLocationSection.swift */,
-				01B6D3E1234CCC9F000942C4 /* ChartSection.swift */,
+				01B6D3E1234CCC9F000942C4 /* HeartRateChartSection.swift */,
 			);
 			path = Sections;
 			sourceTree = "<group>";
@@ -732,6 +736,7 @@
 				20F0C8002327D207003111E7 /* CBUUID+IDs.swift */,
 				20B797992338B8C0001328E1 /* MeasurementFormatter+Ext.swift */,
 				52D9BC9D1DD0CB760030E824 /* Data+Ext.swift */,
+				33976AF182818B9C448C61CE /* Bool+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -822,6 +827,7 @@
 				20D08DFF2329356700569587 /* ActionSection.swift */,
 				20D08E27232B940400569587 /* OptionSelectioSection.swift */,
 				203D0F0B232FB7D100C0340D /* DetailsTableViewSection.swift */,
+				339763237234E5CAE47F8DBB /* ChartDataSection.swift */,
 			);
 			path = Sections;
 			sourceTree = "<group>";
@@ -925,11 +931,10 @@
 			isa = PBXGroup;
 			children = (
 				01468B022361A23300C29E4C /* Cells */,
-				33976B66D7A581F01631AE52 /* GlucoseChartSection.swift */,
+				33976B66D7A581F01631AE52 /* ContinuousGlucoseChartData.swift */,
 				33976856F7CFDAFCC9A665D2 /* LastDataSection.swift */,
-				3397620F961E268512E8BBA8 /* TimeIntervalSection.swift */,
 				339769F5B71FA2B56A4AEE3C /* StartStopSection.swift */,
-				01468B072361C5ED00C29E4C /* TimeSliderSection.swift */,
+				01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */,
 				33976F4A6C92E03D8A6FDDB4 /* GlucoseValueList */,
 			);
 			path = Sections;
@@ -959,6 +964,7 @@
 				20D08E05232A569B00569587 /* Identifiable.swift */,
 				200973D423433A120091951B /* Flag.swift */,
 				200973D623433A5E0091951B /* PaceMeasurementFormatter.swift */,
+				3397618F9EA9546991CF4ED2 /* Randomizer.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1289,7 +1295,7 @@
 				20C7FE57230E997B00B06FD8 /* Links.plist in Resources */,
 				20E07B5D2306975700FCB205 /* GT-Eesti-Display-Light.ttf in Resources */,
 				20D08DFE232929A400569587 /* BGMTableViewCell.xib in Resources */,
-				01468B062361A30A00C29E4C /* SliderTableViewCell.xib in Resources */,
+				01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */,
 				20C7FE26230BEA9D00B06FD8 /* DFUViewController.storyboard in Resources */,
 				20E07B622306975700FCB205 /* GT-Eesti-Display-Bold.ttf in Resources */,
 				5214D0CE1886C02A00460637 /* Settings.bundle in Resources */,
@@ -1386,7 +1392,7 @@
 				20F0C8042327D42A003111E7 /* Section.swift in Sources */,
 				200973D523433A120091951B /* Flag.swift in Sources */,
 				203D0F06232BBEB300C0340D /* DetailsTableViewCell.swift in Sources */,
-				01468B052361A30A00C29E4C /* SliderTableViewCell.swift in Sources */,
+				01468B052361A30A00C29E4C /* StepperTableViewCell.swift in Sources */,
 				304299221CE5DE8E00E1D2AB /* UserFilesViewController.swift in Sources */,
 				204485E7233A172800A8A3A3 /* Peripheral+Running.swift in Sources */,
 				30499E5D1CE4C6C700E0993B /* FolderFilesViewController.swift in Sources */,
@@ -1448,12 +1454,12 @@
 				304299241CE6114000E1D2AB /* TutorialViewController.swift in Sources */,
 				20C7FE0E230A9F9300B06FD8 /* LinkTableViewCell.swift in Sources */,
 				01BE0955234A7500006ACF06 /* HealthTemperatureSection.swift in Sources */,
-				01468B082361C5ED00C29E4C /* TimeSliderSection.swift in Sources */,
+				01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */,
 				20C7FE082306EB5600B06FD8 /* UITableView+Ext.swift in Sources */,
 				20D08E02232A38C200569587 /* TitledError.swift in Sources */,
 				20C7FE53230E811B00B06FD8 /* ServiceProvider.swift in Sources */,
 				20C7FE5E230EC37000B06FD8 /* ServiceTableViewCell.swift in Sources */,
-				01B6D3E2234CCC9F000942C4 /* ChartSection.swift in Sources */,
+				01B6D3E2234CCC9F000942C4 /* HeartRateChartSection.swift in Sources */,
 				30499E511CE471C500E0993B /* DFUViewController.swift in Sources */,
 				3001EBBB1D1BE306008C5C37 /* CGMReading.swift in Sources */,
 				3001EBB11D1BE1F3008C5C37 /* GlucoseReading.swift in Sources */,
@@ -1503,13 +1509,15 @@
 				3000B2111CE317D900F64CEE /* UARTRevealViewController.swift in Sources */,
 				339761A6176917F548C7B465 /* ContinuousGlucoseMonitor.swift in Sources */,
 				339763D41402CC5D9773F46F /* Peripheral+ContinuousGlucoseMonitor.swift in Sources */,
-				33976F79FE2EA20D94F68B69 /* GlucoseChartSection.swift in Sources */,
+				33976F79FE2EA20D94F68B69 /* ContinuousGlucoseChartData.swift in Sources */,
 				339764F85119305F6958B516 /* LastDataSection.swift in Sources */,
-				339760590518A5C121166F46 /* TimeIntervalSection.swift in Sources */,
 				339763D0A0642AF6C7E7AA85 /* StartStopSection.swift in Sources */,
 				3397653E200A1711DC0AA009 /* ContinuousGlucoseMonitorMeasurement.swift in Sources */,
 				33976843D672C14301E9C917 /* SessionStartTime.swift in Sources */,
 				339762F1FAFD0B4E24D99501 /* GlucoseValueList.swift in Sources */,
+				33976C75E25FBF443EB251CD /* Bool+Ext.swift in Sources */,
+				33976B2C1CE8194EFAEB7341 /* Randomizer.swift in Sources */,
+				339765E57CA5E940D960B675 /* ChartDataSection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

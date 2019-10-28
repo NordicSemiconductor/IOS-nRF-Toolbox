@@ -48,7 +48,7 @@ class PeripheralTableViewController: UITableViewController, StatusDelegate {
     var navigationTitle: String { "" }
 
     private lazy var disconnectSection = ActionSection(id: .disconnect, sectionTitle: "Disconnect", items: [
-        ActionSectionItem(title: "Disconnect", style: .destructive) {
+        ActionSectionItem(title: "Disconnect", style: .destructive) { [unowned self] in
             guard let peripheral = self.activePeripheral else { return }
             self.peripheralManager.closeConnection(peripheral: peripheral)
         }

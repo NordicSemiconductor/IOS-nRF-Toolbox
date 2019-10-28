@@ -19,7 +19,11 @@ private extension Identifier where Value == Section {
 class HeartRateMonitorTableViewController: PeripheralTableViewController {
     private let locationSection = SernsorLocationSection(id: .sensorLocation)
     private let instantaneousHeartRateSection = HeartRateSection(id: .heartRateValue)
-    private var chartSection = ChartSection(id: .chartSection)
+    private var chartSection = HeartRateChartSection(id: .chartSection)
+
+    #if DEBUG
+    var randomizer = Randomizer(top: 120, bottom: 60, value: 80, delta: 2)
+    #endif
     
     override var peripheralDescription: Peripheral { .heartRateSensor }
     override var navigationTitle: String { "Heart Rate Monitor" }
@@ -33,7 +37,11 @@ class HeartRateMonitorTableViewController: PeripheralTableViewController {
     override func didUpdateValue(for characteristic: CBCharacteristic) {
         switch characteristic.uuid {
         case CBUUID.Characteristics.HeartRate.measurement:
-            let data = HeartRateMeasurementCharacteristic(with: characteristic.value!)
+            #if DEBUG
+            let data = HeartRateMeasurementCharacteristic(value: randomizer.next())
+            #else
+            let data = HeartRateMeasurementCharacteristic(with: characteristic.value!, date: Date())
+            #endif
             instantaneousHeartRateSection.update(with: data)
             chartSection.update(with: data)
             tableView.reloadData()

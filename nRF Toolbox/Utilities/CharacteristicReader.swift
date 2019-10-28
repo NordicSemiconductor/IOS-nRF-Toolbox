@@ -13,7 +13,6 @@ struct Nibble {
     var second : UInt8
 }
 
-
 enum ReservedSFloatValues : Int16 {
     case positiveInfinity = 0x07FE
     case nan = 0x07FF
@@ -35,7 +34,7 @@ enum ReservedFloatValues : UInt32 {
 }
 
 extension Double {
-    static var veservedValues: [Double] {
+    static var reservedValues: [Double] {
         [Double.infinity, Double.nan, Double.nan, Double.nan, -Double.infinity]
     }
 }
@@ -49,7 +48,7 @@ struct CharacteristicReader {
     }
     
     static func readSInt8Value(ptr aPointer : UnsafeMutablePointer<UInt8>) -> Int8 {
-        return Int8(aPointer.successor().pointee)
+        Int8(aPointer.successor().pointee)
     }
 
     static func readUInt16Value(ptr aPointer : inout UnsafeMutablePointer<UInt8>) -> UInt16 {
@@ -91,7 +90,7 @@ struct CharacteristicReader {
         var output : Float32 = 0
         
         if mantissa >= ReservedSFloatValues.firstReservedValue.rawValue && mantissa <= ReservedSFloatValues.negativeInfinity.rawValue {
-            output = Float32(Double.veservedValues[Int(mantissa - ReservedSFloatValues.firstReservedValue.rawValue)])
+            output = Float32(Double.reservedValues[Int(mantissa - ReservedSFloatValues.firstReservedValue.rawValue)])
         } else {
             if mantissa > 0x0800 {
                 mantissa = -((0x0FFF + 1) - mantissa)
@@ -114,7 +113,7 @@ struct CharacteristicReader {
         var output : Float32 = 0
         
         if mantissa >= ReservedSFloatValues.firstReservedValue.rawValue && mantissa <= ReservedSFloatValues.negativeInfinity.rawValue {
-            output = Float32(Double.veservedValues[Int(mantissa - ReservedSFloatValues.firstReservedValue.rawValue)])
+            output = Float32(Double.reservedValues[Int(mantissa - ReservedSFloatValues.firstReservedValue.rawValue)])
         } else {
             if mantissa > 0x0800 {
                 mantissa = -((0x0FFF + 1) - mantissa)
@@ -135,7 +134,7 @@ struct CharacteristicReader {
         var output : Float32 = 0
         
         if mantissa >= Int32(ReservedFloatValues.firstReservedValue.rawValue) && mantissa <= Int32(ReservedFloatValues.negativeInfinity.rawValue) {
-            output = Float32(Double.veservedValues[Int(mantissa - Int32(ReservedSFloatValues.firstReservedValue.rawValue))])
+            output = Float32(Double.reservedValues[Int(mantissa - Int32(ReservedSFloatValues.firstReservedValue.rawValue))])
         } else {
             if mantissa >= 0x800000 {
                 mantissa = -((0xFFFFFF + 1) - mantissa)

@@ -14,14 +14,14 @@ class GlucoseMonitorViewController: PeripheralTableViewController {
     private var recordAccessControlPoint: CBCharacteristic?
     
     private lazy var actionSection: ActionSection = {
-        let refresh = ActionSectionItem(title: "Refresh") {
+        let refresh = ActionSectionItem(title: "Refresh") { [unowned self] in 
             self.updateDisplayedItems(.all)
         }
-        let clear = ActionSectionItem(title: "Clear") {
+        let clear = ActionSectionItem(title: "Clear") { [unowned self] in
             self.bgmSection.clearReadings()
             self.tableView.reloadData()
         }
-        let deleteAll = ActionSectionItem(title: "Delete All", style: .destructive) {
+        let deleteAll = ActionSectionItem(title: "Delete All", style: .destructive) { [unowned self] in
             self.bgmSection.clearReadings()
             let data = Data([BGMOpCode.deleteStoredRecords.rawValue, BGMOperator.allRecords.rawValue])
             self.activePeripheral?.writeValue(data, for: self.recordAccessControlPoint!, type: .withResponse)
@@ -49,13 +49,9 @@ class GlucoseMonitorViewController: PeripheralTableViewController {
         }
     }
     
-    override var internalSections: [Section] {
-        return [selectionSection, bgmSection, actionSection]
-    }
+    override var internalSections: [Section] { [selectionSection, bgmSection, actionSection] }
     
-    override var peripheralDescription: Peripheral {
-        return .bloodGlucoseMonitor
-    }
+    override var peripheralDescription: Peripheral { .bloodGlucoseMonitor }
     
     override func didDiscover(characteristic: CBCharacteristic, for service: CBService, peripheral: CBPeripheral) {
         super.didDiscover(characteristic: characteristic, for: service, peripheral: peripheral)

@@ -5,23 +5,21 @@
 
 import Foundation
 
-struct SensorStatusAnnunciation {
-    init(data: Data) {
-
-    }
-}
-
 struct ContinuousGlucoseMonitorMeasurement {
-    //TODO: Remove var. Set let
-    var glucoseConcentration: Float
+    let glucoseConcentration: Float
     let date: Date?
-    /*
-    let sensorStatusAnnunciation: SensorStatusAnnunciation
-    let quality: Float
-    let e2eCrc: Int
-    */
+
     init(data: Data, sessionStartTime: SessionStartTime) {
         glucoseConcentration = data.readSFloat(from: 2)
+        let timeOffset: UInt16 = data.read(fromOffset: 4)
+        let sessionTime = sessionStartTime.date
+        date = sessionTime.addingTimeInterval(Double(timeOffset * 60))
+    }
+
+    #if DEBUG
+    init(value: Float) {
+        glucoseConcentration = value
         date = Date()
     }
+    #endif
 }

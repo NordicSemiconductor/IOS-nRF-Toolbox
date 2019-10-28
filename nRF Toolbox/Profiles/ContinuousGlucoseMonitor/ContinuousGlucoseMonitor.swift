@@ -31,8 +31,8 @@ class ContinuousGlucoseMonitor: PeripheralTableViewController {
 
     // MARK: Sections
     private var lastValueSection = LastGlucoseValueSection(id: .lastGlucoseValue)
-    private var chartSection = LinearChartSection(id: .linearChartSection)
-    private lazy var timeSliderSection = TimeSliderSection(id: .timeSliderSection) { [unowned self] ti in
+    private var chartSection = ContinuousGlucoseChartData(id: .linearChartSection)
+    private lazy var timeIntervalSection = TimeIntervalSection(id: .timeSliderSection) { [unowned self] ti in
         var accessParam: [UInt8] = [CGMOpCode.setCommunicationInterval.rawValue, UInt8(ti)]
         let data = Data(bytes: &accessParam, count: 2)
         self.activePeripheral?.writeValue(data, for: self.specificOpsControlPointCharacteristic!, type: .withResponse)
@@ -44,20 +44,22 @@ class ContinuousGlucoseMonitor: PeripheralTableViewController {
         self.tableView.reloadData()
     }
 
-    private lazy var startStopSection = StartStopSection(startAction: {
+    private lazy var startStopSection = StartStopSection(startAction: { [unowned self] in
         let data = Data([CGMOpCode.startSession.rawValue])
         self.activePeripheral?.writeValue(data, for: self.specificOpsControlPointCharacteristic!, type:.withResponse)
         self.reset()
-    }, stopAction: {
+    }, stopAction: { [unowned self] in
         let data = Data([CGMOpCode.stopStopSession.rawValue])
         self.activePeripheral?.writeValue(data, for: self.specificOpsControlPointCharacteristic!, type:.withResponse)
     }, id: .startStopSection)
 
     private var sessionStartTime = SessionStartTime(date: Date())
-    private var randomizer = RandomValueSequence(top: 6.1, bottom: 4.4, value: 5.0, delta: 0.2)
+    #if DEBUG
+    private var randomizer = Randomizer(top: 6.1, bottom: 4.4, value: 5.0, delta: 0.2)
+    #endif
 
     override var internalSections: [Section] {
-        [lastValueSection, chartSection, timeSliderSection, startStopSection]
+        [lastValueSection, chartSection, timeIntervalSection, startStopSection]
     }
     override var peripheralDescription: Peripheral { .continuousGlucoseMonitor }
     override var navigationTitle: String { "Continuous Glucose Monitor" }
@@ -66,7 +68,7 @@ class ContinuousGlucoseMonitor: PeripheralTableViewController {
         super.viewDidLoad()
         self.tableView.register(LinearChartTableViewCell.self, forCellReuseIdentifier: "LinearChartTableViewCell")
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        self.tableView.register(cell: SliderTableViewCell.self)
+        self.tableView.register(cell: StepperTableViewCell.self)
     }
 
     override func didDiscover(characteristic: CoreBluetooth.CBCharacteristic, for service: CoreBluetooth.CBService, peripheral: CoreBluetooth.CBPeripheral) {
@@ -97,8 +99,12 @@ class ContinuousGlucoseMonitor: PeripheralTableViewController {
             sessionStartTime = SessionStartTime(data: characteristic.value!)
         case .measurement:
             let data = characteristic.value!
-            var value = ContinuousGlucoseMonitorMeasurement(data: data, sessionStartTime: sessionStartTime)
-            value.glucoseConcentration = Float(randomizer.next()!)
+            #if DEBUG
+            let value = ContinuousGlucoseMonitorMeasurement(value: Float(randomizer.next()!))
+            #else
+            let value = ContinuousGlucoseMonitorMeasurement(data: data, sessionStartTime: sessionStartTime)
+            #endif
+
             self.lastValueSection.update(with: value)
             self.chartSection.update(with: value)
             self.tableView.reloadData()
@@ -110,9 +116,9 @@ class ContinuousGlucoseMonitor: PeripheralTableViewController {
 
 extension ContinuousGlucoseMonitor {
     override public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if self.visibleSections[indexPath.section] is LinearChartSection, indexPath.row == 0 {
+        if self.visibleSections[indexPath.section] is ContinuousGlucoseChartData, indexPath.row == 0 {
             return 300
-        } else if self.visibleSections[indexPath.section] is TimeSliderSection, indexPath.row == 0 {
+        } else if self.visibleSections[indexPath.section] is TimeIntervalSection, indexPath.row == 0 {
             return 52
         }
         return 44
@@ -124,7 +130,7 @@ extension ContinuousGlucoseMonitor {
         if section is StartStopSection {
             startStopSection.toggle()
             tableView.reloadData()
-        } else if section is LinearChartSection, indexPath.row == 1 {
+        } else if section is ContinuousGlucoseChartData, indexPath.row == 1 {
             let listController = GlucoseValueList(items: chartSection.items)
             navigationController?.pushViewController(listController, animated: true)
         } else {

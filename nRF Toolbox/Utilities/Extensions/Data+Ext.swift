@@ -45,7 +45,7 @@ extension Data {
         var output : Float32 = 0
         
         if mantissa >= ReservedSFloatValues.firstReservedValue.rawValue && mantissa <= ReservedSFloatValues.negativeInfinity.rawValue {
-            output = Float32(Double.veservedValues[Int(mantissa - ReservedSFloatValues.firstReservedValue.rawValue)])
+            output = Float32(Double.reservedValues[Int(mantissa - ReservedSFloatValues.firstReservedValue.rawValue)])
         } else {
             if mantissa > 0x0800 {
                 mantissa = -((0x0FFF + 1) - mantissa)
@@ -65,7 +65,7 @@ extension Data {
         var output : Float32 = 0
         
         if mantissa >= Int32(ReservedFloatValues.firstReservedValue.rawValue) && mantissa <= Int32(ReservedFloatValues.negativeInfinity.rawValue) {
-            output = Float32(Double.veservedValues[Int(mantissa - Int32(ReservedSFloatValues.firstReservedValue.rawValue))])
+            output = Float32(Double.reservedValues[Int(mantissa - Int32(ReservedSFloatValues.firstReservedValue.rawValue))])
         } else {
             if mantissa >= 0x800000 {
                 mantissa = -((0xFFFFFF + 1) - mantissa)

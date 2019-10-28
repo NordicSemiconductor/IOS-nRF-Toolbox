@@ -27,17 +27,8 @@ class StartStopSection: ActionSection {
     }
 
     func toggle() {
-        (isStopped ? start : stop)()
-    }
-
-    private func start() {
-        isStopped = false
-        startItem.action()
-    }
-
-    private func stop() {
-        isStopped = true
-        stopItem.action()
+        (isStopped ? startItem : stopItem).action()
+        isStopped.toggle()
     }
 
 }
