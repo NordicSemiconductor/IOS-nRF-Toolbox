@@ -26,7 +26,7 @@ struct HeartRateMeasurementCharacteristic {
             : Int(data.read(fromOffset: 1) as UInt8)
     }
 
-    #if DEBUG
+    #if RAND
     init(value: Double) {
         self.heartRate = Int(value)
         self.date = Date()

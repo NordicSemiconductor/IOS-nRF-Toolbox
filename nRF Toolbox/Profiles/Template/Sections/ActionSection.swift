@@ -47,7 +47,7 @@ class ActionSection: Section {
     }
     
     func reset() {
-        items = []
+//        items = []
     }
     
     var numberOfItems: Int {

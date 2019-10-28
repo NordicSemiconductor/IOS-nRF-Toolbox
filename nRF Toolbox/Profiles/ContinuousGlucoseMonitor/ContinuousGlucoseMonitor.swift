@@ -54,7 +54,7 @@ class ContinuousGlucoseMonitor: PeripheralTableViewController {
     }, id: .startStopSection)
 
     private var sessionStartTime = SessionStartTime(date: Date())
-    #if DEBUG
+    #if RAND
     private var randomizer = Randomizer(top: 6.1, bottom: 4.4, value: 5.0, delta: 0.2)
     #endif
 
@@ -99,7 +99,7 @@ class ContinuousGlucoseMonitor: PeripheralTableViewController {
             sessionStartTime = SessionStartTime(data: characteristic.value!)
         case .measurement:
             let data = characteristic.value!
-            #if DEBUG
+            #if RAND
             let value = ContinuousGlucoseMonitorMeasurement(value: Float(randomizer.next()!))
             #else
             let value = ContinuousGlucoseMonitorMeasurement(data: data, sessionStartTime: sessionStartTime)

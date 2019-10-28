@@ -21,7 +21,7 @@ class HeartRateMonitorTableViewController: PeripheralTableViewController {
     private let instantaneousHeartRateSection = HeartRateSection(id: .heartRateValue)
     private var chartSection = HeartRateChartSection(id: .chartSection)
 
-    #if DEBUG
+    #if RAND
     var randomizer = Randomizer(top: 120, bottom: 60, value: 80, delta: 2)
     #endif
     
@@ -37,8 +37,8 @@ class HeartRateMonitorTableViewController: PeripheralTableViewController {
     override func didUpdateValue(for characteristic: CBCharacteristic) {
         switch characteristic.uuid {
         case CBUUID.Characteristics.HeartRate.measurement:
-            #if DEBUG
-            let data = HeartRateMeasurementCharacteristic(value: randomizer.next())
+            #if RAND
+            let data = HeartRateMeasurementCharacteristic(value: randomizer.next()!)
             #else
             let data = HeartRateMeasurementCharacteristic(with: characteristic.value!, date: Date())
             #endif

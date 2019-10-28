@@ -5,7 +5,7 @@
 
 import Foundation
 
-#if DEBUG
+#if RAND
 struct Randomizer: IteratorProtocol {
     let top, bottom: Double
     private var value: Double

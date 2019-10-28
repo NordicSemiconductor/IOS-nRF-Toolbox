@@ -16,7 +16,7 @@ struct ContinuousGlucoseMonitorMeasurement {
         date = sessionTime.addingTimeInterval(Double(timeOffset * 60))
     }
 
-    #if DEBUG
+    #if RAND
     init(value: Float) {
         glucoseConcentration = value
         date = Date()

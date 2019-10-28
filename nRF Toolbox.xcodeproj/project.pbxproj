@@ -1647,7 +1647,7 @@
 					"\"iOSDFULibrary\"",
 					"-ObjC",
 				);
-				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -D BETA";
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -D BETA -D RAND";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nordicsemi.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1713,6 +1713,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -1810,7 +1811,7 @@
 					"\"iOSDFULibrary\"",
 					"-ObjC",
 				);
-				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS";
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -D RAND";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nordicsemi.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1885,7 +1886,7 @@
 				5217F4131859EE0000F2D5BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Beta;
 		};
 		5217F4141859EE0000F2D5BB /* Build configuration list for PBXNativeTarget "nRF Toolbox" */ = {
 			isa = XCConfigurationList;
@@ -1895,7 +1896,7 @@
 				5217F4161859EE0000F2D5BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Beta;
 		};
 /* End XCConfigurationList section */
 	};
