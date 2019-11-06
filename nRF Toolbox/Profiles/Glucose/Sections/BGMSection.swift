@@ -52,4 +52,6 @@ class BGMSection: Section {
         
         items[index].context = context
     }
+
+    func cellHeight(for index: Int) -> CGFloat { 75 }
 }

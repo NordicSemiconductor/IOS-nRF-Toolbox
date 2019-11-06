@@ -106,6 +106,4 @@ struct CyclingTableViewSection: Section {
         
         items = items.map(self.update)
     }
-    
-    
 }

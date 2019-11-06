@@ -44,7 +44,7 @@ class DefaultMainRouter {
             .runningSensor : RunningTableViewController(style: .grouped),
             .continuousGlucoseMonitor : ContinuousGlucoseMonitor(style: .grouped),
             .deviceFirmwareUpgrade : DFUViewController.instance(),
-            .proximity : ProximityViewController.instance(),
+            .proximity : ProximityViewController(style: .grouped),
             .homeKit : HKViewController.instance(),
             .uart : UARTRevealViewController.instance(storyboard: UIStoryboard(name: "UARTViewController", bundle: .main))
             ].mapValues { UINavigationController.nordicBranded(rootViewController: $0) }

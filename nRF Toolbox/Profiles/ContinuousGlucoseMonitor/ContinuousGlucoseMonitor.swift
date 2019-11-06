@@ -115,15 +115,6 @@ class ContinuousGlucoseMonitor: PeripheralTableViewController {
 }
 
 extension ContinuousGlucoseMonitor {
-    override public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if self.visibleSections[indexPath.section] is ContinuousGlucoseChartData, indexPath.row == 0 {
-            return 300
-        } else if self.visibleSections[indexPath.section] is TimeIntervalSection, indexPath.row == 0 {
-            return 52
-        }
-        return 44
-    }
-
     public override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let section = visibleSections[indexPath.section]
 

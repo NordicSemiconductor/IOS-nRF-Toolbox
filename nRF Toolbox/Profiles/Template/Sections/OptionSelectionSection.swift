@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct OptionSelectioSection<T>: Section {
+struct OptionSelectionSection<T>: Section {
     var isHidden: Bool { items.count == 0 }
     
     struct Item {

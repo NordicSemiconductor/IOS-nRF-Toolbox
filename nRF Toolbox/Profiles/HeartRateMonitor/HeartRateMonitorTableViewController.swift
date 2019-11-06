@@ -53,12 +53,4 @@ class HeartRateMonitorTableViewController: PeripheralTableViewController {
             super.didUpdateValue(for: characteristic)
         }
     }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard self.visibleSections[indexPath.section].id == .chartSection, !chartSection.isHidden else {
-            return 44
-        }
-        
-        return 400
-    }
 }

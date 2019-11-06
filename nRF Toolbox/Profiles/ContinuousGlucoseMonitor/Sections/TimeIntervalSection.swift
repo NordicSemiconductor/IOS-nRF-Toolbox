@@ -34,4 +34,7 @@ class TimeIntervalSection: Section {
         self.id = id
         self.timeIntervalChanged = timeIntervalChanged
     }
+
+    //TODO: Check correct size
+    func cellHeight(for index: Int) -> CGFloat { 54.0 }
 }

@@ -34,4 +34,6 @@ class ChartDataSection<T>: Section {
     init(id: Identifier<Section>) {
         self.id = id
     }
+
+    func cellHeight(for index: Int) -> CGFloat { 350.0 }
 }

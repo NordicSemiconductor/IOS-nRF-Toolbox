@@ -95,7 +95,11 @@ class PeripheralTableViewController: UITableViewController, StatusDelegate {
         selected(item: indexPath.row, in: section)
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    
+
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        visibleSections[indexPath.section].cellHeight(for: indexPath.row)
+    }
+
     // MARK: Table View Handlers
     func selected(item: Int, in section: Section) {
         switch section.id {
@@ -230,6 +234,8 @@ class PeripheralTableViewController: UITableViewController, StatusDelegate {
         batterySection.update(with: BatteryCharacteristic(with: data))
         reloadSection(id: .battery)
     }
+
+
 }
 
 extension PeripheralTableViewController: CBPeripheralDelegate {

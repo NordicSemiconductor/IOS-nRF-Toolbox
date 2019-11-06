@@ -23,6 +23,8 @@
 		01BE0953234A1C48006ACF06 /* HealthTermometerCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE0952234A1C48006ACF06 /* HealthTermometerCharacteristic.swift */; };
 		01BE0955234A7500006ACF06 /* HealthTemperatureSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE0954234A7500006ACF06 /* HealthTemperatureSection.swift */; };
 		01BE0958234A76D4006ACF06 /* Peripheral+Temperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE0957234A76D4006ACF06 /* Peripheral+Temperature.swift */; };
+		01E4BACB23698DD300EE67A0 /* FindMeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E4BAC923698DD300EE67A0 /* FindMeTableViewCell.swift */; };
+		01E4BACC23698DD300EE67A0 /* FindMeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E4BACA23698DD300EE67A0 /* FindMeTableViewCell.xib */; };
 		0E645A0F1CBF957800D36AD0 /* firmwares in Resources */ = {isa = PBXBuildFile; fileRef = 7E6ED10A196ED482008010B6 /* firmwares */; };
 		20027B08233E116600A0B5ED /* StrideSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20027B07233E116600A0B5ED /* StrideSection.swift */; };
 		2002A000231FAFD100C43E06 /* PeripheralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20029FFF231FAFD100C43E06 /* PeripheralManager.swift */; };
@@ -63,7 +65,6 @@
 		20C7FE0E230A9F9300B06FD8 /* LinkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE0D230A9F9300B06FD8 /* LinkTableViewCell.swift */; };
 		20C7FE10230A9FAB00B06FD8 /* UIFont+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE0F230A9FAB00B06FD8 /* UIFont+Ext.swift */; };
 		20C7FE16230ADD1E00B06FD8 /* StoryboardInstantiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE15230ADD1E00B06FD8 /* StoryboardInstantiable.swift */; };
-		20C7FE1A230AE3E800B06FD8 /* ProximityViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE19230AE3E800B06FD8 /* ProximityViewController.storyboard */; };
 		20C7FE1E230BE75D00B06FD8 /* BGMViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE1D230BE75D00B06FD8 /* BGMViewController.storyboard */; };
 		20C7FE20230BE7DF00B06FD8 /* HKViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE1F230BE7DF00B06FD8 /* HKViewController.storyboard */; };
 		20C7FE26230BEA9D00B06FD8 /* DFUViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE25230BEA9D00B06FD8 /* DFUViewController.storyboard */; };
@@ -81,7 +82,7 @@
 		20D08E02232A38C200569587 /* TitledError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D08E01232A38C200569587 /* TitledError.swift */; };
 		20D08E04232A4A3600569587 /* SelectionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D08E03232A4A3600569587 /* SelectionsTableViewController.swift */; };
 		20D08E06232A569B00569587 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D08E05232A569B00569587 /* Identifiable.swift */; };
-		20D08E28232B940400569587 /* OptionSelectioSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D08E27232B940400569587 /* OptionSelectioSection.swift */; };
+		20D08E28232B940400569587 /* OptionSelectionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D08E27232B940400569587 /* OptionSelectionSection.swift */; };
 		20D08E2B232B95B300569587 /* DisclosureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D08E2A232B95B300569587 /* DisclosureTableViewCell.swift */; };
 		20E07B3C2305593800FCB205 /* ServiceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E07B3A2305593800FCB205 /* ServiceListViewController.swift */; };
 		20E07B3F23055B0B00FCB205 /* InteractionServiceList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20E07B3E23055B0B00FCB205 /* InteractionServiceList.plist */; };
@@ -126,7 +127,6 @@
 		3001EBC31D1C1430008C5C37 /* CGMItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBC01D1C12E4008C5C37 /* CGMItemCell.swift */; };
 		3001EBC51D1C153C008C5C37 /* CGMDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBC41D1C153C008C5C37 /* CGMDetailsViewController.swift */; };
 		3001EBC71D1C1BAA008C5C37 /* CGMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBC61D1C1BAA008C5C37 /* CGMViewController.swift */; };
-		300508931CE1D75800D93BE0 /* ProximityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300508921CE1D75800D93BE0 /* ProximityViewController.swift */; };
 		304299221CE5DE8E00E1D2AB /* UserFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304299211CE5DE8E00E1D2AB /* UserFilesViewController.swift */; };
 		304299241CE6114000E1D2AB /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304299231CE6114000E1D2AB /* TutorialViewController.swift */; };
 		3042993C1CE6154100E1D2AB /* BaseRevealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304299391CE6154100E1D2AB /* BaseRevealViewController.swift */; };
@@ -155,16 +155,20 @@
 		30A1145A1CD2426B000F0F02 /* ScannerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A114591CD2426B000F0F02 /* ScannerDelegate.swift */; };
 		30A1145C1CD24611000F0F02 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A1145B1CD24611000F0F02 /* ScannerViewController.swift */; };
 		339761A6176917F548C7B465 /* ContinuousGlucoseMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976F60C5BCE60DE33DFA31 /* ContinuousGlucoseMonitor.swift */; };
+		3397622AEAB44E02CA055BDF /* ProximityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339769E077B5F68E7D221F4D /* ProximityViewController.swift */; };
 		339762F1FAFD0B4E24D99501 /* GlucoseValueList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339768FF6079F23B5AA31CD9 /* GlucoseValueList.swift */; };
 		339763D0A0642AF6C7E7AA85 /* StartStopSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339769F5B71FA2B56A4AEE3C /* StartStopSection.swift */; };
 		339763D41402CC5D9773F46F /* Peripheral+ContinuousGlucoseMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339767C9A62A86751137B1CA /* Peripheral+ContinuousGlucoseMonitor.swift */; };
 		339764F85119305F6958B516 /* LastDataSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976856F7CFDAFCC9A665D2 /* LastDataSection.swift */; };
 		3397653E200A1711DC0AA009 /* ContinuousGlucoseMonitorMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3397654C348DA2769B9E4B1D /* ContinuousGlucoseMonitorMeasurement.swift */; };
 		339765E57CA5E940D960B675 /* ChartDataSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339763237234E5CAE47F8DBB /* ChartDataSection.swift */; };
+		339767568FA774CDE2FFC170 /* Peripheral+Proximity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976989CA3150561E8CE2F8 /* Peripheral+Proximity.swift */; };
 		33976843D672C14301E9C917 /* SessionStartTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976AA5771775F23255C2BD /* SessionStartTime.swift */; };
 		33976B2C1CE8194EFAEB7341 /* Randomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3397618F9EA9546991CF4ED2 /* Randomizer.swift */; };
 		33976C75E25FBF443EB251CD /* Bool+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976AF182818B9C448C61CE /* Bool+Ext.swift */; };
+		33976DC91B99AAA3F2E12DF7 /* FindMeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339763C07DFE7826BAF28153 /* FindMeSection.swift */; };
 		33976F79FE2EA20D94F68B69 /* ContinuousGlucoseChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976B66D7A581F01631AE52 /* ContinuousGlucoseChartData.swift */; };
+		33976FB5E54F1D8DDF4733E0 /* DistanceChartSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976ECA8BDFCDF4188746E3 /* DistanceChartSection.swift */; };
 		5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAA1885642F007CC40D /* icon-dfu-64.png */; };
 		5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAB1885642F007CC40D /* icon-dfu-320.png */; };
 		5211EFB018856430007CC40D /* icon-hex.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAC1885642F007CC40D /* icon-hex.png */; };
@@ -218,6 +222,8 @@
 		01BE0952234A1C48006ACF06 /* HealthTermometerCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTermometerCharacteristic.swift; sourceTree = "<group>"; };
 		01BE0954234A7500006ACF06 /* HealthTemperatureSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTemperatureSection.swift; sourceTree = "<group>"; };
 		01BE0957234A76D4006ACF06 /* Peripheral+Temperature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Peripheral+Temperature.swift"; sourceTree = "<group>"; };
+		01E4BAC923698DD300EE67A0 /* FindMeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindMeTableViewCell.swift; sourceTree = "<group>"; };
+		01E4BACA23698DD300EE67A0 /* FindMeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FindMeTableViewCell.xib; sourceTree = "<group>"; };
 		20027B07233E116600A0B5ED /* StrideSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrideSection.swift; sourceTree = "<group>"; };
 		20029FFF231FAFD100C43E06 /* PeripheralManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralManager.swift; sourceTree = "<group>"; };
 		2002A001231FB8E800C43E06 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
@@ -257,7 +263,6 @@
 		20C7FE0D230A9F9300B06FD8 /* LinkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkTableViewCell.swift; sourceTree = "<group>"; };
 		20C7FE0F230A9FAB00B06FD8 /* UIFont+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Ext.swift"; sourceTree = "<group>"; };
 		20C7FE15230ADD1E00B06FD8 /* StoryboardInstantiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardInstantiable.swift; sourceTree = "<group>"; };
-		20C7FE19230AE3E800B06FD8 /* ProximityViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProximityViewController.storyboard; sourceTree = "<group>"; };
 		20C7FE1D230BE75D00B06FD8 /* BGMViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BGMViewController.storyboard; sourceTree = "<group>"; };
 		20C7FE1F230BE7DF00B06FD8 /* HKViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HKViewController.storyboard; sourceTree = "<group>"; };
 		20C7FE25230BEA9D00B06FD8 /* DFUViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DFUViewController.storyboard; sourceTree = "<group>"; };
@@ -275,7 +280,7 @@
 		20D08E01232A38C200569587 /* TitledError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitledError.swift; sourceTree = "<group>"; };
 		20D08E03232A4A3600569587 /* SelectionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionsTableViewController.swift; sourceTree = "<group>"; };
 		20D08E05232A569B00569587 /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
-		20D08E27232B940400569587 /* OptionSelectioSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionSelectioSection.swift; sourceTree = "<group>"; };
+		20D08E27232B940400569587 /* OptionSelectionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionSelectionSection.swift; sourceTree = "<group>"; };
 		20D08E2A232B95B300569587 /* DisclosureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureTableViewCell.swift; sourceTree = "<group>"; };
 		20E07B3A2305593800FCB205 /* ServiceListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceListViewController.swift; sourceTree = "<group>"; };
 		20E07B3E23055B0B00FCB205 /* InteractionServiceList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = InteractionServiceList.plist; sourceTree = "<group>"; };
@@ -321,7 +326,6 @@
 		3001EBC01D1C12E4008C5C37 /* CGMItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGMItemCell.swift; sourceTree = "<group>"; };
 		3001EBC41D1C153C008C5C37 /* CGMDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGMDetailsViewController.swift; sourceTree = "<group>"; };
 		3001EBC61D1C1BAA008C5C37 /* CGMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CGMViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		300508921CE1D75800D93BE0 /* ProximityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ProximityViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		302004489406AEA824DCF86D /* Pods_nRF_Toolbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nRF_Toolbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		304299211CE5DE8E00E1D2AB /* UserFilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFilesViewController.swift; sourceTree = "<group>"; };
 		304299231CE6114000E1D2AB /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
@@ -353,14 +357,18 @@
 		30A1145B1CD24611000F0F02 /* ScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 		3397618F9EA9546991CF4ED2 /* Randomizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Randomizer.swift; sourceTree = "<group>"; };
 		339763237234E5CAE47F8DBB /* ChartDataSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartDataSection.swift; sourceTree = "<group>"; };
+		339763C07DFE7826BAF28153 /* FindMeSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindMeSection.swift; sourceTree = "<group>"; };
 		3397654C348DA2769B9E4B1D /* ContinuousGlucoseMonitorMeasurement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinuousGlucoseMonitorMeasurement.swift; sourceTree = "<group>"; };
 		339767C9A62A86751137B1CA /* Peripheral+ContinuousGlucoseMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Peripheral+ContinuousGlucoseMonitor.swift"; sourceTree = "<group>"; };
 		33976856F7CFDAFCC9A665D2 /* LastDataSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastDataSection.swift; sourceTree = "<group>"; };
 		339768FF6079F23B5AA31CD9 /* GlucoseValueList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlucoseValueList.swift; sourceTree = "<group>"; };
+		33976989CA3150561E8CE2F8 /* Peripheral+Proximity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Peripheral+Proximity.swift"; sourceTree = "<group>"; };
+		339769E077B5F68E7D221F4D /* ProximityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProximityViewController.swift; sourceTree = "<group>"; };
 		339769F5B71FA2B56A4AEE3C /* StartStopSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartStopSection.swift; sourceTree = "<group>"; };
 		33976AA5771775F23255C2BD /* SessionStartTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionStartTime.swift; sourceTree = "<group>"; };
 		33976AF182818B9C448C61CE /* Bool+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bool+Ext.swift"; sourceTree = "<group>"; };
 		33976B66D7A581F01631AE52 /* ContinuousGlucoseChartData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinuousGlucoseChartData.swift; sourceTree = "<group>"; };
+		33976ECA8BDFCDF4188746E3 /* DistanceChartSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DistanceChartSection.swift; sourceTree = "<group>"; };
 		33976F60C5BCE60DE33DFA31 /* ContinuousGlucoseMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinuousGlucoseMonitor.swift; sourceTree = "<group>"; };
 		4394EAC53F8A0FF797E7CA7A /* Pods-nRF Toolbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.release.xcconfig"; path = "Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.release.xcconfig"; sourceTree = "<group>"; };
 		51E9CFCBE6C75A89E5780FE4 /* Pods-nRF Toolbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.debug.xcconfig"; path = "Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.debug.xcconfig"; sourceTree = "<group>"; };
@@ -515,6 +523,15 @@
 				01BE0957234A76D4006ACF06 /* Peripheral+Temperature.swift */,
 			);
 			path = Peripheral;
+			sourceTree = "<group>";
+		};
+		01E4BAC823698DC000EE67A0 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				01E4BAC923698DD300EE67A0 /* FindMeTableViewCell.swift */,
+				01E4BACA23698DD300EE67A0 /* FindMeTableViewCell.xib */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		2002A003232260CA00C43E06 /* Glucose */ = {
@@ -697,6 +714,7 @@
 				203D0F07232F77F300C0340D /* Cycling */,
 				2002A003232260CA00C43E06 /* Glucose */,
 				204485DF233A143B00A8A3A3 /* Running */,
+				33976FB7F70E2AC6E606CA7A /* Proximity */,
 			);
 			path = Profiles;
 			sourceTree = "<group>";
@@ -825,7 +843,7 @@
 				20F0C8032327D42A003111E7 /* Section.swift */,
 				20F0C8052327D439003111E7 /* BatterySection.swift */,
 				20D08DFF2329356700569587 /* ActionSection.swift */,
-				20D08E27232B940400569587 /* OptionSelectioSection.swift */,
+				20D08E27232B940400569587 /* OptionSelectionSection.swift */,
 				203D0F0B232FB7D100C0340D /* DetailsTableViewSection.swift */,
 				339763237234E5CAE47F8DBB /* ChartDataSection.swift */,
 			);
@@ -918,6 +936,16 @@
 			path = Peripheral;
 			sourceTree = "<group>";
 		};
+		339764D601B214DA0869F4B0 /* Sections */ = {
+			isa = PBXGroup;
+			children = (
+				01E4BAC823698DC000EE67A0 /* Cell */,
+				339763C07DFE7826BAF28153 /* FindMeSection.swift */,
+				33976ECA8BDFCDF4188746E3 /* DistanceChartSection.swift */,
+			);
+			path = Sections;
+			sourceTree = "<group>";
+		};
 		339765764F70C52AC5738A3F /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -946,6 +974,16 @@
 				339768FF6079F23B5AA31CD9 /* GlucoseValueList.swift */,
 			);
 			path = GlucoseValueList;
+			sourceTree = "<group>";
+		};
+		33976FB7F70E2AC6E606CA7A /* Proximity */ = {
+			isa = PBXGroup;
+			children = (
+				339769E077B5F68E7D221F4D /* ProximityViewController.swift */,
+				339764D601B214DA0869F4B0 /* Sections */,
+				33976989CA3150561E8CE2F8 /* Peripheral+Proximity.swift */,
+			);
+			path = Proximity;
 			sourceTree = "<group>";
 		};
 		5214D0CF18881D0200460637 /* Utilities */ = {
@@ -1021,7 +1059,6 @@
 				5236E166187EA7AA0057E974 /* Scanner */,
 				309F08631E6D6A4300B7546A /* HomeKit */,
 				5252A53B18802F6300EFD773 /* DFU */,
-				5252A53F1880307D00EFD773 /* PROXIMITY */,
 				A86A78491AB8537200823AAB /* UART */,
 				5214D0CF18881D0200460637 /* Utilities */,
 				304299361CE6154100E1D2AB /* BaseViewController */,
@@ -1115,15 +1152,6 @@
 				7E6ED10A196ED482008010B6 /* firmwares */,
 			);
 			path = DFU;
-			sourceTree = "<group>";
-		};
-		5252A53F1880307D00EFD773 /* PROXIMITY */ = {
-			isa = PBXGroup;
-			children = (
-				300508921CE1D75800D93BE0 /* ProximityViewController.swift */,
-				20C7FE19230AE3E800B06FD8 /* ProximityViewController.storyboard */,
-			);
-			path = PROXIMITY;
 			sourceTree = "<group>";
 		};
 		52BDCBE31C4F953C00E2680F /* Logger */ = {
@@ -1289,7 +1317,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				20C7FE1A230AE3E800B06FD8 /* ProximityViewController.storyboard in Resources */,
 				20E07B4B23068D0300FCB205 /* Colors.xcassets in Resources */,
 				20C7FE012306C5FF00B06FD8 /* BLEServiceList.plist in Resources */,
 				20C7FE57230E997B00B06FD8 /* Links.plist in Resources */,
@@ -1314,6 +1341,7 @@
 				20E07B5E2306975700FCB205 /* GT-Eesti-Display-Medium-Italic.ttf in Resources */,
 				20E07B5F2306975700FCB205 /* GT-Eesti-Display-Bold-Italic.ttf in Resources */,
 				7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */,
+				01E4BACC23698DD300EE67A0 /* FindMeTableViewCell.xib in Resources */,
 				20C7FE1E230BE75D00B06FD8 /* BGMViewController.storyboard in Resources */,
 				52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */,
 				5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */,
@@ -1424,13 +1452,14 @@
 				309F08651E6D6A5500B7546A /* HKViewController.swift in Sources */,
 				203D0F0E23325E0A00C0340D /* CyclingTableViewSection.swift in Sources */,
 				3000B2131CE3195E00F64CEE /* EditPopupViewController.swift in Sources */,
-				20D08E28232B940400569587 /* OptionSelectioSection.swift in Sources */,
+				20D08E28232B940400569587 /* OptionSelectionSection.swift in Sources */,
 				20C7FE052306D02400B06FD8 /* Log.swift in Sources */,
 				20B25F382319568B006AF321 /* PeripheralTableViewController.swift in Sources */,
 				52D9BC9E1DD0CB760030E824 /* Data+Ext.swift in Sources */,
 				306ECD621CE61A3600E48BBD /* AppDelegate.swift in Sources */,
 				2002A000231FAFD100C43E06 /* PeripheralManager.swift in Sources */,
 				20F0C8012327D207003111E7 /* CBUUID+IDs.swift in Sources */,
+				01E4BACB23698DD300EE67A0 /* FindMeTableViewCell.swift in Sources */,
 				01B6D3D8234CB533000942C4 /* HeartRateMeasurementCharacteristic.swift in Sources */,
 				20C7FDFE2306BEE000B06FD8 /* Array+Ext.swift in Sources */,
 				01B6D3D3234C7538000942C4 /* HeartRateMonitorTableViewController.swift in Sources */,
@@ -1472,7 +1501,6 @@
 				5231403222FB1E130074325A /* UIColor+Nordic.swift in Sources */,
 				30A1145A1CD2426B000F0F02 /* ScannerDelegate.swift in Sources */,
 				3069A1D71CDC788A003869EA /* BluetoothManager.swift in Sources */,
-				300508931CE1D75800D93BE0 /* ProximityViewController.swift in Sources */,
 				20136505234785DC00C5AF1F /* Peripheral+BloodPressure.swift in Sources */,
 				3042993D1CE6154100E1D2AB /* BaseViewController.swift in Sources */,
 				20D08E2B232B95B300569587 /* DisclosureTableViewCell.swift in Sources */,
@@ -1518,6 +1546,10 @@
 				33976C75E25FBF443EB251CD /* Bool+Ext.swift in Sources */,
 				33976B2C1CE8194EFAEB7341 /* Randomizer.swift in Sources */,
 				339765E57CA5E940D960B675 /* ChartDataSection.swift in Sources */,
+				3397622AEAB44E02CA055BDF /* ProximityViewController.swift in Sources */,
+				33976DC91B99AAA3F2E12DF7 /* FindMeSection.swift in Sources */,
+				33976FB5E54F1D8DDF4733E0 /* DistanceChartSection.swift in Sources */,
+				339767568FA774CDE2FFC170 /* Peripheral+Proximity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

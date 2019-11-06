@@ -30,7 +30,7 @@ class GlucoseMonitorViewController: PeripheralTableViewController {
         return ActionSection(id: "Actions", sectionTitle: "Actions", items: [refresh, clear, deleteAll])
     }()
     
-    private var selectionSection = OptionSelectioSection<GlucoseMonitorViewController>(id: .selectionResult, sectionTitle: "", items: [OptionSelectioSection.Item(option: "Display Items", selectedCase: "All")])
+    private var selectionSection = OptionSelectionSection<GlucoseMonitorViewController>(id: .selectionResult, sectionTitle: "", items: [OptionSelectionSection.Item(option: "Display Items", selectedCase: "All")])
     
     override var navigationTitle: String { "Glucose Monitoring" }
     

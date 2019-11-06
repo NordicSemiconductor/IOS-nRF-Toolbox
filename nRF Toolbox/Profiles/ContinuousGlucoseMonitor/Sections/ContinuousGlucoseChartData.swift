@@ -27,4 +27,8 @@ class ContinuousGlucoseChartData: ChartDataSection<ContinuousGlucoseMonitorMeasu
     override func transform(_ item: ContinuousGlucoseMonitorMeasurement) -> (x: Double, y: Double) {
         (item.date!.timeIntervalSince1970, Double(item.glucoseConcentration))
     }
+
+    override func cellHeight(for index: Int) -> CGFloat {
+        index == 0 ? .defaultTableCellHeight : super.cellHeight(for: index)
+    }
 }
