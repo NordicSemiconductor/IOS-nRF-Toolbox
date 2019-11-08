@@ -45,7 +45,6 @@ class LinearChartTableViewCell: UITableViewCell {
         if #available(iOS 13, *) {
             leftAxis.axisLineColor = .label
             leftAxis.labelTextColor = .label
-
             xAxis.labelTextColor = .label
         }
 
@@ -73,6 +72,8 @@ class LinearChartTableViewCell: UITableViewCell {
         guard value.count > 0 else { return nil }
         let chartValues = value.map { ChartDataEntry(x: $0.x, y: $0.y) }
         let set = LineChartDataSet(entries: chartValues, label: nil)
+        set.drawCirclesEnabled = false
+        set.drawValuesEnabled = false
         return LineChartData(dataSet: set)
     }
 

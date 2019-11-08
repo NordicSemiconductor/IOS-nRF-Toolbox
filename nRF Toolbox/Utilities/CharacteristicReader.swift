@@ -35,7 +35,7 @@ enum ReservedFloatValues : UInt32 {
 
 extension Double {
     static var reservedValues: [Double] {
-        [Double.infinity, Double.nan, Double.nan, Double.nan, -Double.infinity]
+        [.infinity, .nan, .nan, .nan, -.infinity]
     }
 }
 

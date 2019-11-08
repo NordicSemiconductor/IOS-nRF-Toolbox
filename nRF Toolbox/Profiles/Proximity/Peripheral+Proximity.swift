@@ -27,6 +27,6 @@ private extension Peripheral.Service {
 }
 
 private extension Peripheral.Service.Characteristic {
-    static let proximityAlertLevel = Peripheral.Service.Characteristic(uuid: .proximityAlertLevelCharacteristic, action: .write)
-    static let txPowerLevel = Peripheral.Service.Characteristic(uuid: .txPowerLevelCharacteristic, action: .read)
+    static let proximityAlertLevel = Peripheral.Service.Characteristic(uuid: .proximityAlertLevelCharacteristic, properties: nil)
+    static let txPowerLevel = Peripheral.Service.Characteristic(uuid: .txPowerLevelCharacteristic, properties: .read)
 }

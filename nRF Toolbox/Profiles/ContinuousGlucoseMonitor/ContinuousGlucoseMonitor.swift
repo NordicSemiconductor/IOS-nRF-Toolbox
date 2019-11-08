@@ -116,15 +116,15 @@ class ContinuousGlucoseMonitor: PeripheralTableViewController {
 
 extension ContinuousGlucoseMonitor {
     public override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let section = visibleSections[indexPath.section]
-
-        if section is StartStopSection {
+        
+        switch visibleSections[indexPath.section] {
+        case is StartStopSection:
             startStopSection.toggle()
             tableView.reloadData()
-        } else if section is ContinuousGlucoseChartData, indexPath.row == 1 {
+        case is ContinuousGlucoseChartData where indexPath.row == 1:
             let listController = GlucoseValueList(items: chartSection.items)
             navigationController?.pushViewController(listController, animated: true)
-        } else {
+        default:
             super.tableView(tableView, didSelectRowAt: indexPath)
         }
     }

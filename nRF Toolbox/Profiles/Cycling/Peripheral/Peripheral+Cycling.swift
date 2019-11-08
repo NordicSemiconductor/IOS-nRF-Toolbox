@@ -17,6 +17,6 @@ extension Peripheral {
 
 private extension Peripheral.Service {
     static let cyclingSpeedCadenceSensor = Peripheral.Service(uuid: CBUUID.Service.cyclingSpeedCadenceSensor, characteristics: [
-        Peripheral.Service.Characteristic(uuid: CBUUID.Characteristics.CyclingSesnor.measurement, action: .notify(true)),
+        Peripheral.Service.Characteristic(uuid: CBUUID.Characteristics.CyclingSesnor.measurement, properties: .notify(true)),
     ])
 }

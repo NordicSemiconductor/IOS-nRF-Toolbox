@@ -15,6 +15,6 @@ extension Peripheral {
 
 private extension Peripheral.Service {
     static let measurement = Peripheral.Service(uuid: CBUUID.Service.healthTemperature, characteristics: [
-        Characteristic(uuid: CBUUID.Characteristics.HealthTemperature.measurement, action: .notify(true))
+        Characteristic(uuid: CBUUID.Characteristics.HealthTemperature.measurement, properties: .notify(true))
     ])
 }

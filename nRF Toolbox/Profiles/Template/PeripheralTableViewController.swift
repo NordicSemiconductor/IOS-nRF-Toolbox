@@ -12,12 +12,12 @@ import CoreBluetooth
 struct Peripheral {
     struct Service {
         struct Characteristic {
-            enum Action {
-                case read, write, readWrite, notify(Bool)
+            enum Property {
+                case read, notify(Bool)
             }
             
             let uuid: CBUUID
-            let action: Action
+            let properties: Property?
         }
         let uuid: CBUUID
         let characteristics: [Characteristic]
@@ -28,7 +28,7 @@ struct Peripheral {
 
 extension Peripheral.Service {
     static let battery = Peripheral.Service(uuid: CBUUID.Service.battery, characteristics: [
-        Peripheral.Service.Characteristic(uuid: CBUUID.Characteristics.Battery.batteryLevel, action: .read)
+        Peripheral.Service.Characteristic(uuid: CBUUID.Characteristics.Battery.batteryLevel, properties: .read)
     ])
 }
 
@@ -211,7 +211,7 @@ class PeripheralTableViewController: UITableViewController, StatusDelegate {
             .first(where: { $0.uuid == service.uuid })?.characteristics
             .first(where: { $0.uuid == characteristic.uuid })
             .flatMap {
-                switch $0.action {
+                switch $0.properties {
                 case .read: peripheral.readValue(for: characteristic)
                 case .notify(let enabled): peripheral.setNotifyValue(enabled, for: characteristic)
                 default: break

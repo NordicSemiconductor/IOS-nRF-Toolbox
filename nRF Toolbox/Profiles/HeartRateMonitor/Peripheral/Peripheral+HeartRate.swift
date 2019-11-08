@@ -14,7 +14,7 @@ extension Peripheral {
 
 private extension Peripheral.Service {
     static let heartRateMeasurement = Peripheral.Service(uuid: CBUUID.Service.heartRateSensor, characteristics: [
-        Peripheral.Service.Characteristic(uuid: CBUUID.Characteristics.HeartRate.measurement, action: .notify(true)),
-        Peripheral.Service.Characteristic(uuid: CBUUID.Characteristics.HeartRate.location, action: .notify(true))
+        Peripheral.Service.Characteristic(uuid: CBUUID.Characteristics.HeartRate.measurement, properties: .notify(true)),
+        Peripheral.Service.Characteristic(uuid: CBUUID.Characteristics.HeartRate.location, properties: .notify(true))
     ])
 }
