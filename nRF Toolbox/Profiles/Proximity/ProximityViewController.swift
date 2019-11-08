@@ -154,8 +154,8 @@ extension ProximityViewController {
 
         if case .background = UIApplication.shared.applicationState {
             let content = UNMutableNotificationContent()
-            content.title = "Find me"
-            content.subtitle = "Find me feature was enabled"
+            content.title = "Proximity"
+            content.subtitle = activePeripheral?.name.flatMap { "Phone found using \($0)" } ?? "Find iPhone feature was enabled"
 
             content.sound = UNNotificationSound(named: UNNotificationSoundName("high.mp3"))
 
