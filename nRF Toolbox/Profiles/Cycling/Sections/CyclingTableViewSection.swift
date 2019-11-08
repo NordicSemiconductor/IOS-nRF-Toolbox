@@ -18,6 +18,8 @@ extension Identifier where Value == DetailsTableViewCellModel {
 }
 
 struct CyclingTableViewSection: Section {
+    var isHidden: Bool = false 
+    
     // TODO: Load value from settings
     private let wheelCircumference: Double = 2.6//UserDefaults.standard.double(forKey: "key_diameter")
     
@@ -104,6 +106,4 @@ struct CyclingTableViewSection: Section {
         
         items = items.map(self.update)
     }
-    
-    
 }

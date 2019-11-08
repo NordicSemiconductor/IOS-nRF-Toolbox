@@ -35,7 +35,7 @@ class CyclingTableViewController: PeripheralTableViewController {
     
     private func handleCycling(value: Data) {
         cyclingSection.update(with: value)
-        reloadSection(id: .cycling)
+        tableView.reloadData()
     }
 }
 

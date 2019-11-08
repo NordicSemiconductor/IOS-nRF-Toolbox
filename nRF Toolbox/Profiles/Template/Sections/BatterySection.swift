@@ -8,12 +8,13 @@
 
 import UIKit
 
-class BatterySection: DetailsTableViewSection {
-    override func update(with data: Data) {
-        let batteryLevel: UInt8 = data.read()
+class BatterySection: DetailsTableViewSection<BatteryCharacteristic> {
+    override func reset() { }
+    
+    override func update(with characteristic: BatteryCharacteristic) {
+        let batteryLevel: UInt8 = 0// data.read()
         let item = DefaultDetailsTableViewCellModel(title: "Battery", value: "\(batteryLevel)")
         items = [item]
     }
     
-    override func reset() { }
 }

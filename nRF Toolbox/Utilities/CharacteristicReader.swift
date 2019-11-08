@@ -13,13 +13,14 @@ struct Nibble {
     var second : UInt8
 }
 
-
 enum ReservedSFloatValues : Int16 {
     case positiveInfinity = 0x07FE
     case nan = 0x07FF
     case nres = 0x0800
     case reserved = 0x0801
     case negativeInfinity = 0x0802
+    
+    static let firstReservedValue = ReservedSFloatValues.positiveInfinity
 }
 
 enum ReservedFloatValues : UInt32 {
@@ -28,11 +29,15 @@ enum ReservedFloatValues : UInt32 {
     case nres = 0x00800000
     case reserved = 0x00800001
     case negativeInfinity = 0x00800002
+    
+    static let firstReservedValue = ReservedFloatValues.positiveInfinity
 }
 
-let FIRST_S_RESERVED_VALUE = ReservedSFloatValues.positiveInfinity
-let FIRST_RESERVED_VALUE   = ReservedFloatValues.positiveInfinity
-let RESERVED_FLOAT_VALUES  = [Double.infinity, Double.nan, Double.nan, Double.nan, -Double.infinity]
+extension Double {
+    static var reservedValues: [Double] {
+        [.infinity, .nan, .nan, .nan, -.infinity]
+    }
+}
 
 struct CharacteristicReader {
 
@@ -43,7 +48,7 @@ struct CharacteristicReader {
     }
     
     static func readSInt8Value(ptr aPointer : UnsafeMutablePointer<UInt8>) -> Int8 {
-        return Int8(aPointer.successor().pointee)
+        Int8(aPointer.successor().pointee)
     }
 
     static func readUInt16Value(ptr aPointer : inout UnsafeMutablePointer<UInt8>) -> UInt16 {
@@ -74,6 +79,29 @@ struct CharacteristicReader {
         return Int32(val)
     }
     
+    static func readSFloat(_ data: Data, offset: Int) -> Float32 {
+        let tempData: UInt16 = data.read(fromOffset: offset)
+        var mantissa = Int16(tempData & 0x0FFF)
+        var exponent = Int8(tempData >> 12)
+        if exponent >= 0x0008 {
+            exponent = -( (0x000F + 1) - exponent )
+        }
+        
+        var output : Float32 = 0
+        
+        if mantissa >= ReservedSFloatValues.firstReservedValue.rawValue && mantissa <= ReservedSFloatValues.negativeInfinity.rawValue {
+            output = Float32(Double.reservedValues[Int(mantissa - ReservedSFloatValues.firstReservedValue.rawValue)])
+        } else {
+            if mantissa > 0x0800 {
+                mantissa = -((0x0FFF + 1) - mantissa)
+            }
+            let magnitude = pow(10.0, Double(exponent))
+            output = Float32(mantissa) * Float32(magnitude)
+        }
+        
+        return output
+    }
+    
     static func readSFloatValue(ptr aPointer : inout UnsafeMutablePointer<UInt8>) -> Float32 {
         let tempData = CFSwapInt16LittleToHost(UnsafeMutablePointer<UInt16>(OpaquePointer(aPointer)).pointee)
         var mantissa = Int16(tempData & 0x0FFF)
@@ -84,8 +112,8 @@ struct CharacteristicReader {
 
         var output : Float32 = 0
         
-        if mantissa >= FIRST_S_RESERVED_VALUE.rawValue && mantissa <= ReservedSFloatValues.negativeInfinity.rawValue {
-            output = Float32(RESERVED_FLOAT_VALUES[Int(mantissa - FIRST_S_RESERVED_VALUE.rawValue)])
+        if mantissa >= ReservedSFloatValues.firstReservedValue.rawValue && mantissa <= ReservedSFloatValues.negativeInfinity.rawValue {
+            output = Float32(Double.reservedValues[Int(mantissa - ReservedSFloatValues.firstReservedValue.rawValue)])
         } else {
             if mantissa > 0x0800 {
                 mantissa = -((0x0FFF + 1) - mantissa)
@@ -105,8 +133,8 @@ struct CharacteristicReader {
         
         var output : Float32 = 0
         
-        if mantissa >= Int32(FIRST_RESERVED_VALUE.rawValue) && mantissa <= Int32(ReservedFloatValues.negativeInfinity.rawValue) {
-            output = Float32(RESERVED_FLOAT_VALUES[Int(mantissa - Int32(FIRST_S_RESERVED_VALUE.rawValue))])
+        if mantissa >= Int32(ReservedFloatValues.firstReservedValue.rawValue) && mantissa <= Int32(ReservedFloatValues.negativeInfinity.rawValue) {
+            output = Float32(Double.reservedValues[Int(mantissa - Int32(ReservedSFloatValues.firstReservedValue.rawValue))])
         } else {
             if mantissa >= 0x800000 {
                 mantissa = -((0xFFFFFF + 1) - mantissa)

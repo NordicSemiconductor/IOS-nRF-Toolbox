@@ -8,11 +8,11 @@
 
 import UIKit
 
-extension Identifier where Value == DetailsTableViewCellModel {
+private extension Identifier where Value == DetailsTableViewCellModel {
     static let numberOfSteps: Identifier<DetailsTableViewCellModel> = "NumberOfSteps"
 }
 
-class RunningSpeedSection: DetailsTableViewSection {
+class RunningSpeedSection: DetailsTableViewSection<RunningCharacteristic> {
     
     private var numberOfSteps: Int = 0
     private var startDate: Date = Date()
@@ -30,8 +30,8 @@ class RunningSpeedSection: DetailsTableViewSection {
         timer?.invalidate()
     }
     
-    override func update(with data: Data) {
-        let runningData = RunningCharacteristic(data: data)
+    override func update(with characteristic: RunningCharacteristic) {
+        let runningData = characteristic //RunningCharacteristic(data: data)
         let cadence = runningData.instantaneousCadence
         var items: [DefaultDetailsTableViewCellModel] = [
             DefaultDetailsTableViewCellModel(title: "Pace", value: PaceMeasurementFormatter().paceString(from: runningData.instantaneousSpeed)),
@@ -48,7 +48,8 @@ class RunningSpeedSection: DetailsTableViewSection {
         items.append(DefaultDetailsTableViewCellModel(title: "Number of Steps", value: "\(numberOfSteps)", identifier: .numberOfSteps))
         
         self.items = items
-        super.update(with: data)
+        isHidden = false 
+        super.update(with: characteristic)
         
         self.timer?.invalidate()
         if cadence > 0 {

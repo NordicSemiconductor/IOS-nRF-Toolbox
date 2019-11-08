@@ -31,9 +31,9 @@ import CoreBluetooth
     
     //MARK: - Internal variables
     
-    internal let centralManager : CBCentralManager
-    internal var target         : CBPeripheral!
-    internal var file           : DFUFirmware?
+    internal let centralManager   : CBCentralManager
+    internal var targetIdentifier : UUID!
+    internal var file             : DFUFirmware?
     
     internal var queue                 : DispatchQueue
     internal var delegateQueue         : DispatchQueue
@@ -244,7 +244,7 @@ import CoreBluetooth
         self.centralManager = centralManager
         // Just to be sure that manager is not scanning
         self.centralManager.stopScan()
-        self.target = target
+        self.targetIdentifier = target.identifier
         // Default peripheral selector will choose the service UUID as a filter
         self.peripheralSelector = DFUPeripheralSelector()
         // Default UUID helper with standard set of UUIDs
@@ -329,7 +329,7 @@ import CoreBluetooth
         }
         
         // Make sure the target was set by the deprecated init.
-        guard let _ = target else {
+        guard let _ = targetIdentifier else {
             delegate?.dfuError(.failedToConnect, didOccurWithMessage: "Target not specified: use start(target) instead")
             return nil
         }
@@ -394,18 +394,12 @@ import CoreBluetooth
      */
     @objc public func start(targetWithIdentifier uuid: UUID) -> DFUServiceController? {
         // The firmware file must be specified before calling `start(...)`.
-        if file == nil {
+        guard let _ = file else {
             delegate?.dfuError(.fileNotSpecified, didOccurWithMessage: "Firmware not specified")
             return nil
         }
         
-        // As the given peripheral was obtained using a different central manager,
-        // its new instance must be obtained from the new manager.
-        guard let peripheral = self.centralManager.retrievePeripherals(withIdentifiers: [uuid]).first else {
-            delegate?.dfuError(.bluetoothDisabled, didOccurWithMessage: "Could not obtain peripheral instance")
-            return nil
-        }
-        target = peripheral
+        targetIdentifier = uuid
         
         let controller = DFUServiceController()
         let selector   = DFUServiceSelector(initiator: self, controller: controller)

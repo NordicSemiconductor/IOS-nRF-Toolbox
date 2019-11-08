@@ -14,6 +14,18 @@ protocol Section {
     var numberOfItems: Int { get }
     var sectionTitle: String { get }
     var id: Identifier<Section> { get }
+    var isHidden: Bool { get }
+    func cellHeight(for index: Int) -> CGFloat
+}
+
+extension CGFloat {
+    static let defaultTableCellHeight: CGFloat = 44.0
+}
+
+extension Section {
+    func cellHeight(for index: Int) -> CGFloat {
+        .defaultTableCellHeight
+    }
 }
 
 extension Identifier where Value == Section {

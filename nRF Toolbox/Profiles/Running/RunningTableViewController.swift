@@ -9,22 +9,30 @@
 import UIKit
 import CoreBluetooth
 
+private extension Identifier where Value == Section {
+    static let runningSpeedCadence: Identifier<Section> = "runningSpeedCadence"
+    static let runningActivitySection: Identifier<Section> = "runningActivitySection"
+}
+
 class RunningTableViewController: PeripheralTableViewController {
     lazy private var runningSpeedCadenceSection = RunningSpeedSection.init(id: .runningSpeedCadence, itemUpdated: { [weak self] (section, item) in
             self?.reloadItemInSection(section, itemId: item, animation: .none)
         })
     private let activitySection = ActivitySection(id: .runningActivitySection)
-    override var peripheralDescription: Peripheral { Peripheral.runningSpeedCadenceSensor }
+    override var peripheralDescription: Peripheral { .runningSpeedCadenceSensor }
     override var internalSections: [Section] { [activitySection, runningSpeedCadenceSection] }
+    override var navigationTitle: String { "Running Speed and Cadence Sensor" }
     
     override func didUpdateValue(for characteristic: CBCharacteristic) {
         switch characteristic.uuid {
         case CBUUID.Characteristics.Running.measurement:
             characteristic.value.map {
-                self.runningSpeedCadenceSection.update(with: $0)
-                self.activitySection.update(with: $0)
+                let running = RunningCharacteristic(data: $0)
+                self.runningSpeedCadenceSection.update(with: running)
+                self.activitySection.update(with: running)
                 
-                self.reloadSections(ids: [.runningSpeedCadence, .runningActivitySection], animation: .none)
+//                self.reloadSections(ids: [.runningSpeedCadence, .runningActivitySection], animation: .none)
+                self.tableView.reloadData()
             }
             
         default:

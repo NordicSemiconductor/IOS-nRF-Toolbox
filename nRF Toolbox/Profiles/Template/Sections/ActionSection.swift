@@ -24,12 +24,17 @@ struct ActionSectionItem {
     }
 }
 
-struct ActionSection: Section {
+class ActionSection: Section {
+    var isHidden: Bool = false 
     
     func dequeCell(for index: Int, from tableView: UITableView) -> UITableViewCell {
         let item = items[index]
+        return dequeueCell(item: item, at: index, from: tableView)
+    }
+
+    func dequeueCell(item: ActionSectionItem, at index: Int, from tableView: UITableView) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ActionCell")
-        
+
         cell?.textLabel?.font = UIFont.gtEestiDisplay(.regular, size: 17.0)
         cell?.textLabel?.text = item.title
         cell?.textLabel?.textColor = {
@@ -41,11 +46,11 @@ struct ActionSection: Section {
         return cell!
     }
     
-    mutating func reset() { }
-    
-    var numberOfItems: Int {
-        return items.count
+    func reset() {
+//        items = []
     }
+    
+    var numberOfItems: Int { items.count }
     
     var sectionTitle: String
     let id: Identifier<Section>

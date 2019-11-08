@@ -17,8 +17,8 @@ extension Peripheral {
 
 private extension Peripheral.Service {
     static let bloodGlucoseMonitor = Peripheral.Service(uuid: CBUUID.Service.bloodGlucoseMonitor, characteristics: [
-        Peripheral.Service.Characteristic(uuid: CBUUID.Characteristics.BloodGlucoseMonitor.glucoseMeasurement, action: .notify(true)),
-        Peripheral.Service.Characteristic(uuid: CBUUID.Characteristics.BloodGlucoseMonitor.glucoseMeasurementContext, action: .notify(true)),
-        Peripheral.Service.Characteristic(uuid: CBUUID.Characteristics.BloodGlucoseMonitor.recordAccessControlPoint, action: .notify(true))
+        Peripheral.Service.Characteristic(uuid: CBUUID.Characteristics.BloodGlucoseMonitor.glucoseMeasurement, properties: .notify(true)),
+        Peripheral.Service.Characteristic(uuid: CBUUID.Characteristics.BloodGlucoseMonitor.glucoseMeasurementContext, properties: .notify(true)),
+        Peripheral.Service.Characteristic(uuid: CBUUID.Characteristics.BloodGlucoseMonitor.recordAccessControlPoint, properties: .notify(true))
     ])
 }
