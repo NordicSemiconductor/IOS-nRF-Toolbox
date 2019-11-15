@@ -15,7 +15,11 @@ class ConnectTableViewController: UITableViewController {
     
     init(connectDelegate: PeripheralConnectionDelegate) {
         self.connectDelegate = connectDelegate
-        super.init(style: .grouped)
+        if #available(iOS 13.0, *) {
+            super.init(style: .insetGrouped)
+        } else {
+            super.init(style: .grouped)
+        }
     }
     
     required init?(coder: NSCoder) {

@@ -68,7 +68,9 @@ extension PeripheralManager: CBCentralManagerDelegate {
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         Log(category: .ble, type: .debug).log(message: "Discovered peripheral: \(peripheral.name ?? "__unnamed__")")
-        self.peripherals.insert(peripheral)
+        if case .some = peripheral.name {
+            self.peripherals.insert(peripheral)
+        }
         peripheralListDelegate?.peripheralsFound(peripherals.map { DiscoveredPeripheral(with: $0, RSSI: RSSI.int32Value) } )
     }
     
@@ -90,7 +92,7 @@ extension PeripheralManager: CBCentralManagerDelegate {
 
 extension PeripheralManager: PeripheralConnectionDelegate {
     func scan(peripheral: Peripheral) {
-        manager.scanForPeripherals(withServices: [peripheral.uuid], options: nil)
+        manager.scanForPeripherals(withServices: peripheral.uuid.flatMap { [$0] }, options: nil)
     }
     
     func closeConnection(peripheral: CBPeripheral) {

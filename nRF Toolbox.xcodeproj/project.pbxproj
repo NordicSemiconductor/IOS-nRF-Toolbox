@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		01006201234D08700078CEFA /* LinearChartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01006200234D08700078CEFA /* LinearChartTableViewCell.swift */; };
+		0140FCD6237C336D00411963 /* SelectFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0140FCD5237C336D00411963 /* SelectFileView.swift */; };
+		0140FCD9237C3D3F00411963 /* SelectFileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0140FCD8237C3D3F00411963 /* SelectFileView.xib */; };
 		01468B052361A30A00C29E4C /* StepperTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B032361A30A00C29E4C /* StepperTableViewCell.swift */; };
 		01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01468B042361A30A00C29E4C /* StepperTableViewCell.xib */; };
 		01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */; };
@@ -154,8 +156,10 @@
 		30A114561CD2367C000F0F02 /* ScannedPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A114551CD2367C000F0F02 /* ScannedPeripheral.swift */; };
 		30A1145A1CD2426B000F0F02 /* ScannerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A114591CD2426B000F0F02 /* ScannerDelegate.swift */; };
 		30A1145C1CD24611000F0F02 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A1145B1CD24611000F0F02 /* ScannerViewController.swift */; };
+		3397616CB0B03E42E9F890C6 /* DFUViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3397666AEF5D1014982224D6 /* DFUViewController1.swift */; };
 		339761A6176917F548C7B465 /* ContinuousGlucoseMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976F60C5BCE60DE33DFA31 /* ContinuousGlucoseMonitor.swift */; };
 		3397622AEAB44E02CA055BDF /* ProximityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339769E077B5F68E7D221F4D /* ProximityViewController.swift */; };
+		3397628E56C4A84F4D4E8128 /* PeripheralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339767BE0A9B9DF256F73884 /* PeripheralViewController.swift */; };
 		339762F1FAFD0B4E24D99501 /* GlucoseValueList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339768FF6079F23B5AA31CD9 /* GlucoseValueList.swift */; };
 		339763D0A0642AF6C7E7AA85 /* StartStopSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339769F5B71FA2B56A4AEE3C /* StartStopSection.swift */; };
 		339763D41402CC5D9773F46F /* Peripheral+ContinuousGlucoseMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339767C9A62A86751137B1CA /* Peripheral+ContinuousGlucoseMonitor.swift */; };
@@ -207,6 +211,8 @@
 
 /* Begin PBXFileReference section */
 		01006200234D08700078CEFA /* LinearChartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearChartTableViewCell.swift; sourceTree = "<group>"; };
+		0140FCD5237C336D00411963 /* SelectFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFileView.swift; sourceTree = "<group>"; };
+		0140FCD8237C3D3F00411963 /* SelectFileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectFileView.xib; sourceTree = "<group>"; };
 		01468B032361A30A00C29E4C /* StepperTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperTableViewCell.swift; sourceTree = "<group>"; };
 		01468B042361A30A00C29E4C /* StepperTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StepperTableViewCell.xib; sourceTree = "<group>"; };
 		01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalSection.swift; sourceTree = "<group>"; };
@@ -359,6 +365,8 @@
 		339763237234E5CAE47F8DBB /* ChartDataSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartDataSection.swift; sourceTree = "<group>"; };
 		339763C07DFE7826BAF28153 /* FindMeSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindMeSection.swift; sourceTree = "<group>"; };
 		3397654C348DA2769B9E4B1D /* ContinuousGlucoseMonitorMeasurement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinuousGlucoseMonitorMeasurement.swift; sourceTree = "<group>"; };
+		3397666AEF5D1014982224D6 /* DFUViewController1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DFUViewController1.swift; sourceTree = "<group>"; };
+		339767BE0A9B9DF256F73884 /* PeripheralViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeripheralViewController.swift; sourceTree = "<group>"; };
 		339767C9A62A86751137B1CA /* Peripheral+ContinuousGlucoseMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Peripheral+ContinuousGlucoseMonitor.swift"; sourceTree = "<group>"; };
 		33976856F7CFDAFCC9A665D2 /* LastDataSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastDataSection.swift; sourceTree = "<group>"; };
 		339768FF6079F23B5AA31CD9 /* GlucoseValueList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlucoseValueList.swift; sourceTree = "<group>"; };
@@ -428,6 +436,15 @@
 				01006200234D08700078CEFA /* LinearChartTableViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		0140FCD4237C2FFA00411963 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0140FCD8237C3D3F00411963 /* SelectFileView.xib */,
+				0140FCD5237C336D00411963 /* SelectFileView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		01468B022361A23300C29E4C /* Cells */ = {
@@ -715,6 +732,7 @@
 				2002A003232260CA00C43E06 /* Glucose */,
 				204485DF233A143B00A8A3A3 /* Running */,
 				33976FB7F70E2AC6E606CA7A /* Proximity */,
+				3397685D0BC3A39E56B33F94 /* DeviceFirmwareUpdate */,
 			);
 			path = Profiles;
 			sourceTree = "<group>";
@@ -728,6 +746,7 @@
 				20029FFF231FAFD100C43E06 /* PeripheralManager.swift */,
 				20B25F39231960CF006AF321 /* ConnectTableViewController.swift */,
 				20D08E03232A4A3600569587 /* SelectionsTableViewController.swift */,
+				339767BE0A9B9DF256F73884 /* PeripheralViewController.swift */,
 			);
 			path = Template;
 			sourceTree = "<group>";
@@ -966,6 +985,15 @@
 				33976F4A6C92E03D8A6FDDB4 /* GlucoseValueList */,
 			);
 			path = Sections;
+			sourceTree = "<group>";
+		};
+		3397685D0BC3A39E56B33F94 /* DeviceFirmwareUpdate */ = {
+			isa = PBXGroup;
+			children = (
+				0140FCD4237C2FFA00411963 /* Views */,
+				3397666AEF5D1014982224D6 /* DFUViewController1.swift */,
+			);
+			path = DeviceFirmwareUpdate;
 			sourceTree = "<group>";
 		};
 		33976F4A6C92E03D8A6FDDB4 /* GlucoseValueList */ = {
@@ -1324,6 +1352,7 @@
 				20D08DFE232929A400569587 /* BGMTableViewCell.xib in Resources */,
 				01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */,
 				20C7FE26230BEA9D00B06FD8 /* DFUViewController.storyboard in Resources */,
+				0140FCD9237C3D3F00411963 /* SelectFileView.xib in Resources */,
 				20E07B622306975700FCB205 /* GT-Eesti-Display-Bold.ttf in Resources */,
 				5214D0CE1886C02A00460637 /* Settings.bundle in Resources */,
 				20E07B682306975700FCB205 /* GT-Eesti-Display-ULight-Italic.ttf in Resources */,
@@ -1542,6 +1571,7 @@
 				339763D0A0642AF6C7E7AA85 /* StartStopSection.swift in Sources */,
 				3397653E200A1711DC0AA009 /* ContinuousGlucoseMonitorMeasurement.swift in Sources */,
 				33976843D672C14301E9C917 /* SessionStartTime.swift in Sources */,
+				0140FCD6237C336D00411963 /* SelectFileView.swift in Sources */,
 				339762F1FAFD0B4E24D99501 /* GlucoseValueList.swift in Sources */,
 				33976C75E25FBF443EB251CD /* Bool+Ext.swift in Sources */,
 				33976B2C1CE8194EFAEB7341 /* Randomizer.swift in Sources */,
@@ -1550,6 +1580,8 @@
 				33976DC91B99AAA3F2E12DF7 /* FindMeSection.swift in Sources */,
 				33976FB5E54F1D8DDF4733E0 /* DistanceChartSection.swift in Sources */,
 				339767568FA774CDE2FFC170 /* Peripheral+Proximity.swift in Sources */,
+				3397616CB0B03E42E9F890C6 /* DFUViewController1.swift in Sources */,
+				3397628E56C4A84F4D4E8128 /* PeripheralViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

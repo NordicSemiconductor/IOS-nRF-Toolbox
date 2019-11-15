@@ -112,10 +112,8 @@ class ContinuousGlucoseMonitor: PeripheralTableViewController {
             super.didUpdateValue(for: characteristic)
         }
     }
-}
 
-extension ContinuousGlucoseMonitor {
-    public override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         switch visibleSections[indexPath.section] {
         case is StartStopSection:
