@@ -26,8 +26,28 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      onlyGenerateCoverageForSpecifiedTargets = "YES">
+      <CodeCoverageTargets>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "5217F3E11859EE0000F2D5BB"
+            BuildableName = "nRF Toolbox Beta.app"
+            BlueprintName = "nRF Toolbox"
+            ReferencedContainer = "container:nRF Toolbox.xcodeproj">
+         </BuildableReference>
+      </CodeCoverageTargets>
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0169B5A423FBEA9600907C1B"
+               BuildableName = "nRF Toolbox Tests.xctest"
+               BlueprintName = "nRF Toolbox Tests"
+               ReferencedContainer = "container:nRF Toolbox.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

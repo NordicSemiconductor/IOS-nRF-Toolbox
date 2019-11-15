@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="GT-Eesti-Display-Regular.ttf">
+            <string>GTEestiDisplay-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UARTNewCommandViewController" customModule="nRF_Toolbox" customModuleProvider="target">
+            <connections>
+                <outlet property="collectionView" destination="jZ7-mp-DGi" id="hiP-Ue-TGF"/>
+                <outlet property="createButton" destination="u5n-VG-gti" id="2PU-4i-a8j"/>
+                <outlet property="deleteButton" destination="yA1-Ak-ptR" id="CXg-wQ-M7v"/>
+                <outlet property="typeSegmentControl" destination="xej-mh-BNi" id="Q3q-po-bnV"/>
+                <outlet property="valueTextField" destination="wod-JE-wcr" id="TMj-5M-bsI"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="PSb-Wd-33j">
+                    <rect key="frame" x="20" y="60" width="374" height="786"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="T7h-tB-R7a">
+                            <rect key="frame" x="0.0" y="0.0" width="374" height="98.5"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Command value:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0uP-1L-yMb">
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="17.5"/>
+                                    <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="15"/>
+                                    <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="xej-mh-BNi">
+                                    <rect key="frame" x="0.0" y="25.5" width="374" height="32"/>
+                                    <segments>
+                                        <segment title="Text"/>
+                                        <segment title="Bytes"/>
+                                    </segments>
+                                    <connections>
+                                        <action selector="typeChanged:" destination="-1" eventType="valueChanged" id="n1H-h8-9o6"/>
+                                    </connections>
+                                </segmentedControl>
+                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wod-JE-wcr">
+                                    <rect key="frame" x="0.0" y="64.5" width="374" height="34"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
+                                    <connections>
+                                        <action selector="textChanged:" destination="-1" eventType="valueChanged" id="UZp-GK-RNL"/>
+                                        <outlet property="delegate" destination="-1" id="EMi-yv-gjd"/>
+                                    </connections>
+                                </textField>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="JFw-qV-DnZ">
+                            <rect key="frame" x="0.0" y="114.5" width="374" height="625.5"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chose image for the command:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ues-WN-aeO">
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="17.5"/>
+                                    <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="15"/>
+                                    <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="249" verticalCompressionResistancePriority="749" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="jZ7-mp-DGi">
+                                    <rect key="frame" x="0.0" y="25.5" width="374" height="600"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="1Y8-Xl-e9p">
+                                        <size key="itemSize" width="50" height="50"/>
+                                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    </collectionViewFlowLayout>
+                                    <connections>
+                                        <outlet property="dataSource" destination="-1" id="HJy-sh-YUs"/>
+                                        <outlet property="delegate" destination="-1" id="H1P-Uo-yEl"/>
+                                    </connections>
+                                </collectionView>
+                            </subviews>
+                        </stackView>
+                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u5n-VG-gti" customClass="NordicButton" customModule="nRF_Toolbox" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="756" width="374" height="30"/>
+                            <state key="normal" title="Create"/>
+                            <connections>
+                                <action selector="createCommand" destination="-1" eventType="touchUpInside" id="ZF0-GP-H4B"/>
+                            </connections>
+                        </button>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yA1-Ak-ptR" customClass="NordicButton" customModule="nRF_Toolbox" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="786" width="374" height="0.0"/>
+                            <state key="normal" title="Delete"/>
+                            <connections>
+                                <action selector="deleteBtnPressed" destination="-1" eventType="touchUpInside" id="KFc-vK-1FG"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="PSb-Wd-33j" secondAttribute="trailing" constant="20" id="87d-jq-6Kf"/>
+                <constraint firstItem="PSb-Wd-33j" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="mvu-hj-h23"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="PSb-Wd-33j" secondAttribute="bottom" constant="16" id="y43-DW-0ho"/>
+                <constraint firstItem="PSb-Wd-33j" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="yxD-WA-mzY"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                    <color key="value" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <point key="canvasLocation" x="139" y="154"/>
+        </view>
+    </objects>
+</document>

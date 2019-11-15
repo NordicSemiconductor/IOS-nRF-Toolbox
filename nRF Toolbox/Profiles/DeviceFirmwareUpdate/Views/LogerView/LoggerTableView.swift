@@ -10,7 +10,7 @@ import UIKit
 import iOSDFULibrary
 
 struct LogMessage {
-    let level: LogLevel
+    let level: LOGLevel
     let message: String
     let time: Date
 }
@@ -22,6 +22,16 @@ struct LogMessage {
 
 class LoggerTableView: UITableView {
     private var logs: [LogMessage] = []
+    var filter: [LOGLevel] = LOGLevel.allCases {
+        didSet {
+            reloadData()
+        }
+    }
+    
+    private var filteredData: [LogMessage] {
+        guard filter.count != LOGLevel.allCases.count else { return logs }
+        return logs.filter { filter.contains($0.level) }
+    }
     
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
@@ -33,8 +43,13 @@ class LoggerTableView: UITableView {
         initialize()
     }
     
+    func clear() {
+        logs.removeAll()
+        reloadData()
+    }
+    
     private func initialize() {
-        register(cell: LogTableViewCell.self)
+        registerCellNib(cell: LogTableViewCell.self)
         dataSource = self
         
         rowHeight = UITableView.automaticDimension
@@ -43,13 +58,20 @@ class LoggerTableView: UITableView {
     }
 }
 
-extension LoggerTableView: LogPresenter {
+extension LoggerTableView: LogPresenter, Logger {
+    func log(level aLevel: LOGLevel, message aMessage: String) {
+        DispatchQueue.main.async {
+            let log = LogMessage(level: aLevel, message: aMessage, time: Date())
+            self.logs.append(log)
+            guard self.filter.contains(aLevel) else { return }
+            let insertIndexPath = IndexPath(row: self.filteredData.count-1, section: 0)
+            self.insertRows(at: [insertIndexPath], with: .bottom)
+            self.scrollToRow(at: insertIndexPath, at: .bottom, animated: true)
+        }
+    }
+    
     func logWith(_ level: LogLevel, message: String) {
-        let insertIndexPath = IndexPath(row: logs.count, section: 0)
-        let log = LogMessage(level: level, message: message, time: Date())
-        logs.append(log)
-        self.insertRows(at: [insertIndexPath], with: .none)
-        scrollToRow(at: insertIndexPath, at: .bottom, animated: true)
+        self.log(level: level.level, message: message)
     }
     
     var attributedLog: NSAttributedString {
@@ -80,12 +102,13 @@ extension LoggerTableView: LogPresenter {
 
 extension LoggerTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return logs.count
+        print("count: \(filteredData.count)")
+        return filteredData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueCell(ofType: LogTableViewCell.self)
-        let log = logs[indexPath.row]
+        let log = filteredData[indexPath.row]
         cell.update(with: log)
         return cell
     }
