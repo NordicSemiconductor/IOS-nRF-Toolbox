@@ -448,7 +448,7 @@ class DFUViewController: BaseViewController, ScannerDelegate, FileSelectionDeleg
         initiator.progressDelegate = self
         initiator.enableUnsafeExperimentalButtonlessServiceInSecureDfu = true
         dfuController = initiator.with(firmware: selectedFirmware!).start(target: selectedPeripheral!)
-        uploadButton.setTitle("Cancel", for: .normal)
+        uploadButton.setTitle("Cancel", for: .normal) 
         uploadButton.isEnabled = true
     }
 

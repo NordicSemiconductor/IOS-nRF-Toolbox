@@ -4,6 +4,8 @@
 //
 
 import UIKit
+import CoreBluetooth
+
 private extension Identifier where Value == Section {
     static let openFile: Identifier<Section> = "open file"
     static let howTo: Identifier<Section> = "how to"
@@ -12,15 +14,16 @@ private extension Identifier where Value == Section {
 class DFUViewController1: PeripheralTableViewController {
 
     override var peripheralDescription: Peripheral {
-        Peripheral(uuid: nil, services: [.battery])
+        .heartRateSensor //Peripheral(uuid: nil, services: [.battery])
     }
 
-    private lazy var iCloudAction = ActionSectionItem(title: "iCloud") { 
-
+    private lazy var iCloudAction = ActionSectionItem(title: "iCloud") {
+        let menu = UIDocumentPickerViewController(documentTypes: ["com.pkware.zip-archive"], in: .open)
+        self.present(menu, animated: true, completion: nil)
     }
 
-    private lazy var localStorage = ActionSectionItem(title: "Local Storage") { 
-
+    private lazy var localStorage = ActionSectionItem(title: "Local Storage") {
+        
     }
 
     private lazy var loadFileSection = ActionSection(id: .openFile, sectionTitle: "Select File", items: [iCloudAction, localStorage])
@@ -88,5 +91,11 @@ extension DFUViewController1: UIDropInteractionDelegate {
     }
 
     public func dropInteraction(_ interaction: UIDropInteraction, item: UIDragItem, willAnimateDropWith animator: UIDragAnimating) {
+    }
+}
+
+extension DFUViewController1: UIDocumentPickerDelegate {
+    public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
+
     }
 }

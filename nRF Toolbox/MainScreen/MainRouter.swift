@@ -43,7 +43,7 @@ class DefaultMainRouter {
             .healthThermometer : HealthTermometerTableViewController(),
             .runningSensor : RunningTableViewController(),
             .continuousGlucoseMonitor : ContinuousGlucoseMonitor(),
-            .deviceFirmwareUpgrade : DFUViewController1(),
+            .deviceFirmwareUpgrade : UIStoryboard(name: "DFU", bundle: .main).instantiateInitialViewController()!,
             .proximity : ProximityViewController(),
             .homeKit : HKViewController.instance(),
             .uart : UARTRevealViewController.instance(storyboard: UIStoryboard(name: "UARTViewController", bundle: .main))

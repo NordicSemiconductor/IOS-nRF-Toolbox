@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="DyJ-fi-WXm">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="GT-Eesti-Display-Bold.ttf">
+            <string>GTEestiDisplay-Bold</string>
+        </array>
+        <array key="GT-Eesti-Display-Regular.ttf">
+            <string>GTEestiDisplay-Regular</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Select File View Controller-->
+        <scene sceneID="GzA-Kl-ivV">
+            <objects>
+                <viewController id="DyJ-fi-WXm" customClass="DFUSelectFileViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="56R-I0-b3o">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dRW-sF-5Rm" customClass="DFUFileDropView" customModule="nRF_Toolbox" customModuleProvider="target">
+                                <rect key="frame" x="31" y="184" width="352" height="528"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="ZoG-pR-GYK">
+                                        <rect key="frame" x="12" y="135" width="328" height="258"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="P5l-R1-aY5">
+                                                <rect key="frame" x="0.0" y="0.0" width="328" height="200"/>
+                                                <subviews>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_document" translatesAutoresizingMaskIntoConstraints="NO" id="Z3B-65-ky6">
+                                                        <rect key="frame" x="0.0" y="0.0" width="158" height="200"/>
+                                                    </imageView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wkd-Tq-rd8">
+                                                        <rect key="frame" x="170" y="61.5" width="158" height="77.5"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select File" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NyX-R8-hwf">
+                                                                <rect key="frame" x="0.0" y="0.0" width="158" height="28"/>
+                                                                <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="24"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Distribution packet (ZIP) or drap file here." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zzO-j8-kVF">
+                                                                <rect key="frame" x="0.0" y="45" width="158" height="32.5"/>
+                                                                <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="14"/>
+                                                                <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                            </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X1n-NC-Mgc">
+                                                <rect key="frame" x="133.5" y="218" width="61" height="40"/>
+                                                <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="24"/>
+                                                <state key="normal" title="Select"/>
+                                                <connections>
+                                                    <action selector="select" destination="DyJ-fi-WXm" eventType="touchUpInside" id="vhL-Ib-nBC"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="dRW-sF-5Rm" secondAttribute="height" multiplier="2:3" id="105-yc-idc"/>
+                                    <constraint firstItem="ZoG-pR-GYK" firstAttribute="centerX" secondItem="dRW-sF-5Rm" secondAttribute="centerX" id="91h-GU-AZi"/>
+                                    <constraint firstItem="ZoG-pR-GYK" firstAttribute="top" relation="greaterThanOrEqual" secondItem="dRW-sF-5Rm" secondAttribute="top" constant="16" id="b2T-a1-ens"/>
+                                    <constraint firstItem="ZoG-pR-GYK" firstAttribute="centerY" secondItem="dRW-sF-5Rm" secondAttribute="centerY" id="cOe-vQ-tQd"/>
+                                    <constraint firstItem="ZoG-pR-GYK" firstAttribute="leading" secondItem="dRW-sF-5Rm" secondAttribute="leading" constant="12" id="u1r-Mq-O39"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="dRW-sF-5Rm" firstAttribute="centerX" secondItem="56R-I0-b3o" secondAttribute="centerX" id="8Gh-wS-a8J"/>
+                            <constraint firstItem="dRW-sF-5Rm" firstAttribute="width" secondItem="56R-I0-b3o" secondAttribute="width" multiplier="0.85" id="Px2-rr-X6P"/>
+                            <constraint firstItem="dRW-sF-5Rm" firstAttribute="centerY" secondItem="56R-I0-b3o" secondAttribute="centerY" id="VlP-Cs-ZBs"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="sra-8x-8mw"/>
+                    </view>
+                    <connections>
+                        <outlet property="dropView" destination="dRW-sF-5Rm" id="IwF-qN-GUS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ec6-Sg-IA9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="25" y="169"/>
+        </scene>
+        <!--Packet Info View Controller-->
+        <scene sceneID="gRM-2U-e2V">
+            <objects>
+                <viewController storyboardIdentifier="DFUPacketInfoViewController" id="b8Z-En-dAv" customClass="DFUPacketInfoViewController" customModule="nRF_Toolbox" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="QTi-EY-UpT">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rdM-Xd-4oe">
+                                <rect key="frame" x="31" y="184" width="352" height="528"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="3wF-3y-fep">
+                                        <rect key="frame" x="12" y="110.5" width="328" height="307"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="ekd-40-jWL">
+                                                <rect key="frame" x="0.0" y="0.0" width="328" height="249"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a9P-bJ-WO8">
+                                                        <rect key="frame" x="0.0" y="0.0" width="158" height="249"/>
+                                                        <subviews>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="lastBaseline" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="EHt-gd-pv9">
+                                                                <rect key="frame" x="47.5" y="127" width="63" height="32.5"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wie-al-JoC">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="30" height="32.5"/>
+                                                                        <fontDescription key="fontDescription" name="GTEestiDisplay-Bold" family="GT Eesti Display" pointSize="28"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="KB" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dsg-Za-CeS">
+                                                                        <rect key="frame" x="38" y="7" width="25" height="23.5"/>
+                                                                        <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="20"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                            </stackView>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_document" translatesAutoresizingMaskIntoConstraints="NO" id="0vV-Sa-o5l">
+                                                                <rect key="frame" x="0.0" y="0.0" width="158" height="249"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </imageView>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="EHt-gd-pv9" firstAttribute="centerY" secondItem="0vV-Sa-o5l" secondAttribute="centerY" multiplier="1.15" id="1Iw-ge-8ny"/>
+                                                            <constraint firstItem="0vV-Sa-o5l" firstAttribute="top" secondItem="a9P-bJ-WO8" secondAttribute="top" id="38h-AC-wUb"/>
+                                                            <constraint firstAttribute="bottom" secondItem="0vV-Sa-o5l" secondAttribute="bottom" id="EKe-gK-PJo"/>
+                                                            <constraint firstItem="0vV-Sa-o5l" firstAttribute="leading" secondItem="a9P-bJ-WO8" secondAttribute="leading" id="lOy-q0-8uy"/>
+                                                            <constraint firstItem="EHt-gd-pv9" firstAttribute="centerX" secondItem="0vV-Sa-o5l" secondAttribute="centerX" id="v8z-bp-IfT"/>
+                                                            <constraint firstAttribute="trailing" secondItem="0vV-Sa-o5l" secondAttribute="trailing" id="x7c-9n-9H7"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="BkA-eW-6m5">
+                                                        <rect key="frame" x="170" y="76.5" width="158" height="96.5"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="File_Name" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pJX-XA-Lyu">
+                                                                <rect key="frame" x="0.0" y="0.0" width="158" height="20"/>
+                                                                <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Distribution packet (ZIP) or drap file here." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DQ7-46-n4i">
+                                                                <rect key="frame" x="0.0" y="37" width="158" height="59.5"/>
+                                                                <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                            </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zD4-AW-woX">
+                                                <rect key="frame" x="125.5" y="267" width="77" height="40"/>
+                                                <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="24"/>
+                                                <state key="normal" title="Update"/>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="3wF-3y-fep" firstAttribute="centerX" secondItem="rdM-Xd-4oe" secondAttribute="centerX" id="0Vh-Df-1iE"/>
+                                    <constraint firstItem="3wF-3y-fep" firstAttribute="leading" secondItem="rdM-Xd-4oe" secondAttribute="leading" constant="12" id="9AZ-x3-FLP"/>
+                                    <constraint firstAttribute="width" secondItem="rdM-Xd-4oe" secondAttribute="height" multiplier="2:3" id="UK9-QV-2oR"/>
+                                    <constraint firstItem="3wF-3y-fep" firstAttribute="centerY" secondItem="rdM-Xd-4oe" secondAttribute="centerY" id="aeh-I2-UsX"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="rdM-Xd-4oe" firstAttribute="centerX" secondItem="QTi-EY-UpT" secondAttribute="centerX" id="8xT-zt-96E"/>
+                            <constraint firstItem="rdM-Xd-4oe" firstAttribute="width" secondItem="QTi-EY-UpT" secondAttribute="width" multiplier="0.85" id="VyD-PQ-EB5"/>
+                            <constraint firstItem="rdM-Xd-4oe" firstAttribute="centerY" secondItem="QTi-EY-UpT" secondAttribute="centerY" id="biL-tg-LuG"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="fkY-3r-JuK"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Er5-gw-QmQ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ado-Ug-kik" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="858" y="169"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="ic_document" width="163.5" height="200"/>
+    </resources>
+</document>
