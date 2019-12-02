@@ -19,7 +19,7 @@ class RunningTableViewController: PeripheralTableViewController {
             self?.reloadItemInSection(section, itemId: item, animation: .none)
         })
     private let activitySection = ActivitySection(id: .runningActivitySection)
-    override var peripheralDescription: Peripheral { .runningSpeedCadenceSensor }
+    override var peripheralDescription: PeripheralDescription { .runningSpeedCadenceSensor }
     override var internalSections: [Section] { [activitySection, runningSpeedCadenceSection] }
     override var navigationTitle: String { "Running Speed and Cadence Sensor" }
     

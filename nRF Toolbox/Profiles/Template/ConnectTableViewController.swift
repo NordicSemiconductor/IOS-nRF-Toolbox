@@ -36,6 +36,7 @@ class ConnectTableViewController: UITableViewController {
     
     @objc private func close() {
         self.dismiss(animated: true, completion: nil)
+        
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

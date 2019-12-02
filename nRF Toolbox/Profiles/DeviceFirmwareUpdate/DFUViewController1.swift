@@ -13,8 +13,8 @@ private extension Identifier where Value == Section {
 
 class DFUViewController1: PeripheralTableViewController {
 
-    override var peripheralDescription: Peripheral {
-        .heartRateSensor //Peripheral(uuid: nil, services: [.battery])
+    override var peripheralDescription: PeripheralDescription {
+        PeripheralDescription(uuid: nil, services: [.battery])
     }
 
     private lazy var iCloudAction = ActionSectionItem(title: "iCloud") {
@@ -37,9 +37,10 @@ class DFUViewController1: PeripheralTableViewController {
     override func statusDidChanged(_ status: PeripheralStatus) {
         super.statusDidChanged(status)
 
-        if case .connected = status, #available(iOS 11.0, *) {
-                let interaction = UIDropInteraction(delegate: self)
-                self.view.addInteraction(interaction)
+        if case .connected(let peripheral) = status, #available(iOS 11.0, *) {
+            let vc = UIStoryboard(name: "DFU", bundle: .main).instantiateInitialViewController() as? DFUSelectFileViewController
+            vc?.peripheral = peripheral
+            self.navigationController?.pushViewController(vc!, animated: true)
         }
     }
 }

@@ -8,13 +8,13 @@
 
 import CoreBluetooth
 
-extension Peripheral {
-    static let heartRateSensor = Peripheral(uuid: CBUUID.Profile.heartRateSensor, services: [.battery, .heartRateMeasurement])
+extension PeripheralDescription {
+    static let heartRateSensor = PeripheralDescription(uuid: CBUUID.Profile.heartRateSensor, services: [.battery, .heartRateMeasurement])
 }
 
-private extension Peripheral.Service {
-    static let heartRateMeasurement = Peripheral.Service(uuid: CBUUID.Service.heartRateSensor, characteristics: [
-        Peripheral.Service.Characteristic(uuid: CBUUID.Characteristics.HeartRate.measurement, properties: .notify(true)),
-        Peripheral.Service.Characteristic(uuid: CBUUID.Characteristics.HeartRate.location, properties: .notify(true))
+private extension PeripheralDescription.Service {
+    static let heartRateMeasurement = PeripheralDescription.Service(uuid: CBUUID.Service.heartRateSensor, characteristics: [
+        PeripheralDescription.Service.Characteristic(uuid: CBUUID.Characteristics.HeartRate.measurement, properties: .notify(true)),
+        PeripheralDescription.Service.Characteristic(uuid: CBUUID.Characteristics.HeartRate.location, properties: .notify(true))
     ])
 }

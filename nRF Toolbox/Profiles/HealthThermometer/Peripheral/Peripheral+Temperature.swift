@@ -9,12 +9,12 @@
 import Foundation
 import CoreBluetooth
 
-extension Peripheral {
-    static let healthTemperature = Peripheral(uuid: CBUUID.Profile.healthTemperature, services: [.measurement])
+extension PeripheralDescription {
+    static let healthTemperature = PeripheralDescription(uuid: CBUUID.Profile.healthTemperature, services: [.measurement])
 }
 
-private extension Peripheral.Service {
-    static let measurement = Peripheral.Service(uuid: CBUUID.Service.healthTemperature, characteristics: [
+private extension PeripheralDescription.Service {
+    static let measurement = PeripheralDescription.Service(uuid: CBUUID.Service.healthTemperature, characteristics: [
         Characteristic(uuid: CBUUID.Characteristics.HealthTemperature.measurement, properties: .notify(true))
     ])
 }

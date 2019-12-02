@@ -9,16 +9,16 @@
 import Foundation
 import CoreBluetooth
 
-extension Peripheral {
-    static let bloodGlucoseMonitor = Peripheral(uuid: CBUUID.Service.bloodGlucoseMonitor, services: [
+extension PeripheralDescription {
+    static let bloodGlucoseMonitor = PeripheralDescription(uuid: CBUUID.Service.bloodGlucoseMonitor, services: [
         .battery, .bloodGlucoseMonitor
     ])
 }
 
-private extension Peripheral.Service {
-    static let bloodGlucoseMonitor = Peripheral.Service(uuid: CBUUID.Service.bloodGlucoseMonitor, characteristics: [
-        Peripheral.Service.Characteristic(uuid: CBUUID.Characteristics.BloodGlucoseMonitor.glucoseMeasurement, properties: .notify(true)),
-        Peripheral.Service.Characteristic(uuid: CBUUID.Characteristics.BloodGlucoseMonitor.glucoseMeasurementContext, properties: .notify(true)),
-        Peripheral.Service.Characteristic(uuid: CBUUID.Characteristics.BloodGlucoseMonitor.recordAccessControlPoint, properties: .notify(true))
+private extension PeripheralDescription.Service {
+    static let bloodGlucoseMonitor = PeripheralDescription.Service(uuid: CBUUID.Service.bloodGlucoseMonitor, characteristics: [
+        PeripheralDescription.Service.Characteristic(uuid: CBUUID.Characteristics.BloodGlucoseMonitor.glucoseMeasurement, properties: .notify(true)),
+        PeripheralDescription.Service.Characteristic(uuid: CBUUID.Characteristics.BloodGlucoseMonitor.glucoseMeasurementContext, properties: .notify(true)),
+        PeripheralDescription.Service.Characteristic(uuid: CBUUID.Characteristics.BloodGlucoseMonitor.recordAccessControlPoint, properties: .notify(true))
     ])
 }

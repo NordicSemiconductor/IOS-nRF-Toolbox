@@ -1,24 +1,33 @@
 /*
-* Copyright (c) 2016, Nordic Semiconductor
+* Copyright (c) 2019, Nordic Semiconductor
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+* Redistribution and use in source and binary forms, with or without modification,
+* are permitted provided that the following conditions are met:
 *
-* 1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
 *
-* 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
-* documentation and/or other materials provided with the distribution.
+* 2. Redistributions in binary form must reproduce the above copyright notice, this
+*    list of conditions and the following disclaimer in the documentation and/or
+*    other materials provided with the distribution.
 *
-* 3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this
-* software without specific prior written permission.
+* 3. Neither the name of the copyright holder nor the names of its contributors may
+*    be used to endorse or promote products derived from this software without
+*    specific prior written permission.
 *
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-* LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-* HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-* LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-* ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
-* USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+* IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+* INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+* NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+* PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+* ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+* POSSIBILITY OF SUCH DAMAGE.
 */
+
 import Foundation
 import Dispatch
 
@@ -56,7 +65,8 @@ internal class LegacyDFUExecutor : DFUExecutor, LegacyDFUPeripheralDelegate {
     
     func peripheralDidBecomeReady() {
         if firmware.initPacket == nil && peripheral.isInitPacketRequired() {
-            error(.extendedInitPacketRequired, didOccurWithMessage: "The init packet is required by the target device")
+            error(.extendedInitPacketRequired, didOccurWithMessage:
+                "The init packet is required by the target device")
             return
         }
         delegate {
@@ -66,33 +76,35 @@ internal class LegacyDFUExecutor : DFUExecutor, LegacyDFUPeripheralDelegate {
     }
     
     func peripheralDidEnableControlPoint() {
-        // Check whether the target is in application or bootloader mode
+        // Check whether the target is in application or bootloader mode.
         if peripheral.isInApplicationMode(initiator.forceDfu) {
             delegate {
                 $0.dfuStateDidChange(to: .enablingDfuMode)
             }
             peripheral.jumpToBootloader()
         } else {
-            // The device is ready to proceed with DFU
-            peripheral.sendStartDfu(withFirmwareType: firmware.currentPartType, andSize: firmware.currentPartSize)
+            // The device is ready to proceed with DFU.
+            peripheral.sendStartDfu(withFirmwareType: firmware.currentPartType,
+                                    andSize: firmware.currentPartSize)
         }
     }
     
     func peripheralDidFailToStartDfuWithType() {
-        // The DFU target has an old implementation of DFU Bootloader, that allows only the application
-        // to be updated.
+        // The DFU target has an old implementation of DFU Bootloader, that allows
+        // only the application to be updated.
         
         if firmware.currentPartType == FIRMWARE_TYPE_APPLICATION {
-            // Try using the old DFU Start command, without type
+            // Try using the old DFU Start command, without the type.
             peripheral.sendStartDfu(withFirmwareSize: firmware.currentPartSize)
         } else {
-            // Operation can not be continued
-            error(.remoteLegacyDFUNotSupported, didOccurWithMessage: "Updating Softdevice or Bootloader is not supported")
+            // Operation can not be continued.
+            error(.remoteLegacyDFUNotSupported, didOccurWithMessage:
+                "Updating Softdevice or Bootloader is not supported")
         }
     }
 
     func peripheralDidStartDfu() {
-        // Check if the init packet is present for this part
+        // Check if the init packet is present for this part.
         if let initPacket = firmware.initPacket {
             peripheral.sendInitPacket(initPacket)
             return
@@ -125,7 +137,8 @@ internal class LegacyDFUExecutor : DFUExecutor, LegacyDFUPeripheralDelegate {
             invalidStateRetryCount -= 1
             peripheral.start()
         } else {
-            error(.remoteLegacyDFUInvalidState, didOccurWithMessage: "Peripheral is in an invalid state, please try to reset and start over again.")
+            error(.remoteLegacyDFUInvalidState, didOccurWithMessage:
+                "Peripheral is in an invalid state, please try to reset and start over again.")
         }
     }
     
@@ -138,11 +151,12 @@ internal class LegacyDFUExecutor : DFUExecutor, LegacyDFUPeripheralDelegate {
         delegate {
             $0.dfuStateDidChange(to: .uploading)
         }
-        // First the service will send the number of packets of firmware data to be received
-        // by the DFU target before sending a new Packet Receipt Notification.
+        // First the service will send the number of packets of firmware data to be
+        // received by the DFU target before sending a new Packet Receipt Notification.
         // After receiving status Success it will send the firmware.
         peripheral.sendFirmware(firmware,
                                 withPacketReceiptNotificationNumber: initiator.packetReceiptNotificationParameter,
-                                andReportProgressTo: initiator.progressDelegate, on: initiator.progressDelegateQueue)
+                                andReportProgressTo: initiator.progressDelegate,
+                                on: initiator.progressDelegateQueue)
     }
 }

@@ -13,13 +13,17 @@
 		01468B052361A30A00C29E4C /* StepperTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B032361A30A00C29E4C /* StepperTableViewCell.swift */; };
 		01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01468B042361A30A00C29E4C /* StepperTableViewCell.xib */; };
 		01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */; };
+		015E71CF23882B470019C952 /* ProgressImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015E71CE23882B470019C952 /* ProgressImageView.swift */; };
 		0162BA91234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0162BA90234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift */; };
+		01AD26E82395084000F56210 /* ConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26E62395084000F56210 /* ConnectionViewController.swift */; };
+		01AD26E92395084000F56210 /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26E72395084000F56210 /* ConnectionManager.swift */; };
 		01B493112383E14500E1BC08 /* DFUFileInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B4930F2383E14500E1BC08 /* DFUFileInfoCell.swift */; };
 		01B493122383E14500E1BC08 /* DFUFileInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01B493102383E14500E1BC08 /* DFUFileInfoCell.xib */; };
 		01B49314238415DF00E1BC08 /* DFU.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01B49313238415DF00E1BC08 /* DFU.storyboard */; };
 		01B4931723843B3800E1BC08 /* DFUSelectFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B4931623843B3800E1BC08 /* DFUSelectFileViewController.swift */; };
 		01B4931923852E1600E1BC08 /* DFUFileDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B4931823852E1600E1BC08 /* DFUFileDropView.swift */; };
-		01B4931B23853D0D00E1BC08 /* DFUPacketInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B4931A23853D0D00E1BC08 /* DFUPacketInfoViewController.swift */; };
+		01B4931D2385886600E1BC08 /* DFUUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B4931C2385886600E1BC08 /* DFUUpdateViewController.swift */; };
+		01B50B64238BED8B0082E31E /* DFUCompletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B50B63238BED8B0082E31E /* DFUCompletionViewController.swift */; };
 		01B6D3D3234C7538000942C4 /* HeartRateMonitorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3D2234C7538000942C4 /* HeartRateMonitorTableViewController.swift */; };
 		01B6D3D8234CB533000942C4 /* HeartRateMeasurementCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3D7234CB533000942C4 /* HeartRateMeasurementCharacteristic.swift */; };
 		01B6D3DA234CB6B3000942C4 /* HeartRateSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3D9234CB6B3000942C4 /* HeartRateSection.swift */; };
@@ -223,13 +227,17 @@
 		01468B032361A30A00C29E4C /* StepperTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperTableViewCell.swift; sourceTree = "<group>"; };
 		01468B042361A30A00C29E4C /* StepperTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StepperTableViewCell.xib; sourceTree = "<group>"; };
 		01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalSection.swift; sourceTree = "<group>"; };
+		015E71CE23882B470019C952 /* ProgressImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressImageView.swift; sourceTree = "<group>"; };
 		0162BA90234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTemperatureAditionalSection.swift; sourceTree = "<group>"; };
+		01AD26E62395084000F56210 /* ConnectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionViewController.swift; sourceTree = "<group>"; };
+		01AD26E72395084000F56210 /* ConnectionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConnectionManager.swift; path = ../../../../tmp/Scanner/Scanner/ConnectionManager.swift; sourceTree = "<group>"; };
 		01B4930F2383E14500E1BC08 /* DFUFileInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFileInfoCell.swift; sourceTree = "<group>"; };
 		01B493102383E14500E1BC08 /* DFUFileInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DFUFileInfoCell.xib; sourceTree = "<group>"; };
 		01B49313238415DF00E1BC08 /* DFU.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DFU.storyboard; sourceTree = "<group>"; };
 		01B4931623843B3800E1BC08 /* DFUSelectFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUSelectFileViewController.swift; sourceTree = "<group>"; };
 		01B4931823852E1600E1BC08 /* DFUFileDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFileDropView.swift; sourceTree = "<group>"; };
-		01B4931A23853D0D00E1BC08 /* DFUPacketInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUPacketInfoViewController.swift; sourceTree = "<group>"; };
+		01B4931C2385886600E1BC08 /* DFUUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUUpdateViewController.swift; sourceTree = "<group>"; };
+		01B50B63238BED8B0082E31E /* DFUCompletionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUCompletionViewController.swift; sourceTree = "<group>"; };
 		01B6D3D2234C7538000942C4 /* HeartRateMonitorTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateMonitorTableViewController.swift; sourceTree = "<group>"; };
 		01B6D3D7234CB533000942C4 /* HeartRateMeasurementCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateMeasurementCharacteristic.swift; sourceTree = "<group>"; };
 		01B6D3D9234CB6B3000942C4 /* HeartRateSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateSection.swift; sourceTree = "<group>"; };
@@ -495,7 +503,8 @@
 			isa = PBXGroup;
 			children = (
 				01B4931623843B3800E1BC08 /* DFUSelectFileViewController.swift */,
-				01B4931A23853D0D00E1BC08 /* DFUPacketInfoViewController.swift */,
+				01B4931C2385886600E1BC08 /* DFUUpdateViewController.swift */,
+				01B50B63238BED8B0082E31E /* DFUCompletionViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -773,6 +782,8 @@
 		20B7979C2338EC63001328E1 /* Template */ = {
 			isa = PBXGroup;
 			children = (
+				01AD26E72395084000F56210 /* ConnectionManager.swift */,
+				01AD26E62395084000F56210 /* ConnectionViewController.swift */,
 				2013650023462DAA00C5AF1F /* Models */,
 				20B25F372319568B006AF321 /* PeripheralTableViewController.swift */,
 				20F0C8022327D417003111E7 /* Sections */,
@@ -1029,6 +1040,7 @@
 				3397666AEF5D1014982224D6 /* DFUViewController1.swift */,
 				3397646CFD5E3F928892262A /* DFUFileInfoViewController.swift */,
 				01B49313238415DF00E1BC08 /* DFU.storyboard */,
+				015E71CE23882B470019C952 /* ProgressImageView.swift */,
 			);
 			path = DeviceFirmwareUpdate;
 			sourceTree = "<group>";
@@ -1514,7 +1526,6 @@
 				3042993C1CE6154100E1D2AB /* BaseRevealViewController.swift in Sources */,
 				01B6D3E0234CC090000942C4 /* Peripheral+HeartRate.swift in Sources */,
 				30499E4B1CE4667800E0993B /* DFUConstantsUtility.swift in Sources */,
-				01B4931B23853D0D00E1BC08 /* DFUPacketInfoViewController.swift in Sources */,
 				20F15C432313F821000C5503 /* XibInstantiable.swift in Sources */,
 				3001432D1CECADFB008379DF /* CharacteristicReader.swift in Sources */,
 				200973D32341DBAB0091951B /* CyclingCharacteristic.swift in Sources */,
@@ -1541,10 +1552,12 @@
 				201364F72344A93D00C5AF1F /* BloodPressureSection.swift in Sources */,
 				304D59011CE352B300148271 /* LogItemTableViewCell.swift in Sources */,
 				01B4931723843B3800E1BC08 /* DFUSelectFileViewController.swift in Sources */,
+				01AD26E82395084000F56210 /* ConnectionViewController.swift in Sources */,
 				3001EBC51D1C153C008C5C37 /* CGMDetailsViewController.swift in Sources */,
 				2002A002231FB8E800C43E06 /* UIImage+Ext.swift in Sources */,
 				20D08E06232A569B00569587 /* Identifiable.swift in Sources */,
 				01006201234D08700078CEFA /* LinearChartTableViewCell.swift in Sources */,
+				01B50B64238BED8B0082E31E /* DFUCompletionViewController.swift in Sources */,
 				309F086E1E6ED44F00B7546A /* HKScannerDelegate.swift in Sources */,
 				200973DA234344780091951B /* BloodPressureTableViewController.swift in Sources */,
 				201364FB2344A94F00C5AF1F /* TimeBloodPressureSection.swift in Sources */,
@@ -1556,6 +1569,7 @@
 				20C7FE0E230A9F9300B06FD8 /* LinkTableViewCell.swift in Sources */,
 				01BE0955234A7500006ACF06 /* HealthTemperatureSection.swift in Sources */,
 				01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */,
+				01AD26E92395084000F56210 /* ConnectionManager.swift in Sources */,
 				20C7FE082306EB5600B06FD8 /* UITableView+Ext.swift in Sources */,
 				20D08E02232A38C200569587 /* TitledError.swift in Sources */,
 				20C7FE53230E811B00B06FD8 /* ServiceProvider.swift in Sources */,
@@ -1588,11 +1602,13 @@
 				3001EBC31D1C1430008C5C37 /* CGMItemCell.swift in Sources */,
 				3001EBB91D1BE1FB008C5C37 /* BGMViewController.swift in Sources */,
 				30921FD51CD0EB55009CBDDE /* MainViewController.swift in Sources */,
+				01B4931D2385886600E1BC08 /* DFUUpdateViewController.swift in Sources */,
 				3001EBBD1D1BE695008C5C37 /* CGMFeatureData.swift in Sources */,
 				5231403022FB07820074325A /* RootNavigationController.swift in Sources */,
 				20B7979A2338B8C0001328E1 /* MeasurementFormatter+Ext.swift in Sources */,
 				20F0C80C2327DB74003111E7 /* BGMSection.swift in Sources */,
 				01BE0953234A1C48006ACF06 /* HealthTermometerCharacteristic.swift in Sources */,
+				015E71CF23882B470019C952 /* ProgressImageView.swift in Sources */,
 				3001EBB81D1BE1FB008C5C37 /* BGMItemCell.swift in Sources */,
 				300143271CEC4B9D008379DF /* AppUtilities.swift in Sources */,
 				20B7979823350584001328E1 /* Peripheral+Cycling.swift in Sources */,

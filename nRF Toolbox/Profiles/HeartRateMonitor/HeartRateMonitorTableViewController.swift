@@ -25,7 +25,7 @@ class HeartRateMonitorTableViewController: PeripheralTableViewController {
     var randomizer = Randomizer(top: 120, bottom: 60, value: 80, delta: 2)
     #endif
     
-    override var peripheralDescription: Peripheral { .heartRateSensor }
+    override var peripheralDescription: PeripheralDescription { .heartRateSensor }
     override var navigationTitle: String { "Heart Rate Monitor" }
     override var internalSections: [Section] { [instantaneousHeartRateSection, locationSection, chartSection] }
     

@@ -9,9 +9,9 @@
 import UIKit
 import CoreBluetooth
 
-extension Peripheral.Service {
-    static let battery = Peripheral.Service(uuid: CBUUID.Service.battery, characteristics: [
-        Peripheral.Service.Characteristic(uuid: CBUUID.Characteristics.Battery.batteryLevel, properties: .read)
+extension PeripheralDescription.Service {
+    static let battery = PeripheralDescription.Service(uuid: CBUUID.Service.battery, characteristics: [
+        PeripheralDescription.Service.Characteristic(uuid: CBUUID.Characteristics.Battery.batteryLevel, properties: .read)
     ])
 }
 

@@ -1,25 +1,32 @@
-//
 /*
- * Copyright (c) 2016, Nordic Semiconductor
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
- * documentation and/or other materials provided with the distribution.
- *
- * 3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this
- * software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- * HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
- * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+* Copyright (c) 2019, Nordic Semiconductor
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without modification,
+* are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+*
+* 2. Redistributions in binary form must reproduce the above copyright notice, this
+*    list of conditions and the following disclaimer in the documentation and/or
+*    other materials provided with the distribution.
+*
+* 3. Neither the name of the copyright holder nor the names of its contributors may
+*    be used to endorse or promote products derived from this software without
+*    specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+* IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+* INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+* NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+* PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+* ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+* POSSIBILITY OF SUCH DAMAGE.
+*/
 
 import Foundation
 import CoreBluetooth
@@ -67,7 +74,7 @@ import CoreBluetooth
     }
 }
 
-/// UUID Helper for DFU Process
+/// UUID Helper for DFU Process.
 ///
 /// The UUID can be modified for each of the DFU types supported by
 /// the Nordic devices.
@@ -135,7 +142,7 @@ import CoreBluetooth
     /**
      Create the DFU UUID Helper with Custom UUIDs.
  
-     - parameter uuids: Array of Custom UUIDs
+     - parameter uuids: Array of Custom UUIDs.
     */
     @objc public convenience init(customUuids uuids: [DFUUuid]) {
         self.init()
@@ -172,11 +179,12 @@ import CoreBluetooth
 internal extension DFUUuidHelper {
 
     /**
-     Checks if the Characteristic matches the Buttonless Characteristics.
+     Checks if the characteristic matches the Buttonless Characteristics.
  
      - parameter characteristic: Characteristic to check for match.
      
-     - returns: Bool Value.
+     - returns: `True` if the given characteristic matches the Buttonless
+                Characteristic, `false` otherwise.
     */
     func matchesButtonless(_ characteristic: CBCharacteristic) -> Bool {
         return characteristic.uuid.isEqual(buttonlessWithBonds)
@@ -188,11 +196,11 @@ internal extension DFUUuidHelper {
 internal extension CBCharacteristic {
     
     /**
-     Checks if the Characteristic has the given UUID.
+     Checks if the characteristic has the given UUID.
  
      - parameter uuid: DFU UUID.
      
-     - returns: True, if the charactersistic's UUID is equal to the given one.
+     - returns: `True`, if the charactersistic's UUID is equal to the given one.
     */
     func matches(uuid: CBUUID) -> Bool {
         return self.uuid.isEqual(uuid)
@@ -202,11 +210,11 @@ internal extension CBCharacteristic {
 internal extension CBService {
 
     /**
-     Checks if the Service has the given UUID.
+     Checks if the service has the given UUID.
      
      - parameter uuid: DFU UUID.
      
-     - returns: True, if the service's UUID is equal to the given one.
+     - returns: `True`, if the service's UUID is equal to the given one.
      */
     func matches(uuid: CBUUID) -> Bool {
         return self.uuid.isEqual(uuid)

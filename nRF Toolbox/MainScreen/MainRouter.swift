@@ -36,14 +36,17 @@ class DefaultMainRouter {
     
     private let serviceViewControllers: [ServiceId : UIViewController] = {
         return [
-            .glucoseMonitoring : GlucoseMonitorViewController(),
-            .bloodPressureMonitoring : BloodPressureTableViewController(),
-            .cyclingSensor : CyclingTableViewController(),
+            .deviceFirmwareUpgrade : DFUViewController1(),
             .heartRateMonitor : HeartRateMonitorTableViewController(),
-            .healthThermometer : HealthTermometerTableViewController(),
-            .runningSensor : RunningTableViewController(),
+            .bloodPressureMonitoring : BloodPressureTableViewController(),
+            .glucoseMonitoring : GlucoseMonitorViewController(),
             .continuousGlucoseMonitor : ContinuousGlucoseMonitor(),
-            .deviceFirmwareUpgrade : UIStoryboard(name: "DFU", bundle: .main).instantiateInitialViewController()!,
+            .healthThermometer : HealthTermometerTableViewController(),
+            
+            .cyclingSensor : CyclingTableViewController(),
+            
+            .runningSensor : RunningTableViewController(),
+            
             .proximity : ProximityViewController(),
             .homeKit : HKViewController.instance(),
             .uart : UARTRevealViewController.instance(storyboard: UIStoryboard(name: "UARTViewController", bundle: .main))

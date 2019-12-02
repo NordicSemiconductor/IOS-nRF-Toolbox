@@ -61,7 +61,7 @@ class ContinuousGlucoseMonitor: PeripheralTableViewController {
     override var internalSections: [Section] {
         [lastValueSection, chartSection, timeIntervalSection, startStopSection]
     }
-    override var peripheralDescription: Peripheral { .continuousGlucoseMonitor }
+    override var peripheralDescription: PeripheralDescription { .continuousGlucoseMonitor }
     override var navigationTitle: String { "Continuous Glucose Monitor" }
 
     override func viewDidLoad() {

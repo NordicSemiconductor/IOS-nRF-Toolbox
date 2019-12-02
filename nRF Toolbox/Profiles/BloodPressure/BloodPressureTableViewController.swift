@@ -23,7 +23,7 @@ class BloodPressureTableViewController: PeripheralTableViewController {
     private var heartRateSection = PulseBloodPressureSection(id: .heartRate)
     
     override var internalSections: [Section] { [bloodPressureSection, heartRateSection, dateTimeSection, cuffPressureSection] }
-    override var peripheralDescription: Peripheral { .bloodPressure }
+    override var peripheralDescription: PeripheralDescription { .bloodPressure }
     
     private var dataSectionIds: [Identifier<Section>] = [.bloodPressure, .cuffPressure]
     override var navigationTitle: String { "Blood Pressure Monitor" }

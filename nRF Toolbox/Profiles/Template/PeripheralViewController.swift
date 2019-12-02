@@ -6,7 +6,7 @@
 import UIKit
 import CoreBluetooth
 
-struct Peripheral {
+struct PeripheralDescription {
     struct Service {
         struct Characteristic {
             enum Property {
@@ -27,7 +27,7 @@ class PeripheralViewController: UIViewController, StatusDelegate {
     private lazy var peripheralManager = PeripheralManager(peripheral: self.peripheralDescription)
 
     var navigationTitle: String { "" }
-    var peripheralDescription: Peripheral { Peripheral(uuid: CBUUID.Profile.bloodGlucoseMonitor, services: [.battery]) }
+    var peripheralDescription: PeripheralDescription { PeripheralDescription(uuid: CBUUID.Profile.bloodGlucoseMonitor, services: [.battery]) }
     private (set) var activePeripheral: CBPeripheral?
 
     override func viewDidLoad() {
@@ -60,18 +60,14 @@ class PeripheralViewController: UIViewController, StatusDelegate {
         case .disconnected:
             activePeripheral = nil
 
-            let bSettings: InfoActionView.ButtonSettings = ("Connect", {
+            let bSettings: InfoActionView.ButtonSettings = ("Connect", { [unowned self] in
+                let connectionController = ConnectionViewController(style: .grouped)
+                connectionController.delegate = self
 
-                let connectTableViewController = ConnectTableViewController(connectDelegate: self.peripheralManager)
-
-                let nc = UINavigationController.nordicBranded(rootViewController: connectTableViewController)
+                let nc = UINavigationController.nordicBranded(rootViewController: connectionController)
                 nc.modalPresentationStyle = .formSheet
 
                 self.present(nc, animated: true, completion: nil)
-
-                self.peripheralManager.peripheralListDelegate = connectTableViewController
-
-                self.peripheralManager.scan(peripheral: self.peripheralDescription)
             })
 
             let notContent = InfoActionView.instanceWithParams(message: "Device is not connected", buttonSettings: bSettings)
@@ -110,6 +106,12 @@ class PeripheralViewController: UIViewController, StatusDelegate {
 
     func didUpdateValue(for characteristic: CBCharacteristic) {
         Log(category: .ble, type: .debug).log(message: "Cannot handle update value for characteristic \(characteristic)")
+    }
+}
+
+extension PeripheralViewController: ConnectionViewControllerDelegate {
+    func connected(to peripheral: Peripheral) {
+        self.statusDidChanged(.connected(peripheral.peripheral))
     }
 }
 

@@ -1,26 +1,23 @@
-//
-//  crc32.swift
-//  SuperSFV
-//
-//  Created by C.W. Betts on 8/23/15.
-//
-//
-/* crc32.swift -- compute the CRC-32 of a data stream
+/*
  Copyright (C) 1995-1998 Mark Adler
  Copyright (C) 2015 C.W. "Madd the Sane" Betts
+
  This software is provided 'as-is', without any express or implied
  warranty.  In no event will the authors be held liable for any damages
  arising from the use of this software.
+
  Permission is granted to anyone to use this software for any purpose,
  including commercial applications, and to alter it and redistribute it
  freely, subject to the following restrictions:
+
  1. The origin of this software must not be misrepresented; you must not
- claim that you wrote the original software. If you use this software
- in a product, an acknowledgment in the product documentation would be
- appreciated but is not required.
+    claim that you wrote the original software. If you use this software
+    in a product, an acknowledgment in the product documentation would be
+    appreciated but is not required.
  2. Altered source versions must be plainly marked as such, and must not be
- misrepresented as being the original software.
+    misrepresented as being the original software.
  3. This notice may not be removed or altered from any source distribution.
+
  Jean-loup Gailly        Mark Adler
  jloup@gzip.org          madler@alumni.caltech.edu
  */
@@ -108,14 +105,17 @@ func crc32(_ crc: UInt32, data: Data?) -> UInt32 {
  Update a running crc with the bytes buf[0..len-1] and return the updated
  crc. If buf is `nil`, this function returns the required initial value
  for the crc. Pre- and post-conditioning (one's complement) is performed
- within this function so it shouldn't be done by the application.<br>
- Usage example:
- Var crc: UInt32 = crc32(0, nil, 0);
+ within this function so it shouldn't be done by the application.
  
- while (read_buffer(buffer, length) != EOF) {
- crc = crc32(crc, buffer: buffer, length: length)
- }
- if (crc != original_crc) error();
+ Usage example:
+ 
+    var crc: UInt32 = crc32(0, nil, 0);
+ 
+    while (read_buffer(buffer, length) != EOF) {
+        crc = crc32(crc, buffer: buffer, length: length)
+    }
+    if (crc != original_crc) error();
+ 
  */
 func crc32(_ crc: UInt32, buffer: UnsafePointer<UInt8>?, length: Int) -> UInt32 {
     if buffer == nil {
