@@ -302,7 +302,7 @@ class DFUViewController: BaseViewController, ScannerDelegate, FileSelectionDeleg
         }
     }
 
-    func dfuError(_ error: DFUError, didOccurWithMessage message: String) {
+    func dfuError(_ error: iOSDFULibrary.DFUError, didOccurWithMessage message: String) {
         if DFUConstantsUtility.isApplicationStateInactiveOrBackgrounded() {
             DFUConstantsUtility.showBackgroundNotification(message: message)
         }

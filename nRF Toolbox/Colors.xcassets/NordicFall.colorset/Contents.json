@@ -9,10 +9,10 @@
       "color" : {
         "color-space" : "srgb",
         "components" : {
-          "red" : "0.814",
+          "red" : "0.976",
           "alpha" : "1.000",
-          "blue" : "0.319",
-          "green" : "0.243"
+          "blue" : "0.207",
+          "green" : "0.585"
         }
       }
     },
@@ -26,7 +26,7 @@
       ],
       "color" : {
         "platform" : "ios",
-        "reference" : "systemRedColor"
+        "reference" : "systemOrangeColor"
       }
     }
   ]

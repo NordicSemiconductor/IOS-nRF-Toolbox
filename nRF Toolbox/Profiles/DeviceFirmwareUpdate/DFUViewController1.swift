@@ -17,28 +17,11 @@ class DFUViewController1: PeripheralTableViewController {
         PeripheralDescription(uuid: nil, services: [.battery])
     }
 
-    private lazy var iCloudAction = ActionSectionItem(title: "iCloud") {
-        let menu = UIDocumentPickerViewController(documentTypes: ["com.pkware.zip-archive"], in: .open)
-        self.present(menu, animated: true, completion: nil)
-    }
-
-    private lazy var localStorage = ActionSectionItem(title: "Local Storage") {
-        
-    }
-
-    private lazy var loadFileSection = ActionSection(id: .openFile, sectionTitle: "Select File", items: [iCloudAction, localStorage])
-    private lazy var howTo = ActionSection(id: .howTo, sectionTitle: "Info", items: [
-        ActionSectionItem(title: "How To") {
-
-        }
-    ])
-    override var internalSections: [Section] { [loadFileSection, howTo] }
-
     override func statusDidChanged(_ status: PeripheralStatus) {
         super.statusDidChanged(status)
 
         if case .connected(let peripheral) = status, #available(iOS 11.0, *) {
-            let vc = UIStoryboard(name: "DFU", bundle: .main).instantiateInitialViewController() as? DFUSelectFileViewController
+            let vc = UIStoryboard(name: "DFU", bundle: .main).instantiateViewController(withIdentifier: "DFUUpdateViewController") as? DFUUpdateViewController
             vc?.peripheral = peripheral
             self.navigationController?.pushViewController(vc!, animated: true)
         }

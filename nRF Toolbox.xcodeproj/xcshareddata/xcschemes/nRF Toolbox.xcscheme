@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5217F3E11859EE0000F2D5BB"
-               BuildableName = "nRF Toolbox.app"
+               BuildableName = "nRF Toolbox Beta.app"
                BlueprintName = "nRF Toolbox"
                ReferencedContainer = "container:nRF Toolbox.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5217F3E11859EE0000F2D5BB"
-            BuildableName = "nRF Toolbox.app"
+            BuildableName = "nRF Toolbox Beta.app"
             BlueprintName = "nRF Toolbox"
             ReferencedContainer = "container:nRF Toolbox.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5217F3E11859EE0000F2D5BB"
-            BuildableName = "nRF Toolbox.app"
+            BuildableName = "nRF Toolbox Beta.app"
             BlueprintName = "nRF Toolbox"
             ReferencedContainer = "container:nRF Toolbox.xcodeproj">
          </BuildableReference>

@@ -10,15 +10,11 @@ import UIKit
 import iOSDFULibrary
 import CoreBluetooth
 
-extension UIButton {
-    func adjustBorders() {
-        self.layer.borderWidth = 1
-        self.layer.borderColor = self.tintColor.cgColor
-        self.layer.cornerRadius = 2
-    }
-}
-
 class DFUSelectFileViewController: UIViewController {
+    
+    enum State {
+        case readyToOpen, unsupportedFile, readyToUpdate(DFUFirmware), updating, completed
+    }
 
     @IBOutlet var dropView: DFUFileDropView!
     
@@ -27,11 +23,29 @@ class DFUSelectFileViewController: UIViewController {
     
     @IBOutlet var fileSizeLabel: UILabel!
     @IBOutlet var fileNameLabel: UILabel!
-    @IBOutlet var packtTypeLabel: UILabel!
+    @IBOutlet var fileView: FirmwareProgressImage!
+    @IBOutlet var fileInfoContainer: UIView!
     
     private var firmware: DFUFirmware?
     
     var peripheral: CBPeripheral!
+    
+    var state: State = .readyToOpen {
+        didSet {
+            switch state {
+            case .readyToOpen:
+                fileView.parts = [ProgressPart(parts: 1, color: .nordicBlue)]
+            case .unsupportedFile:
+                fileView.parts = [ProgressPart(parts: 1, color: .nordicRed)]
+            case .completed:
+                fileView.parts = [ProgressPart(parts: 1, color: .nordicGreen)]
+            case .readyToUpdate(let firmware):
+                updateFileInfo(with: firmware)
+            default:
+                break
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,11 +55,13 @@ class DFUSelectFileViewController: UIViewController {
             self.openFile(url)
         }
         
-        uploadButton.adjustBorders()
-        updateButton.adjustBorders()
         updateButton.isEnabled = false
         
         dropView.layer.cornerRadius = 5
+        fileView.inactiveColor = .gray
+        fileView.image = UIImage(named: "ic_document")
+        fileView.progress = 1
+        
     }
      
     override func viewDidAppear(_ animated: Bool) {
@@ -60,40 +76,36 @@ class DFUSelectFileViewController: UIViewController {
     }
     
     @IBAction func update() {
-        guard let firmware = self.firmware else { return }
-        let vc = storyboard?.instantiateViewController(withIdentifier: "DFUUpdateViewController") as? DFUUpdateViewController
-        vc?.firmware = firmware
-        vc?.activePeripheral = self.peripheral
-        navigationController?.pushViewController(vc!, animated: true)
     }
     
     private func openFile(_ url: URL) {
         self.firmware = DFUFirmware(urlToZipFile: url)
-        if let firmware = self.firmware {
-            updateFileInfo(with: firmware)
-        } else {
-            resetUI()
+        guard let firmware = self.firmware else {
+            self.state = .unsupportedFile
+            return
         }
+        
+        self.state = .readyToUpdate(firmware)
     }
     
     private func updateFileInfo(with firmware: DFUFirmware) {
-        fileNameLabel.text = firmware.fileName
+        fileInfoContainer.subviews.forEach { $0.removeFromSuperview() }
+        fileView.setParts(with: firmware)
+        let fileInfo = FileSizeView()
+        fileInfo.update(with: firmware)
+        fileInfoContainer.addSubview(fileInfo)
+        fileInfo.addZeroBorderConstraints()
         
         fileSizeLabel.text = try? firmware.fileUrl
             .flatMap { try Data(contentsOf: $0).count }
             .map { Int64($0) }
             .map { ByteCountFormatter.string(fromByteCount: $0, countStyle: .decimal) }
+        fileSizeLabel.isHidden = false
         
-        packtTypeLabel.text = "Distribution packet"
-        updateButton.isEnabled = true 
+        fileNameLabel.text = firmware.fileName
+        fileNameLabel.isHidden = false 
     }
     
-    private func resetUI() {
-        fileNameLabel.text = "Select file"
-        fileSizeLabel.text = ""
-        updateButton.isEnabled = false
-        packtTypeLabel.text = "Select Distribution packet (ZIP) or drop file here."
-    }
 }
 
 extension DFUSelectFileViewController: UIDocumentPickerDelegate {

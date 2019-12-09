@@ -50,6 +50,14 @@ extension UIColor {
         }
     }()
     
+    static let nordicGreen: UIColor = {
+        if #available(iOS 11.0, *) {
+            return UIColor(named: "NordicGreen")!
+        } else {
+            return #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+        }
+    }()
+    
     static let nordicDarkGray: UIColor = {
         if #available(iOS 11.0, *) {
             return UIColor(named: "NordicDarkGray")!
@@ -74,7 +82,7 @@ extension UIColor {
         }
     }()
     
-    static let almostWhite: UIColor = {
+    static let nordicAlmostWhite: UIColor = {
         if #available(iOS 11.0, *) {
             return UIColor(named: "AlmostWhite")!
         } else {
@@ -95,6 +103,14 @@ extension UIColor {
             return UIColor(named: "TableViewBackground")!
         } else {
             return #colorLiteral(red: 0.9499699473, green: 0.9504894614, blue: 0.965736568, alpha: 1)
+        }
+    }()
+    
+    static let nordicLabel: UIColor = {
+        if #available(iOS 13.0, *) {
+            return .label
+        } else {
+            return .black
         }
     }()
 }
