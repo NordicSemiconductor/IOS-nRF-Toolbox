@@ -21,6 +21,11 @@ protocol DFUFileViewActionDelegate: class {
     func done(_ fileView: DFUFileView)
 }
 
+protocol DFUFileHandlerDelegate: class {
+    func fileView(_ fileView: DFUFileView, loadedFirmware firmware: DFUFirmware)
+    func fileView(_ fileView: DFUFileView, didntOpenFileWithError error: Error)
+}
+
 extension DFUFirmwareType {
     var desccription: String {
         switch self {
@@ -85,6 +90,9 @@ class DFUFileView: UIView {
         view.frame = self.bounds
         self.addSubview(view)
         view.addZeroBorderConstraints()
+        if #available(iOS 11.0, *) {
+            addInteraction(UIDropInteraction(delegate: self))
+        }
     }
 
     func loadViewFromNib() -> UIView? {
@@ -116,10 +124,7 @@ class DFUFileView: UIView {
             case .readyToUpdate(let firmware):
                 self.fileScheme.setParts(with: firmware)
                 
-                self.fileSizeLabel.text = firmware.fileUrl
-                    .flatMap { try? Data(contentsOf: $0) }
-                    .map { Int64($0.count) }
-                    .flatMap { ByteCountFormatter().string(fromByteCount: $0) }
+                self.fileSizeLabel.text = ByteCountFormatter().string(fromByteCount: firmware.totalSize)
                 
                 self.deviceScheme.setParts(with: firmware)
                 self.fileSizeView.update(with: firmware)
@@ -130,8 +135,9 @@ class DFUFileView: UIView {
             }
         }
     }
-    
+     
     weak var delegate: DFUFileViewActionDelegate?
+    weak var fileDelegate: DFUFileHandlerDelegate?
     
     @IBAction private func leftButtonAction() {
         switch state {
@@ -154,6 +160,8 @@ class DFUFileView: UIView {
             delegate?.stop(self)
         case .completed:
             delegate?.done(self)
+        case .error:
+            delegate?.share(self)
         default:
             break
         }
@@ -211,5 +219,51 @@ extension DFUFileView: DFUProgressDelegate {
         self.deviceScheme.progress = totalUpdatedPercent
         
         print("Total percent: \(currentPartPercent)")
+    }
+}
+
+extension DFUFirmware: NSItemProviderReading {
+    public static var readableTypeIdentifiersForItemProvider: [String] {
+        ["com.pkware.zip-archive"]
+    }
+    
+    public static func object(withItemProviderData data: Data, typeIdentifier: String) throws -> Self {
+        return DFUFirmware(zipFile: data) as! Self
+    }
+    
+    var totalSize: Int64 {
+        return Int64(size.application + size.bootloader + size.softdevice)
+    }
+}
+
+@available(iOS 11.0, *)
+extension DFUFileView: UIDropInteractionDelegate {
+    
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
+        return UIDropProposal(operation: .copy)
+    }
+     
+    func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
+        switch state {
+        case .error, .unsupportedFile, .readyToOpen, .readyToUpdate:
+            return session.hasItemsConforming(toTypeIdentifiers: ["com.pkware.zip-archive"])
+        default:
+            return false
+        }
+    }
+    
+    func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
+        guard let itemProvider = session.items.first?.itemProvider.copy() as? NSItemProvider else { return }
+        
+        itemProvider.loadObject(ofClass: DFUFirmware.self) { (reading, error) in
+            if let error = error {
+                self.fileDelegate?.fileView(self, didntOpenFileWithError: error)
+                return
+            }
+            
+            if let firmware = reading as? DFUFirmware {
+                self.fileDelegate?.fileView(self, loadedFirmware: firmware)
+            }
+        }
     }
 }

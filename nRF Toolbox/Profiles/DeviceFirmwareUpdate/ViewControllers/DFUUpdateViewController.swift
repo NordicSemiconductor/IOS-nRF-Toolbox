@@ -24,7 +24,8 @@ class DFUUpdateViewController: UIViewController {
         super.viewDidLoad()
         
         navigationItem.title = "DFU"
-        fileView.delegate = self 
+        fileView.delegate = self
+        fileView.fileDelegate = self
         fileView.state = .readyToOpen
     }
 }
@@ -43,6 +44,7 @@ extension DFUUpdateViewController {
 
 extension DFUUpdateViewController: UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
+        print(url)
         createFirmware(url)
     }
 }
@@ -95,13 +97,15 @@ extension DFUUpdateViewController: DFUFileViewActionDelegate {
     }
     
     func share(_ fileView: DFUFileView) {
-        
+        guard let attributedText = self.textView.attributedText else { return }
+        let activity = UIActivityViewController(activityItems: [attributedText], applicationActivities: [])
+        activity.popoverPresentationController?.sourceView = fileView
+        self.present(activity, animated: true, completion: nil)
     }
     
     func done(_ fileView: DFUFileView) {
         fileView.state = .readyToOpen
     }
-    
     
 }
 
@@ -129,4 +133,20 @@ extension DFUUpdateViewController: DFUServiceDelegate {
         self.fileView.state = .error(error)
         print(message)
     }
+}
+
+extension DFUUpdateViewController: DFUFileHandlerDelegate {
+    func fileView(_ fileView: DFUFileView, loadedFirmware firmware: DFUFirmware) {
+        self.firmware = firmware
+        DispatchQueue.main.async {
+            fileView.state = .readyToUpdate(firmware)
+        }
+    }
+    
+    func fileView(_ fileView: DFUFileView, didntOpenFileWithError error: Error) {
+        fileView.state = .error(error)
+        self.textView.logWith(.error, message: error.localizedDescription)
+    }
+    
+    
 }
