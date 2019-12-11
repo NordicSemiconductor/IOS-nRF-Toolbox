@@ -13,13 +13,12 @@
 		01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */; };
 		0162BA91234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0162BA90234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift */; };
 		01AD26E82395084000F56210 /* ConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26E62395084000F56210 /* ConnectionViewController.swift */; };
-		01AD26E92395084000F56210 /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26E72395084000F56210 /* ConnectionManager.swift */; };
 		01AD26EC23953E4800F56210 /* FileSizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26EB23953E4800F56210 /* FileSizeView.swift */; };
 		01AD26F023955A9F00F56210 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26EF23955A9F00F56210 /* ProgressView.swift */; };
 		01AD26F423965A9400F56210 /* FirmwareProgressImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26F323965A9400F56210 /* FirmwareProgressImage.swift */; };
 		01B49314238415DF00E1BC08 /* DFU.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01B49313238415DF00E1BC08 /* DFU.storyboard */; };
-		01B4931723843B3800E1BC08 /* DFUSelectFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B4931623843B3800E1BC08 /* DFUSelectFileViewController.swift */; };
 		01B4931923852E1600E1BC08 /* DFUFileDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B4931823852E1600E1BC08 /* DFUFileDropView.swift */; };
+		01B56C1623A11FDA00140A1C /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B56C1523A11FB600140A1C /* ConnectionManager.swift */; };
 		01B6D3D3234C7538000942C4 /* HeartRateMonitorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3D2234C7538000942C4 /* HeartRateMonitorTableViewController.swift */; };
 		01B6D3D8234CB533000942C4 /* HeartRateMeasurementCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3D7234CB533000942C4 /* HeartRateMeasurementCharacteristic.swift */; };
 		01B6D3DA234CB6B3000942C4 /* HeartRateSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3D9234CB6B3000942C4 /* HeartRateSection.swift */; };
@@ -66,7 +65,6 @@
 		20850177233B690500C792B4 /* RunningCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20850176233B690500C792B4 /* RunningCharacteristic.swift */; };
 		208EE4EA23155FC8008E5FE9 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208EE4E923155FC8008E5FE9 /* WebViewController.swift */; };
 		20B25F382319568B006AF321 /* PeripheralTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B25F372319568B006AF321 /* PeripheralTableViewController.swift */; };
-		20B25F3A231960CF006AF321 /* ConnectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B25F39231960CF006AF321 /* ConnectTableViewController.swift */; };
 		20B797912334FD77001328E1 /* Peripheral+BMG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B797902334FD77001328E1 /* Peripheral+BMG.swift */; };
 		20B797942334FE1B001328E1 /* Identifier+GlucoseMonitorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B797932334FE1B001328E1 /* Identifier+GlucoseMonitorViewController.swift */; };
 		20B7979823350584001328E1 /* Peripheral+Cycling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B7979723350584001328E1 /* Peripheral+Cycling.swift */; };
@@ -228,13 +226,12 @@
 		01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalSection.swift; sourceTree = "<group>"; };
 		0162BA90234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTemperatureAditionalSection.swift; sourceTree = "<group>"; };
 		01AD26E62395084000F56210 /* ConnectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionViewController.swift; sourceTree = "<group>"; };
-		01AD26E72395084000F56210 /* ConnectionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConnectionManager.swift; path = ../../../../tmp/Scanner/Scanner/ConnectionManager.swift; sourceTree = "<group>"; };
 		01AD26EB23953E4800F56210 /* FileSizeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSizeView.swift; sourceTree = "<group>"; };
 		01AD26EF23955A9F00F56210 /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		01AD26F323965A9400F56210 /* FirmwareProgressImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirmwareProgressImage.swift; sourceTree = "<group>"; };
 		01B49313238415DF00E1BC08 /* DFU.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DFU.storyboard; sourceTree = "<group>"; };
-		01B4931623843B3800E1BC08 /* DFUSelectFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUSelectFileViewController.swift; sourceTree = "<group>"; };
 		01B4931823852E1600E1BC08 /* DFUFileDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFileDropView.swift; sourceTree = "<group>"; };
+		01B56C1523A11FB600140A1C /* ConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
 		01B6D3D2234C7538000942C4 /* HeartRateMonitorTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateMonitorTableViewController.swift; sourceTree = "<group>"; };
 		01B6D3D7234CB533000942C4 /* HeartRateMeasurementCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateMeasurementCharacteristic.swift; sourceTree = "<group>"; };
 		01B6D3D9234CB6B3000942C4 /* HeartRateSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateSection.swift; sourceTree = "<group>"; };
@@ -280,7 +277,6 @@
 		20850176233B690500C792B4 /* RunningCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningCharacteristic.swift; sourceTree = "<group>"; };
 		208EE4E923155FC8008E5FE9 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		20B25F372319568B006AF321 /* PeripheralTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralTableViewController.swift; sourceTree = "<group>"; };
-		20B25F39231960CF006AF321 /* ConnectTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectTableViewController.swift; sourceTree = "<group>"; };
 		20B797902334FD77001328E1 /* Peripheral+BMG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Peripheral+BMG.swift"; sourceTree = "<group>"; };
 		20B797932334FE1B001328E1 /* Identifier+GlucoseMonitorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Identifier+GlucoseMonitorViewController.swift"; sourceTree = "<group>"; };
 		20B7979723350584001328E1 /* Peripheral+Cycling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Peripheral+Cycling.swift"; sourceTree = "<group>"; };
@@ -507,10 +503,18 @@
 		01B4931523843B0100E1BC08 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				01B4931623843B3800E1BC08 /* DFUSelectFileViewController.swift */,
 				01F365652397F45500A4543A /* DFUUpdateViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		01B56C1423A1181C00140A1C /* Connection */ = {
+			isa = PBXGroup;
+			children = (
+				01B56C1523A11FB600140A1C /* ConnectionManager.swift */,
+				01AD26E62395084000F56210 /* ConnectionViewController.swift */,
+			);
+			path = Connection;
 			sourceTree = "<group>";
 		};
 		01B6D3D1234C74F3000942C4 /* HeartRateMonitor */ = {
@@ -795,13 +799,10 @@
 		20B7979C2338EC63001328E1 /* Template */ = {
 			isa = PBXGroup;
 			children = (
-				01AD26E72395084000F56210 /* ConnectionManager.swift */,
-				01AD26E62395084000F56210 /* ConnectionViewController.swift */,
 				2013650023462DAA00C5AF1F /* Models */,
 				20B25F372319568B006AF321 /* PeripheralTableViewController.swift */,
 				20F0C8022327D417003111E7 /* Sections */,
 				20029FFF231FAFD100C43E06 /* PeripheralManager.swift */,
-				20B25F39231960CF006AF321 /* ConnectTableViewController.swift */,
 				20D08E03232A4A3600569587 /* SelectionsTableViewController.swift */,
 				339767BE0A9B9DF256F73884 /* PeripheralViewController.swift */,
 			);
@@ -1135,6 +1136,7 @@
 		5217F3EB1859EE0000F2D5BB /* nRF Toolbox */ = {
 			isa = PBXGroup;
 			children = (
+				01B56C1423A1181C00140A1C /* Connection */,
 				20B7979B2338EC59001328E1 /* Profiles */,
 				208EE4E823155F94008E5FE9 /* WebViewController */,
 				20F15C372313D082000C5503 /* CommonViews */,
@@ -1522,7 +1524,6 @@
 				01F365622397BADC00A4543A /* DFUFileView.swift in Sources */,
 				300143291CEC59F4008379DF /* ServiceIdentifiers.swift in Sources */,
 				20E07B422306868F00FCB205 /* BLEService.swift in Sources */,
-				20B25F3A231960CF006AF321 /* ConnectTableViewController.swift in Sources */,
 				3001EBC71D1C1BAA008C5C37 /* CGMViewController.swift in Sources */,
 				01AD26F023955A9F00F56210 /* ProgressView.swift in Sources */,
 				304D58FD1CE34FC600148271 /* LogViewController.swift in Sources */,
@@ -1564,7 +1565,6 @@
 				20C7FE10230A9FAB00B06FD8 /* UIFont+Ext.swift in Sources */,
 				201364F72344A93D00C5AF1F /* BloodPressureSection.swift in Sources */,
 				304D59011CE352B300148271 /* LogItemTableViewCell.swift in Sources */,
-				01B4931723843B3800E1BC08 /* DFUSelectFileViewController.swift in Sources */,
 				01AD26E82395084000F56210 /* ConnectionViewController.swift in Sources */,
 				3001EBC51D1C153C008C5C37 /* CGMDetailsViewController.swift in Sources */,
 				2002A002231FB8E800C43E06 /* UIImage+Ext.swift in Sources */,
@@ -1582,12 +1582,12 @@
 				20C7FE0E230A9F9300B06FD8 /* LinkTableViewCell.swift in Sources */,
 				01BE0955234A7500006ACF06 /* HealthTemperatureSection.swift in Sources */,
 				01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */,
-				01AD26E92395084000F56210 /* ConnectionManager.swift in Sources */,
 				20C7FE082306EB5600B06FD8 /* UITableView+Ext.swift in Sources */,
 				20D08E02232A38C200569587 /* TitledError.swift in Sources */,
 				20C7FE53230E811B00B06FD8 /* ServiceProvider.swift in Sources */,
 				20C7FE5E230EC37000B06FD8 /* ServiceTableViewCell.swift in Sources */,
 				01B6D3E2234CCC9F000942C4 /* HeartRateChartSection.swift in Sources */,
+				01B56C1623A11FDA00140A1C /* ConnectionManager.swift in Sources */,
 				30499E511CE471C500E0993B /* DFUViewController.swift in Sources */,
 				3001EBBB1D1BE306008C5C37 /* CGMReading.swift in Sources */,
 				3001EBB11D1BE1F3008C5C37 /* GlucoseReading.swift in Sources */,
