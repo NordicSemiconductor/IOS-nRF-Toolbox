@@ -9,8 +9,6 @@
 import CoreBluetooth
 import os.log
 
-// com.NordicSemi.IOS-nRF-Scanner
-
 protocol ConnectionManagerDelegate: class {
     func statusChanges(_ status: ConnectionManager.Status)
     func newPeripherals(_ peripherals: [Peripheral], willBeAddedTo existing: [Peripheral])
@@ -93,8 +91,7 @@ open class ConnectionManager: NSObject {
     }
     
     open func startScanning(services: [CBUUID]?) {
-        let uuid = CBUUID(string: "180A")
-        centralManager.scanForPeripherals(withServices: [uuid], options:
+        centralManager.scanForPeripherals(withServices: services, options:
             [CBCentralManagerScanOptionAllowDuplicatesKey:true])
         dispatchSource.schedule(deadline: .now() + .seconds(1), repeating: 1)
         dispatchSource.activate()

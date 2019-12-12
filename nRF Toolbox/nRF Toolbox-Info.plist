@@ -70,7 +70,7 @@
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>We use this feature in order to be able to correctly communicate with your bluetooth peripherals, we do not save, log nor send any of the data used and the app will fully function with no internet connection</string>
 	<key>NSHomeKitUsageDescription</key>
-	<string>nRF Toolbox uses HomeKit to showcase the ability to update the HomeKit enabled peripherals' firmware Over the air (OTA DFU)</string>
+	<string>nRF Toolbox uses HomeKit to showcase the ability to update the HomeKit enabled peripherals&apos; firmware Over the air (OTA DFU)</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>GT-Eesti-Display-Bold-Italic.ttf</string>
@@ -87,6 +87,7 @@
 		<string>GT-Eesti-Display-UBold.ttf</string>
 		<string>GT-Eesti-Display-ULight-Italic.ttf</string>
 		<string>GT-Eesti-Display-ULight.ttf</string>
+		<string>PRAGMATA MEDIUM_0.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

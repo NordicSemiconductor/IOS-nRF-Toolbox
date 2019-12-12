@@ -36,7 +36,7 @@ class DefaultMainRouter {
     
     private let serviceViewControllers: [ServiceId : UIViewController] = {
         return [
-            .deviceFirmwareUpgrade : DFUViewController1(),
+            .deviceFirmwareUpgrade : DFUViewController(),
             .heartRateMonitor : HeartRateMonitorTableViewController(),
             .bloodPressureMonitoring : BloodPressureTableViewController(),
             .glucoseMonitoring : GlucoseMonitorViewController(),

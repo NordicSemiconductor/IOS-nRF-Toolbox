@@ -7,7 +7,7 @@ import UIKit
 import CoreBluetooth
 import iOSDFULibrary
 
-class DFUViewController1: PeripheralViewController {
+class DFUViewController: PeripheralViewController {
     
     @IBOutlet private var fileView: DFUFileView!
     @IBOutlet private var textView: LogerTextView!
@@ -65,14 +65,14 @@ class DFUViewController1: PeripheralViewController {
     }
 }
 
-extension DFUViewController1: UIDocumentPickerDelegate {
+extension DFUViewController: UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
         print(url)
         createFirmware(url)
     }
 }
 
-extension DFUViewController1: DFUFileViewActionDelegate {
+extension DFUViewController: DFUFileViewActionDelegate {
     func openFile(_ fileView: DFUFileView) {
         let documentPickerVC = UIDocumentPickerViewController(documentTypes: ["com.pkware.zip-archive"], in: .import)
         documentPickerVC.delegate = self
@@ -178,7 +178,7 @@ extension DFUViewController1: DFUFileViewActionDelegate {
     
 }
 
-extension DFUViewController1: DFUFileHandlerDelegate {
+extension DFUViewController: DFUFileHandlerDelegate {
     func fileView(_ fileView: DFUFileView, loadedFirmware firmware: DFUFirmware) {
         self.firmware = firmware
         DispatchQueue.main.async {
@@ -193,7 +193,7 @@ extension DFUViewController1: DFUFileHandlerDelegate {
     }
 }
 
-extension DFUViewController1: DFUServiceDelegate {
+extension DFUViewController: DFUServiceDelegate {
     struct DFUError: Error {
         let error: iOSDFULibrary.DFUError
         let localizedDescription: String
