@@ -29,15 +29,18 @@ class PeripheralViewController: UIViewController, StatusDelegate {
     var navigationTitle: String { "" }
     var peripheralDescription: PeripheralDescription { PeripheralDescription(uuid: CBUUID.Profile.bloodGlucoseMonitor, services: [.battery]) }
     private (set) var activePeripheral: CBPeripheral?
+    
+    private var savedView: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         peripheralManager.delegate = self
         self.navigationItem.title = navigationTitle
+        savedView = view
     }
 
-    func disconnect() {
+    @objc func disconnect() {
         guard let peripheral = activePeripheral else { return }
         self.peripheralManager.closeConnection(peripheral: peripheral)
     }
@@ -78,6 +81,7 @@ class PeripheralViewController: UIViewController, StatusDelegate {
             
             activePeripheral?.delegate = self
             activePeripheral?.discoverServices(peripheralDescription.services.map { $0.uuid } )
+            view = savedView
         }
     }
 

@@ -1,37 +1,60 @@
 //
-//  DFUUpdateViewController.swift
-//  nRF Toolbox
-//
-//  Created by Nick Kibysh on 04/12/2019.
-//  Copyright © 2019 Nordic Semiconductor. All rights reserved.
+// Created by Nick Kibysh on 11/11/2019.
+// Copyright (c) 2019 Nordic Semiconductor. All rights reserved.
 //
 
 import UIKit
-import iOSDFULibrary
 import CoreBluetooth
+import iOSDFULibrary
 
-class DFUUpdateViewController: UIViewController {
-    @IBOutlet var fileView: DFUFileView!
-    @IBOutlet var textView: LogerTextView!
+class DFUViewController1: PeripheralViewController {
     
-    var peripheral: CBPeripheral!
+    @IBOutlet private var fileView: DFUFileView!
+    @IBOutlet private var textView: LogerTextView!
+    
+    private lazy var disconnectBtn = UIBarButtonItem(title: "Disconnect", style: .done, target: self, action: #selector(disconnect))
+    
     var firmware: DFUFirmware?
     
     private var dfuController: DFUServiceController?
     private var selectedFirmware: DFUFirmware?
     
+    init() {
+        super.init(nibName: "DFUViewController", bundle: .main)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.rightBarButtonItem = disconnectBtn
+        disconnectBtn.isEnabled = false
         
         navigationItem.title = "DFU"
         fileView.delegate = self
         fileView.fileDelegate = self
         fileView.state = .readyToOpen
     }
-}
 
-extension DFUUpdateViewController {
+    override var peripheralDescription: PeripheralDescription {
+        PeripheralDescription(uuid: nil, services: [.battery])
+    }
+
+    override func statusDidChanged(_ status: PeripheralStatus) {
+        super.statusDidChanged(status)
+        
+        if case .connected = status {
+            disconnectBtn.isEnabled = true
+        } else {
+            disconnectBtn.isEnabled = false
+        }
+    }
+    
     private func createFirmware(_ url: URL) {
+        textView.attributedText = NSAttributedString()
         self.firmware = DFUFirmware(urlToZipFile: url)
         guard let firmware = self.firmware else {
             self.fileView.state = .unsupportedFile
@@ -42,14 +65,14 @@ extension DFUUpdateViewController {
     }
 }
 
-extension DFUUpdateViewController: UIDocumentPickerDelegate {
+extension DFUViewController1: UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
         print(url)
         createFirmware(url)
     }
 }
 
-extension DFUUpdateViewController: DFUFileViewActionDelegate {
+extension DFUViewController1: DFUFileViewActionDelegate {
     func openFile(_ fileView: DFUFileView) {
         let documentPickerVC = UIDocumentPickerViewController(documentTypes: ["com.pkware.zip-archive"], in: .import)
         documentPickerVC.delegate = self
@@ -108,7 +131,7 @@ extension DFUUpdateViewController: DFUFileViewActionDelegate {
         initiator.delegate = self
         initiator.progressDelegate = self.fileView
         initiator.enableUnsafeExperimentalButtonlessServiceInSecureDfu = true
-        self.dfuController = initiator.with(firmware: firmware).start(target: self.peripheral)
+        self.dfuController = initiator.with(firmware: firmware).start(target: self.activePeripheral!)
     }
     
     func pause(_ fileView: DFUFileView) {
@@ -150,11 +173,27 @@ extension DFUUpdateViewController: DFUFileViewActionDelegate {
     
     func done(_ fileView: DFUFileView) {
         fileView.state = .readyToOpen
+        textView.attributedText = NSAttributedString()
     }
     
 }
 
-extension DFUUpdateViewController: DFUServiceDelegate {
+extension DFUViewController1: DFUFileHandlerDelegate {
+    func fileView(_ fileView: DFUFileView, loadedFirmware firmware: DFUFirmware) {
+        self.firmware = firmware
+        DispatchQueue.main.async {
+            self.textView.attributedText = NSAttributedString()
+            fileView.state = .readyToUpdate(firmware)
+        }
+    }
+    
+    func fileView(_ fileView: DFUFileView, didntOpenFileWithError error: Error) {
+        fileView.state = .error(error)
+        self.textView.logWith(.error, message: error.localizedDescription)
+    }
+}
+
+extension DFUViewController1: DFUServiceDelegate {
     struct DFUError: Error {
         let error: iOSDFULibrary.DFUError
         let localizedDescription: String
@@ -178,20 +217,4 @@ extension DFUUpdateViewController: DFUServiceDelegate {
         self.fileView.state = .error(error)
         print(message)
     }
-}
-
-extension DFUUpdateViewController: DFUFileHandlerDelegate {
-    func fileView(_ fileView: DFUFileView, loadedFirmware firmware: DFUFirmware) {
-        self.firmware = firmware
-        DispatchQueue.main.async {
-            fileView.state = .readyToUpdate(firmware)
-        }
-    }
-    
-    func fileView(_ fileView: DFUFileView, didntOpenFileWithError error: Error) {
-        fileView.state = .error(error)
-        self.textView.logWith(.error, message: error.localizedDescription)
-    }
-    
-    
 }

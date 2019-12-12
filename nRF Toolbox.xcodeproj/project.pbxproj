@@ -16,7 +16,6 @@
 		01AD26EC23953E4800F56210 /* FileSizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26EB23953E4800F56210 /* FileSizeView.swift */; };
 		01AD26F023955A9F00F56210 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26EF23955A9F00F56210 /* ProgressView.swift */; };
 		01AD26F423965A9400F56210 /* FirmwareProgressImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26F323965A9400F56210 /* FirmwareProgressImage.swift */; };
-		01B49314238415DF00E1BC08 /* DFU.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01B49313238415DF00E1BC08 /* DFU.storyboard */; };
 		01B4931923852E1600E1BC08 /* DFUFileDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B4931823852E1600E1BC08 /* DFUFileDropView.swift */; };
 		01B56C1623A11FDA00140A1C /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B56C1523A11FB600140A1C /* ConnectionManager.swift */; };
 		01B6D3D3234C7538000942C4 /* HeartRateMonitorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3D2234C7538000942C4 /* HeartRateMonitorTableViewController.swift */; };
@@ -30,12 +29,12 @@
 		01BE0953234A1C48006ACF06 /* HealthTermometerCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE0952234A1C48006ACF06 /* HealthTermometerCharacteristic.swift */; };
 		01BE0955234A7500006ACF06 /* HealthTemperatureSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE0954234A7500006ACF06 /* HealthTemperatureSection.swift */; };
 		01BE0958234A76D4006ACF06 /* Peripheral+Temperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE0957234A76D4006ACF06 /* Peripheral+Temperature.swift */; };
+		01C2E97523A1ACDF008C1701 /* DFUViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01C2E97423A1ACDF008C1701 /* DFUViewController.xib */; };
 		01E4BACB23698DD300EE67A0 /* FindMeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E4BAC923698DD300EE67A0 /* FindMeTableViewCell.swift */; };
 		01E4BACC23698DD300EE67A0 /* FindMeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E4BACA23698DD300EE67A0 /* FindMeTableViewCell.xib */; };
 		01F3655F2397A9C700A4543A /* NordicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F3655E2397A9C700A4543A /* NordicButton.swift */; };
 		01F365622397BADC00A4543A /* DFUFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F365612397BADC00A4543A /* DFUFileView.swift */; };
 		01F365642397BAE500A4543A /* DFUFileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01F365632397BAE500A4543A /* DFUFileView.xib */; };
-		01F365662397F45500A4543A /* DFUUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F365652397F45500A4543A /* DFUUpdateViewController.swift */; };
 		01F365692399363200A4543A /* LogerTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F365682399363200A4543A /* LogerTextView.swift */; };
 		01FEB0FD23969BD1000767C1 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FEB0FC23969BD1000767C1 /* UIView+Ext.swift */; };
 		0E645A0F1CBF957800D36AD0 /* firmwares in Resources */ = {isa = PBXBuildFile; fileRef = 7E6ED10A196ED482008010B6 /* firmwares */; };
@@ -229,7 +228,6 @@
 		01AD26EB23953E4800F56210 /* FileSizeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSizeView.swift; sourceTree = "<group>"; };
 		01AD26EF23955A9F00F56210 /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		01AD26F323965A9400F56210 /* FirmwareProgressImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirmwareProgressImage.swift; sourceTree = "<group>"; };
-		01B49313238415DF00E1BC08 /* DFU.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DFU.storyboard; sourceTree = "<group>"; };
 		01B4931823852E1600E1BC08 /* DFUFileDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFileDropView.swift; sourceTree = "<group>"; };
 		01B56C1523A11FB600140A1C /* ConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
 		01B6D3D2234C7538000942C4 /* HeartRateMonitorTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateMonitorTableViewController.swift; sourceTree = "<group>"; };
@@ -243,12 +241,12 @@
 		01BE0952234A1C48006ACF06 /* HealthTermometerCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTermometerCharacteristic.swift; sourceTree = "<group>"; };
 		01BE0954234A7500006ACF06 /* HealthTemperatureSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTemperatureSection.swift; sourceTree = "<group>"; };
 		01BE0957234A76D4006ACF06 /* Peripheral+Temperature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Peripheral+Temperature.swift"; sourceTree = "<group>"; };
+		01C2E97423A1ACDF008C1701 /* DFUViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DFUViewController.xib; sourceTree = "<group>"; };
 		01E4BAC923698DD300EE67A0 /* FindMeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindMeTableViewCell.swift; sourceTree = "<group>"; };
 		01E4BACA23698DD300EE67A0 /* FindMeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FindMeTableViewCell.xib; sourceTree = "<group>"; };
 		01F3655E2397A9C700A4543A /* NordicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicButton.swift; sourceTree = "<group>"; };
 		01F365612397BADC00A4543A /* DFUFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFileView.swift; sourceTree = "<group>"; };
 		01F365632397BAE500A4543A /* DFUFileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DFUFileView.xib; sourceTree = "<group>"; };
-		01F365652397F45500A4543A /* DFUUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUUpdateViewController.swift; sourceTree = "<group>"; };
 		01F365682399363200A4543A /* LogerTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogerTextView.swift; sourceTree = "<group>"; };
 		01FEB0FC23969BD1000767C1 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		20027B07233E116600A0B5ED /* StrideSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrideSection.swift; sourceTree = "<group>"; };
@@ -503,7 +501,8 @@
 		01B4931523843B0100E1BC08 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				01F365652397F45500A4543A /* DFUUpdateViewController.swift */,
+				3397666AEF5D1014982224D6 /* DFUViewController1.swift */,
+				01C2E97423A1ACDF008C1701 /* DFUViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1050,8 +1049,6 @@
 			children = (
 				01B4931523843B0100E1BC08 /* ViewControllers */,
 				0140FCD4237C2FFA00411963 /* Views */,
-				3397666AEF5D1014982224D6 /* DFUViewController1.swift */,
-				01B49313238415DF00E1BC08 /* DFU.storyboard */,
 			);
 			path = DeviceFirmwareUpdate;
 			sourceTree = "<group>";
@@ -1416,6 +1413,7 @@
 				20C7FE26230BEA9D00B06FD8 /* DFUViewController.storyboard in Resources */,
 				20E07B622306975700FCB205 /* GT-Eesti-Display-Bold.ttf in Resources */,
 				5214D0CE1886C02A00460637 /* Settings.bundle in Resources */,
+				01C2E97523A1ACDF008C1701 /* DFUViewController.xib in Resources */,
 				20E07B682306975700FCB205 /* GT-Eesti-Display-ULight-Italic.ttf in Resources */,
 				0E645A0F1CBF957800D36AD0 /* firmwares in Resources */,
 				20E07B602306975700FCB205 /* GT-Eesti-Display-UBold-Italic.ttf in Resources */,
@@ -1445,7 +1443,6 @@
 				20F15C3C2313D2C7000C5503 /* InfoActionView.xib in Resources */,
 				5217F3F91859EE0000F2D5BB /* Main.storyboard in Resources */,
 				01F365642397BAE500A4543A /* DFUFileView.xib in Resources */,
-				01B49314238415DF00E1BC08 /* DFU.storyboard in Resources */,
 				5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */,
 				20E07B5C2306975700FCB205 /* GT-Eesti-Display-UBold.ttf in Resources */,
 				5211EFB018856430007CC40D /* icon-hex.png in Resources */,
@@ -1530,7 +1527,6 @@
 				201364FD2344E2E300C5AF1F /* CuffPreasureCharacteristic.swift in Sources */,
 				20D08DFD232929A400569587 /* BGMTableViewCell.swift in Sources */,
 				30499E571CE4736500E0993B /* FilePreselectionDelegate.swift in Sources */,
-				01F365662397F45500A4543A /* DFUUpdateViewController.swift in Sources */,
 				01B6D3DE234CBBE5000942C4 /* SernsorLocationSection.swift in Sources */,
 				200973DD2343748F0091951B /* BloodPreasureCharacteristic.swift in Sources */,
 				30A1145C1CD24611000F0F02 /* ScannerViewController.swift in Sources */,

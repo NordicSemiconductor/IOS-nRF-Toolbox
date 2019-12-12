@@ -16,16 +16,12 @@ extension UIColor {
 }
 
 class FirmwareProgressImage: ProgressImage {
-    func setParts(with firmware: DFUFirmware) {
+    func setParts(with firmware: DFUFirmware, reversed: Bool = false ) {
         var parts = [ProgressPart]()
         
         let application = Int(firmware.size.application)
         let bootloader = Int(firmware.size.bootloader)
         let softDevice = Int(firmware.size.softdevice)
-        
-        if application > 1 {
-            parts.append(ProgressPart(parts: application, color: .firmwareApplication))
-        }
         
         if bootloader > 1 {
             parts.append(ProgressPart(parts: bootloader, color: .firmwareBootloader))
@@ -33,6 +29,14 @@ class FirmwareProgressImage: ProgressImage {
         
         if softDevice > 1 {
             parts.append(ProgressPart(parts: softDevice, color: .firmwareSoftDevice))
+        }
+        
+        if application > 1 {
+            parts.append(ProgressPart(parts: application, color: .firmwareApplication))
+        }
+        
+        if reversed {
+            parts = parts.reversed()
         }
         
         self.parts = parts

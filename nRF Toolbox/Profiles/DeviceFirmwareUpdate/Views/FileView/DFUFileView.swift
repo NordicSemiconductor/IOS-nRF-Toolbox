@@ -126,8 +126,8 @@ class DFUFileView: UIView {
                 
                 self.fileSizeLabel.text = ByteCountFormatter().string(fromByteCount: firmware.totalSize)
                 
-                self.deviceScheme.setParts(with: firmware)
                 self.fileSizeView.update(with: firmware)
+                self.deviceScheme.setParts(with: firmware, reversed: true)
             case .updating(let firmwareType):
                 break
             default:
@@ -215,8 +215,8 @@ extension DFUFileView: DFUProgressDelegate {
         let updatedParts = percents.dropLast(percents.count - part).reduce(0, +)
         let currentPartPercent = percents[part] * Double(progress) / 100.0
         let totalUpdatedPercent = Int((currentPartPercent + updatedParts) * 100)
-        self.fileScheme.progress = 100 - totalUpdatedPercent
-        self.deviceScheme.progress = totalUpdatedPercent
+        self.fileScheme.progress = totalUpdatedPercent
+        self.deviceScheme.progress = 100 - totalUpdatedPercent
         
         print("Total percent: \(currentPartPercent)")
     }

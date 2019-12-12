@@ -93,13 +93,9 @@ class FileSizeView: UIView {
             $0.removeFromSuperview()
         }
         
-        let application = Int(firmware.size.application)
         let bootloader = Int(firmware.size.bootloader)
         let softDevice = Int(firmware.size.softdevice)
-        
-        if application > 1 {
-            self.stackView.addArrangedSubview(SizePartView(title: "Application", size: application, color: .firmwareApplication))
-        }
+        let application = Int(firmware.size.application)
         
         if bootloader > 1 {
             self.stackView.addArrangedSubview(SizePartView(title: "Bootloader", size: bootloader, color: .firmwareBootloader))
@@ -107,6 +103,10 @@ class FileSizeView: UIView {
         
         if softDevice > 1 {
             self.stackView.addArrangedSubview(SizePartView(title: "Soft Device", size: softDevice, color: .firmwareSoftDevice))
+        }
+        
+        if application > 1 {
+            self.stackView.addArrangedSubview(SizePartView(title: "Application", size: application, color: .firmwareApplication))
         }
     }
 }
