@@ -13,13 +13,22 @@ protocol ConnectionViewControllerDelegate: class {
 }
 
 class ConnectionViewController: UITableViewController {
-    let connectionManager = ConnectionManager()
+    let scanner: PeripheralScanner
     
     weak var delegate: ConnectionViewControllerDelegate?
     
+    init(scanner: PeripheralScanner) {
+        self.scanner = scanner
+        super.init(style: .grouped)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        connectionManager.delegate = self 
+        scanner.scannerDelegate = self 
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         
         navigationItem.title = "Correct"
@@ -43,42 +52,42 @@ class ConnectionViewController: UITableViewController {
     }
     
     @objc func refresh() {
-        self.connectionManager.refresh()
+        self.scanner.refresh()
         self.tableView.reloadData()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int { 1 }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return connectionManager.peripherals.count
+        return scanner.peripherals.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let p = connectionManager.peripherals[indexPath.row]
+        let p = scanner.peripherals[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")!
         cell.textLabel?.text = p.name
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if case .connecting = connectionManager.status {
+        if case .connecting = scanner.status {
             return
         }
         
-        let peripheral = connectionManager.peripherals[indexPath.row]
-        connectionManager.connect(to: peripheral)
+        let peripheral = scanner.peripherals[indexPath.row]
+        scanner.connect(to: peripheral)
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        connectionManager.status.singleName
+        scanner.status.singleName
     }
 }
 
-extension ConnectionViewController: ConnectionManagerDelegate {
-    func statusChanges(_ status: ConnectionManager.Status) {
+extension ConnectionViewController: PeripheralScannerDelegate {
+    func statusChanges(_ status: PeripheralScanner.Status) {
         let indexSet = IndexSet([0])
         tableView.reloadSections(indexSet, with: .none)
         
-        if case .connected(let p) = status {
+        if case .connecting(let p) = status {
             self.delegate?.connected(to: p)
         }
     }

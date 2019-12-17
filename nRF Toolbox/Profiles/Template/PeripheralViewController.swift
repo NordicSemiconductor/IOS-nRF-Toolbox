@@ -28,7 +28,7 @@ class PeripheralViewController: UIViewController, StatusDelegate {
 
     var navigationTitle: String { "" }
     var peripheralDescription: PeripheralDescription { PeripheralDescription(uuid: CBUUID.Profile.bloodGlucoseMonitor, services: [.battery]) }
-    private (set) var activePeripheral: CBPeripheral?
+    var activePeripheral: CBPeripheral?
     
     private var savedView: UIView!
 
@@ -64,13 +64,7 @@ class PeripheralViewController: UIViewController, StatusDelegate {
             activePeripheral = nil
 
             let bSettings: InfoActionView.ButtonSettings = ("Connect", { [unowned self] in
-                let connectionController = ConnectionViewController(style: .grouped)
-                connectionController.delegate = self
-
-                let nc = UINavigationController.nordicBranded(rootViewController: connectionController)
-                nc.modalPresentationStyle = .formSheet
-
-                self.present(nc, animated: true, completion: nil)
+                self.openConnectorViewController()
             })
 
             let notContent = InfoActionView.instanceWithParams(message: "Device is not connected", buttonSettings: bSettings)
@@ -83,6 +77,17 @@ class PeripheralViewController: UIViewController, StatusDelegate {
             activePeripheral?.discoverServices(peripheralDescription.services.map { $0.uuid } )
             view = savedView
         }
+    }
+    
+    @objc func openConnectorViewController() {
+        let scanner = PeripheralScanner(services: self.peripheralDescription.uuid.map {[$0]})
+        let connectionController = ConnectionViewController(scanner: scanner)
+        connectionController.delegate = self
+
+        let nc = UINavigationController.nordicBranded(rootViewController: connectionController)
+        nc.modalPresentationStyle = .formSheet
+
+        self.present(nc, animated: true, completion: nil)
     }
 
     func didDiscover(service: CBService, for peripheral: CBPeripheral) {
@@ -115,7 +120,7 @@ class PeripheralViewController: UIViewController, StatusDelegate {
 
 extension PeripheralViewController: ConnectionViewControllerDelegate {
     func connected(to peripheral: Peripheral) {
-        self.statusDidChanged(.connected(peripheral.peripheral))
+        self.peripheralManager.connect(peripheral: peripheral)
     }
 }
 

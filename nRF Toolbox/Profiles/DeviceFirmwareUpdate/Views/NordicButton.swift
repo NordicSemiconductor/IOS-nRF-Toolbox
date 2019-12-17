@@ -62,8 +62,6 @@ class NordicButton: UIButton {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.style = .default
-        
-        
     }
     
     private func setupBrandView() {
@@ -72,6 +70,12 @@ class NordicButton: UIButton {
         borderColor = style.tintColor
         setTitleColor(style.tintColor, for: .normal)
         backgroundColor = style.bgColor
+    }
+    
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        cornerRadius = min(frame.width, frame.height) / 2
+        layer.masksToBounds = true
     }
     
     func apply(configurator: NordicButtonConfigurator) {

@@ -16,7 +16,7 @@
 		01AD26EC23953E4800F56210 /* FileSizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26EB23953E4800F56210 /* FileSizeView.swift */; };
 		01AD26F023955A9F00F56210 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26EF23955A9F00F56210 /* ProgressView.swift */; };
 		01AD26F423965A9400F56210 /* FirmwareProgressImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26F323965A9400F56210 /* FirmwareProgressImage.swift */; };
-		01B56C1623A11FDA00140A1C /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B56C1523A11FB600140A1C /* ConnectionManager.swift */; };
+		01B56C1623A11FDA00140A1C /* PeripheralScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B56C1523A11FB600140A1C /* PeripheralScanner.swift */; };
 		01B6D3D3234C7538000942C4 /* HeartRateMonitorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3D2234C7538000942C4 /* HeartRateMonitorTableViewController.swift */; };
 		01B6D3D8234CB533000942C4 /* HeartRateMeasurementCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3D7234CB533000942C4 /* HeartRateMeasurementCharacteristic.swift */; };
 		01B6D3DA234CB6B3000942C4 /* HeartRateSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3D9234CB6B3000942C4 /* HeartRateSection.swift */; };
@@ -225,7 +225,7 @@
 		01AD26EB23953E4800F56210 /* FileSizeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSizeView.swift; sourceTree = "<group>"; };
 		01AD26EF23955A9F00F56210 /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		01AD26F323965A9400F56210 /* FirmwareProgressImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirmwareProgressImage.swift; sourceTree = "<group>"; };
-		01B56C1523A11FB600140A1C /* ConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
+		01B56C1523A11FB600140A1C /* PeripheralScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralScanner.swift; sourceTree = "<group>"; };
 		01B6D3D2234C7538000942C4 /* HeartRateMonitorTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateMonitorTableViewController.swift; sourceTree = "<group>"; };
 		01B6D3D7234CB533000942C4 /* HeartRateMeasurementCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateMeasurementCharacteristic.swift; sourceTree = "<group>"; };
 		01B6D3D9234CB6B3000942C4 /* HeartRateSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateSection.swift; sourceTree = "<group>"; };
@@ -504,7 +504,7 @@
 		01B56C1423A1181C00140A1C /* Connection */ = {
 			isa = PBXGroup;
 			children = (
-				01B56C1523A11FB600140A1C /* ConnectionManager.swift */,
+				01B56C1523A11FB600140A1C /* PeripheralScanner.swift */,
 				01AD26E62395084000F56210 /* ConnectionViewController.swift */,
 			);
 			path = Connection;
@@ -1566,7 +1566,7 @@
 				20C7FE53230E811B00B06FD8 /* ServiceProvider.swift in Sources */,
 				20C7FE5E230EC37000B06FD8 /* ServiceTableViewCell.swift in Sources */,
 				01B6D3E2234CCC9F000942C4 /* HeartRateChartSection.swift in Sources */,
-				01B56C1623A11FDA00140A1C /* ConnectionManager.swift in Sources */,
+				01B56C1623A11FDA00140A1C /* PeripheralScanner.swift in Sources */,
 				3001EBBB1D1BE306008C5C37 /* CGMReading.swift in Sources */,
 				3001EBB11D1BE1F3008C5C37 /* GlucoseReading.swift in Sources */,
 				3000B2151CE32A9200F64CEE /* UARTViewController.swift in Sources */,

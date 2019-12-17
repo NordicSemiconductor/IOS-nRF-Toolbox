@@ -10,6 +10,14 @@ import UIKit
 import iOSDFULibrary
 
 class LogerTextView: UITextView, LoggerDelegate {
+    func scrollToBottom() {
+        if text.count > 0 {
+            let location = text.count - 1
+            let bottom = NSMakeRange(location, 1)
+            scrollRangeToVisible(bottom)
+        }
+    }
+    
     func logWith(_ level: LogLevel, message: String) {
         let color: UIColor = {
             switch level {
@@ -32,7 +40,6 @@ class LogerTextView: UITextView, LoggerDelegate {
         let attributedText = NSMutableAttributedString(attributedString: self.attributedText)
         attributedText.append(newText)
         self.attributedText = attributedText
-        
-        self.contentOffset = CGPoint(x: 0, y: max(0, (contentSize.height - frame.height)))
+        scrollToBottom()
     }
 }

@@ -1,5 +1,5 @@
 //
-//  ConnectionManager.swift
+//  PeripheralScanner.swift
 //  Scanner
 //
 //  Created by Nick Kibysh on 01/12/2019.
@@ -9,8 +9,8 @@
 import CoreBluetooth
 import os.log
 
-protocol ConnectionManagerDelegate: class {
-    func statusChanges(_ status: ConnectionManager.Status)
+protocol PeripheralScannerDelegate: class {
+    func statusChanges(_ status: PeripheralScanner.Status)
     func newPeripherals(_ peripherals: [Peripheral], willBeAddedTo existing: [Peripheral])
     func peripherals(_ peripherals: [Peripheral], addedTo old: [Peripheral])
 }
@@ -27,7 +27,7 @@ public struct Peripheral: Hashable, Equatable {
     }
 }
 
-open class ConnectionManager: NSObject {
+open class PeripheralScanner: NSObject {
     public enum Status {
         case uninitialized, ready, notReady(CBManagerState), scanning, connecting(Peripheral), connected(Peripheral), failedToConnect(Peripheral, Error?)
         
@@ -44,11 +44,13 @@ open class ConnectionManager: NSObject {
         }
     }
     
+    let scanServices: [CBUUID]?
+    
     private (set) var status: Status = .uninitialized {
         didSet {
             DispatchQueue.main.async { [weak self] in
                 guard let `self` = self else { return }
-                self.delegate?.statusChanges(self.status)
+                self.scannerDelegate?.statusChanges(self.status)
             }
         }
     }
@@ -66,9 +68,9 @@ open class ConnectionManager: NSObject {
             DispatchQueue.main.sync { [weak self] in
                 guard let `self` = self else { return }
                 
-                self.delegate?.newPeripherals(p, willBeAddedTo: oldPeripherals)
+                self.scannerDelegate?.newPeripherals(p, willBeAddedTo: oldPeripherals)
                 self.peripherals += p
-                self.delegate?.peripherals(p, addedTo: oldPeripherals)
+                self.scannerDelegate?.peripherals(p, addedTo: oldPeripherals)
             }
             
             self.tmpPeripherals.removeAll()
@@ -76,22 +78,23 @@ open class ConnectionManager: NSObject {
         return t
     }()
     
-    weak var delegate: ConnectionManagerDelegate? {
+    weak var scannerDelegate: PeripheralScannerDelegate? {
         didSet {
-            delegate?.statusChanges(status)
+            scannerDelegate?.statusChanges(status)
         }
     }
     
     private var tmpPeripherals = Set<Peripheral>()
     private (set) var peripherals: [Peripheral] = []
     
-    public override init() {
+    init(services: [CBUUID]?) {
+        self.scanServices = services
         super.init()
-        centralManager = CBCentralManager(delegate: self, queue: bgQueue)
+        self.centralManager = CBCentralManager(delegate: self, queue: bgQueue)
     }
     
-    open func startScanning(services: [CBUUID]?) {
-        centralManager.scanForPeripherals(withServices: services, options:
+    open func startScanning() {
+        centralManager.scanForPeripherals(withServices: scanServices, options:
             [CBCentralManagerScanOptionAllowDuplicatesKey:true])
         dispatchSource.schedule(deadline: .now() + .seconds(1), repeating: 1)
         dispatchSource.activate()
@@ -100,22 +103,25 @@ open class ConnectionManager: NSObject {
     
     open func refresh() {
         peripherals.removeAll()
-        
+    }
+    
+    open func stopScanning() {
+        self.centralManager.stopScan()
+        self.status = .ready
     }
     
     open func connect(to peripheral: Peripheral) {
+        stopScanning()
         self.status = .connecting(peripheral)
-        self.centralManager.stopScan()
-        self.centralManager.connect(peripheral.peripheral)
     }
 }
 
-extension ConnectionManager: CBCentralManagerDelegate {
+extension PeripheralScanner: CBCentralManagerDelegate {
     public func centralManagerDidUpdateState(_ central: CBCentralManager) {
         switch central.state {
         case .poweredOn, .resetting:
             self.status = .ready
-            startScanning(services: nil)
+            startScanning()
         case .poweredOff, .unauthorized, .unknown, .unsupported:
             self.status = .notReady(central.state)
         @unknown default:

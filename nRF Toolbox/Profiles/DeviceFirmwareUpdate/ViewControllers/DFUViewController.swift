@@ -13,6 +13,7 @@ class DFUViewController: PeripheralViewController {
     @IBOutlet private var textView: LogerTextView!
     
     private lazy var disconnectBtn = UIBarButtonItem(title: "Disconnect", style: .done, target: self, action: #selector(disconnect))
+    private lazy var connectBtn = UIBarButtonItem(title: "Connect", style: .done, target: self, action: #selector(openConnectorViewController))
     
     var firmware: DFUFirmware?
     
@@ -40,16 +41,22 @@ class DFUViewController: PeripheralViewController {
     }
 
     override var peripheralDescription: PeripheralDescription {
-        PeripheralDescription(uuid: nil, services: [.battery])
+        PeripheralDescription(uuid: CBUUID(string: "180A"), services: [.battery])
     }
 
     override func statusDidChanged(_ status: PeripheralStatus) {
-        super.statusDidChanged(status)
-        
-        if case .connected = status {
-            disconnectBtn.isEnabled = true
-        } else {
-            disconnectBtn.isEnabled = false
+        switch status {
+        case .disconnected:
+            navigationItem.rightBarButtonItem = connectBtn
+            if case .updating = fileView!.state {
+                navigationItem.rightBarButtonItem = nil
+            }
+        case .connected(let p):
+            dismiss(animated: true, completion: nil)
+            self.activePeripheral = p
+            navigationItem.rightBarButtonItem = disconnectBtn
+        default:
+            navigationItem.rightBarButtonItem = nil
         }
     }
     
@@ -82,48 +89,10 @@ extension DFUViewController: DFUFileViewActionDelegate {
     func update(_ fileView: DFUFileView) {
         guard let firmware = self.firmware else { return }
         
-        var types: [DFUFirmwareType] = []
-        
-        let applicationPresent = firmware.size.application > 1
-        let bootloaderSoftdevicePresent = (firmware.size.bootloader + firmware.size.softdevice) > 1
-        
-        if applicationPresent {
-            types.append(.application)
-        }
-        
-        if bootloaderSoftdevicePresent {
-            types.append(.softdeviceBootloader)
-        }
-        
-        if applicationPresent && bootloaderSoftdevicePresent {
-            types.append(.softdeviceBootloaderApplication)
-        }
-        
-        guard types.count > 1 else {
-            update(with: types[0], firmware: firmware)
+        guard case .some = activePeripheral else {
+            openConnectorViewController()
             return
         }
-        
-        let actions = types.map { type in
-            UIAlertAction(title: type.desccription, style: .default) { (_) in
-                self.update(with: type, firmware: firmware)
-            }
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        let alertController = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
-        alertController.popoverPresentationController?.sourceView = fileView
-        
-        actions.forEach(alertController.addAction(_:))
-        alertController.addAction(cancelAction)
-        
-        present(alertController, animated: true)
-    }
-    
-    private func update(with type: DFUFirmwareType, firmware: DFUFirmware) {
-        
-        // TODO: @philips77 can we select firmware part just before update?
         
         let initiator = DFUServiceInitiator()
         

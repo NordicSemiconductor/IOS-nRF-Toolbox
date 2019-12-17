@@ -45,11 +45,21 @@ class PeripheralManager: NSObject {
     
     var delegate: StatusDelegate?
     var peripheralListDelegate: PeripheralListDelegate?
+    var connectingPeripheral: CBPeripheral?
     
     init(peripheral: PeripheralDescription, manager: CBCentralManager = CBCentralManager()) {
         self.manager = manager
         super.init()
         self.manager.delegate = self
+    }
+    
+    func connect(peripheral: Peripheral) {
+        let uuid = peripheral.peripheral.identifier
+        guard let p = manager.retrievePeripherals(withIdentifiers: [uuid]).first else {
+            return
+        }
+        connectingPeripheral = p 
+        manager.connect(p, options: nil)
     }
 }
 

@@ -128,8 +128,6 @@ class DFUFileView: UIView {
                 
                 self.fileSizeView.update(with: firmware)
                 self.deviceScheme.setParts(with: firmware, reversed: true)
-            case .updating(let firmwareType):
-                break
             default:
                 break
             }
