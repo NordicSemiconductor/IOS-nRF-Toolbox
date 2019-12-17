@@ -41,7 +41,7 @@ class DFUViewController: PeripheralViewController {
     }
 
     override var peripheralDescription: PeripheralDescription {
-        PeripheralDescription(uuid: CBUUID(string: "180A"), services: [.battery])
+        PeripheralDescription(uuid: nil, services: [.battery])
     }
 
     override func statusDidChanged(_ status: PeripheralStatus) {
