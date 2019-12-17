@@ -221,12 +221,20 @@ extension DFUFileView: DFUProgressDelegate {
 }
 
 extension DFUFirmware: NSItemProviderReading {
+    
+    enum Error: Swift.Error {
+        case fileNotSupported
+    }
+    
     public static var readableTypeIdentifiersForItemProvider: [String] {
         ["com.pkware.zip-archive"]
     }
     
     public static func object(withItemProviderData data: Data, typeIdentifier: String) throws -> Self {
-        return DFUFirmware(zipFile: data) as! Self
+        guard let firmware = DFUFirmware(zipFile: data) as? Self else {
+            throw Error.fileNotSupported
+        }
+        return firmware
     }
     
     var totalSize: Int64 {
