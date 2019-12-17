@@ -12,7 +12,6 @@ class DFUViewController: PeripheralViewController {
     @IBOutlet private var fileView: DFUFileView!
     @IBOutlet private var textView: LogerTextView!
     
-    private lazy var disconnectBtn = UIBarButtonItem(title: "Disconnect", style: .done, target: self, action: #selector(disconnect))
     private lazy var connectBtn = UIBarButtonItem(title: "Connect", style: .done, target: self, action: #selector(openConnectorViewController))
     
     var firmware: DFUFirmware?
@@ -31,8 +30,7 @@ class DFUViewController: PeripheralViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.rightBarButtonItem = disconnectBtn
-        disconnectBtn.isEnabled = false
+        navigationItem.rightBarButtonItem = connectBtn
         
         navigationItem.title = "DFU"
         fileView.delegate = self
@@ -47,14 +45,12 @@ class DFUViewController: PeripheralViewController {
     override func statusDidChanged(_ status: PeripheralStatus) {
         switch status {
         case .disconnected:
-            navigationItem.rightBarButtonItem = connectBtn
             if case .updating = fileView!.state {
                 navigationItem.rightBarButtonItem = nil
             }
         case .connected(let p):
             dismiss(animated: true, completion: nil)
             self.activePeripheral = p
-            navigationItem.rightBarButtonItem = disconnectBtn
         default:
             navigationItem.rightBarButtonItem = nil
         }
