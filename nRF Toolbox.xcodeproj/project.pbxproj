@@ -179,6 +179,10 @@
 		33976DC91B99AAA3F2E12DF7 /* FindMeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339763C07DFE7826BAF28153 /* FindMeSection.swift */; };
 		33976F79FE2EA20D94F68B69 /* ContinuousGlucoseChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976B66D7A581F01631AE52 /* ContinuousGlucoseChartData.swift */; };
 		33976FB5E54F1D8DDF4733E0 /* DistanceChartSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976ECA8BDFCDF4188746E3 /* DistanceChartSection.swift */; };
+		4392FEFB23AA608700E6ACEA /* LoggerTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4392FEFA23AA608700E6ACEA /* LoggerTableView.swift */; };
+		4392FEFF23AA610300E6ACEA /* LogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4392FEFD23AA610300E6ACEA /* LogTableViewCell.swift */; };
+		4392FF0023AA610300E6ACEA /* LogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4392FEFE23AA610300E6ACEA /* LogTableViewCell.xib */; };
+		4392FF0223AA6CBE00E6ACEA /* DateFormatter+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4392FF0123AA6CBE00E6ACEA /* DateFormatter+Ext.swift */; };
 		5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAA1885642F007CC40D /* icon-dfu-64.png */; };
 		5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAB1885642F007CC40D /* icon-dfu-320.png */; };
 		5211EFB018856430007CC40D /* icon-hex.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAC1885642F007CC40D /* icon-hex.png */; };
@@ -391,6 +395,10 @@
 		33976ECA8BDFCDF4188746E3 /* DistanceChartSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DistanceChartSection.swift; sourceTree = "<group>"; };
 		33976F60C5BCE60DE33DFA31 /* ContinuousGlucoseMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinuousGlucoseMonitor.swift; sourceTree = "<group>"; };
 		434A9CF823A2883B00792E81 /* PRAGMATA MEDIUM_0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PRAGMATA MEDIUM_0.ttf"; sourceTree = "<group>"; };
+		4392FEFA23AA608700E6ACEA /* LoggerTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerTableView.swift; sourceTree = "<group>"; };
+		4392FEFD23AA610300E6ACEA /* LogTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTableViewCell.swift; sourceTree = "<group>"; };
+		4392FEFE23AA610300E6ACEA /* LogTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LogTableViewCell.xib; sourceTree = "<group>"; };
+		4392FF0123AA6CBE00E6ACEA /* DateFormatter+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Ext.swift"; sourceTree = "<group>"; };
 		4394EAC53F8A0FF797E7CA7A /* Pods-nRF Toolbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.release.xcconfig"; path = "Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.release.xcconfig"; sourceTree = "<group>"; };
 		51E9CFCBE6C75A89E5780FE4 /* Pods-nRF Toolbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.debug.xcconfig"; path = "Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.debug.xcconfig"; sourceTree = "<group>"; };
 		5211EFAA1885642F007CC40D /* icon-dfu-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-64.png"; sourceTree = "<group>"; };
@@ -454,6 +462,7 @@
 		0140FCD4237C2FFA00411963 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4392FEF923AA603700E6ACEA /* LogerView */,
 				01AD26F523966CB900F56210 /* FileScheme */,
 				01F365602397BAC200A4543A /* FileView */,
 				01AD26EB23953E4800F56210 /* FileSizeView.swift */,
@@ -825,6 +834,7 @@
 				20B797992338B8C0001328E1 /* MeasurementFormatter+Ext.swift */,
 				52D9BC9D1DD0CB760030E824 /* Data+Ext.swift */,
 				33976AF182818B9C448C61CE /* Bool+Ext.swift */,
+				4392FF0123AA6CBE00E6ACEA /* DateFormatter+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1064,6 +1074,24 @@
 				33976989CA3150561E8CE2F8 /* Peripheral+Proximity.swift */,
 			);
 			path = Proximity;
+			sourceTree = "<group>";
+		};
+		4392FEF923AA603700E6ACEA /* LogerView */ = {
+			isa = PBXGroup;
+			children = (
+				4392FEFC23AA60EB00E6ACEA /* Cell */,
+				4392FEFA23AA608700E6ACEA /* LoggerTableView.swift */,
+			);
+			path = LogerView;
+			sourceTree = "<group>";
+		};
+		4392FEFC23AA60EB00E6ACEA /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				4392FEFD23AA610300E6ACEA /* LogTableViewCell.swift */,
+				4392FEFE23AA610300E6ACEA /* LogTableViewCell.xib */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		5214D0CF18881D0200460637 /* Utilities */ = {
@@ -1411,6 +1439,7 @@
 				20E07B662306975700FCB205 /* GT-Eesti-Display-Regular-Italic.ttf in Resources */,
 				5217F3FE1859EE0000F2D5BB /* Images.xcassets in Resources */,
 				20E07B5E2306975700FCB205 /* GT-Eesti-Display-Medium-Italic.ttf in Resources */,
+				4392FF0023AA610300E6ACEA /* LogTableViewCell.xib in Resources */,
 				20E07B5F2306975700FCB205 /* GT-Eesti-Display-Bold-Italic.ttf in Resources */,
 				7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */,
 				01E4BACC23698DD300EE67A0 /* FindMeTableViewCell.xib in Resources */,
@@ -1507,6 +1536,7 @@
 				20E07B422306868F00FCB205 /* BLEService.swift in Sources */,
 				3001EBC71D1C1BAA008C5C37 /* CGMViewController.swift in Sources */,
 				01AD26F023955A9F00F56210 /* ProgressView.swift in Sources */,
+				4392FF0223AA6CBE00E6ACEA /* DateFormatter+Ext.swift in Sources */,
 				304D58FD1CE34FC600148271 /* LogViewController.swift in Sources */,
 				201364FD2344E2E300C5AF1F /* CuffPreasureCharacteristic.swift in Sources */,
 				20D08DFD232929A400569587 /* BGMTableViewCell.swift in Sources */,
@@ -1540,6 +1570,7 @@
 				3001EBB71D1BE1FB008C5C37 /* BGMDetailsViewController.swift in Sources */,
 				20C7FE16230ADD1E00B06FD8 /* StoryboardInstantiable.swift in Sources */,
 				20B797912334FD77001328E1 /* Peripheral+BMG.swift in Sources */,
+				4392FEFB23AA608700E6ACEA /* LoggerTableView.swift in Sources */,
 				20D08E002329356700569587 /* ActionSection.swift in Sources */,
 				20C7FE10230A9FAB00B06FD8 /* UIFont+Ext.swift in Sources */,
 				201364F72344A93D00C5AF1F /* BloodPressureSection.swift in Sources */,
@@ -1571,6 +1602,7 @@
 				3001EBB11D1BE1F3008C5C37 /* GlucoseReading.swift in Sources */,
 				3000B2151CE32A9200F64CEE /* UARTViewController.swift in Sources */,
 				20850177233B690500C792B4 /* RunningCharacteristic.swift in Sources */,
+				4392FEFF23AA610300E6ACEA /* LogTableViewCell.swift in Sources */,
 				309F086C1E6EA0F800B7546A /* HKScannerViewController.swift in Sources */,
 				20D08E04232A4A3600569587 /* SelectionsTableViewController.swift in Sources */,
 				20C7FE5B230EAD0000B06FD8 /* UINavigationController+Ext.swift in Sources */,

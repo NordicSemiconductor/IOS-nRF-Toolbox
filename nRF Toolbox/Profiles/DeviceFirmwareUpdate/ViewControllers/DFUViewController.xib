@@ -7,16 +7,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="PRAGMATA MEDIUM_0.ttf">
-            <string>Pragmata-Medium</string>
-        </array>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DFUViewController" customModule="nRF_Toolbox" customModuleProvider="target">
             <connections>
                 <outlet property="fileView" destination="PkQ-X7-VDK" id="ZqV-r2-fRn"/>
-                <outlet property="textView" destination="OVz-af-mx8" id="dvM-1p-Jln"/>
+                <outlet property="logPresenter" destination="sIj-UG-fsD" id="1AC-Zy-13F"/>
                 <outlet property="view" destination="iN0-l3-epB" id="9q0-1M-7qz"/>
             </connections>
         </placeholder>
@@ -35,13 +30,10 @@
                                 <constraint firstAttribute="height" constant="300" id="2I8-gy-bKg"/>
                             </constraints>
                         </view>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="OVz-af-mx8" customClass="LogerTextView" customModule="nRF_Toolbox" customModuleProvider="target">
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="sIj-UG-fsD" customClass="LoggerTableView" customModule="nRF_Toolbox" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="316" width="414" height="502"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                            <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                            <fontDescription key="fontDescription" name="Pragmata-Medium" family="Pragmata" pointSize="18"/>
-                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                        </textView>
+                        </tableView>
                     </subviews>
                 </stackView>
             </subviews>

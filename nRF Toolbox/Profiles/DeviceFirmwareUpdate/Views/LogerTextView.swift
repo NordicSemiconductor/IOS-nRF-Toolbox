@@ -9,6 +9,24 @@
 import UIKit
 import iOSDFULibrary
 
+extension LogLevel {
+    var color: UIColor {
+        switch self {
+        case .warning: return .nordicFall
+        case .error: return .nordicRed
+        case .application: return .nordicGreen
+        case .info: return .nordicBlue
+        case .verbose: return .nordicLake
+        default:
+            if #available(iOS 13, *) {
+                return .label
+            } else {
+                return .black
+            }
+        }
+    }
+}
+
 class LogerTextView: UITextView, LoggerDelegate {
     func scrollToBottom() {
         if text.count > 0 {
@@ -19,23 +37,7 @@ class LogerTextView: UITextView, LoggerDelegate {
     }
     
     func logWith(_ level: LogLevel, message: String) {
-        let color: UIColor = {
-            switch level {
-            case .warning: return .nordicFall
-            case .error: return .nordicRed
-            case .application: return .nordicGreen
-            case .info: return .nordicBlue
-            case .verbose: return .nordicLake
-            default:
-                if #available(iOS 13, *) {
-                    return .label
-                } else {
-                    return .black
-                }
-            }
-        }()
-
-        let attributes: [NSAttributedString.Key : Any] = [.foregroundColor : color]
+        let attributes: [NSAttributedString.Key : Any] = [.foregroundColor : level.color]
         let newText = NSAttributedString(string: "\(message)\n", attributes: attributes)
         let attributedText = NSMutableAttributedString(attributedString: self.attributedText)
         attributedText.append(newText)

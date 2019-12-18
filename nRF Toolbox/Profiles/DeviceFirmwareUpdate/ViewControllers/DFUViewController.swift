@@ -10,7 +10,7 @@ import iOSDFULibrary
 class DFUViewController: PeripheralViewController {
     
     @IBOutlet private var fileView: DFUFileView!
-    @IBOutlet private var textView: LogerTextView!
+    @IBOutlet private var logPresenter: LogPresenter!
     
     private lazy var connectBtn = UIBarButtonItem(title: "Connect", style: .done, target: self, action: #selector(openConnectorViewController))
     
@@ -39,7 +39,7 @@ class DFUViewController: PeripheralViewController {
     }
 
     override var peripheralDescription: PeripheralDescription {
-        PeripheralDescription(uuid: nil, services: [.battery])
+        PeripheralDescription(uuid: CBUUID(string: "180A"), services: [])
     }
 
     override func statusDidChanged(_ status: PeripheralStatus) {
@@ -57,7 +57,7 @@ class DFUViewController: PeripheralViewController {
     }
     
     private func createFirmware(_ url: URL) {
-        textView.attributedText = NSAttributedString()
+        logPresenter.reset()
         self.firmware = DFUFirmware(urlToZipFile: url)
         guard let firmware = self.firmware else {
             self.fileView.state = .unsupportedFile
@@ -92,7 +92,7 @@ extension DFUViewController: DFUFileViewActionDelegate {
         
         let initiator = DFUServiceInitiator()
         
-        initiator.logger = self.textView
+        initiator.logger = logPresenter
         initiator.delegate = self
         initiator.progressDelegate = self.fileView
         initiator.enableUnsafeExperimentalButtonlessServiceInSecureDfu = true
@@ -130,15 +130,14 @@ extension DFUViewController: DFUFileViewActionDelegate {
     }
     
     func share(_ fileView: DFUFileView) {
-        guard let attributedText = self.textView.attributedText else { return }
-        let activity = UIActivityViewController(activityItems: [attributedText], applicationActivities: [])
+        let activity = UIActivityViewController(activityItems: [logPresenter.attributedLog], applicationActivities: [])
         activity.popoverPresentationController?.sourceView = fileView
         self.present(activity, animated: true, completion: nil)
     }
     
     func done(_ fileView: DFUFileView) {
         fileView.state = .readyToOpen
-        textView.attributedText = NSAttributedString()
+        logPresenter.reset()
     }
     
 }
@@ -147,14 +146,14 @@ extension DFUViewController: DFUFileHandlerDelegate {
     func fileView(_ fileView: DFUFileView, loadedFirmware firmware: DFUFirmware) {
         self.firmware = firmware
         DispatchQueue.main.async {
-            self.textView.attributedText = NSAttributedString()
+            self.logPresenter.reset()
             fileView.state = .readyToUpdate(firmware)
         }
     }
     
     func fileView(_ fileView: DFUFileView, didntOpenFileWithError error: Error) {
         fileView.state = .error(error)
-        self.textView.logWith(.error, message: error.localizedDescription)
+        logPresenter.logWith(.error, message: error.localizedDescription)
     }
 }
 
