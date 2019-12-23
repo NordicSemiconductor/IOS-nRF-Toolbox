@@ -21,7 +21,7 @@ class NordicButton: UIButton {
         
         static let `default` = Style(rawValue: 1)
         static let mainAction = Style(rawValue: 2)
-        static let distructive = Style(rawValue: 3)
+        static let destructive = Style(rawValue: 3)
         
         var tintColor: UIColor {
             return .nordicDarkGray
@@ -31,7 +31,7 @@ class NordicButton: UIButton {
             switch self {
             case .default: return .clear
             case .mainAction: return .nordicBlue
-            case .distructive: return .nordicRedDark
+            case .destructive: return .nordicRedDark
             default: return .clear
             }
         }

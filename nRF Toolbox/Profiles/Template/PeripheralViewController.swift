@@ -55,7 +55,6 @@ class PeripheralViewController: UIViewController, StatusDelegate {
                 let url = URL(string: "App-Prefs:root=Bluetooth") //for bluetooth setting
                 let app = UIApplication.shared
                 app.open(url!, options: [:], completionHandler: nil)
-
             })
 
             let notContent = InfoActionView.instanceWithParams(message: "Bluetooth is powered off", buttonSettings: bSettings)

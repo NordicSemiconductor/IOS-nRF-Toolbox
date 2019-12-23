@@ -110,7 +110,6 @@ extension DFUViewController: DFUFileViewActionDelegate {
     }
     
     func stop(_ fileView: DFUFileView) {
-        
         dfuController?.pause()
         
         let stopAction = UIAlertAction(title: "Stop", style: .destructive) { (_) in

@@ -69,7 +69,7 @@ private extension NordicButtonConfigurator {
     static let update = NordicButtonConfigurator(normalTitle: "Update", style: .mainAction)
     static let pause = NordicButtonConfigurator(normalTitle: "Pause")
     static let resume = NordicButtonConfigurator(normalTitle: "Resume")
-    static let stop = NordicButtonConfigurator(normalTitle: "Stop", style: .distructive)
+    static let stop = NordicButtonConfigurator(normalTitle: "Stop", style: .destructive)
     static let done = NordicButtonConfigurator(normalTitle: "Done", style: .mainAction)
     static let share = NordicButtonConfigurator(normalTitle: "Share")
 }

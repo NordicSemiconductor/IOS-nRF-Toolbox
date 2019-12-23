@@ -34,7 +34,6 @@
 		01F3655F2397A9C700A4543A /* NordicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F3655E2397A9C700A4543A /* NordicButton.swift */; };
 		01F365622397BADC00A4543A /* DFUFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F365612397BADC00A4543A /* DFUFileView.swift */; };
 		01F365642397BAE500A4543A /* DFUFileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01F365632397BAE500A4543A /* DFUFileView.xib */; };
-		01F365692399363200A4543A /* LogerTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F365682399363200A4543A /* LogerTextView.swift */; };
 		01FEB0FD23969BD1000767C1 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FEB0FC23969BD1000767C1 /* UIView+Ext.swift */; };
 		0E645A0F1CBF957800D36AD0 /* firmwares in Resources */ = {isa = PBXBuildFile; fileRef = 7E6ED10A196ED482008010B6 /* firmwares */; };
 		20027B08233E116600A0B5ED /* StrideSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20027B07233E116600A0B5ED /* StrideSection.swift */; };
@@ -179,6 +178,7 @@
 		33976DC91B99AAA3F2E12DF7 /* FindMeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339763C07DFE7826BAF28153 /* FindMeSection.swift */; };
 		33976F79FE2EA20D94F68B69 /* ContinuousGlucoseChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976B66D7A581F01631AE52 /* ContinuousGlucoseChartData.swift */; };
 		33976FB5E54F1D8DDF4733E0 /* DistanceChartSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976ECA8BDFCDF4188746E3 /* DistanceChartSection.swift */; };
+		43445EEF23B0AD8D008A9FD9 /* LoggLevel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43445EEE23B0AD8D008A9FD9 /* LoggLevel+Ext.swift */; };
 		4392FEFB23AA608700E6ACEA /* LoggerTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4392FEFA23AA608700E6ACEA /* LoggerTableView.swift */; };
 		4392FEFF23AA610300E6ACEA /* LogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4392FEFD23AA610300E6ACEA /* LogTableViewCell.swift */; };
 		4392FF0023AA610300E6ACEA /* LogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4392FEFE23AA610300E6ACEA /* LogTableViewCell.xib */; };
@@ -247,7 +247,6 @@
 		01F3655E2397A9C700A4543A /* NordicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicButton.swift; sourceTree = "<group>"; };
 		01F365612397BADC00A4543A /* DFUFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFileView.swift; sourceTree = "<group>"; };
 		01F365632397BAE500A4543A /* DFUFileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DFUFileView.xib; sourceTree = "<group>"; };
-		01F365682399363200A4543A /* LogerTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogerTextView.swift; sourceTree = "<group>"; };
 		01FEB0FC23969BD1000767C1 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		20027B07233E116600A0B5ED /* StrideSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrideSection.swift; sourceTree = "<group>"; };
 		20029FFF231FAFD100C43E06 /* PeripheralManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralManager.swift; sourceTree = "<group>"; };
@@ -394,6 +393,7 @@
 		33976B66D7A581F01631AE52 /* ContinuousGlucoseChartData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinuousGlucoseChartData.swift; sourceTree = "<group>"; };
 		33976ECA8BDFCDF4188746E3 /* DistanceChartSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DistanceChartSection.swift; sourceTree = "<group>"; };
 		33976F60C5BCE60DE33DFA31 /* ContinuousGlucoseMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinuousGlucoseMonitor.swift; sourceTree = "<group>"; };
+		43445EEE23B0AD8D008A9FD9 /* LoggLevel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoggLevel+Ext.swift"; sourceTree = "<group>"; };
 		434A9CF823A2883B00792E81 /* PRAGMATA MEDIUM_0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PRAGMATA MEDIUM_0.ttf"; sourceTree = "<group>"; };
 		4392FEFA23AA608700E6ACEA /* LoggerTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerTableView.swift; sourceTree = "<group>"; };
 		4392FEFD23AA610300E6ACEA /* LogTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTableViewCell.swift; sourceTree = "<group>"; };
@@ -467,7 +467,6 @@
 				01F365602397BAC200A4543A /* FileView */,
 				01AD26EB23953E4800F56210 /* FileSizeView.swift */,
 				01F3655E2397A9C700A4543A /* NordicButton.swift */,
-				01F365682399363200A4543A /* LogerTextView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -835,6 +834,7 @@
 				52D9BC9D1DD0CB760030E824 /* Data+Ext.swift */,
 				33976AF182818B9C448C61CE /* Bool+Ext.swift */,
 				4392FF0123AA6CBE00E6ACEA /* DateFormatter+Ext.swift */,
+				43445EEE23B0AD8D008A9FD9 /* LoggLevel+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1563,6 +1563,7 @@
 				306ECD621CE61A3600E48BBD /* AppDelegate.swift in Sources */,
 				2002A000231FAFD100C43E06 /* PeripheralManager.swift in Sources */,
 				20F0C8012327D207003111E7 /* CBUUID+IDs.swift in Sources */,
+				43445EEF23B0AD8D008A9FD9 /* LoggLevel+Ext.swift in Sources */,
 				01E4BACB23698DD300EE67A0 /* FindMeTableViewCell.swift in Sources */,
 				01B6D3D8234CB533000942C4 /* HeartRateMeasurementCharacteristic.swift in Sources */,
 				20C7FDFE2306BEE000B06FD8 /* Array+Ext.swift in Sources */,
@@ -1651,7 +1652,6 @@
 				339764F85119305F6958B516 /* LastDataSection.swift in Sources */,
 				339763D0A0642AF6C7E7AA85 /* StartStopSection.swift in Sources */,
 				3397653E200A1711DC0AA009 /* ContinuousGlucoseMonitorMeasurement.swift in Sources */,
-				01F365692399363200A4543A /* LogerTextView.swift in Sources */,
 				33976843D672C14301E9C917 /* SessionStartTime.swift in Sources */,
 				339762F1FAFD0B4E24D99501 /* GlucoseValueList.swift in Sources */,
 				33976C75E25FBF443EB251CD /* Bool+Ext.swift in Sources */,
