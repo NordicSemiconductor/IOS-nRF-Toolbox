@@ -20,15 +20,10 @@ class FirmwareProgressImage: ProgressImage {
         var parts = [ProgressPart]()
         
         let application = Int(firmware.size.application)
-        let bootloader = Int(firmware.size.bootloader)
-        let softDevice = Int(firmware.size.softdevice)
+        let system = Int(firmware.size.bootloader)
         
-        if bootloader > 1 {
-            parts.append(ProgressPart(parts: bootloader, color: .firmwareBootloader))
-        }
-        
-        if softDevice > 1 {
-            parts.append(ProgressPart(parts: softDevice, color: .firmwareSoftDevice))
+        if system > 1 {
+            parts.append(ProgressPart(parts: system, color: .firmwareBootloader))
         }
         
         if application > 1 {
