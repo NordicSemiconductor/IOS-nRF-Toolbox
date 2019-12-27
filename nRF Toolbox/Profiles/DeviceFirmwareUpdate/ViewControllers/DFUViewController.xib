@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DFUViewController" customModule="nRF_Toolbox" customModuleProvider="target">
+            <connections>
+                <outlet property="fileView" destination="PkQ-X7-VDK" id="ZqV-r2-fRn"/>
+                <outlet property="logPresenter" destination="sIj-UG-fsD" id="1AC-Zy-13F"/>
+                <outlet property="view" destination="iN0-l3-epB" id="9q0-1M-7qz"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="2xI-Kj-9WL">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PkQ-X7-VDK" customClass="DFUFileView" customModule="nRF_Toolbox" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="300"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="300" id="2I8-gy-bKg"/>
+                            </constraints>
+                        </view>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="sIj-UG-fsD" customClass="LoggerTableView" customModule="nRF_Toolbox" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="316" width="414" height="502"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        </tableView>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="2xI-Kj-9WL" secondAttribute="bottom" id="J4C-uY-RmS"/>
+                <constraint firstAttribute="trailing" secondItem="2xI-Kj-9WL" secondAttribute="trailing" id="f9Q-YM-j2V"/>
+                <constraint firstItem="2xI-Kj-9WL" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="knH-ap-EPY"/>
+                <constraint firstItem="2xI-Kj-9WL" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="vNe-aU-wrn"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="139" y="154"/>
+        </view>
+    </objects>
+</document>

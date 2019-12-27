@@ -45,18 +45,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
-    
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
-        let navigationController = self.window?.rootViewController as! UINavigationController
-
-        navigationController.popToRootViewController(animated: true)
-
-        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let dfuViewController = mainStoryboard.instantiateViewController(withIdentifier: "DFUViewController") as! DFUViewController
-        navigationController.pushViewController(dfuViewController, animated: true)
-        dfuViewController.onFileImported(withURL: url)
-        return true
-    }
 
     fileprivate func updateUserDefaults(withDefaults defaults : UserDefaults) {
         let dict = [ "key_diameter" : 2.4,

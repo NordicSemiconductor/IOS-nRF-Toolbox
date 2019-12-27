@@ -19,7 +19,7 @@ private extension Identifier where Value == UNNotification {
 
 class ProximityViewController: PeripheralTableViewController {
 
-    override var peripheralDescription: Peripheral { .proximity }
+    override var peripheralDescription: PeripheralDescription { .proximity }
     override var internalSections: [Section] { [findMeSection, chartSection] }
     override var navigationTitle: String { "Proximity" }
 

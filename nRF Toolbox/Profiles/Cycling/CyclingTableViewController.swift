@@ -19,7 +19,7 @@ class CyclingTableViewController: PeripheralTableViewController {
     }
     
     override var internalSections: [Section] { [cyclingSection] }
-    override var peripheralDescription: Peripheral { .cyclingSpeedCadenceSensor }
+    override var peripheralDescription: PeripheralDescription { .cyclingSpeedCadenceSensor }
     
     override func didUpdateValue(for characteristic: CBCharacteristic) {
         switch characteristic.uuid {

@@ -51,7 +51,7 @@ class GlucoseMonitorViewController: PeripheralTableViewController {
     
     override var internalSections: [Section] { [selectionSection, bgmSection, actionSection] }
     
-    override var peripheralDescription: Peripheral { .bloodGlucoseMonitor }
+    override var peripheralDescription: PeripheralDescription { .bloodGlucoseMonitor }
     
     override func didDiscover(characteristic: CBCharacteristic, for service: CBService, peripheral: CBPeripheral) {
         super.didDiscover(characteristic: characteristic, for: service, peripheral: peripheral)

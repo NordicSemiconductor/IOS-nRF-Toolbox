@@ -9,14 +9,14 @@
 import Foundation
 import CoreBluetooth
 
-extension Peripheral {
-    static let cyclingSpeedCadenceSensor = Peripheral(uuid: CBUUID.Profile.cyclingSpeedCadenceSensor, services: [
+extension PeripheralDescription {
+    static let cyclingSpeedCadenceSensor = PeripheralDescription(uuid: CBUUID.Profile.cyclingSpeedCadenceSensor, services: [
         .battery, .cyclingSpeedCadenceSensor
     ])
 }
 
-private extension Peripheral.Service {
-    static let cyclingSpeedCadenceSensor = Peripheral.Service(uuid: CBUUID.Service.cyclingSpeedCadenceSensor, characteristics: [
-        Peripheral.Service.Characteristic(uuid: CBUUID.Characteristics.CyclingSesnor.measurement, properties: .notify(true)),
+private extension PeripheralDescription.Service {
+    static let cyclingSpeedCadenceSensor = PeripheralDescription.Service(uuid: CBUUID.Service.cyclingSpeedCadenceSensor, characteristics: [
+        PeripheralDescription.Service.Characteristic(uuid: CBUUID.Characteristics.CyclingSesnor.measurement, properties: .notify(true)),
     ])
 }

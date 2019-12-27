@@ -18,7 +18,7 @@ class HealthTermometerTableViewController: PeripheralTableViewController {
     private var temperatureSection = HealthTemperatureSection(id: .temperature)
     private var additionalInfoSection = HealthTemperatureAditionalSection(id: .additionalInfo)
     
-    override var peripheralDescription: Peripheral { .healthTemperature }
+    override var peripheralDescription: PeripheralDescription { .healthTemperature }
     override var internalSections: [Section] { [temperatureSection, additionalInfoSection] }
     override var navigationTitle: String { "Health Thermometer" }
     

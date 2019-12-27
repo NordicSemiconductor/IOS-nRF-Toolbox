@@ -8,13 +8,13 @@
 
 import CoreBluetooth
 
-extension Peripheral {
-    static let bloodPressure = Peripheral(uuid: CBUUID.Profile.bloodPressureMonitor, services: [.battery, .measurement])
+extension PeripheralDescription {
+    static let bloodPressure = PeripheralDescription(uuid: CBUUID.Profile.bloodPressureMonitor, services: [.battery, .measurement])
 }
 
-private extension Peripheral.Service {
-    static let measurement = Peripheral.Service(uuid: CBUUID.Service.bloodPressureMonitor, characteristics: [
-        Peripheral.Service.Characteristic(uuid: CBUUID.Characteristics.BloodPressure.measurement, properties: .notify(true)),
-        Peripheral.Service.Characteristic(uuid: CBUUID.Characteristics.BloodPressure.intermediateCuff, properties: .notify(true))
+private extension PeripheralDescription.Service {
+    static let measurement = PeripheralDescription.Service(uuid: CBUUID.Service.bloodPressureMonitor, characteristics: [
+        PeripheralDescription.Service.Characteristic(uuid: CBUUID.Characteristics.BloodPressure.measurement, properties: .notify(true)),
+        PeripheralDescription.Service.Characteristic(uuid: CBUUID.Characteristics.BloodPressure.intermediateCuff, properties: .notify(true))
     ])
 }

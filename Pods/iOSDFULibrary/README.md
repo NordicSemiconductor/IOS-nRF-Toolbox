@@ -5,7 +5,7 @@
 
 ## Installation
 
-**For Cocoapods(Swift):** ***Using Obj-C?*** [Use these instructions instead](README_OBJC.md)
+**For Cocoapods:**
 
 - Create/Update your **Podfile** with the following contents
 
@@ -48,7 +48,7 @@ if you need to resymbolicate crash logs. you may want to keep those files bundle
 **For Swift Package Manager:**
 
 ```swift
-// swift-tools-version:5.0
+// swift-tools-version:5.1
 import PackageDescription
 
 let package = Package(
@@ -56,7 +56,7 @@ let package = Package(
   dependencies: [
     .package(
       url: "https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library/", 
-      .upToNextMajor(from: "4.5.0")
+      .upToNextMajor(from: "4.6.1")
     )
   ],
   targets: [.target(name: "<Your Target Name>", dependencies: ["NordicDFU"])]
@@ -147,7 +147,7 @@ The library is compatible with nRF51 and nRF52 devices with S-Series Soft Device
 * **SDK 12.0.0** - New Secure DFU has been released. This library is fully backwards compatible so supports both the new and legacy DFU.
 * **SDK 13.0.0** - Buttonless DFU (still experimental) uses different UUIDs. No bond sharing supported. Bootloader will use address +1.
 * **SDK 14.0.0** - Buttonless DFU no longer experimental. New buttonless characteristic added for bonded devices (requires bond, cache cleaning relies on Service Changed indication).
-* **SDK 15.0.0** - Support for higher MTUs will be added (may be postponed).
+* **SDK 15.0.0** - Support for higher MTUs will be added.
 
 This library is fully backwards compatible and supports both the new and legacy DFU. The experimental buttonless DFU service from SDK 12 is supported since version 1.1.0. Due to the fact, that this experimental service from SDK 12 is not safe, you have to call [dfuInitiator.enableUnsafeExperimentalButtonlessServiceInSecureDfu = true](https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library/blob/master/iOSDFULibrary/Classes/Implementation/DFUServiceInitiator.swift#L196) to enable it, this is off by default. Read the method documentation for details. It is recommended to use the Buttonless service from SDK 13 (for non-bonded devices, or 14 for bonded). Both are supported since DFU Library 1.3.0.
 

@@ -14,19 +14,19 @@ extension CBUUID {
     static let txPowerLevelCharacteristic = CBUUID(hex: 0x2A07)
 }
 
-extension Peripheral {
-    static let proximity = Peripheral(uuid: .linkLossService, services: [
+extension PeripheralDescription {
+    static let proximity = PeripheralDescription(uuid: .linkLossService, services: [
         .battery, .immediateAlert, .linkLoss, .txPower
     ])
 }
 
-private extension Peripheral.Service {
-    static let immediateAlert = Peripheral.Service(uuid: .immediateAlertService, characteristics: [.proximityAlertLevel])
-    static let linkLoss = Peripheral.Service(uuid: .linkLossService, characteristics: [.proximityAlertLevel])
-    static let txPower = Peripheral.Service(uuid: .txPowerLevelService, characteristics: [.txPowerLevel])
+private extension PeripheralDescription.Service {
+    static let immediateAlert = PeripheralDescription.Service(uuid: .immediateAlertService, characteristics: [.proximityAlertLevel])
+    static let linkLoss = PeripheralDescription.Service(uuid: .linkLossService, characteristics: [.proximityAlertLevel])
+    static let txPower = PeripheralDescription.Service(uuid: .txPowerLevelService, characteristics: [.txPowerLevel])
 }
 
-private extension Peripheral.Service.Characteristic {
-    static let proximityAlertLevel = Peripheral.Service.Characteristic(uuid: .proximityAlertLevelCharacteristic, properties: nil)
-    static let txPowerLevel = Peripheral.Service.Characteristic(uuid: .txPowerLevelCharacteristic, properties: .read)
+private extension PeripheralDescription.Service.Characteristic {
+    static let proximityAlertLevel = PeripheralDescription.Service.Characteristic(uuid: .proximityAlertLevelCharacteristic, properties: nil)
+    static let txPowerLevel = PeripheralDescription.Service.Characteristic(uuid: .txPowerLevelCharacteristic, properties: .read)
 }

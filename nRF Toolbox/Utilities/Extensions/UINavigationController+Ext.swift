@@ -11,12 +11,12 @@ import UIKit
 extension UINavigationController {
     static func nordicBranded(rootViewController: UIViewController, prefersLargeTitles: Bool = false) -> UINavigationController {
         let nc = UINavigationController(rootViewController: rootViewController)
-        nc.navigationBar.tintColor = .almostWhite
+        nc.navigationBar.tintColor = .nordicAlmostWhite
         nc.navigationBar.barTintColor = .nordicBlue
         
         if #available(iOS 11.0, *) {
             let attributes: [NSAttributedString.Key : Any] = [
-                .foregroundColor : UIColor.almostWhite
+                .foregroundColor : UIColor.nordicAlmostWhite
             ]
             
             nc.navigationBar.titleTextAttributes = attributes

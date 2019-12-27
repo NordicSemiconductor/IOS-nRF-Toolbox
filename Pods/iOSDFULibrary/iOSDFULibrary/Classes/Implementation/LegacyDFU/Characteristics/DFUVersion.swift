@@ -1,23 +1,31 @@
 /*
-* Copyright (c) 2016, Nordic Semiconductor
+* Copyright (c) 2019, Nordic Semiconductor
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+* Redistribution and use in source and binary forms, with or without modification,
+* are permitted provided that the following conditions are met:
 *
-* 1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
 *
-* 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
-* documentation and/or other materials provided with the distribution.
+* 2. Redistributions in binary form must reproduce the above copyright notice, this
+*    list of conditions and the following disclaimer in the documentation and/or
+*    other materials provided with the distribution.
 *
-* 3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this
-* software without specific prior written permission.
+* 3. Neither the name of the copyright holder nor the names of its contributors may
+*    be used to endorse or promote products derived from this software without
+*    specific prior written permission.
 *
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-* LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-* HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-* LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-* ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
-* USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+* IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+* INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+* NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+* PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+* ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+* POSSIBILITY OF SUCH DAMAGE.
 */
 
 import CoreBluetooth
@@ -53,14 +61,14 @@ internal typealias VersionCallback = (_ major: UInt8, _ minor: UInt8) -> Void
      - parameter report:  Method called on error of if version is not supported.
      */
     func readVersion(onSuccess success: VersionCallback?, onError report: ErrorCallback?) {
-        // Save callbacks
+        // Save callbacks.
         self.success = success
         self.report = report
         
-        // Get the peripheral object
+        // Get the peripheral object.
         let peripheral = characteristic.service.peripheral
         
-        // Set the peripheral delegate to self
+        // Set the peripheral delegate to self.
         peripheral.delegate = self
         
         logger.v("Reading DFU Version number...")
@@ -70,8 +78,10 @@ internal typealias VersionCallback = (_ major: UInt8, _ minor: UInt8) -> Void
     
     // MARK: - Peripheral Delegate callbacks
     
-    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        // Ignore updates received for other characteristics
+    func peripheral(_ peripheral: CBPeripheral,
+                    didUpdateValueFor characteristic: CBCharacteristic,
+                    error: Error?) {
+        // Ignore updates received for other characteristics.
         guard self.characteristic.isEqual(characteristic) else {
             return
         }

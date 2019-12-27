@@ -19,17 +19,12 @@ class DiscoveredPeripheral: Equatable {
         self.rssi = rssi
     }
 
-    var name: String {
-        return peripheral.name ?? "No name"
-    }
-    
-    var isConnected: Bool {
-        return peripheral.state == .connected
-    }
+    var name: String { peripheral.name ?? "No name" }
+    var isConnected: Bool { peripheral.state == .connected }
 }
 
 func ==(lhs: DiscoveredPeripheral, rhs: DiscoveredPeripheral) -> Bool {
-    return lhs.peripheral == rhs.peripheral
+    lhs.peripheral == rhs.peripheral
         && lhs.isConnected == rhs.isConnected
         && lhs.rssi == rhs.rssi
 }

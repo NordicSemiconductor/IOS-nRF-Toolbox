@@ -36,15 +36,18 @@ class DefaultMainRouter {
     
     private let serviceViewControllers: [ServiceId : UIViewController] = {
         return [
-            .glucoseMonitoring : GlucoseMonitorViewController(style: .grouped),
-            .bloodPressureMonitoring : BloodPressureTableViewController(style: .grouped),
-            .cyclingSensor : CyclingTableViewController(style: .grouped),
-            .heartRateMonitor : HeartRateMonitorTableViewController(style: .grouped),
-            .healthThermometer : HealthTermometerTableViewController(style: .grouped),
-            .runningSensor : RunningTableViewController(style: .grouped),
-            .continuousGlucoseMonitor : ContinuousGlucoseMonitor(style: .grouped),
-            .deviceFirmwareUpgrade : DFUViewController.instance(),
-            .proximity : ProximityViewController(style: .grouped),
+            .deviceFirmwareUpgrade : DFUViewController(),
+            .heartRateMonitor : HeartRateMonitorTableViewController(),
+            .bloodPressureMonitoring : BloodPressureTableViewController(),
+            .glucoseMonitoring : GlucoseMonitorViewController(),
+            .continuousGlucoseMonitor : ContinuousGlucoseMonitor(),
+            .healthThermometer : HealthTermometerTableViewController(),
+            
+            .cyclingSensor : CyclingTableViewController(),
+            
+            .runningSensor : RunningTableViewController(),
+            
+            .proximity : ProximityViewController(),
             .homeKit : HKViewController.instance(),
             .uart : UARTRevealViewController.instance(storyboard: UIStoryboard(name: "UARTViewController", bundle: .main))
             ].mapValues { UINavigationController.nordicBranded(rootViewController: $0) }

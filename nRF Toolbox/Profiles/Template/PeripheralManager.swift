@@ -33,7 +33,7 @@ protocol PeripheralListDelegate {
 }
 
 protocol PeripheralConnectionDelegate {
-    func scan(peripheral: Peripheral)
+    func scan(peripheral: PeripheralDescription)
     func connect(peripheral: DiscoveredPeripheral)
     func closeConnection(peripheral: CBPeripheral)
 }
@@ -45,11 +45,21 @@ class PeripheralManager: NSObject {
     
     var delegate: StatusDelegate?
     var peripheralListDelegate: PeripheralListDelegate?
+    var connectingPeripheral: CBPeripheral?
     
-    init(peripheral: Peripheral, manager: CBCentralManager = CBCentralManager()) {
+    init(peripheral: PeripheralDescription, manager: CBCentralManager = CBCentralManager()) {
         self.manager = manager
         super.init()
         self.manager.delegate = self
+    }
+    
+    func connect(peripheral: Peripheral) {
+        let uuid = peripheral.peripheral.identifier
+        guard let p = manager.retrievePeripherals(withIdentifiers: [uuid]).first else {
+            return
+        }
+        connectingPeripheral = p 
+        manager.connect(p, options: nil)
     }
 }
 
@@ -67,7 +77,9 @@ extension PeripheralManager: CBCentralManagerDelegate {
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        Log(category: .ble, type: .debug).log(message: "Discovered peripheral: \(peripheral.name ?? "__unnamed__")")
+        Log(category: .ble, type: .debug).log(message: "Discovered peripheral: \(advertisementData[CBAdvertisementDataLocalNameKey] as? String ?? "__unnamed__")")
+//        if case .some = peripheral.name {
+//        }
         self.peripherals.insert(peripheral)
         peripheralListDelegate?.peripheralsFound(peripherals.map { DiscoveredPeripheral(with: $0, RSSI: RSSI.int32Value) } )
     }
@@ -89,8 +101,8 @@ extension PeripheralManager: CBCentralManagerDelegate {
 }
 
 extension PeripheralManager: PeripheralConnectionDelegate {
-    func scan(peripheral: Peripheral) {
-        manager.scanForPeripherals(withServices: [peripheral.uuid], options: nil)
+    func scan(peripheral: PeripheralDescription) {
+        manager.scanForPeripherals(withServices: peripheral.uuid.flatMap { [$0] }, options: [CBCentralManagerScanOptionAllowDuplicatesKey:true])
     }
     
     func closeConnection(peripheral: CBPeripheral) {
@@ -99,5 +111,6 @@ extension PeripheralManager: PeripheralConnectionDelegate {
     
     func connect(peripheral: DiscoveredPeripheral) {
         self.manager.connect(peripheral.peripheral, options: nil)
+        self.manager.stopScan()
     }
 }
