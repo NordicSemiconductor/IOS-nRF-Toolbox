@@ -41,7 +41,7 @@ struct TextCommand: UARTCommandModel {
 
 struct DataCommand: UARTCommandModel {
     var image: UIImage? { UIImage(named: imageName) }
-    var title: String { data.hexEncodedString() }
+    var title: String { "0x" + data.hexEncodedString().uppercased() }
     
     let data: Data
     let imageName: String

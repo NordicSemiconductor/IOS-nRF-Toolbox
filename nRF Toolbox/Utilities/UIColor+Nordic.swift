@@ -158,6 +158,27 @@ extension UIColor {
     }
 }
 
+// MARK: - Text Colors
+extension UIColor {
+    struct Text {
+        static let systemText: UIColor = {
+            if #available(iOS 13.0, *) {
+                return .label
+            } else {
+                return .black
+            }
+        }()
+        
+        static let secondarySystemText: UIColor = {
+            if #available(iOS 13, *) {
+                return .secondaryLabel
+            } else {
+                return .nordicDarkGray
+            }
+        }()
+    }
+}
+
 extension UIColor {
     typealias RGBA = (Int, Int, Int, CGFloat)
     

@@ -18,4 +18,15 @@ class UARTActionCollectionViewCell: UICollectionViewCell {
         // Initialization code
     }
 
+    func apply(command: UARTCommandModel) {
+        title.text = command.title
+        image.image = command.image
+        title.textColor = {
+            if command is DataCommand {
+                return UIColor.Text.secondarySystemText
+            } else {
+                return UIColor.Text.systemText
+            }
+        }()
+    }
 }
