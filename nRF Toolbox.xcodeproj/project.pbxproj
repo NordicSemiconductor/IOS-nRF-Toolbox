@@ -178,7 +178,12 @@
 		33976DC91B99AAA3F2E12DF7 /* FindMeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339763C07DFE7826BAF28153 /* FindMeSection.swift */; };
 		33976F79FE2EA20D94F68B69 /* ContinuousGlucoseChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976B66D7A581F01631AE52 /* ContinuousGlucoseChartData.swift */; };
 		33976FB5E54F1D8DDF4733E0 /* DistanceChartSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976ECA8BDFCDF4188746E3 /* DistanceChartSection.swift */; };
+		4322034123CC773F009840DD /* UARTActionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4322033F23CC773F009840DD /* UARTActionCollectionViewCell.swift */; };
+		4322034223CC773F009840DD /* UARTActionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4322034023CC773F009840DD /* UARTActionCollectionViewCell.xib */; };
+		4322034423CC9D31009840DD /* UARTCommandModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4322034323CC9D31009840DD /* UARTCommandModel.swift */; };
 		43445EEF23B0AD8D008A9FD9 /* LoggLevel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43445EEE23B0AD8D008A9FD9 /* LoggLevel+Ext.swift */; };
+		4381AD1B23BA057000FB1A1F /* UARTViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4381AD1923BA057000FB1A1F /* UARTViewController1.swift */; };
+		4381AD1C23BA057000FB1A1F /* UARTViewController1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4381AD1A23BA057000FB1A1F /* UARTViewController1.xib */; };
 		4392FEFB23AA608700E6ACEA /* LoggerTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4392FEFA23AA608700E6ACEA /* LoggerTableView.swift */; };
 		4392FEFF23AA610300E6ACEA /* LogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4392FEFD23AA610300E6ACEA /* LogTableViewCell.swift */; };
 		4392FF0023AA610300E6ACEA /* LogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4392FEFE23AA610300E6ACEA /* LogTableViewCell.xib */; };
@@ -393,8 +398,13 @@
 		33976B66D7A581F01631AE52 /* ContinuousGlucoseChartData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinuousGlucoseChartData.swift; sourceTree = "<group>"; };
 		33976ECA8BDFCDF4188746E3 /* DistanceChartSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DistanceChartSection.swift; sourceTree = "<group>"; };
 		33976F60C5BCE60DE33DFA31 /* ContinuousGlucoseMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinuousGlucoseMonitor.swift; sourceTree = "<group>"; };
+		4322033F23CC773F009840DD /* UARTActionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTActionCollectionViewCell.swift; sourceTree = "<group>"; };
+		4322034023CC773F009840DD /* UARTActionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTActionCollectionViewCell.xib; sourceTree = "<group>"; };
+		4322034323CC9D31009840DD /* UARTCommandModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTCommandModel.swift; sourceTree = "<group>"; };
 		43445EEE23B0AD8D008A9FD9 /* LoggLevel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoggLevel+Ext.swift"; sourceTree = "<group>"; };
 		434A9CF823A2883B00792E81 /* PRAGMATA MEDIUM_0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PRAGMATA MEDIUM_0.ttf"; sourceTree = "<group>"; };
+		4381AD1923BA057000FB1A1F /* UARTViewController1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTViewController1.swift; sourceTree = "<group>"; };
+		4381AD1A23BA057000FB1A1F /* UARTViewController1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTViewController1.xib; sourceTree = "<group>"; };
 		4392FEFA23AA608700E6ACEA /* LoggerTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerTableView.swift; sourceTree = "<group>"; };
 		4392FEFD23AA610300E6ACEA /* LogTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTableViewCell.swift; sourceTree = "<group>"; };
 		4392FEFE23AA610300E6ACEA /* LogTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LogTableViewCell.xib; sourceTree = "<group>"; };
@@ -783,6 +793,7 @@
 		20B7979B2338EC59001328E1 /* Profiles */ = {
 			isa = PBXGroup;
 			children = (
+				4381AD1823BA010200FB1A1F /* UART */,
 				01816D49235DD7180040F574 /* ContinuousGlucoseMonitor */,
 				20B7979C2338EC63001328E1 /* Template */,
 				01B6D3D1234C74F3000942C4 /* HeartRateMonitor */,
@@ -1074,6 +1085,34 @@
 				33976989CA3150561E8CE2F8 /* Peripheral+Proximity.swift */,
 			);
 			path = Proximity;
+			sourceTree = "<group>";
+		};
+		4322033E23CC76DC009840DD /* CollectionViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				4322033F23CC773F009840DD /* UARTActionCollectionViewCell.swift */,
+				4322034023CC773F009840DD /* UARTActionCollectionViewCell.xib */,
+			);
+			path = CollectionViewCells;
+			sourceTree = "<group>";
+		};
+		4322034523CC9D43009840DD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4322034323CC9D31009840DD /* UARTCommandModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4381AD1823BA010200FB1A1F /* UART */ = {
+			isa = PBXGroup;
+			children = (
+				4322034523CC9D43009840DD /* Model */,
+				4322033E23CC76DC009840DD /* CollectionViewCells */,
+				4381AD1923BA057000FB1A1F /* UARTViewController1.swift */,
+				4381AD1A23BA057000FB1A1F /* UARTViewController1.xib */,
+			);
+			path = UART;
 			sourceTree = "<group>";
 		};
 		4392FEF923AA603700E6ACEA /* LogerView */ = {
@@ -1421,6 +1460,7 @@
 				20C7FE012306C5FF00B06FD8 /* BLEServiceList.plist in Resources */,
 				20C7FE57230E997B00B06FD8 /* Links.plist in Resources */,
 				20E07B5D2306975700FCB205 /* GT-Eesti-Display-Light.ttf in Resources */,
+				4322034223CC773F009840DD /* UARTActionCollectionViewCell.xib in Resources */,
 				20D08DFE232929A400569587 /* BGMTableViewCell.xib in Resources */,
 				01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */,
 				20E07B622306975700FCB205 /* GT-Eesti-Display-Bold.ttf in Resources */,
@@ -1455,6 +1495,7 @@
 				20E07B612306975700FCB205 /* GT-Eesti-Display-Medium.ttf in Resources */,
 				20F15C3C2313D2C7000C5503 /* InfoActionView.xib in Resources */,
 				5217F3F91859EE0000F2D5BB /* Main.storyboard in Resources */,
+				4381AD1C23BA057000FB1A1F /* UARTViewController1.xib in Resources */,
 				01F365642397BAE500A4543A /* DFUFileView.xib in Resources */,
 				5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */,
 				20E07B5C2306975700FCB205 /* GT-Eesti-Display-UBold.ttf in Resources */,
@@ -1572,12 +1613,14 @@
 				20C7FE16230ADD1E00B06FD8 /* StoryboardInstantiable.swift in Sources */,
 				20B797912334FD77001328E1 /* Peripheral+BMG.swift in Sources */,
 				4392FEFB23AA608700E6ACEA /* LoggerTableView.swift in Sources */,
+				4322034123CC773F009840DD /* UARTActionCollectionViewCell.swift in Sources */,
 				20D08E002329356700569587 /* ActionSection.swift in Sources */,
 				20C7FE10230A9FAB00B06FD8 /* UIFont+Ext.swift in Sources */,
 				201364F72344A93D00C5AF1F /* BloodPressureSection.swift in Sources */,
 				304D59011CE352B300148271 /* LogItemTableViewCell.swift in Sources */,
 				01AD26E82395084000F56210 /* ConnectionViewController.swift in Sources */,
 				3001EBC51D1C153C008C5C37 /* CGMDetailsViewController.swift in Sources */,
+				4322034423CC9D31009840DD /* UARTCommandModel.swift in Sources */,
 				2002A002231FB8E800C43E06 /* UIImage+Ext.swift in Sources */,
 				20D08E06232A569B00569587 /* Identifiable.swift in Sources */,
 				01006201234D08700078CEFA /* LinearChartTableViewCell.swift in Sources */,
@@ -1618,6 +1661,7 @@
 				01B6D3DC234CB755000942C4 /* HeartRateLocationCharacteristic.swift in Sources */,
 				20C7FE50230E789F00B06FD8 /* MainRouter.swift in Sources */,
 				201364FF2345D0EA00C5AF1F /* CuffPressureSection.swift in Sources */,
+				4381AD1B23BA057000FB1A1F /* UARTViewController1.swift in Sources */,
 				20E07B3C2305593800FCB205 /* ServiceListViewController.swift in Sources */,
 				30A114561CD2367C000F0F02 /* ScannedPeripheral.swift in Sources */,
 				20F15C3A2313D2B9000C5503 /* InfoActionView.swift in Sources */,

@@ -49,7 +49,7 @@ class DefaultMainRouter {
             
             .proximity : ProximityViewController(),
             .homeKit : HKViewController.instance(),
-            .uart : UARTRevealViewController.instance(storyboard: UIStoryboard(name: "UARTViewController", bundle: .main))
+            .uart : UARTViewController1()
             ].mapValues { UINavigationController.nordicBranded(rootViewController: $0) }
     }()
     

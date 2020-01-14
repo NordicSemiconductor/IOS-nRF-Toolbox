@@ -36,6 +36,15 @@ protocol BluetoothManagerDelegate {
     func peripheralNotSupported()
 }
 
+enum BluetoothManagerError: Error {
+    case cannotFindPeripheral
+    
+    var localizedDescription: String {
+        return "Can not find peripheral"
+    }
+    
+}
+
 class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate {
     
     //MARK: - Delegate Properties
@@ -53,10 +62,11 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
     fileprivate var uartTXCharacteristic        : CBCharacteristic?
     
     fileprivate var connected = false
+    private var connectingPeripheral: CBPeripheral!
     
     //MARK: - BluetoothManager API
     
-    required init(withManager aManager : CBCentralManager) {
+    required init(withManager aManager : CBCentralManager = CBCentralManager()) {
         centralManager = aManager
         UARTServiceUUID          = CBUUID(string: ServiceIdentifiers.uartServiceUUIDString)
         UARTTXCharacteristicUUID = CBUUID(string: ServiceIdentifiers.uartTXCharacteristicUUIDString)
@@ -81,7 +91,13 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
             log(withLevel: .verboseLogLevel, andMessage: "Connecting to device...")
         }
         log(withLevel: .debugLogLevel, andMessage: "centralManager.connect(peripheral, options:nil)")
-        centralManager.connect(aPeripheral, options: nil)
+        
+        guard let p = centralManager.retrievePeripherals(withIdentifiers: [aPeripheral.identifier]).first else {
+            centralManager.delegate?.centralManager?(centralManager, didFailToConnect: aPeripheral, error: BluetoothManagerError.cannotFindPeripheral)
+            return
+        }
+        connectingPeripheral = p
+        centralManager.connect(p, options: nil)
     }
     
     /**
