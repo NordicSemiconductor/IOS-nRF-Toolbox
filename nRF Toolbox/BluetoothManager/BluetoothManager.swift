@@ -148,12 +148,8 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
         
         // Check what kind of Write Type is supported. By default it will try Without Response.
         // If the RX charactereisrtic have Write property the Write Request type will be used.
-        var type: CBCharacteristicWriteType = .withoutResponse
-        var MTU = bluetoothPeripheral?.maximumWriteValueLength(for: .withoutResponse) ?? 20
-        if uartRXCharacteristic.properties.contains(.write) {
-            type = .withResponse
-            MTU = bluetoothPeripheral?.maximumWriteValueLength(for: .withResponse) ?? 20
-        }
+        let type: CBCharacteristicWriteType = uartRXCharacteristic.properties.contains(.write) ? .withResponse : .withoutResponse
+        let MTU = bluetoothPeripheral?.maximumWriteValueLength(for: type) ?? 20
         
         // The following code will split the text into packets
         aText.split(by: MTU).forEach {
@@ -187,6 +183,24 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
         // The callback peripheral:didWriteValueForCharacteristic:error: is called only when the Write Request type was used,
         // but even if, the data is not available there.
         log(withLevel: .appLogLevel, andMessage: "\"\(aText)\" sent")
+    }
+    
+    func send(command aCommand: UARTCommandModel) {
+        guard let uartRXCharacteristic = self.uartRXCharacteristic else {
+            log(withLevel: .warningLogLevel, andMessage: "UART RX Characteristic not found")
+            return
+        }
+        
+        // Check what kind of Write Type is supported. By default it will try Without Response.
+        // If the RX charactereisrtic have Write property the Write Request type will be used.
+        let type: CBCharacteristicWriteType = uartRXCharacteristic.properties.contains(.write) ? .withResponse : .withoutResponse
+        
+        let MTU = bluetoothPeripheral?.maximumWriteValueLength(for: type) ?? 20
+        
+        let data = aCommand.data.split(by: MTU)
+        data.forEach {
+            self.bluetoothPeripheral!.writeValue($0, for: uartRXCharacteristic, type: type)
+        }
     }
     
     //MARK: - Logger API
@@ -383,6 +397,21 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
         } else {
             log(withLevel: .appLogLevel, andMessage: "\"0x\(bytesReceived.hexString)\" received")
         }
+    }
+}
+
+private extension Data {
+    func split(by length: Int) -> [Data] {
+        var startIndex = self.startIndex
+        var chunks = [Data]()
+        
+        while startIndex < endIndex {
+            let endIndex = index(startIndex, offsetBy: length, limitedBy: self.endIndex) ?? self.endIndex
+            chunks.append(subdata(in: startIndex..<endIndex))
+            startIndex = endIndex
+        }
+        
+        return chunks
     }
 }
 

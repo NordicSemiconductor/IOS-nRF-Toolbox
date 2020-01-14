@@ -31,6 +31,8 @@ class UARTViewController1: UIViewController {
         
         let nib = UINib(nibName: "UARTActionCollectionViewCell", bundle: .main)
         collectionView.register(nib, forCellWithReuseIdentifier: "UARTActionCollectionViewCell")
+        
+        navigationItem.title = "UART"
     }
     
     @objc func openConnectorViewController() {
@@ -78,16 +80,8 @@ extension UARTViewController1: BluetoothManagerDelegate {
     }
     
     func peripheralNotSupported() {
+        // MARK: Show Alert
         navigationItem.rightBarButtonItem?.isEnabled = true
-    }
-    
-    override var shouldAutorotate: Bool {
-        return false
-    }
-    
-    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.willTransition(to: newCollection, with: coordinator)
-        collectionView.collectionViewLayout.invalidateLayout()
     }
 }
 
@@ -109,6 +103,11 @@ extension UARTViewController1: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         3
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let command = commands[indexPath.item]
+        btManager.send(command: command)
     }
 }
 
