@@ -176,6 +176,14 @@ extension UIColor {
                 return .nordicDarkGray
             }
         }()
+        
+        static let inactive: UIColor = {
+            if #available(iOS 13, *) {
+                return .systemGray4
+            } else {
+                return .nordicAlmostWhite
+            }
+        }()
     }
 }
 

@@ -110,6 +110,7 @@ extension UARTViewController1: UICollectionViewDelegateFlowLayout {
         
         guard !(command is EmptyModel) else {
             let vc = UARTNewCommandViewController()
+            vc.delegate = self 
             let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false)
             self.present(nc, animated: true)
             return
@@ -142,5 +143,18 @@ extension UARTViewController1: UICollectionViewDataSource {
         return cell
     }
     
+    
+}
+
+extension UARTViewController1: UARTNewCommandDelegate {
+    func createdNewCommand(_ command: UARTCommandModel) {
+        guard let selectedItemIndex = collectionView.indexPathsForSelectedItems?.first?.item else {
+            return
+        }
+        
+        commands[selectedItemIndex] = command
+        collectionView.reloadData()
+        dismiss(animated: true, completion: nil)
+    }
     
 }

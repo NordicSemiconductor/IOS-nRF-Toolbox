@@ -37,6 +37,12 @@ class NordicButton: UIButton {
         }
     }
     
+    override var isEnabled: Bool {
+        didSet {
+            setupBrandView()
+        }
+    }
+    
     var style: Style = .default {
         didSet {
             tintColor = style.tintColor
@@ -67,6 +73,14 @@ class NordicButton: UIButton {
     private func setupBrandView() {
         cornerRadius = min(frame.width, frame.height) / 2
         borderWidth = 1
+        
+        guard isEnabled else {
+            setTitleColor(UIColor.Text.inactive, for: .normal)
+            borderColor = UIColor.Text.inactive
+            backgroundColor = .clear
+            return
+        }
+        
         borderColor = style.tintColor
         setTitleColor(style.tintColor, for: .normal)
         backgroundColor = style.bgColor
