@@ -12,6 +12,13 @@
 		01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01468B042361A30A00C29E4C /* StepperTableViewCell.xib */; };
 		01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */; };
 		0162BA91234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0162BA90234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift */; };
+		01A1B76723CF13A50062FADC /* UARTNewCommandViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A1B76523CF13A50062FADC /* UARTNewCommandViewController.swift */; };
+		01A1B76823CF13A50062FADC /* UARTNewCommandViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01A1B76623CF13A50062FADC /* UARTNewCommandViewController.xib */; };
+		01A1B76A23CF309E0062FADC /* CommandImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A1B76923CF309E0062FADC /* CommandImage.swift */; };
+		01A1B76D23CF43590062FADC /* UART.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01A1B76C23CF43590062FADC /* UART.xcassets */; };
+		01A1B77223CF530E0062FADC /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A1B77023CF530E0062FADC /* ImageCollectionViewCell.swift */; };
+		01A1B77323CF530E0062FADC /* ImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01A1B77123CF530E0062FADC /* ImageCollectionViewCell.xib */; };
+		01A1B77523CF5A080062FADC /* UICollectionView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A1B77423CF5A080062FADC /* UICollectionView+Ext.swift */; };
 		01AD26E82395084000F56210 /* ConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26E62395084000F56210 /* ConnectionViewController.swift */; };
 		01AD26EC23953E4800F56210 /* FileSizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26EB23953E4800F56210 /* FileSizeView.swift */; };
 		01AD26F023955A9F00F56210 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26EF23955A9F00F56210 /* ProgressView.swift */; };
@@ -230,6 +237,13 @@
 		01468B042361A30A00C29E4C /* StepperTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StepperTableViewCell.xib; sourceTree = "<group>"; };
 		01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalSection.swift; sourceTree = "<group>"; };
 		0162BA90234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTemperatureAditionalSection.swift; sourceTree = "<group>"; };
+		01A1B76523CF13A50062FADC /* UARTNewCommandViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTNewCommandViewController.swift; sourceTree = "<group>"; };
+		01A1B76623CF13A50062FADC /* UARTNewCommandViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTNewCommandViewController.xib; sourceTree = "<group>"; };
+		01A1B76923CF309E0062FADC /* CommandImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandImage.swift; sourceTree = "<group>"; };
+		01A1B76C23CF43590062FADC /* UART.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = UART.xcassets; sourceTree = "<group>"; };
+		01A1B77023CF530E0062FADC /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		01A1B77123CF530E0062FADC /* ImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageCollectionViewCell.xib; sourceTree = "<group>"; };
+		01A1B77423CF5A080062FADC /* UICollectionView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Ext.swift"; sourceTree = "<group>"; };
 		01AD26E62395084000F56210 /* ConnectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionViewController.swift; sourceTree = "<group>"; };
 		01AD26EB23953E4800F56210 /* FileSizeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSizeView.swift; sourceTree = "<group>"; };
 		01AD26EF23955A9F00F56210 /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
@@ -499,6 +513,23 @@
 				339765764F70C52AC5738A3F /* Models */,
 			);
 			path = ContinuousGlucoseMonitor;
+			sourceTree = "<group>";
+		};
+		01A1B76423CF13810062FADC /* NewCommand */ = {
+			isa = PBXGroup;
+			children = (
+				01A1B76523CF13A50062FADC /* UARTNewCommandViewController.swift */,
+				01A1B76623CF13A50062FADC /* UARTNewCommandViewController.xib */,
+			);
+			path = NewCommand;
+			sourceTree = "<group>";
+		};
+		01A1B76B23CF43120062FADC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				01A1B76C23CF43590062FADC /* UART.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		01AD26F523966CB900F56210 /* FileScheme */ = {
@@ -837,6 +868,7 @@
 			children = (
 				20C7FDFD2306BEE000B06FD8 /* Array+Ext.swift */,
 				20C7FE072306EB5600B06FD8 /* UITableView+Ext.swift */,
+				01A1B77423CF5A080062FADC /* UICollectionView+Ext.swift */,
 				20C7FE0F230A9FAB00B06FD8 /* UIFont+Ext.swift */,
 				20C7FE5A230EAD0000B06FD8 /* UINavigationController+Ext.swift */,
 				2002A001231FB8E800C43E06 /* UIImage+Ext.swift */,
@@ -1092,6 +1124,8 @@
 			children = (
 				4322033F23CC773F009840DD /* UARTActionCollectionViewCell.swift */,
 				4322034023CC773F009840DD /* UARTActionCollectionViewCell.xib */,
+				01A1B77023CF530E0062FADC /* ImageCollectionViewCell.swift */,
+				01A1B77123CF530E0062FADC /* ImageCollectionViewCell.xib */,
 			);
 			path = CollectionViewCells;
 			sourceTree = "<group>";
@@ -1100,6 +1134,7 @@
 			isa = PBXGroup;
 			children = (
 				4322034323CC9D31009840DD /* UARTCommandModel.swift */,
+				01A1B76923CF309E0062FADC /* CommandImage.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1107,6 +1142,8 @@
 		4381AD1823BA010200FB1A1F /* UART */ = {
 			isa = PBXGroup;
 			children = (
+				01A1B76B23CF43120062FADC /* Resources */,
+				01A1B76423CF13810062FADC /* NewCommand */,
 				4322034523CC9D43009840DD /* Model */,
 				4322033E23CC76DC009840DD /* CollectionViewCells */,
 				4381AD1923BA057000FB1A1F /* UARTViewController1.swift */,
@@ -1466,12 +1503,14 @@
 				20E07B622306975700FCB205 /* GT-Eesti-Display-Bold.ttf in Resources */,
 				5214D0CE1886C02A00460637 /* Settings.bundle in Resources */,
 				01C2E97523A1ACDF008C1701 /* DFUViewController.xib in Resources */,
+				01A1B76823CF13A50062FADC /* UARTNewCommandViewController.xib in Resources */,
 				20E07B682306975700FCB205 /* GT-Eesti-Display-ULight-Italic.ttf in Resources */,
 				0E645A0F1CBF957800D36AD0 /* firmwares in Resources */,
 				20E07B602306975700FCB205 /* GT-Eesti-Display-UBold-Italic.ttf in Resources */,
 				20E07B3F23055B0B00FCB205 /* InteractionServiceList.plist in Resources */,
 				20C7FE032306C72000B06FD8 /* IoTServices.plist in Resources */,
 				20C7FE59230E9BDC00B06FD8 /* ServiceTableViewCell.xib in Resources */,
+				01A1B76D23CF43590062FADC /* UART.xcassets in Resources */,
 				20C7FE2C230BEC1800B06FD8 /* UARTViewController.storyboard in Resources */,
 				20E07B5B2306975700FCB205 /* GT-Eesti-Display-Thin.ttf in Resources */,
 				20E07B642306975700FCB205 /* GT-Eesti-Display-Thin-Italic.ttf in Resources */,
@@ -1497,6 +1536,7 @@
 				5217F3F91859EE0000F2D5BB /* Main.storyboard in Resources */,
 				4381AD1C23BA057000FB1A1F /* UARTViewController1.xib in Resources */,
 				01F365642397BAE500A4543A /* DFUFileView.xib in Resources */,
+				01A1B77323CF530E0062FADC /* ImageCollectionViewCell.xib in Resources */,
 				5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */,
 				20E07B5C2306975700FCB205 /* GT-Eesti-Display-UBold.ttf in Resources */,
 				5211EFB018856430007CC40D /* icon-hex.png in Resources */,
@@ -1577,6 +1617,7 @@
 				20E07B422306868F00FCB205 /* BLEService.swift in Sources */,
 				3001EBC71D1C1BAA008C5C37 /* CGMViewController.swift in Sources */,
 				01AD26F023955A9F00F56210 /* ProgressView.swift in Sources */,
+				01A1B77223CF530E0062FADC /* ImageCollectionViewCell.swift in Sources */,
 				4392FF0223AA6CBE00E6ACEA /* DateFormatter+Ext.swift in Sources */,
 				304D58FD1CE34FC600148271 /* LogViewController.swift in Sources */,
 				201364FD2344E2E300C5AF1F /* CuffPreasureCharacteristic.swift in Sources */,
@@ -1609,6 +1650,7 @@
 				01B6D3D8234CB533000942C4 /* HeartRateMeasurementCharacteristic.swift in Sources */,
 				20C7FDFE2306BEE000B06FD8 /* Array+Ext.swift in Sources */,
 				01B6D3D3234C7538000942C4 /* HeartRateMonitorTableViewController.swift in Sources */,
+				01A1B76A23CF309E0062FADC /* CommandImage.swift in Sources */,
 				3001EBB71D1BE1FB008C5C37 /* BGMDetailsViewController.swift in Sources */,
 				20C7FE16230ADD1E00B06FD8 /* StoryboardInstantiable.swift in Sources */,
 				20B797912334FD77001328E1 /* Peripheral+BMG.swift in Sources */,
@@ -1636,6 +1678,7 @@
 				20C7FE0E230A9F9300B06FD8 /* LinkTableViewCell.swift in Sources */,
 				01BE0955234A7500006ACF06 /* HealthTemperatureSection.swift in Sources */,
 				01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */,
+				01A1B76723CF13A50062FADC /* UARTNewCommandViewController.swift in Sources */,
 				20C7FE082306EB5600B06FD8 /* UITableView+Ext.swift in Sources */,
 				20D08E02232A38C200569587 /* TitledError.swift in Sources */,
 				20C7FE53230E811B00B06FD8 /* ServiceProvider.swift in Sources */,
@@ -1644,6 +1687,7 @@
 				01B56C1623A11FDA00140A1C /* PeripheralScanner.swift in Sources */,
 				3001EBBB1D1BE306008C5C37 /* CGMReading.swift in Sources */,
 				3001EBB11D1BE1F3008C5C37 /* GlucoseReading.swift in Sources */,
+				01A1B77523CF5A080062FADC /* UICollectionView+Ext.swift in Sources */,
 				3000B2151CE32A9200F64CEE /* UARTViewController.swift in Sources */,
 				20850177233B690500C792B4 /* RunningCharacteristic.swift in Sources */,
 				4392FEFF23AA610300E6ACEA /* LogTableViewCell.swift in Sources */,

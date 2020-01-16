@@ -25,9 +25,9 @@ class UARTViewController1: UIViewController {
         btManager.logger = self
         navigationItem.rightBarButtonItem = connectBtn
         
-        commands[5] = TextCommand(text: "Play", imageName: "Play")
+        commands[5] = TextCommand(text: "Play", image: "Play")
         let data = "ay".data(using: .ascii)!
-        commands[7] = DataCommand(data: data, imageName: "Pause")
+        commands[7] = DataCommand(data: data, image: "Pause")
         
         let nib = UINib(nibName: "UARTActionCollectionViewCell", bundle: .main)
         collectionView.register(nib, forCellWithReuseIdentifier: "UARTActionCollectionViewCell")
@@ -107,6 +107,19 @@ extension UARTViewController1: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let command = commands[indexPath.item]
+        
+        guard !(command is EmptyModel) else {
+            let vc = UARTNewCommandViewController()
+            let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false)
+            self.present(nc, animated: true)
+            return
+        }
+        
+        guard btManager.isConnected() else {
+            openConnectorViewController()
+            return
+        }
+        
         btManager.send(command: command)
     }
 }

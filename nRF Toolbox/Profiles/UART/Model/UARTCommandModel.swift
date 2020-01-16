@@ -6,24 +6,21 @@
 //  Copyright © 2020 Nordic Semiconductor. All rights reserved.
 //
 
-import UIKit
+import UIKit.UIImage
 
 protocol UARTCommandModel {
-    var image: UIImage? { get }
-    var imageName: String { get }
+    var image: CommandImage { get }
     var title: String { get }
     var data: Data { get }
 }
 
 struct EmptyModel: UARTCommandModel {
-    var image: UIImage? { nil }
-    var imageName: String { "" }
-    var title: String { "" }
-    var data: Data { Data() }
+    let image: CommandImage = .empty
+    let title: String = ""
+    let data: Data = Data()
 }
 
 struct TextCommand: UARTCommandModel {
-    var image: UIImage? { UIImage(named: imageName) }
     var title: String { text }
     
     var data: Data {
@@ -31,24 +28,12 @@ struct TextCommand: UARTCommandModel {
     }
     
     let text: String
-    let imageName: String
-    
-    init(text: String, imageName: String) {
-        self.imageName = imageName
-        self.text = text
-    }
+    let image: CommandImage
 }
 
 struct DataCommand: UARTCommandModel {
-    var image: UIImage? { UIImage(named: imageName) }
     var title: String { "0x" + data.hexEncodedString().uppercased() }
     
     let data: Data
-    let imageName: String
-    
-    init(data: Data, imageName: String) {
-        self.data = data
-        self.imageName = imageName
-    }
-    
+    let image: CommandImage
 }
