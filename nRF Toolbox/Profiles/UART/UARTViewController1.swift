@@ -16,7 +16,7 @@ class UARTViewController1: UIViewController {
     private lazy var connectBtn = UIBarButtonItem(title: "Connect", style: .done, target: self, action: #selector(openConnectorViewController))
     
     @IBOutlet private var peripheralView: PeripheralView!
-    @IBOutlet private var collectionView: UICollectionView!
+    @IBOutlet private var collectionView: UARTCommandListCollectionView!
     private var commands: [UARTCommandModel] = Array.init(repeating: EmptyModel(), count: 9)
     
     override func viewDidLoad() {
@@ -30,13 +30,12 @@ class UARTViewController1: UIViewController {
         let data = "ay".data(using: .ascii)!
         commands[7] = DataCommand(data: data, image: "Pause")
         
-        let nib = UINib(nibName: "UARTActionCollectionViewCell", bundle: .main)
-        collectionView.register(nib, forCellWithReuseIdentifier: "UARTActionCollectionViewCell")
-        
         navigationItem.title = "UART"
         
         peripheralView.disconnect()
         peripheralView.delegate = self
+        
+        collectionView.commandListDelegate = self
     }
     
     @objc func openConnectorViewController() {
@@ -98,26 +97,31 @@ extension UARTViewController1: Logger {
     }
 }
 
-extension UARTViewController1: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let side = collectionView.frame.size.width / 3 - 2
-        return CGSize(width: side, height: side)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        3
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        3
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let command = commands[indexPath.item]
+extension UARTViewController1: UARTNewCommandDelegate {
+    func createdNewCommand(_ command: UARTCommandModel) {
+        guard let selectedItemIndex = collectionView.indexPathsForSelectedItems?.first?.item else {
+            return
+        }
         
+        commands[selectedItemIndex] = command
+        collectionView.commands = commands
+        collectionView.reloadData()
+        dismiss(animated: true, completion: nil)
+    }
+    
+}
+
+extension UARTViewController1: PeripheralViewDelegate {
+    func requestConnect() {
+        self.openConnectorViewController()
+    }
+}
+
+extension UARTViewController1: UARTCommandListDelegate {
+    func selectedCommand(_ command: UARTCommandModel) {
         guard !(command is EmptyModel) else {
             let vc = UARTNewCommandViewController()
-            vc.delegate = self 
+            vc.delegate = self
             let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false)
             self.present(nc, animated: true)
             return
@@ -129,45 +133,5 @@ extension UARTViewController1: UICollectionViewDelegateFlowLayout {
         }
         
         btManager.send(command: command)
-    }
-}
-
-extension UARTViewController1: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return commands.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let command = commands[indexPath.item]
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UARTActionCollectionViewCell", for: indexPath) as! UARTActionCollectionViewCell
-        cell.apply(command: command)
-        if #available(iOS 13.0, *) {
-            cell.contentView.backgroundColor = .systemGroupedBackground
-        } else {
-            cell.contentView.backgroundColor = .lightGray
-        }
-        return cell
-    }
-    
-    
-}
-
-extension UARTViewController1: UARTNewCommandDelegate {
-    func createdNewCommand(_ command: UARTCommandModel) {
-        guard let selectedItemIndex = collectionView.indexPathsForSelectedItems?.first?.item else {
-            return
-        }
-        
-        commands[selectedItemIndex] = command
-        collectionView.reloadData()
-        dismiss(animated: true, completion: nil)
-    }
-    
-}
-
-extension UARTViewController1: PeripheralViewDelegate {
-    func requestConnect() {
-        self.openConnectorViewController()
     }
 }

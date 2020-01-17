@@ -20,7 +20,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="GMu-sG-Zuq">
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="GMu-sG-Zuq" customClass="UARTCommandListCollectionView" customModule="nRF_Toolbox" customModuleProvider="target">
                     <rect key="frame" x="16" y="120" width="382" height="382"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <constraints>
@@ -32,10 +32,6 @@
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="d0d-b8-1PC"/>
-                        <outlet property="delegate" destination="-1" id="0z3-ed-Hw2"/>
-                    </connections>
                 </collectionView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2NO-LA-gil" customClass="PeripheralView" customModule="nRF_Toolbox" customModuleProvider="target">
                     <rect key="frame" x="16" y="60" width="382" height="44"/>

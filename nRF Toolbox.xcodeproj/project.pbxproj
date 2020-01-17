@@ -26,6 +26,9 @@
 		01AF928323D0AC3200C1BFD6 /* StringProtocol+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AF928223D0AC3200C1BFD6 /* StringProtocol+Ext.swift */; };
 		01AF928723D1A7D400C1BFD6 /* PeripheralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AF928623D1A7D400C1BFD6 /* PeripheralView.swift */; };
 		01AF928923D1A7E300C1BFD6 /* PeripheralView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01AF928823D1A7E300C1BFD6 /* PeripheralView.xib */; };
+		01AF928C23D1D99C00C1BFD6 /* UARTMacroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AF928A23D1D99C00C1BFD6 /* UARTMacroViewController.swift */; };
+		01AF928D23D1D99C00C1BFD6 /* UARTMacroViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01AF928B23D1D99C00C1BFD6 /* UARTMacroViewController.xib */; };
+		01AF929023D1DA5700C1BFD6 /* UARTCommandListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AF928F23D1DA5700C1BFD6 /* UARTCommandListCollectionView.swift */; };
 		01B56C1623A11FDA00140A1C /* PeripheralScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B56C1523A11FB600140A1C /* PeripheralScanner.swift */; };
 		01B6D3D3234C7538000942C4 /* HeartRateMonitorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3D2234C7538000942C4 /* HeartRateMonitorTableViewController.swift */; };
 		01B6D3D8234CB533000942C4 /* HeartRateMeasurementCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3D7234CB533000942C4 /* HeartRateMeasurementCharacteristic.swift */; };
@@ -254,6 +257,9 @@
 		01AF928223D0AC3200C1BFD6 /* StringProtocol+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StringProtocol+Ext.swift"; sourceTree = "<group>"; };
 		01AF928623D1A7D400C1BFD6 /* PeripheralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralView.swift; sourceTree = "<group>"; };
 		01AF928823D1A7E300C1BFD6 /* PeripheralView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PeripheralView.xib; sourceTree = "<group>"; };
+		01AF928A23D1D99C00C1BFD6 /* UARTMacroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacroViewController.swift; sourceTree = "<group>"; };
+		01AF928B23D1D99C00C1BFD6 /* UARTMacroViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTMacroViewController.xib; sourceTree = "<group>"; };
+		01AF928F23D1DA5700C1BFD6 /* UARTCommandListCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTCommandListCollectionView.swift; sourceTree = "<group>"; };
 		01B56C1523A11FB600140A1C /* PeripheralScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralScanner.swift; sourceTree = "<group>"; };
 		01B6D3D2234C7538000942C4 /* HeartRateMonitorTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateMonitorTableViewController.swift; sourceTree = "<group>"; };
 		01B6D3D7234CB533000942C4 /* HeartRateMeasurementCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateMeasurementCharacteristic.swift; sourceTree = "<group>"; };
@@ -550,6 +556,8 @@
 		01AF928423D1A76100C1BFD6 /* Macro */ = {
 			isa = PBXGroup;
 			children = (
+				01AF928A23D1D99C00C1BFD6 /* UARTMacroViewController.swift */,
+				01AF928B23D1D99C00C1BFD6 /* UARTMacroViewController.xib */,
 			);
 			path = Macro;
 			sourceTree = "<group>";
@@ -561,6 +569,14 @@
 				01AF928823D1A7E300C1BFD6 /* PeripheralView.xib */,
 			);
 			path = PeripheralView;
+			sourceTree = "<group>";
+		};
+		01AF928E23D1D9EC00C1BFD6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				01AF928F23D1DA5700C1BFD6 /* UARTCommandListCollectionView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		01B4931523843B0100E1BC08 /* ViewControllers */ = {
@@ -1165,6 +1181,7 @@
 		4381AD1823BA010200FB1A1F /* UART */ = {
 			isa = PBXGroup;
 			children = (
+				01AF928E23D1D9EC00C1BFD6 /* Views */,
 				01AF928523D1A7A800C1BFD6 /* PeripheralView */,
 				01AF928423D1A76100C1BFD6 /* Macro */,
 				01A1B76B23CF43120062FADC /* Resources */,
@@ -1523,6 +1540,7 @@
 				20C7FE57230E997B00B06FD8 /* Links.plist in Resources */,
 				20E07B5D2306975700FCB205 /* GT-Eesti-Display-Light.ttf in Resources */,
 				4322034223CC773F009840DD /* UARTActionCollectionViewCell.xib in Resources */,
+				01AF928D23D1D99C00C1BFD6 /* UARTMacroViewController.xib in Resources */,
 				20D08DFE232929A400569587 /* BGMTableViewCell.xib in Resources */,
 				01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */,
 				20E07B622306975700FCB205 /* GT-Eesti-Display-Bold.ttf in Resources */,
@@ -1742,9 +1760,11 @@
 				309F08701E6FF1F900B7546A /* HKAccessoryViewController.swift in Sources */,
 				3001EBC31D1C1430008C5C37 /* CGMItemCell.swift in Sources */,
 				3001EBB91D1BE1FB008C5C37 /* BGMViewController.swift in Sources */,
+				01AF928C23D1D99C00C1BFD6 /* UARTMacroViewController.swift in Sources */,
 				30921FD51CD0EB55009CBDDE /* MainViewController.swift in Sources */,
 				3001EBBD1D1BE695008C5C37 /* CGMFeatureData.swift in Sources */,
 				5231403022FB07820074325A /* RootNavigationController.swift in Sources */,
+				01AF929023D1DA5700C1BFD6 /* UARTCommandListCollectionView.swift in Sources */,
 				20B7979A2338B8C0001328E1 /* MeasurementFormatter+Ext.swift in Sources */,
 				20F0C80C2327DB74003111E7 /* BGMSection.swift in Sources */,
 				01BE0953234A1C48006ACF06 /* HealthTermometerCharacteristic.swift in Sources */,
