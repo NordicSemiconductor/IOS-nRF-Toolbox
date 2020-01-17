@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UARTViewController1" customModule="nRF_Toolbox" customModuleProvider="target">
             <connections>
                 <outlet property="collectionView" destination="GMu-sG-Zuq" id="Cng-gl-l2a"/>
+                <outlet property="peripheralView" destination="2NO-LA-gil" id="Sg1-Bx-kg7"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,7 +21,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="GMu-sG-Zuq">
-                    <rect key="frame" x="16" y="76" width="382" height="382"/>
+                    <rect key="frame" x="16" y="120" width="382" height="382"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="GMu-sG-Zuq" secondAttribute="height" multiplier="1:1" id="dlu-jz-0yh"/>
@@ -36,16 +37,26 @@
                         <outlet property="delegate" destination="-1" id="0z3-ed-Hw2"/>
                     </connections>
                 </collectionView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2NO-LA-gil" customClass="PeripheralView" customModule="nRF_Toolbox" customModuleProvider="target">
+                    <rect key="frame" x="16" y="60" width="382" height="44"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="Y8A-HC-bOk"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="GMu-sG-Zuq" secondAttribute="bottom" constant="16" id="257-n3-eHY"/>
+                <constraint firstItem="GMu-sG-Zuq" firstAttribute="leading" secondItem="2NO-LA-gil" secondAttribute="leading" id="8Tq-gH-Fky"/>
                 <constraint firstItem="GMu-sG-Zuq" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="LIo-zd-yOA"/>
-                <constraint firstItem="GMu-sG-Zuq" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="32" id="Vwa-iA-Juf"/>
+                <constraint firstItem="GMu-sG-Zuq" firstAttribute="top" secondItem="2NO-LA-gil" secondAttribute="bottom" constant="16" id="P3V-bT-KIW"/>
+                <constraint firstItem="GMu-sG-Zuq" firstAttribute="trailing" secondItem="2NO-LA-gil" secondAttribute="trailing" id="Q7j-zf-8qq"/>
                 <constraint firstItem="GMu-sG-Zuq" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" priority="999" constant="16" id="XH1-CB-Eiq"/>
+                <constraint firstItem="2NO-LA-gil" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="ufp-Dq-Bqs"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <point key="canvasLocation" x="139" y="153"/>
+            <point key="canvasLocation" x="137.68115942028987" y="152.67857142857142"/>
         </view>
     </objects>
 </document>

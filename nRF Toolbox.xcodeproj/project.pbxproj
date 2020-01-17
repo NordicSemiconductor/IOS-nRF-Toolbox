@@ -24,6 +24,8 @@
 		01AD26F023955A9F00F56210 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26EF23955A9F00F56210 /* ProgressView.swift */; };
 		01AD26F423965A9400F56210 /* FirmwareProgressImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26F323965A9400F56210 /* FirmwareProgressImage.swift */; };
 		01AF928323D0AC3200C1BFD6 /* StringProtocol+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AF928223D0AC3200C1BFD6 /* StringProtocol+Ext.swift */; };
+		01AF928723D1A7D400C1BFD6 /* PeripheralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AF928623D1A7D400C1BFD6 /* PeripheralView.swift */; };
+		01AF928923D1A7E300C1BFD6 /* PeripheralView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01AF928823D1A7E300C1BFD6 /* PeripheralView.xib */; };
 		01B56C1623A11FDA00140A1C /* PeripheralScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B56C1523A11FB600140A1C /* PeripheralScanner.swift */; };
 		01B6D3D3234C7538000942C4 /* HeartRateMonitorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3D2234C7538000942C4 /* HeartRateMonitorTableViewController.swift */; };
 		01B6D3D8234CB533000942C4 /* HeartRateMeasurementCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3D7234CB533000942C4 /* HeartRateMeasurementCharacteristic.swift */; };
@@ -250,6 +252,8 @@
 		01AD26EF23955A9F00F56210 /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		01AD26F323965A9400F56210 /* FirmwareProgressImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirmwareProgressImage.swift; sourceTree = "<group>"; };
 		01AF928223D0AC3200C1BFD6 /* StringProtocol+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StringProtocol+Ext.swift"; sourceTree = "<group>"; };
+		01AF928623D1A7D400C1BFD6 /* PeripheralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralView.swift; sourceTree = "<group>"; };
+		01AF928823D1A7E300C1BFD6 /* PeripheralView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PeripheralView.xib; sourceTree = "<group>"; };
 		01B56C1523A11FB600140A1C /* PeripheralScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralScanner.swift; sourceTree = "<group>"; };
 		01B6D3D2234C7538000942C4 /* HeartRateMonitorTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateMonitorTableViewController.swift; sourceTree = "<group>"; };
 		01B6D3D7234CB533000942C4 /* HeartRateMeasurementCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateMeasurementCharacteristic.swift; sourceTree = "<group>"; };
@@ -541,6 +545,22 @@
 				01AD26F323965A9400F56210 /* FirmwareProgressImage.swift */,
 			);
 			path = FileScheme;
+			sourceTree = "<group>";
+		};
+		01AF928423D1A76100C1BFD6 /* Macro */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Macro;
+			sourceTree = "<group>";
+		};
+		01AF928523D1A7A800C1BFD6 /* PeripheralView */ = {
+			isa = PBXGroup;
+			children = (
+				01AF928623D1A7D400C1BFD6 /* PeripheralView.swift */,
+				01AF928823D1A7E300C1BFD6 /* PeripheralView.xib */,
+			);
+			path = PeripheralView;
 			sourceTree = "<group>";
 		};
 		01B4931523843B0100E1BC08 /* ViewControllers */ = {
@@ -1145,6 +1165,8 @@
 		4381AD1823BA010200FB1A1F /* UART */ = {
 			isa = PBXGroup;
 			children = (
+				01AF928523D1A7A800C1BFD6 /* PeripheralView */,
+				01AF928423D1A76100C1BFD6 /* Macro */,
 				01A1B76B23CF43120062FADC /* Resources */,
 				01A1B76423CF13810062FADC /* NewCommand */,
 				4322034523CC9D43009840DD /* Model */,
@@ -1522,6 +1544,7 @@
 				5217F3FE1859EE0000F2D5BB /* Images.xcassets in Resources */,
 				20E07B5E2306975700FCB205 /* GT-Eesti-Display-Medium-Italic.ttf in Resources */,
 				4392FF0023AA610300E6ACEA /* LogTableViewCell.xib in Resources */,
+				01AF928923D1A7E300C1BFD6 /* PeripheralView.xib in Resources */,
 				20E07B5F2306975700FCB205 /* GT-Eesti-Display-Bold-Italic.ttf in Resources */,
 				7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */,
 				01E4BACC23698DD300EE67A0 /* FindMeTableViewCell.xib in Resources */,
@@ -1615,6 +1638,7 @@
 				2013650223462DB900C5AF1F /* BatteryCharacteristic.swift in Sources */,
 				204485EA233A38E900A8A3A3 /* RunningSpeedSection.swift in Sources */,
 				200973D723433A5E0091951B /* PaceMeasurementFormatter.swift in Sources */,
+				01AF928723D1A7D400C1BFD6 /* PeripheralView.swift in Sources */,
 				01F365622397BADC00A4543A /* DFUFileView.swift in Sources */,
 				300143291CEC59F4008379DF /* ServiceIdentifiers.swift in Sources */,
 				20E07B422306868F00FCB205 /* BLEService.swift in Sources */,

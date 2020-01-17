@@ -15,6 +15,7 @@ class UARTViewController1: UIViewController {
     
     private lazy var connectBtn = UIBarButtonItem(title: "Connect", style: .done, target: self, action: #selector(openConnectorViewController))
     
+    @IBOutlet private var peripheralView: PeripheralView!
     @IBOutlet private var collectionView: UICollectionView!
     private var commands: [UARTCommandModel] = Array.init(repeating: EmptyModel(), count: 9)
     
@@ -33,6 +34,9 @@ class UARTViewController1: UIViewController {
         collectionView.register(nib, forCellWithReuseIdentifier: "UARTActionCollectionViewCell")
         
         navigationItem.title = "UART"
+        
+        peripheralView.disconnect()
+        peripheralView.delegate = self
     }
     
     @objc func openConnectorViewController() {
@@ -69,10 +73,12 @@ extension UARTViewController1: BluetoothManagerDelegate {
         
         scanner.dismiss(animated: true, completion: nil)
         navigationItem.rightBarButtonItem?.isEnabled = false
+        peripheralView.connected(peripheral: aName ?? "No Name")
     }
     
     func didDisconnectPeripheral() {
         navigationItem.rightBarButtonItem?.isEnabled = true
+        peripheralView.disconnect()
     }
     
     func peripheralReady() {
@@ -81,6 +87,7 @@ extension UARTViewController1: BluetoothManagerDelegate {
     
     func peripheralNotSupported() {
         // MARK: Show Alert
+        peripheralView.disconnect()
         navigationItem.rightBarButtonItem?.isEnabled = true
     }
 }
@@ -157,4 +164,10 @@ extension UARTViewController1: UARTNewCommandDelegate {
         dismiss(animated: true, completion: nil)
     }
     
+}
+
+extension UARTViewController1: PeripheralViewDelegate {
+    func requestConnect() {
+        self.openConnectorViewController()
+    }
 }
