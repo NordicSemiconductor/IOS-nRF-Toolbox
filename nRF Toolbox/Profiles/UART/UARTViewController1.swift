@@ -38,6 +38,11 @@ class UARTViewController1: UIViewController {
         collectionView.commandListDelegate = self
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        collectionView.collectionViewLayout.invalidateLayout()
+    }
+    
     @objc func openConnectorViewController() {
         let scanner = PeripheralScanner(services: nil)
         let connectionController = ConnectionViewController(scanner: scanner)
@@ -49,10 +54,11 @@ class UARTViewController1: UIViewController {
         self.present(nc, animated: true, completion: nil)
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        collectionView.collectionViewLayout.invalidateLayout()
+    @IBAction func playMacro() {
+        let vc = UARTMacroViewController(bluetoothManager: btManager, commandsList: commands)
+        present(UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false), animated: true)
     }
+    
 }
 
 extension UARTViewController1: ConnectionViewControllerDelegate {

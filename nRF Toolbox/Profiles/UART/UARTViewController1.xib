@@ -40,13 +40,22 @@
                         <constraint firstAttribute="height" constant="44" id="Y8A-HC-bOk"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="17p-aa-r8M" customClass="NordicButton" customModule="nRF_Toolbox" customModuleProvider="target">
+                    <rect key="frame" x="169" y="510" width="76" height="30"/>
+                    <state key="normal" title="Play Macro"/>
+                    <connections>
+                        <action selector="playMacro" destination="-1" eventType="touchUpInside" id="4R0-So-geL"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="GMu-sG-Zuq" secondAttribute="bottom" constant="16" id="257-n3-eHY"/>
                 <constraint firstItem="GMu-sG-Zuq" firstAttribute="leading" secondItem="2NO-LA-gil" secondAttribute="leading" id="8Tq-gH-Fky"/>
+                <constraint firstItem="17p-aa-r8M" firstAttribute="top" secondItem="GMu-sG-Zuq" secondAttribute="bottom" constant="8" id="FpJ-2g-H00"/>
                 <constraint firstItem="GMu-sG-Zuq" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="LIo-zd-yOA"/>
                 <constraint firstItem="GMu-sG-Zuq" firstAttribute="top" secondItem="2NO-LA-gil" secondAttribute="bottom" constant="16" id="P3V-bT-KIW"/>
+                <constraint firstItem="17p-aa-r8M" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="PeW-lR-a22"/>
                 <constraint firstItem="GMu-sG-Zuq" firstAttribute="trailing" secondItem="2NO-LA-gil" secondAttribute="trailing" id="Q7j-zf-8qq"/>
                 <constraint firstItem="GMu-sG-Zuq" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" priority="999" constant="16" id="XH1-CB-Eiq"/>
                 <constraint firstItem="2NO-LA-gil" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="ufp-Dq-Bqs"/>

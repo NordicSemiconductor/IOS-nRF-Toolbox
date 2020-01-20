@@ -20,7 +20,8 @@ class UARTActionCollectionViewCell: UICollectionViewCell {
 
     func apply(command: UARTCommandModel) {
         title.text = command.title
-        image.image = command.image.image
+        image.image = command.image.image?.withRenderingMode(.alwaysTemplate)
+        image.tintColor = .nordicBlue
         title.textColor = {
             if command is DataCommand {
                 return UIColor.Text.secondarySystemText

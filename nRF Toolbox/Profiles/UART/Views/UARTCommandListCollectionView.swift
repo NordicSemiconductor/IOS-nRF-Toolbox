@@ -13,7 +13,11 @@ protocol UARTCommandListDelegate: class {
 }
 
 class UARTCommandListCollectionView: UICollectionView {
-    var commands: [UARTCommandModel] = Array.init(repeating: EmptyModel(), count: 9)
+    var commands: [UARTCommandModel] = Array.init(repeating: EmptyModel(), count: 9) {
+        didSet {
+            reloadData()
+        }
+    }
     weak var commandListDelegate: UARTCommandListDelegate?
     
     required init?(coder: NSCoder) {
