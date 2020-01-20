@@ -55,6 +55,11 @@ class UARTViewController1: UIViewController {
     }
     
     @IBAction func playMacro() {
+        guard btManager.isConnected() else {
+            openConnectorViewController()
+            return
+        }
+        
         let vc = UARTMacroViewController(bluetoothManager: btManager, commandsList: commands)
         present(UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false), animated: true)
     }

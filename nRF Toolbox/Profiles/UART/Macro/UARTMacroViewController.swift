@@ -45,8 +45,8 @@ class UARTMacroViewController: UIViewController {
     }
     
     @IBAction func play() {
-        var itorator = macros.makeIterator()
-        
+        let macro = UARTMacro(name: "Test", timeInterval: timeStepper.value / 1000, commands: macros)
+        btManager.send(macro: macro)
     }
     
     @IBAction func timeStep(sender: UIStepper) {

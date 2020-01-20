@@ -36,6 +36,12 @@ protocol BluetoothManagerDelegate {
     func peripheralNotSupported()
 }
 
+protocol UARTMacroPlayerDelegate {
+    func startPlaying(macros: UARTMacro)
+    func playedCommand(_ command: UARTCommandModel, in macro: UARTMacro)
+    func macroPlayed(_ macro: UARTMacro)
+}
+
 enum BluetoothManagerError: Error {
     case cannotFindPeripheral
     
@@ -48,8 +54,9 @@ enum BluetoothManagerError: Error {
 class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate {
     
     //MARK: - Delegate Properties
-    var delegate : BluetoothManagerDelegate?
-    var logger   : Logger?
+    var delegate: BluetoothManagerDelegate?
+    var macroPlayerDelegate: UARTMacroPlayerDelegate?
+    var logger: Logger?
     
     //MARK: - Class Properties
     fileprivate let UARTServiceUUID             : CBUUID
@@ -63,6 +70,8 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
     
     fileprivate var connected = false
     private var connectingPeripheral: CBPeripheral!
+    
+    private var macroTimer: DispatchSourceTimer!
     
     //MARK: - BluetoothManager API
     
@@ -193,14 +202,38 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
         
         // Check what kind of Write Type is supported. By default it will try Without Response.
         // If the RX charactereisrtic have Write property the Write Request type will be used.
-        let type: CBCharacteristicWriteType = uartRXCharacteristic.properties.contains(.write) ? .withResponse : .withoutResponse
+//        let type: CBCharacteristicWriteType = uartRXCharacteristic.properties.contains(.write) ? .withResponse : .withoutResponse
         
-        let MTU = bluetoothPeripheral?.maximumWriteValueLength(for: type) ?? 20
+//        let MTU = bluetoothPeripheral?.maximumWriteValueLength(for: type) ?? 20
+        
+        var type: CBCharacteristicWriteType = .withoutResponse
+        var MTU = bluetoothPeripheral?.maximumWriteValueLength(for: .withoutResponse) ?? 20
+        if uartRXCharacteristic.properties.contains(.write) {
+            type = .withResponse
+            MTU = bluetoothPeripheral?.maximumWriteValueLength(for: .withResponse) ?? 20
+        }
         
         let data = aCommand.data.split(by: MTU)
         data.forEach {
             self.bluetoothPeripheral!.writeValue($0, for: uartRXCharacteristic, type: type)
         }
+    }
+    
+    func send(macro: UARTMacro) {
+        self.macroTimer = DispatchSource.makeTimerSource()
+        var iterator = macro.commands.makeIterator()
+        
+        macroTimer.setEventHandler { [unowned self] in
+            guard let command = iterator.next() else {
+                self.macroTimer.cancel()
+                return
+            }
+            self.send(command: command)
+        }
+        
+        let miliseconds = Int(macro.timeInterval * 1000.0)
+        macroTimer.schedule(deadline: .now(), repeating: .milliseconds(miliseconds))
+        macroTimer.activate()
     }
     
     //MARK: - Logger API
