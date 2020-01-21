@@ -37,7 +37,9 @@ class UARTMacroViewController: UIViewController {
         super.viewDidLoad()
         commandOrderTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         commandListCollectionView.commands = commandsList
-        commandListCollectionView.commandListDelegate = self 
+        commandListCollectionView.commandListDelegate = self
+        
+        commandOrderTableView.isEditing = true
     }
     
     func setCommandList(_ commands: [UARTCommandModel]) {
@@ -76,6 +78,40 @@ extension UARTMacroViewController: UITableViewDataSource {
         cell?.imageView?.tintColor = .nordicBlue
         return cell!
     }
+}
+
+extension UARTMacroViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            macros.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        default:
+            break
+        }
+    }
     
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, ip) in
+            self.macros.remove(at: ip.row)
+            tableView.deleteRows(at: [ip], with: .automatic)
+        }
+        
+        return [delete]
+    }
     
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let item = macros[sourceIndexPath.row]
+        macros.remove(at: sourceIndexPath.row)
+        macros.insert(item, at: destinationIndexPath.row)
+    }
+ 
 }
