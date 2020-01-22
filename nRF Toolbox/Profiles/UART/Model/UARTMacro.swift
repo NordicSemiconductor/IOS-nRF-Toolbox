@@ -10,6 +10,89 @@ import Foundation
 
 struct UARTMacro {
     let name: String
-    let timeInterval: TimeInterval
+    /// Delay between commands in milliseconds
+    let delay: Int
     let commands: [UARTCommandModel]
+}
+
+private struct UARTCommandContainer: Codable {
+    enum CommandType: String, Codable {
+        case empty, text, data
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case command, type
+    }
+    
+    let command: UARTCommandModel
+    let type: CommandType
+    
+    init(_ command: UARTCommandModel) {
+        self.command = command
+        self.type = {
+            switch command {
+            case is TextCommand: return .text
+            case is DataCommand: return .data
+            default: return .empty
+            }
+        }()
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.type = try container.decode(CommandType.self, forKey: .type)
+        switch self.type {
+        case .text:
+            self.command = try container.decode(TextCommand.self, forKey: .command)
+        case .data:
+            self.command = try container.decode(DataCommand.self, forKey: .command)
+        default:
+            self.command = EmptyModel()
+        }
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(type, forKey: .type)
+        switch self.command {
+        case let m as TextCommand:
+            try container.encode(m, forKey: .command)
+        case let m as DataCommand:
+            try container.encode(m, forKey: .command)
+        case let m as EmptyModel:
+            try container.encode(m, forKey: .command)
+        default:
+            break
+        }
+    }
+    
+    
+}
+
+extension UARTMacro: Codable {
+    
+    enum Error: Swift.Error {
+        case cannotParseCommandList
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case name, delay, commands
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.delay = try container.decode(Int.self, forKey: .delay)
+        let commandContainers = try container.decode([UARTCommandContainer].self, forKey: .commands)
+        self.commands = commandContainers.map { $0.command }
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(name, forKey: .name)
+        try container.encode(delay, forKey: .delay)
+        
+        let commandContainers = commands.map(UARTCommandContainer.init)
+        try container.encode(commandContainers, forKey: .commands)
+    }
 }

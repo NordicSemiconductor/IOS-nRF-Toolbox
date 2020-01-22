@@ -231,8 +231,7 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
             self.send(command: command)
         }
         
-        let miliseconds = Int(macro.timeInterval * 1000.0)
-        macroTimer.schedule(deadline: .now(), repeating: .milliseconds(miliseconds))
+        macroTimer.schedule(deadline: .now(), repeating: .milliseconds(macro.delay))
         macroTimer.activate()
     }
     

@@ -8,19 +8,23 @@
 
 import UIKit.UIImage
 
-protocol UARTCommandModel {
+protocol UARTCommandModel: Codable {
     var image: CommandImage { get }
     var title: String { get }
     var data: Data { get }
 }
 
-struct EmptyModel: UARTCommandModel {
+struct EmptyModel: UARTCommandModel, Codable {
     let image: CommandImage = .empty
     let title: String = ""
     let data: Data = Data()
+    
+    init() { }
+    init(from decoder: Decoder) throws { }
+    func encode(to encoder: Encoder) throws { }
 }
 
-struct TextCommand: UARTCommandModel {
+struct TextCommand: UARTCommandModel, Codable {
     var title: String { text }
     
     var data: Data {
@@ -31,7 +35,7 @@ struct TextCommand: UARTCommandModel {
     let image: CommandImage
 }
 
-struct DataCommand: UARTCommandModel {
+struct DataCommand: UARTCommandModel, Codable {
     var title: String { "0x" + data.hexEncodedString().uppercased() }
     
     let data: Data

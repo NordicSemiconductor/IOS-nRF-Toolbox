@@ -161,6 +161,8 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/AEXML/AEXML.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/AnyCodable/AnyCodable.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Charts/Charts.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CorePlot/CorePlot.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/EVReflection/EVReflection.framework"
@@ -169,6 +171,8 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/iOSDFULibrary/iOSDFULibrary.framework"
 fi
 if [[ "$CONFIGURATION" == "Beta" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/AEXML/AEXML.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/AnyCodable/AnyCodable.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Charts/Charts.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CorePlot/CorePlot.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/EVReflection/EVReflection.framework"
@@ -177,6 +181,8 @@ if [[ "$CONFIGURATION" == "Beta" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/iOSDFULibrary/iOSDFULibrary.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/AEXML/AEXML.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/AnyCodable/AnyCodable.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Charts/Charts.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CorePlot/CorePlot.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/EVReflection/EVReflection.framework"

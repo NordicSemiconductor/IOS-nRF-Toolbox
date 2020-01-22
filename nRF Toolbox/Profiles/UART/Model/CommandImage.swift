@@ -8,7 +8,7 @@
 
 import UIKit.UIImage
 
-struct CommandImage {
+struct CommandImage: Codable {
     var name: String
     var image: UIImage? { UIImage(named: self.name) }
     

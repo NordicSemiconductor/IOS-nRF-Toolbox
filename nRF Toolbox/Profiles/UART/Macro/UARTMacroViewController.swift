@@ -40,6 +40,20 @@ class UARTMacroViewController: UIViewController {
         commandListCollectionView.commandListDelegate = self
         
         commandOrderTableView.isEditing = true
+        
+        navigationItem.title = "Create new Macro"
+        
+        let saveBtn = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
+        let closeBtn: UIBarButtonItem = {
+            if #available(iOS 13, *) {
+                return UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(closeAction))
+            } else {
+                return UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(closeAction))
+            }
+        }()
+        
+        navigationItem.rightBarButtonItem = saveBtn
+        navigationItem.leftBarButtonItem = closeBtn
     }
     
     func setCommandList(_ commands: [UARTCommandModel]) {
@@ -47,12 +61,27 @@ class UARTMacroViewController: UIViewController {
     }
     
     @IBAction func play() {
-        let macro = UARTMacro(name: "Test", timeInterval: timeStepper.value / 1000, commands: macros)
+        let macro = UARTMacro(name: "Test", delay: Int(timeStepper.value), commands: macros)
         btManager.send(macro: macro)
     }
     
     @IBAction func timeStep(sender: UIStepper) {
         timeLabel.text = "\(Int(sender.value)) ms"
+    }
+    
+    @objc private func save() {
+        do {
+            let macro = UARTMacro(name: "Test", delay: Int(timeStepper.value), commands: macros)
+            let data = try JSONEncoder().encode(macro)
+            let newMacro = try JSONDecoder().decode(UARTMacro.self, from: data)
+            btManager.send(macro: newMacro)
+        } catch let error {
+            print(error.localizedDescription)
+        }
+    }
+    
+    @objc private func closeAction() {
+        self.dismiss(animated: true)
     }
 
 }

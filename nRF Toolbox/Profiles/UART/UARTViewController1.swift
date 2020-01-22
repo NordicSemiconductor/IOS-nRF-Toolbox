@@ -26,10 +26,6 @@ class UARTViewController1: UIViewController {
         btManager.logger = self
         navigationItem.rightBarButtonItem = connectBtn
         
-        commands[5] = TextCommand(text: "Play", image: "Play")
-        let data = "ay".data(using: .ascii)!
-        commands[7] = DataCommand(data: data, image: "Pause")
-        
         navigationItem.title = "UART"
         
         peripheralView.disconnect()
@@ -61,6 +57,11 @@ class UARTViewController1: UIViewController {
         }
         
         let vc = UARTMacroViewController(bluetoothManager: btManager, commandsList: commands)
+        
+        if #available(iOS 13.0, *) {
+            vc.isModalInPresentation = true
+        }
+        
         present(UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false), animated: true)
     }
     
