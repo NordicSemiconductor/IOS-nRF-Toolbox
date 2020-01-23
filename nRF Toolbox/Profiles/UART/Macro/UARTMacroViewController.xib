@@ -51,15 +51,15 @@
                             </connections>
                         </stepper>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="100 ms" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jvr-Ya-U1o">
-                            <rect key="frame" x="102" y="0.0" width="222" height="32"/>
+                            <rect key="frame" x="102" y="0.0" width="197" height="32"/>
                             <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="15"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gNK-mr-HRh" customClass="NordicButton" customModule="nRF_Toolbox" customModuleProvider="target">
-                            <rect key="frame" x="332" y="0.0" width="50" height="32"/>
+                            <rect key="frame" x="307" y="0.0" width="75" height="32"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="50" id="4VZ-fg-w3j"/>
+                                <constraint firstAttribute="width" constant="75" id="4VZ-fg-w3j"/>
                             </constraints>
                             <state key="normal" title="Play"/>
                             <connections>
@@ -77,7 +77,7 @@
                     </connections>
                 </tableView>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
                 <constraint firstItem="h2G-g0-G1E" firstAttribute="top" secondItem="GrI-VW-uQP" secondAttribute="bottom" constant="12" id="7Ez-xr-YV4"/>
                 <constraint firstItem="GrI-VW-uQP" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Rgw-Ae-r0W"/>

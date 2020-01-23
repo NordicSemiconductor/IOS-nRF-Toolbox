@@ -113,6 +113,22 @@ extension UIColor {
             return .black
         }
     }()
+    
+    static let nordicBackground: UIColor = {
+        if #available(iOS 13, *) {
+            return .systemBackground
+        } else {
+            return .white
+        }
+    }()
+    
+    static let nordicSecondaryBackground: UIColor = {
+        if #available(iOS 13, *) {
+            return .secondarySystemBackground
+        } else {
+            return .nordicAlmostWhite
+        }
+    }()
 }
 
 // MARK: - System Colors

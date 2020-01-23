@@ -13,7 +13,7 @@ protocol UARTCommandListDelegate: class {
 }
 
 class UARTCommandListCollectionView: UICollectionView {
-    var commands: [UARTCommandModel] = Array.init(repeating: EmptyModel(), count: 9) {
+    var preset: UARTPreset = .default {
         didSet {
             reloadData()
         }
@@ -47,18 +47,18 @@ extension UARTCommandListCollectionView: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let command = commands[indexPath.item]
+        let command = preset.commands[indexPath.item]
         self.commandListDelegate?.selectedCommand(command)
     }
 }
 
 extension UARTCommandListCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return commands.count
+        return preset.commands.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let command = commands[indexPath.item]
+        let command = preset.commands[indexPath.item]
         
         let cell = collectionView.dequeueCell(ofType: UARTActionCollectionViewCell.self, for: indexPath)
         cell.apply(command: command)

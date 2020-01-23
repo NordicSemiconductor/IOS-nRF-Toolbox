@@ -16,12 +16,24 @@ class UARTActionCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        let bgView = UIView()
+        let selectedBGView = UIView()
+        if #available(iOS 13.0, *) {
+            bgView.backgroundColor = .systemGray5
+            selectedBGView.backgroundColor = .systemGray2
+        } else {
+            bgView.backgroundColor = .nordicLightGray
+            selectedBGView.backgroundColor = .nordicAlmostWhite
+        }
+        selectedBackgroundView = selectedBGView
+        backgroundView = bgView
+        image.tintColor = .nordicBlue
     }
 
     func apply(command: UARTCommandModel) {
         title.text = command.title
         image.image = command.image.image?.withRenderingMode(.alwaysTemplate)
-        image.tintColor = .nordicBlue
         title.textColor = {
             if command is DataCommand {
                 return UIColor.Text.secondarySystemText

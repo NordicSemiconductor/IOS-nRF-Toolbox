@@ -6,15 +6,24 @@
 //  Copyright © 2020 Nordic Semiconductor. All rights reserved.
 //
 
-import UIKit.UIImage
+import Foundation
+import AEXML
 
-protocol UARTCommandModel: Codable {
+protocol UARTCommandModel: Codable, XMLRepresentable {
     var image: CommandImage { get }
     var title: String { get }
     var data: Data { get }
 }
 
-struct EmptyModel: UARTCommandModel, Codable {
+protocol XMLRepresentable {
+    var xml: AEXMLElement { get }
+}
+
+struct EmptyModel: UARTCommandModel {
+    var xml: AEXMLElement {
+        return AEXMLElement(name: "command")
+    }
+    
     let image: CommandImage = .empty
     let title: String = ""
     let data: Data = Data()
@@ -24,7 +33,15 @@ struct EmptyModel: UARTCommandModel, Codable {
     func encode(to encoder: Encoder) throws { }
 }
 
-struct TextCommand: UARTCommandModel, Codable {
+struct TextCommand: UARTCommandModel {
+    var xml: AEXMLElement {
+        return AEXMLElement(name: "command", value: text, attributes: [
+            "icon":image.name,
+            "active":"true",
+            "eol":"CR"
+        ])
+    }
+    
     var title: String { text }
     
     var data: Data {
@@ -35,7 +52,15 @@ struct TextCommand: UARTCommandModel, Codable {
     let image: CommandImage
 }
 
-struct DataCommand: UARTCommandModel, Codable {
+struct DataCommand: UARTCommandModel {
+    var xml: AEXMLElement {
+        return AEXMLElement(name: "command", value: String(data: data, encoding: .ascii), attributes: [
+            "icon":image.name,
+            "active":"true",
+            "eol":"CR"
+        ])
+    }
+    
     var title: String { "0x" + data.hexEncodedString().uppercased() }
     
     let data: Data

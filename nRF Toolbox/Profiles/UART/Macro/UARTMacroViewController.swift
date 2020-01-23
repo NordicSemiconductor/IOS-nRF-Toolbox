@@ -9,8 +9,6 @@
 import UIKit
 
 class UARTMacroViewController: UIViewController {
-
-    private let commandsList: [UARTCommandModel]
     private let btManager: BluetoothManager
 
     @IBOutlet var commandListCollectionView: UARTCommandListCollectionView!
@@ -19,13 +17,14 @@ class UARTMacroViewController: UIViewController {
     @IBOutlet var playBtn: NordicButton!
     @IBOutlet var timeLabel: UILabel!
     
+    private let preset: UARTPreset
     private var macros: [UARTCommandModel] = []
     
     private lazy var dispatchSource = DispatchSource.makeTimerSource(queue: .main)
     
-    init(bluetoothManager: BluetoothManager, commandsList: [UARTCommandModel]) {
+    init(bluetoothManager: BluetoothManager, preset: UARTPreset) {
         self.btManager = bluetoothManager
-        self.commandsList = commandsList
+        self.preset = preset
         super.init(nibName: "UARTMacroViewController", bundle: .main)
     }
     
@@ -36,11 +35,12 @@ class UARTMacroViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         commandOrderTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        commandListCollectionView.commands = commandsList
+        commandListCollectionView.preset = preset
         commandListCollectionView.commandListDelegate = self
         
         commandOrderTableView.isEditing = true
         
+        playBtn.style = .mainAction
         navigationItem.title = "Create new Macro"
         
         let saveBtn = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
@@ -54,10 +54,8 @@ class UARTMacroViewController: UIViewController {
         
         navigationItem.rightBarButtonItem = saveBtn
         navigationItem.leftBarButtonItem = closeBtn
-    }
-    
-    func setCommandList(_ commands: [UARTCommandModel]) {
-        commandListCollectionView.commands = commands
+        
+        commandListCollectionView.backgroundColor = .white
     }
     
     @IBAction func play() {

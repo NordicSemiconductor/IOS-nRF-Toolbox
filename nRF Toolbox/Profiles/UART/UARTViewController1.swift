@@ -8,23 +8,26 @@
 
 import UIKit
 import CoreBluetooth
+import AEXML
 
 class UARTViewController1: UIViewController {
 
     let btManager = BluetoothManager()
     
-    private lazy var connectBtn = UIBarButtonItem(title: "Connect", style: .done, target: self, action: #selector(openConnectorViewController))
+    private lazy var shareBtn = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share))
     
     @IBOutlet private var peripheralView: PeripheralView!
     @IBOutlet private var collectionView: UARTCommandListCollectionView!
-    private var commands: [UARTCommandModel] = Array.init(repeating: EmptyModel(), count: 9)
+    @IBOutlet private var macroBtn: NordicButton!
+    
+    private var preset: UARTPreset = .default
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         btManager.delegate = self
         btManager.logger = self
-        navigationItem.rightBarButtonItem = connectBtn
+        navigationItem.rightBarButtonItem = shareBtn
         
         navigationItem.title = "UART"
         
@@ -32,6 +35,8 @@ class UARTViewController1: UIViewController {
         peripheralView.delegate = self
         
         collectionView.commandListDelegate = self
+        
+        macroBtn.style = .mainAction
     }
     
     override func viewWillLayoutSubviews() {
@@ -50,13 +55,18 @@ class UARTViewController1: UIViewController {
         self.present(nc, animated: true, completion: nil)
     }
     
+    @objc func share() {
+        let xml = preset.document
+        print(xml.xml)
+    }
+    
     @IBAction func playMacro() {
         guard btManager.isConnected() else {
             openConnectorViewController()
             return
         }
         
-        let vc = UARTMacroViewController(bluetoothManager: btManager, commandsList: commands)
+        let vc = UARTMacroViewController(bluetoothManager: btManager, preset: preset)
         
         if #available(iOS 13.0, *) {
             vc.isModalInPresentation = true
@@ -83,12 +93,10 @@ extension UARTViewController1: BluetoothManagerDelegate {
         }
         
         scanner.dismiss(animated: true, completion: nil)
-        navigationItem.rightBarButtonItem?.isEnabled = false
         peripheralView.connected(peripheral: aName ?? "No Name")
     }
     
     func didDisconnectPeripheral() {
-        navigationItem.rightBarButtonItem?.isEnabled = true
         peripheralView.disconnect()
     }
     
@@ -99,7 +107,6 @@ extension UARTViewController1: BluetoothManagerDelegate {
     func peripheralNotSupported() {
         // MARK: Show Alert
         peripheralView.disconnect()
-        navigationItem.rightBarButtonItem?.isEnabled = true
     }
 }
 
@@ -115,8 +122,7 @@ extension UARTViewController1: UARTNewCommandDelegate {
             return
         }
         
-        commands[selectedItemIndex] = command
-        collectionView.commands = commands
+        preset.updateCommand(command, at: selectedItemIndex)
         collectionView.reloadData()
         dismiss(animated: true, completion: nil)
     }
