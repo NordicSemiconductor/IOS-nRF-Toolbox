@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UARTMacroViewController: UIViewController {
+class UARTMacroViewController: UIViewController, AlertPresenter {
     private let btManager: BluetoothManager
 
     @IBOutlet var commandListCollectionView: UARTCommandListCollectionView!
@@ -68,18 +68,49 @@ class UARTMacroViewController: UIViewController {
     }
     
     @objc private func save() {
-        do {
-            let macro = UARTMacro(name: "Test", delay: Int(timeStepper.value), commands: macros)
-            let data = try JSONEncoder().encode(macro)
-            let newMacro = try JSONDecoder().decode(UARTMacro.self, from: data)
-            btManager.send(macro: newMacro)
-        } catch let error {
-            print(error.localizedDescription)
+        let alert = UIAlertController(title: "Enter macro's name", message: nil, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default) { (action) in
+            guard let text = alert.textFields?.first?.text, !text.isEmpty else {
+                self.displayErrorAlert(error: QuickError(message: "Name shouldn't be empty"))
+                return
+            }
+            self.saveMacros(text)
         }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addTextField { (tf) in
+            tf.placeholder = "Macro's name"
+        }
+        
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
     }
     
     @objc private func closeAction() {
         self.dismiss(animated: true)
+    }
+    
+    private func saveMacros(_ name: String) {
+        let fileManager = FileManager.default
+        do {
+            let macro = UARTMacro(name: "Test", delay: Int(timeStepper.value), commands: macros)
+            let data = try JSONEncoder().encode(macro)
+            let documentDirectory = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("macros")
+            try fileManager.createDirectory(at: documentDirectory, withIntermediateDirectories: true, attributes: nil)
+            let fileUrl = documentDirectory
+                .appendingPathComponent(name)
+                .appendingPathExtension("json")
+            
+            guard !fileManager.fileExists(atPath: fileUrl.absoluteString) else {
+                throw QuickError(message: "Macro with that name already exists")
+            }
+            try data.write(to: fileUrl)
+            
+        } catch let error {
+            displayErrorAlert(error: error)
+        }
     }
 
 }
