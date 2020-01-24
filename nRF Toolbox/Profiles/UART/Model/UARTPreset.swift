@@ -10,6 +10,11 @@ import Foundation
 import AEXML
 
 struct UARTPreset {
+    
+    enum Error: Swift.Error {
+        case wrongXMLFormat
+    }
+    
     var commands: [UARTCommandModel] = Array(repeating: EmptyModel(), count: 9)
     var name: String
     
@@ -31,13 +36,54 @@ struct UARTPreset {
     mutating func updateCommand(_ command: UARTCommandModel, at index: Int) {
         commands[index] = command
     }
+    
+    init(commands: [UARTCommandModel], name: String) {
+        self.commands = commands
+        self.name = name
+    }
+    
+    init(data: Data) throws {
+        let document = try AEXMLDocument(xml: data)
+        let children = document.children
+        guard let rootNode = children.first(where: { (e) -> Bool in
+            e.name == "uart-configuration"
+        }) else {
+            throw Error.wrongXMLFormat
+        }
+        
+        self.name = rootNode.attributes["name"] ?? ""
+        guard let commandsNode = rootNode.children.first(where: { $0.name == "commands" }) else {
+            throw Error.wrongXMLFormat
+        }
+        
+        var commands: [UARTCommandModel] = []
+        for node in commandsNode.children {
+            guard commands.count < 9 else {
+                break
+            }
+            
+            guard let text = node.value else {
+                commands.append(EmptyModel())
+                continue
+            }
+            
+            let image = CommandImage(name: (node.attributes["icon"] ?? ""))
+            commands.append(TextCommand(text: text, image: image))
+        }
+        
+        while commands.count < 9 {
+            commands.append(EmptyModel())
+        }
+        
+        self.commands = commands
+    }
 }
 
 extension UARTPreset {
     static let `default` = UARTPreset(commands: [
         DataCommand(data: Data([0x01]), image: .number1),
-        DataCommand(data: Data([0x02]), image: .number1),
-        DataCommand(data: Data([0x03]), image: .number1),
+        DataCommand(data: Data([0x02]), image: .number2),
+        DataCommand(data: Data([0x03]), image: .number3),
         TextCommand(text: "Pause", image: .pause),
         TextCommand(text: "Play", image: .play),
         TextCommand(text: "Stop", image: .stop),

@@ -75,6 +75,11 @@ class UARTViewController1: UIViewController {
         present(UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false), animated: true)
     }
     
+    @IBAction func loadPreset() {
+        let documentPickerVC = UIDocumentPickerViewController(documentTypes: ["public.xml", "public.json"], in: .import)
+        documentPickerVC.delegate = self
+        present(documentPickerVC, animated: true)
+    }
 }
 
 extension UARTViewController1: ConnectionViewControllerDelegate {
@@ -123,7 +128,7 @@ extension UARTViewController1: UARTNewCommandDelegate {
         }
         
         preset.updateCommand(command, at: selectedItemIndex)
-        collectionView.reloadData()
+        collectionView.preset = preset
         dismiss(animated: true, completion: nil)
     }
     
@@ -151,5 +156,18 @@ extension UARTViewController1: UARTCommandListDelegate {
         }
         
         btManager.send(command: command)
+    }
+}
+
+extension UARTViewController1: UIDocumentPickerDelegate {
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
+        do {
+            let data = try Data(contentsOf: url)
+            let preset = try UARTPreset(data: data)
+            self.preset = preset
+            collectionView.preset = preset
+        } catch let error {
+            print(error.localizedDescription)
+        }
     }
 }

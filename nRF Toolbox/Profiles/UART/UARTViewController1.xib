@@ -48,6 +48,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="183" height="30"/>
                             <state key="normal" title="Load Preset"/>
                             <connections>
+                                <action selector="loadPreset" destination="-1" eventType="touchUpInside" id="X6c-ih-t83"/>
                                 <action selector="playMacro" destination="-1" eventType="touchUpInside" id="xJN-Iu-g14"/>
                             </connections>
                         </button>
