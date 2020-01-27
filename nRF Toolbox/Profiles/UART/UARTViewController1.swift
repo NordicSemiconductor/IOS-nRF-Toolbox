@@ -65,12 +65,7 @@ class UARTViewController1: UIViewController {
             openConnectorViewController()
             return
         }
-        
-        let vc = UARTMacroViewController(bluetoothManager: btManager, preset: preset)
-        
-        if #available(iOS 13.0, *) {
-            vc.isModalInPresentation = true
-        }
+        let vc = UARTMacrosList(bluetoothManager: btManager, preset: preset)
         
         present(UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false), animated: true)
     }

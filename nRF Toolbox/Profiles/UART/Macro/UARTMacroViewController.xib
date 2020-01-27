@@ -17,6 +17,7 @@
             <connections>
                 <outlet property="commandListCollectionView" destination="GrI-VW-uQP" id="Hr0-5p-Yvx"/>
                 <outlet property="commandOrderTableView" destination="6cd-rl-6dJ" id="AVk-gm-rGR"/>
+                <outlet property="nameTextField" destination="6zp-Ba-BAE" id="z2F-Cb-cQe"/>
                 <outlet property="playBtn" destination="gNK-mr-HRh" id="ZFD-gO-GGD"/>
                 <outlet property="timeLabel" destination="Jvr-Ya-U1o" id="FNE-tM-Sdh"/>
                 <outlet property="timeStepper" destination="muv-wV-kd6" id="RLz-Xd-gwa"/>
@@ -29,7 +30,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="GrI-VW-uQP" customClass="UARTCommandListCollectionView" customModule="nRF_Toolbox" customModuleProvider="target">
-                    <rect key="frame" x="16" y="44" width="382" height="382"/>
+                    <rect key="frame" x="16" y="118.5" width="382" height="382"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="GrI-VW-uQP" secondAttribute="height" multiplier="1:1" id="5Is-zu-cr4"/>
@@ -42,7 +43,7 @@
                     </collectionViewFlowLayout>
                 </collectionView>
                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="h2G-g0-G1E">
-                    <rect key="frame" x="16" y="438" width="382" height="32"/>
+                    <rect key="frame" x="16" y="512.5" width="382" height="32"/>
                     <subviews>
                         <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="100" minimumValue="100" maximumValue="10000" stepValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="muv-wV-kd6">
                             <rect key="frame" x="0.0" y="0.0" width="94" height="32"/>
@@ -69,29 +70,48 @@
                     </subviews>
                 </stackView>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6cd-rl-6dJ">
-                    <rect key="frame" x="0.0" y="482" width="414" height="380"/>
+                    <rect key="frame" x="0.0" y="556.5" width="414" height="305.5"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="1bo-eX-vgG"/>
                         <outlet property="delegate" destination="-1" id="NCI-8V-VfR"/>
                     </connections>
                 </tableView>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6zp-Ba-BAE">
+                    <rect key="frame" x="16" y="76.5" width="382" height="34"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="mHn-dc-XuY"/>
+                    </connections>
+                </textField>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Macros Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nFJ-JL-eRT">
+                    <rect key="frame" x="16" y="52" width="88" height="16.5"/>
+                    <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="14"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
+                <constraint firstItem="GrI-VW-uQP" firstAttribute="width" secondItem="6zp-Ba-BAE" secondAttribute="width" id="2CQ-yS-LFe"/>
                 <constraint firstItem="h2G-g0-G1E" firstAttribute="top" secondItem="GrI-VW-uQP" secondAttribute="bottom" constant="12" id="7Ez-xr-YV4"/>
                 <constraint firstItem="GrI-VW-uQP" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Rgw-Ae-r0W"/>
                 <constraint firstItem="6cd-rl-6dJ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="SQw-ow-xYR"/>
                 <constraint firstItem="h2G-g0-G1E" firstAttribute="trailing" secondItem="GrI-VW-uQP" secondAttribute="trailing" id="Ula-VD-887"/>
                 <constraint firstItem="h2G-g0-G1E" firstAttribute="leading" secondItem="GrI-VW-uQP" secondAttribute="leading" id="W84-pA-gT2"/>
                 <constraint firstItem="GrI-VW-uQP" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="X5a-qN-JuJ"/>
+                <constraint firstItem="6zp-Ba-BAE" firstAttribute="top" secondItem="nFJ-JL-eRT" secondAttribute="bottom" constant="8" id="XHf-nU-80f"/>
+                <constraint firstItem="nFJ-JL-eRT" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="8" id="Y5r-MN-do3"/>
+                <constraint firstItem="GrI-VW-uQP" firstAttribute="top" secondItem="6zp-Ba-BAE" secondAttribute="bottom" constant="8" id="dN4-AG-Z2P"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="6cd-rl-6dJ" secondAttribute="trailing" id="eVj-uS-RbQ"/>
+                <constraint firstItem="6zp-Ba-BAE" firstAttribute="leading" secondItem="nFJ-JL-eRT" secondAttribute="leading" id="fhl-WH-oou"/>
                 <constraint firstItem="6cd-rl-6dJ" firstAttribute="top" secondItem="h2G-g0-G1E" secondAttribute="bottom" constant="12" id="h2R-7y-8W2"/>
+                <constraint firstItem="GrI-VW-uQP" firstAttribute="leading" secondItem="6zp-Ba-BAE" secondAttribute="leading" id="orw-2l-uEf"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="6cd-rl-6dJ" secondAttribute="bottom" id="vSc-vd-QR2"/>
-                <constraint firstItem="GrI-VW-uQP" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="yh2-L4-jRr"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <point key="canvasLocation" x="139" y="154"/>
+            <point key="canvasLocation" x="137.68115942028987" y="153.34821428571428"/>
         </view>
     </objects>
 </document>

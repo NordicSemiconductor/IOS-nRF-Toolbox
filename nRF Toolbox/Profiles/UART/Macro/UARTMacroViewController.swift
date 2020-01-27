@@ -16,15 +16,18 @@ class UARTMacroViewController: UIViewController, AlertPresenter {
     @IBOutlet var timeStepper: UIStepper!
     @IBOutlet var playBtn: NordicButton!
     @IBOutlet var timeLabel: UILabel!
+    @IBOutlet var nameTextField: UITextField!
     
     private let preset: UARTPreset
     private var macros: [UARTCommandModel] = []
+    private var fileUrl: URL?
     
     private lazy var dispatchSource = DispatchSource.makeTimerSource(queue: .main)
     
-    init(bluetoothManager: BluetoothManager, preset: UARTPreset) {
+    init(bluetoothManager: BluetoothManager, preset: UARTPreset, macroUrl: URL? = nil) {
         self.btManager = bluetoothManager
         self.preset = preset
+        self.fileUrl = macroUrl
         super.init(nibName: "UARTMacroViewController", bundle: .main)
     }
     
@@ -44,22 +47,20 @@ class UARTMacroViewController: UIViewController, AlertPresenter {
         navigationItem.title = "Create new Macro"
         
         let saveBtn = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
-        let closeBtn: UIBarButtonItem = {
-            if #available(iOS 13, *) {
-                return UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(closeAction))
-            } else {
-                return UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(closeAction))
-            }
-        }()
         
         navigationItem.rightBarButtonItem = saveBtn
-        navigationItem.leftBarButtonItem = closeBtn
         
         commandListCollectionView.backgroundColor = .white
+        
+        self.fileUrl.flatMap(preloadMacro(_:))
+        
+        if #available(iOS 13.0, *) {
+            isModalInPresentation = true
+        }
     }
     
     @IBAction func play() {
-        let macro = UARTMacro(name: "Test", delay: Int(timeStepper.value), commands: macros)
+        let macro = UARTMacro(name: nameTextField.text ?? "", delay: Int(timeStepper.value), commands: macros)
         btManager.send(macro: macro)
     }
     
@@ -68,34 +69,47 @@ class UARTMacroViewController: UIViewController, AlertPresenter {
     }
     
     @objc private func save() {
-        let alert = UIAlertController(title: "Enter macro's name", message: nil, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Ok", style: .default) { (action) in
-            guard let text = alert.textFields?.first?.text, !text.isEmpty else {
-                self.displayErrorAlert(error: QuickError(message: "Name shouldn't be empty"))
-                return
+        guard let name = nameTextField.text, !name.isEmpty else {
+            displayErrorAlert(error: QuickError(message: "Enter marco's name"))
+            return
+        }
+        
+        fileUrl.flatMap {
+            do {
+                try FileManager.default.removeItem(at: $0)
+            } catch let error {
+                displayErrorAlert(error: error)
             }
-            self.saveMacros(text)
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alert.addTextField { (tf) in
-            tf.placeholder = "Macro's name"
-        }
-        
-        alert.addAction(okAction)
-        alert.addAction(cancelAction)
-        
-        present(alert, animated: true, completion: nil)
+        saveMacros(name)
     }
     
     @objc private func closeAction() {
         self.dismiss(animated: true)
     }
+
+}
+
+extension UARTMacroViewController {
+    private func preloadMacro(_ url: URL) {
+        do {
+            let data = try Data(contentsOf: url)
+            let macro = try JSONDecoder().decode(UARTMacro.self, from: data)
+            nameTextField.text = macro.name
+            macros = macro.commands
+            timeStepper.value = Double(macro.delay)
+            timeLabel.text = "\(macro.delay) ms"
+            navigationItem.title = "Edit Macros"
+        } catch let error {
+            displayErrorAlert(error: error)
+        }
+    }
     
     private func saveMacros(_ name: String) {
         let fileManager = FileManager.default
         do {
-            let macro = UARTMacro(name: "Test", delay: Int(timeStepper.value), commands: macros)
+            let macro = UARTMacro(name: name, delay: Int(timeStepper.value), commands: macros)
             let data = try JSONEncoder().encode(macro)
             let documentDirectory = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("macros")
             try fileManager.createDirectory(at: documentDirectory, withIntermediateDirectories: true, attributes: nil)
@@ -106,13 +120,13 @@ class UARTMacroViewController: UIViewController, AlertPresenter {
             guard !fileManager.fileExists(atPath: fileUrl.absoluteString) else {
                 throw QuickError(message: "Macro with that name already exists")
             }
-            try data.write(to: fileUrl)
             
+            try data.write(to: fileUrl)
+            self.dismiss(animated: true, completion: nil)
         } catch let error {
             displayErrorAlert(error: error)
         }
     }
-
 }
 
 extension UARTMacroViewController: UARTCommandListDelegate {
@@ -171,5 +185,10 @@ extension UARTMacroViewController: UITableViewDelegate {
         macros.remove(at: sourceIndexPath.row)
         macros.insert(item, at: destinationIndexPath.row)
     }
- 
+}
+
+extension UARTMacroViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+    }
 }

@@ -9,10 +9,16 @@
 import Foundation
 
 struct UARTMacro {
-    let name: String
+    var name: String
     /// Delay between commands in milliseconds
     let delay: Int
     let commands: [UARTCommandModel]
+}
+
+extension UARTMacro {
+    static var empty: UARTMacro {
+        UARTMacro(name: "", delay: 100, commands: [])
+    }
 }
 
 private struct UARTCommandContainer: Codable {
