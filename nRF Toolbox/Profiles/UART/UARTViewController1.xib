@@ -64,15 +64,27 @@
                         <constraint firstAttribute="height" constant="30" id="wfg-9c-ebW"/>
                     </constraints>
                 </stackView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7aM-jv-cgC" customClass="NordicButton" customModule="nRF_Toolbox" customModuleProvider="target">
+                    <rect key="frame" x="167" y="816" width="80" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="80" id="hLk-jH-Rtj"/>
+                    </constraints>
+                    <state key="normal" title="Show Log"/>
+                    <connections>
+                        <action selector="displayLoggs" destination="-1" eventType="touchUpInside" id="HHB-64-02l"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="GMu-sG-Zuq" secondAttribute="bottom" constant="16" id="257-n3-eHY"/>
                 <constraint firstItem="GMu-sG-Zuq" firstAttribute="leading" secondItem="2NO-LA-gil" secondAttribute="leading" id="8Tq-gH-Fky"/>
+                <constraint firstItem="7aM-jv-cgC" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="B7C-K3-7Od"/>
                 <constraint firstItem="EuQ-wn-doB" firstAttribute="width" secondItem="GMu-sG-Zuq" secondAttribute="width" id="Cgx-57-3SL"/>
                 <constraint firstItem="GMu-sG-Zuq" firstAttribute="top" secondItem="2NO-LA-gil" secondAttribute="bottom" constant="12" id="F3M-ZV-Oeo"/>
                 <constraint firstItem="GMu-sG-Zuq" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="LIo-zd-yOA"/>
                 <constraint firstItem="GMu-sG-Zuq" firstAttribute="trailing" secondItem="2NO-LA-gil" secondAttribute="trailing" id="Q7j-zf-8qq"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="7aM-jv-cgC" secondAttribute="bottom" constant="16" id="Tgm-Ae-79l"/>
                 <constraint firstItem="EuQ-wn-doB" firstAttribute="top" secondItem="GMu-sG-Zuq" secondAttribute="bottom" constant="12" id="WVn-BN-BLb"/>
                 <constraint firstItem="GMu-sG-Zuq" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" priority="999" constant="16" id="XH1-CB-Eiq"/>
                 <constraint firstItem="EuQ-wn-doB" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="eG9-bx-P4Z"/>

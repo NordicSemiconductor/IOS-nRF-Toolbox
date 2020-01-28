@@ -10,7 +10,7 @@ import UIKit
 import CoreBluetooth
 import AEXML
 
-class UARTViewController1: UIViewController {
+class UARTViewController1: UIViewController, AlertPresenter {
 
     let btManager = BluetoothManager()
     
@@ -21,6 +21,7 @@ class UARTViewController1: UIViewController {
     @IBOutlet private var macroBtn: NordicButton!
     
     private var preset: UARTPreset = .default
+    private lazy var loggerController = UARTLoggerViewController(bluetoothManager: self.btManager)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +38,8 @@ class UARTViewController1: UIViewController {
         collectionView.commandListDelegate = self
         
         macroBtn.style = .mainAction
+        
+        btManager.logger = loggerController.logger
     }
     
     override func viewWillLayoutSubviews() {
@@ -58,6 +61,8 @@ class UARTViewController1: UIViewController {
     @objc func share() {
         let xml = preset.document
         print(xml.xml)
+        
+        let uicodu
     }
     
     @IBAction func playMacro() {
@@ -74,6 +79,16 @@ class UARTViewController1: UIViewController {
         let documentPickerVC = UIDocumentPickerViewController(documentTypes: ["public.xml", "public.json"], in: .import)
         documentPickerVC.delegate = self
         present(documentPickerVC, animated: true)
+    }
+    
+    @IBAction func displayLoggs() {
+        guard btManager.isConnected() else {
+            openConnectorViewController()
+            return
+        }
+        
+        let nc = UINavigationController.nordicBranded(rootViewController: loggerController, prefersLargeTitles: false)
+        present(nc, animated: true, completion: nil)
     }
 }
 
@@ -105,7 +120,7 @@ extension UARTViewController1: BluetoothManagerDelegate {
     }
     
     func peripheralNotSupported() {
-        // MARK: Show Alert
+        displayErrorAlert(error: QuickError(message: "Peripheral not supported"))
         peripheralView.disconnect()
     }
 }
@@ -132,6 +147,10 @@ extension UARTViewController1: UARTNewCommandDelegate {
 extension UARTViewController1: PeripheralViewDelegate {
     func requestConnect() {
         self.openConnectorViewController()
+    }
+    
+    func requestDisconnect() {
+        btManager.cancelPeripheralConnection()
     }
 }
 

@@ -33,6 +33,11 @@ class LoggerTableView: UITableView {
         initialize()
     }
     
+    func clear() {
+        logs.removeAll()
+        reloadData()
+    }
+    
     private func initialize() {
         register(cell: LogTableViewCell.self)
         dataSource = self
@@ -43,7 +48,22 @@ class LoggerTableView: UITableView {
     }
 }
 
-extension LoggerTableView: LogPresenter {
+extension LoggerTableView: LogPresenter, Logger {
+    func log(level aLevel: LOGLevel, message aMessage: String) {
+        let logLevel: LogLevel = {
+            switch aLevel {
+            case .debugLogLevel: return .debug
+            case .verboseLogLevel: return .verbose
+            case .appLogLevel: return .application
+            case .errorLogLevel: return .error
+            case .infoLogLevel: return .info
+            case .warningLogLevel: return .warning
+            }
+        }()
+        
+        logWith(logLevel, message: aMessage)
+    }
+    
     func logWith(_ level: LogLevel, message: String) {
         let insertIndexPath = IndexPath(row: logs.count, section: 0)
         let log = LogMessage(level: level, message: message, time: Date())

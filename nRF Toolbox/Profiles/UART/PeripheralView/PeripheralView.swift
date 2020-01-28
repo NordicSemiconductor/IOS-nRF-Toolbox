@@ -10,6 +10,7 @@ import UIKit
 
 protocol PeripheralViewDelegate: class {
     func requestConnect()
+    func requestDisconnect()
 }
 
 class PeripheralView: UIView, XibInstantiable {
@@ -22,7 +23,11 @@ class PeripheralView: UIView, XibInstantiable {
     private var isConnected: Bool = false
     
     @IBAction func connectionPressed() {
-        delegate?.requestConnect()
+        if case .destructive = connectButton.style {
+            delegate?.requestDisconnect()
+        } else {
+            delegate?.requestConnect()
+        }
     }
     
     func connected(peripheral name: String) {
@@ -30,7 +35,7 @@ class PeripheralView: UIView, XibInstantiable {
         peripheralName.font = UIFont.gtEestiDisplay(.regular, size: 22)
         peripheralName.textColor = UIColor.Text.systemText
         
-        connectButton.setTitle("Reconnect", for: .normal)
+        connectButton.setTitle("Disconnect", for: .normal)
         connectButton.style = .destructive
         isConnected = true
     }
