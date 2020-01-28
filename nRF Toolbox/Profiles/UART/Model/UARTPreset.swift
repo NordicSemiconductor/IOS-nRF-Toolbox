@@ -28,7 +28,7 @@ struct UARTPreset {
         ])
         commands.addChildren(self.commands.map { $0.xml })
         root.addChild(commands)
-        doc.addChild(commands)
+        doc.addChild(root)
         
         return doc
     }

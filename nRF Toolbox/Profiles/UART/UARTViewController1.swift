@@ -62,7 +62,20 @@ class UARTViewController1: UIViewController, AlertPresenter {
         let xml = preset.document
         print(xml.xml)
         
-        let uicodu
+        if #available(iOS 11.0, *) {
+            openDocumentPicker()
+        } else {
+            // Fallback on earlier versions
+        }
+    }
+    
+    @available(iOS 11.0, *)
+    func openDocumentPicker() {
+        let vc = UIDocumentBrowserViewController()
+        vc.allowsDocumentCreation = true
+        vc.allowsPickingMultipleItems = false
+        present(vc, animated: true, completion: nil)
+        vc.delegate = self
     }
     
     @IBAction func playMacro() {
@@ -192,5 +205,56 @@ extension UARTViewController1: UIDocumentPickerDelegate {
         } catch let error {
             print(error.localizedDescription)
         }
+    }
+}
+
+@available(iOS 11.0, *)
+extension UARTViewController1: UIDocumentBrowserViewControllerDelegate {
+    func documentBrowser(_ controller: UIDocumentBrowserViewController, didRequestDocumentCreationWithHandler importHandler: @escaping (URL?, UIDocumentBrowserViewController.ImportMode) -> Void) {
+        
+        let alert = UIAlertController(title: "Enter the preset's name", message: nil, preferredStyle: .alert)
+        alert.addTextField { (tf) in
+            tf.placeholder = "name"
+        }
+        
+        let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
+            guard let name = alert.textFields?.first?.text else {
+                return
+            }
+            
+            self.save(name: name, controller: controller, importHandler: importHandler)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+        
+        controller.present(alert, animated: true, completion: nil)
+    }
+    
+    private func save(name: String, controller: UIDocumentBrowserViewController, importHandler: @escaping (URL?, UIDocumentBrowserViewController.ImportMode) -> Void) {
+        let doc = XMLDocument(name: name)
+        preset.name = name
+        doc.doc = preset.document
+        
+        let url = doc.fileURL
+        
+        doc.save(to: url, for: .forCreating) { (saveSuccess) in
+            guard saveSuccess else {
+                importHandler(nil, .move)
+                return
+            }
+            
+            doc.close { (closeSuccessful) in
+                guard closeSuccessful else {
+                    importHandler(nil, .move)
+                    return
+                }
+                importHandler(url, .move)
+                controller.dismsiss()
+            }
+        }
+        
     }
 }

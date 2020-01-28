@@ -18,6 +18,7 @@
 		019985EA23DF1EED000CDCB6 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019985E923DF1EED000CDCB6 /* UIViewController+Ext.swift */; };
 		019985EE23E0622B000CDCB6 /* UARTLoggerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019985EC23E0622B000CDCB6 /* UARTLoggerViewController.swift */; };
 		019985EF23E0622B000CDCB6 /* UARTLoggerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 019985ED23E0622B000CDCB6 /* UARTLoggerViewController.xib */; };
+		019985F123E07CFB000CDCB6 /* XMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019985F023E07CFB000CDCB6 /* XMLDocument.swift */; };
 		01A1B76723CF13A50062FADC /* UARTNewCommandViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A1B76523CF13A50062FADC /* UARTNewCommandViewController.swift */; };
 		01A1B76823CF13A50062FADC /* UARTNewCommandViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01A1B76623CF13A50062FADC /* UARTNewCommandViewController.xib */; };
 		01A1B76A23CF309E0062FADC /* CommandImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A1B76923CF309E0062FADC /* CommandImage.swift */; };
@@ -261,6 +262,7 @@
 		019985E923DF1EED000CDCB6 /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
 		019985EC23E0622B000CDCB6 /* UARTLoggerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTLoggerViewController.swift; sourceTree = "<group>"; };
 		019985ED23E0622B000CDCB6 /* UARTLoggerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTLoggerViewController.xib; sourceTree = "<group>"; };
+		019985F023E07CFB000CDCB6 /* XMLDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLDocument.swift; sourceTree = "<group>"; };
 		01A1B76523CF13A50062FADC /* UARTNewCommandViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTNewCommandViewController.swift; sourceTree = "<group>"; };
 		01A1B76623CF13A50062FADC /* UARTNewCommandViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTNewCommandViewController.xib; sourceTree = "<group>"; };
 		01A1B76923CF309E0062FADC /* CommandImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandImage.swift; sourceTree = "<group>"; };
@@ -1222,6 +1224,7 @@
 				01AF929523D8962600C1BFD6 /* UARTPreset.swift */,
 				01A1B76923CF309E0062FADC /* CommandImage.swift */,
 				01AF929323D72AC900C1BFD6 /* UARTJsonCoder.swift */,
+				019985F023E07CFB000CDCB6 /* XMLDocument.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1838,6 +1841,7 @@
 				300143271CEC4B9D008379DF /* AppUtilities.swift in Sources */,
 				20B7979823350584001328E1 /* Peripheral+Cycling.swift in Sources */,
 				208EE4EA23155FC8008E5FE9 /* WebViewController.swift in Sources */,
+				019985F123E07CFB000CDCB6 /* XMLDocument.swift in Sources */,
 				20B797942334FE1B001328E1 /* Identifier+GlucoseMonitorViewController.swift in Sources */,
 				309F086A1E6D9EAA00B7546A /* HKHomeStore.swift in Sources */,
 				204485E1233A148700A8A3A3 /* RunningTableViewController.swift in Sources */,
