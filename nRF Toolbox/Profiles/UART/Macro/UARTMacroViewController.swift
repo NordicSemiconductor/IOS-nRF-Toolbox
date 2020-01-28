@@ -130,10 +130,14 @@ extension UARTMacroViewController {
 }
 
 extension UARTMacroViewController: UARTCommandListDelegate {
-    func selectedCommand(_ command: UARTCommandModel) {
+    func selectedCommand(_ command: UARTCommandModel, at index: Int) {
         guard !(command is EmptyModel) else { return }
         macros.append(command)
         commandOrderTableView.insertRows(at: [IndexPath(row: macros.count - 1, section: 0)], with: .automatic)
+    }
+    
+    func longTapAtCommand(_ command: UARTCommandModel, at index: Int) {
+        
     }
 }
 

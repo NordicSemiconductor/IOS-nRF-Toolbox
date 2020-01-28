@@ -15,13 +15,17 @@ protocol UARTNewCommandDelegate: class {
 class UARTNewCommandViewController: UIViewController {
     
     @IBOutlet private var createButton: NordicButton!
+    @IBOutlet private var deleteButton: NordicButton!
     @IBOutlet private var collectionView: UICollectionView!
     @IBOutlet private var valueTextField: UITextField!
     @IBOutlet private var typeSegmentControl: UISegmentedControl!
     
     weak var delegate: UARTNewCommandDelegate?
     
-    init() {
+    private var command: UARTCommandModel?
+    
+    init(command: UARTCommandModel?) {
+        self.command = command
         super.init(nibName: "UARTNewCommandViewController", bundle: .main)
     }
     
@@ -40,6 +44,8 @@ class UARTNewCommandViewController: UIViewController {
         createButton.style = .mainAction
         navigationItem.title = "Create new command"
         collectionView.register(type: ImageCollectionViewCell.self)
+        
+        command.map { self.setupUI(with: $0) }
     }
 
     @IBAction func typeChanged(_ sender: UISegmentedControl) {
@@ -65,9 +71,41 @@ class UARTNewCommandViewController: UIViewController {
         
         delegate?.createdNewCommand(command)
     }
+    
+    @IBAction func deleteBtnPressed() {
+        delegate?.createdNewCommand(EmptyModel())
+    }
 }
 
 extension UARTNewCommandViewController {
+    private func setupUI(with command: UARTCommandModel) {
+        let typeIndex: Int
+        let title: String
+        switch command {
+        case is TextCommand:
+            typeIndex = 0
+            title = command.title
+        case is DataCommand:
+            typeIndex = 1
+            title = command.data.hexEncodedString().uppercased()
+        default:
+            return
+        }
+        
+        typeSegmentControl.selectedSegmentIndex = typeIndex
+        typeChanged(typeSegmentControl)
+        
+        valueTextField.text = title
+        CommandImage.allCases.enumerated()
+            .first(where: { $0.element.name == command.image.name })
+            .map { self.collectionView.selectItem(at: IndexPath(item: $0.offset, section: 0), animated: false, scrollPosition: .top) }
+        
+        deleteButton.isHidden = false
+        deleteButton.style = .destructive
+        
+        createButton.setTitle("Save", for: .normal)
+    }
+    
     private func updateButtonState() {
         createButton.isEnabled = !(valueTextField.text?.isEmpty ?? true) && collectionView.indexPathsForSelectedItems?.first != nil
     }

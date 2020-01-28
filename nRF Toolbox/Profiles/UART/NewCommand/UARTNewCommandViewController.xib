@@ -17,6 +17,7 @@
             <connections>
                 <outlet property="collectionView" destination="jZ7-mp-DGi" id="hiP-Ue-TGF"/>
                 <outlet property="createButton" destination="u5n-VG-gti" id="2PU-4i-a8j"/>
+                <outlet property="deleteButton" destination="yA1-Ak-ptR" id="CXg-wQ-M7v"/>
                 <outlet property="typeSegmentControl" destination="xej-mh-BNi" id="Q3q-po-bnV"/>
                 <outlet property="valueTextField" destination="wod-JE-wcr" id="TMj-5M-bsI"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -90,6 +91,13 @@
                             <state key="normal" title="Create"/>
                             <connections>
                                 <action selector="createCommand" destination="-1" eventType="touchUpInside" id="ZF0-GP-H4B"/>
+                            </connections>
+                        </button>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yA1-Ak-ptR" customClass="NordicButton" customModule="nRF_Toolbox" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="786" width="398" height="0.0"/>
+                            <state key="normal" title="Delete"/>
+                            <connections>
+                                <action selector="deleteBtnPressed" destination="-1" eventType="touchUpInside" id="KFc-vK-1FG"/>
                             </connections>
                         </button>
                     </subviews>

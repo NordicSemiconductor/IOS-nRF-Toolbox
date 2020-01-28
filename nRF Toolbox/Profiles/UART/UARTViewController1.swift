@@ -136,9 +136,18 @@ extension UARTViewController1: PeripheralViewDelegate {
 }
 
 extension UARTViewController1: UARTCommandListDelegate {
-    func selectedCommand(_ command: UARTCommandModel) {
+    
+    func longTapAtCommand(_ command: UARTCommandModel, at index: Int) {
+        let vc = UARTNewCommandViewController(command: command)
+        vc.delegate = self
+        let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false)
+        self.present(nc, animated: true)
+        collectionView.selectItem(at: IndexPath(item: index, section: 0), animated: false, scrollPosition: .top)
+    }
+    
+    func selectedCommand(_ command: UARTCommandModel, at index: Int) {
         guard !(command is EmptyModel) else {
-            let vc = UARTNewCommandViewController()
+            let vc = UARTNewCommandViewController(command: command)
             vc.delegate = self
             let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false)
             self.present(nc, animated: true)

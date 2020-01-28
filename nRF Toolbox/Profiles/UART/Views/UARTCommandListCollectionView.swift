@@ -9,7 +9,8 @@
 import UIKit
 
 protocol UARTCommandListDelegate: class {
-    func selectedCommand(_ command: UARTCommandModel)
+    func selectedCommand(_ command: UARTCommandModel, at index: Int)
+    func longTapAtCommand(_ command: UARTCommandModel, at index: Int)
 }
 
 class UARTCommandListCollectionView: UICollectionView {
@@ -20,6 +21,8 @@ class UARTCommandListCollectionView: UICollectionView {
     }
     weak var commandListDelegate: UARTCommandListDelegate?
     
+    private var longPress = UILongPressGestureRecognizer()
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         initialize()
@@ -29,6 +32,15 @@ class UARTCommandListCollectionView: UICollectionView {
         dataSource = self
         delegate = self
         register(type: UARTActionCollectionViewCell.self)
+        longPress.addTarget(self, action: #selector(longPressed))
+        addGestureRecognizer(longPress)
+    }
+    
+    @objc private func longPressed(_ sender: UIGestureRecognizer) {
+        let location = sender.location(in: self)
+        guard let ip = indexPathForItem(at: location) else { return }
+        let command = preset.commands[ip.item]
+        commandListDelegate?.longTapAtCommand(command, at: ip.item)
     }
 }
 
@@ -48,7 +60,7 @@ extension UARTCommandListCollectionView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let command = preset.commands[indexPath.item]
-        self.commandListDelegate?.selectedCommand(command)
+        self.commandListDelegate?.selectedCommand(command, at: indexPath.item)
     }
 }
 
