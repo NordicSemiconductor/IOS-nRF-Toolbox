@@ -15,7 +15,6 @@ class UARTActionCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
         
         let bgView = UIView()
         let selectedBGView = UIView()

@@ -158,10 +158,10 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
         // Check what kind of Write Type is supported. By default it will try Without Response.
         // If the RX charactereisrtic have Write property the Write Request type will be used.
         let type: CBCharacteristicWriteType = uartRXCharacteristic.properties.contains(.write) ? .withResponse : .withoutResponse
-        let MTU = bluetoothPeripheral?.maximumWriteValueLength(for: type) ?? 20
+        let mtu  = bluetoothPeripheral?.maximumWriteValueLength(for: type) ?? 20
         
         // The following code will split the text into packets
-        aText.split(by: MTU).forEach {
+        aText.split(by: mtu).forEach {
             send(text: $0, withType: type)
         }
     }
@@ -194,6 +194,8 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
         log(withLevel: .appLogLevel, andMessage: "\"\(aText)\" sent")
     }
     
+    /// Sends the given command to the UART characteristic
+    /// - Parameter aCommand: command that will be send to UART peripheral.
     func send(command aCommand: UARTCommandModel) {
         guard let uartRXCharacteristic = self.uartRXCharacteristic else {
             log(withLevel: .warningLogLevel, andMessage: "UART RX Characteristic not found")
@@ -201,19 +203,11 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
         }
         
         // Check what kind of Write Type is supported. By default it will try Without Response.
-        // If the RX charactereisrtic have Write property the Write Request type will be used.
-//        let type: CBCharacteristicWriteType = uartRXCharacteristic.properties.contains(.write) ? .withResponse : .withoutResponse
-        
-//        let MTU = bluetoothPeripheral?.maximumWriteValueLength(for: type) ?? 20
-        
-        var type: CBCharacteristicWriteType = .withoutResponse
-        var MTU = bluetoothPeripheral?.maximumWriteValueLength(for: .withoutResponse) ?? 20
-        if uartRXCharacteristic.properties.contains(.write) {
-            type = .withResponse
-            MTU = bluetoothPeripheral?.maximumWriteValueLength(for: .withResponse) ?? 20
-        }
-        
-        let data = aCommand.data.split(by: MTU)
+        // If the RX characteristic have Write property the Write Request type will be used.
+        let type: CBCharacteristicWriteType = uartRXCharacteristic.properties.contains(.write) ? .withResponse : .withoutResponse
+        let mtu = bluetoothPeripheral?.maximumWriteValueLength(for: type) ?? 20
+
+        let data = aCommand.data.split(by: mtu)
         data.forEach {
             self.bluetoothPeripheral!.writeValue($0, for: uartRXCharacteristic, type: type)
         }

@@ -68,7 +68,13 @@ struct UARTPreset {
             }
             
             let image = CommandImage(name: (node.attributes["icon"] ?? ""))
-            commands.append(TextCommand(text: text, image: image))
+
+            if let type = node.attributes["type"], type == "data" {
+                commands.append(DataCommand(data: Data(text.hexa), image: image))
+            } else {
+                commands.append(TextCommand(text: text, image: image))
+            }
+
         }
         
         while commands.count < 9 {

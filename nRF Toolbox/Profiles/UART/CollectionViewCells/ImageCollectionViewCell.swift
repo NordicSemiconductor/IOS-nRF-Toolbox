@@ -28,9 +28,5 @@ class ImageCollectionViewCell: UICollectionViewCell {
         backgroundView = bgView
         imageView.tintColor = .nordicBlue
     }
-    
-    override func select(_ sender: Any?) {
-        super.select(sender)
-        
-    }
+
 }

@@ -11,8 +11,8 @@ import Foundation
 struct UARTMacro {
     var name: String
     /// Delay between commands in milliseconds
-    let delay: Int
-    let commands: [UARTCommandModel]
+    var delay: Int
+    var commands: [UARTCommandModel]
 }
 
 extension UARTMacro {
@@ -71,8 +71,6 @@ private struct UARTCommandContainer: Codable {
             break
         }
     }
-    
-    
 }
 
 extension UARTMacro: Codable {

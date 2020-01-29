@@ -26,7 +26,7 @@ private struct UARTModelContainer: Codable {
 }
 
 class UARTModelEncoder: JSONEncoder {
-    enum Errors: Error {
+    enum Error: Swift.Error {
         case unknownCommandType
     }
     
@@ -43,7 +43,7 @@ class UARTModelEncoder: JSONEncoder {
         case let m as DataCommand:
             type = .data
             data = try encode(m)
-        default: throw Errors.unknownCommandType
+        default: throw Error.unknownCommandType
         }
         
         return try encode(UARTModelContainer(type: type, data: data))

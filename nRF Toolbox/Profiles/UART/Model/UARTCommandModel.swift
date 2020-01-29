@@ -21,7 +21,7 @@ protocol XMLRepresentable {
 
 struct EmptyModel: UARTCommandModel {
     var xml: AEXMLElement {
-        return AEXMLElement(name: "command")
+        AEXMLElement(name: "command")
     }
     
     let image: CommandImage = .empty
@@ -35,17 +35,18 @@ struct EmptyModel: UARTCommandModel {
 
 struct TextCommand: UARTCommandModel {
     var xml: AEXMLElement {
-        return AEXMLElement(name: "command", value: text, attributes: [
+        AEXMLElement(name: "command", value: text, attributes: [
             "icon":image.name,
             "active":"true",
-            "eol":"CR"
+            "eol":"CR",
+            "type":"text"
         ])
     }
     
     var title: String { text }
     
     var data: Data {
-        return text.data(using: .utf8)!
+        text.data(using: .utf8)!
     }
     
     let text: String
@@ -54,10 +55,11 @@ struct TextCommand: UARTCommandModel {
 
 struct DataCommand: UARTCommandModel {
     var xml: AEXMLElement {
-        return AEXMLElement(name: "command", value: String(data: data, encoding: .ascii), attributes: [
+        AEXMLElement(name: "command", value: data.hexString, attributes: [
             "icon":image.name,
             "active":"true",
-            "eol":"CR"
+            "eol":"CR",
+            "type":"data"
         ])
     }
     

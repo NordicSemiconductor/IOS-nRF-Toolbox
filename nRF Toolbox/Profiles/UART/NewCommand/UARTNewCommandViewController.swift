@@ -135,7 +135,7 @@ extension UARTNewCommandViewController: UICollectionViewDelegateFlowLayout {
 
 extension UARTNewCommandViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return CommandImage.allCases.count
+        CommandImage.allCases.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
