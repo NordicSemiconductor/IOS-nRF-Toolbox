@@ -24,7 +24,7 @@ extension CommandImage: ExpressibleByStringLiteral {
 }
 
 extension CommandImage: CaseIterable {
-    static let allCases: [CommandImage] = [.pause, .play, .record, .repeat, .rewind, .start, .stop, .number1, .number2, .number3, .number4, .number5, .number6, .number7, .number8, .number9]
+    static let allCases: [CommandImage] = [.pause, .play, .record, .repeat, .rewind, .start, .stop, .number1, .number2, .number3, .number4, .number5, .number6, .number7, .number8, .number9, .up, .down, .left, .right]
 }
 
 extension CommandImage {
@@ -46,6 +46,11 @@ extension CommandImage {
     static let rewind: CommandImage = "REW"
     static let start: CommandImage = "START"
     static let stop: CommandImage = "STOP"
+    
+    static let up: CommandImage = "UP"
+    static let down: CommandImage = "DOWN"
+    static let left: CommandImage = "LEFT"
+    static let right: CommandImage = "RIGHT"
 }
 
 
