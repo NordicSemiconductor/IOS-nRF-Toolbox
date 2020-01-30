@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UARTMacrosList: UITableViewController, CloseButtonPresenter {
+class UARTMacrosList: UITableViewController, CloseButtonPresenter, AlertPresenter {
 
     private var files: [URL] = []
     private var fileNames: [String] {
@@ -67,6 +67,18 @@ class UARTMacrosList: UITableViewController, CloseButtonPresenter {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         section == 0 ? "Saved macros" : "Create new one"
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard editingStyle == .delete else { return }
+        let fileUrl = files[indexPath.row]
+        do {
+            try FileManager.default.removeItem(at: fileUrl)
+            files.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        } catch let error {
+            displayErrorAlert(error: error)
+        }
     }
 }
 
