@@ -12,7 +12,7 @@ import AEXML
 
 class UARTViewController1: UIViewController, AlertPresenter {
 
-    let btManager = BluetoothManager()
+    let btManager: BluetoothManager!
     
     private lazy var shareBtn = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share))
     
@@ -22,6 +22,15 @@ class UARTViewController1: UIViewController, AlertPresenter {
     
     private var preset: UARTPreset = .default
     private lazy var loggerController = UARTLoggerViewController(bluetoothManager: self.btManager)
+    
+    init(bluetoothManager: BluetoothManager) {
+        self.btManager = bluetoothManager
+        super.init(nibName: nil, bundle: .main)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

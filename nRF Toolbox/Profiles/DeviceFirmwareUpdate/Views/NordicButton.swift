@@ -24,14 +24,26 @@ class NordicButton: UIButton {
         static let destructive = Style(rawValue: 3)
         
         var tintColor: UIColor {
-            return .nordicDarkGray
+            switch self {
+            case .mainAction: return .white
+            case .destructive: return .nordicRed
+            case .default: return .nordicDarkGray
+            default: return UIColor.Text.systemText
+            }
         }
         
         var bgColor: UIColor {
             switch self {
-            case .default: return .clear
+            case .default, .destructive: return .clear
             case .mainAction: return .nordicBlue
-            case .destructive: return .nordicRedDark
+            default: return .clear
+            }
+        }
+        
+        var borderColor: UIColor {
+            switch self {
+            case .destructive: return .nordicRed
+            case .mainAction, .default: return .nordicBlue
             default: return .clear
             }
         }
@@ -46,6 +58,7 @@ class NordicButton: UIButton {
     var style: Style = .default {
         didSet {
             tintColor = style.tintColor
+            borderColor = style.borderColor
             self.setupBrandView()
         }
     }
@@ -71,7 +84,7 @@ class NordicButton: UIButton {
     }
     
     private func setupBrandView() {
-        cornerRadius = min(frame.width, frame.height) / 2
+        cornerRadius = 4
         borderWidth = 1
         
         guard isEnabled else {
@@ -81,14 +94,14 @@ class NordicButton: UIButton {
             return
         }
         
-        borderColor = style.tintColor
+        borderColor = style.borderColor
         setTitleColor(style.tintColor, for: .normal)
         backgroundColor = style.bgColor
     }
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-        cornerRadius = min(frame.width, frame.height) / 2
+        cornerRadius = 4
         layer.masksToBounds = true
     }
     

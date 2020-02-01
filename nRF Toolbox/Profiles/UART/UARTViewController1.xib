@@ -65,9 +65,9 @@
                     </constraints>
                 </stackView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7aM-jv-cgC" customClass="NordicButton" customModule="nRF_Toolbox" customModuleProvider="target">
-                    <rect key="frame" x="167" y="816" width="80" height="30"/>
+                    <rect key="frame" x="157" y="816" width="100" height="30"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="80" id="hLk-jH-Rtj"/>
+                        <constraint firstAttribute="width" constant="100" id="hLk-jH-Rtj"/>
                     </constraints>
                     <state key="normal" title="Show Log"/>
                     <connections>

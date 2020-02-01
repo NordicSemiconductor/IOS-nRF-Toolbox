@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,7 +23,7 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2cA-nZ-Z8G">
-                        <rect key="frame" x="0.0" y="0.0" width="138" height="169"/>
+                        <rect key="frame" x="16" y="16" width="106" height="153"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5fS-ys-nWj">
                         <rect key="frame" x="8" y="177" width="122" height="20"/>
@@ -34,11 +34,11 @@
                 </subviews>
             </view>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="2cA-nZ-Z8G" secondAttribute="trailing" id="Cfm-Vz-kow"/>
+                <constraint firstAttribute="trailing" secondItem="2cA-nZ-Z8G" secondAttribute="trailing" constant="16" id="Cfm-Vz-kow"/>
+                <constraint firstItem="2cA-nZ-Z8G" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="EZf-Zk-ahe"/>
                 <constraint firstItem="5fS-ys-nWj" firstAttribute="top" secondItem="2cA-nZ-Z8G" secondAttribute="bottom" constant="8" id="OKr-Sh-a71"/>
-                <constraint firstItem="2cA-nZ-Z8G" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ZzX-ch-p6s"/>
+                <constraint firstItem="2cA-nZ-Z8G" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="16" id="ZzX-ch-p6s"/>
                 <constraint firstItem="5fS-ys-nWj" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="ebO-6q-OFi"/>
-                <constraint firstItem="2cA-nZ-Z8G" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="nwP-8o-fJ9"/>
                 <constraint firstAttribute="trailing" secondItem="5fS-ys-nWj" secondAttribute="trailing" constant="8" id="pUy-QZ-dVc"/>
                 <constraint firstAttribute="bottom" secondItem="5fS-ys-nWj" secondAttribute="bottom" constant="8" id="vrh-tx-G92"/>
             </constraints>
@@ -46,7 +46,7 @@
             <size key="customSize" width="138" height="205"/>
             <connections>
                 <outlet property="image" destination="2cA-nZ-Z8G" id="BW5-YU-awK"/>
-                <outlet property="title" destination="5fS-ys-nWj" id="lRQ-Nc-PAf"/>
+                <outlet property="title" destination="5fS-ys-nWj" id="0Dp-5c-HxN"/>
             </connections>
             <point key="canvasLocation" x="204.34782608695653" y="205.24553571428569"/>
         </collectionViewCell>

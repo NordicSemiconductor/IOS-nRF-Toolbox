@@ -25,14 +25,18 @@ class UARTActionCollectionViewCell: UICollectionViewCell {
             bgView.backgroundColor = .nordicLightGray
             selectedBGView.backgroundColor = .nordicAlmostWhite
         }
+        
         selectedBackgroundView = selectedBGView
         backgroundView = bgView
+        
         image.tintColor = .nordicBlue
+        
+        layer.cornerRadius = 5
+        layer.masksToBounds = true
     }
 
     func apply(command: UARTCommandModel) {
         title.text = command.title
-        image.image = command.image.image?.withRenderingMode(.alwaysTemplate)
         title.textColor = {
             if command is DataCommand {
                 return UIColor.Text.secondarySystemText
@@ -40,5 +44,7 @@ class UARTActionCollectionViewCell: UICollectionViewCell {
                 return UIColor.Text.systemText
             }
         }()
+        
+        image.image = command.image.image
     }
 }

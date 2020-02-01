@@ -39,7 +39,8 @@ struct TextCommand: UARTCommandModel {
             "icon":image.name,
             "active":"true",
             "eol":"CR",
-            "type":"text"
+            "type":"text",
+            "system_icon":image.systemIcon?.name ?? ""
         ])
     }
     
@@ -59,7 +60,8 @@ struct DataCommand: UARTCommandModel {
             "icon":image.name,
             "active":"true",
             "eol":"CR",
-            "type":"data"
+            "type":"data",
+            "system_icon":image.systemIcon?.name ?? ""
         ])
     }
     
