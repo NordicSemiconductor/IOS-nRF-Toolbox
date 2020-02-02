@@ -20,6 +20,7 @@ class UARTLoggerViewController: UIViewController, CloseButtonPresenter {
         super.init(nibName: "UARTLoggerViewController", bundle: .main)
         loadView()
         setupUI()
+        tabBarItem = UITabBarItem(title: "Logs", image: TabBarIcon.uartLogs.image, selectedImage: TabBarIcon.uartLogs.filledImage)
     }
     
     required init?(coder: NSCoder) {

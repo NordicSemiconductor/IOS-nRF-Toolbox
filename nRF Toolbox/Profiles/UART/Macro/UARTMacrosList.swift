@@ -22,6 +22,7 @@ class UARTMacrosList: UITableViewController, CloseButtonPresenter, AlertPresente
         self.btManager = bluetoothManager
         self.preset = preset
         super.init(style: .grouped)
+        tabBarItem = UITabBarItem(title: "Macros", image: TabBarIcon.uartMacros.image, selectedImage: TabBarIcon.uartMacros.filledImage)
     }
     
     required init?(coder: NSCoder) {

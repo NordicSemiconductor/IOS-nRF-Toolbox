@@ -26,6 +26,11 @@ struct ModernIcon: Codable {
     static let fill = ModernIcon(name: "fill")
     static let end = ModernIcon(name: "end")
     static let alt = ModernIcon(name: "alt")
+    static let grid = ModernIcon(name: "grid")
+    static let threeXthree = ModernIcon(name: "3x3")
+    static let bolt = ModernIcon(name: "bolt")
+    static let list = ModernIcon(name: "list")
+    static let dash = ModernIcon(name: "dash")
     
     static let play = ModernIcon(name: "play")
     static let pause = ModernIcon(name: "pause")
@@ -40,6 +45,7 @@ struct ModernIcon: Codable {
     static let down = ModernIcon(name: "down")
     static let left = ModernIcon(name: "left")
     static let right = ModernIcon(name: "right")
+    
     
     @available(iOS 13.0, *)
     var image: UIImage? {

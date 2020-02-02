@@ -40,6 +40,7 @@ class UARTViewController1: UIViewController, AlertPresenter {
         navigationItem.rightBarButtonItem = shareBtn
         
         navigationItem.title = "UART"
+        tabBarItem = UITabBarItem(title: "Preset", image: TabBarIcon.uartPreset.image, selectedImage: TabBarIcon.uartPreset.filledImage)
         
         peripheralView.disconnect()
         peripheralView.delegate = self
@@ -111,6 +112,24 @@ class UARTViewController1: UIViewController, AlertPresenter {
         
         let nc = UINavigationController.nordicBranded(rootViewController: loggerController, prefersLargeTitles: false)
         present(nc, animated: true, completion: nil)
+    }
+}
+
+extension UARTViewController1 {
+    private var tabBarImage: UIImage {
+        if #available(iOS 13, *) {
+            return ModernIcon.circle.add(.grid).add(.threeXthree).image!
+        } else {
+            return (UIImage(named: "uart_preset")?.withRenderingMode(.alwaysTemplate))!
+        }
+    }
+    
+    private var selectedTabBarImage: UIImage {
+        if #available(iOS 13, *) {
+            return ModernIcon.circle.add(.grid).add(.threeXthree).add(.fill).image!
+        } else {
+            return (UIImage(named: "uart_preset")?.withRenderingMode(.alwaysTemplate))!
+        }
     }
 }
 
