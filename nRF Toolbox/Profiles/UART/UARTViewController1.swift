@@ -10,15 +10,23 @@ import UIKit
 import CoreBluetooth
 import AEXML
 
+extension UIImage {
+    convenience init?(name: String, systemName: String) {
+        if #available(iOS 13, *) {
+            self.init(systemName: systemName)
+        } else {
+            self.init(named: name)
+        }
+    }
+}
+
 class UARTViewController1: UIViewController, AlertPresenter {
 
     let btManager: BluetoothManager!
     
     private lazy var shareBtn = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share))
     
-    @IBOutlet private var peripheralView: PeripheralView!
     @IBOutlet private var collectionView: UARTCommandListCollectionView!
-    @IBOutlet private var macroBtn: NordicButton!
     
     private var preset: UARTPreset = .default
     private lazy var loggerController = UARTLoggerViewController(bluetoothManager: self.btManager)
@@ -42,12 +50,7 @@ class UARTViewController1: UIViewController, AlertPresenter {
         navigationItem.title = "UART"
         tabBarItem = UITabBarItem(title: "Preset", image: TabBarIcon.uartPreset.image, selectedImage: TabBarIcon.uartPreset.filledImage)
         
-        peripheralView.disconnect()
-        peripheralView.delegate = self
-        
         collectionView.commandListDelegate = self
-        
-        macroBtn.style = .mainAction
         
         btManager.logger = loggerController.logger
     }
@@ -88,48 +91,10 @@ class UARTViewController1: UIViewController, AlertPresenter {
         vc.delegate = self
     }
     
-    @IBAction func playMacro() {
-        guard btManager.isConnected() else {
-            openConnectorViewController()
-            return
-        }
-        let vc = UARTMacrosList(bluetoothManager: btManager, preset: preset)
-        
-        present(UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false), animated: true)
-    }
-    
     @IBAction func loadPreset() {
         let documentPickerVC = UIDocumentPickerViewController(documentTypes: ["public.xml", "public.json"], in: .import)
         documentPickerVC.delegate = self
         present(documentPickerVC, animated: true)
-    }
-    
-    @IBAction func displayLoggs() {
-        guard btManager.isConnected() else {
-            openConnectorViewController()
-            return
-        }
-        
-        let nc = UINavigationController.nordicBranded(rootViewController: loggerController, prefersLargeTitles: false)
-        present(nc, animated: true, completion: nil)
-    }
-}
-
-extension UARTViewController1 {
-    private var tabBarImage: UIImage {
-        if #available(iOS 13, *) {
-            return ModernIcon.circle.add(.grid).add(.threeXthree).image!
-        } else {
-            return (UIImage(named: "uart_preset")?.withRenderingMode(.alwaysTemplate))!
-        }
-    }
-    
-    private var selectedTabBarImage: UIImage {
-        if #available(iOS 13, *) {
-            return ModernIcon.circle.add(.grid).add(.threeXthree).add(.fill).image!
-        } else {
-            return (UIImage(named: "uart_preset")?.withRenderingMode(.alwaysTemplate))!
-        }
     }
 }
 
@@ -149,11 +114,10 @@ extension UARTViewController1: BluetoothManagerDelegate {
         }
         
         scanner.dismiss(animated: true, completion: nil)
-        peripheralView.connected(peripheral: aName ?? "No Name")
     }
     
     func didDisconnectPeripheral() {
-        peripheralView.disconnect()
+        
     }
     
     func peripheralReady() {
@@ -162,7 +126,6 @@ extension UARTViewController1: BluetoothManagerDelegate {
     
     func peripheralNotSupported() {
         displayErrorAlert(error: QuickError(message: "Peripheral not supported"))
-        peripheralView.disconnect()
     }
 }
 
