@@ -11,11 +11,15 @@
         <array key="GT-Eesti-Display-Regular.ttf">
             <string>GTEestiDisplay-Regular</string>
         </array>
+        <array key="GT-Eesti-Display-Thin.ttf">
+            <string>GTEestiDisplay-Thin</string>
+        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UARTViewController1" customModule="nRF_Toolbox" customModuleProvider="target">
             <connections>
                 <outlet property="collectionView" destination="GMu-sG-Zuq" id="Cng-gl-l2a"/>
+                <outlet property="disconnectBtn" destination="PdZ-kf-qsF" id="hJ1-BY-yWz"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -37,37 +41,46 @@
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                 </collectionView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Preset name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gwI-aO-4ac">
-                    <rect key="frame" x="16" y="62" width="90" height="20"/>
-                    <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="17"/>
-                    <nil key="textColor"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Default Preset" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gwI-aO-4ac">
+                    <rect key="frame" x="16" y="62" width="99.5" height="20"/>
+                    <fontDescription key="fontDescription" name="GTEestiDisplay-Thin" family="GT Eesti Display" pointSize="17"/>
+                    <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XE5-WC-7WV">
-                    <rect key="frame" x="340" y="56" width="58" height="32"/>
+                    <rect key="frame" x="306" y="56" width="92" height="32"/>
                     <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="17"/>
-                    <state key="normal" title="Settings">
-                        <color key="titleColor" red="0.81400001049041748" green="0.24300000071525574" blue="0.3190000057220459" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" title="Save / Load">
+                        <color key="titleColor" red="0.0" green="0.66274509803921566" blue="0.80784313725490198" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
+                    <connections>
+                        <action selector="saveLoad" destination="-1" eventType="touchUpInside" id="NgX-Ol-2vD"/>
+                    </connections>
                 </button>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="XlX-zB-arf">
-                    <rect key="frame" x="16" y="494" width="85" height="52.5"/>
+                    <rect key="frame" x="16" y="494" width="166.5" height="16.5"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connected to:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UL0-4i-YtI">
-                            <rect key="frame" x="0.0" y="0.0" width="85" height="16.5"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connected to Nordic_UART" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UL0-4i-YtI">
+                            <rect key="frame" x="0.0" y="0.0" width="166.5" height="16.5"/>
                             <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="14"/>
                             <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PdZ-kf-qsF">
-                            <rect key="frame" x="0.0" y="20.5" width="80" height="32"/>
-                            <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="17"/>
-                            <state key="normal" title="Disconnect">
-                                <color key="titleColor" red="0.81400001049041748" green="0.24300000071525574" blue="0.3190000057220459" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
-                        </button>
                     </subviews>
                 </stackView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PdZ-kf-qsF" customClass="NordicButton" customModule="nRF_Toolbox" customModuleProvider="target">
+                    <rect key="frame" x="147" y="526.5" width="120" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="120" id="hC2-As-vhF"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="17"/>
+                    <state key="normal" title="Disconnect">
+                        <color key="titleColor" red="0.81400001049041748" green="0.24300000071525574" blue="0.3190000057220459" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="disconnect" destination="-1" eventType="touchUpInside" id="8G7-Zz-Kng"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
@@ -78,6 +91,8 @@
                 <constraint firstItem="XE5-WC-7WV" firstAttribute="centerY" secondItem="gwI-aO-4ac" secondAttribute="centerY" id="T15-j5-ePx"/>
                 <constraint firstItem="GMu-sG-Zuq" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" priority="999" constant="16" id="XH1-CB-Eiq"/>
                 <constraint firstItem="GMu-sG-Zuq" firstAttribute="top" secondItem="XE5-WC-7WV" secondAttribute="bottom" constant="8" id="lgU-w6-4fr"/>
+                <constraint firstItem="PdZ-kf-qsF" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="v2D-M8-sun"/>
+                <constraint firstItem="PdZ-kf-qsF" firstAttribute="top" secondItem="XlX-zB-arf" secondAttribute="bottom" constant="16" id="v6d-4c-Wkf"/>
                 <constraint firstItem="XlX-zB-arf" firstAttribute="leading" secondItem="GMu-sG-Zuq" secondAttribute="leading" id="vB5-5c-pB4"/>
                 <constraint firstItem="XE5-WC-7WV" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="12" id="yih-VO-ED0"/>
                 <constraint firstItem="XE5-WC-7WV" firstAttribute="trailing" secondItem="GMu-sG-Zuq" secondAttribute="trailing" id="zm6-hy-Jg3"/>

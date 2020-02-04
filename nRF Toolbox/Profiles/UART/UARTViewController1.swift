@@ -27,9 +27,9 @@ class UARTViewController1: UIViewController, AlertPresenter {
     private lazy var shareBtn = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share))
     
     @IBOutlet private var collectionView: UARTCommandListCollectionView!
+    @IBOutlet private var disconnectBtn: NordicButton!
     
     private var preset: UARTPreset = .default
-    private lazy var loggerController = UARTLoggerViewController(bluetoothManager: self.btManager)
     
     init(bluetoothManager: BluetoothManager) {
         self.btManager = bluetoothManager
@@ -43,8 +43,6 @@ class UARTViewController1: UIViewController, AlertPresenter {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        btManager.delegate = self
-        btManager.logger = self
         navigationItem.rightBarButtonItem = shareBtn
         
         navigationItem.title = "UART"
@@ -52,7 +50,7 @@ class UARTViewController1: UIViewController, AlertPresenter {
         
         collectionView.commandListDelegate = self
         
-        btManager.logger = loggerController.logger
+        disconnectBtn.style = .destructive
     }
     
     override func viewWillLayoutSubviews() {
@@ -96,42 +94,35 @@ class UARTViewController1: UIViewController, AlertPresenter {
         documentPickerVC.delegate = self
         present(documentPickerVC, animated: true)
     }
+    
+    @IBAction func disconnect() {
+        btManager.cancelPeripheralConnection()
+    }
+    
+    @IBAction func saveLoad(_ sender: UIButton) {
+        let alert = UIAlertController(title: "Save or Load preset", message: nil, preferredStyle: .actionSheet)
+        let saveAction = UIAlertAction(title: "Save", style: .default) { (_) in
+            self.share()
+        }
+        
+        let loadAction = UIAlertAction(title: "Load", style: .default) { (_) in
+            self.loadPreset()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+//        alert.popoverPresentationController?.buto = sender
+        alert.addAction(saveAction)
+        alert.addAction(loadAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
 }
 
 extension UARTViewController1: ConnectionViewControllerDelegate {
     func connected(to peripheral: Peripheral) {
         btManager.connectPeripheral(peripheral: peripheral.peripheral)
-    }
-}
-
-extension UARTViewController1: BluetoothManagerDelegate {
-    
-    func didConnectPeripheral(deviceName aName: String?) {
-        guard let presented = presentedViewController,
-            let scannerNC = presented as? UINavigationController,
-            let scanner = scannerNC.viewControllers.first as? ConnectionViewController else {
-            return
-        }
-        
-        scanner.dismiss(animated: true, completion: nil)
-    }
-    
-    func didDisconnectPeripheral() {
-        
-    }
-    
-    func peripheralReady() {
-        
-    }
-    
-    func peripheralNotSupported() {
-        displayErrorAlert(error: QuickError(message: "Peripheral not supported"))
-    }
-}
-
-extension UARTViewController1: Logger {
-    func log(level aLevel: LOGLevel, message aMessage: String) {
-        Log(category: .ble, type: .debug).log(message: aMessage)
     }
 }
 

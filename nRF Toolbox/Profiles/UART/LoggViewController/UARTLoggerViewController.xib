@@ -33,7 +33,7 @@
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                 </tableView>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="dee-yr-cGg" secondAttribute="bottom" id="8PE-42-aHR"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="8YQ-na-4vw" secondAttribute="trailing" constant="8" id="CtH-Qn-FSH"/>

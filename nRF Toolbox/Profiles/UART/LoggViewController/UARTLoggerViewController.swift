@@ -23,6 +23,11 @@ class UARTLoggerViewController: UIViewController, CloseButtonPresenter {
         tabBarItem = UITabBarItem(title: "Logs", image: TabBarIcon.uartLogs.image, selectedImage: TabBarIcon.uartLogs.filledImage)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loggerTableView.reloadData()
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -35,6 +40,8 @@ extension UARTLoggerViewController {
         navigationItem.rightBarButtonItem = clearButton
         setupCloseButton()
         navigationItem.title = "Logger"
+        
+        btManager.logger = self.loggerTableView
     }
     
     @objc private func clear() {

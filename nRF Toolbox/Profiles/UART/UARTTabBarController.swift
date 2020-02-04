@@ -41,39 +41,75 @@ struct TabBarIcon {
 class UARTTabBarController: UITabBarController {
     
     private var bufferView: UIView!
+    private var emptyView: UIView!
     let btManager = BluetoothManager()
-    
-    init() {
-        super.init(nibName: nil, bundle: .main)
-        
-        tabBar.tintColor = .nordicBlue
-        viewControllers = [
-            UARTViewController1(bluetoothManager: btManager),
-            UARTMacrosList(bluetoothManager: btManager, preset: .default),
-            UARTLoggerViewController(bluetoothManager: btManager)
-        ]
-        
-        navigationItem.title = "UART"
-        
-        /*
-        bufferView = view
-        
-        let bSettings: InfoActionView.ButtonSettings = ("Connect", { [unowned self] in
-            self.view = self.bufferView
-        })
-
-        let notContent = InfoActionView.instanceWithParams(message: "Device is not connected", buttonSettings: bSettings)
-        view = notContent
-        */
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         selectedIndex = 0
+        
+        let viewControllers: [UIViewController] = [
+            UARTViewController1(bluetoothManager: btManager),
+            UARTMacrosList(bluetoothManager: btManager, preset: .default),
+            UARTLoggerViewController(bluetoothManager: btManager)
+            ].map { UIDevice.current.userInterfaceIdiom == .pad ? UINavigationController.nordicBranded(rootViewController: $0) : $0
+            }
+        
+        setViewControllers(viewControllers, animated: true)
+        
+        tabBar.tintColor = .nordicBlue
+        navigationItem.title = "UART"
+        
+        bufferView = view
+        
+        let bSettings: InfoActionView.ButtonSettings = ("Connect", { [unowned self] in
+            let scanner = PeripheralScanner(services: nil)
+            let vc = ConnectionViewController(scanner: scanner)
+            vc.delegate = self
+            let nc = UINavigationController.nordicBranded(rootViewController: vc)
+            self.present(nc, animated: true, completion: nil)
+        })
+
+        emptyView = InfoActionView.instanceWithParams(message: "Device is not connected", buttonSettings: bSettings)
+        addEmptyView()
+        btManager.delegate = self
     }
     
+}
+
+extension UARTTabBarController: BluetoothManagerDelegate {
+    func didConnectPeripheral(deviceName aName: String?) {
+        dismiss(animated: true) {
+            self.emptyView.removeFromSuperview()
+        }
+    }
+    
+    func didDisconnectPeripheral() {
+        addEmptyView()
+    }
+    
+    func peripheralReady() {
+        
+    }
+    
+    func peripheralNotSupported() {
+        view = emptyView
+    }
+}
+
+extension UARTTabBarController {
+    private func addEmptyView() {
+        view.addSubview(emptyView)
+        emptyView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        emptyView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        emptyView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        emptyView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        emptyView.translatesAutoresizingMaskIntoConstraints = false
+    }
+}
+
+extension UARTTabBarController: ConnectionViewControllerDelegate {
+    func connected(to peripheral: Peripheral) {
+        btManager.connectPeripheral(peripheral: peripheral.peripheral)
+    }
 }

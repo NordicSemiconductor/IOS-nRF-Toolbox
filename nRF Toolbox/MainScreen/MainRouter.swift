@@ -42,13 +42,9 @@ class DefaultMainRouter {
             .glucoseMonitoring : GlucoseMonitorViewController(),
             .continuousGlucoseMonitor : ContinuousGlucoseMonitor(),
             .healthThermometer : HealthTermometerTableViewController(),
-            
             .cyclingSensor : CyclingTableViewController(),
-            
             .runningSensor : RunningTableViewController(),
-            
             .proximity : ProximityViewController(),
-//            .uart : UARTViewController1(),
             .homeKit : HKViewController.instance()
             ].mapValues { UINavigationController.nordicBranded(rootViewController: $0) }
         .merging([.uart : UARTTabBarController()], uniquingKeysWith: {n, _ in n})
