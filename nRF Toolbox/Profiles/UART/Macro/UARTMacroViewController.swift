@@ -11,6 +11,7 @@ import UIKit
 class UARTMacroViewController: UIViewController, AlertPresenter {
     private let btManager: BluetoothManager
 
+    @IBOutlet private var rootStackView: UIStackView!
     @IBOutlet var commandListCollectionView: UARTCommandListCollectionView!
     @IBOutlet var commandOrderTableView: UITableView!
     @IBOutlet var timeStepper: UIStepper!
@@ -87,6 +88,11 @@ class UARTMacroViewController: UIViewController, AlertPresenter {
     
     @objc private func closeAction() {
         self.dismiss(animated: true)
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        rootStackView.axis = view.frame.width < 550 ? .vertical : .horizontal
     }
 
 }

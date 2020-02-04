@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="ipad10_5" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
@@ -19,6 +19,7 @@
                 <outlet property="commandOrderTableView" destination="6cd-rl-6dJ" id="AVk-gm-rGR"/>
                 <outlet property="nameTextField" destination="6zp-Ba-BAE" id="z2F-Cb-cQe"/>
                 <outlet property="playBtn" destination="gNK-mr-HRh" id="ZFD-gO-GGD"/>
+                <outlet property="rootStackView" destination="FO6-1Q-v2w" id="ecR-1e-2bY"/>
                 <outlet property="timeLabel" destination="Jvr-Ya-U1o" id="FNE-tM-Sdh"/>
                 <outlet property="timeStepper" destination="muv-wV-kd6" id="RLz-Xd-gwa"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -26,59 +27,87 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="GrI-VW-uQP" customClass="UARTCommandListCollectionView" customModule="nRF_Toolbox" customModuleProvider="target">
-                    <rect key="frame" x="16" y="118.5" width="382" height="382"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                    <constraints>
-                        <constraint firstAttribute="width" secondItem="GrI-VW-uQP" secondAttribute="height" multiplier="1:1" id="5Is-zu-cr4"/>
-                    </constraints>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="iI1-wU-f4R">
-                        <size key="itemSize" width="50" height="50"/>
-                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    </collectionViewFlowLayout>
-                </collectionView>
-                <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="h2G-g0-G1E">
-                    <rect key="frame" x="16" y="512.5" width="382" height="32"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="FO6-1Q-v2w">
+                    <rect key="frame" x="12" y="72" width="810" height="1048"/>
                     <subviews>
-                        <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="100" minimumValue="100" maximumValue="10000" stepValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="muv-wV-kd6">
-                            <rect key="frame" x="0.0" y="0.0" width="94" height="32"/>
-                            <connections>
-                                <action selector="timeStepWithSender:" destination="-1" eventType="valueChanged" id="RGY-21-Kxc"/>
-                            </connections>
-                        </stepper>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="100 ms" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jvr-Ya-U1o">
-                            <rect key="frame" x="102" y="0.0" width="197" height="32"/>
-                            <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="15"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gNK-mr-HRh" customClass="NordicButton" customModule="nRF_Toolbox" customModuleProvider="target">
-                            <rect key="frame" x="307" y="0.0" width="75" height="32"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l78-sQ-7e6">
+                            <rect key="frame" x="0.0" y="0.0" width="399" height="1048"/>
+                            <subviews>
+                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="GrI-VW-uQP" customClass="UARTCommandListCollectionView" customModule="nRF_Toolbox" customModuleProvider="target">
+                                    <rect key="frame" x="20" y="16" width="359" height="359"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="GrI-VW-uQP" secondAttribute="height" multiplier="1:1" id="5Is-zu-cr4"/>
+                                    </constraints>
+                                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="iI1-wU-f4R">
+                                        <size key="itemSize" width="50" height="50"/>
+                                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    </collectionViewFlowLayout>
+                                </collectionView>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="75" id="4VZ-fg-w3j"/>
+                                <constraint firstItem="GrI-VW-uQP" firstAttribute="leading" secondItem="l78-sQ-7e6" secondAttribute="leading" priority="999" id="38K-Ns-zul"/>
+                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="GrI-VW-uQP" secondAttribute="bottom" constant="16" id="6BR-P5-8Wq"/>
+                                <constraint firstItem="GrI-VW-uQP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="l78-sQ-7e6" secondAttribute="leading" constant="20" symbolic="YES" id="WNv-kU-shF"/>
+                                <constraint firstItem="GrI-VW-uQP" firstAttribute="centerX" secondItem="l78-sQ-7e6" secondAttribute="centerX" id="gz7-sW-uDa"/>
+                                <constraint firstAttribute="bottom" secondItem="GrI-VW-uQP" secondAttribute="bottom" priority="998" constant="16" id="mzw-QZ-AXX"/>
+                                <constraint firstItem="GrI-VW-uQP" firstAttribute="top" secondItem="l78-sQ-7e6" secondAttribute="top" constant="16" id="v5h-YE-QMW"/>
                             </constraints>
-                            <state key="normal" title="Play"/>
-                            <connections>
-                                <action selector="play" destination="-1" eventType="touchUpInside" id="Na3-gt-Ow1"/>
-                            </connections>
-                        </button>
+                        </view>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="F3Q-mE-lph">
+                            <rect key="frame" x="411" y="0.0" width="399" height="1048"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="h2G-g0-G1E">
+                                    <rect key="frame" x="0.0" y="0.0" width="399" height="32"/>
+                                    <subviews>
+                                        <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="100" minimumValue="100" maximumValue="10000" stepValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="muv-wV-kd6">
+                                            <rect key="frame" x="0.0" y="0.0" width="94" height="32"/>
+                                            <connections>
+                                                <action selector="timeStepWithSender:" destination="-1" eventType="valueChanged" id="RGY-21-Kxc"/>
+                                            </connections>
+                                        </stepper>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="100 ms" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jvr-Ya-U1o">
+                                            <rect key="frame" x="102" y="0.0" width="214" height="32"/>
+                                            <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="15"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gNK-mr-HRh" customClass="NordicButton" customModule="nRF_Toolbox" customModuleProvider="target">
+                                            <rect key="frame" x="324" y="0.0" width="75" height="32"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="75" id="4VZ-fg-w3j"/>
+                                            </constraints>
+                                            <state key="normal" title="Play"/>
+                                            <connections>
+                                                <action selector="play" destination="-1" eventType="touchUpInside" id="Na3-gt-Ow1"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </stackView>
+                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6cd-rl-6dJ">
+                                    <rect key="frame" x="0.0" y="44" width="399" height="1004"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    <connections>
+                                        <outlet property="dataSource" destination="-1" id="1bo-eX-vgG"/>
+                                        <outlet property="delegate" destination="-1" id="NCI-8V-VfR"/>
+                                    </connections>
+                                </tableView>
+                            </subviews>
+                        </stackView>
                     </subviews>
+                    <variation key="heightClass=regular-widthClass=regular" axis="horizontal" distribution="fillEqually"/>
                 </stackView>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6cd-rl-6dJ">
-                    <rect key="frame" x="0.0" y="556.5" width="414" height="305.5"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="1bo-eX-vgG"/>
-                        <outlet property="delegate" destination="-1" id="NCI-8V-VfR"/>
-                    </connections>
-                </tableView>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6zp-Ba-BAE">
-                    <rect key="frame" x="16" y="76.5" width="382" height="34"/>
+                    <rect key="frame" x="12" y="36" width="810" height="28"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="28" id="6U1-8q-rZQ"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                     <connections>
@@ -86,7 +115,10 @@
                     </connections>
                 </textField>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Macros Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nFJ-JL-eRT">
-                    <rect key="frame" x="16" y="52" width="88" height="16.5"/>
+                    <rect key="frame" x="12" y="8" width="88" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="3Rz-c7-MgJ"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="14"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -94,21 +126,15 @@
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
-                <constraint firstItem="GrI-VW-uQP" firstAttribute="width" secondItem="6zp-Ba-BAE" secondAttribute="width" id="2CQ-yS-LFe"/>
-                <constraint firstItem="h2G-g0-G1E" firstAttribute="top" secondItem="GrI-VW-uQP" secondAttribute="bottom" constant="12" id="7Ez-xr-YV4"/>
-                <constraint firstItem="GrI-VW-uQP" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Rgw-Ae-r0W"/>
-                <constraint firstItem="6cd-rl-6dJ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="SQw-ow-xYR"/>
-                <constraint firstItem="h2G-g0-G1E" firstAttribute="trailing" secondItem="GrI-VW-uQP" secondAttribute="trailing" id="Ula-VD-887"/>
-                <constraint firstItem="h2G-g0-G1E" firstAttribute="leading" secondItem="GrI-VW-uQP" secondAttribute="leading" id="W84-pA-gT2"/>
-                <constraint firstItem="GrI-VW-uQP" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="X5a-qN-JuJ"/>
+                <constraint firstItem="6zp-Ba-BAE" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="12" id="5ZM-zq-7h5"/>
+                <constraint firstItem="FO6-1Q-v2w" firstAttribute="top" secondItem="6zp-Ba-BAE" secondAttribute="bottom" constant="8" id="7hi-zw-OlE"/>
+                <constraint firstItem="FO6-1Q-v2w" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="GeV-9J-0oj"/>
                 <constraint firstItem="6zp-Ba-BAE" firstAttribute="top" secondItem="nFJ-JL-eRT" secondAttribute="bottom" constant="8" id="XHf-nU-80f"/>
                 <constraint firstItem="nFJ-JL-eRT" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="8" id="Y5r-MN-do3"/>
-                <constraint firstItem="GrI-VW-uQP" firstAttribute="top" secondItem="6zp-Ba-BAE" secondAttribute="bottom" constant="8" id="dN4-AG-Z2P"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="6cd-rl-6dJ" secondAttribute="trailing" id="eVj-uS-RbQ"/>
+                <constraint firstItem="FO6-1Q-v2w" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" constant="8" id="euF-zj-fGh"/>
                 <constraint firstItem="6zp-Ba-BAE" firstAttribute="leading" secondItem="nFJ-JL-eRT" secondAttribute="leading" id="fhl-WH-oou"/>
-                <constraint firstItem="6cd-rl-6dJ" firstAttribute="top" secondItem="h2G-g0-G1E" secondAttribute="bottom" constant="12" id="h2R-7y-8W2"/>
-                <constraint firstItem="GrI-VW-uQP" firstAttribute="leading" secondItem="6zp-Ba-BAE" secondAttribute="leading" id="orw-2l-uEf"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="6cd-rl-6dJ" secondAttribute="bottom" id="vSc-vd-QR2"/>
+                <constraint firstItem="6zp-Ba-BAE" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="gsX-Jm-k53"/>
+                <constraint firstItem="FO6-1Q-v2w" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="12" id="mVC-4L-QOj"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="137.68115942028987" y="153.34821428571428"/>
