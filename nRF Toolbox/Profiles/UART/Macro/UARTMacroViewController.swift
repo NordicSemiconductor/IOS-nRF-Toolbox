@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol ChangePresenter: class {
+    func cangedMacro(at url: URL)
+    func newMacro(at url: URL)
+}
+
 class UARTMacroViewController: UIViewController, AlertPresenter {
     private let btManager: BluetoothManager
 
@@ -24,6 +29,8 @@ class UARTMacroViewController: UIViewController, AlertPresenter {
     private var fileUrl: URL?
     
     private lazy var dispatchSource = DispatchSource.makeTimerSource(queue: .main)
+    
+    weak var changePresenter: ChangePresenter?
     
     init(bluetoothManager: BluetoothManager, preset: UARTPreset, macroUrl: URL? = nil) {
         self.btManager = bluetoothManager
@@ -128,7 +135,13 @@ extension UARTMacroViewController {
             }
             
             try data.write(to: fileUrl)
-            self.dismiss(animated: true, completion: nil)
+            self.navigationController?.popViewController(animated: true)
+            
+            if case .none = self.fileUrl {
+                changePresenter?.newMacro(at: fileUrl)
+            } else {
+                changePresenter?.cangedMacro(at: fileUrl)
+            }
         } catch let error {
             displayErrorAlert(error: error)
         }

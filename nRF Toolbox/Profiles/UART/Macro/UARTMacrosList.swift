@@ -63,6 +63,7 @@ class UARTMacrosList: UITableViewController, CloseButtonPresenter, AlertPresente
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let fileUrl: URL? = indexPath.section == 0 ? files[indexPath.row] : nil
         let vc = UARTMacroViewController(bluetoothManager: btManager, preset: preset, macroUrl: fileUrl)
+        vc.changePresenter = self 
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -97,4 +98,21 @@ extension UARTMacrosList {
         }
         return []
     }
+}
+
+extension UARTMacrosList: ChangePresenter {
+    private func reloadData() {
+        files = loadMacrosList()
+        tableView.reloadData()
+    }
+    
+    func cangedMacro(at url: URL) {
+        reloadData()
+    }
+    
+    func newMacro(at url: URL) {
+        reloadData()
+    }
+    
+    
 }
