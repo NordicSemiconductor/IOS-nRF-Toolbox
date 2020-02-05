@@ -24,7 +24,7 @@ class UARTMacroViewController: UIViewController, AlertPresenter {
     @IBOutlet var timeLabel: UILabel!
     @IBOutlet var nameTextField: UITextField!
     
-    private let preset: UARTPreset
+    private var preset: UARTPreset
     private var macros: [UARTCommandModel] = []
     private var fileUrl: URL?
     
@@ -53,6 +53,8 @@ class UARTMacroViewController: UIViewController, AlertPresenter {
         
         playBtn.style = .mainAction
         navigationItem.title = "Create new Macro"
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
         
         self.fileUrl.flatMap(preloadMacro(_:))
         
@@ -85,10 +87,6 @@ class UARTMacroViewController: UIViewController, AlertPresenter {
         }
         
         saveMacros(name)
-    }
-    
-    @objc private func closeAction() {
-        self.dismiss(animated: true)
     }
     
     override func viewWillLayoutSubviews() {
@@ -150,8 +148,25 @@ extension UARTMacroViewController: UARTCommandListDelegate {
     }
     
     func longTapAtCommand(_ command: UARTCommandModel, at index: Int) {
-        
+        let vc = UARTNewCommandViewController(command: command)
+        vc.delegate = self
+        let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false)
+        self.present(nc, animated: true)
+        commandListCollectionView.selectItem(at: IndexPath(item: index, section: 0), animated: false, scrollPosition: .top)
     }
+}
+
+extension UARTMacroViewController: UARTNewCommandDelegate {
+    func createdNewCommand(_ command: UARTCommandModel) {
+        guard let selectedItemIndex = commandListCollectionView.indexPathsForSelectedItems?.first?.item else {
+            return
+        }
+        
+        preset.updateCommand(command, at: selectedItemIndex)
+        commandListCollectionView.preset = preset
+        dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 extension UARTMacroViewController: UITableViewDataSource {
