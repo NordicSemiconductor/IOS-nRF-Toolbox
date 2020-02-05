@@ -24,12 +24,17 @@ class UARTViewController1: UIViewController, AlertPresenter {
 
     let btManager: BluetoothManager!
     
-    private lazy var shareBtn = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share))
-    
     @IBOutlet private var collectionView: UARTCommandListCollectionView!
     @IBOutlet private var disconnectBtn: NordicButton!
+    @IBOutlet private var deviceNameLabel: UILabel!
     
     private var preset: UARTPreset = .default
+    
+    var deviceName: String = "" {
+        didSet {
+            deviceNameLabel.text = "Connected to \(deviceName)"
+        }
+    }
     
     init(bluetoothManager: BluetoothManager) {
         self.btManager = bluetoothManager
@@ -42,8 +47,6 @@ class UARTViewController1: UIViewController, AlertPresenter {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.rightBarButtonItem = shareBtn
         
         navigationItem.title = "UART"
         tabBarItem = UITabBarItem(title: "Preset", image: TabBarIcon.uartPreset.image, selectedImage: TabBarIcon.uartPreset.filledImage)
@@ -58,18 +61,7 @@ class UARTViewController1: UIViewController, AlertPresenter {
         collectionView.collectionViewLayout.invalidateLayout()
     }
     
-    @objc func openConnectorViewController() {
-        let scanner = PeripheralScanner(services: nil)
-        let connectionController = ConnectionViewController(scanner: scanner)
-        connectionController.delegate = self
-
-        let nc = UINavigationController.nordicBranded(rootViewController: connectionController)
-        nc.modalPresentationStyle = .formSheet
-
-        self.present(nc, animated: true, completion: nil)
-    }
-    
-    @objc func share() {
+    private func savePreset() {
         let xml = preset.document
         print(xml.xml)
         
@@ -89,7 +81,7 @@ class UARTViewController1: UIViewController, AlertPresenter {
         vc.delegate = self
     }
     
-    @IBAction func loadPreset() {
+    private func loadPreset() {
         let documentPickerVC = UIDocumentPickerViewController(documentTypes: ["public.xml", "public.json"], in: .import)
         documentPickerVC.delegate = self
         present(documentPickerVC, animated: true)
@@ -102,7 +94,7 @@ class UARTViewController1: UIViewController, AlertPresenter {
     @IBAction func saveLoad(_ sender: UIButton) {
         let alert = UIAlertController(title: "Save or Load preset", message: nil, preferredStyle: .actionSheet)
         let saveAction = UIAlertAction(title: "Save", style: .default) { (_) in
-            self.share()
+            self.savePreset()
         }
         
         let loadAction = UIAlertAction(title: "Load", style: .default) { (_) in
@@ -111,7 +103,6 @@ class UARTViewController1: UIViewController, AlertPresenter {
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
-//        alert.popoverPresentationController?.buto = sender
         alert.addAction(saveAction)
         alert.addAction(loadAction)
         alert.addAction(cancelAction)
@@ -139,16 +130,6 @@ extension UARTViewController1: UARTNewCommandDelegate {
     
 }
 
-extension UARTViewController1: PeripheralViewDelegate {
-    func requestConnect() {
-        self.openConnectorViewController()
-    }
-    
-    func requestDisconnect() {
-        btManager.cancelPeripheralConnection()
-    }
-}
-
 extension UARTViewController1: UARTCommandListDelegate {
     
     func longTapAtCommand(_ command: UARTCommandModel, at index: Int) {
@@ -165,11 +146,6 @@ extension UARTViewController1: UARTCommandListDelegate {
             vc.delegate = self
             let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false)
             self.present(nc, animated: true)
-            return
-        }
-        
-        guard btManager.isConnected() else {
-            openConnectorViewController()
             return
         }
         

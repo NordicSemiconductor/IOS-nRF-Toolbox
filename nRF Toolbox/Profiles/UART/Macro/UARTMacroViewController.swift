@@ -54,12 +54,6 @@ class UARTMacroViewController: UIViewController, AlertPresenter {
         playBtn.style = .mainAction
         navigationItem.title = "Create new Macro"
         
-        let saveBtn = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
-        
-        navigationItem.rightBarButtonItem = saveBtn
-        
-        commandListCollectionView.backgroundColor = .white
-        
         self.fileUrl.flatMap(preloadMacro(_:))
         
         if #available(iOS 13.0, *) {

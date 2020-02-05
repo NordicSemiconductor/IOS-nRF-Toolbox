@@ -45,9 +45,10 @@ class DefaultMainRouter {
             .cyclingSensor : CyclingTableViewController(),
             .runningSensor : RunningTableViewController(),
             .proximity : ProximityViewController(),
-            .homeKit : HKViewController.instance()
+            .homeKit : HKViewController.instance(),
+            .uart : UARTTabBarController()
             ].mapValues { UINavigationController.nordicBranded(rootViewController: $0) }
-        .merging([.uart : UARTTabBarController()], uniquingKeysWith: {n, _ in n})
+//        .merging([.uart : UARTTabBarController()], uniquingKeysWith: {n, _ in n})
     }()
     
     lazy private var serviceList = ServiceListViewController(serviceRouter: self)

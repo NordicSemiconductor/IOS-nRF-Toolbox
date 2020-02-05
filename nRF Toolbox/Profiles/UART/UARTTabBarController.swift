@@ -44,16 +44,15 @@ class UARTTabBarController: UITabBarController {
     private var emptyView: UIView!
     let btManager = BluetoothManager()
     
+    private lazy var uartViewController = UARTViewController1(bluetoothManager: btManager)
+    private lazy var uartMacroViewController = UARTMacrosList(bluetoothManager: btManager, preset: .default)
+    private lazy var uartLoggerViewController = UARTLoggerViewController(bluetoothManager: btManager)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         selectedIndex = 0
         
-        let viewControllers: [UIViewController] = [
-            UARTViewController1(bluetoothManager: btManager),
-            UARTMacrosList(bluetoothManager: btManager, preset: .default),
-            UARTLoggerViewController(bluetoothManager: btManager)
-            ].map { UIDevice.current.userInterfaceIdiom == .pad ? UINavigationController.nordicBranded(rootViewController: $0) : $0
-            }
+        let viewControllers: [UIViewController] = [uartViewController, uartMacroViewController, uartLoggerViewController]
         
         setViewControllers(viewControllers, animated: true)
         
@@ -80,6 +79,7 @@ class UARTTabBarController: UITabBarController {
 extension UARTTabBarController: BluetoothManagerDelegate {
     func didConnectPeripheral(deviceName aName: String?) {
         dismiss(animated: true) {
+            self.uartViewController.deviceName = aName ?? ""
             self.emptyView.removeFromSuperview()
         }
     }

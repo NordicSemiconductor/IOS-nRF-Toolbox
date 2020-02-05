@@ -19,6 +19,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UARTViewController1" customModule="nRF_Toolbox" customModuleProvider="target">
             <connections>
                 <outlet property="collectionView" destination="GMu-sG-Zuq" id="Cng-gl-l2a"/>
+                <outlet property="deviceNameLabel" destination="UL0-4i-YtI" id="I99-7Z-Ish"/>
                 <outlet property="disconnectBtn" destination="PdZ-kf-qsF" id="hJ1-BY-yWz"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -54,14 +55,14 @@
                         <color key="titleColor" red="0.0" green="0.66274509803921566" blue="0.80784313725490198" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
-                        <action selector="saveLoad" destination="-1" eventType="touchUpInside" id="NgX-Ol-2vD"/>
+                        <action selector="saveLoad:" destination="-1" eventType="touchUpInside" id="eU4-40-ndT"/>
                     </connections>
                 </button>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="XlX-zB-arf">
-                    <rect key="frame" x="16" y="494" width="166.5" height="16.5"/>
+                    <rect key="frame" x="16" y="494" width="81.5" height="16.5"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connected to Nordic_UART" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UL0-4i-YtI">
-                            <rect key="frame" x="0.0" y="0.0" width="166.5" height="16.5"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connected to" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UL0-4i-YtI">
+                            <rect key="frame" x="0.0" y="0.0" width="81.5" height="16.5"/>
                             <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="14"/>
                             <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
