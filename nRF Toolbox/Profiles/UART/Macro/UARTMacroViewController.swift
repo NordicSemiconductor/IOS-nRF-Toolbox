@@ -93,7 +93,11 @@ class UARTMacroViewController: UIViewController, AlertPresenter {
         super.viewWillLayoutSubviews()
         rootStackView.axis = view.frame.width < 550 ? .vertical : .horizontal
     }
-
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        commandListCollectionView.collectionViewLayout.invalidateLayout()
+    }
 }
 
 extension UARTMacroViewController {

@@ -27,6 +27,7 @@ class UARTViewController1: UIViewController, AlertPresenter {
     @IBOutlet private var collectionView: UARTCommandListCollectionView!
     @IBOutlet private var disconnectBtn: NordicButton!
     @IBOutlet private var deviceNameLabel: UILabel!
+    @IBOutlet private var saveLoadButton: UIButton!
     
     private var preset: UARTPreset = .default
     
@@ -93,6 +94,8 @@ class UARTViewController1: UIViewController, AlertPresenter {
     
     @IBAction func saveLoad(_ sender: UIButton) {
         let alert = UIAlertController(title: "Save or Load preset", message: nil, preferredStyle: .actionSheet)
+        alert.popoverPresentationController?.sourceView = saveLoadButton
+        
         let saveAction = UIAlertAction(title: "Save", style: .default) { (_) in
             self.savePreset()
         }
