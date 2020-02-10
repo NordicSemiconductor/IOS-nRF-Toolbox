@@ -54,6 +54,9 @@
 		01BE0955234A7500006ACF06 /* HealthTemperatureSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE0954234A7500006ACF06 /* HealthTemperatureSection.swift */; };
 		01BE0958234A76D4006ACF06 /* Peripheral+Temperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE0957234A76D4006ACF06 /* Peripheral+Temperature.swift */; };
 		01C2E97523A1ACDF008C1701 /* DFUViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01C2E97423A1ACDF008C1701 /* DFUViewController.xib */; };
+		01DDD79C23EC5CDA003786ED /* TimeIntervalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DDD79A23EC5CDA003786ED /* TimeIntervalTableViewCell.swift */; };
+		01DDD79D23EC5CDA003786ED /* TimeIntervalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01DDD79B23EC5CDA003786ED /* TimeIntervalTableViewCell.xib */; };
+		01DDD7A023EC6351003786ED /* UARTMarcoElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DDD79F23EC6351003786ED /* UARTMarcoElement.swift */; };
 		01E4BACB23698DD300EE67A0 /* FindMeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E4BAC923698DD300EE67A0 /* FindMeTableViewCell.swift */; };
 		01E4BACC23698DD300EE67A0 /* FindMeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E4BACA23698DD300EE67A0 /* FindMeTableViewCell.xib */; };
 		01E5910923DB3BC5008F15A4 /* QuickError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910823DB3BC4008F15A4 /* QuickError.swift */; };
@@ -299,6 +302,9 @@
 		01BE0954234A7500006ACF06 /* HealthTemperatureSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTemperatureSection.swift; sourceTree = "<group>"; };
 		01BE0957234A76D4006ACF06 /* Peripheral+Temperature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Peripheral+Temperature.swift"; sourceTree = "<group>"; };
 		01C2E97423A1ACDF008C1701 /* DFUViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DFUViewController.xib; sourceTree = "<group>"; };
+		01DDD79A23EC5CDA003786ED /* TimeIntervalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalTableViewCell.swift; sourceTree = "<group>"; };
+		01DDD79B23EC5CDA003786ED /* TimeIntervalTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeIntervalTableViewCell.xib; sourceTree = "<group>"; };
+		01DDD79F23EC6351003786ED /* UARTMarcoElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMarcoElement.swift; sourceTree = "<group>"; };
 		01E4BAC923698DD300EE67A0 /* FindMeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindMeTableViewCell.swift; sourceTree = "<group>"; };
 		01E4BACA23698DD300EE67A0 /* FindMeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FindMeTableViewCell.xib; sourceTree = "<group>"; };
 		01E5910823DB3BC4008F15A4 /* QuickError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickError.swift; sourceTree = "<group>"; };
@@ -602,6 +608,8 @@
 		01AF928423D1A76100C1BFD6 /* Macro */ = {
 			isa = PBXGroup;
 			children = (
+				01DDD79E23EC6310003786ED /* Model */,
+				01DDD79923EC5941003786ED /* Cell */,
 				01AF928A23D1D99C00C1BFD6 /* UARTMacroViewController.swift */,
 				01AF928B23D1D99C00C1BFD6 /* UARTMacroViewController.xib */,
 				01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */,
@@ -717,6 +725,23 @@
 				01BE0957234A76D4006ACF06 /* Peripheral+Temperature.swift */,
 			);
 			path = Peripheral;
+			sourceTree = "<group>";
+		};
+		01DDD79923EC5941003786ED /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				01DDD79A23EC5CDA003786ED /* TimeIntervalTableViewCell.swift */,
+				01DDD79B23EC5CDA003786ED /* TimeIntervalTableViewCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		01DDD79E23EC6310003786ED /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				01DDD79F23EC6351003786ED /* UARTMarcoElement.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		01E4BAC823698DC000EE67A0 /* Cell */ = {
@@ -1615,6 +1640,7 @@
 				01A1B76D23CF43590062FADC /* UART.xcassets in Resources */,
 				20C7FE2C230BEC1800B06FD8 /* UARTViewController.storyboard in Resources */,
 				20E07B5B2306975700FCB205 /* GT-Eesti-Display-Thin.ttf in Resources */,
+				01DDD79D23EC5CDA003786ED /* TimeIntervalTableViewCell.xib in Resources */,
 				20E07B642306975700FCB205 /* GT-Eesti-Display-Thin-Italic.ttf in Resources */,
 				20C7FE20230BE7DF00B06FD8 /* HKViewController.storyboard in Resources */,
 				20E07B662306975700FCB205 /* GT-Eesti-Display-Regular-Italic.ttf in Resources */,
@@ -1785,6 +1811,7 @@
 				019985E423DEF23F000CDCB6 /* NordicTextTableViewCell.swift in Sources */,
 				01AD26EC23953E4800F56210 /* FileSizeView.swift in Sources */,
 				309F086E1E6ED44F00B7546A /* HKScannerDelegate.swift in Sources */,
+				01DDD79C23EC5CDA003786ED /* TimeIntervalTableViewCell.swift in Sources */,
 				200973DA234344780091951B /* BloodPressureTableViewController.swift in Sources */,
 				201364FB2344A94F00C5AF1F /* TimeBloodPressureSection.swift in Sources */,
 				01BE094F2349F71B006ACF06 /* HealthTermometerTableViewController.swift in Sources */,
@@ -1864,6 +1891,7 @@
 				339762F1FAFD0B4E24D99501 /* GlucoseValueList.swift in Sources */,
 				01E5910B23DECF61008F15A4 /* UARTMacrosList.swift in Sources */,
 				33976C75E25FBF443EB251CD /* Bool+Ext.swift in Sources */,
+				01DDD7A023EC6351003786ED /* UARTMarcoElement.swift in Sources */,
 				33976B2C1CE8194EFAEB7341 /* Randomizer.swift in Sources */,
 				339765E57CA5E940D960B675 /* ChartDataSection.swift in Sources */,
 				3397622AEAB44E02CA055BDF /* ProximityViewController.swift in Sources */,

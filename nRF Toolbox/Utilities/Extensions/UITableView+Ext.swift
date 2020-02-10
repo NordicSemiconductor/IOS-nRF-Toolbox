@@ -18,7 +18,12 @@ extension UITableView {
         return cell 
     }
     
-    func register<T: UITableViewCell>(cell type: T.Type) {
+    func registerCellClass<T: UITableViewCell>(cell type: T.Type) {
+        let cellId = String(describing: type)
+        register(type, forCellReuseIdentifier: cellId)
+    }
+    
+    func registerCellNib<T: UITableViewCell>(cell type: T.Type) {
         let cellId = String(describing: type)
         let nib = UINib(nibName: cellId, bundle: .main)
         register(nib, forCellReuseIdentifier: cellId)

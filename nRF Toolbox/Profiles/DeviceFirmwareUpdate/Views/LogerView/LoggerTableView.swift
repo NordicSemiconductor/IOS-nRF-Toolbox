@@ -39,7 +39,7 @@ class LoggerTableView: UITableView {
     }
     
     private func initialize() {
-        register(cell: LogTableViewCell.self)
+        registerCellNib(cell: LogTableViewCell.self)
         dataSource = self
         
         rowHeight = UITableView.automaticDimension

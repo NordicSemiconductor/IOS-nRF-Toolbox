@@ -30,7 +30,7 @@ class ServiceListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(cell: ServiceTableViewCell.self)
+        tableView.registerCellNib(cell: ServiceTableViewCell.self)
         tableView.register(LinkTableViewCell.self, forCellReuseIdentifier: "LinkTableViewCell")
     }
     

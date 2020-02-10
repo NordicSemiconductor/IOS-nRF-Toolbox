@@ -9,10 +9,20 @@
 import Foundation
 import AEXML
 
-protocol UARTCommandModel: Codable, XMLRepresentable {
+protocol UARTCommandModel: Codable, XMLRepresentable, UARTMacroElement, NordicTextTableViewCellModel {
     var image: CommandImage { get }
     var title: String { get }
     var data: Data { get }
+}
+
+extension UARTCommandModel {
+    var image: UIImage? {
+        return self.image.image
+    }
+    
+    var text: String? {
+        return self.title
+    }
 }
 
 protocol XMLRepresentable {

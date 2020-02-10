@@ -68,7 +68,7 @@ class ContinuousGlucoseMonitor: PeripheralTableViewController {
         super.viewDidLoad()
         self.tableView.register(LinearChartTableViewCell.self, forCellReuseIdentifier: "LinearChartTableViewCell")
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        self.tableView.register(cell: StepperTableViewCell.self)
+        self.tableView.registerCellNib(cell: StepperTableViewCell.self)
     }
 
     override func didDiscover(characteristic: CoreBluetooth.CBCharacteristic, for service: CoreBluetooth.CBService, peripheral: CoreBluetooth.CBPeripheral) {

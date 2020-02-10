@@ -53,7 +53,7 @@ class ProximityViewController: PeripheralTableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(cell: FindMeTableViewCell.self)
+        tableView.registerCellNib(cell: FindMeTableViewCell.self)
         audioPlayer?.prepareToPlay()
         self.peripheralManager = CBPeripheralManager(delegate: self, queue: nil)
 

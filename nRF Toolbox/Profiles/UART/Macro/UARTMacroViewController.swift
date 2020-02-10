@@ -25,7 +25,7 @@ class UARTMacroViewController: UIViewController, AlertPresenter {
     @IBOutlet var nameTextField: UITextField!
     
     private var preset: UARTPreset
-    private var macros: [UARTCommandModel] = []
+    private var macros: [UARTMacroElement] = []
     private var fileUrl: URL?
     
     private lazy var dispatchSource = DispatchSource.makeTimerSource(queue: .main)
@@ -56,6 +56,10 @@ class UARTMacroViewController: UIViewController, AlertPresenter {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
         
+        commandOrderTableView.registerCellClass(cell: NordicActionTableViewCell.self)
+        commandOrderTableView.registerCellNib(cell: TimeIntervalTableViewCell.self)
+        commandOrderTableView.registerCellClass(cell: NordicTextTableViewCell.self)
+        
         self.fileUrl.flatMap(preloadMacro(_:))
         
         if #available(iOS 13.0, *) {
@@ -66,10 +70,6 @@ class UARTMacroViewController: UIViewController, AlertPresenter {
     @IBAction func play() {
         let macro = UARTMacro(name: nameTextField.text ?? "", delay: Int(timeStepper.value), commands: macros)
         btManager.send(macro: macro)
-    }
-    
-    @IBAction func timeStep(sender: UIStepper) {
-        timeLabel.text = "\(Int(sender.value)) ms"
     }
     
     @objc private func save() {
@@ -174,18 +174,54 @@ extension UARTMacroViewController: UARTNewCommandDelegate {
 }
 
 extension UARTMacroViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        macros.count
+        section == 0 ? macros.count : 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let command = macros[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
-        cell?.textLabel?.text = command.title
-        cell?.imageView?.image = command.image.image?.withRenderingMode(.alwaysTemplate)
-        cell?.imageView?.tintColor = .nordicBlue
-        return cell!
+        if indexPath.section != 0 {
+            return addTimeInterval(tableView)
+        }
+        
+        switch macros[indexPath.row] {
+        case is UARTCommandModel:
+            return commandCell(tableView, index: indexPath.row)
+        case is UARTMacroTimeInterval:
+            return timeIntervalCell(tableView, index: indexPath.row)
+        default:
+            return UITableViewCell()
+        }
     }
+    
+    private func commandCell(_ tableView: UITableView, index: Int) -> UITableViewCell {
+        let cell = tableView.dequeueCell(ofType: NordicTextTableViewCell.self)
+        let command = self.macros[index] as! UARTCommandModel
+        cell.apply(command)
+        cell.selectionStyle = .none
+        return cell
+    }
+    
+    private func timeIntervalCell(_ tableView: UITableView, index: Int) -> UITableViewCell {
+        let cell = tableView.dequeueCell(ofType: TimeIntervalTableViewCell.self)
+        let timeInterval = self.macros[index] as! UARTMacroTimeInterval
+        cell.apply(timeInterval: timeInterval, index: index)
+        cell.callback = { [unowned self] ti, index in
+            self.macros[index] = ti
+        }
+        cell.selectionStyle = .none
+        return cell
+    }
+    
+    private func addTimeInterval(_ tableView: UITableView) -> UITableViewCell {
+        let cell = tableView.dequeueCell(ofType: NordicActionTableViewCell.self)
+        cell.textLabel?.text = "Add pause"
+        return cell
+    }
+    
 }
 
 extension UARTMacroViewController: UITableViewDelegate {
@@ -208,18 +244,38 @@ extension UARTMacroViewController: UITableViewDelegate {
         return [delete]
     }
     
+    func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        guard proposedDestinationIndexPath.section == 1 else { return proposedDestinationIndexPath }
+        return IndexPath(row: macros.count - 1, section: 0)
+    }
+    
     func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-        return false
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.section == 0
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return .delete
+        return indexPath.section == 0 ? .delete : .none
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let item = macros[sourceIndexPath.row]
         macros.remove(at: sourceIndexPath.row)
         macros.insert(item, at: destinationIndexPath.row)
+        print(destinationIndexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard indexPath.section == 1 else { return }
+        macros.append(UARTMacroTimeInterval(miliseconds: 100))
+        tableView.insertRows(at: [IndexPath(row: macros.count - 1, section: 0)], with: .automatic)
+    }
+    
+    func tableView(_ tableView: UITableView, canPerformAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+        indexPath.section == 1
     }
 }
 

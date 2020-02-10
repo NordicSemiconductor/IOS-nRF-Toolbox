@@ -70,7 +70,7 @@ class UARTTabBarController: UITabBarController {
         })
 
         emptyView = InfoActionView.instanceWithParams(message: "Device is not connected", buttonSettings: bSettings)
-//        addEmptyView()
+        addEmptyView()
         btManager.delegate = self
     }
     

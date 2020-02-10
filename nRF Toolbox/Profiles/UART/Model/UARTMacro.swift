@@ -12,7 +12,7 @@ struct UARTMacro {
     var name: String
     /// Delay between commands in milliseconds
     var delay: Int
-    var commands: [UARTCommandModel]
+    var commands: [UARTMacroElement]
 }
 
 extension UARTMacro {
@@ -23,22 +23,23 @@ extension UARTMacro {
 
 private struct UARTCommandContainer: Codable {
     enum CommandType: String, Codable {
-        case empty, text, data
+        case empty, text, data, timeInterval
     }
     
     enum CodingKeys: String, CodingKey {
         case command, type
     }
     
-    let command: UARTCommandModel
+    let command: UARTMacroElement
     let type: CommandType
     
-    init(_ command: UARTCommandModel) {
+    init(_ command: UARTMacroElement) {
         self.command = command
         self.type = {
             switch command {
             case is TextCommand: return .text
             case is DataCommand: return .data
+            case is UARTMacroTimeInterval: return .timeInterval
             default: return .empty
             }
         }()
@@ -48,6 +49,8 @@ private struct UARTCommandContainer: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.type = try container.decode(CommandType.self, forKey: .type)
         switch self.type {
+        case .timeInterval:
+            self.command = try container.decode(UARTMacroTimeInterval.self, forKey: .command)
         case .text:
             self.command = try container.decode(TextCommand.self, forKey: .command)
         case .data:
@@ -61,6 +64,8 @@ private struct UARTCommandContainer: Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(type, forKey: .type)
         switch self.command {
+        case let m as UARTMacroTimeInterval:
+            try container.encode(m, forKey: .command)
         case let m as TextCommand:
             try container.encode(m, forKey: .command)
         case let m as DataCommand:

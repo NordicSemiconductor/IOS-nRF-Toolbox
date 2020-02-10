@@ -214,19 +214,33 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
     }
     
     func send(macro: UARTMacro) {
-        self.macroTimer = DispatchSource.makeTimerSource()
-        var iterator = macro.commands.makeIterator()
         
-        macroTimer.setEventHandler { [unowned self] in
-            guard let command = iterator.next() else {
-                self.macroTimer.cancel()
-                return
+        DispatchQueue.global(qos: .userInitiated).async {
+            macro.commands.forEach { (element) in
+                switch element {
+                case let command as UARTCommandModel:
+                    self.send(command: command)
+                case let timeInterval as UARTMacroTimeInterval:
+                    usleep(useconds_t(timeInterval.miliseconds * 1000))
+                default:
+                    break
+                }
             }
-            self.send(command: command)
         }
         
-        macroTimer.schedule(deadline: .now(), repeating: .milliseconds(macro.delay))
-        macroTimer.activate()
+//        self.macroTimer = DispatchSource.makeTimerSource()
+//        var iterator = macro.commands.makeIterator()
+//
+//        macroTimer.setEventHandler { [unowned self] in
+//            guard let command = iterator.next() else {
+//                self.macroTimer.cancel()
+//                return
+//            }
+////            self.send(command: command)
+//        }
+//
+//        macroTimer.schedule(deadline: .now(), repeating: .milliseconds(macro.delay))
+//        macroTimer.activate()
     }
     
     //MARK: - Logger API

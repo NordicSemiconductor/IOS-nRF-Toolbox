@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol NordicTextTableViewCellModel {
+    var image: UIImage? { get }
+    var text: String? { get }
+}
+
 class NordicTextTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
@@ -27,5 +32,10 @@ class NordicTextTableViewCell: UITableViewCell {
     private func setupAppearance() {
         let defaultSize = textLabel?.font.pointSize ?? 12
         textLabel?.font = UIFont.gtEestiDisplay(.regular, size: defaultSize)
+    }
+    
+    func apply(_ model: NordicTextTableViewCellModel) {
+        textLabel?.text = model.text
+        imageView?.image = model.image
     }
 }
