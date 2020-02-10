@@ -297,10 +297,9 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-        guard error == nil else {
+        if case .some(let e) = error {
             log(withLevel: .debugLogLevel, andMessage: "[Callback] Central Manager did disconnect peripheral")
-            logError(error: error!)
-            return
+            logError(error: e)
         }
         log(withLevel: .debugLogLevel, andMessage: "[Callback] Central Manager did disconnect peripheral successfully")
         log(withLevel: .infoLogLevel, andMessage: "Disconnected")
