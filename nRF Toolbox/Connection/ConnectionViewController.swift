@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ConnectionViewControllerDelegate: class {
-    func connected(to peripheral: Peripheral)
+    func requestConnection(to peripheral: Peripheral)
 }
 
 class ConnectionViewController: UITableViewController {
@@ -74,7 +74,7 @@ class ConnectionViewController: UITableViewController {
         }
         
         let peripheral = scanner.peripherals[indexPath.row]
-        scanner.connect(to: peripheral)
+        delegate?.requestConnection(to: peripheral)
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -88,7 +88,7 @@ extension ConnectionViewController: PeripheralScannerDelegate {
         tableView.reloadSections(indexSet, with: .none)
         
         if case .connecting(let p) = status {
-            self.delegate?.connected(to: p)
+            self.delegate?.requestConnection(to: p)
         }
     }
     
