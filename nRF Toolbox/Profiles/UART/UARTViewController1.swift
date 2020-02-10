@@ -114,12 +114,6 @@ class UARTViewController1: UIViewController, AlertPresenter {
     }
 }
 
-extension UARTViewController1: ConnectionViewControllerDelegate {
-    func connected(to peripheral: Peripheral) {
-        btManager.connectPeripheral(peripheral: peripheral.peripheral)
-    }
-}
-
 extension UARTViewController1: UARTNewCommandDelegate {
     func createdNewCommand(_ command: UARTCommandModel) {
         guard let selectedItemIndex = collectionView.indexPathsForSelectedItems?.first?.item else {

@@ -109,7 +109,7 @@ extension UARTTabBarController {
 }
 
 extension UARTTabBarController: ConnectionViewControllerDelegate {
-    func connected(to peripheral: Peripheral) {
+    func requestConnection(to peripheral: Peripheral) {
         btManager.connectPeripheral(peripheral: peripheral.peripheral)
     }
 }

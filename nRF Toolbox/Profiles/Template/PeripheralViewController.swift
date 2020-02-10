@@ -118,7 +118,7 @@ class PeripheralViewController: UIViewController, StatusDelegate {
 }
 
 extension PeripheralViewController: ConnectionViewControllerDelegate {
-    func connected(to peripheral: Peripheral) {
+    func requestConnection(to peripheral: Peripheral) {
         self.peripheralManager.connect(peripheral: peripheral)
     }
 }
