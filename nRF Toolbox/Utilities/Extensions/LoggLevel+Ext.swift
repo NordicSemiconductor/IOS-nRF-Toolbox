@@ -15,8 +15,9 @@ extension LogLevel {
         case .warning: return .nordicFall
         case .error: return .nordicRed
         case .application: return .nordicGreen
-        case .info: return .nordicBlue
-        case .verbose: return .nordicLake
+        case .info: return UIColor.Text.systemText
+        case .verbose: return .nordicFall
+        case .debug: return .nordicLake
         default:
             if #available(iOS 13, *) {
                 return .label

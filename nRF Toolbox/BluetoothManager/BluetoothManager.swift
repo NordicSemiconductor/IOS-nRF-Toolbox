@@ -71,8 +71,6 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
     fileprivate var connected = false
     private var connectingPeripheral: CBPeripheral!
     
-    private var macroTimer: DispatchSourceTimer!
-    
     //MARK: - BluetoothManager API
     
     required init(withManager aManager : CBCentralManager = CBCentralManager()) {
@@ -211,6 +209,7 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
         data.forEach {
             self.bluetoothPeripheral!.writeValue($0, for: uartRXCharacteristic, type: type)
         }
+        log(withLevel: .appLogLevel, andMessage: "Sent command: \(aCommand.title)")
     }
     
     func send(macro: UARTMacro) {
@@ -227,20 +226,6 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
                 }
             }
         }
-        
-//        self.macroTimer = DispatchSource.makeTimerSource()
-//        var iterator = macro.commands.makeIterator()
-//
-//        macroTimer.setEventHandler { [unowned self] in
-//            guard let command = iterator.next() else {
-//                self.macroTimer.cancel()
-//                return
-//            }
-////            self.send(command: command)
-//        }
-//
-//        macroTimer.schedule(deadline: .now(), repeating: .milliseconds(macro.delay))
-//        macroTimer.activate()
     }
     
     //MARK: - Logger API
@@ -250,11 +235,7 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
     }
     
     func logError(error anError : Error) {
-        if let e = anError as? CBError {
-            logger?.log(level: .errorLogLevel, message: "Error \(e.code): \(e.localizedDescription)")
-        } else {
-            logger?.log(level: .errorLogLevel, message: "Error \(anError.localizedDescription)")
-        }
+        logger?.log(level: .errorLogLevel, message: "Error: \(anError.localizedDescription)")
     }
     
     //MARK: - CBCentralManagerDelegate

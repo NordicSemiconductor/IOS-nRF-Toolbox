@@ -67,9 +67,11 @@ extension LoggerTableView: LogPresenter, Logger {
     func logWith(_ level: LogLevel, message: String) {
         let insertIndexPath = IndexPath(row: logs.count, section: 0)
         let log = LogMessage(level: level, message: message, time: Date())
-        logs.append(log)
-        self.insertRows(at: [insertIndexPath], with: .none)
-        scrollToRow(at: insertIndexPath, at: .bottom, animated: true)
+        DispatchQueue.main.async {
+            self.logs.append(log)
+            self.insertRows(at: [insertIndexPath], with: .none)
+            self.scrollToRow(at: insertIndexPath, at: .bottom, animated: true)
+        }
     }
     
     var attributedLog: NSAttributedString {
@@ -100,7 +102,7 @@ extension LoggerTableView: LogPresenter, Logger {
 
 extension LoggerTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return logs.count
+        logs.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
