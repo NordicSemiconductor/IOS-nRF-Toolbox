@@ -54,7 +54,7 @@
                         </button>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="GMu-sG-Zuq" customClass="UARTCommandListCollectionView" customModule="nRF_Toolbox" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="48" width="374" height="374"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="GMu-sG-Zuq" secondAttribute="height" multiplier="1:1" id="dlu-jz-0yh"/>
                             </constraints>
@@ -66,7 +66,7 @@
                             </collectionViewFlowLayout>
                         </collectionView>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="XE5-WC-7WV" firstAttribute="trailing" secondItem="GMu-sG-Zuq" secondAttribute="trailing" id="0UM-JD-moo"/>
                         <constraint firstItem="GMu-sG-Zuq" firstAttribute="top" secondItem="XE5-WC-7WV" secondAttribute="bottom" constant="8" id="5Q1-1X-Cac"/>
@@ -99,7 +99,7 @@
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="PdZ-kf-qsF" secondAttribute="trailing" constant="16" id="3by-5R-lH6"/>
                 <constraint firstItem="pIh-Or-s4q" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="12" id="6hc-SN-6L5"/>
