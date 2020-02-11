@@ -59,7 +59,7 @@ struct CommandImage: Codable {
         if #available(iOS 13, *), let image = systemIcon?.image {
             return image
         } else {
-            return UIImage(named: self.name)
+            return UIImage(named: self.name)?.withRenderingMode(.alwaysTemplate)
         }
     }
     
