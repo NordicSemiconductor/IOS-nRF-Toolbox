@@ -75,9 +75,9 @@ extension UARTCommandListCollectionView: UICollectionViewDataSource {
         let cell = collectionView.dequeueCell(ofType: UARTActionCollectionViewCell.self, for: indexPath)
         cell.apply(command: command)
         if #available(iOS 13.0, *) {
-            cell.contentView.backgroundColor = .systemGroupedBackground
+            cell.contentView.backgroundColor = UIColor.dynamicColor(light: .systemBackground, dark: .secondarySystemBackground)
         } else {
-            cell.contentView.backgroundColor = .lightGray
+            cell.contentView.backgroundColor = .white
         }
         return cell
     }
