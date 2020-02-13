@@ -72,6 +72,8 @@ class UARTTabBarController: UITabBarController {
         emptyView = InfoActionView.instanceWithParams(message: "Device is not connected", buttonSettings: bSettings)
         addEmptyView()
         btManager.delegate = self
+        
+        delegate = self
     }
     
 }
@@ -111,5 +113,12 @@ extension UARTTabBarController {
 extension UARTTabBarController: ConnectionViewControllerDelegate {
     func requestConnection(to peripheral: Peripheral) {
         btManager.connectPeripheral(peripheral: peripheral.peripheral)
+    }
+}
+
+extension UARTTabBarController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        navigationItem.title = viewController.navigationItem.title
+        navigationItem.rightBarButtonItems = viewController.navigationItem.rightBarButtonItems
     }
 }
