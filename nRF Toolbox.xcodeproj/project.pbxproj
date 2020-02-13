@@ -8,11 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		01006201234D08700078CEFA /* LinearChartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01006200234D08700078CEFA /* LinearChartTableViewCell.swift */; };
+		0125D5B623F44FE6003A1812 /* UIBarButtonItem+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0125D5B523F44FE6003A1812 /* UIBarButtonItem+Ext.swift */; };
+		0125D5B823F53D3B003A1812 /* DFU.LogLevel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0125D5B723F53D3B003A1812 /* DFU.LogLevel+Ext.swift */; };
 		0129126B23E4487000EB3CCD /* UARTTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129126A23E4486F00EB3CCD /* UARTTabBarController.swift */; };
 		01468B052361A30A00C29E4C /* StepperTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B032361A30A00C29E4C /* StepperTableViewCell.swift */; };
 		01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01468B042361A30A00C29E4C /* StepperTableViewCell.xib */; };
 		01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */; };
 		0162BA91234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0162BA90234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift */; };
+		01797E8323F4242500B26BF2 /* ModernIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01797E8223F4242500B26BF2 /* ModernIcon.swift */; };
 		019985E423DEF23F000CDCB6 /* NordicTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019985E323DEF23F000CDCB6 /* NordicTextTableViewCell.swift */; };
 		019985E623DEF2BD000CDCB6 /* NordicActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019985E523DEF2BD000CDCB6 /* NordicActionTableViewCell.swift */; };
 		019985E823DF1C8D000CDCB6 /* CloseButtonPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019985E723DF1C8D000CDCB6 /* CloseButtonPresenter.swift */; };
@@ -27,6 +30,8 @@
 		01A1B77223CF530E0062FADC /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A1B77023CF530E0062FADC /* ImageCollectionViewCell.swift */; };
 		01A1B77323CF530E0062FADC /* ImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01A1B77123CF530E0062FADC /* ImageCollectionViewCell.xib */; };
 		01A1B77523CF5A080062FADC /* UICollectionView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A1B77423CF5A080062FADC /* UICollectionView+Ext.swift */; };
+		01A870D823F409BB00D9202E /* UARTFilterLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A870D723F409BB00D9202E /* UARTFilterLogViewController.swift */; };
+		01A870DA23F40E2F00D9202E /* CheckmarkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A870D923F40E2F00D9202E /* CheckmarkTableViewCell.swift */; };
 		01AD26E82395084000F56210 /* ConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26E62395084000F56210 /* ConnectionViewController.swift */; };
 		01AD26EC23953E4800F56210 /* FileSizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26EB23953E4800F56210 /* FileSizeView.swift */; };
 		01AD26F023955A9F00F56210 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26EF23955A9F00F56210 /* ProgressView.swift */; };
@@ -256,11 +261,14 @@
 
 /* Begin PBXFileReference section */
 		01006200234D08700078CEFA /* LinearChartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearChartTableViewCell.swift; sourceTree = "<group>"; };
+		0125D5B523F44FE6003A1812 /* UIBarButtonItem+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Ext.swift"; sourceTree = "<group>"; };
+		0125D5B723F53D3B003A1812 /* DFU.LogLevel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DFU.LogLevel+Ext.swift"; sourceTree = "<group>"; };
 		0129126A23E4486F00EB3CCD /* UARTTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTTabBarController.swift; sourceTree = "<group>"; };
 		01468B032361A30A00C29E4C /* StepperTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperTableViewCell.swift; sourceTree = "<group>"; };
 		01468B042361A30A00C29E4C /* StepperTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StepperTableViewCell.xib; sourceTree = "<group>"; };
 		01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalSection.swift; sourceTree = "<group>"; };
 		0162BA90234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTemperatureAditionalSection.swift; sourceTree = "<group>"; };
+		01797E8223F4242500B26BF2 /* ModernIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernIcon.swift; sourceTree = "<group>"; };
 		019985E323DEF23F000CDCB6 /* NordicTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicTextTableViewCell.swift; sourceTree = "<group>"; };
 		019985E523DEF2BD000CDCB6 /* NordicActionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicActionTableViewCell.swift; sourceTree = "<group>"; };
 		019985E723DF1C8D000CDCB6 /* CloseButtonPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButtonPresenter.swift; sourceTree = "<group>"; };
@@ -275,6 +283,8 @@
 		01A1B77023CF530E0062FADC /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		01A1B77123CF530E0062FADC /* ImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		01A1B77423CF5A080062FADC /* UICollectionView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Ext.swift"; sourceTree = "<group>"; };
+		01A870D723F409BB00D9202E /* UARTFilterLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTFilterLogViewController.swift; sourceTree = "<group>"; };
+		01A870D923F40E2F00D9202E /* CheckmarkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkTableViewCell.swift; sourceTree = "<group>"; };
 		01AD26E62395084000F56210 /* ConnectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionViewController.swift; sourceTree = "<group>"; };
 		01AD26EB23953E4800F56210 /* FileSizeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSizeView.swift; sourceTree = "<group>"; };
 		01AD26EF23955A9F00F56210 /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
@@ -575,6 +585,8 @@
 			children = (
 				019985EC23E0622B000CDCB6 /* UARTLoggerViewController.swift */,
 				019985ED23E0622B000CDCB6 /* UARTLoggerViewController.xib */,
+				01A870D723F409BB00D9202E /* UARTFilterLogViewController.swift */,
+				01A870D923F40E2F00D9202E /* CheckmarkTableViewCell.swift */,
 			);
 			path = LoggViewController;
 			sourceTree = "<group>";
@@ -990,6 +1002,8 @@
 				4392FF0123AA6CBE00E6ACEA /* DateFormatter+Ext.swift */,
 				43445EEE23B0AD8D008A9FD9 /* LoggLevel+Ext.swift */,
 				01AF928223D0AC3200C1BFD6 /* StringProtocol+Ext.swift */,
+				0125D5B523F44FE6003A1812 /* UIBarButtonItem+Ext.swift */,
+				0125D5B723F53D3B003A1812 /* DFU.LogLevel+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1250,6 +1264,7 @@
 				01AF929123D5A9CD00C1BFD6 /* UARTMacro.swift */,
 				01AF929523D8962600C1BFD6 /* UARTPreset.swift */,
 				01A1B76923CF309E0062FADC /* CommandImage.swift */,
+				01797E8223F4242500B26BF2 /* ModernIcon.swift */,
 				01AF929323D72AC900C1BFD6 /* UARTJsonCoder.swift */,
 				019985F023E07CFB000CDCB6 /* XMLDocument.swift */,
 			);
@@ -1832,6 +1847,7 @@
 				3001EBB11D1BE1F3008C5C37 /* GlucoseReading.swift in Sources */,
 				01A1B77523CF5A080062FADC /* UICollectionView+Ext.swift in Sources */,
 				3000B2151CE32A9200F64CEE /* UARTViewController.swift in Sources */,
+				01797E8323F4242500B26BF2 /* ModernIcon.swift in Sources */,
 				20850177233B690500C792B4 /* RunningCharacteristic.swift in Sources */,
 				4392FEFF23AA610300E6ACEA /* LogTableViewCell.swift in Sources */,
 				309F086C1E6EA0F800B7546A /* HKScannerViewController.swift in Sources */,
@@ -1846,6 +1862,7 @@
 				20D08E2B232B95B300569587 /* DisclosureTableViewCell.swift in Sources */,
 				2002A0052322610F00C43E06 /* GlucoseMonitorViewController.swift in Sources */,
 				01B6D3DC234CB755000942C4 /* HeartRateLocationCharacteristic.swift in Sources */,
+				01A870D823F409BB00D9202E /* UARTFilterLogViewController.swift in Sources */,
 				20C7FE50230E789F00B06FD8 /* MainRouter.swift in Sources */,
 				201364FF2345D0EA00C5AF1F /* CuffPressureSection.swift in Sources */,
 				4381AD1B23BA057000FB1A1F /* UARTViewController1.swift in Sources */,
@@ -1854,6 +1871,7 @@
 				20F15C3A2313D2B9000C5503 /* InfoActionView.swift in Sources */,
 				01FEB0FD23969BD1000767C1 /* UIView+Ext.swift in Sources */,
 				20F15C3F2313D606000C5503 /* NoContentViewController.swift in Sources */,
+				0125D5B623F44FE6003A1812 /* UIBarButtonItem+Ext.swift in Sources */,
 				309F08701E6FF1F900B7546A /* HKAccessoryViewController.swift in Sources */,
 				3001EBC31D1C1430008C5C37 /* CGMItemCell.swift in Sources */,
 				3001EBB91D1BE1FB008C5C37 /* BGMViewController.swift in Sources */,
@@ -1872,6 +1890,7 @@
 				208EE4EA23155FC8008E5FE9 /* WebViewController.swift in Sources */,
 				019985F123E07CFB000CDCB6 /* XMLDocument.swift in Sources */,
 				20B797942334FE1B001328E1 /* Identifier+GlucoseMonitorViewController.swift in Sources */,
+				01A870DA23F40E2F00D9202E /* CheckmarkTableViewCell.swift in Sources */,
 				309F086A1E6D9EAA00B7546A /* HKHomeStore.swift in Sources */,
 				204485E1233A148700A8A3A3 /* RunningTableViewController.swift in Sources */,
 				30499E591CE4A07700E0993B /* AppFilesViewController.swift in Sources */,
@@ -1902,6 +1921,7 @@
 				339767568FA774CDE2FFC170 /* Peripheral+Proximity.swift in Sources */,
 				3397616CB0B03E42E9F890C6 /* DFUViewController.swift in Sources */,
 				3397628E56C4A84F4D4E8128 /* PeripheralViewController.swift in Sources */,
+				0125D5B823F53D3B003A1812 /* DFU.LogLevel+Ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

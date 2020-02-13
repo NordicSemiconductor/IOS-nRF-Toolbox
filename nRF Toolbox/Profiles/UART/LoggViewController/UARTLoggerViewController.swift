@@ -8,12 +8,26 @@
 
 import UIKit
 
+private extension UIImage {
+    static func getFilterIcon(isFilled: Bool) -> UIImage? {
+        if #available(iOS 13, *) {
+            let icon = ModernIcon.line(.horizontal)(.init(digit: 3))(.decrease)(.circle)
+            return (isFilled ? icon(.fill) : icon ).image
+        } else {
+            return UIImage(named: "baseline_filter_list_black_24pt")        
+        }
+    }
+}
+
 class UARTLoggerViewController: UIViewController, CloseButtonPresenter {
     @IBOutlet private var loggerTableView: LoggerTableView!
     @IBOutlet private var commandTextField: UITextField!
     
     var logger: Logger { loggerTableView }
     private var btManager: BluetoothManager
+    private var filterLogLevel: [LOGLevel] = LOGLevel.allCases
+    
+    private lazy var filterBtn = UIBarButtonItem(image: UIImage.getFilterIcon(isFilled: false), style: .plain, target: self, action: #selector(openFilter))
     
     init(bluetoothManager: BluetoothManager) {
         btManager = bluetoothManager
@@ -32,14 +46,28 @@ class UARTLoggerViewController: UIViewController, CloseButtonPresenter {
         fatalError("init(coder:) has not been implemented")
     }
     
+    @objc func openFilter() {
+        let vc = UARTFilterLogViewController(selectedLevels: filterLogLevel)
+        vc.filterDelegate = self
+        let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false)
+        present(nc, animated: true)
+    }
 }
 
 extension UARTLoggerViewController {
     private func setupUI() {
-        let clearButton = UIBarButtonItem(title: "Clear", style: .plain, target: self, action: #selector(clear))
-        navigationItem.rightBarButtonItem = clearButton
         setupCloseButton()
         navigationItem.title = "Logger"
+        
+        let trashImage: UIImage? = {
+            if #available(iOS 13, *) {
+                return ModernIcon.trash.image
+            } else {
+                return UIImage(named: "baseline_delete_outline_black_24pt")
+            }
+        }()
+        let clearItem = UIBarButtonItem(image: trashImage, style: .plain, target: self, action: #selector(clear))
+        navigationItem.rightBarButtonItems = [clearItem, filterBtn]
         
         btManager.logger = self.loggerTableView
     }
@@ -47,6 +75,8 @@ extension UARTLoggerViewController {
     @objc private func clear() {
         loggerTableView.clear()
     }
+    
+    
 }
 
 extension UARTLoggerViewController: UITextFieldDelegate {
@@ -62,4 +92,17 @@ extension UARTLoggerViewController: UITextFieldDelegate {
         btManager.send(text: text)
         return true 
     }
+}
+
+extension UARTLoggerViewController: UARTFilterApplierDelegate {
+    func setLevels(_ levels: [LOGLevel]) {
+        print(levels)
+        filterLogLevel = levels
+        loggerTableView.filter = levels
+        dismsiss()
+        
+        filterBtn.image = UIImage.getFilterIcon(isFilled: levels.count != LOGLevel.allCases.count)
+    }
+    
+    
 }
