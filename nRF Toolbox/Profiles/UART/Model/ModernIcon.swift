@@ -39,6 +39,7 @@ extension ModernIcon {
     static let alt = ModernIcon(name: "alt")
     static let grid = ModernIcon(name: "grid")
     static let threeXthree = ModernIcon(name: "3x3")
+    static let trash = ModernIcon(name: "trash")
     static let bolt = ModernIcon(name: "bolt")
     static let list = ModernIcon(name: "list")
     static let dash = ModernIcon(name: "dash")

@@ -76,20 +76,33 @@ class UARTFilterLogViewController: UITableViewController, CloseButtonPresenter {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        navigationItem.rightBarButtonItem?.isEnabled = true
         guard indexPath.section == 1 else {
             selectedLevels.append(LOGLevel.allCases[indexPath.row])
             return
         }
         tableView.deselectRow(at: indexPath, animated: true)
         for i in 0..<LOGLevel.allCases.count {
-            tableView.selectRow(at: IndexPath(row: i, section: 0), animated: false, scrollPosition: .none)
+            let ip = IndexPath(row: i, section: 0)
+            guard tableView.cellForRow(at: ip)?.isSelected == false else { continue }
+            tableView.selectRow(at: ip, animated: false, scrollPosition: .none)
+            selectedLevels.append(LOGLevel.allCases[i])
         }
-        
     }
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         guard indexPath.section == 0 else { return }
         selectedLevels.removeAll { LOGLevel.allCases[indexPath.row] == $0 }
+        
+        var enabled = false
+        for i in 0..<LOGLevel.allCases.count {
+            if tableView.cellForRow(at: IndexPath(row: i, section: 0))?.isSelected == true {
+                enabled = true
+                break
+            }
+        }
+        
+        navigationItem.rightBarButtonItem?.isEnabled = enabled
     }
     
 }

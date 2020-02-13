@@ -36,7 +36,7 @@ class CheckmarkTableViewCell: UITableViewCell {
         if #available(iOS 13, *) {
             return ModernIcon.circle.image
         } else {
-            return UIImage(named: "baseline_check_circle_white_36pt")?.withRenderingMode(.alwaysTemplate)
+            return UIImage(named: "circle")
         }
     }()
     
