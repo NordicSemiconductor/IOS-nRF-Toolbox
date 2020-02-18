@@ -24,12 +24,13 @@ class UARTViewController1: UIViewController, AlertPresenter {
 
     let btManager: BluetoothManager!
     
-    @IBOutlet private var collectionView: UARTCommandListCollectionView!
+    @IBOutlet private var collectionView: UARTPresetCollectionView!
     @IBOutlet private var disconnectBtn: NordicButton!
     @IBOutlet private var deviceNameLabel: UILabel!
     @IBOutlet private var saveLoadButton: UIButton!
     
     private var preset: UARTPreset = .default
+    private weak var router: UARTRouter?
     
     var deviceName: String = "" {
         didSet {
@@ -37,8 +38,9 @@ class UARTViewController1: UIViewController, AlertPresenter {
         }
     }
     
-    init(bluetoothManager: BluetoothManager) {
+    init(bluetoothManager: BluetoothManager, uartRouter: UARTRouter) {
         self.btManager = bluetoothManager
+        self.router = uartRouter
         super.init(nibName: nil, bundle: .main)
     }
     
@@ -52,7 +54,7 @@ class UARTViewController1: UIViewController, AlertPresenter {
         navigationItem.title = "UART"
         tabBarItem = UITabBarItem(title: "Preset", image: TabBarIcon.uartPreset.image, selectedImage: TabBarIcon.uartPreset.filledImage)
         
-        collectionView.commandListDelegate = self
+        collectionView.presetDelegate = self
         
         disconnectBtn.style = .destructive
     }
@@ -112,37 +114,31 @@ class UARTViewController1: UIViewController, AlertPresenter {
         
         present(alert, animated: true, completion: nil)
     }
+    
+    @IBAction func recordMacros() {
+        router?.displayMacros(with: preset)
+    }
 }
 
 extension UARTViewController1: UARTNewCommandDelegate {
-    func createdNewCommand(_ command: UARTCommandModel) {
-        guard let selectedItemIndex = collectionView.indexPathsForSelectedItems?.first?.item else {
-            return
-        }
-        
-        preset.updateCommand(command, at: selectedItemIndex)
+    func createdNewCommand(_ viewController: UARTNewCommandViewController, command: UARTCommandModel, index: Int) {
+        preset.updateCommand(command, at: index)
         collectionView.preset = preset
-        dismiss(animated: true, completion: nil)
+        viewController.dismsiss()
     }
     
 }
 
-extension UARTViewController1: UARTCommandListDelegate {
+extension UARTViewController1: UARTPresetCollectionViewDelegate {
     
     func longTapAtCommand(_ command: UARTCommandModel, at index: Int) {
-        let vc = UARTNewCommandViewController(command: command)
-        vc.delegate = self
-        let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false)
-        self.present(nc, animated: true)
+        openPresetEditor(with: command, index: index)
         collectionView.selectItem(at: IndexPath(item: index, section: 0), animated: false, scrollPosition: .top)
     }
     
     func selectedCommand(_ command: UARTCommandModel, at index: Int) {
         guard !(command is EmptyModel) else {
-            let vc = UARTNewCommandViewController(command: command)
-            vc.delegate = self
-            let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false)
-            self.present(nc, animated: true)
+            openPresetEditor(with: command, index: index)
             return
         }
         

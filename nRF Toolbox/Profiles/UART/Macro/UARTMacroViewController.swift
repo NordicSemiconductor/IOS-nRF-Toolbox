@@ -17,7 +17,7 @@ class UARTMacroViewController: UIViewController, AlertPresenter {
     private let btManager: BluetoothManager
 
     @IBOutlet private var rootStackView: UIStackView!
-    @IBOutlet var commandListCollectionView: UARTCommandListCollectionView!
+    @IBOutlet var commandListCollectionView: UARTPresetCollectionView!
     @IBOutlet var commandOrderTableView: UITableView!
     @IBOutlet var timeStepper: UIStepper!
     @IBOutlet var playBtn: NordicButton!
@@ -47,7 +47,7 @@ class UARTMacroViewController: UIViewController, AlertPresenter {
         super.viewDidLoad()
         commandOrderTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         commandListCollectionView.preset = preset
-        commandListCollectionView.commandListDelegate = self
+        commandListCollectionView.presetDelegate = self
         
         commandOrderTableView.isEditing = true
         
@@ -144,7 +144,7 @@ extension UARTMacroViewController {
     }
 }
 
-extension UARTMacroViewController: UARTCommandListDelegate {
+extension UARTMacroViewController: UARTPresetCollectionViewDelegate {
     func selectedCommand(_ command: UARTCommandModel, at index: Int) {
         guard !(command is EmptyModel) else { return }
         macros.append(command)
@@ -152,7 +152,7 @@ extension UARTMacroViewController: UARTCommandListDelegate {
     }
     
     func longTapAtCommand(_ command: UARTCommandModel, at index: Int) {
-        let vc = UARTNewCommandViewController(command: command)
+        let vc = UARTNewCommandViewController(command: command, index: index)
         vc.delegate = self
         let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false)
         self.present(nc, animated: true)
@@ -161,14 +161,14 @@ extension UARTMacroViewController: UARTCommandListDelegate {
 }
 
 extension UARTMacroViewController: UARTNewCommandDelegate {
-    func createdNewCommand(_ command: UARTCommandModel) {
+    func createdNewCommand(_ viewController: UARTNewCommandViewController, command: UARTCommandModel, index: Int) {
         guard let selectedItemIndex = commandListCollectionView.indexPathsForSelectedItems?.first?.item else {
             return
         }
         
         preset.updateCommand(command, at: selectedItemIndex)
         commandListCollectionView.preset = preset
-        dismiss(animated: true, completion: nil)
+        viewController.dismsiss()
     }
     
 }

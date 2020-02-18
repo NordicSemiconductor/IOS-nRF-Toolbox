@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="ipad10_5" orientation="portrait" layout="fullscreen" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16085" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16078.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -34,10 +32,10 @@
                     <rect key="frame" x="12" y="72" width="810" height="1048"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l78-sQ-7e6">
-                            <rect key="frame" x="0.0" y="0.0" width="399" height="1048"/>
+                            <rect key="frame" x="0.0" y="0.0" width="810" height="802"/>
                             <subviews>
-                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="GrI-VW-uQP" customClass="UARTCommandListCollectionView" customModule="nRF_Toolbox" customModuleProvider="target">
-                                    <rect key="frame" x="20" y="16" width="359" height="359"/>
+                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="GrI-VW-uQP" customClass="UARTPresetCollectionView" customModule="nRF_Toolbox" customModuleProvider="target">
+                                    <rect key="frame" x="20" y="16" width="770" height="770"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="GrI-VW-uQP" secondAttribute="height" multiplier="1:1" id="5Is-zu-cr4"/>
@@ -61,25 +59,25 @@
                             </constraints>
                         </view>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="F3Q-mE-lph">
-                            <rect key="frame" x="411" y="0.0" width="399" height="1048"/>
+                            <rect key="frame" x="0.0" y="814" width="810" height="234"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="h2G-g0-G1E">
-                                    <rect key="frame" x="0.0" y="0.0" width="399" height="32"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="810" height="30"/>
                                     <subviews>
                                         <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="100" minimumValue="100" maximumValue="10000" stepValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="muv-wV-kd6">
-                                            <rect key="frame" x="0.0" y="0.0" width="94" height="32"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="94" height="30"/>
                                             <connections>
                                                 <action selector="timeStepWithSender:" destination="-1" eventType="valueChanged" id="RGY-21-Kxc"/>
                                             </connections>
                                         </stepper>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="100 ms" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jvr-Ya-U1o">
-                                            <rect key="frame" x="102" y="0.0" width="214" height="32"/>
+                                            <rect key="frame" x="102" y="0.0" width="625" height="30"/>
                                             <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="15"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gNK-mr-HRh" customClass="NordicButton" customModule="nRF_Toolbox" customModuleProvider="target">
-                                            <rect key="frame" x="324" y="0.0" width="75" height="32"/>
+                                            <rect key="frame" x="735" y="0.0" width="75" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="75" id="4VZ-fg-w3j"/>
                                             </constraints>
@@ -91,7 +89,7 @@
                                     </subviews>
                                 </stackView>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6cd-rl-6dJ">
-                                    <rect key="frame" x="0.0" y="44" width="399" height="1004"/>
+                                    <rect key="frame" x="0.0" y="42" width="810" height="192"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     <connections>
                                         <outlet property="dataSource" destination="-1" id="1bo-eX-vgG"/>
@@ -115,7 +113,7 @@
                     </connections>
                 </textField>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Macros Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nFJ-JL-eRT">
-                    <rect key="frame" x="12" y="8" width="88" height="20"/>
+                    <rect key="frame" x="12" y="8" width="92" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="3Rz-c7-MgJ"/>
                     </constraints>

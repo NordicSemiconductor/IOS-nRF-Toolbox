@@ -10,14 +10,13 @@ import Foundation
 
 struct UARTMacro {
     var name: String
-    /// Delay between commands in milliseconds
-    var delay: Int
     var commands: [UARTMacroElement]
+    var preset: UARTPreset
 }
 
 extension UARTMacro {
     static var empty: UARTMacro {
-        UARTMacro(name: "", delay: 100, commands: [])
+        UARTMacro(name: "", commands: [], preset: .empty)
     }
 }
 
@@ -85,14 +84,14 @@ extension UARTMacro: Codable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case name, delay, commands
+        case name, preset, commands
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.name = try container.decode(String.self, forKey: .name)
-        self.delay = try container.decode(Int.self, forKey: .delay)
         let commandContainers = try container.decode([UARTCommandContainer].self, forKey: .commands)
+        self.preset = try container.decode(UARTPreset.self, forKey: .preset)
         self.commands = commandContainers.map { $0.command }
     }
     

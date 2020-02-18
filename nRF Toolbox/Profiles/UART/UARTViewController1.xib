@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16085" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16078.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -52,7 +52,7 @@
                                 <action selector="saveLoad:" destination="-1" eventType="touchUpInside" id="eU4-40-ndT"/>
                             </connections>
                         </button>
-                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="GMu-sG-Zuq" customClass="UARTCommandListCollectionView" customModule="nRF_Toolbox" customModuleProvider="target">
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="GMu-sG-Zuq" customClass="UARTPresetCollectionView" customModule="nRF_Toolbox" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="48" width="374" height="374"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
@@ -98,6 +98,16 @@
                         <action selector="disconnect" destination="-1" eventType="touchUpInside" id="8G7-Zz-Kng"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DJR-Gq-lhC" customClass="NordicButton" customModule="nRF_Toolbox" customModuleProvider="target">
+                    <rect key="frame" x="147" y="832" width="120" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="120" id="xA9-Cl-FUW"/>
+                    </constraints>
+                    <state key="normal" title="Record Macros"/>
+                    <connections>
+                        <action selector="recordMacros" destination="-1" eventType="touchUpInside" id="nSO-lI-VfC"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
             <constraints>
@@ -105,9 +115,11 @@
                 <constraint firstItem="pIh-Or-s4q" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="12" id="6hc-SN-6L5"/>
                 <constraint firstItem="pIh-Or-s4q" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" symbolic="YES" id="CAx-pO-xgC"/>
                 <constraint firstItem="pIh-Or-s4q" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" priority="999" constant="20" id="Jdx-6Y-k6x"/>
+                <constraint firstItem="DJR-Gq-lhC" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Sw3-pt-d9f"/>
                 <constraint firstItem="PdZ-kf-qsF" firstAttribute="centerY" secondItem="UL0-4i-YtI" secondAttribute="centerY" id="THu-nB-o1b"/>
                 <constraint firstItem="pIh-Or-s4q" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ZAI-nD-3dJ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="PdZ-kf-qsF" secondAttribute="bottom" constant="12" id="drJ-6o-9yR"/>
+                <constraint firstItem="DJR-Gq-lhC" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="erT-sA-y3n"/>
                 <constraint firstItem="PdZ-kf-qsF" firstAttribute="top" secondItem="pIh-Or-s4q" secondAttribute="bottom" constant="16" id="ths-Bk-KW0"/>
                 <constraint firstItem="UL0-4i-YtI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="xKo-Sf-yOF"/>
             </constraints>

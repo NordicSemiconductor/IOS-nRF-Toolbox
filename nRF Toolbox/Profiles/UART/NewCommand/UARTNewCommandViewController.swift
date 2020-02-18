@@ -9,7 +9,7 @@
 import UIKit
 
 protocol UARTNewCommandDelegate: class {
-    func createdNewCommand(_ command: UARTCommandModel)
+    func createdNewCommand(_ viewController: UARTNewCommandViewController, command: UARTCommandModel, index: Int)
 }
 
 class UARTNewCommandViewController: UIViewController {
@@ -23,14 +23,16 @@ class UARTNewCommandViewController: UIViewController {
     weak var delegate: UARTNewCommandDelegate?
     
     private var command: UARTCommandModel?
+    private var index: Int
     
-    init(command: UARTCommandModel?) {
+    init(command: UARTCommandModel?, index: Int) {
         self.command = command
+        self.index = index
         super.init(nibName: "UARTNewCommandViewController", bundle: .main)
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
+        Log(category: .app, type: .fault).fault("required init?(coder: NSCoder) is not implemented for UARTNewCommandViewController")
     }
     
     override func viewDidLoad() {
@@ -69,11 +71,11 @@ class UARTNewCommandViewController: UIViewController {
             command = DataCommand(data: Data(valueTextField.text!.hexa), image: image)
         }
         
-        delegate?.createdNewCommand(command)
+        delegate?.createdNewCommand(self, command: command, index: index)
     }
     
     @IBAction func deleteBtnPressed() {
-        delegate?.createdNewCommand(EmptyModel())
+        delegate?.createdNewCommand(self, command: EmptyModel(), index: index)
     }
 }
 

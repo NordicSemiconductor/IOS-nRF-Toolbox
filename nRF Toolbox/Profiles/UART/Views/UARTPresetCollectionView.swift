@@ -8,18 +8,13 @@
 
 import UIKit
 
-protocol UARTCommandListDelegate: class {
-    func selectedCommand(_ command: UARTCommandModel, at index: Int)
-    func longTapAtCommand(_ command: UARTCommandModel, at index: Int)
-}
-
-class UARTCommandListCollectionView: UICollectionView {
+class UARTPresetCollectionView: UICollectionView {
     var preset: UARTPreset = .default {
         didSet {
             reloadData()
         }
     }
-    weak var commandListDelegate: UARTCommandListDelegate?
+    weak var presetDelegate: UARTPresetCollectionViewDelegate?
     
     private var longPress = UILongPressGestureRecognizer()
     
@@ -40,11 +35,11 @@ class UARTCommandListCollectionView: UICollectionView {
         let location = sender.location(in: self)
         guard let ip = indexPathForItem(at: location) else { return }
         let command = preset.commands[ip.item]
-        commandListDelegate?.longTapAtCommand(command, at: ip.item)
+        presetDelegate?.longTapAtCommand(command, at: ip.item)
     }
 }
 
-extension UARTCommandListCollectionView: UICollectionViewDelegateFlowLayout {
+extension UARTPresetCollectionView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let side = collectionView.frame.size.width / 3 - 6
         return CGSize(width: side, height: side)
@@ -60,11 +55,11 @@ extension UARTCommandListCollectionView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let command = preset.commands[indexPath.item]
-        self.commandListDelegate?.selectedCommand(command, at: indexPath.item)
+        self.presetDelegate?.selectedCommand(command, at: indexPath.item)
     }
 }
 
-extension UARTCommandListCollectionView: UICollectionViewDataSource {
+extension UARTPresetCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return preset.commands.count
     }

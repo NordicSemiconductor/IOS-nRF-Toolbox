@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol UARTRouter: class {
+    func displayMacros(with preset: UARTPreset)
+}
+
 struct TabBarIcon {
     private var imageName: String
     private var modernIcon: ModernIcon
@@ -44,7 +48,7 @@ class UARTTabBarController: UITabBarController {
     private var emptyView: UIView!
     let btManager = BluetoothManager()
     
-    private lazy var uartViewController = UARTViewController1(bluetoothManager: btManager)
+    private lazy var uartViewController = UARTViewController1(bluetoothManager: btManager, uartRouter: self)
     private lazy var uartMacroViewController = UARTMacrosList(bluetoothManager: btManager, preset: .default)
     private lazy var uartLoggerViewController = UARTLoggerViewController(bluetoothManager: btManager)
     
@@ -120,5 +124,13 @@ extension UARTTabBarController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         navigationItem.title = viewController.navigationItem.title
         navigationItem.rightBarButtonItems = viewController.navigationItem.rightBarButtonItems
+    }
+}
+
+extension UARTTabBarController: UARTRouter {
+    func displayMacros(with preset: UARTPreset) {
+        let newMacroVC = UARTMacrosTableViewController(preset: preset)
+        uartMacroViewController.navigationController?.pushViewController(newMacroVC, animated: false)
+        selectedViewController = uartMacroViewController        
     }
 }
