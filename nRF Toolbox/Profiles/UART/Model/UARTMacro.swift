@@ -20,7 +20,7 @@ extension UARTMacro {
     }
 }
 
-private struct UARTCommandContainer: Codable {
+struct UARTCommandContainer: Codable {
     enum CommandType: String, Codable {
         case empty, text, data, timeInterval
     }
@@ -98,7 +98,7 @@ extension UARTMacro: Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(name, forKey: .name)
-        try container.encode(delay, forKey: .delay)
+        try container.encode(preset, forKey: .preset)
         
         let commandContainers = commands.map(UARTCommandContainer.init)
         try container.encode(commandContainers, forKey: .commands)

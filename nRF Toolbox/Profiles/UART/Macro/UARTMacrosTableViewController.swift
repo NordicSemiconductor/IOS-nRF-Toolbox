@@ -94,7 +94,7 @@ class UARTMacrosTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        guard section == Section.commands else { return 0 }
+        guard section == Section.commands || section == Section.name else { return 0 }
         return 44
     }
     

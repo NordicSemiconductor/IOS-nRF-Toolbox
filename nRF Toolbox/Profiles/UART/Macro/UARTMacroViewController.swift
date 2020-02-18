@@ -19,7 +19,6 @@ class UARTMacroViewController: UIViewController, AlertPresenter {
     @IBOutlet private var rootStackView: UIStackView!
     @IBOutlet var commandListCollectionView: UARTPresetCollectionView!
     @IBOutlet var commandOrderTableView: UITableView!
-    @IBOutlet var timeStepper: UIStepper!
     @IBOutlet var playBtn: NordicButton!
     @IBOutlet var timeLabel: UILabel!
     @IBOutlet var nameTextField: UITextField!
@@ -68,8 +67,8 @@ class UARTMacroViewController: UIViewController, AlertPresenter {
     }
     
     @IBAction func play() {
-        let macro = UARTMacro(name: nameTextField.text ?? "", delay: Int(timeStepper.value), commands: macros)
-        btManager.send(macro: macro)
+//        let macro = UARTMacro(name: nameTextField.text ?? "", delay: Int(timeStepper.value), commands: macros)
+//        btManager.send(macro: macro)
     }
     
     @objc private func save() {
@@ -107,8 +106,8 @@ extension UARTMacroViewController {
             let macro = try JSONDecoder().decode(UARTMacro.self, from: data)
             nameTextField.text = macro.name
             macros = macro.commands
-            timeStepper.value = Double(macro.delay)
-            timeLabel.text = "\(macro.delay) ms"
+//            timeStepper.value = Double(macro.delay)
+//            timeLabel.text = "\(macro.delay) ms"
             navigationItem.title = "Edit Macros"
         } catch let error {
             displayErrorAlert(error: error)
@@ -118,7 +117,7 @@ extension UARTMacroViewController {
     private func saveMacros(_ name: String) {
         let fileManager = FileManager.default
         do {
-            let macro = UARTMacro(name: name, delay: Int(timeStepper.value), commands: macros)
+            let macro = UARTMacro.empty//(name: name, delay: Int(timeStepper.value), commands: macros)
             let data = try JSONEncoder().encode(macro)
             let documentDirectory = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("macros")
             try fileManager.createDirectory(at: documentDirectory, withIntermediateDirectories: true, attributes: nil)

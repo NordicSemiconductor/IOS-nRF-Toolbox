@@ -108,14 +108,13 @@ extension UARTPreset: Codable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let commandContainers = try container.decode([Data].self, forKey: .commands)
-        let commands = try commandContainers.map { try UARTModelDecoder().decodeModel(from: $0) }
-        self.commands = commands
+        let commandContainers = try container.decode([UARTCommandContainer].self, forKey: .commands)
+        self.commands = commandContainers.compactMap { $0.command as? UARTCommandModel }
         self.name = try container.decode(String.self, forKey: .name)
     }
     
     func encode(to encoder: Encoder) throws {
-        let modelContainers = try self.commands.map { try UARTModelEncoder().encode(model: $0) }
+        let modelContainers = self.commands.map { UARTCommandContainer($0) }
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(modelContainers, forKey: .commands)
         try container.encode(name, forKey: .name)

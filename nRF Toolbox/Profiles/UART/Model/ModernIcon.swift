@@ -8,7 +8,7 @@
 
 import UIKit.UIImage
 
-struct ModernIcon: Codable {
+struct ModernIcon: Codable, Equatable {
     private (set) var name: String
     init(name: String) {
         self.name = name

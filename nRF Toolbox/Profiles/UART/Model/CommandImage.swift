@@ -8,7 +8,11 @@
 
 import UIKit.UIImage
 
-struct CommandImage: Codable {
+struct CommandImage: Codable, Equatable {
+    static func == (lhs: CommandImage, rhs: CommandImage) -> Bool {
+        lhs.name == rhs.name && lhs.systemIcon == rhs.systemIcon
+    }
+    
     var name: String
     var image: UIImage? {
         if #available(iOS 13, *), let image = systemIcon?.image {

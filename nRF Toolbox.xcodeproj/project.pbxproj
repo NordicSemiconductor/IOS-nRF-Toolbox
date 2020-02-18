@@ -24,6 +24,8 @@
 		01675E7223F6D1BE00FC0519 /* UARTPresetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01675E7023F6D1BE00FC0519 /* UARTPresetTableViewCell.xib */; };
 		0169B59E23FBD8BE00907C1B /* NordicTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0169B59D23FBD8BE00907C1B /* NordicTextFieldCell.swift */; };
 		0169B5A023FBD90E00907C1B /* NordicTextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0169B59F23FBD90E00907C1B /* NordicTextFieldCell.xib */; };
+		0169B5A823FBEA9600907C1B /* nRF_Toolbox_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0169B5A723FBEA9600907C1B /* nRF_Toolbox_Tests.swift */; };
+		0169B5B223FBEBB300907C1B /* UARTPresetTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0169B5B123FBEBB300907C1B /* UARTPresetTest.swift */; };
 		01797E8323F4242500B26BF2 /* ModernIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01797E8223F4242500B26BF2 /* ModernIcon.swift */; };
 		019985E423DEF23F000CDCB6 /* NordicTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019985E323DEF23F000CDCB6 /* NordicTextTableViewCell.swift */; };
 		019985E623DEF2BD000CDCB6 /* NordicActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019985E523DEF2BD000CDCB6 /* NordicActionTableViewCell.swift */; };
@@ -253,6 +255,16 @@
 		DCBF9D003D5AA175E9F24910 /* Pods_nRF_Toolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 302004489406AEA824DCF86D /* Pods_nRF_Toolbox.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		0169B5AA23FBEA9600907C1B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5217F3DA1859EE0000F2D5BB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5217F3E11859EE0000F2D5BB;
+			remoteInfo = "nRF Toolbox";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		0E645A0E1CBF943000D36AD0 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -284,6 +296,10 @@
 		01675E7023F6D1BE00FC0519 /* UARTPresetTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTPresetTableViewCell.xib; sourceTree = "<group>"; };
 		0169B59D23FBD8BE00907C1B /* NordicTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicTextFieldCell.swift; sourceTree = "<group>"; };
 		0169B59F23FBD90E00907C1B /* NordicTextFieldCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NordicTextFieldCell.xib; sourceTree = "<group>"; };
+		0169B5A523FBEA9600907C1B /* nRF Toolbox Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "nRF Toolbox Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0169B5A723FBEA9600907C1B /* nRF_Toolbox_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nRF_Toolbox_Tests.swift; sourceTree = "<group>"; };
+		0169B5A923FBEA9600907C1B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0169B5B123FBEBB300907C1B /* UARTPresetTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTPresetTest.swift; sourceTree = "<group>"; };
 		01797E8223F4242500B26BF2 /* ModernIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernIcon.swift; sourceTree = "<group>"; };
 		019985E323DEF23F000CDCB6 /* NordicTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicTextTableViewCell.swift; sourceTree = "<group>"; };
 		019985E523DEF2BD000CDCB6 /* NordicActionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicActionTableViewCell.swift; sourceTree = "<group>"; };
@@ -426,7 +442,6 @@
 		300143281CEC59F4008379DF /* ServiceIdentifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceIdentifiers.swift; sourceTree = "<group>"; };
 		3001432A1CEC6D2A008379DF /* RecordAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordAccess.swift; sourceTree = "<group>"; };
 		3001432C1CECADFB008379DF /* CharacteristicReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacteristicReader.swift; sourceTree = "<group>"; };
-		3001432E1CEDAD04008379DF /* CharacteristicReaderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacteristicReaderTests.swift; sourceTree = "<group>"; };
 		3001EBB01D1BE1F3008C5C37 /* GlucoseReading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GlucoseReading.swift; path = Model/GlucoseReading.swift; sourceTree = "<group>"; };
 		3001EBB41D1BE1FB008C5C37 /* BGMDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BGMDetailsViewController.swift; sourceTree = "<group>"; };
 		3001EBB51D1BE1FB008C5C37 /* BGMItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BGMItemCell.swift; sourceTree = "<group>"; };
@@ -509,8 +524,6 @@
 		5217F3F31859EE0000F2D5BB /* nRF Toolbox-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "nRF Toolbox-Prefix.pch"; sourceTree = "<group>"; };
 		5217F3F81859EE0000F2D5BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5217F3FD1859EE0000F2D5BB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		5217F40C1859EE0000F2D5BB /* nRF ToolboxTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "nRF ToolboxTests-Info.plist"; sourceTree = "<group>"; };
-		5217F40E1859EE0000F2D5BB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5217F41A1859EEF400F2D5BB /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		522636361C60FFB00054A550 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		5231402F22FB07820074325A /* RootNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationController.swift; sourceTree = "<group>"; };
@@ -526,6 +539,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		0169B5A223FBEA9600907C1B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5217F3DF1859EE0000F2D5BB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -589,6 +609,24 @@
 				01675E6B23F6CF9500FC0519 /* MacrosPlayer.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		0169B5A623FBEA9600907C1B /* nRF Toolbox Tests */ = {
+			isa = PBXGroup;
+			children = (
+				0169B5B023FBEB9200907C1B /* UART */,
+				0169B5A723FBEA9600907C1B /* nRF_Toolbox_Tests.swift */,
+				0169B5A923FBEA9600907C1B /* Info.plist */,
+			);
+			path = "nRF Toolbox Tests";
+			sourceTree = "<group>";
+		};
+		0169B5B023FBEB9200907C1B /* UART */ = {
+			isa = PBXGroup;
+			children = (
+				0169B5B123FBEBB300907C1B /* UARTPresetTest.swift */,
+			);
+			path = UART;
 			sourceTree = "<group>";
 		};
 		01816D49235DD7180040F574 /* ContinuousGlucoseMonitor */ = {
@@ -1376,7 +1414,7 @@
 			children = (
 				5214D0CD1886C02A00460637 /* Settings.bundle */,
 				5217F3EB1859EE0000F2D5BB /* nRF Toolbox */,
-				5217F40A1859EE0000F2D5BB /* nRF ToolboxTests */,
+				0169B5A623FBEA9600907C1B /* nRF Toolbox Tests */,
 				5217F3E41859EE0000F2D5BB /* Frameworks */,
 				5217F3E31859EE0000F2D5BB /* Products */,
 				6D243D2956D29EBCF8A45C2A /* Pods */,
@@ -1387,6 +1425,7 @@
 			isa = PBXGroup;
 			children = (
 				5217F3E21859EE0000F2D5BB /* nRF Toolbox Beta.app */,
+				0169B5A523FBEA9600907C1B /* nRF Toolbox Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1445,24 +1484,6 @@
 				5217F3EE1859EE0000F2D5BB /* InfoPlist.strings */,
 				5217F3F31859EE0000F2D5BB /* nRF Toolbox-Prefix.pch */,
 				20C7FDFF2306C52900B06FD8 /* Services */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		5217F40A1859EE0000F2D5BB /* nRF ToolboxTests */ = {
-			isa = PBXGroup;
-			children = (
-				3001432E1CEDAD04008379DF /* CharacteristicReaderTests.swift */,
-				5217F40B1859EE0000F2D5BB /* Supporting Files */,
-			);
-			path = "nRF ToolboxTests";
-			sourceTree = "<group>";
-		};
-		5217F40B1859EE0000F2D5BB /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				5217F40C1859EE0000F2D5BB /* nRF ToolboxTests-Info.plist */,
-				5217F40D1859EE0000F2D5BB /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1603,6 +1624,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		0169B5A423FBEA9600907C1B /* nRF Toolbox Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0169B5AC23FBEA9600907C1B /* Build configuration list for PBXNativeTarget "nRF Toolbox Tests" */;
+			buildPhases = (
+				0169B5A123FBEA9600907C1B /* Sources */,
+				0169B5A223FBEA9600907C1B /* Frameworks */,
+				0169B5A323FBEA9600907C1B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0169B5AB23FBEA9600907C1B /* PBXTargetDependency */,
+			);
+			name = "nRF Toolbox Tests";
+			productName = "nRF Toolbox Tests";
+			productReference = 0169B5A523FBEA9600907C1B /* nRF Toolbox Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		5217F3E11859EE0000F2D5BB /* nRF Toolbox */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5217F4141859EE0000F2D5BB /* Build configuration list for PBXNativeTarget "nRF Toolbox" */;
@@ -1629,9 +1668,16 @@
 		5217F3DA1859EE0000F2D5BB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1140;
 				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = "Nordic Semiconductor";
 				TargetAttributes = {
+					0169B5A423FBEA9600907C1B = {
+						CreatedOnToolsVersion = 11.4;
+						DevelopmentTeam = P3R8YQEV4L;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 5217F3E11859EE0000F2D5BB;
+					};
 					5217F3E11859EE0000F2D5BB = {
 						DevelopmentTeam = P3R8YQEV4L;
 						LastSwiftMigration = 1030;
@@ -1661,11 +1707,19 @@
 			projectRoot = "";
 			targets = (
 				5217F3E11859EE0000F2D5BB /* nRF Toolbox */,
+				0169B5A423FBEA9600907C1B /* nRF Toolbox Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		0169B5A323FBEA9600907C1B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5217F3E01859EE0000F2D5BB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1780,6 +1834,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0169B5A123FBEA9600907C1B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0169B5B223FBEBB300907C1B /* UARTPresetTest.swift in Sources */,
+				0169B5A823FBEA9600907C1B /* nRF_Toolbox_Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5217F3DE1859EE0000F2D5BB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1971,6 +2034,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		0169B5AB23FBEA9600907C1B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5217F3E11859EE0000F2D5BB /* nRF Toolbox */;
+			targetProxy = 0169B5AA23FBEA9600907C1B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		5217F3EE1859EE0000F2D5BB /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
@@ -1988,17 +2059,100 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		5217F40D1859EE0000F2D5BB /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5217F40E1859EE0000F2D5BB /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		0169B5AD23FBEA9600907C1B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = P3R8YQEV4L;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "nRF Toolbox Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "no.nordicsemi.nRF-Toolbox-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox Beta.app/nRF Toolbox Beta";
+			};
+			name = Debug;
+		};
+		0169B5AE23FBEA9600907C1B /* Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = P3R8YQEV4L;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "nRF Toolbox Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "no.nordicsemi.nRF-Toolbox-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox Beta.app/nRF Toolbox Beta";
+			};
+			name = Beta;
+		};
+		0169B5AF23FBEA9600907C1B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = P3R8YQEV4L;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "nRF Toolbox Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "no.nordicsemi.nRF-Toolbox-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox Beta.app/nRF Toolbox Beta";
+			};
+			name = Release;
+		};
 		20FDA43523154494006EEBC1 /* Beta */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2326,6 +2480,16 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0169B5AC23FBEA9600907C1B /* Build configuration list for PBXNativeTarget "nRF Toolbox Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0169B5AD23FBEA9600907C1B /* Debug */,
+				0169B5AE23FBEA9600907C1B /* Beta */,
+				0169B5AF23FBEA9600907C1B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Beta;
+		};
 		5217F3DD1859EE0000F2D5BB /* Build configuration list for PBXProject "nRF Toolbox" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

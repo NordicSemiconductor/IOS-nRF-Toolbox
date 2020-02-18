@@ -29,7 +29,7 @@ protocol XMLRepresentable {
     var xml: AEXMLElement { get }
 }
 
-struct EmptyModel: UARTCommandModel {
+struct EmptyModel: UARTCommandModel, Equatable {
     var xml: AEXMLElement {
         AEXMLElement(name: "command")
     }
@@ -41,9 +41,11 @@ struct EmptyModel: UARTCommandModel {
     init() { }
     init(from decoder: Decoder) throws { }
     func encode(to encoder: Encoder) throws { }
+    
+    static func ==(lhs: EmptyModel, rhs: EmptyModel) -> Bool { true }
 }
 
-struct TextCommand: UARTCommandModel {
+struct TextCommand: UARTCommandModel, Equatable {
     var xml: AEXMLElement {
         AEXMLElement(name: "command", value: text, attributes: [
             "icon":image.name,
@@ -64,7 +66,7 @@ struct TextCommand: UARTCommandModel {
     let image: CommandImage
 }
 
-struct DataCommand: UARTCommandModel {
+struct DataCommand: UARTCommandModel, Equatable {
     var xml: AEXMLElement {
         AEXMLElement(name: "command", value: data.hexString, attributes: [
             "icon":image.name,
