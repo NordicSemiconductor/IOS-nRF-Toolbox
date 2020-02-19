@@ -32,6 +32,7 @@ class NordicTextTableViewCell: UITableViewCell {
     private func setupAppearance() {
         let defaultSize = textLabel?.font.pointSize ?? 12
         textLabel?.font = UIFont.gtEestiDisplay(.regular, size: defaultSize)
+        imageView?.tintColor = .nordicBlue
     }
     
     func apply(_ model: NordicTextTableViewCellModel) {

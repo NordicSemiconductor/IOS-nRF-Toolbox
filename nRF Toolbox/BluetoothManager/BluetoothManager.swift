@@ -71,6 +71,8 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
     fileprivate var connected = false
     private var connectingPeripheral: CBPeripheral!
     
+    private let btQueue = DispatchQueue(label: "com.nRF-toolbox.bluetoothManager", qos: .utility)
+    
     //MARK: - BluetoothManager API
     
     required init(withManager aManager : CBCentralManager = CBCentralManager()) {
@@ -214,7 +216,7 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
     
     func send(macro: UARTMacro) {
         
-        DispatchQueue.global(qos: .userInitiated).async {
+        btQueue.async {
             macro.commands.forEach { (element) in
                 switch element {
                 case let command as UARTCommandModel:

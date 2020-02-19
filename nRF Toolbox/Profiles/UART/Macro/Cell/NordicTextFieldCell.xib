@@ -24,7 +24,7 @@
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits"/>
                         <connections>
-                            <action selector="textChanged:" destination="qyR-Sr-oAW" eventType="valueChanged" id="oQL-un-fh9"/>
+                            <action selector="textChanged:" destination="qyR-Sr-oAW" eventType="editingChanged" id="OZ5-ei-fS9"/>
                             <outlet property="delegate" destination="qyR-Sr-oAW" id="PhB-Yo-HLv"/>
                         </connections>
                     </textField>
@@ -45,6 +45,9 @@
                     <constraint firstItem="V9A-IM-O3H" firstAttribute="centerY" secondItem="tpn-ap-AB6" secondAttribute="centerY" id="f8e-df-dWk"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="textField" destination="V9A-IM-O3H" id="jpL-45-53G"/>
+            </connections>
             <point key="canvasLocation" x="-189.13043478260872" y="46.875"/>
         </tableViewCell>
     </objects>

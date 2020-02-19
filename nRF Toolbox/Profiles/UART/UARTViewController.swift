@@ -1,5 +1,5 @@
 //
-//  UARTViewController1.swift
+//  UARTViewController.swift
 //  nRF Toolbox
 //
 //  Created by Nick Kibish on 30.12.2019.
@@ -20,7 +20,7 @@ extension UIImage {
     }
 }
 
-class UARTViewController1: UIViewController, AlertPresenter {
+class UARTViewController: UIViewController, AlertPresenter {
 
     let btManager: BluetoothManager!
     
@@ -29,7 +29,7 @@ class UARTViewController1: UIViewController, AlertPresenter {
     @IBOutlet private var deviceNameLabel: UILabel!
     @IBOutlet private var saveLoadButton: UIButton!
     
-    private var preset: UARTPreset = .default
+    private var preset: UARTPreset = .empty
     private weak var router: UARTRouter?
     
     var deviceName: String = "" {
@@ -120,7 +120,7 @@ class UARTViewController1: UIViewController, AlertPresenter {
     }
 }
 
-extension UARTViewController1: UARTNewCommandDelegate {
+extension UARTViewController: UARTNewCommandDelegate {
     func createdNewCommand(_ viewController: UARTNewCommandViewController, command: UARTCommandModel, index: Int) {
         preset.updateCommand(command, at: index)
         collectionView.preset = preset
@@ -129,7 +129,7 @@ extension UARTViewController1: UARTNewCommandDelegate {
     
 }
 
-extension UARTViewController1: UARTPresetCollectionViewDelegate {
+extension UARTViewController: UARTPresetCollectionViewDelegate {
     
     func longTapAtCommand(_ command: UARTCommandModel, at index: Int) {
         openPresetEditor(with: command, index: index)
@@ -146,7 +146,7 @@ extension UARTViewController1: UARTPresetCollectionViewDelegate {
     }
 }
 
-extension UARTViewController1: UIDocumentPickerDelegate {
+extension UARTViewController: UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
         do {
             let data = try Data(contentsOf: url)
@@ -160,7 +160,7 @@ extension UARTViewController1: UIDocumentPickerDelegate {
 }
 
 @available(iOS 11.0, *)
-extension UARTViewController1: UIDocumentBrowserViewControllerDelegate {
+extension UARTViewController: UIDocumentBrowserViewControllerDelegate {
     func documentBrowser(_ controller: UIDocumentBrowserViewController, didRequestDocumentCreationWithHandler importHandler: @escaping (URL?, UIDocumentBrowserViewController.ImportMode) -> Void) {
         
         let alert = UIAlertController(title: "Enter the preset's name", message: nil, preferredStyle: .alert)

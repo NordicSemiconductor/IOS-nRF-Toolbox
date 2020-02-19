@@ -15,8 +15,16 @@ class MockFileManager: FileManager {
     }
 }
 
-extension UARTMacro {
+extension UARTMacro: Equatable {
     static let mock = UARTMacro(name: "Mock", commands: UARTPreset.default.commands, preset: UARTPreset.default)
+    
+    public static func == (lhs: UARTMacro, rhs: UARTMacro) -> Bool {
+        lhs.preset == rhs.preset
+            && lhs.name == rhs.name
+            && zip(lhs.commands, rhs.commands).reduce(true) {
+                $0 && compare($1.0, $1.1)
+            }
+    }
 }
 
 class UARTMacroFileManagerTests: XCTestCase {
@@ -43,9 +51,15 @@ class UARTMacroFileManagerTests: XCTestCase {
     
     func testContent() {
         XCTAssertNoThrow(try fileManager.save(macro), "Should save file into temp directory")
-        XCTAssertNoThrow(try fileManager.macrosUrls())
-        XCTAssertEqual(1, try fileManager.macrosUrls().count)
-        XCTAssertEqual("Mock.json", try fileManager.macrosUrls().last?.lastPathComponent)
+        XCTAssertNoThrow(try fileManager.macrosList())
+        XCTAssertEqual(1, try fileManager.macrosList().count)
+        XCTAssertEqual("Mock", try fileManager.macrosList().last)
+    }
+    
+    func testMacrosLoading() throws {
+        XCTAssertNoThrow(try fileManager.save(macro), "Should save file into temp directory")
+        let loadedMacros = try fileManager.macros(for: macro.name)
+        XCTAssertEqual(loadedMacros, macro)
     }
 
     func testPerformanceExample() throws {

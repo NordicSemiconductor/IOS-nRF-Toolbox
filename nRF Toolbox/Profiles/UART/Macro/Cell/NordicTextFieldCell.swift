@@ -9,6 +9,7 @@
 import UIKit
 
 class NordicTextFieldCell: UITableViewCell {
+    @IBOutlet var textField: UITextField!
     var textChanged: ((String?) -> Void)?
     
     @IBAction func textChanged(_ sender: UITextField) {

@@ -9,22 +9,26 @@
 import XCTest
 @testable import nRF_Toolbox_Beta
 
+func compare(_ command1: UARTMacroElement, _ command2: UARTMacroElement) -> Bool {
+    switch (command1, command1) {
+    case (let t1 as UARTMacroTimeInterval, let t2 as UARTMacroTimeInterval):
+        return t1.miliseconds == t2.miliseconds
+    case (is EmptyModel, is EmptyModel):
+        return true
+    case (let l as TextCommand, let r as TextCommand):
+        return l == r
+    case (let l as DataCommand, let r as DataCommand):
+        return l == r
+    default: return false
+    }
+}
+
 extension UARTPreset: Equatable {
     public static func == (lhs: UARTPreset, rhs: UARTPreset) -> Bool {
         return lhs.name == rhs.name &&
-            zip(lhs.commands, rhs.commands).reduce(true, { (res, tup) -> Bool in
-                return res && {
-                    switch (tup.0, tup.1) {
-                    case (is EmptyModel, is EmptyModel):
-                        return true
-                    case (let l as TextCommand, let r as TextCommand):
-                        return l == r
-                    case (let l as DataCommand, let r as DataCommand):
-                        return l == r
-                    default: return false
-                    }
-                    }()
-            })
+            zip(lhs.commands, rhs.commands).reduce(true) {
+                $0 && compare($1.0, $1.1)
+            }
     }
 }
 

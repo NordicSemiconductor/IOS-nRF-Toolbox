@@ -9,6 +9,11 @@
 import Foundation
 
 class UARTMacroFileManager: NSObject {
+    
+    enum Error: Swift.Error {
+        case noDataAtUrl
+    }
+    
     private var fileManager: FileManager
     
     init(fileManager: FileManager = .default) {
@@ -18,7 +23,7 @@ class UARTMacroFileManager: NSObject {
     
     func save(_ macro: UARTMacro, sholdUpdate: Bool = false) throws {
         let data = try JSONEncoder().encode(macro)
-        let fileUrl = try self.fileUrl(for: macro)
+        let fileUrl = try self.fileUrl(for: macro.name)
         
         guard !fileManager.fileExists(atPath: fileUrl.path) || sholdUpdate else {
             throw QuickError(message: "Macro with that name already exists")
@@ -28,26 +33,39 @@ class UARTMacroFileManager: NSObject {
     }
     
     func remove(macro: UARTMacro) throws {
-        let url = try fileUrl(for: macro)
+        try removeMacro(name: macro.name)
+    }
+    
+    func removeMacro(name: String) throws {
+        let url = try fileUrl(for: name)
         try fileManager.removeItem(at: url)
     }
     
-    func macrosUrls() throws -> [URL] {
+    func macrosList() throws -> [String] {
         try fileManager
             .contentsOfDirectory(atPath: macrosDir().path)
-            .compactMap { URL(string: $0) }
+            .compactMap { URL(string: $0)?.deletingPathExtension().lastPathComponent }
+    }
+    
+    func macros(for name: String) throws -> UARTMacro {
+        let path = try fileUrl(for: name).path
+        guard let data = fileManager.contents(atPath: path) else {
+            throw Error.noDataAtUrl
+        }
+        
+        return try JSONDecoder().decode(UARTMacro.self, from: data)
     }
     
     private func macrosDir() throws -> URL {
         return try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("macros")
     }
     
-    private func fileUrl(for macro: UARTMacro) throws -> URL {
+    private func fileUrl(for name: String) throws -> URL {
         let documentDirectory = try macrosDir()
         if !fileManager.fileExists(atPath: documentDirectory.path) {
             try fileManager.createDirectory(at: documentDirectory, withIntermediateDirectories: true, attributes: nil)
         }
-        return documentDirectory.appendingPathComponent(macro.name).appendingPathExtension("json")
+        return documentDirectory.appendingPathComponent(name).appendingPathExtension("json")
     }
     
 }

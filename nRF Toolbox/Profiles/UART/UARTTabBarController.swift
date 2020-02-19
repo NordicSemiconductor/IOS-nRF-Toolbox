@@ -48,7 +48,7 @@ class UARTTabBarController: UITabBarController {
     private var emptyView: UIView!
     let btManager = BluetoothManager()
     
-    private lazy var uartViewController = UARTViewController1(bluetoothManager: btManager, uartRouter: self)
+    private lazy var uartViewController = UARTViewController(bluetoothManager: btManager, uartRouter: self)
     private lazy var uartMacroViewController = UARTMacrosList(bluetoothManager: btManager, preset: .default)
     private lazy var uartLoggerViewController = UARTLoggerViewController(bluetoothManager: btManager)
     
@@ -129,8 +129,9 @@ extension UARTTabBarController: UITabBarControllerDelegate {
 
 extension UARTTabBarController: UARTRouter {
     func displayMacros(with preset: UARTPreset) {
-        let newMacroVC = UARTMacrosTableViewController(preset: preset)
+        let newMacroVC = UARTMacrosTableViewController(preset: preset, bluetoothManager: btManager)
         uartMacroViewController.navigationController?.pushViewController(newMacroVC, animated: false)
+        newMacroVC.macrosDelegate = uartMacroViewController
         selectedViewController = uartMacroViewController        
     }
 }

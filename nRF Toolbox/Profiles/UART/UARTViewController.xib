@@ -16,7 +16,7 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UARTViewController1" customModule="nRF_Toolbox" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UARTViewController" customModule="nRF_Toolbox" customModuleProvider="target">
             <connections>
                 <outlet property="collectionView" destination="GMu-sG-Zuq" id="Cng-gl-l2a"/>
                 <outlet property="deviceNameLabel" destination="UL0-4i-YtI" id="I99-7Z-Ish"/>

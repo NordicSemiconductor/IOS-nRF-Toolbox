@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol UARTMacroViewControllerDelegate: class {
+    func macrosController(_ controller: UARTMacrosTableViewController, created macros: UARTMacro)
+    func macrosController(_ controller: UARTMacrosTableViewController, changed macros: UARTMacro)
+}
+
 class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
     
     struct Section {
@@ -19,15 +24,24 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
     
     private var presetCollectionView: UARTPresetCollectionView?
     private var macros: UARTMacro
+    private let fileManager = UARTMacroFileManager()
+    private let editingMode: Bool
+    private let bluetoothManager: BluetoothManager
     
-    init(preset: UARTPreset) {
+    weak var macrosDelegate: UARTMacroViewControllerDelegate?
+    
+    init(preset: UARTPreset, bluetoothManager: BluetoothManager) {
         self.macros = .empty
         self.macros.preset = preset
+        self.editingMode = false
+        self.bluetoothManager = bluetoothManager
         super.init(style: .grouped)
     }
     
-    init(macros: UARTMacro = .empty) {
+    init(macros: UARTMacro = .empty, bluetoothManager: BluetoothManager) {
         self.macros = macros
+        self.editingMode = true
+        self.bluetoothManager = bluetoothManager
         super.init(style: .grouped)
     }
     
@@ -53,7 +67,17 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
             return
         }
         
-//        saveMacros(macros.name)
+        guard macros.commands.filter ({ $0 is UARTCommandModel }).count > 0 else {
+            displayErrorAlert(error: QuickError(message: "Select at least one command"))
+            return
+        }
+        
+        try? displayOnError(fileManager.save(macros, sholdUpdate: editingMode))
+        if editingMode {
+            macrosDelegate?.macrosController(self, changed: macros)
+        } else {
+            macrosDelegate?.macrosController(self, created: macros)
+        }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -72,7 +96,7 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
-        case Section.name: return tableView.dequeueCell(ofType: NordicTextFieldCell.self)
+        case Section.name: return nameCell(tableView)
         case Section.preset: return presetCell(tableView)
         case Section.commands: return commandCell(tableView, index: indexPath.row)
         case Section.play:
@@ -89,6 +113,9 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
         case Section.commands:
             tableView.deselectRow(at: indexPath, animated: true)
             handleCommandSectionTap(indexPath.row)
+        case Section.play:
+            tableView.deselectRow(at: indexPath, animated: true)
+            bluetoothManager.send(macro: macros)
         default:
             break
         }
@@ -187,6 +214,8 @@ extension UARTMacrosTableViewController: UARTNewCommandDelegate {
 extension UARTMacrosTableViewController {
     private func nameCell(_ tableView: UITableView) -> UITableViewCell {
         let cell = tableView.dequeueCell(ofType: NordicTextFieldCell.self)
+        cell.textField.text = macros.name
+        cell.selectionStyle = .none
         cell.textChanged = { [unowned self] text in
             let name = text ?? ""
             self.macros.name = name
@@ -197,6 +226,7 @@ extension UARTMacrosTableViewController {
     private func presetCell(_ tableView: UITableView) -> UITableViewCell {
         let cell = tableView.dequeueCell(ofType: UARTPresetTableViewCell.self)
         cell.apply(preset: macros.preset, delegate: self)
+        cell.selectionStyle = .none
         presetCollectionView = cell.presetCollectionView
         return cell
     }
@@ -226,32 +256,5 @@ extension UARTMacrosTableViewController {
         default:
             Log(category: .app, type: .fault).fault("Unknown command type")
         }
-    }
-}
-
-extension UARTMacrosTableViewController {
-    private func saveMacros(_ macro: UARTMacro) throws {
-        let fileManager = FileManager.default
-        let data = try JSONEncoder().encode(macro)
-        let fileUrl = try self.fileUrl(for: macro)
-            
-            guard !fileManager.fileExists(atPath: fileUrl.absoluteString) else {
-                throw QuickError(message: "Macro with that name already exists")
-            }
-            
-            try data.write(to: fileUrl)
-            self.navigationController?.popViewController(animated: true)
-            
-//            if case .none = self.fileUrl {
-//                changePresenter?.newMacro(at: fileUrl)
-//            } else {
-//                changePresenter?.cangedMacro(at: fileUrl)
-//            }
-    }
-    
-    private func fileUrl(for macro: UARTMacro) throws -> URL {
-        let fileManager = FileManager.default
-        let documentDirectory = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("macros")
-        return documentDirectory.appendingPathComponent(macro.name).appendingPathExtension("json")
     }
 }

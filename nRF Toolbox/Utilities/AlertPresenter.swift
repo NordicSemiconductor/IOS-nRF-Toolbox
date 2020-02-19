@@ -20,4 +20,13 @@ extension AlertPresenter where Self: UIViewController {
         alertController.addAction(cancelAction)
         present(alertController, animated: true, completion: nil)
     }
+    
+    func displayOnError<T>(_ expression: @autoclosure () throws -> T) throws -> T {
+        do {
+            return try expression()
+        } catch let error {
+            displayErrorAlert(error: error)
+            throw error
+        }
+    }
 }
