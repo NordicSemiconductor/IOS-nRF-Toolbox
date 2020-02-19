@@ -26,6 +26,8 @@
 		0169B5A023FBD90E00907C1B /* NordicTextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0169B59F23FBD90E00907C1B /* NordicTextFieldCell.xib */; };
 		0169B5A823FBEA9600907C1B /* nRF_Toolbox_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0169B5A723FBEA9600907C1B /* nRF_Toolbox_Tests.swift */; };
 		0169B5B223FBEBB300907C1B /* UARTPresetTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0169B5B123FBEBB300907C1B /* UARTPresetTest.swift */; };
+		0169B5B423FC31BB00907C1B /* UARTMacroSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0169B5B323FC31BB00907C1B /* UARTMacroSaver.swift */; };
+		0169B5B623FD37E400907C1B /* UARTMacroFileManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0169B5B523FD37E400907C1B /* UARTMacroFileManagerTests.swift */; };
 		01797E8323F4242500B26BF2 /* ModernIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01797E8223F4242500B26BF2 /* ModernIcon.swift */; };
 		019985E423DEF23F000CDCB6 /* NordicTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019985E323DEF23F000CDCB6 /* NordicTextTableViewCell.swift */; };
 		019985E623DEF2BD000CDCB6 /* NordicActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019985E523DEF2BD000CDCB6 /* NordicActionTableViewCell.swift */; };
@@ -300,6 +302,8 @@
 		0169B5A723FBEA9600907C1B /* nRF_Toolbox_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nRF_Toolbox_Tests.swift; sourceTree = "<group>"; };
 		0169B5A923FBEA9600907C1B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0169B5B123FBEBB300907C1B /* UARTPresetTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTPresetTest.swift; sourceTree = "<group>"; };
+		0169B5B323FC31BB00907C1B /* UARTMacroSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacroSaver.swift; sourceTree = "<group>"; };
+		0169B5B523FD37E400907C1B /* UARTMacroFileManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacroFileManagerTests.swift; sourceTree = "<group>"; };
 		01797E8223F4242500B26BF2 /* ModernIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernIcon.swift; sourceTree = "<group>"; };
 		019985E323DEF23F000CDCB6 /* NordicTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicTextTableViewCell.swift; sourceTree = "<group>"; };
 		019985E523DEF2BD000CDCB6 /* NordicActionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicActionTableViewCell.swift; sourceTree = "<group>"; };
@@ -607,6 +611,7 @@
 			isa = PBXGroup;
 			children = (
 				01675E6B23F6CF9500FC0519 /* MacrosPlayer.swift */,
+				0169B5B323FC31BB00907C1B /* UARTMacroSaver.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -625,6 +630,7 @@
 			isa = PBXGroup;
 			children = (
 				0169B5B123FBEBB300907C1B /* UARTPresetTest.swift */,
+				0169B5B523FD37E400907C1B /* UARTMacroFileManagerTests.swift */,
 			);
 			path = UART;
 			sourceTree = "<group>";
@@ -1838,6 +1844,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0169B5B623FD37E400907C1B /* UARTMacroFileManagerTests.swift in Sources */,
 				0169B5B223FBEBB300907C1B /* UARTPresetTest.swift in Sources */,
 				0169B5A823FBEA9600907C1B /* nRF_Toolbox_Tests.swift in Sources */,
 			);
@@ -1978,6 +1985,7 @@
 				20F15C3F2313D606000C5503 /* NoContentViewController.swift in Sources */,
 				0125D5B623F44FE6003A1812 /* UIBarButtonItem+Ext.swift in Sources */,
 				309F08701E6FF1F900B7546A /* HKAccessoryViewController.swift in Sources */,
+				0169B5B423FC31BB00907C1B /* UARTMacroSaver.swift in Sources */,
 				3001EBC31D1C1430008C5C37 /* CGMItemCell.swift in Sources */,
 				3001EBB91D1BE1FB008C5C37 /* BGMViewController.swift in Sources */,
 				01AF928C23D1D99C00C1BFD6 /* UARTMacroViewController.swift in Sources */,
