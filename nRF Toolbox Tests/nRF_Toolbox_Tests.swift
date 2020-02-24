@@ -2,7 +2,7 @@
 //  nRF_Toolbox_Tests.swift
 //  nRF Toolbox Tests
 //
-//  Created by Nick Kibysh on 18/02/2020.
+//  Created by Nick Kibysh on 24/02/2020.
 //  Copyright © 2020 Nordic Semiconductor. All rights reserved.
 //
 

@@ -19,6 +19,9 @@
 		01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */; };
 		014C4E892403F8AE0003E601 /* UARTMacrosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E882403F8AE0003E601 /* UARTMacrosTableViewController.swift */; };
 		014C4E8B2403F9BD0003E601 /* UARTMacroSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E8A2403F9BD0003E601 /* UARTMacroSaver.swift */; };
+		014C4E932404038A0003E601 /* nRF_Toolbox_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E922404038A0003E601 /* nRF_Toolbox_Tests.swift */; };
+		014C4E9E240403A00003E601 /* UARTPresetTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E9C240403A00003E601 /* UARTPresetTest.swift */; };
+		014C4E9F240403A00003E601 /* UARTMacroFileManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E9D240403A00003E601 /* UARTMacroFileManagerTests.swift */; };
 		0162BA91234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0162BA90234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift */; };
 		01675E6923F6990500FC0519 /* UARTMacrosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01675E6823F6990500FC0519 /* UARTMacrosTableViewController.swift */; };
 		01675E7123F6D1BE00FC0519 /* UARTPresetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01675E6F23F6D1BE00FC0519 /* UARTPresetTableViewCell.swift */; };
@@ -67,8 +70,6 @@
 		01BE0955234A7500006ACF06 /* HealthTemperatureSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE0954234A7500006ACF06 /* HealthTemperatureSection.swift */; };
 		01BE0958234A76D4006ACF06 /* Peripheral+Temperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE0957234A76D4006ACF06 /* Peripheral+Temperature.swift */; };
 		01C2E97523A1ACDF008C1701 /* DFUViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01C2E97423A1ACDF008C1701 /* DFUViewController.xib */; };
-		01E4BACB23698DD300EE67A0 /* FindMeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E4BAC923698DD300EE67A0 /* FindMeTableViewCell.swift */; };
-		01E4BACC23698DD300EE67A0 /* FindMeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E4BACA23698DD300EE67A0 /* FindMeTableViewCell.xib */; };
 		01DDD79C23EC5CDA003786ED /* TimeIntervalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DDD79A23EC5CDA003786ED /* TimeIntervalTableViewCell.swift */; };
 		01DDD79D23EC5CDA003786ED /* TimeIntervalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01DDD79B23EC5CDA003786ED /* TimeIntervalTableViewCell.xib */; };
 		01DDD7A023EC6351003786ED /* UARTMarcoElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DDD79F23EC6351003786ED /* UARTMarcoElement.swift */; };
@@ -121,7 +122,6 @@
 		20C7FE16230ADD1E00B06FD8 /* StoryboardInstantiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE15230ADD1E00B06FD8 /* StoryboardInstantiable.swift */; };
 		20C7FE1E230BE75D00B06FD8 /* BGMViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE1D230BE75D00B06FD8 /* BGMViewController.storyboard */; };
 		20C7FE20230BE7DF00B06FD8 /* HKViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE1F230BE7DF00B06FD8 /* HKViewController.storyboard */; };
-		20C7FE2C230BEC1800B06FD8 /* UARTViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE2B230BEC1800B06FD8 /* UARTViewController.storyboard */; };
 		20C7FE2E230BEC9D00B06FD8 /* CGMViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE2D230BEC9D00B06FD8 /* CGMViewController.storyboard */; };
 		20C7FE50230E789F00B06FD8 /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE4F230E789F00B06FD8 /* MainRouter.swift */; };
 		20C7FE53230E811B00B06FD8 /* ServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE52230E811B00B06FD8 /* ServiceProvider.swift */; };
@@ -222,7 +222,6 @@
 		33976DC91B99AAA3F2E12DF7 /* FindMeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339763C07DFE7826BAF28153 /* FindMeSection.swift */; };
 		33976F79FE2EA20D94F68B69 /* ContinuousGlucoseChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976B66D7A581F01631AE52 /* ContinuousGlucoseChartData.swift */; };
 		33976FB5E54F1D8DDF4733E0 /* DistanceChartSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976ECA8BDFCDF4188746E3 /* DistanceChartSection.swift */; };
-		43445EEF23B0AD8D008A9FD9 /* LoggLevel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43445EEE23B0AD8D008A9FD9 /* LoggLevel+Ext.swift */; };
 		4322034123CC773F009840DD /* UARTActionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4322033F23CC773F009840DD /* UARTActionCollectionViewCell.swift */; };
 		4322034223CC773F009840DD /* UARTActionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4322034023CC773F009840DD /* UARTActionCollectionViewCell.xib */; };
 		4322034423CC9D31009840DD /* UARTCommandModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4322034323CC9D31009840DD /* UARTCommandModel.swift */; };
@@ -256,6 +255,16 @@
 		DCBF9D003D5AA175E9F24910 /* Pods_nRF_Toolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 302004489406AEA824DCF86D /* Pods_nRF_Toolbox.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		014C4E952404038A0003E601 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5217F3DA1859EE0000F2D5BB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5217F3E11859EE0000F2D5BB;
+			remoteInfo = "nRF Toolbox";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		0E645A0E1CBF943000D36AD0 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -282,6 +291,11 @@
 		01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalSection.swift; sourceTree = "<group>"; };
 		014C4E882403F8AE0003E601 /* UARTMacrosTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTMacrosTableViewController.swift; sourceTree = "<group>"; };
 		014C4E8A2403F9BD0003E601 /* UARTMacroSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTMacroSaver.swift; sourceTree = "<group>"; };
+		014C4E902404038A0003E601 /* nRF Toolbox Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "nRF Toolbox Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		014C4E922404038A0003E601 /* nRF_Toolbox_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nRF_Toolbox_Tests.swift; sourceTree = "<group>"; };
+		014C4E942404038A0003E601 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		014C4E9C240403A00003E601 /* UARTPresetTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTPresetTest.swift; sourceTree = "<group>"; };
+		014C4E9D240403A00003E601 /* UARTMacroFileManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTMacroFileManagerTests.swift; sourceTree = "<group>"; };
 		0162BA90234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTemperatureAditionalSection.swift; sourceTree = "<group>"; };
 		01675E6823F6990500FC0519 /* UARTMacrosTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosTableViewController.swift; sourceTree = "<group>"; };
 		01675E6F23F6D1BE00FC0519 /* UARTPresetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTPresetTableViewCell.swift; sourceTree = "<group>"; };
@@ -330,8 +344,6 @@
 		01BE0954234A7500006ACF06 /* HealthTemperatureSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTemperatureSection.swift; sourceTree = "<group>"; };
 		01BE0957234A76D4006ACF06 /* Peripheral+Temperature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Peripheral+Temperature.swift"; sourceTree = "<group>"; };
 		01C2E97423A1ACDF008C1701 /* DFUViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DFUViewController.xib; sourceTree = "<group>"; };
-		01E4BAC923698DD300EE67A0 /* FindMeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindMeTableViewCell.swift; sourceTree = "<group>"; };
-		01E4BACA23698DD300EE67A0 /* FindMeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FindMeTableViewCell.xib; sourceTree = "<group>"; };
 		01DDD79A23EC5CDA003786ED /* TimeIntervalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalTableViewCell.swift; sourceTree = "<group>"; };
 		01DDD79B23EC5CDA003786ED /* TimeIntervalTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeIntervalTableViewCell.xib; sourceTree = "<group>"; };
 		01DDD79F23EC6351003786ED /* UARTMarcoElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMarcoElement.swift; sourceTree = "<group>"; };
@@ -383,7 +395,6 @@
 		20C7FE15230ADD1E00B06FD8 /* StoryboardInstantiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardInstantiable.swift; sourceTree = "<group>"; };
 		20C7FE1D230BE75D00B06FD8 /* BGMViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BGMViewController.storyboard; sourceTree = "<group>"; };
 		20C7FE1F230BE7DF00B06FD8 /* HKViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HKViewController.storyboard; sourceTree = "<group>"; };
-		20C7FE2B230BEC1800B06FD8 /* UARTViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = UARTViewController.storyboard; sourceTree = "<group>"; };
 		20C7FE2D230BEC9D00B06FD8 /* CGMViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CGMViewController.storyboard; sourceTree = "<group>"; };
 		20C7FE4F230E789F00B06FD8 /* MainRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRouter.swift; sourceTree = "<group>"; };
 		20C7FE52230E811B00B06FD8 /* ServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProvider.swift; sourceTree = "<group>"; };
@@ -487,8 +498,6 @@
 		33976B66D7A581F01631AE52 /* ContinuousGlucoseChartData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinuousGlucoseChartData.swift; sourceTree = "<group>"; };
 		33976ECA8BDFCDF4188746E3 /* DistanceChartSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DistanceChartSection.swift; sourceTree = "<group>"; };
 		33976F60C5BCE60DE33DFA31 /* ContinuousGlucoseMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinuousGlucoseMonitor.swift; sourceTree = "<group>"; };
-		43445EEE23B0AD8D008A9FD9 /* LoggLevel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoggLevel+Ext.swift"; sourceTree = "<group>"; };
-		434A9CF823A2883B00792E81 /* PRAGMATA MEDIUM_0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PRAGMATA MEDIUM_0.ttf"; sourceTree = "<group>"; };
 		4322033F23CC773F009840DD /* UARTActionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTActionCollectionViewCell.swift; sourceTree = "<group>"; };
 		4322034023CC773F009840DD /* UARTActionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTActionCollectionViewCell.xib; sourceTree = "<group>"; };
 		4322034323CC9D31009840DD /* UARTCommandModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTCommandModel.swift; sourceTree = "<group>"; };
@@ -533,6 +542,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		014C4E8D2404038A0003E601 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5217F3DF1859EE0000F2D5BB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -588,6 +604,25 @@
 				01468B042361A30A00C29E4C /* StepperTableViewCell.xib */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		014C4E912404038A0003E601 /* nRF Toolbox Tests */ = {
+			isa = PBXGroup;
+			children = (
+				014C4E9B240403A00003E601 /* UART */,
+				014C4E922404038A0003E601 /* nRF_Toolbox_Tests.swift */,
+				014C4E942404038A0003E601 /* Info.plist */,
+			);
+			path = "nRF Toolbox Tests";
+			sourceTree = "<group>";
+		};
+		014C4E9B240403A00003E601 /* UART */ = {
+			isa = PBXGroup;
+			children = (
+				014C4E9C240403A00003E601 /* UARTPresetTest.swift */,
+				014C4E9D240403A00003E601 /* UARTMacroFileManagerTests.swift */,
+			);
+			path = UART;
 			sourceTree = "<group>";
 		};
 		01675E6A23F6CF8000FC0519 /* Utils */ = {
@@ -1383,6 +1418,7 @@
 				5214D0CD1886C02A00460637 /* Settings.bundle */,
 				5217F3EB1859EE0000F2D5BB /* nRF Toolbox */,
 				5217F40A1859EE0000F2D5BB /* nRF ToolboxTests */,
+				014C4E912404038A0003E601 /* nRF Toolbox Tests */,
 				5217F3E41859EE0000F2D5BB /* Frameworks */,
 				5217F3E31859EE0000F2D5BB /* Products */,
 				6D243D2956D29EBCF8A45C2A /* Pods */,
@@ -1393,6 +1429,7 @@
 			isa = PBXGroup;
 			children = (
 				5217F3E21859EE0000F2D5BB /* nRF Toolbox Beta.app */,
+				014C4E902404038A0003E601 /* nRF Toolbox Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1609,6 +1646,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		014C4E8F2404038A0003E601 /* nRF Toolbox Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 014C4E972404038A0003E601 /* Build configuration list for PBXNativeTarget "nRF Toolbox Tests" */;
+			buildPhases = (
+				014C4E8C2404038A0003E601 /* Sources */,
+				014C4E8D2404038A0003E601 /* Frameworks */,
+				014C4E8E2404038A0003E601 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				014C4E962404038A0003E601 /* PBXTargetDependency */,
+			);
+			name = "nRF Toolbox Tests";
+			productName = "nRF Toolbox Tests";
+			productReference = 014C4E902404038A0003E601 /* nRF Toolbox Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		5217F3E11859EE0000F2D5BB /* nRF Toolbox */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5217F4141859EE0000F2D5BB /* Build configuration list for PBXNativeTarget "nRF Toolbox" */;
@@ -1635,9 +1690,16 @@
 		5217F3DA1859EE0000F2D5BB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1140;
 				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = "Nordic Semiconductor";
 				TargetAttributes = {
+					014C4E8F2404038A0003E601 = {
+						CreatedOnToolsVersion = 11.4;
+						DevelopmentTeam = TQL72QW32W;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 5217F3E11859EE0000F2D5BB;
+					};
 					5217F3E11859EE0000F2D5BB = {
 						DevelopmentTeam = P3R8YQEV4L;
 						LastSwiftMigration = 1030;
@@ -1667,11 +1729,19 @@
 			projectRoot = "";
 			targets = (
 				5217F3E11859EE0000F2D5BB /* nRF Toolbox */,
+				014C4E8F2404038A0003E601 /* nRF Toolbox Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		014C4E8E2404038A0003E601 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5217F3E01859EE0000F2D5BB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1786,6 +1856,16 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		014C4E8C2404038A0003E601 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				014C4E9F240403A00003E601 /* UARTMacroFileManagerTests.swift in Sources */,
+				014C4E9E240403A00003E601 /* UARTPresetTest.swift in Sources */,
+				014C4E932404038A0003E601 /* nRF_Toolbox_Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5217F3DE1859EE0000F2D5BB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1977,6 +2057,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		014C4E962404038A0003E601 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5217F3E11859EE0000F2D5BB /* nRF Toolbox */;
+			targetProxy = 014C4E952404038A0003E601 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		5217F3EE1859EE0000F2D5BB /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
@@ -2005,6 +2093,94 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		014C4E982404038A0003E601 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = TQL72QW32W;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "nRF Toolbox Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "no.nordicsemi.nRF-Toolbox-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox Beta.app/nRF Toolbox Beta";
+			};
+			name = Debug;
+		};
+		014C4E992404038A0003E601 /* Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = TQL72QW32W;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "nRF Toolbox Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "no.nordicsemi.nRF-Toolbox-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox Beta.app/nRF Toolbox Beta";
+			};
+			name = Beta;
+		};
+		014C4E9A2404038A0003E601 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = TQL72QW32W;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "nRF Toolbox Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "no.nordicsemi.nRF-Toolbox-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox Beta.app/nRF Toolbox Beta";
+			};
+			name = Release;
+		};
 		20FDA43523154494006EEBC1 /* Beta */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2332,6 +2508,16 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		014C4E972404038A0003E601 /* Build configuration list for PBXNativeTarget "nRF Toolbox Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				014C4E982404038A0003E601 /* Debug */,
+				014C4E992404038A0003E601 /* Beta */,
+				014C4E9A2404038A0003E601 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		5217F3DD1859EE0000F2D5BB /* Build configuration list for PBXProject "nRF Toolbox" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2340,7 +2526,7 @@
 				5217F4131859EE0000F2D5BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Beta;
+			defaultConfigurationName = Debug;
 		};
 		5217F4141859EE0000F2D5BB /* Build configuration list for PBXNativeTarget "nRF Toolbox" */ = {
 			isa = XCConfigurationList;
@@ -2350,7 +2536,7 @@
 				5217F4161859EE0000F2D5BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Beta;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
