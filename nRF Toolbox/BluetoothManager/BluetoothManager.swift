@@ -36,11 +36,27 @@ protocol BluetoothManagerDelegate {
     func peripheralNotSupported()
 }
 
+protocol UARTMacroPlayerDelegate {
+    func startPlaying(macros: UARTMacro)
+    func playedCommand(_ command: UARTCommandModel, in macro: UARTMacro)
+    func macroPlayed(_ macro: UARTMacro)
+}
+
+enum BluetoothManagerError: Error {
+    case cannotFindPeripheral
+    
+    var localizedDescription: String {
+        return "Can not find peripheral"
+    }
+    
+}
+
 class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate {
     
     //MARK: - Delegate Properties
-    var delegate : BluetoothManagerDelegate?
-    var logger   : Logger?
+    var delegate: BluetoothManagerDelegate?
+    var macroPlayerDelegate: UARTMacroPlayerDelegate?
+    var logger: Logger?
     
     //MARK: - Class Properties
     fileprivate let UARTServiceUUID             : CBUUID
@@ -53,10 +69,13 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
     fileprivate var uartTXCharacteristic        : CBCharacteristic?
     
     fileprivate var connected = false
+    private var connectingPeripheral: CBPeripheral!
+    
+    private let btQueue = DispatchQueue(label: "com.nRF-toolbox.bluetoothManager", qos: .utility)
     
     //MARK: - BluetoothManager API
     
-    required init(withManager aManager : CBCentralManager) {
+    required init(withManager aManager : CBCentralManager = CBCentralManager()) {
         centralManager = aManager
         UARTServiceUUID          = CBUUID(string: ServiceIdentifiers.uartServiceUUIDString)
         UARTTXCharacteristicUUID = CBUUID(string: ServiceIdentifiers.uartTXCharacteristicUUIDString)
@@ -81,7 +100,13 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
             log(withLevel: .verboseLogLevel, andMessage: "Connecting to device...")
         }
         log(withLevel: .debugLogLevel, andMessage: "centralManager.connect(peripheral, options:nil)")
-        centralManager.connect(aPeripheral, options: nil)
+        
+        guard let p = centralManager.retrievePeripherals(withIdentifiers: [aPeripheral.identifier]).first else {
+            centralManager.delegate?.centralManager?(centralManager, didFailToConnect: aPeripheral, error: BluetoothManagerError.cannotFindPeripheral)
+            return
+        }
+        connectingPeripheral = p
+        centralManager.connect(p, options: nil)
     }
     
     /**
@@ -132,15 +157,11 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
         
         // Check what kind of Write Type is supported. By default it will try Without Response.
         // If the RX charactereisrtic have Write property the Write Request type will be used.
-        var type: CBCharacteristicWriteType = .withoutResponse
-        var MTU = bluetoothPeripheral?.maximumWriteValueLength(for: .withoutResponse) ?? 20
-        if uartRXCharacteristic.properties.contains(.write) {
-            type = .withResponse
-            MTU = bluetoothPeripheral?.maximumWriteValueLength(for: .withResponse) ?? 20
-        }
+        let type: CBCharacteristicWriteType = uartRXCharacteristic.properties.contains(.write) ? .withResponse : .withoutResponse
+        let mtu  = bluetoothPeripheral?.maximumWriteValueLength(for: type) ?? 20
         
         // The following code will split the text into packets
-        aText.split(by: MTU).forEach {
+        aText.split(by: mtu).forEach {
             send(text: $0, withType: type)
         }
     }
@@ -173,6 +194,42 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
         log(withLevel: .appLogLevel, andMessage: "\"\(aText)\" sent")
     }
     
+    /// Sends the given command to the UART characteristic
+    /// - Parameter aCommand: command that will be send to UART peripheral.
+    func send(command aCommand: UARTCommandModel) {
+        guard let uartRXCharacteristic = self.uartRXCharacteristic else {
+            log(withLevel: .warningLogLevel, andMessage: "UART RX Characteristic not found")
+            return
+        }
+        
+        // Check what kind of Write Type is supported. By default it will try Without Response.
+        // If the RX characteristic have Write property the Write Request type will be used.
+        let type: CBCharacteristicWriteType = uartRXCharacteristic.properties.contains(.write) ? .withResponse : .withoutResponse
+        let mtu = bluetoothPeripheral?.maximumWriteValueLength(for: type) ?? 20
+
+        let data = aCommand.data.split(by: mtu)
+        data.forEach {
+            self.bluetoothPeripheral!.writeValue($0, for: uartRXCharacteristic, type: type)
+        }
+        log(withLevel: .appLogLevel, andMessage: "Sent command: \(aCommand.title)")
+    }
+    
+    func send(macro: UARTMacro) {
+        
+        btQueue.async {
+            macro.commands.forEach { (element) in
+                switch element {
+                case let command as UARTCommandModel:
+                    self.send(command: command)
+                case let timeInterval as UARTMacroTimeInterval:
+                    usleep(useconds_t(timeInterval.miliseconds * 1000))
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
     //MARK: - Logger API
     
     func log(withLevel aLevel : LOGLevel, andMessage aMessage : String) {
@@ -180,11 +237,7 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
     }
     
     func logError(error anError : Error) {
-        if let e = anError as? CBError {
-            logger?.log(level: .errorLogLevel, message: "Error \(e.code): \(e.localizedDescription)")
-        } else {
-            logger?.log(level: .errorLogLevel, message: "Error \(anError.localizedDescription)")
-        }
+        logger?.log(level: .errorLogLevel, message: "Error: \(anError.localizedDescription)")
     }
     
     //MARK: - CBCentralManagerDelegate
@@ -227,10 +280,9 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-        guard error == nil else {
+        if case .some(let e) = error {
             log(withLevel: .debugLogLevel, andMessage: "[Callback] Central Manager did disconnect peripheral")
-            logError(error: error!)
-            return
+            logError(error: e)
         }
         log(withLevel: .debugLogLevel, andMessage: "[Callback] Central Manager did disconnect peripheral successfully")
         log(withLevel: .infoLogLevel, andMessage: "Disconnected")
@@ -367,6 +419,21 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
         } else {
             log(withLevel: .appLogLevel, andMessage: "\"0x\(bytesReceived.hexString)\" received")
         }
+    }
+}
+
+private extension Data {
+    func split(by length: Int) -> [Data] {
+        var startIndex = self.startIndex
+        var chunks = [Data]()
+        
+        while startIndex < endIndex {
+            let endIndex = index(startIndex, offsetBy: length, limitedBy: self.endIndex) ?? self.endIndex
+            chunks.append(subdata(in: startIndex..<endIndex))
+            startIndex = endIndex
+        }
+        
+        return chunks
     }
 }
 

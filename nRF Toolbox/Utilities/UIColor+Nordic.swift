@@ -51,7 +51,9 @@ extension UIColor {
     }()
     
     static let nordicGreen: UIColor = {
-        if #available(iOS 11.0, *) {
+        if #available(iOS 13.0, *) {
+            return UIColor.dynamicColor(light: UIColor(named: "NordicGreen")!, dark: .systemGreen)
+        } else if #available(iOS 11.0, *) {
             return UIColor(named: "NordicGreen")!
         } else {
             return #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
@@ -113,6 +115,22 @@ extension UIColor {
             return .black
         }
     }()
+    
+    static let nordicBackground: UIColor = {
+        if #available(iOS 13, *) {
+            return .systemBackground
+        } else {
+            return .white
+        }
+    }()
+    
+    static let nordicSecondaryBackground: UIColor = {
+        if #available(iOS 13, *) {
+            return .secondarySystemBackground
+        } else {
+            return .nordicAlmostWhite
+        }
+    }()
 }
 
 // MARK: - System Colors
@@ -154,6 +172,35 @@ extension UIColor {
             }
             
             return .dynamicColor(light: .nordicRedDark, dark: dark)
+        }()
+    }
+}
+
+// MARK: - Text Colors
+extension UIColor {
+    struct Text {
+        static let systemText: UIColor = {
+            if #available(iOS 13.0, *) {
+                return .label
+            } else {
+                return .black
+            }
+        }()
+        
+        static let secondarySystemText: UIColor = {
+            if #available(iOS 13, *) {
+                return .secondaryLabel
+            } else {
+                return .nordicDarkGray
+            }
+        }()
+        
+        static let inactive: UIColor = {
+            if #available(iOS 13, *) {
+                return .systemGray4
+            } else {
+                return .nordicAlmostWhite
+            }
         }()
     }
 }

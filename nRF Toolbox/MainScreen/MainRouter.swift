@@ -42,15 +42,13 @@ class DefaultMainRouter {
             .glucoseMonitoring : GlucoseMonitorViewController(),
             .continuousGlucoseMonitor : ContinuousGlucoseMonitor(),
             .healthThermometer : HealthTermometerTableViewController(),
-            
             .cyclingSensor : CyclingTableViewController(),
-            
             .runningSensor : RunningTableViewController(),
-            
             .proximity : ProximityViewController(),
             .homeKit : HKViewController.instance(),
-            .uart : UARTRevealViewController.instance(storyboard: UIStoryboard(name: "UARTViewController", bundle: .main))
+            .uart : UARTTabBarController()
             ].mapValues { UINavigationController.nordicBranded(rootViewController: $0) }
+//        .merging([.uart : UARTTabBarController()], uniquingKeysWith: {n, _ in n})
     }()
     
     lazy private var serviceList = ServiceListViewController(serviceRouter: self)

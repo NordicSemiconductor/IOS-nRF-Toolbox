@@ -5,4 +5,5 @@ target "nRF Toolbox" do
     pod 'SWRevealViewController', '~> 2.3'
     pod 'CorePlot', '~> 2.2'
     pod 'Charts'
+    pod 'AEXML', '~> 4.5'
 end

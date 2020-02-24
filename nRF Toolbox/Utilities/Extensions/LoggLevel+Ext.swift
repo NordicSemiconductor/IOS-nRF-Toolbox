@@ -6,23 +6,17 @@
 //  Copyright © 2019 Nordic Semiconductor. All rights reserved.
 //
 
-import Foundation
-import iOSDFULibrary
+import UIKit.UIColor
 
-extension LogLevel {
+extension LOGLevel {
     var color: UIColor {
         switch self {
-        case .warning: return .nordicFall
-        case .error: return .nordicRed
-        case .application: return .nordicGreen
-        case .info: return .nordicBlue
-        case .verbose: return .nordicLake
-        default:
-            if #available(iOS 13, *) {
-                return .label
-            } else {
-                return .black
-            }
+        case .warningLogLevel: return .nordicFall
+        case .errorLogLevel: return .nordicRed
+        case .appLogLevel: return .nordicGreen
+        case .infoLogLevel: return UIColor.Text.systemText
+        case .verboseLogLevel: return .nordicFall
+        case .debugLogLevel: return .nordicLake
         }
     }
 }

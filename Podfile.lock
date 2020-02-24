@@ -1,4 +1,5 @@
 PODS:
+  - AEXML (4.5.0)
   - Charts (3.4.0):
     - Charts/Core (= 3.4.0)
   - Charts/Core (3.4.0)
@@ -12,14 +13,16 @@ PODS:
   - ZIPFoundation (0.9.9)
 
 DEPENDENCIES:
+  - AEXML (~> 4.5)
   - Charts
   - CorePlot (~> 2.2)
   - EVReflection (~> 5.10)
-  - iOSDFULibrary
+  - iOSDFULibrary (~> 4.6)
   - SWRevealViewController (~> 2.3)
 
 SPEC REPOS:
   trunk:
+    - AEXML
     - Charts
     - CorePlot
     - EVReflection
@@ -28,6 +31,7 @@ SPEC REPOS:
     - ZIPFoundation
 
 SPEC CHECKSUMS:
+  AEXML: 0e8f1d874fa033ca6b3909452a8bc362faad46e6
   Charts: 74c9f256eaf0460c0c416522d1cf8c634ea6b286
   CorePlot: cbe0c6e14220705e32e06a89c7d6a5a908b7d7d8
   EVReflection: 8124de482178d34ccd56473e16cd95990f9a1113
@@ -35,6 +39,6 @@ SPEC CHECKSUMS:
   SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
   ZIPFoundation: 89df685c971926b0323087952320bdfee9f0b6ef
 
-PODFILE CHECKSUM: 1a40d2e8d031b00b14199e8a530049e2329d770f
+PODFILE CHECKSUM: 1475882d89eb044f48e0c5a58f533262c543b6b2
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.8.0

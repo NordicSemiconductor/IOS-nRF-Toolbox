@@ -36,7 +36,7 @@ class GlucoseMonitorViewController: PeripheralTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(cell: BGMTableViewCell.self)
+        tableView.registerCellNib(cell: BGMTableViewCell.self)
     }
     
     // MARK: Table View Handlers
