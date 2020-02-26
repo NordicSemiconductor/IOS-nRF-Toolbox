@@ -34,9 +34,11 @@ protocol ServiceRouter {
 
 class DefaultMainRouter {
     
-    private let serviceViewControllers: [ServiceId : UIViewController] = {
+    private let dfuRouter: DFURouter = DFURouter(navigationController: UINavigationController.nordicBranded())
+    
+    private lazy var serviceViewControllers: [ServiceId : UIViewController] = {
         return [
-            .deviceFirmwareUpgrade : DFUViewController(),
+//            .deviceFirmwareUpgrade : dfuRouter.initialState(),
             .heartRateMonitor : HeartRateMonitorTableViewController(),
             .bloodPressureMonitoring : BloodPressureTableViewController(),
             .glucoseMonitoring : GlucoseMonitorViewController(),
@@ -48,7 +50,7 @@ class DefaultMainRouter {
             .homeKit : HKViewController.instance(),
             .uart : UARTTabBarController()
             ].mapValues { UINavigationController.nordicBranded(rootViewController: $0) }
-//        .merging([.uart : UARTTabBarController()], uniquingKeysWith: {n, _ in n})
+        .merging([.deviceFirmwareUpgrade : dfuRouter.initialState()], uniquingKeysWith: {n, _ in n})
     }()
     
     lazy private var serviceList = ServiceListViewController(serviceRouter: self)

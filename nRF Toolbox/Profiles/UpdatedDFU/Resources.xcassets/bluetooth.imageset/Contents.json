@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "bluetooth-24px.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
+  }
+}

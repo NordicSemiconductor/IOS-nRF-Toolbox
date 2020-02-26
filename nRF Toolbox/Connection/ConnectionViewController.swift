@@ -69,12 +69,18 @@ class ConnectionViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let peripheral = scanner.peripherals[indexPath.row]
+        peripheral.peripheral.services?.forEach {
+            print($0.debugDescription)
+        }
+        
+        return
         if case .connecting = scanner.status {
             return
         }
         
-        let peripheral = scanner.peripherals[indexPath.row]
-        delegate?.requestConnection(to: peripheral)
+//        let peripheral = scanner.peripherals[indexPath.row]
+//        delegate?.requestConnection(to: peripheral)
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

@@ -70,6 +70,10 @@
 		01BE0955234A7500006ACF06 /* HealthTemperatureSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE0954234A7500006ACF06 /* HealthTemperatureSection.swift */; };
 		01BE0958234A76D4006ACF06 /* Peripheral+Temperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE0957234A76D4006ACF06 /* Peripheral+Temperature.swift */; };
 		01C2E97523A1ACDF008C1701 /* DFUViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01C2E97423A1ACDF008C1701 /* DFUViewController.xib */; };
+		01D6D2B924067B0500E1A66F /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01D6D2B824067B0500E1A66F /* Resources.xcassets */; };
+		01D6D2BB240696D000E1A66F /* DFURouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6D2BA240696D000E1A66F /* DFURouter.swift */; };
+		01D6D2C02406A1EF00E1A66F /* DFUStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6D2BE2406A1EF00E1A66F /* DFUStartViewController.swift */; };
+		01D6D2C12406A1EF00E1A66F /* DFUStartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01D6D2BF2406A1EF00E1A66F /* DFUStartViewController.xib */; };
 		01DDD79C23EC5CDA003786ED /* TimeIntervalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DDD79A23EC5CDA003786ED /* TimeIntervalTableViewCell.swift */; };
 		01DDD79D23EC5CDA003786ED /* TimeIntervalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01DDD79B23EC5CDA003786ED /* TimeIntervalTableViewCell.xib */; };
 		01DDD7A023EC6351003786ED /* UARTMarcoElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DDD79F23EC6351003786ED /* UARTMarcoElement.swift */; };
@@ -344,6 +348,10 @@
 		01BE0954234A7500006ACF06 /* HealthTemperatureSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTemperatureSection.swift; sourceTree = "<group>"; };
 		01BE0957234A76D4006ACF06 /* Peripheral+Temperature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Peripheral+Temperature.swift"; sourceTree = "<group>"; };
 		01C2E97423A1ACDF008C1701 /* DFUViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DFUViewController.xib; sourceTree = "<group>"; };
+		01D6D2B824067B0500E1A66F /* Resources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resources.xcassets; sourceTree = "<group>"; };
+		01D6D2BA240696D000E1A66F /* DFURouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFURouter.swift; sourceTree = "<group>"; };
+		01D6D2BE2406A1EF00E1A66F /* DFUStartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUStartViewController.swift; sourceTree = "<group>"; };
+		01D6D2BF2406A1EF00E1A66F /* DFUStartViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DFUStartViewController.xib; sourceTree = "<group>"; };
 		01DDD79A23EC5CDA003786ED /* TimeIntervalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalTableViewCell.swift; sourceTree = "<group>"; };
 		01DDD79B23EC5CDA003786ED /* TimeIntervalTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeIntervalTableViewCell.xib; sourceTree = "<group>"; };
 		01DDD79F23EC6351003786ED /* UARTMarcoElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMarcoElement.swift; sourceTree = "<group>"; };
@@ -814,6 +822,25 @@
 			path = Peripheral;
 			sourceTree = "<group>";
 		};
+		01D6D2BC24069FE000E1A66F /* UpdatedDFU */ = {
+			isa = PBXGroup;
+			children = (
+				01D6D2BD2406A1B500E1A66F /* ViewConrollers */,
+				01D6D2B824067B0500E1A66F /* Resources.xcassets */,
+				01D6D2BA240696D000E1A66F /* DFURouter.swift */,
+			);
+			path = UpdatedDFU;
+			sourceTree = "<group>";
+		};
+		01D6D2BD2406A1B500E1A66F /* ViewConrollers */ = {
+			isa = PBXGroup;
+			children = (
+				01D6D2BE2406A1EF00E1A66F /* DFUStartViewController.swift */,
+				01D6D2BF2406A1EF00E1A66F /* DFUStartViewController.xib */,
+			);
+			path = ViewConrollers;
+			sourceTree = "<group>";
+		};
 		01DDD79923EC5941003786ED /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1025,6 +1052,7 @@
 		20B7979B2338EC59001328E1 /* Profiles */ = {
 			isa = PBXGroup;
 			children = (
+				01D6D2BC24069FE000E1A66F /* UpdatedDFU */,
 				4381AD1823BA010200FB1A1F /* UART */,
 				01816D49235DD7180040F574 /* ContinuousGlucoseMonitor */,
 				20B7979C2338EC63001328E1 /* Template */,
@@ -1757,10 +1785,12 @@
 				01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */,
 				20E07B622306975700FCB205 /* GT-Eesti-Display-Bold.ttf in Resources */,
 				5214D0CE1886C02A00460637 /* Settings.bundle in Resources */,
+				01D6D2C12406A1EF00E1A66F /* DFUStartViewController.xib in Resources */,
 				01C2E97523A1ACDF008C1701 /* DFUViewController.xib in Resources */,
 				01A1B76823CF13A50062FADC /* UARTNewCommandViewController.xib in Resources */,
 				20E07B682306975700FCB205 /* GT-Eesti-Display-ULight-Italic.ttf in Resources */,
 				0E645A0F1CBF957800D36AD0 /* firmwares in Resources */,
+				01D6D2B924067B0500E1A66F /* Resources.xcassets in Resources */,
 				20E07B602306975700FCB205 /* GT-Eesti-Display-UBold-Italic.ttf in Resources */,
 				20E07B3F23055B0B00FCB205 /* InteractionServiceList.plist in Resources */,
 				20C7FE032306C72000B06FD8 /* IoTServices.plist in Resources */,
@@ -1898,12 +1928,14 @@
 				304D58FD1CE34FC600148271 /* LogViewController.swift in Sources */,
 				201364FD2344E2E300C5AF1F /* CuffPreasureCharacteristic.swift in Sources */,
 				20D08DFD232929A400569587 /* BGMTableViewCell.swift in Sources */,
+				01D6D2BB240696D000E1A66F /* DFURouter.swift in Sources */,
 				30499E571CE4736500E0993B /* FilePreselectionDelegate.swift in Sources */,
 				01B6D3DE234CBBE5000942C4 /* SernsorLocationSection.swift in Sources */,
 				200973DD2343748F0091951B /* BloodPreasureCharacteristic.swift in Sources */,
 				30A1145C1CD24611000F0F02 /* ScannerViewController.swift in Sources */,
 				308AA57A1CD8DD4300CC9857 /* GlucoseReadingContext.swift in Sources */,
 				3001432B1CEC6D2A008379DF /* RecordAccess.swift in Sources */,
+				01D6D2C02406A1EF00E1A66F /* DFUStartViewController.swift in Sources */,
 				304D58FF1CE3521900148271 /* LogItem.swift in Sources */,
 				3042993C1CE6154100E1D2AB /* BaseRevealViewController.swift in Sources */,
 				01B6D3E0234CC090000942C4 /* Peripheral+HeartRate.swift in Sources */,
@@ -2516,7 +2548,7 @@
 				014C4E9A2404038A0003E601 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Beta;
 		};
 		5217F3DD1859EE0000F2D5BB /* Build configuration list for PBXProject "nRF Toolbox" */ = {
 			isa = XCConfigurationList;
@@ -2526,7 +2558,7 @@
 				5217F4131859EE0000F2D5BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Beta;
 		};
 		5217F4141859EE0000F2D5BB /* Build configuration list for PBXNativeTarget "nRF Toolbox" */ = {
 			isa = XCConfigurationList;
@@ -2536,7 +2568,7 @@
 				5217F4161859EE0000F2D5BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Beta;
 		};
 /* End XCConfigurationList section */
 	};

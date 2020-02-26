@@ -9,8 +9,9 @@
 import UIKit
 
 extension UINavigationController {
-    static func nordicBranded(rootViewController: UIViewController, prefersLargeTitles: Bool = false) -> UINavigationController {
-        let nc = UINavigationController(rootViewController: rootViewController)
+    static func nordicBranded(rootViewController: UIViewController? = nil, prefersLargeTitles: Bool = false) -> UINavigationController {
+        let nc = UINavigationController()
+        nc.viewControllers = [rootViewController].compactMap { $0 }
         nc.navigationBar.tintColor = .nordicAlmostWhite
         nc.navigationBar.barTintColor = .nordicBlue
         
