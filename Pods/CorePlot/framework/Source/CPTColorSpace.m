@@ -37,7 +37,7 @@
 #else
         cgSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
 #endif
-        space = [[CPTColorSpace alloc] initWithCGColorSpace:cgSpace];
+        space = [[self alloc] initWithCGColorSpace:cgSpace];
         CGColorSpaceRelease(cgSpace);
     });
 
@@ -55,7 +55,7 @@
  **/
 -(nonnull instancetype)initWithCGColorSpace:(nonnull CGColorSpaceRef)colorSpace
 {
-    if ( (self = [super init]) ) {
+    if ((self = [super init])) {
         CGColorSpaceRetain(colorSpace);
         cgColorSpace = colorSpace;
     }
@@ -106,7 +106,7 @@
  */
 -(nullable instancetype)initWithCoder:(nonnull NSCoder *)coder
 {
-    if ( (self = [super init]) ) {
+    if ((self = [super init])) {
         CGColorSpaceRef colorSpace = [coder newCGColorSpaceDecodeForKey:@"CPTColorSpace.cgColorSpace"];
 
         if ( colorSpace ) {

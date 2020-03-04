@@ -7,6 +7,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="GT-Eesti-Display-Regular.ttf">
+            <string>GTEestiDisplay-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DFUStartViewController" customModule="nRF_Toolbox" customModuleProvider="target">
             <connections>
@@ -18,21 +23,27 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="CIV-VP-y0c">
-                    <rect key="frame" x="32" y="168" width="350" height="560.5"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="CIV-VP-y0c">
+                    <rect key="frame" x="32" y="60" width="350" height="776"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="phb-8N-FM5">
-                            <rect key="frame" x="0.0" y="0.0" width="350" height="246"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="phb-8N-FM5">
+                            <rect key="frame" x="36.5" y="0.0" width="277" height="356"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bluetooth_disabled" translatesAutoresizingMaskIntoConstraints="NO" id="L7L-lc-5Pa">
-                                    <rect key="frame" x="75" y="0.0" width="200" height="200"/>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="747" verticalCompressionResistancePriority="748" image="bluetooth_disabled" translatesAutoresizingMaskIntoConstraints="NO" id="L7L-lc-5Pa">
+                                    <rect key="frame" x="3.5" y="0.0" width="270" height="270"/>
                                     <color key="tintColor" systemColor="systemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="L7L-lc-5Pa" secondAttribute="height" multiplier="1:1" id="ata-tq-gHY"/>
                                     </constraints>
                                 </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connect and update bluetooth device" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y2k-Gf-JQH">
+                                    <rect key="frame" x="0.0" y="286" width="277" height="20"/>
+                                    <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="17"/>
+                                    <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0fc-CQ-fzp">
-                                    <rect key="frame" x="145.5" y="216" width="59" height="30"/>
+                                    <rect key="frame" x="98.5" y="322" width="80" height="34"/>
                                     <state key="normal" title="Connect">
                                         <color key="titleColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                     </state>
@@ -47,29 +58,46 @@
                                             <real key="value" value="1"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="openBluetoothConnector" destination="-1" eventType="touchUpInside" id="0YF-Te-nPe"/>
+                                    </connections>
                                 </button>
                             </subviews>
                         </stackView>
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Yn-Gf-vTW">
+                            <rect key="frame" x="175" y="372" width="0.5" height="0.0"/>
+                            <color key="backgroundColor" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="0.5" id="lRF-Qk-PME"/>
+                            </constraints>
+                            <variation key="widthClass=regular" hidden="NO"/>
+                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MJr-oW-4j6">
-                            <rect key="frame" x="0.0" y="278" width="350" height="0.5"/>
-                            <color key="backgroundColor" systemColor="systemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+                            <rect key="frame" x="32" y="388" width="286" height="0.5"/>
+                            <color key="backgroundColor" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="0.5" id="Ra3-KV-ctD"/>
                             </constraints>
+                            <variation key="widthClass=regular" hidden="YES"/>
                         </view>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="xOn-My-0GL">
-                            <rect key="frame" x="0.0" y="310.5" width="350" height="250"/>
+                            <rect key="frame" x="40" y="420.5" width="270" height="355.5"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HomeKit-Glyph" translatesAutoresizingMaskIntoConstraints="NO" id="2me-m9-vVW">
-                                    <rect key="frame" x="75" y="0.0" width="200" height="200"/>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="747" verticalCompressionResistancePriority="748" image="HomeKit-Glyph" translatesAutoresizingMaskIntoConstraints="NO" id="2me-m9-vVW">
+                                    <rect key="frame" x="0.0" y="0.0" width="270" height="269.5"/>
                                     <color key="tintColor" systemColor="systemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="2me-m9-vVW" secondAttribute="height" multiplier="1:1" id="NO6-6T-OqN"/>
-                                        <constraint firstAttribute="width" constant="200" id="knE-Bm-aDJ"/>
                                     </constraints>
                                 </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Update HomeKit Accessory" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ekd-Zk-Z7B">
+                                    <rect key="frame" x="35" y="285.5" width="200.5" height="20"/>
+                                    <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="17"/>
+                                    <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SBN-wI-47C">
-                                    <rect key="frame" x="135" y="216" width="80" height="34"/>
+                                    <rect key="frame" x="95" y="321.5" width="80" height="34"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="34" id="aps-LH-v67"/>
                                         <constraint firstAttribute="width" constant="80" id="iTg-Dh-gZM"/>
@@ -94,14 +122,19 @@
                     </subviews>
                     <constraints>
                         <constraint firstItem="L7L-lc-5Pa" firstAttribute="width" secondItem="2me-m9-vVW" secondAttribute="width" id="9fd-FV-MwW"/>
+                        <constraint firstItem="SBN-wI-47C" firstAttribute="width" secondItem="0fc-CQ-fzp" secondAttribute="width" id="CIa-BP-Qoe"/>
+                        <constraint firstItem="MJr-oW-4j6" firstAttribute="leading" secondItem="CIV-VP-y0c" secondAttribute="leading" constant="32" id="qZa-DM-mnC"/>
+                        <constraint firstItem="SBN-wI-47C" firstAttribute="height" secondItem="0fc-CQ-fzp" secondAttribute="height" id="yGh-cr-eHu"/>
                     </constraints>
+                    <variation key="widthClass=regular" axis="horizontal"/>
                 </stackView>
             </subviews>
-            <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
                 <constraint firstItem="CIV-VP-y0c" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="9gd-bY-a3c"/>
                 <constraint firstItem="CIV-VP-y0c" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="32" id="b1i-Tf-e2y"/>
                 <constraint firstItem="CIV-VP-y0c" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="fKC-N6-rKC"/>
+                <constraint firstItem="CIV-VP-y0c" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="mHZ-sx-Kdi"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="137.68115942028987" y="153.34821428571428"/>

@@ -1,10 +1,10 @@
 #import "CPTAnimation.h"
 
+#import "_CPTAnimationTimingFunctions.h"
 #import "CPTAnimationOperation.h"
 #import "CPTAnimationPeriod.h"
 #import "CPTDefinitions.h"
 #import "CPTPlotRange.h"
-#import "_CPTAnimationTimingFunctions.h"
 
 static const CGFloat kCPTAnimationFrameRate = CPTFloat(1.0 / 60.0); // 60 frames per second
 
@@ -100,7 +100,7 @@ typedef NSMutableArray<CPTAnimationOperation *> CPTMutableAnimationArray;
  **/
 -(nonnull instancetype)init
 {
-    if ( (self = [super init]) ) {
+    if ((self = [super init])) {
         animationOperations        = [[NSMutableArray alloc] init];
         runningAnimationOperations = [[NSMutableArray alloc] init];
         timer                      = NULL;
@@ -200,7 +200,7 @@ typedef NSMutableArray<CPTAnimationOperation *> CPTMutableAnimationArray;
     id boundObject             = animationOperation.boundObject;
     CPTAnimationPeriod *period = animationOperation.period;
 
-    if ( animationOperation.delegate || (boundObject && period && ![period.startValue isEqual:period.endValue]) ) {
+    if ( animationOperation.delegate || (boundObject && period && ![period.startValue isEqual:period.endValue])) {
         dispatch_async(self.animationQueue, ^{
             [self.animationOperations addObject:animationOperation];
 
@@ -277,7 +277,7 @@ typedef NSMutableArray<CPTAnimationOperation *> CPTMutableAnimationArray;
         CGFloat duration  = period.duration;
         CGFloat startTime = period.startOffset;
         CGFloat delay     = period.delay;
-        if ( isnan(delay) ) {
+        if ( isnan(delay)) {
             if ( [period canStartWithValueFromObject:animationOperation.boundObject propertyGetter:animationOperation.boundGetter] ) {
                 period.delay = currentTime - startTime;
                 startTime    = currentTime;
@@ -315,7 +315,7 @@ typedef NSMutableArray<CPTAnimationOperation *> CPTMutableAnimationArray;
 
                     for ( CPTAnimationOperation *operation in runningOperations ) {
                         if ( operation.boundObject == boundObject ) {
-                            if ( (operation.boundGetter == boundGetter) && (operation.boundSetter == boundSetter) ) {
+                            if ((operation.boundGetter == boundGetter) && (operation.boundSetter == boundSetter)) {
                                 operation.canceled = YES;
                             }
                         }
@@ -334,11 +334,11 @@ typedef NSMutableArray<CPTAnimationOperation *> CPTMutableAnimationArray;
                     CGFloat progress = timingFunction(currentTime - startTime, duration);
 
                     CPTDictionary *parameters = @{
-                        CPTAnimationOperationKey: animationOperation,
-                        CPTAnimationValueKey: [period tweenedValueForProgress:progress],
-                        CPTAnimationValueClassKey: valueClass ? valueClass : [NSNull null],
-                        CPTAnimationStartedKey: @(started),
-                        CPTAnimationFinishedKey: @(currentTime >= endTime)
+                                                    CPTAnimationOperationKey: animationOperation,
+                                                    CPTAnimationValueKey: [period tweenedValueForProgress:progress],
+                                                    CPTAnimationValueClassKey: valueClass ? valueClass : [NSNull null],
+                                                    CPTAnimationStartedKey: @(started),
+                                                    CPTAnimationFinishedKey: @(currentTime >= endTime)
                     };
 
                     // Used -performSelectorOnMainThread:... instead of GCD to ensure the animation continues to run in all run loop common modes.
@@ -400,12 +400,19 @@ typedef NSMutableArray<CPTAnimationOperation *> CPTMutableAnimationArray;
             id boundObject  = animationOperation.boundObject;
             id tweenedValue = parameters[CPTAnimationValueKey];
 
-            if ( [tweenedValue isKindOfClass:[NSDecimalNumber class]] ) {
-                NSDecimal buffer = ( (NSDecimalNumber *)tweenedValue ).decimalValue;
+            if ( !valueClass && [tweenedValue isKindOfClass:[NSDecimalNumber class]] ) {
+                NSDecimal buffer = ((NSDecimalNumber *)tweenedValue).decimalValue;
 
                 typedef void (*SetterType)(id, SEL, NSDecimal);
                 SetterType setterMethod = (SetterType)[boundObject methodForSelector:boundSetter];
                 setterMethod(boundObject, boundSetter, buffer);
+            }
+            else if ( valueClass && [tweenedValue isKindOfClass:[NSNumber class]] ) {
+                NSNumber *value = (NSNumber *)tweenedValue;
+
+                typedef void (*NumberSetterType)(id, SEL, NSNumber *);
+                NumberSetterType setterMethod = (NumberSetterType)[boundObject methodForSelector:boundSetter];
+                setterMethod(boundObject, boundSetter, value);
             }
             else if ( [tweenedValue isKindOfClass:[CPTPlotRange class]] ) {
                 CPTPlotRange *range = (CPTPlotRange *)tweenedValue;
@@ -425,7 +432,7 @@ typedef NSMutableArray<CPTAnimationOperation *> CPTMutableAnimationArray;
                 invocation.target   = boundObject;
                 invocation.selector = boundSetter;
 
-                void *buffer = malloc(bufferSize);
+                void *buffer = calloc(1, bufferSize);
                 [value getValue:buffer];
                 [invocation setArgument:buffer atIndex:2];
                 free(buffer);

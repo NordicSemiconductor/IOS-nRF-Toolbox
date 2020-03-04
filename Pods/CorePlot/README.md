@@ -1,12 +1,12 @@
 # Core Plot
 
-*Cocoa plotting framework for Mac OS X and iOS.*
+*Cocoa plotting framework for macOS, iOS, and tvOS.*
 
-[![Build Status](https://secure.travis-ci.org/core-plot/core-plot.svg)](http://travis-ci.org/core-plot/core-plot) [![Version Status](https://img.shields.io/cocoapods/v/CorePlot.svg)](https://cocoapods.org/pods/CorePlot) [![license MIT](https://img.shields.io/cocoapods/l/CorePlot.svg)](http://opensource.org/licenses/BSD-3-Clause)  [![Platform](https://img.shields.io/cocoapods/p/CorePlot.svg)](http://core-plot.github.io)
+[![Build Status](https://secure.travis-ci.org/core-plot/core-plot.svg)](http://travis-ci.org/core-plot/core-plot) [![Version Status](https://img.shields.io/cocoapods/v/CorePlot.svg)](https://cocoapods.org/pods/CorePlot) [![license MIT](https://img.shields.io/cocoapods/l/CorePlot.svg)](http://opensource.org/licenses/BSD-3-Clause)  [![Platform](https://img.shields.io/cocoapods/p/CorePlot.svg)](http://core-plot.github.io) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 # Introduction
 
-Core Plot is a 2D plotting framework for Mac OS X, iOS, and tvOS. It is highly customizable and capable of drawing many types of plots. See the  [Example Graphs](https://github.com/core-plot/core-plot/wiki/Example-Graphs) wiki page and the [example applications](https://github.com/core-plot/core-plot/tree/master/examples) for examples of some of its capabilities.
+Core Plot is a 2D plotting framework for macOS, iOS, and tvOS. It is highly customizable and capable of drawing many types of plots. See the  [Example Graphs](https://github.com/core-plot/core-plot/wiki/Example-Graphs) wiki page and the [example applications](https://github.com/core-plot/core-plot/tree/master/examples) for examples of some of its capabilities.
 
 # Getting Started
 
@@ -33,7 +33,6 @@ Documentation of the Core Plot API and high-level architecture can be found in t
 ## Social Networks
 
   * [Twitter](https://twitter.com/CorePlot)
-  * [App.net](https://alpha.app.net/coreplot); Subscribe to the [Announcements](https://app.net/c/2rw2) broadcast.
 
 # Contributing to Core Plot
 
@@ -49,7 +48,7 @@ Everyone has a their own preferred coding style, and no one way can be considere
 Core Plot includes a [script](https://github.com/core-plot/core-plot/blob/master/scripts/format_core_plot.sh) to run [Uncrustify](http://uncrustify.sourceforge.net) on the source code to standardize the formatting. All source code will be formatted with this tool before being committed to the Core Plot repository.
 
 ## Testing
-Because Core Plot is intended to be used in scientific, financial, and other domains where correctness is paramount, unit testing is integrated into the framework. Good test coverage protects developers from introducing accidental regressions and frees them to experiment and refactor without fear of breaking things. See the [unit testing](https://github.com/core-plot/core-plot/wiki/Unit-Testing) wiki page for instructions on how to build unit tests for any new code you add to the project.
+Core Plot is intended to be applied in scientific, financial, and other domains where correctness is paramount. In order to assure the quality of the framework, unit testing is integrated. Good test coverage protects developers from introducing accidental regressions, and helps them to experiment and refactor without breaking existing code. See the [unit testing](https://github.com/core-plot/core-plot/wiki/Unit-Testing) wiki page for instructions on how to build unit tests for any new code you add to the project.
 
 # Support Core Plot
 

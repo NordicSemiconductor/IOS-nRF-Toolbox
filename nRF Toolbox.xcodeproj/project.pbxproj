@@ -13,6 +13,10 @@
 		0125D5B623F44FE6003A1812 /* UIBarButtonItem+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0125D5B523F44FE6003A1812 /* UIBarButtonItem+Ext.swift */; };
 		0125D5B823F53D3B003A1812 /* DFU.LogLevel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0125D5B723F53D3B003A1812 /* DFU.LogLevel+Ext.swift */; };
 		0129126B23E4487000EB3CCD /* UARTTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129126A23E4486F00EB3CCD /* UARTTabBarController.swift */; };
+		012C2BDC240FCD0C005EC1A0 /* DFUUpdateSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDB240FCD0C005EC1A0 /* DFUUpdateSection.swift */; };
+		012C2BE12410682D005EC1A0 /* LegendLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDE2410682D005EC1A0 /* LegendLabel.swift */; };
+		012C2BE22410682D005EC1A0 /* Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDF2410682D005EC1A0 /* Segment.swift */; };
+		012C2BE32410682D005EC1A0 /* SegmentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BE02410682D005EC1A0 /* SegmentedView.swift */; };
 		0133C73B23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0133C73A23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift */; };
 		01468B052361A30A00C29E4C /* StepperTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B032361A30A00C29E4C /* StepperTableViewCell.swift */; };
 		01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01468B042361A30A00C29E4C /* StepperTableViewCell.xib */; };
@@ -22,6 +26,10 @@
 		014C4E932404038A0003E601 /* nRF_Toolbox_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E922404038A0003E601 /* nRF_Toolbox_Tests.swift */; };
 		014C4E9E240403A00003E601 /* UARTPresetTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E9C240403A00003E601 /* UARTPresetTest.swift */; };
 		014C4E9F240403A00003E601 /* UARTMacroFileManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E9D240403A00003E601 /* UARTMacroFileManagerTests.swift */; };
+		0151170B240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01511709240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift */; };
+		0151170C240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0151170A240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.xib */; };
+		015F1098240FA06D00FDAC49 /* DFUActionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015F1097240FA06D00FDAC49 /* DFUActionSection.swift */; };
+		015F109B240FA82400FDAC49 /* DFUDocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015F109A240FA82400FDAC49 /* DFUDocumentPicker.swift */; };
 		0162BA91234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0162BA90234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift */; };
 		01675E6923F6990500FC0519 /* UARTMacrosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01675E6823F6990500FC0519 /* UARTMacrosTableViewController.swift */; };
 		01675E7123F6D1BE00FC0519 /* UARTPresetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01675E6F23F6D1BE00FC0519 /* UARTPresetTableViewCell.swift */; };
@@ -84,6 +92,14 @@
 		01F3655F2397A9C700A4543A /* NordicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F3655E2397A9C700A4543A /* NordicButton.swift */; };
 		01F365622397BADC00A4543A /* DFUFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F365612397BADC00A4543A /* DFUFileView.swift */; };
 		01F365642397BAE500A4543A /* DFUFileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01F365632397BAE500A4543A /* DFUFileView.xib */; };
+		01FBC5012407BF8F00B1056B /* DFUBluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5002407BF8F00B1056B /* DFUBluetoothManager.swift */; };
+		01FBC5062407C2B000B1056B /* DFUFileSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5042407C2B000B1056B /* DFUFileSelector.swift */; };
+		01FBC5072407C2B000B1056B /* DFUFileSelector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01FBC5052407C2B000B1056B /* DFUFileSelector.xib */; };
+		01FBC50B2408067400B1056B /* DFUFirmwareInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5092408067400B1056B /* DFUFirmwareInfoViewController.swift */; };
+		01FBC5102408101B00B1056B /* NordicRightDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC50F2408101B00B1056B /* NordicRightDetailTableViewCell.swift */; };
+		01FBC5132408132800B1056B /* DFUDeviceInfoSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5122408132800B1056B /* DFUDeviceInfoSection.swift */; };
+		01FBC5152408158F00B1056B /* CBPeripheralState+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5142408158F00B1056B /* CBPeripheralState+Ext.swift */; };
+		01FBC51724081A1C00B1056B /* DFUFirmwareSizeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC51624081A1C00B1056B /* DFUFirmwareSizeSection.swift */; };
 		01FEB0FD23969BD1000767C1 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FEB0FC23969BD1000767C1 /* UIView+Ext.swift */; };
 		0E645A0F1CBF957800D36AD0 /* firmwares in Resources */ = {isa = PBXBuildFile; fileRef = 7E6ED10A196ED482008010B6 /* firmwares */; };
 		20027B08233E116600A0B5ED /* StrideSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20027B07233E116600A0B5ED /* StrideSection.swift */; };
@@ -255,8 +271,8 @@
 		52BDCBBE1C3FD86900E2680F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BDCBBD1C3FD86900E2680F /* QuartzCore.framework */; };
 		52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */; };
 		52D9BC9E1DD0CB760030E824 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9BC9D1DD0CB760030E824 /* Data+Ext.swift */; };
+		54F4851E44FF59B675F192F7 /* Pods_nRF_Toolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BBF3C0AEDFD6F1D18E47808 /* Pods_nRF_Toolbox.framework */; };
 		7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B422818A8DF4D006BA1BC /* high.mp3 */; };
-		DCBF9D003D5AA175E9F24910 /* Pods_nRF_Toolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 302004489406AEA824DCF86D /* Pods_nRF_Toolbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -289,6 +305,10 @@
 		0125D5B523F44FE6003A1812 /* UIBarButtonItem+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Ext.swift"; sourceTree = "<group>"; };
 		0125D5B723F53D3B003A1812 /* DFU.LogLevel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DFU.LogLevel+Ext.swift"; sourceTree = "<group>"; };
 		0129126A23E4486F00EB3CCD /* UARTTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTTabBarController.swift; sourceTree = "<group>"; };
+		012C2BDB240FCD0C005EC1A0 /* DFUUpdateSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUUpdateSection.swift; sourceTree = "<group>"; };
+		012C2BDE2410682D005EC1A0 /* LegendLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegendLabel.swift; sourceTree = "<group>"; };
+		012C2BDF2410682D005EC1A0 /* Segment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Segment.swift; sourceTree = "<group>"; };
+		012C2BE02410682D005EC1A0 /* SegmentedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedView.swift; sourceTree = "<group>"; };
 		0133C73A23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTPresetCollectionViewDelegate.swift; sourceTree = "<group>"; };
 		01468B032361A30A00C29E4C /* StepperTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperTableViewCell.swift; sourceTree = "<group>"; };
 		01468B042361A30A00C29E4C /* StepperTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StepperTableViewCell.xib; sourceTree = "<group>"; };
@@ -300,6 +320,10 @@
 		014C4E942404038A0003E601 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		014C4E9C240403A00003E601 /* UARTPresetTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTPresetTest.swift; sourceTree = "<group>"; };
 		014C4E9D240403A00003E601 /* UARTMacroFileManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTMacroFileManagerTests.swift; sourceTree = "<group>"; };
+		01511709240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFirmwareSizeSchemeCell.swift; sourceTree = "<group>"; };
+		0151170A240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DFUFirmwareSizeSchemeCell.xib; sourceTree = "<group>"; };
+		015F1097240FA06D00FDAC49 /* DFUActionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUActionSection.swift; sourceTree = "<group>"; };
+		015F109A240FA82400FDAC49 /* DFUDocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUDocumentPicker.swift; sourceTree = "<group>"; };
 		0162BA90234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTemperatureAditionalSection.swift; sourceTree = "<group>"; };
 		01675E6823F6990500FC0519 /* UARTMacrosTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosTableViewController.swift; sourceTree = "<group>"; };
 		01675E6F23F6D1BE00FC0519 /* UARTPresetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTPresetTableViewCell.swift; sourceTree = "<group>"; };
@@ -362,6 +386,14 @@
 		01F3655E2397A9C700A4543A /* NordicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicButton.swift; sourceTree = "<group>"; };
 		01F365612397BADC00A4543A /* DFUFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFileView.swift; sourceTree = "<group>"; };
 		01F365632397BAE500A4543A /* DFUFileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DFUFileView.xib; sourceTree = "<group>"; };
+		01FBC5002407BF8F00B1056B /* DFUBluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUBluetoothManager.swift; sourceTree = "<group>"; };
+		01FBC5042407C2B000B1056B /* DFUFileSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFileSelector.swift; sourceTree = "<group>"; };
+		01FBC5052407C2B000B1056B /* DFUFileSelector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DFUFileSelector.xib; sourceTree = "<group>"; };
+		01FBC5092408067400B1056B /* DFUFirmwareInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFirmwareInfoViewController.swift; sourceTree = "<group>"; };
+		01FBC50F2408101B00B1056B /* NordicRightDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicRightDetailTableViewCell.swift; sourceTree = "<group>"; };
+		01FBC5122408132800B1056B /* DFUDeviceInfoSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUDeviceInfoSection.swift; sourceTree = "<group>"; };
+		01FBC5142408158F00B1056B /* CBPeripheralState+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CBPeripheralState+Ext.swift"; sourceTree = "<group>"; };
+		01FBC51624081A1C00B1056B /* DFUFirmwareSizeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFirmwareSizeSection.swift; sourceTree = "<group>"; };
 		01FEB0FC23969BD1000767C1 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		20027B07233E116600A0B5ED /* StrideSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrideSection.swift; sourceTree = "<group>"; };
 		20029FFF231FAFD100C43E06 /* PeripheralManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralManager.swift; sourceTree = "<group>"; };
@@ -444,6 +476,7 @@
 		20F15C3B2313D2C7000C5503 /* InfoActionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoActionView.xib; sourceTree = "<group>"; };
 		20F15C3E2313D606000C5503 /* NoContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoContentViewController.swift; sourceTree = "<group>"; };
 		20F15C422313F821000C5503 /* XibInstantiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XibInstantiable.swift; sourceTree = "<group>"; };
+		2BBF3C0AEDFD6F1D18E47808 /* Pods_nRF_Toolbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nRF_Toolbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3000B2101CE317D900F64CEE /* UARTRevealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTRevealViewController.swift; sourceTree = "<group>"; };
 		3000B2121CE3195E00F64CEE /* EditPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPopupViewController.swift; sourceTree = "<group>"; };
 		300143261CEC4B9D008379DF /* AppUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUtilities.swift; sourceTree = "<group>"; };
@@ -461,7 +494,6 @@
 		3001EBC01D1C12E4008C5C37 /* CGMItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGMItemCell.swift; sourceTree = "<group>"; };
 		3001EBC41D1C153C008C5C37 /* CGMDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGMDetailsViewController.swift; sourceTree = "<group>"; };
 		3001EBC61D1C1BAA008C5C37 /* CGMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CGMViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		302004489406AEA824DCF86D /* Pods_nRF_Toolbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nRF_Toolbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		304299211CE5DE8E00E1D2AB /* UserFilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFilesViewController.swift; sourceTree = "<group>"; };
 		304299231CE6114000E1D2AB /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		304299391CE6154100E1D2AB /* BaseRevealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseRevealViewController.swift; sourceTree = "<group>"; };
@@ -517,8 +549,6 @@
 		4392FEFD23AA610300E6ACEA /* LogTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTableViewCell.swift; sourceTree = "<group>"; };
 		4392FEFE23AA610300E6ACEA /* LogTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LogTableViewCell.xib; sourceTree = "<group>"; };
 		4392FF0123AA6CBE00E6ACEA /* DateFormatter+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Ext.swift"; sourceTree = "<group>"; };
-		4394EAC53F8A0FF797E7CA7A /* Pods-nRF Toolbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.release.xcconfig"; path = "Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.release.xcconfig"; sourceTree = "<group>"; };
-		51E9CFCBE6C75A89E5780FE4 /* Pods-nRF Toolbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.debug.xcconfig"; path = "Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.debug.xcconfig"; sourceTree = "<group>"; };
 		5211EFAA1885642F007CC40D /* icon-dfu-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-64.png"; sourceTree = "<group>"; };
 		5211EFAB1885642F007CC40D /* icon-dfu-320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-320.png"; sourceTree = "<group>"; };
 		5211EFAC1885642F007CC40D /* icon-hex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-hex.png"; sourceTree = "<group>"; };
@@ -546,7 +576,9 @@
 		7E1B422818A8DF4D006BA1BC /* high.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = high.mp3; sourceTree = "<group>"; };
 		7E6ED10A196ED482008010B6 /* firmwares */ = {isa = PBXFileReference; lastKnownFileType = folder; path = firmwares; sourceTree = "<group>"; };
 		89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E9F710B1836E396EDA6C09B9 /* Pods-nRF Toolbox.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.beta.xcconfig"; path = "Pods/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.beta.xcconfig"; sourceTree = "<group>"; };
+		90B5FAF386ACB7D37504FB30 /* Pods-nRF Toolbox.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.beta.xcconfig"; path = "Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.beta.xcconfig"; sourceTree = "<group>"; };
+		A2D3F4EB82905481B5877E14 /* Pods-nRF Toolbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.release.xcconfig"; path = "Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.release.xcconfig"; sourceTree = "<group>"; };
+		C13FDFD56CF1F2BC6E59BCCD /* Pods-nRF Toolbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.debug.xcconfig"; path = "Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -569,7 +601,7 @@
 				5217F3E81859EE0000F2D5BB /* CoreGraphics.framework in Frameworks */,
 				5217F3EA1859EE0000F2D5BB /* UIKit.framework in Frameworks */,
 				5217F3E61859EE0000F2D5BB /* Foundation.framework in Frameworks */,
-				DCBF9D003D5AA175E9F24910 /* Pods_nRF_Toolbox.framework in Frameworks */,
+				54F4851E44FF59B675F192F7 /* Pods_nRF_Toolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -591,6 +623,16 @@
 				0119609F23FA064100A7EF29 /* UARTMacrosHeaderView.xib */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		012C2BDD24106811005EC1A0 /* Viewes */ = {
+			isa = PBXGroup;
+			children = (
+				012C2BDE2410682D005EC1A0 /* LegendLabel.swift */,
+				012C2BDF2410682D005EC1A0 /* Segment.swift */,
+				012C2BE02410682D005EC1A0 /* SegmentedView.swift */,
+			);
+			path = Viewes;
 			sourceTree = "<group>";
 		};
 		0140FCD4237C2FFA00411963 /* Views */ = {
@@ -825,6 +867,8 @@
 		01D6D2BC24069FE000E1A66F /* UpdatedDFU */ = {
 			isa = PBXGroup;
 			children = (
+				012C2BDD24106811005EC1A0 /* Viewes */,
+				01FBC4FF2407BF5600B1056B /* Utils */,
 				01D6D2BD2406A1B500E1A66F /* ViewConrollers */,
 				01D6D2B824067B0500E1A66F /* Resources.xcassets */,
 				01D6D2BA240696D000E1A66F /* DFURouter.swift */,
@@ -835,8 +879,9 @@
 		01D6D2BD2406A1B500E1A66F /* ViewConrollers */ = {
 			isa = PBXGroup;
 			children = (
-				01D6D2BE2406A1EF00E1A66F /* DFUStartViewController.swift */,
-				01D6D2BF2406A1EF00E1A66F /* DFUStartViewController.xib */,
+				01FBC5082408066100B1056B /* DFUFirmwareInfo */,
+				01FBC5032407C25E00B1056B /* DFUFileSelector */,
+				01FBC5022407C25300B1056B /* DFUStartViewController */,
 			);
 			path = ViewConrollers;
 			sourceTree = "<group>";
@@ -878,6 +923,82 @@
 				01F365632397BAE500A4543A /* DFUFileView.xib */,
 			);
 			path = FileView;
+			sourceTree = "<group>";
+		};
+		01FBC4FF2407BF5600B1056B /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				01FBC5002407BF8F00B1056B /* DFUBluetoothManager.swift */,
+				015F109A240FA82400FDAC49 /* DFUDocumentPicker.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		01FBC5022407C25300B1056B /* DFUStartViewController */ = {
+			isa = PBXGroup;
+			children = (
+				01D6D2BE2406A1EF00E1A66F /* DFUStartViewController.swift */,
+				01D6D2BF2406A1EF00E1A66F /* DFUStartViewController.xib */,
+			);
+			path = DFUStartViewController;
+			sourceTree = "<group>";
+		};
+		01FBC5032407C25E00B1056B /* DFUFileSelector */ = {
+			isa = PBXGroup;
+			children = (
+				01FBC50D24080CE800B1056B /* Sections */,
+				01FBC5042407C2B000B1056B /* DFUFileSelector.swift */,
+				01FBC5052407C2B000B1056B /* DFUFileSelector.xib */,
+			);
+			path = DFUFileSelector;
+			sourceTree = "<group>";
+		};
+		01FBC5082408066100B1056B /* DFUFirmwareInfo */ = {
+			isa = PBXGroup;
+			children = (
+				01FBC511240812E600B1056B /* Sections */,
+				01FBC50E24080FF600B1056B /* Cells */,
+				01FBC5092408067400B1056B /* DFUFirmwareInfoViewController.swift */,
+			);
+			path = DFUFirmwareInfo;
+			sourceTree = "<group>";
+		};
+		01FBC50D24080CE800B1056B /* Sections */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Sections;
+			sourceTree = "<group>";
+		};
+		01FBC50E24080FF600B1056B /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				01FBC50F2408101B00B1056B /* NordicRightDetailTableViewCell.swift */,
+				01511709240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift */,
+				0151170A240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		01FBC511240812E600B1056B /* Sections */ = {
+			isa = PBXGroup;
+			children = (
+				01FBC5122408132800B1056B /* DFUDeviceInfoSection.swift */,
+				01FBC51624081A1C00B1056B /* DFUFirmwareSizeSection.swift */,
+				012C2BDB240FCD0C005EC1A0 /* DFUUpdateSection.swift */,
+				015F1097240FA06D00FDAC49 /* DFUActionSection.swift */,
+			);
+			path = Sections;
+			sourceTree = "<group>";
+		};
+		04CD51502DA0CA668E27A6C1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C13FDFD56CF1F2BC6E59BCCD /* Pods-nRF Toolbox.debug.xcconfig */,
+				90B5FAF386ACB7D37504FB30 /* Pods-nRF Toolbox.beta.xcconfig */,
+				A2D3F4EB82905481B5877E14 /* Pods-nRF Toolbox.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		2002A003232260CA00C43E06 /* Glucose */ = {
@@ -1111,6 +1232,7 @@
 				01AF928223D0AC3200C1BFD6 /* StringProtocol+Ext.swift */,
 				0125D5B523F44FE6003A1812 /* UIBarButtonItem+Ext.swift */,
 				0125D5B723F53D3B003A1812 /* DFU.LogLevel+Ext.swift */,
+				01FBC5142408158F00B1056B /* CBPeripheralState+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1449,7 +1571,7 @@
 				014C4E912404038A0003E601 /* nRF Toolbox Tests */,
 				5217F3E41859EE0000F2D5BB /* Frameworks */,
 				5217F3E31859EE0000F2D5BB /* Products */,
-				6D243D2956D29EBCF8A45C2A /* Pods */,
+				04CD51502DA0CA668E27A6C1 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1474,7 +1596,7 @@
 				5217F3E71859EE0000F2D5BB /* CoreGraphics.framework */,
 				5217F3E91859EE0000F2D5BB /* UIKit.framework */,
 				89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */,
-				302004489406AEA824DCF86D /* Pods_nRF_Toolbox.framework */,
+				2BBF3C0AEDFD6F1D18E47808 /* Pods_nRF_Toolbox.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1600,16 +1722,6 @@
 			name = Logger;
 			sourceTree = "<group>";
 		};
-		6D243D2956D29EBCF8A45C2A /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				51E9CFCBE6C75A89E5780FE4 /* Pods-nRF Toolbox.debug.xcconfig */,
-				4394EAC53F8A0FF797E7CA7A /* Pods-nRF Toolbox.release.xcconfig */,
-				E9F710B1836E396EDA6C09B9 /* Pods-nRF Toolbox.beta.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		7E6ED10C197D1D40008010B6 /* File Selection */ = {
 			isa = PBXGroup;
 			children = (
@@ -1696,12 +1808,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5217F4141859EE0000F2D5BB /* Build configuration list for PBXNativeTarget "nRF Toolbox" */;
 			buildPhases = (
-				8B80C1585542D2D10E73CB3A /* [CP] Check Pods Manifest.lock */,
+				F69B7DF990C35AA52DFBE002 /* [CP] Check Pods Manifest.lock */,
 				5217F3DE1859EE0000F2D5BB /* Sources */,
 				5217F3DF1859EE0000F2D5BB /* Frameworks */,
 				5217F3E01859EE0000F2D5BB /* Resources */,
 				0E645A0E1CBF943000D36AD0 /* Embed Frameworks */,
-				1C633273D176F0D847977108 /* [CP] Embed Pods Frameworks */,
+				68BC9103C97013EC8BEEAF30 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1786,10 +1898,12 @@
 				20E07B622306975700FCB205 /* GT-Eesti-Display-Bold.ttf in Resources */,
 				5214D0CE1886C02A00460637 /* Settings.bundle in Resources */,
 				01D6D2C12406A1EF00E1A66F /* DFUStartViewController.xib in Resources */,
+				01FBC5072407C2B000B1056B /* DFUFileSelector.xib in Resources */,
 				01C2E97523A1ACDF008C1701 /* DFUViewController.xib in Resources */,
 				01A1B76823CF13A50062FADC /* UARTNewCommandViewController.xib in Resources */,
 				20E07B682306975700FCB205 /* GT-Eesti-Display-ULight-Italic.ttf in Resources */,
 				0E645A0F1CBF957800D36AD0 /* firmwares in Resources */,
+				0151170C240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.xib in Resources */,
 				01D6D2B924067B0500E1A66F /* Resources.xcassets in Resources */,
 				20E07B602306975700FCB205 /* GT-Eesti-Display-UBold-Italic.ttf in Resources */,
 				20E07B3F23055B0B00FCB205 /* InteractionServiceList.plist in Resources */,
@@ -1835,7 +1949,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1C633273D176F0D847977108 /* [CP] Embed Pods Frameworks */ = {
+		68BC9103C97013EC8BEEAF30 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1847,6 +1961,7 @@
 				"${BUILT_PRODUCTS_DIR}/CorePlot/CorePlot.framework",
 				"${BUILT_PRODUCTS_DIR}/EVReflection/EVReflection.framework",
 				"${BUILT_PRODUCTS_DIR}/SWRevealViewController/SWRevealViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/SegmentedView/SegmentedView.framework",
 				"${BUILT_PRODUCTS_DIR}/ZIPFoundation/ZIPFoundation.framework",
 				"${BUILT_PRODUCTS_DIR}/iOSDFULibrary/iOSDFULibrary.framework",
 			);
@@ -1857,6 +1972,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePlot.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EVReflection.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SWRevealViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SegmentedView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZIPFoundation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSDFULibrary.framework",
 			);
@@ -1865,16 +1981,20 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8B80C1585542D2D10E73CB3A /* [CP] Check Pods Manifest.lock */ = {
+		F69B7DF990C35AA52DFBE002 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			inputFileListPaths = (
 			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-nRF Toolbox-checkManifestLockResult.txt",
 			);
@@ -1903,11 +2023,13 @@
 				0162BA91234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift in Sources */,
 				20F0C8042327D42A003111E7 /* Section.swift in Sources */,
 				200973D523433A120091951B /* Flag.swift in Sources */,
+				012C2BE12410682D005EC1A0 /* LegendLabel.swift in Sources */,
 				203D0F06232BBEB300C0340D /* DetailsTableViewCell.swift in Sources */,
 				01468B052361A30A00C29E4C /* StepperTableViewCell.swift in Sources */,
 				019985E823DF1C8D000CDCB6 /* CloseButtonPresenter.swift in Sources */,
 				01AF929A23DB17C100C1BFD6 /* AlertPresenter.swift in Sources */,
 				304299221CE5DE8E00E1D2AB /* UserFilesViewController.swift in Sources */,
+				01FBC5062407C2B000B1056B /* DFUFileSelector.swift in Sources */,
 				204485E7233A172800A8A3A3 /* Peripheral+Running.swift in Sources */,
 				30499E5D1CE4C6C700E0993B /* FolderFilesViewController.swift in Sources */,
 				30499E551CE4732200E0993B /* FileSelectionDelegate.swift in Sources */,
@@ -1969,13 +2091,16 @@
 				4392FEFB23AA608700E6ACEA /* LoggerTableView.swift in Sources */,
 				01AF929223D5A9CD00C1BFD6 /* UARTMacro.swift in Sources */,
 				4322034123CC773F009840DD /* UARTActionCollectionViewCell.swift in Sources */,
+				0151170B240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift in Sources */,
 				20D08E002329356700569587 /* ActionSection.swift in Sources */,
 				20C7FE10230A9FAB00B06FD8 /* UIFont+Ext.swift in Sources */,
 				201364F72344A93D00C5AF1F /* BloodPressureSection.swift in Sources */,
 				014C4E892403F8AE0003E601 /* UARTMacrosTableViewController.swift in Sources */,
 				304D59011CE352B300148271 /* LogItemTableViewCell.swift in Sources */,
+				012C2BDC240FCD0C005EC1A0 /* DFUUpdateSection.swift in Sources */,
 				01E5910923DB3BC5008F15A4 /* QuickError.swift in Sources */,
 				01AD26E82395084000F56210 /* ConnectionViewController.swift in Sources */,
+				01FBC50B2408067400B1056B /* DFUFirmwareInfoViewController.swift in Sources */,
 				3001EBC51D1C153C008C5C37 /* CGMDetailsViewController.swift in Sources */,
 				0133C73B23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift in Sources */,
 				4322034423CC9D31009840DD /* UARTCommandModel.swift in Sources */,
@@ -1987,6 +2112,8 @@
 				01AD26EC23953E4800F56210 /* FileSizeView.swift in Sources */,
 				309F086E1E6ED44F00B7546A /* HKScannerDelegate.swift in Sources */,
 				01DDD79C23EC5CDA003786ED /* TimeIntervalTableViewCell.swift in Sources */,
+				01FBC5132408132800B1056B /* DFUDeviceInfoSection.swift in Sources */,
+				01FBC5152408158F00B1056B /* CBPeripheralState+Ext.swift in Sources */,
 				200973DA234344780091951B /* BloodPressureTableViewController.swift in Sources */,
 				201364FB2344A94F00C5AF1F /* TimeBloodPressureSection.swift in Sources */,
 				01BE094F2349F71B006ACF06 /* HealthTermometerTableViewController.swift in Sources */,
@@ -1994,6 +2121,7 @@
 				01BE0958234A76D4006ACF06 /* Peripheral+Temperature.swift in Sources */,
 				304299241CE6114000E1D2AB /* TutorialViewController.swift in Sources */,
 				20C7FE0E230A9F9300B06FD8 /* LinkTableViewCell.swift in Sources */,
+				012C2BE32410682D005EC1A0 /* SegmentedView.swift in Sources */,
 				01BE0955234A7500006ACF06 /* HealthTemperatureSection.swift in Sources */,
 				01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */,
 				01A1B76723CF13A50062FADC /* UARTNewCommandViewController.swift in Sources */,
@@ -2011,6 +2139,7 @@
 				20850177233B690500C792B4 /* RunningCharacteristic.swift in Sources */,
 				4392FEFF23AA610300E6ACEA /* LogTableViewCell.swift in Sources */,
 				309F086C1E6EA0F800B7546A /* HKScannerViewController.swift in Sources */,
+				015F109B240FA82400FDAC49 /* DFUDocumentPicker.swift in Sources */,
 				20D08E04232A4A3600569587 /* SelectionsTableViewController.swift in Sources */,
 				20C7FE5B230EAD0000B06FD8 /* UINavigationController+Ext.swift in Sources */,
 				20F0C8062327D439003111E7 /* BatterySection.swift in Sources */,
@@ -2019,6 +2148,7 @@
 				3069A1D71CDC788A003869EA /* BluetoothManager.swift in Sources */,
 				20136505234785DC00C5AF1F /* Peripheral+BloodPressure.swift in Sources */,
 				3042993D1CE6154100E1D2AB /* BaseViewController.swift in Sources */,
+				01FBC5102408101B00B1056B /* NordicRightDetailTableViewCell.swift in Sources */,
 				20D08E2B232B95B300569587 /* DisclosureTableViewCell.swift in Sources */,
 				2002A0052322610F00C43E06 /* GlucoseMonitorViewController.swift in Sources */,
 				01B6D3DC234CB755000942C4 /* HeartRateLocationCharacteristic.swift in Sources */,
@@ -2026,6 +2156,7 @@
 				20C7FE50230E789F00B06FD8 /* MainRouter.swift in Sources */,
 				201364FF2345D0EA00C5AF1F /* CuffPressureSection.swift in Sources */,
 				4381AD1B23BA057000FB1A1F /* UARTViewController.swift in Sources */,
+				012C2BE22410682D005EC1A0 /* Segment.swift in Sources */,
 				20E07B3C2305593800FCB205 /* ServiceListViewController.swift in Sources */,
 				30A114561CD2367C000F0F02 /* ScannedPeripheral.swift in Sources */,
 				20F15C3A2313D2B9000C5503 /* InfoActionView.swift in Sources */,
@@ -2049,6 +2180,7 @@
 				0169B59E23FBD8BE00907C1B /* NordicTextFieldCell.swift in Sources */,
 				20B7979823350584001328E1 /* Peripheral+Cycling.swift in Sources */,
 				208EE4EA23155FC8008E5FE9 /* WebViewController.swift in Sources */,
+				01FBC51724081A1C00B1056B /* DFUFirmwareSizeSection.swift in Sources */,
 				019985F123E07CFB000CDCB6 /* XMLDocument.swift in Sources */,
 				20B797942334FE1B001328E1 /* Identifier+GlucoseMonitorViewController.swift in Sources */,
 				01A870DA23F40E2F00D9202E /* CheckmarkTableViewCell.swift in Sources */,
@@ -2065,6 +2197,7 @@
 				339763D41402CC5D9773F46F /* Peripheral+ContinuousGlucoseMonitor.swift in Sources */,
 				33976F79FE2EA20D94F68B69 /* ContinuousGlucoseChartData.swift in Sources */,
 				339764F85119305F6958B516 /* LastDataSection.swift in Sources */,
+				015F1098240FA06D00FDAC49 /* DFUActionSection.swift in Sources */,
 				339763D0A0642AF6C7E7AA85 /* StartStopSection.swift in Sources */,
 				3397653E200A1711DC0AA009 /* ContinuousGlucoseMonitorMeasurement.swift in Sources */,
 				33976843D672C14301E9C917 /* SessionStartTime.swift in Sources */,
@@ -2075,6 +2208,7 @@
 				01DDD7A023EC6351003786ED /* UARTMarcoElement.swift in Sources */,
 				33976B2C1CE8194EFAEB7341 /* Randomizer.swift in Sources */,
 				339765E57CA5E940D960B675 /* ChartDataSection.swift in Sources */,
+				01FBC5012407BF8F00B1056B /* DFUBluetoothManager.swift in Sources */,
 				3397622AEAB44E02CA055BDF /* ProximityViewController.swift in Sources */,
 				33976DC91B99AAA3F2E12DF7 /* FindMeSection.swift in Sources */,
 				01AF929623D8962600C1BFD6 /* UARTPreset.swift in Sources */,
@@ -2274,7 +2408,7 @@
 		};
 		20FDA43623154494006EEBC1 /* Beta */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E9F710B1836E396EDA6C09B9 /* Pods-nRF Toolbox.beta.xcconfig */;
+			baseConfigurationReference = 90B5FAF386ACB7D37504FB30 /* Pods-nRF Toolbox.beta.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -2438,7 +2572,7 @@
 		};
 		5217F4151859EE0000F2D5BB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 51E9CFCBE6C75A89E5780FE4 /* Pods-nRF Toolbox.debug.xcconfig */;
+			baseConfigurationReference = C13FDFD56CF1F2BC6E59BCCD /* Pods-nRF Toolbox.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -2489,7 +2623,7 @@
 		};
 		5217F4161859EE0000F2D5BB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4394EAC53F8A0FF797E7CA7A /* Pods-nRF Toolbox.release.xcconfig */;
+			baseConfigurationReference = A2D3F4EB82905481B5877E14 /* Pods-nRF Toolbox.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;

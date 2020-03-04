@@ -3,12 +3,13 @@ PODS:
   - Charts (3.4.0):
     - Charts/Core (= 3.4.0)
   - Charts/Core (3.4.0)
-  - CorePlot (2.2)
+  - CorePlot (2.3)
   - EVReflection (5.10.1):
     - EVReflection/Core (= 5.10.1)
   - EVReflection/Core (5.10.1)
   - iOSDFULibrary (4.6.1):
     - ZIPFoundation (= 0.9.9)
+  - SegmentedView (0.1.0)
   - SWRevealViewController (2.3.0)
   - ZIPFoundation (0.9.9)
 
@@ -18,6 +19,7 @@ DEPENDENCIES:
   - CorePlot (~> 2.2)
   - EVReflection (~> 5.10)
   - iOSDFULibrary (~> 4.6)
+  - SegmentedView (from `CustomPods/SegmentedView`)
   - SWRevealViewController (~> 2.3)
 
 SPEC REPOS:
@@ -30,15 +32,20 @@ SPEC REPOS:
     - SWRevealViewController
     - ZIPFoundation
 
+EXTERNAL SOURCES:
+  SegmentedView:
+    :path: CustomPods/SegmentedView
+
 SPEC CHECKSUMS:
   AEXML: 0e8f1d874fa033ca6b3909452a8bc362faad46e6
   Charts: 74c9f256eaf0460c0c416522d1cf8c634ea6b286
-  CorePlot: cbe0c6e14220705e32e06a89c7d6a5a908b7d7d8
+  CorePlot: 6bfe6d30d215beec3cfd18ee43e434620119bc1e
   EVReflection: 8124de482178d34ccd56473e16cd95990f9a1113
   iOSDFULibrary: 3053cf01eaabec37dc7372fb77ae4a218b577c55
+  SegmentedView: df0d0654f27133c3827fd8c2eafef18170fb4986
   SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
   ZIPFoundation: 89df685c971926b0323087952320bdfee9f0b6ef
 
-PODFILE CHECKSUM: 1475882d89eb044f48e0c5a58f533262c543b6b2
+PODFILE CHECKSUM: 8f3fb609156990921a11597f73dc82c674c626f4
 
-COCOAPODS: 1.8.0
+COCOAPODS: 1.9.0

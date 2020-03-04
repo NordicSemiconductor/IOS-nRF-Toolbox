@@ -10,7 +10,10 @@ import UIKit
 
 class DFUStartViewController: UIViewController {
     
-    init(router: DFURouter) {
+    private let router: DFURouterType
+    
+    init(router: DFURouterType) {
+        self.router = router
         super.init(nibName: "DFUStartViewController", bundle: .main)
     }
     
@@ -20,7 +23,13 @@ class DFUStartViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        navigationItem.title = "DFU"
     }
 
+    @IBAction func openBluetoothConnector() {
+        router.goToBluetoothConnector(scanner: PeripheralScanner(services: []), presentationType: .push) { [weak self] (p) in
+            self?.router.goToFileSelection()
+        }
+    }
 }
+

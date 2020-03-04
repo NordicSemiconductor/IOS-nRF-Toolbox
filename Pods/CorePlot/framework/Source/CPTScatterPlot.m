@@ -206,6 +206,7 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
         [self exposeBinding:CPTScatterPlotBindingPlotSymbols];
     }
 }
+
 #endif
 
 /// @endcond
@@ -236,7 +237,7 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
  **/
 -(nonnull instancetype)initWithFrame:(CGRect)newFrame
 {
-    if ( (self = [super initWithFrame:newFrame]) ) {
+    if ((self = [super initWithFrame:newFrame])) {
         dataLineStyle                   = [[CPTLineStyle alloc] init];
         plotSymbol                      = nil;
         areaFill                        = nil;
@@ -263,7 +264,7 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
 
 -(nonnull instancetype)initWithLayer:(nonnull id)layer
 {
-    if ( (self = [super initWithLayer:layer]) ) {
+    if ((self = [super initWithLayer:layer])) {
         CPTScatterPlot *theLayer = (CPTScatterPlot *)layer;
 
         dataLineStyle                           = theLayer->dataLineStyle;
@@ -319,7 +320,7 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
 
 -(nullable instancetype)initWithCoder:(nonnull NSCoder *)coder
 {
-    if ( (self = [super initWithCoder:coder]) ) {
+    if ((self = [super initWithCoder:coder])) {
         interpolation                  = (CPTScatterPlotInterpolation)[coder decodeIntegerForKey:@"CPTScatterPlot.interpolation"];
         histogramOption                = (CPTScatterPlotHistogramOption)[coder decodeIntegerForKey:@"CPTScatterPlot.histogramOption"];
         curvedInterpolationOption      = (CPTScatterPlotCurvedInterpolationOption)[coder decodeIntegerForKey:@"CPTScatterPlot.curvedInterpolationOption"];
@@ -455,7 +456,7 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
 {
     CPTPlotSymbol *symbol = [self cachedValueForKey:CPTScatterPlotBindingPlotSymbols recordIndex:idx];
 
-    if ( (symbol == nil) || (symbol == [CPTPlot nilData]) ) {
+    if ((symbol == nil) || (symbol == [CPTPlot nilData])) {
         symbol = self.plotSymbol;
     }
 
@@ -475,16 +476,16 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
 
     CPTLineStyle *lineStyle = self.dataLineStyle;
 
-    if ( self.areaFill || self.areaFill2 || lineStyle.dashPattern || lineStyle.lineFill || (self.interpolation == CPTScatterPlotInterpolationCurved) ) {
+    if ( self.areaFill || self.areaFill2 || lineStyle.dashPattern || lineStyle.lineFill || (self.interpolation == CPTScatterPlotInterpolationCurved)) {
         // show all points to preserve the line dash and area fills
         for ( NSUInteger i = 0; i < dataCount; i++ ) {
             pointDrawFlags[i] = YES;
         }
     }
     else {
-        CPTPlotRangeComparisonResult *xRangeFlags = malloc( dataCount * sizeof(CPTPlotRangeComparisonResult) );
-        CPTPlotRangeComparisonResult *yRangeFlags = malloc( dataCount * sizeof(CPTPlotRangeComparisonResult) );
-        BOOL *nanFlags                            = malloc( dataCount * sizeof(BOOL) );
+        CPTPlotRangeComparisonResult *xRangeFlags = calloc(dataCount, sizeof(CPTPlotRangeComparisonResult));
+        CPTPlotRangeComparisonResult *yRangeFlags = calloc(dataCount, sizeof(CPTPlotRangeComparisonResult));
+        BOOL *nanFlags                            = calloc(dataCount, sizeof(BOOL));
 
         CPTPlotRange *xRange = xyPlotSpace.xRange;
         CPTPlotRange *yRange = xyPlotSpace.yRange;
@@ -499,7 +500,7 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
                 const double y = yBytes[i];
 
                 CPTPlotRangeComparisonResult xFlag = [xRange compareToDouble:x];
-                xRangeFlags[i] = xFlag;
+                xRangeFlags[i]                     = xFlag;
                 if ( xFlag != CPTPlotRangeComparisonResultNumberInRange ) {
                     yRangeFlags[i] = CPTPlotRangeComparisonResultNumberInRange; // if x is out of range, then y doesn't matter
                 }
@@ -519,7 +520,7 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
                 const NSDecimal y = yBytes[i];
 
                 CPTPlotRangeComparisonResult xFlag = [xRange compareToDecimal:x];
-                xRangeFlags[i] = xFlag;
+                xRangeFlags[i]                     = xFlag;
                 if ( xFlag != CPTPlotRangeComparisonResultNumberInRange ) {
                     yRangeFlags[i] = CPTPlotRangeComparisonResultNumberInRange; // if x is out of range, then y doesn't matter
                 }
@@ -535,7 +536,7 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
         // are included. This ensures no lines are left out that shouldn't be.
         CPTScatterPlotInterpolation theInterpolation = self.interpolation;
 
-        memset( pointDrawFlags, NO, dataCount * sizeof(BOOL) );
+        memset(pointDrawFlags, NO, dataCount * sizeof(BOOL));
         if ( dataCount > 0 ) {
             pointDrawFlags[0] = (xRangeFlags[0] == CPTPlotRangeComparisonResultNumberInRange &&
                                  yRangeFlags[0] == CPTPlotRangeComparisonResultNumberInRange &&
@@ -543,9 +544,9 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
         }
         if ( visibleOnly ) {
             for ( NSUInteger i = 1; i < dataCount; i++ ) {
-                if ( (xRangeFlags[i] == CPTPlotRangeComparisonResultNumberInRange) &&
-                     (yRangeFlags[i] == CPTPlotRangeComparisonResultNumberInRange) &&
-                     !nanFlags[i] ) {
+                if ((xRangeFlags[i] == CPTPlotRangeComparisonResultNumberInRange) &&
+                    (yRangeFlags[i] == CPTPlotRangeComparisonResultNumberInRange) &&
+                    !nanFlags[i] ) {
                     pointDrawFlags[i] = YES;
                 }
             }
@@ -555,13 +556,13 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
                 case CPTScatterPlotInterpolationCurved:
                     // Keep 2 points outside of the visible area on each side to maintain the correct curvature of the line
                     if ( dataCount > 1 ) {
-                        if ( !nanFlags[0] && !nanFlags[1] && ( (xRangeFlags[0] != xRangeFlags[1]) || (yRangeFlags[0] != yRangeFlags[1]) ) ) {
+                        if ( !nanFlags[0] && !nanFlags[1] && ((xRangeFlags[0] != xRangeFlags[1]) || (yRangeFlags[0] != yRangeFlags[1]))) {
                             pointDrawFlags[0] = YES;
                             pointDrawFlags[1] = YES;
                         }
-                        else if ( (xRangeFlags[1] == CPTPlotRangeComparisonResultNumberInRange) &&
-                                  (yRangeFlags[1] == CPTPlotRangeComparisonResultNumberInRange) &&
-                                  !nanFlags[1] ) {
+                        else if ((xRangeFlags[1] == CPTPlotRangeComparisonResultNumberInRange) &&
+                                 (yRangeFlags[1] == CPTPlotRangeComparisonResultNumberInRange) &&
+                                 !nanFlags[1] ) {
                             pointDrawFlags[1] = YES;
                         }
                     }
@@ -572,14 +573,14 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
                             pointDrawFlags[i - 1] = YES;
                             pointDrawFlags[i]     = YES;
                         }
-                        else if ( !nanFlags[i - 1] && !nanFlags[i] && ( (xRangeFlags[i - 1] != xRangeFlags[i]) || (yRangeFlags[i - 1] != yRangeFlags[i]) ) ) {
+                        else if ( !nanFlags[i - 1] && !nanFlags[i] && ((xRangeFlags[i - 1] != xRangeFlags[i]) || (yRangeFlags[i - 1] != yRangeFlags[i]))) {
                             pointDrawFlags[i - 2] = YES;
                             pointDrawFlags[i - 1] = YES;
                             pointDrawFlags[i]     = YES;
                         }
-                        else if ( (xRangeFlags[i] == CPTPlotRangeComparisonResultNumberInRange) &&
-                                  (yRangeFlags[i] == CPTPlotRangeComparisonResultNumberInRange) &&
-                                  !nanFlags[i] ) {
+                        else if ((xRangeFlags[i] == CPTPlotRangeComparisonResultNumberInRange) &&
+                                 (yRangeFlags[i] == CPTPlotRangeComparisonResultNumberInRange) &&
+                                 !nanFlags[i] ) {
                             pointDrawFlags[i] = YES;
                         }
                     }
@@ -588,13 +589,13 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
                 default:
                     // Keep 1 point outside of the visible area on each side
                     for ( NSUInteger i = 1; i < dataCount; i++ ) {
-                        if ( !nanFlags[i - 1] && !nanFlags[i] && ( (xRangeFlags[i - 1] != xRangeFlags[i]) || (yRangeFlags[i - 1] != yRangeFlags[i]) ) ) {
+                        if ( !nanFlags[i - 1] && !nanFlags[i] && ((xRangeFlags[i - 1] != xRangeFlags[i]) || (yRangeFlags[i - 1] != yRangeFlags[i]))) {
                             pointDrawFlags[i - 1] = YES;
                             pointDrawFlags[i]     = YES;
                         }
-                        else if ( (xRangeFlags[i] == CPTPlotRangeComparisonResultNumberInRange) &&
-                                  (yRangeFlags[i] == CPTPlotRangeComparisonResultNumberInRange) &&
-                                  !nanFlags[i] ) {
+                        else if ((xRangeFlags[i] == CPTPlotRangeComparisonResultNumberInRange) &&
+                                 (yRangeFlags[i] == CPTPlotRangeComparisonResultNumberInRange) &&
+                                 !nanFlags[i] ) {
                             pointDrawFlags[i] = YES;
                         }
                     }
@@ -620,7 +621,7 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
         dispatch_apply(dataCount, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t i) {
             const double x = xBytes[i];
             const double y = yBytes[i];
-            if ( !drawPointFlags[i] || isnan(x) || isnan(y) ) {
+            if ( !drawPointFlags[i] || isnan(x) || isnan(y)) {
                 viewPoints[i] = CPTPointMake(NAN, NAN);
             }
             else {
@@ -642,7 +643,7 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
         dispatch_apply(dataCount, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t i) {
             const NSDecimal x = xBytes[i];
             const NSDecimal y = yBytes[i];
-            if ( !drawPointFlags[i] || NSDecimalIsNotANumber(&x) || NSDecimalIsNotANumber(&y) ) {
+            if ( !drawPointFlags[i] || NSDecimalIsNotANumber(&x) || NSDecimalIsNotANumber(&y)) {
                 viewPoints[i] = CPTPointMake(NAN, NAN);
             }
             else {
@@ -660,7 +661,7 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
 {
     // Align to device pixels if there is a data line.
     // Otherwise, align to view space, so fills are sharp at edges.
-    if ( self.dataLineStyle.lineWidth > CPTFloat(0.0) ) {
+    if ( self.dataLineStyle.lineWidth > CPTFloat(0.0)) {
         dispatch_apply(dataCount, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t i) {
             if ( drawPointFlags[i] ) {
                 viewPoints[i] = CPTAlignPointToUserSpace(context, viewPoints[i]);
@@ -688,7 +689,7 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
                 result = i;
                 break;
             }
-            if ( (delta < 0) && (i == 0) ) {
+            if ((delta < 0) && (i == 0)) {
                 break;
             }
         }
@@ -717,10 +718,10 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
 -(NSUInteger)indexOfVisiblePointClosestToPlotAreaPoint:(CGPoint)viewPoint
 {
     NSUInteger dataCount = self.cachedDataCount;
-    CGPoint *viewPoints  = calloc( dataCount, sizeof(CGPoint) );
-    BOOL *drawPointFlags = calloc( dataCount, sizeof(BOOL) );
+    CGPoint *viewPoints  = calloc(dataCount, sizeof(CGPoint));
+    BOOL *drawPointFlags = calloc(dataCount, sizeof(BOOL));
 
-    [self calculatePointsToDraw:drawPointFlags forPlotSpace:(id)self.plotSpace includeVisiblePointsOnly:YES numberOfPoints:dataCount];
+    [self calculatePointsToDraw:drawPointFlags forPlotSpace:(CPTXYPlotSpace *)self.plotSpace includeVisiblePointsOnly:YES numberOfPoints:dataCount];
     [self calculateViewPoints:viewPoints withDrawPointFlags:drawPointFlags numberOfPoints:dataCount];
 
     NSInteger result = [self extremeDrawnPointIndexForFlags:drawPointFlags numberOfPoints:dataCount extremeNumIsLowerBound:YES];
@@ -729,7 +730,7 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
         for ( NSUInteger i = (NSUInteger)result; i < dataCount; ++i ) {
             if ( drawPointFlags[i] ) {
                 CGFloat distanceSquared = squareOfDistanceBetweenPoints(viewPoint, viewPoints[i]);
-                if ( isnan(minimumDistanceSquared) || (distanceSquared < minimumDistanceSquared) ) {
+                if ( isnan(minimumDistanceSquared) || (distanceSquared < minimumDistanceSquared)) {
                     minimumDistanceSquared = distanceSquared;
                     result                 = (NSInteger)i;
                 }
@@ -786,14 +787,14 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
     CPTMutableNumericData *xValueData = [self cachedNumbersForField:CPTScatterPlotFieldX];
     CPTMutableNumericData *yValueData = [self cachedNumbersForField:CPTScatterPlotFieldY];
 
-    if ( (xValueData == nil) || (yValueData == nil) ) {
+    if ((xValueData == nil) || (yValueData == nil)) {
         return;
     }
     NSUInteger dataCount = self.cachedDataCount;
     if ( dataCount == 0 ) {
         return;
     }
-    if ( !(self.dataLineStyle || self.areaFill || self.areaFill2 || self.plotSymbol || self.plotSymbols.count) ) {
+    if ( !(self.dataLineStyle || self.areaFill || self.areaFill2 || self.plotSymbol || self.plotSymbols.count)) {
         return;
     }
     if ( xValueData.numberOfSamples != yValueData.numberOfSamples ) {
@@ -803,8 +804,8 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
     [super renderAsVectorInContext:context];
 
     // Calculate view points, and align to user space
-    CGPoint *viewPoints  = malloc( dataCount * sizeof(CGPoint) );
-    BOOL *drawPointFlags = malloc( dataCount * sizeof(BOOL) );
+    CGPoint *viewPoints  = calloc(dataCount, sizeof(CGPoint));
+    BOOL *drawPointFlags = calloc(dataCount, sizeof(BOOL));
 
     CPTXYPlotSpace *thePlotSpace = (CPTXYPlotSpace *)self.plotSpace;
     [self calculatePointsToDraw:drawPointFlags forPlotSpace:thePlotSpace includeVisiblePointsOnly:NO numberOfPoints:dataCount];
@@ -820,7 +821,7 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
     NSInteger firstDrawnPointIndex = [self extremeDrawnPointIndexForFlags:drawPointFlags numberOfPoints:dataCount extremeNumIsLowerBound:YES];
 
     if ( firstDrawnPointIndex != NSNotFound ) {
-        NSRange viewIndexRange = NSMakeRange( (NSUInteger)firstDrawnPointIndex, (NSUInteger)(lastDrawnPointIndex - firstDrawnPointIndex + 1) );
+        NSRange viewIndexRange = NSMakeRange((NSUInteger)firstDrawnPointIndex, (NSUInteger)(lastDrawnPointIndex - firstDrawnPointIndex + 1));
 
         CPTPlotArea *thePlotArea            = self.plotArea;
         CPTLineStyle *theLineStyle          = self.dataLineStyle;
@@ -846,8 +847,8 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
                     theAreaBaseValue = CPTDecimalNaN();
                     break;
             }
-            if ( !NSDecimalIsNotANumber(&theAreaBaseValue) ) {
-                if ( theFill || ( (i == 0) && fillBands ) ) {
+            if ( !NSDecimalIsNotANumber(&theAreaBaseValue)) {
+                if ( theFill || ((i == 0) && fillBands)) {
                     // clear the plot shadow if any--not needed for fills when the plot has a data line
                     if ( theLineStyle ) {
                         CGContextSaveGState(context);
@@ -872,8 +873,8 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
                     }
 
                     // Draw fill bands
-                    if ( (i == 0) && fillBands ) {
-                        CGFloat height = CPTFloat( CGBitmapContextGetHeight(context) );
+                    if ((i == 0) && fillBands ) {
+                        CGFloat height = CPTFloat(CGBitmapContextGetHeight(context));
 
                         for ( CPTLimitBand *band in fillBands ) {
                             CGContextSaveGState(context);
@@ -891,7 +892,7 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
                                 maxPoint = CPTAlignIntegralPointToUserSpace(context, maxPoint);
                             }
 
-                            CGContextClipToRect( context, CGRectMake(minPoint.x, 0.0, maxPoint.x - minPoint.x, height) );
+                            CGContextClipToRect(context, CGRectMake(minPoint.x, 0.0, maxPoint.x - minPoint.x, height));
 
                             CGContextBeginPath(context);
                             CGContextAddPath(context, dataLinePath);
@@ -983,9 +984,9 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
     for ( NSUInteger i = indexRange.location; i <= lastDrawnPointIndex; i++ ) {
         CGPoint viewPoint = viewPoints[i];
 
-        if ( isnan(viewPoint.x) || isnan(viewPoint.y) ) {
+        if ( isnan(viewPoint.x) || isnan(viewPoint.y)) {
             if ( !lastPointSkipped ) {
-                if ( !isnan(baselineYValue) ) {
+                if ( !isnan(baselineYValue)) {
                     CGPathAddLineToPoint(dataLinePath, NULL, lastPoint.x, baselineYValue);
                     CGPathAddLineToPoint(dataLinePath, NULL, firstPoint.x, baselineYValue);
                     CGPathCloseSubpath(dataLinePath);
@@ -1032,7 +1033,7 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
         }
     }
 
-    if ( !lastPointSkipped && !isnan(baselineYValue) ) {
+    if ( !lastPointSkipped && !isnan(baselineYValue)) {
         CGPathAddLineToPoint(dataLinePath, NULL, lastPoint.x, baselineYValue);
         CGPathAddLineToPoint(dataLinePath, NULL, firstPoint.x, baselineYValue);
         CGPathCloseSubpath(dataLinePath);
@@ -1053,8 +1054,8 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
     CPTScatterPlotCurvedInterpolationOption interpolationOption = self.curvedInterpolationOption;
 
     if ( lastDrawnPointIndex > 0 ) {
-        CGPoint *controlPoints1 = calloc( lastDrawnPointIndex, sizeof(CGPoint) );
-        CGPoint *controlPoints2 = calloc( lastDrawnPointIndex, sizeof(CGPoint) );
+        CGPoint *controlPoints1 = calloc(lastDrawnPointIndex, sizeof(CGPoint));
+        CGPoint *controlPoints2 = calloc(lastDrawnPointIndex, sizeof(CGPoint));
 
         lastDrawnPointIndex--;
 
@@ -1062,7 +1063,7 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
         for ( NSUInteger i = indexRange.location; i <= lastDrawnPointIndex; i++ ) {
             CGPoint viewPoint = viewPoints[i];
 
-            if ( isnan(viewPoint.x) || isnan(viewPoint.y) ) {
+            if ( isnan(viewPoint.x) || isnan(viewPoint.y)) {
                 if ( !lastPointSkipped ) {
                     switch ( interpolationOption ) {
                         case CPTScatterPlotCurvedInterpolationNormal:
@@ -1181,9 +1182,9 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
         for ( NSUInteger i = indexRange.location; i <= lastDrawnPointIndex; i++ ) {
             CGPoint viewPoint = viewPoints[i];
 
-            if ( isnan(viewPoint.x) || isnan(viewPoint.y) ) {
+            if ( isnan(viewPoint.x) || isnan(viewPoint.y)) {
                 if ( !lastPointSkipped ) {
-                    if ( !isnan(baselineYValue) ) {
+                    if ( !isnan(baselineYValue)) {
                         CGPathAddLineToPoint(dataLinePath, NULL, lastPoint.x, baselineYValue);
                         CGPathAddLineToPoint(dataLinePath, NULL, firstPoint.x, baselineYValue);
                         CGPathCloseSubpath(dataLinePath);
@@ -1207,13 +1208,13 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
                     // add the control points
                     CGPathMoveToPoint(dataLinePath, NULL, cp1.x - CPTFloat(5.0), cp1.y);
                     CGPathAddLineToPoint(dataLinePath, NULL, cp1.x + CPTFloat(5.0), cp1.y);
-                    CGPathMoveToPoint( dataLinePath, NULL, cp1.x, cp1.y - CPTFloat(5.0) );
-                    CGPathAddLineToPoint( dataLinePath, NULL, cp1.x, cp1.y + CPTFloat(5.0) );
+                    CGPathMoveToPoint(dataLinePath, NULL, cp1.x, cp1.y - CPTFloat(5.0));
+                    CGPathAddLineToPoint(dataLinePath, NULL, cp1.x, cp1.y + CPTFloat(5.0));
 
-                    CGPathMoveToPoint( dataLinePath, NULL, cp2.x - CPTFloat(3.5), cp2.y - CPTFloat(3.5) );
-                    CGPathAddLineToPoint( dataLinePath, NULL, cp2.x + CPTFloat(3.5), cp2.y + CPTFloat(3.5) );
-                    CGPathMoveToPoint( dataLinePath, NULL, cp2.x + CPTFloat(3.5), cp2.y - CPTFloat(3.5) );
-                    CGPathAddLineToPoint( dataLinePath, NULL, cp2.x - CPTFloat(3.5), cp2.y + CPTFloat(3.5) );
+                    CGPathMoveToPoint(dataLinePath, NULL, cp2.x - CPTFloat(3.5), cp2.y - CPTFloat(3.5));
+                    CGPathAddLineToPoint(dataLinePath, NULL, cp2.x + CPTFloat(3.5), cp2.y + CPTFloat(3.5));
+                    CGPathMoveToPoint(dataLinePath, NULL, cp2.x + CPTFloat(3.5), cp2.y - CPTFloat(3.5));
+                    CGPathAddLineToPoint(dataLinePath, NULL, cp2.x - CPTFloat(3.5), cp2.y + CPTFloat(3.5));
 
                     // add a line connecting the control points
                     CGPathMoveToPoint(dataLinePath, NULL, cp1.x, cp1.y);
@@ -1228,7 +1229,7 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
             }
         }
 
-        if ( !lastPointSkipped && !isnan(baselineYValue) ) {
+        if ( !lastPointSkipped && !isnan(baselineYValue)) {
             CGPathAddLineToPoint(dataLinePath, NULL, lastPoint.x, baselineYValue);
             CGPathAddLineToPoint(dataLinePath, NULL, firstPoint.x, baselineYValue);
             CGPathCloseSubpath(dataLinePath);
@@ -1284,12 +1285,12 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
             CGFloat d2 = hypot(p2.x - p1.x, p2.y - p1.y);
             CGFloat d3 = hypot(p3.x - p2.x, p3.y - p2.y);
             // constants
-            CGFloat d1_a  = pow(d1, alpha);             // d1^alpha
-            CGFloat d2_a  = pow(d2, alpha);             // d2^alpha
-            CGFloat d3_a  = pow(d3, alpha);             // d3^alpha
-            CGFloat d1_2a = pow( d1_a, CPTFloat(2.0) ); // d1^alpha^2 = d1^2*alpha
-            CGFloat d2_2a = pow( d2_a, CPTFloat(2.0) ); // d2^alpha^2 = d2^2*alpha
-            CGFloat d3_2a = pow( d3_a, CPTFloat(2.0) ); // d3^alpha^2 = d3^2*alpha
+            CGFloat d1_a  = pow(d1, alpha);           // d1^alpha
+            CGFloat d2_a  = pow(d2, alpha);           // d2^alpha
+            CGFloat d3_a  = pow(d3, alpha);           // d3^alpha
+            CGFloat d1_2a = pow(d1_a, CPTFloat(2.0)); // d1^alpha^2 = d1^2*alpha
+            CGFloat d2_2a = pow(d2_a, CPTFloat(2.0)); // d2^alpha^2 = d2^2*alpha
+            CGFloat d3_2a = pow(d3_a, CPTFloat(2.0)); // d3^alpha^2 = d3^2*alpha
 
             // calculate the control points
             // see : http://www.cemyuksel.com/research/catmullrom_param/catmullrom.pdf under point 3.
@@ -1299,9 +1300,9 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
             }
             else {
                 CGFloat divisor = CPTFloat(3.0) * d1_a * (d1_a + d2_a);
-                cp1 = CPTPointMake( (p2.x * d1_2a - p0.x * d2_2a + (2 * d1_2a + 3 * d1_a * d2_a + d2_2a) * p1.x) / divisor,
-                                    (p2.y * d1_2a - p0.y * d2_2a + (2 * d1_2a + 3 * d1_a * d2_a + d2_2a) * p1.y) / divisor
-                                     );
+                cp1 = CPTPointMake((p2.x * d1_2a - p0.x * d2_2a + (2 * d1_2a + 3 * d1_a * d2_a + d2_2a) * p1.x) / divisor,
+                                   (p2.y * d1_2a - p0.y * d2_2a + (2 * d1_2a + 3 * d1_a * d2_a + d2_2a) * p1.y) / divisor
+                                  );
             }
 
             if ( fabs(d3) <= epsilon ) {
@@ -1309,8 +1310,8 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
             }
             else {
                 CGFloat divisor = 3 * d3_a * (d3_a + d2_a);
-                cp2 = CPTPointMake( (d3_2a * p1.x - d2_2a * p3.x + (2 * d3_2a + 3 * d3_a * d2_a + d2_2a) * p2.x) / divisor,
-                                    (d3_2a * p1.y - d2_2a * p3.y + (2 * d3_2a + 3 * d3_a * d2_a + d2_2a) * p2.y) / divisor );
+                cp2 = CPTPointMake((d3_2a * p1.x - d2_2a * p3.x + (2 * d3_2a + 3 * d3_a * d2_a + d2_2a) * p2.x) / divisor,
+                                   (d3_2a * p1.y - d2_2a * p3.y + (2 * d3_2a + 3 * d3_a * d2_a + d2_2a) * p2.y) / divisor);
             }
 
             points[index + 1]  = cp1;
@@ -1363,17 +1364,17 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
                 m.dy = p2.y - p0.y;
 
                 if ( monotonic ) {
-                    if ( m.dx > CPTFloat(0.0) ) {
+                    if ( m.dx > CPTFloat(0.0)) {
                         m.dx = MIN(p2.x - p1.x, p1.x - p0.x);
                     }
-                    else if ( m.dx < CPTFloat(0.0) ) {
+                    else if ( m.dx < CPTFloat(0.0)) {
                         m.dx = MAX(p2.x - p1.x, p1.x - p0.x);
                     }
 
-                    if ( m.dy > CPTFloat(0.0) ) {
+                    if ( m.dy > CPTFloat(0.0)) {
                         m.dy = MIN(p2.y - p1.y, p1.y - p0.y);
                     }
-                    else if ( m.dy < CPTFloat(0.0) ) {
+                    else if ( m.dy < CPTFloat(0.0)) {
                         m.dy = MAX(p2.y - p1.y, p1.y - p0.y);
                     }
                 }
@@ -1483,10 +1484,10 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
         NSUInteger n = indexRange.length - 1;
 
         // rhs vector
-        CGPoint *a = malloc( n * sizeof(CGPoint) );
-        CGPoint *b = malloc( n * sizeof(CGPoint) );
-        CGPoint *c = malloc( n * sizeof(CGPoint) );
-        CGPoint *r = malloc( n * sizeof(CGPoint) );
+        CGPoint *a = calloc(n, sizeof(CGPoint));
+        CGPoint *b = calloc(n, sizeof(CGPoint));
+        CGPoint *c = calloc(n, sizeof(CGPoint));
+        CGPoint *r = calloc(n, sizeof(CGPoint));
 
         // left most segment
         a[0] = CGPointZero;
@@ -1533,11 +1534,11 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
         cp1[indexRange.location + n] = CGPointMake(r[n - 1].x / b[n - 1].x,
                                                    r[n - 1].y / b[n - 1].y);
         for ( NSUInteger i = n - 2; i > 0; i-- ) {
-            cp1[indexRange.location + i + 1] = CGPointMake( (r[i].x - c[i].x * cp1[indexRange.location + i + 2].x) / b[i].x,
-                                                            (r[i].y - c[i].y * cp1[indexRange.location + i + 2].y) / b[i].y );
+            cp1[indexRange.location + i + 1] = CGPointMake((r[i].x - c[i].x * cp1[indexRange.location + i + 2].x) / b[i].x,
+                                                           (r[i].y - c[i].y * cp1[indexRange.location + i + 2].y) / b[i].y);
         }
-        cp1[indexRange.location + 1] = CGPointMake( (r[0].x - c[0].x * cp1[indexRange.location + 2].x) / b[0].x,
-                                                    (r[0].y - c[0].y * cp1[indexRange.location + 2].y) / b[0].y );
+        cp1[indexRange.location + 1] = CGPointMake((r[0].x - c[0].x * cp1[indexRange.location + 2].x) / b[0].x,
+                                                   (r[0].y - c[0].y * cp1[indexRange.location + 2].y) / b[0].y);
 
         // we have p1, now compute p2
         NSUInteger rangeEnd = NSMaxRange(indexRange) - 1;
@@ -1546,8 +1547,8 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
                                  CPTFloat(2.0) * viewPoints[i].y - cp1[i + 1].y);
         }
 
-        cp2[rangeEnd] = CGPointMake( CPTFloat(0.5) * (viewPoints[rangeEnd].x + cp1[rangeEnd].x),
-                                     CPTFloat(0.5) * (viewPoints[rangeEnd].y + cp1[rangeEnd].y) );
+        cp2[rangeEnd] = CGPointMake(CPTFloat(0.5) * (viewPoints[rangeEnd].x + cp1[rangeEnd].x),
+                                    CPTFloat(0.5) * (viewPoints[rangeEnd].y + cp1[rangeEnd].y));
 
         // clean up
         free(a);
@@ -1567,8 +1568,8 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
         if ( theLineStyle ) {
             [theLineStyle setLineStyleInContext:context];
 
-            CGPoint alignedStartPoint = CPTAlignPointToUserSpace( context, CPTPointMake( CGRectGetMinX(rect), CGRectGetMidY(rect) ) );
-            CGPoint alignedEndPoint   = CPTAlignPointToUserSpace( context, CPTPointMake( CGRectGetMaxX(rect), CGRectGetMidY(rect) ) );
+            CGPoint alignedStartPoint = CPTAlignPointToUserSpace(context, CPTPointMake(CGRectGetMinX(rect), CGRectGetMidY(rect)));
+            CGPoint alignedEndPoint   = CPTAlignPointToUserSpace(context, CPTPointMake(CGRectGetMaxX(rect), CGRectGetMidY(rect)));
             CGContextMoveToPoint(context, alignedStartPoint.x, alignedStartPoint.y);
             CGContextAddLineToPoint(context, alignedEndPoint.x, alignedEndPoint.y);
 
@@ -1579,7 +1580,7 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
 
         if ( thePlotSymbol ) {
             [thePlotSymbol renderInContext:context
-                                   atPoint:CPTPointMake( CGRectGetMidX(rect), CGRectGetMidY(rect) )
+                                   atPoint:CPTPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect))
                                      scale:self.contentsScale
                              alignToPixels:YES];
         }
@@ -1607,13 +1608,13 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
                     CGContextAddPath(context, swatchPath);
                     CGContextClip(context);
 
-                    if ( CPTDecimalGreaterThanOrEqualTo(self.areaBaseValue2.decimalValue, self.areaBaseValue.decimalValue) ) {
-                        [fill1 fillRect:CPTRectMake( CGRectGetMinX(rect), CGRectGetMinY(rect), rect.size.width, rect.size.height / CPTFloat(2.0) ) inContext:context];
-                        [fill2 fillRect:CPTRectMake( CGRectGetMinX(rect), CGRectGetMidY(rect), rect.size.width, rect.size.height / CPTFloat(2.0) ) inContext:context];
+                    if ( CPTDecimalGreaterThanOrEqualTo(self.areaBaseValue2.decimalValue, self.areaBaseValue.decimalValue)) {
+                        [fill1 fillRect:CPTRectMake(CGRectGetMinX(rect), CGRectGetMinY(rect), rect.size.width, rect.size.height / CPTFloat(2.0)) inContext:context];
+                        [fill2 fillRect:CPTRectMake(CGRectGetMinX(rect), CGRectGetMidY(rect), rect.size.width, rect.size.height / CPTFloat(2.0)) inContext:context];
                     }
                     else {
-                        [fill2 fillRect:CPTRectMake( CGRectGetMinX(rect), CGRectGetMinY(rect), rect.size.width, rect.size.height / CPTFloat(2.0) ) inContext:context];
-                        [fill1 fillRect:CPTRectMake( CGRectGetMinX(rect), CGRectGetMidY(rect), rect.size.width, rect.size.height / CPTFloat(2.0) ) inContext:context];
+                        [fill2 fillRect:CPTRectMake(CGRectGetMinX(rect), CGRectGetMinY(rect), rect.size.width, rect.size.height / CPTFloat(2.0)) inContext:context];
+                        [fill1 fillRect:CPTRectMake(CGRectGetMinX(rect), CGRectGetMidY(rect), rect.size.width, rect.size.height / CPTFloat(2.0)) inContext:context];
                     }
 
                     CGContextRestoreGState(context);
@@ -1635,8 +1636,8 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
     }
 
     // Calculate view points
-    CGPoint *viewPoints  = malloc( dataCount * sizeof(CGPoint) );
-    BOOL *drawPointFlags = malloc( dataCount * sizeof(BOOL) );
+    CGPoint *viewPoints  = calloc(dataCount, sizeof(CGPoint));
+    BOOL *drawPointFlags = calloc(dataCount, sizeof(BOOL));
 
     for ( NSUInteger i = 0; i < dataCount; i++ ) {
         drawPointFlags[i] = YES;
@@ -1702,8 +1703,8 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
             CGPathRelease(dataLinePath);
 
             CPTNumberArray *lowerLeft  = [space plotPointForPlotAreaViewPoint:boundingBox.origin];
-            CPTNumberArray *upperRight = [space plotPointForPlotAreaViewPoint:CGPointMake( CGRectGetMaxX(boundingBox),
-                                                                                           CGRectGetMaxY(boundingBox) )];
+            CPTNumberArray *upperRight = [space plotPointForPlotAreaViewPoint:CGPointMake(CGRectGetMaxX(boundingBox),
+                                                                                          CGRectGetMaxY(boundingBox))];
 
             switch ( fieldEnum ) {
                 case CPTScatterPlotFieldX:
@@ -1759,11 +1760,11 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
     switch ( coord ) {
         case CPTCoordinateX:
             result = @[@(CPTScatterPlotFieldX)];
-            break;
+        break;
 
         case CPTCoordinateY:
             result = @[@(CPTScatterPlotFieldY)];
-            break;
+        break;
 
         default:
             [NSException raise:CPTException format:@"Invalid coordinate passed to fieldIdentifiersForCoordinate:"];
@@ -1807,7 +1808,7 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
     BOOL positiveDirection = YES;
     CPTPlotRange *yRange   = [self.plotSpace plotRangeForCoordinate:CPTCoordinateY];
 
-    if ( CPTDecimalLessThan( yRange.lengthDecimal, CPTDecimalFromInteger(0) ) ) {
+    if ( CPTDecimalLessThan(yRange.lengthDecimal, CPTDecimalFromInteger(0))) {
         positiveDirection = !positiveDirection;
     }
 
@@ -1938,9 +1939,9 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
             CGFloat margin = self.plotSymbolMarginForHitDetection * CPTFloat(2.0);
             symbolRect.size.width  += margin;
             symbolRect.size.height += margin;
-            symbolRect.origin       = CPTPointMake( center.x - CPTFloat(0.5) * CGRectGetWidth(symbolRect), center.y - CPTFloat(0.5) * CGRectGetHeight(symbolRect) );
+            symbolRect.origin       = CPTPointMake(center.x - CPTFloat(0.5) * CGRectGetWidth(symbolRect), center.y - CPTFloat(0.5) * CGRectGetHeight(symbolRect));
 
-            if ( CGRectContainsPoint(symbolRect, plotAreaPoint) ) {
+            if ( CGRectContainsPoint(symbolRect, plotAreaPoint)) {
                 self.pointingDeviceDownIndex = idx;
 
                 if ( [theDelegate respondsToSelector:@selector(scatterPlot:plotSymbolTouchDownAtRecordIndex:)] ) {
@@ -1963,7 +1964,7 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
          ([theDelegate respondsToSelector:@selector(scatterPlotDataLineTouchDown:)] ||
           [theDelegate respondsToSelector:@selector(scatterPlot:dataLineTouchDownWithEvent:)] ||
           [theDelegate respondsToSelector:@selector(scatterPlotDataLineWasSelected:)] ||
-          [theDelegate respondsToSelector:@selector(scatterPlot:dataLineWasSelectedWithEvent:)]) ) {
+          [theDelegate respondsToSelector:@selector(scatterPlot:dataLineWasSelectedWithEvent:)])) {
         plotSelected = [self plotWasLineHitByInteractionPoint:interactionPoint];
         if ( plotSelected ) {
             // Let the delegate know that the plot was selected.
@@ -2055,9 +2056,9 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
             CGFloat margin = self.plotSymbolMarginForHitDetection * CPTFloat(2.0);
             symbolRect.size.width  += margin;
             symbolRect.size.height += margin;
-            symbolRect.origin       = CPTPointMake( center.x - CPTFloat(0.5) * CGRectGetWidth(symbolRect), center.y - CPTFloat(0.5) * CGRectGetHeight(symbolRect) );
+            symbolRect.origin       = CPTPointMake(center.x - CPTFloat(0.5) * CGRectGetWidth(symbolRect), center.y - CPTFloat(0.5) * CGRectGetHeight(symbolRect));
 
-            if ( CGRectContainsPoint(symbolRect, plotAreaPoint) ) {
+            if ( CGRectContainsPoint(symbolRect, plotAreaPoint)) {
                 self.pointingDeviceDownIndex = idx;
 
                 if ( [theDelegate respondsToSelector:@selector(scatterPlot:plotSymbolTouchUpAtRecordIndex:)] ) {
@@ -2092,7 +2093,7 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
          ([theDelegate respondsToSelector:@selector(scatterPlotDataLineTouchUp:)] ||
           [theDelegate respondsToSelector:@selector(scatterPlot:dataLineTouchUpWithEvent:)] ||
           [theDelegate respondsToSelector:@selector(scatterPlotDataLineWasSelected:)] ||
-          [theDelegate respondsToSelector:@selector(scatterPlot:dataLineWasSelectedWithEvent:)]) ) {
+          [theDelegate respondsToSelector:@selector(scatterPlot:dataLineWasSelectedWithEvent:)])) {
         plotSelected = [self plotWasLineHitByInteractionPoint:interactionPoint];
 
         if ( plotSelected ) {
@@ -2136,8 +2137,8 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
     NSUInteger dataCount     = self.cachedDataCount;
 
     if ( theGraph && thePlotArea && !self.hidden && dataCount ) {
-        CGPoint *viewPoints  = malloc( dataCount * sizeof(CGPoint) );
-        BOOL *drawPointFlags = malloc( dataCount * sizeof(BOOL) );
+        CGPoint *viewPoints  = calloc(dataCount, sizeof(CGPoint));
+        BOOL *drawPointFlags = calloc(dataCount, sizeof(BOOL));
 
         CPTXYPlotSpace *thePlotSpace = (CPTXYPlotSpace *)self.plotSpace;
         [self calculatePointsToDraw:drawPointFlags forPlotSpace:thePlotSpace includeVisiblePointsOnly:NO numberOfPoints:dataCount];
@@ -2147,14 +2148,14 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
         if ( firstDrawnPointIndex != NSNotFound ) {
             NSInteger lastDrawnPointIndex = [self extremeDrawnPointIndexForFlags:drawPointFlags numberOfPoints:dataCount extremeNumIsLowerBound:NO];
 
-            NSRange viewIndexRange = NSMakeRange( (NSUInteger)firstDrawnPointIndex, (NSUInteger)(lastDrawnPointIndex - firstDrawnPointIndex + 1) );
+            NSRange viewIndexRange = NSMakeRange((NSUInteger)firstDrawnPointIndex, (NSUInteger)(lastDrawnPointIndex - firstDrawnPointIndex + 1));
             CGPathRef dataLinePath = [self newDataLinePathForViewPoints:viewPoints indexRange:viewIndexRange baselineYValue:CPTNAN];
-            CGPathRef path         = CGPathCreateCopyByStrokingPath( dataLinePath,
-                                                                     NULL,
-                                                                     self.plotLineMarginForHitDetection * CPTFloat(2.0),
-                                                                     kCGLineCapRound,
-                                                                     kCGLineJoinRound,
-                                                                     CPTFloat(3.0) );
+            CGPathRef path         = CGPathCreateCopyByStrokingPath(dataLinePath,
+                                                                    NULL,
+                                                                    self.plotLineMarginForHitDetection * CPTFloat(2.0),
+                                                                    kCGLineCapRound,
+                                                                    kCGLineJoinRound,
+                                                                    CPTFloat(3.0));
 
             CGPoint plotAreaPoint = [theGraph convertPoint:interactionPoint toLayer:thePlotArea];
 
@@ -2203,10 +2204,10 @@ CPTScatterPlotBinding const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; /
 
 -(void)setCurvedInterpolationCustomAlpha:(CGFloat)newCurvedInterpolationCustomAlpha
 {
-    if ( newCurvedInterpolationCustomAlpha > CPTFloat(1.0) ) {
+    if ( newCurvedInterpolationCustomAlpha > CPTFloat(1.0)) {
         newCurvedInterpolationCustomAlpha = CPTFloat(1.0);
     }
-    if ( newCurvedInterpolationCustomAlpha < CPTFloat(0.0) ) {
+    if ( newCurvedInterpolationCustomAlpha < CPTFloat(0.0)) {
         newCurvedInterpolationCustomAlpha = CPTFloat(0.0);
     }
 

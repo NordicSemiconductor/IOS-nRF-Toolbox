@@ -14,7 +14,7 @@
 
 -(nullable instancetype)initWithCoder:(nonnull NSCoder *)coder
 {
-    if ( (self = [super initWithCoder:coder]) ) {
+    if ((self = [super initWithCoder:coder])) {
         // support old archives
         if ( [coder containsValueForKey:@"CPTPlotGroup.identifier"] ) {
             self.identifier = [coder decodeObjectOfClass:[NSObject class]
@@ -83,7 +83,7 @@
     // nothing to draw
 }
 
--(void)renderAsVectorInContext:(nonnull CGContextRef)context
+-(void)renderAsVectorInContext:(nonnull CGContextRef __unused)context
 {
     // nothing to draw
 }
