@@ -202,7 +202,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/CorePlot/CorePlot.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/EVReflection/EVReflection.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SWRevealViewController/SWRevealViewController.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/SegmentedView/SegmentedView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ZIPFoundation/ZIPFoundation.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/iOSDFULibrary/iOSDFULibrary.framework"
 fi
@@ -212,7 +211,6 @@ if [[ "$CONFIGURATION" == "Beta" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/CorePlot/CorePlot.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/EVReflection/EVReflection.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SWRevealViewController/SWRevealViewController.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/SegmentedView/SegmentedView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ZIPFoundation/ZIPFoundation.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/iOSDFULibrary/iOSDFULibrary.framework"
 fi
@@ -222,7 +220,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/CorePlot/CorePlot.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/EVReflection/EVReflection.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SWRevealViewController/SWRevealViewController.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/SegmentedView/SegmentedView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ZIPFoundation/ZIPFoundation.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/iOSDFULibrary/iOSDFULibrary.framework"
 fi

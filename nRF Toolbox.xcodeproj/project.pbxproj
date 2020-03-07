@@ -17,6 +17,8 @@
 		012C2BE12410682D005EC1A0 /* LegendLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDE2410682D005EC1A0 /* LegendLabel.swift */; };
 		012C2BE22410682D005EC1A0 /* Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDF2410682D005EC1A0 /* Segment.swift */; };
 		012C2BE32410682D005EC1A0 /* SegmentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BE02410682D005EC1A0 /* SegmentedView.swift */; };
+		012C2BE72410F8AA005EC1A0 /* DFUUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BE52410F8AA005EC1A0 /* DFUUpdateViewController.swift */; };
+		012C2BE82410F8AA005EC1A0 /* DFUUpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 012C2BE62410F8AA005EC1A0 /* DFUUpdateViewController.xib */; };
 		0133C73B23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0133C73A23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift */; };
 		01468B052361A30A00C29E4C /* StepperTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B032361A30A00C29E4C /* StepperTableViewCell.swift */; };
 		01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01468B042361A30A00C29E4C /* StepperTableViewCell.xib */; };
@@ -53,6 +55,8 @@
 		01A1B77523CF5A080062FADC /* UICollectionView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A1B77423CF5A080062FADC /* UICollectionView+Ext.swift */; };
 		01A870D823F409BB00D9202E /* UARTFilterLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A870D723F409BB00D9202E /* UARTFilterLogViewController.swift */; };
 		01A870DA23F40E2F00D9202E /* CheckmarkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A870D923F40E2F00D9202E /* CheckmarkTableViewCell.swift */; };
+		01AA707D24124F270018DB29 /* DFUUpdateTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AA707C24124F270018DB29 /* DFUUpdateTabBarViewController.swift */; };
+		01AA707F241291C00018DB29 /* LoggObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AA707E241291C00018DB29 /* LoggObserver.swift */; };
 		01AD26E82395084000F56210 /* ConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26E62395084000F56210 /* ConnectionViewController.swift */; };
 		01AD26EC23953E4800F56210 /* FileSizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26EB23953E4800F56210 /* FileSizeView.swift */; };
 		01AD26F023955A9F00F56210 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26EF23955A9F00F56210 /* ProgressView.swift */; };
@@ -309,6 +313,8 @@
 		012C2BDE2410682D005EC1A0 /* LegendLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegendLabel.swift; sourceTree = "<group>"; };
 		012C2BDF2410682D005EC1A0 /* Segment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Segment.swift; sourceTree = "<group>"; };
 		012C2BE02410682D005EC1A0 /* SegmentedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedView.swift; sourceTree = "<group>"; };
+		012C2BE52410F8AA005EC1A0 /* DFUUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUUpdateViewController.swift; sourceTree = "<group>"; };
+		012C2BE62410F8AA005EC1A0 /* DFUUpdateViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DFUUpdateViewController.xib; sourceTree = "<group>"; };
 		0133C73A23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTPresetCollectionViewDelegate.swift; sourceTree = "<group>"; };
 		01468B032361A30A00C29E4C /* StepperTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperTableViewCell.swift; sourceTree = "<group>"; };
 		01468B042361A30A00C29E4C /* StepperTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StepperTableViewCell.xib; sourceTree = "<group>"; };
@@ -347,6 +353,8 @@
 		01A1B77423CF5A080062FADC /* UICollectionView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Ext.swift"; sourceTree = "<group>"; };
 		01A870D723F409BB00D9202E /* UARTFilterLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTFilterLogViewController.swift; sourceTree = "<group>"; };
 		01A870D923F40E2F00D9202E /* CheckmarkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkTableViewCell.swift; sourceTree = "<group>"; };
+		01AA707C24124F270018DB29 /* DFUUpdateTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUUpdateTabBarViewController.swift; sourceTree = "<group>"; };
+		01AA707E241291C00018DB29 /* LoggObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggObserver.swift; sourceTree = "<group>"; };
 		01AD26E62395084000F56210 /* ConnectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionViewController.swift; sourceTree = "<group>"; };
 		01AD26EB23953E4800F56210 /* FileSizeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSizeView.swift; sourceTree = "<group>"; };
 		01AD26EF23955A9F00F56210 /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
@@ -635,6 +643,16 @@
 			path = Viewes;
 			sourceTree = "<group>";
 		};
+		012C2BE42410F844005EC1A0 /* DFUUpdate */ = {
+			isa = PBXGroup;
+			children = (
+				012C2BE52410F8AA005EC1A0 /* DFUUpdateViewController.swift */,
+				012C2BE62410F8AA005EC1A0 /* DFUUpdateViewController.xib */,
+				01AA707C24124F270018DB29 /* DFUUpdateTabBarViewController.swift */,
+			);
+			path = DFUUpdate;
+			sourceTree = "<group>";
+		};
 		0140FCD4237C2FFA00411963 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -879,6 +897,7 @@
 		01D6D2BD2406A1B500E1A66F /* ViewConrollers */ = {
 			isa = PBXGroup;
 			children = (
+				012C2BE42410F844005EC1A0 /* DFUUpdate */,
 				01FBC5082408066100B1056B /* DFUFirmwareInfo */,
 				01FBC5032407C25E00B1056B /* DFUFileSelector */,
 				01FBC5022407C25300B1056B /* DFUStartViewController */,
@@ -930,6 +949,7 @@
 			children = (
 				01FBC5002407BF8F00B1056B /* DFUBluetoothManager.swift */,
 				015F109A240FA82400FDAC49 /* DFUDocumentPicker.swift */,
+				01AA707E241291C00018DB29 /* LoggObserver.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1887,6 +1907,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				20E07B4B23068D0300FCB205 /* Colors.xcassets in Resources */,
+				012C2BE82410F8AA005EC1A0 /* DFUUpdateViewController.xib in Resources */,
 				20C7FE012306C5FF00B06FD8 /* BLEServiceList.plist in Resources */,
 				20C7FE57230E997B00B06FD8 /* Links.plist in Resources */,
 				20E07B5D2306975700FCB205 /* GT-Eesti-Display-Light.ttf in Resources */,
@@ -1961,7 +1982,6 @@
 				"${BUILT_PRODUCTS_DIR}/CorePlot/CorePlot.framework",
 				"${BUILT_PRODUCTS_DIR}/EVReflection/EVReflection.framework",
 				"${BUILT_PRODUCTS_DIR}/SWRevealViewController/SWRevealViewController.framework",
-				"${BUILT_PRODUCTS_DIR}/SegmentedView/SegmentedView.framework",
 				"${BUILT_PRODUCTS_DIR}/ZIPFoundation/ZIPFoundation.framework",
 				"${BUILT_PRODUCTS_DIR}/iOSDFULibrary/iOSDFULibrary.framework",
 			);
@@ -1972,7 +1992,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePlot.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EVReflection.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SWRevealViewController.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SegmentedView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZIPFoundation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSDFULibrary.framework",
 			);
@@ -2106,6 +2125,7 @@
 				4322034423CC9D31009840DD /* UARTCommandModel.swift in Sources */,
 				2002A002231FB8E800C43E06 /* UIImage+Ext.swift in Sources */,
 				20D08E06232A569B00569587 /* Identifiable.swift in Sources */,
+				01AA707F241291C00018DB29 /* LoggObserver.swift in Sources */,
 				01006201234D08700078CEFA /* LinearChartTableViewCell.swift in Sources */,
 				01AD26F423965A9400F56210 /* FirmwareProgressImage.swift in Sources */,
 				019985E423DEF23F000CDCB6 /* NordicTextTableViewCell.swift in Sources */,
@@ -2127,8 +2147,10 @@
 				01A1B76723CF13A50062FADC /* UARTNewCommandViewController.swift in Sources */,
 				20C7FE082306EB5600B06FD8 /* UITableView+Ext.swift in Sources */,
 				20D08E02232A38C200569587 /* TitledError.swift in Sources */,
+				01AA707D24124F270018DB29 /* DFUUpdateTabBarViewController.swift in Sources */,
 				20C7FE53230E811B00B06FD8 /* ServiceProvider.swift in Sources */,
 				20C7FE5E230EC37000B06FD8 /* ServiceTableViewCell.swift in Sources */,
+				012C2BE72410F8AA005EC1A0 /* DFUUpdateViewController.swift in Sources */,
 				01B6D3E2234CCC9F000942C4 /* HeartRateChartSection.swift in Sources */,
 				01B56C1623A11FDA00140A1C /* PeripheralScanner.swift in Sources */,
 				3001EBBB1D1BE306008C5C37 /* CGMReading.swift in Sources */,

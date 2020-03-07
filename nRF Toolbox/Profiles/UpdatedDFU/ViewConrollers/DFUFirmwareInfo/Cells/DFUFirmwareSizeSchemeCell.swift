@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SegmentedView
 import iOSDFULibrary
 
 extension DFUFirmwareSize {

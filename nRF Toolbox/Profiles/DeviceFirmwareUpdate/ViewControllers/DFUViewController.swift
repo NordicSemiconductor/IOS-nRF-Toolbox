@@ -164,8 +164,6 @@ extension DFUViewController: DFUServiceDelegate {
 
     func dfuStateDidChange(to state: DFUState) {
         switch state {
-        case .aborted:
-            fileView.state = .readyToOpen
         case .completed:
             fileView.state = .completed
         case .uploading:

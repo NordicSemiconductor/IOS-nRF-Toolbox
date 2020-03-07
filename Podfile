@@ -6,5 +6,4 @@ target "nRF Toolbox" do
     pod 'CorePlot', '~> 2.2'
     pod 'Charts'
     pod 'AEXML', '~> 4.5'
-    pod 'SegmentedView', :path => 'CustomPods/SegmentedView'
 end

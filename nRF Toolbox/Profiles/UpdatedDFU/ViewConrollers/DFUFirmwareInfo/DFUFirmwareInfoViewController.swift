@@ -37,8 +37,8 @@ class DFUFirmwareInfoViewController: UITableViewController, AlertPresenter {
         }
     }
     
-    private lazy var updateSection = DFUUpdateSection() {
-        // TODO: Start update
+    private lazy var updateSection = DFUUpdateSection() { [unowned self] in
+        self.router.goToUpdate(firmware: self.firmware, peripheral: self.bluetoothManager.peripheral)
     }
     
     init(firmware: DFUFirmware, bluetoothManager: DFUBluetoothManager, router: DFURouterType) {

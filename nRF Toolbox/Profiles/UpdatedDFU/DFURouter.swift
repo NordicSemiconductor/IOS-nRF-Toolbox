@@ -8,6 +8,7 @@
 
 import UIKit
 import iOSDFULibrary
+import CoreBluetooth
 
 enum PresentationType {
     case push, present
@@ -20,9 +21,16 @@ protocol DFURouterType: class {
     @discardableResult func goToBluetoothConnector(scanner: PeripheralScanner, presentationType: PresentationType, callback: @escaping (Peripheral) -> () ) -> ConnectionViewController
     @discardableResult func goToFileSelection() -> DFUFileSelector
     @discardableResult func goToFirmwareInfo(firmware: DFUFirmware) -> DFUFirmwareInfoViewController
+    @discardableResult func goToUpdate(firmware: DFUFirmware, peripheral: Peripheral) -> DFUUpdateViewController
 }
 
 class DFURouter: DFURouterType {
+    func goToUpdate(firmware: DFUFirmware, peripheral: Peripheral) -> DFUUpdateViewController {
+        let vc = DFUUpdateViewController(firmware: firmware, peripheral: peripheral)
+        navigationController.pushViewController(vc, animated: true)
+        return vc
+    }
+    
     private let btManager = DFUBluetoothManager()
     
     let navigationController: UINavigationController
@@ -72,6 +80,8 @@ class DFURouter: DFURouterType {
     
     func initialState() -> UIViewController {
         let vc = getStartViewController()
+        
+//        let vc = DFUUpdateViewController()
         navigationController.viewControllers = [vc]
         return navigationController
     }
