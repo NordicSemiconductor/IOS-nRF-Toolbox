@@ -62,4 +62,6 @@ extension ModernIcon {
     static let line = ModernIcon(name: "line")
     static let horizontal = ModernIcon(name: "horizontal")
     static let decrease = ModernIcon(name: "decrease")
+    static let circlePath = ModernIcon(name: "circlepath")
+    static let arrow = ModernIcon(name: "arrow")
 }

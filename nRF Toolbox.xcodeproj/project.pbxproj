@@ -38,6 +38,8 @@
 		01675E7223F6D1BE00FC0519 /* UARTPresetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01675E7023F6D1BE00FC0519 /* UARTPresetTableViewCell.xib */; };
 		0169B59E23FBD8BE00907C1B /* NordicTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0169B59D23FBD8BE00907C1B /* NordicTextFieldCell.swift */; };
 		0169B5A023FBD90E00907C1B /* NordicTextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0169B59F23FBD90E00907C1B /* NordicTextFieldCell.xib */; };
+		016EF388241632AF005FFA30 /* LoggerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016EF386241632AF005FFA30 /* LoggerTableViewController.swift */; };
+		016EF389241632AF005FFA30 /* LoggerTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 016EF387241632AF005FFA30 /* LoggerTableViewController.xib */; };
 		01797E8323F4242500B26BF2 /* ModernIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01797E8223F4242500B26BF2 /* ModernIcon.swift */; };
 		019985E423DEF23F000CDCB6 /* NordicTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019985E323DEF23F000CDCB6 /* NordicTextTableViewCell.swift */; };
 		019985E623DEF2BD000CDCB6 /* NordicActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019985E523DEF2BD000CDCB6 /* NordicActionTableViewCell.swift */; };
@@ -336,6 +338,8 @@
 		01675E7023F6D1BE00FC0519 /* UARTPresetTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTPresetTableViewCell.xib; sourceTree = "<group>"; };
 		0169B59D23FBD8BE00907C1B /* NordicTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicTextFieldCell.swift; sourceTree = "<group>"; };
 		0169B59F23FBD90E00907C1B /* NordicTextFieldCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NordicTextFieldCell.xib; sourceTree = "<group>"; };
+		016EF386241632AF005FFA30 /* LoggerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerTableViewController.swift; sourceTree = "<group>"; };
+		016EF387241632AF005FFA30 /* LoggerTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoggerTableViewController.xib; sourceTree = "<group>"; };
 		01797E8223F4242500B26BF2 /* ModernIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernIcon.swift; sourceTree = "<group>"; };
 		019985E323DEF23F000CDCB6 /* NordicTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicTextTableViewCell.swift; sourceTree = "<group>"; };
 		019985E523DEF2BD000CDCB6 /* NordicActionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicActionTableViewCell.swift; sourceTree = "<group>"; };
@@ -646,9 +650,11 @@
 		012C2BE42410F844005EC1A0 /* DFUUpdate */ = {
 			isa = PBXGroup;
 			children = (
+				01AA707C24124F270018DB29 /* DFUUpdateTabBarViewController.swift */,
 				012C2BE52410F8AA005EC1A0 /* DFUUpdateViewController.swift */,
 				012C2BE62410F8AA005EC1A0 /* DFUUpdateViewController.xib */,
-				01AA707C24124F270018DB29 /* DFUUpdateTabBarViewController.swift */,
+				016EF386241632AF005FFA30 /* LoggerTableViewController.swift */,
+				016EF387241632AF005FFA30 /* LoggerTableViewController.xib */,
 			);
 			path = DFUUpdate;
 			sourceTree = "<group>";
@@ -1954,6 +1960,7 @@
 				20E07B672306975700FCB205 /* GT-Eesti-Display-Light-Italic.ttf in Resources */,
 				20C7FE2E230BEC9D00B06FD8 /* CGMViewController.storyboard in Resources */,
 				20E07B652306975700FCB205 /* GT-Eesti-Display-ULight.ttf in Resources */,
+				016EF389241632AF005FFA30 /* LoggerTableViewController.xib in Resources */,
 				20E07B612306975700FCB205 /* GT-Eesti-Display-Medium.ttf in Resources */,
 				20F15C3C2313D2C7000C5503 /* InfoActionView.xib in Resources */,
 				5217F3F91859EE0000F2D5BB /* Main.storyboard in Resources */,
@@ -2092,6 +2099,7 @@
 				3000B2131CE3195E00F64CEE /* EditPopupViewController.swift in Sources */,
 				20D08E28232B940400569587 /* OptionSelectionSection.swift in Sources */,
 				20C7FE052306D02400B06FD8 /* Log.swift in Sources */,
+				016EF388241632AF005FFA30 /* LoggerTableViewController.swift in Sources */,
 				20B25F382319568B006AF321 /* PeripheralTableViewController.swift in Sources */,
 				52D9BC9E1DD0CB760030E824 /* Data+Ext.swift in Sources */,
 				306ECD621CE61A3600E48BBD /* AppDelegate.swift in Sources */,

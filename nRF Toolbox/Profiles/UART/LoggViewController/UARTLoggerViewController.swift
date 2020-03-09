@@ -73,7 +73,7 @@ extension UARTLoggerViewController {
     }
     
     @objc private func clear() {
-        loggerTableView.clear()
+        loggerTableView.reset()
     }
     
     

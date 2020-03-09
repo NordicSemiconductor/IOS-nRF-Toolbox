@@ -7,7 +7,40 @@
 //
 
 import UIKit
+import iOSDFULibrary
 
 class DFUUpdateTabBarViewController: UITabBarController {
+    let logger = LoggObserver()
     
+    private let router: DFURouterType
+    private let updateVC: DFUUpdateViewController
+    private let loggerVC: LoggerTableViewController
+    
+    init(router: DFURouterType, firmware: DFUFirmware, peripheral: Peripheral) {
+        self.router = router
+        
+        self.updateVC = DFUUpdateViewController(firmware: firmware, peripheral: peripheral, logger: logger)
+        self.loggerVC = LoggerTableViewController(observer: logger)
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tabBar.tintColor = .nordicBlue
+        navigationItem.title = "Update"
+        setViewControllers([updateVC, loggerVC], animated: true)
+        delegate = self
+        selectedIndex = 0
+    }
+}
+
+extension DFUUpdateTabBarViewController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        navigationItem.title = viewController.navigationItem.title
+    }
 }

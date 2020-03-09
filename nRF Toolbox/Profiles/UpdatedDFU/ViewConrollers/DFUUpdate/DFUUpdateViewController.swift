@@ -17,11 +17,13 @@ class DFUUpdateViewController: UIViewController {
     
     private let firmware: DFUFirmware!
     private let peripheral: Peripheral!
+    private let logger: LoggerDelegate
     private var dfuController: DFUServiceController?
     
-    init(firmware: DFUFirmware, peripheral: Peripheral) {
+    init(firmware: DFUFirmware, peripheral: Peripheral, logger: LoggerDelegate) {
         self.firmware = firmware
         self.peripheral = peripheral
+        self.logger = logger
         super.init(nibName: "DFUUpdateViewController", bundle: .main)
     }
     
@@ -32,7 +34,7 @@ class DFUUpdateViewController: UIViewController {
     func update(_ firmware: DFUFirmware) {
         let initiator = DFUServiceInitiator()
         
-        initiator.logger = loggerTableView
+        initiator.logger = logger
         initiator.delegate = self
         initiator.progressDelegate = self
         initiator.enableUnsafeExperimentalButtonlessServiceInSecureDfu = true
@@ -41,7 +43,15 @@ class DFUUpdateViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         navigationItem.title = "Update"
+        tabBarItem.title = "Update"
+        if #available(iOS 13.0, *) {
+            tabBarItem.image = UIImage(systemName: ModernIcon.arrow(.init(digit: 2))(.circlePath).name)
+        } else {
+            // Fallback on earlier versions
+        }
+        
         update(self.firmware)
         playPauseButton.contentHorizontalAlignment = .fill
         playPauseButton.contentVerticalAlignment = .fill

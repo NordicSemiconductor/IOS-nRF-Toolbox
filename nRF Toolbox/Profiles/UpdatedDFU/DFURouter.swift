@@ -21,14 +21,14 @@ protocol DFURouterType: class {
     @discardableResult func goToBluetoothConnector(scanner: PeripheralScanner, presentationType: PresentationType, callback: @escaping (Peripheral) -> () ) -> ConnectionViewController
     @discardableResult func goToFileSelection() -> DFUFileSelector
     @discardableResult func goToFirmwareInfo(firmware: DFUFirmware) -> DFUFirmwareInfoViewController
-    @discardableResult func goToUpdate(firmware: DFUFirmware, peripheral: Peripheral) -> DFUUpdateViewController
+    func goToUpdate(firmware: DFUFirmware, peripheral: Peripheral)
 }
 
 class DFURouter: DFURouterType {
-    func goToUpdate(firmware: DFUFirmware, peripheral: Peripheral) -> DFUUpdateViewController {
-        let vc = DFUUpdateViewController(firmware: firmware, peripheral: peripheral)
+    func goToUpdate(firmware: DFUFirmware, peripheral: Peripheral) {
+        let vc = DFUUpdateTabBarViewController(router: self, firmware: firmware, peripheral: peripheral)
+//        navigationController.setViewControllers([vc], animated: true)
         navigationController.pushViewController(vc, animated: true)
-        return vc
     }
     
     private let btManager = DFUBluetoothManager()

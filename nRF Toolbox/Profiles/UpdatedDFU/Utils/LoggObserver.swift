@@ -10,10 +10,8 @@ import Foundation
 import iOSDFULibrary
 
 extension Notification.Name {
-    struct DFULogger {
-        static let newMessage = Notification.Name("newMessage")
-        static let reset = Notification.Name("reset")
-    }
+    static let newMessage = Notification.Name("newMessage")
+    static let reset = Notification.Name("reset")
 }
 
 class LoggObserver: LoggerDelegate {
@@ -29,14 +27,14 @@ class LoggObserver: LoggerDelegate {
     
     func reset() {
         messages.removeAll()
-        notificationCenter.post(Notification(name: Notification.Name.DFULogger.reset, object: self, userInfo: nil))
+        notificationCenter.post(Notification(name: .reset, object: self, userInfo: nil))
     }
     
     func logWith(_ level: LogLevel, message: String) {
         let message = LogMessage(level: level.level, message: message, time: Date())
         messages.append(message)
         
-        let notification = Notification.init(name: Notification.Name.DFULogger.newMessage, object: self, userInfo: [LoggObserver.messageNotificationKey : message])
+        let notification = Notification.init(name: .newMessage, object: self, userInfo: [LoggObserver.messageNotificationKey : message])
         notificationCenter.post(notification)
     }
     
