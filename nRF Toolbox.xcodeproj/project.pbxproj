@@ -650,6 +650,7 @@
 		012C2BE42410F844005EC1A0 /* DFUUpdate */ = {
 			isa = PBXGroup;
 			children = (
+				01363A842417DD2C0030821E /* View */,
 				01AA707C24124F270018DB29 /* DFUUpdateTabBarViewController.swift */,
 				012C2BE52410F8AA005EC1A0 /* DFUUpdateViewController.swift */,
 				012C2BE62410F8AA005EC1A0 /* DFUUpdateViewController.xib */,
@@ -657,6 +658,13 @@
 				016EF387241632AF005FFA30 /* LoggerTableViewController.xib */,
 			);
 			path = DFUUpdate;
+			sourceTree = "<group>";
+		};
+		01363A842417DD2C0030821E /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		0140FCD4237C2FFA00411963 /* Views */ = {

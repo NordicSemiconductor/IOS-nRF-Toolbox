@@ -9,6 +9,11 @@
 import UIKit
 import iOSDFULibrary
 
+protocol DFUUpdateRouter: class {
+    func showLogs()
+    func done()
+}
+
 class DFUUpdateTabBarViewController: UITabBarController {
     let logger = LoggObserver()
     
@@ -23,6 +28,8 @@ class DFUUpdateTabBarViewController: UITabBarController {
         self.loggerVC = LoggerTableViewController(observer: logger)
         
         super.init(nibName: nil, bundle: nil)
+        
+        updateVC.router = self 
     }
     
     required init?(coder: NSCoder) {
@@ -43,4 +50,16 @@ extension DFUUpdateTabBarViewController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         navigationItem.title = viewController.navigationItem.title
     }
+}
+
+extension DFUUpdateTabBarViewController: DFUUpdateRouter {
+    func showLogs() {
+        selectedIndex = 1
+    }
+    
+    func done() {
+        router.initialState()
+    }
+    
+    
 }
