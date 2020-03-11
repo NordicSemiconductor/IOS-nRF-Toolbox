@@ -29,7 +29,7 @@ class DFUUpdateTabBarViewController: UITabBarController {
         
         super.init(nibName: nil, bundle: nil)
         
-        updateVC.router = self 
+        updateVC.router = self
     }
     
     required init?(coder: NSCoder) {

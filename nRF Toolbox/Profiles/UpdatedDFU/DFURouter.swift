@@ -15,6 +15,7 @@ enum PresentationType {
 }
 
 protocol DFURouterType: class {
+    @discardableResult
     func initialState() -> UIViewController
     
     func getStartViewController() -> DFUStartViewController

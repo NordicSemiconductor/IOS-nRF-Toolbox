@@ -24,13 +24,13 @@ class LoggerTableViewController: UITableViewController {
         loggTableView.logs = self.observer.messages
         loggTableView.reloadData()
         
-        NotificationCenter.default.addObserver(forName: .newMessage, object: nil, queue: .main) { [unowned self] (notification) in
+        NotificationCenter.default.addObserver(forName: .newMessage, object: nil, queue: .main) { [weak self] (notification) in
             guard let message = notification.userInfo?[LoggObserver.messageNotificationKey] as? LogMessage else { return }
-            self.loggTableView.addMessage(message)
+            self?.loggTableView.addMessage(message)
         }
         
-        NotificationCenter.default.addObserver(forName: .reset, object: nil, queue: .main) { [unowned self] (notification) in
-            self.loggTableView.reset()
+        NotificationCenter.default.addObserver(forName: .reset, object: nil, queue: .main) { [weak self] (notification) in
+            self?.loggTableView.reset()
         }
         
         navigationItem.title = "Loggs"

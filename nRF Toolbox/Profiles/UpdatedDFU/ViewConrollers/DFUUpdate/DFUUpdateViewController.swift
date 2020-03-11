@@ -9,44 +9,45 @@
 import UIKit
 import iOSDFULibrary
 
-class DFUUpdateViewController: UIViewController {
-    @IBOutlet private var arrowImage: UIImageView!
-    @IBOutlet private var progressView: UIProgressView!
-    @IBOutlet private var playPauseButton: UIButton!
+class DFUUpdateViewController: UITableViewController {
     
-    @IBOutlet private var stopBtn: NordicButton!
-    @IBOutlet private var doneBtn: NordicButton!
-    @IBOutlet private var retryBtn: NordicButton!
-    @IBOutlet private var showLogBtn: NordicButton!
-    
-    @IBOutlet private var statusLabel: UILabel!
+    private var headerView: DFUUpdateProgressView!
     
     private let firmware: DFUFirmware!
     private let peripheral: Peripheral!
     private let logger: LoggerDelegate
     weak var router: DFUUpdateRouter?
     private var dfuController: DFUServiceController?
+    private var serviceInitiator = DFUServiceInitiator()
+    private var currentState: DFUState?
+    
+    private let controlSection = ControlSection()
+    private let stopSection = ControlSection()
     
     init(firmware: DFUFirmware, peripheral: Peripheral, logger: LoggerDelegate, router: DFUUpdateRouter? = nil) {
         self.firmware = firmware
         self.peripheral = peripheral
         self.logger = logger
         self.router = router
-        super.init(nibName: "DFUUpdateViewController", bundle: .main)
+        self.headerView = DFUUpdateProgressView.instance()
+        
+        if #available(iOS 13, *) {
+            super.init(style: .insetGrouped)
+        } else {
+            super.init(style: .grouped)            
+        }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func update(_ firmware: DFUFirmware) {
-        let initiator = DFUServiceInitiator()
-        
-        initiator.logger = logger
-        initiator.delegate = self
-        initiator.progressDelegate = self
-        initiator.enableUnsafeExperimentalButtonlessServiceInSecureDfu = true
-        self.dfuController = initiator.with(firmware: firmware).start(target: peripheral.peripheral)
+    private func update() {
+        serviceInitiator.logger = logger
+        serviceInitiator.delegate = self
+        serviceInitiator.progressDelegate = self
+        serviceInitiator.enableUnsafeExperimentalButtonlessServiceInSecureDfu = true
+        self.dfuController = serviceInitiator.with(firmware: firmware).start(target: peripheral.peripheral)
     }
     
     override func viewDidLoad() {
@@ -57,27 +58,75 @@ class DFUUpdateViewController: UIViewController {
         if #available(iOS 13.0, *) {
             tabBarItem.image = UIImage(systemName: ModernIcon.arrow(.init(digit: 2))(.circlePath).name)
         } else {
-            // Fallback on earlier versions
+            // TODO: Add correct image
         }
         
-        update(firmware)
-        playPauseButton.tintColor = .nordicBlue
-        playPauseButton.contentHorizontalAlignment = .fill
-        playPauseButton.contentVerticalAlignment = .fill
+        tableView.registerCellClass(cell: NordicActionTableViewCell.self)
         
-        doneBtn.style = .mainAction
-        stopBtn.style = .destructive
+        headerView.frame = .zero
+        headerView.frame.size.height = 240
+        tableView.tableHeaderView = headerView
+        
+        controlSection.callback = { [unowned self] item in
+            switch item.id {
+            case .resume: self.resume()
+            case .pause: self.pause()
+            case .done: self.router?.done()
+            case .retry: self.retry()
+            case .showLog: self.router?.showLogs()
+            case .stop: self.stop()
+            default: break
+            }
+        }
+        
+        stopSection.callback = { [unowned self] _ in
+            self.stop()
+        }
+        
+        controlSection.items = [.pause]
+        
+        stopSection.items = [.stop]
+        
+        update()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        if case .some(let state) = currentState, state == .uploading {
+            headerView.startAnimating()
+        } else {
+            headerView.stopAnimating()
+        }
+    }
+}
+
+extension DFUUpdateViewController {
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
     }
     
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        [controlSection, stopSection][section].items.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        [controlSection, stopSection][indexPath.section].dequeCell(for: indexPath.row, from: tableView)
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        [controlSection, stopSection][indexPath.section].didSelectItem(at: indexPath.row)
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+extension DFUUpdateViewController {
     @IBAction private func stop() {
         dfuController?.pause()
         
         let stopAction = UIAlertAction(title: "Stop", style: .destructive) { (_) in
             _ = self.dfuController?.abort()
+            self.router?.done()
         }
         
         let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
@@ -92,82 +141,66 @@ class DFUUpdateViewController: UIViewController {
     }
     
     @IBAction private func retry() {
-        update(firmware)
+        update()
     }
     
-    @IBAction private func showLog() {
-        router?.showLogs()
+    @IBAction private func pause() {
+        dfuController?.pause()
+        controlSection.items = [.resume]
+        headerView.stopAnimating()
+        tableView.reloadData()
     }
     
-    @IBAction private func done() {
-        router?.done()
-    }
-}
-
-extension DFUUpdateViewController {
-    private func startAnimating() {
-        arrowImage.translatesAutoresizingMaskIntoConstraints = true
-        
-        UIView.animateKeyframes(withDuration: 1, delay: 0, options: [.repeat], animations: {
-            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1) {
-                self.arrowImage.transform = CGAffineTransform(rotationAngle: .pi)
-            }
-            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5) {
-                self.arrowImage.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
-            }
-            UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.5) {
-                self.arrowImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            }
-        })
-    }
-    
-    private func stopAnimation() {
-        self.arrowImage.layer.removeAllAnimations()
-    }
-    
-    /// Set buttons visible
-    /// - Parameter hidden: tuple with hidden flags in the next order: stopBtn, doneBtn, retryBtn, showLogBtn
-    private func setButtonHidden(_ hidden: (Bool, Bool, Bool, Bool)) {
-        stopBtn.isHidden = hidden.0
-        doneBtn.isHidden = hidden.1
-        retryBtn.isHidden = hidden.2
-        showLogBtn.isHidden = hidden.3
+    @IBAction private func resume() {
+        dfuController?.resume()
+        controlSection.items = [.pause]
+        headerView.startAnimating()
+        tableView.reloadData()
     }
 }
 
 extension DFUUpdateViewController: DFUServiceDelegate {
     func dfuStateDidChange(to state: DFUState) {
-        statusLabel.text = state.description()
-        
+        headerView.statusLabel.text = state.description()
         print(state.description())
+        currentState = state
+        
+        headerView.stopAnimating()
         
         switch state {
-        case .starting:
-            retryBtn.isHidden = true
-            setButtonHidden((false, true, true, true))
-        case .uploading:
-            startAnimating()
-            setButtonHidden((false, true, true, true))
-        case .aborted:
-            setButtonHidden((true, false, false, false))
-            stopAnimation()
+        case .connecting:
+            headerView.style = .update
+            controlSection.items = []
         case .completed:
-            setButtonHidden((true, false, true, false))
-            stopAnimation()
+            headerView.style = .done
+            controlSection.items = [.showLog, .done]
+        case .uploading:
+            headerView.startAnimating()
+            controlSection.items = [.pause]
         default:
             break
         }
+        tableView.reloadData()
     }
     
+    
     func dfuError(_ error: DFUError, didOccurWithMessage message: String) {
-        print(message)
+        headerView.style = .error
+        headerView.statusLabel.text = message
+        controlSection.items = [.retry, .showLog, .done]
+        tableView.reloadData()
     }
     
 }
 
 extension DFUUpdateViewController: DFUProgressDelegate {
     func dfuProgressDidChange(for part: Int, outOf totalParts: Int, to progress: Int, currentSpeedBytesPerSecond: Double, avgSpeedBytesPerSecond: Double) {
-        progressView.progress = Float(progress) / 100.0
+        // TODO: Check progress
+        headerView.progressView.progress = Float(progress) / 100.0
+        
+        headerView.statusLabel.text = "Updating. Part \(part) of \(totalParts): \(progress)%"
+        
+        
     }
     
 }
