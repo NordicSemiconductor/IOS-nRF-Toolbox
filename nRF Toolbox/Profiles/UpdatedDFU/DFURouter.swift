@@ -23,9 +23,17 @@ protocol DFURouterType: class {
     @discardableResult func goToFileSelection() -> DFUFileSelector
     @discardableResult func goToFirmwareInfo(firmware: DFUFirmware) -> DFUFirmwareInfoViewController
     func goToUpdate(firmware: DFUFirmware, peripheral: Peripheral)
+    @discardableResult
+    func goToHMAccessoryList() -> HMAccessoryListTableViewController
 }
 
 class DFURouter: DFURouterType {
+    func goToHMAccessoryList() -> HMAccessoryListTableViewController {
+        let vc = HMAccessoryListTableViewController(router: self)
+        navigationController.pushViewController(vc, animated: true)
+        return vc
+    }
+    
     func goToUpdate(firmware: DFUFirmware, peripheral: Peripheral) {
         let vc = DFUUpdateTabBarViewController(router: self, firmware: firmware, peripheral: peripheral)
 //        navigationController.setViewControllers([vc], animated: true)

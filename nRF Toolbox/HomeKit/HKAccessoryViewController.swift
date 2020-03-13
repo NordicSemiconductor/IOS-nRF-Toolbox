@@ -10,7 +10,7 @@ import UIKit
 import HomeKit
 
 //Identifiers
-let dfuServiceIdentifier            = "00001530-1212-EFDE-1523-785FEABCD123"
+//let dfuServiceIdentifier            = "00001530-1212-EFDE-1523-785FEABCD123"
 let dfuControlPointIdentifier       = "00001531-1212-EFDE-1523-785FEABCD123"
 let accessoryInformationIdentifier  = "0000003E-0000-1000-8000-0026BB765291"
 let hwVersionIdentifier             = "00000053-0000-1000-8000-0026BB765291"

@@ -116,6 +116,9 @@
                                             <real key="value" value="1"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="openHomeAccessory" destination="-1" eventType="touchUpInside" id="0kG-fV-gQy"/>
+                                    </connections>
                                 </button>
                             </subviews>
                         </stackView>

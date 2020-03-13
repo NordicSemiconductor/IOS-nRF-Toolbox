@@ -85,6 +85,9 @@
 		01BE0958234A76D4006ACF06 /* Peripheral+Temperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE0957234A76D4006ACF06 /* Peripheral+Temperature.swift */; };
 		01BEADCF2418FB1800FC7183 /* DFUUpdateProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BEADCE2418FB1800FC7183 /* DFUUpdateProgressView.swift */; };
 		01BEADD12418FB5A00FC7183 /* DFUUpdateProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01BEADD02418FB5A00FC7183 /* DFUUpdateProgressView.xib */; };
+		01BEADD4241A992300FC7183 /* HMAccessoryListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BEADD3241A992300FC7183 /* HMAccessoryListTableViewController.swift */; };
+		01BEADD6241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BEADD5241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift */; };
+		01BEADD8241AE6BF00FC7183 /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BEADD7241AE6BF00FC7183 /* UILabel+Ext.swift */; };
 		01C2E97523A1ACDF008C1701 /* DFUViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01C2E97423A1ACDF008C1701 /* DFUViewController.xib */; };
 		01D6D2B924067B0500E1A66F /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01D6D2B824067B0500E1A66F /* Resources.xcassets */; };
 		01D6D2BB240696D000E1A66F /* DFURouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6D2BA240696D000E1A66F /* DFURouter.swift */; };
@@ -387,6 +390,9 @@
 		01BE0957234A76D4006ACF06 /* Peripheral+Temperature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Peripheral+Temperature.swift"; sourceTree = "<group>"; };
 		01BEADCE2418FB1800FC7183 /* DFUUpdateProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUUpdateProgressView.swift; sourceTree = "<group>"; };
 		01BEADD02418FB5A00FC7183 /* DFUUpdateProgressView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DFUUpdateProgressView.xib; sourceTree = "<group>"; };
+		01BEADD3241A992300FC7183 /* HMAccessoryListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HMAccessoryListTableViewController.swift; sourceTree = "<group>"; };
+		01BEADD5241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicBottomDetailsTableViewCell.swift; sourceTree = "<group>"; };
+		01BEADD7241AE6BF00FC7183 /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
 		01C2E97423A1ACDF008C1701 /* DFUViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DFUViewController.xib; sourceTree = "<group>"; };
 		01D6D2B824067B0500E1A66F /* Resources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resources.xcassets; sourceTree = "<group>"; };
 		01D6D2BA240696D000E1A66F /* DFURouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFURouter.swift; sourceTree = "<group>"; };
@@ -744,6 +750,7 @@
 			isa = PBXGroup;
 			children = (
 				019985E323DEF23F000CDCB6 /* NordicTextTableViewCell.swift */,
+				01BEADD5241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift */,
 				019985E523DEF2BD000CDCB6 /* NordicActionTableViewCell.swift */,
 			);
 			path = TableViewCell;
@@ -910,6 +917,14 @@
 			path = Peripheral;
 			sourceTree = "<group>";
 		};
+		01BEADD22419AC7C00FC7183 /* HomeKit */ = {
+			isa = PBXGroup;
+			children = (
+				01BEADD3241A992300FC7183 /* HMAccessoryListTableViewController.swift */,
+			);
+			path = HomeKit;
+			sourceTree = "<group>";
+		};
 		01D6D2BC24069FE000E1A66F /* UpdatedDFU */ = {
 			isa = PBXGroup;
 			children = (
@@ -925,6 +940,7 @@
 		01D6D2BD2406A1B500E1A66F /* ViewConrollers */ = {
 			isa = PBXGroup;
 			children = (
+				01BEADD22419AC7C00FC7183 /* HomeKit */,
 				012C2BE42410F844005EC1A0 /* DFUUpdate */,
 				01FBC5082408066100B1056B /* DFUFirmwareInfo */,
 				01FBC5032407C25E00B1056B /* DFUFileSelector */,
@@ -1281,6 +1297,7 @@
 				0125D5B523F44FE6003A1812 /* UIBarButtonItem+Ext.swift */,
 				0125D5B723F53D3B003A1812 /* DFU.LogLevel+Ext.swift */,
 				01FBC5142408158F00B1056B /* CBPeripheralState+Ext.swift */,
+				01BEADD7241AE6BF00FC7183 /* UILabel+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2203,6 +2220,7 @@
 				01FBC5102408101B00B1056B /* NordicRightDetailTableViewCell.swift in Sources */,
 				20D08E2B232B95B300569587 /* DisclosureTableViewCell.swift in Sources */,
 				2002A0052322610F00C43E06 /* GlucoseMonitorViewController.swift in Sources */,
+				01BEADD4241A992300FC7183 /* HMAccessoryListTableViewController.swift in Sources */,
 				01B6D3DC234CB755000942C4 /* HeartRateLocationCharacteristic.swift in Sources */,
 				01A870D823F409BB00D9202E /* UARTFilterLogViewController.swift in Sources */,
 				20C7FE50230E789F00B06FD8 /* MainRouter.swift in Sources */,
@@ -2230,6 +2248,7 @@
 				01BE0953234A1C48006ACF06 /* HealthTermometerCharacteristic.swift in Sources */,
 				3001EBB81D1BE1FB008C5C37 /* BGMItemCell.swift in Sources */,
 				300143271CEC4B9D008379DF /* AppUtilities.swift in Sources */,
+				01BEADD8241AE6BF00FC7183 /* UILabel+Ext.swift in Sources */,
 				0169B59E23FBD8BE00907C1B /* NordicTextFieldCell.swift in Sources */,
 				20B7979823350584001328E1 /* Peripheral+Cycling.swift in Sources */,
 				208EE4EA23155FC8008E5FE9 /* WebViewController.swift in Sources */,
@@ -2239,6 +2258,7 @@
 				01A870DA23F40E2F00D9202E /* CheckmarkTableViewCell.swift in Sources */,
 				309F086A1E6D9EAA00B7546A /* HKHomeStore.swift in Sources */,
 				204485E1233A148700A8A3A3 /* RunningTableViewController.swift in Sources */,
+				01BEADD6241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift in Sources */,
 				30499E591CE4A07700E0993B /* AppFilesViewController.swift in Sources */,
 				3001EBBF1D1BE727008C5C37 /* CGMSpecificOperations.swift in Sources */,
 				203D0F09232F782200C0340D /* CyclingTableViewController.swift in Sources */,

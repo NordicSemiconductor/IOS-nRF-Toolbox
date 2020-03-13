@@ -31,5 +31,9 @@ class DFUStartViewController: UIViewController {
             self?.router.goToFileSelection()
         }
     }
+    
+    @IBAction func openHomeAccessory() {
+        router.goToHMAccessoryList()
+    }
 }
 
