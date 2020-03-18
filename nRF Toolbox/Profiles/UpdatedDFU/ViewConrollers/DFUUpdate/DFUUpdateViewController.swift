@@ -119,103 +119,7 @@ class UpgradeTableViewController<T: UpgradeManager>: UITableViewController {
         headerView.startAnimating()
         tableView.reloadData()
     }
-}
-
-
-
-class DFUUpdateViewController: UITableViewController {
     
-    private (set) var headerView: DFUUpdateProgressView!
-    
-    private let firmware: DFUFirmware!
-    private let peripheral: Peripheral!
-    private let logger: LoggerDelegate
-    weak var router: DFUUpdateRouter?
-    private var dfuController: DFUServiceController?
-    private var serviceInitiator = DFUServiceInitiator()
-    private var currentState: DFUState?
-    
-    private let controlSection = ControlSection()
-    private let stopSection = ControlSection()
-    
-    init(firmware: DFUFirmware, peripheral: Peripheral, logger: LoggerDelegate, router: DFUUpdateRouter? = nil) {
-        self.firmware = firmware
-        self.peripheral = peripheral
-        self.logger = logger
-        self.router = router
-        self.headerView = DFUUpdateProgressView.instance()
-        
-        if #available(iOS 13, *) {
-            super.init(style: .insetGrouped)
-        } else {
-            super.init(style: .grouped)            
-        }
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func update() {
-        serviceInitiator.logger = logger
-        serviceInitiator.delegate = self
-        serviceInitiator.progressDelegate = self
-        serviceInitiator.enableUnsafeExperimentalButtonlessServiceInSecureDfu = true
-        self.dfuController = serviceInitiator.with(firmware: firmware).start(target: peripheral.peripheral)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        navigationItem.title = "Update"
-        tabBarItem.title = "Update"
-        if #available(iOS 13.0, *) {
-            tabBarItem.image = UIImage(systemName: ModernIcon.arrow(.init(digit: 2))(.circlePath).name)
-        } else {
-            // TODO: Add correct image
-        }
-        
-        tableView.registerCellClass(cell: NordicActionTableViewCell.self)
-        
-        headerView.frame = .zero
-        headerView.frame.size.height = 240
-        tableView.tableHeaderView = headerView
-        
-        controlSection.callback = { [unowned self] item in
-            switch item.id {
-            case .resume: self.resume()
-            case .pause: self.pause()
-            case .done: self.router?.done()
-            case .retry: self.retry()
-            case .showLog: self.router?.showLogs()
-            case .stop: self.stop()
-            default: break
-            }
-        }
-        
-        stopSection.callback = { [unowned self] _ in
-            self.stop()
-        }
-        
-        controlSection.items = [.pause]
-        
-        stopSection.items = [.stop]
-        
-        update()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        if case .some(let state) = currentState, state == .uploading {
-            headerView.startAnimating()
-        } else {
-            headerView.stopAnimating()
-        }
-    }
-}
-
-extension DFUUpdateViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
@@ -232,44 +136,49 @@ extension DFUUpdateViewController {
         [controlSection, stopSection][indexPath.section].didSelectItem(at: indexPath.row)
         tableView.deselectRow(at: indexPath, animated: true)
     }
+
 }
 
-extension DFUUpdateViewController {
-    @IBAction private func stop() {
-        dfuController?.pause()
+extension DFUServiceController: UpgradeManager {
+    func stop() {
+        _ = abort()
+    }
+}
+
+class DFUUpdateViewController: UpgradeTableViewController<DFUServiceController> {
+    
+    private let firmware: DFUFirmware!
+    private let logger: LoggerDelegate
+    private var serviceInitiator = DFUServiceInitiator()
+    private var currentState: DFUState?
+    
+    init(firmware: DFUFirmware, peripheral: Peripheral, logger: LoggerDelegate, router: DFUUpdateRouter? = nil) {
+        self.firmware = firmware
+        self.logger = logger
         
-        let stopAction = UIAlertAction(title: "Stop", style: .destructive) { (_) in
-            _ = self.dfuController?.abort()
-            self.router?.done()
+        super.init(peripheral: peripheral, router: router)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func update() {
+        serviceInitiator.logger = logger
+        serviceInitiator.delegate = self
+        serviceInitiator.progressDelegate = self
+        serviceInitiator.enableUnsafeExperimentalButtonlessServiceInSecureDfu = true
+        manager = serviceInitiator.with(firmware: firmware).start(target: peripheral.peripheral)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if case .some(let state) = currentState, state == .uploading {
+            headerView.startAnimating()
+        } else {
+            headerView.stopAnimating()
         }
-        
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
-            self.dfuController?.resume()
-        }
-        
-        let alert = UIAlertController(title: "Stop", message: "Are you sure you want to stop DFU process", preferredStyle: .alert)
-        alert.addAction(cancel)
-        alert.addAction(stopAction)
-        
-        present(alert, animated: true)
-    }
-    
-    @IBAction private func retry() {
-        update()
-    }
-    
-    @IBAction private func pause() {
-        dfuController?.pause()
-        controlSection.items = [.resume]
-        headerView.stopAnimating()
-        tableView.reloadData()
-    }
-    
-    @IBAction private func resume() {
-        dfuController?.resume()
-        controlSection.items = [.pause]
-        headerView.startAnimating()
-        tableView.reloadData()
     }
 }
 

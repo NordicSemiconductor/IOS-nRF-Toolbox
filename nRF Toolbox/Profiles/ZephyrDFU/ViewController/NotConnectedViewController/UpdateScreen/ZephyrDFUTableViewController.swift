@@ -10,23 +10,9 @@ import UIKit
 import McuManager
 
 extension FirmwareUpgradeManager: UpgradeManager {
-    func pause() {
-        
-    }
-    
-    func resume() {
-        
-    }
-    
-    func start() {
-//        star
-    }
-    
     func stop() {
-        
+        cancel()
     }
-    
-    
 }
 
 class ZephyrDFUTableViewController: UpgradeTableViewController<FirmwareUpgradeManager> {
