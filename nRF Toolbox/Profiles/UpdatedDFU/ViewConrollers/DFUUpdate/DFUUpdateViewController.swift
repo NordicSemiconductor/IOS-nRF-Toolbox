@@ -9,9 +9,52 @@
 import UIKit
 import iOSDFULibrary
 
+class UpgradeTableViewController: UITableViewController {
+    private (set) var headerView: DFUUpdateProgressView!
+    let peripheral: Peripheral
+    
+    init(peripheral: Peripheral) {
+        self.peripheral = peripheral
+        self.headerView = DFUUpdateProgressView.instance()
+        
+        if #available(iOS 13, *) {
+            super.init(style: .insetGrouped)
+        } else {
+            super.init(style: .grouped)
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        navigationItem.title = "Update"
+        tabBarItem.title = "Update"
+        if #available(iOS 13.0, *) {
+            tabBarItem.image = UIImage(systemName: ModernIcon.arrow(.init(digit: 2))(.circlePath).name)
+        } else {
+            // TODO: Add correct image
+        }
+        
+        tableView.registerCellClass(cell: NordicActionTableViewCell.self)
+        
+        headerView.frame = .zero
+        headerView.frame.size.height = 240
+        tableView.tableHeaderView = headerView
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+}
+
 class DFUUpdateViewController: UITableViewController {
     
-    private var headerView: DFUUpdateProgressView!
+    private (set) var headerView: DFUUpdateProgressView!
     
     private let firmware: DFUFirmware!
     private let peripheral: Peripheral!

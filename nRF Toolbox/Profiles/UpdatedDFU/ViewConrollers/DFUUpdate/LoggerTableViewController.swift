@@ -33,7 +33,7 @@ class LoggerTableViewController: UITableViewController {
             self?.loggTableView.reset()
         }
         
-        navigationItem.title = "Loggs"
+        navigationItem.title = "Logs"
         tabBarItem = UITabBarItem(title: "Logs", image: TabBarIcon.uartLogs.image, selectedImage: TabBarIcon.uartLogs.filledImage)
     }
     

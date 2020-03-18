@@ -12,6 +12,10 @@
 		011960A023FA064100A7EF29 /* UARTMacrosHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0119609F23FA064100A7EF29 /* UARTMacrosHeaderView.xib */; };
 		0125D5B623F44FE6003A1812 /* UIBarButtonItem+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0125D5B523F44FE6003A1812 /* UIBarButtonItem+Ext.swift */; };
 		0125D5B823F53D3B003A1812 /* DFU.LogLevel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0125D5B723F53D3B003A1812 /* DFU.LogLevel+Ext.swift */; };
+		01268AF52421805F00E83156 /* ZephyrDFUTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01268AF42421805F00E83156 /* ZephyrDFUTableViewController.swift */; };
+		01268AF724218BED00E83156 /* ZephyrFileSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01268AF624218BED00E83156 /* ZephyrFileSelector.swift */; };
+		01268AF924218E5800E83156 /* ZephyrDFUDocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01268AF824218E5800E83156 /* ZephyrDFUDocumentPicker.swift */; };
+		01268AFB2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01268AFA2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift */; };
 		0129126B23E4487000EB3CCD /* UARTTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129126A23E4486F00EB3CCD /* UARTTabBarController.swift */; };
 		012C2BDC240FCD0C005EC1A0 /* DFUUpdateSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDB240FCD0C005EC1A0 /* DFUUpdateSection.swift */; };
 		012C2BE12410682D005EC1A0 /* LegendLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDE2410682D005EC1A0 /* LegendLabel.swift */; };
@@ -41,6 +45,8 @@
 		016EF388241632AF005FFA30 /* LoggerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016EF386241632AF005FFA30 /* LoggerTableViewController.swift */; };
 		016EF389241632AF005FFA30 /* LoggerTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 016EF387241632AF005FFA30 /* LoggerTableViewController.xib */; };
 		01797E8323F4242500B26BF2 /* ModernIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01797E8223F4242500B26BF2 /* ModernIcon.swift */; };
+		0197AFCF2420DAAC00ADF105 /* NotConnectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0197AFCD2420DAAC00ADF105 /* NotConnectedViewController.swift */; };
+		0197AFD02420DAAC00ADF105 /* NotConnectedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0197AFCE2420DAAC00ADF105 /* NotConnectedViewController.xib */; };
 		019985E423DEF23F000CDCB6 /* NordicTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019985E323DEF23F000CDCB6 /* NordicTextTableViewCell.swift */; };
 		019985E623DEF2BD000CDCB6 /* NordicActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019985E523DEF2BD000CDCB6 /* NordicActionTableViewCell.swift */; };
 		019985E823DF1C8D000CDCB6 /* CloseButtonPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019985E723DF1C8D000CDCB6 /* CloseButtonPresenter.swift */; };
@@ -96,6 +102,7 @@
 		01DDD79C23EC5CDA003786ED /* TimeIntervalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DDD79A23EC5CDA003786ED /* TimeIntervalTableViewCell.swift */; };
 		01DDD79D23EC5CDA003786ED /* TimeIntervalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01DDD79B23EC5CDA003786ED /* TimeIntervalTableViewCell.xib */; };
 		01DDD7A023EC6351003786ED /* UARTMarcoElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DDD79F23EC6351003786ED /* UARTMarcoElement.swift */; };
+		01DFC55C2420F0AB00AF2EF0 /* ZephyrDFURouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DFC55B2420F0AB00AF2EF0 /* ZephyrDFURouter.swift */; };
 		01E4BACB23698DD300EE67A0 /* FindMeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E4BAC923698DD300EE67A0 /* FindMeTableViewCell.swift */; };
 		01E4BACC23698DD300EE67A0 /* FindMeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E4BACA23698DD300EE67A0 /* FindMeTableViewCell.xib */; };
 		01E5910923DB3BC5008F15A4 /* QuickError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910823DB3BC4008F15A4 /* QuickError.swift */; };
@@ -103,9 +110,9 @@
 		01F3655F2397A9C700A4543A /* NordicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F3655E2397A9C700A4543A /* NordicButton.swift */; };
 		01F365622397BADC00A4543A /* DFUFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F365612397BADC00A4543A /* DFUFileView.swift */; };
 		01F365642397BAE500A4543A /* DFUFileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01F365632397BAE500A4543A /* DFUFileView.xib */; };
-		01FBC5012407BF8F00B1056B /* DFUBluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5002407BF8F00B1056B /* DFUBluetoothManager.swift */; };
-		01FBC5062407C2B000B1056B /* DFUFileSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5042407C2B000B1056B /* DFUFileSelector.swift */; };
-		01FBC5072407C2B000B1056B /* DFUFileSelector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01FBC5052407C2B000B1056B /* DFUFileSelector.xib */; };
+		01FBC5012407BF8F00B1056B /* PeripheralHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */; };
+		01FBC5062407C2B000B1056B /* FileSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5042407C2B000B1056B /* FileSelectorViewController.swift */; };
+		01FBC5072407C2B000B1056B /* FileSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01FBC5052407C2B000B1056B /* FileSelectorViewController.xib */; };
 		01FBC50B2408067400B1056B /* DFUFirmwareInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5092408067400B1056B /* DFUFirmwareInfoViewController.swift */; };
 		01FBC5102408101B00B1056B /* NordicRightDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC50F2408101B00B1056B /* NordicRightDetailTableViewCell.swift */; };
 		01FBC5132408132800B1056B /* DFUDeviceInfoSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5122408132800B1056B /* DFUDeviceInfoSection.swift */; };
@@ -315,6 +322,10 @@
 		0119609F23FA064100A7EF29 /* UARTMacrosHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTMacrosHeaderView.xib; sourceTree = "<group>"; };
 		0125D5B523F44FE6003A1812 /* UIBarButtonItem+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Ext.swift"; sourceTree = "<group>"; };
 		0125D5B723F53D3B003A1812 /* DFU.LogLevel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DFU.LogLevel+Ext.swift"; sourceTree = "<group>"; };
+		01268AF42421805F00E83156 /* ZephyrDFUTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFUTableViewController.swift; sourceTree = "<group>"; };
+		01268AF624218BED00E83156 /* ZephyrFileSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrFileSelector.swift; sourceTree = "<group>"; };
+		01268AF824218E5800E83156 /* ZephyrDFUDocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFUDocumentPicker.swift; sourceTree = "<group>"; };
+		01268AFA2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFUTabBarViewController.swift; sourceTree = "<group>"; };
 		0129126A23E4486F00EB3CCD /* UARTTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTTabBarController.swift; sourceTree = "<group>"; };
 		012C2BDB240FCD0C005EC1A0 /* DFUUpdateSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUUpdateSection.swift; sourceTree = "<group>"; };
 		012C2BDE2410682D005EC1A0 /* LegendLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegendLabel.swift; sourceTree = "<group>"; };
@@ -346,6 +357,8 @@
 		016EF386241632AF005FFA30 /* LoggerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerTableViewController.swift; sourceTree = "<group>"; };
 		016EF387241632AF005FFA30 /* LoggerTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoggerTableViewController.xib; sourceTree = "<group>"; };
 		01797E8223F4242500B26BF2 /* ModernIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernIcon.swift; sourceTree = "<group>"; };
+		0197AFCD2420DAAC00ADF105 /* NotConnectedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotConnectedViewController.swift; sourceTree = "<group>"; };
+		0197AFCE2420DAAC00ADF105 /* NotConnectedViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotConnectedViewController.xib; sourceTree = "<group>"; };
 		019985E323DEF23F000CDCB6 /* NordicTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicTextTableViewCell.swift; sourceTree = "<group>"; };
 		019985E523DEF2BD000CDCB6 /* NordicActionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicActionTableViewCell.swift; sourceTree = "<group>"; };
 		019985E723DF1C8D000CDCB6 /* CloseButtonPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButtonPresenter.swift; sourceTree = "<group>"; };
@@ -401,6 +414,7 @@
 		01DDD79A23EC5CDA003786ED /* TimeIntervalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalTableViewCell.swift; sourceTree = "<group>"; };
 		01DDD79B23EC5CDA003786ED /* TimeIntervalTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeIntervalTableViewCell.xib; sourceTree = "<group>"; };
 		01DDD79F23EC6351003786ED /* UARTMarcoElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMarcoElement.swift; sourceTree = "<group>"; };
+		01DFC55B2420F0AB00AF2EF0 /* ZephyrDFURouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFURouter.swift; sourceTree = "<group>"; };
 		01E4BAC923698DD300EE67A0 /* FindMeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindMeTableViewCell.swift; sourceTree = "<group>"; };
 		01E4BACA23698DD300EE67A0 /* FindMeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FindMeTableViewCell.xib; sourceTree = "<group>"; };
 		01E5910823DB3BC4008F15A4 /* QuickError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickError.swift; sourceTree = "<group>"; };
@@ -408,9 +422,9 @@
 		01F3655E2397A9C700A4543A /* NordicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicButton.swift; sourceTree = "<group>"; };
 		01F365612397BADC00A4543A /* DFUFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFileView.swift; sourceTree = "<group>"; };
 		01F365632397BAE500A4543A /* DFUFileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DFUFileView.xib; sourceTree = "<group>"; };
-		01FBC5002407BF8F00B1056B /* DFUBluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUBluetoothManager.swift; sourceTree = "<group>"; };
-		01FBC5042407C2B000B1056B /* DFUFileSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFileSelector.swift; sourceTree = "<group>"; };
-		01FBC5052407C2B000B1056B /* DFUFileSelector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DFUFileSelector.xib; sourceTree = "<group>"; };
+		01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralHolder.swift; sourceTree = "<group>"; };
+		01FBC5042407C2B000B1056B /* FileSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSelectorViewController.swift; sourceTree = "<group>"; };
+		01FBC5052407C2B000B1056B /* FileSelectorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FileSelectorViewController.xib; sourceTree = "<group>"; };
 		01FBC5092408067400B1056B /* DFUFirmwareInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFirmwareInfoViewController.swift; sourceTree = "<group>"; };
 		01FBC50F2408101B00B1056B /* NordicRightDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicRightDetailTableViewCell.swift; sourceTree = "<group>"; };
 		01FBC5122408132800B1056B /* DFUDeviceInfoSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUDeviceInfoSection.swift; sourceTree = "<group>"; };
@@ -647,6 +661,32 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		01268AF12421595200E83156 /* NotConnectedViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0197AFCD2420DAAC00ADF105 /* NotConnectedViewController.swift */,
+				0197AFCE2420DAAC00ADF105 /* NotConnectedViewController.xib */,
+			);
+			path = NotConnectedViewController;
+			sourceTree = "<group>";
+		};
+		01268AF22421599800E83156 /* FileSelection */ = {
+			isa = PBXGroup;
+			children = (
+				01268AF624218BED00E83156 /* ZephyrFileSelector.swift */,
+				01268AF824218E5800E83156 /* ZephyrDFUDocumentPicker.swift */,
+			);
+			path = FileSelection;
+			sourceTree = "<group>";
+		};
+		01268AF32421795500E83156 /* UpdateScreen */ = {
+			isa = PBXGroup;
+			children = (
+				01268AF42421805F00E83156 /* ZephyrDFUTableViewController.swift */,
+			);
+			path = UpdateScreen;
+			sourceTree = "<group>";
+		};
 		012C2BDD24106811005EC1A0 /* Viewes */ = {
 			isa = PBXGroup;
 			children = (
@@ -744,6 +784,14 @@
 				339765764F70C52AC5738A3F /* Models */,
 			);
 			path = ContinuousGlucoseMonitor;
+			sourceTree = "<group>";
+		};
+		0197AFCC2420DA3500ADF105 /* ZephyrDFU */ = {
+			isa = PBXGroup;
+			children = (
+				01DFC5592420EFED00AF2EF0 /* ViewController */,
+			);
+			path = ZephyrDFU;
 			sourceTree = "<group>";
 		};
 		019985E223DEF220000CDCB6 /* TableViewCell */ = {
@@ -940,11 +988,11 @@
 		01D6D2BD2406A1B500E1A66F /* ViewConrollers */ = {
 			isa = PBXGroup;
 			children = (
-				01BEADD22419AC7C00FC7183 /* HomeKit */,
-				012C2BE42410F844005EC1A0 /* DFUUpdate */,
-				01FBC5082408066100B1056B /* DFUFirmwareInfo */,
-				01FBC5032407C25E00B1056B /* DFUFileSelector */,
 				01FBC5022407C25300B1056B /* DFUStartViewController */,
+				01FBC5032407C25E00B1056B /* DFUFileSelector */,
+				01BEADD22419AC7C00FC7183 /* HomeKit */,
+				01FBC5082408066100B1056B /* DFUFirmwareInfo */,
+				012C2BE42410F844005EC1A0 /* DFUUpdate */,
 			);
 			path = ViewConrollers;
 			sourceTree = "<group>";
@@ -970,6 +1018,26 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		01DFC5592420EFED00AF2EF0 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				01DFC55A2420EFFC00AF2EF0 /* NotConnectedViewController */,
+				01DFC55B2420F0AB00AF2EF0 /* ZephyrDFURouter.swift */,
+				01268AFA2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		01DFC55A2420EFFC00AF2EF0 /* NotConnectedViewController */ = {
+			isa = PBXGroup;
+			children = (
+				01268AF32421795500E83156 /* UpdateScreen */,
+				01268AF22421599800E83156 /* FileSelection */,
+				01268AF12421595200E83156 /* NotConnectedViewController */,
+			);
+			path = NotConnectedViewController;
+			sourceTree = "<group>";
+		};
 		01E4BAC823698DC000EE67A0 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -991,7 +1059,7 @@
 		01FBC4FF2407BF5600B1056B /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				01FBC5002407BF8F00B1056B /* DFUBluetoothManager.swift */,
+				01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */,
 				015F109A240FA82400FDAC49 /* DFUDocumentPicker.swift */,
 				01AA707E241291C00018DB29 /* LoggObserver.swift */,
 			);
@@ -1011,8 +1079,8 @@
 			isa = PBXGroup;
 			children = (
 				01FBC50D24080CE800B1056B /* Sections */,
-				01FBC5042407C2B000B1056B /* DFUFileSelector.swift */,
-				01FBC5052407C2B000B1056B /* DFUFileSelector.xib */,
+				01FBC5042407C2B000B1056B /* FileSelectorViewController.swift */,
+				01FBC5052407C2B000B1056B /* FileSelectorViewController.xib */,
 			);
 			path = DFUFileSelector;
 			sourceTree = "<group>";
@@ -1237,6 +1305,7 @@
 		20B7979B2338EC59001328E1 /* Profiles */ = {
 			isa = PBXGroup;
 			children = (
+				0197AFCC2420DA3500ADF105 /* ZephyrDFU */,
 				01D6D2BC24069FE000E1A66F /* UpdatedDFU */,
 				4381AD1823BA010200FB1A1F /* UART */,
 				01816D49235DD7180040F574 /* ContinuousGlucoseMonitor */,
@@ -1963,12 +2032,13 @@
 				20E07B622306975700FCB205 /* GT-Eesti-Display-Bold.ttf in Resources */,
 				5214D0CE1886C02A00460637 /* Settings.bundle in Resources */,
 				01D6D2C12406A1EF00E1A66F /* DFUStartViewController.xib in Resources */,
-				01FBC5072407C2B000B1056B /* DFUFileSelector.xib in Resources */,
+				01FBC5072407C2B000B1056B /* FileSelectorViewController.xib in Resources */,
 				01C2E97523A1ACDF008C1701 /* DFUViewController.xib in Resources */,
 				01A1B76823CF13A50062FADC /* UARTNewCommandViewController.xib in Resources */,
 				01BEADD12418FB5A00FC7183 /* DFUUpdateProgressView.xib in Resources */,
 				20E07B682306975700FCB205 /* GT-Eesti-Display-ULight-Italic.ttf in Resources */,
 				0E645A0F1CBF957800D36AD0 /* firmwares in Resources */,
+				0197AFD02420DAAC00ADF105 /* NotConnectedViewController.xib in Resources */,
 				0151170C240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.xib in Resources */,
 				01D6D2B924067B0500E1A66F /* Resources.xcassets in Resources */,
 				20E07B602306975700FCB205 /* GT-Eesti-Display-UBold-Italic.ttf in Resources */,
@@ -2027,7 +2097,9 @@
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/CorePlot/CorePlot.framework",
 				"${BUILT_PRODUCTS_DIR}/EVReflection/EVReflection.framework",
+				"${BUILT_PRODUCTS_DIR}/McuManager/McuManager.framework",
 				"${BUILT_PRODUCTS_DIR}/SWRevealViewController/SWRevealViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftCBOR/SwiftCBOR.framework",
 				"${BUILT_PRODUCTS_DIR}/ZIPFoundation/ZIPFoundation.framework",
 				"${BUILT_PRODUCTS_DIR}/iOSDFULibrary/iOSDFULibrary.framework",
 			);
@@ -2037,7 +2109,9 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePlot.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EVReflection.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/McuManager.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SWRevealViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftCBOR.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZIPFoundation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSDFULibrary.framework",
 			);
@@ -2094,7 +2168,7 @@
 				019985E823DF1C8D000CDCB6 /* CloseButtonPresenter.swift in Sources */,
 				01AF929A23DB17C100C1BFD6 /* AlertPresenter.swift in Sources */,
 				304299221CE5DE8E00E1D2AB /* UserFilesViewController.swift in Sources */,
-				01FBC5062407C2B000B1056B /* DFUFileSelector.swift in Sources */,
+				01FBC5062407C2B000B1056B /* FileSelectorViewController.swift in Sources */,
 				204485E7233A172800A8A3A3 /* Peripheral+Running.swift in Sources */,
 				30499E5D1CE4C6C700E0993B /* FolderFilesViewController.swift in Sources */,
 				30499E551CE4732200E0993B /* FileSelectionDelegate.swift in Sources */,
@@ -2135,6 +2209,7 @@
 				01AF928323D0AC3200C1BFD6 /* StringProtocol+Ext.swift in Sources */,
 				309F08651E6D6A5500B7546A /* HKViewController.swift in Sources */,
 				203D0F0E23325E0A00C0340D /* CyclingTableViewSection.swift in Sources */,
+				0197AFCF2420DAAC00ADF105 /* NotConnectedViewController.swift in Sources */,
 				3000B2131CE3195E00F64CEE /* EditPopupViewController.swift in Sources */,
 				20D08E28232B940400569587 /* OptionSelectionSection.swift in Sources */,
 				20C7FE052306D02400B06FD8 /* Log.swift in Sources */,
@@ -2179,6 +2254,7 @@
 				01AD26EC23953E4800F56210 /* FileSizeView.swift in Sources */,
 				309F086E1E6ED44F00B7546A /* HKScannerDelegate.swift in Sources */,
 				01DDD79C23EC5CDA003786ED /* TimeIntervalTableViewCell.swift in Sources */,
+				01268AF52421805F00E83156 /* ZephyrDFUTableViewController.swift in Sources */,
 				01FBC5132408132800B1056B /* DFUDeviceInfoSection.swift in Sources */,
 				01FBC5152408158F00B1056B /* CBPeripheralState+Ext.swift in Sources */,
 				200973DA234344780091951B /* BloodPressureTableViewController.swift in Sources */,
@@ -2197,6 +2273,7 @@
 				01AA707D24124F270018DB29 /* DFUUpdateTabBarViewController.swift in Sources */,
 				20C7FE53230E811B00B06FD8 /* ServiceProvider.swift in Sources */,
 				20C7FE5E230EC37000B06FD8 /* ServiceTableViewCell.swift in Sources */,
+				01268AF924218E5800E83156 /* ZephyrDFUDocumentPicker.swift in Sources */,
 				012C2BE72410F8AA005EC1A0 /* DFUUpdateViewController.swift in Sources */,
 				01B6D3E2234CCC9F000942C4 /* HeartRateChartSection.swift in Sources */,
 				01B56C1623A11FDA00140A1C /* PeripheralScanner.swift in Sources */,
@@ -2256,6 +2333,7 @@
 				019985F123E07CFB000CDCB6 /* XMLDocument.swift in Sources */,
 				20B797942334FE1B001328E1 /* Identifier+GlucoseMonitorViewController.swift in Sources */,
 				01A870DA23F40E2F00D9202E /* CheckmarkTableViewCell.swift in Sources */,
+				01DFC55C2420F0AB00AF2EF0 /* ZephyrDFURouter.swift in Sources */,
 				309F086A1E6D9EAA00B7546A /* HKHomeStore.swift in Sources */,
 				204485E1233A148700A8A3A3 /* RunningTableViewController.swift in Sources */,
 				01BEADD6241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift in Sources */,
@@ -2264,6 +2342,7 @@
 				203D0F09232F782200C0340D /* CyclingTableViewController.swift in Sources */,
 				203D0F0C232FB7D100C0340D /* DetailsTableViewSection.swift in Sources */,
 				01B6D3DA234CB6B3000942C4 /* HeartRateSection.swift in Sources */,
+				01268AF724218BED00E83156 /* ZephyrFileSelector.swift in Sources */,
 				20027B08233E116600A0B5ED /* StrideSection.swift in Sources */,
 				3000B2111CE317D900F64CEE /* UARTRevealViewController.swift in Sources */,
 				339761A6176917F548C7B465 /* ContinuousGlucoseMonitor.swift in Sources */,
@@ -2282,7 +2361,7 @@
 				33976B2C1CE8194EFAEB7341 /* Randomizer.swift in Sources */,
 				01363A872417E4FA0030821E /* ControlSection.swift in Sources */,
 				339765E57CA5E940D960B675 /* ChartDataSection.swift in Sources */,
-				01FBC5012407BF8F00B1056B /* DFUBluetoothManager.swift in Sources */,
+				01FBC5012407BF8F00B1056B /* PeripheralHolder.swift in Sources */,
 				3397622AEAB44E02CA055BDF /* ProximityViewController.swift in Sources */,
 				33976DC91B99AAA3F2E12DF7 /* FindMeSection.swift in Sources */,
 				01AF929623D8962600C1BFD6 /* UARTPreset.swift in Sources */,
@@ -2290,6 +2369,7 @@
 				01F3655F2397A9C700A4543A /* NordicButton.swift in Sources */,
 				339767568FA774CDE2FFC170 /* Peripheral+Proximity.swift in Sources */,
 				3397616CB0B03E42E9F890C6 /* DFUViewController.swift in Sources */,
+				01268AFB2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift in Sources */,
 				3397628E56C4A84F4D4E8128 /* PeripheralViewController.swift in Sources */,
 				0125D5B823F53D3B003A1812 /* DFU.LogLevel+Ext.swift in Sources */,
 			);

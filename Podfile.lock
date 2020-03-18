@@ -9,6 +9,9 @@ PODS:
   - EVReflection/Core (5.10.1)
   - iOSDFULibrary (4.6.1):
     - ZIPFoundation (= 0.9.9)
+  - McuManager (0.8.1):
+    - SwiftCBOR (= 0.4.3)
+  - SwiftCBOR (0.4.3)
   - SWRevealViewController (2.3.0)
   - ZIPFoundation (0.9.9)
 
@@ -18,6 +21,7 @@ DEPENDENCIES:
   - CorePlot (~> 2.2)
   - EVReflection (~> 5.10)
   - iOSDFULibrary (~> 4.6)
+  - McuManager (~> 0.8.0)
   - SWRevealViewController (~> 2.3)
 
 SPEC REPOS:
@@ -27,6 +31,8 @@ SPEC REPOS:
     - CorePlot
     - EVReflection
     - iOSDFULibrary
+    - McuManager
+    - SwiftCBOR
     - SWRevealViewController
     - ZIPFoundation
 
@@ -36,9 +42,11 @@ SPEC CHECKSUMS:
   CorePlot: 6bfe6d30d215beec3cfd18ee43e434620119bc1e
   EVReflection: 8124de482178d34ccd56473e16cd95990f9a1113
   iOSDFULibrary: 3053cf01eaabec37dc7372fb77ae4a218b577c55
+  McuManager: 1259e76b68c1535a77b57373af88fa9656c90e76
+  SwiftCBOR: c7d740966575e0fd5d971466de2b6776db3f10c3
   SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
   ZIPFoundation: 89df685c971926b0323087952320bdfee9f0b6ef
 
-PODFILE CHECKSUM: 1475882d89eb044f48e0c5a58f533262c543b6b2
+PODFILE CHECKSUM: ae6c9c6642b06cebe5d03d78388858659530572a
 
 COCOAPODS: 1.9.0

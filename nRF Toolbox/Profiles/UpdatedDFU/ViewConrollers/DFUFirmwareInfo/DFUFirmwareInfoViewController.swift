@@ -13,7 +13,7 @@ class DFUFirmwareInfoViewController: UITableViewController, AlertPresenter {
 
     let router: DFURouterType
     private var firmware: DFUFirmware
-    let bluetoothManager: DFUBluetoothManager
+    let bluetoothManager: PeripheralHolder
     private let documentPicker = DFUDocumentPicker()
     private lazy var sections: [DFUActionSection] = [self.deviceInfoSection, self.firmwareInfoSection, self.updateSection]
     
@@ -41,7 +41,7 @@ class DFUFirmwareInfoViewController: UITableViewController, AlertPresenter {
         self.router.goToUpdate(firmware: self.firmware, peripheral: self.bluetoothManager.peripheral)
     }
     
-    init(firmware: DFUFirmware, bluetoothManager: DFUBluetoothManager, router: DFURouterType) {
+    init(firmware: DFUFirmware, bluetoothManager: PeripheralHolder, router: DFURouterType) {
         self.firmware = firmware
         self.bluetoothManager = bluetoothManager
         self.router = router

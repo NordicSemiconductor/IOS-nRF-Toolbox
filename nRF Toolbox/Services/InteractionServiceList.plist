@@ -26,5 +26,17 @@
 		<key>id</key>
 		<string>deviceFirmwareUpgrade</string>
 	</dict>
+    <dict>
+        <key>code</key>
+        <string>MCU</string>
+        <key>name</key>
+        <string>Zephyr DFU</string>
+        <key>icon</key>
+        <string>FeatureDFU</string>
+        <key>info</key>
+        <string></string>
+        <key>id</key>
+        <string>zephyrDFU</string>
+    </dict>
 </array>
 </plist>

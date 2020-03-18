@@ -6,4 +6,5 @@ target "nRF Toolbox" do
     pod 'CorePlot', '~> 2.2'
     pod 'Charts'
     pod 'AEXML', '~> 4.5'
+    pod 'McuManager', '~> 0.8.0'
 end

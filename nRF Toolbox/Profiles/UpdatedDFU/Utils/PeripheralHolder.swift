@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol DFUConnectionCallback: class {
+protocol PeripheralConnectionCallback: class {
     func peripheralWasSelected(_ peripheral: Peripheral)
 }
 
-class DFUBluetoothManager: NSObject, ConnectionViewControllerDelegate {
+class PeripheralHolder: NSObject, ConnectionViewControllerDelegate {
     private (set) var peripheral: Peripheral!
-    weak var callback: DFUConnectionCallback?
+    weak var callback: PeripheralConnectionCallback?
     
     func requestConnection(to peripheral: Peripheral) {
         self.peripheral = peripheral

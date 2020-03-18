@@ -27,7 +27,7 @@ class InfoActionView: UIView, XibInstantiable {
         }
     }
     
-    private var action: Action?
+    var action: Action?
     var buttonSettings: ButtonSettings? {
         didSet {
             actionButton.isHidden = buttonSettings == nil
@@ -39,8 +39,12 @@ class InfoActionView: UIView, XibInstantiable {
     typealias Action = (() -> Void)
     typealias ButtonSettings = (String, Action)
     
-    @IBAction private func executeAction(_ sender: UIButton) {
+    @IBAction func executeAction(_ sender: UIButton) {
         action?()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
     }
     
     static func instanceWithParams(message: String? = nil, image: UIImage? = nil, buttonSettings: ButtonSettings? = nil) -> InfoActionView {

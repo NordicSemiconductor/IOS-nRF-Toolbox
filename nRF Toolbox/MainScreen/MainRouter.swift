@@ -18,6 +18,7 @@ enum ServiceId: String, CaseIterable {
     case continuousGlucoseMonitor
     case uart
     case deviceFirmwareUpgrade
+    case zephyrDFU
     case proximity
     case homeKit
 }
@@ -35,6 +36,7 @@ protocol ServiceRouter {
 class DefaultMainRouter {
     
     private let dfuRouter: DFURouter = DFURouter(navigationController: UINavigationController.nordicBranded())
+    private let zephyrRouter: ZephyrDFURouterType = ZephyrDFURouter(navigationController: UINavigationController.nordicBranded())
     
     private lazy var serviceViewControllers: [ServiceId : UIViewController] = {
         return [
@@ -50,7 +52,10 @@ class DefaultMainRouter {
             .homeKit : HKViewController.instance(),
             .uart : UARTTabBarController()
             ].mapValues { UINavigationController.nordicBranded(rootViewController: $0) }
-        .merging([.deviceFirmwareUpgrade : dfuRouter.initialState()], uniquingKeysWith: {n, _ in n})
+        .merging([
+            .deviceFirmwareUpgrade : dfuRouter.initialState(),
+            .zephyrDFU : zephyrRouter.setInitialState()
+        ], uniquingKeysWith: {n, _ in n})
     }()
     
     lazy private var serviceList = ServiceListViewController(serviceRouter: self)

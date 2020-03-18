@@ -37,6 +37,10 @@ class DFUUpdateProgressView: UIView, XibInstantiable {
             
             progressView.tintColor = colorImage.0
             statusLabel.textColor = style == .error ? .nordicRed : UIColor.Text.secondarySystemText
+            
+            if style != .update {
+                stopAnimating()
+            }
         }
     }
     

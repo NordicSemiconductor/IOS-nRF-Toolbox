@@ -20,11 +20,10 @@ protocol DFURouterType: class {
     
     func getStartViewController() -> DFUStartViewController
     @discardableResult func goToBluetoothConnector(scanner: PeripheralScanner, presentationType: PresentationType, callback: @escaping (Peripheral) -> () ) -> ConnectionViewController
-    @discardableResult func goToFileSelection() -> DFUFileSelector
+    @discardableResult func goToFileSelection() -> DFUFileSelectorViewController
     @discardableResult func goToFirmwareInfo(firmware: DFUFirmware) -> DFUFirmwareInfoViewController
     func goToUpdate(firmware: DFUFirmware, peripheral: Peripheral)
-    @discardableResult
-    func goToHMAccessoryList() -> HMAccessoryListTableViewController
+    @discardableResult func goToHMAccessoryList() -> HMAccessoryListTableViewController
 }
 
 class DFURouter: DFURouterType {
@@ -37,10 +36,11 @@ class DFURouter: DFURouterType {
     func goToUpdate(firmware: DFUFirmware, peripheral: Peripheral) {
         let vc = DFUUpdateTabBarViewController(router: self, firmware: firmware, peripheral: peripheral)
 //        navigationController.setViewControllers([vc], animated: true)
+        // TODO: Prevent back action
         navigationController.pushViewController(vc, animated: true)
     }
     
-    private let btManager = DFUBluetoothManager()
+    private let btManager = PeripheralHolder()
     
     let navigationController: UINavigationController
     
@@ -58,8 +58,8 @@ class DFURouter: DFURouterType {
     }
     
     @discardableResult
-    func goToFileSelection() -> DFUFileSelector {
-        let vc = DFUFileSelector(router: self)
+    func goToFileSelection() -> DFUFileSelectorViewController {
+        let vc = DFUFileSelectorViewController(router: self, documentPicker: DFUDocumentPicker())
         navigationController.pushViewController(vc, animated: true)
         return vc
     }
@@ -89,15 +89,13 @@ class DFURouter: DFURouterType {
     
     func initialState() -> UIViewController {
         let vc = getStartViewController()
-        
-//        let vc = DFUUpdateViewController()
         navigationController.viewControllers = [vc]
         return navigationController
     }
     
 }
 
-extension DFURouter: DFUConnectionCallback {
+extension DFURouter: PeripheralConnectionCallback {
     func peripheralWasSelected(_ peripheral: Peripheral) {
         storedBluetoothCallback(peripheral)
     }
