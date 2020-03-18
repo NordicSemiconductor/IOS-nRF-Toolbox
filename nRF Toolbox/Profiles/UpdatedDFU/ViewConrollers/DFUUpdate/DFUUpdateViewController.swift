@@ -9,13 +9,25 @@
 import UIKit
 import iOSDFULibrary
 
-class UpgradeTableViewController: UITableViewController {
+protocol UpgradeManager {
+    func stop()
+    func pause()
+    func resume()
+}
+
+class UpgradeTableViewController<T: UpgradeManager>: UITableViewController {
     private (set) var headerView: DFUUpdateProgressView!
     let peripheral: Peripheral
+    weak var router: DFUUpdateRouter?
+    var manager: T?
     
-    init(peripheral: Peripheral) {
+    private (set) var controlSection = ControlSection()
+    private (set) var stopSection = ControlSection()
+    
+    init(peripheral: Peripheral, router: DFUUpdateRouter?) {
         self.peripheral = peripheral
         self.headerView = DFUUpdateProgressView.instance()
+        self.router = router
         
         if #available(iOS 13, *) {
             super.init(style: .insetGrouped)
@@ -45,12 +57,71 @@ class UpgradeTableViewController: UITableViewController {
         headerView.frame.size.height = 240
         tableView.tableHeaderView = headerView
         
+        controlSection.items = [.pause]
+        stopSection.items = [.stop]
+        
+        controlSection.callback = { [unowned self] item in
+            switch item.id {
+            case .resume: self.resume()
+            case .pause: self.pause()
+            case .done: self.router?.done()
+            case .retry: self.retry()
+            case .showLog: self.router?.showLogs()
+            case .stop: self.stop()
+            default: break
+            }
+        }
+        
+        stopSection.callback = { [unowned self] _ in
+            self.stop()
+        }
+        
+        update()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    func update() {
+        
+    }
+    
+    func stop() {
+        manager?.pause()
+        
+        let stopAction = UIAlertAction(title: "Stop", style: .destructive) { (_) in
+            _ = self.manager?.stop()
+            self.router?.done()
+        }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
+            self.manager?.resume()
+        }
+        
+        let alert = UIAlertController(title: "Stop", message: "Are you sure you want to stop DFU process", preferredStyle: .alert)
+        alert.addAction(cancel)
+        alert.addAction(stopAction)
+        
+        present(alert, animated: true)
+    }
+    
+    func retry() {
+        update()
+    }
+    
+    func pause() {
+        manager?.pause()
+        controlSection.items = [.resume]
+        headerView.stopAnimating()
+        tableView.reloadData()
+    }
+    
+    func resume() {
+        manager?.resume()
+        controlSection.items = [.pause]
+        headerView.startAnimating()
+        tableView.reloadData()
     }
 }
+
+
 
 class DFUUpdateViewController: UITableViewController {
     
