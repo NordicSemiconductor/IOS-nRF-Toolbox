@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16085" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16078.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,14 +20,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="btc-i6-bLA">
-                    <rect key="frame" x="135" y="392.5" width="144.5" height="111"/>
+                    <rect key="frame" x="135.5" y="335" width="143" height="226.5"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="752" image="Logo_RGB_Ver_pdf" translatesAutoresizingMaskIntoConstraints="NO" id="7vn-iH-Lm8">
-                            <rect key="frame" x="64" y="0.0" width="16" height="16"/>
+                            <rect key="frame" x="0.0" y="0.0" width="143" height="122"/>
                             <color key="tintColor" red="0.46274509803921571" green="0.52549019607843139" blue="0.5725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Content" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8xH-ne-gyr">
-                            <rect key="frame" x="0.0" y="32" width="144.5" height="33"/>
+                            <rect key="frame" x="2.5" y="138" width="138" height="32.5"/>
                             <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="28"/>
                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
@@ -37,10 +35,11 @@
                                 <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="32"/>
                             </variation>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SmD-yx-OvG">
-                            <rect key="frame" x="12" y="81" width="120" height="30"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SmD-yx-OvG" customClass="NordicButton" customModule="nRF_Toolbox" customModuleProvider="target">
+                            <rect key="frame" x="11.5" y="186.5" width="120" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="iQp-Ql-KH6"/>
+                                <constraint firstAttribute="height" constant="40" id="jXC-eI-CQZ"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <state key="normal" title="Settings">
@@ -64,10 +63,11 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
-                <outlet property="actionButton" destination="SmD-yx-OvG" id="Twq-mx-FBR"/>
-                <outlet property="imageView" destination="7vn-iH-Lm8" id="1U6-S0-V8h"/>
-                <outlet property="messageLabel" destination="8xH-ne-gyr" id="CYR-Gg-ptz"/>
+                <outlet property="actionButton" destination="SmD-yx-OvG" id="sBR-Na-BKE"/>
+                <outlet property="imageView" destination="7vn-iH-Lm8" id="rHf-ER-tnC"/>
+                <outlet property="messageLabel" destination="8xH-ne-gyr" id="i8a-vf-Ji9"/>
             </connections>
+            <point key="canvasLocation" x="139" y="154"/>
         </view>
     </objects>
     <resources>

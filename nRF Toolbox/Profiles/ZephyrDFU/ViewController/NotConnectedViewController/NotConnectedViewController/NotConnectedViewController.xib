@@ -15,6 +15,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NotConnectedViewController" customModule="nRF_Toolbox" customModuleProvider="target">
             <connections>
+                <outlet property="button" destination="aaK-aJ-b8J" id="mxm-Nk-69r"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -24,17 +25,17 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="UH9-eo-wF1">
-                    <rect key="frame" x="138" y="332" width="138" height="232.5"/>
+                    <rect key="frame" x="65" y="327" width="284" height="242.5"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="752" image="bluetooth_disabled" translatesAutoresizingMaskIntoConstraints="NO" id="G52-HI-k6u">
-                            <rect key="frame" x="0.0" y="0.0" width="138" height="138"/>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="G52-HI-k6u">
+                            <rect key="frame" x="73" y="0.0" width="138" height="138"/>
                             <color key="tintColor" red="0.46274509800000002" green="0.52549019610000003" blue="0.57254901960000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="G52-HI-k6u" secondAttribute="height" multiplier="1:1" id="nEr-BJ-wRN"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Content" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tvx-4N-dMr">
-                            <rect key="frame" x="0.0" y="154" width="138" height="32.5"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Device is not connected" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tvx-4N-dMr">
+                            <rect key="frame" x="0.0" y="154" width="284" height="32.5"/>
                             <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="28"/>
                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
@@ -42,10 +43,11 @@
                                 <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="32"/>
                             </variation>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aaK-aJ-b8J">
-                            <rect key="frame" x="9" y="202.5" width="120" height="30"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aaK-aJ-b8J" customClass="NordicButton" customModule="nRF_Toolbox" customModuleProvider="target">
+                            <rect key="frame" x="82" y="202.5" width="120" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="MKK-ji-jR3"/>
+                                <constraint firstAttribute="height" constant="40" id="tUZ-90-s3k"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <state key="normal" title="Settings">
@@ -60,7 +62,6 @@
             </subviews>
             <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="G52-HI-k6u" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="1:3" id="II2-Zk-N2x"/>
                 <constraint firstItem="UH9-eo-wF1" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Upm-B4-dkl"/>
                 <constraint firstItem="UH9-eo-wF1" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="YLF-dK-ATu"/>
             </constraints>
@@ -73,7 +74,4 @@
             <point key="canvasLocation" x="139" y="154"/>
         </view>
     </objects>
-    <resources>
-        <image name="bluetooth_disabled" width="24" height="24"/>
-    </resources>
 </document>

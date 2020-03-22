@@ -73,7 +73,9 @@ class UARTTabBarController: UITabBarController {
             self.present(nc, animated: true, completion: nil)
         })
 
-        emptyView = InfoActionView.instanceWithParams(message: "Device is not connected", buttonSettings: bSettings)
+        let emptyView = InfoActionView.instanceWithParams(message: "Device is not connected", buttonSettings: bSettings)
+        emptyView.actionButton.style = .mainAction
+        self.emptyView = emptyView
         addEmptyView()
         btManager.delegate = self
         

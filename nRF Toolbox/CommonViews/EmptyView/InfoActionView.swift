@@ -9,9 +9,9 @@
 import UIKit
 
 class InfoActionView: UIView, XibInstantiable {
-    @IBOutlet private var messageLabel: UILabel!
-    @IBOutlet private var actionButton: UIButton!
-    @IBOutlet private var imageView: UIImageView!
+    @IBOutlet var messageLabel: UILabel!
+    @IBOutlet var actionButton: NordicButton!
+    @IBOutlet var imageView: UIImageView!
     
     var message: String? {
         didSet {
@@ -58,16 +58,10 @@ class InfoActionView: UIView, XibInstantiable {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        actionButton.layer.borderColor = UIColor.tableViewSeparator.cgColor
-        actionButton.layer.borderWidth = 2
-        actionButton.layer.cornerRadius = 2
-        actionButton.contentEdgeInsets = UIEdgeInsets(top: 6, left: 8, bottom: 6, right: 8)
         
-        #if BETA
         if #available(iOS 13.0, *) {
             backgroundColor = .systemBackground
             imageView.tintColor = .systemGray3
         }
-        #endif
     }
 }

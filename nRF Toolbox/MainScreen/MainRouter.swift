@@ -29,7 +29,6 @@ protocol MainRouter {
 
 protocol ServiceRouter {
     func showServiceController(with serviceId: ServiceId)
-//    func showServiceController(_ model: BLEService)
     func showLinkController(_ link: LinkService)
 }
 
@@ -40,7 +39,6 @@ class DefaultMainRouter {
     
     private lazy var serviceViewControllers: [ServiceId : UIViewController] = {
         return [
-//            .deviceFirmwareUpgrade : dfuRouter.initialState(),
             .heartRateMonitor : HeartRateMonitorTableViewController(),
             .bloodPressureMonitoring : BloodPressureTableViewController(),
             .glucoseMonitoring : GlucoseMonitorViewController(),

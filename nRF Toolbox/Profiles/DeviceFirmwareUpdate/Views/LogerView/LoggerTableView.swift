@@ -112,6 +112,7 @@ extension LoggerTableView: UITableViewDataSource {
         let cell = tableView.dequeueCell(ofType: LogTableViewCell.self)
         let log = filteredData[indexPath.row]
         cell.update(with: log)
+        cell.selectionStyle = .none
         return cell
     }
 }

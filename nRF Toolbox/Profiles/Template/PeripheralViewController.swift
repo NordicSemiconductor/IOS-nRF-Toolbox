@@ -65,8 +65,10 @@ class PeripheralViewController: UIViewController, StatusDelegate {
             let bSettings: InfoActionView.ButtonSettings = ("Connect", { [unowned self] in
                 self.openConnectorViewController()
             })
-
+            
             let notContent = InfoActionView.instanceWithParams(message: "Device is not connected", buttonSettings: bSettings)
+            notContent.actionButton.style = .mainAction
+            
             view = notContent
         case .connected(let peripheral):
             dismiss(animated: true, completion: nil)

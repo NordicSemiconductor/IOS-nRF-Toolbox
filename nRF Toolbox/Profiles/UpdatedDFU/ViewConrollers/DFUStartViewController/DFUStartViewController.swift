@@ -10,6 +10,9 @@ import UIKit
 
 class DFUStartViewController: UIViewController {
     
+    @IBOutlet private var connectButton: NordicButton!
+    @IBOutlet private var accessoriesButton: NordicButton!
+    
     private let router: DFURouterType
     
     init(router: DFURouterType) {
@@ -24,6 +27,9 @@ class DFUStartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "DFU"
+        
+        connectButton.style = .mainAction
+        accessoriesButton.style = .mainAction
     }
 
     @IBAction func openBluetoothConnector() {

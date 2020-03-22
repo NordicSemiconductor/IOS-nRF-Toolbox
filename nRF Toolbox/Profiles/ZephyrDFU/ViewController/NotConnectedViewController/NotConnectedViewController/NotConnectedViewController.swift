@@ -11,6 +11,7 @@ import UIKit
 class NotConnectedViewController: UIViewController {
     
     weak var router: ZephyrDFURouterType?
+    @IBOutlet private var button: NordicButton!
     
     init(router: ZephyrDFURouterType) {
         self.router = router
@@ -27,6 +28,8 @@ class NotConnectedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        button.style = .mainAction
         
         self.actienView.action = { [weak self] in
             self?.router?.goToPeripheralSelector(scanner: PeripheralScanner(services: nil), presentationType: .push, callback: { (preipheral) in

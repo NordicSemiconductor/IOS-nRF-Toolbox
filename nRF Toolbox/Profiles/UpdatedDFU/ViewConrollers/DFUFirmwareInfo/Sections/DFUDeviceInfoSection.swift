@@ -20,7 +20,7 @@ class DFUDeviceInfoSection: DFUActionSection {
     func dequeCell(for index: Int, from tableView: UITableView) -> UITableViewCell {
         guard index != 2 else {
             let cell = tableView.dequeueCell(ofType: NordicActionTableViewCell.self)
-            cell.textLabel?.text = "Chose another device"
+            cell.textLabel?.text = "Choose another device"
             return cell
         }
         

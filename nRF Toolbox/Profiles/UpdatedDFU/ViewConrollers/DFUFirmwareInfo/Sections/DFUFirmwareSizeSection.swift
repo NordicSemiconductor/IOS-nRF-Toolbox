@@ -28,7 +28,7 @@ class DFUFirmwareSizeSection: DFUActionSection {
             return cell
         case firmware.size.segments.count + 1:
             let cell = tableView.dequeueCell(ofType: NordicActionTableViewCell.self)
-            cell.textLabel?.text = "Change Destribution Package"
+            cell.textLabel?.text = "Change Distribution Package"
             return cell
         default:
             let segment = firmware.size.segments[index - 1]

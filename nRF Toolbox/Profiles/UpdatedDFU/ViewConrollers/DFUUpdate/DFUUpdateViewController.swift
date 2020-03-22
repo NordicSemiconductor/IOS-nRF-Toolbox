@@ -194,12 +194,15 @@ extension DFUUpdateViewController: DFUServiceDelegate {
         case .connecting:
             headerView.style = .update
             controlSection.items = []
+            stopSection.items = [.stop]
         case .completed:
             headerView.style = .done
-            controlSection.items = [.showLog, .done]
+            controlSection.items = [.done]
+            stopSection.items = []
         case .uploading:
             headerView.startAnimating()
             controlSection.items = [.pause]
+            stopSection.items = [.stop]
         default:
             break
         }
@@ -210,7 +213,8 @@ extension DFUUpdateViewController: DFUServiceDelegate {
     func dfuError(_ error: DFUError, didOccurWithMessage message: String) {
         headerView.style = .error
         headerView.statusLabel.text = message
-        controlSection.items = [.retry, .showLog, .done]
+        controlSection.items = [.retry, .done]
+        stopSection.items = []
         tableView.reloadData()
     }
     

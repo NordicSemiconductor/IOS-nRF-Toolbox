@@ -15,6 +15,8 @@ class LoggerTableViewController: UITableViewController {
     init(observer: LoggObserver) {
         self.observer = observer
         super.init(nibName: "LoggerTableViewController", bundle: .main)
+        
+        tabBarItem = UITabBarItem(title: "Logs", image: TabBarIcon.uartLogs.image, selectedImage: TabBarIcon.uartLogs.filledImage)
     }
     
     override func viewDidLoad() {
@@ -34,7 +36,6 @@ class LoggerTableViewController: UITableViewController {
         }
         
         navigationItem.title = "Logs"
-        tabBarItem = UITabBarItem(title: "Logs", image: TabBarIcon.uartLogs.image, selectedImage: TabBarIcon.uartLogs.filledImage)
     }
     
     required init?(coder: NSCoder) {
