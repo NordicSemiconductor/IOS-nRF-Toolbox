@@ -8,7 +8,7 @@
 
 import Foundation
 
-class UARTMacroFileManager: NSObject {
+class UARTMacroFileManager {
     
     enum Error: Swift.Error {
         case noDataAtUrl
@@ -18,7 +18,6 @@ class UARTMacroFileManager: NSObject {
     
     init(fileManager: FileManager = .default) {
         self.fileManager = fileManager
-        super.init()
     }
     
     func save(_ macro: UARTMacro, sholdUpdate: Bool = false) throws {

@@ -57,4 +57,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         Log(category: .app, type: .fault).log(message: "Applications will terminate")
     }
+    
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        
+        if DFUPacketManager().handleUrl(url) {
+            router.showServiceController(with: .deviceFirmwareUpgrade)
+        }
+        
+        return true
+    }
+    
 }

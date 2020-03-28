@@ -45,6 +45,7 @@
 		016EF388241632AF005FFA30 /* LoggerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016EF386241632AF005FFA30 /* LoggerTableViewController.swift */; };
 		016EF389241632AF005FFA30 /* LoggerTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 016EF387241632AF005FFA30 /* LoggerTableViewController.xib */; };
 		01797E8323F4242500B26BF2 /* ModernIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01797E8223F4242500B26BF2 /* ModernIcon.swift */; };
+		0192BB352428E63C003F7F6B /* DFUFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0192BB342428E63C003F7F6B /* DFUFileManager.swift */; };
 		0197AFCF2420DAAC00ADF105 /* NotConnectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0197AFCD2420DAAC00ADF105 /* NotConnectedViewController.swift */; };
 		0197AFD02420DAAC00ADF105 /* NotConnectedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0197AFCE2420DAAC00ADF105 /* NotConnectedViewController.xib */; };
 		019985E423DEF23F000CDCB6 /* NordicTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019985E323DEF23F000CDCB6 /* NordicTextTableViewCell.swift */; };
@@ -99,6 +100,12 @@
 		01D6D2BB240696D000E1A66F /* DFURouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6D2BA240696D000E1A66F /* DFURouter.swift */; };
 		01D6D2C02406A1EF00E1A66F /* DFUStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6D2BE2406A1EF00E1A66F /* DFUStartViewController.swift */; };
 		01D6D2C12406A1EF00E1A66F /* DFUStartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01D6D2BF2406A1EF00E1A66F /* DFUStartViewController.xib */; };
+		01D98C85242E2855000A3B35 /* FileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D98C83242E2855000A3B35 /* FileTableViewCell.swift */; };
+		01D98C86242E2855000A3B35 /* FileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01D98C84242E2855000A3B35 /* FileTableViewCell.xib */; };
+		01D98C8C242E2B3C000A3B35 /* UIImage+File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D98C88242E2B3B000A3B35 /* UIImage+File.swift */; };
+		01D98C8E242E2B3C000A3B35 /* Dirrectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D98C8A242E2B3B000A3B35 /* Dirrectory.swift */; };
+		01D98C8F242E2B3C000A3B35 /* DocumentFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D98C8B242E2B3B000A3B35 /* DocumentFileManager.swift */; };
+		01D98C91242E33ED000A3B35 /* FSDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D98C90242E33ED000A3B35 /* FSDataSource.swift */; };
 		01DDD79C23EC5CDA003786ED /* TimeIntervalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DDD79A23EC5CDA003786ED /* TimeIntervalTableViewCell.swift */; };
 		01DDD79D23EC5CDA003786ED /* TimeIntervalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01DDD79B23EC5CDA003786ED /* TimeIntervalTableViewCell.xib */; };
 		01DDD7A023EC6351003786ED /* UARTMarcoElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DDD79F23EC6351003786ED /* UARTMarcoElement.swift */; };
@@ -357,6 +364,7 @@
 		016EF386241632AF005FFA30 /* LoggerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerTableViewController.swift; sourceTree = "<group>"; };
 		016EF387241632AF005FFA30 /* LoggerTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoggerTableViewController.xib; sourceTree = "<group>"; };
 		01797E8223F4242500B26BF2 /* ModernIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernIcon.swift; sourceTree = "<group>"; };
+		0192BB342428E63C003F7F6B /* DFUFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFileManager.swift; sourceTree = "<group>"; };
 		0197AFCD2420DAAC00ADF105 /* NotConnectedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotConnectedViewController.swift; sourceTree = "<group>"; };
 		0197AFCE2420DAAC00ADF105 /* NotConnectedViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotConnectedViewController.xib; sourceTree = "<group>"; };
 		019985E323DEF23F000CDCB6 /* NordicTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicTextTableViewCell.swift; sourceTree = "<group>"; };
@@ -411,6 +419,12 @@
 		01D6D2BA240696D000E1A66F /* DFURouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFURouter.swift; sourceTree = "<group>"; };
 		01D6D2BE2406A1EF00E1A66F /* DFUStartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUStartViewController.swift; sourceTree = "<group>"; };
 		01D6D2BF2406A1EF00E1A66F /* DFUStartViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DFUStartViewController.xib; sourceTree = "<group>"; };
+		01D98C83242E2855000A3B35 /* FileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTableViewCell.swift; sourceTree = "<group>"; };
+		01D98C84242E2855000A3B35 /* FileTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FileTableViewCell.xib; sourceTree = "<group>"; };
+		01D98C88242E2B3B000A3B35 /* UIImage+File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+File.swift"; sourceTree = "<group>"; };
+		01D98C8A242E2B3B000A3B35 /* Dirrectory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dirrectory.swift; sourceTree = "<group>"; };
+		01D98C8B242E2B3B000A3B35 /* DocumentFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentFileManager.swift; sourceTree = "<group>"; };
+		01D98C90242E33ED000A3B35 /* FSDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSDataSource.swift; sourceTree = "<group>"; };
 		01DDD79A23EC5CDA003786ED /* TimeIntervalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalTableViewCell.swift; sourceTree = "<group>"; };
 		01DDD79B23EC5CDA003786ED /* TimeIntervalTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeIntervalTableViewCell.xib; sourceTree = "<group>"; };
 		01DDD79F23EC6351003786ED /* UARTMarcoElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMarcoElement.swift; sourceTree = "<group>"; };
@@ -997,6 +1011,17 @@
 			path = ViewConrollers;
 			sourceTree = "<group>";
 		};
+		01D98C87242E2B21000A3B35 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				01D98C8A242E2B3B000A3B35 /* Dirrectory.swift */,
+				01D98C8B242E2B3B000A3B35 /* DocumentFileManager.swift */,
+				01D98C88242E2B3B000A3B35 /* UIImage+File.swift */,
+				01D98C90242E33ED000A3B35 /* FSDataSource.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		01DDD79923EC5941003786ED /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1078,7 +1103,9 @@
 		01FBC5032407C25E00B1056B /* DFUFileSelector */ = {
 			isa = PBXGroup;
 			children = (
-				01FBC50D24080CE800B1056B /* Sections */,
+				01D98C87242E2B21000A3B35 /* Utils */,
+				0192BB342428E63C003F7F6B /* DFUFileManager.swift */,
+				01FBC50D24080CE800B1056B /* Cell */,
 				01FBC5042407C2B000B1056B /* FileSelectorViewController.swift */,
 				01FBC5052407C2B000B1056B /* FileSelectorViewController.xib */,
 			);
@@ -1095,11 +1122,13 @@
 			path = DFUFirmwareInfo;
 			sourceTree = "<group>";
 		};
-		01FBC50D24080CE800B1056B /* Sections */ = {
+		01FBC50D24080CE800B1056B /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				01D98C83242E2855000A3B35 /* FileTableViewCell.swift */,
+				01D98C84242E2855000A3B35 /* FileTableViewCell.xib */,
 			);
-			path = Sections;
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		01FBC50E24080FF600B1056B /* Cells */ = {
@@ -2027,6 +2056,7 @@
 				019985EF23E0622B000CDCB6 /* UARTLoggerViewController.xib in Resources */,
 				0169B5A023FBD90E00907C1B /* NordicTextFieldCell.xib in Resources */,
 				4322034223CC773F009840DD /* UARTActionCollectionViewCell.xib in Resources */,
+				01D98C86242E2855000A3B35 /* FileTableViewCell.xib in Resources */,
 				20D08DFE232929A400569587 /* BGMTableViewCell.xib in Resources */,
 				01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */,
 				20E07B622306975700FCB205 /* GT-Eesti-Display-Bold.ttf in Resources */,
@@ -2264,6 +2294,7 @@
 				01BE0958234A76D4006ACF06 /* Peripheral+Temperature.swift in Sources */,
 				304299241CE6114000E1D2AB /* TutorialViewController.swift in Sources */,
 				20C7FE0E230A9F9300B06FD8 /* LinkTableViewCell.swift in Sources */,
+				01D98C8C242E2B3C000A3B35 /* UIImage+File.swift in Sources */,
 				012C2BE32410682D005EC1A0 /* SegmentedView.swift in Sources */,
 				01BE0955234A7500006ACF06 /* HealthTemperatureSection.swift in Sources */,
 				01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */,
@@ -2294,11 +2325,13 @@
 				3069A1D71CDC788A003869EA /* BluetoothManager.swift in Sources */,
 				20136505234785DC00C5AF1F /* Peripheral+BloodPressure.swift in Sources */,
 				3042993D1CE6154100E1D2AB /* BaseViewController.swift in Sources */,
+				01D98C91242E33ED000A3B35 /* FSDataSource.swift in Sources */,
 				01FBC5102408101B00B1056B /* NordicRightDetailTableViewCell.swift in Sources */,
 				20D08E2B232B95B300569587 /* DisclosureTableViewCell.swift in Sources */,
 				2002A0052322610F00C43E06 /* GlucoseMonitorViewController.swift in Sources */,
 				01BEADD4241A992300FC7183 /* HMAccessoryListTableViewController.swift in Sources */,
 				01B6D3DC234CB755000942C4 /* HeartRateLocationCharacteristic.swift in Sources */,
+				01D98C8E242E2B3C000A3B35 /* Dirrectory.swift in Sources */,
 				01A870D823F409BB00D9202E /* UARTFilterLogViewController.swift in Sources */,
 				20C7FE50230E789F00B06FD8 /* MainRouter.swift in Sources */,
 				201364FF2345D0EA00C5AF1F /* CuffPressureSection.swift in Sources */,
@@ -2341,6 +2374,7 @@
 				3001EBBF1D1BE727008C5C37 /* CGMSpecificOperations.swift in Sources */,
 				203D0F09232F782200C0340D /* CyclingTableViewController.swift in Sources */,
 				203D0F0C232FB7D100C0340D /* DetailsTableViewSection.swift in Sources */,
+				01D98C8F242E2B3C000A3B35 /* DocumentFileManager.swift in Sources */,
 				01B6D3DA234CB6B3000942C4 /* HeartRateSection.swift in Sources */,
 				01268AF724218BED00E83156 /* ZephyrFileSelector.swift in Sources */,
 				20027B08233E116600A0B5ED /* StrideSection.swift in Sources */,
@@ -2351,9 +2385,11 @@
 				339764F85119305F6958B516 /* LastDataSection.swift in Sources */,
 				015F1098240FA06D00FDAC49 /* DFUActionSection.swift in Sources */,
 				339763D0A0642AF6C7E7AA85 /* StartStopSection.swift in Sources */,
+				01D98C85242E2855000A3B35 /* FileTableViewCell.swift in Sources */,
 				3397653E200A1711DC0AA009 /* ContinuousGlucoseMonitorMeasurement.swift in Sources */,
 				33976843D672C14301E9C917 /* SessionStartTime.swift in Sources */,
 				339762F1FAFD0B4E24D99501 /* GlucoseValueList.swift in Sources */,
+				0192BB352428E63C003F7F6B /* DFUFileManager.swift in Sources */,
 				01675E7123F6D1BE00FC0519 /* UARTPresetTableViewCell.swift in Sources */,
 				01E5910B23DECF61008F15A4 /* UARTMacrosList.swift in Sources */,
 				33976C75E25FBF443EB251CD /* Bool+Ext.swift in Sources */,

@@ -85,6 +85,7 @@ class UpgradeTableViewController<T: UpgradeManager>: UITableViewController {
     
     func stop() {
         manager?.pause()
+        headerView.stopAnimating()
         
         let stopAction = UIAlertAction(title: "Stop", style: .destructive) { (_) in
             _ = self.manager?.stop()
@@ -93,6 +94,7 @@ class UpgradeTableViewController<T: UpgradeManager>: UITableViewController {
         
         let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
             self.manager?.resume()
+            self.headerView.startAnimating()
         }
         
         let alert = UIAlertController(title: "Stop", message: "Are you sure you want to stop DFU process", preferredStyle: .alert)

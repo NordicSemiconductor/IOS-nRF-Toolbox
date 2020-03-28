@@ -45,7 +45,7 @@ class ZephyrDFURouter: ZephyrDFURouterType {
     }
     
     func goToPeripheralSelector(scanner: PeripheralScanner, presentationType: PresentationType = .push, callback: @escaping (Peripheral) -> ()) -> ConnectionViewController {
-        let vc = ConnectionViewController(scanner: PeripheralScanner(services: nil))
+        let vc = ConnectionViewController(scanner: PeripheralScanner(services: nil), presentationType: presentationType)
         
         storedBluetoothCallback = callback
         vc.delegate = btManager

@@ -82,6 +82,8 @@ extension DefaultMainRouter: ServiceRouter {
             Log(category: .ui, type: .error).log(message: "Cannot find view controller for \(serviceId) service id")
             return
         }
+        
+        guard (splitViewController.viewControllers.last as? UINavigationController)?.viewControllers.last != viewController else { return }
         splitViewController.showDetailViewController(viewController, sender: self)
     }
     
