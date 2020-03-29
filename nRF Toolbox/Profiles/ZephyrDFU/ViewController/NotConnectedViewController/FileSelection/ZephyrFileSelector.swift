@@ -64,6 +64,7 @@ class ZephyrFileSelector: FileSelectorViewController<Data> {
     init(router: ZephyrDFURouterType? = nil, documentPicker: DocumentPicker<Data>) {
         self.router = router
         super.init(documentPicker: documentPicker)
+        filterExtension = "bin"
     }
     
     required init?(coder: NSCoder) {

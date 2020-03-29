@@ -13,6 +13,7 @@ class FileTableViewCell: UITableViewCell {
     @IBOutlet var fileImage: UIImageView!
     @IBOutlet var infoLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
+    @IBOutlet var leadingConstraint: NSLayoutConstraint!
     
     func update(_ model: FSNodeRepresentation) {
         nameLabel.text = model.name
@@ -24,13 +25,16 @@ class FileTableViewCell: UITableViewCell {
         dafeFormatter.dateStyle = .short
         dateLabel.text = model.modificationDate.flatMap { dafeFormatter.string(from: $0) }
         
-        contentView.layoutMargins.left = CGFloat(model.level * 16)
+        leadingConstraint.constant = CGFloat(model.level * 12)
+        layoutIfNeeded()
         
         if model.node is Directory {
             self.selectionStyle = .none
         } else {
             self.selectionStyle = .default
         }
+        
+        fileImage.alpha = model.valid ? 1 : 0.5
         
     }
     

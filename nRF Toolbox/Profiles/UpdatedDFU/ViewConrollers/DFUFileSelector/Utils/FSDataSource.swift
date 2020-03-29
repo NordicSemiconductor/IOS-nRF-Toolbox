@@ -20,10 +20,12 @@ struct FSNodeRepresentation {
     
     var modificationDate: Date?
     var sizeInfo: String
+    var valid: Bool
 }
 
 struct FSDataSource {
     var items: [FSNodeRepresentation] = []
+    var fileExtensionFilter: String?
     
     mutating func updateItems(_ dir: Directory) {
         self.items = items(dir, level: 0)
@@ -31,6 +33,13 @@ struct FSDataSource {
     
     func items(_ dir: Directory, level: Int = 0) -> [FSNodeRepresentation] {
         dir.nodes.reduce([FSNodeRepresentation]()) { (result, node) in
+            let valid: Bool
+            if node is File, let ext = fileExtensionFilter, node.url.pathExtension != ext {
+                valid = false
+            } else {
+                valid = true
+            }
+            
             var res = result
             let image = (node is Directory)
                 ? ImageWrapper(icon: .folder, imageName: "folder").image
@@ -43,7 +52,7 @@ struct FSDataSource {
                 infoText = ByteCountFormatter().string(fromByteCount: Int64((node as! File).size))
             }
             
-            res.append(FSNodeRepresentation(node: node, level: level, name: node.name, collapsed: false, size: 0, image: image!, modificationDate: node.resourceModificationDate, sizeInfo: infoText))
+            res.append(FSNodeRepresentation(node: node, level: level, name: node.name, collapsed: false, size: 0, image: image!, modificationDate: node.resourceModificationDate, sizeInfo: infoText, valid: valid))
             if let dir = node as? Directory {
                 res.append(contentsOf: self.items(dir, level: level + 1))
             }

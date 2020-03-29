@@ -71,6 +71,7 @@
                 <outlet property="dateLabel" destination="6eA-d3-cqt" id="gzD-Vu-Vba"/>
                 <outlet property="fileImage" destination="EQr-aE-iZv" id="rJG-IA-vCU"/>
                 <outlet property="infoLabel" destination="21z-az-adw" id="zph-Zv-qM6"/>
+                <outlet property="leadingConstraint" destination="69q-PB-oxY" id="SBU-AP-Caz"/>
                 <outlet property="nameLabel" destination="tVs-Y4-2hP" id="OZd-47-K3Q"/>
             </connections>
             <point key="canvasLocation" x="-236" y="180"/>

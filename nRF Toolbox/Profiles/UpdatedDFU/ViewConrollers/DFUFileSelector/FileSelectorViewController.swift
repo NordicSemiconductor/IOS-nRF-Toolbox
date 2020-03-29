@@ -16,6 +16,11 @@ class FileSelectorViewController<T>: UIViewController, AlertPresenter, UITableVi
     private var documentFileManager = DocumentFileManager()
     private var fsItems: [FSNodeRepresentation] = []
     private (set) var dataSource = FSDataSource()
+    var filterExtension: String? = nil  {
+        didSet {
+            dataSource.fileExtensionFilter = filterExtension
+        }
+    }
     
     @IBOutlet private var emptyView: UIView!
     @IBOutlet private var tableView: UITableView!
@@ -113,6 +118,7 @@ class DFUFileSelectorViewController: FileSelectorViewController<DFUFirmware> {
     init(router: DFURouterType, documentPicker: DocumentPicker<DFUFirmware>) {
         self.router = router
         super.init(documentPicker: documentPicker)
+        filterExtension = "zip"
     }
     
     required init?(coder: NSCoder) {
