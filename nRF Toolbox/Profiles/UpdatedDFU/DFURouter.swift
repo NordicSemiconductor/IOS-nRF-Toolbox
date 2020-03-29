@@ -35,9 +35,7 @@ class DFURouter: DFURouterType {
     
     func goToUpdate(firmware: DFUFirmware, peripheral: Peripheral) {
         let vc = DFUUpdateTabBarViewController(router: self, firmware: firmware, peripheral: peripheral)
-//        navigationController.setViewControllers([vc], animated: true)
-        // TODO: Prevent back action
-        navigationController.pushViewController(vc, animated: true)
+        navigationController.setViewControllers([vc], animated: true)
     }
     
     private let btManager = PeripheralHolder()

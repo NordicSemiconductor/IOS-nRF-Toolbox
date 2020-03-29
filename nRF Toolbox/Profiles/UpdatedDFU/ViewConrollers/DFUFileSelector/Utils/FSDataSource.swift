@@ -10,6 +10,8 @@ import Foundation
 import UIKit.UIImage
 
 struct FSNodeRepresentation {
+    var node: FSNode
+    
     var level: Int
     var name: String
     var collapsed: Bool
@@ -41,9 +43,8 @@ struct FSDataSource {
                 infoText = ByteCountFormatter().string(fromByteCount: Int64((node as! File).size))
             }
             
-            res.append(FSNodeRepresentation(level: level, name: node.name, collapsed: false, size: 0, image: image!, modificationDate: node.resourceModificationDate, sizeInfo: infoText))
+            res.append(FSNodeRepresentation(node: node, level: level, name: node.name, collapsed: false, size: 0, image: image!, modificationDate: node.resourceModificationDate, sizeInfo: infoText))
             if let dir = node as? Directory {
-                
                 res.append(contentsOf: self.items(dir, level: level + 1))
             }
             return res

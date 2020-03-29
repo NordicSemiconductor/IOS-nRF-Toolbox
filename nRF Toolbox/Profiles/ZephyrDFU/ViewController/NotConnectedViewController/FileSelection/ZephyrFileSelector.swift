@@ -58,12 +58,12 @@ class ZephyrFileManager: DFUFileManager<ZephyrPacket> {
     }
 }
 
-class ZephyrFileSelector: FileSelectorViewController<Data, ZephyrPacket> {
+class ZephyrFileSelector: FileSelectorViewController<Data> {
     weak var router: ZephyrDFURouterType?
     
     init(router: ZephyrDFURouterType? = nil, documentPicker: DocumentPicker<Data>) {
         self.router = router
-        super.init(documentPicker: documentPicker, fileManager: ZephyrFileManager())
+        super.init(documentPicker: documentPicker)
     }
     
     required init?(coder: NSCoder) {
@@ -72,6 +72,16 @@ class ZephyrFileSelector: FileSelectorViewController<Data, ZephyrPacket> {
     
     override func documentWasOpened(document: Data) {
         router?.goToUpdateScreen(data: document)
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let item = dataSource.items[indexPath.row].node
+        do {
+            let data = try Data(contentsOf: item.url)
+            documentWasOpened(document: data)
+        } catch let error {
+            displayErrorAlert(error: error)
+        }
     }
 }
 

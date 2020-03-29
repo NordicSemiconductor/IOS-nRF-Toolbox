@@ -16,6 +16,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FileSelectorViewController" customModule="nRF_Toolbox" customModuleProvider="target">
             <connections>
                 <outlet property="emptyView" destination="i5M-Pr-FkT" id="qYO-os-q0h"/>
+                <outlet property="selectButton" destination="aj7-fv-2Uc" id="OXP-lv-OZA"/>
                 <outlet property="tableView" destination="fKk-fd-ZvI" id="DeL-VV-Ae3"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -26,7 +27,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="YYR-1X-5km">
-                    <rect key="frame" x="88" y="314" width="238" height="268"/>
+                    <rect key="frame" x="88" y="310" width="238" height="276"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="doc" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="TIC-K9-8cu">
                             <rect key="frame" x="29" y="0.0" width="180" height="180"/>
@@ -43,10 +44,10 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aj7-fv-2Uc" customClass="NordicButton" customModule="nRF_Toolbox" customModuleProvider="target">
-                            <rect key="frame" x="79" y="236" width="80" height="32"/>
+                            <rect key="frame" x="39" y="236" width="160" height="40"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="32" id="aYq-0k-iWi"/>
-                                <constraint firstAttribute="width" constant="80" id="hpB-Rp-Nls"/>
+                                <constraint firstAttribute="height" constant="40" id="aYq-0k-iWi"/>
+                                <constraint firstAttribute="width" constant="160" id="hpB-Rp-Nls"/>
                             </constraints>
                             <state key="normal" title="Browse"/>
                             <connections>

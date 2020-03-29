@@ -9,25 +9,20 @@
 import UIKit
 import iOSDFULibrary
 
-
-
-class FileSelectorViewController<T, P: DFUPacket>: UIViewController, AlertPresenter, UITableViewDataSource, UITableViewDelegate {
-    
-    private let fileManager: DFUFileManager<P>
+class FileSelectorViewController<T>: UIViewController, AlertPresenter, UITableViewDataSource, UITableViewDelegate {
     
     private let documentPicker: DocumentPicker<T>
     
     private var documentFileManager = DocumentFileManager()
     private var fsItems: [FSNodeRepresentation] = []
-    private dataSource = FSDataSource()
+    private (set) var dataSource = FSDataSource()
     
-    private (set) var items: [P] = []
     @IBOutlet private var emptyView: UIView!
     @IBOutlet private var tableView: UITableView!
+    @IBOutlet private var selectButton: NordicButton!
     
-    init(documentPicker: DocumentPicker<T>, fileManager: DFUFileManager<P>) {
+    init(documentPicker: DocumentPicker<T>) {
         self.documentPicker = documentPicker
-        self.fileManager = fileManager
         super.init(nibName: "FileSelectorViewController", bundle: .main)
         navigationItem.title = "Select Package"
     }
@@ -38,9 +33,11 @@ class FileSelectorViewController<T, P: DFUPacket>: UIViewController, AlertPresen
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.registerCellClass(cell: NordicTextTableViewCell.self)
+        tableView.registerCellNib(cell: FileTableViewCell.self)
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadList), name: UIApplication.willEnterForegroundNotification, object: nil)
+        
+        selectButton.style = .mainAction
     }
     
     deinit {
@@ -62,7 +59,7 @@ class FileSelectorViewController<T, P: DFUPacket>: UIViewController, AlertPresen
             return
         }
         
-        if !items.isEmpty {
+        if !dataSource.items.isEmpty {
             view = tableView
             tableView.reloadData()
         } else {
@@ -86,27 +83,36 @@ class FileSelectorViewController<T, P: DFUPacket>: UIViewController, AlertPresen
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        items.count
+        dataSource.items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueCell(ofType: NordicTextTableViewCell.self)
-        cell.textLabel?.text = items[indexPath.row].name
+        let cell = tableView.dequeueCell(ofType: FileTableViewCell.self)
+        let item = dataSource.items[indexPath.row]
+        cell.update(item)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        UIDevice.current.userInterfaceIdiom == .pad ? 80 : 66
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
     
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        "Documents Directory"
+    }
+    
 }
 
-class DFUFileSelectorViewController: FileSelectorViewController<DFUFirmware, DFUDistributionPacket> {
+class DFUFileSelectorViewController: FileSelectorViewController<DFUFirmware> {
     weak var router: DFURouterType?
     
     init(router: DFURouterType, documentPicker: DocumentPicker<DFUFirmware>) {
         self.router = router
-        super.init(documentPicker: documentPicker, fileManager: DFUPacketManager())
+        super.init(documentPicker: documentPicker)
     }
     
     required init?(coder: NSCoder) {
@@ -118,6 +124,7 @@ class DFUFileSelectorViewController: FileSelectorViewController<DFUFirmware, DFU
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        items[indexPath.row].firmware.flatMap { documentWasOpened(document: $0) }
+        let item = dataSource.items[indexPath.row].node
+        DFUFirmware(urlToZipFile: item.url).flatMap { self.documentWasOpened(document: $0) }
     }
 }

@@ -20,11 +20,18 @@ class FileTableViewCell: UITableViewCell {
         infoLabel.text = model.sizeInfo
         
         let dafeFormatter = DateFormatter()
-        dafeFormatter.timeStyle = .short
+        dafeFormatter.timeStyle = .none
         dafeFormatter.dateStyle = .short
         dateLabel.text = model.modificationDate.flatMap { dafeFormatter.string(from: $0) }
         
-        contentView.layoutMargins.left = CGFloat(model.level * 12)
+        contentView.layoutMargins.left = CGFloat(model.level * 16)
+        
+        if model.node is Directory {
+            self.selectionStyle = .none
+        } else {
+            self.selectionStyle = .default
+        }
+        
     }
     
 }
