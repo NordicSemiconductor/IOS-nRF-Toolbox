@@ -14,7 +14,6 @@ class FileSelectorViewController<T>: UIViewController, AlertPresenter, UITableVi
     private let documentPicker: DocumentPicker<T>
     
     private var documentFileManager = DocumentFileManager()
-    private var fsItems: [FSNodeRepresentation] = []
     private (set) var dataSource = FSDataSource()
     var filterExtension: String? = nil  {
         didSet {
@@ -39,10 +38,13 @@ class FileSelectorViewController<T>: UIViewController, AlertPresenter, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.registerCellNib(cell: FileTableViewCell.self)
+        tableView.registerCellClass(cell: NordicActionTableViewCell.self)
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadList), name: UIApplication.willEnterForegroundNotification, object: nil)
         
         selectButton.style = .mainAction
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(reloadList))
     }
     
     deinit {
@@ -76,6 +78,10 @@ class FileSelectorViewController<T>: UIViewController, AlertPresenter, UITableVi
         
     }
     
+    func fileWasSelected(file: File) {
+        
+    }
+    
     @IBAction private func openDocumentPicker() {
         documentPicker.openDocumentPicker(presentOn: self) { [unowned self] (result) in
             switch result {
@@ -87,11 +93,21 @@ class FileSelectorViewController<T>: UIViewController, AlertPresenter, UITableVi
         }
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        dataSource.items.count
+        section == 0 ? dataSource.items.count : 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard indexPath.section == 0 else {
+            let cell = tableView.dequeueCell(ofType: NordicActionTableViewCell.self)
+            cell.textLabel?.text = "Import Another"
+            return cell
+        }
+        
         let cell = tableView.dequeueCell(ofType: FileTableViewCell.self)
         let item = dataSource.items[indexPath.row]
         cell.update(item)
@@ -99,15 +115,23 @@ class FileSelectorViewController<T>: UIViewController, AlertPresenter, UITableVi
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        UIDevice.current.userInterfaceIdiom == .pad ? 80 : 66
+        indexPath.section == 0
+            ? UIDevice.current.userInterfaceIdiom == .pad
+                ? 80
+                : 66
+            : 44
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        if indexPath.section == 1 {
+            openDocumentPicker()
+        } else if let file = dataSource.items[indexPath.row].node as? File, dataSource.items[indexPath.row].valid {
+            fileWasSelected(file: file)
+        }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        "Documents Directory"
+        section == 0 ? "Documents Directory" : ""
     }
     
 }
@@ -129,8 +153,12 @@ class DFUFileSelectorViewController: FileSelectorViewController<DFUFirmware> {
         router?.goToFirmwareInfo(firmware: document)
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = dataSource.items[indexPath.row].node
-        DFUFirmware(urlToZipFile: item.url).flatMap { self.documentWasOpened(document: $0) }
+    override func fileWasSelected(file: File) {
+        guard let firmware = DFUFirmware(urlToZipFile: file.url) else {
+            displayErrorAlert(error: QuickError(message: "Can not create Firmware from selected file"))
+            return
+        }
+        
+        documentWasOpened(document: firmware)
     }
 }

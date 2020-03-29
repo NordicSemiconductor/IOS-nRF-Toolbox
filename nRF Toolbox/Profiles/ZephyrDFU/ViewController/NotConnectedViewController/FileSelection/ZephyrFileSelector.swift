@@ -75,10 +75,9 @@ class ZephyrFileSelector: FileSelectorViewController<Data> {
         router?.goToUpdateScreen(data: document)
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = dataSource.items[indexPath.row].node
+    override func fileWasSelected(file: File) {
         do {
-            let data = try Data(contentsOf: item.url)
+            let data = try Data(contentsOf: file.url)
             documentWasOpened(document: data)
         } catch let error {
             displayErrorAlert(error: error)
