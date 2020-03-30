@@ -80,7 +80,7 @@ class HMAccessoryListTableViewController: UIViewController, AlertPresenter {
                 notContent.actionButton.style = .mainAction
                 notContent.messageLabel.text = "Open Settings to provide access to the Home Data"
                 
-                navigationItem.rightBarButtonItems = nil 
+                navigationItem.rightBarButtonItems = nil
 //                view = notContent
             case .restricted:
                 break
@@ -193,10 +193,26 @@ extension HMAccessoryListTableViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let activity: UIActivityIndicatorView
+        if #available(iOS 13.0, *) {
+            activity = UIActivityIndicatorView(style: .large)
+        } else {
+            activity = UIActivityIndicatorView(style: .gray)
+        }
+        
+        activity.center = tableView.center
+        tableView.addSubview(activity)
+        activity.startAnimating()
+        tableView.isUserInteractionEnabled = false
+        
         let accessory = sections[indexPath.section].items[indexPath.row]
         guard let service = accessory.services.first (where: { $0.serviceType == dfuServiceIdentifier }) else { return }
         guard let characteristic = service.characteristics.first(where: { $0.characteristicType == dfuControlPointIdentifier }) else { return }
         characteristic.writeValue(0x01) { (error) in
+            tableView.isUserInteractionEnabled = true
+            activity.stopAnimating()
+            
             if let e = error {
                 self.displayErrorAlert(error: e)
                 return
