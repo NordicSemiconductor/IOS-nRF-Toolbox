@@ -12,22 +12,27 @@ import HomeKit
 let dfuServiceIdentifier = "00001530-1212-EFDE-1523-785FEABCD123"
 //let dfuControlPointIdentifier = "00001531-1212-EFDE-1523-785FEABCD123"
 
-class HMAccessoryListTableViewController: UITableViewController, AlertPresenter {
+class HMAccessoryListTableViewController: UIViewController, AlertPresenter {
     
-    let hkManager = HMHomeManager()
+    var hkManager: HMHomeManager!
     
     private let router: DFURouterType?
     
-    private var suggestedAccessories: [HMAccessory] = []
-    private var unsupportedAccessories: [HMAccessory] = []
+//    private var suggestedAccessories: [HMAccessory] = []
+//    private var unsupportedAccessories: [HMAccessory] = []
+    
+    private var supportedSection = AccessoriesSection(sectionTitle: "Accessories with DFU Service", footer: "These accessories have DFU service and can be updated with Nordic DFU.", id: "supportedSection")
+    private var unsupportedSection = AccessoriesSection(sectionTitle: "All other accessories", footer: nil, id: "unsupportedSection")
+    
+    var sections: [AccessoriesSection] {
+        [supportedSection, unsupportedSection].filter { !$0.isHidden }
+    }
+    
+    @IBOutlet private var tableView: UITableView!
     
     init(router: DFURouterType?) {
         self.router = router
-        if #available(iOS 13, *) {
-            super.init(style: .insetGrouped)
-        } else {
-            super.init(style: .grouped)
-        }
+        super.init(nibName: "HMAccessoryListTableViewController", bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -37,12 +42,56 @@ class HMAccessoryListTableViewController: UITableViewController, AlertPresenter 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        hkManager = HMHomeManager()
+        
         tableView.registerCellClass(cell: NordicBottomDetailsTableViewCell.self)
-        hkManager.delegate = self
         
         navigationItem.title = "Accessories"
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addAccessory))
+        let addBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addAccessory))
+        let refreshBtn = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(update))
+        
+        navigationItem.rightBarButtonItems = [addBtn, refreshBtn]
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // TODO: Remove it from viewDidAppear. That is workaround
+        hkManager.delegate = self
+    }
+    
+    func checkAvailability() {
+        
+        if #available(iOS 13.0, *) {
+            switch hkManager.authorizationStatus {
+            case .determined:
+                let bSettings: InfoActionView.ButtonSettings = ("Settings", {
+                    let url = URL(string: "App-Prefs:root=Bluetooth") //for bluetooth setting
+                    let app = UIApplication.shared
+                    app.open(url!, options: [:], completionHandler: nil)
+                })
+
+                let notContent = InfoActionView.instanceWithParams(message: "Access denied", buttonSettings: bSettings)
+                notContent.actionButton.style = .mainAction
+                notContent.messageLabel.text = "Open Settings to provide access to the Home Data"
+                
+                navigationItem.rightBarButtonItems = nil 
+//                view = notContent
+            case .restricted:
+                break
+            case .authorized:
+                break
+            default:
+                break
+            }
+        } else {
+            // Fallback on earlier versions
+        }
     }
     
     @objc func addAccessory() {
@@ -53,21 +102,73 @@ class HMAccessoryListTableViewController: UITableViewController, AlertPresenter 
             }
         })
     }
-
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 2
+    
+    @objc private func update() {
+        homeManagerDidUpdateHomes(hkManager)
     }
+}
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return [suggestedAccessories, unsupportedAccessories][section].count
+extension HMAccessoryListTableViewController: HMHomeManagerDelegate {
+    func homeManagerDidUpdateHomes(_ manager: HMHomeManager) {
+        let (suggestedAccessories, unsupportedAccessories): ([HMAccessory], [HMAccessory]) = hkManager.homes.reduce([]) { $0 + $1.accessories }
+            .reduce(([], [])) {
+                var supported = $0.0
+                var unsupported = $0.1
+                if $1.services.contains(where: { $0.serviceType == dfuServiceIdentifier }) {
+                    supported.append($1)
+                } else {
+                    unsupported.append($1)
+                }
+                return (supported, unsupported)
+        }
+        
+        supportedSection.items = suggestedAccessories
+        unsupportedSection.items = unsupportedAccessories
+        
+        guard suggestedAccessories.count + unsupportedAccessories.count > 0 else {
+            let bSettings: InfoActionView.ButtonSettings = ("Add Accessory", {
+                self.addAccessory()
+            })
+
+            let notContent = InfoActionView.instanceWithParams(message: "Add new HomeKit Accessory", buttonSettings: bSettings)
+            notContent.messageLabel.text = "Currently there's no any HomeKit accessory. You can add the new one straight from nRF-ToolBox or from Home App."
+            notContent.actionButton.style = .mainAction
+            view = notContent
+            return
+        }
+        
+        view = tableView
+        tableView.reloadData()
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let accessory = [suggestedAccessories, unsupportedAccessories][indexPath.section][indexPath.row]
+    func homeManagerDidUpdatePrimaryHome(_ manager: HMHomeManager) {
+        
+    }
+    
+    @available(iOS 13.0, *)
+    func homeManager(_ manager: HMHomeManager, didReceiveAddAccessoryRequest request: HMAddAccessoryRequest) {
+        
+    }
+    
+    @available(iOS 13.0, *)
+    func homeManager(_ manager: HMHomeManager, didUpdate status: HMHomeManagerAuthorizationStatus) {
+        
+    }
+}
+
+extension HMAccessoryListTableViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return sections.count
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return sections[section].numberOfItems
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let accessory = sections[indexPath.section].items[indexPath.row]
         
         let homeName = hkManager.homes.first { $0.accessories.contains(accessory) }?.name
         let roomName = accessory.room?.name
@@ -79,17 +180,20 @@ class HMAccessoryListTableViewController: UITableViewController, AlertPresenter 
         
         return cell
     }
+}
+
+extension HMAccessoryListTableViewController: UITableViewDelegate {
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        section == 0 ? "Accessories with DFU Service" : "All other accessories"
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        sections[section].sectionTitle
     }
     
-    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        section == 0 ? "These accessories have DFU service and can be updated with Nordic DFU." : nil
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        sections[section].sectionFooter
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let accessory = [suggestedAccessories, unsupportedAccessories][indexPath.section][indexPath.row]
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let accessory = sections[indexPath.section].items[indexPath.row]
         guard let service = accessory.services.first (where: { $0.serviceType == dfuServiceIdentifier }) else { return }
         guard let characteristic = service.characteristics.first(where: { $0.characteristicType == dfuControlPointIdentifier }) else { return }
         characteristic.writeValue(0x01) { (error) in
@@ -103,68 +207,5 @@ class HMAccessoryListTableViewController: UITableViewController, AlertPresenter 
             })
             
         }
-    }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-}
-
-extension HMAccessoryListTableViewController: HMHomeManagerDelegate {
-    func homeManagerDidUpdateHomes(_ manager: HMHomeManager) {
-        (suggestedAccessories, unsupportedAccessories) = hkManager.homes.reduce([]) { $0 + $1.accessories }
-            .reduce(([], [])) {
-                var supported = $0.0
-                var unsupported = $0.1
-                if $1.services.contains(where: { $0.serviceType == dfuServiceIdentifier }) {
-                    supported.append($1)
-                } else {
-                    unsupported.append($1)
-                }
-                return (supported, unsupported)
-        }
-        tableView.reloadData()
     }
 }

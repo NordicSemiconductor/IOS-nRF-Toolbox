@@ -9,14 +9,15 @@
 import UIKit
 
 class InfoActionView: UIView, XibInstantiable {
+    @IBOutlet var titleLabel: UILabel!
     @IBOutlet var messageLabel: UILabel!
     @IBOutlet var actionButton: NordicButton!
     @IBOutlet var imageView: UIImageView!
     
     var message: String? {
         didSet {
-            messageLabel.text = message
-            messageLabel.isHidden = message == nil
+            titleLabel.text = message
+            titleLabel.isHidden = message == nil
         }
     }
     
@@ -49,7 +50,7 @@ class InfoActionView: UIView, XibInstantiable {
     
     static func instanceWithParams(message: String? = nil, image: UIImage? = nil, buttonSettings: ButtonSettings? = nil) -> InfoActionView {
         let view = InfoActionView.instance()
-        view.messageLabel.text = message
+        view.titleLabel.text = message
         view.imageView.image = image
         view.buttonSettings = buttonSettings
         
