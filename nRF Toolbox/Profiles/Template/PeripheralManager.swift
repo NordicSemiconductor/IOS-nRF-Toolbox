@@ -77,7 +77,7 @@ extension PeripheralManager: CBCentralManagerDelegate {
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        Log(category: .ble, type: .debug).log(message: "Discovered peripheral: \(advertisementData[CBAdvertisementDataLocalNameKey] as? String ?? "__unnamed__")")
+        SystemLog(category: .ble, type: .debug).log(message: "Discovered peripheral: \(advertisementData[CBAdvertisementDataLocalNameKey] as? String ?? "__unnamed__")")
 //        if case .some = peripheral.name {
 //        }
         self.peripherals.insert(peripheral)
@@ -85,17 +85,17 @@ extension PeripheralManager: CBCentralManagerDelegate {
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        Log(category: .ble, type: .debug).log(message: "Connected to device: \(peripheral.name ?? "__unnamed__")")
+        SystemLog(category: .ble, type: .debug).log(message: "Connected to device: \(peripheral.name ?? "__unnamed__")")
         delegate?.statusDidChanged(.connected(peripheral))
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
-        Log(category: .ble, type: .error).log(message: error?.localizedDescription ?? "Failed to Connect: (no message)")
+        SystemLog(category: .ble, type: .error).log(message: error?.localizedDescription ?? "Failed to Connect: (no message)")
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-        Log(category: .ble, type: .debug).log(message: "Disconnected peripheral: \(peripheral)")
-        error.map { Log(category: .ble, type: .error).log(message: "Disconnected peripheral with error: \($0.localizedDescription)") }
+        SystemLog(category: .ble, type: .debug).log(message: "Disconnected peripheral: \(peripheral)")
+        error.map { SystemLog(category: .ble, type: .error).log(message: "Disconnected peripheral with error: \($0.localizedDescription)") }
         delegate?.statusDidChanged(.disconnected)
     }
 }

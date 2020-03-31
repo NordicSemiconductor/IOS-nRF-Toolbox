@@ -28,7 +28,7 @@ class ProximityViewController: PeripheralTableViewController {
         do {
             return try AVAudioPlayer(contentsOf: url)
         } catch let error {
-            Log(category: .util, type: .error).log(message: error.localizedDescription)
+            SystemLog(category: .util, type: .error).log(message: error.localizedDescription)
             return nil
         }
     }()
@@ -84,7 +84,7 @@ class ProximityViewController: PeripheralTableViewController {
 
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
         guard error == nil else {
-            Log(category: .ble, type: .error).log(message: "Did not write characteristic \(characteristic), error: \(error.debugDescription)")
+            SystemLog(category: .ble, type: .error).log(message: "Did not write characteristic \(characteristic), error: \(error.debugDescription)")
             return
         }
     }
@@ -92,7 +92,7 @@ class ProximityViewController: PeripheralTableViewController {
     func peripheralDidUpdateRSSI(_ peripheral: CBPeripheral, error: Error?) {
         guard peripheral == activePeripheral else { return }
         guard error == nil else {
-            Log(category: .ble, type: .error).log(message: "RSSI Reader error: \(error!.localizedDescription)")
+            SystemLog(category: .ble, type: .error).log(message: "RSSI Reader error: \(error!.localizedDescription)")
             return
         }
 
@@ -195,13 +195,13 @@ extension ProximityViewController: CBPeripheralManagerDelegate {
         let alertLevel: UInt8 = attributeRequest.value!.read()
         switch alertLevel {
         case 0:
-            Log(category: .ble, type: .debug).log(message: "No Alert")
+            SystemLog(category: .ble, type: .debug).log(message: "No Alert")
             stopSound()
         case 1:
-            Log(category: .ble, type: .debug).log(message: "Low Alert")
+            SystemLog(category: .ble, type: .debug).log(message: "Low Alert")
             playSoundOnce(repeat: false)
         case 2:
-            Log(category: .ble, type: .debug).log(message: "High Alert")
+            SystemLog(category: .ble, type: .debug).log(message: "High Alert")
             playSoundOnce(repeat: true)
         default:
             break
@@ -209,14 +209,14 @@ extension ProximityViewController: CBPeripheralManagerDelegate {
     }
 
     public func peripheralManager(_ peripheral: CBPeripheralManager, willRestoreState dict: [String: Any]) {
-        Log(category: .ble, type: .debug).log(message: "Will Restore characteristic: \(dict)")
+        SystemLog(category: .ble, type: .debug).log(message: "Will Restore characteristic: \(dict)")
     }
 
     func peripheralManager(_ peripheral: CBPeripheralManager, didAdd service: CBService, error: Error?) {
         if let error = error {
-            Log(category: .ble, type: .error).log(message: error.localizedDescription)
+            SystemLog(category: .ble, type: .error).log(message: error.localizedDescription)
         } else {
-            Log(category: .ble, type: .debug).log(message: "added service: \(service.debugDescription)")
+            SystemLog(category: .ble, type: .debug).log(message: "added service: \(service.debugDescription)")
         }
     }
 }

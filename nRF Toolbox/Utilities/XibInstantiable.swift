@@ -17,7 +17,7 @@ extension XibInstantiable where Self: UIView {
         let name = String(describing: self)
         guard let view = Bundle.main.loadNibNamed(name, owner: nil, options: nil)?.first as? Self else {
             let errorMessage = "Cannot load nib named \(name)"
-            Log(category: .ui, type: .fault).log(message: errorMessage)
+            SystemLog(category: .ui, type: .fault).log(message: errorMessage)
             fatalError(errorMessage)
         }
         

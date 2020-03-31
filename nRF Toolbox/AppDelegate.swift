@@ -55,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        Log(category: .app, type: .fault).log(message: "Applications will terminate")
+        SystemLog(category: .app, type: .fault).log(message: "Applications will terminate")
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {

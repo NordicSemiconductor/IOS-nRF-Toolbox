@@ -21,7 +21,7 @@ class SelectionsTableViewController: UITableViewController {
     }
     
     required init?(coder: NSCoder) {
-        Log(category: .ui, type: .fault).fault("init(coder:) has not been implemented")
+        SystemLog(category: .ui, type: .fault).fault("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {

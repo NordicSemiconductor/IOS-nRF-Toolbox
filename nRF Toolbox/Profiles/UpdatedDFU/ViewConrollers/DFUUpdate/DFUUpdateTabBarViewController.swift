@@ -15,7 +15,7 @@ protocol DFUUpdateRouter: class {
 }
 
 class DFUUpdateTabBarViewController: UITabBarController {
-    let logger = LoggObserver()
+    let logger = LogObserver()
     
     private let router: DFURouterType
     private let updateVC: DFUUpdateViewController

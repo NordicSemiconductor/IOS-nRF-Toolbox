@@ -9,10 +9,10 @@
 import UIKit
 
 class LoggerTableViewController: UITableViewController {
-    let observer: LoggObserver
+    let observer: LogObserver
     private var loggTableView: LoggerTableView { tableView as! LoggerTableView }
     
-    init(observer: LoggObserver) {
+    init(observer: LogObserver) {
         self.observer = observer
         super.init(nibName: "LoggerTableViewController", bundle: .main)
         
@@ -27,7 +27,7 @@ class LoggerTableViewController: UITableViewController {
         loggTableView.reloadData()
         
         NotificationCenter.default.addObserver(forName: .newMessage, object: nil, queue: .main) { [weak self] (notification) in
-            guard let message = notification.userInfo?[LoggObserver.messageNotificationKey] as? LogMessage else { return }
+            guard let message = notification.userInfo?[LogObserver.messageNotificationKey] as? LogMessage else { return }
             self?.loggTableView.addMessage(message)
         }
         

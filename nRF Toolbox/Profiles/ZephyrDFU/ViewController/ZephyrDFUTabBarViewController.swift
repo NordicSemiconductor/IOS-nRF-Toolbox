@@ -10,7 +10,7 @@ import UIKit
 
 class ZephyrDFUTabBarViewController: UITabBarController {
     
-    let logger = LoggObserver()
+    let logger = LogObserver()
     
     private let router: ZephyrDFURouterType?
     private let data: Data

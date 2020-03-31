@@ -12,7 +12,7 @@ extension UITableView {
     func dequeueCell<T: UITableViewCell>(ofType type: T.Type) -> T {
         let cellId = String(describing: type)
         guard let cell = dequeueReusableCell(withIdentifier: cellId) as? T else {
-            Log(category: .ui, type: .error).log(message: "Can not dequeue cell of type `\(cellId)` with cell ID '\(cellId)'")
+            SystemLog(category: .ui, type: .error).log(message: "Can not dequeue cell of type `\(cellId)` with cell ID '\(cellId)'")
             fatalError("Can not dequeue cell")
         }
         return cell 

@@ -72,7 +72,7 @@ class DFUPacketManager: DFUFileManager<DFUDistributionPacket> {
         do {
             try fileManager.moveItem(at: url, to: newUrl)
         } catch let error {
-            Log(category: .util, type: .error).log(message: error.localizedDescription)
+            SystemLog(category: .util, type: .error).log(message: error.localizedDescription)
             return false
         }
         

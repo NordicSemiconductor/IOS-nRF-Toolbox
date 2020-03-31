@@ -79,7 +79,7 @@ extension DefaultMainRouter: UISplitViewControllerDelegate {
 extension DefaultMainRouter: ServiceRouter {
     func showServiceController(with serviceId: ServiceId) {
         guard let viewController = serviceViewControllers[serviceId] else {
-            Log(category: .ui, type: .error).log(message: "Cannot find view controller for \(serviceId) service id")
+            SystemLog(category: .ui, type: .error).log(message: "Cannot find view controller for \(serviceId) service id")
             return
         }
         

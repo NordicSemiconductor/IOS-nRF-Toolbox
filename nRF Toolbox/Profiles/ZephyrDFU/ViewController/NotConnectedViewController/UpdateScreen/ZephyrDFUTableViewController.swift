@@ -8,6 +8,7 @@
 
 import UIKit
 import McuManager
+import iOSDFULibrary
 
 extension FirmwareUpgradeManager: UpgradeManager {
     func stop() {
@@ -15,12 +16,24 @@ extension FirmwareUpgradeManager: UpgradeManager {
     }
 }
 
+extension Log.Level {
+    var dfuLogLevel: LogLevel {
+        switch self {
+        case .debug: return .debug
+        case .verbose: return .debug
+        case .info: return .info
+        case .warn: return .warning
+        case .error: return .error
+        }
+    }
+}
+
 class ZephyrDFUTableViewController: UpgradeTableViewController<FirmwareUpgradeManager> {
     private let data: Data
     
-    private let logger: LoggObserver
+    private let logger: LogObserver
     
-    init(data: Data, peripheral: Peripheral, router: DFUUpdateRouter, logger: LoggObserver) {
+    init(data: Data, peripheral: Peripheral, router: DFUUpdateRouter, logger: LogObserver) {
         self.data = data
         self.logger = logger
         
@@ -71,6 +84,10 @@ extension ZephyrDFUTableViewController {
 }
 
 extension ZephyrDFUTableViewController: FirmwareUpgradeDelegate {
+    func log(_ msg: String, atLevel level: Log.Level) {
+        logger.logWith(level.dfuLogLevel, message: msg)
+    }
+    
     func upgradeDidStart(controller: FirmwareUpgradeController) {
         headerView.style = .update
         headerView.startAnimating()
@@ -78,11 +95,9 @@ extension ZephyrDFUTableViewController: FirmwareUpgradeDelegate {
         
         stopSection.items = [.stop]
         controlSection.items = [.pause]
-        logger.logWith(.application, message: "Started Update")
     }
     
     func upgradeStateDidChange(from previousState: FirmwareUpgradeState, to newState: FirmwareUpgradeState) {
-        logger.logWith(.debug, message: "Status changed: old status: \(previousState), new state: \(newState)")
     }
     
     func upgradeDidComplete() {
@@ -92,8 +107,6 @@ extension ZephyrDFUTableViewController: FirmwareUpgradeDelegate {
         controlSection.items = [.showLog, .done]
         stopSection.items = []
         tableView.reloadData()
-        
-        logger.logWith(.info, message: "Upgrade Completed!")
     }
     
     func upgradeDidFail(inState state: FirmwareUpgradeState, with error: Error) {
@@ -103,8 +116,6 @@ extension ZephyrDFUTableViewController: FirmwareUpgradeDelegate {
         controlSection.items = [.retry, .showLog, .done]
         stopSection.items = []
         tableView.reloadData()
-        
-        logger.logWith(.error, message: "Error: \(error.localizedDescription)")
     }
     
     func upgradeDidCancel(state: FirmwareUpgradeState) {
@@ -113,15 +124,11 @@ extension ZephyrDFUTableViewController: FirmwareUpgradeDelegate {
         controlSection.items = [.showLog, .done]
         stopSection.items = []
         tableView.reloadData()
-        
-        logger.logWith(.info, message: "Upgrade was canceled")
     }
     
     func uploadProgressDidChange(bytesSent: Int, imageSize: Int, timestamp: Date) {
         let percent = Float(bytesSent) / Float(imageSize)
         headerView.progressView.progress = percent
-        
-        logger.logWith(.verbose, message: "Bytes sent: \(bytesSent) of \(imageSize)")
     }
     
     

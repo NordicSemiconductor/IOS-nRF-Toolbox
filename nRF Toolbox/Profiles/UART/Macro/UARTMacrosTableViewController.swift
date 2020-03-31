@@ -104,7 +104,7 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
             cell.textLabel?.text = "Play"
             return cell
         default:
-            Log(category: .app, type: .fault).fault("Unknown section in the tableView")
+            SystemLog(category: .app, type: .fault).fault("Unknown section in the tableView")
         }
     }
     
@@ -254,7 +254,7 @@ extension UARTMacrosTableViewController {
             cell.selectionStyle = .none
             return cell
         default:
-            Log(category: .app, type: .fault).fault("Unknown command type")
+            SystemLog(category: .app, type: .fault).fault("Unknown command type")
         }
     }
 }

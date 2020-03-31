@@ -28,7 +28,7 @@ class WebViewController: UIViewController {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        Log(category: .ui, type: .fault).fault("init(coder:) has not been implemented")
+        SystemLog(category: .ui, type: .fault).fault("init(coder:) has not been implemented")
     }
     
     @objc private func action(_ sender: UIBarButtonItem) {

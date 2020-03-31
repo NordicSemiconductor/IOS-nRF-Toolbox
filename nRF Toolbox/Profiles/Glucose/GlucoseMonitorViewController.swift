@@ -90,10 +90,10 @@ extension GlucoseMonitorViewController {
             reloadSection(id: .bgmReadings)
         default:
             guard let error = responseCode.error else {
-                Log(category: .ble, type: .error).log(message: "Cannot parse error for \(responseCode)")
+                SystemLog(category: .ble, type: .error).log(message: "Cannot parse error for \(responseCode)")
                 return
             }
-            Log(category: .ble, type: .error).log(message: "Error access control error: \(error.localizedDescription)")
+            SystemLog(category: .ble, type: .error).log(message: "Error access control error: \(error.localizedDescription)")
             AppUtilities.showAlert(title: error.title, andMessage: error.message ?? "", from: self)
         }
     }

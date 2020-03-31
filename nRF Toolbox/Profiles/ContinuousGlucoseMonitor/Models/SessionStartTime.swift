@@ -10,7 +10,7 @@ struct SessionStartTime {
 
     init(data: Data) {
         self.date = data.readDate(from: 0)
-        Log(category: .util, type: .debug).log(message: "Session Date: \(self.date)")
+        SystemLog(category: .util, type: .debug).log(message: "Session Date: \(self.date)")
     }
 
     init(date: Date) {

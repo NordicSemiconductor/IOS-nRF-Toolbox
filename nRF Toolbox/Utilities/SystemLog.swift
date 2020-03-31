@@ -60,7 +60,7 @@ extension LogCategory {
     static let app = LogCategory(rawValue: "application")!
 }
 
-struct Log {
+struct SystemLog {
     let category: LogCategory
     let type: LogType
     
