@@ -130,6 +130,4 @@ extension ZephyrDFUTableViewController: FirmwareUpgradeDelegate {
         let percent = Float(bytesSent) / Float(imageSize)
         headerView.progressView.progress = percent
     }
-    
-    
 }

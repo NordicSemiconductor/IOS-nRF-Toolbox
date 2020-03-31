@@ -15,7 +15,7 @@ class CyclingTableViewController: PeripheralTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(DetailsTableViewCell.self, forCellReuseIdentifier: "DetailsTableViewCell")
-        navigationItem.title = "Cycling Speed and Cadence Sensor"
+        navigationItem.title = "Cycling Speed and Cadence"
     }
     
     override var internalSections: [Section] { [cyclingSection] }

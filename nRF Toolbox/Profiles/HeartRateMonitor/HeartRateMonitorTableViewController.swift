@@ -26,7 +26,7 @@ class HeartRateMonitorTableViewController: PeripheralTableViewController {
     #endif
     
     override var peripheralDescription: PeripheralDescription { .heartRateSensor }
-    override var navigationTitle: String { "Heart Rate Monitor" }
+    override var navigationTitle: String { "Heart Rate" }
     override var internalSections: [Section] { [instantaneousHeartRateSection, locationSection, chartSection] }
     
     override func viewDidLoad() {

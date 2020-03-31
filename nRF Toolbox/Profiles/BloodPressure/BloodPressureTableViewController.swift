@@ -26,7 +26,7 @@ class BloodPressureTableViewController: PeripheralTableViewController {
     override var peripheralDescription: PeripheralDescription { .bloodPressure }
     
     private var dataSectionIds: [Identifier<Section>] = [.bloodPressure, .cuffPressure]
-    override var navigationTitle: String { "Blood Pressure Monitor" }
+    override var navigationTitle: String { "Blood Pressure" }
     
     override func didUpdateValue(for characteristic: CBCharacteristic) {
         guard let value = characteristic.value else {
