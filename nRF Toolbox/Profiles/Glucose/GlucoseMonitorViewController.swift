@@ -13,21 +13,24 @@ class GlucoseMonitorViewController: PeripheralTableViewController {
     private var bgmSection = BGMSection()
     private var recordAccessControlPoint: CBCharacteristic?
     
-    private lazy var actionSection: ActionSection = {
-        let refresh = ActionSectionItem(title: "Refresh") { [unowned self] in 
-            self.updateDisplayedItems(.all)
+    private lazy var actionSection: BGMActionSection = { [unowned self] in
+        let section = BGMActionSection()
+        section.registerRequiredCells(for: self.tableView)
+        section.refreshAction = { id in
+            self.updateDisplayedItems(id)
         }
-        let clear = ActionSectionItem(title: "Clear") { [unowned self] in
+        
+        section.clearAction = {
             self.bgmSection.clearReadings()
             self.tableView.reloadData()
         }
-        let deleteAll = ActionSectionItem(title: "Delete All", style: .destructive) { [unowned self] in
+        
+        section.deleteAllAction = {
             self.bgmSection.clearReadings()
             let data = Data([BGMOpCode.deleteStoredRecords.rawValue, BGMOperator.allRecords.rawValue])
             self.activePeripheral?.writeValue(data, for: self.recordAccessControlPoint!, type: .withResponse)
         }
-        
-        return ActionSection(id: "Actions", sectionTitle: "Actions", items: [refresh, clear, deleteAll])
+        return section
     }()
     
     private var selectionSection = OptionSelectionSection<GlucoseMonitorViewController>(id: .selectionResult, sectionTitle: "", items: [OptionSelectionSection.Item(option: "Display Items", selectedCase: "All")])
@@ -44,12 +47,14 @@ class GlucoseMonitorViewController: PeripheralTableViewController {
         switch section.id {
         case .selectionResult:
             handleOptionSelection()
+        case .bgMActionSection:
+            actionSection.didSelectRaw(at: item)
         default:
             super.selected(item: item, in: section)
         }
     }
     
-    override var internalSections: [Section] { [selectionSection, bgmSection, actionSection] }
+    override var internalSections: [Section] { [actionSection, bgmSection] }
     
     override var peripheralDescription: PeripheralDescription { .bloodGlucoseMonitor }
     

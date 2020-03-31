@@ -24,7 +24,7 @@ class PeripheralTableViewController: PeripheralViewController, UITableViewDataSo
     var visibleSections: [Section] { sections.filter { !$0.isHidden } }
     var internalSections: [Section] { [] }
 
-    private lazy var disconnectSection = ActionSection(id: .disconnect, sectionTitle: "Disconnect", items: [
+    private lazy var disconnectSection = ActionSection(id: .disconnect, sectionTitle: "Connection", items: [
         ActionSectionItem(title: "Disconnect", style: .destructive) { [unowned self] in
             guard let peripheral = self.activePeripheral else { return }
             self.disconnect()
@@ -62,7 +62,8 @@ class PeripheralTableViewController: PeripheralViewController, UITableViewDataSo
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { visibleSections[indexPath.section].cellHeight(for: indexPath.row) }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { visibleSections[indexPath.section].cellHeight(for: indexPath.row)
+    }
 
     // MARK: Table View Handlers
     func selected(item: Int, in section: Section) {

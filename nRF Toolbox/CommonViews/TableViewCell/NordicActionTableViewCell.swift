@@ -10,6 +10,21 @@ import UIKit
 
 class NordicActionTableViewCell: UITableViewCell {
     
+    enum Style {
+        case `default`, destructive
+    }
+    
+    var style: Style = .default {
+        didSet {
+            switch style {
+            case .default:
+                textLabel?.textColor = .nordicLake
+            case .destructive:
+                textLabel?.textColor = .nordicRed
+            }
+        }
+    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupAppearance()
@@ -27,6 +42,12 @@ class NordicActionTableViewCell: UITableViewCell {
     private func setupAppearance() {
         let defaultSize = textLabel?.font.pointSize ?? 12
         textLabel?.font = UIFont.gtEestiDisplay(.regular, size: defaultSize)
-        textLabel?.textColor = .systemBlue
+        
+        switch style {
+        case .default:
+            textLabel?.textColor = .nordicLake
+        case .destructive:
+            textLabel?.textColor = .nordicRed
+        }
     }
 }

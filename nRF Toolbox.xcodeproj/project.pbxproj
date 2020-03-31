@@ -279,6 +279,9 @@
 		4392FEFF23AA610300E6ACEA /* LogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4392FEFD23AA610300E6ACEA /* LogTableViewCell.swift */; };
 		4392FF0023AA610300E6ACEA /* LogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4392FEFE23AA610300E6ACEA /* LogTableViewCell.xib */; };
 		4392FF0223AA6CBE00E6ACEA /* DateFormatter+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4392FF0123AA6CBE00E6ACEA /* DateFormatter+Ext.swift */; };
+		43F837242433FA7C003D88F0 /* BGMActionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F837232433FA7C003D88F0 /* BGMActionSection.swift */; };
+		43F837262433FB1F003D88F0 /* BGMDisplayItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F837252433FB1F003D88F0 /* BGMDisplayItemTableViewCell.swift */; };
+		43F837282433FB29003D88F0 /* BGMDisplayItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43F837272433FB29003D88F0 /* BGMDisplayItemTableViewCell.xib */; };
 		5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAA1885642F007CC40D /* icon-dfu-64.png */; };
 		5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAB1885642F007CC40D /* icon-dfu-320.png */; };
 		5211EFB018856430007CC40D /* icon-hex.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAC1885642F007CC40D /* icon-hex.png */; };
@@ -603,6 +606,9 @@
 		4392FEFD23AA610300E6ACEA /* LogTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTableViewCell.swift; sourceTree = "<group>"; };
 		4392FEFE23AA610300E6ACEA /* LogTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LogTableViewCell.xib; sourceTree = "<group>"; };
 		4392FF0123AA6CBE00E6ACEA /* DateFormatter+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Ext.swift"; sourceTree = "<group>"; };
+		43F837232433FA7C003D88F0 /* BGMActionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGMActionSection.swift; sourceTree = "<group>"; };
+		43F837252433FB1F003D88F0 /* BGMDisplayItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGMDisplayItemTableViewCell.swift; sourceTree = "<group>"; };
+		43F837272433FB29003D88F0 /* BGMDisplayItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BGMDisplayItemTableViewCell.xib; sourceTree = "<group>"; };
 		5211EFAA1885642F007CC40D /* icon-dfu-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-64.png"; sourceTree = "<group>"; };
 		5211EFAB1885642F007CC40D /* icon-dfu-320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-320.png"; sourceTree = "<group>"; };
 		5211EFAC1885642F007CC40D /* icon-hex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-hex.png"; sourceTree = "<group>"; };
@@ -1309,6 +1315,7 @@
 			isa = PBXGroup;
 			children = (
 				20F0C80B2327DB74003111E7 /* BGMSection.swift */,
+				43F837232433FA7C003D88F0 /* BGMActionSection.swift */,
 			);
 			path = Sections;
 			sourceTree = "<group>";
@@ -1420,6 +1427,8 @@
 			children = (
 				20D08DFB232929A400569587 /* BGMTableViewCell.swift */,
 				20D08DFC232929A400569587 /* BGMTableViewCell.xib */,
+				43F837252433FB1F003D88F0 /* BGMDisplayItemTableViewCell.swift */,
+				43F837272433FB29003D88F0 /* BGMDisplayItemTableViewCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -2089,6 +2098,7 @@
 				20E07B3F23055B0B00FCB205 /* InteractionServiceList.plist in Resources */,
 				20C7FE032306C72000B06FD8 /* IoTServices.plist in Resources */,
 				20C7FE59230E9BDC00B06FD8 /* ServiceTableViewCell.xib in Resources */,
+				43F837282433FB29003D88F0 /* BGMDisplayItemTableViewCell.xib in Resources */,
 				01A1B76D23CF43590062FADC /* UART.xcassets in Resources */,
 				20E07B5B2306975700FCB205 /* GT-Eesti-Display-Thin.ttf in Resources */,
 				01DDD79D23EC5CDA003786ED /* TimeIntervalTableViewCell.xib in Resources */,
@@ -2218,6 +2228,7 @@
 				30499E5D1CE4C6C700E0993B /* FolderFilesViewController.swift in Sources */,
 				30499E551CE4732200E0993B /* FileSelectionDelegate.swift in Sources */,
 				201364F92344A94700C5AF1F /* PulseBloodPressureSection.swift in Sources */,
+				43F837242433FA7C003D88F0 /* BGMActionSection.swift in Sources */,
 				2013650223462DB900C5AF1F /* BatteryCharacteristic.swift in Sources */,
 				019985E623DEF2BD000CDCB6 /* NordicActionTableViewCell.swift in Sources */,
 				204485EA233A38E900A8A3A3 /* RunningSpeedSection.swift in Sources */,
@@ -2383,6 +2394,7 @@
 				01A870DA23F40E2F00D9202E /* CheckmarkTableViewCell.swift in Sources */,
 				01DFC55C2420F0AB00AF2EF0 /* ZephyrDFURouter.swift in Sources */,
 				309F086A1E6D9EAA00B7546A /* HKHomeStore.swift in Sources */,
+				43F837262433FB1F003D88F0 /* BGMDisplayItemTableViewCell.swift in Sources */,
 				204485E1233A148700A8A3A3 /* RunningTableViewController.swift in Sources */,
 				01BEADD6241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift in Sources */,
 				30499E591CE4A07700E0993B /* AppFilesViewController.swift in Sources */,

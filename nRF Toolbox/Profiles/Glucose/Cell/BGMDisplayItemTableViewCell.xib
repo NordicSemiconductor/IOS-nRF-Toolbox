@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="BGMDisplayItemTableViewCell" rowHeight="50" id="iYD-gj-78h" customClass="BGMDisplayItemTableViewCell" customModule="nRF_Toolbox" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="469" height="66"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iYD-gj-78h" id="jcz-br-T1C">
+                <rect key="frame" x="0.0" y="0.0" width="469" height="66"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="cm4-qx-gCW">
+                        <rect key="frame" x="12" y="17.5" width="445" height="32"/>
+                        <segments>
+                            <segment title="All"/>
+                            <segment title="First"/>
+                            <segment title="Last"/>
+                        </segments>
+                        <connections>
+                            <action selector="displayItemsChangesWithSender:" destination="iYD-gj-78h" eventType="valueChanged" id="Qbh-Tl-XUm"/>
+                        </connections>
+                    </segmentedControl>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="cm4-qx-gCW" firstAttribute="centerY" secondItem="jcz-br-T1C" secondAttribute="centerY" id="gVx-mz-QiW"/>
+                    <constraint firstItem="cm4-qx-gCW" firstAttribute="centerX" secondItem="jcz-br-T1C" secondAttribute="centerX" id="vEj-HA-1G8"/>
+                    <constraint firstItem="cm4-qx-gCW" firstAttribute="leading" secondItem="jcz-br-T1C" secondAttribute="leading" constant="12" id="xbC-FJ-le3"/>
+                </constraints>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="-322.46376811594206" y="52.901785714285715"/>
+        </tableViewCell>
+    </objects>
+</document>
