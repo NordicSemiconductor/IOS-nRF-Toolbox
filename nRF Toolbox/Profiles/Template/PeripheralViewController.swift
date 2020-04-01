@@ -66,7 +66,7 @@ class PeripheralViewController: UIViewController, StatusDelegate {
                 self.openConnectorViewController()
             })
             
-            let notContent = InfoActionView.instanceWithParams(message: "Device is not connected", buttonSettings: bSettings)
+            let notContent = InfoActionView.instanceWithParams(message: "No connected device", buttonSettings: bSettings)
             notContent.actionButton.style = .mainAction
             
             view = notContent
