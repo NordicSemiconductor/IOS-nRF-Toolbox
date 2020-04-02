@@ -55,10 +55,10 @@ class ProximityViewController: PeripheralTableViewController {
         super.viewDidLoad()
         tableView.registerCellNib(cell: FindMeTableViewCell.self)
         audioPlayer?.prepareToPlay()
-        self.peripheralManager = CBPeripheralManager(delegate: self, queue: nil)
+        peripheralManager = CBPeripheralManager(delegate: self, queue: nil)
 
-        self.tableView.register(DetailsTableViewCell.self, forCellReuseIdentifier: "DetailsTableViewCell")
-        self.tableView.register(LinearChartTableViewCell.self, forCellReuseIdentifier: "LinearChartTableViewCell")
+        tableView.register(DetailsTableViewCell.self, forCellReuseIdentifier: "DetailsTableViewCell")
+        tableView.register(LinearChartTableViewCell.self, forCellReuseIdentifier: "LinearChartTableViewCell")
 
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { b, error in
 
@@ -96,8 +96,9 @@ class ProximityViewController: PeripheralTableViewController {
             return
         }
 
-        self.rssi = peripheral.rssi?.intValue
-        if let rssi = self.rssi, let tx = self.txValue {
+        // TODO: Rid off RSSI
+        rssi = peripheral.rssi?.intValue
+        if let rssi = self.rssi, let tx = txValue {
             chartSection.update(rssi: rssi, tx: tx)
         }
     }
@@ -106,8 +107,8 @@ class ProximityViewController: PeripheralTableViewController {
         switch characteristic.uuid {
         case .txPowerLevelCharacteristic:
             let value: Int8? = characteristic.value?.read()
-            self.txValue = value.map(Int.init)
-            self.tableView.reloadData()
+            txValue = value.map(Int.init)
+            tableView.reloadData()
         default:
             super.didUpdateValue(for: characteristic)
         }
@@ -134,7 +135,7 @@ class ProximityViewController: PeripheralTableViewController {
             timer?.invalidate()
             txValue = nil
             rssi = nil
-            self.chartSection.reset()
+            chartSection.reset()
         default:
             break
         }
@@ -180,7 +181,7 @@ extension ProximityViewController: CBPeripheralManagerDelegate {
                 value: nil,
                 permissions: .writeable)
             service.characteristics = [characteristic]
-            self.peripheralManager.add(service)
+            peripheralManager.add(service)
         default:
             break
         }

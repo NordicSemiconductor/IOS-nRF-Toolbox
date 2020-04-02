@@ -46,23 +46,23 @@ struct UARTCommandContainer: Codable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.decode(CommandType.self, forKey: .type)
+        type = try container.decode(CommandType.self, forKey: .type)
         switch self.type {
         case .timeInterval:
-            self.command = try container.decode(UARTMacroTimeInterval.self, forKey: .command)
+            command = try container.decode(UARTMacroTimeInterval.self, forKey: .command)
         case .text:
-            self.command = try container.decode(TextCommand.self, forKey: .command)
+            command = try container.decode(TextCommand.self, forKey: .command)
         case .data:
-            self.command = try container.decode(DataCommand.self, forKey: .command)
+            command = try container.decode(DataCommand.self, forKey: .command)
         default:
-            self.command = EmptyModel()
+            command = EmptyModel()
         }
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(type, forKey: .type)
-        switch self.command {
+        switch command {
         case let m as UARTMacroTimeInterval:
             try container.encode(m, forKey: .command)
         case let m as TextCommand:
@@ -89,10 +89,10 @@ extension UARTMacro: Codable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.decode(String.self, forKey: .name)
+        name = try container.decode(String.self, forKey: .name)
         let commandContainers = try container.decode([UARTCommandContainer].self, forKey: .commands)
-        self.preset = try container.decode(UARTPreset.self, forKey: .preset)
-        self.commands = commandContainers.map { $0.command }
+        preset = try container.decode(UARTPreset.self, forKey: .preset)
+        commands = commandContainers.map { $0.command }
     }
     
     func encode(to encoder: Encoder) throws {

@@ -20,7 +20,7 @@ class PeripheralTableViewController: PeripheralViewController, UITableViewDataSo
     var tableView: UITableView!
     private var batterySection = BatterySection(id: .battery)
 
-    var sections: [Section] { self.internalSections + [batterySection, disconnectSection] }
+    var sections: [Section] { internalSections + [batterySection, disconnectSection] }
     var visibleSections: [Section] { sections.filter { !$0.isHidden } }
     var internalSections: [Section] { [] }
 
@@ -69,7 +69,7 @@ class PeripheralTableViewController: PeripheralViewController, UITableViewDataSo
     func selected(item: Int, in section: Section) {
         switch section.id {
         case .disconnect:
-            self.disconnect()
+            disconnect()
         default:
             if let actionSection = section as? ActionSection {
                 actionSection.items[item].action()
@@ -81,6 +81,8 @@ class PeripheralTableViewController: PeripheralViewController, UITableViewDataSo
     
     func reloadSection(id: Identifier<Section>, animation: UITableView.RowAnimation = .automatic) {
         tableView.reloadData()
+        
+        // TODO: Figure out what should we do with that method. Maybe just to rid off this.
         return 
         guard let index = visibleSections.firstIndex(where: { $0.id == id }) else {
             SystemLog(category: .ui, type: .error).log(message: "Cannot upload section \(id)")

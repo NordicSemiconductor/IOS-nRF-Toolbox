@@ -15,7 +15,7 @@ class DFUFirmwareInfoViewController: UITableViewController, AlertPresenter {
     private var firmware: DFUFirmware
     let bluetoothManager: PeripheralHolder
     private let documentPicker = DFUDocumentPicker()
-    private lazy var sections: [DFUActionSection] = [self.deviceInfoSection, self.firmwareInfoSection, self.updateSection]
+    private lazy var sections: [DFUActionSection] = [deviceInfoSection, firmwareInfoSection, updateSection]
     
     private lazy var deviceInfoSection = DFUDeviceInfoSection(peripheral: bluetoothManager.peripheral) { [unowned self] in
         self.router.goToBluetoothConnector(scanner: PeripheralScanner(services: []), presentationType: .present) { (p) in
@@ -69,18 +69,18 @@ class DFUFirmwareInfoViewController: UITableViewController, AlertPresenter {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return self.sections.count
+        sections.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sections[section].numberOfItems
+        sections[section].numberOfItems
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return sections[indexPath.section].dequeCell(for: indexPath.row, from: tableView)
+        sections[indexPath.section].dequeCell(for: indexPath.row, from: tableView)
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sections[section].sectionTitle
+        sections[section].sectionTitle
     }
 }

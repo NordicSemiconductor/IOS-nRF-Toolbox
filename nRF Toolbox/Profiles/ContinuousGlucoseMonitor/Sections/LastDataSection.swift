@@ -11,7 +11,7 @@ class LastGlucoseValueSection: DetailsTableViewSection<ContinuousGlucoseMonitorM
     override func update(with characteristic: ContinuousGlucoseMonitorMeasurement) {
         let stringValue = String(format: "%.2f mmol/L", characteristic.glucoseConcentration)
         let item = DefaultDetailsTableViewCellModel(title: "Glucose Concentration", value: stringValue)
-        self.items = [item]
+        items = [item]
         super.update(with: characteristic)
     }
 }

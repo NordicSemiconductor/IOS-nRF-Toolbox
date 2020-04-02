@@ -114,11 +114,11 @@ extension GlucoseMonitorViewController {
         }
         selector.navigationItem.title = selectionSection.items.first?.option
         
-        self.navigationController?.pushViewController(selector, animated: true)
+        navigationController?.pushViewController(selector, animated: true)
     }
     
     private func updateDisplayedItems(_ itemsToDisplay: Identifier<GlucoseMonitorViewController>) {
-        self.bgmSection.clearReadings()
+        bgmSection.clearReadings()
         
         let bgmOperator: UInt8 = {
             switch itemsToDisplay {
@@ -130,6 +130,6 @@ extension GlucoseMonitorViewController {
         }()
         
         let data = Data([BGMOpCode.reportStoredRecords.rawValue, bgmOperator])
-        self.activePeripheral?.writeValue(data, for: self.recordAccessControlPoint!, type: .withResponse)
+        activePeripheral?.writeValue(data, for: recordAccessControlPoint!, type: .withResponse)
     }
 }

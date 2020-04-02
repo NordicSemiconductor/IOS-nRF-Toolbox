@@ -26,7 +26,7 @@ class ChartDataSection<T>: Section {
     var isHidden: Bool = false
 
     func update(with data: T) {
-        self.items.append(data)
+        items.append(data)
     }
 
     func transform(_ item: T) -> (x: Double, y: Double) { (0, 0) }

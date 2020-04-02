@@ -18,7 +18,7 @@ struct CommandImage: Codable, Equatable {
         if #available(iOS 13, *), let image = systemIcon?.image {
             return image
         } else {
-            return UIImage(named: self.name)?.withRenderingMode(.alwaysTemplate)
+            return UIImage(named: name)?.withRenderingMode(.alwaysTemplate)
         }
     }
     
@@ -32,8 +32,8 @@ struct CommandImage: Codable, Equatable {
 
 extension CommandImage: ExpressibleByStringLiteral {
     init(stringLiteral value: String) {
-        self.name = value
-        self.systemIcon = nil
+        name = value
+        systemIcon = nil
     }
 }
 

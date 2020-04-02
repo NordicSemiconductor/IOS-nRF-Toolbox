@@ -23,7 +23,7 @@ open class LegendLabel: UILabel {
     
     public var segment: Segment? {
         didSet {
-            self.text = segment?.shortTitle ?? segment?.title
+            text = segment?.shortTitle ?? segment?.title
             layoutSubviews()
         }
     }
@@ -42,7 +42,7 @@ open class LegendLabel: UILabel {
     open override func draw(_ rect: CGRect) {
         super.draw(rect)
         
-        guard let segment = self.segment else {
+        guard let segment = segment else {
             return
         }
         

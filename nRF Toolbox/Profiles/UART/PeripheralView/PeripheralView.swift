@@ -54,8 +54,8 @@ class PeripheralView: UIView, XibInstantiable {
         super.init(coder: aDecoder)
 
         guard let view = loadViewFromNib() else { return }
-        view.frame = self.bounds
-        self.addSubview(view)
+        view.frame = bounds
+        addSubview(view)
         container = view
     }
 

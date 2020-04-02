@@ -46,7 +46,6 @@ class FindMeTableViewCell: UITableViewCell {
         }
 
         if let tx = tx, let rssi = rssi {
-            let distance = self.distance(rssi: rssi, tx: tx)
             let formatter = MeasurementFormatter()
             formatter.unitOptions = .naturalScale
         }

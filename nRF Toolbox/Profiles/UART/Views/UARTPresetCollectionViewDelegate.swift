@@ -18,6 +18,6 @@ extension UARTPresetCollectionViewDelegate where Self: UIViewController & UARTNe
         let vc = UARTNewCommandViewController(command: command, index: index)
         vc.delegate = self
         let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false)
-        self.present(nc, animated: true)
+        present(nc, animated: true)
     }
 }

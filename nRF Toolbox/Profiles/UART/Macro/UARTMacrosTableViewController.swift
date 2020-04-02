@@ -31,16 +31,16 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
     weak var macrosDelegate: UARTMacroViewControllerDelegate?
     
     init(preset: UARTPreset, bluetoothManager: BluetoothManager) {
-        self.macros = .empty
-        self.macros.preset = preset
-        self.editingMode = false
+        macros = .empty
+        macros.preset = preset
+        editingMode = false
         self.bluetoothManager = bluetoothManager
         super.init(style: .grouped)
     }
     
     init(macros: UARTMacro = .empty, bluetoothManager: BluetoothManager) {
         self.macros = macros
-        self.editingMode = true
+        editingMode = true
         self.bluetoothManager = bluetoothManager
         super.init(style: .grouped)
     }

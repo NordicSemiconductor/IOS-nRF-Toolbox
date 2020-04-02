@@ -39,8 +39,8 @@ class ContinuousGlucoseMonitor: PeripheralTableViewController {
     }
 
     private func reset() {
-        self.chartSection.reset()
-        self.tableView.reloadData()
+        chartSection.reset()
+        tableView.reloadData()
     }
 
     private lazy var startStopSection = StartStopSection(startAction: { [unowned self] in
@@ -65,9 +65,9 @@ class ContinuousGlucoseMonitor: PeripheralTableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.register(LinearChartTableViewCell.self, forCellReuseIdentifier: "LinearChartTableViewCell")
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        self.tableView.registerCellNib(cell: StepperTableViewCell.self)
+        tableView.register(LinearChartTableViewCell.self, forCellReuseIdentifier: "LinearChartTableViewCell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.registerCellNib(cell: StepperTableViewCell.self)
     }
 
     override func didDiscover(characteristic: CoreBluetooth.CBCharacteristic, for service: CoreBluetooth.CBService, peripheral: CoreBluetooth.CBPeripheral) {
@@ -104,9 +104,9 @@ class ContinuousGlucoseMonitor: PeripheralTableViewController {
             let value = ContinuousGlucoseMonitorMeasurement(data: data, sessionStartTime: sessionStartTime)
             #endif
 
-            self.lastValueSection.update(with: value)
-            self.chartSection.update(with: value)
-            self.tableView.reloadData()
+            lastValueSection.update(with: value)
+            chartSection.update(with: value)
+            tableView.reloadData()
         default:
             super.didUpdateValue(for: characteristic)
         }

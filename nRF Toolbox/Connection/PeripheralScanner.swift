@@ -58,7 +58,7 @@ open class PeripheralScanner: NSObject {
     private var centralManager: CBCentralManager!
     private let bgQueue = DispatchQueue(label: "no.nordicsemi.nRF-Toolbox.ConnectionManager", qos: .utility)
     private lazy var dispatchSource: DispatchSourceTimer = {
-        let t = DispatchSource.makeTimerSource(queue: self.bgQueue)
+        let t = DispatchSource.makeTimerSource(queue: bgQueue)
         t.setEventHandler {
             let oldPeripherals = self.peripherals
             let oldSet: Set<Peripheral> = Set(oldPeripherals)
@@ -88,9 +88,9 @@ open class PeripheralScanner: NSObject {
     private (set) var peripherals: [Peripheral] = []
     
     init(services: [CBUUID]?) {
-        self.scanServices = services
+        scanServices = services
         super.init()
-        self.centralManager = CBCentralManager(delegate: self, queue: bgQueue)
+        centralManager = CBCentralManager(delegate: self, queue: bgQueue)
     }
     
     open func startScanning() {
@@ -106,13 +106,13 @@ open class PeripheralScanner: NSObject {
     }
     
     open func stopScanning() {
-        self.centralManager.stopScan()
-        self.status = .ready
+        centralManager.stopScan()
+        status = .ready
     }
     
     open func connect(to peripheral: Peripheral) {
         stopScanning()
-        self.status = .connecting(peripheral)
+        status = .connecting(peripheral)
     }
 }
 
@@ -120,10 +120,10 @@ extension PeripheralScanner: CBCentralManagerDelegate {
     public func centralManagerDidUpdateState(_ central: CBCentralManager) {
         switch central.state {
         case .poweredOn, .resetting:
-            self.status = .ready
+            status = .ready
             startScanning()
         case .poweredOff, .unauthorized, .unknown, .unsupported:
-            self.status = .notReady(central.state)
+            status = .notReady(central.state)
         @unknown default:
             break
         }
@@ -139,15 +139,15 @@ extension PeripheralScanner: CBCentralManagerDelegate {
     }
      
     public func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        guard case .connecting(let p) = self.status else { return }
+        guard case .connecting(let p) = status else { return }
         guard p.peripheral == peripheral else { return }
-        self.status = .connected(p)
+        status = .connected(p)
     }
     
     public func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
-        guard case .connecting(let p) = self.status else { return }
+        guard case .connecting(let p) = status else { return }
         guard p.peripheral == peripheral else { return }
         
-        self.status = .failedToConnect(p, error)
+        status = .failedToConnect(p, error)
     }
 }

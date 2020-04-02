@@ -64,7 +64,7 @@ struct CyclingCharacteristic {
     }
     
     func speed(_ oldCharacteristic: CyclingCharacteristic, wheelCircumference: Double) -> Measurement<UnitSpeed>? {
-        guard let wheelRevolutionDiff = self.wheelRevolutionDiff(oldCharacteristic), let wheelEventTime = self.wheelRevolutionsAndTime?.time, let oldWheelEventTime = oldCharacteristic.wheelRevolutionsAndTime?.time else {
+        guard let wheelRevolutionDiff = wheelRevolutionDiff(oldCharacteristic), let wheelEventTime = wheelRevolutionsAndTime?.time, let oldWheelEventTime = oldCharacteristic.wheelRevolutionsAndTime?.time else {
             return nil
         }
         
@@ -86,7 +86,7 @@ struct CyclingCharacteristic {
     }
     
     private func wheelRevolutionDiff(_ oldCharacteristic: CyclingCharacteristic) -> Int? {
-        guard let oldWheelRevolution = oldCharacteristic.wheelRevolutionsAndTime?.revolution, let wheelRevolution = self.wheelRevolutionsAndTime?.revolution else {
+        guard let oldWheelRevolution = oldCharacteristic.wheelRevolutionsAndTime?.revolution, let wheelRevolution = wheelRevolutionsAndTime?.revolution else {
             return nil
         }
         guard oldWheelRevolution != 0 else { return 0 }
@@ -94,7 +94,7 @@ struct CyclingCharacteristic {
     }
     
     private func crankRevolutionDiff(_ old: CyclingCharacteristic) -> Int? {
-        guard let crankRevolution = self.crankRevolutionsAndTime?.revolution, let oldCrankRevolution = old.crankRevolutionsAndTime?.revolution else {
+        guard let crankRevolution = crankRevolutionsAndTime?.revolution, let oldCrankRevolution = old.crankRevolutionsAndTime?.revolution else {
             return nil
         }
         

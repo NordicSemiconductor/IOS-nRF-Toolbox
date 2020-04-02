@@ -16,6 +16,6 @@ struct QuickError: ReadableError {
     let readableMessage: String
     
     init(message: String) {
-        self.readableMessage = message
+        readableMessage = message
     }
 }

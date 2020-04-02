@@ -15,7 +15,7 @@ class DocumentPicker<T>: NSObject, UIDocumentPickerDelegate {
     let types: [String]
     
     init(documentTypes: [String]) {
-        self.types = documentTypes
+        types = documentTypes
         super.init()
     }
     

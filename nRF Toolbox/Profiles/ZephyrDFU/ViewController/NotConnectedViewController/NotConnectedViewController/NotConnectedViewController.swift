@@ -31,7 +31,7 @@ class NotConnectedViewController: UIViewController {
         
         button.style = .mainAction
         
-        self.actienView.action = { [weak self] in
+        actienView.action = { [weak self] in
             self?.router?.goToPeripheralSelector(scanner: PeripheralScanner(services: nil), presentationType: .push, callback: { (preipheral) in
                 self?.router?.goToFileSelector()
             })

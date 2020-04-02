@@ -40,8 +40,8 @@ class UARTViewController: UIViewController, AlertPresenter {
     }
     
     init(bluetoothManager: BluetoothManager, uartRouter: UARTRouter) {
-        self.btManager = bluetoothManager
-        self.router = uartRouter
+        btManager = bluetoothManager
+        router = uartRouter
         super.init(nibName: nil, bundle: .main)
     }
     

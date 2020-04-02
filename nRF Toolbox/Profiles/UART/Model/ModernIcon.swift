@@ -21,13 +21,13 @@ struct ImageWrapper {
     }
     
     init(icon: ModernIcon, image: UIImage?) {
-        self.modernIcon = icon
-        self.legacyIcon = image
+        modernIcon = icon
+        legacyIcon = image
     }
     
     init(icon: ModernIcon, imageName: String) {
-        self.modernIcon = icon
-        self.legacyIcon = UIImage(named: imageName)
+        modernIcon = icon
+        legacyIcon = UIImage(named: imageName)
     }
 }
 
@@ -38,7 +38,7 @@ struct ModernIcon: Codable, Equatable {
     }
     
     init(digit: Int) {
-        self.name = "\(digit)"
+        name = "\(digit)"
     }
     
     func add(_ icon: ModernIcon) -> ModernIcon {

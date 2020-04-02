@@ -80,7 +80,7 @@ class NordicButton: UIButton {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.style = .default
+        style = .default
     }
     
     private func setupBrandView() {

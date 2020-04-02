@@ -34,6 +34,6 @@ extension Identifier: CustomStringConvertible {
 
 extension Identifier: Hashable {
     func hash(into hasher: inout Hasher) {
-        hasher.combine(self.string)
+        hasher.combine(string)
     }
 }

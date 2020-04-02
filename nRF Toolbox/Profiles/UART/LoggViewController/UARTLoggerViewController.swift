@@ -69,7 +69,7 @@ extension UARTLoggerViewController {
         let clearItem = UIBarButtonItem(image: trashImage, style: .plain, target: self, action: #selector(clear))
         navigationItem.rightBarButtonItems = [clearItem, filterBtn]
         
-        btManager.logger = self.loggerTableView
+        btManager.logger = loggerTableView
     }
     
     @objc private func clear() {

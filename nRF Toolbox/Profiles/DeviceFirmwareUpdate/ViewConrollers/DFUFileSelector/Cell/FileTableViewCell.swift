@@ -29,9 +29,9 @@ class FileTableViewCell: UITableViewCell {
         layoutIfNeeded()
         
         if model.node is Directory {
-            self.selectionStyle = .none
+            selectionStyle = .none
         } else {
-            self.selectionStyle = .default
+            selectionStyle = .default
         }
         
         fileImage.alpha = model.valid ? 1 : 0.5

@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let router = DefaultMainRouter()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        self.updateUserDefaults(withDefaults: UserDefaults.standard)
+        updateUserDefaults(withDefaults: UserDefaults.standard)
         
         //Setting colors of UIPageControlViewController Page Indicator
         let pageControl = UIPageControl.appearance()

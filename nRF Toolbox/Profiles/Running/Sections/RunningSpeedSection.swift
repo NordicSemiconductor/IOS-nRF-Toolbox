@@ -50,9 +50,9 @@ class RunningSpeedSection: DetailsTableViewSection<RunningCharacteristic> {
         self.items = items
         super.update(with: characteristic)
         
-        self.timer?.invalidate()
+        timer?.invalidate()
         if cadence > 0 {
-            self.timer = Timer.scheduledTimer(withTimeInterval: 60.0 / Double(cadence), repeats: true) { [weak self] (timer) in
+            timer = Timer.scheduledTimer(withTimeInterval: 60.0 / Double(cadence), repeats: true) { [weak self] (timer) in
                 guard let `self` = self else { return }
                 self.numberOfSteps += 1
                 

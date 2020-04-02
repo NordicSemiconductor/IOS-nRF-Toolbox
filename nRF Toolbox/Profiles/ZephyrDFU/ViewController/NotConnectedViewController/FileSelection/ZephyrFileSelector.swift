@@ -31,7 +31,7 @@ class ZephyrFileManager: DFUFileManager<ZephyrPacket> {
     override func checkAndMoveFiles() throws -> [ZephyrPacket] {
         let packetDir = try tmpDir().appendingPathComponent("dfu")
         
-        return try self.content(of: try tmpDir())
+        return try content(of: try tmpDir())
             .map { (packet) -> ZephyrPacket in
                 let newUrl = packetDir.appendingPathComponent(packet.name)
                 try fileManager.moveItem(atPath: packet.url.path, toPath: newUrl.path)

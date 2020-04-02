@@ -55,7 +55,7 @@ extension UARTPresetCollectionView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let command = preset.commands[indexPath.item]
-        self.presetDelegate?.selectedCommand(command, at: indexPath.item)
+        presetDelegate?.selectedCommand(command, at: indexPath.item)
     }
 }
 

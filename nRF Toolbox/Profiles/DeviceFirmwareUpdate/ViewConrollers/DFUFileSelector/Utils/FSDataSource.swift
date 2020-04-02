@@ -28,7 +28,7 @@ struct FSDataSource {
     var fileExtensionFilter: String?
     
     mutating func updateItems(_ dir: Directory) {
-        self.items = items(dir, level: 0)
+        items = items(dir, level: 0)
     }
     
     func items(_ dir: Directory, level: Int = 0) -> [FSNodeRepresentation] {

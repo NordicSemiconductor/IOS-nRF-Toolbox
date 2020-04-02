@@ -14,7 +14,7 @@ struct Flag: ExpressibleByIntegerLiteral {
     let flag: IntegerLiteralType
     
     init(integerLiteral value: UInt8) {
-        self.flag = value
+        flag = value
     }
     
     static func isAvailable(bits: UInt8, flag: Flag) -> Bool {

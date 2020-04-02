@@ -20,8 +20,8 @@ class StartStopSection: ActionSection {
     }
 
     init(startAction: @escaping VoidAction, stopAction: @escaping VoidAction, id: Identifier<Section>) {
-        self.stopItem = ActionSectionItem(title: "Stop Session", style: .destructive, action: stopAction)
-        self.startItem = ActionSectionItem(title: "Start Session", action: startAction)
+        stopItem = ActionSectionItem(title: "Stop Session", style: .destructive, action: stopAction)
+        startItem = ActionSectionItem(title: "Start Session", action: startAction)
 
         super.init(id: id, sectionTitle: "Start / Stop Session", items: [startItem, stopItem])
     }

@@ -34,12 +34,12 @@ class ConnectionViewController: UITableViewController {
     }
     
     @objc func close() {
-        self.dismiss(animated: true)
+        dismiss(animated: true)
     }
     
     @objc func refresh() {
-        self.scanner.refresh()
-        self.tableView.reloadData()
+        scanner.refresh()
+        tableView.reloadData()
     }
     
     private func setupNavigationAppearance(type: PresentationType) {
@@ -95,7 +95,7 @@ extension ConnectionViewController: PeripheralScannerDelegate {
         tableView.reloadSections(indexSet, with: .none)
         
         if case .connecting(let p) = status {
-            self.delegate?.requestConnection(to: p)
+            delegate?.requestConnection(to: p)
         }
     }
     
@@ -105,6 +105,6 @@ extension ConnectionViewController: PeripheralScannerDelegate {
     
     func peripherals(_ peripherals: [Peripheral], addedTo old: [Peripheral]) {
         let insertedIndexPathes = peripherals.enumerated().map { IndexPath(row: old.count + $0.offset, section: 0) }
-        self.tableView.insertRows(at: insertedIndexPathes, with: .automatic)
+        tableView.insertRows(at: insertedIndexPathes, with: .automatic)
     }
 }

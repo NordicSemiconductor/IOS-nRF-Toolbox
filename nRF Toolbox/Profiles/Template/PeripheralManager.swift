@@ -80,7 +80,7 @@ extension PeripheralManager: CBCentralManagerDelegate {
         SystemLog(category: .ble, type: .debug).log(message: "Discovered peripheral: \(advertisementData[CBAdvertisementDataLocalNameKey] as? String ?? "__unnamed__")")
 //        if case .some = peripheral.name {
 //        }
-        self.peripherals.insert(peripheral)
+        peripherals.insert(peripheral)
         peripheralListDelegate?.peripheralsFound(peripherals.map { DiscoveredPeripheral(with: $0, RSSI: RSSI.int32Value) } )
     }
     
@@ -110,7 +110,7 @@ extension PeripheralManager: PeripheralConnectionDelegate {
     }
     
     func connect(peripheral: DiscoveredPeripheral) {
-        self.manager.connect(peripheral.peripheral, options: nil)
-        self.manager.stopScan()
+        manager.connect(peripheral.peripheral, options: nil)
+        manager.stopScan()
     }
 }

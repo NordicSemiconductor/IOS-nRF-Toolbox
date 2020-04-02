@@ -28,8 +28,8 @@ struct HeartRateMeasurementCharacteristic {
 
     #if RAND
     init(value: Double) {
-        self.heartRate = Int(value)
-        self.date = Date()
+        heartRate = Int(value)
+        date = Date()
     }
     #endif
 }

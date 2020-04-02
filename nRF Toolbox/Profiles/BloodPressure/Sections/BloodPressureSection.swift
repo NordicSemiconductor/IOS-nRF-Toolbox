@@ -32,6 +32,6 @@ class BloodPressureSection: DetailsTableViewSection<BloodPreasureCharacteristic>
         let diastolicItem = DefaultDetailsTableViewCellModel(title: "Diastolic", value: formatter.string(from: characteristic.diastolicPreasure))
         let maItem = DefaultDetailsTableViewCellModel(title: "Mean AP", value: formatter.string(from: characteristic.meanArterialPreasure))
         
-        self.items = [systolicItem, diastolicItem, maItem]
+        items = [systolicItem, diastolicItem, maItem]
     }
 }

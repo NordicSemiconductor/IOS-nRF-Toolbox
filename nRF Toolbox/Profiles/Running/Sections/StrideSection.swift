@@ -12,7 +12,7 @@ class ActivitySection: DetailsTableViewSection<RunningCharacteristic> {
     override var sectionTitle: String { "Activity type" } 
     
     override func update(with characteristic: RunningCharacteristic) {
-        self.items = [DefaultDetailsTableViewCellModel(title: "Activity", value: characteristic.isRunning ? "Running" : "Walking")]
+        items = [DefaultDetailsTableViewCellModel(title: "Activity", value: characteristic.isRunning ? "Running" : "Walking")]
         super.update(with: characteristic)
     }
 }

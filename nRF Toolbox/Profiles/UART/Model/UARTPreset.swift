@@ -51,7 +51,7 @@ struct UARTPreset {
             throw Error.wrongXMLFormat
         }
         
-        self.name = rootNode.attributes["name"] ?? ""
+        name = rootNode.attributes["name"] ?? ""
         guard let commandsNode = rootNode.children.first(where: { $0.name == "commands" }) else {
             throw Error.wrongXMLFormat
         }
@@ -109,12 +109,12 @@ extension UARTPreset: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let commandContainers = try container.decode([UARTCommandContainer].self, forKey: .commands)
-        self.commands = commandContainers.compactMap { $0.command as? UARTCommandModel }
-        self.name = try container.decode(String.self, forKey: .name)
+        commands = commandContainers.compactMap { $0.command as? UARTCommandModel }
+        name = try container.decode(String.self, forKey: .name)
     }
     
     func encode(to encoder: Encoder) throws {
-        let modelContainers = self.commands.map { UARTCommandContainer($0) }
+        let modelContainers = commands.map { UARTCommandContainer($0) }
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(modelContainers, forKey: .commands)
         try container.encode(name, forKey: .name)

@@ -24,7 +24,7 @@ struct PeripheralDescription {
 }
 
 class PeripheralViewController: UIViewController, StatusDelegate {
-    private lazy var peripheralManager = PeripheralManager(peripheral: self.peripheralDescription)
+    private lazy var peripheralManager = PeripheralManager(peripheral: peripheralDescription)
 
     var navigationTitle: String { "" }
     var peripheralDescription: PeripheralDescription { PeripheralDescription(uuid: CBUUID.Profile.bloodGlucoseMonitor, services: [.battery]) }
@@ -36,13 +36,13 @@ class PeripheralViewController: UIViewController, StatusDelegate {
         super.viewDidLoad()
 
         peripheralManager.delegate = self
-        self.navigationItem.title = navigationTitle
+        navigationItem.title = navigationTitle
         savedView = view
     }
 
     @objc func disconnect() {
         guard let peripheral = activePeripheral else { return }
-        self.peripheralManager.closeConnection(peripheral: peripheral)
+        peripheralManager.closeConnection(peripheral: peripheral)
     }
 
     func statusDidChanged(_ status: PeripheralStatus) {
@@ -81,18 +81,18 @@ class PeripheralViewController: UIViewController, StatusDelegate {
     }
     
     @objc func openConnectorViewController() {
-        let scanner = PeripheralScanner(services: self.peripheralDescription.uuid.map {[$0]})
+        let scanner = PeripheralScanner(services: peripheralDescription.uuid.map {[$0]})
         let connectionController = ConnectionViewController(scanner: scanner)
         connectionController.delegate = self
 
         let nc = UINavigationController.nordicBranded(rootViewController: connectionController)
         nc.modalPresentationStyle = .formSheet
 
-        self.present(nc, animated: true, completion: nil)
+        present(nc, animated: true, completion: nil)
     }
 
     func didDiscover(service: CBService, for peripheral: CBPeripheral) {
-        let characteristics: [CBUUID]? = self.peripheralDescription
+        let characteristics: [CBUUID]? = peripheralDescription
                 .services
                 .first(where: { $0.uuid == service.uuid })?
                 .characteristics
@@ -121,7 +121,7 @@ class PeripheralViewController: UIViewController, StatusDelegate {
 
 extension PeripheralViewController: ConnectionViewControllerDelegate {
     func requestConnection(to peripheral: Peripheral) {
-        self.peripheralManager.connect(peripheral: peripheral)
+        peripheralManager.connect(peripheral: peripheral)
     }
 }
 
@@ -139,7 +139,7 @@ extension PeripheralViewController: CBPeripheralDelegate {
                                                        """)
 
         peripheral.services?.forEach { [unowned peripheral] service in
-            self.didDiscover(service: service, for: peripheral)
+            didDiscover(service: service, for: peripheral)
         }
     }
 
@@ -152,7 +152,7 @@ extension PeripheralViewController: CBPeripheralDelegate {
         SystemLog(category: .ble, type: .debug).log(message: "Discovered characteristics \(service.characteristics.debugDescription) for service: \(service)")
 
         service.characteristics?.forEach { [unowned service] ch in
-            self.didDiscover(characteristic: ch, for: service, peripheral: peripheral)
+            didDiscover(characteristic: ch, for: service, peripheral: peripheral)
         }
     }
 
@@ -165,7 +165,7 @@ extension PeripheralViewController: CBPeripheralDelegate {
 
         SystemLog(category: .ble, type: .debug).log(message: "New value in characteristic: \(characteristic.debugDescription)")
 
-        self.didUpdateValue(for: characteristic)
+        didUpdateValue(for: characteristic)
     }
 
     @objc func dismissPresentedViewController() {

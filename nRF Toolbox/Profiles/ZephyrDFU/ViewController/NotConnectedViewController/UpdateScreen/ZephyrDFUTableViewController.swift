@@ -40,7 +40,7 @@ class ZephyrDFUTableViewController: UpgradeTableViewController<FirmwareUpgradeMa
         super.init(peripheral: peripheral, router: router)
         
         let transport = McuMgrBleTransport(peripheral.peripheral)
-        self.manager = FirmwareUpgradeManager(transporter: transport!, delegate: self)
+        manager = FirmwareUpgradeManager(transporter: transport!, delegate: self)
     }
     
     required init?(coder: NSCoder) {
@@ -49,7 +49,7 @@ class ZephyrDFUTableViewController: UpgradeTableViewController<FirmwareUpgradeMa
     
     override func update() {
         do {
-            try self.manager?.start(data: self.data)
+            try manager?.start(data: data)
         } catch let error {
             headerView.style = .error
             headerView.statusLabel.text = error.localizedDescription
