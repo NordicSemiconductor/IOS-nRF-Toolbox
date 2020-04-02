@@ -36,7 +36,7 @@ struct CyclingTableViewSection: Section {
         DefaultDetailsTableViewCellModel(title: "Cadence", identifier: .cadence),
         DefaultDetailsTableViewCellModel(title: "Distance", identifier: .distance),
         DefaultDetailsTableViewCellModel(title: "Total Distance", identifier: .totalDistance),
-        DefaultDetailsTableViewCellModel(title: "Gear Retio", identifier: .gearRatio)
+        DefaultDetailsTableViewCellModel(title: "Gear Ratio", identifier: .gearRatio)
     ]
     
     func dequeCell(for index: Int, from tableView: UITableView) -> UITableViewCell {

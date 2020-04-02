@@ -24,6 +24,7 @@ class LinearChartTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(chartsView)
+        
         chartsView.legend.form = .empty
         chartsView.noDataText = "Retrieving data..."
         chartsView.noDataFont = .gtEestiDisplay(.thin, size: 32)
@@ -31,6 +32,8 @@ class LinearChartTableViewCell: UITableViewCell {
         if #available(iOS 13, *) {
             chartsView.noDataTextColor = .systemGray2
         }
+        
+        chartsView.rightAxis.drawLabelsEnabled = false
 
         let leftAxis = chartsView.leftAxis
         leftAxis.labelFont = .gtEestiDisplay(.light, size: 10)
@@ -53,10 +56,13 @@ class LinearChartTableViewCell: UITableViewCell {
 
     private func setupBorderAnchors() {
         chartsView.translatesAutoresizingMaskIntoConstraints = false
-        chartsView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        chartsView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        chartsView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        chartsView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        
+        NSLayoutConstraint.activate([
+            chartsView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            chartsView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 16),
+            chartsView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
+            chartsView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12)
+        ])
     }
 
     required init?(coder: NSCoder) {
