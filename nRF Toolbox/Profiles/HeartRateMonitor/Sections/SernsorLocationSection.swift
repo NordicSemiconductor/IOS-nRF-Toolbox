@@ -11,7 +11,6 @@ import UIKit
 class SernsorLocationSection: DetailsTableViewSection<BodySensorLocationCharacteristic> {
     override func update(with characteristic: BodySensorLocationCharacteristic) {
         items = [DefaultDetailsTableViewCellModel(title: "Sensor Location", value: characteristic.description)]
-        isHidden = false 
         super.update(with: characteristic)
     }
 }

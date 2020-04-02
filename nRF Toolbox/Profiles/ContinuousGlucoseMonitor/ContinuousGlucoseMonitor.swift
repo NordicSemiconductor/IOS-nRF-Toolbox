@@ -40,7 +40,6 @@ class ContinuousGlucoseMonitor: PeripheralTableViewController {
 
     private func reset() {
         self.chartSection.reset()
-        self.lastValueSection.isHidden = true
         self.tableView.reloadData()
     }
 

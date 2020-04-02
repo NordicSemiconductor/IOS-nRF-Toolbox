@@ -9,7 +9,9 @@
 import UIKit
 
 class DetailsTableViewSection<C>: Section {
-    lazy var isHidden: Bool = items.count == 0
+    var isHidden: Bool {
+        items.isEmpty
+    }
     
     typealias SectionUpdated = (Identifier<Section>) -> ()
     typealias ItemUpdated = (Identifier<Section>, Identifier<DetailsTableViewCellModel>) -> ()

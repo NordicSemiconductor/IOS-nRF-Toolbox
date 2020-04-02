@@ -12,7 +12,6 @@ class BloodPressureSection: DetailsTableViewSection<BloodPreasureCharacteristic>
     
     override init(id: Identifier<Section>, sectionUpdated: ((Identifier<Section>) -> ())? = nil, itemUpdated: ((Identifier<Section>, Identifier<DetailsTableViewCellModel>) -> ())? = nil) {
         super.init(id: id, sectionUpdated: sectionUpdated, itemUpdated: itemUpdated)
-        isHidden = false
     }
     
     override var sectionTitle: String { "Blood Pressure" }

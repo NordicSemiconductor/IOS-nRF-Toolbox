@@ -11,7 +11,6 @@ import UIKit
 class HeartRateSection: DetailsTableViewSection<HeartRateMeasurementCharacteristic> {
     override func update(with characteristic: HeartRateMeasurementCharacteristic) {
         items = [DefaultDetailsTableViewCellModel(title: "Heart Rate", value: "\(characteristic.heartRate)")]
-        isHidden = false
         super.update(with: characteristic)
     }
 }

@@ -48,7 +48,6 @@ class RunningSpeedSection: DetailsTableViewSection<RunningCharacteristic> {
         items.append(DefaultDetailsTableViewCellModel(title: "Number of Steps", value: "\(numberOfSteps)", identifier: .numberOfSteps))
         
         self.items = items
-        isHidden = false 
         super.update(with: characteristic)
         
         self.timer?.invalidate()

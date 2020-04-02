@@ -26,7 +26,6 @@ class HealthTemperatureAditionalSection: DetailsTableViewSection<HealthTermomete
         }
         
         self.items = items
-        isHidden = items.count == 0
         
         super.update(with: characteristic)
     }

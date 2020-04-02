@@ -17,7 +17,6 @@ class HealthTemperatureSection: DetailsTableViewSection<HealthTermometerCharacte
         formatter.numberFormatter = numberFormatter
         
         items = [DefaultDetailsTableViewCellModel(title: "Temperature", value: formatter.string(from: characteristic.temperature))]
-        isHidden = false
         super.update(with: characteristic)
     }
 }

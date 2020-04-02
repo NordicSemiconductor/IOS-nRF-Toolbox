@@ -12,7 +12,6 @@ class LastGlucoseValueSection: DetailsTableViewSection<ContinuousGlucoseMonitorM
         let stringValue = String(format: "%.2f mmol/L", characteristic.glucoseConcentration)
         let item = DefaultDetailsTableViewCellModel(title: "Glucose Concentration", value: stringValue)
         self.items = [item]
-        isHidden = false
         super.update(with: characteristic)
     }
 }

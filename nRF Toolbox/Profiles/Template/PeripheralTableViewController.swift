@@ -80,6 +80,8 @@ class PeripheralTableViewController: PeripheralViewController, UITableViewDataSo
     }
     
     func reloadSection(id: Identifier<Section>, animation: UITableView.RowAnimation = .automatic) {
+        tableView.reloadData()
+        return 
         guard let index = visibleSections.firstIndex(where: { $0.id == id }) else {
             SystemLog(category: .ui, type: .error).log(message: "Cannot upload section \(id)")
             return
