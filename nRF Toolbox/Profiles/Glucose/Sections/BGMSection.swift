@@ -46,7 +46,7 @@ class BGMSection: Section {
     
     func update(context: GlucoseReadingContext) {
         guard let index = items.firstIndex(where: { $0.sequenceNumber == context.sequenceNumber }) else {
-            Log(category: .ble, type: .error).log(message: "Glucose measurement with sequence number: \(context.sequenceNumber) not found")
+            SystemLog(category: .ble, type: .error).log(message: "Glucose measurement with sequence number: \(context.sequenceNumber) not found")
             return
         }
         

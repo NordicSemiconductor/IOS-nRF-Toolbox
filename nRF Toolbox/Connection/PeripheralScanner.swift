@@ -131,8 +131,8 @@ extension PeripheralScanner: CBCentralManagerDelegate {
     
     public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
 
-        let name = peripheral.name
-            ?? advertisementData[CBAdvertisementDataLocalNameKey] as? String
+        let name = advertisementData[CBAdvertisementDataLocalNameKey] as? String
+            ?? peripheral.name
             ?? "N/A"
         let p = Peripheral(peripheral: peripheral, rssi: RSSI, name: name)
         tmpPeripherals.insert(p)

@@ -32,7 +32,7 @@ class UARTNewCommandViewController: UIViewController {
     }
     
     required init?(coder: NSCoder) {
-        Log(category: .app, type: .fault).fault("required init?(coder: NSCoder) is not implemented for UARTNewCommandViewController")
+        SystemLog(category: .app, type: .fault).fault("required init?(coder: NSCoder) is not implemented for UARTNewCommandViewController")
     }
     
     override func viewDidLoad() {

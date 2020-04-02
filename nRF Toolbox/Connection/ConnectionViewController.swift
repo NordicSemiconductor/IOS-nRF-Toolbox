@@ -17,9 +17,10 @@ class ConnectionViewController: UITableViewController {
     
     weak var delegate: ConnectionViewControllerDelegate?
     
-    init(scanner: PeripheralScanner) {
+    init(scanner: PeripheralScanner, presentationType: PresentationType = .present) {
         self.scanner = scanner
         super.init(style: .grouped)
+        setupNavigationAppearance(type: presentationType)
     }
     
     required init?(coder: NSCoder) {
@@ -30,21 +31,6 @@ class ConnectionViewController: UITableViewController {
         super.viewDidLoad()
         scanner.scannerDelegate = self 
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        
-        navigationItem.title = "Correct"
-        
-        var leftButton: UIBarButtonItem
-        var rightButton: UIBarButtonItem
-        if #available(iOS 13.0, *) {
-            leftButton = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(close))
-            rightButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
-        } else {
-            leftButton = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(close))
-            rightButton = UIBarButtonItem(title: "Refresh", style: .plain, target: self, action: #selector(refresh))
-        }
-        
-        navigationItem.leftBarButtonItem = leftButton
-        navigationItem.rightBarButtonItem = rightButton
     }
     
     @objc func close() {
@@ -54,6 +40,27 @@ class ConnectionViewController: UITableViewController {
     @objc func refresh() {
         self.scanner.refresh()
         self.tableView.reloadData()
+    }
+    
+    private func setupNavigationAppearance(type: PresentationType) {
+        navigationItem.title = "Connect"
+        
+        let rightButton: UIBarButtonItem
+        if #available(iOS 13.0, *) {
+            rightButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
+        } else {
+            rightButton = UIBarButtonItem(title: "Refresh", style: .plain, target: self, action: #selector(refresh))
+        }
+        navigationItem.rightBarButtonItem = rightButton
+        
+        guard case .present = type else { return }
+        let leftButton: UIBarButtonItem
+        if #available(iOS 13.0, *) {
+            leftButton = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(close))
+        } else {
+            leftButton = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(close))
+        }
+        navigationItem.leftBarButtonItem = leftButton
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int { 1 }

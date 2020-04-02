@@ -40,7 +40,21 @@
  *  @brief Marks a method declaration as deprecated.
  **/
 
-#define cpt_deprecated __attribute__( (deprecated) )
+#define cpt_deprecated __attribute__((deprecated))
+
+// Unused parameter attribute (DEBUG only)
+
+/**
+ *  @def cpt_unused
+ *  @hideinitializer
+ *  @brief Marks a parameter value as unused only in RELEASE builds.
+ **/
+
+#ifdef DEBUG
+#define cpt_unused
+#else
+#define cpt_unused __unused
+#endif
 
 // Swift wrappers
 
@@ -49,14 +63,14 @@
  *  @hideinitializer
  *  @brief Marks a type definition to be imported into Swift as an enumeration.
  **/
-#define cpt_swift_enum __attribute__( ( swift_wrapper(enum) ) )
+#define cpt_swift_enum __attribute__((swift_wrapper(enum)))
 
 /**
  *  @def cpt_swift_struct
  *  @hideinitializer
  *  @brief Marks a type definition to be imported into Swift as a structure.
  **/
-#define cpt_swift_struct __attribute__( ( swift_wrapper(struct) ) )
+#define cpt_swift_struct __attribute__((swift_wrapper(struct)))
 
 // Type safety defines
 
@@ -66,7 +80,7 @@
  *  @param x The number to cast.
  *  @brief Casts a number to @ref CGFloat.
  **/
-#define CPTFloat(x) ( (CGFloat)(x) )
+#define CPTFloat(x) ((CGFloat)(x))
 
 /**
  *  @def CPTPointMake
@@ -75,7 +89,7 @@
  *  @param y The y-coordinate of the point.
  *  @brief A replacement for @ref CGPointMake(), casting each parameter to @ref CGFloat.
  **/
-#define CPTPointMake(x, y) CGPointMake( (CGFloat)(x), (CGFloat)(y) )
+#define CPTPointMake(x, y) CGPointMake((CGFloat)(x), (CGFloat)(y))
 
 /**
  *  @def CPTSizeMake
@@ -84,7 +98,7 @@
  *  @param h The height of the size.
  *  @brief A replacement for @ref CGSizeMake(), casting each parameter to @ref CGFloat.
  **/
-#define CPTSizeMake(w, h) CGSizeMake( (CGFloat)(w), (CGFloat)(h) )
+#define CPTSizeMake(w, h) CGSizeMake((CGFloat)(w), (CGFloat)(h))
 
 /**
  *  @def CPTRectMake
@@ -95,7 +109,7 @@
  *  @param h The height of the rectangle.
  *  @brief A replacement for @ref CGRectMake(), casting each parameter to @ref CGFloat.
  **/
-#define CPTRectMake(x, y, w, h) CGRectMake( (CGFloat)(x), (CGFloat)(y), (CGFloat)(w), (CGFloat)(h) )
+#define CPTRectMake(x, y, w, h) CGRectMake((CGFloat)(x), (CGFloat)(y), (CGFloat)(w), (CGFloat)(h))
 
 /**
  *  @def CPTRectInset
@@ -105,14 +119,14 @@
  *  @param dy The y-offset.
  *  @brief A replacement for @ref CGRectInset(), casting each offset parameter to @ref CGFloat.
  **/
-#define CPTRectInset(rect, dx, dy) CGRectInset( rect, (CGFloat)(dx), (CGFloat)(dy) )
+#define CPTRectInset(rect, dx, dy) CGRectInset(rect, (CGFloat)(dx), (CGFloat)(dy))
 
 /**
  *  @def CPTNAN
  *  @hideinitializer
  *  @brief The not-a-number constant (@NAN), cast to @ref CGFloat.
  **/
-#define CPTNAN ( (CGFloat)NAN )
+#define CPTNAN ((CGFloat)NAN)
 
 /**
  *  @brief Enumeration of numeric types
@@ -168,7 +182,7 @@ CPTRGBAColor;
 /**
  *  @brief Enumeration of label positioning offset directions
  **/
-typedef NS_ENUM (NSInteger, CPTSign) {
+typedef NS_CLOSED_ENUM(NSInteger, CPTSign) {
     CPTSignNone     = 0,  ///< No offset
     CPTSignPositive = +1, ///< Positive offset
     CPTSignNegative = -1  ///< Negative offset

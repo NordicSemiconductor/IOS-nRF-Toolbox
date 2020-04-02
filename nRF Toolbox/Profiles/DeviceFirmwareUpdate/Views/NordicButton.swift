@@ -27,7 +27,7 @@ class NordicButton: UIButton {
             switch self {
             case .mainAction: return .white
             case .destructive: return .nordicRed
-            case .default: return .nordicDarkGray
+            case .default: return .nordicLake
             default: return UIColor.Text.systemText
             }
         }
@@ -35,7 +35,7 @@ class NordicButton: UIButton {
         var bgColor: UIColor {
             switch self {
             case .default, .destructive: return .clear
-            case .mainAction: return .nordicBlue
+            case .mainAction: return .nordicLake
             default: return .clear
             }
         }
@@ -43,7 +43,7 @@ class NordicButton: UIButton {
         var borderColor: UIColor {
             switch self {
             case .destructive: return .nordicRed
-            case .mainAction, .default: return .nordicBlue
+            case .mainAction, .default: return .nordicLake
             default: return .clear
             }
         }

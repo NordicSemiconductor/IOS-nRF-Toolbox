@@ -46,7 +46,7 @@ class PeripheralViewController: UIViewController, StatusDelegate {
     }
 
     func statusDidChanged(_ status: PeripheralStatus) {
-        Log(category: .ble, type: .debug).log(message: "Changed Bluetooth status in \(String(describing: type(of: self))), status: \(status)")
+        SystemLog(category: .ble, type: .debug).log(message: "Changed Bluetooth status in \(String(describing: type(of: self))), status: \(status)")
         switch status {
         case .poweredOff:
             activePeripheral = nil
@@ -65,8 +65,10 @@ class PeripheralViewController: UIViewController, StatusDelegate {
             let bSettings: InfoActionView.ButtonSettings = ("Connect", { [unowned self] in
                 self.openConnectorViewController()
             })
-
+            
             let notContent = InfoActionView.instanceWithParams(message: "Device is not connected", buttonSettings: bSettings)
+            notContent.actionButton.style = .mainAction
+            
             view = notContent
         case .connected(let peripheral):
             dismiss(animated: true, completion: nil)
@@ -113,7 +115,7 @@ class PeripheralViewController: UIViewController, StatusDelegate {
     }
 
     func didUpdateValue(for characteristic: CBCharacteristic) {
-        Log(category: .ble, type: .debug).log(message: "Cannot handle update value for characteristic \(characteristic)")
+        SystemLog(category: .ble, type: .debug).log(message: "Cannot handle update value for characteristic \(characteristic)")
     }
 }
 
@@ -126,11 +128,11 @@ extension PeripheralViewController: ConnectionViewControllerDelegate {
 extension PeripheralViewController: CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if let error = error {
-            Log(category: .ble, type: .error).log(message: "Services discovery failed: \(error.localizedDescription)")
+            SystemLog(category: .ble, type: .error).log(message: "Services discovery failed: \(error.localizedDescription)")
             return
         }
 
-        Log(category: .ble, type: .debug).log(message: """
+        SystemLog(category: .ble, type: .debug).log(message: """
                                                        Found services:
                                                        \(peripheral.services.debugDescription)
                                                        in peripheral: \(peripheral)
@@ -143,11 +145,11 @@ extension PeripheralViewController: CBPeripheralDelegate {
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         if let error = error {
-            Log(category: .ble, type: .error).log(message: "Characteristic discovery failed: \(error.localizedDescription)")
+            SystemLog(category: .ble, type: .error).log(message: "Characteristic discovery failed: \(error.localizedDescription)")
             return
         }
 
-        Log(category: .ble, type: .debug).log(message: "Discovered characteristics \(service.characteristics.debugDescription) for service: \(service)")
+        SystemLog(category: .ble, type: .debug).log(message: "Discovered characteristics \(service.characteristics.debugDescription) for service: \(service)")
 
         service.characteristics?.forEach { [unowned service] ch in
             self.didDiscover(characteristic: ch, for: service, peripheral: peripheral)
@@ -157,11 +159,11 @@ extension PeripheralViewController: CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
 
         if let error = error {
-            Log(category: .ble, type: .error).log(message: "Update value for characteristic \(characteristic) failed with error: \(error.localizedDescription). Peripheral: \(peripheral)")
+            SystemLog(category: .ble, type: .error).log(message: "Update value for characteristic \(characteristic) failed with error: \(error.localizedDescription). Peripheral: \(peripheral)")
             return
         }
 
-        Log(category: .ble, type: .debug).log(message: "New value in characteristic: \(characteristic.debugDescription)")
+        SystemLog(category: .ble, type: .debug).log(message: "New value in characteristic: \(characteristic.debugDescription)")
 
         self.didUpdateValue(for: characteristic)
     }

@@ -18,6 +18,7 @@ enum ServiceId: String, CaseIterable {
     case continuousGlucoseMonitor
     case uart
     case deviceFirmwareUpgrade
+    case zephyrDFU
     case proximity
     case homeKit
 }
@@ -28,15 +29,16 @@ protocol MainRouter {
 
 protocol ServiceRouter {
     func showServiceController(with serviceId: ServiceId)
-//    func showServiceController(_ model: BLEService)
     func showLinkController(_ link: LinkService)
 }
 
 class DefaultMainRouter {
     
-    private let serviceViewControllers: [ServiceId : UIViewController] = {
+    private let dfuRouter: DFURouter = DFURouter(navigationController: UINavigationController.nordicBranded())
+    private let zephyrRouter: ZephyrDFURouterType = ZephyrDFURouter(navigationController: UINavigationController.nordicBranded())
+    
+    private lazy var serviceViewControllers: [ServiceId : UIViewController] = {
         return [
-            .deviceFirmwareUpgrade : DFUViewController(),
             .heartRateMonitor : HeartRateMonitorTableViewController(),
             .bloodPressureMonitoring : BloodPressureTableViewController(),
             .glucoseMonitoring : GlucoseMonitorViewController(),
@@ -48,7 +50,10 @@ class DefaultMainRouter {
             .homeKit : HKViewController.instance(),
             .uart : UARTTabBarController()
             ].mapValues { UINavigationController.nordicBranded(rootViewController: $0) }
-//        .merging([.uart : UARTTabBarController()], uniquingKeysWith: {n, _ in n})
+        .merging([
+            .deviceFirmwareUpgrade : dfuRouter.initialState(),
+            .zephyrDFU : zephyrRouter.setInitialState()
+        ], uniquingKeysWith: {n, _ in n})
     }()
     
     lazy private var serviceList = ServiceListViewController(serviceRouter: self)
@@ -74,9 +79,11 @@ extension DefaultMainRouter: UISplitViewControllerDelegate {
 extension DefaultMainRouter: ServiceRouter {
     func showServiceController(with serviceId: ServiceId) {
         guard let viewController = serviceViewControllers[serviceId] else {
-            Log(category: .ui, type: .error).log(message: "Cannot find view controller for \(serviceId) service id")
+            SystemLog(category: .ui, type: .error).log(message: "Cannot find view controller for \(serviceId) service id")
             return
         }
+        
+        guard (splitViewController.viewControllers.last as? UINavigationController)?.viewControllers.last != viewController else { return }
         splitViewController.showDetailViewController(viewController, sender: self)
     }
     

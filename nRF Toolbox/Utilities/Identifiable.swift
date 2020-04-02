@@ -31,3 +31,9 @@ extension Identifier: CustomStringConvertible {
         return string
     }
 }
+
+extension Identifier: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.string)
+    }
+}

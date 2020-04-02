@@ -32,6 +32,7 @@ CPTBarPlotBinding const CPTBarPlotBindingBarTips       = @"barTips";       ///< 
 CPTBarPlotBinding const CPTBarPlotBindingBarBases      = @"barBases";      ///< Bar bases.
 CPTBarPlotBinding const CPTBarPlotBindingBarFills      = @"barFills";      ///< Bar fills.
 CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< Bar line styles.
+CPTBarPlotBinding const CPTBarPlotBindingBarWidths     = @"barWidths";     ///< Bar widths.
 
 /// @cond
 @interface CPTBarPlot()
@@ -41,19 +42,21 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
 @property (nonatomic, readwrite, copy, nullable) CPTNumberArray *barBases;
 @property (nonatomic, readwrite, copy, nullable) CPTFillArray *barFills;
 @property (nonatomic, readwrite, copy, nullable) CPTLineStyleArray *barLineStyles;
+@property (nonatomic, readwrite, copy, nullable) CPTLineStyleArray *barWidths;
 @property (nonatomic, readwrite, assign) NSUInteger pointingDeviceDownIndex;
 
 -(BOOL)barAtRecordIndex:(NSUInteger)idx basePoint:(nonnull CGPoint *)basePoint tipPoint:(nonnull CGPoint *)tipPoint;
 -(nullable CGMutablePathRef)newBarPathWithContext:(nullable CGContextRef)context recordIndex:(NSUInteger)recordIndex;
--(nonnull CGMutablePathRef)newBarPathWithContext:(nullable CGContextRef)context basePoint:(CGPoint)basePoint tipPoint:(CGPoint)tipPoint;
+-(nonnull CGMutablePathRef)newBarPathWithContext:(nullable CGContextRef)context basePoint:(CGPoint)basePoint tipPoint:(CGPoint)tipPoint width:(NSNumber *)width;
 -(nullable CPTFill *)barFillForIndex:(NSUInteger)idx;
 -(nullable CPTLineStyle *)barLineStyleForIndex:(NSUInteger)idx;
+-(nonnull NSNumber *)barWidthForIndex:(NSUInteger)idx;
 -(void)drawBarInContext:(nonnull CGContextRef)context recordIndex:(NSUInteger)idx;
 
 -(CGFloat)lengthInView:(NSDecimal)plotLength;
 -(double)doubleLengthInPlotCoordinates:(NSDecimal)decimalLength;
 
--(BOOL)barIsVisibleWithBasePoint:(CGPoint)basePoint;
+-(BOOL)barIsVisibleWithBasePoint:(CGPoint)basePoint width:(NSNumber *)width;
 
 @end
 
@@ -75,6 +78,7 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
 @dynamic barBases;
 @dynamic barFills;
 @dynamic barLineStyles;
+@dynamic barWidths;
 
 /** @property CGFloat barCornerRadius
  *  @brief The corner radius for the end of the bars. Default is @num{0.0} for square corners.
@@ -170,7 +174,7 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
  **/
 +(nonnull instancetype)tubularBarPlotWithColor:(nonnull CPTColor *)color horizontalBars:(BOOL)horizontal
 {
-    CPTBarPlot *barPlot               = [[CPTBarPlot alloc] init];
+    CPTBarPlot *barPlot               = [[self alloc] init];
     CPTMutableLineStyle *barLineStyle = [[CPTMutableLineStyle alloc] init];
 
     barLineStyle.lineWidth = CPTFloat(1.0);
@@ -205,8 +209,10 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
         [self exposeBinding:CPTBarPlotBindingBarBases];
         [self exposeBinding:CPTBarPlotBindingBarFills];
         [self exposeBinding:CPTBarPlotBindingBarLineStyles];
+        [self exposeBinding:CPTBarPlotBindingBarWidths];
     }
 }
+
 #endif
 
 /// @endcond
@@ -236,7 +242,7 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
  **/
 -(nonnull instancetype)initWithFrame:(CGRect)newFrame
 {
-    if ( (self = [super initWithFrame:newFrame]) ) {
+    if ((self = [super initWithFrame:newFrame])) {
         lineStyle                     = [[CPTLineStyle alloc] init];
         fill                          = [CPTFill fillWithColor:[CPTColor blackColor]];
         barWidth                      = @0.5;
@@ -262,7 +268,7 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
 
 -(nonnull instancetype)initWithLayer:(nonnull id)layer
 {
-    if ( (self = [super initWithLayer:layer]) ) {
+    if ((self = [super initWithLayer:layer])) {
         CPTBarPlot *theLayer = (CPTBarPlot *)layer;
 
         lineStyle                     = theLayer->lineStyle;
@@ -310,7 +316,7 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
 
 -(nullable instancetype)initWithCoder:(nonnull NSCoder *)coder
 {
-    if ( (self = [super initWithCoder:coder]) ) {
+    if ((self = [super initWithCoder:coder])) {
         NSNumber *num;
 
         lineStyle = [[coder decodeObjectOfClass:[CPTLineStyle class]
@@ -367,6 +373,9 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
     // Bar line styles
     [self reloadBarLineStylesInIndexRange:indexRange];
 
+    // Bar widths
+    [self reloadBarWidthsInIndexRange:indexRange];
+
     // Legend
     id<CPTBarPlotDataSource> theDataSource = (id<CPTBarPlotDataSource>)self.dataSource;
 
@@ -405,7 +414,7 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
             CPTMutableNumericData *locationData = nil;
             if ( self.doublePrecisionCache ) {
                 locationData = [[CPTMutableNumericData alloc] initWithData:[NSData data]
-                                                                  dataType:CPTDataType( CPTFloatingPointDataType, sizeof(double), CFByteOrderGetCurrent() )
+                                                                  dataType:CPTDataType(CPTFloatingPointDataType, sizeof(double), CFByteOrderGetCurrent())
                                                                      shape:nil];
                 locationData.shape = @[@(indexRange.length)];
 
@@ -424,13 +433,13 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
             }
             else {
                 locationData = [[CPTMutableNumericData alloc] initWithData:[NSData data]
-                                                                  dataType:CPTDataType( CPTDecimalDataType, sizeof(NSDecimal), CFByteOrderGetCurrent() )
+                                                                  dataType:CPTDataType(CPTDecimalDataType, sizeof(NSDecimal), CFByteOrderGetCurrent())
                                                                      shape:nil];
                 locationData.shape = @[@(indexRange.length)];
 
                 NSDecimal delta = CPTDecimalFromInteger(1);
                 if ( indexRange.length > 1 ) {
-                    delta = CPTDecimalDivide( self.plotRange.lengthDecimal, CPTDecimalFromUnsignedInteger(indexRange.length - 1) );
+                    delta = CPTDecimalDivide(self.plotRange.lengthDecimal, CPTDecimalFromUnsignedInteger(indexRange.length - 1));
                 }
 
                 NSDecimal locationDecimal = self.plotRange.locationDecimal;
@@ -453,7 +462,7 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
             CPTMutableNumericData *locationData = nil;
             if ( self.doublePrecisionCache ) {
                 locationData = [[CPTMutableNumericData alloc] initWithData:[NSData data]
-                                                                  dataType:CPTDataType( CPTFloatingPointDataType, sizeof(double), CFByteOrderGetCurrent() )
+                                                                  dataType:CPTDataType(CPTFloatingPointDataType, sizeof(double), CFByteOrderGetCurrent())
                                                                      shape:nil];
                 locationData.shape = @[@(indexRange.length)];
 
@@ -467,7 +476,7 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
             }
             else {
                 locationData = [[CPTMutableNumericData alloc] initWithData:[NSData data]
-                                                                  dataType:CPTDataType( CPTDecimalDataType, sizeof(NSDecimal), CFByteOrderGetCurrent() )
+                                                                  dataType:CPTDataType(CPTDecimalDataType, sizeof(NSDecimal), CFByteOrderGetCurrent())
                                                                      shape:nil];
                 locationData.shape = @[@(indexRange.length)];
 
@@ -528,7 +537,9 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
             }
         }
 
-        [self cacheArray:array forKey:CPTBarPlotBindingBarFills atRecordIndex:indexRange.location];
+        [self cacheArray:array
+                  forKey:CPTBarPlotBindingBarFills
+           atRecordIndex:indexRange.location];
     }
 
     // Legend
@@ -580,12 +591,57 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
             }
         }
 
-        [self cacheArray:array forKey:CPTBarPlotBindingBarLineStyles atRecordIndex:indexRange.location];
+        [self cacheArray:array
+                  forKey:CPTBarPlotBindingBarLineStyles
+           atRecordIndex:indexRange.location];
     }
 
     // Legend
     if ( needsLegendUpdate ) {
         [[NSNotificationCenter defaultCenter] postNotificationName:CPTLegendNeedsRedrawForPlotNotification object:self];
+    }
+
+    [self setNeedsDisplay];
+}
+
+/**
+ *  @brief Reload all bar widths from the data source immediately.
+ **/
+-(void)reloadBarWidths
+{
+    [self reloadBarWidthsInIndexRange:NSMakeRange(0, self.cachedDataCount)];
+}
+
+/** @brief Reload bar widths in the given index range from the data source immediately.
+ *  @param indexRange The index range to load.
+ **/
+-(void)reloadBarWidthsInIndexRange:(NSRange)indexRange
+{
+    id<CPTBarPlotDataSource> theDataSource = (id<CPTBarPlotDataSource>)self.dataSource;
+
+    if ( [theDataSource respondsToSelector:@selector(barWidthsForBarPlot:recordIndexRange:)] ) {
+        [self cacheArray:[theDataSource barWidthsForBarPlot:self recordIndexRange:indexRange]
+                  forKey:CPTBarPlotBindingBarWidths
+           atRecordIndex:indexRange.location];
+    }
+    else if ( [theDataSource respondsToSelector:@selector(barWidthForBarPlot:recordIndex:)] ) {
+        id nilObject                 = [CPTPlot nilData];
+        CPTMutableNumberArray *array = [[NSMutableArray alloc] initWithCapacity:indexRange.length];
+        NSUInteger maxIndex          = NSMaxRange(indexRange);
+
+        for ( NSUInteger idx = indexRange.location; idx < maxIndex; idx++ ) {
+            NSNumber *width = [theDataSource barWidthForBarPlot:self recordIndex:idx];
+            if ( width ) {
+                [array addObject:width];
+            }
+            else {
+                [array addObject:nilObject];
+            }
+        }
+
+        [self cacheArray:array
+                  forKey:CPTBarPlotBindingBarWidths
+           atRecordIndex:indexRange.location];
     }
 
     [self setNeedsDisplay];
@@ -788,12 +844,12 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
 
     NSDecimal barOffsetLength = [self lengthInPlotCoordinates:self.barOffset.decimalValue];
     NSDecimal barWidthLength  = [self lengthInPlotCoordinates:self.barWidth.decimalValue];
-    NSDecimal halfBarWidth    = CPTDecimalDivide( barWidthLength, CPTDecimalFromInteger(2) );
+    NSDecimal halfBarWidth    = CPTDecimalDivide(barWidthLength, CPTDecimalFromInteger(2));
 
     NSDecimal rangeLocation = range.locationDecimal;
     NSDecimal rangeLength   = range.lengthDecimal;
 
-    if ( CPTDecimalGreaterThanOrEqualTo( rangeLength, CPTDecimalFromInteger(0) ) ) {
+    if ( CPTDecimalGreaterThanOrEqualTo(rangeLength, CPTDecimalFromInteger(0))) {
         rangeLocation = CPTDecimalSubtract(rangeLocation, halfBarWidth);
 
         range.locationDecimal = CPTDecimalAdd(rangeLocation, barOffsetLength);
@@ -822,13 +878,13 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
 
     CPTMutableNumericData *cachedLocations = [self cachedNumbersForField:CPTBarPlotFieldBarLocation];
     CPTMutableNumericData *cachedLengths   = [self cachedNumbersForField:CPTBarPlotFieldBarTip];
-    if ( (cachedLocations == nil) || (cachedLengths == nil) ) {
+    if ((cachedLocations == nil) || (cachedLengths == nil)) {
         return;
     }
 
     BOOL basesVary                     = self.barBasesVary;
     CPTMutableNumericData *cachedBases = [self cachedNumbersForField:CPTBarPlotFieldBarBase];
-    if ( basesVary && (cachedBases == nil) ) {
+    if ( basesVary && (cachedBases == nil)) {
         return;
     }
 
@@ -841,7 +897,7 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
         [NSException raise:CPTException format:@"Number of bar locations and lengths do not match"];
     }
 
-    if ( basesVary && (cachedLengths.numberOfSamples != cachedBases.numberOfSamples) ) {
+    if ( basesVary && (cachedLengths.numberOfSamples != cachedBases.numberOfSamples)) {
         [NSException raise:CPTException format:@"Number of bar lengths and bases do not match"];
     }
 
@@ -868,13 +924,13 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
     if ( self.doublePrecisionCache ) {
         double plotPoint[2];
         plotPoint[independentCoord] = [self cachedDoubleForField:CPTBarPlotFieldBarLocation recordIndex:idx];
-        if ( isnan(plotPoint[independentCoord]) ) {
+        if ( isnan(plotPoint[independentCoord])) {
             return NO;
         }
 
         // Tip point
         plotPoint[dependentCoord] = [self cachedDoubleForField:CPTBarPlotFieldBarTip recordIndex:idx];
-        if ( isnan(plotPoint[dependentCoord]) ) {
+        if ( isnan(plotPoint[dependentCoord])) {
             return NO;
         }
         *tipPoint = [thePlotSpace plotAreaViewPointForDoublePrecisionPlotPoint:plotPoint numberOfCoordinates:2];
@@ -886,7 +942,7 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
         else {
             plotPoint[dependentCoord] = [self cachedDoubleForField:CPTBarPlotFieldBarBase recordIndex:idx];
         }
-        if ( isnan(plotPoint[dependentCoord]) ) {
+        if ( isnan(plotPoint[dependentCoord])) {
             return NO;
         }
         *basePoint = [thePlotSpace plotAreaViewPointForDoublePrecisionPlotPoint:plotPoint numberOfCoordinates:2];
@@ -894,13 +950,13 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
     else {
         NSDecimal plotPoint[2];
         plotPoint[independentCoord] = [self cachedDecimalForField:CPTBarPlotFieldBarLocation recordIndex:idx];
-        if ( NSDecimalIsNotANumber(&plotPoint[independentCoord]) ) {
+        if ( NSDecimalIsNotANumber(&plotPoint[independentCoord])) {
             return NO;
         }
 
         // Tip point
         plotPoint[dependentCoord] = [self cachedDecimalForField:CPTBarPlotFieldBarTip recordIndex:idx];
-        if ( NSDecimalIsNotANumber(&plotPoint[dependentCoord]) ) {
+        if ( NSDecimalIsNotANumber(&plotPoint[dependentCoord])) {
             return NO;
         }
         *tipPoint = [thePlotSpace plotAreaViewPointForPlotPoint:plotPoint numberOfCoordinates:2];
@@ -912,7 +968,7 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
         else {
             plotPoint[dependentCoord] = [self cachedDecimalForField:CPTBarPlotFieldBarBase recordIndex:idx];
         }
-        if ( NSDecimalIsNotANumber(&plotPoint[dependentCoord]) ) {
+        if ( NSDecimalIsNotANumber(&plotPoint[dependentCoord])) {
             return NO;
         }
         *basePoint = [thePlotSpace plotAreaViewPointForPlotPoint:plotPoint numberOfCoordinates:2];
@@ -944,18 +1000,23 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
         return NULL;
     }
 
-    CGMutablePathRef path = [self newBarPathWithContext:context basePoint:basePoint tipPoint:tipPoint];
+    NSNumber *width = [self barWidthForIndex:recordIndex];
+
+    CGMutablePathRef path = [self newBarPathWithContext:context
+                                              basePoint:basePoint
+                                               tipPoint:tipPoint
+                                                  width:width];
 
     return path;
 }
 
--(nonnull CGMutablePathRef)newBarPathWithContext:(nullable CGContextRef)context basePoint:(CGPoint)basePoint tipPoint:(CGPoint)tipPoint
+-(nonnull CGMutablePathRef)newBarPathWithContext:(nullable CGContextRef)context basePoint:(CGPoint)basePoint tipPoint:(CGPoint)tipPoint width:(NSNumber *)width
 {
     // This function is used to create a path which is used for both
     // drawing a bar and for doing hit-testing on a click/touch event
     BOOL horizontalBars = self.barsAreHorizontal;
 
-    CGFloat barWidthLength = [self lengthInView:self.barWidth.decimalValue];
+    CGFloat barWidthLength = [self lengthInView:width.decimalValue];
     CGFloat halfBarWidth   = CPTFloat(0.5) * barWidthLength;
 
     CGRect barRect;
@@ -984,7 +1045,7 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
 
         CGContextRef theContext = context;
 
-        if ( self.lineStyle.lineWidth > CPTFloat(0.0) ) {
+        if ( self.lineStyle.lineWidth > CPTFloat(0.0)) {
             barRect = CPTAlignRectToUserSpace(theContext, barRect);
         }
         else {
@@ -992,21 +1053,21 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
         }
     }
 
-    CGFloat radius     = MIN( MIN( self.barCornerRadius, ABS(barRect.size.width) * CPTFloat(0.5) ), ABS(barRect.size.height) * CPTFloat(0.5) );
-    CGFloat baseRadius = MIN( MIN( self.barBaseCornerRadius, ABS(barRect.size.width) * CPTFloat(0.5) ), ABS(barRect.size.height) * CPTFloat(0.5) );
+    CGFloat radius     = MIN(MIN(self.barCornerRadius, ABS(barRect.size.width) * CPTFloat(0.5)), ABS(barRect.size.height) * CPTFloat(0.5));
+    CGFloat baseRadius = MIN(MIN(self.barBaseCornerRadius, ABS(barRect.size.width) * CPTFloat(0.5)), ABS(barRect.size.height) * CPTFloat(0.5));
 
-    if ( widthNegative && ( barRect.size.width > CPTFloat(0.0) ) ) {
+    if ( widthNegative && (barRect.size.width > CPTFloat(0.0))) {
         barRect.origin.x  += barRect.size.width;
         barRect.size.width = -barRect.size.width;
     }
-    if ( heightNegative && ( barRect.size.height > CPTFloat(0.0) ) ) {
+    if ( heightNegative && (barRect.size.height > CPTFloat(0.0))) {
         barRect.origin.y   += barRect.size.height;
         barRect.size.height = -barRect.size.height;
     }
 
     CGMutablePathRef path = CGPathCreateMutable();
-    if ( radius == CPTFloat(0.0) ) {
-        if ( baseRadius == CPTFloat(0.0) ) {
+    if ( radius == CPTFloat(0.0)) {
+        if ( baseRadius == CPTFloat(0.0)) {
             // square corners
             CGPathAddRect(path, NULL, barRect);
         }
@@ -1034,7 +1095,7 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
         CGFloat tipX = barRect.origin.x + barRect.size.width;
         CGFloat tipY = barRect.origin.y + barRect.size.height;
 
-        if ( baseRadius == CPTFloat(0.0) ) {
+        if ( baseRadius == CPTFloat(0.0)) {
             // rounded at tip end only
             CGPathMoveToPoint(path, NULL, barRect.origin.x, barRect.origin.y);
             if ( horizontalBars ) {
@@ -1052,14 +1113,14 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
         else {
             // rounded at both ends
             if ( horizontalBars ) {
-                CGPathMoveToPoint( path, NULL, barRect.origin.x, CGRectGetMidY(barRect) );
+                CGPathMoveToPoint(path, NULL, barRect.origin.x, CGRectGetMidY(barRect));
                 CGPathAddArcToPoint(path, NULL, barRect.origin.x, tipY, CGRectGetMidX(barRect), tipY, baseRadius);
                 CGPathAddArcToPoint(path, NULL, tipX, tipY, tipX, CGRectGetMidY(barRect), radius);
                 CGPathAddArcToPoint(path, NULL, tipX, barRect.origin.y, CGRectGetMidX(barRect), barRect.origin.y, radius);
                 CGPathAddArcToPoint(path, NULL, barRect.origin.x, barRect.origin.y, barRect.origin.x, CGRectGetMidY(barRect), baseRadius);
             }
             else {
-                CGPathMoveToPoint( path, NULL, barRect.origin.x, CGRectGetMidY(barRect) );
+                CGPathMoveToPoint(path, NULL, barRect.origin.x, CGRectGetMidY(barRect));
                 CGPathAddArcToPoint(path, NULL, barRect.origin.x, tipY, CGRectGetMidX(barRect), tipY, radius);
                 CGPathAddArcToPoint(path, NULL, tipX, tipY, tipX, CGRectGetMidY(barRect), radius);
                 CGPathAddArcToPoint(path, NULL, tipX, barRect.origin.y, CGRectGetMidX(barRect), barRect.origin.y, baseRadius);
@@ -1072,16 +1133,16 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
     return path;
 }
 
--(BOOL)barIsVisibleWithBasePoint:(CGPoint)basePoint
+-(BOOL)barIsVisibleWithBasePoint:(CGPoint)basePoint width:(NSNumber *)width
 {
     BOOL horizontalBars    = self.barsAreHorizontal;
-    CGFloat barWidthLength = [self lengthInView:self.barWidth.decimalValue];
+    CGFloat barWidthLength = [self lengthInView:width.decimalValue];
     CGFloat halfBarWidth   = CPTFloat(0.5) * barWidthLength;
 
     CPTPlotArea *thePlotArea = self.plotArea;
 
-    CGFloat lowerBound = ( horizontalBars ? CGRectGetMinY(thePlotArea.bounds) : CGRectGetMinX(thePlotArea.bounds) );
-    CGFloat upperBound = ( horizontalBars ? CGRectGetMaxY(thePlotArea.bounds) : CGRectGetMaxX(thePlotArea.bounds) );
+    CGFloat lowerBound = (horizontalBars ? CGRectGetMinY(thePlotArea.bounds) : CGRectGetMinX(thePlotArea.bounds));
+    CGFloat upperBound = (horizontalBars ? CGRectGetMaxY(thePlotArea.bounds) : CGRectGetMaxX(thePlotArea.bounds));
     CGFloat base       = (horizontalBars ? basePoint.y : basePoint.x);
 
     return (base + halfBarWidth >= lowerBound) && (base - halfBarWidth <= upperBound);
@@ -1091,7 +1152,7 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
 {
     CPTFill *theBarFill = [self cachedValueForKey:CPTBarPlotBindingBarFills recordIndex:idx];
 
-    if ( (theBarFill == nil) || (theBarFill == [CPTPlot nilData]) ) {
+    if ((theBarFill == nil) || (theBarFill == [CPTPlot nilData])) {
         theBarFill = self.fill;
     }
 
@@ -1102,11 +1163,22 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
 {
     CPTLineStyle *theBarLineStyle = [self cachedValueForKey:CPTBarPlotBindingBarLineStyles recordIndex:idx];
 
-    if ( (theBarLineStyle == nil) || (theBarLineStyle == [CPTPlot nilData]) ) {
+    if ((theBarLineStyle == nil) || (theBarLineStyle == [CPTPlot nilData])) {
         theBarLineStyle = self.lineStyle;
     }
 
     return theBarLineStyle;
+}
+
+-(nonnull NSNumber *)barWidthForIndex:(NSUInteger)idx
+{
+    NSNumber *theBarWidth = [self cachedValueForKey:CPTBarPlotBindingBarWidths recordIndex:idx];
+
+    if ((theBarWidth == nil) || (theBarWidth == [CPTPlot nilData])) {
+        theBarWidth = self.barWidth;
+    }
+
+    return theBarWidth;
 }
 
 -(void)drawBarInContext:(nonnull CGContextRef)context recordIndex:(NSUInteger)idx
@@ -1119,12 +1191,17 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
         return;
     }
 
+    NSNumber *width = [self barWidthForIndex:idx];
+
     // Return if bar is off screen
-    if ( ![self barIsVisibleWithBasePoint:basePoint] ) {
+    if ( ![self barIsVisibleWithBasePoint:basePoint width:width] ) {
         return;
     }
 
-    CGMutablePathRef path = [self newBarPathWithContext:context basePoint:basePoint tipPoint:tipPoint];
+    CGMutablePathRef path = [self newBarPathWithContext:context
+                                              basePoint:basePoint
+                                               tipPoint:tipPoint
+                                                  width:width];
 
     if ( path ) {
         CGContextSaveGState(context);
@@ -1230,7 +1307,7 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
     BOOL horizontalBars       = self.barsAreHorizontal;
     CPTCoordinate coordinate  = (horizontalBars ? CPTCoordinateX : CPTCoordinateY);
     CPTPlotRange *lengthRange = [self.plotSpace plotRangeForCoordinate:coordinate];
-    if ( CPTDecimalLessThan( lengthRange.lengthDecimal, CPTDecimalFromInteger(0) ) ) {
+    if ( CPTDecimalLessThan(lengthRange.lengthDecimal, CPTDecimalFromInteger(0))) {
         positiveDirection = !positiveDirection;
     }
 
@@ -1350,10 +1427,10 @@ CPTBarPlotBinding const CPTBarPlotBindingBarLineStyles = @"barLineStyles"; ///< 
     NSUInteger barCount = self.cachedDataCount;
     NSUInteger ii       = 0;
 
-    while ( (ii < barCount) && (idx == NSNotFound) ) {
+    while ((ii < barCount) && (idx == NSNotFound)) {
         CGMutablePathRef path = [self newBarPathWithContext:NULL recordIndex:ii];
 
-        if ( CGPathContainsPoint(path, NULL, point, false) ) {
+        if ( CGPathContainsPoint(path, NULL, point, false)) {
             idx = ii;
         }
 

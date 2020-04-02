@@ -7,9 +7,6 @@
 /// @cond
 @interface CPTLayerAnnotation()
 
-@property (nonatomic, readwrite, strong, nullable) CPTConstraints *xConstraints;
-@property (nonatomic, readwrite, strong, nullable) CPTConstraints *yConstraints;
-
 -(void)setConstraints;
 
 @end
@@ -36,7 +33,14 @@
  **/
 @synthesize rectAnchor;
 
+/** @property CPTConstraints *xConstraints
+ *  @brief The constraints used to position the content layer relative to the reference layer in the x-direction. Setting the @ref rectAnchor resets the constraints.
+ **/
 @synthesize xConstraints;
+
+/** @property CPTConstraints *yConstraints
+ *  @brief The constraints used to position the content layer relative to the reference layer in the y-direction. Setting the @ref rectAnchor resets the constraints.
+ **/
 @synthesize yConstraints;
 
 #pragma mark -
@@ -57,7 +61,7 @@
 {
     NSParameterAssert(newAnchorLayer);
 
-    if ( (self = [super init]) ) {
+    if ((self = [super init])) {
         anchorLayer  = newAnchorLayer;
         rectAnchor   = CPTRectAnchorTop;
         xConstraints = nil;
@@ -114,14 +118,23 @@
  */
 -(nullable instancetype)initWithCoder:(nonnull NSCoder *)coder
 {
-    if ( (self = [super initWithCoder:coder]) ) {
-        anchorLayer = [coder decodeObjectOfClass:[CPTLayer class]
-                                          forKey:@"CPTLayerAnnotation.anchorLayer"];
+    if ((self = [super initWithCoder:coder])) {
+        CPTLayer *anchor = [coder decodeObjectOfClass:[CPTLayer class]
+                                               forKey:@"CPTLayerAnnotation.anchorLayer"];
         xConstraints = [coder decodeObjectOfClass:[CPTConstraints class]
                                            forKey:@"CPTLayerAnnotation.xConstraints"];
         yConstraints = [coder decodeObjectOfClass:[CPTConstraints class]
                                            forKey:@"CPTLayerAnnotation.yConstraints"];
         rectAnchor = (CPTRectAnchor)[coder decodeIntegerForKey:@"CPTLayerAnnotation.rectAnchor"];
+
+        if ( anchor ) {
+            anchorLayer = anchor;
+
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(positionContentLayer)
+                                                         name:CPTLayerBoundsDidChangeNotification
+                                                       object:anchor];
+        }
     }
     return self;
 }
@@ -155,7 +168,7 @@
 
             content.anchorPoint = self.contentAnchorPoint;
             content.position    = newPosition;
-            content.transform   = CATransform3DMakeRotation( self.rotation, CPTFloat(0.0), CPTFloat(0.0), CPTFloat(1.0) );
+            content.transform   = CATransform3DMakeRotation(self.rotation, CPTFloat(0.0), CPTFloat(0.0), CPTFloat(1.0));
             [content pixelAlign];
         }
     }
@@ -249,6 +262,21 @@
     if ( newAnchor != rectAnchor ) {
         rectAnchor = newAnchor;
         [self setConstraints];
+    }
+}
+
+-(void)setXConstraints:(CPTConstraints *)newConstraints
+{
+    if ( newConstraints != xConstraints ) {
+        xConstraints = newConstraints;
+        [self positionContentLayer];
+    }
+}
+
+-(void)setYConstraints:(CPTConstraints *)newConstraints
+{
+    if ( newConstraints != yConstraints ) {
+        yConstraints = newConstraints;
         [self positionContentLayer];
     }
 }

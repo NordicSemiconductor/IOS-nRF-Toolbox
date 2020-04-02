@@ -20,7 +20,7 @@ struct ServiceSection {
 struct DefaultServiceProvider: ServiceProvider {
     
     private static func loadServicesFromFile<T: ServiceType & Decodable>(_ fileName: String) -> [T] {
-        let errorLogger = Log(category: .ui, type: .error)
+        let errorLogger = SystemLog(category: .ui, type: .error)
         guard let fileUrl = Bundle.main.url(forResource: fileName, withExtension: "plist") else {
             errorLogger.log(message: "Could not find \"\(fileName).plist\"")
             return []
@@ -29,7 +29,7 @@ struct DefaultServiceProvider: ServiceProvider {
             let data = try Data(contentsOf: fileUrl, options: .mappedIfSafe)
             return try PropertyListDecoder().decode([T].self, from: data)
         } catch let error {
-            Log(category: .ui, type: .error).log(message: "Could not load services: \(error.localizedDescription)")
+            SystemLog(category: .ui, type: .error).log(message: "Could not load services: \(error.localizedDescription)")
             return []
         }
     }

@@ -24,7 +24,7 @@ class ServiceListViewController: UITableViewController {
     
     required init?(coder aDecoder: NSCoder) {
         let errorMessage = "init(coder:) has not been implemented in ServiceListViewController"
-        Log(category: .ui, type: .fault).log(message: errorMessage)
+        SystemLog(category: .ui, type: .fault).log(message: errorMessage)
         fatalError(errorMessage)
     }
     
@@ -61,7 +61,7 @@ extension ServiceListViewController {
             return cell
         default:
             let errorMessage = "Incorrect cell type for indexPath \(indexPath)"
-            Log(category: .ui, type: .fault).log(message: errorMessage)
+            SystemLog(category: .ui, type: .fault).log(message: errorMessage)
             fatalError(errorMessage)
         }
     }
@@ -73,7 +73,7 @@ extension ServiceListViewController {
         switch dataProvider.sections[indexPath] {
         case let model as BLEService:
             guard let serviceId = ServiceId(rawValue: model.id) else {
-                Log(category: .ui, type: .debug).log(message: "Unknown service selected with id \(model.id)")
+                SystemLog(category: .ui, type: .debug).log(message: "Unknown service selected with id \(model.id)")
                 break
             }
             selectedService = serviceId
@@ -81,7 +81,7 @@ extension ServiceListViewController {
         case let link as LinkService:
             serviceRouter.showLinkController(link)
         default:
-            Log(category: .ui, type: .debug).log(message: "Unknown Cell type selected")
+            SystemLog(category: .ui, type: .debug).log(message: "Unknown Cell type selected")
         }
     }
     

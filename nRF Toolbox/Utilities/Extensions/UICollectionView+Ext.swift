@@ -12,7 +12,7 @@ extension UICollectionView {
     func dequeueCell<T: UICollectionViewCell>(ofType type: T.Type, for indexPath: IndexPath) -> T {
         let cellId = String(describing: type)
         guard let cell = dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? T else {
-            Log(category: .ui, type: .error).log(message: "Can not dequeue cell of type `\(cellId)` with cell ID '\(cellId)'")
+            SystemLog(category: .ui, type: .error).log(message: "Can not dequeue cell of type `\(cellId)` with cell ID '\(cellId)'")
             fatalError("Can not dequeue cell")
         }
         return cell

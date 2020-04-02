@@ -9,14 +9,15 @@
 import UIKit
 
 class InfoActionView: UIView, XibInstantiable {
-    @IBOutlet private var messageLabel: UILabel!
-    @IBOutlet private var actionButton: UIButton!
-    @IBOutlet private var imageView: UIImageView!
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var messageLabel: UILabel!
+    @IBOutlet var actionButton: NordicButton!
+    @IBOutlet var imageView: UIImageView!
     
     var message: String? {
         didSet {
-            messageLabel.text = message
-            messageLabel.isHidden = message == nil
+            titleLabel.text = message
+            titleLabel.isHidden = message == nil
         }
     }
     
@@ -27,7 +28,7 @@ class InfoActionView: UIView, XibInstantiable {
         }
     }
     
-    private var action: Action?
+    var action: Action?
     var buttonSettings: ButtonSettings? {
         didSet {
             actionButton.isHidden = buttonSettings == nil
@@ -39,13 +40,17 @@ class InfoActionView: UIView, XibInstantiable {
     typealias Action = (() -> Void)
     typealias ButtonSettings = (String, Action)
     
-    @IBAction private func executeAction(_ sender: UIButton) {
+    @IBAction func executeAction(_ sender: UIButton) {
         action?()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
     }
     
     static func instanceWithParams(message: String? = nil, image: UIImage? = nil, buttonSettings: ButtonSettings? = nil) -> InfoActionView {
         let view = InfoActionView.instance()
-        view.messageLabel.text = message
+        view.titleLabel.text = message
         view.imageView.image = image
         view.buttonSettings = buttonSettings
         
@@ -54,16 +59,10 @@ class InfoActionView: UIView, XibInstantiable {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        actionButton.layer.borderColor = UIColor.tableViewSeparator.cgColor
-        actionButton.layer.borderWidth = 2
-        actionButton.layer.cornerRadius = 2
-        actionButton.contentEdgeInsets = UIEdgeInsets(top: 6, left: 8, bottom: 6, right: 8)
         
-        #if BETA
         if #available(iOS 13.0, *) {
             backgroundColor = .systemBackground
             imageView.tintColor = .systemGray3
         }
-        #endif
     }
 }

@@ -8,6 +8,29 @@
 
 import UIKit.UIImage
 
+struct ImageWrapper {
+    var modernIcon: ModernIcon
+    var legacyIcon: UIImage?
+    
+    var image: UIImage? {
+        if #available(iOS 13, *) {
+            return modernIcon.image
+        } else {
+            return legacyIcon
+        }
+    }
+    
+    init(icon: ModernIcon, image: UIImage?) {
+        self.modernIcon = icon
+        self.legacyIcon = image
+    }
+    
+    init(icon: ModernIcon, imageName: String) {
+        self.modernIcon = icon
+        self.legacyIcon = UIImage(named: imageName)
+    }
+}
+
 struct ModernIcon: Codable, Equatable {
     private (set) var name: String
     init(name: String) {
@@ -62,4 +85,11 @@ extension ModernIcon {
     static let line = ModernIcon(name: "line")
     static let horizontal = ModernIcon(name: "horizontal")
     static let decrease = ModernIcon(name: "decrease")
+    static let circlePath = ModernIcon(name: "circlepath")
+    static let arrow = ModernIcon(name: "arrow")
+    
+    static let exclamationmark = ModernIcon(name: "exclamationmark")
+    static let triangle = ModernIcon(name: "triangle")
+    
+    static let folder = ModernIcon(name: "folder")
 }

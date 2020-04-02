@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16085" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16078.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DFUFirmwareSizeSchemeCell" rowHeight="126" id="KGk-i7-Jjw" customClass="DFUFirmwareSizeSchemeCell" customModule="nRF_Toolbox" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="401" height="126"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="401" height="126"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="0Kb-Rc-Loa">
+                        <rect key="frame" x="20" y="11" width="361" height="80"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="File Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kir-TN-a1p">
+                                <rect key="frame" x="0.0" y="0.0" width="361" height="40"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EBG-5e-KFt" customClass="SegmentedView" customModule="nRF_Toolbox" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="48" width="361" height="32"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="Zbb-u6-KYd"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="separatorWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="separatorColor">
+                                        <color key="value" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                    </stackView>
+                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="7VP-Qt-Wm2">
+                        <rect key="frame" x="20" y="91" width="361" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="pua-Iu-lE2"/>
+                        </constraints>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailingMargin" secondItem="0Kb-Rc-Loa" secondAttribute="trailing" id="83n-E5-9RL"/>
+                    <constraint firstItem="0Kb-Rc-Loa" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="GZ4-B6-BUv"/>
+                    <constraint firstItem="7VP-Qt-Wm2" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="K5c-Ok-l99"/>
+                    <constraint firstItem="7VP-Qt-Wm2" firstAttribute="top" secondItem="0Kb-Rc-Loa" secondAttribute="bottom" id="L5K-Wc-M9X"/>
+                    <constraint firstItem="0Kb-Rc-Loa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="QMP-8t-j4J"/>
+                    <constraint firstItem="7VP-Qt-Wm2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Rvm-H9-RC4"/>
+                    <constraint firstItem="7VP-Qt-Wm2" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="S7I-XO-JPK"/>
+                    <constraint firstItem="7VP-Qt-Wm2" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" placeholder="YES" id="aMa-4S-6rX"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="legendStackView" destination="7VP-Qt-Wm2" id="CyW-Nl-vkZ"/>
+                <outlet property="segmentedView" destination="EBG-5e-KFt" id="lZw-7U-f9n"/>
+                <outlet property="titleLabel" destination="Kir-TN-a1p" id="u3t-ma-D7e"/>
+            </connections>
+            <point key="canvasLocation" x="196.37681159420291" y="180.80357142857142"/>
+        </tableViewCell>
+    </objects>
+</document>

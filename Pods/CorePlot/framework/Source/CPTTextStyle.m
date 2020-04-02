@@ -7,6 +7,8 @@
 /// @cond
 @interface CPTTextStyle()
 
+// font would override fontName/fontSize if not nil
+@property (readwrite, strong, nonatomic, nullable) CPTNativeFont *font;
 @property (readwrite, copy, nonatomic, nullable) NSString *fontName;
 @property (readwrite, assign, nonatomic) CGFloat fontSize;
 @property (readwrite, copy, nonatomic, nullable) CPTColor *color;
@@ -26,13 +28,20 @@
 
 @implementation CPTTextStyle
 
+/** @property CPTNativeFont* font
+ *  @brief The font. Default is @nil.
+ *
+ *  Font will override fontName and fontSize if not @nil.
+ **/
+@synthesize font;
+
 /** @property CGFloat fontSize
- *  @brief The font size. Default is @num{12.0}.
+ *  @brief The font size. Default is @num{12.0}. Ignored if font is not @nil.
  **/
 @synthesize fontSize;
 
 /** @property nullable NSString *fontName
- *  @brief The font name. Default is Helvetica.
+ *  @brief The font name. Default is Helvetica. Ignored if font is not @nil.
  **/
 @synthesize fontName;
 
@@ -73,6 +82,7 @@
 {
     CPTTextStyle *newTextStyle = [[self alloc] init];
 
+    newTextStyle.font          = textStyle.font;
     newTextStyle.color         = textStyle.color;
     newTextStyle.fontName      = textStyle.fontName;
     newTextStyle.fontSize      = textStyle.fontSize;
@@ -88,9 +98,10 @@
 /// @name Initialization
 /// @{
 
-/** @brief Initializes a newly allocated CPTAnnotation object.
+/** @brief Initializes a newly allocated CPTTextStyle object.
  *
  *  The initialized object will have the following properties:
+ *  - @ref font = nil
  *  - @ref fontName = Helvetica
  *  - @ref fontSize = @num{12.0}
  *  - @ref color = opaque black
@@ -101,7 +112,8 @@
  **/
 -(nonnull instancetype)init
 {
-    if ( (self = [super init]) ) {
+    if ((self = [super init])) {
+        font          = nil;
         fontName      = @"Helvetica";
         fontSize      = CPTFloat(12.0);
         color         = [CPTColor blackColor];
@@ -120,6 +132,16 @@
 
 -(void)encodeWithCoder:(nonnull NSCoder *)coder
 {
+#if TARGET_OS_SIMULATOR || TARGET_OS_IPHONE || TARGET_OS_TV
+    if ( self.font ) {
+        // UIFont does not support NSCoding :(
+        [coder encodeObject:[self.font fontDescriptor] forKey:@"CPTTextStyle.font+descriptor"];
+    }
+#else
+    // NSFont supports NSCoding :)
+    [coder encodeObject:self.font forKey:@"CPTTextStyle.font"];
+#endif
+
     [coder encodeObject:self.fontName forKey:@"CPTTextStyle.fontName"];
     [coder encodeCGFloat:self.fontSize forKey:@"CPTTextStyle.fontSize"];
     [coder encodeObject:self.color forKey:@"CPTTextStyle.color"];
@@ -129,7 +151,20 @@
 
 -(nullable instancetype)initWithCoder:(nonnull NSCoder *)coder
 {
-    if ( (self = [super init]) ) {
+    if ((self = [super init])) {
+#if TARGET_OS_SIMULATOR || TARGET_OS_IPHONE || TARGET_OS_TV
+        // UIFont does not support NSCoding :(
+        UIFontDescriptor *fontDescriptor = [coder decodeObjectOfClass:[UIFontDescriptor class]
+                                                               forKey:@"CPTTextStyle.font+descriptor"];
+        if ( fontDescriptor ) {
+            font = [UIFont fontWithDescriptor:fontDescriptor size:0]; // 0 will keep the same font size
+        }
+#else
+        // NSFont supports NSCoding :)
+        font = [coder decodeObjectOfClass:[NSFont class]
+                                   forKey:@"CPTTextStyle.font"];
+#endif
+
         fontName = [[coder decodeObjectOfClass:[NSString class]
                                         forKey:@"CPTTextStyle.fontName"] copy];
         fontSize = [coder decodeCGFloatForKey:@"CPTTextStyle.fontSize"];
@@ -164,6 +199,7 @@
 {
     CPTTextStyle *newCopy = [[CPTTextStyle allocWithZone:zone] init];
 
+    newCopy.font          = self.font;
     newCopy.fontName      = self.fontName;
     newCopy.color         = self.color;
     newCopy.fontSize      = self.fontSize;
@@ -184,6 +220,7 @@
 {
     CPTTextStyle *newCopy = [[CPTMutableTextStyle allocWithZone:zone] init];
 
+    newCopy.font          = self.font;
     newCopy.fontName      = self.fontName;
     newCopy.color         = self.color;
     newCopy.fontSize      = self.fontSize;

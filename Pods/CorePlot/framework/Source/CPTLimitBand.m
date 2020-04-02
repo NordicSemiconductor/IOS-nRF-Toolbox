@@ -28,7 +28,7 @@
  **/
 +(nonnull instancetype)limitBandWithRange:(nullable CPTPlotRange *)newRange fill:(nullable CPTFill *)newFill
 {
-    return [[CPTLimitBand alloc] initWithRange:newRange fill:newFill];
+    return [[self alloc] initWithRange:newRange fill:newFill];
 }
 
 /** @brief Initializes a newly allocated CPTLimitBand object with the provided range and fill.
@@ -38,7 +38,7 @@
  **/
 -(nonnull instancetype)initWithRange:(nullable CPTPlotRange *)newRange fill:(nullable CPTFill *)newFill
 {
-    if ( (self = [super init]) ) {
+    if ((self = [super init])) {
         range = newRange;
         fill  = newFill;
     }
@@ -91,7 +91,7 @@
  */
 -(nullable instancetype)initWithCoder:(nonnull NSCoder *)decoder
 {
-    if ( (self = [super init]) ) {
+    if ((self = [super init])) {
         range = [decoder decodeObjectOfClass:[CPTPlotRange class]
                                       forKey:@"CPTLimitBand.range"];
         fill = [decoder decodeObjectOfClass:[CPTFill class]

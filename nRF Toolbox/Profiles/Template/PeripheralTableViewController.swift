@@ -73,14 +73,14 @@ class PeripheralTableViewController: PeripheralViewController, UITableViewDataSo
             if let actionSection = section as? ActionSection {
                 actionSection.items[item].action()
             } else {
-                Log(category: .ui, type: .debug).log(message: "Skipped item #\(item) in section \(section.id)")
+                SystemLog(category: .ui, type: .debug).log(message: "Skipped item #\(item) in section \(section.id)")
             }
         }
     }
     
     func reloadSection(id: Identifier<Section>, animation: UITableView.RowAnimation = .automatic) {
         guard let index = visibleSections.firstIndex(where: { $0.id == id }) else {
-            Log(category: .ui, type: .error).log(message: "Cannot upload section \(id)")
+            SystemLog(category: .ui, type: .error).log(message: "Cannot upload section \(id)")
             return
         }
         tableView.reloadSections([index], with: .none)
@@ -131,7 +131,7 @@ class PeripheralTableViewController: PeripheralViewController, UITableViewDataSo
         case CBUUID.Characteristics.Battery.batteryLevel:
             handleBatteryValue(characteristic)
         default:
-            Log(category: .ble, type: .debug).log(message: "Cannot handle update value for characteristic \(characteristic)")
+            SystemLog(category: .ble, type: .debug).log(message: "Cannot handle update value for characteristic \(characteristic)")
         }
     }
     

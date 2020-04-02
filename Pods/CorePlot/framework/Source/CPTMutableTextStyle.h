@@ -4,6 +4,7 @@
 
 @interface CPTMutableTextStyle : CPTTextStyle
 
+@property (readwrite, strong, nonatomic, nullable) CPTNativeFont *font;
 @property (readwrite, copy, nonatomic, nullable) NSString *fontName;
 @property (readwrite, assign, nonatomic) CGFloat fontSize;
 @property (readwrite, copy, nonatomic, nullable) CPTColor *color;

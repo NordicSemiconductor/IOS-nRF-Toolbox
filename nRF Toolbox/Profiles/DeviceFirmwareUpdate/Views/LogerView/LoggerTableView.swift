@@ -21,7 +21,8 @@ struct LogMessage {
 }
 
 class LoggerTableView: UITableView {
-    private var logs: [LogMessage] = []
+    var logs: [LogMessage] = []
+    
     var filter: [LOGLevel] = LOGLevel.allCases {
         didSet {
             reloadData()
@@ -43,11 +44,6 @@ class LoggerTableView: UITableView {
         initialize()
     }
     
-    func clear() {
-        logs.removeAll()
-        reloadData()
-    }
-    
     private func initialize() {
         registerCellNib(cell: LogTableViewCell.self)
         dataSource = self
@@ -58,15 +54,26 @@ class LoggerTableView: UITableView {
     }
 }
 
+extension LoggerTableView {
+    func addMessage(_ message: LogMessage) {
+        self.logs.append(message)
+        guard self.filter.contains(message.level) else { return }
+        let insertIndexPath = IndexPath(row: self.filteredData.count-1, section: 0)
+        self.insertRows(at: [insertIndexPath], with: .bottom)
+        self.scrollToRow(at: insertIndexPath, at: .bottom, animated: true)
+    }
+    
+    func reset() {
+        logs.removeAll()
+        reloadData()
+    }
+}
+
 extension LoggerTableView: LogPresenter, Logger {
     func log(level aLevel: LOGLevel, message aMessage: String) {
         DispatchQueue.main.async {
             let log = LogMessage(level: aLevel, message: aMessage, time: Date())
-            self.logs.append(log)
-            guard self.filter.contains(aLevel) else { return }
-            let insertIndexPath = IndexPath(row: self.filteredData.count-1, section: 0)
-            self.insertRows(at: [insertIndexPath], with: .bottom)
-            self.scrollToRow(at: insertIndexPath, at: .bottom, animated: true)
+            self.addMessage(log)
         }
     }
     
@@ -93,11 +100,6 @@ extension LoggerTableView: LogPresenter, Logger {
             return $0
         }
     }
-    
-    func reset() {
-        logs.removeAll()
-        reloadData()
-    }
 }
 
 extension LoggerTableView: UITableViewDataSource {
@@ -110,6 +112,7 @@ extension LoggerTableView: UITableViewDataSource {
         let cell = tableView.dequeueCell(ofType: LogTableViewCell.self)
         let log = filteredData[indexPath.row]
         cell.update(with: log)
+        cell.selectionStyle = .none
         return cell
     }
 }
