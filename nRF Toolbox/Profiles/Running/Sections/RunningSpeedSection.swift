@@ -35,7 +35,7 @@ class RunningSpeedSection: DetailsTableViewSection<RunningCharacteristic> {
         let cadence = runningData.instantaneousCadence
         var items: [DefaultDetailsTableViewCellModel] = [
             DefaultDetailsTableViewCellModel(title: "Pace", value: PaceMeasurementFormatter().paceString(from: runningData.instantaneousSpeed)),
-            DefaultDetailsTableViewCellModel(title: "Cadence", value: "\(cadence)")
+            DefaultDetailsTableViewCellModel(title: "Cadence", value: "\(cadence) RPM")
         ]
         
         if let distance = runningData.totalDistance, let strideLength = runningData.instantaneousStrideLength {
