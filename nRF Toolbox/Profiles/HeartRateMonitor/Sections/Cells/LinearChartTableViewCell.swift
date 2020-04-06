@@ -18,6 +18,8 @@ extension DateFormatter: IAxisValueFormatter {
 }
 
 class LinearChartTableViewCell: UITableViewCell {
+    
+    static let maxVisibleXRange = 12.0
 
     let chartsView = LineChartView()
 
@@ -33,6 +35,7 @@ class LinearChartTableViewCell: UITableViewCell {
             chartsView.noDataTextColor = .systemGray2
         }
         
+        chartsView.setScaleEnabled(false)
         chartsView.rightAxis.drawLabelsEnabled = false
 
         let leftAxis = chartsView.leftAxis
@@ -44,6 +47,9 @@ class LinearChartTableViewCell: UITableViewCell {
         dateFormatter.timeStyle = .short
         dateFormatter.dateStyle = .none
         xAxis.valueFormatter = dateFormatter
+        
+        chartsView.dragEnabled = true
+        chartsView.dragDecelerationFrictionCoef = 0.35
 
         if #available(iOS 13, *) {
             leftAxis.axisLineColor = .label
@@ -72,15 +78,34 @@ class LinearChartTableViewCell: UITableViewCell {
     func update(with data: [(x: TimeInterval, y: Double)]) {
         let dataSet = configureChartData(data)
         chartsView.data = dataSet
+        chartsView.setVisibleXRangeMaximum(Self.maxVisibleXRange)
+        guard let last = data.last?.x else { return }
+        
+        if chartsView.highestVisibleX.rounded(.up) >= chartsView.xAxis.axisMaximum - 2 {
+            chartsView.moveViewToX(last)
+        }
     }
     
     private func configureChartData(_ value: [(x: TimeInterval, y: Double)]) -> LineChartData? {
         guard value.count > 0 else { return nil }
+        guard let first = value.first?.x else { return nil }
+
+        let data = chartsView.data as? LineChartData ?? LineChartData()
         let chartValues = value.map { ChartDataEntry(x: $0.x, y: $0.y) }
+        
+        let last = value.last?.x ?? Double.leastNormalMagnitude
+        let xMax = max((first + Self.maxVisibleXRange), last)
+        
+        chartsView.xAxis.axisMaximum = xMax
+        chartsView.xAxis.axisMinimum = first
+        
         let set = LineChartDataSet(entries: chartValues, label: nil)
         set.drawCirclesEnabled = false
         set.drawValuesEnabled = false
-        return LineChartData(dataSet: set)
+        
+        data.dataSets = [set]
+        
+        return data
     }
 
 }
