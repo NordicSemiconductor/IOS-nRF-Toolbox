@@ -14,12 +14,16 @@ enum PeripheralStatus: CustomDebugStringConvertible {
     case poweredOff
     case connected(CBPeripheral)
     case disconnected
+    case discoveringServices
+    case discoveredRequiredServices
     
     var debugDescription: String {
         switch self {
         case .connected(let p): return "connected to \(p.name ?? "__unnamed__")"
         case .disconnected: return "disconnected"
         case .poweredOff: return "powered off"
+        case .discoveringServices: return "discovering services"
+        case .discoveredRequiredServices: return "discovered required services"
         }
     }
 }

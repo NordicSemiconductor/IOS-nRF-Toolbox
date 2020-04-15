@@ -47,7 +47,7 @@ struct CyclingTableViewSection: Section {
     
     mutating func reset() {
         for i in items.enumerated() {
-            items[i.offset].value = "-"
+            items[i.offset].details = "-"
         }
         
         oldCharacteristic = .zero 
@@ -72,15 +72,15 @@ struct CyclingTableViewSection: Section {
         
         switch item.identifier {
         case .speed:
-            item.value = speedFormatter.string(from: speed)
+            item.details = speedFormatter.string(from: speed)
         case .distance:
-            item.value = distanceFormatter.string(from: travelDistance)
+            item.details = distanceFormatter.string(from: travelDistance)
         case .totalDistance:
-            item.value = distanceFormatter.string(from: totalTravelDistance)
+            item.details = distanceFormatter.string(from: totalTravelDistance)
         case .cadence:
-            item.value = "\(cadence) RPM"
+            item.details = "\(cadence) RPM"
         case .gearRatio:
-            item.value = String(format: "%.2f", gearRatio)
+            item.details = String(format: "%.2f", gearRatio)
         default:
             break
         }

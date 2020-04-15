@@ -552,12 +552,19 @@ import CoreBluetooth
      Triggers a switch to DFU Bootloader mode on the remote target by sending DFU Start
      command.
      
+     - parameter name: Alternative advertising name to be set. This feature is supported in
+                       SDK 14 or newer.
+     - parameter success: Callback called when the jump has been initiated.
      - parameter report: Method called when an error occurred.
      */
     func jumpToBootloaderMode(withAlternativeAdvertisingName name: String?,
+                              onSuccess success: @escaping Callback,
                               onError report: @escaping ErrorCallback) {
         if !aborted {
             func enterBootloader() {
+                // The method above may reset the device before it sents a response to
+                // the request. We will call the success callback right here.
+                success()
                 self.buttonlessDfuCharacteristic!.send(ButtonlessDFURequest.enterBootloader,
                                                        onSuccess: nil, onError: report)
             }

@@ -24,7 +24,7 @@ class HealthTermometerTableViewController: PeripheralTableViewController {
     
     override func didUpdateValue(for characteristic: CBCharacteristic) {
         switch characteristic.uuid {
-        case CBUUID.Characteristics.HealthTemperature.measurement:
+    case CBUUID.Characteristics.HealthTemperature.measurement:
             let temperature = HealthTermometerCharacteristic(data: characteristic.value!)
             temperatureSection.update(with: temperature)
             additionalInfoSection.update(with: temperature)

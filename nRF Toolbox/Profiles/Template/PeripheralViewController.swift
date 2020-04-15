@@ -21,17 +21,21 @@ struct PeripheralDescription {
     }
     let uuid: CBUUID?
     let services: [Service]
+    let requiredServices: [CBUUID]?
 }
 
-class PeripheralViewController: UIViewController, StatusDelegate {
+class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter {
     private lazy var peripheralManager = PeripheralManager(peripheral: peripheralDescription)
 
     var navigationTitle: String { "" }
-    var peripheralDescription: PeripheralDescription { PeripheralDescription(uuid: CBUUID.Profile.bloodGlucoseMonitor, services: [.battery]) }
+    var peripheralDescription: PeripheralDescription { SystemLog(category: .app, type: .fault).fault("Override this method in subclass") }
+    var requiredServices: [CBUUID]?
     var activePeripheral: CBPeripheral?
     
     private var savedView: UIView!
-
+    private var discoveredServices: [CBUUID] = []
+    private var serviceFinderTimer: Timer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -49,6 +53,7 @@ class PeripheralViewController: UIViewController, StatusDelegate {
         SystemLog(category: .ble, type: .debug).log(message: "Changed Bluetooth status in \(String(describing: type(of: self))), status: \(status)")
         switch status {
         case .poweredOff:
+            serviceFinderTimer?.invalidate()
             activePeripheral = nil
 
             let bSettings: InfoActionView.ButtonSettings = ("Settings", {
@@ -60,6 +65,7 @@ class PeripheralViewController: UIViewController, StatusDelegate {
             let notContent = InfoActionView.instanceWithParams(message: "Bluetooth is powered off", buttonSettings: bSettings)
             view = notContent
         case .disconnected:
+            serviceFinderTimer?.invalidate()
             activePeripheral = nil
 
             let bSettings: InfoActionView.ButtonSettings = ("Connect", { [unowned self] in
@@ -76,6 +82,26 @@ class PeripheralViewController: UIViewController, StatusDelegate {
             
             activePeripheral?.delegate = self
             activePeripheral?.discoverServices(peripheralDescription.services.map { $0.uuid } )
+            
+            if case .none = peripheralDescription.requiredServices {
+                statusDidChanged(.discoveredRequiredServices)
+            } else {
+                statusDidChanged(.discoveringServices)
+            }
+            
+            serviceFinderTimer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [weak self] (t) in
+                self?.displayErrorAlert(error: QuickError(message: "Can't find required services"))
+                self?.disconnect()
+                t.invalidate()
+            }
+            
+        case .discoveringServices:
+            let notContent = InfoActionView.instanceWithParams(message: "Discovering Services...")
+            notContent.actionButton.style = .mainAction
+            
+            view = notContent
+        case .discoveredRequiredServices:
+            serviceFinderTimer?.invalidate()
             view = savedView
         }
     }
@@ -99,6 +125,12 @@ class PeripheralViewController: UIViewController, StatusDelegate {
                 .map { $0.uuid }
 
         peripheral.discoverCharacteristics(characteristics, for: service)
+        
+        discoveredServices.append(service.uuid)
+        guard let requiredServices = peripheralDescription.requiredServices else { return }
+        if Set(requiredServices).subtracting(Set(discoveredServices)).isEmpty {
+            statusDidChanged(.discoveredRequiredServices)
+        }
     }
 
     func didDiscover(characteristic: CBCharacteristic, for service: CBService, peripheral: CBPeripheral) {

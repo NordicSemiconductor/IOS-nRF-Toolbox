@@ -9,7 +9,7 @@
 import CoreBluetooth
 
 extension PeripheralDescription {
-    static let heartRateSensor = PeripheralDescription(uuid: CBUUID.Profile.heartRateSensor, services: [.battery, .heartRateMeasurement])
+    static let heartRateSensor = PeripheralDescription(uuid: CBUUID.Profile.heartRateSensor, services: [.battery, .heartRateMeasurement], requiredServices: [CBUUID.Service.heartRateSensor])
 }
 
 private extension PeripheralDescription.Service {

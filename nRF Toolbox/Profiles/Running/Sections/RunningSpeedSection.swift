@@ -60,7 +60,7 @@ class RunningSpeedSection: DetailsTableViewSection<RunningCharacteristic> {
                     .firstIndex(where: { $0.identifier == .numberOfSteps })
                     .map {
                         var item = self.items[$0] as! DefaultDetailsTableViewCellModel
-                        item.value = "\(self.numberOfSteps)"
+                        item.details = "\(self.numberOfSteps)"
                         self.items[$0] = item
                     }
                 

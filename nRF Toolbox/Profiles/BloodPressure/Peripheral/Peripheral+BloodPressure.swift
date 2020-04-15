@@ -9,7 +9,7 @@
 import CoreBluetooth
 
 extension PeripheralDescription {
-    static let bloodPressure = PeripheralDescription(uuid: CBUUID.Profile.bloodPressureMonitor, services: [.battery, .measurement])
+    static let bloodPressure = PeripheralDescription(uuid: CBUUID.Profile.bloodPressureMonitor, services: [.battery, .measurement], requiredServices: [CBUUID.Service.bloodPressureMonitor])
 }
 
 private extension PeripheralDescription.Service {

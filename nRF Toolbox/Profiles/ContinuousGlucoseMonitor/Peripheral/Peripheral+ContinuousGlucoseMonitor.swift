@@ -7,7 +7,7 @@ import Foundation
 import CoreBluetooth
 
 extension PeripheralDescription {
-    static let continuousGlucoseMonitor = PeripheralDescription(uuid: CBUUID(hex: 0x181F), services: [.battery, .continuousGlucoseMonitor])
+    static let continuousGlucoseMonitor = PeripheralDescription(uuid: CBUUID(hex: 0x181F), services: [.battery, .continuousGlucoseMonitor], requiredServices: nil)
 }
 
 private extension PeripheralDescription.Service {

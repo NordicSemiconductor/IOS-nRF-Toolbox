@@ -9,6 +9,13 @@
 import Foundation
 
 class HealthTemperatureAditionalSection: DetailsTableViewSection<HealthTermometerCharacteristic> {
+    
+    override var isHidden: Bool { false }
+    
+    override init(id: Identifier<Section>, sectionUpdated: ((Identifier<Section>) -> ())? = nil, itemUpdated: ((Identifier<Section>, Identifier<DetailsTableViewCellModel>) -> ())? = nil) {
+        super.init(id: id, sectionUpdated: sectionUpdated, itemUpdated: itemUpdated)
+    }
+    
     override func update(with characteristic: HealthTermometerCharacteristic) {
         
         var items: [DetailsTableViewCellModel] = []
@@ -18,7 +25,7 @@ class HealthTemperatureAditionalSection: DetailsTableViewSection<HealthTermomete
             dateFormatter.dateStyle = .medium
             dateFormatter.timeStyle = .short
             let dateString = dateFormatter.string(from: $0)
-            items.append(DefaultDetailsTableViewCellModel(title: "Date/Time", value: dateString))
+            items.append(DefaultDetailsTableViewCellModel(title: "Date / Time", value: dateString))
         }
         
         characteristic.type.map {

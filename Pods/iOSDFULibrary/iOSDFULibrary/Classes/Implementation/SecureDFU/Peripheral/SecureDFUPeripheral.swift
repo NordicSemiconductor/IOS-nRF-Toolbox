@@ -40,6 +40,16 @@ internal class SecureDFUPeripheral : BaseCommonDFUPeripheral<SecureDFUExecutor, 
     /// `nil` then use a randomly generated name.
     let alternativeAdvertisingName: String?
     
+    /// This flag is set when the bootloader is setting alternative advertising name.
+    /// If the buttonless service is not configured correctly, it will reboot on the attempt to
+    /// set the name, and will freeze.
+    ///
+    /// For more info, see:
+    /// https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library/issues/365
+    /// and for solution:
+    /// https://devzone.nordicsemi.com/f/nordic-q-a/59881/advertising-rename-feature-not-working
+    var possibleDisconnectionOnSettingAlternativeName: Bool = false
+    
     // MARK: - Peripheral API
     
     override var requiredServices: [CBUUID]? {
@@ -87,7 +97,6 @@ internal class SecureDFUPeripheral : BaseCommonDFUPeripheral<SecureDFUExecutor, 
      in `DFUServiceInitiator`.
      */
     func jumpToBootloader() {
-        jumpingToBootloader = true
         newAddressExpected = dfuService!.newAddressExpected
 
         var name: String?
@@ -101,14 +110,39 @@ internal class SecureDFUPeripheral : BaseCommonDFUPeripheral<SecureDFUExecutor, 
             }
         }
 
+        // See `peripheralDidDisconnect()` for details.
+        possibleDisconnectionOnSettingAlternativeName = name != nil
+        
         dfuService!.jumpToBootloaderMode(withAlternativeAdvertisingName: name,
-            // On success the device gets disconnected and
-            // `centralManager(_:didDisconnectPeripheral:error)` will be called.
+            onSuccess: {
+                self.jumpingToBootloader = true
+                // The device will now disconnect and
+                // `centralManager(_:didDisconnectPeripheral:error)` will be called.
+            },
             onError: { (error, message) in
                 self.jumpingToBootloader = false
                 self.delegate?.error(error, didOccurWithMessage: message)
             }
         )
+    }
+    
+    override func peripheralDidDisconnect() {
+        // When the buttonless service reboots when command 0x02 (set advertising name)
+        // is sent, instead of replying with status (success or error), it means it
+        // is not properly configured.
+        //
+        // Add the following code to the app:
+        //
+        // Initialize the async SVCI interface to bootloader before any interrupts are enabled.
+        // err_code = ble_dfu_buttonless_async_svci_init();
+        // APP_ERROR_CHECK(err_code);
+        //
+        // See https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library/issues/365
+        if possibleDisconnectionOnSettingAlternativeName {
+            logger.e("Buttonless service not configured, see: https://devzone.nordicsemi.com/f/nordic-q-a/59881/advertising-rename-feature-not-working/243566#243566. To workaround, disable alternative advertising name.")
+            possibleDisconnectionOnSettingAlternativeName = false
+        }
+        super.peripheralDidDisconnect()
     }
     
     /**

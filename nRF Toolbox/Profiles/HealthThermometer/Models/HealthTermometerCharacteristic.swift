@@ -31,7 +31,7 @@ struct HealthTermometerCharacteristic {
             }
         }
         
-        case armpit, bodyGeneral, ear, finger, gastroIntenstinalTract, mouth, rectum, toe, tympanumEarDrum
+        case armpit=1, bodyGeneral, ear, finger, gastroIntenstinalTract, mouth, rectum, toe, tympanumEarDrum
     }
     
     let temperature: Measurement<UnitTemperature>

@@ -9,21 +9,20 @@
 import UIKit
 
 protocol DetailsTableViewCellModel {
-    var title: String { get }
-    var details: CustomStringConvertible { get }
+    var title: String { get set }
+    var details: CustomStringConvertible { get set }
     var identifier: Identifier<DetailsTableViewCellModel> { get }
 }
 
 struct DefaultDetailsTableViewCellModel: DetailsTableViewCellModel {
-    let title: String
+    var title: String
     let identifier: Identifier<DetailsTableViewCellModel>
-    var value: String = "-"
     
-    var details: CustomStringConvertible { return value }
+    var details: CustomStringConvertible
     
     init(title: String, value: String = "-", identifier: Identifier<DetailsTableViewCellModel> = "") {
         self.title = title
-        self.value = value
+        self.details = value
         self.identifier = identifier
     }
 }

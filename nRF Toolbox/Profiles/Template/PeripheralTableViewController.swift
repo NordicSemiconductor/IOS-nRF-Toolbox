@@ -23,6 +23,8 @@ class PeripheralTableViewController: PeripheralViewController, UITableViewDataSo
     var sections: [Section] { internalSections + [batterySection, disconnectSection] }
     var visibleSections: [Section] { sections.filter { !$0.isHidden } }
     var internalSections: [Section] { [] }
+    
+    private var discoveredServices: [CBUUID]?
 
     private lazy var disconnectSection = ActionSection(id: .disconnect, sectionTitle: "Connection", items: [
         ActionSectionItem(title: "Disconnect", style: .destructive) { [unowned self] in
@@ -32,12 +34,14 @@ class PeripheralTableViewController: PeripheralViewController, UITableViewDataSo
     ])
 
     override func viewDidLoad() {
-        super.viewDidLoad()
         if #available(iOS 13.0, *) {
             tableView = UITableView(frame: .zero, style: .insetGrouped)
         } else {
             tableView = UITableView(frame: .zero, style: .grouped)
         }
+        self.view = tableView
+        
+        super.viewDidLoad()
 
         tableView.delegate = self
         tableView.dataSource = self
@@ -123,8 +127,6 @@ class PeripheralTableViewController: PeripheralViewController, UITableViewDataSo
             for var section in visibleSections {
                 section.reset()
             }
-        case .connected:
-            view = tableView
         default:
             break
         }
@@ -147,6 +149,13 @@ class PeripheralTableViewController: PeripheralViewController, UITableViewDataSo
         reloadSection(id: .battery)
     }
 
+    override func didDiscover(service: CBService, for peripheral: CBPeripheral) {
+        super.didDiscover(service: service, for: peripheral)
+        
+        guard let required = requiredServices else { return }
+        
+        
+    }
 
 }
 
