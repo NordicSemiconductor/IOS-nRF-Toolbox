@@ -76,8 +76,15 @@ class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter
             notContent.actionButton.style = .mainAction
             
             view = notContent
-        case .connected(let peripheral):
+            
+        case .connecting:
+            let notContent = InfoActionView.instanceWithParams(message: "Connecting...")
+            notContent.actionButton.style = .mainAction
+            
+            view = notContent
             dismiss(animated: true, completion: nil)
+            
+        case .connected(let peripheral):
             activePeripheral = peripheral
             
             activePeripheral?.delegate = self
