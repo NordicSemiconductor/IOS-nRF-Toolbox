@@ -26,7 +26,7 @@ class StepperTableViewCell: UITableViewCell {
         stepper.maximumValue = model.max
         stepper.value = model.value
         stepper.stepValue = model.step
-        valueLabel.text = "\(model.value) min"
+        valueLabel.text = "\(Int(model.value)) min"
     }
     
     @IBAction private func valueChanged(sender: UIStepper) {

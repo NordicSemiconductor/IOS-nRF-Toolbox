@@ -3,7 +3,7 @@
 // Copyright (c) 2019 Nordic Semiconductor. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class LastGlucoseValueSection: DetailsTableViewSection<ContinuousGlucoseMonitorMeasurement> {
     override var sectionTitle: String { "Last Glucose Value" }
@@ -13,5 +13,11 @@ class LastGlucoseValueSection: DetailsTableViewSection<ContinuousGlucoseMonitorM
         let item = DefaultDetailsTableViewCellModel(title: "Glucose Concentration", value: stringValue)
         items = [item]
         super.update(with: characteristic)
+    }
+    
+    override func dequeCell(for index: Int, from tableView: UITableView) -> UITableViewCell {
+        let cell = super.dequeCell(for: index, from: tableView)
+        cell.selectionStyle = .none
+        return cell
     }
 }

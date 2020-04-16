@@ -12,7 +12,7 @@ class ContinuousGlucoseChartData: ChartDataSection<ContinuousGlucoseMonitorMeasu
     override func dequeCell(for index: Int, from tableView: UITableView) -> UITableViewCell {
         if index == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
-            cell?.textLabel?.text = "All Values"
+            cell?.textLabel?.text = "All Records"
             cell?.accessoryType = .disclosureIndicator
             return cell!
         } else {
@@ -29,6 +29,6 @@ class ContinuousGlucoseChartData: ChartDataSection<ContinuousGlucoseMonitorMeasu
     }
 
     override func cellHeight(for index: Int) -> CGFloat {
-        index == 0 ? .defaultTableCellHeight : super.cellHeight(for: index)
+        index == 1 ? .defaultTableCellHeight : super.cellHeight(for: index)
     }
 }

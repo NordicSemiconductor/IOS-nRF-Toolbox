@@ -30,6 +30,7 @@ class GlucoseValueList: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = items[indexPath.row]
         let cell = tableView.dequeueCell(ofType: DetailsTableViewCell.self)
+        cell.selectionStyle = .none
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .short
         dateFormatter.timeStyle = .short

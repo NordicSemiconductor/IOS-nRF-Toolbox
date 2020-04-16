@@ -96,10 +96,12 @@ class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter
                 statusDidChanged(.discoveringServices)
             }
             
-            serviceFinderTimer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [weak self] (t) in
-                self?.displayErrorAlert(error: QuickError(message: "Can't find required services"))
-                self?.disconnect()
-                t.invalidate()
+            if case .some = requiredServices {
+                serviceFinderTimer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [weak self] (t) in
+                    self?.displayErrorAlert(error: QuickError(message: "Can't find required services"))
+                    self?.disconnect()
+                    t.invalidate()
+                }
             }
             
         case .discoveringServices:
@@ -134,7 +136,10 @@ class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter
         peripheral.discoverCharacteristics(characteristics, for: service)
         
         discoveredServices.append(service.uuid)
-        guard let requiredServices = peripheralDescription.requiredServices else { return }
+        guard let requiredServices = peripheralDescription.requiredServices else {
+            serviceFinderTimer?.invalidate()
+            return
+        }
         if Set(requiredServices).subtracting(Set(discoveredServices)).isEmpty {
             statusDidChanged(.discoveredRequiredServices)
         }
