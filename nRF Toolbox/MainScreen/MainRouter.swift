@@ -47,7 +47,6 @@ class DefaultMainRouter {
             .cyclingSensor : CyclingTableViewController(),
             .runningSensor : RunningTableViewController(),
             .proximity : ProximityViewController(),
-            .homeKit : HKViewController.instance(),
             .uart : UARTTabBarController()
             ].mapValues { UINavigationController.nordicBranded(rootViewController: $0) }
         .merging([
@@ -72,7 +71,7 @@ class DefaultMainRouter {
 
 extension DefaultMainRouter: UISplitViewControllerDelegate {
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
-        return serviceList.selectedService == nil
+        serviceList.selectedService == nil
     }
 }
 
@@ -95,13 +94,11 @@ extension DefaultMainRouter: ServiceRouter {
 }
 
 extension DefaultMainRouter: MainRouter {
-    var rootViewController: UIViewController {
-        return splitViewController
-    }
+    var rootViewController: UIViewController { splitViewController }
 }
 
 extension DefaultMainRouter {
-    static private func createAndWrappController<T>(controllerClass: T.Type) -> UIViewController where T : UIViewController & StoryboardInstantiable {
-        return UINavigationController.nordicBranded(rootViewController: controllerClass.instance())
+    static private func createAndWrapController<T>(controllerClass: T.Type) -> UIViewController where T : UIViewController & StoryboardInstantiable {
+        UINavigationController.nordicBranded(rootViewController: controllerClass.instance())
     }
 }

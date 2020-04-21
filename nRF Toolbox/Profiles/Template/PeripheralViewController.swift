@@ -90,20 +90,17 @@ class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter
             activePeripheral?.delegate = self
             activePeripheral?.discoverServices(peripheralDescription.services.map { $0.uuid } )
             
-            if case .none = peripheralDescription.requiredServices {
-                statusDidChanged(.discoveredRequiredServices)
-            } else {
+            if let requiredServices = peripheralDescription.requiredServices, !requiredServices.isEmpty {
                 statusDidChanged(.discoveringServices)
-            }
-            
-            if case .some = requiredServices {
                 serviceFinderTimer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [weak self] (t) in
-                    self?.displayErrorAlert(error: QuickError(message: "Can't find required services"))
+                    self?.displayBindingErrorAlert()
                     self?.disconnect()
                     t.invalidate()
                 }
+            } else {
+                statusDidChanged(.discoveredRequiredServices)
             }
-            
+
         case .discoveringServices:
             let notContent = InfoActionView.instanceWithParams(message: "Discovering Services...")
             notContent.actionButton.style = .mainAction
@@ -160,6 +157,26 @@ class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter
 
     func didUpdateValue(for characteristic: CBCharacteristic) {
         SystemLog(category: .ble, type: .debug).log(message: "Cannot handle update value for characteristic \(characteristic)")
+    }
+}
+
+extension PeripheralViewController {
+    private func displayBindingErrorAlert() {
+        let title = "No services discovered"
+        let message = "It seems there're no required services. Check your device or try to turn off / on bluetooth in settings"
+
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let settingsAction = UIAlertAction(title: "Settings", style: .default) { _ in
+            let url = URL(string: "App-Prefs:root=Bluetooth") //for bluetooth setting
+            let app = UIApplication.shared
+            app.open(url!, options: [:], completionHandler: nil)
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(settingsAction)
+        alert.addAction(cancelAction)
+
+        present(alert, animated: true)
     }
 }
 

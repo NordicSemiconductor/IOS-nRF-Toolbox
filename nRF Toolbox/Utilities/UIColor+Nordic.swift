@@ -50,14 +50,6 @@ extension UIColor {
         }
     }()
     
-    static let nordicRedDark: UIColor = {
-        if #available(iOS 11.0, *) {
-            return UIColor(named: "NordicRedDark")!
-        } else {
-            return #colorLiteral(red: 0.8138422955, green: 0.24269408, blue: 0.3188471754, alpha: 1)
-        }
-    }()
-    
     static let nordicGreen: UIColor = {
         if #available(iOS 13.0, *) {
             return UIColor.dynamicColor(light: UIColor(named: "NordicGreen")!, dark: .systemGreen)
@@ -187,7 +179,7 @@ extension UIColor {
                 dark = .black 
             }
             
-            return .dynamicColor(light: .nordicRedDark, dark: dark)
+            return .dynamicColor(light: .nordicRed, dark: dark)
         }()
     }
 }
