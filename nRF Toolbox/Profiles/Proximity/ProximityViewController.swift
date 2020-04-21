@@ -37,7 +37,6 @@ class ProximityViewController: PeripheralViewController {
 
     var immediateAlertCharacteristic: CBCharacteristic!
 
-    private var txCharacteristic: CBCharacteristic?
     private var txValue: Int?
     private var rssi: Int?
     private var timer: Timer?
@@ -49,7 +48,7 @@ class ProximityViewController: PeripheralViewController {
         guard let immediateAlertCharacteristic = self.immediateAlertCharacteristic else {
             return
         }
-        var val : UInt8 = findMeEnabled ? 2 : 0
+        var val : UInt8 = findMeEnabled ? 0 : 2
         let data = Data(bytes: &val, count: 1)
         self.activePeripheral?.writeValue(data, for: immediateAlertCharacteristic, type: CBCharacteristicWriteType.withoutResponse)
         
@@ -85,7 +84,7 @@ class ProximityViewController: PeripheralViewController {
             let data = Data(bytes: &val, count: 1)
             peripheral.writeValue(data, for: characteristic, type: CBCharacteristicWriteType.withResponse)
         case (.txPowerLevelService, .txPowerLevelCharacteristic):
-            txCharacteristic = characteristic
+            peripheral.readValue(for: characteristic)
         default:
             break
         }
@@ -124,19 +123,17 @@ class ProximityViewController: PeripheralViewController {
         }
         
         update(rssi: rssi, txValue: txValue)
+        timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { timer in
+            self.activePeripheral?.readRSSI()
+        }
+        timer?.fire()
     }
 
     override func statusDidChanged(_ status: PeripheralStatus) {
         super.statusDidChanged(status)
         switch status {
         case .connected(_):
-            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
-                self.activePeripheral?.readRSSI()
-                if let txCharacteristic = self.txCharacteristic {
-                    self.activePeripheral?.readValue(for: txCharacteristic)
-                }
-            }
-            timer?.fire()
+            self.activePeripheral?.readRSSI()
         case .disconnected, .poweredOff:
             timer?.invalidate()
             txValue = nil
