@@ -70,7 +70,7 @@ class PeripheralManager: NSObject {
         
         delegate?.statusDidChanged(.connecting)
         
-        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false, block: { [weak self] (_) in
+        timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false, block: { [weak self] (_) in
             self?.closeConnection(peripheral: p)
             self?.delegate?.statusDidChanged(.disconnected(QuickError(message: "Connection timeout")))
         })

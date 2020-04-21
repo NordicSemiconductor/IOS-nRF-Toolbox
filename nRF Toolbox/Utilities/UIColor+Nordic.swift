@@ -34,6 +34,14 @@ extension UIColor {
         }
         }()!
     
+    static let nordicYello: UIColor = {
+        if #available(iOS 11.0, *) {
+            return UIColor(named: "NordicFall")!
+        } else {
+            return #colorLiteral(red: 0.9759542346, green: 0.5849055648, blue: 0.2069504261, alpha: 1)
+        }
+    }()
+    
     static let nordicFall: UIColor = {
         if #available(iOS 11.0, *) {
             return UIColor(named: "NordicFall")!
@@ -62,9 +70,17 @@ extension UIColor {
     
     static let nordicDarkGray: UIColor = {
         if #available(iOS 11.0, *) {
-            return UIColor(named: "NordicDarkGray")!
+            return UIColor(named: "NordicDarkGrey")!
         } else {
             return #colorLiteral(red: 0.2590435743, green: 0.3151275516, blue: 0.353839159, alpha: 1)
+        }
+    }()
+    
+    static let nordicGrey4: UIColor = {
+        if #available(iOS 13, *) {
+            return UIColor(named: "NordicGray4")!
+        } else {
+            return UIColor(red: 209, green: 209, blue: 209, alpha: 1)
         }
     }()
     

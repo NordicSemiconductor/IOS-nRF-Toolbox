@@ -8,19 +8,19 @@ import CoreBluetooth
 import AVFoundation
 import UserNotifications
 
-private extension Identifier where Value == Section {
-    static let findMeSection: Identifier<Section> = "FindMeSection"
-    static let approxDistanceSection: Identifier<Section> = "ApproxDistanceSection"
+extension Identifier where Value == UNNotification {
+    static let notification: Identifier<Self> = "Identifier.UNNotification.Proximity"
 }
 
-private extension Identifier where Value == UNNotification {
-    static let notification: Identifier<UNNotification> = "Notification.Id"
-}
-
-class ProximityViewController: PeripheralTableViewController {
+class ProximityViewController: PeripheralViewController {
+    
+    @IBOutlet private var distanceView: DistanceView!
+    @IBOutlet private var distanceLabel: UILabel!
+    @IBOutlet private var rssiView: SignalStrengthView!
+    @IBOutlet private var findMeBtn: NordicButton!
+    @IBOutlet private var disconnectBtn: NordicButton!
 
     override var peripheralDescription: PeripheralDescription { .proximity }
-    override var internalSections: [Section] { [findMeSection, chartSection] }
     override var navigationTitle: String { "Proximity" }
 
     let audioPlayer: AVAudioPlayer? = {
@@ -33,15 +33,6 @@ class ProximityViewController: PeripheralTableViewController {
         }
     }()
 
-    private lazy var findMeSection = FindMeSection(id: .findMeSection) { findMe in
-        var val : UInt8 = findMe ? 2 : 0
-        let data = Data(bytes: &val, count: 1)
-        self.activePeripheral?.writeValue(data, for: self.immediateAlertCharacteristic!, type: CBCharacteristicWriteType.withoutResponse)
-
-        self.tableView.reloadData()
-    }
-
-    private var chartSection = ApproxDistanceSection(id: .approxDistanceSection)
     private var peripheralManager: CBPeripheralManager!
 
     var immediateAlertCharacteristic: CBCharacteristic!
@@ -50,20 +41,37 @@ class ProximityViewController: PeripheralTableViewController {
     private var txValue: Int?
     private var rssi: Int?
     private var timer: Timer?
+    
+    private var rssiArr: [Int] = []
+    private var findMeEnabled: Bool = false
+    
+    @IBAction func findMe() {
+        guard let immediateAlertCharacteristic = self.immediateAlertCharacteristic else {
+            return
+        }
+        var val : UInt8 = findMeEnabled ? 2 : 0
+        let data = Data(bytes: &val, count: 1)
+        self.activePeripheral?.writeValue(data, for: immediateAlertCharacteristic, type: CBCharacteristicWriteType.withoutResponse)
+        
+        findMeEnabled.toggle()
+        let title = findMeEnabled ? "SILENT ME" : "FIND ME"
+        findMeBtn.setTitle(title, for: .normal)
+    }
+    
+    @IBAction func disconnectAction() {
+        disconnect()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.registerCellNib(cell: FindMeTableViewCell.self)
+        findMeBtn.style = .mainAction
         audioPlayer?.prepareToPlay()
         peripheralManager = CBPeripheralManager(delegate: self, queue: nil)
-
-        tableView.register(DetailsTableViewCell.self, forCellReuseIdentifier: "DetailsTableViewCell")
-        tableView.register(LinearChartTableViewCell.self, forCellReuseIdentifier: "LinearChartTableViewCell")
+        disconnectBtn.style = .destructive
 
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { b, error in
-
+            
         }
-
     }
     
     override func didDiscover(characteristic: CBCharacteristic, for service: CBService, peripheral: CBPeripheral) {
@@ -71,6 +79,7 @@ class ProximityViewController: PeripheralTableViewController {
         switch (service.uuid, characteristic.uuid) {
         case (.immediateAlertService, .proximityAlertLevelCharacteristic):
             immediateAlertCharacteristic = characteristic
+            self.findMeBtn.isEnabled = true
         case (.linkLossService, .proximityAlertLevelCharacteristic):
             var val = UInt8(1)
             let data = Data(bytes: &val, count: 1)
@@ -89,29 +98,32 @@ class ProximityViewController: PeripheralTableViewController {
         }
     }
 
-    func peripheralDidUpdateRSSI(_ peripheral: CBPeripheral, error: Error?) {
-        guard peripheral == activePeripheral else { return }
-        guard error == nil else {
-            SystemLog(category: .ble, type: .error).log(message: "RSSI Reader error: \(error!.localizedDescription)")
-            return
-        }
-
-        // TODO: Rid off RSSI
-        rssi = peripheral.rssi?.intValue
-        if let rssi = self.rssi, let tx = txValue {
-            chartSection.update(rssi: rssi, tx: tx)
-        }
-    }
-
     override func didUpdateValue(for characteristic: CBCharacteristic) {
         switch characteristic.uuid {
         case .txPowerLevelCharacteristic:
             let value: Int8? = characteristic.value?.read()
             txValue = value.map(Int.init)
-            tableView.reloadData()
+            self.update(rssi: rssi, txValue: txValue)
         default:
             super.didUpdateValue(for: characteristic)
         }
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didReadRSSI RSSI: NSNumber, error: Error?) {
+        if let e = error {
+            SystemLog(category: .ble, type: .error).log(message: "RSSI Reader error: \(e.localizedDescription)")
+            displayErrorAlert(error: e)
+            return
+        }
+        
+        rssiArr.append(RSSI.intValue)
+        rssi = rssiArr.reduce(0, +) / rssiArr.count
+        
+        if rssiArr.count > 20 {
+            rssiArr.removeFirst()
+        }
+        
+        update(rssi: rssi, txValue: txValue)
     }
 
     override func statusDidChanged(_ status: PeripheralStatus) {
@@ -123,25 +135,70 @@ class ProximityViewController: PeripheralTableViewController {
                 if let txCharacteristic = self.txCharacteristic {
                     self.activePeripheral?.readValue(for: txCharacteristic)
                 }
-                self.findMeSection.update(rssi: self.rssi, tx: self.txValue)
-
-                if let rssi = self.rssi, let tx = self.txValue {
-                    self.chartSection.update(rssi: rssi, tx: tx)
-                }
-                self.tableView.reloadData()
             }
             timer?.fire()
         case .disconnected, .poweredOff:
             timer?.invalidate()
             txValue = nil
             rssi = nil
-            chartSection.reset()
+            
+            rssiView.filledBars = 0
+            distanceView.unfilledSectors = distanceView.numberOfSectors
+            distanceLabel.text = "Unknown"
+            
+            findMeBtn.isEnabled = false
         default:
             break
         }
     }
 }
 
+//MARK: - Signal Strength
+extension ProximityViewController {
+    private func update(rssi value: Int?, txValue: Int?) {
+        guard let rssi = value else {
+            rssiView.filledBars = 0
+            return
+        }
+        
+        let rssiSectors = Int((RSSI.percent(from: rssi) * Double(rssiView.numberOfBars)).rounded())
+        rssiView.filledBars = rssiSectors
+        
+        if let tx = txValue {
+            SystemLog(category: .ble, type: .debug).log(message: "Proximity Tx: \(tx)")
+            let distance = pow(10, (Double(tx - rssi) / 20.0))
+            let distanceUnitVal = Measurement<UnitLength>(value: distance, unit: .millimeters)
+            let formatter = MeasurementFormatter()
+            let numberFormatter = NumberFormatter()
+            numberFormatter.maximumFractionDigits = 2
+            formatter.numberFormatter = numberFormatter
+            formatter.unitOptions = .naturalScale
+            distanceLabel.text = formatter.string(from: distanceUnitVal)
+            
+            let distancePercentage = positionInDistanceRange(distance: distance)
+            distanceView.unfilledSectors = distanceView.numberOfSectors - Int((distancePercentage * Double(distanceView.numberOfSectors)).rounded())
+            
+        } else {
+            let rssiDistance = Int((RSSI.percent(from: rssi) * Double(distanceView.numberOfSectors)).rounded())
+            distanceView.unfilledSectors = distanceView.numberOfSectors - rssiDistance
+        }
+        
+        
+    }
+    
+    func positionInDistanceRange(distance: Double, min: Double = 200, max: Double = 5_000) -> Double {
+        if distance > max {
+            return 0
+        } else if distance < min {
+            return 1
+        }
+        
+        let rangeDistance = max - min
+        return 1 - (distance / rangeDistance)
+    }
+}
+
+//MARK: - Player
 extension ProximityViewController {
     private func stopSound() {
         if case .background = UIApplication.shared.applicationState {

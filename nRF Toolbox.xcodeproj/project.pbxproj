@@ -106,8 +106,6 @@
 		01DDD79D23EC5CDA003786ED /* TimeIntervalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01DDD79B23EC5CDA003786ED /* TimeIntervalTableViewCell.xib */; };
 		01DDD7A023EC6351003786ED /* UARTMarcoElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DDD79F23EC6351003786ED /* UARTMarcoElement.swift */; };
 		01DFC55C2420F0AB00AF2EF0 /* ZephyrDFURouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DFC55B2420F0AB00AF2EF0 /* ZephyrDFURouter.swift */; };
-		01E4BACB23698DD300EE67A0 /* FindMeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E4BAC923698DD300EE67A0 /* FindMeTableViewCell.swift */; };
-		01E4BACC23698DD300EE67A0 /* FindMeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E4BACA23698DD300EE67A0 /* FindMeTableViewCell.xib */; };
 		01E5910923DB3BC5008F15A4 /* QuickError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910823DB3BC4008F15A4 /* QuickError.swift */; };
 		01E5910B23DECF61008F15A4 /* UARTMacrosList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */; };
 		01FBC5012407BF8F00B1056B /* PeripheralHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */; };
@@ -228,13 +226,16 @@
 		33976843D672C14301E9C917 /* SessionStartTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976AA5771775F23255C2BD /* SessionStartTime.swift */; };
 		33976B2C1CE8194EFAEB7341 /* Randomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3397618F9EA9546991CF4ED2 /* Randomizer.swift */; };
 		33976C75E25FBF443EB251CD /* Bool+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976AF182818B9C448C61CE /* Bool+Ext.swift */; };
-		33976DC91B99AAA3F2E12DF7 /* FindMeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339763C07DFE7826BAF28153 /* FindMeSection.swift */; };
 		33976F79FE2EA20D94F68B69 /* ContinuousGlucoseChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976B66D7A581F01631AE52 /* ContinuousGlucoseChartData.swift */; };
-		33976FB5E54F1D8DDF4733E0 /* DistanceChartSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976ECA8BDFCDF4188746E3 /* DistanceChartSection.swift */; };
 		4322034123CC773F009840DD /* UARTActionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4322033F23CC773F009840DD /* UARTActionCollectionViewCell.swift */; };
 		4322034223CC773F009840DD /* UARTActionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4322034023CC773F009840DD /* UARTActionCollectionViewCell.xib */; };
 		4322034423CC9D31009840DD /* UARTCommandModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4322034323CC9D31009840DD /* UARTCommandModel.swift */; };
+		432DCD53244E5FEE00C6828F /* RSSI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432DCD52244E5FEE00C6828F /* RSSI.swift */; };
 		43445EEF23B0AD8D008A9FD9 /* LoggLevel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43445EEE23B0AD8D008A9FD9 /* LoggLevel+Ext.swift */; };
+		4350CFF9244CEFC90068EEEA /* SignalStrengthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4350CFF7244CEFC90068EEEA /* SignalStrengthView.swift */; };
+		4350CFFA244CEFC90068EEEA /* DistanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4350CFF8244CEFC90068EEEA /* DistanceView.swift */; };
+		4350CFFD244D109B0068EEEA /* ProximityBluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4350CFFC244D109B0068EEEA /* ProximityBluetoothManager.swift */; };
+		4350CFFF244D20AE0068EEEA /* ProximityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4350CFFE244D20AE0068EEEA /* ProximityViewController.xib */; };
 		4353A50F243175C300159CDF /* HMAccessoryListTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4353A50E243175C300159CDF /* HMAccessoryListTableViewController.xib */; };
 		4353A5122431856A00159CDF /* AccessoriesSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4353A5112431856A00159CDF /* AccessoriesSection.swift */; };
 		4381AD1B23BA057000FB1A1F /* UARTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4381AD1923BA057000FB1A1F /* UARTViewController.swift */; };
@@ -400,8 +401,6 @@
 		01DDD79B23EC5CDA003786ED /* TimeIntervalTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeIntervalTableViewCell.xib; sourceTree = "<group>"; };
 		01DDD79F23EC6351003786ED /* UARTMarcoElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMarcoElement.swift; sourceTree = "<group>"; };
 		01DFC55B2420F0AB00AF2EF0 /* ZephyrDFURouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFURouter.swift; sourceTree = "<group>"; };
-		01E4BAC923698DD300EE67A0 /* FindMeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindMeTableViewCell.swift; sourceTree = "<group>"; };
-		01E4BACA23698DD300EE67A0 /* FindMeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FindMeTableViewCell.xib; sourceTree = "<group>"; };
 		01E5910823DB3BC4008F15A4 /* QuickError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickError.swift; sourceTree = "<group>"; };
 		01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosList.swift; sourceTree = "<group>"; };
 		01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralHolder.swift; sourceTree = "<group>"; };
@@ -514,7 +513,6 @@
 		30A1145B1CD24611000F0F02 /* ScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 		3397618F9EA9546991CF4ED2 /* Randomizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Randomizer.swift; sourceTree = "<group>"; };
 		339763237234E5CAE47F8DBB /* ChartDataSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartDataSection.swift; sourceTree = "<group>"; };
-		339763C07DFE7826BAF28153 /* FindMeSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindMeSection.swift; sourceTree = "<group>"; };
 		3397654C348DA2769B9E4B1D /* ContinuousGlucoseMonitorMeasurement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinuousGlucoseMonitorMeasurement.swift; sourceTree = "<group>"; };
 		339767BE0A9B9DF256F73884 /* PeripheralViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeripheralViewController.swift; sourceTree = "<group>"; };
 		339767C9A62A86751137B1CA /* Peripheral+ContinuousGlucoseMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Peripheral+ContinuousGlucoseMonitor.swift"; sourceTree = "<group>"; };
@@ -526,13 +524,17 @@
 		33976AA5771775F23255C2BD /* SessionStartTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionStartTime.swift; sourceTree = "<group>"; };
 		33976AF182818B9C448C61CE /* Bool+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bool+Ext.swift"; sourceTree = "<group>"; };
 		33976B66D7A581F01631AE52 /* ContinuousGlucoseChartData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinuousGlucoseChartData.swift; sourceTree = "<group>"; };
-		33976ECA8BDFCDF4188746E3 /* DistanceChartSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DistanceChartSection.swift; sourceTree = "<group>"; };
 		33976F60C5BCE60DE33DFA31 /* ContinuousGlucoseMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinuousGlucoseMonitor.swift; sourceTree = "<group>"; };
 		4322033F23CC773F009840DD /* UARTActionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTActionCollectionViewCell.swift; sourceTree = "<group>"; };
 		4322034023CC773F009840DD /* UARTActionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTActionCollectionViewCell.xib; sourceTree = "<group>"; };
 		4322034323CC9D31009840DD /* UARTCommandModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTCommandModel.swift; sourceTree = "<group>"; };
+		432DCD52244E5FEE00C6828F /* RSSI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSI.swift; sourceTree = "<group>"; };
 		43445EEE23B0AD8D008A9FD9 /* LoggLevel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoggLevel+Ext.swift"; sourceTree = "<group>"; };
 		434A9CF823A2883B00792E81 /* PRAGMATA MEDIUM_0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PRAGMATA MEDIUM_0.ttf"; sourceTree = "<group>"; };
+		4350CFF7244CEFC90068EEEA /* SignalStrengthView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignalStrengthView.swift; sourceTree = "<group>"; };
+		4350CFF8244CEFC90068EEEA /* DistanceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DistanceView.swift; sourceTree = "<group>"; };
+		4350CFFC244D109B0068EEEA /* ProximityBluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProximityBluetoothManager.swift; sourceTree = "<group>"; };
+		4350CFFE244D20AE0068EEEA /* ProximityViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProximityViewController.xib; sourceTree = "<group>"; };
 		4353A50E243175C300159CDF /* HMAccessoryListTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HMAccessoryListTableViewController.xib; sourceTree = "<group>"; };
 		4353A5112431856A00159CDF /* AccessoriesSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoriesSection.swift; sourceTree = "<group>"; };
 		4381AD1923BA057000FB1A1F /* UARTViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTViewController.swift; sourceTree = "<group>"; };
@@ -987,15 +989,6 @@
 				01268AF12421595200E83156 /* NotConnectedViewController */,
 			);
 			path = NotConnectedViewController;
-			sourceTree = "<group>";
-		};
-		01E4BAC823698DC000EE67A0 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				01E4BAC923698DD300EE67A0 /* FindMeTableViewCell.swift */,
-				01E4BACA23698DD300EE67A0 /* FindMeTableViewCell.xib */,
-			);
-			path = Cell;
 			sourceTree = "<group>";
 		};
 		01FBC4FF2407BF5600B1056B /* Utils */ = {
@@ -1478,16 +1471,6 @@
 			path = Peripheral;
 			sourceTree = "<group>";
 		};
-		339764D601B214DA0869F4B0 /* Sections */ = {
-			isa = PBXGroup;
-			children = (
-				01E4BAC823698DC000EE67A0 /* Cell */,
-				339763C07DFE7826BAF28153 /* FindMeSection.swift */,
-				33976ECA8BDFCDF4188746E3 /* DistanceChartSection.swift */,
-			);
-			path = Sections;
-			sourceTree = "<group>";
-		};
 		339765764F70C52AC5738A3F /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -1521,8 +1504,10 @@
 		33976FB7F70E2AC6E606CA7A /* Proximity */ = {
 			isa = PBXGroup;
 			children = (
+				4350CFFB244D104C0068EEEA /* Utils */,
+				4350CFF6244CEFC00068EEEA /* Views */,
 				339769E077B5F68E7D221F4D /* ProximityViewController.swift */,
-				339764D601B214DA0869F4B0 /* Sections */,
+				4350CFFE244D20AE0068EEEA /* ProximityViewController.xib */,
 				33976989CA3150561E8CE2F8 /* Peripheral+Proximity.swift */,
 			);
 			path = Proximity;
@@ -1551,6 +1536,24 @@
 				019985F023E07CFB000CDCB6 /* XMLDocument.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		4350CFF6244CEFC00068EEEA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4350CFF8244CEFC90068EEEA /* DistanceView.swift */,
+				4350CFF7244CEFC90068EEEA /* SignalStrengthView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4350CFFB244D104C0068EEEA /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				4350CFFC244D109B0068EEEA /* ProximityBluetoothManager.swift */,
+				432DCD52244E5FEE00C6828F /* RSSI.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		4353A5102431855E00159CDF /* Sections */ = {
@@ -1889,8 +1892,8 @@
 				01AF928923D1A7E300C1BFD6 /* PeripheralView.xib in Resources */,
 				20E07B5F2306975700FCB205 /* GT-Eesti-Display-Bold-Italic.ttf in Resources */,
 				7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */,
-				01E4BACC23698DD300EE67A0 /* FindMeTableViewCell.xib in Resources */,
 				52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */,
+				4350CFFF244D20AE0068EEEA /* ProximityViewController.xib in Resources */,
 				5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */,
 				01675E7223F6D1BE00FC0519 /* UARTPresetTableViewCell.xib in Resources */,
 				5217F3F01859EE0000F2D5BB /* InfoPlist.strings in Resources */,
@@ -2042,7 +2045,6 @@
 				20F0C8012327D207003111E7 /* CBUUID+IDs.swift in Sources */,
 				43445EEF23B0AD8D008A9FD9 /* LoggLevel+Ext.swift in Sources */,
 				019985EA23DF1EED000CDCB6 /* UIViewController+Ext.swift in Sources */,
-				01E4BACB23698DD300EE67A0 /* FindMeTableViewCell.swift in Sources */,
 				01B6D3D8234CB533000942C4 /* HeartRateMeasurementCharacteristic.swift in Sources */,
 				20C7FDFE2306BEE000B06FD8 /* Array+Ext.swift in Sources */,
 				01B6D3D3234C7538000942C4 /* HeartRateMonitorTableViewController.swift in Sources */,
@@ -2079,12 +2081,14 @@
 				01BE0958234A76D4006ACF06 /* Peripheral+Temperature.swift in Sources */,
 				20C7FE0E230A9F9300B06FD8 /* LinkTableViewCell.swift in Sources */,
 				01D98C8C242E2B3C000A3B35 /* UIImage+File.swift in Sources */,
+				432DCD53244E5FEE00C6828F /* RSSI.swift in Sources */,
 				012C2BE32410682D005EC1A0 /* SegmentedView.swift in Sources */,
 				01BE0955234A7500006ACF06 /* HealthTemperatureSection.swift in Sources */,
 				01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */,
 				01A1B76723CF13A50062FADC /* UARTNewCommandViewController.swift in Sources */,
 				20C7FE082306EB5600B06FD8 /* UITableView+Ext.swift in Sources */,
 				20D08E02232A38C200569587 /* TitledError.swift in Sources */,
+				4350CFFD244D109B0068EEEA /* ProximityBluetoothManager.swift in Sources */,
 				01AA707D24124F270018DB29 /* DFUUpdateTabBarViewController.swift in Sources */,
 				20C7FE53230E811B00B06FD8 /* ServiceProvider.swift in Sources */,
 				20C7FE5E230EC37000B06FD8 /* ServiceTableViewCell.swift in Sources */,
@@ -2160,6 +2164,7 @@
 				20027B08233E116600A0B5ED /* StrideSection.swift in Sources */,
 				339761A6176917F548C7B465 /* ContinuousGlucoseMonitor.swift in Sources */,
 				339763D41402CC5D9773F46F /* Peripheral+ContinuousGlucoseMonitor.swift in Sources */,
+				4350CFFA244CEFC90068EEEA /* DistanceView.swift in Sources */,
 				4353A5122431856A00159CDF /* AccessoriesSection.swift in Sources */,
 				33976F79FE2EA20D94F68B69 /* ContinuousGlucoseChartData.swift in Sources */,
 				339764F85119305F6958B516 /* LastDataSection.swift in Sources */,
@@ -2179,9 +2184,8 @@
 				339765E57CA5E940D960B675 /* ChartDataSection.swift in Sources */,
 				01FBC5012407BF8F00B1056B /* PeripheralHolder.swift in Sources */,
 				3397622AEAB44E02CA055BDF /* ProximityViewController.swift in Sources */,
-				33976DC91B99AAA3F2E12DF7 /* FindMeSection.swift in Sources */,
 				01AF929623D8962600C1BFD6 /* UARTPreset.swift in Sources */,
-				33976FB5E54F1D8DDF4733E0 /* DistanceChartSection.swift in Sources */,
+				4350CFF9244CEFC90068EEEA /* SignalStrengthView.swift in Sources */,
 				339767568FA774CDE2FFC170 /* Peripheral+Proximity.swift in Sources */,
 				01268AFB2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift in Sources */,
 				3397628E56C4A84F4D4E8128 /* PeripheralViewController.swift in Sources */,
