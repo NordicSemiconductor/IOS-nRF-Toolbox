@@ -85,14 +85,6 @@ class PeripheralTableViewController: PeripheralViewController, UITableViewDataSo
     
     func reloadSection(id: Identifier<Section>, animation: UITableView.RowAnimation = .automatic) {
         tableView.reloadData()
-        
-        // TODO: Figure out what should we do with that method. Maybe just to rid off this.
-        return 
-        guard let index = visibleSections.firstIndex(where: { $0.id == id }) else {
-            SystemLog(category: .ui, type: .error).log(message: "Cannot upload section \(id)")
-            return
-        }
-        tableView.reloadSections([index], with: .none)
     }
     
     func reloadSections(ids: [Identifier<Section>], animation: UITableView.RowAnimation = .automatic) {
@@ -104,17 +96,6 @@ class PeripheralTableViewController: PeripheralViewController, UITableViewDataSo
     }
     
     func reloadItemInSection(_ sectionId: Identifier<Section>, itemId: Identifier<DetailsTableViewCellModel>, animation: UITableView.RowAnimation = .automatic) {
-//        guard let section = visibleSections
-//                .enumerated()
-//                .first(where: { $0.element.id == sectionId && $0.element is DetailsTableViewSection }),
-//            let itemIndex = (section.element as? DetailsTableViewSection)?.items
-//                .firstIndex(where: { $0.identifier == itemId })
-//            else {
-//                Log(category: .ui, type: .error).log(message: "Cannot upload section \(sectionId)")
-//            return
-//        }
-//
-//        tableView.reloadRows(at: [IndexPath(row: itemIndex, section: section.offset)], with: animation)
     }
     
     // MARK: Bluetooth events handling
@@ -153,8 +134,6 @@ class PeripheralTableViewController: PeripheralViewController, UITableViewDataSo
         super.didDiscover(service: service, for: peripheral)
         
         guard let required = requiredServices else { return }
-        
-        
     }
 
 }

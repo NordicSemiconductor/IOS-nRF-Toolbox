@@ -44,8 +44,7 @@ class LinearChartTableViewCell: UITableViewCell {
         let xAxis = chartsView.xAxis
         xAxis.labelFont = .gtEestiDisplay(.light, size: 10)
         let dateFormatter = DateFormatter()
-        dateFormatter.timeStyle = .short
-        dateFormatter.dateStyle = .none
+        dateFormatter.dateFormat = "mm:ss"
         xAxis.valueFormatter = dateFormatter
         
         chartsView.dragEnabled = true

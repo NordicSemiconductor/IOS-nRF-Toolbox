@@ -37,12 +37,10 @@ struct DefaultServiceProvider: ServiceProvider {
     let sections: [ServiceSection] = {
         let bleServices: [BLEService] = DefaultServiceProvider.loadServicesFromFile("BLEServiceList")
         let utilsServices: [BLEService] = DefaultServiceProvider.loadServicesFromFile("InteractionServiceList")
-        let smartHomeServices: [BLEService] = DefaultServiceProvider.loadServicesFromFile("IoTServices")
         let links: [LinkService] = DefaultServiceProvider.loadServicesFromFile("Links")
         return [
             ServiceSection(title: "Bluetooth Services", services: bleServices),
             ServiceSection(title: "Utils Services", services: utilsServices),
-            ServiceSection(title: "Smart Homes", services: smartHomeServices),
             ServiceSection(title: "Links", services: links)
         ]
     }()

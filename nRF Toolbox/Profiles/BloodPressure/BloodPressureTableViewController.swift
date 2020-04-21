@@ -40,30 +40,15 @@ class BloodPressureTableViewController: PeripheralTableViewController {
             bloodPressureSection.update(with: bloodPressureCharacteristic)
             heartRateSection.update(with: bloodPressureCharacteristic)
             dateTimeSection.update(with: bloodPressureCharacteristic)
-            
-            setBloodPressureVisibility(true)
+
             tableView.reloadData()
         case CBUUID.Characteristics.BloodPressure.intermediateCuff:
             cuffPressureSection.update(with: CuffPreasureCharacteristic(data: value))
-            setBloodPressureVisibility(false)
+
             tableView.reloadData()
         default:
             super.didUpdateValue(for: characteristic)
         }
     }
-    
-    private func setBloodPressureVisibility(_ isVisible: Bool) {
-//        [bloodPressureSection, heartRateSection, dateTimeSection].forEach { $0.isHidden = !isVisible }
-    }
-    
-    override func statusDidChanged(_ status: PeripheralStatus) {
-        if case .connected(_) = status {
-//            bloodPressureSection.isHidden = false
-//            heartRateSection.isHidden = true
-//            dateTimeSection.isHidden = true
-//            cuffPressureSection.isHidden = true
-        }
-        
-        super.statusDidChanged(status)
-    }
+
 }

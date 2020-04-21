@@ -27,11 +27,6 @@ class ServiceTableViewCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-    
-        if #available(iOS 13.0, *) {
-            selectedBackgroundView = UIView()
-            selectedBackgroundView?.backgroundColor = .tertiarySystemGroupedBackground
-        }
     }
     
     func update(with model: BLEService) {

@@ -10,17 +10,14 @@ import UIKit
 import HomeKit
 
 let dfuServiceIdentifier = "00001530-1212-EFDE-1523-785FEABCD123"
-//let dfuControlPointIdentifier = "00001531-1212-EFDE-1523-785FEABCD123"
+let dfuControlPointIdentifier = "00001531-1212-EFDE-1523-785FEABCD123"
 
 class HMAccessoryListTableViewController: UIViewController, AlertPresenter {
     
     var hkManager: HMHomeManager!
     
     private let router: DFURouterType?
-    
-//    private var suggestedAccessories: [HMAccessory] = []
-//    private var unsupportedAccessories: [HMAccessory] = []
-    
+
     private var supportedSection = AccessoriesSection(sectionTitle: "Accessories with DFU Service", footer: "These accessories have DFU service and can be updated with Nordic DFU.", id: "supportedSection")
     private var unsupportedSection = AccessoriesSection(sectionTitle: "All other accessories", footer: nil, id: "unsupportedSection")
     
@@ -159,12 +156,12 @@ extension HMAccessoryListTableViewController: HMHomeManagerDelegate {
 extension HMAccessoryListTableViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return sections.count
+        sections.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return sections[section].numberOfItems
+        sections[section].numberOfItems
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

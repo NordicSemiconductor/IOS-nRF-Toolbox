@@ -10,7 +10,7 @@ import UIKit
 
 class HeartRateSection: DetailsTableViewSection<HeartRateMeasurementCharacteristic> {
     override func update(with characteristic: HeartRateMeasurementCharacteristic) {
-        items = [DefaultDetailsTableViewCellModel(title: "Heart Rate", value: "\(characteristic.heartRate) BPN")]
+        items = [DefaultDetailsTableViewCellModel(title: "Heart Rate", value: "\(characteristic.heartRate) BPM")]
         super.update(with: characteristic)
     }
 }

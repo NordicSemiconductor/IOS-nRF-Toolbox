@@ -46,7 +46,7 @@ enum BluetoothManagerError: Error {
     case cannotFindPeripheral
     
     var localizedDescription: String {
-        return "Can not find peripheral"
+        "Can not find peripheral"
     }
     
 }
