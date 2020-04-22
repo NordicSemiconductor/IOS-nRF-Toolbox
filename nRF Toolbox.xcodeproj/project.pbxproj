@@ -263,7 +263,6 @@
 		52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */; };
 		52D9BC9E1DD0CB760030E824 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9BC9D1DD0CB760030E824 /* Data+Ext.swift */; };
 		7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B422818A8DF4D006BA1BC /* high.mp3 */; };
-		DB0C2F14CD7F8422851077A1 /* Pods_nRF_Toolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F20B3FC767F35FC2E41A6A50 /* Pods_nRF_Toolbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -402,7 +401,6 @@
 		01FBC5142408158F00B1056B /* CBPeripheralState+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CBPeripheralState+Ext.swift"; sourceTree = "<group>"; };
 		01FBC51624081A1C00B1056B /* DFUFirmwareSizeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFirmwareSizeSection.swift; sourceTree = "<group>"; };
 		01FEB0FC23969BD1000767C1 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
-		037B7BCB6D1BE75E608CDDAC /* Pods-nRF Toolbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.release.xcconfig"; path = "Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.release.xcconfig"; sourceTree = "<group>"; };
 		20027B07233E116600A0B5ED /* StrideSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrideSection.swift; sourceTree = "<group>"; };
 		20029FFF231FAFD100C43E06 /* PeripheralManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralManager.swift; sourceTree = "<group>"; };
 		2002A001231FB8E800C43E06 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
@@ -557,10 +555,7 @@
 		52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		52D9BC9D1DD0CB760030E824 /* Data+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Ext.swift"; sourceTree = "<group>"; };
 		7E1B422818A8DF4D006BA1BC /* high.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = high.mp3; sourceTree = "<group>"; };
-		825D586E52D14134859331F5 /* Pods-nRF Toolbox.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.beta.xcconfig"; path = "Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.beta.xcconfig"; sourceTree = "<group>"; };
 		89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B669D6E0559E7DC87E6003AE /* Pods-nRF Toolbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.debug.xcconfig"; path = "Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.debug.xcconfig"; sourceTree = "<group>"; };
-		F20B3FC767F35FC2E41A6A50 /* Pods_nRF_Toolbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nRF_Toolbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -583,7 +578,6 @@
 				5217F3E81859EE0000F2D5BB /* CoreGraphics.framework in Frameworks */,
 				5217F3EA1859EE0000F2D5BB /* UIKit.framework in Frameworks */,
 				5217F3E61859EE0000F2D5BB /* Foundation.framework in Frameworks */,
-				DB0C2F14CD7F8422851077A1 /* Pods_nRF_Toolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1045,9 +1039,6 @@
 		04CD51502DA0CA668E27A6C1 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				B669D6E0559E7DC87E6003AE /* Pods-nRF Toolbox.debug.xcconfig */,
-				825D586E52D14134859331F5 /* Pods-nRF Toolbox.beta.xcconfig */,
-				037B7BCB6D1BE75E608CDDAC /* Pods-nRF Toolbox.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1611,7 +1602,6 @@
 				5217F3E71859EE0000F2D5BB /* CoreGraphics.framework */,
 				5217F3E91859EE0000F2D5BB /* UIKit.framework */,
 				89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */,
-				F20B3FC767F35FC2E41A6A50 /* Pods_nRF_Toolbox.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1724,12 +1714,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5217F4141859EE0000F2D5BB /* Build configuration list for PBXNativeTarget "nRF Toolbox" */;
 			buildPhases = (
-				9D7A4A167EECB1358B073714 /* [CP] Check Pods Manifest.lock */,
 				5217F3DE1859EE0000F2D5BB /* Sources */,
 				5217F3DF1859EE0000F2D5BB /* Frameworks */,
 				5217F3E01859EE0000F2D5BB /* Resources */,
 				0E645A0E1CBF943000D36AD0 /* Embed Frameworks */,
-				D7AEFDFC9FF5AAB5F3186559 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1862,65 +1850,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		9D7A4A167EECB1358B073714 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-nRF Toolbox-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D7AEFDFC9FF5AAB5F3186559 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/AEXML/AEXML.framework",
-				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
-				"${BUILT_PRODUCTS_DIR}/CorePlot/CorePlot.framework",
-				"${BUILT_PRODUCTS_DIR}/EVReflection/EVReflection.framework",
-				"${BUILT_PRODUCTS_DIR}/McuManager/McuManager.framework",
-				"${BUILT_PRODUCTS_DIR}/SWRevealViewController/SWRevealViewController.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftCBOR/SwiftCBOR.framework",
-				"${BUILT_PRODUCTS_DIR}/ZIPFoundation/ZIPFoundation.framework",
-				"${BUILT_PRODUCTS_DIR}/iOSDFULibrary/iOSDFULibrary.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AEXML.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePlot.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EVReflection.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/McuManager.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SWRevealViewController.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftCBOR.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZIPFoundation.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSDFULibrary.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		014C4E8C2404038A0003E601 /* Sources */ = {
@@ -2316,7 +2245,6 @@
 		};
 		20FDA43623154494006EEBC1 /* Beta */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 825D586E52D14134859331F5 /* Pods-nRF Toolbox.beta.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -2480,7 +2408,6 @@
 		};
 		5217F4151859EE0000F2D5BB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B669D6E0559E7DC87E6003AE /* Pods-nRF Toolbox.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -2531,7 +2458,6 @@
 		};
 		5217F4161859EE0000F2D5BB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 037B7BCB6D1BE75E608CDDAC /* Pods-nRF Toolbox.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
