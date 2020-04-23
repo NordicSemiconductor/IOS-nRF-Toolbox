@@ -22,8 +22,8 @@ class NotConnectedViewController: UIViewController {
         super.init(coder: coder)
     }
     
-    private var actienView: InfoActionView {
-        return view as! InfoActionView
+    private var actionView: InfoActionView {
+        view as! InfoActionView
     }
     
     override func viewDidLoad() {
@@ -31,11 +31,13 @@ class NotConnectedViewController: UIViewController {
         
         button.style = .mainAction
         
-        actienView.action = { [weak self] in
+        actionView.action = { [weak self] in
             self?.router?.goToPeripheralSelector(scanner: PeripheralScanner(services: nil), presentationType: .push, callback: { (preipheral) in
                 self?.router?.goToFileSelector()
             })
         }
+
+        navigationItem.title = "MCU Manager"
     }
 
 }

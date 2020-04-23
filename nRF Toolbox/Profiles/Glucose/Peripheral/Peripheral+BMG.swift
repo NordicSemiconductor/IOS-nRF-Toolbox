@@ -12,7 +12,9 @@ import CoreBluetooth
 extension PeripheralDescription {
     static let bloodGlucoseMonitor = PeripheralDescription(uuid: CBUUID.Service.bloodGlucoseMonitor, services: [
         .battery, .bloodGlucoseMonitor
-    ], requiredServices: [CBUUID.Service.bloodGlucoseMonitor])
+    ],
+        mandatoryServices: [CBUUID.Service.bloodGlucoseMonitor],
+        mandatoryCharacteristics: [CBUUID.Characteristics.BloodGlucoseMonitor.glucoseMeasurement, CBUUID.Characteristics.BloodGlucoseMonitor.recordAccessControlPoint, CBUUID.Characteristics.BloodGlucoseMonitor.glucoseMeasurementContext])
 }
 
 private extension PeripheralDescription.Service {

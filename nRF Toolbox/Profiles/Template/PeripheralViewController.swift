@@ -21,7 +21,8 @@ struct PeripheralDescription {
     }
     let uuid: CBUUID?
     let services: [Service]
-    let requiredServices: [CBUUID]?
+    let mandatoryServices: [CBUUID]?
+    let mandatoryCharacteristics: [CBUUID]?
 }
 
 class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter {
@@ -34,6 +35,7 @@ class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter
     
     private var savedView: UIView!
     private var discoveredServices: [CBUUID] = []
+    private var discoveredCharacteristics: [CBUUID] = []
     private var serviceFinderTimer: Timer?
     
     override func viewDidLoad() {
@@ -49,7 +51,7 @@ class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter
         peripheralManager.closeConnection(peripheral: peripheral)
     }
 
-    func statusDidChanged(_ status: PeripheralStatus) {
+    func statusDidChanged(_ status: PeripheralStatus)  {
         SystemLog(category: .ble, type: .debug).log(message: "Changed Bluetooth status in \(String(describing: type(of: self))), status: \(status)")
         switch status {
         case .poweredOff:
@@ -64,7 +66,7 @@ class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter
 
             let notContent = InfoActionView.instanceWithParams(message: "Bluetooth is powered off", buttonSettings: bSettings)
             view = notContent
-        case .disconnected:
+        case .disconnected(let error):
             serviceFinderTimer?.invalidate()
             activePeripheral = nil
 
@@ -76,6 +78,10 @@ class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter
             notContent.actionButton.style = .mainAction
             
             view = notContent
+
+            if let e = error {
+                displayErrorAlert(error: e)
+            }
             
         case .connecting:
             let notContent = InfoActionView.instanceWithParams(message: "Connecting...")
@@ -90,23 +96,26 @@ class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter
             activePeripheral?.delegate = self
             activePeripheral?.discoverServices(peripheralDescription.services.map { $0.uuid } )
             
-            if let requiredServices = peripheralDescription.requiredServices, !requiredServices.isEmpty {
-                statusDidChanged(.discoveringServices)
+            if let requiredServices = peripheralDescription.mandatoryServices, !requiredServices.isEmpty {
+                statusDidChanged(.discoveringServicesAndCharacteristics)
                 serviceFinderTimer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [weak self] (t) in
                     self?.displayBindingErrorAlert()
                     self?.disconnect()
                     t.invalidate()
                 }
             } else {
-                statusDidChanged(.discoveredRequiredServices)
+                statusDidChanged(.discoveredRequiredServicesAndCharacteristics)
             }
 
-        case .discoveringServices:
-            let notContent = InfoActionView.instanceWithParams(message: "Discovering Services...")
+        case .discoveringServicesAndCharacteristics:
+            let notContent = InfoActionView.instanceWithParams(message: "Discovering Services and Characteristics...")
+            notContent.titleLabel.numberOfLines = 0
+            notContent.titleLabel.textAlignment = .center
             notContent.actionButton.style = .mainAction
             
             view = notContent
-        case .discoveredRequiredServices:
+
+        case .discoveredRequiredServicesAndCharacteristics:
             serviceFinderTimer?.invalidate()
             view = savedView
         }
@@ -133,13 +142,16 @@ class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter
         peripheral.discoverCharacteristics(characteristics, for: service)
         
         discoveredServices.append(service.uuid)
-        guard let requiredServices = peripheralDescription.requiredServices else {
-            serviceFinderTimer?.invalidate()
-            return
+
+        let requiredServices = peripheralDescription.mandatoryServices ?? []
+        let requiredCharacteristics = peripheralDescription.mandatoryCharacteristics ?? []
+
+        if Set(requiredServices).subtracting(Set(discoveredServices)).isEmpty &&
+               Set(requiredCharacteristics).subtracting(Set(discoveredCharacteristics)).isEmpty &&
+                peripheralManager.status != .discoveredRequiredServicesAndCharacteristics  {
+            peripheralManager.status = .discoveredRequiredServicesAndCharacteristics
         }
-        if Set(requiredServices).subtracting(Set(discoveredServices)).isEmpty {
-            statusDidChanged(.discoveredRequiredServices)
-        }
+
     }
 
     func didDiscover(characteristic: CBCharacteristic, for service: CBService, peripheral: CBPeripheral) {
@@ -153,6 +165,17 @@ class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter
                     default: break
                     }
                 }
+
+        discoveredCharacteristics.append(characteristic.uuid)
+
+        let requiredServices = peripheralDescription.mandatoryServices ?? []
+        let requiredCharacteristics = peripheralDescription.mandatoryCharacteristics ?? []
+
+        if Set(requiredServices).subtracting(Set(discoveredServices)).isEmpty &&
+               Set(requiredCharacteristics).subtracting(Set(discoveredCharacteristics)).isEmpty &&
+                peripheralManager.status != .discoveredRequiredServicesAndCharacteristics {
+            peripheralManager.status = .discoveredRequiredServicesAndCharacteristics
+        }
     }
 
     func didUpdateValue(for characteristic: CBCharacteristic) {

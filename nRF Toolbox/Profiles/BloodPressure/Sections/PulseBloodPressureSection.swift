@@ -8,8 +8,8 @@
 
 import Foundation
 
-class PulseBloodPressureSection: DetailsTableViewSection<BloodPreasureCharacteristic> {
-    override func update(with characteristic: BloodPreasureCharacteristic) {
+class PulseBloodPressureSection: DetailsTableViewSection<BloodPressureCharacteristic> {
+    override func update(with characteristic: BloodPressureCharacteristic) {
         guard let heartRate = characteristic.pulseRate else {
             reset()
             return

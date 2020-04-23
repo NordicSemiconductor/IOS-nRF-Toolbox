@@ -9,23 +9,35 @@
 import Foundation
 import CoreBluetooth
 
-enum PeripheralStatus: CustomDebugStringConvertible {
+enum PeripheralStatus: CustomDebugStringConvertible, Equatable {
     
     case poweredOff
     case connecting
     case connected(CBPeripheral)
     case disconnected(Error?)
-    case discoveringServices
-    case discoveredRequiredServices
-    
+    case discoveringServicesAndCharacteristics
+    case discoveredRequiredServicesAndCharacteristics
+
+    static func ==(lhs: PeripheralStatus, rhs: PeripheralStatus) -> Bool {
+        switch (lhs, rhs) {
+        case (.poweredOff, poweredOff): return true
+        case (.connecting, .connecting): return true
+        case (.connected(let p1), .connected(let p2)): return p1 == p2
+        case (.disconnected, .disconnected): return true
+        case (.discoveringServicesAndCharacteristics, .discoveringServicesAndCharacteristics): return true
+        case (.discoveredRequiredServicesAndCharacteristics, .discoveredRequiredServicesAndCharacteristics): return true
+        default: return false
+        }
+    }
+
     var debugDescription: String {
         switch self {
         case .connecting: return "connecting"
         case .connected(let p): return "connected to \(p.name ?? "__unnamed__")"
         case .disconnected: return "disconnected"
         case .poweredOff: return "powered off"
-        case .discoveringServices: return "discovering services"
-        case .discoveredRequiredServices: return "discovered required services"
+        case .discoveringServicesAndCharacteristics: return "discovering services"
+        case .discoveredRequiredServicesAndCharacteristics: return "discovered required services"
         }
     }
 }
@@ -53,6 +65,11 @@ class PeripheralManager: NSObject {
     var delegate: StatusDelegate?
     var peripheralListDelegate: PeripheralListDelegate?
     var connectingPeripheral: CBPeripheral?
+    var status: PeripheralStatus = .disconnected(nil) {
+        didSet {
+            self.delegate?.statusDidChanged(status)
+        }
+    }
     
     init(peripheral: PeripheralDescription, manager: CBCentralManager = CBCentralManager()) {
         self.manager = manager
@@ -67,12 +84,12 @@ class PeripheralManager: NSObject {
         }
         connectingPeripheral = p 
         manager.connect(p, options: nil)
-        
-        delegate?.statusDidChanged(.connecting)
+
+        self.status = .connecting
         
         timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false, block: { [weak self] (_) in
             self?.closeConnection(peripheral: p)
-            self?.delegate?.statusDidChanged(.disconnected(QuickError(message: "Connection timeout")))
+            self?.status = .disconnected(QuickError(message: "Connection timeout"))
         })
     }
 }
@@ -82,9 +99,9 @@ extension PeripheralManager: CBCentralManagerDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         switch central.state {
         case .poweredOff:
-            delegate?.statusDidChanged(.poweredOff)
+            self.status = .poweredOff
         case .poweredOn:
-            delegate?.statusDidChanged(.disconnected(nil))
+            self.status = .disconnected(nil)
         default:
             break
         }
@@ -98,20 +115,20 @@ extension PeripheralManager: CBCentralManagerDelegate {
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         SystemLog(category: .ble, type: .debug).log(message: "Connected to device: \(peripheral.name ?? "__unnamed__")")
-        delegate?.statusDidChanged(.connected(peripheral))
+        status = .connected(peripheral)
         timer?.invalidate()
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         SystemLog(category: .ble, type: .error).log(message: error?.localizedDescription ?? "Failed to Connect: (no message)")
         timer?.invalidate()
-        delegate?.statusDidChanged(.disconnected(QuickError(message: "Unable to connect")))
+        status = .disconnected(QuickError(message: "Unable to connect"))
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         SystemLog(category: .ble, type: .debug).log(message: "Disconnected peripheral: \(peripheral)")
         error.map { SystemLog(category: .ble, type: .error).log(message: "Disconnected peripheral with error: \($0.localizedDescription)") }
-        delegate?.statusDidChanged(.disconnected(error))
+        status = .disconnected(error)
         timer?.invalidate()
     }
 }

@@ -17,7 +17,9 @@ extension CBUUID {
 extension PeripheralDescription {
     static let proximity = PeripheralDescription(uuid: .linkLossService, services: [
         .battery, .immediateAlert, .linkLoss, .txPower
-    ], requiredServices: [.immediateAlertService])
+    ],
+        mandatoryServices: [.immediateAlertService],
+        mandatoryCharacteristics: [.proximityAlertLevelCharacteristic])
 }
 
 private extension PeripheralDescription.Service {

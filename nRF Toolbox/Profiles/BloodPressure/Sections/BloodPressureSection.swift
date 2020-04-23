@@ -8,7 +8,7 @@
 
 import Foundation
 
-class BloodPressureSection: DetailsTableViewSection<BloodPreasureCharacteristic> {
+class BloodPressureSection: DetailsTableViewSection<BloodPressureCharacteristic> {
     
     override init(id: Identifier<Section>, sectionUpdated: ((Identifier<Section>) -> ())? = nil, itemUpdated: ((Identifier<Section>, Identifier<DetailsTableViewCellModel>) -> ())? = nil) {
         super.init(id: id, sectionUpdated: sectionUpdated, itemUpdated: itemUpdated)
@@ -24,13 +24,13 @@ class BloodPressureSection: DetailsTableViewSection<BloodPreasureCharacteristic>
         ]
     }
     
-    override func update(with characteristic: BloodPreasureCharacteristic) {
+    override func update(with characteristic: BloodPressureCharacteristic) {
         let formatter = MeasurementFormatter()
         formatter.unitOptions = .providedUnit
         
-        let systolicItem = DefaultDetailsTableViewCellModel(title: "Systolic", value: formatter.string(from: characteristic.systolicPreasure))
-        let diastolicItem = DefaultDetailsTableViewCellModel(title: "Diastolic", value: formatter.string(from: characteristic.diastolicPreasure))
-        let maItem = DefaultDetailsTableViewCellModel(title: "Mean AP", value: formatter.string(from: characteristic.meanArterialPreasure))
+        let systolicItem = DefaultDetailsTableViewCellModel(title: "Systolic", value: formatter.string(from: characteristic.systolicPressure))
+        let diastolicItem = DefaultDetailsTableViewCellModel(title: "Diastolic", value: formatter.string(from: characteristic.diastolicPressure))
+        let maItem = DefaultDetailsTableViewCellModel(title: "Mean AP", value: formatter.string(from: characteristic.meanArterialPressure))
         
         items = [systolicItem, diastolicItem, maItem]
     }

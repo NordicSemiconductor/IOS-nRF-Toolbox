@@ -12,7 +12,9 @@ import CoreBluetooth
 extension PeripheralDescription {
     static let cyclingSpeedCadenceSensor = PeripheralDescription(uuid: CBUUID.Profile.cyclingSpeedCadenceSensor, services: [
         .battery, .cyclingSpeedCadenceSensor
-    ], requiredServices: [CBUUID.Service.cyclingSpeedCadenceSensor])
+    ],
+        mandatoryServices: [CBUUID.Service.cyclingSpeedCadenceSensor],
+        mandatoryCharacteristics: [CBUUID.Characteristics.CyclingSesnor.measurement])
 }
 
 private extension PeripheralDescription.Service {

@@ -8,8 +8,8 @@
 
 import Foundation
 
-class TimeBloodPressureSection: DetailsTableViewSection<BloodPreasureCharacteristic> {
-    override func update(with characteristic: BloodPreasureCharacteristic) {
+class TimeBloodPressureSection: DetailsTableViewSection<BloodPressureCharacteristic> {
+    override func update(with characteristic: BloodPressureCharacteristic) {
         guard let date = characteristic.date else {
             reset()
             return

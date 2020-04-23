@@ -27,7 +27,15 @@ class BloodPressureTableViewController: PeripheralTableViewController {
     
     private var dataSectionIds: [Identifier<Section>] = [.bloodPressure, .cuffPressure]
     override var navigationTitle: String { "Blood Pressure" }
-    
+
+    override func didDiscover(service: CBService, for peripheral: CBPeripheral) {
+        super.didDiscover(service: service, for: peripheral)
+    }
+
+    override func didDiscover(characteristic: CBCharacteristic, for service: CBService, peripheral: CBPeripheral) {
+        super.didDiscover(characteristic: characteristic, for: service, peripheral: peripheral)
+    }
+
     override func didUpdateValue(for characteristic: CBCharacteristic) {
         guard let value = characteristic.value else {
             super.didUpdateValue(for: characteristic)
@@ -35,7 +43,7 @@ class BloodPressureTableViewController: PeripheralTableViewController {
         }
         switch characteristic.uuid {
         case CBUUID.Characteristics.BloodPressure.measurement:
-            let bloodPressureCharacteristic = BloodPreasureCharacteristic(data: value)
+            let bloodPressureCharacteristic = BloodPressureCharacteristic(data: value)
 
             bloodPressureSection.update(with: bloodPressureCharacteristic)
             heartRateSection.update(with: bloodPressureCharacteristic)

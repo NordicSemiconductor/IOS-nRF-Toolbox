@@ -125,7 +125,7 @@
 		200973D523433A120091951B /* Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200973D423433A120091951B /* Flag.swift */; };
 		200973D723433A5E0091951B /* PaceMeasurementFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200973D623433A5E0091951B /* PaceMeasurementFormatter.swift */; };
 		200973DA234344780091951B /* BloodPressureTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200973D9234344780091951B /* BloodPressureTableViewController.swift */; };
-		200973DD2343748F0091951B /* BloodPreasureCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200973DC2343748F0091951B /* BloodPreasureCharacteristic.swift */; };
+		200973DD2343748F0091951B /* BloodPressureCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200973DC2343748F0091951B /* BloodPressureCharacteristic.swift */; };
 		201364F72344A93D00C5AF1F /* BloodPressureSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201364F62344A93D00C5AF1F /* BloodPressureSection.swift */; };
 		201364F92344A94700C5AF1F /* PulseBloodPressureSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201364F82344A94700C5AF1F /* PulseBloodPressureSection.swift */; };
 		201364FB2344A94F00C5AF1F /* TimeBloodPressureSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201364FA2344A94F00C5AF1F /* TimeBloodPressureSection.swift */; };
@@ -263,7 +263,7 @@
 		52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */; };
 		52D9BC9E1DD0CB760030E824 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9BC9D1DD0CB760030E824 /* Data+Ext.swift */; };
 		7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B422818A8DF4D006BA1BC /* high.mp3 */; };
-		FD02B9672E8867EB0455BE31 /* Pods_nRF_Toolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85DB0961823221AFB3E17D3B /* Pods_nRF_Toolbox.framework */; };
+		B9333AF83F2257C393C81470 /* Pods_nRF_Toolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1C52F90A80A6E5FFBFC488 /* Pods_nRF_Toolbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -402,8 +402,6 @@
 		01FBC5142408158F00B1056B /* CBPeripheralState+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CBPeripheralState+Ext.swift"; sourceTree = "<group>"; };
 		01FBC51624081A1C00B1056B /* DFUFirmwareSizeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFirmwareSizeSection.swift; sourceTree = "<group>"; };
 		01FEB0FC23969BD1000767C1 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
-		106F48D84A91BBA0C2F6FA7B /* Pods-nRF Toolbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.debug.xcconfig"; path = "Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.debug.xcconfig"; sourceTree = "<group>"; };
-		152F07142A5EAC95D7E1F0A7 /* Pods-nRF Toolbox.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.beta.xcconfig"; path = "Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.beta.xcconfig"; sourceTree = "<group>"; };
 		20027B07233E116600A0B5ED /* StrideSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrideSection.swift; sourceTree = "<group>"; };
 		20029FFF231FAFD100C43E06 /* PeripheralManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralManager.swift; sourceTree = "<group>"; };
 		2002A001231FB8E800C43E06 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
@@ -412,7 +410,7 @@
 		200973D423433A120091951B /* Flag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flag.swift; sourceTree = "<group>"; };
 		200973D623433A5E0091951B /* PaceMeasurementFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaceMeasurementFormatter.swift; sourceTree = "<group>"; };
 		200973D9234344780091951B /* BloodPressureTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodPressureTableViewController.swift; sourceTree = "<group>"; };
-		200973DC2343748F0091951B /* BloodPreasureCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodPreasureCharacteristic.swift; sourceTree = "<group>"; };
+		200973DC2343748F0091951B /* BloodPressureCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodPressureCharacteristic.swift; sourceTree = "<group>"; };
 		201364F62344A93D00C5AF1F /* BloodPressureSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodPressureSection.swift; sourceTree = "<group>"; };
 		201364F82344A94700C5AF1F /* PulseBloodPressureSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseBloodPressureSection.swift; sourceTree = "<group>"; };
 		201364FA2344A94F00C5AF1F /* TimeBloodPressureSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBloodPressureSection.swift; sourceTree = "<group>"; };
@@ -557,10 +555,12 @@
 		52BDCBBD1C3FD86900E2680F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		52D9BC9D1DD0CB760030E824 /* Data+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Ext.swift"; sourceTree = "<group>"; };
+		5A98BC822E262F88E44D6E02 /* Pods-nRF Toolbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.release.xcconfig"; path = "Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.release.xcconfig"; sourceTree = "<group>"; };
+		5B1C52F90A80A6E5FFBFC488 /* Pods_nRF_Toolbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nRF_Toolbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		69A9BA14F5A63C56C457514A /* Pods-nRF Toolbox.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.beta.xcconfig"; path = "Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.beta.xcconfig"; sourceTree = "<group>"; };
 		7E1B422818A8DF4D006BA1BC /* high.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = high.mp3; sourceTree = "<group>"; };
-		85DB0961823221AFB3E17D3B /* Pods_nRF_Toolbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nRF_Toolbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		98D2E2DFA4F145B960B832B4 /* Pods-nRF Toolbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.release.xcconfig"; path = "Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.release.xcconfig"; sourceTree = "<group>"; };
+		EAAF1D5ED777F196D5C340C3 /* Pods-nRF Toolbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.debug.xcconfig"; path = "Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -583,7 +583,7 @@
 				5217F3E81859EE0000F2D5BB /* CoreGraphics.framework in Frameworks */,
 				5217F3EA1859EE0000F2D5BB /* UIKit.framework in Frameworks */,
 				5217F3E61859EE0000F2D5BB /* Foundation.framework in Frameworks */,
-				FD02B9672E8867EB0455BE31 /* Pods_nRF_Toolbox.framework in Frameworks */,
+				B9333AF83F2257C393C81470 /* Pods_nRF_Toolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1045,9 +1045,9 @@
 		04CD51502DA0CA668E27A6C1 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				106F48D84A91BBA0C2F6FA7B /* Pods-nRF Toolbox.debug.xcconfig */,
-				152F07142A5EAC95D7E1F0A7 /* Pods-nRF Toolbox.beta.xcconfig */,
-				98D2E2DFA4F145B960B832B4 /* Pods-nRF Toolbox.release.xcconfig */,
+				EAAF1D5ED777F196D5C340C3 /* Pods-nRF Toolbox.debug.xcconfig */,
+				69A9BA14F5A63C56C457514A /* Pods-nRF Toolbox.beta.xcconfig */,
+				5A98BC822E262F88E44D6E02 /* Pods-nRF Toolbox.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1086,7 +1086,7 @@
 		200973DB2343746B0091951B /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				200973DC2343748F0091951B /* BloodPreasureCharacteristic.swift */,
+				200973DC2343748F0091951B /* BloodPressureCharacteristic.swift */,
 				201364FC2344E2E300C5AF1F /* CuffPreasureCharacteristic.swift */,
 			);
 			path = Models;
@@ -1611,7 +1611,7 @@
 				5217F3E71859EE0000F2D5BB /* CoreGraphics.framework */,
 				5217F3E91859EE0000F2D5BB /* UIKit.framework */,
 				89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */,
-				85DB0961823221AFB3E17D3B /* Pods_nRF_Toolbox.framework */,
+				5B1C52F90A80A6E5FFBFC488 /* Pods_nRF_Toolbox.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1724,12 +1724,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5217F4141859EE0000F2D5BB /* Build configuration list for PBXNativeTarget "nRF Toolbox" */;
 			buildPhases = (
-				E53589448211B18DC5D4B791 /* [CP] Check Pods Manifest.lock */,
+				5FC3317ABD3B19C7AC4BD5DE /* [CP] Check Pods Manifest.lock */,
 				5217F3DE1859EE0000F2D5BB /* Sources */,
 				5217F3DF1859EE0000F2D5BB /* Frameworks */,
 				5217F3E01859EE0000F2D5BB /* Resources */,
 				0E645A0E1CBF943000D36AD0 /* Embed Frameworks */,
-				99FC4E8DC3F8A27EED8A631E /* [CP] Embed Pods Frameworks */,
+				CA42A312846FDA743BF24EF8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1864,41 +1864,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		99FC4E8DC3F8A27EED8A631E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/AEXML/AEXML.framework",
-				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
-				"${BUILT_PRODUCTS_DIR}/CorePlot/CorePlot.framework",
-				"${BUILT_PRODUCTS_DIR}/EVReflection/EVReflection.framework",
-				"${BUILT_PRODUCTS_DIR}/McuManager/McuManager.framework",
-				"${BUILT_PRODUCTS_DIR}/SWRevealViewController/SWRevealViewController.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftCBOR/SwiftCBOR.framework",
-				"${BUILT_PRODUCTS_DIR}/ZIPFoundation/ZIPFoundation.framework",
-				"${BUILT_PRODUCTS_DIR}/iOSDFULibrary/iOSDFULibrary.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AEXML.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePlot.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EVReflection.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/McuManager.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SWRevealViewController.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftCBOR.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZIPFoundation.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSDFULibrary.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E53589448211B18DC5D4B791 /* [CP] Check Pods Manifest.lock */ = {
+		5FC3317ABD3B19C7AC4BD5DE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1918,6 +1884,38 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CA42A312846FDA743BF24EF8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AEXML/AEXML.framework",
+				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
+				"${BUILT_PRODUCTS_DIR}/CorePlot/CorePlot.framework",
+				"${BUILT_PRODUCTS_DIR}/McuManager/McuManager.framework",
+				"${BUILT_PRODUCTS_DIR}/SWRevealViewController/SWRevealViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftCBOR/SwiftCBOR.framework",
+				"${BUILT_PRODUCTS_DIR}/ZIPFoundation/ZIPFoundation.framework",
+				"${BUILT_PRODUCTS_DIR}/iOSDFULibrary/iOSDFULibrary.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AEXML.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePlot.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/McuManager.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SWRevealViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftCBOR.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZIPFoundation.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSDFULibrary.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1965,7 +1963,7 @@
 				20D08DFD232929A400569587 /* BGMTableViewCell.swift in Sources */,
 				01D6D2BB240696D000E1A66F /* DFURouter.swift in Sources */,
 				01B6D3DE234CBBE5000942C4 /* SernsorLocationSection.swift in Sources */,
-				200973DD2343748F0091951B /* BloodPreasureCharacteristic.swift in Sources */,
+				200973DD2343748F0091951B /* BloodPressureCharacteristic.swift in Sources */,
 				30A1145C1CD24611000F0F02 /* ScannerViewController.swift in Sources */,
 				01D6D2C02406A1EF00E1A66F /* DFUStartViewController.swift in Sources */,
 				01B6D3E0234CC090000942C4 /* Peripheral+HeartRate.swift in Sources */,
@@ -2316,7 +2314,7 @@
 		};
 		20FDA43623154494006EEBC1 /* Beta */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 152F07142A5EAC95D7E1F0A7 /* Pods-nRF Toolbox.beta.xcconfig */;
+			baseConfigurationReference = 69A9BA14F5A63C56C457514A /* Pods-nRF Toolbox.beta.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -2345,8 +2343,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-framework",
-					"\"EVReflection\"",
 					"-framework",
 					"\"iOSDFULibrary\"",
 					"-ObjC",
@@ -2480,7 +2476,7 @@
 		};
 		5217F4151859EE0000F2D5BB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 106F48D84A91BBA0C2F6FA7B /* Pods-nRF Toolbox.debug.xcconfig */;
+			baseConfigurationReference = EAAF1D5ED777F196D5C340C3 /* Pods-nRF Toolbox.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -2510,8 +2506,6 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
-					"\"EVReflection\"",
-					"-framework",
 					"\"iOSDFULibrary\"",
 					"-ObjC",
 				);
@@ -2531,7 +2525,7 @@
 		};
 		5217F4161859EE0000F2D5BB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 98D2E2DFA4F145B960B832B4 /* Pods-nRF Toolbox.release.xcconfig */;
+			baseConfigurationReference = 5A98BC822E262F88E44D6E02 /* Pods-nRF Toolbox.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -2560,8 +2554,6 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-framework",
-					"\"EVReflection\"",
 					"-framework",
 					"\"iOSDFULibrary\"",
 					"-ObjC",

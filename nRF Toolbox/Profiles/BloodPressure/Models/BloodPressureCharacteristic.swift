@@ -14,11 +14,11 @@ private extension Flag {
     static let pulseRate: Flag = 0x04
 }
 
-struct BloodPreasureCharacteristic {
+struct BloodPressureCharacteristic {
     
-    let systolicPreasure: Measurement<UnitPressure>
-    let diastolicPreasure: Measurement<UnitPressure>
-    let meanArterialPreasure: Measurement<UnitPressure>
+    let systolicPressure: Measurement<UnitPressure>
+    let diastolicPressure: Measurement<UnitPressure>
+    let meanArterialPressure: Measurement<UnitPressure>
     let date: Date?
     let pulseRate: Int?
     
@@ -30,9 +30,9 @@ struct BloodPreasureCharacteristic {
         let diastolicValue: Float32 = data.readSFloat(from: 3)
         let meanArterialValue: Float32 = data.readSFloat(from: 5)
         
-        systolicPreasure = Measurement<UnitPressure>(value: Double(systolicValue), unit: unit)
-        diastolicPreasure = Measurement<UnitPressure>(value: Double(diastolicValue), unit: unit)
-        meanArterialPreasure = Measurement<UnitPressure>(value: Double(meanArterialValue), unit: unit)
+        systolicPressure = Measurement<UnitPressure>(value: Double(systolicValue), unit: unit)
+        diastolicPressure = Measurement<UnitPressure>(value: Double(diastolicValue), unit: unit)
+        meanArterialPressure = Measurement<UnitPressure>(value: Double(meanArterialValue), unit: unit)
         
         var offset = 7
         date = Flag.isAvailable(bits: flags, flag: .timeStamp) ? {

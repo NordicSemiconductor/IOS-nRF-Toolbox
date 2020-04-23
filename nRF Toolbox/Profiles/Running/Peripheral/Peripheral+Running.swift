@@ -10,7 +10,7 @@ import Foundation
 import CoreBluetooth
 
 extension PeripheralDescription {
-    static let runningSpeedCadenceSensor = PeripheralDescription(uuid: CBUUID.Profile.runningSpeedCadenceSensor, services: [.battery, .speedCadence], requiredServices: [CBUUID.Service.runningSpeedCadenceSensor])
+    static let runningSpeedCadenceSensor = PeripheralDescription(uuid: CBUUID.Profile.runningSpeedCadenceSensor, services: [.battery, .speedCadence], mandatoryServices: [CBUUID.Service.runningSpeedCadenceSensor], mandatoryCharacteristics: [CBUUID.Characteristics.Running.measurement])
 }
 
 private extension PeripheralDescription.Service {
