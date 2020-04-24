@@ -69,6 +69,7 @@ class FileSelectorViewController<T>: UIViewController, AlertPresenter, UITableVi
         if !dataSource.items.isEmpty {
             view = tableView
             tableView.reloadData()
+            tableView.backgroundColor = .groupTableViewBackground
         } else {
             view = emptyView
         }

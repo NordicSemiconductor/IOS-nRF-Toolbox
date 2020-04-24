@@ -32,7 +32,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="umh-hs-lLq" customClass="DistanceView" customModule="nRF_Toolbox" customModuleProvider="target">
-                    <rect key="frame" x="87" y="60" width="240" height="240"/>
+                    <rect key="frame" x="87" y="178.5" width="240" height="240"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1na-lx-pc0">
                             <rect key="frame" x="40" y="120" width="160" height="0.5"/>
@@ -74,14 +74,16 @@
                         <constraint firstItem="SFl-sE-IA7" firstAttribute="width" secondItem="umh-hs-lLq" secondAttribute="width" multiplier="1:4" id="XJe-6U-H6m"/>
                         <constraint firstItem="1na-lx-pc0" firstAttribute="centerY" secondItem="umh-hs-lLq" secondAttribute="centerY" id="bCa-GZ-zz1"/>
                         <constraint firstItem="1na-lx-pc0" firstAttribute="top" secondItem="bo0-aq-Nj1" secondAttribute="bottom" constant="12" id="cKA-Rj-OXt"/>
-                        <constraint firstAttribute="width" constant="240" id="ezT-Px-eMg"/>
+                        <constraint firstAttribute="width" constant="240" id="ezT-Px-eMg">
+                            <variation key="heightClass=regular-widthClass=regular" constant="360"/>
+                        </constraint>
                         <constraint firstItem="1na-lx-pc0" firstAttribute="width" secondItem="umh-hs-lLq" secondAttribute="width" multiplier="10:15" id="qXb-yd-mfb"/>
                         <constraint firstItem="1na-lx-pc0" firstAttribute="centerX" secondItem="umh-hs-lLq" secondAttribute="centerX" id="vuk-yp-XfL"/>
                         <constraint firstItem="bo0-aq-Nj1" firstAttribute="centerX" secondItem="umh-hs-lLq" secondAttribute="centerX" id="ymI-oj-Reu"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qKO-iA-Cxg" customClass="NordicButton" customModule="nRF_Toolbox" customModuleProvider="target">
-                    <rect key="frame" x="127" y="324" width="160" height="40"/>
+                    <rect key="frame" x="127" y="442.5" width="160" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="0Gy-jB-NXM"/>
                         <constraint firstAttribute="width" constant="160" id="eac-pi-xuV"/>
@@ -92,7 +94,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0N9-bO-XAg" customClass="NordicButton" customModule="nRF_Toolbox" customModuleProvider="target">
-                    <rect key="frame" x="127" y="380" width="160" height="40"/>
+                    <rect key="frame" x="127" y="498.5" width="160" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="4lg-gM-ARf"/>
                         <constraint firstAttribute="width" constant="160" id="wEG-B5-ka5"/>
@@ -109,7 +111,7 @@
                 <constraint firstItem="umh-hs-lLq" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="I4i-xg-KVr"/>
                 <constraint firstItem="qKO-iA-Cxg" firstAttribute="top" secondItem="umh-hs-lLq" secondAttribute="bottom" constant="24" id="RQq-li-f4z"/>
                 <constraint firstItem="0N9-bO-XAg" firstAttribute="top" secondItem="qKO-iA-Cxg" secondAttribute="bottom" constant="16" id="h3w-R2-iUj"/>
-                <constraint firstItem="umh-hs-lLq" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="16" id="qEH-SL-tlY"/>
+                <constraint firstItem="umh-hs-lLq" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" multiplier="1:1.5" id="qYu-p3-4ha"/>
                 <constraint firstItem="0N9-bO-XAg" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="rf6-kg-bpp"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
