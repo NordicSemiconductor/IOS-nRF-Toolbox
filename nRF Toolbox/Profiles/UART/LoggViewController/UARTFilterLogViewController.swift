@@ -9,15 +9,15 @@
 import UIKit
 
 protocol UARTFilterApplierDelegate: class {
-    func setLevels(_ levels: [LOGLevel])
+    func setLevels(_ levels: [LogType])
 }
 
 class UARTFilterLogViewController: UITableViewController, CloseButtonPresenter {
-    private var selectedLevels: [LOGLevel]
+    private var selectedLevels: [LogType]
     
     weak var filterDelegate: UARTFilterApplierDelegate?
     
-    init(selectedLevels: [LOGLevel]) {
+    init(selectedLevels: [LogType]) {
         self.selectedLevels = selectedLevels
         super.init(style: .grouped)
     }
@@ -32,7 +32,7 @@ class UARTFilterLogViewController: UITableViewController, CloseButtonPresenter {
         setupCloseButton()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
         
-        LOGLevel.allCases.enumerated().forEach {
+        LogType.allCases.enumerated().forEach {
             if selectedLevels.contains($0.element) {
                 tableView.selectRow(at: IndexPath(row: $0.offset, section: 0), animated: false, scrollPosition: .none)
             } else {
@@ -57,7 +57,7 @@ class UARTFilterLogViewController: UITableViewController, CloseButtonPresenter {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        section == 0 ? LOGLevel.allCases.count : 1
+        section == 0 ? LogType.allCases.count : 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -67,7 +67,7 @@ class UARTFilterLogViewController: UITableViewController, CloseButtonPresenter {
             return cell
         }
         
-        let level = LOGLevel.allCases[indexPath.row]
+        let level = LogType.allCases[indexPath.row]
         let cell = tableView.dequeueCell(ofType: CheckmarkTableViewCell.self)
         let selected = selectedLevels.contains(level)
         cell.setSelected(selected, animated: false)
@@ -78,24 +78,24 @@ class UARTFilterLogViewController: UITableViewController, CloseButtonPresenter {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         navigationItem.rightBarButtonItem?.isEnabled = true
         guard indexPath.section == 1 else {
-            selectedLevels.append(LOGLevel.allCases[indexPath.row])
+            selectedLevels.append(LogType.allCases[indexPath.row])
             return
         }
         tableView.deselectRow(at: indexPath, animated: true)
-        for i in 0..<LOGLevel.allCases.count {
+        for i in 0..<LogType.allCases.count {
             let ip = IndexPath(row: i, section: 0)
             guard tableView.cellForRow(at: ip)?.isSelected == false else { continue }
             tableView.selectRow(at: ip, animated: false, scrollPosition: .none)
-            selectedLevels.append(LOGLevel.allCases[i])
+            selectedLevels.append(LogType.allCases[i])
         }
     }
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         guard indexPath.section == 0 else { return }
-        selectedLevels.removeAll { LOGLevel.allCases[indexPath.row] == $0 }
+        selectedLevels.removeAll { LogType.allCases[indexPath.row] == $0 }
         
         var enabled = false
-        for i in 0..<LOGLevel.allCases.count {
+        for i in 0..<LogType.allCases.count {
             if tableView.cellForRow(at: IndexPath(row: i, section: 0))?.isSelected == true {
                 enabled = true
                 break

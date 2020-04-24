@@ -225,6 +225,8 @@
 		433A90092451AA1900107822 /* SliderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A90072451AA1900107822 /* SliderTableViewCell.swift */; };
 		433A900A2451AA1900107822 /* SliderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 433A90082451AA1900107822 /* SliderTableViewCell.xib */; };
 		433A900C24525CDA00107822 /* WheelSizeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A900B24525CDA00107822 /* WheelSizeSection.swift */; };
+		433A900F2453042900107822 /* LogObserver+DFU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A900E2453042900107822 /* LogObserver+DFU.swift */; };
+		433A9012245304DE00107822 /* McuMgrLogObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A9011245304DE00107822 /* McuMgrLogObserver.swift */; };
 		43445EEF23B0AD8D008A9FD9 /* LoggLevel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43445EEE23B0AD8D008A9FD9 /* LoggLevel+Ext.swift */; };
 		4350CFF9244CEFC90068EEEA /* SignalStrengthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4350CFF7244CEFC90068EEEA /* SignalStrengthView.swift */; };
 		4350CFFA244CEFC90068EEEA /* DistanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4350CFF8244CEFC90068EEEA /* DistanceView.swift */; };
@@ -515,6 +517,8 @@
 		433A90072451AA1900107822 /* SliderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderTableViewCell.swift; sourceTree = "<group>"; };
 		433A90082451AA1900107822 /* SliderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SliderTableViewCell.xib; sourceTree = "<group>"; };
 		433A900B24525CDA00107822 /* WheelSizeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelSizeSection.swift; sourceTree = "<group>"; };
+		433A900E2453042900107822 /* LogObserver+DFU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogObserver+DFU.swift"; sourceTree = "<group>"; };
+		433A9011245304DE00107822 /* McuMgrLogObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = McuMgrLogObserver.swift; sourceTree = "<group>"; };
 		43445EEE23B0AD8D008A9FD9 /* LoggLevel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoggLevel+Ext.swift"; sourceTree = "<group>"; };
 		434A9CF823A2883B00792E81 /* PRAGMATA MEDIUM_0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PRAGMATA MEDIUM_0.ttf"; sourceTree = "<group>"; };
 		4350CFF7244CEFC90068EEEA /* SignalStrengthView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignalStrengthView.swift; sourceTree = "<group>"; };
@@ -652,6 +656,7 @@
 		012C2BE42410F844005EC1A0 /* DFUUpdate */ = {
 			isa = PBXGroup;
 			children = (
+				433A900D2453040E00107822 /* Util */,
 				01363A852417E4DF0030821E /* Section */,
 				01363A842417DD2C0030821E /* View */,
 				01AA707C24124F270018DB29 /* DFUUpdateTabBarViewController.swift */,
@@ -970,6 +975,7 @@
 		01DFC55A2420EFFC00AF2EF0 /* NotConnectedViewController */ = {
 			isa = PBXGroup;
 			children = (
+				433A9010245304CB00107822 /* Util */,
 				01268AF32421795500E83156 /* UpdateScreen */,
 				01268AF22421599800E83156 /* FileSelection */,
 				01268AF12421595200E83156 /* NotConnectedViewController */,
@@ -1520,6 +1526,22 @@
 				433A90082451AA1900107822 /* SliderTableViewCell.xib */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		433A900D2453040E00107822 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				433A900E2453042900107822 /* LogObserver+DFU.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		433A9010245304CB00107822 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				433A9011245304DE00107822 /* McuMgrLogObserver.swift */,
+			);
+			path = Util;
 			sourceTree = "<group>";
 		};
 		4350CFF6244CEFC00068EEEA /* Views */ = {
@@ -2099,6 +2121,7 @@
 				014C4E8B2403F9BD0003E601 /* UARTMacroSaver.swift in Sources */,
 				01BEADCF2418FB1800FC7183 /* DFUUpdateProgressView.swift in Sources */,
 				01AF929423D72AC900C1BFD6 /* UARTJsonCoder.swift in Sources */,
+				433A900F2453042900107822 /* LogObserver+DFU.swift in Sources */,
 				01AF929023D1DA5700C1BFD6 /* UARTPresetCollectionView.swift in Sources */,
 				20B7979A2338B8C0001328E1 /* MeasurementFormatter+Ext.swift in Sources */,
 				20F0C80C2327DB74003111E7 /* BGMSection.swift in Sources */,
@@ -2124,6 +2147,7 @@
 				20027B08233E116600A0B5ED /* StrideSection.swift in Sources */,
 				433A900C24525CDA00107822 /* WheelSizeSection.swift in Sources */,
 				339761A6176917F548C7B465 /* ContinuousGlucoseMonitor.swift in Sources */,
+				433A9012245304DE00107822 /* McuMgrLogObserver.swift in Sources */,
 				339763D41402CC5D9773F46F /* Peripheral+ContinuousGlucoseMonitor.swift in Sources */,
 				4350CFFA244CEFC90068EEEA /* DistanceView.swift in Sources */,
 				4353A5122431856A00159CDF /* AccessoriesSection.swift in Sources */,

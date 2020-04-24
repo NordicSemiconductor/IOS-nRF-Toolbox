@@ -14,7 +14,7 @@ extension Notification.Name {
     static let reset = Notification.Name("reset")
 }
 
-class LogObserver: LoggerDelegate {
+class LogObserver {
     
     static let messageNotificationKey = Identifier<String>.init(string: "message")
         
@@ -30,8 +30,8 @@ class LogObserver: LoggerDelegate {
         notificationCenter.post(Notification(name: .reset, object: self, userInfo: nil))
     }
     
-    func logWith(_ level: LogLevel, message: String) {
-        let message = LogMessage(level: level.level, message: message, time: Date())
+    func logWith(_ level: LogType, message: String) {
+        let message = LogMessage(level: level, message: message, time: Date())
         messages.append(message)
         
         let notification = Notification.init(name: .newMessage, object: self, userInfo: [LogObserver.messageNotificationKey : message])

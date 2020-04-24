@@ -9,6 +9,10 @@
 import Foundation
 import os.log
 
+protocol Logger {
+    func log(level aLevel: LogType, message aMessage: String)
+}
+
 struct LogType: Equatable, RawRepresentable {
     typealias RawValue = String
     
@@ -18,7 +22,6 @@ struct LogType: Equatable, RawRepresentable {
         self.rawValue = rawValue
     }
     
-    @available(iOS 10.0, *)
     func osLogType() -> OSLogType {
         switch self {
         case .default: return .default
@@ -36,6 +39,33 @@ extension LogType {
     static let debug = LogType(rawValue: "debug")!
     static let error = LogType(rawValue: "error")!
     static let fault = LogType(rawValue: "fault")!
+    static let verbose = LogType(rawValue: "verboseLogLevel")!
+    static let application = LogType(rawValue: "application")!
+    static let warning = LogType(rawValue: "warning")!
+}
+
+extension LogType: CaseIterable {
+    static var allCases: [LogType] {
+        return [
+            .debug, .info, .verbose, .application, .warning, .error
+        ]
+    }
+}
+
+extension LogType {
+    var name: String {
+        switch self {
+        case .application: return "Application"
+        case .debug: return "Debug"
+        case .default: return "Default"
+        case .error: return "Error"
+        case .fault: return "Fault"
+        case .info: return "Info"
+        case .verbose: return "Verbose"
+        case .warning: return "Warning"
+        default: return "Unknown"
+        }
+    }
 }
 
 struct LogCategory: Equatable, RawRepresentable {

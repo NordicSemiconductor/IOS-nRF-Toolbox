@@ -16,31 +16,20 @@ extension FirmwareUpgradeManager: UpgradeManager {
     }
 }
 
-extension Log.Level {
-    var dfuLogLevel: LogLevel {
-        switch self {
-        case .debug: return .debug
-        case .verbose: return .debug
-        case .info: return .info
-        case .warn: return .warning
-        case .error: return .error
-        }
-    }
-}
-
 class ZephyrDFUTableViewController: UpgradeTableViewController<FirmwareUpgradeManager> {
     private let data: Data
     
-    private let logger: LogObserver
+    private let logger: McuMgrLogObserver
     
-    init(data: Data, peripheral: Peripheral, router: DFUUpdateRouter, logger: LogObserver) {
+    init(data: Data, peripheral: Peripheral, router: DFUUpdateRouter, logger: McuMgrLogObserver) {
         self.data = data
         self.logger = logger
         
         super.init(peripheral: peripheral, router: router)
         
         let transport = McuMgrBleTransport(peripheral.peripheral)
-        manager = FirmwareUpgradeManager(transporter: transport!, delegate: self)
+        manager = FirmwareUpgradeManager(transporter: transport, delegate: self)
+        manager?.logDelegate = logger
     }
     
     required init?(coder: NSCoder) {
@@ -84,9 +73,6 @@ extension ZephyrDFUTableViewController {
 }
 
 extension ZephyrDFUTableViewController: FirmwareUpgradeDelegate {
-    func log(_ msg: String, atLevel level: Log.Level) {
-        logger.logWith(level.dfuLogLevel, message: msg)
-    }
     
     func upgradeDidStart(controller: FirmwareUpgradeController) {
         headerView.style = .update

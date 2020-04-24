@@ -1,14 +1,15 @@
 //
-//  DFU.LogLevel+Ext.swift
+//  McuMgrLogObserver.swift
 //  nRF Toolbox
 //
-//  Created by Nick Kibysh on 13/02/2020.
+//  Created by Nick Kibish on 24.04.2020.
 //  Copyright © 2020 Nordic Semiconductor. All rights reserved.
 //
 
-import iOSDFULibrary
+import Foundation
+import McuManager
 
-extension LogLevel {
+extension McuMgrLogLevel {
     var level: LogType {
         switch self {
         case .application: return .application
@@ -19,4 +20,12 @@ extension LogLevel {
         case .warning: return .warning
         }
     }
+}
+
+class McuMgrLogObserver: LogObserver, McuMgrLogDelegate {
+    func log(_ msg: String, ofCategory category: McuMgrLogCategory, atLevel level: McuMgrLogLevel) {
+        logWith(level.level, message: msg)
+    }
+    
+    
 }

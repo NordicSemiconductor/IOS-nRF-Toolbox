@@ -6,6 +6,7 @@
 //  Copyright © 2016 Nordic Semiconductor. All rights reserved.
 //
 
+/*
 enum LOGLevel: CaseIterable {
     case debugLogLevel
     case verboseLogLevel
@@ -27,7 +28,5 @@ extension LOGLevel {
         }
     }
 }
+ */
 
-protocol Logger {
-    func log(level aLevel: LOGLevel, message aMessage: String) -> Void
-}

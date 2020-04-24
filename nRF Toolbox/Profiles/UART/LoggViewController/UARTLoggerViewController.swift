@@ -25,7 +25,7 @@ class UARTLoggerViewController: UIViewController, CloseButtonPresenter {
     
     var logger: Logger { loggerTableView }
     private var btManager: BluetoothManager
-    private var filterLogLevel: [LOGLevel] = LOGLevel.allCases
+    private var filterLogLevel: [LogType] = LogType.allCases
     
     private lazy var filterBtn = UIBarButtonItem(image: UIImage.getFilterIcon(isFilled: false), style: .plain, target: self, action: #selector(openFilter))
     
@@ -95,13 +95,13 @@ extension UARTLoggerViewController: UITextFieldDelegate {
 }
 
 extension UARTLoggerViewController: UARTFilterApplierDelegate {
-    func setLevels(_ levels: [LOGLevel]) {
+    func setLevels(_ levels: [LogType]) {
         print(levels)
         filterLogLevel = levels
         loggerTableView.filter = levels
         dismsiss()
         
-        filterBtn.image = UIImage.getFilterIcon(isFilled: levels.count != LOGLevel.allCases.count)
+        filterBtn.image = UIImage.getFilterIcon(isFilled: levels.count != LogType.allCases.count)
     }
     
     

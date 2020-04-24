@@ -9,8 +9,9 @@
 import UIKit
 import iOSDFULibrary
 
+
 struct LogMessage {
-    let level: LOGLevel
+    let level: LogType
     let message: String
     let time: Date
 }
@@ -23,14 +24,14 @@ struct LogMessage {
 class LoggerTableView: UITableView {
     var logs: [LogMessage] = []
     
-    var filter: [LOGLevel] = LOGLevel.allCases {
+    var filter: [LogType] = LogType.allCases {
         didSet {
             reloadData()
         }
     }
     
     private var filteredData: [LogMessage] {
-        guard filter.count != LOGLevel.allCases.count else { return logs }
+        guard filter.count != LogType.allCases.count else { return logs }
         return logs.filter { filter.contains($0.level) }
     }
     
@@ -59,7 +60,7 @@ extension LoggerTableView {
         self.logs.append(message)
         guard self.filter.contains(message.level) else { return }
         let insertIndexPath = IndexPath(row: self.filteredData.count-1, section: 0)
-        self.insertRows(at: [insertIndexPath], with: .bottom)
+        self.insertRows(at: [insertIndexPath], with: .none)
         self.scrollToRow(at: insertIndexPath, at: .bottom, animated: true)
     }
     
@@ -70,7 +71,7 @@ extension LoggerTableView {
 }
 
 extension LoggerTableView: LogPresenter, Logger {
-    func log(level aLevel: LOGLevel, message aMessage: String) {
+    func log(level aLevel: LogType, message aMessage: String) {
         DispatchQueue.main.async {
             let log = LogMessage(level: aLevel, message: aMessage, time: Date())
             self.addMessage(log)

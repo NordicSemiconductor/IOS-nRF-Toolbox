@@ -8,15 +8,19 @@
 
 import UIKit.UIColor
 
-extension LOGLevel {
+extension LogType {
     var color: UIColor {
         switch self {
-        case .warningLogLevel: return .nordicFall
-        case .errorLogLevel: return .nordicRed
-        case .appLogLevel: return .nordicGreen
-        case .infoLogLevel: return UIColor.Text.systemText
-        case .verboseLogLevel: return .nordicFall
-        case .debugLogLevel: return .nordicLake
+        case .warning: return .nordicFall
+        case .application: return .nordicGreen
+        case .info: return UIColor.Text.systemText
+        case .verbose: return .nordicFall
+        case .debug, .default:
+            return .nordicLake
+        case .error, .fault:
+            return .nordicRed
+        default:
+            return UIColor.Text.systemText
         }
     }
 }
