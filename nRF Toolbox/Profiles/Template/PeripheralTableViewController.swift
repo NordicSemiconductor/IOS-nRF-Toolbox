@@ -50,6 +50,8 @@ class PeripheralTableViewController: PeripheralViewController, UITableViewDataSo
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "ActionCell")
         tableView.register(DisclosureTableViewCell.self, forCellReuseIdentifier: "DisclosureTableViewCell")
         tableView.register(DetailsTableViewCell.self, forCellReuseIdentifier: "DetailsTableViewCell")
+        
+        sections.forEach { $0.registerCells(self.tableView) }
     }
 
     // MARK: Table View DataSource

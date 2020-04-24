@@ -222,6 +222,9 @@
 		4322034223CC773F009840DD /* UARTActionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4322034023CC773F009840DD /* UARTActionCollectionViewCell.xib */; };
 		4322034423CC9D31009840DD /* UARTCommandModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4322034323CC9D31009840DD /* UARTCommandModel.swift */; };
 		432DCD53244E5FEE00C6828F /* RSSI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432DCD52244E5FEE00C6828F /* RSSI.swift */; };
+		433A90092451AA1900107822 /* SliderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A90072451AA1900107822 /* SliderTableViewCell.swift */; };
+		433A900A2451AA1900107822 /* SliderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 433A90082451AA1900107822 /* SliderTableViewCell.xib */; };
+		433A900C24525CDA00107822 /* WheelSizeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A900B24525CDA00107822 /* WheelSizeSection.swift */; };
 		43445EEF23B0AD8D008A9FD9 /* LoggLevel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43445EEE23B0AD8D008A9FD9 /* LoggLevel+Ext.swift */; };
 		4350CFF9244CEFC90068EEEA /* SignalStrengthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4350CFF7244CEFC90068EEEA /* SignalStrengthView.swift */; };
 		4350CFFA244CEFC90068EEEA /* DistanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4350CFF8244CEFC90068EEEA /* DistanceView.swift */; };
@@ -264,6 +267,7 @@
 		52D9BC9E1DD0CB760030E824 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9BC9D1DD0CB760030E824 /* Data+Ext.swift */; };
 		7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B422818A8DF4D006BA1BC /* high.mp3 */; };
 		B9333AF83F2257C393C81470 /* Pods_nRF_Toolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1C52F90A80A6E5FFBFC488 /* Pods_nRF_Toolbox.framework */; };
+		CC7B90D148FC21C73B54BFAB /* NumberFormatter+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7B93FA695799F95D065492 /* NumberFormatter+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -509,6 +513,9 @@
 		4322034023CC773F009840DD /* UARTActionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTActionCollectionViewCell.xib; sourceTree = "<group>"; };
 		4322034323CC9D31009840DD /* UARTCommandModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTCommandModel.swift; sourceTree = "<group>"; };
 		432DCD52244E5FEE00C6828F /* RSSI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSI.swift; sourceTree = "<group>"; };
+		433A90072451AA1900107822 /* SliderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderTableViewCell.swift; sourceTree = "<group>"; };
+		433A90082451AA1900107822 /* SliderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SliderTableViewCell.xib; sourceTree = "<group>"; };
+		433A900B24525CDA00107822 /* WheelSizeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelSizeSection.swift; sourceTree = "<group>"; };
 		43445EEE23B0AD8D008A9FD9 /* LoggLevel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoggLevel+Ext.swift"; sourceTree = "<group>"; };
 		434A9CF823A2883B00792E81 /* PRAGMATA MEDIUM_0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PRAGMATA MEDIUM_0.ttf"; sourceTree = "<group>"; };
 		4350CFF7244CEFC90068EEEA /* SignalStrengthView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignalStrengthView.swift; sourceTree = "<group>"; };
@@ -560,6 +567,7 @@
 		69A9BA14F5A63C56C457514A /* Pods-nRF Toolbox.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.beta.xcconfig"; path = "Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.beta.xcconfig"; sourceTree = "<group>"; };
 		7E1B422818A8DF4D006BA1BC /* high.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = high.mp3; sourceTree = "<group>"; };
 		89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC7B93FA695799F95D065492 /* NumberFormatter+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NumberFormatter+Ext.swift"; sourceTree = "<group>"; };
 		EAAF1D5ED777F196D5C340C3 /* Pods-nRF Toolbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.debug.xcconfig"; path = "Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1133,7 +1141,9 @@
 		203D0F0A232FB4FB00C0340D /* Sections */ = {
 			isa = PBXGroup;
 			children = (
+				433A90052451A9EA00107822 /* SliderSection */,
 				203D0F0D23325E0A00C0340D /* CyclingTableViewSection.swift */,
+				433A900B24525CDA00107822 /* WheelSizeSection.swift */,
 			);
 			path = Sections;
 			sourceTree = "<group>";
@@ -1286,6 +1296,7 @@
 				0125D5B723F53D3B003A1812 /* DFU.LogLevel+Ext.swift */,
 				01FBC5142408158F00B1056B /* CBPeripheralState+Ext.swift */,
 				01BEADD7241AE6BF00FC7183 /* UILabel+Ext.swift */,
+				CC7B93FA695799F95D065492 /* NumberFormatter+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1494,6 +1505,23 @@
 				019985F023E07CFB000CDCB6 /* XMLDocument.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		433A90052451A9EA00107822 /* SliderSection */ = {
+			isa = PBXGroup;
+			children = (
+				433A90062451A9F800107822 /* Cells */,
+			);
+			path = SliderSection;
+			sourceTree = "<group>";
+		};
+		433A90062451A9F800107822 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				433A90072451AA1900107822 /* SliderTableViewCell.swift */,
+				433A90082451AA1900107822 /* SliderTableViewCell.xib */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		4350CFF6244CEFC00068EEEA /* Views */ = {
@@ -1822,6 +1850,7 @@
 				0197AFD02420DAAC00ADF105 /* NotConnectedViewController.xib in Resources */,
 				0151170C240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.xib in Resources */,
 				01D6D2B924067B0500E1A66F /* Resources.xcassets in Resources */,
+				433A900A2451AA1900107822 /* SliderTableViewCell.xib in Resources */,
 				20E07B602306975700FCB205 /* GT-Eesti-Display-UBold-Italic.ttf in Resources */,
 				20E07B3F23055B0B00FCB205 /* InteractionServiceList.plist in Resources */,
 				20C7FE032306C72000B06FD8 /* IoTServices.plist in Resources */,
@@ -2009,6 +2038,7 @@
 				2002A002231FB8E800C43E06 /* UIImage+Ext.swift in Sources */,
 				20D08E06232A569B00569587 /* Identifiable.swift in Sources */,
 				01AA707F241291C00018DB29 /* LogObserver.swift in Sources */,
+				433A90092451AA1900107822 /* SliderTableViewCell.swift in Sources */,
 				01006201234D08700078CEFA /* LinearChartTableViewCell.swift in Sources */,
 				019985E423DEF23F000CDCB6 /* NordicTextTableViewCell.swift in Sources */,
 				01DDD79C23EC5CDA003786ED /* TimeIntervalTableViewCell.swift in Sources */,
@@ -2096,6 +2126,7 @@
 				01B6D3DA234CB6B3000942C4 /* HeartRateSection.swift in Sources */,
 				01268AF724218BED00E83156 /* ZephyrFileSelector.swift in Sources */,
 				20027B08233E116600A0B5ED /* StrideSection.swift in Sources */,
+				433A900C24525CDA00107822 /* WheelSizeSection.swift in Sources */,
 				339761A6176917F548C7B465 /* ContinuousGlucoseMonitor.swift in Sources */,
 				339763D41402CC5D9773F46F /* Peripheral+ContinuousGlucoseMonitor.swift in Sources */,
 				4350CFFA244CEFC90068EEEA /* DistanceView.swift in Sources */,
@@ -2124,6 +2155,7 @@
 				01268AFB2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift in Sources */,
 				3397628E56C4A84F4D4E8128 /* PeripheralViewController.swift in Sources */,
 				0125D5B823F53D3B003A1812 /* DFU.LogLevel+Ext.swift in Sources */,
+				CC7B90D148FC21C73B54BFAB /* NumberFormatter+Ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

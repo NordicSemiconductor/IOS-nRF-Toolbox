@@ -11,16 +11,23 @@ import CoreBluetooth
 
 class CyclingTableViewController: PeripheralTableViewController {
     private var cyclingSection = CyclingTableViewSection()
+    private var wheelSizeSection = WheelSizeSection()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(DetailsTableViewCell.self, forCellReuseIdentifier: "DetailsTableViewCell")
         navigationItem.title = "Cycling Speed and Cadence"
+
+        wheelSizeSection.wheelSizeChangedAction = {
+            self.cyclingSection.wheelSize = $0.converted(to: .meters).value
+        }
+
+        cyclingSection.wheelSize = wheelSizeSection.wheelSize.converted(to: .meters).value
     }
     
-    override var internalSections: [Section] { [cyclingSection] }
+    override var internalSections: [Section] { [wheelSizeSection, cyclingSection] }
     override var peripheralDescription: PeripheralDescription { .cyclingSpeedCadenceSensor }
-    
+
     override func didUpdateValue(for characteristic: CBCharacteristic) {
         switch characteristic.uuid {
         case CBUUID.Characteristics.CyclingSesnor.measurement:

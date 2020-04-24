@@ -18,10 +18,12 @@ extension Identifier where Value == DetailsTableViewCellModel {
 }
 
 struct CyclingTableViewSection: Section {
-    var isHidden: Bool = false 
+    var isHidden: Bool = false
     
-    // TODO: Load value from settings
-    private let wheelCircumference: Double = 2.6//UserDefaults.standard.double(forKey: "key_diameter")
+    var wheelSize: Double = 0.6
+    private var wheelCircumference: Double {
+        self.wheelSize * .pi
+    }
     
     private var oldCharacteristic: CyclingCharacteristic = .zero
     
@@ -38,6 +40,11 @@ struct CyclingTableViewSection: Section {
         DefaultDetailsTableViewCellModel(title: "Total Distance", identifier: .totalDistance),
         DefaultDetailsTableViewCellModel(title: "Gear Ratio", identifier: .gearRatio)
     ]
+    
+    func registerCells(_ tableView: UITableView) {
+        tableView.registerCellClass(cell: DetailsTableViewCell.self)
+        tableView.registerCellNib(cell: SliderTableViewCell.self)
+    }
     
     func dequeCell(for index: Int, from tableView: UITableView) -> UITableViewCell {
         let detailsCell = tableView.dequeueCell(ofType: DetailsTableViewCell.self)

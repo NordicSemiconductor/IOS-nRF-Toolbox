@@ -16,6 +16,7 @@ protocol Section {
     var id: Identifier<Section> { get }
     var isHidden: Bool { get }
     func cellHeight(for index: Int) -> CGFloat
+    func registerCells(_ tableView: UITableView)
 }
 
 extension CGFloat {
@@ -25,6 +26,10 @@ extension CGFloat {
 extension Section {
     func cellHeight(for index: Int) -> CGFloat {
         .defaultTableCellHeight
+    }
+    
+    func registerCells(_ tableView: UITableView) {
+        
     }
 }
 
