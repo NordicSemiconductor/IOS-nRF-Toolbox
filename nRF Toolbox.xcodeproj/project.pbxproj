@@ -251,7 +251,6 @@
 		5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAB1885642F007CC40D /* icon-dfu-320.png */; };
 		5211EFB018856430007CC40D /* icon-hex.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAC1885642F007CC40D /* icon-hex.png */; };
 		5211EFB118856430007CC40D /* icon-hex@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAD1885642F007CC40D /* icon-hex@2x.png */; };
-		5214D0CE1886C02A00460637 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5214D0CD1886C02A00460637 /* Settings.bundle */; };
 		5217F3E61859EE0000F2D5BB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5217F3E51859EE0000F2D5BB /* Foundation.framework */; };
 		5217F3E81859EE0000F2D5BB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5217F3E71859EE0000F2D5BB /* CoreGraphics.framework */; };
 		5217F3EA1859EE0000F2D5BB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5217F3E91859EE0000F2D5BB /* UIKit.framework */; };
@@ -543,7 +542,6 @@
 		5211EFAB1885642F007CC40D /* icon-dfu-320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-320.png"; sourceTree = "<group>"; };
 		5211EFAC1885642F007CC40D /* icon-hex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-hex.png"; sourceTree = "<group>"; };
 		5211EFAD1885642F007CC40D /* icon-hex@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-hex@2x.png"; sourceTree = "<group>"; };
-		5214D0CD1886C02A00460637 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		5217F3E21859EE0000F2D5BB /* nRF Toolbox Beta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nRF Toolbox Beta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5217F3E51859EE0000F2D5BB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5217F3E71859EE0000F2D5BB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1608,7 +1606,6 @@
 		5217F3D91859EE0000F2D5BB = {
 			isa = PBXGroup;
 			children = (
-				5214D0CD1886C02A00460637 /* Settings.bundle */,
 				5217F3EB1859EE0000F2D5BB /* nRF Toolbox */,
 				5217F40A1859EE0000F2D5BB /* nRF ToolboxTests */,
 				014C4E912404038A0003E601 /* nRF Toolbox Tests */,
@@ -1841,7 +1838,6 @@
 				20D08DFE232929A400569587 /* BGMTableViewCell.xib in Resources */,
 				01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */,
 				20E07B622306975700FCB205 /* GT-Eesti-Display-Bold.ttf in Resources */,
-				5214D0CE1886C02A00460637 /* Settings.bundle in Resources */,
 				01D6D2C12406A1EF00E1A66F /* DFUStartViewController.xib in Resources */,
 				01FBC5072407C2B000B1056B /* FileSelectorViewController.xib in Resources */,
 				01A1B76823CF13A50062FADC /* UARTNewCommandViewController.xib in Resources */,
