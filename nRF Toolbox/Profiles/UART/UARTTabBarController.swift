@@ -46,8 +46,15 @@ struct TabBarIcon {
 class UARTTabBarController: UITabBarController {
     
     private var bufferView: UIView!
-    private var emptyView: UIView!
+    private var emptyView: InfoActionView!
     let btManager = BluetoothManager()
+    private lazy var bSettings: InfoActionView.ButtonSettings = ("Connect", { [unowned self] in
+        let scanner = PeripheralScanner(services: nil)
+        let vc = ConnectionViewController(scanner: scanner)
+        vc.delegate = self
+        let nc = UINavigationController.nordicBranded(rootViewController: vc)
+        self.present(nc, animated: true, completion: nil)
+    })
     
     private lazy var uartViewController = UARTViewController(bluetoothManager: btManager, uartRouter: self)
     private lazy var uartMacroViewController = UARTMacrosList(bluetoothManager: btManager, preset: .default)
@@ -55,8 +62,6 @@ class UARTTabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        selectedIndex = 0
-        
         let viewControllers: [UIViewController] = [uartViewController, uartMacroViewController, uartLoggerViewController]
         
         setViewControllers(viewControllers, animated: true)
@@ -65,14 +70,6 @@ class UARTTabBarController: UITabBarController {
         navigationItem.title = "UART"
         
         bufferView = view
-        
-        let bSettings: InfoActionView.ButtonSettings = ("Connect", { [unowned self] in
-            let scanner = PeripheralScanner(services: nil)
-            let vc = ConnectionViewController(scanner: scanner)
-            vc.delegate = self
-            let nc = UINavigationController.nordicBranded(rootViewController: vc)
-            self.present(nc, animated: true, completion: nil)
-        })
 
         let emptyView = InfoActionView.instanceWithParams(message: "Device is not connected", buttonSettings: bSettings)
         emptyView.actionButton.style = .mainAction
@@ -85,6 +82,8 @@ class UARTTabBarController: UITabBarController {
         if #available(iOS 11, *) {
             navigationItem.largeTitleDisplayMode = .never
         }
+
+        selectedIndex = 0
     }
     
 }
@@ -97,6 +96,8 @@ extension UARTTabBarController: BluetoothManagerDelegate {
     
     func didDisconnectPeripheral() {
         addEmptyView()
+        self.emptyView.buttonSettings = bSettings
+        self.emptyView.titleLabel.text = "Device is not connected"
     }
     
     func peripheralReady() {
@@ -104,13 +105,18 @@ extension UARTTabBarController: BluetoothManagerDelegate {
     }
     
     func peripheralNotSupported() {
-        view = emptyView
+        addEmptyView()
+        self.emptyView.buttonSettings = bSettings
+        self.emptyView.titleLabel.text = "Device is not supported"
     }
 
     func requestedConnect(peripheral: CBPeripheral) {
         dismiss(animated: true) {
-            (self.emptyView as? InfoActionView)?.buttonSettings = nil
-            (self.emptyView as? InfoActionView)?.titleLabel.text = "Connecting..."
+            self.emptyView.buttonSettings = nil
+            self.emptyView.titleLabel.text = "Connecting..."
+            self.emptyView.buttonSettings = ("Cancel", { [unowned self] in
+                self.btManager.cancelPeripheralConnection()
+            })
         }
     }
 }
@@ -141,9 +147,10 @@ extension UARTTabBarController: UITabBarControllerDelegate {
 
 extension UARTTabBarController: UARTRouter {
     func displayMacros(with preset: UARTPreset) {
-        let newMacroVC = UARTMacrosTableViewController(preset: preset, bluetoothManager: btManager)
-        uartMacroViewController.navigationController?.pushViewController(newMacroVC, animated: false)
+        let newMacroVC = UARTMacrosTableViewController(preset: preset, bluetoothManager: btManager, presentationType: .present)
+        let nc = UINavigationController.nordicBranded(rootViewController: newMacroVC, prefersLargeTitles: false)
+        
+        selectedViewController?.present(nc, animated: true, completion: nil)
         newMacroVC.macrosDelegate = uartMacroViewController
-        selectedViewController = uartMacroViewController        
     }
 }

@@ -20,11 +20,11 @@ class UARTMacroFileManager {
         self.fileManager = fileManager
     }
     
-    func save(_ macro: UARTMacro, sholdUpdate: Bool = false) throws {
+    func save(_ macro: UARTMacro, shodUpdate: Bool = false) throws {
         let data = try JSONEncoder().encode(macro)
         let fileUrl = try self.fileUrl(for: macro.name)
         
-        guard !fileManager.fileExists(atPath: fileUrl.path) || sholdUpdate else {
+        guard !fileManager.fileExists(atPath: fileUrl.path) || shodUpdate else {
             throw QuickError(message: "Macro with that name already exists")
         }
         

@@ -225,7 +225,7 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
                 case let command as UARTCommandModel:
                     self.send(command: command)
                 case let timeInterval as UARTMacroTimeInterval:
-                    usleep(useconds_t(timeInterval.miliseconds * 1000))
+                    usleep(useconds_t(timeInterval.milliseconds * 1000))
                 default:
                     break
                 }

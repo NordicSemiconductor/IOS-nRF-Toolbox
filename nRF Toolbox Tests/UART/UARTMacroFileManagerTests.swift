@@ -45,7 +45,7 @@ class UARTMacroFileManagerTests: XCTestCase {
         XCTAssertThrowsError(try fileManager.remove(macro: macro), "Should throww error as macros does not exist")
         XCTAssertNoThrow(try fileManager.save(macro), "Should save file into temp directory")
         XCTAssertThrowsError(try fileManager.save(macro), "Should throw exeption as file already exists")
-        XCTAssertNoThrow(try fileManager.save(macro, sholdUpdate: true), "Should rewrite file")
+        XCTAssertNoThrow(try fileManager.save(macro, shodUpdate: true), "Should rewrite file")
         XCTAssertNoThrow(try fileManager.remove(macro: macro), "Should remove macro")
     }
     

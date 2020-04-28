@@ -12,7 +12,7 @@ import XCTest
 func compare(_ command1: UARTMacroElement, _ command2: UARTMacroElement) -> Bool {
     switch (command1, command1) {
     case (let t1 as UARTMacroTimeInterval, let t2 as UARTMacroTimeInterval):
-        return t1.miliseconds == t2.miliseconds
+        return t1.milliseconds == t2.milliseconds
     case (is EmptyModel, is EmptyModel):
         return true
     case (let l as TextCommand, let r as TextCommand):

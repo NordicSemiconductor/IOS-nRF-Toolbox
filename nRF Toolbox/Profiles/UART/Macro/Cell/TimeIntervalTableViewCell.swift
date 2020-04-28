@@ -30,12 +30,12 @@ class TimeIntervalTableViewCell: UITableViewCell {
     @IBAction func changedTimeInterval(_ sender: UIStepper) {
         let value = Int(sender.value)
         label.text = "\(value) ms"
-        let ti = UARTMacroTimeInterval(miliseconds: value)
+        let ti = UARTMacroTimeInterval(milliseconds: value)
         callback(ti, index)
     }
     
     func apply(timeInterval: UARTMacroTimeInterval, index: Int) {
-        let ti = timeInterval.miliseconds
+        let ti = timeInterval.milliseconds
         self.index = index 
         stepper.value = Double(ti)
         label.text = "\(ti) ms"
