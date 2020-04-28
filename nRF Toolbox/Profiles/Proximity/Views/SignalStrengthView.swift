@@ -30,7 +30,7 @@ class SignalStrengthView: UIView {
         switch k {
         case .leastNonzeroMagnitude...0.25: return .nordicRed
         case 0.25...0.5: return .nordicFall
-        case 0.5...0.75: return .nordicYello
+        case 0.5...0.75: return .nordicYellow
         case 0.75...1: return .nordicGreen
         default:
             return .nordicDarkGray

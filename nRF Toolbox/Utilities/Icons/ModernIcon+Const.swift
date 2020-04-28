@@ -1,59 +1,12 @@
 //
-//  ModernIcon.swift
+//  ModernIcon+Ext.swift
 //  nRF Toolbox
 //
-//  Created by Nick Kibysh on 12/02/2020.
+//  Created by Nick Kibish on 27.04.2020.
 //  Copyright © 2020 Nordic Semiconductor. All rights reserved.
 //
 
-import UIKit.UIImage
-
-struct ImageWrapper {
-    var modernIcon: ModernIcon
-    var legacyIcon: UIImage?
-    
-    var image: UIImage? {
-        if #available(iOS 13, *) {
-            return modernIcon.image
-        } else {
-            return legacyIcon
-        }
-    }
-    
-    init(icon: ModernIcon, image: UIImage?) {
-        modernIcon = icon
-        legacyIcon = image
-    }
-    
-    init(icon: ModernIcon, imageName: String) {
-        modernIcon = icon
-        legacyIcon = UIImage(named: imageName)
-    }
-}
-
-struct ModernIcon: Codable, Equatable {
-    private (set) var name: String
-    init(name: String) {
-        self.name = name
-    }
-    
-    init(digit: Int) {
-        name = "\(digit)"
-    }
-    
-    func add(_ icon: ModernIcon) -> ModernIcon {
-        return ModernIcon(name: "\(name).\(icon.name)")
-    }
-    
-    func callAsFunction(_ icon: ModernIcon) -> ModernIcon {
-        return ModernIcon(name: "\(name).\(icon.name)")
-    }
-    
-    @available(iOS 13.0, *)
-    var image: UIImage? {
-        return UIImage(systemName: name)
-    }
-}
+import Foundation
 
 extension ModernIcon {
     static let circle = ModernIcon(name: "circle")

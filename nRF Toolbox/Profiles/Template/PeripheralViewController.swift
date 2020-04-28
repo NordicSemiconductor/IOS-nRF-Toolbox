@@ -43,6 +43,10 @@ class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter
 
         peripheralManager.delegate = self
         navigationItem.title = navigationTitle
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationItem.largeTitleDisplayMode = .never
+        }
+        
         savedView = view
     }
 

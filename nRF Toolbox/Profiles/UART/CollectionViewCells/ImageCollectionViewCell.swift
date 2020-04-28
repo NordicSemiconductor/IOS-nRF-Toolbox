@@ -21,8 +21,8 @@ class ImageCollectionViewCell: UICollectionViewCell {
             bgView.backgroundColor = .systemGray5
             selectedBGView.backgroundColor = .systemGray2
         } else {
-            bgView.backgroundColor = .nordicLightGray
-            selectedBGView.backgroundColor = .nordicAlmostWhite
+            bgView.backgroundColor = .nordicGrey5
+            selectedBGView.backgroundColor = .nordicGrey4
         }
         selectedBackgroundView = selectedBGView
         backgroundView = bgView

@@ -48,6 +48,12 @@ class UARTNewCommandViewController: UIViewController {
         collectionView.register(type: ImageCollectionViewCell.self)
         
         command.map { self.setupUI(with: $0) }
+
+        if #available(iOS 13, *) {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(dismsiss))
+        } else {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Close", style: .done, target: self, action: #selector(dismsiss))
+        }
     }
 
     @IBAction func typeChanged(_ sender: UISegmentedControl) {

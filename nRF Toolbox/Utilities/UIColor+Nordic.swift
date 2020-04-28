@@ -34,7 +34,7 @@ extension UIColor {
         }
         }()!
     
-    static let nordicYello: UIColor = {
+    static let nordicYellow: UIColor = {
         if #available(iOS 11.0, *) {
             return UIColor(named: "NordicFall")!
         } else {
@@ -69,10 +69,18 @@ extension UIColor {
     }()
     
     static let nordicGrey4: UIColor = {
-        if #available(iOS 13, *) {
+        if #available(iOS 11, *) {
             return UIColor(named: "NordicGray4")!
         } else {
-            return UIColor(red: 209, green: 209, blue: 209, alpha: 1)
+            return UIColor(red: 0.82, green: 0.82, blue: 0.839, alpha: 1)
+        }
+    }()
+
+    static let nordicGrey5: UIColor = {
+        if #available(iOS 11, *) {
+            return UIColor(named: "NordicGray5")!
+        } else {
+            return UIColor(red: 0.89, green: 0.89, blue: 0.91, alpha: 1)
         }
     }()
     
@@ -219,7 +227,7 @@ extension UIColor {
     static func dynamicColor(light: UIColor, dark: UIColor) -> UIColor {
         if #available(iOS 13.0, *) {
             return UIColor { (traitCollection) -> UIColor in
-                return traitCollection.userInterfaceStyle == .light ? light : dark
+                traitCollection.userInterfaceStyle == .light ? light : dark
             }
         } else {
             return light

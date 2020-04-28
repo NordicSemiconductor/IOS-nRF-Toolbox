@@ -30,6 +30,7 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 protocol BluetoothManagerDelegate {
+    func requestedConnect(peripheral: CBPeripheral)
     func didConnectPeripheral(deviceName aName : String?)
     func didDisconnectPeripheral()
     func peripheralReady()
@@ -91,6 +92,8 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
      * - parameter aPeripheral: target peripheral to connect to
      */
     func connectPeripheral(peripheral aPeripheral : CBPeripheral) {
+        delegate?.requestedConnect(peripheral: aPeripheral)
+
         bluetoothPeripheral = aPeripheral
         
         // we assign the bluetoothPeripheral property after we establish a connection, in the callback

@@ -19,7 +19,7 @@ enum RSSI: Int {
         switch self {
         case .outOfRange: return UIColor.nordicGrey4
         case .practicalWorst, .bad: return UIColor.nordicRed
-        case .ok: return UIColor.nordicYello
+        case .ok: return UIColor.nordicYellow
         case .good: return UIColor.nordicBlue
         }
     }

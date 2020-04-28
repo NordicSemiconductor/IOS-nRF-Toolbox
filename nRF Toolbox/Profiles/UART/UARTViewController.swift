@@ -72,7 +72,7 @@ class UARTViewController: UIViewController, AlertPresenter {
         if #available(iOS 11.0, *) {
             openDocumentPicker()
         } else {
-            // Fallback on earlier versions
+            saveLoadButton.isHidden = true
         }
     }
     

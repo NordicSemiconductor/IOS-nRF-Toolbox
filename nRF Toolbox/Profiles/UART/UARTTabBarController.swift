@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreBluetooth.CBPeripheral
 
 protocol UARTRouter: class {
     func displayMacros(with preset: UARTPreset)
@@ -80,16 +81,18 @@ class UARTTabBarController: UITabBarController {
         btManager.delegate = self
         
         delegate = self
+
+        if #available(iOS 11, *) {
+            navigationItem.largeTitleDisplayMode = .never
+        }
     }
     
 }
 
 extension UARTTabBarController: BluetoothManagerDelegate {
     func didConnectPeripheral(deviceName aName: String?) {
-        dismiss(animated: true) {
-            self.uartViewController.deviceName = aName ?? ""
-            self.emptyView.removeFromSuperview()
-        }
+        uartViewController.deviceName = aName ?? ""
+        emptyView.removeFromSuperview()
     }
     
     func didDisconnectPeripheral() {
@@ -97,11 +100,18 @@ extension UARTTabBarController: BluetoothManagerDelegate {
     }
     
     func peripheralReady() {
-        
+        self.emptyView.removeFromSuperview()
     }
     
     func peripheralNotSupported() {
         view = emptyView
+    }
+
+    func requestedConnect(peripheral: CBPeripheral) {
+        dismiss(animated: true) {
+            (self.emptyView as? InfoActionView)?.buttonSettings = nil
+            (self.emptyView as? InfoActionView)?.titleLabel.text = "Connecting..."
+        }
     }
 }
 
