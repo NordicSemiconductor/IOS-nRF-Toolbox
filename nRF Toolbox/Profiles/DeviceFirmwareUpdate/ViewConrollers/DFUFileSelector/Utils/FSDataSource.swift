@@ -42,7 +42,7 @@ struct FSDataSource {
             
             var res = result
             let image = (node is Directory)
-                ? ImageWrapper(icon: .folder, imageName: "folder").image
+                ? ImageWrapper(icon: .folder, imageName: "folderEmpty").image
                 : UIImage.icon(forFileURL: node.url, preferredSize: .smallest)
             
             let infoText: String

@@ -24,6 +24,7 @@ class FileSelectorViewController<T>: UIViewController, AlertPresenter, UITableVi
     @IBOutlet private var emptyView: UIView!
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var selectButton: NordicButton!
+    @IBOutlet private var docImage: UIImageView!
     
     init(documentPicker: DocumentPicker<T>) {
         self.documentPicker = documentPicker
@@ -45,6 +46,10 @@ class FileSelectorViewController<T>: UIViewController, AlertPresenter, UITableVi
         selectButton.style = .mainAction
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(reloadList))
+        
+        if #available(iOS 13, *) {
+            UIImage(systemName: "doc").map { self.docImage.image = $0 }
+        }
     }
     
     deinit {

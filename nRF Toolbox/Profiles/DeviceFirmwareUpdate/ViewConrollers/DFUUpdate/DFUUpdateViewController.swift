@@ -48,7 +48,7 @@ class UpgradeTableViewController<T: UpgradeManager>: UITableViewController {
         if #available(iOS 13.0, *) {
             tabBarItem.image = UIImage(systemName: ModernIcon.arrow(.init(digit: 2))(.circlePath).name)
         } else {
-            // TODO: Add correct image
+            tabBarItem.image = UIImage(named: "FeatureDFU")
         }
         
         tableView.registerCellClass(cell: NordicActionTableViewCell.self)
@@ -224,9 +224,8 @@ extension DFUUpdateViewController: DFUServiceDelegate {
 
 extension DFUUpdateViewController: DFUProgressDelegate {
     func dfuProgressDidChange(for part: Int, outOf totalParts: Int, to progress: Int, currentSpeedBytesPerSecond: Double, avgSpeedBytesPerSecond: Double) {
-        // TODO: Check progress
-        headerView.progressView.progress = Float(progress) / 100.0
         
+        headerView.progressView.progress = Float(progress) / 100.0
         headerView.statusLabel.text = "Updating. Part \(part) of \(totalParts): \(progress)%"
         
         

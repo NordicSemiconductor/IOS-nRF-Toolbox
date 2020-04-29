@@ -21,10 +21,11 @@ class DFUUpdateProgressView: UIView, XibInstantiable {
     var style: Style = .update {
         didSet {
             let colorImage: (UIColor, ModernIcon, UIImage?) = {
+                let oldImage = UIImage(named: "FeatureDFU")?.withRenderingMode(.alwaysTemplate)
                 switch style {
-                case .done: return (.nordicGreen, ModernIcon.checkmark(.circle), nil)
-                case .error: return (.nordicRed, ModernIcon.exclamationmark(.triangle), nil)
-                case .update: return (.nordicBlue, ModernIcon.arrow(.init(digit: 2))(.circlePath), nil)
+                case .done: return (.nordicGreen, ModernIcon.checkmark(.circle), oldImage)
+                case .error: return (.nordicRed, ModernIcon.exclamationmark(.triangle), oldImage)
+                case .update: return (.nordicBlue, ModernIcon.arrow(.init(digit: 2))(.circlePath), oldImage)
                 }
             }()
             
@@ -49,7 +50,9 @@ class DFUUpdateProgressView: UIView, XibInstantiable {
         
         UIView.animateKeyframes(withDuration: 1, delay: 0, options: [.repeat], animations: {
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1) {
-                self.updateLogoImage.transform = CGAffineTransform(rotationAngle: .pi)
+                if #available(iOS 13, *) {
+                    self.updateLogoImage.transform = CGAffineTransform(rotationAngle: .pi)
+                }
             }
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5) {
                 self.updateLogoImage.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
