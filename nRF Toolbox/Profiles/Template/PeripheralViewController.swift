@@ -41,13 +41,14 @@ class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        savedView = view
+        self.view = InfoActionView.instanceWithParams()
+
         peripheralManager.delegate = self
         navigationItem.title = navigationTitle
         if #available(iOS 11.0, *) {
             navigationController?.navigationItem.largeTitleDisplayMode = .never
         }
-        
-        savedView = view
     }
 
     @objc func disconnect() {
@@ -55,74 +56,109 @@ class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter
         peripheralManager.closeConnection(peripheral: peripheral)
     }
 
+    // MARK: Status changed
     func statusDidChanged(_ status: PeripheralStatus)  {
         SystemLog(category: .ble, type: .debug).log(message: "Changed Bluetooth status in \(String(describing: type(of: self))), status: \(status)")
         switch status {
         case .poweredOff:
-            serviceFinderTimer?.invalidate()
-            activePeripheral = nil
-
-            let bSettings: InfoActionView.ButtonSettings = ("Settings", {
-                let url = URL(string: "App-Prefs:root=Bluetooth") //for bluetooth setting
-                let app = UIApplication.shared
-                app.open(url!, options: [:], completionHandler: nil)
-            })
-
-            let notContent = InfoActionView.instanceWithParams(message: "Bluetooth is powered off", buttonSettings: bSettings)
-            view = notContent
+            onPowerOffStatus()
         case .disconnected(let error):
-            serviceFinderTimer?.invalidate()
-            activePeripheral = nil
-
-            let bSettings: InfoActionView.ButtonSettings = ("Connect", { [unowned self] in
-                self.openConnectorViewController()
-            })
-            
-            let notContent = InfoActionView.instanceWithParams(message: "No connected device", buttonSettings: bSettings)
-            notContent.actionButton.style = .mainAction
-            
-            view = notContent
-
-            if let e = error {
-                displayErrorAlert(error: e)
-            }
-            
+            onDisconnectedStatus(error: error)
         case .connecting:
-            let notContent = InfoActionView.instanceWithParams(message: "Connecting...")
-            notContent.actionButton.style = .mainAction
-            
-            view = notContent
-            dismiss(animated: true, completion: nil)
-            
+            onConnectingStatus()
         case .connected(let peripheral):
-            activePeripheral = peripheral
-            
-            activePeripheral?.delegate = self
-            activePeripheral?.discoverServices(peripheralDescription.services.map { $0.uuid } )
-            
-            if let requiredServices = peripheralDescription.mandatoryServices, !requiredServices.isEmpty {
-                statusDidChanged(.discoveringServicesAndCharacteristics)
-                serviceFinderTimer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [weak self] (t) in
-                    self?.displayBindingErrorAlert()
-                    self?.disconnect()
-                    t.invalidate()
-                }
-            } else {
-                statusDidChanged(.discoveredRequiredServicesAndCharacteristics)
-            }
-
+            onConnectedStatus(peripheral: peripheral)
         case .discoveringServicesAndCharacteristics:
-            let notContent = InfoActionView.instanceWithParams(message: "Discovering Services and Characteristics...")
-            notContent.titleLabel.numberOfLines = 0
-            notContent.titleLabel.textAlignment = .center
-            notContent.actionButton.style = .mainAction
-            
-            view = notContent
-
+            onDiscoveringServicesAndCharacteristics()
         case .discoveredRequiredServicesAndCharacteristics:
-            serviceFinderTimer?.invalidate()
-            view = savedView
+            onDiscoveringServicesAndCharacteristics()
+        case .unauthorized:
+            onUnauthorizedStatus()
         }
+    }
+
+    func onPowerOffStatus() {
+        serviceFinderTimer?.invalidate()
+        activePeripheral = nil
+
+        let bSettings: InfoActionView.ButtonSettings = ("Settings", {
+            let url = URL(string: "App-Prefs:root=Bluetooth") //for bluetooth setting
+            let app = UIApplication.shared
+            app.open(url!, options: [:], completionHandler: nil)
+        })
+
+        let notContent = InfoActionView.instanceWithParams(message: "Bluetooth is powered off", buttonSettings: bSettings)
+        view = notContent
+    }
+
+    func onDisconnectedStatus(error: Error?) {
+        serviceFinderTimer?.invalidate()
+        activePeripheral = nil
+
+        let bSettings: InfoActionView.ButtonSettings = ("Connect", { [unowned self] in
+            self.openConnectorViewController()
+        })
+
+        let notContent = InfoActionView.instanceWithParams(message: "No connected device", buttonSettings: bSettings)
+        notContent.actionButton.style = .mainAction
+
+        view = notContent
+
+        if let e = error {
+            displayErrorAlert(error: e)
+        }
+    }
+
+    func onConnectingStatus() {
+        let notContent = InfoActionView.instanceWithParams(message: "Connecting...")
+        notContent.actionButton.style = .mainAction
+
+        view = notContent
+        dismiss(animated: true, completion: nil)
+    }
+
+    func onConnectedStatus(peripheral: CBPeripheral) {
+        activePeripheral = peripheral
+
+        activePeripheral?.delegate = self
+        activePeripheral?.discoverServices(peripheralDescription.services.map { $0.uuid } )
+
+        if let requiredServices = peripheralDescription.mandatoryServices, !requiredServices.isEmpty {
+            statusDidChanged(.discoveringServicesAndCharacteristics)
+            serviceFinderTimer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [weak self] (t) in
+                self?.displayBindingErrorAlert()
+                self?.disconnect()
+                t.invalidate()
+            }
+        } else {
+            statusDidChanged(.discoveredRequiredServicesAndCharacteristics)
+        }
+    }
+
+    func discoveredMandatoryServices() {
+        let notContent = InfoActionView.instanceWithParams(message: "Discovering Services and Characteristics...")
+        notContent.titleLabel.numberOfLines = 0
+        notContent.titleLabel.textAlignment = .center
+        notContent.actionButton.style = .mainAction
+
+        view = notContent
+    }
+
+    func onDiscoveringServicesAndCharacteristics() {
+        serviceFinderTimer?.invalidate()
+        view = savedView
+    }
+
+    func onUnauthorizedStatus() {
+        let bSettings: InfoActionView.ButtonSettings = ("Settings", {
+            let url = URL(string: "App-Prefs:root=Bluetooth") //for bluetooth setting
+            let app = UIApplication.shared
+            app.open(url!, options: [:], completionHandler: nil)
+        })
+
+        let notContent = InfoActionView.instanceWithParams(message: "Using Bluetooth is not Allowed", buttonSettings: bSettings)
+        notContent.messageLabel.text = "It seems you denied nRF-Toolbox to use Bluetooth. Open settings and allow to use Bluetooth."
+        view = notContent
     }
     
     @objc func openConnectorViewController() {

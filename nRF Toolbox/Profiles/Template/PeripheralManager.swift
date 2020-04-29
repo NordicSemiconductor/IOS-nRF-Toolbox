@@ -12,6 +12,7 @@ import CoreBluetooth
 enum PeripheralStatus: CustomDebugStringConvertible, Equatable {
     
     case poweredOff
+    case unauthorized
     case connecting
     case connected(CBPeripheral)
     case disconnected(Error?)
@@ -21,6 +22,7 @@ enum PeripheralStatus: CustomDebugStringConvertible, Equatable {
     static func ==(lhs: PeripheralStatus, rhs: PeripheralStatus) -> Bool {
         switch (lhs, rhs) {
         case (.poweredOff, poweredOff): return true
+        case (.unauthorized, .unauthorized): return true
         case (.connecting, .connecting): return true
         case (.connected(let p1), .connected(let p2)): return p1 == p2
         case (.disconnected, .disconnected): return true
@@ -36,6 +38,7 @@ enum PeripheralStatus: CustomDebugStringConvertible, Equatable {
         case .connected(let p): return "connected to \(p.name ?? "__unnamed__")"
         case .disconnected: return "disconnected"
         case .poweredOff: return "powered off"
+        case .unauthorized: return "unauthorized"
         case .discoveringServicesAndCharacteristics: return "discovering services"
         case .discoveredRequiredServicesAndCharacteristics: return "discovered required services"
         }
@@ -97,11 +100,23 @@ class PeripheralManager: NSObject {
 extension PeripheralManager: CBCentralManagerDelegate {
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        if #available(iOS 13, *) {
+            switch central.authorization {
+            case .denied, .restricted:
+                self.status = .unauthorized
+                return
+            default:
+                break
+            }
+        }
+
         switch central.state {
         case .poweredOff:
             self.status = .poweredOff
         case .poweredOn:
             self.status = .disconnected(nil)
+        case .unauthorized:
+            self.status = .unauthorized
         default:
             break
         }
