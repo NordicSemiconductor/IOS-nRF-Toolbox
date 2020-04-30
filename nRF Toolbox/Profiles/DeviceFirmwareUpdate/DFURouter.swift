@@ -82,7 +82,7 @@ class DFURouter: DFURouterType {
     }
     
     func getStartViewController() -> DFUStartViewController {
-        return DFUStartViewController(router: self)
+        DFUStartViewController(router: self)
     }
     
     func initialState() -> UIViewController {

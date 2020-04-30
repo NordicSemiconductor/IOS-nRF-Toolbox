@@ -23,7 +23,10 @@ extension McuMgrLogLevel {
 }
 
 class McuMgrLogObserver: LogObserver, McuMgrLogDelegate {
+    var shouldLog: Bool = true
+    
     func log(_ msg: String, ofCategory category: McuMgrLogCategory, atLevel level: McuMgrLogLevel) {
+        guard shouldLog else { return }
         logWith(level.level, message: msg)
     }
     

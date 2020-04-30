@@ -27,7 +27,6 @@ class WheelSizeSection: Section {
     func dequeCell(for index: Int, from tableView: UITableView) -> UITableViewCell {
         let cell = tableView.dequeueCell(ofType: SliderTableViewCell.self)
 
-        let isMetric = Locale.current.usesMetricSystem
         let units: UnitLength = .inches
 
         cell.slider.minimumValue = 20

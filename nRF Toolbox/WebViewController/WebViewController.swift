@@ -34,7 +34,7 @@ class WebViewController: UIViewController {
     @objc private func action(_ sender: UIBarButtonItem) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let openInBrowserAction = UIAlertAction(title: "Open in Safari", style: .default) { _ in
-            UIApplication.shared.openURL(self.link.url)
+            UIApplication.shared.open(self.link.url)
         }
         let shareAction = UIAlertAction(title: "Share", style: .default) { _ in
             self.share(sender)

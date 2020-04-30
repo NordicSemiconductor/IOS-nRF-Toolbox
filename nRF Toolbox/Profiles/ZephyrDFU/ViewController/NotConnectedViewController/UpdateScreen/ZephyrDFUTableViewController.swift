@@ -75,6 +75,8 @@ extension ZephyrDFUTableViewController {
 extension ZephyrDFUTableViewController: FirmwareUpgradeDelegate {
     
     func upgradeDidStart(controller: FirmwareUpgradeController) {
+        logger.shouldLog = false
+        
         headerView.style = .update
         headerView.startAnimating()
         headerView.statusLabel.text = "UPDATING"
@@ -84,9 +86,12 @@ extension ZephyrDFUTableViewController: FirmwareUpgradeDelegate {
     }
     
     func upgradeStateDidChange(from previousState: FirmwareUpgradeState, to newState: FirmwareUpgradeState) {
+
     }
     
     func upgradeDidComplete() {
+        logger.shouldLog = true
+        
         headerView.style = .done
         headerView.statusLabel.text = "COMPLETED"
         
@@ -96,6 +101,8 @@ extension ZephyrDFUTableViewController: FirmwareUpgradeDelegate {
     }
     
     func upgradeDidFail(inState state: FirmwareUpgradeState, with error: Error) {
+        logger.shouldLog = true
+        
         headerView.style = .error
         headerView.statusLabel.text = error.localizedDescription
         
@@ -105,6 +112,8 @@ extension ZephyrDFUTableViewController: FirmwareUpgradeDelegate {
     }
     
     func upgradeDidCancel(state: FirmwareUpgradeState) {
+        logger.shouldLog = true
+        
         headerView.statusLabel.text = "CANCELED"
         
         controlSection.items = [.showLog, .done]
@@ -113,6 +122,8 @@ extension ZephyrDFUTableViewController: FirmwareUpgradeDelegate {
     }
     
     func uploadProgressDidChange(bytesSent: Int, imageSize: Int, timestamp: Date) {
+        logger.shouldLog = true
+        
         let percent = Float(bytesSent) / Float(imageSize)
         headerView.progressView.progress = percent
     }

@@ -134,8 +134,6 @@ class PeripheralTableViewController: PeripheralViewController, UITableViewDataSo
 
     override func didDiscover(service: CBService, for peripheral: CBPeripheral) {
         super.didDiscover(service: service, for: peripheral)
-        
-        guard let required = requiredServices else { return }
     }
 
 }

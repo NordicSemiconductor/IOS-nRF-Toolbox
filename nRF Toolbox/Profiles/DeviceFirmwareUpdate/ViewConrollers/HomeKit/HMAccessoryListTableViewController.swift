@@ -78,7 +78,7 @@ class HMAccessoryListTableViewController: UIViewController, AlertPresenter {
                 notContent.messageLabel.text = "Open Settings to provide access to the Home Data"
                 
                 navigationItem.rightBarButtonItems = nil
-//                view = notContent
+                view = notContent
             case .restricted:
                 break
             case .authorized:
