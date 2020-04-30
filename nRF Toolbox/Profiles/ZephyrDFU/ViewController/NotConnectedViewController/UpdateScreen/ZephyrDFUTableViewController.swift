@@ -122,8 +122,6 @@ extension ZephyrDFUTableViewController: FirmwareUpgradeDelegate {
     }
     
     func uploadProgressDidChange(bytesSent: Int, imageSize: Int, timestamp: Date) {
-        logger.shouldLog = true
-        
         let percent = Float(bytesSent) / Float(imageSize)
         headerView.progressView.progress = percent
     }

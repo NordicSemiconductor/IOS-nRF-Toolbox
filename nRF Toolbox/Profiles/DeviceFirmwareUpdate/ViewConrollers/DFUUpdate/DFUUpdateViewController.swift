@@ -44,12 +44,16 @@ class UpgradeTableViewController<T: UpgradeManager>: UITableViewController {
         super.viewDidLoad()
         
         navigationItem.title = "Update"
-        tabBarItem.title = "Update"
+        let tabBarItem = UITabBarItem(title: "Update", image: nil, tag: 1)
         if #available(iOS 13.0, *) {
             tabBarItem.image = UIImage(systemName: ModernIcon.arrow(.init(digit: 2))(.circlePath).name)
         } else {
-            tabBarItem.image = UIImage(named: "FeatureDFU")
+//            let img = UIImage(named: "FeatureDFU")
+//            img?.draw(in: CGRect(x: 0, y: 0, width: 30, height: 30))
+//            tabBarItem.image = img
         }
+        
+        self.tabBarItem = tabBarItem
         
         tableView.registerCellClass(cell: NordicActionTableViewCell.self)
         

@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,11 +20,17 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" image="arrow.2.circlepath" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="v6l-bm-YSm">
-                    <rect key="frame" x="48" y="68.5" width="342" height="131"/>
+                    <rect key="frame" x="48" y="68.5" width="342" height="130"/>
                     <color key="tintColor" red="0.0" green="0.66274509800000003" blue="0.80784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="131" id="uhM-Ux-lga"/>
+                    </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connecting" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gcy-sY-LxP">
-                    <rect key="frame" x="32" y="224" width="70" height="17"/>
+                    <rect key="frame" x="32" y="223" width="70" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="18" id="jq1-cw-qd4"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="14"/>
                     <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
@@ -37,7 +43,6 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="9fP-pI-HT8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="24" id="2Hu-W8-uuE"/>
-                <constraint firstItem="Gcy-sY-LxP" firstAttribute="top" secondItem="v6l-bm-YSm" secondAttribute="bottom" constant="24" id="5pG-JI-lqY"/>
                 <constraint firstItem="v6l-bm-YSm" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="DKT-CK-J1n"/>
                 <constraint firstItem="9fP-pI-HT8" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Hk3-x1-dXe"/>
                 <constraint firstItem="v6l-bm-YSm" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="24" id="NxX-Jm-fuS"/>
