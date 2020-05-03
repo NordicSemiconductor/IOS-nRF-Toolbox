@@ -14,7 +14,8 @@ extension PeripheralDescription {
         .battery, .bloodGlucoseMonitor
     ],
         mandatoryServices: [CBUUID.Service.bloodGlucoseMonitor],
-        mandatoryCharacteristics: [CBUUID.Characteristics.BloodGlucoseMonitor.glucoseMeasurement, CBUUID.Characteristics.BloodGlucoseMonitor.recordAccessControlPoint, CBUUID.Characteristics.BloodGlucoseMonitor.glucoseMeasurementContext])
+        mandatoryCharacteristics: [] /*[CBUUID.Characteristics.BloodGlucoseMonitor.glucoseMeasurement, CBUUID.Characteristics.BloodGlucoseMonitor.recordAccessControlPoint, CBUUID.Characteristics.BloodGlucoseMonitor.glucoseMeasurementContext]*/
+    )
 }
 
 private extension PeripheralDescription.Service {

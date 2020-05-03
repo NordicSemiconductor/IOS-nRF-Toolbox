@@ -21,7 +21,7 @@ class DFUUpdateProgressView: UIView, XibInstantiable {
     var style: Style = .update {
         didSet {
             let colorImage: (UIColor, ModernIcon, UIImage?) = {
-                let oldImage = UIImage(named: "FeatureDFU")?.withRenderingMode(.alwaysTemplate)
+                let oldImage = UIImage(named: "update_ic")?.withRenderingMode(.alwaysTemplate)
                 switch style {
                 case .done: return (.nordicGreen, ModernIcon.checkmark(.circle), oldImage)
                 case .error: return (.nordicRed, ModernIcon.exclamationmark(.triangle), oldImage)
@@ -46,13 +46,11 @@ class DFUUpdateProgressView: UIView, XibInstantiable {
     }
     
     func startAnimating() {
-        updateLogoImage.translatesAutoresizingMaskIntoConstraints = true
+//        updateLogoImage.translatesAutoresizingMaskIntoConstraints = true
         
         UIView.animateKeyframes(withDuration: 1, delay: 0, options: [.repeat], animations: {
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1) {
-                if #available(iOS 13, *) {
-                    self.updateLogoImage.transform = CGAffineTransform(rotationAngle: .pi)
-                }
+                self.updateLogoImage.transform = CGAffineTransform(rotationAngle: .pi)
             }
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5) {
                 self.updateLogoImage.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)

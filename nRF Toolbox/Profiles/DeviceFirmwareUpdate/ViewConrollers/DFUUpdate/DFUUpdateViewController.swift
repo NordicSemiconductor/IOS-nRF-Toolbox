@@ -27,6 +27,7 @@ class UpgradeTableViewController<T: UpgradeManager>: UITableViewController {
     init(peripheral: Peripheral, router: DFUUpdateRouter?) {
         self.peripheral = peripheral
         self.headerView = DFUUpdateProgressView.instance()
+        
         self.router = router
         
         if #available(iOS 13, *) {
@@ -40,6 +41,12 @@ class UpgradeTableViewController<T: UpgradeManager>: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        headerView.frame = CGRect(x: 0, y: -240, width: tableView.frame.width, height: 240)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -48,18 +55,15 @@ class UpgradeTableViewController<T: UpgradeManager>: UITableViewController {
         if #available(iOS 13.0, *) {
             tabBarItem.image = UIImage(systemName: ModernIcon.arrow(.init(digit: 2))(.circlePath).name)
         } else {
-//            let img = UIImage(named: "FeatureDFU")
-//            img?.draw(in: CGRect(x: 0, y: 0, width: 30, height: 30))
-//            tabBarItem.image = img
+            tabBarItem.image = UIImage(named: "update_ic")
         }
         
         self.tabBarItem = tabBarItem
         
         tableView.registerCellClass(cell: NordicActionTableViewCell.self)
-        
-        headerView.frame = .zero
-        headerView.frame.size.height = 240
-        tableView.tableHeaderView = headerView
+
+        tableView.contentInset.top = 240
+        tableView.addSubview(headerView)
         
         controlSection.items = [.pause]
         stopSection.items = [.stop]
