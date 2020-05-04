@@ -164,7 +164,7 @@ class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter
     }
 
     func onDiscoveringServicesAndCharacteristics() {
-        let notContent = InfoActionView.instanceWithParams(message: "Discovering services")
+        let notContent = InfoActionView.instanceWithParams(message: "Discovering services...")
         notContent.messageLabel.text = "Looking for mandatory services and characteristics"
         notContent.titleLabel.numberOfLines = 0
         notContent.titleLabel.textAlignment = .center

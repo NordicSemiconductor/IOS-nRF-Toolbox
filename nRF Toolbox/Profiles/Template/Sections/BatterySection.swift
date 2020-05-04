@@ -12,7 +12,7 @@ class BatterySection: DetailsTableViewSection<BatteryCharacteristic> {
     override func reset() { }
     
     override func update(with characteristic: BatteryCharacteristic) {
-        let item = DefaultDetailsTableViewCellModel(title: "Battery", value: "\(characteristic.batteryLevel)")
+        let item = DefaultDetailsTableViewCellModel(title: "Battery", value: "\(characteristic.batteryLevel)%")
         items = [item]
     }
     

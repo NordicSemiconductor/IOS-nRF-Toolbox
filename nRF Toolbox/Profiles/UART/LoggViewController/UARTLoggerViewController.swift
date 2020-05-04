@@ -52,6 +52,10 @@ class UARTLoggerViewController: UIViewController, CloseButtonPresenter {
         let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false)
         present(nc, animated: true)
     }
+    
+    func reset() {
+        loggerTableView.reset()
+    }
 }
 
 extension UARTLoggerViewController {

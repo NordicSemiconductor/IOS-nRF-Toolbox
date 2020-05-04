@@ -98,6 +98,8 @@ extension UARTTabBarController: BluetoothManagerDelegate {
         addEmptyView()
         self.emptyView.buttonSettings = bSettings
         self.emptyView.titleLabel.text = "Device is not connected"
+        
+        uartLoggerViewController.reset()
     }
     
     func peripheralReady() {

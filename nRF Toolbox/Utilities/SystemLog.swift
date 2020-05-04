@@ -47,7 +47,7 @@ extension LogType {
 extension LogType: CaseIterable {
     static var allCases: [LogType] {
         return [
-            .debug, .info, .verbose, .application, .warning, .error
+            .debug, .verbose, .info, .application, .warning, .error
         ]
     }
 }

@@ -102,7 +102,7 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
         } else {
             log(withLevel: .verbose, andMessage: "Connecting to device...")
         }
-        log(withLevel: .verbose, andMessage: "centralManager.connect(peripheral, options:nil)")
+        log(withLevel: .debug, andMessage: "centralManager.connect(peripheral, options:nil)")
         
         guard let p = centralManager.retrievePeripherals(withIdentifiers: [aPeripheral.identifier]).first else {
             centralManager.delegate?.centralManager?(centralManager, didFailToConnect: aPeripheral, error: BluetoothManagerError.cannotFindPeripheral)
@@ -360,7 +360,7 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
             //Enable notifications on TX Characteristic
             if (uartTXCharacteristic != nil && uartRXCharacteristic != nil) {
                 log(withLevel: .verbose, andMessage: "Enabling notifications for \(uartTXCharacteristic!.uuid.uuidString)")
-                log(withLevel: .verbose, andMessage: "peripheral.setNotifyValue(true, for: \(uartTXCharacteristic!.uuid.uuidString))")
+                log(withLevel: .debug, andMessage: "peripheral.setNotifyValue(true, for: \(uartTXCharacteristic!.uuid.uuidString))")
                 bluetoothPeripheral!.setNotifyValue(true, for: uartTXCharacteristic!)
             } else {
                 log(withLevel: .warning, andMessage: "UART service does not have required characteristics. Try to turn Bluetooth Off and On again to clear cache.")
