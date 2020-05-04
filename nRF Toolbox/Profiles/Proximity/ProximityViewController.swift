@@ -67,10 +67,6 @@ class ProximityViewController: PeripheralViewController {
         audioPlayer?.prepareToPlay()
         peripheralManager = CBPeripheralManager(delegate: self, queue: nil)
         disconnectBtn.style = .destructive
-
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { b, error in
-            
-        }
     }
     
     override func didDiscover(characteristic: CBCharacteristic, for service: CBService, peripheral: CBPeripheral) {

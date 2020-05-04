@@ -41,6 +41,8 @@ class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        
         savedView = view
         self.view = InfoActionView.instanceWithParams()
 
@@ -49,11 +51,26 @@ class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter
         if #available(iOS 11.0, *) {
             navigationController?.navigationItem.largeTitleDisplayMode = .never
         }
+        
+        AppUtilities.requestNotificationAuthorization { (_, error) in
+            if let e = error {
+                self.displayErrorAlert(error: e)
+            }
+        }
     }
 
     @objc func disconnect() {
         guard let peripheral = activePeripheral else { return }
         peripheralManager.closeConnection(peripheral: peripheral)
+    }
+    
+    @objc func didEnterBackground(notification: Notification) {
+        guard let peripheral = activePeripheral else { return }
+        
+        let name = peripheral.name ?? "peripheral"
+        let msg = "You are still connected to \(name). It will collect data also in background."
+            
+        AppUtilities.showBackgroundNotification(title: "Still connected", message: msg)
     }
 
     // MARK: Status changed
@@ -111,6 +128,12 @@ class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter
             displayErrorAlert(error: e)
         default:
             break
+        }
+        
+        if case .background = UIApplication.shared.applicationState {
+            let name = activePeripheral?.name ?? "Peripheral"
+            let msg = "\(name) is disconnected."
+            AppUtilities.showBackgroundNotification(title: "Disconnected", message: msg)
         }
     }
 

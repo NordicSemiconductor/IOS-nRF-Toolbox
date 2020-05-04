@@ -63,14 +63,18 @@ class AppUtilities: NSObject {
         viewController.present(alertView, animated: true)
     }
 
-    static func showBackgroundNotification(message aMessage : String){
-        let localNotification = UILocalNotification()
-        localNotification.alertAction   = "Show"
-        localNotification.alertBody     = aMessage
-        localNotification.hasAction     = false
-        localNotification.fireDate      = Date(timeIntervalSinceNow: 1)
-        localNotification.timeZone      = TimeZone.current
-        localNotification.soundName     = UILocalNotificationDefaultSoundName
+    static func showBackgroundNotification(title: String, message: String){
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.subtitle = message
+
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let request = UNNotificationRequest(identifier: Identifier<UNNotification>.notification.string, content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request)
+    }
+    
+    static func requestNotificationAuthorization(handler: @escaping (Bool, Error?) -> ()) {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound], completionHandler: handler)
     }
     
     static func isApplicationInactive() -> Bool {
