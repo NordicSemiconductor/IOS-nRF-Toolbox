@@ -23,17 +23,17 @@ class BloodPressureTableViewController: PeripheralTableViewController {
     private var heartRateSection = PulseBloodPressureSection(id: .heartRate)
     
     override var internalSections: [Section] { [bloodPressureSection, heartRateSection, dateTimeSection, cuffPressureSection] }
-    override var peripheralDescription: PeripheralDescription { .bloodPressure }
+    override var peripheralDescription: PeripheralDescription { . bloodPressure }
     
     private var dataSectionIds: [Identifier<Section>] = [.bloodPressure, .cuffPressure]
     override var navigationTitle: String { "Blood Pressure" }
 
     override func didDiscover(service: CBService, for peripheral: CBPeripheral) {
         super.didDiscover(service: service, for: peripheral)
-    }
-
-    override func didDiscover(characteristic: CBCharacteristic, for service: CBService, peripheral: CBPeripheral) {
-        super.didDiscover(characteristic: characteristic, for: service, peripheral: peripheral)
+        
+        if service.uuid == CBUUID.Service.bloodPressureMonitor {
+            
+        }
     }
 
     override func didUpdateValue(for characteristic: CBCharacteristic) {

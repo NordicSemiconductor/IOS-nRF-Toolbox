@@ -71,7 +71,7 @@ class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter
         case .discoveringServicesAndCharacteristics:
             onDiscoveringServicesAndCharacteristics()
         case .discoveredRequiredServicesAndCharacteristics:
-            onDiscoveringServicesAndCharacteristics()
+            onDiscoveredMandatoryServices()
         case .unauthorized:
             onUnauthorizedStatus()
         }
@@ -103,9 +103,14 @@ class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter
         notContent.actionButton.style = .mainAction
 
         view = notContent
-
-        if let e = error {
+        
+        switch error {
+        case let e as ConnectionTimeoutError :
+            displaySettingsAlert(title: e.title , message: e.readableMessage)
+        case let e?:
             displayErrorAlert(error: e)
+        default:
+            break
         }
     }
 
@@ -135,8 +140,9 @@ class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter
         }
     }
 
-    func discoveredMandatoryServices() {
-        let notContent = InfoActionView.instanceWithParams(message: "Discovering Services and Characteristics...")
+    func onDiscoveringServicesAndCharacteristics() {
+        let notContent = InfoActionView.instanceWithParams(message: "Discovering services")
+        notContent.messageLabel.text = "Looking for mandatory services and characteristics"
         notContent.titleLabel.numberOfLines = 0
         notContent.titleLabel.textAlignment = .center
         notContent.actionButton.style = .mainAction
@@ -144,7 +150,7 @@ class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter
         view = notContent
     }
 
-    func onDiscoveringServicesAndCharacteristics() {
+    func onDiscoveredMandatoryServices() {
         serviceFinderTimer?.invalidate()
         view = savedView
     }
@@ -224,10 +230,7 @@ class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter
 }
 
 extension PeripheralViewController {
-    private func displayBindingErrorAlert() {
-        let title = "No services discovered"
-        let message = "It seems there're no required services. Check your device or try to turn off / on bluetooth in settings"
-
+    private func displaySettingsAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let settingsAction = UIAlertAction(title: "Settings", style: .default) { _ in
             let url = URL(string: "App-Prefs:root=Bluetooth") //for bluetooth setting
@@ -240,6 +243,13 @@ extension PeripheralViewController {
         alert.addAction(cancelAction)
 
         present(alert, animated: true)
+    }
+    
+    private func displayBindingErrorAlert() {
+        let title = "No services discovered"
+        let message = "Required service has not been discovered. Check your device, or try to restart Bluetooth in Settings."
+
+        displaySettingsAlert(title: title, message: message)
     }
 }
 

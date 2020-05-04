@@ -59,6 +59,15 @@ protocol PeripheralConnectionDelegate {
     func closeConnection(peripheral: CBPeripheral)
 }
 
+struct ConnectionTimeoutError: ReadableError {
+    
+    var title: String {
+        "Connection Timeout"
+    }
+    
+    var readableMessage: String
+}
+
 class PeripheralManager: NSObject {
     
     private let manager: CBCentralManager
@@ -92,7 +101,8 @@ class PeripheralManager: NSObject {
         
         timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false, block: { [weak self] (_) in
             self?.closeConnection(peripheral: p)
-            self?.status = .disconnected(QuickError(message: "Connection timeout"))
+            let error = ConnectionTimeoutError(readableMessage: "Check your device, or try to restart Bluetooth in Settings.")
+            self?.status = .disconnected(error)
         })
     }
 }

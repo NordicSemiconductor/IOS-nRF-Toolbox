@@ -9,7 +9,14 @@
 import Foundation
 
 protocol ReadableError: Error {
+    var title: String { get }
     var readableMessage: String { get }
+}
+
+extension ReadableError {
+    var title: String {
+        return "Error"
+    }
 }
 
 struct QuickError: ReadableError {
