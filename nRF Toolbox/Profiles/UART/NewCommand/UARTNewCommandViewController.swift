@@ -44,6 +44,10 @@ class UARTNewCommandViewController: UIViewController {
     @IBOutlet private var valueTextField: UITextField!
     @IBOutlet private var typeSegmentControl: UISegmentedControl!
     
+    @IBOutlet private var textView: AutoReszableTextView!
+    @IBOutlet private var eolLabel: UILabel!
+    @IBOutlet private var eolSegment: UISegmentedControl!
+    
     weak var delegate: UARTNewCommandDelegate?
     
     private var command: UARTCommandModel?
@@ -67,6 +71,7 @@ class UARTNewCommandViewController: UIViewController {
         }
         
         setupTextField()
+        setupTextView()
         createButton.style = .mainAction
         navigationItem.title = "Create new command"
         collectionView.register(type: ImageCollectionViewCell.self)
@@ -81,13 +86,28 @@ class UARTNewCommandViewController: UIViewController {
     }
 
     @IBAction func typeChanged(_ sender: UISegmentedControl) {
-        valueTextField.text = ""
-        updateButtonState()
-        valueTextField.leftViewMode = sender.selectedSegmentIndex == 1 ? .always : .never
+        // textField.isHidden, textView.isHidden, eolLabel.isHidden, eolSegment.isHidden
+        let hiddenOptions: (Bool, Bool, Bool, Bool)
+        
+        if sender.selectedSegmentIndex == 0 {
+            hiddenOptions = (true, false, false, false )
+        } else {
+            hiddenOptions = (false, true, true, true )
+        }
+        
+        valueTextField.isHidden = hiddenOptions.0
+        textView.isHidden = hiddenOptions.1
+        eolLabel.isHidden = hiddenOptions.2
+        eolSegment.isHidden = hiddenOptions.3
+        
+        createButton.isEnabled = readyForCreate()
+        
+        textView.resignFirstResponder()
+        valueTextField.resignFirstResponder()
     }
     
-    @IBAction func textChanged(_ sender: UITextField) {
-        updateButtonState()
+    @IBAction func textChanged(_ sender: Any) {
+        createButton.isEnabled = readyForCreate()
     }
     
     @IBAction func createCommand() {
@@ -96,7 +116,7 @@ class UARTNewCommandViewController: UIViewController {
         let image = CommandImage.allCases[selectedItem]
         
         if typeSegmentControl.selectedSegmentIndex == 0 {
-            command = TextCommand(text: valueTextField.text!, image: image)
+            command = TextCommand(text: textView.text!, image: image)
         } else {
             command = DataCommand(data: Data(valueTextField.text!.hexa), image: image)
         }
@@ -117,9 +137,11 @@ extension UARTNewCommandViewController {
         case is TextCommand:
             typeIndex = 0
             title = command.title
+            textView.text = title
         case is DataCommand:
             typeIndex = 1
             title = command.data.hexEncodedString().uppercased()
+            valueTextField.text = title
         default:
             return
         }
@@ -127,7 +149,6 @@ extension UARTNewCommandViewController {
         typeSegmentControl.selectedSegmentIndex = typeIndex
         typeChanged(typeSegmentControl)
         
-        valueTextField.text = title
         CommandImage.allCases.enumerated()
             .first(where: { $0.element.name == command.image.name })
             .map { self.collectionView.selectItem(at: IndexPath(item: $0.offset, section: 0), animated: false, scrollPosition: .top) }
@@ -142,20 +163,49 @@ extension UARTNewCommandViewController {
         createButton.isEnabled = !(valueTextField.text?.isEmpty ?? true) && collectionView.indexPathsForSelectedItems?.first != nil
     }
     
+    private func setupTextView() {
+        let accessoryToolbar = UIToolbar()
+        accessoryToolbar.autoresizingMask = .flexibleHeight
+        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: textView, action: #selector(resignFirstResponder))
+        accessoryToolbar.items = [doneBtn]
+        
+        textView.inputAccessoryView = accessoryToolbar
+        
+        textView.didChangeText = { [weak self] _ in
+            self?.createButton.isEnabled = self?.readyForCreate() == true
+        }
+    }
+    
     private func setupTextField() {
+        let accessoryToolbar = UIToolbar()
+        accessoryToolbar.autoresizingMask = .flexibleHeight
+        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: valueTextField, action: #selector(resignFirstResponder))
+        accessoryToolbar.items = [doneBtn]
+        
         let hexLabel = UILabel()
-        hexLabel.text = "0x"
+        hexLabel.text = "  0x"
         hexLabel.font = valueTextField.font
         hexLabel.textColor = UIColor.Text.secondarySystemText
         hexLabel.textAlignment = .center
         valueTextField.leftView = hexLabel
-        valueTextField.leftViewMode = .never
+        valueTextField.leftViewMode = .always
+        valueTextField.inputAccessoryView = accessoryToolbar
+    }
+    
+    private func readyForCreate() -> Bool {
+        let selectedItem = collectionView.indexPathsForSelectedItems?.first != nil
+        
+        let dataIsReady = typeSegmentControl.selectedSegmentIndex == 0
+            ? !textView.text.isEmpty
+            : valueTextField.text?.isEmpty == false
+        
+        return selectedItem && dataIsReady
     }
 }
 
 extension UARTNewCommandViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        updateButtonState()
+        createButton.isEnabled = readyForCreate()
         valueTextField.resignFirstResponder()
     }
     
@@ -193,10 +243,6 @@ extension UARTNewCommandViewController: UITextFieldDelegate {
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard typeSegmentControl.selectedSegmentIndex == 1 else {
-            return true
-        }
-        
         return CharacterSet(charactersIn: "0123456789abcdefABCDEF").isSuperset(of: CharacterSet(charactersIn: string))
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,8 +18,11 @@
                 <outlet property="collectionView" destination="jZ7-mp-DGi" id="hiP-Ue-TGF"/>
                 <outlet property="createButton" destination="u5n-VG-gti" id="2PU-4i-a8j"/>
                 <outlet property="deleteButton" destination="yA1-Ak-ptR" id="CXg-wQ-M7v"/>
+                <outlet property="eolLabel" destination="dfu-h9-JX4" id="DEX-c7-ECL"/>
+                <outlet property="eolSegment" destination="DOf-x4-x0q" id="r19-5O-YeZ"/>
+                <outlet property="textView" destination="zML-1J-9HH" id="Hcx-51-DrC"/>
                 <outlet property="typeSegmentControl" destination="xej-mh-BNi" id="Q3q-po-bnV"/>
-                <outlet property="valueTextField" destination="wod-JE-wcr" id="TMj-5M-bsI"/>
+                <outlet property="valueTextField" destination="P2Z-rE-Hql" id="rx3-OF-3Q3"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -32,7 +35,7 @@
                     <rect key="frame" x="20" y="60" width="374" height="786"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="T7h-tB-R7a">
-                            <rect key="frame" x="0.0" y="0.0" width="374" height="98.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="374" height="257"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Command value:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0uP-1L-yMb">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="17.5"/>
@@ -50,19 +53,43 @@
                                         <action selector="typeChanged:" destination="-1" eventType="valueChanged" id="n1H-h8-9o6"/>
                                     </connections>
                                 </segmentedControl>
-                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wod-JE-wcr">
-                                    <rect key="frame" x="0.0" y="64.5" width="374" height="34"/>
+                                <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="P2Z-rE-Hql">
+                                    <rect key="frame" x="0.0" y="60.5" width="374" height="0.0"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
+                                    <textInputTraits key="textInputTraits"/>
                                     <connections>
-                                        <action selector="textChanged:" destination="-1" eventType="valueChanged" id="UZp-GK-RNL"/>
-                                        <outlet property="delegate" destination="-1" id="EMi-yv-gjd"/>
+                                        <action selector="textChanged:" destination="-1" eventType="valueChanged" id="Seb-ht-flq"/>
+                                        <outlet property="delegate" destination="-1" id="dYb-hR-Qp9"/>
                                     </connections>
                                 </textField>
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="zML-1J-9HH" customClass="AutoReszableTextView" customModule="nRF_Toolbox" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="64.5" width="374" height="128"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="128" placeholder="YES" id="Ynw-7b-cez"/>
+                                    </constraints>
+                                    <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                </textView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EOL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dfu-h9-JX4">
+                                    <rect key="frame" x="0.0" y="200.5" width="374" height="17.5"/>
+                                    <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="15"/>
+                                    <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="DOf-x4-x0q">
+                                    <rect key="frame" x="0.0" y="226" width="374" height="32"/>
+                                    <segments>
+                                        <segment title="\n"/>
+                                        <segment title="\r"/>
+                                        <segment title="\n+\r"/>
+                                    </segments>
+                                </segmentedControl>
                             </subviews>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="JFw-qV-DnZ">
-                            <rect key="frame" x="0.0" y="114.5" width="374" height="625.5"/>
+                            <rect key="frame" x="0.0" y="273" width="374" height="467"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chose image for the command:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ues-WN-aeO">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="17.5"/>
@@ -71,7 +98,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="249" verticalCompressionResistancePriority="749" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="jZ7-mp-DGi">
-                                    <rect key="frame" x="0.0" y="25.5" width="374" height="600"/>
+                                    <rect key="frame" x="0.0" y="25.5" width="374" height="441.5"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="1Y8-Xl-e9p">
                                         <size key="itemSize" width="50" height="50"/>

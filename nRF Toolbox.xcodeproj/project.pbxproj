@@ -247,6 +247,7 @@
 		4389184224360F7300175A94 /* GlucoseReadingContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4389184024360F7300175A94 /* GlucoseReadingContext.swift */; };
 		438918442436108E00175A94 /* RecordAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438918432436108E00175A94 /* RecordAccess.swift */; };
 		4392FF0223AA6CBE00E6ACEA /* DateFormatter+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4392FF0123AA6CBE00E6ACEA /* DateFormatter+Ext.swift */; };
+		43E2F73F2462E31400912BD6 /* AutoReszableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E2F73E2462E31400912BD6 /* AutoReszableTextView.swift */; };
 		43F837242433FA7C003D88F0 /* BGMActionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F837232433FA7C003D88F0 /* BGMActionSection.swift */; };
 		43F837262433FB1F003D88F0 /* BGMDisplayItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F837252433FB1F003D88F0 /* BGMDisplayItemTableViewCell.swift */; };
 		43F837282433FB29003D88F0 /* BGMDisplayItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43F837272433FB29003D88F0 /* BGMDisplayItemTableViewCell.xib */; };
@@ -541,6 +542,7 @@
 		4389184024360F7300175A94 /* GlucoseReadingContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlucoseReadingContext.swift; sourceTree = "<group>"; };
 		438918432436108E00175A94 /* RecordAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordAccess.swift; sourceTree = "<group>"; };
 		4392FF0123AA6CBE00E6ACEA /* DateFormatter+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Ext.swift"; sourceTree = "<group>"; };
+		43E2F73E2462E31400912BD6 /* AutoReszableTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoReszableTextView.swift; sourceTree = "<group>"; };
 		43F837232433FA7C003D88F0 /* BGMActionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGMActionSection.swift; sourceTree = "<group>"; };
 		43F837252433FB1F003D88F0 /* BGMDisplayItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGMDisplayItemTableViewCell.swift; sourceTree = "<group>"; };
 		43F837272433FB29003D88F0 /* BGMDisplayItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BGMDisplayItemTableViewCell.xib; sourceTree = "<group>"; };
@@ -770,6 +772,7 @@
 			children = (
 				01A1B76523CF13A50062FADC /* UARTNewCommandViewController.swift */,
 				01A1B76623CF13A50062FADC /* UARTNewCommandViewController.xib */,
+				43E2F73E2462E31400912BD6 /* AutoReszableTextView.swift */,
 			);
 			path = NewCommand;
 			sourceTree = "<group>";
@@ -2016,6 +2019,7 @@
 				01B6D3E0234CC090000942C4 /* Peripheral+HeartRate.swift in Sources */,
 				019985EE23E0622B000CDCB6 /* UARTLoggerViewController.swift in Sources */,
 				20F15C432313F821000C5503 /* XibInstantiable.swift in Sources */,
+				43E2F73F2462E31400912BD6 /* AutoReszableTextView.swift in Sources */,
 				3001432D1CECADFB008379DF /* CharacteristicReader.swift in Sources */,
 				200973D32341DBAB0091951B /* CyclingCharacteristic.swift in Sources */,
 				0119609E23FA063700A7EF29 /* UARTMacrosHeaderView.swift in Sources */,

@@ -33,6 +33,14 @@
 import UIKit
 
 extension UIColor {
+
+    convenience init(r: Int, g: Int, b: Int, a: Int = 100) {
+        let red = CGFloat(r) / 255
+        let green = CGFloat(g) / 255
+        let blue = CGFloat(b) / 255
+        let alpha = CGFloat(a) / 100
+        self.init(red: red, green: green, blue: blue, alpha: alpha)
+    }
     
     static let nordicBlue: UIColor = {
         if #available(iOS 11.0, *) {
@@ -171,6 +179,13 @@ extension UIColor {
             return .nordicAlmostWhite
         }
     }()
+    
+    static let nordicTextViewColor = dynamicColor(light: .white, dark: .black)
+    static let nordicTextViewBordorColor: UIColor = {
+        let light = UIColor(r: 205, g: 204, b: 205)
+        let dark = UIColor(r: 50, g: 50, b: 50)
+        return dynamicColor(light: light, dark: dark)
+    }()
 }
 
 // MARK: - System Colors
@@ -251,7 +266,7 @@ extension UIColor {
     static func dynamicColor(light: UIColor, dark: UIColor) -> UIColor {
         if #available(iOS 13.0, *) {
             return UIColor { (traitCollection) -> UIColor in
-                traitCollection.userInterfaceStyle == .light ? light : dark
+                traitCollection.userInterfaceStyle == .dark ? dark : light
             }
         } else {
             return light
