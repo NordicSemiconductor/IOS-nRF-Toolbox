@@ -489,7 +489,6 @@
 		300143261CEC4B9D008379DF /* AppUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUtilities.swift; sourceTree = "<group>"; };
 		300143281CEC59F4008379DF /* ServiceIdentifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceIdentifiers.swift; sourceTree = "<group>"; };
 		3001432C1CECADFB008379DF /* CharacteristicReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacteristicReader.swift; sourceTree = "<group>"; };
-		3001432E1CEDAD04008379DF /* CharacteristicReaderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacteristicReaderTests.swift; sourceTree = "<group>"; };
 		3069A1D61CDC788A003869EA /* BluetoothManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
 		306ECD611CE61A3600E48BBD /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		309F08661E6D706B00B7546A /* nRF Toolbox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "nRF Toolbox.entitlements"; sourceTree = "<group>"; };
@@ -558,8 +557,6 @@
 		5217F3F31859EE0000F2D5BB /* nRF Toolbox-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "nRF Toolbox-Prefix.pch"; sourceTree = "<group>"; };
 		5217F3F81859EE0000F2D5BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5217F3FD1859EE0000F2D5BB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		5217F40C1859EE0000F2D5BB /* nRF ToolboxTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "nRF ToolboxTests-Info.plist"; sourceTree = "<group>"; };
-		5217F40E1859EE0000F2D5BB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5217F41A1859EEF400F2D5BB /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		522636361C60FFB00054A550 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		5231403122FB1E130074325A /* UIColor+Nordic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Nordic.swift"; sourceTree = "<group>"; };
@@ -1651,7 +1648,6 @@
 			isa = PBXGroup;
 			children = (
 				5217F3EB1859EE0000F2D5BB /* nRF Toolbox */,
-				5217F40A1859EE0000F2D5BB /* nRF ToolboxTests */,
 				014C4E912404038A0003E601 /* nRF Toolbox Tests */,
 				5217F3E41859EE0000F2D5BB /* Frameworks */,
 				5217F3E31859EE0000F2D5BB /* Products */,
@@ -1716,24 +1712,6 @@
 				5217F3EE1859EE0000F2D5BB /* InfoPlist.strings */,
 				5217F3F31859EE0000F2D5BB /* nRF Toolbox-Prefix.pch */,
 				20C7FDFF2306C52900B06FD8 /* Services */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		5217F40A1859EE0000F2D5BB /* nRF ToolboxTests */ = {
-			isa = PBXGroup;
-			children = (
-				3001432E1CEDAD04008379DF /* CharacteristicReaderTests.swift */,
-				5217F40B1859EE0000F2D5BB /* Supporting Files */,
-			);
-			path = "nRF ToolboxTests";
-			sourceTree = "<group>";
-		};
-		5217F40B1859EE0000F2D5BB /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				5217F40C1859EE0000F2D5BB /* nRF ToolboxTests-Info.plist */,
-				5217F40D1859EE0000F2D5BB /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -2228,14 +2206,6 @@
 				5217F3F81859EE0000F2D5BB /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		5217F40D1859EE0000F2D5BB /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5217F40E1859EE0000F2D5BB /* en */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
