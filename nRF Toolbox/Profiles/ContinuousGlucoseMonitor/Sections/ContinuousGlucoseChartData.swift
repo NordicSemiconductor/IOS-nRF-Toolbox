@@ -42,9 +42,16 @@ class ContinuousGlucoseChartData: ChartDataSection<ContinuousGlucoseMonitorMeasu
             cell?.textLabel?.text = "All Records"
             cell?.accessoryType = .disclosureIndicator
             return cell!
-        } else {
-            return super.dequeCell(for: index, from: tableView)
         }
+        let cell = super.dequeCell(for: index, from: tableView)
+        if let chartCell = cell as? LinearChartTableViewCell {
+            chartCell.maxVisibleXRange = 300
+            let dFormatter = DateFormatter()
+            dFormatter.timeStyle = .short
+            dFormatter.dateStyle = .none
+            chartCell.dateFormatter = dFormatter
+        }
+        return cell
     }
 
     override func update(with data: ContinuousGlucoseMonitorMeasurement) {

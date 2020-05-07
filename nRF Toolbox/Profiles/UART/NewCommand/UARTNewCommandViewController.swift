@@ -116,7 +116,8 @@ class UARTNewCommandViewController: UIViewController {
         let image = CommandImage.allCases[selectedItem]
         
         if typeSegmentControl.selectedSegmentIndex == 0 {
-            command = TextCommand(text: textView.text!, image: image)
+            let text = textView.text.split(separator: "\n").joined(separator: self.eolSymbol())
+            command = TextCommand(text: text, image: image, eol: self.eolSymbol())
         } else {
             command = DataCommand(data: Data(valueTextField.text!.hexa), image: image)
         }
@@ -134,10 +135,11 @@ extension UARTNewCommandViewController {
         let typeIndex: Int
         let title: String
         switch command {
-        case is TextCommand:
+        case let tCommand as TextCommand:
             typeIndex = 0
-            title = command.title
+            title = tCommand.title
             textView.text = title
+            updateEOLSegment(eol: tCommand.eol)
         case is DataCommand:
             typeIndex = 1
             title = command.data.hexEncodedString().uppercased()
@@ -174,6 +176,11 @@ extension UARTNewCommandViewController {
         textView.didChangeText = { [weak self] _ in
             self?.createButton.isEnabled = self?.readyForCreate() == true
         }
+    }
+    
+    private func updateEOLSegment(eol: String) {
+        let symbols = ["\n", "\r", "\n\r"]
+        eolSegment.selectedSegmentIndex = symbols.enumerated().first(where: { eol == $0.element })?.offset ?? 0
     }
     
     private func setupTextField() {

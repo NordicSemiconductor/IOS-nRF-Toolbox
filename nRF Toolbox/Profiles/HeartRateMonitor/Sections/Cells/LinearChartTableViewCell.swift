@@ -43,9 +43,19 @@ extension DateFormatter: IAxisValueFormatter {
 
 class LinearChartTableViewCell: UITableViewCell {
     
-    static let maxVisibleXRange = 30.0
+    var maxVisibleXRange = 300.0
 
     let chartsView = LineChartView()
+    
+    var dateFormatter: DateFormatter = {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "mm:ss"
+            return dateFormatter
+        }() {
+        didSet {
+            chartsView.xAxis.valueFormatter = dateFormatter
+        }
+    }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -67,8 +77,7 @@ class LinearChartTableViewCell: UITableViewCell {
 
         let xAxis = chartsView.xAxis
         xAxis.labelFont = .gtEestiDisplay(.light, size: 10)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "mm:ss"
+        
         xAxis.valueFormatter = dateFormatter
         
         chartsView.dragEnabled = true
@@ -101,7 +110,7 @@ class LinearChartTableViewCell: UITableViewCell {
     func update(with data: [(x: TimeInterval, y: Double)]) {
         let dataSet = configureChartData(data)
         chartsView.data = dataSet
-        chartsView.setVisibleXRangeMaximum(Self.maxVisibleXRange)
+        chartsView.setVisibleXRangeMaximum(maxVisibleXRange)
         guard let last = data.last?.x else { return }
         
         if chartsView.highestVisibleX.rounded(.up) >= chartsView.xAxis.axisMaximum - 2 {
@@ -117,7 +126,7 @@ class LinearChartTableViewCell: UITableViewCell {
         let chartValues = value.map { ChartDataEntry(x: $0.x, y: $0.y) }
         
         let last = value.last?.x ?? Double.leastNormalMagnitude
-        let xMax = max((first + Self.maxVisibleXRange), last)
+        let xMax = max((first + maxVisibleXRange), last)
         
         chartsView.xAxis.axisMaximum = xMax
         chartsView.xAxis.axisMinimum = first

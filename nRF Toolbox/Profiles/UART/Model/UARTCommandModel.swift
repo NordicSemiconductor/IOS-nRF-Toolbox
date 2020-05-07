@@ -88,6 +88,7 @@ struct TextCommand: UARTCommandModel, Equatable {
     
     let text: String
     let image: CommandImage
+    var eol: String = "\n"
 }
 
 struct DataCommand: UARTCommandModel, Equatable {
