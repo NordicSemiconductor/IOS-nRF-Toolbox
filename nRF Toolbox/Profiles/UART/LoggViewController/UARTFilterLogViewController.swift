@@ -100,33 +100,52 @@ class UARTFilterLogViewController: UITableViewController, CloseButtonPresenter {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        navigationItem.rightBarButtonItem?.isEnabled = true
-        guard indexPath.section == 1 else {
-            selectedLevels.append(LogType.allCases[indexPath.row])
+        if indexPath.section == 1 {
+            selectedLevels = LogType.allCases
+            self.tableView(tableView, setSelection: true)
             return
         }
-        tableView.deselectRow(at: indexPath, animated: true)
-        for i in 0..<LogType.allCases.count {
-            let ip = IndexPath(row: i, section: 0)
-            guard tableView.cellForRow(at: ip)?.isSelected == false else { continue }
-            tableView.selectRow(at: ip, animated: false, scrollPosition: .none)
-            selectedLevels.append(LogType.allCases[i])
-        }
+        
+        self.tableView(tableView, setSelection: false)
+        selectedLevels = selectedTypes(start: indexPath, tableView: tableView)
     }
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         guard indexPath.section == 0 else { return }
-        selectedLevels.removeAll { LogType.allCases[indexPath.row] == $0 }
         
-        var enabled = false
-        for i in 0..<LogType.allCases.count {
-            if tableView.cellForRow(at: IndexPath(row: i, section: 0))?.isSelected == true {
-                enabled = true
-                break
-            }
+        self.tableView(tableView, setSelection: false)
+        selectedLevels = selectedTypes(start: indexPath, tableView: tableView)
+    }
+}
+
+extension UARTFilterLogViewController {
+    private func selectedTypes(start indexPath: IndexPath, tableView: UITableView) -> [LogType] {
+        let selectedSequence = sequence(first: indexPath) { (ip) -> IndexPath? in
+            guard ip.row < LogType.allCases.count - 1 else { return nil }
+            return IndexPath(item: ip.row + 1, section: ip.section)
         }
         
-        navigationItem.rightBarButtonItem?.isEnabled = enabled
+        selectedSequence.forEach {
+            tableView.selectRow(at: $0, animated: false, scrollPosition: .none)
+        }
+        
+        return selectedSequence.map {
+            LogType.allCases[$0.row]
+        }
     }
     
+    private func tableView(_ tableView: UITableView, setSelection selection: Bool) {
+        sequence(first: IndexPath(row: 0, section: 0)) { (ip) -> IndexPath? in
+            let next = IndexPath(row: ip.row + 1, section: ip.section)
+            guard next.row < LogType.allCases.count else { return nil }
+            return next
+        }
+        .forEach {
+            if selection {
+                tableView.selectRow(at: $0, animated: false, scrollPosition: .none)
+            } else {
+                tableView.deselectRow(at: $0, animated: false)
+            }
+        }
+    }
 }
