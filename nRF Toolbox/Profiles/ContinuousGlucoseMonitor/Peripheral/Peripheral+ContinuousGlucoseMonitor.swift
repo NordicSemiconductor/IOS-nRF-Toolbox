@@ -47,14 +47,6 @@ private extension CBUUID {
 extension PeripheralDescription {
     static let continuousGlucoseMonitor = PeripheralDescription(uuid: CBUUID(hex: 0x181F), services: [.battery, .continuousGlucoseMonitor], mandatoryServices: [CBUUID(hex: 0x181F)],
         mandatoryCharacteristics: [
-            .feature,
-    .measurement,
-    .sessionRunTime,
-    .sessionStartTime,
-    .specificOpsControlPoint,
-    .status,
-    .measurementContext,
-    .recordAccessPoint
         ])
 }
 
