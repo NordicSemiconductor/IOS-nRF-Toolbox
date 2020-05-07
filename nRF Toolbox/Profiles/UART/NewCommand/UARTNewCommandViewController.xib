@@ -81,9 +81,9 @@
                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="DOf-x4-x0q">
                                     <rect key="frame" x="0.0" y="226" width="374" height="32"/>
                                     <segments>
-                                        <segment title="\n"/>
-                                        <segment title="\r"/>
-                                        <segment title="\n+\r"/>
+                                        <segment title="LF"/>
+                                        <segment title="CR"/>
+                                        <segment title="CR+LF"/>
                                     </segments>
                                 </segmentedControl>
                             </subviews>

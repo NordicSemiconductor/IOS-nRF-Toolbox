@@ -42,8 +42,8 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
     struct Section {
         static let name = 0
         static let preset = 1
-        static let commands = 2
-        static let play = 3
+        static let play = 2
+        static let commands = 3
     }
     
     private var presetCollectionView: UARTPresetCollectionView?
