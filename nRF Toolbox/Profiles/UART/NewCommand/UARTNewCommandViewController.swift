@@ -201,6 +201,16 @@ extension UARTNewCommandViewController {
         
         return selectedItem && dataIsReady
     }
+    
+    private func eolSymbol() -> String {
+        switch eolSegment.selectedSegmentIndex {
+        case 0: return "\n"
+        case 1: return "\r"
+        case 2: return "\n\r"
+        default:
+            return ""
+        }
+    }
 }
 
 extension UARTNewCommandViewController: UICollectionViewDelegateFlowLayout {
