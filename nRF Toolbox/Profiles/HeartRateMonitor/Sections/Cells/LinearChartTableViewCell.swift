@@ -43,7 +43,7 @@ extension DateFormatter: IAxisValueFormatter {
 
 class LinearChartTableViewCell: UITableViewCell {
     
-    var maxVisibleXRange = 300.0
+    var maxVisibleXRange = 30.0
 
     let chartsView = LineChartView()
     
