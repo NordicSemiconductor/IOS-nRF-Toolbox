@@ -17,7 +17,7 @@ DEPENDENCIES:
   - Charts (~> 3.5)
   - CorePlot (~> 2.2)
   - iOSDFULibrary (~> 4.7)
-  - McuManager (= 0.10)
+  - McuManager (~> 0.10)
   - SWRevealViewController (~> 2.3)
 
 SPEC REPOS:
@@ -41,6 +41,6 @@ SPEC CHECKSUMS:
   SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
   ZIPFoundation: b1f0de4eed33e74a676f76e12559ab6b75990197
 
-PODFILE CHECKSUM: 9aa223de00485d04b83ecbf517f62c22dc559664
+PODFILE CHECKSUM: 231a987b95c8a931837051e6800bdf1778d188ee
 
 COCOAPODS: 1.9.1
