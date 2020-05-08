@@ -140,7 +140,6 @@
 		204485E7233A172800A8A3A3 /* Peripheral+Running.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204485E6233A172800A8A3A3 /* Peripheral+Running.swift */; };
 		204485EA233A38E900A8A3A3 /* RunningSpeedSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204485E9233A38E900A8A3A3 /* RunningSpeedSection.swift */; };
 		20850177233B690500C792B4 /* RunningCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20850176233B690500C792B4 /* RunningCharacteristic.swift */; };
-		208EE4EA23155FC8008E5FE9 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208EE4E923155FC8008E5FE9 /* WebViewController.swift */; };
 		20B25F382319568B006AF321 /* PeripheralTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B25F372319568B006AF321 /* PeripheralTableViewController.swift */; };
 		20B797912334FD77001328E1 /* Peripheral+BMG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B797902334FD77001328E1 /* Peripheral+BMG.swift */; };
 		20B797942334FE1B001328E1 /* Identifier+GlucoseMonitorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B797932334FE1B001328E1 /* Identifier+GlucoseMonitorViewController.swift */; };
@@ -433,7 +432,6 @@
 		204485E6233A172800A8A3A3 /* Peripheral+Running.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Peripheral+Running.swift"; sourceTree = "<group>"; };
 		204485E9233A38E900A8A3A3 /* RunningSpeedSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningSpeedSection.swift; sourceTree = "<group>"; };
 		20850176233B690500C792B4 /* RunningCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningCharacteristic.swift; sourceTree = "<group>"; };
-		208EE4E923155FC8008E5FE9 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		20B25F372319568B006AF321 /* PeripheralTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralTableViewController.swift; sourceTree = "<group>"; };
 		20B797902334FD77001328E1 /* Peripheral+BMG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Peripheral+BMG.swift"; sourceTree = "<group>"; };
 		20B797932334FE1B001328E1 /* Identifier+GlucoseMonitorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Identifier+GlucoseMonitorViewController.swift"; sourceTree = "<group>"; };
@@ -1192,14 +1190,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		208EE4E823155F94008E5FE9 /* WebViewController */ = {
-			isa = PBXGroup;
-			children = (
-				208EE4E923155FC8008E5FE9 /* WebViewController.swift */,
-			);
-			path = WebViewController;
-			sourceTree = "<group>";
-		};
 		20B25F112317FAA3006AF321 /* BLE */ = {
 			isa = PBXGroup;
 			children = (
@@ -1689,7 +1679,6 @@
 			children = (
 				01B56C1423A1181C00140A1C /* Connection */,
 				20B7979B2338EC59001328E1 /* Profiles */,
-				208EE4E823155F94008E5FE9 /* WebViewController */,
 				20F15C372313D082000C5503 /* CommonViews */,
 				20E07B39230558B700FCB205 /* MainScreen */,
 				309F08661E6D706B00B7546A /* nRF Toolbox.entitlements */,
@@ -2134,7 +2123,6 @@
 				01BEADD8241AE6BF00FC7183 /* UILabel+Ext.swift in Sources */,
 				0169B59E23FBD8BE00907C1B /* NordicTextFieldCell.swift in Sources */,
 				20B7979823350584001328E1 /* Peripheral+Cycling.swift in Sources */,
-				208EE4EA23155FC8008E5FE9 /* WebViewController.swift in Sources */,
 				01FBC51724081A1C00B1056B /* DFUFirmwareSizeSection.swift in Sources */,
 				019985F123E07CFB000CDCB6 /* XMLDocument.swift in Sources */,
 				20B797942334FE1B001328E1 /* Identifier+GlucoseMonitorViewController.swift in Sources */,
@@ -2372,6 +2360,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "nRF Toolbox/nRF Toolbox.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 4;
 				DEFINES_MODULE = NO;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2534,6 +2523,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "nRF Toolbox/nRF Toolbox.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 4;
 				DEFINES_MODULE = NO;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2583,6 +2573,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "nRF Toolbox/nRF Toolbox.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 4;
 				DEFINES_MODULE = NO;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (

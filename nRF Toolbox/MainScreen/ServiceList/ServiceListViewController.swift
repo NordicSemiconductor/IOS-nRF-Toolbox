@@ -103,7 +103,8 @@ extension ServiceListViewController {
             selectedService = serviceId
             serviceRouter.showServiceController(with: serviceId)
         case let link as LinkService:
-            serviceRouter.showLinkController(link)
+            tableView.deselectRow(at: indexPath, animated: true)
+            serviceRouter.openLink(link)
         default:
             SystemLog(category: .ui, type: .debug).log(message: "Unknown Cell type selected")
         }
