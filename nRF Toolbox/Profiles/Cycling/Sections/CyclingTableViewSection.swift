@@ -1,10 +1,34 @@
-//
-//  CyclingTableViewSection.swift
-//  nRF Toolbox
-//
-//  Created by Nick Kibysh on 18/09/2019.
-//  Copyright © 2019 Nordic Semiconductor. All rights reserved.
-//
+/*
+* Copyright (c) 2020, Nordic Semiconductor
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without modification,
+* are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+*
+* 2. Redistributions in binary form must reproduce the above copyright notice, this
+*    list of conditions and the following disclaimer in the documentation and/or
+*    other materials provided with the distribution.
+*
+* 3. Neither the name of the copyright holder nor the names of its contributors may
+*    be used to endorse or promote products derived from this software without
+*    specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+* IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+* INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+* NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+* PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+* ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+* POSSIBILITY OF SUCH DAMAGE.
+*/
+
+
 
 import UIKit
 import CoreBluetooth
@@ -18,10 +42,12 @@ extension Identifier where Value == DetailsTableViewCellModel {
 }
 
 struct CyclingTableViewSection: Section {
-    var isHidden: Bool = false 
+    var isHidden: Bool = false
     
-    // TODO: Load value from settings
-    private let wheelCircumference: Double = 2.6//UserDefaults.standard.double(forKey: "key_diameter")
+    var wheelSize: Double = 0.6
+    private var wheelCircumference: Double {
+        self.wheelSize * .pi
+    }
     
     private var oldCharacteristic: CyclingCharacteristic = .zero
     
@@ -36,8 +62,13 @@ struct CyclingTableViewSection: Section {
         DefaultDetailsTableViewCellModel(title: "Cadence", identifier: .cadence),
         DefaultDetailsTableViewCellModel(title: "Distance", identifier: .distance),
         DefaultDetailsTableViewCellModel(title: "Total Distance", identifier: .totalDistance),
-        DefaultDetailsTableViewCellModel(title: "Gear Retio", identifier: .gearRatio)
+        DefaultDetailsTableViewCellModel(title: "Gear Ratio", identifier: .gearRatio)
     ]
+    
+    func registerCells(_ tableView: UITableView) {
+        tableView.registerCellClass(cell: DetailsTableViewCell.self)
+        tableView.registerCellNib(cell: SliderTableViewCell.self)
+    }
     
     func dequeCell(for index: Int, from tableView: UITableView) -> UITableViewCell {
         let detailsCell = tableView.dequeueCell(ofType: DetailsTableViewCell.self)
@@ -47,7 +78,7 @@ struct CyclingTableViewSection: Section {
     
     mutating func reset() {
         for i in items.enumerated() {
-            items[i.offset].value = "-"
+            items[i.offset].details = "-"
         }
         
         oldCharacteristic = .zero 
@@ -72,15 +103,15 @@ struct CyclingTableViewSection: Section {
         
         switch item.identifier {
         case .speed:
-            item.value = speedFormatter.string(from: speed)
+            item.details = speedFormatter.string(from: speed)
         case .distance:
-            item.value = distanceFormatter.string(from: travelDistance)
+            item.details = distanceFormatter.string(from: travelDistance)
         case .totalDistance:
-            item.value = distanceFormatter.string(from: totalTravelDistance)
+            item.details = distanceFormatter.string(from: totalTravelDistance)
         case .cadence:
-            item.value = "\(cadence) RPM"
+            item.details = "\(cadence) RPM"
         case .gearRatio:
-            item.value = String(format: "%.2f", gearRatio)
+            item.details = String(format: "%.2f", gearRatio)
         default:
             break
         }

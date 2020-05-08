@@ -1,10 +1,34 @@
-//
-//  PeripheralScanner.swift
-//  Scanner
-//
-//  Created by Nick Kibysh on 01/12/2019.
-//  Copyright © 2019 Nick Kibysh. All rights reserved.
-//
+/*
+* Copyright (c) 2020, Nordic Semiconductor
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without modification,
+* are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+*
+* 2. Redistributions in binary form must reproduce the above copyright notice, this
+*    list of conditions and the following disclaimer in the documentation and/or
+*    other materials provided with the distribution.
+*
+* 3. Neither the name of the copyright holder nor the names of its contributors may
+*    be used to endorse or promote products derived from this software without
+*    specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+* IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+* INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+* NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+* PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+* ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+* POSSIBILITY OF SUCH DAMAGE.
+*/
+
+
 
 import CoreBluetooth
 import os.log
@@ -58,7 +82,7 @@ open class PeripheralScanner: NSObject {
     private var centralManager: CBCentralManager!
     private let bgQueue = DispatchQueue(label: "no.nordicsemi.nRF-Toolbox.ConnectionManager", qos: .utility)
     private lazy var dispatchSource: DispatchSourceTimer = {
-        let t = DispatchSource.makeTimerSource(queue: self.bgQueue)
+        let t = DispatchSource.makeTimerSource(queue: bgQueue)
         t.setEventHandler {
             let oldPeripherals = self.peripherals
             let oldSet: Set<Peripheral> = Set(oldPeripherals)
@@ -88,9 +112,9 @@ open class PeripheralScanner: NSObject {
     private (set) var peripherals: [Peripheral] = []
     
     init(services: [CBUUID]?) {
-        self.scanServices = services
+        scanServices = services
         super.init()
-        self.centralManager = CBCentralManager(delegate: self, queue: bgQueue)
+        centralManager = CBCentralManager(delegate: self, queue: bgQueue)
     }
     
     open func startScanning() {
@@ -106,13 +130,13 @@ open class PeripheralScanner: NSObject {
     }
     
     open func stopScanning() {
-        self.centralManager.stopScan()
-        self.status = .ready
+        centralManager.stopScan()
+        status = .ready
     }
     
     open func connect(to peripheral: Peripheral) {
         stopScanning()
-        self.status = .connecting(peripheral)
+        status = .connecting(peripheral)
     }
 }
 
@@ -120,10 +144,10 @@ extension PeripheralScanner: CBCentralManagerDelegate {
     public func centralManagerDidUpdateState(_ central: CBCentralManager) {
         switch central.state {
         case .poweredOn, .resetting:
-            self.status = .ready
+            status = .ready
             startScanning()
         case .poweredOff, .unauthorized, .unknown, .unsupported:
-            self.status = .notReady(central.state)
+            status = .notReady(central.state)
         @unknown default:
             break
         }
@@ -139,15 +163,15 @@ extension PeripheralScanner: CBCentralManagerDelegate {
     }
      
     public func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        guard case .connecting(let p) = self.status else { return }
+        guard case .connecting(let p) = status else { return }
         guard p.peripheral == peripheral else { return }
-        self.status = .connected(p)
+        status = .connected(p)
     }
     
     public func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
-        guard case .connecting(let p) = self.status else { return }
+        guard case .connecting(let p) = status else { return }
         guard p.peripheral == peripheral else { return }
         
-        self.status = .failedToConnect(p, error)
+        status = .failedToConnect(p, error)
     }
 }

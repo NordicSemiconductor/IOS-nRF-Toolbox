@@ -1,14 +1,46 @@
-//
-//  UIColor+Nordic.swift
-//  nRF Toolbox
-//
-//  Created by Aleksander Nowakowski on 07/08/2019.
-//  Copyright © 2019 Nordic Semiconductor. All rights reserved.
-//
+/*
+* Copyright (c) 2020, Nordic Semiconductor
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without modification,
+* are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+*
+* 2. Redistributions in binary form must reproduce the above copyright notice, this
+*    list of conditions and the following disclaimer in the documentation and/or
+*    other materials provided with the distribution.
+*
+* 3. Neither the name of the copyright holder nor the names of its contributors may
+*    be used to endorse or promote products derived from this software without
+*    specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+* IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+* INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+* NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+* PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+* ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+* POSSIBILITY OF SUCH DAMAGE.
+*/
+
+
 
 import UIKit
 
 extension UIColor {
+
+    convenience init(r: Int, g: Int, b: Int, a: Int = 100) {
+        let red = CGFloat(r) / 255
+        let green = CGFloat(g) / 255
+        let blue = CGFloat(b) / 255
+        let alpha = CGFloat(a) / 100
+        self.init(red: red, green: green, blue: blue, alpha: alpha)
+    }
     
     static let nordicBlue: UIColor = {
         if #available(iOS 11.0, *) {
@@ -34,7 +66,7 @@ extension UIColor {
         }
         }()!
     
-    static let nordicFall: UIColor = {
+    static let nordicYellow: UIColor = {
         if #available(iOS 11.0, *) {
             return UIColor(named: "NordicFall")!
         } else {
@@ -42,11 +74,11 @@ extension UIColor {
         }
     }()
     
-    static let nordicRedDark: UIColor = {
+    static let nordicFall: UIColor = {
         if #available(iOS 11.0, *) {
-            return UIColor(named: "NordicRedDark")!
+            return UIColor(named: "NordicFall")!
         } else {
-            return #colorLiteral(red: 0.8138422955, green: 0.24269408, blue: 0.3188471754, alpha: 1)
+            return #colorLiteral(red: 0.9759542346, green: 0.5849055648, blue: 0.2069504261, alpha: 1)
         }
     }()
     
@@ -62,9 +94,25 @@ extension UIColor {
     
     static let nordicDarkGray: UIColor = {
         if #available(iOS 11.0, *) {
-            return UIColor(named: "NordicDarkGray")!
+            return UIColor(named: "NordicDarkGrey")!
         } else {
             return #colorLiteral(red: 0.2590435743, green: 0.3151275516, blue: 0.353839159, alpha: 1)
+        }
+    }()
+    
+    static let nordicGrey4: UIColor = {
+        if #available(iOS 11, *) {
+            return UIColor(named: "NordicGray4")!
+        } else {
+            return UIColor(red: 0.82, green: 0.82, blue: 0.839, alpha: 1)
+        }
+    }()
+
+    static let nordicGrey5: UIColor = {
+        if #available(iOS 11, *) {
+            return UIColor(named: "NordicGray5")!
+        } else {
+            return UIColor(red: 0.89, green: 0.89, blue: 0.91, alpha: 1)
         }
     }()
     
@@ -131,6 +179,13 @@ extension UIColor {
             return .nordicAlmostWhite
         }
     }()
+    
+    static let nordicTextViewColor = dynamicColor(light: .white, dark: .black)
+    static let nordicTextViewBordorColor: UIColor = {
+        let light = UIColor(r: 205, g: 204, b: 205)
+        let dark = UIColor(r: 50, g: 50, b: 50)
+        return dynamicColor(light: light, dark: dark)
+    }()
 }
 
 // MARK: - System Colors
@@ -171,7 +226,7 @@ extension UIColor {
                 dark = .black 
             }
             
-            return .dynamicColor(light: .nordicRedDark, dark: dark)
+            return .dynamicColor(light: .nordicRed, dark: dark)
         }()
     }
 }
@@ -211,7 +266,7 @@ extension UIColor {
     static func dynamicColor(light: UIColor, dark: UIColor) -> UIColor {
         if #available(iOS 13.0, *) {
             return UIColor { (traitCollection) -> UIColor in
-                return traitCollection.userInterfaceStyle == .light ? light : dark
+                traitCollection.userInterfaceStyle == .dark ? dark : light
             }
         } else {
             return light

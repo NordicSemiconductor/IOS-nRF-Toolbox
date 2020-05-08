@@ -1,10 +1,34 @@
-//
-//  GlucoseMonitorViewController.swift
-//  nRF Toolbox
-//
-//  Created by Nick Kibysh on 06/09/2019.
-//  Copyright © 2019 Nordic Semiconductor. All rights reserved.
-//
+/*
+* Copyright (c) 2020, Nordic Semiconductor
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without modification,
+* are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+*
+* 2. Redistributions in binary form must reproduce the above copyright notice, this
+*    list of conditions and the following disclaimer in the documentation and/or
+*    other materials provided with the distribution.
+*
+* 3. Neither the name of the copyright holder nor the names of its contributors may
+*    be used to endorse or promote products derived from this software without
+*    specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+* IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+* INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+* NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+* PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+* ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+* POSSIBILITY OF SUCH DAMAGE.
+*/
+
+
 
 import UIKit
 import CoreBluetooth
@@ -13,26 +37,29 @@ class GlucoseMonitorViewController: PeripheralTableViewController {
     private var bgmSection = BGMSection()
     private var recordAccessControlPoint: CBCharacteristic?
     
-    private lazy var actionSection: ActionSection = {
-        let refresh = ActionSectionItem(title: "Refresh") { [unowned self] in 
-            self.updateDisplayedItems(.all)
+    private lazy var actionSection: BGMActionSection = { [unowned self] in
+        let section = BGMActionSection()
+        section.registerRequiredCells(for: self.tableView)
+        section.refreshAction = { id in
+            self.updateDisplayedItems(id)
         }
-        let clear = ActionSectionItem(title: "Clear") { [unowned self] in
+        
+        section.clearAction = {
             self.bgmSection.clearReadings()
             self.tableView.reloadData()
         }
-        let deleteAll = ActionSectionItem(title: "Delete All", style: .destructive) { [unowned self] in
+        
+        section.deleteAllAction = {
             self.bgmSection.clearReadings()
             let data = Data([BGMOpCode.deleteStoredRecords.rawValue, BGMOperator.allRecords.rawValue])
             self.activePeripheral?.writeValue(data, for: self.recordAccessControlPoint!, type: .withResponse)
         }
-        
-        return ActionSection(id: "Actions", sectionTitle: "Actions", items: [refresh, clear, deleteAll])
+        return section
     }()
     
     private var selectionSection = OptionSelectionSection<GlucoseMonitorViewController>(id: .selectionResult, sectionTitle: "", items: [OptionSelectionSection.Item(option: "Display Items", selectedCase: "All")])
     
-    override var navigationTitle: String { "Glucose Monitoring" }
+    override var navigationTitle: String { "Glucose" }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,12 +71,14 @@ class GlucoseMonitorViewController: PeripheralTableViewController {
         switch section.id {
         case .selectionResult:
             handleOptionSelection()
+        case .bgMActionSection:
+            actionSection.didSelectRaw(at: item)
         default:
             super.selected(item: item, in: section)
         }
     }
     
-    override var internalSections: [Section] { [selectionSection, bgmSection, actionSection] }
+    override var internalSections: [Section] { [actionSection, bgmSection] }
     
     override var peripheralDescription: PeripheralDescription { .bloodGlucoseMonitor }
     
@@ -109,11 +138,11 @@ extension GlucoseMonitorViewController {
         }
         selector.navigationItem.title = selectionSection.items.first?.option
         
-        self.navigationController?.pushViewController(selector, animated: true)
+        navigationController?.pushViewController(selector, animated: true)
     }
     
     private func updateDisplayedItems(_ itemsToDisplay: Identifier<GlucoseMonitorViewController>) {
-        self.bgmSection.clearReadings()
+        bgmSection.clearReadings()
         
         let bgmOperator: UInt8 = {
             switch itemsToDisplay {
@@ -125,6 +154,6 @@ extension GlucoseMonitorViewController {
         }()
         
         let data = Data([BGMOpCode.reportStoredRecords.rawValue, bgmOperator])
-        self.activePeripheral?.writeValue(data, for: self.recordAccessControlPoint!, type: .withResponse)
+        activePeripheral?.writeValue(data, for: recordAccessControlPoint!, type: .withResponse)
     }
 }

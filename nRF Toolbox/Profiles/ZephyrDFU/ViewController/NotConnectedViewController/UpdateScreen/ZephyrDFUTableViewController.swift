@@ -1,10 +1,34 @@
-//
-//  ZephyrDFUTableViewController.swift
-//  nRF Toolbox
-//
-//  Created by Nick Kibysh on 17/03/2020.
-//  Copyright © 2020 Nordic Semiconductor. All rights reserved.
-//
+/*
+* Copyright (c) 2020, Nordic Semiconductor
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without modification,
+* are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+*
+* 2. Redistributions in binary form must reproduce the above copyright notice, this
+*    list of conditions and the following disclaimer in the documentation and/or
+*    other materials provided with the distribution.
+*
+* 3. Neither the name of the copyright holder nor the names of its contributors may
+*    be used to endorse or promote products derived from this software without
+*    specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+* IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+* INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+* NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+* PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+* ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+* POSSIBILITY OF SUCH DAMAGE.
+*/
+
+
 
 import UIKit
 import McuManager
@@ -16,31 +40,20 @@ extension FirmwareUpgradeManager: UpgradeManager {
     }
 }
 
-extension Log.Level {
-    var dfuLogLevel: LogLevel {
-        switch self {
-        case .debug: return .debug
-        case .verbose: return .debug
-        case .info: return .info
-        case .warn: return .warning
-        case .error: return .error
-        }
-    }
-}
-
 class ZephyrDFUTableViewController: UpgradeTableViewController<FirmwareUpgradeManager> {
     private let data: Data
     
-    private let logger: LogObserver
+    private let logger: McuMgrLogObserver
     
-    init(data: Data, peripheral: Peripheral, router: DFUUpdateRouter, logger: LogObserver) {
+    init(data: Data, peripheral: Peripheral, router: DFUUpdateRouter, logger: McuMgrLogObserver) {
         self.data = data
         self.logger = logger
         
         super.init(peripheral: peripheral, router: router)
         
         let transport = McuMgrBleTransport(peripheral.peripheral)
-        self.manager = FirmwareUpgradeManager(transporter: transport!, delegate: self)
+        manager = FirmwareUpgradeManager(transporter: transport, delegate: self)
+        manager?.logDelegate = logger
     }
     
     required init?(coder: NSCoder) {
@@ -49,7 +62,7 @@ class ZephyrDFUTableViewController: UpgradeTableViewController<FirmwareUpgradeMa
     
     override func update() {
         do {
-            try self.manager?.start(data: self.data)
+            try manager?.start(data: data)
         } catch let error {
             headerView.style = .error
             headerView.statusLabel.text = error.localizedDescription
@@ -84,11 +97,10 @@ extension ZephyrDFUTableViewController {
 }
 
 extension ZephyrDFUTableViewController: FirmwareUpgradeDelegate {
-    func log(_ msg: String, atLevel level: Log.Level) {
-        logger.logWith(level.dfuLogLevel, message: msg)
-    }
     
     func upgradeDidStart(controller: FirmwareUpgradeController) {
+        logger.shouldLog = false
+        
         headerView.style = .update
         headerView.startAnimating()
         headerView.statusLabel.text = "UPDATING"
@@ -98,9 +110,12 @@ extension ZephyrDFUTableViewController: FirmwareUpgradeDelegate {
     }
     
     func upgradeStateDidChange(from previousState: FirmwareUpgradeState, to newState: FirmwareUpgradeState) {
+
     }
     
     func upgradeDidComplete() {
+        logger.shouldLog = true
+        
         headerView.style = .done
         headerView.statusLabel.text = "COMPLETED"
         
@@ -110,6 +125,8 @@ extension ZephyrDFUTableViewController: FirmwareUpgradeDelegate {
     }
     
     func upgradeDidFail(inState state: FirmwareUpgradeState, with error: Error) {
+        logger.shouldLog = true
+        
         headerView.style = .error
         headerView.statusLabel.text = error.localizedDescription
         
@@ -119,6 +136,8 @@ extension ZephyrDFUTableViewController: FirmwareUpgradeDelegate {
     }
     
     func upgradeDidCancel(state: FirmwareUpgradeState) {
+        logger.shouldLog = true
+        
         headerView.statusLabel.text = "CANCELED"
         
         controlSection.items = [.showLog, .done]
@@ -130,6 +149,4 @@ extension ZephyrDFUTableViewController: FirmwareUpgradeDelegate {
         let percent = Float(bytesSent) / Float(imageSize)
         headerView.progressView.progress = percent
     }
-    
-    
 }

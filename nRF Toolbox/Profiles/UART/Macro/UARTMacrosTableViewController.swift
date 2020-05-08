@@ -1,10 +1,34 @@
-//
-//  UARTMacrosTableViewController.swift
-//  nRF Toolbox
-//
-//  Created by Nick Kibysh on 14/02/2020.
-//  Copyright © 2020 Nordic Semiconductor. All rights reserved.
-//
+/*
+* Copyright (c) 2020, Nordic Semiconductor
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without modification,
+* are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+*
+* 2. Redistributions in binary form must reproduce the above copyright notice, this
+*    list of conditions and the following disclaimer in the documentation and/or
+*    other materials provided with the distribution.
+*
+* 3. Neither the name of the copyright holder nor the names of its contributors may
+*    be used to endorse or promote products derived from this software without
+*    specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+* IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+* INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+* NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+* PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+* ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+* POSSIBILITY OF SUCH DAMAGE.
+*/
+
+
 
 import UIKit
 
@@ -18,8 +42,8 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
     struct Section {
         static let name = 0
         static let preset = 1
-        static let commands = 2
-        static let play = 3
+        static let play = 2
+        static let commands = 3
     }
     
     private var presetCollectionView: UARTPresetCollectionView?
@@ -27,22 +51,30 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
     private let fileManager = UARTMacroFileManager()
     private let editingMode: Bool
     private let bluetoothManager: BluetoothManager
+
+    let presentationType: PresentationType
     
     weak var macrosDelegate: UARTMacroViewControllerDelegate?
     
-    init(preset: UARTPreset, bluetoothManager: BluetoothManager) {
-        self.macros = .empty
-        self.macros.preset = preset
-        self.editingMode = false
+    init(preset: UARTPreset, bluetoothManager: BluetoothManager, presentationType: PresentationType = .push) {
+        macros = .empty
+        macros.preset = preset
+        editingMode = false
         self.bluetoothManager = bluetoothManager
+        self.presentationType = presentationType
         super.init(style: .grouped)
+
+        self.setupLeftNavButton(presentationType: presentationType)
     }
     
-    init(macros: UARTMacro = .empty, bluetoothManager: BluetoothManager) {
+    init(macros: UARTMacro = .empty, bluetoothManager: BluetoothManager, presentationType: PresentationType = .push) {
         self.macros = macros
-        self.editingMode = true
+        editingMode = true
         self.bluetoothManager = bluetoothManager
+        self.presentationType = presentationType
         super.init(style: .grouped)
+
+        self.setupLeftNavButton(presentationType: presentationType)
     }
     
     required init?(coder: NSCoder) {
@@ -72,17 +104,20 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
             return
         }
         
-        try? displayOnError(fileManager.save(macros, sholdUpdate: editingMode))
+        try? displayOnError(fileManager.save(macros, shodUpdate: editingMode))
         if editingMode {
             macrosDelegate?.macrosController(self, changed: macros)
         } else {
             macrosDelegate?.macrosController(self, created: macros)
         }
+
+        switch presentationType {
+        case .present: dismsiss()
+        case .push: navigationController?.popViewController(animated: true)
+        }
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
-    }
+    override func numberOfSections(in tableView: UITableView) -> Int { 4 }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
@@ -119,12 +154,6 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
         default:
             break
         }
-    }
-    
-    private func handleCommandSectionTap(_ index: Int) {
-        guard index == macros.commands.count else { return }
-        macros.commands.append(UARTMacroTimeInterval(miliseconds: 100))
-        tableView.insertRows(at: [IndexPath(item: macros.commands.count - 1, section: Section.commands)], with: .automatic)
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -171,7 +200,7 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
     }
     
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return indexPath.section == Section.commands && indexPath.row < macros.commands.count
+        indexPath.section == Section.commands && indexPath.row < macros.commands.count
     }
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
@@ -184,6 +213,27 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
     override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
         guard proposedDestinationIndexPath.section != Section.commands || proposedDestinationIndexPath.row >= macros.commands.count else { return proposedDestinationIndexPath }
         return IndexPath(row: macros.commands.count - 1, section: Section.commands)
+    }
+}
+
+//MARK: - Private method
+extension UARTMacrosTableViewController {
+    private func setupLeftNavButton(presentationType: PresentationType) {
+        guard case .present = presentationType else {
+            return
+        }
+
+        if #available(iOS 13, *) {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(dismsiss))
+        } else {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .done, target: self, action: #selector(dismsiss))
+        }
+    }
+
+    private func handleCommandSectionTap(_ index: Int) {
+        guard index == macros.commands.count else { return }
+        macros.commands.append(UARTMacroTimeInterval(milliseconds: 100))
+        tableView.insertRows(at: [IndexPath(item: macros.commands.count - 1, section: Section.commands)], with: .automatic)
     }
 }
 

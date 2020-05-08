@@ -1,6 +1,0 @@
-framework module ZIPFoundation {
-  umbrella header "ZIPFoundation-umbrella.h"
-
-  export *
-  module * { export * }
-}

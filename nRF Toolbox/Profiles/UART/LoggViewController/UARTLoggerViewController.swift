@@ -1,10 +1,34 @@
-//
-//  UARTLoggerViewController.swift
-//  nRF Toolbox
-//
-//  Created by Nick Kibysh on 28/01/2020.
-//  Copyright © 2020 Nordic Semiconductor. All rights reserved.
-//
+/*
+* Copyright (c) 2020, Nordic Semiconductor
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without modification,
+* are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+*
+* 2. Redistributions in binary form must reproduce the above copyright notice, this
+*    list of conditions and the following disclaimer in the documentation and/or
+*    other materials provided with the distribution.
+*
+* 3. Neither the name of the copyright holder nor the names of its contributors may
+*    be used to endorse or promote products derived from this software without
+*    specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+* IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+* INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+* NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+* PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+* ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+* POSSIBILITY OF SUCH DAMAGE.
+*/
+
+
 
 import UIKit
 
@@ -25,7 +49,7 @@ class UARTLoggerViewController: UIViewController, CloseButtonPresenter {
     
     var logger: Logger { loggerTableView }
     private var btManager: BluetoothManager
-    private var filterLogLevel: [LOGLevel] = LOGLevel.allCases
+    private var filterLogLevel: [LogType] = LogType.allCases
     
     private lazy var filterBtn = UIBarButtonItem(image: UIImage.getFilterIcon(isFilled: false), style: .plain, target: self, action: #selector(openFilter))
     
@@ -52,6 +76,10 @@ class UARTLoggerViewController: UIViewController, CloseButtonPresenter {
         let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false)
         present(nc, animated: true)
     }
+    
+    func reset() {
+        loggerTableView.reset()
+    }
 }
 
 extension UARTLoggerViewController {
@@ -69,7 +97,7 @@ extension UARTLoggerViewController {
         let clearItem = UIBarButtonItem(image: trashImage, style: .plain, target: self, action: #selector(clear))
         navigationItem.rightBarButtonItems = [clearItem, filterBtn]
         
-        btManager.logger = self.loggerTableView
+        btManager.logger = loggerTableView
     }
     
     @objc private func clear() {
@@ -95,13 +123,13 @@ extension UARTLoggerViewController: UITextFieldDelegate {
 }
 
 extension UARTLoggerViewController: UARTFilterApplierDelegate {
-    func setLevels(_ levels: [LOGLevel]) {
+    func setLevels(_ levels: [LogType]) {
         print(levels)
         filterLogLevel = levels
         loggerTableView.filter = levels
         dismsiss()
         
-        filterBtn.image = UIImage.getFilterIcon(isFilled: levels.count != LOGLevel.allCases.count)
+        filterBtn.image = UIImage.getFilterIcon(isFilled: levels.count != LogType.allCases.count)
     }
     
     

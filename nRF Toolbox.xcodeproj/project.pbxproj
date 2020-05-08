@@ -57,7 +57,6 @@
 		019985F123E07CFB000CDCB6 /* XMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019985F023E07CFB000CDCB6 /* XMLDocument.swift */; };
 		01A1B76723CF13A50062FADC /* UARTNewCommandViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A1B76523CF13A50062FADC /* UARTNewCommandViewController.swift */; };
 		01A1B76823CF13A50062FADC /* UARTNewCommandViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01A1B76623CF13A50062FADC /* UARTNewCommandViewController.xib */; };
-		01A1B76A23CF309E0062FADC /* CommandImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A1B76923CF309E0062FADC /* CommandImage.swift */; };
 		01A1B76D23CF43590062FADC /* UART.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01A1B76C23CF43590062FADC /* UART.xcassets */; };
 		01A1B77223CF530E0062FADC /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A1B77023CF530E0062FADC /* ImageCollectionViewCell.swift */; };
 		01A1B77323CF530E0062FADC /* ImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01A1B77123CF530E0062FADC /* ImageCollectionViewCell.xib */; };
@@ -67,9 +66,6 @@
 		01AA707D24124F270018DB29 /* DFUUpdateTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AA707C24124F270018DB29 /* DFUUpdateTabBarViewController.swift */; };
 		01AA707F241291C00018DB29 /* LogObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AA707E241291C00018DB29 /* LogObserver.swift */; };
 		01AD26E82395084000F56210 /* ConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26E62395084000F56210 /* ConnectionViewController.swift */; };
-		01AD26EC23953E4800F56210 /* FileSizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26EB23953E4800F56210 /* FileSizeView.swift */; };
-		01AD26F023955A9F00F56210 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26EF23955A9F00F56210 /* ProgressView.swift */; };
-		01AD26F423965A9400F56210 /* FirmwareProgressImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26F323965A9400F56210 /* FirmwareProgressImage.swift */; };
 		01AF928323D0AC3200C1BFD6 /* StringProtocol+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AF928223D0AC3200C1BFD6 /* StringProtocol+Ext.swift */; };
 		01AF928723D1A7D400C1BFD6 /* PeripheralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AF928623D1A7D400C1BFD6 /* PeripheralView.swift */; };
 		01AF928923D1A7E300C1BFD6 /* PeripheralView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01AF928823D1A7E300C1BFD6 /* PeripheralView.xib */; };
@@ -95,7 +91,6 @@
 		01BEADD4241A992300FC7183 /* HMAccessoryListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BEADD3241A992300FC7183 /* HMAccessoryListTableViewController.swift */; };
 		01BEADD6241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BEADD5241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift */; };
 		01BEADD8241AE6BF00FC7183 /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BEADD7241AE6BF00FC7183 /* UILabel+Ext.swift */; };
-		01C2E97523A1ACDF008C1701 /* DFUViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01C2E97423A1ACDF008C1701 /* DFUViewController.xib */; };
 		01D6D2B924067B0500E1A66F /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01D6D2B824067B0500E1A66F /* Resources.xcassets */; };
 		01D6D2BB240696D000E1A66F /* DFURouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6D2BA240696D000E1A66F /* DFURouter.swift */; };
 		01D6D2C02406A1EF00E1A66F /* DFUStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6D2BE2406A1EF00E1A66F /* DFUStartViewController.swift */; };
@@ -110,13 +105,8 @@
 		01DDD79D23EC5CDA003786ED /* TimeIntervalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01DDD79B23EC5CDA003786ED /* TimeIntervalTableViewCell.xib */; };
 		01DDD7A023EC6351003786ED /* UARTMarcoElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DDD79F23EC6351003786ED /* UARTMarcoElement.swift */; };
 		01DFC55C2420F0AB00AF2EF0 /* ZephyrDFURouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DFC55B2420F0AB00AF2EF0 /* ZephyrDFURouter.swift */; };
-		01E4BACB23698DD300EE67A0 /* FindMeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E4BAC923698DD300EE67A0 /* FindMeTableViewCell.swift */; };
-		01E4BACC23698DD300EE67A0 /* FindMeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E4BACA23698DD300EE67A0 /* FindMeTableViewCell.xib */; };
 		01E5910923DB3BC5008F15A4 /* QuickError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910823DB3BC4008F15A4 /* QuickError.swift */; };
 		01E5910B23DECF61008F15A4 /* UARTMacrosList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */; };
-		01F3655F2397A9C700A4543A /* NordicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F3655E2397A9C700A4543A /* NordicButton.swift */; };
-		01F365622397BADC00A4543A /* DFUFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F365612397BADC00A4543A /* DFUFileView.swift */; };
-		01F365642397BAE500A4543A /* DFUFileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01F365632397BAE500A4543A /* DFUFileView.xib */; };
 		01FBC5012407BF8F00B1056B /* PeripheralHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */; };
 		01FBC5062407C2B000B1056B /* FileSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5042407C2B000B1056B /* FileSelectorViewController.swift */; };
 		01FBC5072407C2B000B1056B /* FileSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01FBC5052407C2B000B1056B /* FileSelectorViewController.xib */; };
@@ -126,7 +116,6 @@
 		01FBC5152408158F00B1056B /* CBPeripheralState+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5142408158F00B1056B /* CBPeripheralState+Ext.swift */; };
 		01FBC51724081A1C00B1056B /* DFUFirmwareSizeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC51624081A1C00B1056B /* DFUFirmwareSizeSection.swift */; };
 		01FEB0FD23969BD1000767C1 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FEB0FC23969BD1000767C1 /* UIView+Ext.swift */; };
-		0E645A0F1CBF957800D36AD0 /* firmwares in Resources */ = {isa = PBXBuildFile; fileRef = 7E6ED10A196ED482008010B6 /* firmwares */; };
 		20027B08233E116600A0B5ED /* StrideSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20027B07233E116600A0B5ED /* StrideSection.swift */; };
 		2002A000231FAFD100C43E06 /* PeripheralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20029FFF231FAFD100C43E06 /* PeripheralManager.swift */; };
 		2002A002231FB8E800C43E06 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2002A001231FB8E800C43E06 /* UIImage+Ext.swift */; };
@@ -135,7 +124,7 @@
 		200973D523433A120091951B /* Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200973D423433A120091951B /* Flag.swift */; };
 		200973D723433A5E0091951B /* PaceMeasurementFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200973D623433A5E0091951B /* PaceMeasurementFormatter.swift */; };
 		200973DA234344780091951B /* BloodPressureTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200973D9234344780091951B /* BloodPressureTableViewController.swift */; };
-		200973DD2343748F0091951B /* BloodPreasureCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200973DC2343748F0091951B /* BloodPreasureCharacteristic.swift */; };
+		200973DD2343748F0091951B /* BloodPressureCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200973DC2343748F0091951B /* BloodPressureCharacteristic.swift */; };
 		201364F72344A93D00C5AF1F /* BloodPressureSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201364F62344A93D00C5AF1F /* BloodPressureSection.swift */; };
 		201364F92344A94700C5AF1F /* PulseBloodPressureSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201364F82344A94700C5AF1F /* PulseBloodPressureSection.swift */; };
 		201364FB2344A94F00C5AF1F /* TimeBloodPressureSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201364FA2344A94F00C5AF1F /* TimeBloodPressureSection.swift */; };
@@ -165,9 +154,6 @@
 		20C7FE0E230A9F9300B06FD8 /* LinkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE0D230A9F9300B06FD8 /* LinkTableViewCell.swift */; };
 		20C7FE10230A9FAB00B06FD8 /* UIFont+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE0F230A9FAB00B06FD8 /* UIFont+Ext.swift */; };
 		20C7FE16230ADD1E00B06FD8 /* StoryboardInstantiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE15230ADD1E00B06FD8 /* StoryboardInstantiable.swift */; };
-		20C7FE1E230BE75D00B06FD8 /* BGMViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE1D230BE75D00B06FD8 /* BGMViewController.storyboard */; };
-		20C7FE20230BE7DF00B06FD8 /* HKViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE1F230BE7DF00B06FD8 /* HKViewController.storyboard */; };
-		20C7FE2E230BEC9D00B06FD8 /* CGMViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE2D230BEC9D00B06FD8 /* CGMViewController.storyboard */; };
 		20C7FE50230E789F00B06FD8 /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE4F230E789F00B06FD8 /* MainRouter.swift */; };
 		20C7FE53230E811B00B06FD8 /* ServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7FE52230E811B00B06FD8 /* ServiceProvider.swift */; };
 		20C7FE57230E997B00B06FD8 /* Links.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20C7FE56230E997B00B06FD8 /* Links.plist */; };
@@ -208,49 +194,15 @@
 		20F15C3C2313D2C7000C5503 /* InfoActionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20F15C3B2313D2C7000C5503 /* InfoActionView.xib */; };
 		20F15C3F2313D606000C5503 /* NoContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F15C3E2313D606000C5503 /* NoContentViewController.swift */; };
 		20F15C432313F821000C5503 /* XibInstantiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F15C422313F821000C5503 /* XibInstantiable.swift */; };
-		3000B2111CE317D900F64CEE /* UARTRevealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3000B2101CE317D900F64CEE /* UARTRevealViewController.swift */; };
-		3000B2131CE3195E00F64CEE /* EditPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3000B2121CE3195E00F64CEE /* EditPopupViewController.swift */; };
 		300143271CEC4B9D008379DF /* AppUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300143261CEC4B9D008379DF /* AppUtilities.swift */; };
 		300143291CEC59F4008379DF /* ServiceIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300143281CEC59F4008379DF /* ServiceIdentifiers.swift */; };
-		3001432B1CEC6D2A008379DF /* RecordAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001432A1CEC6D2A008379DF /* RecordAccess.swift */; };
 		3001432D1CECADFB008379DF /* CharacteristicReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001432C1CECADFB008379DF /* CharacteristicReader.swift */; };
-		3001EBB11D1BE1F3008C5C37 /* GlucoseReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBB01D1BE1F3008C5C37 /* GlucoseReading.swift */; };
-		3001EBB71D1BE1FB008C5C37 /* BGMDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBB41D1BE1FB008C5C37 /* BGMDetailsViewController.swift */; };
-		3001EBB81D1BE1FB008C5C37 /* BGMItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBB51D1BE1FB008C5C37 /* BGMItemCell.swift */; };
-		3001EBB91D1BE1FB008C5C37 /* BGMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBB61D1BE1FB008C5C37 /* BGMViewController.swift */; };
-		3001EBBB1D1BE306008C5C37 /* CGMReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBBA1D1BE306008C5C37 /* CGMReading.swift */; };
-		3001EBBD1D1BE695008C5C37 /* CGMFeatureData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBBC1D1BE695008C5C37 /* CGMFeatureData.swift */; };
-		3001EBBF1D1BE727008C5C37 /* CGMSpecificOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBBE1D1BE727008C5C37 /* CGMSpecificOperations.swift */; };
-		3001EBC31D1C1430008C5C37 /* CGMItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBC01D1C12E4008C5C37 /* CGMItemCell.swift */; };
-		3001EBC51D1C153C008C5C37 /* CGMDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBC41D1C153C008C5C37 /* CGMDetailsViewController.swift */; };
-		3001EBC71D1C1BAA008C5C37 /* CGMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001EBC61D1C1BAA008C5C37 /* CGMViewController.swift */; };
-		304299221CE5DE8E00E1D2AB /* UserFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304299211CE5DE8E00E1D2AB /* UserFilesViewController.swift */; };
-		304299241CE6114000E1D2AB /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304299231CE6114000E1D2AB /* TutorialViewController.swift */; };
-		3042993C1CE6154100E1D2AB /* BaseRevealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304299391CE6154100E1D2AB /* BaseRevealViewController.swift */; };
-		3042993D1CE6154100E1D2AB /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3042993A1CE6154100E1D2AB /* BaseViewController.swift */; };
-		30499E4B1CE4667800E0993B /* DFUConstantsUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E4A1CE4667800E0993B /* DFUConstantsUtility.swift */; };
-		30499E551CE4732200E0993B /* FileSelectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E541CE4732200E0993B /* FileSelectionDelegate.swift */; };
-		30499E571CE4736500E0993B /* FilePreselectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E561CE4736500E0993B /* FilePreselectionDelegate.swift */; };
-		30499E591CE4A07700E0993B /* AppFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E581CE4A07700E0993B /* AppFilesViewController.swift */; };
-		30499E5D1CE4C6C700E0993B /* FolderFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30499E5C1CE4C6C700E0993B /* FolderFilesViewController.swift */; };
-		304D58FB1CE34EE600148271 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304D58FA1CE34EE600148271 /* Logger.swift */; };
-		304D58FD1CE34FC600148271 /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304D58FC1CE34FC600148271 /* LogViewController.swift */; };
-		304D58FF1CE3521900148271 /* LogItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304D58FE1CE3521900148271 /* LogItem.swift */; };
-		304D59011CE352B300148271 /* LogItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304D59001CE352B300148271 /* LogItemTableViewCell.swift */; };
 		3069A1D71CDC788A003869EA /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3069A1D61CDC788A003869EA /* BluetoothManager.swift */; };
 		306ECD621CE61A3600E48BBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306ECD611CE61A3600E48BBD /* AppDelegate.swift */; };
-		308AA57A1CD8DD4300CC9857 /* GlucoseReadingContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308AA5791CD8DD4300CC9857 /* GlucoseReadingContext.swift */; };
-		30921FD51CD0EB55009CBDDE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30921FD41CD0EB55009CBDDE /* MainViewController.swift */; };
-		309F08651E6D6A5500B7546A /* HKViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F08641E6D6A5500B7546A /* HKViewController.swift */; };
 		309F08681E6D706B00B7546A /* HomeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 309F08671E6D706B00B7546A /* HomeKit.framework */; };
-		309F086A1E6D9EAA00B7546A /* HKHomeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F08691E6D9EAA00B7546A /* HKHomeStore.swift */; };
-		309F086C1E6EA0F800B7546A /* HKScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F086B1E6EA0F800B7546A /* HKScannerViewController.swift */; };
-		309F086E1E6ED44F00B7546A /* HKScannerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F086D1E6ED44F00B7546A /* HKScannerDelegate.swift */; };
-		309F08701E6FF1F900B7546A /* HKAccessoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F086F1E6FF1F900B7546A /* HKAccessoryViewController.swift */; };
 		30A114561CD2367C000F0F02 /* ScannedPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A114551CD2367C000F0F02 /* ScannedPeripheral.swift */; };
 		30A1145A1CD2426B000F0F02 /* ScannerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A114591CD2426B000F0F02 /* ScannerDelegate.swift */; };
 		30A1145C1CD24611000F0F02 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A1145B1CD24611000F0F02 /* ScannerViewController.swift */; };
-		3397616CB0B03E42E9F890C6 /* DFUViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3397666AEF5D1014982224D6 /* DFUViewController.swift */; };
 		339761A6176917F548C7B465 /* ContinuousGlucoseMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976F60C5BCE60DE33DFA31 /* ContinuousGlucoseMonitor.swift */; };
 		3397622AEAB44E02CA055BDF /* ProximityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339769E077B5F68E7D221F4D /* ProximityViewController.swift */; };
 		3397628E56C4A84F4D4E8128 /* PeripheralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339767BE0A9B9DF256F73884 /* PeripheralViewController.swift */; };
@@ -264,26 +216,45 @@
 		33976843D672C14301E9C917 /* SessionStartTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976AA5771775F23255C2BD /* SessionStartTime.swift */; };
 		33976B2C1CE8194EFAEB7341 /* Randomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3397618F9EA9546991CF4ED2 /* Randomizer.swift */; };
 		33976C75E25FBF443EB251CD /* Bool+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976AF182818B9C448C61CE /* Bool+Ext.swift */; };
-		33976DC91B99AAA3F2E12DF7 /* FindMeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339763C07DFE7826BAF28153 /* FindMeSection.swift */; };
 		33976F79FE2EA20D94F68B69 /* ContinuousGlucoseChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976B66D7A581F01631AE52 /* ContinuousGlucoseChartData.swift */; };
-		33976FB5E54F1D8DDF4733E0 /* DistanceChartSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976ECA8BDFCDF4188746E3 /* DistanceChartSection.swift */; };
 		4322034123CC773F009840DD /* UARTActionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4322033F23CC773F009840DD /* UARTActionCollectionViewCell.swift */; };
 		4322034223CC773F009840DD /* UARTActionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4322034023CC773F009840DD /* UARTActionCollectionViewCell.xib */; };
 		4322034423CC9D31009840DD /* UARTCommandModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4322034323CC9D31009840DD /* UARTCommandModel.swift */; };
+		432DCD53244E5FEE00C6828F /* RSSI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432DCD52244E5FEE00C6828F /* RSSI.swift */; };
+		433A90092451AA1900107822 /* SliderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A90072451AA1900107822 /* SliderTableViewCell.swift */; };
+		433A900A2451AA1900107822 /* SliderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 433A90082451AA1900107822 /* SliderTableViewCell.xib */; };
+		433A900C24525CDA00107822 /* WheelSizeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A900B24525CDA00107822 /* WheelSizeSection.swift */; };
+		433A900F2453042900107822 /* LogObserver+DFU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A900E2453042900107822 /* LogObserver+DFU.swift */; };
+		433A9012245304DE00107822 /* McuMgrLogObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A9011245304DE00107822 /* McuMgrLogObserver.swift */; };
 		43445EEF23B0AD8D008A9FD9 /* LoggLevel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43445EEE23B0AD8D008A9FD9 /* LoggLevel+Ext.swift */; };
+		4350CFF9244CEFC90068EEEA /* SignalStrengthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4350CFF7244CEFC90068EEEA /* SignalStrengthView.swift */; };
+		4350CFFA244CEFC90068EEEA /* DistanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4350CFF8244CEFC90068EEEA /* DistanceView.swift */; };
+		4350CFFD244D109B0068EEEA /* ProximityBluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4350CFFC244D109B0068EEEA /* ProximityBluetoothManager.swift */; };
+		4350CFFF244D20AE0068EEEA /* ProximityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4350CFFE244D20AE0068EEEA /* ProximityViewController.xib */; };
 		4353A50F243175C300159CDF /* HMAccessoryListTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4353A50E243175C300159CDF /* HMAccessoryListTableViewController.xib */; };
 		4353A5122431856A00159CDF /* AccessoriesSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4353A5112431856A00159CDF /* AccessoriesSection.swift */; };
+		436C0AD02456FD3300B03B61 /* ModernIcon+Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C0ACF2456FD3300B03B61 /* ModernIcon+Const.swift */; };
+		436C0AD22456FDD700B03B61 /* ImageWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C0AD12456FDD700B03B61 /* ImageWrapper.swift */; };
 		4381AD1B23BA057000FB1A1F /* UARTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4381AD1923BA057000FB1A1F /* UARTViewController.swift */; };
 		4381AD1C23BA057000FB1A1F /* UARTViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4381AD1A23BA057000FB1A1F /* UARTViewController.xib */; };
-		4392FEFB23AA608700E6ACEA /* LoggerTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4392FEFA23AA608700E6ACEA /* LoggerTableView.swift */; };
-		4392FEFF23AA610300E6ACEA /* LogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4392FEFD23AA610300E6ACEA /* LogTableViewCell.swift */; };
-		4392FF0023AA610300E6ACEA /* LogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4392FEFE23AA610300E6ACEA /* LogTableViewCell.xib */; };
+		4389183324360C0D00175A94 /* NordicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4389183224360C0D00175A94 /* NordicButton.swift */; };
+		4389183524360C9E00175A94 /* LoggerTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4389183424360C9E00175A94 /* LoggerTableView.swift */; };
+		4389183824360D0100175A94 /* LogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4389183624360D0100175A94 /* LogTableViewCell.swift */; };
+		4389183924360D0100175A94 /* LogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4389183724360D0100175A94 /* LogTableViewCell.xib */; };
+		4389183C24360EAB00175A94 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4389183B24360EAA00175A94 /* Logger.swift */; };
+		4389183E24360F0900175A94 /* CGMSpecificOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4389183D24360F0900175A94 /* CGMSpecificOperations.swift */; };
+		4389184124360F7300175A94 /* GlucoseReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4389183F24360F7300175A94 /* GlucoseReading.swift */; };
+		4389184224360F7300175A94 /* GlucoseReadingContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4389184024360F7300175A94 /* GlucoseReadingContext.swift */; };
+		438918442436108E00175A94 /* RecordAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438918432436108E00175A94 /* RecordAccess.swift */; };
 		4392FF0223AA6CBE00E6ACEA /* DateFormatter+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4392FF0123AA6CBE00E6ACEA /* DateFormatter+Ext.swift */; };
+		43E2F73F2462E31400912BD6 /* AutoReszableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E2F73E2462E31400912BD6 /* AutoReszableTextView.swift */; };
+		43F837242433FA7C003D88F0 /* BGMActionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F837232433FA7C003D88F0 /* BGMActionSection.swift */; };
+		43F837262433FB1F003D88F0 /* BGMDisplayItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F837252433FB1F003D88F0 /* BGMDisplayItemTableViewCell.swift */; };
+		43F837282433FB29003D88F0 /* BGMDisplayItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43F837272433FB29003D88F0 /* BGMDisplayItemTableViewCell.xib */; };
 		5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAA1885642F007CC40D /* icon-dfu-64.png */; };
 		5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAB1885642F007CC40D /* icon-dfu-320.png */; };
 		5211EFB018856430007CC40D /* icon-hex.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAC1885642F007CC40D /* icon-hex.png */; };
 		5211EFB118856430007CC40D /* icon-hex@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5211EFAD1885642F007CC40D /* icon-hex@2x.png */; };
-		5214D0CE1886C02A00460637 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5214D0CD1886C02A00460637 /* Settings.bundle */; };
 		5217F3E61859EE0000F2D5BB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5217F3E51859EE0000F2D5BB /* Foundation.framework */; };
 		5217F3E81859EE0000F2D5BB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5217F3E71859EE0000F2D5BB /* CoreGraphics.framework */; };
 		5217F3EA1859EE0000F2D5BB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5217F3E91859EE0000F2D5BB /* UIKit.framework */; };
@@ -292,14 +263,15 @@
 		5217F3FE1859EE0000F2D5BB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5217F3FD1859EE0000F2D5BB /* Images.xcassets */; };
 		5217F41B1859EEF400F2D5BB /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5217F41A1859EEF400F2D5BB /* CoreBluetooth.framework */; };
 		522636371C60FFB00054A550 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 522636361C60FFB00054A550 /* libz.tbd */; };
-		5231403022FB07820074325A /* RootNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5231402F22FB07820074325A /* RootNavigationController.swift */; };
 		5231403222FB1E130074325A /* UIColor+Nordic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5231403122FB1E130074325A /* UIColor+Nordic.swift */; };
 		52BDCB191C3FD31F00E2680F /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BDCB181C3FD31F00E2680F /* Accelerate.framework */; };
 		52BDCBBE1C3FD86900E2680F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BDCBBD1C3FD86900E2680F /* QuartzCore.framework */; };
 		52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */; };
 		52D9BC9E1DD0CB760030E824 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9BC9D1DD0CB760030E824 /* Data+Ext.swift */; };
 		7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B422818A8DF4D006BA1BC /* high.mp3 */; };
-		DB0C2F14CD7F8422851077A1 /* Pods_nRF_Toolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F20B3FC767F35FC2E41A6A50 /* Pods_nRF_Toolbox.framework */; };
+		B9333AF83F2257C393C81470 /* Pods_nRF_Toolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1C52F90A80A6E5FFBFC488 /* Pods_nRF_Toolbox.framework */; };
+		CC7B90D148FC21C73B54BFAB /* NumberFormatter+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7B93FA695799F95D065492 /* NumberFormatter+Ext.swift */; };
+		CC7B91DDFD7EF39F27FEC85A /* CommandImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7B95845343A3D826B220D5 /* CommandImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -378,7 +350,6 @@
 		019985F023E07CFB000CDCB6 /* XMLDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLDocument.swift; sourceTree = "<group>"; };
 		01A1B76523CF13A50062FADC /* UARTNewCommandViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTNewCommandViewController.swift; sourceTree = "<group>"; };
 		01A1B76623CF13A50062FADC /* UARTNewCommandViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTNewCommandViewController.xib; sourceTree = "<group>"; };
-		01A1B76923CF309E0062FADC /* CommandImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandImage.swift; sourceTree = "<group>"; };
 		01A1B76C23CF43590062FADC /* UART.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = UART.xcassets; sourceTree = "<group>"; };
 		01A1B77023CF530E0062FADC /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		01A1B77123CF530E0062FADC /* ImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -388,9 +359,6 @@
 		01AA707C24124F270018DB29 /* DFUUpdateTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUUpdateTabBarViewController.swift; sourceTree = "<group>"; };
 		01AA707E241291C00018DB29 /* LogObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogObserver.swift; sourceTree = "<group>"; };
 		01AD26E62395084000F56210 /* ConnectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionViewController.swift; sourceTree = "<group>"; };
-		01AD26EB23953E4800F56210 /* FileSizeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSizeView.swift; sourceTree = "<group>"; };
-		01AD26EF23955A9F00F56210 /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
-		01AD26F323965A9400F56210 /* FirmwareProgressImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirmwareProgressImage.swift; sourceTree = "<group>"; };
 		01AF928223D0AC3200C1BFD6 /* StringProtocol+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StringProtocol+Ext.swift"; sourceTree = "<group>"; };
 		01AF928623D1A7D400C1BFD6 /* PeripheralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralView.swift; sourceTree = "<group>"; };
 		01AF928823D1A7E300C1BFD6 /* PeripheralView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PeripheralView.xib; sourceTree = "<group>"; };
@@ -416,7 +384,6 @@
 		01BEADD3241A992300FC7183 /* HMAccessoryListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HMAccessoryListTableViewController.swift; sourceTree = "<group>"; };
 		01BEADD5241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicBottomDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		01BEADD7241AE6BF00FC7183 /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
-		01C2E97423A1ACDF008C1701 /* DFUViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DFUViewController.xib; sourceTree = "<group>"; };
 		01D6D2B824067B0500E1A66F /* Resources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resources.xcassets; sourceTree = "<group>"; };
 		01D6D2BA240696D000E1A66F /* DFURouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFURouter.swift; sourceTree = "<group>"; };
 		01D6D2BE2406A1EF00E1A66F /* DFUStartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUStartViewController.swift; sourceTree = "<group>"; };
@@ -431,13 +398,8 @@
 		01DDD79B23EC5CDA003786ED /* TimeIntervalTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeIntervalTableViewCell.xib; sourceTree = "<group>"; };
 		01DDD79F23EC6351003786ED /* UARTMarcoElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMarcoElement.swift; sourceTree = "<group>"; };
 		01DFC55B2420F0AB00AF2EF0 /* ZephyrDFURouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFURouter.swift; sourceTree = "<group>"; };
-		01E4BAC923698DD300EE67A0 /* FindMeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindMeTableViewCell.swift; sourceTree = "<group>"; };
-		01E4BACA23698DD300EE67A0 /* FindMeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FindMeTableViewCell.xib; sourceTree = "<group>"; };
 		01E5910823DB3BC4008F15A4 /* QuickError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickError.swift; sourceTree = "<group>"; };
 		01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosList.swift; sourceTree = "<group>"; };
-		01F3655E2397A9C700A4543A /* NordicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicButton.swift; sourceTree = "<group>"; };
-		01F365612397BADC00A4543A /* DFUFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFileView.swift; sourceTree = "<group>"; };
-		01F365632397BAE500A4543A /* DFUFileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DFUFileView.xib; sourceTree = "<group>"; };
 		01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralHolder.swift; sourceTree = "<group>"; };
 		01FBC5042407C2B000B1056B /* FileSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSelectorViewController.swift; sourceTree = "<group>"; };
 		01FBC5052407C2B000B1056B /* FileSelectorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FileSelectorViewController.xib; sourceTree = "<group>"; };
@@ -447,7 +409,6 @@
 		01FBC5142408158F00B1056B /* CBPeripheralState+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CBPeripheralState+Ext.swift"; sourceTree = "<group>"; };
 		01FBC51624081A1C00B1056B /* DFUFirmwareSizeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFirmwareSizeSection.swift; sourceTree = "<group>"; };
 		01FEB0FC23969BD1000767C1 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
-		037B7BCB6D1BE75E608CDDAC /* Pods-nRF Toolbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.release.xcconfig"; path = "Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.release.xcconfig"; sourceTree = "<group>"; };
 		20027B07233E116600A0B5ED /* StrideSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrideSection.swift; sourceTree = "<group>"; };
 		20029FFF231FAFD100C43E06 /* PeripheralManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralManager.swift; sourceTree = "<group>"; };
 		2002A001231FB8E800C43E06 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
@@ -456,7 +417,7 @@
 		200973D423433A120091951B /* Flag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flag.swift; sourceTree = "<group>"; };
 		200973D623433A5E0091951B /* PaceMeasurementFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaceMeasurementFormatter.swift; sourceTree = "<group>"; };
 		200973D9234344780091951B /* BloodPressureTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodPressureTableViewController.swift; sourceTree = "<group>"; };
-		200973DC2343748F0091951B /* BloodPreasureCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodPreasureCharacteristic.swift; sourceTree = "<group>"; };
+		200973DC2343748F0091951B /* BloodPressureCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodPressureCharacteristic.swift; sourceTree = "<group>"; };
 		201364F62344A93D00C5AF1F /* BloodPressureSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodPressureSection.swift; sourceTree = "<group>"; };
 		201364F82344A94700C5AF1F /* PulseBloodPressureSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseBloodPressureSection.swift; sourceTree = "<group>"; };
 		201364FA2344A94F00C5AF1F /* TimeBloodPressureSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBloodPressureSection.swift; sourceTree = "<group>"; };
@@ -486,9 +447,6 @@
 		20C7FE0D230A9F9300B06FD8 /* LinkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkTableViewCell.swift; sourceTree = "<group>"; };
 		20C7FE0F230A9FAB00B06FD8 /* UIFont+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Ext.swift"; sourceTree = "<group>"; };
 		20C7FE15230ADD1E00B06FD8 /* StoryboardInstantiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardInstantiable.swift; sourceTree = "<group>"; };
-		20C7FE1D230BE75D00B06FD8 /* BGMViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BGMViewController.storyboard; sourceTree = "<group>"; };
-		20C7FE1F230BE7DF00B06FD8 /* HKViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HKViewController.storyboard; sourceTree = "<group>"; };
-		20C7FE2D230BEC9D00B06FD8 /* CGMViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CGMViewController.storyboard; sourceTree = "<group>"; };
 		20C7FE4F230E789F00B06FD8 /* MainRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRouter.swift; sourceTree = "<group>"; };
 		20C7FE52230E811B00B06FD8 /* ServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProvider.swift; sourceTree = "<group>"; };
 		20C7FE56230E997B00B06FD8 /* Links.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Links.plist; sourceTree = "<group>"; };
@@ -529,55 +487,19 @@
 		20F15C3B2313D2C7000C5503 /* InfoActionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoActionView.xib; sourceTree = "<group>"; };
 		20F15C3E2313D606000C5503 /* NoContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoContentViewController.swift; sourceTree = "<group>"; };
 		20F15C422313F821000C5503 /* XibInstantiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XibInstantiable.swift; sourceTree = "<group>"; };
-		3000B2101CE317D900F64CEE /* UARTRevealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTRevealViewController.swift; sourceTree = "<group>"; };
-		3000B2121CE3195E00F64CEE /* EditPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPopupViewController.swift; sourceTree = "<group>"; };
 		300143261CEC4B9D008379DF /* AppUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUtilities.swift; sourceTree = "<group>"; };
 		300143281CEC59F4008379DF /* ServiceIdentifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceIdentifiers.swift; sourceTree = "<group>"; };
-		3001432A1CEC6D2A008379DF /* RecordAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordAccess.swift; sourceTree = "<group>"; };
 		3001432C1CECADFB008379DF /* CharacteristicReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacteristicReader.swift; sourceTree = "<group>"; };
-		3001432E1CEDAD04008379DF /* CharacteristicReaderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacteristicReaderTests.swift; sourceTree = "<group>"; };
-		3001EBB01D1BE1F3008C5C37 /* GlucoseReading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GlucoseReading.swift; path = Model/GlucoseReading.swift; sourceTree = "<group>"; };
-		3001EBB41D1BE1FB008C5C37 /* BGMDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BGMDetailsViewController.swift; sourceTree = "<group>"; };
-		3001EBB51D1BE1FB008C5C37 /* BGMItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BGMItemCell.swift; sourceTree = "<group>"; };
-		3001EBB61D1BE1FB008C5C37 /* BGMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BGMViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		3001EBBA1D1BE306008C5C37 /* CGMReading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CGMReading.swift; path = Model/CGMReading.swift; sourceTree = "<group>"; };
-		3001EBBC1D1BE695008C5C37 /* CGMFeatureData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CGMFeatureData.swift; path = Model/CGMFeatureData.swift; sourceTree = "<group>"; };
-		3001EBBE1D1BE727008C5C37 /* CGMSpecificOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CGMSpecificOperations.swift; path = Model/CGMSpecificOperations.swift; sourceTree = "<group>"; };
-		3001EBC01D1C12E4008C5C37 /* CGMItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGMItemCell.swift; sourceTree = "<group>"; };
-		3001EBC41D1C153C008C5C37 /* CGMDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGMDetailsViewController.swift; sourceTree = "<group>"; };
-		3001EBC61D1C1BAA008C5C37 /* CGMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CGMViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		304299211CE5DE8E00E1D2AB /* UserFilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFilesViewController.swift; sourceTree = "<group>"; };
-		304299231CE6114000E1D2AB /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
-		304299391CE6154100E1D2AB /* BaseRevealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseRevealViewController.swift; sourceTree = "<group>"; };
-		3042993A1CE6154100E1D2AB /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		30499E4A1CE4667800E0993B /* DFUConstantsUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DFUConstantsUtility.swift; sourceTree = "<group>"; };
-		30499E541CE4732200E0993B /* FileSelectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileSelectionDelegate.swift; sourceTree = "<group>"; };
-		30499E561CE4736500E0993B /* FilePreselectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePreselectionDelegate.swift; sourceTree = "<group>"; };
-		30499E581CE4A07700E0993B /* AppFilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppFilesViewController.swift; sourceTree = "<group>"; };
-		30499E5C1CE4C6C700E0993B /* FolderFilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderFilesViewController.swift; sourceTree = "<group>"; };
-		304D58FA1CE34EE600148271 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
-		304D58FC1CE34FC600148271 /* LogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogViewController.swift; sourceTree = "<group>"; };
-		304D58FE1CE3521900148271 /* LogItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogItem.swift; sourceTree = "<group>"; };
-		304D59001CE352B300148271 /* LogItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogItemTableViewCell.swift; sourceTree = "<group>"; };
 		3069A1D61CDC788A003869EA /* BluetoothManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
 		306ECD611CE61A3600E48BBD /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		308AA5791CD8DD4300CC9857 /* GlucoseReadingContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GlucoseReadingContext.swift; path = Model/GlucoseReadingContext.swift; sourceTree = "<group>"; };
-		30921FD41CD0EB55009CBDDE /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		309F08641E6D6A5500B7546A /* HKViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = HKViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		309F08661E6D706B00B7546A /* nRF Toolbox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "nRF Toolbox.entitlements"; sourceTree = "<group>"; };
 		309F08671E6D706B00B7546A /* HomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HomeKit.framework; path = System/Library/Frameworks/HomeKit.framework; sourceTree = SDKROOT; };
-		309F08691E6D9EAA00B7546A /* HKHomeStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKHomeStore.swift; sourceTree = "<group>"; };
-		309F086B1E6EA0F800B7546A /* HKScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKScannerViewController.swift; sourceTree = "<group>"; };
-		309F086D1E6ED44F00B7546A /* HKScannerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKScannerDelegate.swift; sourceTree = "<group>"; };
-		309F086F1E6FF1F900B7546A /* HKAccessoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKAccessoryViewController.swift; sourceTree = "<group>"; };
 		30A114551CD2367C000F0F02 /* ScannedPeripheral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannedPeripheral.swift; sourceTree = "<group>"; };
 		30A114591CD2426B000F0F02 /* ScannerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerDelegate.swift; sourceTree = "<group>"; };
 		30A1145B1CD24611000F0F02 /* ScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 		3397618F9EA9546991CF4ED2 /* Randomizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Randomizer.swift; sourceTree = "<group>"; };
 		339763237234E5CAE47F8DBB /* ChartDataSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartDataSection.swift; sourceTree = "<group>"; };
-		339763C07DFE7826BAF28153 /* FindMeSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindMeSection.swift; sourceTree = "<group>"; };
 		3397654C348DA2769B9E4B1D /* ContinuousGlucoseMonitorMeasurement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinuousGlucoseMonitorMeasurement.swift; sourceTree = "<group>"; };
-		3397666AEF5D1014982224D6 /* DFUViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DFUViewController.swift; sourceTree = "<group>"; };
 		339767BE0A9B9DF256F73884 /* PeripheralViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeripheralViewController.swift; sourceTree = "<group>"; };
 		339767C9A62A86751137B1CA /* Peripheral+ContinuousGlucoseMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Peripheral+ContinuousGlucoseMonitor.swift"; sourceTree = "<group>"; };
 		33976856F7CFDAFCC9A665D2 /* LastDataSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastDataSection.swift; sourceTree = "<group>"; };
@@ -588,26 +510,46 @@
 		33976AA5771775F23255C2BD /* SessionStartTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionStartTime.swift; sourceTree = "<group>"; };
 		33976AF182818B9C448C61CE /* Bool+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bool+Ext.swift"; sourceTree = "<group>"; };
 		33976B66D7A581F01631AE52 /* ContinuousGlucoseChartData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinuousGlucoseChartData.swift; sourceTree = "<group>"; };
-		33976ECA8BDFCDF4188746E3 /* DistanceChartSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DistanceChartSection.swift; sourceTree = "<group>"; };
 		33976F60C5BCE60DE33DFA31 /* ContinuousGlucoseMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinuousGlucoseMonitor.swift; sourceTree = "<group>"; };
 		4322033F23CC773F009840DD /* UARTActionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTActionCollectionViewCell.swift; sourceTree = "<group>"; };
 		4322034023CC773F009840DD /* UARTActionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTActionCollectionViewCell.xib; sourceTree = "<group>"; };
 		4322034323CC9D31009840DD /* UARTCommandModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTCommandModel.swift; sourceTree = "<group>"; };
+		432DCD52244E5FEE00C6828F /* RSSI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSI.swift; sourceTree = "<group>"; };
+		433A90072451AA1900107822 /* SliderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderTableViewCell.swift; sourceTree = "<group>"; };
+		433A90082451AA1900107822 /* SliderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SliderTableViewCell.xib; sourceTree = "<group>"; };
+		433A900B24525CDA00107822 /* WheelSizeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelSizeSection.swift; sourceTree = "<group>"; };
+		433A900E2453042900107822 /* LogObserver+DFU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogObserver+DFU.swift"; sourceTree = "<group>"; };
+		433A9011245304DE00107822 /* McuMgrLogObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = McuMgrLogObserver.swift; sourceTree = "<group>"; };
 		43445EEE23B0AD8D008A9FD9 /* LoggLevel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoggLevel+Ext.swift"; sourceTree = "<group>"; };
 		434A9CF823A2883B00792E81 /* PRAGMATA MEDIUM_0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PRAGMATA MEDIUM_0.ttf"; sourceTree = "<group>"; };
+		4350CFF7244CEFC90068EEEA /* SignalStrengthView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignalStrengthView.swift; sourceTree = "<group>"; };
+		4350CFF8244CEFC90068EEEA /* DistanceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DistanceView.swift; sourceTree = "<group>"; };
+		4350CFFC244D109B0068EEEA /* ProximityBluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProximityBluetoothManager.swift; sourceTree = "<group>"; };
+		4350CFFE244D20AE0068EEEA /* ProximityViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProximityViewController.xib; sourceTree = "<group>"; };
 		4353A50E243175C300159CDF /* HMAccessoryListTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HMAccessoryListTableViewController.xib; sourceTree = "<group>"; };
 		4353A5112431856A00159CDF /* AccessoriesSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoriesSection.swift; sourceTree = "<group>"; };
+		436C0ACF2456FD3300B03B61 /* ModernIcon+Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModernIcon+Const.swift"; sourceTree = "<group>"; };
+		436C0AD12456FDD700B03B61 /* ImageWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWrapper.swift; sourceTree = "<group>"; };
 		4381AD1923BA057000FB1A1F /* UARTViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTViewController.swift; sourceTree = "<group>"; };
 		4381AD1A23BA057000FB1A1F /* UARTViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTViewController.xib; sourceTree = "<group>"; };
-		4392FEFA23AA608700E6ACEA /* LoggerTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerTableView.swift; sourceTree = "<group>"; };
-		4392FEFD23AA610300E6ACEA /* LogTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTableViewCell.swift; sourceTree = "<group>"; };
-		4392FEFE23AA610300E6ACEA /* LogTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LogTableViewCell.xib; sourceTree = "<group>"; };
+		4389183224360C0D00175A94 /* NordicButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NordicButton.swift; sourceTree = "<group>"; };
+		4389183424360C9E00175A94 /* LoggerTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggerTableView.swift; sourceTree = "<group>"; };
+		4389183624360D0100175A94 /* LogTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogTableViewCell.swift; sourceTree = "<group>"; };
+		4389183724360D0100175A94 /* LogTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LogTableViewCell.xib; sourceTree = "<group>"; };
+		4389183B24360EAA00175A94 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		4389183D24360F0900175A94 /* CGMSpecificOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGMSpecificOperations.swift; sourceTree = "<group>"; };
+		4389183F24360F7300175A94 /* GlucoseReading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlucoseReading.swift; sourceTree = "<group>"; };
+		4389184024360F7300175A94 /* GlucoseReadingContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlucoseReadingContext.swift; sourceTree = "<group>"; };
+		438918432436108E00175A94 /* RecordAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordAccess.swift; sourceTree = "<group>"; };
 		4392FF0123AA6CBE00E6ACEA /* DateFormatter+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Ext.swift"; sourceTree = "<group>"; };
+		43E2F73E2462E31400912BD6 /* AutoReszableTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoReszableTextView.swift; sourceTree = "<group>"; };
+		43F837232433FA7C003D88F0 /* BGMActionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGMActionSection.swift; sourceTree = "<group>"; };
+		43F837252433FB1F003D88F0 /* BGMDisplayItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGMDisplayItemTableViewCell.swift; sourceTree = "<group>"; };
+		43F837272433FB29003D88F0 /* BGMDisplayItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BGMDisplayItemTableViewCell.xib; sourceTree = "<group>"; };
 		5211EFAA1885642F007CC40D /* icon-dfu-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-64.png"; sourceTree = "<group>"; };
 		5211EFAB1885642F007CC40D /* icon-dfu-320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-320.png"; sourceTree = "<group>"; };
 		5211EFAC1885642F007CC40D /* icon-hex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-hex.png"; sourceTree = "<group>"; };
 		5211EFAD1885642F007CC40D /* icon-hex@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-hex@2x.png"; sourceTree = "<group>"; };
-		5214D0CD1886C02A00460637 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		5217F3E21859EE0000F2D5BB /* nRF Toolbox Beta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nRF Toolbox Beta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5217F3E51859EE0000F2D5BB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5217F3E71859EE0000F2D5BB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -617,22 +559,21 @@
 		5217F3F31859EE0000F2D5BB /* nRF Toolbox-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "nRF Toolbox-Prefix.pch"; sourceTree = "<group>"; };
 		5217F3F81859EE0000F2D5BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5217F3FD1859EE0000F2D5BB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		5217F40C1859EE0000F2D5BB /* nRF ToolboxTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "nRF ToolboxTests-Info.plist"; sourceTree = "<group>"; };
-		5217F40E1859EE0000F2D5BB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5217F41A1859EEF400F2D5BB /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		522636361C60FFB00054A550 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		5231402F22FB07820074325A /* RootNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationController.swift; sourceTree = "<group>"; };
 		5231403122FB1E130074325A /* UIColor+Nordic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Nordic.swift"; sourceTree = "<group>"; };
 		52BDCB181C3FD31F00E2680F /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		52BDCBBD1C3FD86900E2680F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		52D9BC9D1DD0CB760030E824 /* Data+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Ext.swift"; sourceTree = "<group>"; };
+		5A98BC822E262F88E44D6E02 /* Pods-nRF Toolbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.release.xcconfig"; path = "Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.release.xcconfig"; sourceTree = "<group>"; };
+		5B1C52F90A80A6E5FFBFC488 /* Pods_nRF_Toolbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nRF_Toolbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		69A9BA14F5A63C56C457514A /* Pods-nRF Toolbox.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.beta.xcconfig"; path = "Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.beta.xcconfig"; sourceTree = "<group>"; };
 		7E1B422818A8DF4D006BA1BC /* high.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = high.mp3; sourceTree = "<group>"; };
-		7E6ED10A196ED482008010B6 /* firmwares */ = {isa = PBXFileReference; lastKnownFileType = folder; path = firmwares; sourceTree = "<group>"; };
-		825D586E52D14134859331F5 /* Pods-nRF Toolbox.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.beta.xcconfig"; path = "Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.beta.xcconfig"; sourceTree = "<group>"; };
 		89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B669D6E0559E7DC87E6003AE /* Pods-nRF Toolbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.debug.xcconfig"; path = "Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.debug.xcconfig"; sourceTree = "<group>"; };
-		F20B3FC767F35FC2E41A6A50 /* Pods_nRF_Toolbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nRF_Toolbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC7B93FA695799F95D065492 /* NumberFormatter+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NumberFormatter+Ext.swift"; sourceTree = "<group>"; };
+		CC7B95845343A3D826B220D5 /* CommandImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandImage.swift; sourceTree = "<group>"; };
+		EAAF1D5ED777F196D5C340C3 /* Pods-nRF Toolbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.debug.xcconfig"; path = "Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -655,7 +596,7 @@
 				5217F3E81859EE0000F2D5BB /* CoreGraphics.framework in Frameworks */,
 				5217F3EA1859EE0000F2D5BB /* UIKit.framework in Frameworks */,
 				5217F3E61859EE0000F2D5BB /* Foundation.framework in Frameworks */,
-				DB0C2F14CD7F8422851077A1 /* Pods_nRF_Toolbox.framework in Frameworks */,
+				B9333AF83F2257C393C81470 /* Pods_nRF_Toolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -718,6 +659,7 @@
 		012C2BE42410F844005EC1A0 /* DFUUpdate */ = {
 			isa = PBXGroup;
 			children = (
+				433A900D2453040E00107822 /* Util */,
 				01363A852417E4DF0030821E /* Section */,
 				01363A842417DD2C0030821E /* View */,
 				01AA707C24124F270018DB29 /* DFUUpdateTabBarViewController.swift */,
@@ -743,18 +685,6 @@
 				01363A862417E4FA0030821E /* ControlSection.swift */,
 			);
 			path = Section;
-			sourceTree = "<group>";
-		};
-		0140FCD4237C2FFA00411963 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				4392FEF923AA603700E6ACEA /* LogerView */,
-				01AD26F523966CB900F56210 /* FileScheme */,
-				01F365602397BAC200A4543A /* FileView */,
-				01AD26EB23953E4800F56210 /* FileSizeView.swift */,
-				01F3655E2397A9C700A4543A /* NordicButton.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		01468B022361A23300C29E4C /* Cells */ = {
@@ -796,6 +726,10 @@
 		01816D49235DD7180040F574 /* ContinuousGlucoseMonitor */ = {
 			isa = PBXGroup;
 			children = (
+				438918432436108E00175A94 /* RecordAccess.swift */,
+				4389183F24360F7300175A94 /* GlucoseReading.swift */,
+				4389184024360F7300175A94 /* GlucoseReadingContext.swift */,
+				4389183D24360F0900175A94 /* CGMSpecificOperations.swift */,
 				33976F60C5BCE60DE33DFA31 /* ContinuousGlucoseMonitor.swift */,
 				339760417A26067B655C06DE /* Peripheral */,
 				3397661232134BCC03D6DA0E /* Sections */,
@@ -838,6 +772,7 @@
 			children = (
 				01A1B76523CF13A50062FADC /* UARTNewCommandViewController.swift */,
 				01A1B76623CF13A50062FADC /* UARTNewCommandViewController.xib */,
+				43E2F73E2462E31400912BD6 /* AutoReszableTextView.swift */,
 			);
 			path = NewCommand;
 			sourceTree = "<group>";
@@ -848,15 +783,6 @@
 				01A1B76C23CF43590062FADC /* UART.xcassets */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		01AD26F523966CB900F56210 /* FileScheme */ = {
-			isa = PBXGroup;
-			children = (
-				01AD26EF23955A9F00F56210 /* ProgressView.swift */,
-				01AD26F323965A9400F56210 /* FirmwareProgressImage.swift */,
-			);
-			path = FileScheme;
 			sourceTree = "<group>";
 		};
 		01AF928423D1A76100C1BFD6 /* Macro */ = {
@@ -888,15 +814,6 @@
 				0133C73A23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		01B4931523843B0100E1BC08 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				3397666AEF5D1014982224D6 /* DFUViewController.swift */,
-				01C2E97423A1ACDF008C1701 /* DFUViewController.xib */,
-			);
-			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		01B56C1423A1181C00140A1C /* Connection */ = {
@@ -993,7 +910,7 @@
 			path = HomeKit;
 			sourceTree = "<group>";
 		};
-		01D6D2BC24069FE000E1A66F /* UpdatedDFU */ = {
+		01D6D2BC24069FE000E1A66F /* DeviceFirmwareUpdate */ = {
 			isa = PBXGroup;
 			children = (
 				012C2BDD24106811005EC1A0 /* Viewes */,
@@ -1002,7 +919,7 @@
 				01D6D2B824067B0500E1A66F /* Resources.xcassets */,
 				01D6D2BA240696D000E1A66F /* DFURouter.swift */,
 			);
-			path = UpdatedDFU;
+			path = DeviceFirmwareUpdate;
 			sourceTree = "<group>";
 		};
 		01D6D2BD2406A1B500E1A66F /* ViewConrollers */ = {
@@ -1062,29 +979,12 @@
 		01DFC55A2420EFFC00AF2EF0 /* NotConnectedViewController */ = {
 			isa = PBXGroup;
 			children = (
+				433A9010245304CB00107822 /* Util */,
 				01268AF32421795500E83156 /* UpdateScreen */,
 				01268AF22421599800E83156 /* FileSelection */,
 				01268AF12421595200E83156 /* NotConnectedViewController */,
 			);
 			path = NotConnectedViewController;
-			sourceTree = "<group>";
-		};
-		01E4BAC823698DC000EE67A0 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				01E4BAC923698DD300EE67A0 /* FindMeTableViewCell.swift */,
-				01E4BACA23698DD300EE67A0 /* FindMeTableViewCell.xib */,
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
-		01F365602397BAC200A4543A /* FileView */ = {
-			isa = PBXGroup;
-			children = (
-				01F365612397BADC00A4543A /* DFUFileView.swift */,
-				01F365632397BAE500A4543A /* DFUFileView.xib */,
-			);
-			path = FileView;
 			sourceTree = "<group>";
 		};
 		01FBC4FF2407BF5600B1056B /* Utils */ = {
@@ -1161,9 +1061,9 @@
 		04CD51502DA0CA668E27A6C1 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				B669D6E0559E7DC87E6003AE /* Pods-nRF Toolbox.debug.xcconfig */,
-				825D586E52D14134859331F5 /* Pods-nRF Toolbox.beta.xcconfig */,
-				037B7BCB6D1BE75E608CDDAC /* Pods-nRF Toolbox.release.xcconfig */,
+				EAAF1D5ED777F196D5C340C3 /* Pods-nRF Toolbox.debug.xcconfig */,
+				69A9BA14F5A63C56C457514A /* Pods-nRF Toolbox.beta.xcconfig */,
+				5A98BC822E262F88E44D6E02 /* Pods-nRF Toolbox.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1202,7 +1102,7 @@
 		200973DB2343746B0091951B /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				200973DC2343748F0091951B /* BloodPreasureCharacteristic.swift */,
+				200973DC2343748F0091951B /* BloodPressureCharacteristic.swift */,
 				201364FC2344E2E300C5AF1F /* CuffPreasureCharacteristic.swift */,
 			);
 			path = Models;
@@ -1249,7 +1149,9 @@
 		203D0F0A232FB4FB00C0340D /* Sections */ = {
 			isa = PBXGroup;
 			children = (
+				433A90052451A9EA00107822 /* SliderSection */,
 				203D0F0D23325E0A00C0340D /* CyclingTableViewSection.swift */,
+				433A900B24525CDA00107822 /* WheelSizeSection.swift */,
 			);
 			path = Sections;
 			sourceTree = "<group>";
@@ -1309,6 +1211,7 @@
 			isa = PBXGroup;
 			children = (
 				20F0C80B2327DB74003111E7 /* BGMSection.swift */,
+				43F837232433FA7C003D88F0 /* BGMActionSection.swift */,
 			);
 			path = Sections;
 			sourceTree = "<group>";
@@ -1341,7 +1244,7 @@
 			isa = PBXGroup;
 			children = (
 				0197AFCC2420DA3500ADF105 /* ZephyrDFU */,
-				01D6D2BC24069FE000E1A66F /* UpdatedDFU */,
+				01D6D2BC24069FE000E1A66F /* DeviceFirmwareUpdate */,
 				4381AD1823BA010200FB1A1F /* UART */,
 				01816D49235DD7180040F574 /* ContinuousGlucoseMonitor */,
 				20B7979C2338EC63001328E1 /* Template */,
@@ -1352,7 +1255,6 @@
 				2002A003232260CA00C43E06 /* Glucose */,
 				204485DF233A143B00A8A3A3 /* Running */,
 				33976FB7F70E2AC6E606CA7A /* Proximity */,
-				3397685D0BC3A39E56B33F94 /* DeviceFirmwareUpdate */,
 			);
 			path = Profiles;
 			sourceTree = "<group>";
@@ -1402,6 +1304,7 @@
 				0125D5B723F53D3B003A1812 /* DFU.LogLevel+Ext.swift */,
 				01FBC5142408158F00B1056B /* CBPeripheralState+Ext.swift */,
 				01BEADD7241AE6BF00FC7183 /* UILabel+Ext.swift */,
+				CC7B93FA695799F95D065492 /* NumberFormatter+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1420,6 +1323,8 @@
 			children = (
 				20D08DFB232929A400569587 /* BGMTableViewCell.swift */,
 				20D08DFC232929A400569587 /* BGMTableViewCell.xib */,
+				43F837252433FB1F003D88F0 /* BGMDisplayItemTableViewCell.swift */,
+				43F837272433FB29003D88F0 /* BGMDisplayItemTableViewCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1501,6 +1406,8 @@
 		20F15C372313D082000C5503 /* CommonViews */ = {
 			isa = PBXGroup;
 			children = (
+				4389183A24360D1A00175A94 /* LoggerTableView */,
+				4389183224360C0D00175A94 /* NordicButton.swift */,
 				019985E223DEF220000CDCB6 /* TableViewCell */,
 				20F15C3D2313D5ED000C5503 /* NoContentViewController */,
 				20F15C382313D093000C5503 /* EmptyView */,
@@ -1525,37 +1432,6 @@
 			path = NoContentViewController;
 			sourceTree = "<group>";
 		};
-		3001EBB21D1BE1FB008C5C37 /* ContinuousGlucoseMonitoring */ = {
-			isa = PBXGroup;
-			children = (
-				3001EBC61D1C1BAA008C5C37 /* CGMViewController.swift */,
-				20C7FE2D230BEC9D00B06FD8 /* CGMViewController.storyboard */,
-				3001EBC41D1C153C008C5C37 /* CGMDetailsViewController.swift */,
-				3001EBC01D1C12E4008C5C37 /* CGMItemCell.swift */,
-			);
-			path = ContinuousGlucoseMonitoring;
-			sourceTree = "<group>";
-		};
-		3001EBB31D1BE1FB008C5C37 /* StandarGlucoseMonitoring */ = {
-			isa = PBXGroup;
-			children = (
-				3001EBB41D1BE1FB008C5C37 /* BGMDetailsViewController.swift */,
-				3001EBB51D1BE1FB008C5C37 /* BGMItemCell.swift */,
-				3001EBB61D1BE1FB008C5C37 /* BGMViewController.swift */,
-				20C7FE1D230BE75D00B06FD8 /* BGMViewController.storyboard */,
-			);
-			path = StandarGlucoseMonitoring;
-			sourceTree = "<group>";
-		};
-		304299361CE6154100E1D2AB /* BaseViewController */ = {
-			isa = PBXGroup;
-			children = (
-				3042993A1CE6154100E1D2AB /* BaseViewController.swift */,
-				304299391CE6154100E1D2AB /* BaseRevealViewController.swift */,
-			);
-			path = BaseViewController;
-			sourceTree = "<group>";
-		};
 		3069A1D21CDC76FE003869EA /* BluetoothManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -1564,35 +1440,12 @@
 			path = BluetoothManager;
 			sourceTree = "<group>";
 		};
-		309F08631E6D6A4300B7546A /* HomeKit */ = {
-			isa = PBXGroup;
-			children = (
-				309F08641E6D6A5500B7546A /* HKViewController.swift */,
-				20C7FE1F230BE7DF00B06FD8 /* HKViewController.storyboard */,
-				309F08691E6D9EAA00B7546A /* HKHomeStore.swift */,
-				309F086B1E6EA0F800B7546A /* HKScannerViewController.swift */,
-				309F086D1E6ED44F00B7546A /* HKScannerDelegate.swift */,
-				309F086F1E6FF1F900B7546A /* HKAccessoryViewController.swift */,
-			);
-			path = HomeKit;
-			sourceTree = "<group>";
-		};
 		339760417A26067B655C06DE /* Peripheral */ = {
 			isa = PBXGroup;
 			children = (
 				339767C9A62A86751137B1CA /* Peripheral+ContinuousGlucoseMonitor.swift */,
 			);
 			path = Peripheral;
-			sourceTree = "<group>";
-		};
-		339764D601B214DA0869F4B0 /* Sections */ = {
-			isa = PBXGroup;
-			children = (
-				01E4BAC823698DC000EE67A0 /* Cell */,
-				339763C07DFE7826BAF28153 /* FindMeSection.swift */,
-				33976ECA8BDFCDF4188746E3 /* DistanceChartSection.swift */,
-			);
-			path = Sections;
 			sourceTree = "<group>";
 		};
 		339765764F70C52AC5738A3F /* Models */ = {
@@ -1617,15 +1470,6 @@
 			path = Sections;
 			sourceTree = "<group>";
 		};
-		3397685D0BC3A39E56B33F94 /* DeviceFirmwareUpdate */ = {
-			isa = PBXGroup;
-			children = (
-				01B4931523843B0100E1BC08 /* ViewControllers */,
-				0140FCD4237C2FFA00411963 /* Views */,
-			);
-			path = DeviceFirmwareUpdate;
-			sourceTree = "<group>";
-		};
 		33976F4A6C92E03D8A6FDDB4 /* GlucoseValueList */ = {
 			isa = PBXGroup;
 			children = (
@@ -1637,8 +1481,10 @@
 		33976FB7F70E2AC6E606CA7A /* Proximity */ = {
 			isa = PBXGroup;
 			children = (
+				4350CFFB244D104C0068EEEA /* Utils */,
+				4350CFF6244CEFC00068EEEA /* Views */,
 				339769E077B5F68E7D221F4D /* ProximityViewController.swift */,
-				339764D601B214DA0869F4B0 /* Sections */,
+				4350CFFE244D20AE0068EEEA /* ProximityViewController.xib */,
 				33976989CA3150561E8CE2F8 /* Peripheral+Proximity.swift */,
 			);
 			path = Proximity;
@@ -1661,12 +1507,62 @@
 				4322034323CC9D31009840DD /* UARTCommandModel.swift */,
 				01AF929123D5A9CD00C1BFD6 /* UARTMacro.swift */,
 				01AF929523D8962600C1BFD6 /* UARTPreset.swift */,
-				01A1B76923CF309E0062FADC /* CommandImage.swift */,
-				01797E8223F4242500B26BF2 /* ModernIcon.swift */,
+				436C0ACD2456D59500B03B61 /* Icons */,
 				01AF929323D72AC900C1BFD6 /* UARTJsonCoder.swift */,
 				019985F023E07CFB000CDCB6 /* XMLDocument.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		433A90052451A9EA00107822 /* SliderSection */ = {
+			isa = PBXGroup;
+			children = (
+				433A90062451A9F800107822 /* Cells */,
+			);
+			path = SliderSection;
+			sourceTree = "<group>";
+		};
+		433A90062451A9F800107822 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				433A90072451AA1900107822 /* SliderTableViewCell.swift */,
+				433A90082451AA1900107822 /* SliderTableViewCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		433A900D2453040E00107822 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				433A900E2453042900107822 /* LogObserver+DFU.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		433A9010245304CB00107822 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				433A9011245304DE00107822 /* McuMgrLogObserver.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		4350CFF6244CEFC00068EEEA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4350CFF8244CEFC90068EEEA /* DistanceView.swift */,
+				4350CFF7244CEFC90068EEEA /* SignalStrengthView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4350CFFB244D104C0068EEEA /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				4350CFFC244D109B0068EEEA /* ProximityBluetoothManager.swift */,
+				432DCD52244E5FEE00C6828F /* RSSI.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		4353A5102431855E00159CDF /* Sections */ = {
@@ -1675,6 +1571,24 @@
 				4353A5112431856A00159CDF /* AccessoriesSection.swift */,
 			);
 			path = Sections;
+			sourceTree = "<group>";
+		};
+		436C0ACD2456D59500B03B61 /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				CC7B95845343A3D826B220D5 /* CommandImage.swift */,
+			);
+			path = Icons;
+			sourceTree = "<group>";
+		};
+		436C0ACE2456FD0C00B03B61 /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				01797E8223F4242500B26BF2 /* ModernIcon.swift */,
+				436C0ACF2456FD3300B03B61 /* ModernIcon+Const.swift */,
+				436C0AD12456FDD700B03B61 /* ImageWrapper.swift */,
+			);
+			path = Icons;
 			sourceTree = "<group>";
 		};
 		4381AD1823BA010200FB1A1F /* UART */ = {
@@ -1696,27 +1610,21 @@
 			path = UART;
 			sourceTree = "<group>";
 		};
-		4392FEF923AA603700E6ACEA /* LogerView */ = {
+		4389183A24360D1A00175A94 /* LoggerTableView */ = {
 			isa = PBXGroup;
 			children = (
-				4392FEFC23AA60EB00E6ACEA /* Cell */,
-				4392FEFA23AA608700E6ACEA /* LoggerTableView.swift */,
+				4389183624360D0100175A94 /* LogTableViewCell.swift */,
+				4389183724360D0100175A94 /* LogTableViewCell.xib */,
+				4389183424360C9E00175A94 /* LoggerTableView.swift */,
 			);
-			path = LogerView;
-			sourceTree = "<group>";
-		};
-		4392FEFC23AA60EB00E6ACEA /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				4392FEFD23AA610300E6ACEA /* LogTableViewCell.swift */,
-				4392FEFE23AA610300E6ACEA /* LogTableViewCell.xib */,
-			);
-			path = Cell;
+			path = LoggerTableView;
 			sourceTree = "<group>";
 		};
 		5214D0CF18881D0200460637 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				436C0ACE2456FD0C00B03B61 /* Icons */,
+				4389183B24360EAA00175A94 /* Logger.swift */,
 				20B25F112317FAA3006AF321 /* BLE */,
 				20C7FE062306EB4100B06FD8 /* Extensions */,
 				300143261CEC4B9D008379DF /* AppUtilities.swift */,
@@ -1742,9 +1650,7 @@
 		5217F3D91859EE0000F2D5BB = {
 			isa = PBXGroup;
 			children = (
-				5214D0CD1886C02A00460637 /* Settings.bundle */,
 				5217F3EB1859EE0000F2D5BB /* nRF Toolbox */,
-				5217F40A1859EE0000F2D5BB /* nRF ToolboxTests */,
 				014C4E912404038A0003E601 /* nRF Toolbox Tests */,
 				5217F3E41859EE0000F2D5BB /* Frameworks */,
 				5217F3E31859EE0000F2D5BB /* Products */,
@@ -1773,7 +1679,7 @@
 				5217F3E71859EE0000F2D5BB /* CoreGraphics.framework */,
 				5217F3E91859EE0000F2D5BB /* UIKit.framework */,
 				89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */,
-				F20B3FC767F35FC2E41A6A50 /* Pods_nRF_Toolbox.framework */,
+				5B1C52F90A80A6E5FFBFC488 /* Pods_nRF_Toolbox.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1789,14 +1695,8 @@
 				309F08661E6D706B00B7546A /* nRF Toolbox.entitlements */,
 				A8F1142619C1B7EC007F956E /* StoryBoard */,
 				3069A1D21CDC76FE003869EA /* BluetoothManager */,
-				5252A533188025EC00EFD773 /* BGM */,
-				A85667E31B2233A3004A6D3C /* MainViewController */,
 				5236E166187EA7AA0057E974 /* Scanner */,
-				309F08631E6D6A4300B7546A /* HomeKit */,
-				5252A53B18802F6300EFD773 /* DFU */,
-				A86A78491AB8537200823AAB /* UART */,
 				5214D0CF18881D0200460637 /* Utilities */,
-				304299361CE6154100E1D2AB /* BaseViewController */,
 				306ECD611CE61A3600E48BBD /* AppDelegate.swift */,
 				5217F3FD1859EE0000F2D5BB /* Images.xcassets */,
 				20E07B4A23068D0300FCB205 /* Colors.xcassets */,
@@ -1819,32 +1719,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		5217F40A1859EE0000F2D5BB /* nRF ToolboxTests */ = {
-			isa = PBXGroup;
-			children = (
-				3001432E1CEDAD04008379DF /* CharacteristicReaderTests.swift */,
-				5217F40B1859EE0000F2D5BB /* Supporting Files */,
-			);
-			path = "nRF ToolboxTests";
-			sourceTree = "<group>";
-		};
-		5217F40B1859EE0000F2D5BB /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				5217F40C1859EE0000F2D5BB /* nRF ToolboxTests-Info.plist */,
-				5217F40D1859EE0000F2D5BB /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		5226362B1C5A5FE10054A550 /* Tutorial */ = {
-			isa = PBXGroup;
-			children = (
-				304299231CE6114000E1D2AB /* TutorialViewController.swift */,
-			);
-			name = Tutorial;
-			sourceTree = "<group>";
-		};
 		5236E166187EA7AA0057E974 /* Scanner */ = {
 			isa = PBXGroup;
 			children = (
@@ -1853,72 +1727,6 @@
 				30A1145B1CD24611000F0F02 /* ScannerViewController.swift */,
 			);
 			path = Scanner;
-			sourceTree = "<group>";
-		};
-		524F2CDC18897D18008A8555 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				3001432A1CEC6D2A008379DF /* RecordAccess.swift */,
-				3001EBB01D1BE1F3008C5C37 /* GlucoseReading.swift */,
-				308AA5791CD8DD4300CC9857 /* GlucoseReadingContext.swift */,
-				3001EBBA1D1BE306008C5C37 /* CGMReading.swift */,
-				3001EBBE1D1BE727008C5C37 /* CGMSpecificOperations.swift */,
-				3001EBBC1D1BE695008C5C37 /* CGMFeatureData.swift */,
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
-		5252A533188025EC00EFD773 /* BGM */ = {
-			isa = PBXGroup;
-			children = (
-				3001EBB31D1BE1FB008C5C37 /* StandarGlucoseMonitoring */,
-				3001EBB21D1BE1FB008C5C37 /* ContinuousGlucoseMonitoring */,
-				524F2CDC18897D18008A8555 /* Model */,
-			);
-			path = BGM;
-			sourceTree = "<group>";
-		};
-		5252A53B18802F6300EFD773 /* DFU */ = {
-			isa = PBXGroup;
-			children = (
-				7E996869197FB8FD0092E69E /* Constants */,
-				7E6ED10C197D1D40008010B6 /* File Selection */,
-				7E6ED10A196ED482008010B6 /* firmwares */,
-			);
-			path = DFU;
-			sourceTree = "<group>";
-		};
-		52BDCBE31C4F953C00E2680F /* Logger */ = {
-			isa = PBXGroup;
-			children = (
-				304D58FA1CE34EE600148271 /* Logger.swift */,
-				304D58FC1CE34FC600148271 /* LogViewController.swift */,
-				304D58FE1CE3521900148271 /* LogItem.swift */,
-				304D59001CE352B300148271 /* LogItemTableViewCell.swift */,
-			);
-			name = Logger;
-			sourceTree = "<group>";
-		};
-		7E6ED10C197D1D40008010B6 /* File Selection */ = {
-			isa = PBXGroup;
-			children = (
-				30499E541CE4732200E0993B /* FileSelectionDelegate.swift */,
-				30499E561CE4736500E0993B /* FilePreselectionDelegate.swift */,
-				30499E581CE4A07700E0993B /* AppFilesViewController.swift */,
-				30499E5C1CE4C6C700E0993B /* FolderFilesViewController.swift */,
-				304299211CE5DE8E00E1D2AB /* UserFilesViewController.swift */,
-				5226362B1C5A5FE10054A550 /* Tutorial */,
-			);
-			name = "File Selection";
-			path = FileSelection;
-			sourceTree = "<group>";
-		};
-		7E996869197FB8FD0092E69E /* Constants */ = {
-			isa = PBXGroup;
-			children = (
-				30499E4A1CE4667800E0993B /* DFUConstantsUtility.swift */,
-			);
-			path = Constants;
 			sourceTree = "<group>";
 		};
 		A85667DD1B222AA7004A6D3C /* AppImages */ = {
@@ -1930,25 +1738,6 @@
 				5211EFAD1885642F007CC40D /* icon-hex@2x.png */,
 			);
 			path = AppImages;
-			sourceTree = "<group>";
-		};
-		A85667E31B2233A3004A6D3C /* MainViewController */ = {
-			isa = PBXGroup;
-			children = (
-				30921FD41CD0EB55009CBDDE /* MainViewController.swift */,
-				5231402F22FB07820074325A /* RootNavigationController.swift */,
-			);
-			path = MainViewController;
-			sourceTree = "<group>";
-		};
-		A86A78491AB8537200823AAB /* UART */ = {
-			isa = PBXGroup;
-			children = (
-				52BDCBE31C4F953C00E2680F /* Logger */,
-				3000B2101CE317D900F64CEE /* UARTRevealViewController.swift */,
-				3000B2121CE3195E00F64CEE /* EditPopupViewController.swift */,
-			);
-			path = UART;
 			sourceTree = "<group>";
 		};
 		A8F1142619C1B7EC007F956E /* StoryBoard */ = {
@@ -1985,12 +1774,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5217F4141859EE0000F2D5BB /* Build configuration list for PBXNativeTarget "nRF Toolbox" */;
 			buildPhases = (
-				9D7A4A167EECB1358B073714 /* [CP] Check Pods Manifest.lock */,
+				5FC3317ABD3B19C7AC4BD5DE /* [CP] Check Pods Manifest.lock */,
 				5217F3DE1859EE0000F2D5BB /* Sources */,
 				5217F3DF1859EE0000F2D5BB /* Frameworks */,
 				5217F3E01859EE0000F2D5BB /* Resources */,
 				0E645A0E1CBF943000D36AD0 /* Embed Frameworks */,
-				D7AEFDFC9FF5AAB5F3186559 /* [CP] Embed Pods Frameworks */,
+				CA42A312846FDA743BF24EF8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2074,53 +1863,47 @@
 				20D08DFE232929A400569587 /* BGMTableViewCell.xib in Resources */,
 				01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */,
 				20E07B622306975700FCB205 /* GT-Eesti-Display-Bold.ttf in Resources */,
-				5214D0CE1886C02A00460637 /* Settings.bundle in Resources */,
 				01D6D2C12406A1EF00E1A66F /* DFUStartViewController.xib in Resources */,
 				01FBC5072407C2B000B1056B /* FileSelectorViewController.xib in Resources */,
-				01C2E97523A1ACDF008C1701 /* DFUViewController.xib in Resources */,
 				01A1B76823CF13A50062FADC /* UARTNewCommandViewController.xib in Resources */,
 				01BEADD12418FB5A00FC7183 /* DFUUpdateProgressView.xib in Resources */,
 				20E07B682306975700FCB205 /* GT-Eesti-Display-ULight-Italic.ttf in Resources */,
-				0E645A0F1CBF957800D36AD0 /* firmwares in Resources */,
 				0197AFD02420DAAC00ADF105 /* NotConnectedViewController.xib in Resources */,
 				0151170C240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.xib in Resources */,
 				01D6D2B924067B0500E1A66F /* Resources.xcassets in Resources */,
+				433A900A2451AA1900107822 /* SliderTableViewCell.xib in Resources */,
 				20E07B602306975700FCB205 /* GT-Eesti-Display-UBold-Italic.ttf in Resources */,
 				20E07B3F23055B0B00FCB205 /* InteractionServiceList.plist in Resources */,
 				20C7FE032306C72000B06FD8 /* IoTServices.plist in Resources */,
 				20C7FE59230E9BDC00B06FD8 /* ServiceTableViewCell.xib in Resources */,
+				43F837282433FB29003D88F0 /* BGMDisplayItemTableViewCell.xib in Resources */,
 				01A1B76D23CF43590062FADC /* UART.xcassets in Resources */,
 				20E07B5B2306975700FCB205 /* GT-Eesti-Display-Thin.ttf in Resources */,
 				01DDD79D23EC5CDA003786ED /* TimeIntervalTableViewCell.xib in Resources */,
 				20E07B642306975700FCB205 /* GT-Eesti-Display-Thin-Italic.ttf in Resources */,
-				20C7FE20230BE7DF00B06FD8 /* HKViewController.storyboard in Resources */,
 				20E07B662306975700FCB205 /* GT-Eesti-Display-Regular-Italic.ttf in Resources */,
 				5217F3FE1859EE0000F2D5BB /* Images.xcassets in Resources */,
 				20E07B5E2306975700FCB205 /* GT-Eesti-Display-Medium-Italic.ttf in Resources */,
-				4392FF0023AA610300E6ACEA /* LogTableViewCell.xib in Resources */,
 				01AF928923D1A7E300C1BFD6 /* PeripheralView.xib in Resources */,
 				20E07B5F2306975700FCB205 /* GT-Eesti-Display-Bold-Italic.ttf in Resources */,
 				7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */,
-				01E4BACC23698DD300EE67A0 /* FindMeTableViewCell.xib in Resources */,
-				20C7FE1E230BE75D00B06FD8 /* BGMViewController.storyboard in Resources */,
 				52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */,
+				4350CFFF244D20AE0068EEEA /* ProximityViewController.xib in Resources */,
 				5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */,
 				01675E7223F6D1BE00FC0519 /* UARTPresetTableViewCell.xib in Resources */,
 				5217F3F01859EE0000F2D5BB /* InfoPlist.strings in Resources */,
 				20E07B632306975700FCB205 /* GT-Eesti-Display-Regular.ttf in Resources */,
 				011960A023FA064100A7EF29 /* UARTMacrosHeaderView.xib in Resources */,
 				5211EFB118856430007CC40D /* icon-hex@2x.png in Resources */,
+				4389183924360D0100175A94 /* LogTableViewCell.xib in Resources */,
 				20E07B672306975700FCB205 /* GT-Eesti-Display-Light-Italic.ttf in Resources */,
-				20C7FE2E230BEC9D00B06FD8 /* CGMViewController.storyboard in Resources */,
 				20E07B652306975700FCB205 /* GT-Eesti-Display-ULight.ttf in Resources */,
 				016EF389241632AF005FFA30 /* LoggerTableViewController.xib in Resources */,
 				20E07B612306975700FCB205 /* GT-Eesti-Display-Medium.ttf in Resources */,
 				20F15C3C2313D2C7000C5503 /* InfoActionView.xib in Resources */,
 				4353A50F243175C300159CDF /* HMAccessoryListTableViewController.xib in Resources */,
 				5217F3F91859EE0000F2D5BB /* Main.storyboard in Resources */,
-				01F365642397BAE500A4543A /* DFUFileView.xib in Resources */,
 				4381AD1C23BA057000FB1A1F /* UARTViewController.xib in Resources */,
-				01F365642397BAE500A4543A /* DFUFileView.xib in Resources */,
 				01A1B77323CF530E0062FADC /* ImageCollectionViewCell.xib in Resources */,
 				5211EFAF18856430007CC40D /* icon-dfu-320.png in Resources */,
 				20E07B5C2306975700FCB205 /* GT-Eesti-Display-UBold.ttf in Resources */,
@@ -2131,7 +1914,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		9D7A4A167EECB1358B073714 /* [CP] Check Pods Manifest.lock */ = {
+		5FC3317ABD3B19C7AC4BD5DE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2153,7 +1936,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D7AEFDFC9FF5AAB5F3186559 /* [CP] Embed Pods Frameworks */ = {
+		CA42A312846FDA743BF24EF8 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2163,7 +1946,6 @@
 				"${BUILT_PRODUCTS_DIR}/AEXML/AEXML.framework",
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/CorePlot/CorePlot.framework",
-				"${BUILT_PRODUCTS_DIR}/EVReflection/EVReflection.framework",
 				"${BUILT_PRODUCTS_DIR}/McuManager/McuManager.framework",
 				"${BUILT_PRODUCTS_DIR}/SWRevealViewController/SWRevealViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftCBOR/SwiftCBOR.framework",
@@ -2175,7 +1957,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AEXML.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePlot.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EVReflection.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/McuManager.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SWRevealViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftCBOR.framework",
@@ -2212,69 +1993,56 @@
 				01468B052361A30A00C29E4C /* StepperTableViewCell.swift in Sources */,
 				019985E823DF1C8D000CDCB6 /* CloseButtonPresenter.swift in Sources */,
 				01AF929A23DB17C100C1BFD6 /* AlertPresenter.swift in Sources */,
-				304299221CE5DE8E00E1D2AB /* UserFilesViewController.swift in Sources */,
 				01FBC5062407C2B000B1056B /* FileSelectorViewController.swift in Sources */,
 				204485E7233A172800A8A3A3 /* Peripheral+Running.swift in Sources */,
-				30499E5D1CE4C6C700E0993B /* FolderFilesViewController.swift in Sources */,
-				30499E551CE4732200E0993B /* FileSelectionDelegate.swift in Sources */,
 				201364F92344A94700C5AF1F /* PulseBloodPressureSection.swift in Sources */,
+				43F837242433FA7C003D88F0 /* BGMActionSection.swift in Sources */,
 				2013650223462DB900C5AF1F /* BatteryCharacteristic.swift in Sources */,
 				019985E623DEF2BD000CDCB6 /* NordicActionTableViewCell.swift in Sources */,
 				204485EA233A38E900A8A3A3 /* RunningSpeedSection.swift in Sources */,
 				200973D723433A5E0091951B /* PaceMeasurementFormatter.swift in Sources */,
 				01AF928723D1A7D400C1BFD6 /* PeripheralView.swift in Sources */,
-				01F365622397BADC00A4543A /* DFUFileView.swift in Sources */,
 				300143291CEC59F4008379DF /* ServiceIdentifiers.swift in Sources */,
 				0129126B23E4487000EB3CCD /* UARTTabBarController.swift in Sources */,
 				20E07B422306868F00FCB205 /* BLEService.swift in Sources */,
-				3001EBC71D1C1BAA008C5C37 /* CGMViewController.swift in Sources */,
-				01AD26F023955A9F00F56210 /* ProgressView.swift in Sources */,
 				01A1B77223CF530E0062FADC /* ImageCollectionViewCell.swift in Sources */,
 				4392FF0223AA6CBE00E6ACEA /* DateFormatter+Ext.swift in Sources */,
-				304D58FD1CE34FC600148271 /* LogViewController.swift in Sources */,
+				4389184124360F7300175A94 /* GlucoseReading.swift in Sources */,
+				4389184224360F7300175A94 /* GlucoseReadingContext.swift in Sources */,
 				201364FD2344E2E300C5AF1F /* CuffPreasureCharacteristic.swift in Sources */,
 				20D08DFD232929A400569587 /* BGMTableViewCell.swift in Sources */,
 				01D6D2BB240696D000E1A66F /* DFURouter.swift in Sources */,
-				30499E571CE4736500E0993B /* FilePreselectionDelegate.swift in Sources */,
 				01B6D3DE234CBBE5000942C4 /* SernsorLocationSection.swift in Sources */,
-				200973DD2343748F0091951B /* BloodPreasureCharacteristic.swift in Sources */,
+				200973DD2343748F0091951B /* BloodPressureCharacteristic.swift in Sources */,
 				30A1145C1CD24611000F0F02 /* ScannerViewController.swift in Sources */,
-				308AA57A1CD8DD4300CC9857 /* GlucoseReadingContext.swift in Sources */,
-				3001432B1CEC6D2A008379DF /* RecordAccess.swift in Sources */,
 				01D6D2C02406A1EF00E1A66F /* DFUStartViewController.swift in Sources */,
-				304D58FF1CE3521900148271 /* LogItem.swift in Sources */,
-				3042993C1CE6154100E1D2AB /* BaseRevealViewController.swift in Sources */,
 				01B6D3E0234CC090000942C4 /* Peripheral+HeartRate.swift in Sources */,
 				019985EE23E0622B000CDCB6 /* UARTLoggerViewController.swift in Sources */,
-				30499E4B1CE4667800E0993B /* DFUConstantsUtility.swift in Sources */,
 				20F15C432313F821000C5503 /* XibInstantiable.swift in Sources */,
+				43E2F73F2462E31400912BD6 /* AutoReszableTextView.swift in Sources */,
 				3001432D1CECADFB008379DF /* CharacteristicReader.swift in Sources */,
 				200973D32341DBAB0091951B /* CyclingCharacteristic.swift in Sources */,
 				0119609E23FA063700A7EF29 /* UARTMacrosHeaderView.swift in Sources */,
 				01AF928323D0AC3200C1BFD6 /* StringProtocol+Ext.swift in Sources */,
-				309F08651E6D6A5500B7546A /* HKViewController.swift in Sources */,
 				203D0F0E23325E0A00C0340D /* CyclingTableViewSection.swift in Sources */,
 				0197AFCF2420DAAC00ADF105 /* NotConnectedViewController.swift in Sources */,
-				3000B2131CE3195E00F64CEE /* EditPopupViewController.swift in Sources */,
 				20D08E28232B940400569587 /* OptionSelectionSection.swift in Sources */,
 				20C7FE052306D02400B06FD8 /* SystemLog.swift in Sources */,
 				016EF388241632AF005FFA30 /* LoggerTableViewController.swift in Sources */,
 				20B25F382319568B006AF321 /* PeripheralTableViewController.swift in Sources */,
 				52D9BC9E1DD0CB760030E824 /* Data+Ext.swift in Sources */,
+				4389183E24360F0900175A94 /* CGMSpecificOperations.swift in Sources */,
 				306ECD621CE61A3600E48BBD /* AppDelegate.swift in Sources */,
 				2002A000231FAFD100C43E06 /* PeripheralManager.swift in Sources */,
 				20F0C8012327D207003111E7 /* CBUUID+IDs.swift in Sources */,
 				43445EEF23B0AD8D008A9FD9 /* LoggLevel+Ext.swift in Sources */,
 				019985EA23DF1EED000CDCB6 /* UIViewController+Ext.swift in Sources */,
-				01E4BACB23698DD300EE67A0 /* FindMeTableViewCell.swift in Sources */,
 				01B6D3D8234CB533000942C4 /* HeartRateMeasurementCharacteristic.swift in Sources */,
 				20C7FDFE2306BEE000B06FD8 /* Array+Ext.swift in Sources */,
 				01B6D3D3234C7538000942C4 /* HeartRateMonitorTableViewController.swift in Sources */,
-				01A1B76A23CF309E0062FADC /* CommandImage.swift in Sources */,
-				3001EBB71D1BE1FB008C5C37 /* BGMDetailsViewController.swift in Sources */,
 				20C7FE16230ADD1E00B06FD8 /* StoryboardInstantiable.swift in Sources */,
+				438918442436108E00175A94 /* RecordAccess.swift in Sources */,
 				20B797912334FD77001328E1 /* Peripheral+BMG.swift in Sources */,
-				4392FEFB23AA608700E6ACEA /* LoggerTableView.swift in Sources */,
 				01AF929223D5A9CD00C1BFD6 /* UARTMacro.swift in Sources */,
 				4322034123CC773F009840DD /* UARTActionCollectionViewCell.swift in Sources */,
 				0151170B240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift in Sources */,
@@ -2282,22 +2050,18 @@
 				20C7FE10230A9FAB00B06FD8 /* UIFont+Ext.swift in Sources */,
 				201364F72344A93D00C5AF1F /* BloodPressureSection.swift in Sources */,
 				014C4E892403F8AE0003E601 /* UARTMacrosTableViewController.swift in Sources */,
-				304D59011CE352B300148271 /* LogItemTableViewCell.swift in Sources */,
 				012C2BDC240FCD0C005EC1A0 /* DFUUpdateSection.swift in Sources */,
 				01E5910923DB3BC5008F15A4 /* QuickError.swift in Sources */,
 				01AD26E82395084000F56210 /* ConnectionViewController.swift in Sources */,
 				01FBC50B2408067400B1056B /* DFUFirmwareInfoViewController.swift in Sources */,
-				3001EBC51D1C153C008C5C37 /* CGMDetailsViewController.swift in Sources */,
 				0133C73B23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift in Sources */,
 				4322034423CC9D31009840DD /* UARTCommandModel.swift in Sources */,
 				2002A002231FB8E800C43E06 /* UIImage+Ext.swift in Sources */,
 				20D08E06232A569B00569587 /* Identifiable.swift in Sources */,
 				01AA707F241291C00018DB29 /* LogObserver.swift in Sources */,
+				433A90092451AA1900107822 /* SliderTableViewCell.swift in Sources */,
 				01006201234D08700078CEFA /* LinearChartTableViewCell.swift in Sources */,
-				01AD26F423965A9400F56210 /* FirmwareProgressImage.swift in Sources */,
 				019985E423DEF23F000CDCB6 /* NordicTextTableViewCell.swift in Sources */,
-				01AD26EC23953E4800F56210 /* FileSizeView.swift in Sources */,
-				309F086E1E6ED44F00B7546A /* HKScannerDelegate.swift in Sources */,
 				01DDD79C23EC5CDA003786ED /* TimeIntervalTableViewCell.swift in Sources */,
 				01268AF52421805F00E83156 /* ZephyrDFUTableViewController.swift in Sources */,
 				01FBC5132408132800B1056B /* DFUDeviceInfoSection.swift in Sources */,
@@ -2305,41 +2069,40 @@
 				200973DA234344780091951B /* BloodPressureTableViewController.swift in Sources */,
 				201364FB2344A94F00C5AF1F /* TimeBloodPressureSection.swift in Sources */,
 				01BE094F2349F71B006ACF06 /* HealthTermometerTableViewController.swift in Sources */,
-				304D58FB1CE34EE600148271 /* Logger.swift in Sources */,
 				01BE0958234A76D4006ACF06 /* Peripheral+Temperature.swift in Sources */,
-				304299241CE6114000E1D2AB /* TutorialViewController.swift in Sources */,
 				20C7FE0E230A9F9300B06FD8 /* LinkTableViewCell.swift in Sources */,
 				01D98C8C242E2B3C000A3B35 /* UIImage+File.swift in Sources */,
+				432DCD53244E5FEE00C6828F /* RSSI.swift in Sources */,
 				012C2BE32410682D005EC1A0 /* SegmentedView.swift in Sources */,
 				01BE0955234A7500006ACF06 /* HealthTemperatureSection.swift in Sources */,
 				01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */,
 				01A1B76723CF13A50062FADC /* UARTNewCommandViewController.swift in Sources */,
 				20C7FE082306EB5600B06FD8 /* UITableView+Ext.swift in Sources */,
 				20D08E02232A38C200569587 /* TitledError.swift in Sources */,
+				4350CFFD244D109B0068EEEA /* ProximityBluetoothManager.swift in Sources */,
 				01AA707D24124F270018DB29 /* DFUUpdateTabBarViewController.swift in Sources */,
 				20C7FE53230E811B00B06FD8 /* ServiceProvider.swift in Sources */,
 				20C7FE5E230EC37000B06FD8 /* ServiceTableViewCell.swift in Sources */,
 				01268AF924218E5800E83156 /* ZephyrDFUDocumentPicker.swift in Sources */,
+				4389183824360D0100175A94 /* LogTableViewCell.swift in Sources */,
 				012C2BE72410F8AA005EC1A0 /* DFUUpdateViewController.swift in Sources */,
 				01B6D3E2234CCC9F000942C4 /* HeartRateChartSection.swift in Sources */,
 				01B56C1623A11FDA00140A1C /* PeripheralScanner.swift in Sources */,
-				3001EBBB1D1BE306008C5C37 /* CGMReading.swift in Sources */,
+				4389183C24360EAB00175A94 /* Logger.swift in Sources */,
 				01675E6923F6990500FC0519 /* UARTMacrosTableViewController.swift in Sources */,
-				3001EBB11D1BE1F3008C5C37 /* GlucoseReading.swift in Sources */,
 				01A1B77523CF5A080062FADC /* UICollectionView+Ext.swift in Sources */,
 				01797E8323F4242500B26BF2 /* ModernIcon.swift in Sources */,
 				20850177233B690500C792B4 /* RunningCharacteristic.swift in Sources */,
-				4392FEFF23AA610300E6ACEA /* LogTableViewCell.swift in Sources */,
-				309F086C1E6EA0F800B7546A /* HKScannerViewController.swift in Sources */,
 				015F109B240FA82400FDAC49 /* DFUDocumentPicker.swift in Sources */,
+				4389183524360C9E00175A94 /* LoggerTableView.swift in Sources */,
 				20D08E04232A4A3600569587 /* SelectionsTableViewController.swift in Sources */,
+				436C0AD02456FD3300B03B61 /* ModernIcon+Const.swift in Sources */,
 				20C7FE5B230EAD0000B06FD8 /* UINavigationController+Ext.swift in Sources */,
 				20F0C8062327D439003111E7 /* BatterySection.swift in Sources */,
 				5231403222FB1E130074325A /* UIColor+Nordic.swift in Sources */,
 				30A1145A1CD2426B000F0F02 /* ScannerDelegate.swift in Sources */,
 				3069A1D71CDC788A003869EA /* BluetoothManager.swift in Sources */,
 				20136505234785DC00C5AF1F /* Peripheral+BloodPressure.swift in Sources */,
-				3042993D1CE6154100E1D2AB /* BaseViewController.swift in Sources */,
 				01D98C91242E33ED000A3B35 /* FSDataSource.swift in Sources */,
 				01FBC5102408101B00B1056B /* NordicRightDetailTableViewCell.swift in Sources */,
 				20D08E2B232B95B300569587 /* DisclosureTableViewCell.swift in Sources */,
@@ -2354,24 +2117,19 @@
 				012C2BE22410682D005EC1A0 /* Segment.swift in Sources */,
 				20E07B3C2305593800FCB205 /* ServiceListViewController.swift in Sources */,
 				30A114561CD2367C000F0F02 /* ScannedPeripheral.swift in Sources */,
+				4389183324360C0D00175A94 /* NordicButton.swift in Sources */,
 				20F15C3A2313D2B9000C5503 /* InfoActionView.swift in Sources */,
 				01FEB0FD23969BD1000767C1 /* UIView+Ext.swift in Sources */,
 				20F15C3F2313D606000C5503 /* NoContentViewController.swift in Sources */,
 				0125D5B623F44FE6003A1812 /* UIBarButtonItem+Ext.swift in Sources */,
 				014C4E8B2403F9BD0003E601 /* UARTMacroSaver.swift in Sources */,
 				01BEADCF2418FB1800FC7183 /* DFUUpdateProgressView.swift in Sources */,
-				309F08701E6FF1F900B7546A /* HKAccessoryViewController.swift in Sources */,
-				3001EBC31D1C1430008C5C37 /* CGMItemCell.swift in Sources */,
-				3001EBB91D1BE1FB008C5C37 /* BGMViewController.swift in Sources */,
-				30921FD51CD0EB55009CBDDE /* MainViewController.swift in Sources */,
-				3001EBBD1D1BE695008C5C37 /* CGMFeatureData.swift in Sources */,
 				01AF929423D72AC900C1BFD6 /* UARTJsonCoder.swift in Sources */,
-				5231403022FB07820074325A /* RootNavigationController.swift in Sources */,
+				433A900F2453042900107822 /* LogObserver+DFU.swift in Sources */,
 				01AF929023D1DA5700C1BFD6 /* UARTPresetCollectionView.swift in Sources */,
 				20B7979A2338B8C0001328E1 /* MeasurementFormatter+Ext.swift in Sources */,
 				20F0C80C2327DB74003111E7 /* BGMSection.swift in Sources */,
 				01BE0953234A1C48006ACF06 /* HealthTermometerCharacteristic.swift in Sources */,
-				3001EBB81D1BE1FB008C5C37 /* BGMItemCell.swift in Sources */,
 				300143271CEC4B9D008379DF /* AppUtilities.swift in Sources */,
 				01BEADD8241AE6BF00FC7183 /* UILabel+Ext.swift in Sources */,
 				0169B59E23FBD8BE00907C1B /* NordicTextFieldCell.swift in Sources */,
@@ -2382,20 +2140,20 @@
 				20B797942334FE1B001328E1 /* Identifier+GlucoseMonitorViewController.swift in Sources */,
 				01A870DA23F40E2F00D9202E /* CheckmarkTableViewCell.swift in Sources */,
 				01DFC55C2420F0AB00AF2EF0 /* ZephyrDFURouter.swift in Sources */,
-				309F086A1E6D9EAA00B7546A /* HKHomeStore.swift in Sources */,
+				43F837262433FB1F003D88F0 /* BGMDisplayItemTableViewCell.swift in Sources */,
 				204485E1233A148700A8A3A3 /* RunningTableViewController.swift in Sources */,
 				01BEADD6241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift in Sources */,
-				30499E591CE4A07700E0993B /* AppFilesViewController.swift in Sources */,
-				3001EBBF1D1BE727008C5C37 /* CGMSpecificOperations.swift in Sources */,
 				203D0F09232F782200C0340D /* CyclingTableViewController.swift in Sources */,
 				203D0F0C232FB7D100C0340D /* DetailsTableViewSection.swift in Sources */,
 				01D98C8F242E2B3C000A3B35 /* DocumentFileManager.swift in Sources */,
 				01B6D3DA234CB6B3000942C4 /* HeartRateSection.swift in Sources */,
 				01268AF724218BED00E83156 /* ZephyrFileSelector.swift in Sources */,
 				20027B08233E116600A0B5ED /* StrideSection.swift in Sources */,
-				3000B2111CE317D900F64CEE /* UARTRevealViewController.swift in Sources */,
+				433A900C24525CDA00107822 /* WheelSizeSection.swift in Sources */,
 				339761A6176917F548C7B465 /* ContinuousGlucoseMonitor.swift in Sources */,
+				433A9012245304DE00107822 /* McuMgrLogObserver.swift in Sources */,
 				339763D41402CC5D9773F46F /* Peripheral+ContinuousGlucoseMonitor.swift in Sources */,
+				4350CFFA244CEFC90068EEEA /* DistanceView.swift in Sources */,
 				4353A5122431856A00159CDF /* AccessoriesSection.swift in Sources */,
 				33976F79FE2EA20D94F68B69 /* ContinuousGlucoseChartData.swift in Sources */,
 				339764F85119305F6958B516 /* LastDataSection.swift in Sources */,
@@ -2412,18 +2170,18 @@
 				01DDD7A023EC6351003786ED /* UARTMarcoElement.swift in Sources */,
 				33976B2C1CE8194EFAEB7341 /* Randomizer.swift in Sources */,
 				01363A872417E4FA0030821E /* ControlSection.swift in Sources */,
+				436C0AD22456FDD700B03B61 /* ImageWrapper.swift in Sources */,
 				339765E57CA5E940D960B675 /* ChartDataSection.swift in Sources */,
 				01FBC5012407BF8F00B1056B /* PeripheralHolder.swift in Sources */,
 				3397622AEAB44E02CA055BDF /* ProximityViewController.swift in Sources */,
-				33976DC91B99AAA3F2E12DF7 /* FindMeSection.swift in Sources */,
 				01AF929623D8962600C1BFD6 /* UARTPreset.swift in Sources */,
-				33976FB5E54F1D8DDF4733E0 /* DistanceChartSection.swift in Sources */,
-				01F3655F2397A9C700A4543A /* NordicButton.swift in Sources */,
+				4350CFF9244CEFC90068EEEA /* SignalStrengthView.swift in Sources */,
 				339767568FA774CDE2FFC170 /* Peripheral+Proximity.swift in Sources */,
-				3397616CB0B03E42E9F890C6 /* DFUViewController.swift in Sources */,
 				01268AFB2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift in Sources */,
 				3397628E56C4A84F4D4E8128 /* PeripheralViewController.swift in Sources */,
 				0125D5B823F53D3B003A1812 /* DFU.LogLevel+Ext.swift in Sources */,
+				CC7B90D148FC21C73B54BFAB /* NumberFormatter+Ext.swift in Sources */,
+				CC7B91DDFD7EF39F27FEC85A /* CommandImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2452,14 +2210,6 @@
 				5217F3F81859EE0000F2D5BB /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		5217F40D1859EE0000F2D5BB /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5217F40E1859EE0000F2D5BB /* en */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -2614,7 +2364,7 @@
 		};
 		20FDA43623154494006EEBC1 /* Beta */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 825D586E52D14134859331F5 /* Pods-nRF Toolbox.beta.xcconfig */;
+			baseConfigurationReference = 69A9BA14F5A63C56C457514A /* Pods-nRF Toolbox.beta.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -2643,8 +2393,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-framework",
-					"\"EVReflection\"",
 					"-framework",
 					"\"iOSDFULibrary\"",
 					"-ObjC",
@@ -2778,7 +2526,7 @@
 		};
 		5217F4151859EE0000F2D5BB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B669D6E0559E7DC87E6003AE /* Pods-nRF Toolbox.debug.xcconfig */;
+			baseConfigurationReference = EAAF1D5ED777F196D5C340C3 /* Pods-nRF Toolbox.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -2808,8 +2556,6 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
-					"\"EVReflection\"",
-					"-framework",
 					"\"iOSDFULibrary\"",
 					"-ObjC",
 				);
@@ -2829,7 +2575,7 @@
 		};
 		5217F4161859EE0000F2D5BB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 037B7BCB6D1BE75E608CDDAC /* Pods-nRF Toolbox.release.xcconfig */;
+			baseConfigurationReference = 5A98BC822E262F88E44D6E02 /* Pods-nRF Toolbox.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -2858,8 +2604,6 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-framework",
-					"\"EVReflection\"",
 					"-framework",
 					"\"iOSDFULibrary\"",
 					"-ObjC",

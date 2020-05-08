@@ -32,7 +32,7 @@
 		<key>name</key>
 		<string>MCU Manager</string>
 		<key>icon</key>
-		<string>FeatureDFU</string>
+		<string>FeatureMCU</string>
 		<key>info</key>
 		<string></string>
 		<key>id</key>

@@ -1,7 +1,34 @@
-//
-// Created by Nick Kibysh on 11/11/2019.
-// Copyright (c) 2019 Nordic Semiconductor. All rights reserved.
-//
+/*
+* Copyright (c) 2020, Nordic Semiconductor
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without modification,
+* are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+*
+* 2. Redistributions in binary form must reproduce the above copyright notice, this
+*    list of conditions and the following disclaimer in the documentation and/or
+*    other materials provided with the distribution.
+*
+* 3. Neither the name of the copyright holder nor the names of its contributors may
+*    be used to endorse or promote products derived from this software without
+*    specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+* IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+* INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+* NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+* PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+* ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+* POSSIBILITY OF SUCH DAMAGE.
+*/
+
+
 
 import UIKit
 import CoreBluetooth
@@ -21,84 +48,206 @@ struct PeripheralDescription {
     }
     let uuid: CBUUID?
     let services: [Service]
+    let mandatoryServices: [CBUUID]?
+    let mandatoryCharacteristics: [CBUUID]?
 }
 
-class PeripheralViewController: UIViewController, StatusDelegate {
-    private lazy var peripheralManager = PeripheralManager(peripheral: self.peripheralDescription)
+class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter {
+    private lazy var peripheralManager = PeripheralManager(peripheral: peripheralDescription)
 
     var navigationTitle: String { "" }
-    var peripheralDescription: PeripheralDescription { PeripheralDescription(uuid: CBUUID.Profile.bloodGlucoseMonitor, services: [.battery]) }
+    var peripheralDescription: PeripheralDescription { SystemLog(category: .app, type: .fault).fault("Override this method in subclass") }
+    var requiredServices: [CBUUID]?
     var activePeripheral: CBPeripheral?
     
     private var savedView: UIView!
-
+    private var discoveredServices: [CBUUID] = []
+    private var discoveredCharacteristics: [CBUUID] = []
+    private var serviceFinderTimer: Timer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        peripheralManager.delegate = self
-        self.navigationItem.title = navigationTitle
+        NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        
         savedView = view
+        self.view = InfoActionView.instanceWithParams()
+
+        peripheralManager.delegate = self
+        navigationItem.title = navigationTitle
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationItem.largeTitleDisplayMode = .never
+        }
+        
+        AppUtilities.requestNotificationAuthorization { (_, error) in
+            if let e = error {
+                self.displayErrorAlert(error: e)
+            }
+        }
     }
 
     @objc func disconnect() {
         guard let peripheral = activePeripheral else { return }
-        self.peripheralManager.closeConnection(peripheral: peripheral)
+        peripheralManager.closeConnection(peripheral: peripheral)
+    }
+    
+    @objc func didEnterBackground(notification: Notification) {
+        guard let peripheral = activePeripheral else { return }
+        
+        let name = peripheral.name ?? "peripheral"
+        let msg = "You are still connected to \(name). It will collect data also in background."
+            
+        AppUtilities.showBackgroundNotification(title: "Still connected", message: msg)
     }
 
-    func statusDidChanged(_ status: PeripheralStatus) {
+    // MARK: Status changed
+    func statusDidChanged(_ status: PeripheralStatus)  {
         SystemLog(category: .ble, type: .debug).log(message: "Changed Bluetooth status in \(String(describing: type(of: self))), status: \(status)")
         switch status {
         case .poweredOff:
-            activePeripheral = nil
-
-            let bSettings: InfoActionView.ButtonSettings = ("Settings", {
-                let url = URL(string: "App-Prefs:root=Bluetooth") //for bluetooth setting
-                let app = UIApplication.shared
-                app.open(url!, options: [:], completionHandler: nil)
-            })
-
-            let notContent = InfoActionView.instanceWithParams(message: "Bluetooth is powered off", buttonSettings: bSettings)
-            view = notContent
-        case .disconnected:
-            activePeripheral = nil
-
-            let bSettings: InfoActionView.ButtonSettings = ("Connect", { [unowned self] in
-                self.openConnectorViewController()
-            })
-            
-            let notContent = InfoActionView.instanceWithParams(message: "Device is not connected", buttonSettings: bSettings)
-            notContent.actionButton.style = .mainAction
-            
-            view = notContent
+            onPowerOffStatus()
+        case .disconnected(let error):
+            onDisconnectedStatus(error: error)
+        case .connecting:
+            onConnectingStatus()
         case .connected(let peripheral):
-            dismiss(animated: true, completion: nil)
-            activePeripheral = peripheral
-            
-            activePeripheral?.delegate = self
-            activePeripheral?.discoverServices(peripheralDescription.services.map { $0.uuid } )
-            view = savedView
+            onConnectedStatus(peripheral: peripheral)
+        case .discoveringServicesAndCharacteristics:
+            onDiscoveringServicesAndCharacteristics()
+        case .discoveredRequiredServicesAndCharacteristics:
+            onDiscoveredMandatoryServices()
+        case .unauthorized:
+            onUnauthorizedStatus()
         }
+    }
+
+    func onPowerOffStatus() {
+        serviceFinderTimer?.invalidate()
+        activePeripheral = nil
+
+        let bSettings: InfoActionView.ButtonSettings = ("Settings", {
+            let url = URL(string: "App-Prefs:root=Bluetooth") //for bluetooth setting
+            let app = UIApplication.shared
+            app.open(url!, options: [:], completionHandler: nil)
+        })
+
+        let notContent = InfoActionView.instanceWithParams(message: "Bluetooth is powered off", buttonSettings: bSettings)
+        view = notContent
+    }
+
+    func onDisconnectedStatus(error: Error?) {
+        serviceFinderTimer?.invalidate()
+        activePeripheral = nil
+
+        let bSettings: InfoActionView.ButtonSettings = ("Connect", { [unowned self] in
+            self.openConnectorViewController()
+        })
+
+        let notContent = InfoActionView.instanceWithParams(message: "No connected device", buttonSettings: bSettings)
+        notContent.actionButton.style = .mainAction
+
+        view = notContent
+        
+        switch error {
+        case let e as ConnectionTimeoutError :
+            displaySettingsAlert(title: e.title , message: e.readableMessage)
+        case let e?:
+            displayErrorAlert(error: e)
+        default:
+            break
+        }
+        
+        if case .background = UIApplication.shared.applicationState {
+            let name = activePeripheral?.name ?? "Peripheral"
+            let msg = "\(name) is disconnected."
+            AppUtilities.showBackgroundNotification(title: "Disconnected", message: msg)
+        }
+    }
+
+    func onConnectingStatus() {
+        let notContent = InfoActionView.instanceWithParams(message: "Connecting...")
+        notContent.actionButton.style = .mainAction
+
+        view = notContent
+        dismiss(animated: true, completion: nil)
+    }
+
+    func onConnectedStatus(peripheral: CBPeripheral) {
+        activePeripheral = peripheral
+
+        activePeripheral?.delegate = self
+        activePeripheral?.discoverServices(peripheralDescription.services.map { $0.uuid } )
+
+        if let requiredServices = peripheralDescription.mandatoryServices, !requiredServices.isEmpty {
+            statusDidChanged(.discoveringServicesAndCharacteristics)
+            serviceFinderTimer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [weak self] (t) in
+                self?.displayBindingErrorAlert()
+                self?.disconnect()
+                t.invalidate()
+            }
+        } else {
+            statusDidChanged(.discoveredRequiredServicesAndCharacteristics)
+        }
+    }
+
+    func onDiscoveringServicesAndCharacteristics() {
+        let notContent = InfoActionView.instanceWithParams(message: "Discovering services...")
+        notContent.messageLabel.text = "Looking for mandatory services and characteristics"
+        notContent.titleLabel.numberOfLines = 0
+        notContent.titleLabel.textAlignment = .center
+        notContent.actionButton.style = .mainAction
+
+        view = notContent
+    }
+
+    func onDiscoveredMandatoryServices() {
+        serviceFinderTimer?.invalidate()
+        view = savedView
+    }
+
+    func onUnauthorizedStatus() {
+        let bSettings: InfoActionView.ButtonSettings = ("Settings", {
+            let url = URL(string: "App-Prefs:root=Bluetooth") //for bluetooth setting
+            let app = UIApplication.shared
+            app.open(url!, options: [:], completionHandler: nil)
+        })
+
+        let notContent = InfoActionView.instanceWithParams(message: "Using Bluetooth is not Allowed", buttonSettings: bSettings)
+        notContent.messageLabel.text = "It seems you denied nRF-Toolbox to use Bluetooth. Open settings and allow to use Bluetooth."
+        view = notContent
     }
     
     @objc func openConnectorViewController() {
-        let scanner = PeripheralScanner(services: self.peripheralDescription.uuid.map {[$0]})
+        let scanner = PeripheralScanner(services: peripheralDescription.uuid.map {[$0]})
         let connectionController = ConnectionViewController(scanner: scanner)
         connectionController.delegate = self
 
         let nc = UINavigationController.nordicBranded(rootViewController: connectionController)
         nc.modalPresentationStyle = .formSheet
 
-        self.present(nc, animated: true, completion: nil)
+        present(nc, animated: true, completion: nil)
     }
 
     func didDiscover(service: CBService, for peripheral: CBPeripheral) {
-        let characteristics: [CBUUID]? = self.peripheralDescription
+        let characteristics: [CBUUID]? = peripheralDescription
                 .services
                 .first(where: { $0.uuid == service.uuid })?
                 .characteristics
                 .map { $0.uuid }
 
         peripheral.discoverCharacteristics(characteristics, for: service)
+        
+        discoveredServices.append(service.uuid)
+
+        let requiredServices = peripheralDescription.mandatoryServices ?? []
+        let requiredCharacteristics = peripheralDescription.mandatoryCharacteristics ?? []
+
+        if Set(requiredServices).subtracting(Set(discoveredServices)).isEmpty &&
+               Set(requiredCharacteristics).subtracting(Set(discoveredCharacteristics)).isEmpty &&
+                peripheralManager.status != .discoveredRequiredServicesAndCharacteristics  {
+            peripheralManager.status = .discoveredRequiredServicesAndCharacteristics
+        }
+
     }
 
     func didDiscover(characteristic: CBCharacteristic, for service: CBService, peripheral: CBPeripheral) {
@@ -112,6 +261,17 @@ class PeripheralViewController: UIViewController, StatusDelegate {
                     default: break
                     }
                 }
+
+        discoveredCharacteristics.append(characteristic.uuid)
+
+        let requiredServices = peripheralDescription.mandatoryServices ?? []
+        let requiredCharacteristics = peripheralDescription.mandatoryCharacteristics ?? []
+
+        if Set(requiredServices).subtracting(Set(discoveredServices)).isEmpty &&
+               Set(requiredCharacteristics).subtracting(Set(discoveredCharacteristics)).isEmpty &&
+                peripheralManager.status != .discoveredRequiredServicesAndCharacteristics {
+            peripheralManager.status = .discoveredRequiredServicesAndCharacteristics
+        }
     }
 
     func didUpdateValue(for characteristic: CBCharacteristic) {
@@ -119,9 +279,33 @@ class PeripheralViewController: UIViewController, StatusDelegate {
     }
 }
 
+extension PeripheralViewController {
+    private func displaySettingsAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let settingsAction = UIAlertAction(title: "Settings", style: .default) { _ in
+            let url = URL(string: "App-Prefs:root=Bluetooth") //for bluetooth setting
+            let app = UIApplication.shared
+            app.open(url!, options: [:], completionHandler: nil)
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(settingsAction)
+        alert.addAction(cancelAction)
+
+        present(alert, animated: true)
+    }
+    
+    private func displayBindingErrorAlert() {
+        let title = "No services discovered"
+        let message = "Required service has not been discovered. Check your device, or try to restart Bluetooth in Settings."
+
+        displaySettingsAlert(title: title, message: message)
+    }
+}
+
 extension PeripheralViewController: ConnectionViewControllerDelegate {
     func requestConnection(to peripheral: Peripheral) {
-        self.peripheralManager.connect(peripheral: peripheral)
+        peripheralManager.connect(peripheral: peripheral)
     }
 }
 
@@ -139,7 +323,7 @@ extension PeripheralViewController: CBPeripheralDelegate {
                                                        """)
 
         peripheral.services?.forEach { [unowned peripheral] service in
-            self.didDiscover(service: service, for: peripheral)
+            didDiscover(service: service, for: peripheral)
         }
     }
 
@@ -152,7 +336,7 @@ extension PeripheralViewController: CBPeripheralDelegate {
         SystemLog(category: .ble, type: .debug).log(message: "Discovered characteristics \(service.characteristics.debugDescription) for service: \(service)")
 
         service.characteristics?.forEach { [unowned service] ch in
-            self.didDiscover(characteristic: ch, for: service, peripheral: peripheral)
+            didDiscover(characteristic: ch, for: service, peripheral: peripheral)
         }
     }
 
@@ -165,7 +349,7 @@ extension PeripheralViewController: CBPeripheralDelegate {
 
         SystemLog(category: .ble, type: .debug).log(message: "New value in characteristic: \(characteristic.debugDescription)")
 
-        self.didUpdateValue(for: characteristic)
+        didUpdateValue(for: characteristic)
     }
 
     @objc func dismissPresentedViewController() {

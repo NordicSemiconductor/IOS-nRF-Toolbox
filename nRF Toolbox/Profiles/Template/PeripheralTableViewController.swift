@@ -1,10 +1,34 @@
-//
-//  PeripheralTableViewController.swift
-//  nRF Toolbox
-//
-//  Created by Nick Kibysh on 30/08/2019.
-//  Copyright © 2019 Nordic Semiconductor. All rights reserved.
-//
+/*
+* Copyright (c) 2020, Nordic Semiconductor
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without modification,
+* are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice, this
+*    list of conditions and the following disclaimer.
+*
+* 2. Redistributions in binary form must reproduce the above copyright notice, this
+*    list of conditions and the following disclaimer in the documentation and/or
+*    other materials provided with the distribution.
+*
+* 3. Neither the name of the copyright holder nor the names of its contributors may
+*    be used to endorse or promote products derived from this software without
+*    specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+* IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+* INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+* NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+* PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+* ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+* POSSIBILITY OF SUCH DAMAGE.
+*/
+
+
 
 import UIKit
 import CoreBluetooth
@@ -20,11 +44,13 @@ class PeripheralTableViewController: PeripheralViewController, UITableViewDataSo
     var tableView: UITableView!
     private var batterySection = BatterySection(id: .battery)
 
-    var sections: [Section] { self.internalSections + [batterySection, disconnectSection] }
+    var sections: [Section] { internalSections + [batterySection, disconnectSection] }
     var visibleSections: [Section] { sections.filter { !$0.isHidden } }
     var internalSections: [Section] { [] }
+    
+    private var discoveredServices: [CBUUID]?
 
-    private lazy var disconnectSection = ActionSection(id: .disconnect, sectionTitle: "Disconnect", items: [
+    private lazy var disconnectSection = ActionSection(id: .disconnect, sectionTitle: "Connection", items: [
         ActionSectionItem(title: "Disconnect", style: .destructive) { [unowned self] in
             guard let peripheral = self.activePeripheral else { return }
             self.disconnect()
@@ -32,12 +58,14 @@ class PeripheralTableViewController: PeripheralViewController, UITableViewDataSo
     ])
 
     override func viewDidLoad() {
-        super.viewDidLoad()
         if #available(iOS 13.0, *) {
             tableView = UITableView(frame: .zero, style: .insetGrouped)
         } else {
             tableView = UITableView(frame: .zero, style: .grouped)
         }
+        self.view = tableView
+        
+        super.viewDidLoad()
 
         tableView.delegate = self
         tableView.dataSource = self
@@ -46,6 +74,8 @@ class PeripheralTableViewController: PeripheralViewController, UITableViewDataSo
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "ActionCell")
         tableView.register(DisclosureTableViewCell.self, forCellReuseIdentifier: "DisclosureTableViewCell")
         tableView.register(DetailsTableViewCell.self, forCellReuseIdentifier: "DetailsTableViewCell")
+        
+        sections.forEach { $0.registerCells(self.tableView) }
     }
 
     // MARK: Table View DataSource
@@ -62,13 +92,14 @@ class PeripheralTableViewController: PeripheralViewController, UITableViewDataSo
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { visibleSections[indexPath.section].cellHeight(for: indexPath.row) }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { visibleSections[indexPath.section].cellHeight(for: indexPath.row)
+    }
 
     // MARK: Table View Handlers
     func selected(item: Int, in section: Section) {
         switch section.id {
         case .disconnect:
-            self.disconnect()
+            disconnect()
         default:
             if let actionSection = section as? ActionSection {
                 actionSection.items[item].action()
@@ -79,11 +110,7 @@ class PeripheralTableViewController: PeripheralViewController, UITableViewDataSo
     }
     
     func reloadSection(id: Identifier<Section>, animation: UITableView.RowAnimation = .automatic) {
-        guard let index = visibleSections.firstIndex(where: { $0.id == id }) else {
-            SystemLog(category: .ui, type: .error).log(message: "Cannot upload section \(id)")
-            return
-        }
-        tableView.reloadSections([index], with: .none)
+        tableView.reloadData()
     }
     
     func reloadSections(ids: [Identifier<Section>], animation: UITableView.RowAnimation = .automatic) {
@@ -95,17 +122,6 @@ class PeripheralTableViewController: PeripheralViewController, UITableViewDataSo
     }
     
     func reloadItemInSection(_ sectionId: Identifier<Section>, itemId: Identifier<DetailsTableViewCellModel>, animation: UITableView.RowAnimation = .automatic) {
-//        guard let section = visibleSections
-//                .enumerated()
-//                .first(where: { $0.element.id == sectionId && $0.element is DetailsTableViewSection }),
-//            let itemIndex = (section.element as? DetailsTableViewSection)?.items
-//                .firstIndex(where: { $0.identifier == itemId })
-//            else {
-//                Log(category: .ui, type: .error).log(message: "Cannot upload section \(sectionId)")
-//            return
-//        }
-//
-//        tableView.reloadRows(at: [IndexPath(row: itemIndex, section: section.offset)], with: animation)
     }
     
     // MARK: Bluetooth events handling
@@ -118,8 +134,6 @@ class PeripheralTableViewController: PeripheralViewController, UITableViewDataSo
             for var section in visibleSections {
                 section.reset()
             }
-        case .connected:
-            view = tableView
         default:
             break
         }
@@ -142,6 +156,9 @@ class PeripheralTableViewController: PeripheralViewController, UITableViewDataSo
         reloadSection(id: .battery)
     }
 
+    override func didDiscover(service: CBService, for peripheral: CBPeripheral) {
+        super.didDiscover(service: service, for: peripheral)
+    }
 
 }
 
