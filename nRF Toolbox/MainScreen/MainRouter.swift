@@ -53,7 +53,7 @@ protocol MainRouter {
 
 protocol ServiceRouter {
     func showServiceController(with serviceId: ServiceId)
-    func showLinkController(_ link: LinkService)
+    func openLink(_ link: LinkService)
 }
 
 class DefaultMainRouter {
@@ -110,10 +110,8 @@ extension DefaultMainRouter: ServiceRouter {
         splitViewController.showDetailViewController(viewController, sender: self)
     }
     
-    func showLinkController(_ link: LinkService) {
-        let webViewController = WebViewController(link: link)
-        let nc = UINavigationController.nordicBranded(rootViewController: webViewController)
-        splitViewController.showDetailViewController(nc, sender: self)
+    func openLink(_ link: LinkService) {
+        UIApplication.shared.open(link.url)
     }
 }
 
