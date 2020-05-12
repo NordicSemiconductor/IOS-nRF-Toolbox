@@ -126,9 +126,7 @@ class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter
         activePeripheral = nil
 
         let bSettings: InfoActionView.ButtonSettings = ("Settings", {
-            let url = URL(string: "App-Prefs:root=Bluetooth") //for bluetooth setting
-            let app = UIApplication.shared
-            app.open(url!, options: [:], completionHandler: nil)
+            UIApplication.shared.openSettings()
         })
 
         let notContent = InfoActionView.instanceWithParams(message: "Bluetooth is powered off", buttonSettings: bSettings)
@@ -207,9 +205,7 @@ class PeripheralViewController: UIViewController, StatusDelegate, AlertPresenter
 
     func onUnauthorizedStatus() {
         let bSettings: InfoActionView.ButtonSettings = ("Settings", {
-            let url = URL(string: "App-Prefs:root=Bluetooth") //for bluetooth setting
-            let app = UIApplication.shared
-            app.open(url!, options: [:], completionHandler: nil)
+            UIApplication.shared.openSettings()
         })
 
         let notContent = InfoActionView.instanceWithParams(message: "Using Bluetooth is not Allowed", buttonSettings: bSettings)
@@ -283,9 +279,7 @@ extension PeripheralViewController {
     private func displaySettingsAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let settingsAction = UIAlertAction(title: "Settings", style: .default) { _ in
-            let url = URL(string: "App-Prefs:root=Bluetooth") //for bluetooth setting
-            let app = UIApplication.shared
-            app.open(url!, options: [:], completionHandler: nil)
+            UIApplication.shared.openSettings()
         }
 
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)

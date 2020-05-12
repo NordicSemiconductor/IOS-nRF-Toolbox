@@ -92,11 +92,9 @@ class HMAccessoryListTableViewController: UIViewController, AlertPresenter {
             switch hkManager.authorizationStatus {
             case .determined:
                 let bSettings: InfoActionView.ButtonSettings = ("Settings", {
-                    let url = URL(string: "App-Prefs:root=Bluetooth") //for bluetooth setting
-                    let app = UIApplication.shared
-                    app.open(url!, options: [:], completionHandler: nil)
+                    UIApplication.shared.openSettings()
                 })
-
+                
                 let notContent = InfoActionView.instanceWithParams(message: "Access denied", buttonSettings: bSettings)
                 notContent.actionButton.style = .mainAction
                 notContent.messageLabel.text = "Open Settings to provide access to the Home Data"
