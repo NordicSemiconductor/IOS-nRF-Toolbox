@@ -246,6 +246,7 @@
 		4389184224360F7300175A94 /* GlucoseReadingContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4389184024360F7300175A94 /* GlucoseReadingContext.swift */; };
 		438918442436108E00175A94 /* RecordAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438918432436108E00175A94 /* RecordAccess.swift */; };
 		4392FF0223AA6CBE00E6ACEA /* DateFormatter+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4392FF0123AA6CBE00E6ACEA /* DateFormatter+Ext.swift */; };
+		43D34724246D58D70060DBE2 /* UARTShortcutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D34723246D58D70060DBE2 /* UARTShortcutManager.swift */; };
 		43E2F73F2462E31400912BD6 /* AutoReszableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E2F73E2462E31400912BD6 /* AutoReszableTextView.swift */; };
 		43F837242433FA7C003D88F0 /* BGMActionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F837232433FA7C003D88F0 /* BGMActionSection.swift */; };
 		43F837262433FB1F003D88F0 /* BGMDisplayItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F837252433FB1F003D88F0 /* BGMDisplayItemTableViewCell.swift */; };
@@ -539,6 +540,7 @@
 		4389184024360F7300175A94 /* GlucoseReadingContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlucoseReadingContext.swift; sourceTree = "<group>"; };
 		438918432436108E00175A94 /* RecordAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordAccess.swift; sourceTree = "<group>"; };
 		4392FF0123AA6CBE00E6ACEA /* DateFormatter+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Ext.swift"; sourceTree = "<group>"; };
+		43D34723246D58D70060DBE2 /* UARTShortcutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTShortcutManager.swift; sourceTree = "<group>"; };
 		43E2F73E2462E31400912BD6 /* AutoReszableTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoReszableTextView.swift; sourceTree = "<group>"; };
 		43F837232433FA7C003D88F0 /* BGMActionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGMActionSection.swift; sourceTree = "<group>"; };
 		43F837252433FB1F003D88F0 /* BGMDisplayItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGMDisplayItemTableViewCell.swift; sourceTree = "<group>"; };
@@ -715,6 +717,7 @@
 			isa = PBXGroup;
 			children = (
 				014C4E8A2403F9BD0003E601 /* UARTMacroSaver.swift */,
+				43D34723246D58D70060DBE2 /* UARTShortcutManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2152,6 +2155,7 @@
 				01E5910B23DECF61008F15A4 /* UARTMacrosList.swift in Sources */,
 				33976C75E25FBF443EB251CD /* Bool+Ext.swift in Sources */,
 				01DDD7A023EC6351003786ED /* UARTMarcoElement.swift in Sources */,
+				43D34724246D58D70060DBE2 /* UARTShortcutManager.swift in Sources */,
 				33976B2C1CE8194EFAEB7341 /* Randomizer.swift in Sources */,
 				01363A872417E4FA0030821E /* ControlSection.swift in Sources */,
 				436C0AD22456FDD700B03B61 /* ImageWrapper.swift in Sources */,
