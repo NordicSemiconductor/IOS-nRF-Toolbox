@@ -103,8 +103,8 @@ struct CharacteristicReader {
         return Int32(val)
     }
     
-    static func readSFloat(_ data: Data, offset: Int) -> Float32 {
-        let tempData: UInt16 = data.read(fromOffset: offset)
+    static func readSFloat(_ data: Data, offset: Int) throws -> Float32 {
+        let tempData: UInt16 = try data.read(fromOffset: offset)
         var mantissa = Int16(tempData & 0x0FFF)
         var exponent = Int8(tempData >> 12)
         if exponent >= 0x0008 {

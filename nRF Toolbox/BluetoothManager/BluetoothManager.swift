@@ -238,7 +238,11 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
         data.forEach {
             self.bluetoothPeripheral!.writeValue($0, for: uartRXCharacteristic, type: type)
         }
+        log(withLevel: .verbose, andMessage: "Writing to characteristic: \(uartRXCharacteristic.uuid.uuidString)")
+        let typeAsString = type == .withoutResponse ? ".withoutResponse" : ".withResponse"
+        log(withLevel: .debug, andMessage: "peripheral.writeValue(0x\(aCommand.data.hexString), for: \(uartRXCharacteristic.uuid.uuidString), type: \(typeAsString))")
         log(withLevel: .application, andMessage: "Sent command: \(aCommand.title)")
+        
     }
     
     func send(macro: UARTMacro) {

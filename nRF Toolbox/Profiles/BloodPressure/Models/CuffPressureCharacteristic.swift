@@ -36,15 +36,15 @@ private extension Flag {
     static let unitFlag: Flag = 0x01
 }
 
-struct CuffPreasureCharacteristic {
-    let cuffPreasure: Measurement<UnitPressure>
+struct CuffPressureCharacteristic {
+    let cuffPressure: Measurement<UnitPressure>
     
-    init(data: Data) {
-        let flags: UInt8 = data.read()
+    init(data: Data) throws {
+        let flags: UInt8 = try data.read()
         let unit: UnitPressure = Flag.isAvailable(bits: flags, flag: .unitFlag) ? .millimetersOfMercury : .kilopascals
         
-        let cuffPressureValue: Float32 = data.readSFloat(from: 1)
-        cuffPreasure = Measurement<UnitPressure>(value: Double(cuffPressureValue), unit: unit)
+        let cuffPressureValue: Float32 = try data.readSFloat(from: 1)
+        cuffPressure = Measurement<UnitPressure>(value: Double(cuffPressureValue), unit: unit)
     }
     
 }

@@ -103,6 +103,7 @@ class UARTFilterLogViewController: UITableViewController, CloseButtonPresenter {
         if indexPath.section == 1 {
             selectedLevels = LogType.allCases
             self.tableView(tableView, setSelection: true)
+            tableView.deselectRow(at: IndexPath(row: 0, section: 1), animated: true)
             return
         }
         

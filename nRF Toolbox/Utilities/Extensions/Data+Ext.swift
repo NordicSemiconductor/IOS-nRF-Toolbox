@@ -34,18 +34,24 @@ import Foundation
 
 extension Data {
 
+    enum DataError: Error {
+        case outOfRange
+    }
+
     internal var hexString: String {
-        return map { String(format: "%02X", $0) }.joined()
+        map { String(format: "%02X", $0) }.joined()
     }
     
-    func read<R: FixedWidthInteger>(fromOffset offset: Int = 0) -> R {
+    func read<R: FixedWidthInteger>(fromOffset offset: Int = 0) throws -> R {
         let length = MemoryLayout<R>.size
-        
+
+        guard offset + length < count else { throw DataError.outOfRange }
+
         return subdata(in: offset ..< offset + length).withUnsafeBytes { $0.load(as: R.self) }
     }
     
-    func readSFloat(from offset: Int = 0) -> Float {
-        let tempData: UInt16 = read(fromOffset: offset)
+    func readSFloat(from offset: Int = 0) throws -> Float {
+        let tempData: UInt16 = try read(fromOffset: offset)
         var mantissa = Int16(tempData & 0x0FFF)
         var exponent = Int8(tempData >> 12)
         if exponent >= 0x0008 {
@@ -67,8 +73,8 @@ extension Data {
         return output
     }
     
-    func readFloat(from offset: Int = 0) -> Float {
-        let tempData: UInt32 = read(fromOffset: offset)
+    func readFloat(from offset: Int = 0) throws -> Float {
+        let tempData: UInt32 = try read(fromOffset: offset)
         var mantissa = Int32(tempData & 0x00FFFFFF)
         let exponent = Int8(bitPattern: UInt8(tempData >> 24))
         
@@ -87,14 +93,14 @@ extension Data {
         return output
     }
     
-    func readDate(from offset: Int = 0) -> Date {
+    func readDate(from offset: Int = 0) throws -> Date {
         var offset = offset
-        let year: UInt16 = read(fromOffset: offset); offset += 2
-        let month: UInt8 = read(fromOffset: offset); offset += 1
-        let day: UInt8 = read(fromOffset: offset); offset += 1
-        let hour: UInt8 = read(fromOffset: offset); offset += 1
-        let min: UInt8 = read(fromOffset: offset); offset += 1
-        let sec: UInt8 = read(fromOffset: offset); offset += 1
+        let year: UInt16 = try read(fromOffset: offset); offset += 2
+        let month: UInt8 = try read(fromOffset: offset); offset += 1
+        let day: UInt8 = try read(fromOffset: offset); offset += 1
+        let hour: UInt8 = try read(fromOffset: offset); offset += 1
+        let min: UInt8 = try read(fromOffset: offset); offset += 1
+        let sec: UInt8 = try read(fromOffset: offset); offset += 1
         
         let calendar = Calendar.current
         let dateComponents = DateComponents(calendar: .current,

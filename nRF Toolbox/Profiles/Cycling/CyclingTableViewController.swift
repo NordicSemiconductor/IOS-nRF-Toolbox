@@ -65,8 +65,12 @@ class CyclingTableViewController: PeripheralTableViewController {
     }
     
     private func handleCycling(value: Data) {
-        cyclingSection.update(with: value)
-        tableView.reloadData()
+        do {
+            try cyclingSection.update(with: value)
+            tableView.reloadData()
+        } catch let error {
+            displayErrorAlert(error: error)
+        }
     }
 }
 

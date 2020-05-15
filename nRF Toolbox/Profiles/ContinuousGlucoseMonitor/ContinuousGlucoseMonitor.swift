@@ -122,7 +122,11 @@ class ContinuousGlucoseMonitor: PeripheralTableViewController {
     override func didUpdateValue(for characteristic: CoreBluetooth.CBCharacteristic) {
         switch characteristic.uuid {
         case .sessionStartTime:
-            sessionStartTime = SessionStartTime(data: characteristic.value!)
+            do {
+                sessionStartTime = try SessionStartTime(data: characteristic.value!)
+            } catch let error {
+                displayErrorAlert(error: error)
+            }
         case .measurement:
             let data = characteristic.value!
             #if RAND

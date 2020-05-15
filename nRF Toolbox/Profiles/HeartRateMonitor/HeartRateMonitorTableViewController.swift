@@ -70,9 +70,14 @@ class HeartRateMonitorTableViewController: PeripheralTableViewController {
             chartSection.update(with: data)
             tableView.reloadData()
         case CBUUID.Characteristics.HeartRate.location:
-            BodySensorLocationCharacteristic(with: characteristic.value!)
-                .map { self.locationSection.update(with: $0) }
-            tableView.reloadData()
+            guard let value = characteristic.value else { return }
+            do {
+                let bodySensorCharacteristic = try BodySensorLocationCharacteristic(with: value)
+                self.locationSection.update(with: bodySensorCharacteristic)
+                tableView.reloadData()
+            } catch let error {
+                displayErrorAlert(error: error)
+            }
         default:
             super.didUpdateValue(for: characteristic)
         }

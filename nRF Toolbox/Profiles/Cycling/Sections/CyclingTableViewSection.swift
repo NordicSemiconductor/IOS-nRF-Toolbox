@@ -118,9 +118,9 @@ struct CyclingTableViewSection: Section {
         return item
     }
     
-    mutating func update(with data: Data) {
+    mutating func update(with data: Data) throws {
         
-        let characteristic = CyclingCharacteristic(data: data)
+        let characteristic = try CyclingCharacteristic(data: data)
         
         characteristic.travelDistance(with: wheelCircumference)
             .flatMap { self.totalTravelDistance = $0 }
