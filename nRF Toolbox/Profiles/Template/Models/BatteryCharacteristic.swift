@@ -33,10 +33,10 @@
 import Foundation
 
 struct BatteryCharacteristic {
-    let batteryLevel: Int?
+    let batteryLevel: Int
     
-    init(with data: Data) {
-        let batteryLevelValue: Int8? = try? data.read()
-        batteryLevel = batteryLevelValue.map { Int($0) }
+    init(with data: Data) throws {
+        let batteryLevelValue: Int8 = try data.read()
+        batteryLevel = Int(batteryLevelValue)
     }
 }
