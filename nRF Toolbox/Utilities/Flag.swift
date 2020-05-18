@@ -42,6 +42,6 @@ struct Flag: ExpressibleByIntegerLiteral {
     }
     
     static func isAvailable(bits: UInt8, flag: Flag) -> Bool {
-        return bits & flag.flag != 0
+        bits & flag.flag != 0
     }
 }

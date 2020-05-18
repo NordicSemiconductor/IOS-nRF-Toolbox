@@ -33,6 +33,15 @@
 import Foundation
 
 enum BodySensorLocationCharacteristic: Int, CustomStringConvertible {
+    
+    enum ParsingError: ReadableError {
+        case parsError
+        
+        var readableMessage: String {
+            "Can not detect sensor location"
+        }
+    }
+    
     case other, chest, wrist, finger, hand, earLobe, foot
     
     var description: String {
@@ -47,8 +56,13 @@ enum BodySensorLocationCharacteristic: Int, CustomStringConvertible {
         }
     }
     
-    init?(with data: Data) {
-        let value: UInt8 = data.read()
-        self.init(rawValue: Int(value))
+    init(with data: Data) throws {
+        let value: UInt8 = try data.read()
+        
+        guard value < 7 else {
+            throw ParsingError.parsError
+        }
+        
+        self.init(rawValue: Int(value))!
     }
 }

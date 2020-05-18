@@ -127,7 +127,7 @@
 		201364F72344A93D00C5AF1F /* BloodPressureSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201364F62344A93D00C5AF1F /* BloodPressureSection.swift */; };
 		201364F92344A94700C5AF1F /* PulseBloodPressureSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201364F82344A94700C5AF1F /* PulseBloodPressureSection.swift */; };
 		201364FB2344A94F00C5AF1F /* TimeBloodPressureSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201364FA2344A94F00C5AF1F /* TimeBloodPressureSection.swift */; };
-		201364FD2344E2E300C5AF1F /* CuffPreasureCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201364FC2344E2E300C5AF1F /* CuffPreasureCharacteristic.swift */; };
+		201364FD2344E2E300C5AF1F /* CuffPressureCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201364FC2344E2E300C5AF1F /* CuffPressureCharacteristic.swift */; };
 		201364FF2345D0EA00C5AF1F /* CuffPressureSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201364FE2345D0EA00C5AF1F /* CuffPressureSection.swift */; };
 		2013650223462DB900C5AF1F /* BatteryCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2013650123462DB900C5AF1F /* BatteryCharacteristic.swift */; };
 		20136505234785DC00C5AF1F /* Peripheral+BloodPressure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20136504234785DC00C5AF1F /* Peripheral+BloodPressure.swift */; };
@@ -419,7 +419,7 @@
 		201364F62344A93D00C5AF1F /* BloodPressureSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodPressureSection.swift; sourceTree = "<group>"; };
 		201364F82344A94700C5AF1F /* PulseBloodPressureSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseBloodPressureSection.swift; sourceTree = "<group>"; };
 		201364FA2344A94F00C5AF1F /* TimeBloodPressureSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBloodPressureSection.swift; sourceTree = "<group>"; };
-		201364FC2344E2E300C5AF1F /* CuffPreasureCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuffPreasureCharacteristic.swift; sourceTree = "<group>"; };
+		201364FC2344E2E300C5AF1F /* CuffPressureCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuffPressureCharacteristic.swift; sourceTree = "<group>"; };
 		201364FE2345D0EA00C5AF1F /* CuffPressureSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuffPressureSection.swift; sourceTree = "<group>"; };
 		2013650123462DB900C5AF1F /* BatteryCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryCharacteristic.swift; sourceTree = "<group>"; };
 		20136504234785DC00C5AF1F /* Peripheral+BloodPressure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Peripheral+BloodPressure.swift"; sourceTree = "<group>"; };
@@ -1101,7 +1101,7 @@
 			isa = PBXGroup;
 			children = (
 				200973DC2343748F0091951B /* BloodPressureCharacteristic.swift */,
-				201364FC2344E2E300C5AF1F /* CuffPreasureCharacteristic.swift */,
+				201364FC2344E2E300C5AF1F /* CuffPressureCharacteristic.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1998,7 +1998,7 @@
 				4392FF0223AA6CBE00E6ACEA /* DateFormatter+Ext.swift in Sources */,
 				4389184124360F7300175A94 /* GlucoseReading.swift in Sources */,
 				4389184224360F7300175A94 /* GlucoseReadingContext.swift in Sources */,
-				201364FD2344E2E300C5AF1F /* CuffPreasureCharacteristic.swift in Sources */,
+				201364FD2344E2E300C5AF1F /* CuffPressureCharacteristic.swift in Sources */,
 				20D08DFD232929A400569587 /* BGMTableViewCell.swift in Sources */,
 				01D6D2BB240696D000E1A66F /* DFURouter.swift in Sources */,
 				01B6D3DE234CBBE5000942C4 /* SernsorLocationSection.swift in Sources */,
@@ -2352,7 +2352,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "nRF Toolbox/nRF Toolbox.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = NO;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2370,6 +2370,7 @@
 					"$(PROJECT_DIR)",
 					"$(PODS_ROOT)",
 				);
+				MARKETING_VERSION = 5.0.1;
 				NEW_SETTING = "";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -2378,7 +2379,7 @@
 					"\"iOSDFULibrary\"",
 					"-ObjC",
 				);
-				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -D BETA -D RAND";
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -D BETA";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nordicsemi.nRF-Toolbox-beta";
 				PRODUCT_NAME = "$(TARGET_NAME) Beta";
 				PROVISIONING_PROFILE = "";
@@ -2515,7 +2516,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "nRF Toolbox/nRF Toolbox.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = NO;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2533,6 +2534,7 @@
 					"$(PROJECT_DIR)",
 					"$(PODS_ROOT)",
 				);
+				MARKETING_VERSION = 5.0.1;
 				NEW_SETTING = "";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -2565,7 +2567,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "nRF Toolbox/nRF Toolbox.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = NO;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2583,6 +2585,7 @@
 					"$(PROJECT_DIR)",
 					"$(PODS_ROOT)",
 				);
+				MARKETING_VERSION = 5.0.1;
 				NEW_SETTING = "";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (

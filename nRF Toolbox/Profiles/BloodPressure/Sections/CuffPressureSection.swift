@@ -32,14 +32,14 @@
 
 import Foundation
 
-class CuffPressureSection: DetailsTableViewSection<CuffPreasureCharacteristic> {
+class CuffPressureSection: DetailsTableViewSection<CuffPressureCharacteristic> {
     
     override var sectionTitle: String { "Cuff Pressure" }
     
-    override func update(with characteristic: CuffPreasureCharacteristic) {
+    override func update(with characteristic: CuffPressureCharacteristic) {
         let formatter = MeasurementFormatter()
         formatter.unitOptions = .providedUnit
         
-        items = [DefaultDetailsTableViewCellModel(title: "Intermediate Cuff Pressure", value: formatter.string(from: characteristic.cuffPreasure))]
+        items = [DefaultDetailsTableViewCellModel(title: "Intermediate Cuff Pressure", value: formatter.string(from: characteristic.cuffPressure))]
     }
 }

@@ -61,18 +61,29 @@ class HeartRateMonitorTableViewController: PeripheralTableViewController {
     override func didUpdateValue(for characteristic: CBCharacteristic) {
         switch characteristic.uuid {
         case CBUUID.Characteristics.HeartRate.measurement:
+            let data: HeartRateMeasurementCharacteristic
             #if RAND
-            let data = HeartRateMeasurementCharacteristic(value: randomizer.next()!)
+            data = HeartRateMeasurementCharacteristic(value: randomizer.next()!)
             #else
-            let data = HeartRateMeasurementCharacteristic(with: characteristic.value!, date: Date())
+            do {
+                data = try HeartRateMeasurementCharacteristic(with: characteristic.value!, date: Date())
+            } catch let error {
+                displayErrorAlert(error: error)
+                return
+            }
             #endif
             instantaneousHeartRateSection.update(with: data)
             chartSection.update(with: data)
             tableView.reloadData()
         case CBUUID.Characteristics.HeartRate.location:
-            BodySensorLocationCharacteristic(with: characteristic.value!)
-                .map { self.locationSection.update(with: $0) }
-            tableView.reloadData()
+            guard let value = characteristic.value else { return }
+            do {
+                let bodySensorCharacteristic = try BodySensorLocationCharacteristic(with: value)
+                self.locationSection.update(with: bodySensorCharacteristic)
+                tableView.reloadData()
+            } catch let error {
+                displayErrorAlert(error: error)
+            }
         default:
             super.didUpdateValue(for: characteristic)
         }

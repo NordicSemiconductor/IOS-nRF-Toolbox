@@ -40,14 +40,14 @@ struct HeartRateMeasurementCharacteristic {
     let heartRate: Int
     let date: Date
     
-    init(with data: Data, date: Date) {
+    init(with data: Data, date: Date) throws {
         self.date = date
 
-        let flags: UInt8 = data.read()
+        let flags: UInt8 = try data.read()
         
         heartRate = Flag.isAvailable(bits: flags, flag: .heartRateType)
-            ? Int(data.read(fromOffset: 1) as UInt16)
-            : Int(data.read(fromOffset: 1) as UInt8)
+            ? Int(try data.read(fromOffset: 1) as UInt16)
+            : Int(try data.read(fromOffset: 1) as UInt8)
     }
 
     #if RAND

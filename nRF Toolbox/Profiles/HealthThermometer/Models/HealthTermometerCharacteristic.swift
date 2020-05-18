@@ -63,21 +63,21 @@ struct HealthTermometerCharacteristic {
     let timeStamp: Date?
     let type: TemperatureType?
     
-    init(data: Data) {
-        let flags: UInt8 = data.read()
+    init(data: Data) throws {
+        let flags: UInt8 = try data.read()
         let unit: UnitTemperature = Flag.isAvailable(bits: flags, flag: .unit) ? .fahrenheit : .celsius
         
-        let temperatureValue = data.readFloat(from: 1)
+        let temperatureValue = try data.readFloat(from: 1)
         temperature = Measurement<UnitTemperature>(value: Double(temperatureValue), unit: unit)
         
         var offset = 5
-        timeStamp = Flag.isAvailable(bits: flags, flag: .timestamp) ? {
+        timeStamp = try Flag.isAvailable(bits: flags, flag: .timestamp) ? {
                 defer { offset += 7 }
-                return data.readDate(from: offset)
+                return try data.readDate(from: offset)
             }() : nil
         
-        type = Flag.isAvailable(bits: flags, flag: .type) ? {
-                let typeValue: UInt8 = data.read(fromOffset: offset)
+        type = try Flag.isAvailable(bits: flags, flag: .type) ? {
+                let typeValue: UInt8 = try data.read(fromOffset: offset)
                 return TemperatureType(rawValue: typeValue)
             }() : nil
     }

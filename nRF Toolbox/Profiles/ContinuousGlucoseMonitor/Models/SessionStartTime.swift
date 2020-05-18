@@ -35,8 +35,8 @@ import Foundation
 struct SessionStartTime {
     let date: Date
 
-    init(data: Data) {
-        self.date = data.readDate(from: 0)
+    init(data: Data) throws {
+        self.date = try data.readDate(from: 0)
         SystemLog(category: .util, type: .debug).log(message: "Session Date: \(self.date)")
     }
 

@@ -50,12 +50,15 @@ class RunningTableViewController: PeripheralTableViewController {
     override func didUpdateValue(for characteristic: CBCharacteristic) {
         switch characteristic.uuid {
         case CBUUID.Characteristics.Running.measurement:
-            characteristic.value.map {
-                let running = RunningCharacteristic(data: $0)
+            guard let value = characteristic.value else { return }
+            do {
+                let running = try RunningCharacteristic(data: value)
                 runningSpeedCadenceSection.update(with: running)
                 activitySection.update(with: running)
                 
                 tableView.reloadData()
+            } catch let error {
+                displayErrorAlert(error: error)
             }
             
         default:

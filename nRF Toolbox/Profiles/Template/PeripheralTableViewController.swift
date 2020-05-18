@@ -152,8 +152,12 @@ class PeripheralTableViewController: PeripheralViewController, UITableViewDataSo
     // MARK: Bluetooth Characteristic Handling
     func handleBatteryValue(_ characteristic: CBCharacteristic) {
         guard let data = characteristic.value, data.count > 0 else { return }
-        batterySection.update(with: BatteryCharacteristic(with: data))
-        reloadSection(id: .battery)
+        do {
+            batterySection.update(with: try BatteryCharacteristic(with: data))
+            reloadSection(id: .battery)            
+        } catch let error {
+            displayErrorAlert(error: error)
+        }
     }
 
     override func didDiscover(service: CBService, for peripheral: CBPeripheral) {

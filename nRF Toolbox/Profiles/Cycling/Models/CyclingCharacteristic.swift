@@ -51,22 +51,22 @@ struct CyclingCharacteristic {
         self.crankRevolutionsAndTime = crankRevolutionsAndTime
     }
     
-    init(data: Data) {
-        let flags: UInt8 = data.read()
+    init(data: Data) throws {
+        let flags: UInt8 = try data.read()
         
-        wheelRevolutionsAndTime = Flag.isAvailable(bits: flags, flag: .wheelData) ? {
+        wheelRevolutionsAndTime = try Flag.isAvailable(bits: flags, flag: .wheelData) ? {
                 (
-                    Int(data.read(fromOffset: 1) as UInt32),
-                    Double(data.read(fromOffset: 5) as UInt16)
+                    Int(try data.read(fromOffset: 1) as UInt32),
+                    Double(try data.read(fromOffset: 5) as UInt16)
                 )
             }() : nil
         
         let crankOffset: (Int, Int) = Flag.isAvailable(bits: flags, flag: .wheelData) ? (7, 9) : (1, 3)
         
-        crankRevolutionsAndTime = Flag.isAvailable(bits: flags, flag: .crankData) ? {
+        crankRevolutionsAndTime = try Flag.isAvailable(bits: flags, flag: .crankData) ? {
                 (
-                    Int(data.read(fromOffset: crankOffset.0) as UInt16),
-                    Double(data.read(fromOffset: crankOffset.1) as UInt16)
+                    Int(try data.read(fromOffset: crankOffset.0) as UInt16),
+                    Double(try data.read(fromOffset: crankOffset.1) as UInt16)
                 )
             }() : nil
     }

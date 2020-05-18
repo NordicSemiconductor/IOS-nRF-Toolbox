@@ -171,7 +171,9 @@ extension PeripheralManager: CBCentralManagerDelegate {
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         SystemLog(category: .ble, type: .error).log(message: error?.localizedDescription ?? "Failed to Connect: (no message)")
         timer?.invalidate()
-        status = .disconnected(QuickError(message: "Unable to connect"))
+        
+        let e: Error? = error ?? QuickError(message: "Unable to connect")
+        status = .disconnected(e)
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {

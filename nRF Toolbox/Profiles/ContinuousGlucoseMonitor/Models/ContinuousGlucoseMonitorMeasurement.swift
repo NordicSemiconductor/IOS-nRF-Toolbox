@@ -36,9 +36,9 @@ struct ContinuousGlucoseMonitorMeasurement {
     let glucoseConcentration: Float
     let date: Date?
 
-    init(data: Data, sessionStartTime: SessionStartTime) {
-        glucoseConcentration = data.readSFloat(from: 2)
-        let timeOffset: UInt16 = data.read(fromOffset: 4)
+    init(data: Data, sessionStartTime: SessionStartTime) throws {
+        glucoseConcentration = try data.readSFloat(from: 2)
+        let timeOffset: UInt16 = try data.read(fromOffset: 4)
         let sessionTime = sessionStartTime.date
         date = sessionTime.addingTimeInterval(Double(timeOffset * 60))
     }

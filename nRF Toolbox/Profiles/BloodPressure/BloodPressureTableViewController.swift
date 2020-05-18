@@ -67,15 +67,24 @@ class BloodPressureTableViewController: PeripheralTableViewController {
         }
         switch characteristic.uuid {
         case CBUUID.Characteristics.BloodPressure.measurement:
-            let bloodPressureCharacteristic = BloodPressureCharacteristic(data: value)
+            do {
+                let bloodPressureCharacteristic = try BloodPressureCharacteristic(data: value)
+                bloodPressureSection.update(with: bloodPressureCharacteristic)
+                heartRateSection.update(with: bloodPressureCharacteristic)
+                dateTimeSection.update(with: bloodPressureCharacteristic)
+                
+                tableView.reloadData()
+            } catch let error {
+                displayErrorAlert(error: error)
+            }
 
-            bloodPressureSection.update(with: bloodPressureCharacteristic)
-            heartRateSection.update(with: bloodPressureCharacteristic)
-            dateTimeSection.update(with: bloodPressureCharacteristic)
-
-            tableView.reloadData()
         case CBUUID.Characteristics.BloodPressure.intermediateCuff:
-            cuffPressureSection.update(with: CuffPreasureCharacteristic(data: value))
+            do {
+                let cuffCharacteristic = try CuffPressureCharacteristic(data: value)
+                cuffPressureSection.update(with: cuffCharacteristic)
+            } catch let error {
+                displayErrorAlert(error: error)
+            }
 
             tableView.reloadData()
         default:
