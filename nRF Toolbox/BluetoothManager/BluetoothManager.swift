@@ -283,7 +283,7 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
         case .resetting:
             state = "Resetting"
         case .unauthorized:
-            state = "Unautthorized"
+            state = "Unauthorized"
         case .unsupported:
             state = "Unsupported"
         default:
