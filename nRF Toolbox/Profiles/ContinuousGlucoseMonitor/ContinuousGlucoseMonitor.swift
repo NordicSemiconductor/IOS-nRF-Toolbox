@@ -129,10 +129,16 @@ class ContinuousGlucoseMonitor: PeripheralTableViewController {
             }
         case .measurement:
             let data = characteristic.value!
+            let value: ContinuousGlucoseMonitorMeasurement
             #if RAND
-            let value = ContinuousGlucoseMonitorMeasurement(value: Float(randomizer.next()!))
+            value = ContinuousGlucoseMonitorMeasurement(value: Float(randomizer.next()!))
             #else
-            let value = ContinuousGlucoseMonitorMeasurement(data: data, sessionStartTime: sessionStartTime)
+            do {
+                value = try ContinuousGlucoseMonitorMeasurement(data: data, sessionStartTime: sessionStartTime)
+            } catch let error {
+                displayErrorAlert(error: error)
+                return 
+            }
             #endif
 
             lastValueSection.update(with: value)

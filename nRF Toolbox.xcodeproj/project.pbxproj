@@ -2375,7 +2375,7 @@
 					"\"iOSDFULibrary\"",
 					"-ObjC",
 				);
-				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -D BETA -D RAND";
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -D BETA";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nordicsemi.nRF-Toolbox-beta";
 				PRODUCT_NAME = "$(TARGET_NAME) Beta";
 				PROVISIONING_PROFILE = "";
