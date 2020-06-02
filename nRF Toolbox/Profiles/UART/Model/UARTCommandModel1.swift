@@ -33,6 +33,14 @@
 import Foundation
 import AEXML
 
+extension UARTCommandModel {
+    var xml: AEXMLElement {
+        fatalError()
+    }
+    
+}
+
+/*
 protocol UARTCommandModel: Codable, XMLRepresentable, UARTMacroElement, NordicTextTableViewCellModel {
     var image: CommandImage { get }
     var title: String { get }
@@ -107,3 +115,4 @@ struct DataCommand: UARTCommandModel, Equatable {
     let data: Data
     let image: CommandImage
 }
+*/

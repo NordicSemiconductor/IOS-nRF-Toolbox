@@ -69,6 +69,8 @@ struct UARTCommandContainer: Codable {
     }
     
     init(from decoder: Decoder) throws {
+        fatalError()
+        /*
         let container = try decoder.container(keyedBy: CodingKeys.self)
         type = try container.decode(CommandType.self, forKey: .type)
         switch self.type {
@@ -81,9 +83,12 @@ struct UARTCommandContainer: Codable {
         default:
             command = EmptyModel()
         }
+ */
     }
     
     func encode(to encoder: Encoder) throws {
+        fatalError()
+        /*
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(type, forKey: .type)
         switch command {
@@ -98,6 +103,7 @@ struct UARTCommandContainer: Codable {
         default:
             break
         }
+ */
     }
 }
 

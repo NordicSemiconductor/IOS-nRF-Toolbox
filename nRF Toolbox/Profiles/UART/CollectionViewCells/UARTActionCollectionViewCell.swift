@@ -69,6 +69,6 @@ class UARTActionCollectionViewCell: UICollectionViewCell {
             }
         }()
         
-        image.image = command.image.image
+        image.image = command.image
     }
 }

@@ -116,7 +116,7 @@ class UARTNewCommandViewController: UIViewController {
         let image = CommandImage.allCases[selectedItem]
         
         if typeSegmentControl.selectedSegmentIndex == 0 {
-            let text = textView.text.split(separator: "\n").joined(separator: self.eolSymbol())
+            let text = textView.text.split(separator: "\n").joined(separator: self.eolSymbol().rawValue)
             command = TextCommand(text: text, image: image, eol: self.eolSymbol())
         } else {
             command = DataCommand(data: Data(valueTextField.text!.hexa), image: image)
@@ -137,7 +137,7 @@ extension UARTNewCommandViewController {
         switch command {
         case let tCommand as TextCommand:
             typeIndex = 0
-            title = tCommand.title
+            title = tCommand.title!
             textView.text = title
             updateEOLSegment(eol: tCommand.eol)
         case is DataCommand:
@@ -152,7 +152,7 @@ extension UARTNewCommandViewController {
         typeChanged(typeSegmentControl)
         
         CommandImage.allCases.enumerated()
-            .first(where: { $0.element.name == command.image.name })
+            .first(where: { $0.element.name == command.icon?.name })
             .map { self.collectionView.selectItem(at: IndexPath(item: $0.offset, section: 0), animated: false, scrollPosition: .top) }
         
         deleteButton.isHidden = false
@@ -178,8 +178,8 @@ extension UARTNewCommandViewController {
         }
     }
     
-    private func updateEOLSegment(eol: String) {
-        let symbols = ["\n", "\r", "\n\r"]
+    private func updateEOLSegment(eol: EOL) {
+        let symbols = EOL.allCases
         eolSegment.selectedSegmentIndex = symbols.enumerated().first(where: { eol == $0.element })?.offset ?? 0
     }
     
@@ -209,13 +209,12 @@ extension UARTNewCommandViewController {
         return selectedItem && dataIsReady
     }
     
-    private func eolSymbol() -> String {
+    private func eolSymbol() -> EOL {
         switch eolSegment.selectedSegmentIndex {
-        case 0: return "\n"
-        case 1: return "\r"
-        case 2: return "\n\r"
-        default:
-            return ""
+        case 0: return .lf
+        case 1: return .cr
+        case 2: return .lfcr
+        default: return .none
         }
     }
 }

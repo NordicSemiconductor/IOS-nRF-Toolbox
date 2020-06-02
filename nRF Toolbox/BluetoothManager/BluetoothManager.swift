@@ -234,13 +234,13 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
         let type: CBCharacteristicWriteType = uartRXCharacteristic.properties.contains(.write) ? .withResponse : .withoutResponse
         let mtu = bluetoothPeripheral?.maximumWriteValueLength(for: type) ?? 20
 
-        let data = aCommand.data.split(by: mtu)
+        let data = aCommand.data!.split(by: mtu)
         data.forEach {
             self.bluetoothPeripheral!.writeValue($0, for: uartRXCharacteristic, type: type)
         }
         log(withLevel: .verbose, andMessage: "Writing to characteristic: \(uartRXCharacteristic.uuid.uuidString)")
         let typeAsString = type == .withoutResponse ? ".withoutResponse" : ".withResponse"
-        log(withLevel: .debug, andMessage: "peripheral.writeValue(0x\(aCommand.data.hexString), for: \(uartRXCharacteristic.uuid.uuidString), type: \(typeAsString))")
+        log(withLevel: .debug, andMessage: "peripheral.writeValue(0x\(aCommand.data!.hexString), for: \(uartRXCharacteristic.uuid.uuidString), type: \(typeAsString))")
         log(withLevel: .application, andMessage: "Sent command: \(aCommand.title)")
         
     }
@@ -253,7 +253,7 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
                 case let command as UARTCommandModel:
                     self.send(command: command)
                 case let timeInterval as UARTMacroTimeInterval:
-                    usleep(useconds_t(timeInterval.milliseconds * 1000))
+                    usleep(useconds_t(timeInterval.delay * 1000))
                 default:
                     break
                 }

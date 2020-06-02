@@ -55,6 +55,8 @@ class UARTModelEncoder: JSONEncoder {
     }
     
     func encode(model: UARTCommandModel) throws -> Data {
+        fatalError()
+        /*
         let type: UARTModelContainer.ModelType
         let data: Data
         switch model {
@@ -71,11 +73,14 @@ class UARTModelEncoder: JSONEncoder {
         }
         
         return try encode(UARTModelContainer(type: type, data: data))
+ */
     }
 }
 
 class UARTModelDecoder: JSONDecoder {
     func decodeModel(from data: Data) throws -> UARTCommandModel {
+        fatalError()
+        /*
         let container = try decode(UARTModelContainer.self, from: data)
         let modelData = container.data
         return try {
@@ -85,5 +90,6 @@ class UARTModelDecoder: JSONDecoder {
             case .text: return try decode(TextCommand.self, from: modelData)
             }
         }()
+ */
     }
 }

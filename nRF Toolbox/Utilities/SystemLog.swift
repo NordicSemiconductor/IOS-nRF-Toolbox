@@ -112,6 +112,7 @@ extension LogCategory {
     static let ble = LogCategory(rawValue: "ble")!
     static let util = LogCategory(rawValue: "util")!
     static let app = LogCategory(rawValue: "application")!
+    static let coreData = LogCategory(rawValue: "coreData")!
 }
 
 struct SystemLog {
@@ -134,6 +135,15 @@ struct SystemLog {
     func fault(_ errorMessage: String) -> Never {
         if #available(iOS 10.0, *) {
             os_log("%@", log: category.osLog(), type: type.osLogType(), errorMessage)
+        } else {
+            NSLog("%@", errorMessage)
+        }
+        fatalError(errorMessage)
+    }
+    
+    static func fault(_ errorMessage: String, category: LogCategory) -> Never {
+        if #available(iOS 10.0, *) {
+            os_log("%@", log: category.osLog(), type: LogType.fault.osLogType(), errorMessage)
         } else {
             NSLog("%@", errorMessage)
         }

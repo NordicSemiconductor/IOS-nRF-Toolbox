@@ -231,9 +231,12 @@ extension UARTMacrosTableViewController {
     }
 
     private func handleCommandSectionTap(_ index: Int) {
+        
+        /*
         guard index == macros.commands.count else { return }
         macros.commands.append(UARTMacroTimeInterval(milliseconds: 100))
         tableView.insertRows(at: [IndexPath(item: macros.commands.count - 1, section: Section.commands)], with: .automatic)
+ */
     }
 }
 

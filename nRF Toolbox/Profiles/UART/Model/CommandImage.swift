@@ -32,7 +32,34 @@
 
 import UIKit.UIImage
 
-struct CommandImage: Codable, Equatable {
+class CommandImage: NSObject, NSCoding {
+    private struct Key {
+        static let legacyIconName: String = "legacyIconName"
+        static let modernIconName: String = "modernIconName"
+    }
+    
+    func encode(with coder: NSCoder) {
+        coder.encode(name, forKey: Key.legacyIconName)
+        (systemIcon?.name).map { coder.encode($0, forKey: Key.modernIconName) }
+    }
+    
+    required convenience init?(coder: NSCoder) {
+        guard let name = coder.decodeObject(forKey: Key.legacyIconName) as? String else {
+            return nil
+        }
+        
+        let modernIconName = coder.decodeObject(forKey: Key.modernIconName) as? String
+        let modernIcon = modernIconName.map { ModernIcon(name: $0) }
+        
+        self.init(name: name, modernIcon: modernIcon)
+    }
+    
+    init(stringLiteral value: String) {
+        name = value
+        systemIcon = nil
+        super.init()
+    }
+    
     static func == (lhs: CommandImage, rhs: CommandImage) -> Bool {
         lhs.name == rhs.name && lhs.systemIcon == rhs.systemIcon
     }
@@ -51,13 +78,6 @@ struct CommandImage: Codable, Equatable {
     init(name: String, modernIcon: ModernIcon? = nil) {
         self.name = name
         self.systemIcon = modernIcon
-    }
-}
-
-extension CommandImage: ExpressibleByStringLiteral {
-    init(stringLiteral value: String) {
-        name = value
-        systemIcon = nil
     }
 }
 

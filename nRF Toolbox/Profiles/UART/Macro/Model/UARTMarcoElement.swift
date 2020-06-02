@@ -31,9 +31,10 @@
 
 
 import Foundation
-
+/*
 protocol UARTMacroElement {  }
 
 struct UARTMacroTimeInterval: Codable, UARTMacroElement {
     var milliseconds: Int
 }
+*/

@@ -25,7 +25,7 @@ class UARTShortcutManager {
         
         activity.isEligibleForSearch = true
         activity.isEligibleForPrediction = true
-        let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeItem as String)
+//        let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeItem as String)
         
         return activity
     }
