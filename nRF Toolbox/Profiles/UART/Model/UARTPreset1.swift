@@ -32,7 +32,7 @@
 
 import Foundation
 import AEXML
-
+/*
 struct UARTPreset {
     
     enum Error: Swift.Error {
@@ -144,3 +144,4 @@ extension UARTPreset: Codable {
         try container.encode(name, forKey: .name)
     }
 }
+*/

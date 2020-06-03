@@ -118,19 +118,25 @@ extension UARTMacro: Codable {
     }
     
     init(from decoder: Decoder) throws {
+        fatalError()
+        /*
         let container = try decoder.container(keyedBy: CodingKeys.self)
         name = try container.decode(String.self, forKey: .name)
         let commandContainers = try container.decode([UARTCommandContainer].self, forKey: .commands)
         preset = try container.decode(UARTPreset.self, forKey: .preset)
         commands = commandContainers.map { $0.command }
+ */
     }
     
     func encode(to encoder: Encoder) throws {
+        fatalError()
+        /*
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(name, forKey: .name)
         try container.encode(preset, forKey: .preset)
         
         let commandContainers = commands.map(UARTCommandContainer.init)
         try container.encode(commandContainers, forKey: .commands)
+ */
     }
 }

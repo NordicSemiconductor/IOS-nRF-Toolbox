@@ -258,7 +258,7 @@ extension UARTMacrosTableViewController: UARTPresetCollectionViewDelegate {
 extension UARTMacrosTableViewController: UARTNewCommandDelegate {
     func createdNewCommand(_ viewController: UARTNewCommandViewController, command: UARTCommandModel, index: Int) {
         macros.preset.updateCommand(command, at: index)
-        presetCollectionView?.preset = macros.preset
+        presetCollectionView?.reloadData()
         viewController.dismsiss()
     }
 }

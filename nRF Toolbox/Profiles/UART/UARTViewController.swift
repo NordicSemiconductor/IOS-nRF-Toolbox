@@ -90,6 +90,7 @@ class UARTViewController: UIViewController, AlertPresenter {
     }
     
     private func savePreset() {
+        /*
         let xml = preset.document
         print(xml.xml)
         
@@ -98,6 +99,8 @@ class UARTViewController: UIViewController, AlertPresenter {
         } else {
             saveLoadButton.isHidden = true
         }
+ */
+        fatalError()
     }
     
     @available(iOS 11.0, *)
@@ -173,6 +176,8 @@ extension UARTViewController: UARTPresetCollectionViewDelegate {
 
 extension UARTViewController: UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
+        fatalError()
+        /*
         do {
             let data = try Data(contentsOf: url)
             let preset = try UARTPreset(data: data)
@@ -182,6 +187,7 @@ extension UARTViewController: UIDocumentPickerDelegate {
         } catch let error {
             displayErrorAlert(error: error)
         }
+ */
     }
 }
 
@@ -211,6 +217,8 @@ extension UARTViewController: UIDocumentBrowserViewControllerDelegate {
     }
     
     private func save(name: String, controller: UIDocumentBrowserViewController, importHandler: @escaping (URL?, UIDocumentBrowserViewController.ImportMode) -> Void) {
+        fatalError()
+        /*
         let doc = XMLDocument(name: name)
         preset.name = name
         doc.doc = preset.document
@@ -232,6 +240,7 @@ extension UARTViewController: UIDocumentBrowserViewControllerDelegate {
                 controller.dismsiss()
             }
         }
+ */
         
     }
 }
