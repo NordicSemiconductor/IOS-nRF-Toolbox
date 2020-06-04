@@ -48,7 +48,7 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
     
     private var presetCollectionView: UARTPresetCollectionView?
     private var macros: UARTMacro
-    private let fileManager = UARTMacroFileManager()
+//    private let fileManager = UARTMacroFileManager()
     private let editingMode: Bool
     private let bluetoothManager: BluetoothManager
 
@@ -94,12 +94,14 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
     }
     
     @objc private func save() {
+        fatalError()
+        /*
         guard !macros.name.isEmpty else {
             displayErrorAlert(error: QuickError(message: "Enter marco's name"))
             return
         }
         
-        guard macros.commands.filter ({ $0 is UARTCommandModel }).count > 0 else {
+        guard !macros.commands.isEmpty else {
             displayErrorAlert(error: QuickError(message: "Select at least one command"))
             return
         }
@@ -115,6 +117,7 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
         case .present: dismsiss()
         case .push: navigationController?.popViewController(animated: true)
         }
+ */
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int { 4 }
@@ -188,7 +191,8 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, ip) in
-            self.macros.commands.remove(at: ip.row)
+            fatalError()
+//            self.macros.commands.remove(at: ip.row)
             tableView.deleteRows(at: [ip], with: .automatic)
         }
         
@@ -205,8 +209,10 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let item = macros.commands[sourceIndexPath.row]
-        macros.commands.remove(at: sourceIndexPath.row)
-        macros.commands.insert(item, at: destinationIndexPath.row)
+        
+        macros.removeFromCommandsSet(at: sourceIndexPath.row)
+        macros.insertIntoCommandsSet(item, at: destinationIndexPath.row)
+        
         print(destinationIndexPath)
     }
     
@@ -246,7 +252,8 @@ extension UARTMacrosTableViewController: UARTPresetCollectionViewDelegate {
             openPresetEditor(with: command, index: index)
             return
         }
-        macros.commands.append(command)
+        
+        macros.addToCommandsSet(command)
         tableView.insertRows(at: [IndexPath(item: macros.commands.count - 1, section: Section.commands)], with: .automatic)
     }
     
@@ -291,13 +298,13 @@ extension UARTMacrosTableViewController {
             return cell
         }
         
-        let element = macros.commands[index]
+        let element = macros.elements[index]
         switch element {
         case let timeInterval as UARTMacroTimeInterval:
             let cell = tableView.dequeueCell(ofType: TimeIntervalTableViewCell.self)
             cell.apply(timeInterval: timeInterval, index: index)
             cell.callback = { [unowned self] ti, index in
-                self.macros.commands[index] = ti
+                self.macros.replaceCommandsSet(at: index, with: ti)
             }
             cell.selectionStyle = .none
             return cell

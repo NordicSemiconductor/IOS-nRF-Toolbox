@@ -31,7 +31,7 @@
 
 
 import Foundation
-
+/*
 class UARTMacroFileManager {
     
     enum Error: Swift.Error {
@@ -92,3 +92,4 @@ class UARTMacroFileManager {
     }
     
 }
+*/

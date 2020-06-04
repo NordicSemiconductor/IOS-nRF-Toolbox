@@ -37,7 +37,7 @@ class UARTMacrosList: UITableViewController, CloseButtonPresenter, AlertPresente
     private var macrosNames: [String] = []
     
     private let btManager: BluetoothManager
-    private let macrosFileManager = UARTMacroFileManager()
+//    private let macrosFileManager = UARTMacroFileManager()
     private let preset: UARTPreset
     
     init(bluetoothManager: BluetoothManager, preset: UARTPreset) {
@@ -86,8 +86,9 @@ class UARTMacrosList: UITableViewController, CloseButtonPresenter, AlertPresente
         let vc: UARTMacrosTableViewController
         if indexPath.section == 0 {
             do {
-                let macros = try displayOnError(macrosFileManager.macros(for: macrosNames[indexPath.row]))
-                vc = UARTMacrosTableViewController(macros: macros, bluetoothManager: btManager)
+                fatalError()
+//                let macros = try displayOnError(macrosFileManager.macros(for: macrosNames[indexPath.row]))
+//                vc = UARTMacrosTableViewController(macros: macros, bluetoothManager: btManager)
             } catch {
                 return
             }
@@ -110,7 +111,8 @@ class UARTMacrosList: UITableViewController, CloseButtonPresenter, AlertPresente
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
         let macroName = macrosNames[indexPath.row]
-        try? displayOnError(macrosFileManager.removeMacro(name: macroName))
+        fatalError()
+//        try? displayOnError(macrosFileManager.removeMacro(name: macroName))
         macrosNames = loadMacrosList()
         tableView.deleteRows(at: [indexPath], with: .automatic)
     }
@@ -118,7 +120,8 @@ class UARTMacrosList: UITableViewController, CloseButtonPresenter, AlertPresente
 
 extension UARTMacrosList {
     private func loadMacrosList() -> [String] {
-        (try? displayOnError( macrosFileManager.macrosList()) ) ?? []
+        fatalError()
+//        (try? displayOnError( macrosFileManager.macrosList()) ) ?? []
     }
 }
 

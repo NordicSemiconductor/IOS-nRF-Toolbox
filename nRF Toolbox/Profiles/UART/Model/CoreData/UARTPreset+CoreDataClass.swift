@@ -20,7 +20,7 @@ public class UARTPreset: NSManagedObject {
     
     var commands: [UARTCommandModel] {
         set {
-            newValue.forEach(self.addToCommands)
+            newValue.forEach(self.addToCommandsSet)
         }
         get {
             self.commandsSet.map { $0 as! UARTCommandModel }
@@ -28,8 +28,8 @@ public class UARTPreset: NSManagedObject {
     }
     
     func updateCommand(_ command: UARTCommandModel, at index: Int) {
-        removeFromCommands(at: index)
-        insertIntoCommands(command, at: index)
+        removeFromCommandsSet(at: index)
+        insertIntoCommandsSet(command, at: index)
     }
 }
 

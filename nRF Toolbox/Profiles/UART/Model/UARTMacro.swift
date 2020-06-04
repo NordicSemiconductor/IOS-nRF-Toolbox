@@ -31,7 +31,7 @@
 
 
 import Foundation
-
+/*
 struct UARTMacro {
     var name: String
     var commands: [UARTMacroElement]
@@ -140,3 +140,6 @@ extension UARTMacro: Codable {
  */
     }
 }
+*/
+
+
