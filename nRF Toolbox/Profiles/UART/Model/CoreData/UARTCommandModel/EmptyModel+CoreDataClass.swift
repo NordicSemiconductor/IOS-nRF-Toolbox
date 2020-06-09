@@ -11,6 +11,12 @@ import CoreData
 
 @objc(EmptyModel)
 public class EmptyModel: UARTCommandModel {
+    
+    static func emptyModel(in context: NSManagedObjectContext) -> EmptyModel {
+        let rquest: NSFetchRequest<EmptyModel> = EmptyModel.fetchRequest()
+        let object = try! context.fetch(req           j                                                     )
+    }
+    
     public override var title: String! {
         get { "" }
         set { SystemLog.fault("EmptyModel has only readOnsy permission", category: .coreData) }

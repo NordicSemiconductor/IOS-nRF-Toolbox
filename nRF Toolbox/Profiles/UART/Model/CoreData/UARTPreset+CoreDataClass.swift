@@ -11,20 +11,48 @@ import CoreData
 
 @objc(UARTPreset)
 public class UARTPreset: NSManagedObject {
-    init(commands: [UARTCommandModel], name: String, context: NSManagedObjectContext = CoreDataStack.uart.viewContext) {
-        let entity = NSEntityDescription.entity(forEntityName: "UARTPreset", in: context)
-        super.init(entity: entity!, insertInto: context)
+    init(commands: [UARTCommandModel], name: String, context: NSManagedObjectContext? = CoreDataStack.uart.viewContext) {
+        if let entity = context.flatMap({ Self.getEntity(context: $0) }) {
+            super.init(entity: entity, insertInto: context)
+        } else {
+            super.init()
+        }
         self.commands = commands
+        commands.forEach {
+            self.insertIntoCommandsSet($0, at: 0)
+        }
         self.name = name
     }
     
-    var commands: [UARTCommandModel] {
+    public override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
+        self.commands = self.commandsSet.map { $0 as! UARTCommandModel }
+    }
+    
+    var commands: [UARTCommandModel] = [] {
+        didSet {
+            commands.forEach(self.addToCommandsSet)
+        }
+    }
+    /*
+     {
         set {
             newValue.forEach(self.addToCommandsSet)
+            
         }
         get {
             self.commandsSet.map { $0 as! UARTCommandModel }
         }
+    }
+     */
+    
+    public override func awakeFromInsert() {
+        super.awakeFromInsert()
+    }
+    
+    public override func willSave() {
+        commands.forEach(self.addToCommandsSet)
+        super.willSave()
     }
     
     func updateCommand(_ command: UARTCommandModel, at index: Int) {

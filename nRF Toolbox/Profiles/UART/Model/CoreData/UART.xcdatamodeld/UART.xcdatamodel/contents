@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19G36e" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="DataCommand" representedClassName="DataCommand" parentEntity="UARTCommandModel" syncable="YES"/>
     <entity name="EmptyModel" representedClassName="EmptyModel" parentEntity="UARTCommandModel" syncable="YES"/>
     <entity name="TextCommand" representedClassName="TextCommand" parentEntity="UARTCommandModel" syncable="YES">
-        <attribute name="commandText" transient="YES" attributeType="String"/>
         <attribute name="eolSymbol" attributeType="String"/>
     </entity>
     <entity name="UARTCommandModel" representedClassName="UARTCommandModel" isAbstract="YES" parentEntity="UARTMacroElement" syncable="YES">
@@ -22,12 +21,12 @@
     </entity>
     <entity name="UARTPreset" representedClassName="UARTPreset" syncable="YES">
         <attribute name="name" attributeType="String"/>
-        <relationship name="commandsSet" toMany="YES" minCount="9" maxCount="9" deletionRule="Nullify" ordered="YES" destinationEntity="UARTCommandModel"/>
+        <relationship name="commandsSet" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="UARTCommandModel"/>
     </entity>
     <elements>
         <element name="DataCommand" positionX="-27" positionY="36" width="128" height="43"/>
         <element name="EmptyModel" positionX="-54" positionY="18" width="128" height="43"/>
-        <element name="TextCommand" positionX="-45" positionY="27" width="128" height="73"/>
+        <element name="TextCommand" positionX="-45" positionY="27" width="128" height="58"/>
         <element name="UARTCommandModel" positionX="-63" positionY="-18" width="128" height="88"/>
         <element name="UARTMacro" positionX="-27" positionY="27" width="128" height="88"/>
         <element name="UARTMacroElement" positionX="-9" positionY="45" width="128" height="28"/>

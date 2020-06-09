@@ -2,7 +2,7 @@
 //  UARTPreset+CoreDataProperties.swift
 //  
 //
-//  Created by Nick Kibish on 03.06.2020.
+//  Created by Nick Kibysh on 05/06/2020.
 //
 //
 

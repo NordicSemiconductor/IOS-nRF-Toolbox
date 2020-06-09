@@ -54,7 +54,7 @@ class UARTViewController: UIViewController, AlertPresenter {
     @IBOutlet private var saveLoadButton: UIButton!
     @IBOutlet private var presetName: UILabel!
     
-    private var preset: UARTPreset = .empty
+    private var preset: UARTPreset = .default
     private weak var router: UARTRouter?
     
     var deviceName: String = "" {
@@ -79,6 +79,7 @@ class UARTViewController: UIViewController, AlertPresenter {
         navigationItem.title = "UART"
         tabBarItem = UITabBarItem(title: "Preset", image: TabBarIcon.uartPreset.image, selectedImage: TabBarIcon.uartPreset.filledImage)
         
+        collectionView.preset = preset
         collectionView.presetDelegate = self
         
         disconnectBtn.style = .destructive
@@ -90,6 +91,31 @@ class UARTViewController: UIViewController, AlertPresenter {
     }
     
     private func savePreset() {
+        
+        let alert = UIAlertController(title: "Save preset", message: nil, preferredStyle: .alert)
+        alert.addTextField { (tf) in
+            tf.placeholder = "Preset name"
+        }
+        
+        let ok = UIAlertAction(title: "Save", style: .default) { (_) in
+            let name = alert.textFields?.first?.text
+            self.preset.name = name!
+            do {
+                try CoreDataStack.uart.viewContext.save()
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
+            
+        }
+        
+        alert.addAction(ok)
+        alert.addAction(cancel)
+        present(alert, animated: true, completion: nil)
+        
+        
         /*
         let xml = preset.document
         print(xml.xml)
@@ -100,7 +126,6 @@ class UARTViewController: UIViewController, AlertPresenter {
             saveLoadButton.isHidden = true
         }
  */
-        fatalError()
     }
     
     @available(iOS 11.0, *)
@@ -113,9 +138,16 @@ class UARTViewController: UIViewController, AlertPresenter {
     }
     
     private func loadPreset() {
+        
+        let vc = PresetListViewController()
+        self.present(vc, animated: true, completion: nil)
+        
+        
+        /*
         let documentPickerVC = UIDocumentPickerViewController(documentTypes: ["public.xml", "public.json"], in: .import)
         documentPickerVC.delegate = self
         present(documentPickerVC, animated: true)
+        */
     }
     
     @IBAction func disconnect() {

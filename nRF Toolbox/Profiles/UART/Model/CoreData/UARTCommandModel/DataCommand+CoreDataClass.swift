@@ -11,9 +11,12 @@ import CoreData
 
 @objc(DataCommand)
 public class DataCommand: UARTCommandModel {
-    init(data: Data, image: CommandImage, context: NSManagedObjectContext = CoreDataStack.uart.viewContext) {
-        let entity = NSEntityDescription.entity(forEntityName: "DataCommand", in: context)
-        super.init(entity: entity!, insertInto: context)
+    init(data: Data, image: CommandImage, context: NSManagedObjectContext? = CoreDataStack.uart.viewContext) {
+        if let entity = context.flatMap({ Self.getEntity(context: $0) }) {
+            super.init(entity: entity, insertInto: context)
+        } else {
+            super.init()
+        }
         
         self.data = data
         self.icon = image

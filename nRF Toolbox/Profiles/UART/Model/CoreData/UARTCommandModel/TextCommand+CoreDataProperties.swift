@@ -16,6 +16,6 @@ extension TextCommand {
         return NSFetchRequest<TextCommand>(entityName: "TextCommand")
     }
 
-    @NSManaged public var eolSymbol: String?
+    @NSManaged public var eolSymbol: String! 
 
 }

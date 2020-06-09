@@ -17,7 +17,8 @@ public class TextCommand: UARTCommandModel {
             self.data = newValue?.data(using: .utf8)
         }
         get {
-            self.data.flatMap { String(data: $0, encoding: .utf8) }
+//            self.data.flatMap { String(data: $0, encoding: .utf8) }
+            self.title
         }
     }
     
@@ -25,12 +26,16 @@ public class TextCommand: UARTCommandModel {
         EOL(symbol: eolSymbol!)
     }
     
-    init(text: String, image: CommandImage, eol: EOL = .lf, context: NSManagedObjectContext = CoreDataStack.uart.viewContext) {
-        let entity = NSEntityDescription.entity(forEntityName: "TextCommand", in: context)
-        super.init(entity: entity!, insertInto: context)
+    init(text: String, image: CommandImage, eol: EOL = .lf, context: NSManagedObjectContext? = CoreDataStack.uart.viewContext) {
+        if let entity = context.flatMap({ Self.getEntity(context: $0) }) {
+            super.init(entity: entity, insertInto: context)
+        } else {
+            super.init()
+        }
         self.icon = image
         self.commandText = text
         self.title = text
+        self.eolSymbol = eol.rawValue
         
     }
 

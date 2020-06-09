@@ -17,6 +17,7 @@
 		01268AF924218E5800E83156 /* ZephyrDFUDocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01268AF824218E5800E83156 /* ZephyrDFUDocumentPicker.swift */; };
 		01268AFB2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01268AFA2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift */; };
 		0129126B23E4487000EB3CCD /* UARTTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129126A23E4486F00EB3CCD /* UARTTabBarController.swift */; };
+		012AFC6C248E415700BEA271 /* PresetListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012AFC6B248E415700BEA271 /* PresetListViewController.swift */; };
 		012C2BDC240FCD0C005EC1A0 /* DFUUpdateSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDB240FCD0C005EC1A0 /* DFUUpdateSection.swift */; };
 		012C2BE12410682D005EC1A0 /* LegendLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDE2410682D005EC1A0 /* LegendLabel.swift */; };
 		012C2BE22410682D005EC1A0 /* Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDF2410682D005EC1A0 /* Segment.swift */; };
@@ -37,6 +38,7 @@
 		015F1098240FA06D00FDAC49 /* DFUActionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015F1097240FA06D00FDAC49 /* DFUActionSection.swift */; };
 		015F109B240FA82400FDAC49 /* DFUDocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015F109A240FA82400FDAC49 /* DFUDocumentPicker.swift */; };
 		0162BA91234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0162BA90234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift */; };
+		01673071248A42BE006BE9B1 /* NSManagedObject+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01673070248A42BE006BE9B1 /* NSManagedObject+Ext.swift */; };
 		01675E7123F6D1BE00FC0519 /* UARTPresetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01675E6F23F6D1BE00FC0519 /* UARTPresetTableViewCell.swift */; };
 		01675E7223F6D1BE00FC0519 /* UARTPresetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01675E7023F6D1BE00FC0519 /* UARTPresetTableViewCell.xib */; };
 		0169B59E23FBD8BE00907C1B /* NordicTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0169B59D23FBD8BE00907C1B /* NordicTextFieldCell.swift */; };
@@ -322,6 +324,7 @@
 		01268AF824218E5800E83156 /* ZephyrDFUDocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFUDocumentPicker.swift; sourceTree = "<group>"; };
 		01268AFA2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFUTabBarViewController.swift; sourceTree = "<group>"; };
 		0129126A23E4486F00EB3CCD /* UARTTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTTabBarController.swift; sourceTree = "<group>"; };
+		012AFC6B248E415700BEA271 /* PresetListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetListViewController.swift; sourceTree = "<group>"; };
 		012C2BDB240FCD0C005EC1A0 /* DFUUpdateSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUUpdateSection.swift; sourceTree = "<group>"; };
 		012C2BDE2410682D005EC1A0 /* LegendLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegendLabel.swift; sourceTree = "<group>"; };
 		012C2BDF2410682D005EC1A0 /* Segment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Segment.swift; sourceTree = "<group>"; };
@@ -344,6 +347,7 @@
 		015F1097240FA06D00FDAC49 /* DFUActionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUActionSection.swift; sourceTree = "<group>"; };
 		015F109A240FA82400FDAC49 /* DFUDocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUDocumentPicker.swift; sourceTree = "<group>"; };
 		0162BA90234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTemperatureAditionalSection.swift; sourceTree = "<group>"; };
+		01673070248A42BE006BE9B1 /* NSManagedObject+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Ext.swift"; sourceTree = "<group>"; };
 		01675E6F23F6D1BE00FC0519 /* UARTPresetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTPresetTableViewCell.swift; sourceTree = "<group>"; };
 		01675E7023F6D1BE00FC0519 /* UARTPresetTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTPresetTableViewCell.xib; sourceTree = "<group>"; };
 		0169B59D23FBD8BE00907C1B /* NordicTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicTextFieldCell.swift; sourceTree = "<group>"; };
@@ -672,6 +676,14 @@
 				01268AF42421805F00E83156 /* ZephyrDFUTableViewController.swift */,
 			);
 			path = UpdateScreen;
+			sourceTree = "<group>";
+		};
+		012AFC6A248E3D5E00BEA271 /* PresetList */ = {
+			isa = PBXGroup;
+			children = (
+				012AFC6B248E415700BEA271 /* PresetListViewController.swift */,
+			);
+			path = PresetList;
 			sourceTree = "<group>";
 		};
 		012C2BDD24106811005EC1A0 /* Viewes */ = {
@@ -1554,6 +1566,7 @@
 			isa = PBXGroup;
 			children = (
 				4325A6B2247FCBE6007A8868 /* CoreDataStack.swift */,
+				01673070248A42BE006BE9B1 /* NSManagedObject+Ext.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -1630,6 +1643,7 @@
 		4381AD1823BA010200FB1A1F /* UART */ = {
 			isa = PBXGroup;
 			children = (
+				012AFC6A248E3D5E00BEA271 /* PresetList */,
 				01675E6A23F6CF8000FC0519 /* Utils */,
 				019985EB23E061D1000CDCB6 /* LoggViewController */,
 				01AF928E23D1D9EC00C1BFD6 /* Views */,
@@ -2063,6 +2077,7 @@
 				20D08DFD232929A400569587 /* BGMTableViewCell.swift in Sources */,
 				01D6D2BB240696D000E1A66F /* DFURouter.swift in Sources */,
 				4325A6B3247FCBE6007A8868 /* CoreDataStack.swift in Sources */,
+				012AFC6C248E415700BEA271 /* PresetListViewController.swift in Sources */,
 				01B6D3DE234CBBE5000942C4 /* SernsorLocationSection.swift in Sources */,
 				200973DD2343748F0091951B /* BloodPressureCharacteristic.swift in Sources */,
 				30A1145C1CD24611000F0F02 /* ScannerViewController.swift in Sources */,
@@ -2205,6 +2220,7 @@
 				01BEADD6241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift in Sources */,
 				439A43B9248663BD0054567D /* DataCommand+CoreDataClass.swift in Sources */,
 				203D0F09232F782200C0340D /* CyclingTableViewController.swift in Sources */,
+				01673071248A42BE006BE9B1 /* NSManagedObject+Ext.swift in Sources */,
 				203D0F0C232FB7D100C0340D /* DetailsTableViewSection.swift in Sources */,
 				01D98C8F242E2B3C000A3B35 /* DocumentFileManager.swift in Sources */,
 				01B6D3DA234CB6B3000942C4 /* HeartRateSection.swift in Sources */,
