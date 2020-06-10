@@ -126,7 +126,7 @@ class UARTNewCommandViewController: UIViewController {
     }
     
     @IBAction func deleteBtnPressed() {
-        delegate?.createdNewCommand(self, command: EmptyModel(), index: index)
+        delegate?.createdNewCommand(self, command: EmptyModel.emptyModel(), index: index)
     }
 }
 

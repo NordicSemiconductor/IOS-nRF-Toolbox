@@ -217,8 +217,8 @@
 		33976B2C1CE8194EFAEB7341 /* Randomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3397618F9EA9546991CF4ED2 /* Randomizer.swift */; };
 		33976C75E25FBF443EB251CD /* Bool+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976AF182818B9C448C61CE /* Bool+Ext.swift */; };
 		33976F79FE2EA20D94F68B69 /* ContinuousGlucoseChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976B66D7A581F01631AE52 /* ContinuousGlucoseChartData.swift */; };
-		4308BC812487E82800C278AD /* UARTMacro+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4308BC802487E82800C278AD /* UARTMacro+CoreDataClass.swift */; };
-		4308BC862487E8F500C278AD /* UARTMacro+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4308BC852487E8F500C278AD /* UARTMacro+CoreDataProperties.swift */; };
+		4308BC812487E82800C278AD /* UARTMacro+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4308BC802487E82800C278AD /* UARTMacro+CoreDataProperties.swift */; };
+		4308BC862487E8F500C278AD /* UARTMacro+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4308BC852487E8F500C278AD /* UARTMacro+CoreDataClass.swift */; };
 		431F62EE247DDC2500DC32DA /* UART.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 431F62EC247DDC2500DC32DA /* UART.xcdatamodeld */; };
 		431F62FB247E81AF00DC32DA /* TextCommand+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431F62F9247E81AF00DC32DA /* TextCommand+CoreDataProperties.swift */; };
 		431F62FC247E81AF00DC32DA /* TextCommand+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431F62FA247E81AF00DC32DA /* TextCommand+CoreDataClass.swift */; };
@@ -528,11 +528,11 @@
 		33976B66D7A581F01631AE52 /* ContinuousGlucoseChartData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinuousGlucoseChartData.swift; sourceTree = "<group>"; };
 		33976F60C5BCE60DE33DFA31 /* ContinuousGlucoseMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinuousGlucoseMonitor.swift; sourceTree = "<group>"; };
 		3F7F8A53E0E1660A9EBBE469 /* Pods_nRF_Toolbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nRF_Toolbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4308BC802487E82800C278AD /* UARTMacro+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UARTMacro+CoreDataClass.swift"; path = "/Users/nick/Developer/Nordic/IOS-nRF-Toolbox/nRF Toolbox/Profiles/UART/Model/CoreData/UARTMacro+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		4308BC852487E8F500C278AD /* UARTMacro+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UARTMacro+CoreDataProperties.swift"; path = "/Users/nick/Developer/Nordic/IOS-nRF-Toolbox/nRF Toolbox/Profiles/UART/Model/CoreData/UARTMacro+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		4308BC802487E82800C278AD /* UARTMacro+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UARTMacro+CoreDataProperties.swift"; path = "/Users/nickkibish/Developer/Nordic/IOS-nRF-Toolbox/nRF Toolbox/Profiles/UART/Model/CoreData/UARTMacro+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		4308BC852487E8F500C278AD /* UARTMacro+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UARTMacro+CoreDataClass.swift"; path = "/Users/nickkibish/Developer/Nordic/IOS-nRF-Toolbox/nRF Toolbox/Profiles/UART/Model/CoreData/UARTMacro+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		431F62ED247DDC2500DC32DA /* UART.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UART.xcdatamodel; sourceTree = "<group>"; };
-		431F62F9247E81AF00DC32DA /* TextCommand+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "TextCommand+CoreDataProperties.swift"; path = "/Users/nick/Developer/Nordic/IOS-nRF-Toolbox/nRF Toolbox/Profiles/UART/Model/CoreData/UARTCommandModel/TextCommand+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
-		431F62FA247E81AF00DC32DA /* TextCommand+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "TextCommand+CoreDataClass.swift"; path = "/Users/nick/Developer/Nordic/IOS-nRF-Toolbox/nRF Toolbox/Profiles/UART/Model/CoreData/UARTCommandModel/TextCommand+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		431F62F9247E81AF00DC32DA /* TextCommand+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "TextCommand+CoreDataProperties.swift"; path = "/Users/nickkibish/Developer/Nordic/IOS-nRF-Toolbox/nRF Toolbox/Profiles/UART/Model/CoreData/UARTCommandModel/TextCommand+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		431F62FA247E81AF00DC32DA /* TextCommand+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "TextCommand+CoreDataClass.swift"; path = "/Users/nickkibish/Developer/Nordic/IOS-nRF-Toolbox/nRF Toolbox/Profiles/UART/Model/CoreData/UARTCommandModel/TextCommand+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		4322033F23CC773F009840DD /* UARTActionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTActionCollectionViewCell.swift; sourceTree = "<group>"; };
 		4322034023CC773F009840DD /* UARTActionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTActionCollectionViewCell.xib; sourceTree = "<group>"; };
 		4322034323CC9D31009840DD /* UARTCommandModel1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTCommandModel1.swift; sourceTree = "<group>"; };
@@ -567,14 +567,14 @@
 		4389184024360F7300175A94 /* GlucoseReadingContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlucoseReadingContext.swift; sourceTree = "<group>"; };
 		438918432436108E00175A94 /* RecordAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordAccess.swift; sourceTree = "<group>"; };
 		4392FF0123AA6CBE00E6ACEA /* DateFormatter+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Ext.swift"; sourceTree = "<group>"; };
-		439A43AE24863F5E0054567D /* EmptyModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "EmptyModel+CoreDataClass.swift"; path = "/Users/nick/Developer/Nordic/IOS-nRF-Toolbox/nRF Toolbox/Profiles/UART/Model/CoreData/UARTCommandModel/EmptyModel+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		439A43AF24863F5E0054567D /* EmptyModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "EmptyModel+CoreDataProperties.swift"; path = "/Users/nick/Developer/Nordic/IOS-nRF-Toolbox/nRF Toolbox/Profiles/UART/Model/CoreData/UARTCommandModel/EmptyModel+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
-		439A43B2248640110054567D /* UARTCommandModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UARTCommandModel+CoreDataClass.swift"; path = "/Users/nick/Developer/Nordic/IOS-nRF-Toolbox/nRF Toolbox/Profiles/UART/Model/CoreData/UARTCommandModel/UARTCommandModel+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		439A43B3248640110054567D /* UARTCommandModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UARTCommandModel+CoreDataProperties.swift"; path = "/Users/nick/Developer/Nordic/IOS-nRF-Toolbox/nRF Toolbox/Profiles/UART/Model/CoreData/UARTCommandModel/UARTCommandModel+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
-		439A43B6248663BD0054567D /* DataCommand+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DataCommand+CoreDataClass.swift"; path = "/Users/nick/Developer/Nordic/IOS-nRF-Toolbox/nRF Toolbox/Profiles/UART/Model/CoreData/UARTCommandModel/DataCommand+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		439A43B7248663BD0054567D /* DataCommand+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DataCommand+CoreDataProperties.swift"; path = "/Users/nick/Developer/Nordic/IOS-nRF-Toolbox/nRF Toolbox/Profiles/UART/Model/CoreData/UARTCommandModel/DataCommand+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		439A43AE24863F5E0054567D /* EmptyModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "EmptyModel+CoreDataClass.swift"; path = "/Users/nickkibish/Developer/Nordic/IOS-nRF-Toolbox/nRF Toolbox/Profiles/UART/Model/CoreData/UARTCommandModel/EmptyModel+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		439A43AF24863F5E0054567D /* EmptyModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "EmptyModel+CoreDataProperties.swift"; path = "/Users/nickkibish/Developer/Nordic/IOS-nRF-Toolbox/nRF Toolbox/Profiles/UART/Model/CoreData/UARTCommandModel/EmptyModel+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		439A43B2248640110054567D /* UARTCommandModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UARTCommandModel+CoreDataClass.swift"; path = "/Users/nickkibish/Developer/Nordic/IOS-nRF-Toolbox/nRF Toolbox/Profiles/UART/Model/CoreData/UARTCommandModel/UARTCommandModel+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		439A43B3248640110054567D /* UARTCommandModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UARTCommandModel+CoreDataProperties.swift"; path = "/Users/nickkibish/Developer/Nordic/IOS-nRF-Toolbox/nRF Toolbox/Profiles/UART/Model/CoreData/UARTCommandModel/UARTCommandModel+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		439A43B6248663BD0054567D /* DataCommand+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DataCommand+CoreDataClass.swift"; path = "/Users/nickkibish/Developer/Nordic/IOS-nRF-Toolbox/nRF Toolbox/Profiles/UART/Model/CoreData/UARTCommandModel/DataCommand+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		439A43B7248663BD0054567D /* DataCommand+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DataCommand+CoreDataProperties.swift"; path = "/Users/nickkibish/Developer/Nordic/IOS-nRF-Toolbox/nRF Toolbox/Profiles/UART/Model/CoreData/UARTCommandModel/DataCommand+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		439F85642487A49A00362261 /* UARTPreset+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UARTPreset+CoreDataClass.swift"; sourceTree = "<group>"; };
-		439F85672487A78E00362261 /* UARTPreset+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UARTPreset+CoreDataProperties.swift"; path = "/Users/nick/Developer/Nordic/IOS-nRF-Toolbox/nRF Toolbox/Profiles/UART/Model/CoreData/UARTPreset+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		439F85672487A78E00362261 /* UARTPreset+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UARTPreset+CoreDataProperties.swift"; path = "/Users/nickkibish/Developer/Nordic/IOS-nRF-Toolbox/nRF Toolbox/Profiles/UART/Model/CoreData/UARTPreset+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		43D34723246D58D70060DBE2 /* UARTShortcutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTShortcutManager.swift; sourceTree = "<group>"; };
 		43E2F73E2462E31400912BD6 /* AutoReszableTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoReszableTextView.swift; sourceTree = "<group>"; };
 		43F837232433FA7C003D88F0 /* BGMActionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGMActionSection.swift; sourceTree = "<group>"; };
@@ -1526,8 +1526,8 @@
 		431F62EB247DDB3F00DC32DA /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				4308BC852487E8F500C278AD /* UARTMacro+CoreDataProperties.swift */,
-				4308BC802487E82800C278AD /* UARTMacro+CoreDataClass.swift */,
+				4308BC852487E8F500C278AD /* UARTMacro+CoreDataClass.swift */,
+				4308BC802487E82800C278AD /* UARTMacro+CoreDataProperties.swift */,
 				439F85672487A78E00362261 /* UARTPreset+CoreDataProperties.swift */,
 				439F85642487A49A00362261 /* UARTPreset+CoreDataClass.swift */,
 				431F62EC247DDC2500DC32DA /* UART.xcdatamodeld */,
@@ -2066,7 +2066,7 @@
 				01AF928723D1A7D400C1BFD6 /* PeripheralView.swift in Sources */,
 				300143291CEC59F4008379DF /* ServiceIdentifiers.swift in Sources */,
 				0129126B23E4487000EB3CCD /* UARTTabBarController.swift in Sources */,
-				4308BC812487E82800C278AD /* UARTMacro+CoreDataClass.swift in Sources */,
+				4308BC812487E82800C278AD /* UARTMacro+CoreDataProperties.swift in Sources */,
 				436C90B1246B34AF00BD7E59 /* UIApplication+Ext.swift in Sources */,
 				20E07B422306868F00FCB205 /* BLEService.swift in Sources */,
 				01A1B77223CF530E0062FADC /* ImageCollectionViewCell.swift in Sources */,
@@ -2173,7 +2173,7 @@
 				20C7FE5B230EAD0000B06FD8 /* UINavigationController+Ext.swift in Sources */,
 				20F0C8062327D439003111E7 /* BatterySection.swift in Sources */,
 				5231403222FB1E130074325A /* UIColor+Nordic.swift in Sources */,
-				4308BC862487E8F500C278AD /* UARTMacro+CoreDataProperties.swift in Sources */,
+				4308BC862487E8F500C278AD /* UARTMacro+CoreDataClass.swift in Sources */,
 				30A1145A1CD2426B000F0F02 /* ScannerDelegate.swift in Sources */,
 				3069A1D71CDC788A003869EA /* BluetoothManager.swift in Sources */,
 				20136505234785DC00C5AF1F /* Peripheral+BloodPressure.swift in Sources */,

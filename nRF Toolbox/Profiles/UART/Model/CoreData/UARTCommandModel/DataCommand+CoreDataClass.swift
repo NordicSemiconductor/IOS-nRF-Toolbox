@@ -22,5 +22,9 @@ public class DataCommand: UARTCommandModel {
         self.icon = image
         self.title = "0x" + data.hexString
     }
+    
+    public override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
+    }
 
 }

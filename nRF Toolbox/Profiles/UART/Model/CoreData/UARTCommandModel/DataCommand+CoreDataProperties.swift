@@ -16,5 +16,6 @@ extension DataCommand {
         return NSFetchRequest<DataCommand>(entityName: "DataCommand")
     }
 
+    
 
 }

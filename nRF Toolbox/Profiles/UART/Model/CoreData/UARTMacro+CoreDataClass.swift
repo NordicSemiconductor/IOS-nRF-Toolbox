@@ -38,5 +38,5 @@ public class UARTMacro: NSManagedObject {
         self.preset = preset
     }
     
-    static let empty = UARTMacro(name: "", commands: [], preset: .empty)
+    static let empty = UARTMacro(name: "", commands: [], preset: .default)
 }

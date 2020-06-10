@@ -38,5 +38,9 @@ public class TextCommand: UARTCommandModel {
         self.eolSymbol = eol.rawValue
         
     }
+    
+    public override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
+    }
 
 }

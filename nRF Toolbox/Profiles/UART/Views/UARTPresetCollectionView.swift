@@ -33,7 +33,7 @@
 import UIKit
 
 class UARTPresetCollectionView: UICollectionView {
-    var preset: UARTPreset = .empty {
+    var preset: UARTPreset = .default {
         didSet {
             reloadData()
         }

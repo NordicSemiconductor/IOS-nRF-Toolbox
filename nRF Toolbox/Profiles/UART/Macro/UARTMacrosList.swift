@@ -93,7 +93,7 @@ class UARTMacrosList: UITableViewController, CloseButtonPresenter, AlertPresente
                 return
             }
         } else {
-            vc = UARTMacrosTableViewController(preset: UARTPreset.empty, bluetoothManager: btManager)
+            vc = UARTMacrosTableViewController(preset: UARTPreset.default, bluetoothManager: btManager)
         }
         
         vc.macrosDelegate = self

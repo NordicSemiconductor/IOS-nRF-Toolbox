@@ -32,6 +32,7 @@ public class UARTPreset: NSManagedObject {
     var commands: [UARTCommandModel] = [] {
         didSet {
             commands.forEach(self.addToCommandsSet)
+            print(commands.count)
         }
     }
     /*
@@ -51,13 +52,20 @@ public class UARTPreset: NSManagedObject {
     }
     
     public override func willSave() {
-        commands.forEach(self.addToCommandsSet)
+//        commands.forEach(self.addToCommandsSet)
         super.willSave()
     }
     
     func updateCommand(_ command: UARTCommandModel, at index: Int) {
-        removeFromCommandsSet(at: index)
-        insertIntoCommandsSet(command, at: index)
+        commands[index] = command
+        
+        commandsSet.compactMap { $0 as? UARTCommandModel }
+            .forEach(self.removeFromCommandsSet)
+        
+        let set = NSOrderedSet(array: commands)
+        self.addToCommandsSet(set)
+        
+        print(commandsSet.count)
     }
 }
 
@@ -74,5 +82,5 @@ extension UARTPreset {
         TextCommand(text: "Repeat", image: .repeat)
     ], name: "Demo")
     
-    static let empty = UARTPreset(commands: Array(repeating: EmptyModel(), count: 9), name: "")
+//    static let empty = UARTPreset(commands: Array(repeating: EmptyModel.emptyModel(in: CoreDataStack.uart.viewContext), count: 9), name: "")
 }
