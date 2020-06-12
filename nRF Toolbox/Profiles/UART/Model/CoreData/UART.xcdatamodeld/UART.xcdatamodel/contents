@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19G36e" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="DataCommand" representedClassName="DataCommand" parentEntity="UARTCommandModel" syncable="YES"/>
     <entity name="EmptyModel" representedClassName="EmptyModel" parentEntity="UARTCommandModel" syncable="YES"/>
     <entity name="TextCommand" representedClassName="TextCommand" parentEntity="UARTCommandModel" syncable="YES">
         <attribute name="eolSymbol" attributeType="String"/>
     </entity>
     <entity name="UARTCommandModel" representedClassName="UARTCommandModel" isAbstract="YES" parentEntity="UARTMacroElement" syncable="YES">
-        <attribute name="data" attributeType="Binary"/>
-        <attribute name="icon" attributeType="Transformable" customClassName="CommandImage"/>
-        <attribute name="title" attributeType="String"/>
+        <attribute name="data" optional="YES" attributeType="Binary"/>
+        <attribute name="icon" optional="YES" attributeType="Transformable" customClassName="CommandImage"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
     </entity>
     <entity name="UARTMacro" representedClassName="UARTMacro" syncable="YES">
         <attribute name="name" attributeType="String"/>

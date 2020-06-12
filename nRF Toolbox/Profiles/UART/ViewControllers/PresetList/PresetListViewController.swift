@@ -9,10 +9,16 @@
 import UIKit
 import CoreData
 
+protocol PresetListDelegate: class {
+    func didSelectPreset(_ preset: UARTPreset)
+}
+
 class PresetListViewController: UITableViewController {
     
     private let coreDataStack: CoreDataStack
     private var presets: [UARTPreset] = []
+    
+    weak var presetDelegate: PresetListDelegate?
     
     init(stack: CoreDataStack = CoreDataStack.uart) {
         self.coreDataStack = stack
@@ -49,4 +55,9 @@ class PresetListViewController: UITableViewController {
         cell.textLabel?.text = preset.name
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        presetDelegate?.didSelectPreset(presets[indexPath.row])
+    }
+    
 }

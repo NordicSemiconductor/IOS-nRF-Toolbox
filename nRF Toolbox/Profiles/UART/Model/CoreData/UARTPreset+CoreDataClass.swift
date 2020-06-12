@@ -26,11 +26,14 @@ public class UARTPreset: NSManagedObject {
     
     public override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)
-        self.commands = self.commandsSet.map { $0 as! UARTCommandModel }
+        self.commands = self.commandsSet.map { $0 as! UARTCommandModel }  //.map { $0 as! UARTCommandModel }
     }
     
     var commands: [UARTCommandModel] = [] {
         didSet {
+            commandsSet.map { $0 as! UARTCommandModel }
+                .forEach(self.removeFromCommandsSet)
+                
             commands.forEach(self.addToCommandsSet)
             print(commands.count)
         }

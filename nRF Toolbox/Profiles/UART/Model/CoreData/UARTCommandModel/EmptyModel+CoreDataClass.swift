@@ -31,7 +31,7 @@ public class EmptyModel: UARTCommandModel {
     }
     
     public override var title: String! {
-        get { "u" }
+        get { "" }
         set { SystemLog.fault("EmptyModel has only readOnsy permission", category: .coreData) }
     }
     
@@ -41,7 +41,7 @@ public class EmptyModel: UARTCommandModel {
     }
     
     override var data: Data! {
-        get { "Data".data(using: .utf8) }
+        get { Data() }
         set { SystemLog.fault("EmptyModel has only readOnsy permission", category: .coreData) }
     }
     

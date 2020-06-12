@@ -844,12 +844,14 @@
 				01AF928623D1A7D400C1BFD6 /* PeripheralView.swift */,
 				01AF928823D1A7E300C1BFD6 /* PeripheralView.xib */,
 			);
-			path = PeripheralView;
+			name = PeripheralView;
+			path = ../PeripheralView;
 			sourceTree = "<group>";
 		};
 		01AF928E23D1D9EC00C1BFD6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				01AF928523D1A7A800C1BFD6 /* PeripheralView */,
 				01AF928F23D1DA5700C1BFD6 /* UARTPresetCollectionView.swift */,
 				0133C73A23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift */,
 			);
@@ -1523,6 +1525,28 @@
 			path = Proximity;
 			sourceTree = "<group>";
 		};
+		4308D1B02492472D009C9B26 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				4308D1B12492474B009C9B26 /* Preset */,
+				01A1B76423CF13810062FADC /* NewCommand */,
+				01AF928423D1A76100C1BFD6 /* Macro */,
+				019985EB23E061D1000CDCB6 /* LoggViewController */,
+				012AFC6A248E3D5E00BEA271 /* PresetList */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		4308D1B12492474B009C9B26 /* Preset */ = {
+			isa = PBXGroup;
+			children = (
+				4381AD1923BA057000FB1A1F /* UARTViewController.swift */,
+				4381AD1A23BA057000FB1A1F /* UARTViewController.xib */,
+				0129126A23E4486F00EB3CCD /* UARTTabBarController.swift */,
+			);
+			path = Preset;
+			sourceTree = "<group>";
+		};
 		431F62EB247DDB3F00DC32DA /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
@@ -1643,19 +1667,12 @@
 		4381AD1823BA010200FB1A1F /* UART */ = {
 			isa = PBXGroup;
 			children = (
-				012AFC6A248E3D5E00BEA271 /* PresetList */,
+				4308D1B02492472D009C9B26 /* ViewControllers */,
 				01675E6A23F6CF8000FC0519 /* Utils */,
-				019985EB23E061D1000CDCB6 /* LoggViewController */,
 				01AF928E23D1D9EC00C1BFD6 /* Views */,
-				01AF928523D1A7A800C1BFD6 /* PeripheralView */,
-				01AF928423D1A76100C1BFD6 /* Macro */,
 				01A1B76B23CF43120062FADC /* Resources */,
-				01A1B76423CF13810062FADC /* NewCommand */,
 				4322034523CC9D43009840DD /* Model */,
 				4322033E23CC76DC009840DD /* CollectionViewCells */,
-				4381AD1923BA057000FB1A1F /* UARTViewController.swift */,
-				4381AD1A23BA057000FB1A1F /* UARTViewController.xib */,
-				0129126A23E4486F00EB3CCD /* UARTTabBarController.swift */,
 			);
 			path = UART;
 			sourceTree = "<group>";

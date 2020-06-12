@@ -140,6 +140,7 @@ class UARTViewController: UIViewController, AlertPresenter {
     private func loadPreset() {
         
         let vc = PresetListViewController()
+        vc.presetDelegate = self
         self.present(vc, animated: true, completion: nil)
         
         
@@ -166,11 +167,19 @@ class UARTViewController: UIViewController, AlertPresenter {
             self.loadPreset()
         }
         
+        let saveAs = UIAlertAction(title: "Save As", style: .default) { (_) in
+            
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(saveAction)
         alert.addAction(loadAction)
         alert.addAction(cancelAction)
+        
+        if !preset.objectID.isTemporaryID {
+            alert.addAction(saveAs)
+        }
         
         present(alert, animated: true, completion: nil)
     }
@@ -275,4 +284,15 @@ extension UARTViewController: UIDocumentBrowserViewControllerDelegate {
  */
         
     }
+}
+
+extension UARTViewController: PresetListDelegate {
+    
+    func didSelectPreset(_ preset: UARTPreset) {
+        dismsiss()
+        self.preset = preset
+        collectionView.preset = preset
+        collectionView.reloadData()
+    }
+    
 }
