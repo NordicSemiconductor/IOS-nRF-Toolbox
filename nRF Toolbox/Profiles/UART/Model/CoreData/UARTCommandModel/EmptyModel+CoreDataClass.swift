@@ -22,7 +22,11 @@ public class EmptyModel: UARTCommandModel {
             return model
         } else {
         }
- */
+        */
+    }
+    
+    public override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
     }
     
     private init(context: NSManagedObjectContext) {

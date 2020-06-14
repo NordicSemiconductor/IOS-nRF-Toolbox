@@ -22,7 +22,7 @@ public class UARTPreset: NSManagedObject {
             self.insertIntoCommandsSet($0, at: 0)
         }
         self.name = name
-    }
+    } 
     
     public override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)
