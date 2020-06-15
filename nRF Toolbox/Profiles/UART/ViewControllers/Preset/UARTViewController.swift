@@ -48,13 +48,17 @@ class UARTViewController: UIViewController, AlertPresenter {
 
     let btManager: BluetoothManager!
     
-    @IBOutlet private var collectionView: UARTPresetCollectionView!
     @IBOutlet private var disconnectBtn: NordicButton!
     @IBOutlet private var deviceNameLabel: UILabel!
     @IBOutlet private var saveLoadButton: UIButton!
     @IBOutlet private var presetName: UILabel!
     
-    private var preset: UARTPreset = .default
+    @IBOutlet private var collectionView: UICollectionView!
+    
+    private var presets: [UARTPreset] = []
+    private let coreDataUtil: UARTCoreDataUtil
+    
+//    private var preset: UARTPreset = .default
     private weak var router: UARTRouter?
     
     var deviceName: String = "" {
@@ -63,9 +67,10 @@ class UARTViewController: UIViewController, AlertPresenter {
         }
     }
     
-    init(bluetoothManager: BluetoothManager, uartRouter: UARTRouter) {
+    init(bluetoothManager: BluetoothManager, uartRouter: UARTRouter, coreDataUtil: UARTCoreDataUtil = UARTCoreDataUtil()) {
         btManager = bluetoothManager
         router = uartRouter
+        self.coreDataUtil = coreDataUtil
         super.init(nibName: nil, bundle: .main)
     }
     
@@ -79,15 +84,11 @@ class UARTViewController: UIViewController, AlertPresenter {
         navigationItem.title = "UART"
         tabBarItem = UITabBarItem(title: "Preset", image: TabBarIcon.uartPreset.image, selectedImage: TabBarIcon.uartPreset.filledImage)
         
-        collectionView.preset = preset
-        collectionView.presetDelegate = self
-        
         disconnectBtn.style = .destructive
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        collectionView.collectionViewLayout.invalidateLayout()
+        
+        collectionView.register(type: UARTPresetCollectionViewCell.self)
+        
+        self.presets = try! coreDataUtil.getPresets(options: .all)
     }
     
     private func savePreset() {
@@ -98,6 +99,7 @@ class UARTViewController: UIViewController, AlertPresenter {
         }
         
         let ok = UIAlertAction(title: "Save", style: .default) { (_) in
+            /*
             let name = alert.textFields?.first?.text
             self.preset.name = name!
             do {
@@ -105,6 +107,7 @@ class UARTViewController: UIViewController, AlertPresenter {
             } catch let error {
                 print(error.localizedDescription)
             }
+ */
         }
         
         let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
@@ -177,22 +180,23 @@ class UARTViewController: UIViewController, AlertPresenter {
         alert.addAction(loadAction)
         alert.addAction(cancelAction)
         
+        /*
         if !preset.objectID.isTemporaryID {
             alert.addAction(saveAs)
         }
-        
+        */
         present(alert, animated: true, completion: nil)
     }
     
     @IBAction func recordMacros() {
-        router?.displayMacros(with: preset)
+//        router?.displayMacros(with: preset)
     }
 }
 
 extension UARTViewController: UARTNewCommandDelegate {
     func createdNewCommand(_ viewController: UARTNewCommandViewController, command: UARTCommandModel, index: Int) {
-        preset.updateCommand(command, at: index)
-        collectionView.preset = preset
+//        preset.updateCommand(command, at: index)
+//        presetCollectionView.preset = preset
         viewController.dismsiss()
     }
     
@@ -202,7 +206,7 @@ extension UARTViewController: UARTPresetCollectionViewDelegate {
     
     func longTapAtCommand(_ command: UARTCommandModel, at index: Int) {
         openPresetEditor(with: command, index: index)
-        collectionView.selectItem(at: IndexPath(item: index, section: 0), animated: false, scrollPosition: .top)
+        
     }
     
     func selectedCommand(_ command: UARTCommandModel, at index: Int) {
@@ -290,9 +294,29 @@ extension UARTViewController: PresetListDelegate {
     
     func didSelectPreset(_ preset: UARTPreset) {
         dismsiss()
-        self.preset = preset
-        collectionView.preset = preset
-        collectionView.reloadData()
+//        self.preset = preset
     }
     
+}
+
+extension UARTViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        presets.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueCell(ofType: UARTPresetCollectionViewCell.self, for: indexPath)
+        
+        cell.preset = presets[indexPath.row]
+        
+        return cell
+    }
+    
+}
+
+extension UARTViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let side = min(collectionView.frame.size.width, collectionView.frame.size.height)
+        return CGSize(width: side, height: side)
+    }
 }

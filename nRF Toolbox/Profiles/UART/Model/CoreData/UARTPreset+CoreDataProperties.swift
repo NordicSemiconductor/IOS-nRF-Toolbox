@@ -2,7 +2,7 @@
 //  UARTPreset+CoreDataProperties.swift
 //  
 //
-//  Created by Nick Kibysh on 05/06/2020.
+//  Created by Nick Kibish on 15.06.2020.
 //
 //
 
@@ -17,6 +17,7 @@ extension UARTPreset {
     }
 
     @NSManaged public var name: String!
+    @NSManaged public var isFavorite: Bool
     @NSManaged public var commandsSet: NSOrderedSet!
 
 }

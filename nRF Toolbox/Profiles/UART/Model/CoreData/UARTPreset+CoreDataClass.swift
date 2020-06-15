@@ -73,17 +73,7 @@ public class UARTPreset: NSManagedObject {
 }
 
 extension UARTPreset {
-    static let `default` = UARTPreset(commands: [
-        DataCommand(data: Data([0x01]), image: .number1),
-        DataCommand(data: Data([0x02]), image: .number2),
-        DataCommand(data: Data([0x03]), image: .number3),
-        TextCommand(text: "Pause", image: .pause),
-        TextCommand(text: "Play", image: .play),
-        TextCommand(text: "Stop", image: .stop),
-        TextCommand(text: "Rew", image: .rewind),
-        TextCommand(text: "Start", image: .start),
-        TextCommand(text: "Repeat", image: .repeat)
-    ], name: "Demo")
+//    static let `default` = 
     
 //    static let empty = UARTPreset(commands: Array(repeating: EmptyModel.emptyModel(in: CoreDataStack.uart.viewContext), count: 9), name: "")
 }

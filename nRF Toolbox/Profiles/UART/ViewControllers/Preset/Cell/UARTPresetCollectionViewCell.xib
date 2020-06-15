@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="UARTPresetCollectionViewCell" id="PfX-eb-MEg" customClass="UARTPresetCollectionViewCell" customModule="nRF_Toolbox" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="420" height="362"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="CJB-FX-JJw">
+                <rect key="frame" x="0.0" y="0.0" width="420" height="362"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="iZM-nl-UAs" customClass="UARTPresetCollectionView" customModule="nRF_Toolbox" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="420" height="362"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="WWf-iH-0a5">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                    </collectionView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="iZM-nl-UAs" secondAttribute="trailing" id="7Kq-gf-ENZ"/>
+                    <constraint firstItem="iZM-nl-UAs" firstAttribute="top" secondItem="CJB-FX-JJw" secondAttribute="top" id="AYb-dw-tD6"/>
+                    <constraint firstAttribute="bottom" secondItem="iZM-nl-UAs" secondAttribute="bottom" id="GVf-o7-MV4"/>
+                    <constraint firstItem="iZM-nl-UAs" firstAttribute="leading" secondItem="CJB-FX-JJw" secondAttribute="leading" id="dkc-zP-fAS"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <size key="customSize" width="420" height="362"/>
+            <connections>
+                <outlet property="presetCollectionView" destination="iZM-nl-UAs" id="YDF-km-N3E"/>
+            </connections>
+            <point key="canvasLocation" x="118.84057971014494" y="115.17857142857142"/>
+        </collectionViewCell>
+    </objects>
+</document>

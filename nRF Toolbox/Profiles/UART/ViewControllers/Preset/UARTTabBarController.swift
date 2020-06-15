@@ -81,7 +81,7 @@ class UARTTabBarController: UITabBarController {
     })
     
     private lazy var uartViewController = UARTViewController(bluetoothManager: btManager, uartRouter: self)
-    private lazy var uartMacroViewController = UARTMacrosList(bluetoothManager: btManager, preset: .default)
+    private lazy var uartMacroViewController = UARTMacrosList(bluetoothManager: btManager)
     private lazy var uartLoggerViewController = UARTLoggerViewController(bluetoothManager: btManager)
     
     override func viewDidLoad() {

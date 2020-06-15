@@ -38,11 +38,10 @@ class UARTMacrosList: UITableViewController, CloseButtonPresenter, AlertPresente
     
     private let btManager: BluetoothManager
 //    private let macrosFileManager = UARTMacroFileManager()
-    private let preset: UARTPreset
+//    private let preset: UARTPreset
     
-    init(bluetoothManager: BluetoothManager, preset: UARTPreset) {
+    init(bluetoothManager: BluetoothManager) {
         self.btManager = bluetoothManager
-        self.preset = preset
         super.init(style: .grouped)
         tabBarItem = UITabBarItem(title: "Macros", image: TabBarIcon.uartMacros.image, selectedImage: TabBarIcon.uartMacros.filledImage)
     }
@@ -93,11 +92,11 @@ class UARTMacrosList: UITableViewController, CloseButtonPresenter, AlertPresente
                 return
             }
         } else {
-            vc = UARTMacrosTableViewController(preset: UARTPreset.default, bluetoothManager: btManager)
+//            vc = UARTMacrosTableViewController(preset: UARTPreset.default, bluetoothManager: btManager)
         }
         
-        vc.macrosDelegate = self
-        navigationController?.pushViewController(vc, animated: true)
+//        vc.macrosDelegate = self
+//        navigationController?.pushViewController(vc, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
