@@ -21,6 +21,7 @@
                 <outlet property="collectionView" destination="GMu-sG-Zuq" id="H87-PP-auS"/>
                 <outlet property="deviceNameLabel" destination="UL0-4i-YtI" id="I99-7Z-Ish"/>
                 <outlet property="disconnectBtn" destination="PdZ-kf-qsF" id="hJ1-BY-yWz"/>
+                <outlet property="pageControl" destination="vcL-8T-gcU" id="oAW-6O-DYu"/>
                 <outlet property="presetName" destination="gwI-aO-4ac" id="2z1-gX-hyp"/>
                 <outlet property="saveLoadButton" destination="XE5-WC-7WV" id="YCc-Us-PuJ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -32,7 +33,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pIh-Or-s4q">
-                    <rect key="frame" x="20" y="56" width="374" height="422"/>
+                    <rect key="frame" x="20" y="56" width="374" height="462"/>
                     <subviews>
                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gwI-aO-4ac">
                             <rect key="frame" x="0.0" y="10" width="5.5" height="20"/>
@@ -53,17 +54,17 @@
                                 <action selector="saveLoad:" destination="-1" eventType="touchUpInside" id="eU4-40-ndT"/>
                             </connections>
                         </button>
-                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="GMu-sG-Zuq">
-                            <rect key="frame" x="0.0" y="48" width="374" height="374"/>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="GMu-sG-Zuq">
+                            <rect key="frame" x="0.0" y="48" width="374" height="414"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="GMu-sG-Zuq" secondAttribute="height" multiplier="1:1" id="dlu-jz-0yh"/>
+                                <constraint firstAttribute="width" secondItem="GMu-sG-Zuq" secondAttribute="height" multiplier="1:1" constant="-40" id="dlu-jz-0yh"/>
                             </constraints>
                             <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="FlV-gx-Umc">
                                 <size key="itemSize" width="50" height="50"/>
                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                 <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="sectionInset" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
                             </collectionViewFlowLayout>
                             <connections>
                                 <outlet property="dataSource" destination="-1" id="w8h-te-s8b"/>
@@ -96,13 +97,13 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connected to" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UL0-4i-YtI">
-                    <rect key="frame" x="16" y="502" width="81.5" height="16.5"/>
+                    <rect key="frame" x="16" y="626" width="81.5" height="16.5"/>
                     <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="14"/>
                     <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PdZ-kf-qsF" customClass="NordicButton" customModule="nRF_Toolbox" customModuleProvider="target">
-                    <rect key="frame" x="278" y="494" width="120" height="32"/>
+                    <rect key="frame" x="278" y="618" width="120" height="32"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="120" id="hC2-As-vhF"/>
                         <constraint firstAttribute="height" constant="32" id="o66-Qn-Lt7"/>
@@ -115,6 +116,11 @@
                         <action selector="disconnect" destination="-1" eventType="touchUpInside" id="8G7-Zz-Kng"/>
                     </connections>
                 </button>
+                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="vcL-8T-gcU">
+                    <rect key="frame" x="187.5" y="526" width="39" height="37"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="currentPageIndicatorTintColor" red="0.0" green="0.66274509803921566" blue="0.80784313725490198" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </pageControl>
             </subviews>
             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
             <constraints>
@@ -122,10 +128,12 @@
                 <constraint firstItem="pIh-Or-s4q" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="12" id="6hc-SN-6L5"/>
                 <constraint firstItem="pIh-Or-s4q" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" symbolic="YES" id="CAx-pO-xgC"/>
                 <constraint firstItem="pIh-Or-s4q" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" priority="999" constant="20" id="Jdx-6Y-k6x"/>
+                <constraint firstItem="vcL-8T-gcU" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Spr-qI-hOv"/>
                 <constraint firstItem="PdZ-kf-qsF" firstAttribute="centerY" secondItem="UL0-4i-YtI" secondAttribute="centerY" id="THu-nB-o1b"/>
                 <constraint firstItem="pIh-Or-s4q" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ZAI-nD-3dJ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="PdZ-kf-qsF" secondAttribute="bottom" constant="12" id="drJ-6o-9yR"/>
-                <constraint firstItem="PdZ-kf-qsF" firstAttribute="top" secondItem="pIh-Or-s4q" secondAttribute="bottom" constant="16" id="ths-Bk-KW0"/>
+                <constraint firstItem="PdZ-kf-qsF" firstAttribute="top" secondItem="pIh-Or-s4q" secondAttribute="bottom" constant="100" id="ths-Bk-KW0"/>
+                <constraint firstItem="vcL-8T-gcU" firstAttribute="top" secondItem="pIh-Or-s4q" secondAttribute="bottom" constant="8" id="uN8-U7-HjA"/>
                 <constraint firstItem="UL0-4i-YtI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="xKo-Sf-yOF"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>

@@ -52,6 +52,7 @@ class UARTViewController: UIViewController, AlertPresenter {
     @IBOutlet private var deviceNameLabel: UILabel!
     @IBOutlet private var saveLoadButton: UIButton!
     @IBOutlet private var presetName: UILabel!
+    @IBOutlet private var pageControl: UIPageControl!
     
     @IBOutlet private var collectionView: UICollectionView!
     
@@ -89,6 +90,11 @@ class UARTViewController: UIViewController, AlertPresenter {
         collectionView.register(type: UARTPresetCollectionViewCell.self)
         
         self.presets = try! coreDataUtil.getPresets(options: .all)
+        
+        collectionView.decelerationRate = .fast
+        
+        pageControl.backgroundColor = .clear
+        pageControl.tintColor = .nordicBlue
     }
     
     private func savePreset() {
@@ -301,7 +307,8 @@ extension UARTViewController: PresetListDelegate {
 
 extension UARTViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        presets.count
+        pageControl.numberOfPages = presets.count
+        return presets.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -316,7 +323,29 @@ extension UARTViewController: UICollectionViewDataSource {
 
 extension UARTViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let side = min(collectionView.frame.size.width, collectionView.frame.size.height)
-        return CGSize(width: side, height: side)
+        var side = min(collectionView.frame.size.width, collectionView.frame.size.height)
+        let lineSpacing = (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).minimumLineSpacing
+        
+        side -= lineSpacing / 2
+        
+        return CGSize(width: side, height: side + 40)
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        
+        let lineSpacing = (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).minimumLineSpacing
+        
+        let pageWidth = scrollView.frame.width + lineSpacing / 2
+        
+        let currentPageNumber = round(scrollView.contentOffset.x / pageWidth)
+        let maxPageNumber = CGFloat(collectionView?.numberOfItems(inSection: 0) ?? 0)
+        
+        var pageNumber = round(targetContentOffset.pointee.x / pageWidth)
+        pageNumber = max(0, currentPageNumber - 1, pageNumber)
+        pageNumber = min(maxPageNumber, currentPageNumber + 1, pageNumber)
+        
+        pageControl.currentPage = Int(pageNumber)
+        
+        targetContentOffset.pointee.x = pageNumber * pageWidth
     }
 }

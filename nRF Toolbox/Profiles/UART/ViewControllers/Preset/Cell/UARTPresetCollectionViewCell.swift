@@ -13,10 +13,12 @@ class UARTPresetCollectionViewCell: UICollectionViewCell {
         didSet {
             presetCollectionView.preset = preset
             presetCollectionView.reloadData()
+            presetName.text = preset.name
         }
     }
     
     @IBOutlet var presetCollectionView: UARTPresetCollectionView!
+    @IBOutlet var presetName: UILabel!
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)

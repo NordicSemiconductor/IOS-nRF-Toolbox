@@ -11,15 +11,15 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="UARTPresetCollectionViewCell" id="PfX-eb-MEg" customClass="UARTPresetCollectionViewCell" customModule="nRF_Toolbox" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="420" height="362"/>
+            <rect key="frame" x="0.0" y="0.0" width="427" height="467"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="CJB-FX-JJw">
-                <rect key="frame" x="0.0" y="0.0" width="420" height="362"/>
+                <rect key="frame" x="0.0" y="0.0" width="427" height="467"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="iZM-nl-UAs" customClass="UARTPresetCollectionView" customModule="nRF_Toolbox" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="420" height="362"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <rect key="frame" x="0.0" y="40" width="427" height="427"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="WWf-iH-0a5">
                             <size key="itemSize" width="128" height="128"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -27,19 +27,65 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                     </collectionView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8ze-FF-b6z">
+                        <rect key="frame" x="0.0" y="0.0" width="427" height="40"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Preset Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="taX-dr-3PN">
+                                <rect key="frame" x="164" y="9.5" width="99" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qz3-QG-tbf">
+                                <rect key="frame" x="387" y="8" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="5je-vi-FL0"/>
+                                    <constraint firstAttribute="width" secondItem="qz3-QG-tbf" secondAttribute="height" multiplier="1:1" id="gMq-Oc-h7I"/>
+                                </constraints>
+                                <color key="tintColor" red="0.0" green="0.66274509800000003" blue="0.80784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="ellipsis" catalog="system"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="12"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" red="0.0" green="0.66274509800000003" blue="0.80784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="qz3-QG-tbf" secondAttribute="trailing" constant="16" id="1cr-2p-uWV"/>
+                            <constraint firstItem="taX-dr-3PN" firstAttribute="centerY" secondItem="8ze-FF-b6z" secondAttribute="centerY" id="6Mk-D0-0D0"/>
+                            <constraint firstItem="qz3-QG-tbf" firstAttribute="centerY" secondItem="8ze-FF-b6z" secondAttribute="centerY" id="SnA-bb-wVy"/>
+                            <constraint firstItem="taX-dr-3PN" firstAttribute="centerX" secondItem="8ze-FF-b6z" secondAttribute="centerX" id="uYj-W2-93C"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="8ze-FF-b6z" firstAttribute="leading" secondItem="CJB-FX-JJw" secondAttribute="leading" id="2tK-Cx-43E"/>
                     <constraint firstAttribute="trailing" secondItem="iZM-nl-UAs" secondAttribute="trailing" id="7Kq-gf-ENZ"/>
-                    <constraint firstItem="iZM-nl-UAs" firstAttribute="top" secondItem="CJB-FX-JJw" secondAttribute="top" id="AYb-dw-tD6"/>
+                    <constraint firstItem="iZM-nl-UAs" firstAttribute="top" secondItem="CJB-FX-JJw" secondAttribute="top" constant="40" id="AYb-dw-tD6"/>
+                    <constraint firstAttribute="trailing" secondItem="8ze-FF-b6z" secondAttribute="trailing" id="ArV-Up-3ds"/>
+                    <constraint firstItem="8ze-FF-b6z" firstAttribute="top" secondItem="CJB-FX-JJw" secondAttribute="top" id="CWq-Tv-a1M"/>
                     <constraint firstAttribute="bottom" secondItem="iZM-nl-UAs" secondAttribute="bottom" id="GVf-o7-MV4"/>
                     <constraint firstItem="iZM-nl-UAs" firstAttribute="leading" secondItem="CJB-FX-JJw" secondAttribute="leading" id="dkc-zP-fAS"/>
+                    <constraint firstItem="iZM-nl-UAs" firstAttribute="top" secondItem="8ze-FF-b6z" secondAttribute="bottom" id="gOf-bh-fAi"/>
                 </constraints>
             </collectionViewCellContentView>
-            <size key="customSize" width="420" height="362"/>
+            <size key="customSize" width="427" height="467"/>
             <connections>
                 <outlet property="presetCollectionView" destination="iZM-nl-UAs" id="YDF-km-N3E"/>
+                <outlet property="presetName" destination="taX-dr-3PN" id="IHf-Pi-4xt"/>
             </connections>
-            <point key="canvasLocation" x="118.84057971014494" y="115.17857142857142"/>
+            <point key="canvasLocation" x="123.91304347826087" y="150.33482142857142"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="ellipsis" catalog="system" width="128" height="37"/>
+    </resources>
 </document>
