@@ -88,6 +88,7 @@ class UARTViewController: UIViewController, AlertPresenter {
         disconnectBtn.style = .destructive
         
         collectionView.register(type: UARTPresetCollectionViewCell.self)
+        collectionView.register(type: AddUARTPresetCell.self)
         
         self.presets = try! coreDataUtil.getPresets(options: .all)
         
@@ -308,10 +309,15 @@ extension UARTViewController: PresetListDelegate {
 extension UARTViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         pageControl.numberOfPages = presets.count
-        return presets.count
+        return presets.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        guard indexPath.row != presets.count else {
+            return collectionView.dequeueCell(ofType: AddUARTPresetCell.self, for: indexPath)
+        }
+        
         let cell = collectionView.dequeueCell(ofType: UARTPresetCollectionViewCell.self, for: indexPath)
         
         cell.preset = presets[indexPath.row]

@@ -243,6 +243,8 @@
 		43645A9A249770E600231247 /* UARTPresetCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43645A99249770E600231247 /* UARTPresetCollectionViewCell.swift */; };
 		43645A9C2497781600231247 /* UARTPresetCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43645A9B2497781600231247 /* UARTPresetCollectionViewCell.xib */; };
 		43645A9E24978A4000231247 /* UARTCoreDataUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43645A9D24978A4000231247 /* UARTCoreDataUtil.swift */; };
+		43645AA02499092700231247 /* AddUARTPresetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43645A9F2499092700231247 /* AddUARTPresetCell.xib */; };
+		43645AA2249909D100231247 /* AddUARTPresetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43645AA1249909D100231247 /* AddUARTPresetCell.swift */; };
 		436C0AD02456FD3300B03B61 /* ModernIcon+Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C0ACF2456FD3300B03B61 /* ModernIcon+Const.swift */; };
 		436C0AD22456FDD700B03B61 /* ImageWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C0AD12456FDD700B03B61 /* ImageWrapper.swift */; };
 		436C90B1246B34AF00BD7E59 /* UIApplication+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C90B0246B34AF00BD7E59 /* UIApplication+Ext.swift */; };
@@ -558,6 +560,8 @@
 		43645A99249770E600231247 /* UARTPresetCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTPresetCollectionViewCell.swift; sourceTree = "<group>"; };
 		43645A9B2497781600231247 /* UARTPresetCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTPresetCollectionViewCell.xib; sourceTree = "<group>"; };
 		43645A9D24978A4000231247 /* UARTCoreDataUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTCoreDataUtil.swift; sourceTree = "<group>"; };
+		43645A9F2499092700231247 /* AddUARTPresetCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddUARTPresetCell.xib; sourceTree = "<group>"; };
+		43645AA1249909D100231247 /* AddUARTPresetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUARTPresetCell.swift; sourceTree = "<group>"; };
 		436C0ACF2456FD3300B03B61 /* ModernIcon+Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModernIcon+Const.swift"; sourceTree = "<group>"; };
 		436C0AD12456FDD700B03B61 /* ImageWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWrapper.swift; sourceTree = "<group>"; };
 		436C90B0246B34AF00BD7E59 /* UIApplication+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Ext.swift"; sourceTree = "<group>"; };
@@ -1667,6 +1671,8 @@
 			children = (
 				43645A99249770E600231247 /* UARTPresetCollectionViewCell.swift */,
 				43645A9B2497781600231247 /* UARTPresetCollectionViewCell.xib */,
+				43645A9F2499092700231247 /* AddUARTPresetCell.xib */,
+				43645AA1249909D100231247 /* AddUARTPresetCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1971,6 +1977,7 @@
 				01D6D2B924067B0500E1A66F /* Resources.xcassets in Resources */,
 				433A900A2451AA1900107822 /* SliderTableViewCell.xib in Resources */,
 				20E07B602306975700FCB205 /* GT-Eesti-Display-UBold-Italic.ttf in Resources */,
+				43645AA02499092700231247 /* AddUARTPresetCell.xib in Resources */,
 				20E07B3F23055B0B00FCB205 /* InteractionServiceList.plist in Resources */,
 				20C7FE032306C72000B06FD8 /* IoTServices.plist in Resources */,
 				20C7FE59230E9BDC00B06FD8 /* ServiceTableViewCell.xib in Resources */,
@@ -2138,6 +2145,7 @@
 				20B25F382319568B006AF321 /* PeripheralTableViewController.swift in Sources */,
 				431F62FB247E81AF00DC32DA /* TextCommand+CoreDataProperties.swift in Sources */,
 				52D9BC9E1DD0CB760030E824 /* Data+Ext.swift in Sources */,
+				43645AA2249909D100231247 /* AddUARTPresetCell.swift in Sources */,
 				4389183E24360F0900175A94 /* CGMSpecificOperations.swift in Sources */,
 				306ECD621CE61A3600E48BBD /* AppDelegate.swift in Sources */,
 				2002A000231FAFD100C43E06 /* PeripheralManager.swift in Sources */,
