@@ -11,6 +11,11 @@ import CoreData
 
 @objc(UARTPreset)
 public class UARTPreset: NSManagedObject {
+    
+    var isEmpty: Bool {
+        self.commands.reduce(true) { $0 && ($1 is EmptyModel) }
+    }
+    
     init(commands: [UARTCommandModel], name: String, context: NSManagedObjectContext? = CoreDataStack.uart.viewContext) {
         if let entity = context.flatMap({ Self.getEntity(context: $0) }) {
             super.init(entity: entity, insertInto: context)
@@ -22,11 +27,11 @@ public class UARTPreset: NSManagedObject {
             self.insertIntoCommandsSet($0, at: 0)
         }
         self.name = name
-    } 
+    }
     
     public override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)
-        self.commands = self.commandsSet.map { $0 as! UARTCommandModel }  //.map { $0 as! UARTCommandModel }
+        self.commands = self.commandsSet.map { $0 as! UARTCommandModel }
     }
     
     var commands: [UARTCommandModel] = [] {
@@ -38,24 +43,12 @@ public class UARTPreset: NSManagedObject {
             print(commands.count)
         }
     }
-    /*
-     {
-        set {
-            newValue.forEach(self.addToCommandsSet)
-            
-        }
-        get {
-            self.commandsSet.map { $0 as! UARTCommandModel }
-        }
-    }
-     */
     
     public override func awakeFromInsert() {
         super.awakeFromInsert()
     }
     
     public override func willSave() {
-//        commands.forEach(self.addToCommandsSet)
         super.willSave()
     }
     
@@ -73,7 +66,7 @@ public class UARTPreset: NSManagedObject {
 }
 
 extension UARTPreset {
-//    static let `default` = 
-    
-//    static let empty = UARTPreset(commands: Array(repeating: EmptyModel.emptyModel(in: CoreDataStack.uart.viewContext), count: 9), name: "")
+    static var empty: UARTPreset {
+        UARTPreset(commands: Array(repeating: EmptyModel.emptyModel(), count: 9), name: "")
+    }
 }

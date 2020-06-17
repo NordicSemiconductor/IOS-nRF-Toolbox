@@ -247,6 +247,14 @@ extension UARTMacrosTableViewController {
 }
 
 extension UARTMacrosTableViewController: UARTPresetCollectionViewDelegate {
+    func selectedCommand(_ presetView: UARTPresetCollectionView, command: UARTCommandModel, at index: Int) {
+        
+    }
+    
+    func longTapAtCommand(_ presetView: UARTPresetCollectionView, command: UARTCommandModel, at index: Int) {
+        
+    }
+    
     func selectedCommand(_ command: UARTCommandModel, at index: Int) {
         guard !(command is EmptyModel) else {
             openPresetEditor(with: command, index: index)

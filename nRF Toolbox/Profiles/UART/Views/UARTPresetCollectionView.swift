@@ -59,7 +59,7 @@ class UARTPresetCollectionView: UICollectionView {
         let location = sender.location(in: self)
         guard let ip = indexPathForItem(at: location) else { return }
         let command = preset.commands[ip.item]
-        presetDelegate?.longTapAtCommand(command, at: ip.item)
+        presetDelegate?.longTapAtCommand(self, command: command, at: ip.item)
     }
 }
 
@@ -79,7 +79,7 @@ extension UARTPresetCollectionView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let command = preset.commands[indexPath.item]
-        presetDelegate?.selectedCommand(command, at: indexPath.item)
+        presetDelegate?.selectedCommand(self, command: command, at: indexPath.item)
     }
 }
 

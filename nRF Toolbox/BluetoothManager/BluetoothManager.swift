@@ -320,7 +320,7 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
         
         connected = false
         delegate?.didDisconnectPeripheral()
-        bluetoothPeripheral!.delegate = nil
+        bluetoothPeripheral?.delegate = nil
         bluetoothPeripheral = nil
     }
     

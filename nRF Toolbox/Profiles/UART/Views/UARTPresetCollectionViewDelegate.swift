@@ -33,8 +33,8 @@
 import UIKit
 
 protocol UARTPresetCollectionViewDelegate: class {
-    func selectedCommand(_ command: UARTCommandModel, at index: Int)
-    func longTapAtCommand(_ command: UARTCommandModel, at index: Int)
+    func selectedCommand(_ presetView: UARTPresetCollectionView, command: UARTCommandModel, at index: Int)
+    func longTapAtCommand(_ presetView: UARTPresetCollectionView, command: UARTCommandModel, at index: Int)
 }
 
 extension UARTPresetCollectionViewDelegate where Self: UIViewController & UARTNewCommandDelegate {

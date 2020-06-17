@@ -61,6 +61,7 @@ class UARTViewController: UIViewController, AlertPresenter {
     
 //    private var preset: UARTPreset = .default
     private weak var router: UARTRouter?
+    private var activePresetView: UARTPresetCollectionView?
     
     var deviceName: String = "" {
         didSet {
@@ -149,10 +150,6 @@ class UARTViewController: UIViewController, AlertPresenter {
     
     private func loadPreset() {
         
-        let vc = PresetListViewController()
-        vc.presetDelegate = self
-        self.present(vc, animated: true, completion: nil)
-        
         
         /*
         let documentPickerVC = UIDocumentPickerViewController(documentTypes: ["public.xml", "public.json"], in: .import)
@@ -205,18 +202,18 @@ extension UARTViewController: UARTNewCommandDelegate {
 //        preset.updateCommand(command, at: index)
 //        presetCollectionView.preset = preset
         viewController.dismsiss()
+        
+        activePresetView?.preset.commands[index] = command
+        activePresetView?.reloadData()
+        try! CoreDataStack.uart.viewContext.save()
     }
     
 }
 
 extension UARTViewController: UARTPresetCollectionViewDelegate {
-    
-    func longTapAtCommand(_ command: UARTCommandModel, at index: Int) {
-        openPresetEditor(with: command, index: index)
+    func selectedCommand(_ presetView: UARTPresetCollectionView, command: UARTCommandModel, at index: Int) {
+        activePresetView = presetView
         
-    }
-    
-    func selectedCommand(_ command: UARTCommandModel, at index: Int) {
         guard !(command is EmptyModel) else {
             openPresetEditor(with: command, index: index)
             return
@@ -224,7 +221,73 @@ extension UARTViewController: UARTPresetCollectionViewDelegate {
         
         btManager.send(command: command)
     }
+    
+    func longTapAtCommand(_ presetView: UARTPresetCollectionView, command: UARTCommandModel, at index: Int) {
+        openPresetEditor(with: command, index: index)
+        
+        activePresetView = presetView
+    }
 }
+
+extension UARTViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        pageControl.numberOfPages = presets.count
+        return presets.count + 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        guard indexPath.row != presets.count else {
+            return collectionView.dequeueCell(ofType: AddUARTPresetCell.self, for: indexPath)
+        }
+        
+        let cell = collectionView.dequeueCell(ofType: UARTPresetCollectionViewCell.self, for: indexPath)
+        cell.presetCollectionView.presetDelegate = self
+        cell.preset = presets[indexPath.row]
+        
+        return cell
+    }
+    
+}
+
+extension UARTViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        var side = min(collectionView.frame.size.width, collectionView.frame.size.height)
+        let lineSpacing = (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).minimumLineSpacing
+        
+        side -= lineSpacing / 2
+        
+        return CGSize(width: side, height: side + 40)
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        
+        let lineSpacing = (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).minimumLineSpacing
+        
+        let pageWidth = scrollView.frame.width + lineSpacing / 2
+        
+        let currentPageNumber = round(scrollView.contentOffset.x / pageWidth)
+        let maxPageNumber = CGFloat(collectionView?.numberOfItems(inSection: 0) ?? 0)
+        
+        var pageNumber = round(targetContentOffset.pointee.x / pageWidth)
+        pageNumber = max(0, currentPageNumber - 1, pageNumber)
+        pageNumber = min(maxPageNumber, currentPageNumber + 1, pageNumber)
+        
+        pageControl.currentPage = Int(pageNumber)
+        
+        targetContentOffset.pointee.x = pageNumber * pageWidth
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        presets += [UARTPreset.empty]
+        
+        collectionView.reloadData()
+    }
+}
+
+
+
+
 
 extension UARTViewController: UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
@@ -294,64 +357,5 @@ extension UARTViewController: UIDocumentBrowserViewControllerDelegate {
         }
  */
         
-    }
-}
-
-extension UARTViewController: PresetListDelegate {
-    
-    func didSelectPreset(_ preset: UARTPreset) {
-        dismsiss()
-//        self.preset = preset
-    }
-    
-}
-
-extension UARTViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        pageControl.numberOfPages = presets.count
-        return presets.count + 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        guard indexPath.row != presets.count else {
-            return collectionView.dequeueCell(ofType: AddUARTPresetCell.self, for: indexPath)
-        }
-        
-        let cell = collectionView.dequeueCell(ofType: UARTPresetCollectionViewCell.self, for: indexPath)
-        
-        cell.preset = presets[indexPath.row]
-        
-        return cell
-    }
-    
-}
-
-extension UARTViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var side = min(collectionView.frame.size.width, collectionView.frame.size.height)
-        let lineSpacing = (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).minimumLineSpacing
-        
-        side -= lineSpacing / 2
-        
-        return CGSize(width: side, height: side + 40)
-    }
-    
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        
-        let lineSpacing = (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).minimumLineSpacing
-        
-        let pageWidth = scrollView.frame.width + lineSpacing / 2
-        
-        let currentPageNumber = round(scrollView.contentOffset.x / pageWidth)
-        let maxPageNumber = CGFloat(collectionView?.numberOfItems(inSection: 0) ?? 0)
-        
-        var pageNumber = round(targetContentOffset.pointee.x / pageWidth)
-        pageNumber = max(0, currentPageNumber - 1, pageNumber)
-        pageNumber = min(maxPageNumber, currentPageNumber + 1, pageNumber)
-        
-        pageControl.currentPage = Int(pageNumber)
-        
-        targetContentOffset.pointee.x = pageNumber * pageWidth
     }
 }
