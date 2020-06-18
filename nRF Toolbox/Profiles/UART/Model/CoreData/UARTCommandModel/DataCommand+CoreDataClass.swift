@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-
+/*
 @objc(DataCommand)
 public class DataCommand: UARTCommandModel {
     init(data: Data, image: CommandImage, context: NSManagedObjectContext? = CoreDataStack.uart.viewContext) {
@@ -28,3 +28,4 @@ public class DataCommand: UARTCommandModel {
     }
 
 }
+*/

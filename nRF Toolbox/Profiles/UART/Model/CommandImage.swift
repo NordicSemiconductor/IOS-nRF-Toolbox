@@ -34,8 +34,8 @@ import UIKit.UIImage
 
 class CommandImage: NSObject, NSCoding {
     private struct Key {
-        static let legacyIconName: String = "legacyIconName"
-        static let modernIconName: String = "modernIconName"
+        static let legacyIconName: String = "CommandImage.key.legacyIconName"
+        static let modernIconName: String = "CommandImage.key.modernIconName"
     }
     
     func encode(with coder: NSCoder) {

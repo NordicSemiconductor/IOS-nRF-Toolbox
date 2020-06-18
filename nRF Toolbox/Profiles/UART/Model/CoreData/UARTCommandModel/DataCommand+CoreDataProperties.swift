@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-
+/*
 extension DataCommand {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<DataCommand> {
@@ -19,3 +19,4 @@ extension DataCommand {
     
 
 }
+*/

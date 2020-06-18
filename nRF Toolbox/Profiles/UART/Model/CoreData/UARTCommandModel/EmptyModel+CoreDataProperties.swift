@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-
+/*
 extension EmptyModel {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<EmptyModel> {
@@ -18,3 +18,4 @@ extension EmptyModel {
 
 
 }
+*/

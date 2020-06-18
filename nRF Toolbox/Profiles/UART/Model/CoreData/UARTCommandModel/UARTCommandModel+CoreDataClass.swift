@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 import UIKit.UIImage
-
+/*
 @objc(UARTCommandModel)
 public class UARTCommandModel: UARTMacroElement {
 
@@ -26,3 +26,4 @@ extension UARTCommandModel: NordicTextTableViewCellModel {
     
     
 }
+*/

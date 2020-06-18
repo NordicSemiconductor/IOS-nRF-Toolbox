@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-
+/*
 extension TextCommand {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<TextCommand> {
@@ -19,3 +19,4 @@ extension TextCommand {
     @NSManaged public var eolSymbol: String! 
 
 }
+*/

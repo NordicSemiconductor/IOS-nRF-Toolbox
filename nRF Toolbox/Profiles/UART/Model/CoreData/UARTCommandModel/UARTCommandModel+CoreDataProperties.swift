@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-
+/*
 extension UARTCommandModel {
 
     @nonobjc class func fetchRequest() -> NSFetchRequest<UARTCommandModel> {
@@ -21,3 +21,4 @@ extension UARTCommandModel {
     @NSManaged var title: String!
 
 }
+*/

@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-
+/*
 @objc(EmptyModel)
 public class EmptyModel: UARTCommandModel {
     
@@ -50,3 +50,4 @@ public class EmptyModel: UARTCommandModel {
     }
     
 }
+*/

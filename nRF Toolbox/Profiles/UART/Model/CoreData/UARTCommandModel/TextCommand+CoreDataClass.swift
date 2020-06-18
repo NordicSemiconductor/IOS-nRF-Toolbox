@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-
+/*
 @objc(TextCommand)
 public class TextCommand: UARTCommandModel {
     
@@ -43,4 +43,4 @@ public class TextCommand: UARTCommandModel {
         super.init(entity: entity, insertInto: context)
     }
 
-}
+}*/
