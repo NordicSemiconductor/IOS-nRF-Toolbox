@@ -59,7 +59,6 @@ class UARTViewController: UIViewController, AlertPresenter {
     private var presets: [UARTPreset] = []
     private let coreDataUtil: UARTCoreDataUtil
     
-//    private var preset: UARTPreset = .default
     private weak var router: UARTRouter?
     private var activePresetView: UARTPresetCollectionView?
     
@@ -99,108 +98,17 @@ class UARTViewController: UIViewController, AlertPresenter {
         pageControl.tintColor = .nordicBlue
     }
     
-    private func savePreset() {
-        
-        let alert = UIAlertController(title: "Save preset", message: nil, preferredStyle: .alert)
-        alert.addTextField { (tf) in
-            tf.placeholder = "Preset name"
-        }
-        
-        let ok = UIAlertAction(title: "Save", style: .default) { (_) in
-            /*
-            let name = alert.textFields?.first?.text
-            self.preset.name = name!
-            do {
-                try CoreDataStack.uart.viewContext.save()
-            } catch let error {
-                print(error.localizedDescription)
-            }
- */
-        }
-        
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
-            
-        }
-        
-        alert.addAction(ok)
-        alert.addAction(cancel)
-        present(alert, animated: true, completion: nil)
-        
-        
-        /*
-        let xml = preset.document
-        print(xml.xml)
-        
-        if #available(iOS 11.0, *) {
-            openDocumentPicker()
-        } else {
-            saveLoadButton.isHidden = true
-        }
- */
-    }
-    
-    @available(iOS 11.0, *)
-    func openDocumentPicker() {
-        let vc = UIDocumentBrowserViewController()
-        vc.allowsDocumentCreation = true
-        vc.allowsPickingMultipleItems = false
-        present(vc, animated: true, completion: nil)
-        vc.delegate = self
-    }
-    
-    private func loadPreset() {
-        
-        
-        /*
-        let documentPickerVC = UIDocumentPickerViewController(documentTypes: ["public.xml", "public.json"], in: .import)
-        documentPickerVC.delegate = self
-        present(documentPickerVC, animated: true)
-        */
-    }
-    
     @IBAction func disconnect() {
         btManager.cancelPeripheralConnection()
     }
     
-    @IBAction func saveLoad(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Save or Load preset", message: nil, preferredStyle: .actionSheet)
-        alert.popoverPresentationController?.sourceView = saveLoadButton
-        
-        let saveAction = UIAlertAction(title: "Save", style: .default) { (_) in
-            self.savePreset()
-        }
-        
-        let loadAction = UIAlertAction(title: "Load", style: .default) { (_) in
-            self.loadPreset()
-        }
-        
-        let saveAs = UIAlertAction(title: "Save As", style: .default) { (_) in
-            
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        alert.addAction(saveAction)
-        alert.addAction(loadAction)
-        alert.addAction(cancelAction)
-        
-        /*
-        if !preset.objectID.isTemporaryID {
-            alert.addAction(saveAs)
-        }
-        */
-        present(alert, animated: true, completion: nil)
-    }
-    
     @IBAction func recordMacros() {
-//        router?.displayMacros(with: preset)
+        
     }
 }
 
 extension UARTViewController: UARTNewCommandDelegate {
     func createdNewCommand(_ viewController: UARTNewCommandViewController, command: UARTCommandModel, index: Int) {
-//        preset.updateCommand(command, at: index)
-//        presetCollectionView.preset = preset
         viewController.dismsiss()
         
         activePresetView?.preset.commands[index] = command
@@ -242,6 +150,7 @@ extension UARTViewController: UICollectionViewDataSource {
         }
         
         let cell = collectionView.dequeueCell(ofType: UARTPresetCollectionViewCell.self, for: indexPath)
+        cell.viewController = self
         cell.presetCollectionView.presetDelegate = self
         cell.preset = presets[indexPath.row]
         
@@ -282,80 +191,5 @@ extension UARTViewController: UICollectionViewDelegateFlowLayout {
         presets += [UARTPreset.empty]
         
         collectionView.reloadData()
-    }
-}
-
-
-
-
-
-extension UARTViewController: UIDocumentPickerDelegate {
-    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
-        fatalError()
-        /*
-        do {
-            let data = try Data(contentsOf: url)
-            let preset = try UARTPreset(data: data)
-            self.preset = preset
-            presetName.text = preset.name
-            collectionView.preset = preset
-        } catch let error {
-            displayErrorAlert(error: error)
-        }
- */
-    }
-}
-
-@available(iOS 11.0, *)
-extension UARTViewController: UIDocumentBrowserViewControllerDelegate {
-    func documentBrowser(_ controller: UIDocumentBrowserViewController, didRequestDocumentCreationWithHandler importHandler: @escaping (URL?, UIDocumentBrowserViewController.ImportMode) -> Void) {
-        
-        let alert = UIAlertController(title: "Enter the preset's name", message: nil, preferredStyle: .alert)
-        alert.addTextField { (tf) in
-            tf.placeholder = "name"
-        }
-        
-        let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
-            guard let name = alert.textFields?.first?.text else {
-                return
-            }
-            
-            self.save(name: name, controller: controller, importHandler: importHandler)
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        alert.addAction(saveAction)
-        alert.addAction(cancelAction)
-        
-        controller.present(alert, animated: true, completion: nil)
-    }
-    
-    private func save(name: String, controller: UIDocumentBrowserViewController, importHandler: @escaping (URL?, UIDocumentBrowserViewController.ImportMode) -> Void) {
-        fatalError()
-        /*
-        let doc = XMLDocument(name: name)
-        preset.name = name
-        doc.doc = preset.document
-        
-        let url = doc.fileURL
-        
-        doc.save(to: url, for: .forCreating) { (saveSuccess) in
-            guard saveSuccess else {
-                importHandler(nil, .move)
-                return
-            }
-            
-            doc.close { (closeSuccessful) in
-                guard closeSuccessful else {
-                    importHandler(nil, .move)
-                    return
-                }
-                importHandler(url, .move)
-                controller.dismsiss()
-            }
-        }
- */
-        
     }
 }

@@ -55,6 +55,9 @@
                                         <color key="value" red="0.0" green="0.66274509800000003" blue="0.80784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="moreBtnPressed" destination="PfX-eb-MEg" eventType="touchUpInside" id="29p-Zi-NJL"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -79,6 +82,7 @@
             </collectionViewCellContentView>
             <size key="customSize" width="427" height="467"/>
             <connections>
+                <outlet property="moreButton" destination="qz3-QG-tbf" id="tsz-T2-oKw"/>
                 <outlet property="presetCollectionView" destination="iZM-nl-UAs" id="YDF-km-N3E"/>
                 <outlet property="presetName" destination="taX-dr-3PN" id="IHf-Pi-4xt"/>
             </connections>
