@@ -92,11 +92,11 @@ extension UARTPreset {
             TextCommand(text: "Play", image: .play),
             TextCommand(text: "Stop", image: .stop),
             TextCommand(text: "Start", image: .start),
-            EmptyModel.emptyModel(),
+            EmptyModel(),
             TextCommand(text: "Repeat", image: .repeat),
-            EmptyModel.emptyModel(),
+            EmptyModel(),
             TextCommand(text: "Rew", image: .rewind),
-            EmptyModel.emptyModel()
+            EmptyModel()
         ], name: "Walkman")
     }
     

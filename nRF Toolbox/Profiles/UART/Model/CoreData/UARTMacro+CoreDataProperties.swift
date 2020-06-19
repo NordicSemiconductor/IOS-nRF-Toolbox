@@ -16,7 +16,7 @@ extension UARTMacro {
         return NSFetchRequest<UARTMacro>(entityName: "UARTMacro")
     }
 
-    @NSManaged public var name: String?
-    @NSManaged public var preset: UARTPreset?
+    @NSManaged var name: String?
+    @NSManaged var preset: UARTPreset!
 
 }

@@ -210,8 +210,8 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let item = macros.commands[sourceIndexPath.row]
         
-        macros.removeFromCommandsSet(at: sourceIndexPath.row)
-        macros.insertIntoCommandsSet(item, at: destinationIndexPath.row)
+        macros.commands.remove(at: sourceIndexPath.row)
+        macros.commands.insert(item, at: destinationIndexPath.row)
         
         print(destinationIndexPath)
     }
@@ -261,7 +261,7 @@ extension UARTMacrosTableViewController: UARTPresetCollectionViewDelegate {
             return
         }
         
-        macros.addToCommandsSet(command)
+        macros.commands.append(command)
         tableView.insertRows(at: [IndexPath(item: macros.commands.count - 1, section: Section.commands)], with: .automatic)
     }
     
@@ -306,13 +306,13 @@ extension UARTMacrosTableViewController {
             return cell
         }
         
-        let element = macros.elements[index]
+        let element = macros.commands[index]
         switch element {
         case let timeInterval as UARTMacroTimeInterval:
             let cell = tableView.dequeueCell(ofType: TimeIntervalTableViewCell.self)
             cell.apply(timeInterval: timeInterval, index: index)
             cell.callback = { [unowned self] ti, index in
-                self.macros.replaceCommandsSet(at: index, with: ti)
+//                self.macros.replaceCommandsSet(at: index, with: ti)
             }
             cell.selectionStyle = .none
             return cell

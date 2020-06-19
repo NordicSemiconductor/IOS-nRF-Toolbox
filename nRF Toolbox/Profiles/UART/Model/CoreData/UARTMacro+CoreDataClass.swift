@@ -10,20 +10,9 @@ import Foundation
 import CoreData
 
 @objc(UARTMacro)
-public class UARTMacro: NSManagedObject {
+class UARTMacro: NSManagedObject {
     
-    var elements: [UARTMacroElement] {
-        get {
-            self.commandsSet.map { $0 as! UARTMacroElement }
-        }
-        set {
-            newValue.forEach(self.addToCommandsSet)
-        }
-    }
-    
-    var commands: [UARTCommandModel] {
-        elements.compactMap { $0 as? UARTCommandModel }
-    }
+    var commands: [UARTMacroElement] = []
     
     init(name: String, commands: [UARTMacroElement], preset: UARTPreset, context: NSManagedObjectContext? = CoreDataStack.uart.viewContext) {
         
@@ -34,9 +23,12 @@ public class UARTMacro: NSManagedObject {
         }
 
         self.name = name
-        self.elements = commands
         self.preset = preset
     }
     
     static let empty = UARTMacro(name: "", commands: [], preset: .default)
+    
+    func replaceCommandsSet(at: Int, with element: UARTMacroElement) {
+        
+    }
 }

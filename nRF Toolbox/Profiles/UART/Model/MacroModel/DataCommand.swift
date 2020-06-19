@@ -9,22 +9,29 @@
 import UIKit
 
 class DataCommand: NSObject, UARTCommandModel {
+    
     private(set) var data: Data
     private(set) var icon: CommandImage? = nil
-    private(set) var title: String = ""
-
+    var title: String {
+        "0x" + data.hexString
+    }
+    
     func encode(with coder: NSCoder) {
-        coder.encode(data, forKey: Key.dataKey)
-        icon.flatMap { coder.encode($0, forKey: Key.iconKey) }
+        coder.encode(data, forKey: UARTCommandModelKey.dataKey)
+        icon.flatMap { coder.encode($0, forKey: UARTCommandModelKey.iconKey) }
     }
 
     required init?(coder: NSCoder) {
-        guard let data = coder.decodeObject(forKey: Key.dataKey) as? Data else {
+        guard let data = coder.decodeObject(forKey: UARTCommandModelKey.dataKey) as? Data else {
             return nil
         }
 
         self.data = data
-        self.title = "0x" + data.hexString
-        self.icon = coder.decodeObject(forKey: Key.iconKey) as? CommandImage
+        self.icon = coder.decodeObject(forKey: UARTCommandModelKey.iconKey) as? CommandImage
+    }
+    
+    init(data: Data, image: CommandImage) {
+        self.data = data
+        self.icon = image
     }
 }

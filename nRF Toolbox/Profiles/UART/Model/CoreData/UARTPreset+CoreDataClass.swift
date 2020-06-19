@@ -10,10 +10,28 @@ import Foundation
 import CoreData
 
 @objc(UARTPreset)
-public class UARTPreset: NSManagedObject {
+class UARTPreset: NSManagedObject {
     
     var isEmpty: Bool {
         self.commands.reduce(true) { $0 && ($1 is EmptyModel) }
+    }
+    
+    var commands: [UARTCommandModel] {
+        get {
+            commandSet.compactMap { $0 as? UARTCommandModel }
+        }
+        set {
+            commandSet = newValue.compactMap { $0 as? NSObject }
+        }
+    }
+    
+    subscript(index: Int) -> UARTCommandModel {
+        get {
+            commandSet[index] as! UARTCommandModel
+        }
+        set(newValue) {
+            commandSet[index] = newValue as! NSObject
+        }
     }
     
     init(commands: [UARTCommandModel], name: String, context: NSManagedObjectContext? = CoreDataStack.uart.viewContext) {
@@ -23,25 +41,16 @@ public class UARTPreset: NSManagedObject {
             super.init()
         }
         self.commands = commands
-        commands.forEach {
-            self.insertIntoCommandsSet($0, at: 0)
-        }
         self.name = name
+    }
+    
+    private func updateCommands(commands: [UARTCommandModel]) {
+        self.commandSet.removeAll()
+        self.commandSet += commands.compactMap { $0 as? NSObject }
     }
     
     public override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)
-        self.commands = self.commandsSet.map { $0 as! UARTCommandModel }
-    }
-    
-    var commands: [UARTCommandModel] = [] {
-        didSet {
-            commandsSet.map { $0 as! UARTCommandModel }
-                .forEach(self.removeFromCommandsSet)
-                
-            commands.forEach(self.addToCommandsSet)
-            print(commands.count)
-        }
     }
     
     public override func awakeFromInsert() {
@@ -53,20 +62,12 @@ public class UARTPreset: NSManagedObject {
     }
     
     func updateCommand(_ command: UARTCommandModel, at index: Int) {
-        commands[index] = command
-        
-        commandsSet.compactMap { $0 as? UARTCommandModel }
-            .forEach(self.removeFromCommandsSet)
-        
-        let set = NSOrderedSet(array: commands)
-        self.addToCommandsSet(set)
-        
-        print(commandsSet.count)
+        commandSet[index] = command as! NSObject
     }
 }
 
 extension UARTPreset {
     static var empty: UARTPreset {
-        UARTPreset(commands: Array(repeating: EmptyModel.emptyModel(), count: 9), name: "")
+        UARTPreset(commands: Array(repeating: EmptyModel(), count: 9), name: "")
     }
 }

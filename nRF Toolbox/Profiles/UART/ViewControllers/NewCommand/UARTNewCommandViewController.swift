@@ -126,7 +126,7 @@ class UARTNewCommandViewController: UIViewController {
     }
     
     @IBAction func deleteBtnPressed() {
-        delegate?.createdNewCommand(self, command: EmptyModel.emptyModel(), index: index)
+        delegate?.createdNewCommand(self, command: EmptyModel(), index: index)
     }
 }
 
@@ -137,7 +137,7 @@ extension UARTNewCommandViewController {
         switch command {
         case let tCommand as TextCommand:
             typeIndex = 0
-            title = tCommand.title!
+            title = tCommand.title
             textView.text = title
             updateEOLSegment(eol: tCommand.eol)
         case is DataCommand:

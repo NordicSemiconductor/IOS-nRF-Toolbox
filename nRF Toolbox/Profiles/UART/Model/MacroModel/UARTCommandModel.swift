@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol UARTCommandModel: UARTMacroElement {
+protocol UARTCommandModel: UARTMacroElement, NordicTextTableViewCellModel {
     var data: Data { get }
     var icon: CommandImage? { get }
     var title: String { get }
@@ -17,6 +17,12 @@ protocol UARTCommandModel: UARTMacroElement {
 extension UARTCommandModel {
     var image: UIImage? {
         return icon?.image
+    }
+}
+
+extension UARTCommandModel {
+    var text: String? {
+        return title
     }
 }
 

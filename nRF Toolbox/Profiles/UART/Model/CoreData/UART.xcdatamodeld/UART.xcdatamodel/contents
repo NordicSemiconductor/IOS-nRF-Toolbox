@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19G46c" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="DataCommand" representedClassName="DataCommand" syncable="YES"/>
     <entity name="EmptyModel" representedClassName="EmptyModel" syncable="YES"/>
     <entity name="TextCommand" representedClassName="TextCommand" syncable="YES">
@@ -13,6 +13,7 @@
         <attribute name="delay" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
     <entity name="UARTPreset" representedClassName="UARTPreset" syncable="YES">
+        <attribute name="commandSet" optional="YES" attributeType="Transformable"/>
         <attribute name="isFavorite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
     </entity>
@@ -23,6 +24,6 @@
         <element name="TextCommand" positionX="-45" positionY="27" width="128" height="58"/>
         <element name="UARTMacro" positionX="-27" positionY="27" width="128" height="73"/>
         <element name="UARTMacroTimeInterval" positionX="9" positionY="54" width="128" height="58"/>
-        <element name="UARTPreset" positionX="-27" positionY="27" width="128" height="73"/>
+        <element name="UARTPreset" positionX="-27" positionY="27" width="128" height="88"/>
     </elements>
 </model>

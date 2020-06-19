@@ -2,7 +2,7 @@
 //  UARTPreset+CoreDataProperties.swift
 //  
 //
-//  Created by Nick Kibish on 18.06.2020.
+//  Created by Nick Kibysh on 19/06/2020.
 //
 //
 
@@ -16,7 +16,8 @@ extension UARTPreset {
         return NSFetchRequest<UARTPreset>(entityName: "UARTPreset")
     }
 
-    @NSManaged public var isFavorite: Bool
-    @NSManaged public var name: String?
+    @NSManaged var isFavorite: Bool
+    @NSManaged var name: String?
+    @NSManaged var commandSet: [NSObject]!
 
 }

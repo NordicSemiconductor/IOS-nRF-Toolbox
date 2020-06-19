@@ -8,6 +8,7 @@
 
 import Foundation
 
-protocol UARTMacroElement: NSCoding {
+@objc
+protocol UARTMacroElement: NSCoding, NSObjectProtocol {
     
 }

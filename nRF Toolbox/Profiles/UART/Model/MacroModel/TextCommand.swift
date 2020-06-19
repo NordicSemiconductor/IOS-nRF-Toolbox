@@ -10,11 +10,13 @@ import UIKit
 
 class TextCommand: NSObject, UARTCommandModel {
     
-    var eol: EOL
-
-    private(set) var data: Data
     private(set) var icon: CommandImage? = nil
     private(set) var title: String = ""
+    
+    var eol: EOL
+    var data: Data {
+        title.data(using: .utf8)!
+    }
 
     required init?(coder: NSCoder) {
         guard let data = coder.decodeObject(forKey: UARTCommandModelKey.dataKey) as? Data,
@@ -22,9 +24,15 @@ class TextCommand: NSObject, UARTCommandModel {
             return nil
         }
 
-        self.data = data
         self.title = String(data: data, encoding: .utf8) ?? ""
         self.icon = coder.decodeObject(forKey: UARTCommandModelKey.iconKey) as? CommandImage
+        self.eol = EOL(rawValue: eolSymbol)!
+    }
+    
+    init(text: String, image: CommandImage, eol: EOL = .cr) {
+        self.title = text
+        self.icon = image
+        self.eol = eol
     }
 
     func encode(with coder: NSCoder) {

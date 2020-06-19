@@ -9,13 +9,24 @@
 import UIKit
 
 class EmptyModel: NSObject, UARTCommandModel {
-    private(set) let data: Data = Data()
-    private(set) let icon: CommandImage? = nil
-    private(set) let title: String = ""
+    let data: Data
+    let icon: CommandImage?
+    let title: String
+    
+    override init() {
+        data = Data()
+        icon = nil
+        title = ""
+        
+        super.init()
+    }
 
     func encode(with coder: NSCoder) {
     }
 
     required init?(coder: NSCoder) {
+        data = Data()
+        icon = nil
+        title = ""
     }
 }
