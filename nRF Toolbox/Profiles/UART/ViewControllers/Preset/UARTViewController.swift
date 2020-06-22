@@ -99,7 +99,10 @@ class UARTViewController: UIViewController, AlertPresenter {
     }
     
     @IBAction func disconnect() {
-        btManager.cancelPeripheralConnection()
+//        btManager.cancelPeripheralConnection()
+        
+        let img = presets.first?.renderImage(size: CGSize(width: 800, height: 800))
+        print(img)
     }
     
     @IBAction func recordMacros() {

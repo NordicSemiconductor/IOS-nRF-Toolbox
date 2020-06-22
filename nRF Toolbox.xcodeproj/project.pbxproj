@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		01006201234D08700078CEFA /* LinearChartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01006200234D08700078CEFA /* LinearChartTableViewCell.swift */; };
+		01078F4D24A0C482009A170E /* UARTPreset+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01078F4C24A0C482009A170E /* UARTPreset+View.swift */; };
 		0119609E23FA063700A7EF29 /* UARTMacrosHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0119609D23FA063700A7EF29 /* UARTMacrosHeaderView.swift */; };
 		011960A023FA064100A7EF29 /* UARTMacrosHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0119609F23FA064100A7EF29 /* UARTMacrosHeaderView.xib */; };
 		0125D5B623F44FE6003A1812 /* UIBarButtonItem+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0125D5B523F44FE6003A1812 /* UIBarButtonItem+Ext.swift */; };
@@ -325,6 +326,7 @@
 
 /* Begin PBXFileReference section */
 		01006200234D08700078CEFA /* LinearChartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearChartTableViewCell.swift; sourceTree = "<group>"; };
+		01078F4C24A0C482009A170E /* UARTPreset+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UARTPreset+View.swift"; sourceTree = "<group>"; };
 		0119609D23FA063700A7EF29 /* UARTMacrosHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosHeaderView.swift; sourceTree = "<group>"; };
 		0119609F23FA064100A7EF29 /* UARTMacrosHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTMacrosHeaderView.xib; sourceTree = "<group>"; };
 		0125D5B523F44FE6003A1812 /* UIBarButtonItem+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Ext.swift"; sourceTree = "<group>"; };
@@ -663,6 +665,14 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		01078F4B24A0C425009A170E /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				01078F4C24A0C482009A170E /* UARTPreset+View.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		0119609C23F9FDC700A7EF29 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -778,6 +788,7 @@
 		01675E6A23F6CF8000FC0519 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				01078F4B24A0C425009A170E /* Extension */,
 				014C4E8A2403F9BD0003E601 /* UARTMacroSaver.swift */,
 				43D34723246D58D70060DBE2 /* UARTShortcutManager.swift */,
 				43645A9D24978A4000231247 /* UARTCoreDataUtil.swift */,
@@ -2118,6 +2129,7 @@
 				012C2BE12410682D005EC1A0 /* LegendLabel.swift in Sources */,
 				203D0F06232BBEB300C0340D /* DetailsTableViewCell.swift in Sources */,
 				01468B052361A30A00C29E4C /* StepperTableViewCell.swift in Sources */,
+				01078F4D24A0C482009A170E /* UARTPreset+View.swift in Sources */,
 				019985E823DF1C8D000CDCB6 /* CloseButtonPresenter.swift in Sources */,
 				430901A9249B86AF0030EE00 /* TextCommand.swift in Sources */,
 				01AF929A23DB17C100C1BFD6 /* AlertPresenter.swift in Sources */,
