@@ -34,7 +34,7 @@ class UARTPreset: NSManagedObject {
         }
     }
     
-    init(commands: [UARTCommandModel], name: String, context: NSManagedObjectContext? = CoreDataStack.uart.viewContext) {
+    init(commands: [UARTCommandModel], name: String, isFavorite: Bool = false, context: NSManagedObjectContext? = CoreDataStack.uart.viewContext) {
         if let entity = context.flatMap({ Self.getEntity(context: $0) }) {
             super.init(entity: entity, insertInto: context)
         } else {
@@ -42,6 +42,7 @@ class UARTPreset: NSManagedObject {
         }
         self.commands = commands
         self.name = name
+        self.isFavorite = isFavorite
     }
     
     private func updateCommands(commands: [UARTCommandModel]) {
@@ -69,5 +70,12 @@ class UARTPreset: NSManagedObject {
 extension UARTPreset {
     static var empty: UARTPreset {
         UARTPreset(commands: Array(repeating: EmptyModel(), count: 9), name: "")
+    }
+    
+    static func fetchFavorite(isFavorite: Bool = true, stack: CoreDataStack = .uart) throws -> [UARTPreset] {
+        let fRequest: NSFetchRequest<UARTPreset> = UARTPreset.fetchRequest()
+        fRequest.predicate = NSPredicate(format: "isFavorite", isFavorite)
+        
+        return try stack.viewContext.fetch(fRequest)
     }
 }

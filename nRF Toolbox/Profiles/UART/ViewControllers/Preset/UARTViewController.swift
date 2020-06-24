@@ -90,7 +90,7 @@ class UARTViewController: UIViewController, AlertPresenter {
         collectionView.register(type: UARTPresetCollectionViewCell.self)
         collectionView.register(type: AddUARTPresetCell.self)
         
-        self.presets = try! coreDataUtil.getPresets(options: .all)
+        self.presets = try! coreDataUtil.getPresets(options: .favorite)
         
         collectionView.decelerationRate = .fast
         
@@ -99,10 +99,7 @@ class UARTViewController: UIViewController, AlertPresenter {
     }
     
     @IBAction func disconnect() {
-//        btManager.cancelPeripheralConnection()
-        
-        let img = presets.first?.renderImage(size: CGSize(width: 800, height: 800))
-        print(img)
+        btManager.cancelPeripheralConnection()
     }
     
     @IBAction func recordMacros() {
@@ -191,8 +188,9 @@ extension UARTViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        presets += [UARTPreset.empty]
+        let vc = PresetListViewController(stack: .uart)
+        let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false)
         
-        collectionView.reloadData()
+        present(nc, animated: true, completion: nil)
     }
 }

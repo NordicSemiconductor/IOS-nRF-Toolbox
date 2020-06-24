@@ -32,9 +32,9 @@ class UARTCoreDataUtil {
         
         switch options {
         case .favorite:
-            request.predicate = NSPredicate(format: "isFavorite == $@", "YES")
+            request.predicate = NSPredicate(format: "isFavorite == YES")
         case .notFavorite:
-            request.predicate = NSPredicate(format: "isFavorite == $@", "NO")
+            request.predicate = NSPredicate(format: "isFavorite == NO")
         case .all:
             break
         }
@@ -69,7 +69,7 @@ extension UARTPreset {
             TextCommand(text: "Rew", image: .rewind),
             TextCommand(text: "Start", image: .start),
             TextCommand(text: "Repeat", image: .repeat)
-        ], name: "Demo")
+        ], name: "Demo", isFavorite: true)
     }
     
     static var numbers: UARTPreset {
@@ -83,7 +83,7 @@ extension UARTPreset {
             DataCommand(data: Data([0x07]), image: .number7),
             DataCommand(data: Data([0x08]), image: .number8),
             DataCommand(data: Data([0x09]), image: .number9),
-        ], name: "Numbers")
+        ], name: "Numbers", isFavorite: false)
     }
     
     static  var walkman: UARTPreset {
@@ -97,7 +97,7 @@ extension UARTPreset {
             EmptyModel(),
             TextCommand(text: "Rew", image: .rewind),
             EmptyModel()
-        ], name: "Walkman")
+        ], name: "Walkman", isFavorite: true)
     }
     
 }

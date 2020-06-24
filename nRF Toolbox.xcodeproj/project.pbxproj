@@ -93,6 +93,8 @@
 		01BEADD4241A992300FC7183 /* HMAccessoryListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BEADD3241A992300FC7183 /* HMAccessoryListTableViewController.swift */; };
 		01BEADD6241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BEADD5241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift */; };
 		01BEADD8241AE6BF00FC7183 /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BEADD7241AE6BF00FC7183 /* UILabel+Ext.swift */; };
+		01CA8B3C24A1ED36009FC4C8 /* PresetListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CA8B3A24A1ED36009FC4C8 /* PresetListCell.swift */; };
+		01CA8B3D24A1ED36009FC4C8 /* PresetListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01CA8B3B24A1ED36009FC4C8 /* PresetListCell.xib */; };
 		01D6D2B924067B0500E1A66F /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01D6D2B824067B0500E1A66F /* Resources.xcassets */; };
 		01D6D2BB240696D000E1A66F /* DFURouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6D2BA240696D000E1A66F /* DFURouter.swift */; };
 		01D6D2C02406A1EF00E1A66F /* DFUStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6D2BE2406A1EF00E1A66F /* DFUStartViewController.swift */; };
@@ -413,6 +415,8 @@
 		01BEADD3241A992300FC7183 /* HMAccessoryListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HMAccessoryListTableViewController.swift; sourceTree = "<group>"; };
 		01BEADD5241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicBottomDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		01BEADD7241AE6BF00FC7183 /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
+		01CA8B3A24A1ED36009FC4C8 /* PresetListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetListCell.swift; sourceTree = "<group>"; };
+		01CA8B3B24A1ED36009FC4C8 /* PresetListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PresetListCell.xib; sourceTree = "<group>"; };
 		01D6D2B824067B0500E1A66F /* Resources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resources.xcassets; sourceTree = "<group>"; };
 		01D6D2BA240696D000E1A66F /* DFURouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFURouter.swift; sourceTree = "<group>"; };
 		01D6D2BE2406A1EF00E1A66F /* DFUStartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUStartViewController.swift; sourceTree = "<group>"; };
@@ -711,6 +715,7 @@
 		012AFC6A248E3D5E00BEA271 /* PresetList */ = {
 			isa = PBXGroup;
 			children = (
+				01CA8B3924A1ED13009FC4C8 /* Cell */,
 				012AFC6B248E415700BEA271 /* PresetListViewController.swift */,
 			);
 			path = PresetList;
@@ -982,6 +987,15 @@
 				4353A50E243175C300159CDF /* HMAccessoryListTableViewController.xib */,
 			);
 			path = HomeKit;
+			sourceTree = "<group>";
+		};
+		01CA8B3924A1ED13009FC4C8 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				01CA8B3A24A1ED36009FC4C8 /* PresetListCell.swift */,
+				01CA8B3B24A1ED36009FC4C8 /* PresetListCell.xib */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		01D6D2BC24069FE000E1A66F /* DeviceFirmwareUpdate */ = {
@@ -1564,7 +1578,6 @@
 				01A1B76423CF13810062FADC /* NewCommand */,
 				01AF928423D1A76100C1BFD6 /* Macro */,
 				019985EB23E061D1000CDCB6 /* LoggViewController */,
-				012AFC6A248E3D5E00BEA271 /* PresetList */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1572,6 +1585,7 @@
 		4308D1B12492474B009C9B26 /* Preset */ = {
 			isa = PBXGroup;
 			children = (
+				012AFC6A248E3D5E00BEA271 /* PresetList */,
 				43645A9824975F7C00231247 /* Cell */,
 				4381AD1923BA057000FB1A1F /* UARTViewController.swift */,
 				4381AD1A23BA057000FB1A1F /* UARTViewController.xib */,
@@ -2028,6 +2042,7 @@
 				7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */,
 				52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */,
 				4350CFFF244D20AE0068EEEA /* ProximityViewController.xib in Resources */,
+				01CA8B3D24A1ED36009FC4C8 /* PresetListCell.xib in Resources */,
 				5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */,
 				01675E7223F6D1BE00FC0519 /* UARTPresetTableViewCell.xib in Resources */,
 				5217F3F01859EE0000F2D5BB /* InfoPlist.strings in Resources */,
@@ -2216,6 +2231,7 @@
 				01DDD79C23EC5CDA003786ED /* TimeIntervalTableViewCell.swift in Sources */,
 				01268AF52421805F00E83156 /* ZephyrDFUTableViewController.swift in Sources */,
 				01FBC5132408132800B1056B /* DFUDeviceInfoSection.swift in Sources */,
+				01CA8B3C24A1ED36009FC4C8 /* PresetListCell.swift in Sources */,
 				439A43B024863F5E0054567D /* EmptyModel+CoreDataClass.swift in Sources */,
 				01FBC5152408158F00B1056B /* CBPeripheralState+Ext.swift in Sources */,
 				200973DA234344780091951B /* BloodPressureTableViewController.swift in Sources */,
