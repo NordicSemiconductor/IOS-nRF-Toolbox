@@ -80,6 +80,9 @@
                     <rect key="frame" x="187.5" y="478" width="39" height="37"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="currentPageIndicatorTintColor" red="0.0" green="0.66274509803921566" blue="0.80784313725490198" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <connections>
+                        <action selector="pageSelected" destination="-1" eventType="valueChanged" id="LkN-qu-8zd"/>
+                    </connections>
                 </pageControl>
             </subviews>
             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>

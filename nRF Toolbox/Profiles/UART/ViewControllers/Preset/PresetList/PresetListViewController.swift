@@ -69,6 +69,10 @@ class PresetListViewController: UICollectionViewController {
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let preset = presets[indexPath.item]
+        self.presetDelegate?.didSelectPreset(preset)
+    }
 }
 
 extension PresetListViewController: UICollectionViewDelegateFlowLayout {
@@ -83,24 +87,3 @@ extension PresetListViewController: UICollectionViewDelegateFlowLayout {
         return collectionViewsizeForItem(collectionView)
     }
 }
-
-/*
-override func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
-}
-
-override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    presets.count
-}
-
-override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")!
-    let preset = presets[indexPath.row]
-    cell.textLabel?.text = preset.name
-    return cell
-}
-
-override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    presetDelegate?.didSelectPreset(presets[indexPath.row])
-}
-*/

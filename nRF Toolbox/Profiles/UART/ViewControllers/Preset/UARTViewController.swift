@@ -105,6 +105,10 @@ class UARTViewController: UIViewController, AlertPresenter {
     @IBAction func recordMacros() {
         
     }
+    
+    @IBAction func pageSelected() {
+        moveToPresetIndex(pageControl.currentPage)
+    }
 }
 
 extension UARTViewController: UARTNewCommandDelegate {
@@ -189,8 +193,41 @@ extension UARTViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = PresetListViewController(stack: .uart)
+        vc.presetDelegate = self
         let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false)
         
         present(nc, animated: true, completion: nil)
+    }
+}
+
+extension UARTViewController: PresetListDelegate {
+    func didSelectPreset(_ preset: UARTPreset) {
+        dismsiss()
+        guard !presets.contains(preset) else {
+            moveToPreset(preset)
+            return
+        }
+        
+        presets.append(preset)
+        collectionView.reloadData()
+    }
+    
+    private func moveToPreset(_ preset: UARTPreset) {
+        guard let index = presets.firstIndex(of: preset) else {
+            return
+        }
+        
+        moveToPresetIndex(index)
+    }
+    
+    private func moveToPresetIndex(_ index: Int) {
+        let lineSpacing = (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).minimumLineSpacing
+        
+        let pageWidth = collectionView.frame.width + lineSpacing / 2
+        
+        UIView.animate(withDuration: 0.25) {
+            self.collectionView.contentOffset = CGPoint(x: Int(pageWidth) * index, y: 0)
+            self.pageControl.currentPage = index
+        }
     }
 }
