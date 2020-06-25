@@ -41,6 +41,9 @@ class TextCommand: NSObject, UARTCommandModel {
         icon.flatMap { coder.encode($0, forKey: UARTCommandModelKey.iconKey) }
     }
 
+    func clone() -> UARTCommandModel {
+        TextCommand(text: text!, image: icon!, eol: eol)
+    }
 }
 
 fileprivate extension UARTCommandModelKey {

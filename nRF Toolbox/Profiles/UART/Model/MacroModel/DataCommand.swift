@@ -10,6 +10,12 @@ import UIKit
 
 class DataCommand: NSObject, UARTCommandModel {
     
+    
+    func clone() -> UARTCommandModel {
+        return DataCommand(data: data, image: icon!)
+    }
+    
+    
     private(set) var data: Data
     private(set) var icon: CommandImage? = nil
     var title: String {

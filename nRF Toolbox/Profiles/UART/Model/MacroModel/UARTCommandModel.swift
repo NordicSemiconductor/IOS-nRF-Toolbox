@@ -12,6 +12,8 @@ protocol UARTCommandModel: UARTMacroElement, NordicTextTableViewCellModel {
     var data: Data { get }
     var icon: CommandImage? { get }
     var title: String { get }
+    
+    func clone() -> UARTCommandModel
 }
 
 extension UARTCommandModel {

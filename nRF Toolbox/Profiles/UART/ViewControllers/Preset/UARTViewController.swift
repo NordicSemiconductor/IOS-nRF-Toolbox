@@ -58,6 +58,7 @@ class UARTViewController: UIViewController, AlertPresenter {
     
     private var presets: [UARTPreset] = []
     private let coreDataUtil: UARTCoreDataUtil
+    private let coreDataStack: CoreDataStack = .uart
     
     private weak var router: UARTRouter?
     private var activePresetView: UARTPresetCollectionView?
@@ -156,6 +157,7 @@ extension UARTViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueCell(ofType: UARTPresetCollectionViewCell.self, for: indexPath)
         cell.viewController = self
         cell.presetCollectionView.presetDelegate = self
+        cell.presetDelegate = self
         cell.preset = presets[indexPath.row]
         
         return cell
@@ -230,4 +232,76 @@ extension UARTViewController: PresetListDelegate {
             self.pageControl.currentPage = index
         }
     }
+}
+
+extension UARTViewController: UARTPresetDelegate {
+    func save(preset: UARTPreset) {
+        
+    }
+    
+    func saveAs(preset: UARTPreset) {
+        let alert = UIAlertController(title: "Save As", message: "Enter new preset's name", preferredStyle: .alert)
+        
+        alert.addTextField { (tf) in
+            tf.placeholder = preset.name.map { $0 + " copy" } ?? "New Preset"
+        }
+        
+        let okAction = UIAlertAction(title: "OK", style: .default) { [weak alert, weak self] (_) in
+            
+            let name = alert?.textFields?.first?.text?.nilOnEmpty()
+                ?? preset.name.map { $0 + " copy" }
+                ?? "New Preset"
+            let copy = preset.cloneWithName(name)
+            try! self?.coreDataStack.viewContext.save()
+            
+            self?.presets.append(copy)
+            self?.collectionView.reloadData()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func toggleFavorite(preset: UARTPreset) {
+        preset.isFavorite.toggle()
+        try! coreDataStack.viewContext.save()
+    }
+    
+    func export(preset: UARTPreset) {
+        
+    }
+    
+    func removeFromQuickAccess(preset: UARTPreset) {
+        
+    }
+    
+    func rename(preset: UARTPreset) {
+        let alert = UIAlertController(title: "Rename", message: "Rename preset", preferredStyle: .alert)
+        
+        alert.addTextField { (tf) in
+            tf.text = preset.name
+            tf.selectAll(nil)
+        }
+        
+        let okAction = UIAlertAction(title: "OK", style: .default) { [weak alert] (_) in
+            let name = alert?.textFields?.first?.text
+            preset.name = name
+            try! self.coreDataStack.viewContext.save()
+            
+            self.collectionView.reloadData()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    
 }

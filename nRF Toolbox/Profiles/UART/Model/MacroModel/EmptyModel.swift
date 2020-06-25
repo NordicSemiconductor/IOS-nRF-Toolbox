@@ -29,4 +29,8 @@ class EmptyModel: NSObject, UARTCommandModel {
         icon = nil
         title = ""
     }
+    
+    func clone() -> UARTCommandModel {
+        EmptyModel()
+    }
 }

@@ -109,6 +109,8 @@
 		01DDD79D23EC5CDA003786ED /* TimeIntervalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01DDD79B23EC5CDA003786ED /* TimeIntervalTableViewCell.xib */; };
 		01DDD7A023EC6351003786ED /* UARTMarcoElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DDD79F23EC6351003786ED /* UARTMarcoElement.swift */; };
 		01DFC55C2420F0AB00AF2EF0 /* ZephyrDFURouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DFC55B2420F0AB00AF2EF0 /* ZephyrDFURouter.swift */; };
+		01E2B55E24A4887500D22FB1 /* PresetListUtilityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E2B55C24A4887500D22FB1 /* PresetListUtilityCell.swift */; };
+		01E2B55F24A4887500D22FB1 /* PresetListUtilityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E2B55D24A4887500D22FB1 /* PresetListUtilityCell.xib */; };
 		01E5910923DB3BC5008F15A4 /* QuickError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910823DB3BC4008F15A4 /* QuickError.swift */; };
 		01E5910B23DECF61008F15A4 /* UARTMacrosList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */; };
 		01FBC5012407BF8F00B1056B /* PeripheralHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */; };
@@ -431,6 +433,8 @@
 		01DDD79B23EC5CDA003786ED /* TimeIntervalTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeIntervalTableViewCell.xib; sourceTree = "<group>"; };
 		01DDD79F23EC6351003786ED /* UARTMarcoElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMarcoElement.swift; sourceTree = "<group>"; };
 		01DFC55B2420F0AB00AF2EF0 /* ZephyrDFURouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFURouter.swift; sourceTree = "<group>"; };
+		01E2B55C24A4887500D22FB1 /* PresetListUtilityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetListUtilityCell.swift; sourceTree = "<group>"; };
+		01E2B55D24A4887500D22FB1 /* PresetListUtilityCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PresetListUtilityCell.xib; sourceTree = "<group>"; };
 		01E5910823DB3BC4008F15A4 /* QuickError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickError.swift; sourceTree = "<group>"; };
 		01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosList.swift; sourceTree = "<group>"; };
 		01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralHolder.swift; sourceTree = "<group>"; };
@@ -994,6 +998,8 @@
 			children = (
 				01CA8B3A24A1ED36009FC4C8 /* PresetListCell.swift */,
 				01CA8B3B24A1ED36009FC4C8 /* PresetListCell.xib */,
+				01E2B55C24A4887500D22FB1 /* PresetListUtilityCell.swift */,
+				01E2B55D24A4887500D22FB1 /* PresetListUtilityCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -2054,6 +2060,7 @@
 				20E07B652306975700FCB205 /* GT-Eesti-Display-ULight.ttf in Resources */,
 				43645A9C2497781600231247 /* UARTPresetCollectionViewCell.xib in Resources */,
 				016EF389241632AF005FFA30 /* LoggerTableViewController.xib in Resources */,
+				01E2B55F24A4887500D22FB1 /* PresetListUtilityCell.xib in Resources */,
 				20E07B612306975700FCB205 /* GT-Eesti-Display-Medium.ttf in Resources */,
 				20F15C3C2313D2C7000C5503 /* InfoActionView.xib in Resources */,
 				4353A50F243175C300159CDF /* HMAccessoryListTableViewController.xib in Resources */,
@@ -2328,6 +2335,7 @@
 				01268AF724218BED00E83156 /* ZephyrFileSelector.swift in Sources */,
 				20027B08233E116600A0B5ED /* StrideSection.swift in Sources */,
 				433A900C24525CDA00107822 /* WheelSizeSection.swift in Sources */,
+				01E2B55E24A4887500D22FB1 /* PresetListUtilityCell.swift in Sources */,
 				339761A6176917F548C7B465 /* ContinuousGlucoseMonitor.swift in Sources */,
 				433A9012245304DE00107822 /* McuMgrLogObserver.swift in Sources */,
 				339763D41402CC5D9773F46F /* Peripheral+ContinuousGlucoseMonitor.swift in Sources */,

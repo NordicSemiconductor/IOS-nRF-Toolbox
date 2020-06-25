@@ -44,4 +44,8 @@ extension StringProtocol {
             return UInt8(self[startIndex..<endIndex], radix: 16)
         }
     }
+    
+    func nilOnEmpty() -> Self? {
+        return self.isEmpty ? nil : self
+    }
 }
