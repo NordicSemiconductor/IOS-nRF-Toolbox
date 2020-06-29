@@ -11,6 +11,7 @@ import CoreData
 
 protocol PresetListDelegate: class {
     func didSelectPreset(_ preset: UARTPreset)
+    func presetWasDeleted(_ preset: UARTPreset)
 }
 
 @available(iOS 13.0, *)
@@ -34,6 +35,7 @@ class PresetListViewController: UICollectionViewController {
         
         collectionView.register(type: PresetListUtilityCell.self)
         collectionView.register(type: PresetListCell.self)
+        collectionView.registerViewNib(type: PresetListSectionTitleView.self, ofKind: UICollectionView.elementKindSectionHeader)
         collectionView.backgroundColor = .tableViewBackground
     }
     
@@ -63,10 +65,6 @@ class PresetListViewController: UICollectionViewController {
         return try! coreDataStack.viewContext.fetch(request)
     }
     
-//    private func filterPresets(isFavorite:  Bool) -> [UARTPreset] {
-//        presets.filter { $0.isFavorite == isFavorite }
-//    }
-    
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 3
     }
@@ -90,7 +88,6 @@ class PresetListViewController: UICollectionViewController {
         }
         
         let cell = collectionView.dequeueCell(ofType: PresetListCell.self, for: indexPath)
-        
         
         let presets = indexPath.section == 0 ? favoritePresets : notFavoritePresets
         let preset = presets[indexPath.item]
@@ -124,13 +121,30 @@ class PresetListViewController: UICollectionViewController {
     
     @available(iOS 13.0, *)
     override func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
-        let id = configuration.identifier as! String
-        
-        animator.addCompletion {
-            
-        }
         
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionHeader else {
+            SystemLog.fault("Kind is not supported", category: .ui)
+        }
+        
+        let view = collectionView.dequeueView(type: PresetListSectionTitleView.self, ofKind: kind, for: indexPath)
+        
+        switch indexPath.section {
+        case 0:
+            view.title.text = "Favorite"
+        case 1:
+            view.title.text = "Not Favorite"
+        case 2:
+            view.title.text = "New Preset"
+        default:
+            break
+        }
+        
+        return view
+    }
+    
 }
 
 extension PresetListViewController: UICollectionViewDelegateFlowLayout {
@@ -143,6 +157,10 @@ extension PresetListViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionViewsizeForItem(collectionView)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: 320, height: 40)
     }
 }
 
@@ -173,6 +191,8 @@ extension PresetListViewController: UIContextMenuInteractionDelegate {
                     
                     self.coreDataStack.viewContext.delete(preset)
                     try? self.coreDataStack.viewContext.save()
+                    
+                    self.presetDelegate?.presetWasDeleted(preset)
                 }
                 
             }

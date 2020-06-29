@@ -194,6 +194,10 @@ extension UARTViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard indexPath.item == presets.count else {
+            return
+        }
+        
         let vc = PresetListViewController(stack: .uart)
         vc.presetDelegate = self
         let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false)
@@ -212,6 +216,15 @@ extension UARTViewController: PresetListDelegate {
         
         presets.append(preset)
         collectionView.reloadData()
+    }
+    
+    func presetWasDeleted(_ preset: UARTPreset) {
+        guard let index = presets.firstIndex(of: preset) else {
+            return
+        }
+        
+        presets.remove(at: index)
+        collectionView.deleteItems(at: [IndexPath(item: index, section: 0)])
     }
     
     private func moveToPreset(_ preset: UARTPreset) {

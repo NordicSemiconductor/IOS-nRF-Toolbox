@@ -111,6 +111,8 @@
 		01DFC55C2420F0AB00AF2EF0 /* ZephyrDFURouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DFC55B2420F0AB00AF2EF0 /* ZephyrDFURouter.swift */; };
 		01E2B55E24A4887500D22FB1 /* PresetListUtilityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E2B55C24A4887500D22FB1 /* PresetListUtilityCell.swift */; };
 		01E2B55F24A4887500D22FB1 /* PresetListUtilityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E2B55D24A4887500D22FB1 /* PresetListUtilityCell.xib */; };
+		01E2B56124AA10C600D22FB1 /* PresetListSectionTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E2B56024AA10C600D22FB1 /* PresetListSectionTitleView.swift */; };
+		01E2B56324AA10D400D22FB1 /* PresetListSectionTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E2B56224AA10D400D22FB1 /* PresetListSectionTitleView.xib */; };
 		01E5910923DB3BC5008F15A4 /* QuickError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910823DB3BC4008F15A4 /* QuickError.swift */; };
 		01E5910B23DECF61008F15A4 /* UARTMacrosList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */; };
 		01FBC5012407BF8F00B1056B /* PeripheralHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */; };
@@ -435,6 +437,8 @@
 		01DFC55B2420F0AB00AF2EF0 /* ZephyrDFURouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFURouter.swift; sourceTree = "<group>"; };
 		01E2B55C24A4887500D22FB1 /* PresetListUtilityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetListUtilityCell.swift; sourceTree = "<group>"; };
 		01E2B55D24A4887500D22FB1 /* PresetListUtilityCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PresetListUtilityCell.xib; sourceTree = "<group>"; };
+		01E2B56024AA10C600D22FB1 /* PresetListSectionTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetListSectionTitleView.swift; sourceTree = "<group>"; };
+		01E2B56224AA10D400D22FB1 /* PresetListSectionTitleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PresetListSectionTitleView.xib; sourceTree = "<group>"; };
 		01E5910823DB3BC4008F15A4 /* QuickError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickError.swift; sourceTree = "<group>"; };
 		01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosList.swift; sourceTree = "<group>"; };
 		01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralHolder.swift; sourceTree = "<group>"; };
@@ -1000,6 +1004,8 @@
 				01CA8B3B24A1ED36009FC4C8 /* PresetListCell.xib */,
 				01E2B55C24A4887500D22FB1 /* PresetListUtilityCell.swift */,
 				01E2B55D24A4887500D22FB1 /* PresetListUtilityCell.xib */,
+				01E2B56024AA10C600D22FB1 /* PresetListSectionTitleView.swift */,
+				01E2B56224AA10D400D22FB1 /* PresetListSectionTitleView.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -2042,6 +2048,7 @@
 				20E07B642306975700FCB205 /* GT-Eesti-Display-Thin-Italic.ttf in Resources */,
 				20E07B662306975700FCB205 /* GT-Eesti-Display-Regular-Italic.ttf in Resources */,
 				5217F3FE1859EE0000F2D5BB /* Images.xcassets in Resources */,
+				01E2B56324AA10D400D22FB1 /* PresetListSectionTitleView.xib in Resources */,
 				20E07B5E2306975700FCB205 /* GT-Eesti-Display-Medium-Italic.ttf in Resources */,
 				01AF928923D1A7E300C1BFD6 /* PeripheralView.xib in Resources */,
 				20E07B5F2306975700FCB205 /* GT-Eesti-Display-Bold-Italic.ttf in Resources */,
@@ -2264,6 +2271,7 @@
 				01268AF924218E5800E83156 /* ZephyrDFUDocumentPicker.swift in Sources */,
 				4389183824360D0100175A94 /* LogTableViewCell.swift in Sources */,
 				012C2BE72410F8AA005EC1A0 /* DFUUpdateViewController.swift in Sources */,
+				01E2B56124AA10C600D22FB1 /* PresetListSectionTitleView.swift in Sources */,
 				01B6D3E2234CCC9F000942C4 /* HeartRateChartSection.swift in Sources */,
 				01B56C1623A11FDA00140A1C /* PeripheralScanner.swift in Sources */,
 				4389183C24360EAB00175A94 /* Logger.swift in Sources */,

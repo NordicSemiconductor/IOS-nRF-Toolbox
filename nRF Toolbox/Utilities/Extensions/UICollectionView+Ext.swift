@@ -47,4 +47,16 @@ extension UICollectionView {
         let nib = UINib(nibName: cellId, bundle: .main)
         register(nib, forCellWithReuseIdentifier: cellId)
     }
+    
+    func registerViewNib<T>(type: T.Type, ofKind kind: String) where T: UICollectionReusableView {
+        let viewId = String(describing: type)
+        let nib = UINib(nibName: viewId, bundle: .main)
+        register(nib, forSupplementaryViewOfKind: kind, withReuseIdentifier: viewId)
+    }
+    
+    func dequeueView<T: UICollectionReusableView>(type: T.Type, ofKind kind: String, for indexPath: IndexPath) -> T {
+        let viewId = String(describing: type)
+        let view = dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: viewId, for: indexPath) as! T
+        return view
+    }
 }
