@@ -13,10 +13,17 @@ protocol PresetListDelegate: class {
     func didSelectPreset(_ preset: UARTPreset)
 }
 
+@available(iOS 13.0, *)
+class PresetContextMenuInteraction: UIContextMenuInteraction {
+    var preset: UARTPreset?
+}
+
 class PresetListViewController: UICollectionViewController {
     
     private let coreDataStack: CoreDataStack
-    private var presets: [UARTPreset] = []
+//    private var presets: [UARTPreset] = []
+    private var favoritePresets: [UARTPreset] = []
+    private var notFavoritePresets: [UARTPreset] = []
     
     weak var presetDelegate: PresetListDelegate?
     
@@ -37,13 +44,13 @@ class PresetListViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        presets = getPresetList()
+        let presets = getPresetList()
+        favoritePresets = presets.filter { $0.isFavorite }
+        notFavoritePresets = presets.filter { !$0.isFavorite }
         
         navigationItem.title = "Preset List"
         if #available(iOS 13.0, *) {
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(dismsiss))
-        } else {
-            // Fallback on earlier versions
         }
     }
     
@@ -56,9 +63,9 @@ class PresetListViewController: UICollectionViewController {
         return try! coreDataStack.viewContext.fetch(request)
     }
     
-    private func filterPresets(isFavorite:  Bool) -> [UARTPreset] {
-        presets.filter { $0.isFavorite == isFavorite }
-    }
+//    private func filterPresets(isFavorite:  Bool) -> [UARTPreset] {
+//        presets.filter { $0.isFavorite == isFavorite }
+//    }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 3
@@ -66,8 +73,8 @@ class PresetListViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-        case 0: return filterPresets(isFavorite: true).count
-        case 1: return filterPresets(isFavorite: false).count
+        case 0: return favoritePresets.count
+        case 1: return notFavoritePresets.count
         case 2: return 2
         default: SystemLog.fault("Unknown section", category: .ui)
         }
@@ -84,8 +91,17 @@ class PresetListViewController: UICollectionViewController {
         
         let cell = collectionView.dequeueCell(ofType: PresetListCell.self, for: indexPath)
         
-        let presets = indexPath.section == 0 ? filterPresets(isFavorite: true) : filterPresets(isFavorite: false)
+        
+        let presets = indexPath.section == 0 ? favoritePresets : notFavoritePresets
         let preset = presets[indexPath.item]
+        
+        if #available(iOS 13.0, *) {
+            let interaction = PresetContextMenuInteraction(delegate: self)
+            interaction.preset = preset
+            cell.addInteraction(interaction)
+        } else {
+            // Fallback on earlier versions
+        }
         
         let cellSize  = collectionViewsizeForItem(collectionView)
         let imageSize = CGSize(width: cellSize.width, height: cellSize.width)
@@ -100,10 +116,20 @@ class PresetListViewController: UICollectionViewController {
             return
         }
         
-        let presets = indexPath.section == 0 ? filterPresets(isFavorite: true) : filterPresets(isFavorite: false)
+        let presets = indexPath.section == 0 ? favoritePresets : notFavoritePresets
         let preset = presets[indexPath.item]
         
         self.presetDelegate?.didSelectPreset(preset)
+    }
+    
+    @available(iOS 13.0, *)
+    override func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
+        let id = configuration.identifier as! String
+        
+        animator.addCompletion {
+            
+        }
+        
     }
 }
 
@@ -117,5 +143,77 @@ extension PresetListViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionViewsizeForItem(collectionView)
+    }
+}
+
+@available(iOS 13.0, *)
+extension PresetListViewController: UIContextMenuInteractionDelegate {
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { [weak interaction, weak self] (menu) -> UIMenu? in
+            guard let preset = (interaction as? PresetContextMenuInteraction)?.preset else {
+                return nil
+            }
+            
+            let toggleFavoriteAction = self?.toggleAction(preset)
+            
+            let removeAction = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: UIMenuElement.Attributes.destructive) { (_) in
+                
+                guard let `self` = self else {
+                    return
+                }
+                
+                if let ip = self.getIndexPath(for: preset) {
+                    if preset.isFavorite {
+                        self.favoritePresets.remove(at: ip.item)
+                    } else {
+                        self.notFavoritePresets.remove(at: ip.item)
+                    }
+                    
+                    self.collectionView.deleteItems(at: [ip])
+                    
+                    self.coreDataStack.viewContext.delete(preset)
+                    try? self.coreDataStack.viewContext.save()
+                }
+                
+            }
+            
+            return UIMenu(title: "Options", image: nil, identifier: nil, children: [toggleFavoriteAction!, removeAction])
+        }
+    }
+    
+    private func toggleAction(_ preset: UARTPreset) -> UIAction {
+        let title = preset.isFavorite ? "Remove from favorite" : "Add to favorite"
+        let systemIconName = preset.isFavorite ? "star" : "star.fill"
+        
+        return UIAction(title: title, image: UIImage(systemName: systemIconName)) { [weak self] (_) in
+            guard let `self` = self else { return }
+            preset.isFavorite.toggle()
+            
+            if let index = self.favoritePresets.firstIndex(of: preset) {
+                let atIP = IndexPath(item: index, section: 0)
+                let toIP = IndexPath(item: self.notFavoritePresets.count, section: 1)
+                
+                self.favoritePresets.remove(at: index)
+                self.notFavoritePresets.append(preset)
+                
+                self.collectionView.moveItem(at: atIP, to: toIP)
+            } else if let index = self.notFavoritePresets.firstIndex(of: preset) {
+                let atIP = IndexPath(item: index, section: 1)
+                let toIP = IndexPath(item: self.favoritePresets.count, section: 0)
+                
+                self.notFavoritePresets.remove(at: index)
+                self.favoritePresets.append(preset)
+                
+                self.collectionView.moveItem(at: atIP, to: toIP)
+            }
+            
+            try? self.coreDataStack.viewContext.save()
+            self.collectionView.reloadData()
+        }
+    }
+    
+    private func getIndexPath(for preset: UARTPreset) -> IndexPath? {
+        favoritePresets.firstIndex(of: preset).map { IndexPath(item: $0, section: 0) }
+            ?? notFavoritePresets.firstIndex(of: preset).map { IndexPath(item: $0, section: 1) }
     }
 }

@@ -50,7 +50,7 @@ extension UARTPreset {
                     let command = self.commands[commandIndex]
                     guard !(command is EmptyModel), let img = command.image else { continue }
                     
-                    let color: UIColor = Bool.random() ? UIColor.nordicBlue : UIColor.nordicRed
+                    let color: UIColor = UIColor.nordicBlue
                     guard let newImage = img
                         .resize(targetSize: CGSize(width: iconSize, height: iconSize))
                         .drawInColor(color: color)
