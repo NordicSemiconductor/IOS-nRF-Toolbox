@@ -198,7 +198,7 @@ extension UARTViewController: UICollectionViewDelegateFlowLayout {
             return
         }
         
-        let vc = PresetListViewController(stack: .uart)
+        let vc = PresetListViewController(inQuickAccess: presets, stack: .uart)
         vc.presetDelegate = self
         let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false)
         
@@ -227,6 +227,14 @@ extension UARTViewController: PresetListDelegate {
         collectionView.deleteItems(at: [IndexPath(item: index, section: 0)])
     }
     
+    func presetWasRenamed(_ preset: UARTPreset) {
+        guard let index = presets.firstIndex(of: preset) else {
+            return
+        }
+        
+        collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+    }
+    
     private func moveToPreset(_ preset: UARTPreset) {
         guard let index = presets.firstIndex(of: preset) else {
             return
@@ -253,28 +261,10 @@ extension UARTViewController: UARTPresetDelegate {
     }
     
     func saveAs(preset: UARTPreset) {
-        let alert = UIAlertController(title: "Save As", message: "Enter new preset's name", preferredStyle: .alert)
-        
-        alert.addTextField { (tf) in
-            tf.placeholder = preset.name.map { $0 + " copy" } ?? "New Preset"
-        }
-        
-        let okAction = UIAlertAction(title: "OK", style: .default) { [weak alert, weak self] (_) in
-            
-            let name = alert?.textFields?.first?.text?.nilOnEmpty()
-                ?? preset.name.map { $0 + " copy" }
-                ?? "New Preset"
-            let copy = preset.cloneWithName(name)
-            try! self?.coreDataStack.viewContext.save()
-            
+        let alert = UARTPresetUIUtil().dupplicatePreset(preset, intoContext: coreDataStack.viewContext) { [weak self] (copy) in
             self?.presets.append(copy)
             self?.collectionView.reloadData()
         }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        alert.addAction(okAction)
-        alert.addAction(cancelAction)
         
         present(alert, animated: true, completion: nil)
     }
@@ -293,25 +283,9 @@ extension UARTViewController: UARTPresetDelegate {
     }
     
     func rename(preset: UARTPreset) {
-        let alert = UIAlertController(title: "Rename", message: "Rename preset", preferredStyle: .alert)
-        
-        alert.addTextField { (tf) in
-            tf.text = preset.name
-            tf.selectAll(nil)
+        let alert = UARTPresetUIUtil().renameAlert(for: preset) { [weak self] in
+            self?.collectionView.reloadData()
         }
-        
-        let okAction = UIAlertAction(title: "OK", style: .default) { [weak alert] (_) in
-            let name = alert?.textFields?.first?.text
-            preset.name = name
-            try! self.coreDataStack.viewContext.save()
-            
-            self.collectionView.reloadData()
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        alert.addAction(okAction)
-        alert.addAction(cancelAction)
         
         present(alert, animated: true, completion: nil)
     }

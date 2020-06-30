@@ -12,6 +12,7 @@ import CoreData
 protocol PresetListDelegate: class {
     func didSelectPreset(_ preset: UARTPreset)
     func presetWasDeleted(_ preset: UARTPreset)
+    func presetWasRenamed(_ preset: UARTPreset)
 }
 
 @available(iOS 13.0, *)
@@ -21,15 +22,22 @@ class PresetContextMenuInteraction: UIContextMenuInteraction {
 
 class PresetListViewController: UICollectionViewController {
     
+    private struct DataSource {
+        var favoritePresets: [UARTPreset] = []
+        var notFavoritePresets: [UARTPreset] = []
+        var inQuickAccess: [UARTPreset] = []
+    }
+    
     private let coreDataStack: CoreDataStack
-//    private var presets: [UARTPreset] = []
-    private var favoritePresets: [UARTPreset] = []
-    private var notFavoritePresets: [UARTPreset] = []
+    private var dataSource: DataSource = DataSource()
     
     weak var presetDelegate: PresetListDelegate?
     
-    init(stack: CoreDataStack = CoreDataStack.uart) {
+    init(inQuickAccess: [UARTPreset], stack: CoreDataStack = CoreDataStack.uart) {
         self.coreDataStack = stack
+        
+        self.dataSource = DataSource(favoritePresets: [], notFavoritePresets: [], inQuickAccess: inQuickAccess)
+        
         let flowLayout = UICollectionViewFlowLayout()
         super.init(collectionViewLayout: flowLayout)
         
@@ -47,8 +55,8 @@ class PresetListViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let presets = getPresetList()
-        favoritePresets = presets.filter { $0.isFavorite }
-        notFavoritePresets = presets.filter { !$0.isFavorite }
+        dataSource.favoritePresets = presets.filter { $0.isFavorite }
+        dataSource.notFavoritePresets = presets.filter { !$0.isFavorite }
         
         navigationItem.title = "Preset List"
         if #available(iOS 13.0, *) {
@@ -71,8 +79,8 @@ class PresetListViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-        case 0: return favoritePresets.count
-        case 1: return notFavoritePresets.count
+        case 0: return dataSource.favoritePresets.count
+        case 1: return dataSource.notFavoritePresets.count
         case 2: return 2
         default: SystemLog.fault("Unknown section", category: .ui)
         }
@@ -89,20 +97,23 @@ class PresetListViewController: UICollectionViewController {
         
         let cell = collectionView.dequeueCell(ofType: PresetListCell.self, for: indexPath)
         
-        let presets = indexPath.section == 0 ? favoritePresets : notFavoritePresets
+        let presets = indexPath.section == 0 ? dataSource.favoritePresets : dataSource.notFavoritePresets
         let preset = presets[indexPath.item]
         
         if #available(iOS 13.0, *) {
             let interaction = PresetContextMenuInteraction(delegate: self)
             interaction.preset = preset
             cell.addInteraction(interaction)
-        } else {
-            // Fallback on earlier versions
         }
         
         let cellSize  = collectionViewsizeForItem(collectionView)
         let imageSize = CGSize(width: cellSize.width, height: cellSize.width)
         cell.apply(preset, imageSize: imageSize)
+        
+        cell.imageView.borderColor = .nordicBlue
+        cell.imageView.cornerRadius = 4
+         
+        cell.imageView.borderWidth = dataSource.inQuickAccess.contains(preset) ? 2 : 0
         
         return cell
     }
@@ -113,15 +124,10 @@ class PresetListViewController: UICollectionViewController {
             return
         }
         
-        let presets = indexPath.section == 0 ? favoritePresets : notFavoritePresets
+        let presets = indexPath.section == 0 ? dataSource.favoritePresets : dataSource.notFavoritePresets
         let preset = presets[indexPath.item]
         
         self.presetDelegate?.didSelectPreset(preset)
-    }
-    
-    @available(iOS 13.0, *)
-    override func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
-        
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -168,23 +174,17 @@ extension PresetListViewController: UICollectionViewDelegateFlowLayout {
 extension PresetListViewController: UIContextMenuInteractionDelegate {
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { [weak interaction, weak self] (menu) -> UIMenu? in
-            guard let preset = (interaction as? PresetContextMenuInteraction)?.preset else {
+            guard let preset = (interaction as? PresetContextMenuInteraction)?.preset, let `self` = self else {
                 return nil
             }
             
-            let toggleFavoriteAction = self?.toggleAction(preset)
-            
             let removeAction = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: UIMenuElement.Attributes.destructive) { (_) in
-                
-                guard let `self` = self else {
-                    return
-                }
                 
                 if let ip = self.getIndexPath(for: preset) {
                     if preset.isFavorite {
-                        self.favoritePresets.remove(at: ip.item)
+                        self.dataSource.favoritePresets.remove(at: ip.item)
                     } else {
-                        self.notFavoritePresets.remove(at: ip.item)
+                        self.dataSource.notFavoritePresets.remove(at: ip.item)
                     }
                     
                     self.collectionView.deleteItems(at: [ip])
@@ -197,7 +197,13 @@ extension PresetListViewController: UIContextMenuInteractionDelegate {
                 
             }
             
-            return UIMenu(title: "Options", image: nil, identifier: nil, children: [toggleFavoriteAction!, removeAction])
+            return UIMenu(title: "Options", image: nil, identifier: nil, children: [
+                self.toggleAction(preset),
+                self.renameAction(preset),
+                self.duplicateAction(preset),
+                self.exportAction(preset),
+                removeAction
+            ])
         }
     }
     
@@ -209,20 +215,20 @@ extension PresetListViewController: UIContextMenuInteractionDelegate {
             guard let `self` = self else { return }
             preset.isFavorite.toggle()
             
-            if let index = self.favoritePresets.firstIndex(of: preset) {
+            if let index = self.dataSource.favoritePresets.firstIndex(of: preset) {
                 let atIP = IndexPath(item: index, section: 0)
-                let toIP = IndexPath(item: self.notFavoritePresets.count, section: 1)
+                let toIP = IndexPath(item: self.dataSource.notFavoritePresets.count, section: 1)
                 
-                self.favoritePresets.remove(at: index)
-                self.notFavoritePresets.append(preset)
+                self.dataSource.favoritePresets.remove(at: index)
+                self.dataSource.notFavoritePresets.append(preset)
                 
                 self.collectionView.moveItem(at: atIP, to: toIP)
-            } else if let index = self.notFavoritePresets.firstIndex(of: preset) {
+            } else if let index = self.dataSource.notFavoritePresets.firstIndex(of: preset) {
                 let atIP = IndexPath(item: index, section: 1)
-                let toIP = IndexPath(item: self.favoritePresets.count, section: 0)
+                let toIP = IndexPath(item: self.dataSource.favoritePresets.count, section: 0)
                 
-                self.notFavoritePresets.remove(at: index)
-                self.favoritePresets.append(preset)
+                self.dataSource.notFavoritePresets.remove(at: index)
+                self.dataSource.favoritePresets.append(preset)
                 
                 self.collectionView.moveItem(at: atIP, to: toIP)
             }
@@ -232,8 +238,36 @@ extension PresetListViewController: UIContextMenuInteractionDelegate {
         }
     }
     
+    private func duplicateAction(_ preset: UARTPreset) -> UIAction {
+        UIAction(title: "Duplicate", image: ModernIcon.duplicateIcon.image) { [unowned self] (_) in
+            let alert = UARTPresetUIUtil().dupplicatePreset(preset, intoContext: self.coreDataStack.viewContext) { (new) in
+                self.dataSource.notFavoritePresets.append(new)
+                self.collectionView.insertItems(at: [IndexPath(item: self.dataSource.notFavoritePresets.count-1, section: 1)])
+            }
+            
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    private func renameAction(_ preset: UARTPreset) -> UIAction {
+        UIAction(title: "Rename", image: ModernIcon.pencil.image) { (_) in
+            let alert = UARTPresetUIUtil().renameAlert(for: preset) { [weak self] in
+                self?.collectionView.reloadData()
+                self?.presetDelegate?.presetWasRenamed(preset)
+            }
+            
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    private func exportAction(_ preset: UARTPreset) -> UIAction {
+        UIAction(title: "Export", image: ModernIcon.exportIcon.image) { (_) in
+            
+        }
+    }
+    
     private func getIndexPath(for preset: UARTPreset) -> IndexPath? {
-        favoritePresets.firstIndex(of: preset).map { IndexPath(item: $0, section: 0) }
-            ?? notFavoritePresets.firstIndex(of: preset).map { IndexPath(item: $0, section: 1) }
+        dataSource.favoritePresets.firstIndex(of: preset).map { IndexPath(item: $0, section: 0) }
+            ?? dataSource.notFavoritePresets.firstIndex(of: preset).map { IndexPath(item: $0, section: 1) }
     }
 }

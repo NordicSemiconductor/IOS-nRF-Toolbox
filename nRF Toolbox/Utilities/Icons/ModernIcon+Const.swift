@@ -33,6 +33,11 @@
 import Foundation
 
 extension ModernIcon {
+    static let exportIcon = ModernIcon.square(.and)(.arrow)(.up)
+    static let duplicateIcon = ModernIcon.doc(.on)(.doc)
+}
+
+extension ModernIcon {
     static let circle = ModernIcon(name: "circle")
     static let fill = ModernIcon(name: "fill")
     static let end = ModernIcon(name: "end")
@@ -46,6 +51,8 @@ extension ModernIcon {
     static let and = ModernIcon(name: "and")
     static let square = ModernIcon(name: "square")
     static let doc = ModernIcon(name: "doc")
+    static let on = ModernIcon(name: "on")
+    static let pencil = ModernIcon(name: "pencil")
     
     static let play = ModernIcon(name: "play")
     static let pause = ModernIcon(name: "pause")

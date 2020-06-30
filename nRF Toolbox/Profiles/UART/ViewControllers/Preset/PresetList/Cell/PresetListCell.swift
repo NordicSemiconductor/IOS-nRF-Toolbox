@@ -9,7 +9,7 @@
 import UIKit
 
 class PresetListCell: UICollectionViewCell {
-    @IBOutlet private var imageView: UIImageView!
+    @IBOutlet var imageView: UIImageView!
     @IBOutlet private var presetName: UILabel!
     @IBOutlet private var starImage: UIImageView!
     

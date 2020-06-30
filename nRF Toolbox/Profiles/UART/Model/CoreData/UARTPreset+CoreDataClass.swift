@@ -66,9 +66,9 @@ class UARTPreset: NSManagedObject {
         commandSet[index] = command as! NSObject
     }
     
-    func cloneWithName(_ name: String) -> UARTPreset {
+    func cloneWithName(_ name: String, context: NSManagedObjectContext?) -> UARTPreset {
         let copiedCommands = self.commands.map { $0.clone() }
-        let newPreset = UARTPreset(commands: copiedCommands, name: name)
+        let newPreset = UARTPreset(commands: copiedCommands, name: name, isFavorite: false, context: context)
         return newPreset
     }
 }

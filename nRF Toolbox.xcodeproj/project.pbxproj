@@ -113,6 +113,7 @@
 		01E2B55F24A4887500D22FB1 /* PresetListUtilityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E2B55D24A4887500D22FB1 /* PresetListUtilityCell.xib */; };
 		01E2B56124AA10C600D22FB1 /* PresetListSectionTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E2B56024AA10C600D22FB1 /* PresetListSectionTitleView.swift */; };
 		01E2B56324AA10D400D22FB1 /* PresetListSectionTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E2B56224AA10D400D22FB1 /* PresetListSectionTitleView.xib */; };
+		01E2B56524AB4D9900D22FB1 /* UARTPresetUIUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E2B56424AB4D9900D22FB1 /* UARTPresetUIUtil.swift */; };
 		01E5910923DB3BC5008F15A4 /* QuickError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910823DB3BC4008F15A4 /* QuickError.swift */; };
 		01E5910B23DECF61008F15A4 /* UARTMacrosList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */; };
 		01FBC5012407BF8F00B1056B /* PeripheralHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */; };
@@ -439,6 +440,7 @@
 		01E2B55D24A4887500D22FB1 /* PresetListUtilityCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PresetListUtilityCell.xib; sourceTree = "<group>"; };
 		01E2B56024AA10C600D22FB1 /* PresetListSectionTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetListSectionTitleView.swift; sourceTree = "<group>"; };
 		01E2B56224AA10D400D22FB1 /* PresetListSectionTitleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PresetListSectionTitleView.xib; sourceTree = "<group>"; };
+		01E2B56424AB4D9900D22FB1 /* UARTPresetUIUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTPresetUIUtil.swift; sourceTree = "<group>"; };
 		01E5910823DB3BC4008F15A4 /* QuickError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickError.swift; sourceTree = "<group>"; };
 		01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosList.swift; sourceTree = "<group>"; };
 		01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralHolder.swift; sourceTree = "<group>"; };
@@ -681,6 +683,7 @@
 			isa = PBXGroup;
 			children = (
 				01078F4C24A0C482009A170E /* UARTPreset+View.swift */,
+				01E2B56424AB4D9900D22FB1 /* UARTPresetUIUtil.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -2274,6 +2277,7 @@
 				01E2B56124AA10C600D22FB1 /* PresetListSectionTitleView.swift in Sources */,
 				01B6D3E2234CCC9F000942C4 /* HeartRateChartSection.swift in Sources */,
 				01B56C1623A11FDA00140A1C /* PeripheralScanner.swift in Sources */,
+				01E2B56524AB4D9900D22FB1 /* UARTPresetUIUtil.swift in Sources */,
 				4389183C24360EAB00175A94 /* Logger.swift in Sources */,
 				01A1B77523CF5A080062FADC /* UICollectionView+Ext.swift in Sources */,
 				430901A7249B868E0030EE00 /* EmptyModel.swift in Sources */,
