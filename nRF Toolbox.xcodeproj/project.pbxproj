@@ -114,6 +114,12 @@
 		01E2B56124AA10C600D22FB1 /* PresetListSectionTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E2B56024AA10C600D22FB1 /* PresetListSectionTitleView.swift */; };
 		01E2B56324AA10D400D22FB1 /* PresetListSectionTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E2B56224AA10D400D22FB1 /* PresetListSectionTitleView.xib */; };
 		01E2B56524AB4D9900D22FB1 /* UARTPresetUIUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E2B56424AB4D9900D22FB1 /* UARTPresetUIUtil.swift */; };
+		01E2B56924ACA01600D22FB1 /* UARTMacrosCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E2B56724ACA01600D22FB1 /* UARTMacrosCollectionViewController.swift */; };
+		01E2B56A24ACA01600D22FB1 /* UARTMacrosCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E2B56824ACA01600D22FB1 /* UARTMacrosCollectionViewController.xib */; };
+		01E2B56E24ACA04600D22FB1 /* UARTMacrosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E2B56C24ACA04600D22FB1 /* UARTMacrosCollectionViewCell.swift */; };
+		01E2B56F24ACA04600D22FB1 /* UARTMacrosCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E2B56D24ACA04600D22FB1 /* UARTMacrosCollectionViewCell.xib */; };
+		01E2B57224ACCAEE00D22FB1 /* SearchCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E2B57024ACCAEE00D22FB1 /* SearchCollectionReusableView.swift */; };
+		01E2B57324ACCAEE00D22FB1 /* SearchCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E2B57124ACCAEE00D22FB1 /* SearchCollectionReusableView.xib */; };
 		01E5910923DB3BC5008F15A4 /* QuickError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910823DB3BC4008F15A4 /* QuickError.swift */; };
 		01E5910B23DECF61008F15A4 /* UARTMacrosList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */; };
 		01FBC5012407BF8F00B1056B /* PeripheralHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */; };
@@ -441,6 +447,12 @@
 		01E2B56024AA10C600D22FB1 /* PresetListSectionTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetListSectionTitleView.swift; sourceTree = "<group>"; };
 		01E2B56224AA10D400D22FB1 /* PresetListSectionTitleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PresetListSectionTitleView.xib; sourceTree = "<group>"; };
 		01E2B56424AB4D9900D22FB1 /* UARTPresetUIUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTPresetUIUtil.swift; sourceTree = "<group>"; };
+		01E2B56724ACA01600D22FB1 /* UARTMacrosCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosCollectionViewController.swift; sourceTree = "<group>"; };
+		01E2B56824ACA01600D22FB1 /* UARTMacrosCollectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTMacrosCollectionViewController.xib; sourceTree = "<group>"; };
+		01E2B56C24ACA04600D22FB1 /* UARTMacrosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosCollectionViewCell.swift; sourceTree = "<group>"; };
+		01E2B56D24ACA04600D22FB1 /* UARTMacrosCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTMacrosCollectionViewCell.xib; sourceTree = "<group>"; };
+		01E2B57024ACCAEE00D22FB1 /* SearchCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionReusableView.swift; sourceTree = "<group>"; };
+		01E2B57124ACCAEE00D22FB1 /* SearchCollectionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchCollectionReusableView.xib; sourceTree = "<group>"; };
 		01E5910823DB3BC4008F15A4 /* QuickError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickError.swift; sourceTree = "<group>"; };
 		01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosList.swift; sourceTree = "<group>"; };
 		01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralHolder.swift; sourceTree = "<group>"; };
@@ -877,6 +889,7 @@
 		01AF928423D1A76100C1BFD6 /* Macro */ = {
 			isa = PBXGroup;
 			children = (
+				01E2B56624AC9FF400D22FB1 /* UPD */,
 				014C4E882403F8AE0003E601 /* UARTMacrosTableViewController.swift */,
 				0119609C23F9FDC700A7EF29 /* Views */,
 				01DDD79923EC5941003786ED /* Cell */,
@@ -1088,6 +1101,27 @@
 				01268AF12421595200E83156 /* NotConnectedViewController */,
 			);
 			path = NotConnectedViewController;
+			sourceTree = "<group>";
+		};
+		01E2B56624AC9FF400D22FB1 /* UPD */ = {
+			isa = PBXGroup;
+			children = (
+				01E2B56B24ACA02500D22FB1 /* Cells */,
+				01E2B56724ACA01600D22FB1 /* UARTMacrosCollectionViewController.swift */,
+				01E2B56824ACA01600D22FB1 /* UARTMacrosCollectionViewController.xib */,
+			);
+			path = UPD;
+			sourceTree = "<group>";
+		};
+		01E2B56B24ACA02500D22FB1 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				01E2B56C24ACA04600D22FB1 /* UARTMacrosCollectionViewCell.swift */,
+				01E2B56D24ACA04600D22FB1 /* UARTMacrosCollectionViewCell.xib */,
+				01E2B57024ACCAEE00D22FB1 /* SearchCollectionReusableView.swift */,
+				01E2B57124ACCAEE00D22FB1 /* SearchCollectionReusableView.xib */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		01FBC4FF2407BF5600B1056B /* Utils */ = {
@@ -2054,7 +2088,9 @@
 				01E2B56324AA10D400D22FB1 /* PresetListSectionTitleView.xib in Resources */,
 				20E07B5E2306975700FCB205 /* GT-Eesti-Display-Medium-Italic.ttf in Resources */,
 				01AF928923D1A7E300C1BFD6 /* PeripheralView.xib in Resources */,
+				01E2B57324ACCAEE00D22FB1 /* SearchCollectionReusableView.xib in Resources */,
 				20E07B5F2306975700FCB205 /* GT-Eesti-Display-Bold-Italic.ttf in Resources */,
+				01E2B56A24ACA01600D22FB1 /* UARTMacrosCollectionViewController.xib in Resources */,
 				7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */,
 				52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */,
 				4350CFFF244D20AE0068EEEA /* ProximityViewController.xib in Resources */,
@@ -2064,6 +2100,7 @@
 				5217F3F01859EE0000F2D5BB /* InfoPlist.strings in Resources */,
 				20E07B632306975700FCB205 /* GT-Eesti-Display-Regular.ttf in Resources */,
 				011960A023FA064100A7EF29 /* UARTMacrosHeaderView.xib in Resources */,
+				01E2B56F24ACA04600D22FB1 /* UARTMacrosCollectionViewCell.xib in Resources */,
 				5211EFB118856430007CC40D /* icon-hex@2x.png in Resources */,
 				4389183924360D0100175A94 /* LogTableViewCell.xib in Resources */,
 				20E07B672306975700FCB205 /* GT-Eesti-Display-Light-Italic.ttf in Resources */,
@@ -2173,6 +2210,7 @@
 				43645A9E24978A4000231247 /* UARTCoreDataUtil.swift in Sources */,
 				019985E623DEF2BD000CDCB6 /* NordicActionTableViewCell.swift in Sources */,
 				204485EA233A38E900A8A3A3 /* RunningSpeedSection.swift in Sources */,
+				01E2B56924ACA01600D22FB1 /* UARTMacrosCollectionViewController.swift in Sources */,
 				200973D723433A5E0091951B /* PaceMeasurementFormatter.swift in Sources */,
 				01AF928723D1A7D400C1BFD6 /* PeripheralView.swift in Sources */,
 				300143291CEC59F4008379DF /* ServiceIdentifiers.swift in Sources */,
@@ -2278,6 +2316,7 @@
 				01B6D3E2234CCC9F000942C4 /* HeartRateChartSection.swift in Sources */,
 				01B56C1623A11FDA00140A1C /* PeripheralScanner.swift in Sources */,
 				01E2B56524AB4D9900D22FB1 /* UARTPresetUIUtil.swift in Sources */,
+				01E2B56E24ACA04600D22FB1 /* UARTMacrosCollectionViewCell.swift in Sources */,
 				4389183C24360EAB00175A94 /* Logger.swift in Sources */,
 				01A1B77523CF5A080062FADC /* UICollectionView+Ext.swift in Sources */,
 				430901A7249B868E0030EE00 /* EmptyModel.swift in Sources */,
@@ -2323,6 +2362,7 @@
 				433A900F2453042900107822 /* LogObserver+DFU.swift in Sources */,
 				01AF929023D1DA5700C1BFD6 /* UARTPresetCollectionView.swift in Sources */,
 				20B7979A2338B8C0001328E1 /* MeasurementFormatter+Ext.swift in Sources */,
+				01E2B57224ACCAEE00D22FB1 /* SearchCollectionReusableView.swift in Sources */,
 				20F0C80C2327DB74003111E7 /* BGMSection.swift in Sources */,
 				01BE0953234A1C48006ACF06 /* HealthTermometerCharacteristic.swift in Sources */,
 				300143271CEC4B9D008379DF /* AppUtilities.swift in Sources */,

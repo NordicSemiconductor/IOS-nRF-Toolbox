@@ -86,7 +86,7 @@ class UARTTabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let viewControllers: [UIViewController] = [uartViewController, uartMacroViewController, uartLoggerViewController]
+        let viewControllers: [UIViewController] = [uartViewController, uartMacroViewController, uartLoggerViewController, UARTMacrosCollectionViewController()]
         
         setViewControllers(viewControllers, animated: true)
         

@@ -58,7 +58,6 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
     
     init(preset: UARTPreset, bluetoothManager: BluetoothManager, presentationType: PresentationType = .push) {
         macros = .empty
-        macros.preset = preset
         editingMode = false
         self.bluetoothManager = bluetoothManager
         self.presentationType = presentationType
@@ -272,7 +271,6 @@ extension UARTMacrosTableViewController: UARTPresetCollectionViewDelegate {
 
 extension UARTMacrosTableViewController: UARTNewCommandDelegate {
     func createdNewCommand(_ viewController: UARTNewCommandViewController, command: UARTCommandModel, index: Int) {
-        macros.preset.updateCommand(command, at: index)
         presetCollectionView?.reloadData()
         viewController.dismsiss()
     }
@@ -293,7 +291,7 @@ extension UARTMacrosTableViewController {
     
     private func presetCell(_ tableView: UITableView) -> UITableViewCell {
         let cell = tableView.dequeueCell(ofType: UARTPresetTableViewCell.self)
-        cell.apply(preset: macros.preset, delegate: self)
+//        cell.apply(preset: macros.preset, delegate: self)
         cell.selectionStyle = .none
         presetCollectionView = cell.presetCollectionView
         return cell

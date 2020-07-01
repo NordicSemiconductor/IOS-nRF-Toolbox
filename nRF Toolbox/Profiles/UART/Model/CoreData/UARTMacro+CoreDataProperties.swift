@@ -2,7 +2,7 @@
 //  UARTMacro+CoreDataProperties.swift
 //  
 //
-//  Created by Nick Kibish on 18.06.2020.
+//  Created by Nick Kibysh on 30/06/2020.
 //
 //
 
@@ -16,7 +16,7 @@ extension UARTMacro {
         return NSFetchRequest<UARTMacro>(entityName: "UARTMacro")
     }
 
-    @NSManaged var name: String?
-    @NSManaged var preset: UARTPreset!
+    @NSManaged public var name: String!
+    @NSManaged public var commandSet: [NSObject]!
 
 }

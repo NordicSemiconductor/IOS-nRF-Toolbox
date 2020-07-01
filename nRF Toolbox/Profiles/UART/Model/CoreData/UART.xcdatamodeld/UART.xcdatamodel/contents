@@ -6,8 +6,8 @@
         <attribute name="eolSymbol" attributeType="String"/>
     </entity>
     <entity name="UARTMacro" representedClassName="UARTMacro" syncable="YES">
+        <attribute name="commandSet" optional="YES" attributeType="Transformable"/>
         <attribute name="name" attributeType="String"/>
-        <relationship name="preset" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UARTPreset"/>
     </entity>
     <entity name="UARTMacroTimeInterval" representedClassName="UARTMacroTimeInterval" syncable="YES" codeGenerationType="class">
         <attribute name="delay" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>

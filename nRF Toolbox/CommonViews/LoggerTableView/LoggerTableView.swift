@@ -129,7 +129,6 @@ extension LoggerTableView: LogPresenter, Logger {
 
 extension LoggerTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("count: \(filteredData.count)")
         return filteredData.count
     }
     

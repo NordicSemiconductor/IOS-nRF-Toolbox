@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="GT-Eesti-Display-Regular.ttf">
+            <string>GTEestiDisplay-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="UARTMacrosCollectionViewCell" customModule="nRF_Toolbox" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="272" height="125"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="272" height="125"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VCj-R8-9Yl">
+                        <rect key="frame" x="0.0" y="0.0" width="272" height="125"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Zde-N6-iU7">
+                                <rect key="frame" x="8" y="75.5" width="103" height="39.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Macros Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAh-Rq-o6O">
+                                        <rect key="frame" x="0.0" y="0.0" width="103" height="20"/>
+                                        <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9 commands" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="24v-y2-SYn">
+                                        <rect key="frame" x="0.0" y="22" width="82.5" height="17.5"/>
+                                        <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="JYI-OK-Y47">
+                                <rect key="frame" x="8" y="10" width="88" height="24"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="doc" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="gpO-xp-KqU">
+                                        <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="gpO-xp-KqU" secondAttribute="height" multiplier="1:1" id="Qzl-RH-wfT"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.clockwise.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="gOd-Yv-bNt">
+                                        <rect key="frame" x="32" y="0.5" width="24" height="23"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="gOd-Yv-bNt" secondAttribute="height" multiplier="1:1" id="RlZ-cM-qa3"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.down.left.square" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="5zM-yt-qpi">
+                                        <rect key="frame" x="64" y="1" width="24" height="21.5"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="5zM-yt-qpi" secondAttribute="height" multiplier="1:1" id="CWv-9B-qoY"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="5zM-yt-qpi" firstAttribute="width" secondItem="5zM-yt-qpi" secondAttribute="height" multiplier="1:1" id="bLa-rg-0EE"/>
+                                    <constraint firstAttribute="height" constant="24" id="ejx-tg-BPW"/>
+                                    <constraint firstItem="5zM-yt-qpi" firstAttribute="width" secondItem="5zM-yt-qpi" secondAttribute="height" multiplier="1:1" id="vFG-lH-VPW"/>
+                                    <constraint firstItem="gOd-Yv-bNt" firstAttribute="width" secondItem="gOd-Yv-bNt" secondAttribute="height" multiplier="1:1" id="zsM-xv-a2Z"/>
+                                </constraints>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lep-rd-JfG">
+                                <rect key="frame" x="230" y="6" width="32" height="32"/>
+                                <color key="backgroundColor" white="1" alpha="0.25" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="M9g-5x-U6G"/>
+                                    <constraint firstAttribute="width" secondItem="lep-rd-JfG" secondAttribute="height" multiplier="1:1" id="axY-Ma-OOx"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="ellipsis" catalog="system"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="18"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.34509803921568627" green="0.59215686274509804" blue="0.24313725490196078" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="Zde-N6-iU7" firstAttribute="leading" secondItem="VCj-R8-9Yl" secondAttribute="leading" constant="8" id="Bjh-Da-eNC"/>
+                            <constraint firstItem="JYI-OK-Y47" firstAttribute="top" secondItem="VCj-R8-9Yl" secondAttribute="top" constant="10" id="EoY-IC-Pjy"/>
+                            <constraint firstAttribute="bottom" secondItem="Zde-N6-iU7" secondAttribute="bottom" constant="10" id="G0f-I4-auN"/>
+                            <constraint firstItem="lep-rd-JfG" firstAttribute="centerY" secondItem="JYI-OK-Y47" secondAttribute="centerY" id="K3K-0F-YVc"/>
+                            <constraint firstAttribute="trailing" secondItem="lep-rd-JfG" secondAttribute="trailing" constant="10" id="RvR-q7-Fv8"/>
+                            <constraint firstItem="Zde-N6-iU7" firstAttribute="leading" secondItem="JYI-OK-Y47" secondAttribute="leading" id="YCM-qz-2g5"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="12"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="VCj-R8-9Yl" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="cIw-A6-UgU"/>
+                <constraint firstAttribute="bottom" secondItem="VCj-R8-9Yl" secondAttribute="bottom" id="dY5-rU-Fdj"/>
+                <constraint firstAttribute="trailing" secondItem="VCj-R8-9Yl" secondAttribute="trailing" id="dtx-TO-sTd"/>
+                <constraint firstItem="VCj-R8-9Yl" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="nTk-aP-PMW"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <size key="customSize" width="272" height="125"/>
+            <point key="canvasLocation" x="-115.94202898550725" y="204.57589285714286"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="arrow.clockwise.circle" catalog="system" width="128" height="121"/>
+        <image name="arrow.down.left.square" catalog="system" width="128" height="114"/>
+        <image name="doc" catalog="system" width="115" height="128"/>
+        <image name="ellipsis" catalog="system" width="128" height="37"/>
+    </resources>
+</document>

@@ -34,11 +34,9 @@ import UIKit
 
 class UARTMacrosList: UITableViewController, CloseButtonPresenter, AlertPresenter {
 
-    private var macrosNames: [String] = []
+    private var macros: [UARTMacro] = []
     
     private let btManager: BluetoothManager
-//    private let macrosFileManager = UARTMacroFileManager()
-//    private let preset: UARTPreset
     
     init(bluetoothManager: BluetoothManager) {
         self.btManager = bluetoothManager
@@ -52,7 +50,7 @@ class UARTMacrosList: UITableViewController, CloseButtonPresenter, AlertPresente
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        macrosNames = loadMacrosList()
+        macros = loadMacrosList()
         
         tableView.registerCellClass(cell: NordicTextTableViewCell.self)
         tableView.registerCellClass(cell: NordicActionTableViewCell.self)
@@ -66,7 +64,7 @@ class UARTMacrosList: UITableViewController, CloseButtonPresenter, AlertPresente
     override func numberOfSections(in tableView: UITableView) -> Int { 2 }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        section == 0 ? macrosNames.count : 1
+        section == 0 ? macros.count : 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -77,7 +75,7 @@ class UARTMacrosList: UITableViewController, CloseButtonPresenter, AlertPresente
         }
         
         let cell = tableView.dequeueCell(ofType: NordicTextTableViewCell.self)
-        cell.textLabel?.text = macrosNames[indexPath.row]
+        cell.textLabel?.text = macros[indexPath.row].name
         return cell
     }
     
@@ -109,18 +107,15 @@ class UARTMacrosList: UITableViewController, CloseButtonPresenter, AlertPresente
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
-        let macroName = macrosNames[indexPath.row]
+        let macroName = macros[indexPath.row].name
         fatalError()
-//        try? displayOnError(macrosFileManager.removeMacro(name: macroName))
-        macrosNames = loadMacrosList()
         tableView.deleteRows(at: [indexPath], with: .automatic)
     }
 }
 
 extension UARTMacrosList {
-    private func loadMacrosList() -> [String] {
-        fatalError()
-//        (try? displayOnError( macrosFileManager.macrosList()) ) ?? []
+    private func loadMacrosList() -> [UARTMacro] {
+        return []
     }
 }
 
@@ -136,7 +131,7 @@ extension UARTMacrosList: UARTMacroViewControllerDelegate {
     }
     
     private func reloadData() {
-        macrosNames = loadMacrosList()
+        macros = loadMacrosList()
         tableView.reloadData()
     }
     
