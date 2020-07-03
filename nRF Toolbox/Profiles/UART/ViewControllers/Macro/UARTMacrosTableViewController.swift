@@ -125,7 +125,7 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
         switch section {
         case Section.name: return 1
         case Section.preset: return 1
-        case Section.commands: return macros.commands.count + 1
+        case Section.commands: return macros.elements.count + 1
         case Section.play: return 1
         default: return 0
         }
@@ -179,11 +179,11 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        indexPath.section == Section.commands && indexPath.row < macros.commands.count
+        indexPath.section == Section.commands && indexPath.row < macros.elements.count
     }
     
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        guard indexPath.section == Section.commands, indexPath.row < macros.commands.count else { return .none}
+        guard indexPath.section == Section.commands, indexPath.row < macros.elements.count else { return .none}
         return .delete
     }
     
@@ -203,21 +203,21 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
     }
     
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        indexPath.section == Section.commands && indexPath.row < macros.commands.count
+        indexPath.section == Section.commands && indexPath.row < macros.elements.count
     }
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let item = macros.commands[sourceIndexPath.row]
+        let item = macros.elements[sourceIndexPath.row]
         
-        macros.commands.remove(at: sourceIndexPath.row)
-        macros.commands.insert(item, at: destinationIndexPath.row)
+        macros.elements.remove(at: sourceIndexPath.row)
+        macros.elements.insert(item, at: destinationIndexPath.row)
         
         print(destinationIndexPath)
     }
     
     override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
-        guard proposedDestinationIndexPath.section != Section.commands || proposedDestinationIndexPath.row >= macros.commands.count else { return proposedDestinationIndexPath }
-        return IndexPath(row: macros.commands.count - 1, section: Section.commands)
+        guard proposedDestinationIndexPath.section != Section.commands || proposedDestinationIndexPath.row >= macros.elements.count else { return proposedDestinationIndexPath }
+        return IndexPath(row: macros.elements.count - 1, section: Section.commands)
     }
 }
 
@@ -260,8 +260,8 @@ extension UARTMacrosTableViewController: UARTPresetCollectionViewDelegate {
             return
         }
         
-        macros.commands.append(command)
-        tableView.insertRows(at: [IndexPath(item: macros.commands.count - 1, section: Section.commands)], with: .automatic)
+        macros.elements.append(command)
+        tableView.insertRows(at: [IndexPath(item: macros.elements.count - 1, section: Section.commands)], with: .automatic)
     }
     
     func longTapAtCommand(_ command: UARTCommandModel, at index: Int) {
@@ -298,13 +298,13 @@ extension UARTMacrosTableViewController {
     }
     
     private func commandCell(_ tableView: UITableView, index: Int) -> UITableViewCell {
-        guard index < macros.commands.count else {
+        guard index < macros.elements.count else {
             let cell = tableView.dequeueCell(ofType: NordicActionTableViewCell.self)
             cell.textLabel?.text = "Add delay"
             return cell
         }
         
-        let element = macros.commands[index]
+        let element = macros.elements[index]
         switch element {
         case let timeInterval as UARTMacroTimeInterval:
             let cell = tableView.dequeueCell(ofType: TimeIntervalTableViewCell.self)

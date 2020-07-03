@@ -88,6 +88,9 @@
                                         <real key="value" value="18"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="editButtonPressed" destination="gTV-IL-0wX" eventType="touchUpInside" id="6CJ-1K-rjX"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.34509803921568627" green="0.59215686274509804" blue="0.24313725490196078" alpha="1" colorSpace="calibratedRGB"/>
@@ -115,6 +118,12 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="272" height="125"/>
+            <connections>
+                <outlet property="commandsLabel" destination="24v-y2-SYn" id="UWY-XU-buc"/>
+                <outlet property="imageStack" destination="JYI-OK-Y47" id="S7l-b9-FvX"/>
+                <outlet property="macroColorView" destination="VCj-R8-9Yl" id="LZ4-MP-hmh"/>
+                <outlet property="nameLabel" destination="kAh-Rq-o6O" id="I9A-YG-jJH"/>
+            </connections>
             <point key="canvasLocation" x="-115.94202898550725" y="204.57589285714286"/>
         </collectionViewCell>
     </objects>

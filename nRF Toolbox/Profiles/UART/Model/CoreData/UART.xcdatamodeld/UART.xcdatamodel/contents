@@ -6,6 +6,7 @@
         <attribute name="eolSymbol" attributeType="String"/>
     </entity>
     <entity name="UARTMacro" representedClassName="UARTMacro" syncable="YES">
+        <attribute name="colorName" optional="YES" attributeType="String"/>
         <attribute name="commandSet" optional="YES" attributeType="Transformable"/>
         <attribute name="name" attributeType="String"/>
     </entity>
@@ -22,7 +23,7 @@
         <element name="DataCommand" positionX="-27" positionY="36" width="128" height="43"/>
         <element name="EmptyModel" positionX="-54" positionY="18" width="128" height="43"/>
         <element name="TextCommand" positionX="-45" positionY="27" width="128" height="58"/>
-        <element name="UARTMacro" positionX="-27" positionY="27" width="128" height="73"/>
+        <element name="UARTMacro" positionX="-27" positionY="27" width="128" height="88"/>
         <element name="UARTMacroTimeInterval" positionX="9" positionY="54" width="128" height="58"/>
         <element name="UARTPreset" positionX="-27" positionY="27" width="128" height="88"/>
     </elements>

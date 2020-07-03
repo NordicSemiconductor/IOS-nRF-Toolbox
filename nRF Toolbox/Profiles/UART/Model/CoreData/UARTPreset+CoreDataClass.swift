@@ -10,7 +10,8 @@ import Foundation
 import CoreData
 
 @objc(UARTPreset)
-class UARTPreset: NSManagedObject {
+class
+        UARTPreset: NSManagedObject {
     
     var isEmpty: Bool {
         self.commands.reduce(true) { $0 && ($1 is EmptyModel) }

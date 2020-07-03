@@ -120,6 +120,8 @@
 		01E2B56F24ACA04600D22FB1 /* UARTMacrosCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E2B56D24ACA04600D22FB1 /* UARTMacrosCollectionViewCell.xib */; };
 		01E2B57224ACCAEE00D22FB1 /* SearchCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E2B57024ACCAEE00D22FB1 /* SearchCollectionReusableView.swift */; };
 		01E2B57324ACCAEE00D22FB1 /* SearchCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E2B57124ACCAEE00D22FB1 /* SearchCollectionReusableView.xib */; };
+		01E2B57524ADCE4F00D22FB1 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E2B57424ADCE4F00D22FB1 /* UIColor+Ext.swift */; };
+		01E2B57724ADF8BD00D22FB1 /* UARTColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E2B57624ADF8BD00D22FB1 /* UARTColor.swift */; };
 		01E5910923DB3BC5008F15A4 /* QuickError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910823DB3BC4008F15A4 /* QuickError.swift */; };
 		01E5910B23DECF61008F15A4 /* UARTMacrosList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */; };
 		01FBC5012407BF8F00B1056B /* PeripheralHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */; };
@@ -453,6 +455,8 @@
 		01E2B56D24ACA04600D22FB1 /* UARTMacrosCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTMacrosCollectionViewCell.xib; sourceTree = "<group>"; };
 		01E2B57024ACCAEE00D22FB1 /* SearchCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionReusableView.swift; sourceTree = "<group>"; };
 		01E2B57124ACCAEE00D22FB1 /* SearchCollectionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchCollectionReusableView.xib; sourceTree = "<group>"; };
+		01E2B57424ADCE4F00D22FB1 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
+		01E2B57624ADF8BD00D22FB1 /* UARTColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTColor.swift; sourceTree = "<group>"; };
 		01E5910823DB3BC4008F15A4 /* QuickError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickError.swift; sourceTree = "<group>"; };
 		01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosList.swift; sourceTree = "<group>"; };
 		01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralHolder.swift; sourceTree = "<group>"; };
@@ -1435,6 +1439,7 @@
 				01FBC5142408158F00B1056B /* CBPeripheralState+Ext.swift */,
 				01BEADD7241AE6BF00FC7183 /* UILabel+Ext.swift */,
 				CC7B93FA695799F95D065492 /* NumberFormatter+Ext.swift */,
+				01E2B57424ADCE4F00D22FB1 /* UIColor+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1684,6 +1689,7 @@
 			children = (
 				4309019F249B802B0030EE00 /* MacroModel */,
 				4325A6AF247FC60F007A8868 /* EOL.swift */,
+				01E2B57624ADF8BD00D22FB1 /* UARTColor.swift */,
 				431F62EB247DDB3F00DC32DA /* CoreData */,
 				4322034323CC9D31009840DD /* UARTCommandModel1.swift */,
 				01AF929123D5A9CD00C1BFD6 /* UARTMacro.swift */,
@@ -2338,6 +2344,7 @@
 				430901A1249B80380030EE00 /* UARTMacroElement.swift in Sources */,
 				01FBC5102408101B00B1056B /* NordicRightDetailTableViewCell.swift in Sources */,
 				20D08E2B232B95B300569587 /* DisclosureTableViewCell.swift in Sources */,
+				01E2B57524ADCE4F00D22FB1 /* UIColor+Ext.swift in Sources */,
 				2002A0052322610F00C43E06 /* GlucoseMonitorViewController.swift in Sources */,
 				01BEADD4241A992300FC7183 /* HMAccessoryListTableViewController.swift in Sources */,
 				430901A5249B85BA0030EE00 /* DataCommand.swift in Sources */,
@@ -2355,6 +2362,7 @@
 				20F15C3A2313D2B9000C5503 /* InfoActionView.swift in Sources */,
 				01FEB0FD23969BD1000767C1 /* UIView+Ext.swift in Sources */,
 				20F15C3F2313D606000C5503 /* NoContentViewController.swift in Sources */,
+				01E2B57724ADF8BD00D22FB1 /* UARTColor.swift in Sources */,
 				0125D5B623F44FE6003A1812 /* UIBarButtonItem+Ext.swift in Sources */,
 				014C4E8B2403F9BD0003E601 /* UARTMacroSaver.swift in Sources */,
 				01BEADCF2418FB1800FC7183 /* DFUUpdateProgressView.swift in Sources */,

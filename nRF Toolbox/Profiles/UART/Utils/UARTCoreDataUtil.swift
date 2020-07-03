@@ -50,6 +50,10 @@ extension UARTCoreDataUtil {
         stack.viewContext.insert(UARTPreset.default)
         stack.viewContext.insert(UARTPreset.walkman)
         stack.viewContext.insert(UARTPreset.numbers)
+
+        stack.viewContext.insert(UARTMacro.walkman)
+        stack.viewContext.insert(UARTMacro.numbers)
+        stack.viewContext.insert(UARTMacro.controller)
         
         try! stack.viewContext.save()
         

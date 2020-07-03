@@ -2,7 +2,7 @@
 //  UARTMacro+CoreDataProperties.swift
 //  
 //
-//  Created by Nick Kibysh on 30/06/2020.
+//  Created by Nick Kibysh on 02/07/2020.
 //
 //
 
@@ -18,5 +18,6 @@ extension UARTMacro {
 
     @NSManaged public var name: String!
     @NSManaged public var commandSet: [NSObject]!
+    @NSManaged public var colorName: String!
 
 }

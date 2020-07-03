@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 extension UICollectionViewFlowLayout {
     func itemWidth(minimumCellWidth minWidth: CGFloat) -> CGFloat {
@@ -24,6 +25,8 @@ extension UICollectionViewFlowLayout {
 
 class UARTMacrosCollectionViewController: UICollectionViewController {
     
+    var macros: [UARTMacro] = []
+    
     init() {
         super.init(nibName: "UARTMacrosCollectionViewController", bundle: .main)
     }
@@ -37,6 +40,13 @@ class UARTMacrosCollectionViewController: UICollectionViewController {
         
         collectionView.register(type: UARTMacrosCollectionViewCell.self)
         collectionView.registerViewNib(type: SearchCollectionReusableView.self, ofKind: UICollectionView.elementKindSectionHeader)
+        
+        self.macros = fetchMacros()
+    }
+    
+    private func fetchMacros() -> [UARTMacro] {
+        let request: NSFetchRequest<UARTMacro> = UARTMacro.fetchRequest()
+        return try! CoreDataStack.uart.viewContext.fetch(request)
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -44,11 +54,14 @@ class UARTMacrosCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        5
+        macros.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueCell(ofType: UARTMacrosCollectionViewCell.self, for: indexPath)
+        let macro = macros[indexPath.item]
+        cell.applyMacro(macro)
+        
         return cell
     }
 

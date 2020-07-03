@@ -248,7 +248,7 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
     func send(macro: UARTMacro) {
         
         btQueue.async {
-            macro.commands.forEach { (element) in
+            macro.elements.forEach { (element) in
                 switch element {
                 case let command as UARTCommandModel:
                     self.send(command: command)
