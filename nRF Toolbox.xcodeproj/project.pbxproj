@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		01006201234D08700078CEFA /* LinearChartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01006200234D08700078CEFA /* LinearChartTableViewCell.swift */; };
 		01078F4D24A0C482009A170E /* UARTPreset+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01078F4C24A0C482009A170E /* UARTPreset+View.swift */; };
+		01135D3524B320CC00DA0434 /* UARTMacroRepeatCommandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01135D3424B320CC00DA0434 /* UARTMacroRepeatCommandCell.swift */; };
 		0119609E23FA063700A7EF29 /* UARTMacrosHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0119609D23FA063700A7EF29 /* UARTMacrosHeaderView.swift */; };
 		011960A023FA064100A7EF29 /* UARTMacrosHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0119609F23FA064100A7EF29 /* UARTMacrosHeaderView.xib */; };
 		0125D5B623F44FE6003A1812 /* UIBarButtonItem+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0125D5B523F44FE6003A1812 /* UIBarButtonItem+Ext.swift */; };
@@ -77,6 +78,9 @@
 		01AF929623D8962600C1BFD6 /* UARTPreset1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AF929523D8962600C1BFD6 /* UARTPreset1.swift */; };
 		01AF929A23DB17C100C1BFD6 /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AF929923DB17C100C1BFD6 /* AlertPresenter.swift */; };
 		01B56C1623A11FDA00140A1C /* PeripheralScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B56C1523A11FB600140A1C /* PeripheralScanner.swift */; };
+		01B5A78524AF520C00B0FF97 /* UARTMacrosEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B5A78424AF520C00B0FF97 /* UARTMacrosEditViewController.swift */; };
+		01B5A78924AF52F600B0FF97 /* UARTMacroCommandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B5A78724AF52F600B0FF97 /* UARTMacroCommandCell.swift */; };
+		01B5A78A24AF52F600B0FF97 /* UARTMacroCommandCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01B5A78824AF52F600B0FF97 /* UARTMacroCommandCell.xib */; };
 		01B6D3D3234C7538000942C4 /* HeartRateMonitorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3D2234C7538000942C4 /* HeartRateMonitorTableViewController.swift */; };
 		01B6D3D8234CB533000942C4 /* HeartRateMeasurementCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3D7234CB533000942C4 /* HeartRateMeasurementCharacteristic.swift */; };
 		01B6D3DA234CB6B3000942C4 /* HeartRateSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3D9234CB6B3000942C4 /* HeartRateSection.swift */; };
@@ -124,6 +128,7 @@
 		01E2B57724ADF8BD00D22FB1 /* UARTColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E2B57624ADF8BD00D22FB1 /* UARTColor.swift */; };
 		01E5910923DB3BC5008F15A4 /* QuickError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910823DB3BC4008F15A4 /* QuickError.swift */; };
 		01E5910B23DECF61008F15A4 /* UARTMacrosList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */; };
+		01EDBDA624AF679100F15CEF /* UARTMacrosEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01EDBDA524AF679100F15CEF /* UARTMacrosEditViewController.xib */; };
 		01FBC5012407BF8F00B1056B /* PeripheralHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */; };
 		01FBC5062407C2B000B1056B /* FileSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5042407C2B000B1056B /* FileSelectorViewController.swift */; };
 		01FBC5072407C2B000B1056B /* FileSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01FBC5052407C2B000B1056B /* FileSelectorViewController.xib */; };
@@ -342,6 +347,7 @@
 /* Begin PBXFileReference section */
 		01006200234D08700078CEFA /* LinearChartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearChartTableViewCell.swift; sourceTree = "<group>"; };
 		01078F4C24A0C482009A170E /* UARTPreset+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UARTPreset+View.swift"; sourceTree = "<group>"; };
+		01135D3424B320CC00DA0434 /* UARTMacroRepeatCommandCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacroRepeatCommandCell.swift; sourceTree = "<group>"; };
 		0119609D23FA063700A7EF29 /* UARTMacrosHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosHeaderView.swift; sourceTree = "<group>"; };
 		0119609F23FA064100A7EF29 /* UARTMacrosHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTMacrosHeaderView.xib; sourceTree = "<group>"; };
 		0125D5B523F44FE6003A1812 /* UIBarButtonItem+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Ext.swift"; sourceTree = "<group>"; };
@@ -412,6 +418,9 @@
 		01AF929523D8962600C1BFD6 /* UARTPreset1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTPreset1.swift; sourceTree = "<group>"; };
 		01AF929923DB17C100C1BFD6 /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
 		01B56C1523A11FB600140A1C /* PeripheralScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralScanner.swift; sourceTree = "<group>"; };
+		01B5A78424AF520C00B0FF97 /* UARTMacrosEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosEditViewController.swift; sourceTree = "<group>"; };
+		01B5A78724AF52F600B0FF97 /* UARTMacroCommandCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacroCommandCell.swift; sourceTree = "<group>"; };
+		01B5A78824AF52F600B0FF97 /* UARTMacroCommandCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTMacroCommandCell.xib; sourceTree = "<group>"; };
 		01B6D3D2234C7538000942C4 /* HeartRateMonitorTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateMonitorTableViewController.swift; sourceTree = "<group>"; };
 		01B6D3D7234CB533000942C4 /* HeartRateMeasurementCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateMeasurementCharacteristic.swift; sourceTree = "<group>"; };
 		01B6D3D9234CB6B3000942C4 /* HeartRateSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateSection.swift; sourceTree = "<group>"; };
@@ -459,6 +468,7 @@
 		01E2B57624ADF8BD00D22FB1 /* UARTColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTColor.swift; sourceTree = "<group>"; };
 		01E5910823DB3BC4008F15A4 /* QuickError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickError.swift; sourceTree = "<group>"; };
 		01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosList.swift; sourceTree = "<group>"; };
+		01EDBDA524AF679100F15CEF /* UARTMacrosEditViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTMacrosEditViewController.xib; sourceTree = "<group>"; };
 		01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralHolder.swift; sourceTree = "<group>"; };
 		01FBC5042407C2B000B1056B /* FileSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSelectorViewController.swift; sourceTree = "<group>"; };
 		01FBC5052407C2B000B1056B /* FileSelectorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FileSelectorViewController.xib; sourceTree = "<group>"; };
@@ -932,6 +942,45 @@
 			path = Connection;
 			sourceTree = "<group>";
 		};
+		01B5A78224AF451700B0FF97 /* MacrosList */ = {
+			isa = PBXGroup;
+			children = (
+				01B5A78324AF452300B0FF97 /* MacrosEdit */,
+				01E2B56B24ACA02500D22FB1 /* Cells */,
+				01E2B56724ACA01600D22FB1 /* UARTMacrosCollectionViewController.swift */,
+				01E2B56824ACA01600D22FB1 /* UARTMacrosCollectionViewController.xib */,
+			);
+			path = MacrosList;
+			sourceTree = "<group>";
+		};
+		01B5A78324AF452300B0FF97 /* MacrosEdit */ = {
+			isa = PBXGroup;
+			children = (
+				01B5A78624AF521F00B0FF97 /* Cell */,
+				01B5A78424AF520C00B0FF97 /* UARTMacrosEditViewController.swift */,
+				01EDBDA524AF679100F15CEF /* UARTMacrosEditViewController.xib */,
+			);
+			path = MacrosEdit;
+			sourceTree = "<group>";
+		};
+		01B5A78624AF521F00B0FF97 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				01B5A78B24AF531100B0FF97 /* UARTMacroCommandCell */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		01B5A78B24AF531100B0FF97 /* UARTMacroCommandCell */ = {
+			isa = PBXGroup;
+			children = (
+				01B5A78724AF52F600B0FF97 /* UARTMacroCommandCell.swift */,
+				01B5A78824AF52F600B0FF97 /* UARTMacroCommandCell.xib */,
+				01135D3424B320CC00DA0434 /* UARTMacroRepeatCommandCell.swift */,
+			);
+			path = UARTMacroCommandCell;
+			sourceTree = "<group>";
+		};
 		01B6D3D1234C74F3000942C4 /* HeartRateMonitor */ = {
 			isa = PBXGroup;
 			children = (
@@ -1110,9 +1159,7 @@
 		01E2B56624AC9FF400D22FB1 /* UPD */ = {
 			isa = PBXGroup;
 			children = (
-				01E2B56B24ACA02500D22FB1 /* Cells */,
-				01E2B56724ACA01600D22FB1 /* UARTMacrosCollectionViewController.swift */,
-				01E2B56824ACA01600D22FB1 /* UARTMacrosCollectionViewController.xib */,
+				01B5A78224AF451700B0FF97 /* MacrosList */,
 			);
 			path = UPD;
 			sourceTree = "<group>";
@@ -2076,6 +2123,7 @@
 				01BEADD12418FB5A00FC7183 /* DFUUpdateProgressView.xib in Resources */,
 				20E07B682306975700FCB205 /* GT-Eesti-Display-ULight-Italic.ttf in Resources */,
 				0197AFD02420DAAC00ADF105 /* NotConnectedViewController.xib in Resources */,
+				01EDBDA624AF679100F15CEF /* UARTMacrosEditViewController.xib in Resources */,
 				0151170C240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.xib in Resources */,
 				01D6D2B924067B0500E1A66F /* Resources.xcassets in Resources */,
 				433A900A2451AA1900107822 /* SliderTableViewCell.xib in Resources */,
@@ -2113,6 +2161,7 @@
 				20E07B652306975700FCB205 /* GT-Eesti-Display-ULight.ttf in Resources */,
 				43645A9C2497781600231247 /* UARTPresetCollectionViewCell.xib in Resources */,
 				016EF389241632AF005FFA30 /* LoggerTableViewController.xib in Resources */,
+				01B5A78A24AF52F600B0FF97 /* UARTMacroCommandCell.xib in Resources */,
 				01E2B55F24A4887500D22FB1 /* PresetListUtilityCell.xib in Resources */,
 				20E07B612306975700FCB205 /* GT-Eesti-Display-Medium.ttf in Resources */,
 				20F15C3C2313D2C7000C5503 /* InfoActionView.xib in Resources */,
@@ -2303,6 +2352,7 @@
 				20C7FE0E230A9F9300B06FD8 /* LinkTableViewCell.swift in Sources */,
 				01D98C8C242E2B3C000A3B35 /* UIImage+File.swift in Sources */,
 				432DCD53244E5FEE00C6828F /* RSSI.swift in Sources */,
+				01135D3524B320CC00DA0434 /* UARTMacroRepeatCommandCell.swift in Sources */,
 				012C2BE32410682D005EC1A0 /* SegmentedView.swift in Sources */,
 				01BE0955234A7500006ACF06 /* HealthTemperatureSection.swift in Sources */,
 				01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */,
@@ -2335,6 +2385,7 @@
 				436C0AD02456FD3300B03B61 /* ModernIcon+Const.swift in Sources */,
 				20C7FE5B230EAD0000B06FD8 /* UINavigationController+Ext.swift in Sources */,
 				20F0C8062327D439003111E7 /* BatterySection.swift in Sources */,
+				01B5A78924AF52F600B0FF97 /* UARTMacroCommandCell.swift in Sources */,
 				5231403222FB1E130074325A /* UIColor+Nordic.swift in Sources */,
 				4308BC862487E8F500C278AD /* UARTMacro+CoreDataClass.swift in Sources */,
 				30A1145A1CD2426B000F0F02 /* ScannerDelegate.swift in Sources */,
@@ -2402,6 +2453,7 @@
 				4350CFFA244CEFC90068EEEA /* DistanceView.swift in Sources */,
 				4353A5122431856A00159CDF /* AccessoriesSection.swift in Sources */,
 				33976F79FE2EA20D94F68B69 /* ContinuousGlucoseChartData.swift in Sources */,
+				01B5A78524AF520C00B0FF97 /* UARTMacrosEditViewController.swift in Sources */,
 				339764F85119305F6958B516 /* LastDataSection.swift in Sources */,
 				015F1098240FA06D00FDAC49 /* DFUActionSection.swift in Sources */,
 				339763D0A0642AF6C7E7AA85 /* StartStopSection.swift in Sources */,

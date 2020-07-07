@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="GT-Eesti-Display-Regular.ttf">
+            <string>GTEestiDisplay-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="67" id="KGk-i7-Jjw" customClass="UARTMacroCommandCell" customModule="nRF_Toolbox" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="452" height="67"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="452" height="67"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="hrl-Fp-nrf">
+                        <rect key="frame" x="12" y="12.5" width="44" height="42"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="hrl-Fp-nrf" secondAttribute="height" multiplier="1:1" constant="1" id="Asd-Vf-9PN"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Command Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="flh-Gj-EOe">
+                        <rect key="frame" x="64" y="12" width="118.5" height="19"/>
+                        <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="16"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ejI-Eh-fuK">
+                        <rect key="frame" x="408" y="12" width="32" height="32"/>
+                        <color key="backgroundColor" systemColor="systemGray6Color" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="32" id="6o9-CJ-t3o"/>
+                            <constraint firstAttribute="width" secondItem="ejI-Eh-fuK" secondAttribute="height" multiplier="1:1" id="MBP-yY-yQz"/>
+                        </constraints>
+                        <state key="normal" image="xmark" catalog="system"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="16"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QPW-RE-4oH">
+                        <rect key="frame" x="352" y="12" width="32" height="32"/>
+                        <color key="backgroundColor" systemColor="systemGray6Color" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="QPW-RE-4oH" secondAttribute="height" multiplier="1:1" id="KUS-UK-R0t"/>
+                        </constraints>
+                        <state key="normal" image="slider.horizontal.3" catalog="system"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="4"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Command Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PUe-Wr-LEV">
+                        <rect key="frame" x="64" y="41" width="89" height="14"/>
+                        <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="12"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="ejI-Eh-fuK" firstAttribute="bottom" secondItem="QPW-RE-4oH" secondAttribute="bottom" id="Qai-Ei-4lH"/>
+                    <constraint firstItem="ejI-Eh-fuK" firstAttribute="leading" secondItem="QPW-RE-4oH" secondAttribute="trailing" constant="24" id="SvR-J8-x0Z"/>
+                    <constraint firstItem="hrl-Fp-nrf" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="TtA-st-C8H"/>
+                    <constraint firstAttribute="trailing" secondItem="ejI-Eh-fuK" secondAttribute="trailing" constant="12" id="U21-gj-bTr"/>
+                    <constraint firstItem="flh-Gj-EOe" firstAttribute="top" secondItem="hrl-Fp-nrf" secondAttribute="top" id="U3Y-8W-gDc"/>
+                    <constraint firstItem="PUe-Wr-LEV" firstAttribute="bottom" secondItem="hrl-Fp-nrf" secondAttribute="bottom" id="duz-5o-hsh"/>
+                    <constraint firstItem="ejI-Eh-fuK" firstAttribute="top" secondItem="flh-Gj-EOe" secondAttribute="top" id="eAe-IC-Owd"/>
+                    <constraint firstItem="hrl-Fp-nrf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="hGw-cy-bnd"/>
+                    <constraint firstItem="ejI-Eh-fuK" firstAttribute="top" secondItem="QPW-RE-4oH" secondAttribute="top" id="lxA-eL-Ff3"/>
+                    <constraint firstItem="PUe-Wr-LEV" firstAttribute="leading" secondItem="flh-Gj-EOe" secondAttribute="leading" id="nFf-DU-1Ta"/>
+                    <constraint firstItem="hrl-Fp-nrf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="vC8-aM-9jh"/>
+                    <constraint firstItem="flh-Gj-EOe" firstAttribute="leading" secondItem="hrl-Fp-nrf" secondAttribute="trailing" constant="8" id="yJx-yg-hZz"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <point key="canvasLocation" x="1.4492753623188408" y="107.47767857142857"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="play.circle" catalog="system" width="128" height="121"/>
+        <image name="slider.horizontal.3" catalog="system" width="128" height="100"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
+    </resources>
+</document>
