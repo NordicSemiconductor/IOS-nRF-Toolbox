@@ -41,4 +41,16 @@ extension UIColor {
             return nil
         }
     }
+    
+    public func adjustAlpha(_ newValue: CGFloat) -> UIColor? {
+        var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
+        if self.getRed(&red, green: &green, blue: &blue, alpha: &alpha) {
+            return UIColor(red: red,
+                           green: green,
+                           blue: blue,
+                           alpha: newValue)
+        } else {
+            return nil
+        }
+    }
 }

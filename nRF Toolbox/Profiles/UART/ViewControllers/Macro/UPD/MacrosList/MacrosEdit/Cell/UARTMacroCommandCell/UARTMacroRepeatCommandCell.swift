@@ -9,5 +9,9 @@
 import UIKit
 
 class UARTMacroRepeatCommandCell: UITableViewCell {
+    @IBOutlet var title: UILabel!
+    @IBOutlet var argument: ArgumentLabel!
+    
+    
     
 }

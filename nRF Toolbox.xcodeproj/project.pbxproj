@@ -10,6 +10,10 @@
 		01006201234D08700078CEFA /* LinearChartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01006200234D08700078CEFA /* LinearChartTableViewCell.swift */; };
 		01078F4D24A0C482009A170E /* UARTPreset+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01078F4C24A0C482009A170E /* UARTPreset+View.swift */; };
 		01135D3524B320CC00DA0434 /* UARTMacroRepeatCommandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01135D3424B320CC00DA0434 /* UARTMacroRepeatCommandCell.swift */; };
+		01135D6024B5B55600DA0434 /* UARTMacroRepeatCommandCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01135D5F24B5B55600DA0434 /* UARTMacroRepeatCommandCell.xib */; };
+		01135D6224B5B9B000DA0434 /* ArgumentLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01135D6124B5B9B000DA0434 /* ArgumentLabel.swift */; };
+		01135D6424B5F7BC00DA0434 /* UARTIncrementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01135D6324B5F7BC00DA0434 /* UARTIncrementViewController.swift */; };
+		01135D6624B60D6D00DA0434 /* UARTIncrementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01135D6524B60D6D00DA0434 /* UARTIncrementViewController.xib */; };
 		0119609E23FA063700A7EF29 /* UARTMacrosHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0119609D23FA063700A7EF29 /* UARTMacrosHeaderView.swift */; };
 		011960A023FA064100A7EF29 /* UARTMacrosHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0119609F23FA064100A7EF29 /* UARTMacrosHeaderView.xib */; };
 		0125D5B623F44FE6003A1812 /* UIBarButtonItem+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0125D5B523F44FE6003A1812 /* UIBarButtonItem+Ext.swift */; };
@@ -348,6 +352,10 @@
 		01006200234D08700078CEFA /* LinearChartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearChartTableViewCell.swift; sourceTree = "<group>"; };
 		01078F4C24A0C482009A170E /* UARTPreset+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UARTPreset+View.swift"; sourceTree = "<group>"; };
 		01135D3424B320CC00DA0434 /* UARTMacroRepeatCommandCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacroRepeatCommandCell.swift; sourceTree = "<group>"; };
+		01135D5F24B5B55600DA0434 /* UARTMacroRepeatCommandCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTMacroRepeatCommandCell.xib; sourceTree = "<group>"; };
+		01135D6124B5B9B000DA0434 /* ArgumentLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentLabel.swift; sourceTree = "<group>"; };
+		01135D6324B5F7BC00DA0434 /* UARTIncrementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTIncrementViewController.swift; sourceTree = "<group>"; };
+		01135D6524B60D6D00DA0434 /* UARTIncrementViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTIncrementViewController.xib; sourceTree = "<group>"; };
 		0119609D23FA063700A7EF29 /* UARTMacrosHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosHeaderView.swift; sourceTree = "<group>"; };
 		0119609F23FA064100A7EF29 /* UARTMacrosHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTMacrosHeaderView.xib; sourceTree = "<group>"; };
 		0125D5B523F44FE6003A1812 /* UIBarButtonItem+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Ext.swift"; sourceTree = "<group>"; };
@@ -719,6 +727,7 @@
 			children = (
 				0119609D23FA063700A7EF29 /* UARTMacrosHeaderView.swift */,
 				0119609F23FA064100A7EF29 /* UARTMacrosHeaderView.xib */,
+				01135D6124B5B9B000DA0434 /* ArgumentLabel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -959,6 +968,8 @@
 				01B5A78624AF521F00B0FF97 /* Cell */,
 				01B5A78424AF520C00B0FF97 /* UARTMacrosEditViewController.swift */,
 				01EDBDA524AF679100F15CEF /* UARTMacrosEditViewController.xib */,
+				01135D6324B5F7BC00DA0434 /* UARTIncrementViewController.swift */,
+				01135D6524B60D6D00DA0434 /* UARTIncrementViewController.xib */,
 			);
 			path = MacrosEdit;
 			sourceTree = "<group>";
@@ -977,6 +988,7 @@
 				01B5A78724AF52F600B0FF97 /* UARTMacroCommandCell.swift */,
 				01B5A78824AF52F600B0FF97 /* UARTMacroCommandCell.xib */,
 				01135D3424B320CC00DA0434 /* UARTMacroRepeatCommandCell.swift */,
+				01135D5F24B5B55600DA0434 /* UARTMacroRepeatCommandCell.xib */,
 			);
 			path = UARTMacroCommandCell;
 			sourceTree = "<group>";
@@ -2121,11 +2133,13 @@
 				01FBC5072407C2B000B1056B /* FileSelectorViewController.xib in Resources */,
 				01A1B76823CF13A50062FADC /* UARTNewCommandViewController.xib in Resources */,
 				01BEADD12418FB5A00FC7183 /* DFUUpdateProgressView.xib in Resources */,
+				01135D6024B5B55600DA0434 /* UARTMacroRepeatCommandCell.xib in Resources */,
 				20E07B682306975700FCB205 /* GT-Eesti-Display-ULight-Italic.ttf in Resources */,
 				0197AFD02420DAAC00ADF105 /* NotConnectedViewController.xib in Resources */,
 				01EDBDA624AF679100F15CEF /* UARTMacrosEditViewController.xib in Resources */,
 				0151170C240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.xib in Resources */,
 				01D6D2B924067B0500E1A66F /* Resources.xcassets in Resources */,
+				01135D6624B60D6D00DA0434 /* UARTIncrementViewController.xib in Resources */,
 				433A900A2451AA1900107822 /* SliderTableViewCell.xib in Resources */,
 				20E07B602306975700FCB205 /* GT-Eesti-Display-UBold-Italic.ttf in Resources */,
 				43645AA02499092700231247 /* AddUARTPresetCell.xib in Resources */,
@@ -2319,6 +2333,7 @@
 				20C7FE16230ADD1E00B06FD8 /* StoryboardInstantiable.swift in Sources */,
 				438918442436108E00175A94 /* RecordAccess.swift in Sources */,
 				20B797912334FD77001328E1 /* Peripheral+BMG.swift in Sources */,
+				01135D6224B5B9B000DA0434 /* ArgumentLabel.swift in Sources */,
 				01AF929223D5A9CD00C1BFD6 /* UARTMacro.swift in Sources */,
 				4322034123CC773F009840DD /* UARTActionCollectionViewCell.swift in Sources */,
 				0151170B240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift in Sources */,
@@ -2379,6 +2394,7 @@
 				01797E8323F4242500B26BF2 /* ModernIcon.swift in Sources */,
 				20850177233B690500C792B4 /* RunningCharacteristic.swift in Sources */,
 				015F109B240FA82400FDAC49 /* DFUDocumentPicker.swift in Sources */,
+				01135D6424B5F7BC00DA0434 /* UARTIncrementViewController.swift in Sources */,
 				439A43B8248663BD0054567D /* DataCommand+CoreDataProperties.swift in Sources */,
 				4389183524360C9E00175A94 /* LoggerTableView.swift in Sources */,
 				20D08E04232A4A3600569587 /* SelectionsTableViewController.swift in Sources */,
