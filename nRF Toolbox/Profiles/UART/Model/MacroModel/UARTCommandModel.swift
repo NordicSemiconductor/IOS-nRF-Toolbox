@@ -20,11 +20,19 @@ extension UARTCommandModel {
     var image: UIImage? {
         return icon?.image
     }
-}
-
-extension UARTCommandModel {
+    
     var text: String? {
         return title
+    }
+    
+    var typeName: String {
+        return {
+            switch self {
+            case is TextCommand: return "Text Command"
+            case is DataCommand: return "Data Command"
+            default: return ""
+            }
+        }()
     }
 }
 

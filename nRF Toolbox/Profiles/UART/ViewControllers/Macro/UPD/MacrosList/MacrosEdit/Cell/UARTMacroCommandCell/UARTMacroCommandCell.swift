@@ -9,16 +9,14 @@
 import UIKit
 
 class UARTMacroCommandCell: UITableViewCell {
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    @IBOutlet var icon: UIImageView!
+    @IBOutlet var title: UILabel!
+    @IBOutlet var commandDescription: UILabel!
+    
+    func apply(_ command: UARTCommandModel) {
+        icon.image = command.image
+        title.text = command.title
+        commandDescription.text = command.typeName
     }
     
 }
