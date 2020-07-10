@@ -58,12 +58,13 @@ class UARTMacrosCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let macro = macros[indexPath.item]
+        
         let cell = collectionView.dequeueCell(ofType: UARTMacrosCollectionViewCell.self, for: indexPath)
         cell.editMacros = { _ in
-            let vc = UARTMacrosEditViewController()
+            let vc = UARTMacrosEditViewController(macros: macro)
             self.present(vc, animated: true, completion: nil)
         }
-        let macro = macros[indexPath.item]
         cell.applyMacro(macro)
         
         return cell

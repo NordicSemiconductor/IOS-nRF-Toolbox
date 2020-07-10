@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UARTIncrementViewController" customModule="nRF_Toolbox" customModuleProvider="target">
             <connections>
+                <outlet property="stepper" destination="onE-1f-ikA" id="RsT-HJ-uOW"/>
                 <outlet property="view" destination="iN0-l3-epB" id="YSV-08-8BZ"/>
             </connections>
         </placeholder>

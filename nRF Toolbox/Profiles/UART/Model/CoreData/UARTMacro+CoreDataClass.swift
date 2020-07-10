@@ -12,8 +12,8 @@ import CoreData
 @objc(UARTMacro)
 class UARTMacro: NSManagedObject {
     
-    var commands: [UARTCommandModel] {
-        elements.compactMap { $0 as? UARTCommandModel }
+    var commands: [UARTMacroCommandWrapper] {
+        elements.compactMap { $0 as? UARTMacroCommandWrapper }
     }
     
     var color: UARTColor {
@@ -43,7 +43,7 @@ class UARTMacro: NSManagedObject {
         }
     }
     
-    init(name: String, color: UARTColor, commands: [UARTMacroElement], context: NSManagedObjectContext? = CoreDataStack.uart.viewContext) {
+    init(name: String, color: UARTColor, commands: [UARTMacroCommandWrapper], context: NSManagedObjectContext? = CoreDataStack.uart.viewContext) {
         
         if let entity = context.flatMap({ Self.getEntity(context: $0) }) {
             super.init(entity: entity, insertInto: context)
@@ -69,39 +69,39 @@ class UARTMacro: NSManagedObject {
 
 extension UARTMacro {
     static var walkman: UARTMacro {
-        UARTMacro(name: "Walkman", color: .red, commands: [
-            TextCommand(text: "Pause", image: .pause),
-            TextCommand(text: "Play", image: .play),
-            TextCommand(text: "Stop", image: .stop),
-            TextCommand(text: "Start", image: .start),
-            TextCommand(text: "Repeat", image: .repeat),
-            TextCommand(text: "Rew", image: .rewind)
+        return UARTMacro(name: "Walkman", color: .red, commands: [
+            UARTMacroCommandWrapper(command: TextCommand(text: "Pause", image: .pause), repeatCount: 2, timeInterval: 100),
+            UARTMacroCommandWrapper(command: TextCommand(text: "Play", image: .play), repeatCount: 1, timeInterval: 100),
+            UARTMacroCommandWrapper(command: TextCommand(text: "Stop", image: .stop), repeatCount: 3, timeInterval: 300),
+            UARTMacroCommandWrapper(command: TextCommand(text: "Start", image: .start), repeatCount: 1, timeInterval: 500),
+            UARTMacroCommandWrapper(command: TextCommand(text: "Repeat", image: .repeat), repeatCount: 2, timeInterval: 100),
+            UARTMacroCommandWrapper(command: TextCommand(text: "Rew", image: .rewind), repeatCount: 2, timeInterval: 200)
         ])
     }
     
     static var controller: UARTMacro {
         UARTMacro(name: "Controller", color: .blue, commands: [
-            TextCommand(text: "Up", image: .up),
-            TextCommand(text: "Left", image: .left),
-            TextCommand(text: "Down", image: .down),
-            TextCommand(text: "Start", image: .start),
-            TextCommand(text: "Repeat", image: .repeat),
-            TextCommand(text: "Rew", image: .rewind)
+            UARTMacroCommandWrapper(command: TextCommand(text: "Up", image: .up), repeatCount: 2, timeInterval: 100),
+            UARTMacroCommandWrapper(command: TextCommand(text: "Left", image: .left), repeatCount: 1, timeInterval: 100),
+            UARTMacroCommandWrapper(command: TextCommand(text: "Down", image: .down), repeatCount: 3, timeInterval: 300),
+            UARTMacroCommandWrapper(command: TextCommand(text: "Start", image: .start), repeatCount: 1, timeInterval: 500),
+            UARTMacroCommandWrapper(command: TextCommand(text: "Repeat", image: .repeat), repeatCount: 2, timeInterval: 100),
+            UARTMacroCommandWrapper(command: TextCommand(text: "Rew", image: .rewind), repeatCount: 2, timeInterval: 200)
         ])
     }
     
     static var numbers: UARTMacro {
         UARTMacro(name: "Numbers", color: .green, commands: [
-            DataCommand(data: Data([0x01]), image: .number1),
-            DataCommand(data: Data([0x02]), image: .number2),
-            DataCommand(data: Data([0x03]), image: .number3),
-            DataCommand(data: Data([0x04]), image: .number4),
-            DataCommand(data: Data([0x05]), image: .number5),
-            DataCommand(data: Data([0x06]), image: .number6),
-            DataCommand(data: Data([0x07]), image: .number7),
-            DataCommand(data: Data([0x08]), image: .number8),
-            DataCommand(data: Data([0x09]), image: .number9),
-            DataCommand(data: Data([0x00]), image: .number0)
+            UARTMacroCommandWrapper(command: DataCommand(data: Data([0x01]), image: .number1), repeatCount: 2, timeInterval: 100),
+            UARTMacroCommandWrapper(command: DataCommand(data: Data([0x02]), image: .number2), repeatCount: 1, timeInterval: 100),
+            UARTMacroCommandWrapper(command: DataCommand(data: Data([0x03]), image: .number3), repeatCount: 3, timeInterval: 300),
+            UARTMacroCommandWrapper(command: DataCommand(data: Data([0x04]), image: .number4), repeatCount: 1, timeInterval: 500),
+            UARTMacroCommandWrapper(command: DataCommand(data: Data([0x05]), image: .number5), repeatCount: 2, timeInterval: 100),
+            UARTMacroCommandWrapper(command: DataCommand(data: Data([0x06]), image: .number6), repeatCount: 2, timeInterval: 200),
+            UARTMacroCommandWrapper(command: DataCommand(data: Data([0x07]), image: .number7), repeatCount: 2, timeInterval: 100),
+            UARTMacroCommandWrapper(command: DataCommand(data: Data([0x08]), image: .number8), repeatCount: 1, timeInterval: 100),
+            UARTMacroCommandWrapper(command: DataCommand(data: Data([0x09]), image: .number9), repeatCount: 3, timeInterval: 300),
+            UARTMacroCommandWrapper(command: DataCommand(data: Data([0x00]), image: .number0), repeatCount: 1, timeInterval: 500)
         ])
     }
 }

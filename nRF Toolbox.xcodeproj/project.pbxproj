@@ -132,7 +132,6 @@
 		01E2B57724ADF8BD00D22FB1 /* UARTColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E2B57624ADF8BD00D22FB1 /* UARTColor.swift */; };
 		01E5910923DB3BC5008F15A4 /* QuickError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910823DB3BC4008F15A4 /* QuickError.swift */; };
 		01E5910B23DECF61008F15A4 /* UARTMacrosList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */; };
-		01EDBDA624AF679100F15CEF /* UARTMacrosEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01EDBDA524AF679100F15CEF /* UARTMacrosEditViewController.xib */; };
 		01FBC5012407BF8F00B1056B /* PeripheralHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */; };
 		01FBC5062407C2B000B1056B /* FileSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5042407C2B000B1056B /* FileSelectorViewController.swift */; };
 		01FBC5072407C2B000B1056B /* FileSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01FBC5052407C2B000B1056B /* FileSelectorViewController.xib */; };
@@ -468,7 +467,6 @@
 		01E2B57624ADF8BD00D22FB1 /* UARTColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTColor.swift; sourceTree = "<group>"; };
 		01E5910823DB3BC4008F15A4 /* QuickError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickError.swift; sourceTree = "<group>"; };
 		01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosList.swift; sourceTree = "<group>"; };
-		01EDBDA524AF679100F15CEF /* UARTMacrosEditViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTMacrosEditViewController.xib; sourceTree = "<group>"; };
 		01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralHolder.swift; sourceTree = "<group>"; };
 		01FBC5042407C2B000B1056B /* FileSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSelectorViewController.swift; sourceTree = "<group>"; };
 		01FBC5052407C2B000B1056B /* FileSelectorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FileSelectorViewController.xib; sourceTree = "<group>"; };
@@ -960,7 +958,6 @@
 			children = (
 				01B5A78624AF521F00B0FF97 /* Cell */,
 				01B5A78424AF520C00B0FF97 /* UARTMacrosEditViewController.swift */,
-				01EDBDA524AF679100F15CEF /* UARTMacrosEditViewController.xib */,
 				01135D6324B5F7BC00DA0434 /* UARTIncrementViewController.swift */,
 				01135D6524B60D6D00DA0434 /* UARTIncrementViewController.xib */,
 			);
@@ -2112,7 +2109,6 @@
 				01135D6024B5B55600DA0434 /* UARTMacroRepeatCommandCell.xib in Resources */,
 				20E07B682306975700FCB205 /* GT-Eesti-Display-ULight-Italic.ttf in Resources */,
 				0197AFD02420DAAC00ADF105 /* NotConnectedViewController.xib in Resources */,
-				01EDBDA624AF679100F15CEF /* UARTMacrosEditViewController.xib in Resources */,
 				0151170C240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.xib in Resources */,
 				01D6D2B924067B0500E1A66F /* Resources.xcassets in Resources */,
 				01135D6624B60D6D00DA0434 /* UARTIncrementViewController.xib in Resources */,

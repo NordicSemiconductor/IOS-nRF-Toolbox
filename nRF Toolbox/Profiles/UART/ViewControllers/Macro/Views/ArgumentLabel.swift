@@ -11,7 +11,8 @@ import UIKit
 class ArgumentLabel: UILabel {
     private let edgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
     
-    var labelDidPressed: ((ArgumentLabel) -> ())?
+    var labelDidPressed: ((ArgumentLabel, UARTIncrementViewController) -> ())?
+    var stepperValueChanged: ((Int) -> ())?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,7 +34,10 @@ class ArgumentLabel: UILabel {
         
         isHighlighted.toggle()
         
-        labelDidPressed?(self)
+        let vc = UARTIncrementViewController()
+        vc.stepperValueChanged = stepperValueChanged
+        
+        labelDidPressed?(self, vc)
     }
     
     open override func drawText(in rect: CGRect) {

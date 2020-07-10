@@ -39,7 +39,7 @@ class UARTMacrosCollectionViewCell: UICollectionViewCell {
             imageStack.arrangedSubviews.compactMap { $0 as? UIImageView }
         )
         .forEach {
-            $0.1.image = $0.0.image
+            $0.1.image = $0.0.command.image
         }
         
 //        macroColorView.backgroundColor = macro.color.color
