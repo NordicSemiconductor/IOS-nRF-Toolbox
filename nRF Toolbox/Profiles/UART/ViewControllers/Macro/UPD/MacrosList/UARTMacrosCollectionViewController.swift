@@ -63,7 +63,8 @@ class UARTMacrosCollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueCell(ofType: UARTMacrosCollectionViewCell.self, for: indexPath)
         cell.editMacros = { _ in
             let vc = UARTMacrosEditViewController(macros: macro)
-            self.present(vc, animated: true, completion: nil)
+            let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: true)
+            self.present(nc, animated: true, completion: nil)
         }
         cell.applyMacro(macro)
         

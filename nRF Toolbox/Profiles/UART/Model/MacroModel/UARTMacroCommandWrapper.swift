@@ -17,14 +17,15 @@ class UARTMacroCommandWrapper: NSObject, UARTMacroElement {
     }
 
     func encode(with coder: NSCoder) {
-        coder.encode(self.repeatCount, forKey: CodingKey.repeatCount)
-        coder.encode(self.timeInterval, forKey: CodingKey.repeatCount)
+        coder.encode(Int32(self.repeatCount), forKey: CodingKey.repeatCount)
+        coder.encode(Int32(self.timeInterval), forKey: CodingKey.timeInterval)
         coder.encode(self.command, forKey: CodingKey.command)
     }
     
     required init?(coder: NSCoder) {
-        self.repeatCount = coder.decodeInteger(forKey: CodingKey.repeatCount)
-        self.timeInterval = coder.decodeInteger(forKey: CodingKey.timeInterval)
+        self.repeatCount = Int(coder.decodeInt32(forKey: CodingKey.repeatCount))
+        self.timeInterval = Int(coder.decodeInt32(forKey: CodingKey.timeInterval))
+
         self.command = coder.decodeObject(forKey: CodingKey.command) as! UARTCommandModel
     }
     

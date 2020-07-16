@@ -98,7 +98,7 @@ class UARTTabBarController: UITabBarController {
         let emptyView = InfoActionView.instanceWithParams(message: "Device is not connected", buttonSettings: bSettings)
         emptyView.actionButton.style = .mainAction
         self.emptyView = emptyView
-        addEmptyView()
+//        addEmptyView()
         btManager.delegate = self
         
         delegate = self
@@ -119,6 +119,7 @@ extension UARTTabBarController: BluetoothManagerDelegate {
     }
     
     func didDisconnectPeripheral() {
+        return
         addEmptyView()
         self.emptyView.buttonSettings = bSettings
         self.emptyView.titleLabel.text = "Device is not connected"

@@ -12,11 +12,12 @@ class UARTIncrementViewController: UIViewController, UIPopoverPresentationContro
 
     @IBOutlet var stepper: UIStepper!
 
-    var stepperSetup: (min: Int, max: Int, val: Int) = (0, 100, 1) {
+    var stepperSetup: (min: Int, max: Int, val: Int, step: Int) = (0, 100, 1, 1) {
         didSet {
             stepper.minimumValue = Double(stepperSetup.min)
             stepper.maximumValue = Double(stepperSetup.max)
-            stepper.value = stepper.value
+            stepper.value = Double(stepperSetup.val)
+            stepper.stepValue = Double(stepperSetup.step)
         }
     }
 
@@ -24,11 +25,6 @@ class UARTIncrementViewController: UIViewController, UIPopoverPresentationContro
 
     init() {
         super.init(nibName: "UARTIncrementViewController", bundle: .main)
-
-        self.popoverPresentationController?.delegate = self
-        self.modalPresentationStyle = .popover
-        self.preferredContentSize = CGSize(width: 110, height: 48)
-        self.popoverPresentationController?.permittedArrowDirections = .up
     }
 
     required init?(coder: NSCoder) {
@@ -42,9 +38,5 @@ class UARTIncrementViewController: UIViewController, UIPopoverPresentationContro
 
     @IBAction func valueChanged(_ stepper: UIStepper) {
         stepperValueChanged?(Int(stepper.value))
-    }
-
-    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
-        UIModalPresentationStyle.none
     }
 }

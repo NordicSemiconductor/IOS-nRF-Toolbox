@@ -47,14 +47,9 @@
                             </label>
                         </subviews>
                     </stackView>
-                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f7R-oM-rLK">
-                        <rect key="frame" x="353" y="6.5" width="51" height="31"/>
-                    </switch>
                 </subviews>
                 <constraints>
                     <constraint firstItem="oOL-X7-Fd9" firstAttribute="leading" secondItem="SBO-gI-k11" secondAttribute="leading" constant="12" id="3Ba-wE-aB1"/>
-                    <constraint firstAttribute="trailing" secondItem="f7R-oM-rLK" secondAttribute="trailing" constant="12" id="AUF-xG-yeC"/>
-                    <constraint firstItem="f7R-oM-rLK" firstAttribute="centerY" secondItem="SBO-gI-k11" secondAttribute="centerY" id="Ayr-5n-kaA"/>
                     <constraint firstItem="oOL-X7-Fd9" firstAttribute="centerY" secondItem="SBO-gI-k11" secondAttribute="centerY" id="f5b-gR-qcN"/>
                 </constraints>
             </tableViewCellContentView>

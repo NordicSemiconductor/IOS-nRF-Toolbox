@@ -12,6 +12,10 @@ private protocol SectionDescriptor {
     
 }
 
+extension UARTMacroTimeInterval: SectionDescriptor {
+    
+}
+
 private struct CommandWrapper: SectionDescriptor {
     var element: UARTMacroCommandWrapper
     var expanded: Bool = true
@@ -23,13 +27,30 @@ class UARTMacrosEditViewController: UITableViewController {
 
     init(macros: UARTMacro) {
         self.macros = macros
-        self.elements = macros.elements.map { CommandWrapper(element: $0 as! UARTMacroCommandWrapper) }
+        self.elements = macros.elements.compactMap {
+            switch $0 {
+            case let c as UARTMacroCommandWrapper:
+                return CommandWrapper(element: c, expanded: c.repeatCount > 1)
+            case let ti as UARTMacroTimeInterval:
+                return ti
+            default:
+                return nil
+            }
+        }
 
         if #available(iOS 13, *) {
             super.init(style: .insetGrouped)
         } else {
             super.init(style: .grouped)
         }
+        
+        
+        let cancelItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismsiss))
+        let saveItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
+        
+        navigationItem.leftBarButtonItem = cancelItem
+        navigationItem.rightBarButtonItem = saveItem
+        navigationItem.title = "Edit macros"
     }
     
     required init?(coder: NSCoder) {
@@ -42,6 +63,7 @@ class UARTMacrosEditViewController: UITableViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.registerCellNib(cell: UARTMacroCommandCell.self)
         tableView.registerCellNib(cell: UARTMacroRepeatCommandCell.self)
+        tableView.registerCellNib(cell: UARTMacroWaitCell.self)
         tableView.reloadData()
     }
 
@@ -64,10 +86,39 @@ class UARTMacrosEditViewController: UITableViewController {
         switch elements[indexPath.section] {
         case let e as CommandWrapper:
             return self.tableView(tableView, commandCellForRowAt: indexPath, command: e)
+        case let ti as UARTMacroTimeInterval:
+            return self.tableView(tableView, timeIntervalCellForRowAt: indexPath, timeInterval: ti)
         default:
             fatalError()
         }
         
+    }
+    
+    @IBAction private func save() {
+        
+    }
+    
+}
+
+//MARK: - Table View
+extension UARTMacrosEditViewController {
+    private func tableView(_ tableView: UITableView, timeIntervalCellForRowAt indexPath: IndexPath, timeInterval: UARTMacroTimeInterval) -> UITableViewCell {
+        let cell = tableView.dequeueCell(ofType: UARTMacroWaitCell.self)
+        
+        let milliseconds = Int(timeInterval.timeInterval * 1000)
+        cell.intervalLabel.text = "\(milliseconds) milliseconds"
+        cell.presentController = { [weak self] label, controller in
+            self?.setupAndShowStepper(controller, on: label)
+            controller.stepperSetup = (100, 10_000, milliseconds, 100)
+        }
+        
+        cell.timeIntervalChanged = { [weak cell, unowned self] ti in
+            
+            (self.elements[indexPath.section] as! UARTMacroTimeInterval).timeInterval = Double(ti) / 1000.0
+            cell?.intervalLabel.text = "\(ti) milliseconds"
+        }
+        
+        return cell
     }
     
     private func tableView(_ tableView: UITableView, commandCellForRowAt indexPath: IndexPath, command: CommandWrapper) -> UITableViewCell {
@@ -76,6 +127,19 @@ class UARTMacrosEditViewController: UITableViewController {
         case 0:
             let cell = tableView.dequeueCell(ofType: UARTMacroCommandCell.self)
             cell.apply(command.element.command)
+            
+            cell.expandAction = { [weak self] sender in
+                guard var command = self?.elements[indexPath.section] as? CommandWrapper else {
+                    return
+                }
+                
+                command.expanded.toggle()
+                sender.isHighlighted = command.expanded
+                
+                self?.elements[indexPath.section] = command
+                tableView.reloadSections([indexPath.section], with: .automatic)
+            }
+            
             return cell
         case 1:
             return self.tableView(tableView, repeatCellForRowAt: indexPath, command: command)
@@ -91,8 +155,8 @@ class UARTMacrosEditViewController: UITableViewController {
         cell.title.text = "Repeat"
         cell.argument.text = "\(command.element.repeatCount) times"
         cell.argument.labelDidPressed = { [weak self] label, controller in
-            self?.present(controller, animated: true)
-            controller.stepperSetup = (1, 100, command.element.repeatCount)
+            self?.setupAndShowStepper(controller, on: label)
+            controller.stepperSetup = (1, 100, command.element.repeatCount, 1)
         }
 
         cell.argument.stepperValueChanged = { [weak cell] val in
@@ -108,15 +172,32 @@ class UARTMacrosEditViewController: UITableViewController {
         cell.title.text = "Time Interval"
         cell.argument.text = "\(command.element.timeInterval) milliseconds"
         cell.argument.labelDidPressed = { [weak self] label, controller in
-            self?.present(controller, animated: true)
-            controller.stepperSetup = (100, 10_000, command.element.timeInterval)
+            self?.setupAndShowStepper(controller, on: label)
+            controller.stepperSetup = (100, 10_000, command.element.timeInterval, 100)
         }
 
         cell.argument.stepperValueChanged = { [weak cell] val in
-            cell?.argument.text = "\(val) times"
+            cell?.argument.text = "\(val) milliseconds"
             (self.elements[indexPath.section] as! CommandWrapper).element.timeInterval = val
         }
         
         return cell
+    }
+    
+    private func setupAndShowStepper(_ controller: UARTIncrementViewController, on view: UIView) {
+        controller.modalPresentationStyle = .popover
+        controller.preferredContentSize = CGSize(width: 110, height: 48)
+        
+        controller.popoverPresentationController?.sourceView = view
+        controller.popoverPresentationController?.permittedArrowDirections = .up
+        controller.popoverPresentationController?.delegate = self
+        
+        self.present(controller, animated: true)
+    }
+}
+
+extension UARTMacrosEditViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.none
     }
 }

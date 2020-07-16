@@ -132,6 +132,9 @@
 		01E2B57724ADF8BD00D22FB1 /* UARTColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E2B57624ADF8BD00D22FB1 /* UARTColor.swift */; };
 		01E5910923DB3BC5008F15A4 /* QuickError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910823DB3BC4008F15A4 /* QuickError.swift */; };
 		01E5910B23DECF61008F15A4 /* UARTMacrosList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */; };
+		01F94C5724BDC2A200D34EC4 /* UARTMacroWaitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F94C5524BDC2A200D34EC4 /* UARTMacroWaitCell.swift */; };
+		01F94C5824BDC2A200D34EC4 /* UARTMacroWaitCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01F94C5624BDC2A200D34EC4 /* UARTMacroWaitCell.xib */; };
+		01F94C5A24BDE49A00D34EC4 /* UARTMacroTimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F94C5924BDE49A00D34EC4 /* UARTMacroTimeInterval.swift */; };
 		01FBC5012407BF8F00B1056B /* PeripheralHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */; };
 		01FBC5062407C2B000B1056B /* FileSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5042407C2B000B1056B /* FileSelectorViewController.swift */; };
 		01FBC5072407C2B000B1056B /* FileSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01FBC5052407C2B000B1056B /* FileSelectorViewController.xib */; };
@@ -467,6 +470,9 @@
 		01E2B57624ADF8BD00D22FB1 /* UARTColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTColor.swift; sourceTree = "<group>"; };
 		01E5910823DB3BC4008F15A4 /* QuickError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickError.swift; sourceTree = "<group>"; };
 		01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosList.swift; sourceTree = "<group>"; };
+		01F94C5524BDC2A200D34EC4 /* UARTMacroWaitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacroWaitCell.swift; sourceTree = "<group>"; };
+		01F94C5624BDC2A200D34EC4 /* UARTMacroWaitCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTMacroWaitCell.xib; sourceTree = "<group>"; };
+		01F94C5924BDE49A00D34EC4 /* UARTMacroTimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacroTimeInterval.swift; sourceTree = "<group>"; };
 		01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralHolder.swift; sourceTree = "<group>"; };
 		01FBC5042407C2B000B1056B /* FileSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSelectorViewController.swift; sourceTree = "<group>"; };
 		01FBC5052407C2B000B1056B /* FileSelectorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FileSelectorViewController.xib; sourceTree = "<group>"; };
@@ -907,7 +913,6 @@
 				014C4E882403F8AE0003E601 /* UARTMacrosTableViewController.swift */,
 				0119609C23F9FDC700A7EF29 /* Views */,
 				01DDD79923EC5941003786ED /* Cell */,
-				01DDD79E23EC6310003786ED /* Model */,
 				01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */,
 			);
 			path = Macro;
@@ -979,6 +984,8 @@
 				01B5A78824AF52F600B0FF97 /* UARTMacroCommandCell.xib */,
 				01135D3424B320CC00DA0434 /* UARTMacroRepeatCommandCell.swift */,
 				01135D5F24B5B55600DA0434 /* UARTMacroRepeatCommandCell.xib */,
+				01F94C5524BDC2A200D34EC4 /* UARTMacroWaitCell.swift */,
+				01F94C5624BDC2A200D34EC4 /* UARTMacroWaitCell.xib */,
 			);
 			path = UARTMacroCommandCell;
 			sourceTree = "<group>";
@@ -1127,13 +1134,6 @@
 				0169B59F23FBD90E00907C1B /* NordicTextFieldCell.xib */,
 			);
 			path = Cell;
-			sourceTree = "<group>";
-		};
-		01DDD79E23EC6310003786ED /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		01DFC5592420EFED00AF2EF0 /* ViewController */ = {
@@ -1702,6 +1702,7 @@
 				430901A0249B80380030EE00 /* UARTMacroElement.swift */,
 				430901A2249B839C0030EE00 /* UARTCommandModel.swift */,
 				01135D6A24B743E800DA0434 /* UARTMacroCommandWrapper.swift */,
+				01F94C5924BDE49A00D34EC4 /* UARTMacroTimeInterval.swift */,
 				430901A4249B85BA0030EE00 /* DataCommand.swift */,
 				430901A6249B868E0030EE00 /* EmptyModel.swift */,
 				430901A8249B86AF0030EE00 /* TextCommand.swift */,
@@ -2103,6 +2104,7 @@
 				01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */,
 				20E07B622306975700FCB205 /* GT-Eesti-Display-Bold.ttf in Resources */,
 				01D6D2C12406A1EF00E1A66F /* DFUStartViewController.xib in Resources */,
+				01F94C5824BDC2A200D34EC4 /* UARTMacroWaitCell.xib in Resources */,
 				01FBC5072407C2B000B1056B /* FileSelectorViewController.xib in Resources */,
 				01A1B76823CF13A50062FADC /* UARTNewCommandViewController.xib in Resources */,
 				01BEADD12418FB5A00FC7183 /* DFUUpdateProgressView.xib in Resources */,
@@ -2291,6 +2293,7 @@
 				20B25F382319568B006AF321 /* PeripheralTableViewController.swift in Sources */,
 				52D9BC9E1DD0CB760030E824 /* Data+Ext.swift in Sources */,
 				43645AA2249909D100231247 /* AddUARTPresetCell.swift in Sources */,
+				01F94C5724BDC2A200D34EC4 /* UARTMacroWaitCell.swift in Sources */,
 				4389183E24360F0900175A94 /* CGMSpecificOperations.swift in Sources */,
 				306ECD621CE61A3600E48BBD /* AppDelegate.swift in Sources */,
 				2002A000231FAFD100C43E06 /* PeripheralManager.swift in Sources */,
@@ -2303,6 +2306,7 @@
 				20C7FE16230ADD1E00B06FD8 /* StoryboardInstantiable.swift in Sources */,
 				438918442436108E00175A94 /* RecordAccess.swift in Sources */,
 				20B797912334FD77001328E1 /* Peripheral+BMG.swift in Sources */,
+				01F94C5A24BDE49A00D34EC4 /* UARTMacroTimeInterval.swift in Sources */,
 				01135D6224B5B9B000DA0434 /* ArgumentLabel.swift in Sources */,
 				01AF929223D5A9CD00C1BFD6 /* UARTMacro.swift in Sources */,
 				4322034123CC773F009840DD /* UARTActionCollectionViewCell.swift in Sources */,
