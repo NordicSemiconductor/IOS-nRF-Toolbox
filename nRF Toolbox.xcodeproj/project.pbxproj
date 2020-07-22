@@ -31,6 +31,12 @@
 		012C2BE32410682D005EC1A0 /* SegmentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BE02410682D005EC1A0 /* SegmentedView.swift */; };
 		012C2BE72410F8AA005EC1A0 /* DFUUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BE52410F8AA005EC1A0 /* DFUUpdateViewController.swift */; };
 		0133C73B23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0133C73A23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift */; };
+		01355F5E24C1BAAA00743CC0 /* MacrosAddNewCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01355F5D24C1BAAA00743CC0 /* MacrosAddNewCommand.swift */; };
+		01355F6024C1BAC300743CC0 /* MacrosAddNewCommand.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01355F5F24C1BAC300743CC0 /* MacrosAddNewCommand.xib */; };
+		01355F6524C4F46F00743CC0 /* UARTEditMacrosVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01355F6424C4F46F00743CC0 /* UARTEditMacrosVC.swift */; };
+		01355F6924C4F5DC00743CC0 /* UARTColorSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01355F6724C4F5DC00743CC0 /* UARTColorSelectorCell.swift */; };
+		01355F6A24C4F5DC00743CC0 /* UARTColorSelectorCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01355F6824C4F5DC00743CC0 /* UARTColorSelectorCell.xib */; };
+		01355F6E24C4F97300743CC0 /* CGRect+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01355F6D24C4F97300743CC0 /* CGRect+Ext.swift */; };
 		01363A872417E4FA0030821E /* ControlSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01363A862417E4FA0030821E /* ControlSection.swift */; };
 		01468B052361A30A00C29E4C /* StepperTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B032361A30A00C29E4C /* StepperTableViewCell.swift */; };
 		01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01468B042361A30A00C29E4C /* StepperTableViewCell.xib */; };
@@ -83,7 +89,7 @@
 		01AF929623D8962600C1BFD6 /* UARTPreset1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AF929523D8962600C1BFD6 /* UARTPreset1.swift */; };
 		01AF929A23DB17C100C1BFD6 /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AF929923DB17C100C1BFD6 /* AlertPresenter.swift */; };
 		01B56C1623A11FDA00140A1C /* PeripheralScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B56C1523A11FB600140A1C /* PeripheralScanner.swift */; };
-		01B5A78524AF520C00B0FF97 /* UARTMacrosEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B5A78424AF520C00B0FF97 /* UARTMacrosEditViewController.swift */; };
+		01B5A78524AF520C00B0FF97 /* UARTMacroEditCommandListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B5A78424AF520C00B0FF97 /* UARTMacroEditCommandListVC.swift */; };
 		01B5A78924AF52F600B0FF97 /* UARTMacroCommandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B5A78724AF52F600B0FF97 /* UARTMacroCommandCell.swift */; };
 		01B5A78A24AF52F600B0FF97 /* UARTMacroCommandCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01B5A78824AF52F600B0FF97 /* UARTMacroCommandCell.xib */; };
 		01B6D3D3234C7538000942C4 /* HeartRateMonitorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3D2234C7538000942C4 /* HeartRateMonitorTableViewController.swift */; };
@@ -314,7 +320,7 @@
 		52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */; };
 		52D9BC9E1DD0CB760030E824 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9BC9D1DD0CB760030E824 /* Data+Ext.swift */; };
 		7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B422818A8DF4D006BA1BC /* high.mp3 */; };
-		83F05D920F2780D39F7C8596 /* Pods_nRF_Toolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F7F8A53E0E1660A9EBBE469 /* Pods_nRF_Toolbox.framework */; };
+		8A58D9DDD854A71B01D56CD6 /* Pods_nRF_Toolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D88C78097BEB88EBDE194CE7 /* Pods_nRF_Toolbox.framework */; };
 		CC7B90D148FC21C73B54BFAB /* NumberFormatter+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7B93FA695799F95D065492 /* NumberFormatter+Ext.swift */; };
 		CC7B91DDFD7EF39F27FEC85A /* CommandImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7B95845343A3D826B220D5 /* CommandImage.swift */; };
 /* End PBXBuildFile section */
@@ -367,6 +373,12 @@
 		012C2BE02410682D005EC1A0 /* SegmentedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedView.swift; sourceTree = "<group>"; };
 		012C2BE52410F8AA005EC1A0 /* DFUUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUUpdateViewController.swift; sourceTree = "<group>"; };
 		0133C73A23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTPresetCollectionViewDelegate.swift; sourceTree = "<group>"; };
+		01355F5D24C1BAAA00743CC0 /* MacrosAddNewCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacrosAddNewCommand.swift; sourceTree = "<group>"; };
+		01355F5F24C1BAC300743CC0 /* MacrosAddNewCommand.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MacrosAddNewCommand.xib; sourceTree = "<group>"; };
+		01355F6424C4F46F00743CC0 /* UARTEditMacrosVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTEditMacrosVC.swift; sourceTree = "<group>"; };
+		01355F6724C4F5DC00743CC0 /* UARTColorSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTColorSelectorCell.swift; sourceTree = "<group>"; };
+		01355F6824C4F5DC00743CC0 /* UARTColorSelectorCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTColorSelectorCell.xib; sourceTree = "<group>"; };
+		01355F6D24C4F97300743CC0 /* CGRect+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+Ext.swift"; sourceTree = "<group>"; };
 		01363A862417E4FA0030821E /* ControlSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSection.swift; sourceTree = "<group>"; };
 		01468B032361A30A00C29E4C /* StepperTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperTableViewCell.swift; sourceTree = "<group>"; };
 		01468B042361A30A00C29E4C /* StepperTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StepperTableViewCell.xib; sourceTree = "<group>"; };
@@ -421,7 +433,7 @@
 		01AF929523D8962600C1BFD6 /* UARTPreset1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTPreset1.swift; sourceTree = "<group>"; };
 		01AF929923DB17C100C1BFD6 /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
 		01B56C1523A11FB600140A1C /* PeripheralScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralScanner.swift; sourceTree = "<group>"; };
-		01B5A78424AF520C00B0FF97 /* UARTMacrosEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosEditViewController.swift; sourceTree = "<group>"; };
+		01B5A78424AF520C00B0FF97 /* UARTMacroEditCommandListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacroEditCommandListVC.swift; sourceTree = "<group>"; };
 		01B5A78724AF52F600B0FF97 /* UARTMacroCommandCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacroCommandCell.swift; sourceTree = "<group>"; };
 		01B5A78824AF52F600B0FF97 /* UARTMacroCommandCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTMacroCommandCell.xib; sourceTree = "<group>"; };
 		01B6D3D2234C7538000942C4 /* HeartRateMonitorTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateMonitorTableViewController.swift; sourceTree = "<group>"; };
@@ -482,6 +494,7 @@
 		01FBC5142408158F00B1056B /* CBPeripheralState+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CBPeripheralState+Ext.swift"; sourceTree = "<group>"; };
 		01FBC51624081A1C00B1056B /* DFUFirmwareSizeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFirmwareSizeSection.swift; sourceTree = "<group>"; };
 		01FEB0FC23969BD1000767C1 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
+		059DE8FB6492C95975B7AA0C /* Pods-nRF Toolbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.release.xcconfig"; path = "Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.release.xcconfig"; sourceTree = "<group>"; };
 		20027B07233E116600A0B5ED /* StrideSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrideSection.swift; sourceTree = "<group>"; };
 		20029FFF231FAFD100C43E06 /* PeripheralManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralManager.swift; sourceTree = "<group>"; };
 		2002A001231FB8E800C43E06 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
@@ -583,7 +596,6 @@
 		33976AF182818B9C448C61CE /* Bool+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bool+Ext.swift"; sourceTree = "<group>"; };
 		33976B66D7A581F01631AE52 /* ContinuousGlucoseChartData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinuousGlucoseChartData.swift; sourceTree = "<group>"; };
 		33976F60C5BCE60DE33DFA31 /* ContinuousGlucoseMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinuousGlucoseMonitor.swift; sourceTree = "<group>"; };
-		3F7F8A53E0E1660A9EBBE469 /* Pods_nRF_Toolbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nRF_Toolbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4308BC802487E82800C278AD /* UARTMacro+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UARTMacro+CoreDataProperties.swift"; path = "/Users/nick/Developer/Nordic/IOS-nRF-Toolbox/nRF Toolbox/Profiles/UART/Model/CoreData/UARTMacro+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		4308BC852487E8F500C278AD /* UARTMacro+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UARTMacro+CoreDataClass.swift"; path = "/Users/nick/Developer/Nordic/IOS-nRF-Toolbox/nRF Toolbox/Profiles/UART/Model/CoreData/UARTMacro+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		430901A0249B80380030EE00 /* UARTMacroElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacroElement.swift; sourceTree = "<group>"; };
@@ -657,13 +669,13 @@
 		52BDCBBD1C3FD86900E2680F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		52D9BC9D1DD0CB760030E824 /* Data+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Ext.swift"; sourceTree = "<group>"; };
-		795B8C42D5AC43A6FBF291A1 /* Pods-nRF Toolbox.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.beta.xcconfig"; path = "Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.beta.xcconfig"; sourceTree = "<group>"; };
-		7A46CD9CE0D0B16A147EBAED /* Pods-nRF Toolbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.release.xcconfig"; path = "Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.release.xcconfig"; sourceTree = "<group>"; };
 		7E1B422818A8DF4D006BA1BC /* high.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = high.mp3; sourceTree = "<group>"; };
 		89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC073E5A52E936C1CBCED363 /* Pods-nRF Toolbox.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.beta.xcconfig"; path = "Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.beta.xcconfig"; sourceTree = "<group>"; };
+		BF008B5997DF0183C4AE3C0D /* Pods-nRF Toolbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.debug.xcconfig"; path = "Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.debug.xcconfig"; sourceTree = "<group>"; };
 		CC7B93FA695799F95D065492 /* NumberFormatter+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NumberFormatter+Ext.swift"; sourceTree = "<group>"; };
 		CC7B95845343A3D826B220D5 /* CommandImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandImage.swift; sourceTree = "<group>"; };
-		D62327A873D12FFF32D56808 /* Pods-nRF Toolbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nRF Toolbox.debug.xcconfig"; path = "Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox.debug.xcconfig"; sourceTree = "<group>"; };
+		D88C78097BEB88EBDE194CE7 /* Pods_nRF_Toolbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nRF_Toolbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -686,7 +698,7 @@
 				5217F3E81859EE0000F2D5BB /* CoreGraphics.framework in Frameworks */,
 				5217F3EA1859EE0000F2D5BB /* UIKit.framework in Frameworks */,
 				5217F3E61859EE0000F2D5BB /* Foundation.framework in Frameworks */,
-				83F05D920F2780D39F7C8596 /* Pods_nRF_Toolbox.framework in Frameworks */,
+				8A58D9DDD854A71B01D56CD6 /* Pods_nRF_Toolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -786,6 +798,50 @@
 				016EF387241632AF005FFA30 /* LoggerTableViewController.xib */,
 			);
 			path = DFUUpdate;
+			sourceTree = "<group>";
+		};
+		01355F5C24C1BA7E00743CC0 /* Viewes */ = {
+			isa = PBXGroup;
+			children = (
+				01355F5D24C1BAAA00743CC0 /* MacrosAddNewCommand.swift */,
+				01355F5F24C1BAC300743CC0 /* MacrosAddNewCommand.xib */,
+			);
+			path = Viewes;
+			sourceTree = "<group>";
+		};
+		01355F6124C318E800743CC0 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				01135D6524B60D6D00DA0434 /* UARTIncrementViewController.xib */,
+				01135D6324B5F7BC00DA0434 /* UARTIncrementViewController.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		01355F6224C3193900743CC0 /* MacroEditCommandListVC */ = {
+			isa = PBXGroup;
+			children = (
+				01B5A78424AF520C00B0FF97 /* UARTMacroEditCommandListVC.swift */,
+			);
+			path = MacroEditCommandListVC;
+			sourceTree = "<group>";
+		};
+		01355F6324C3194400743CC0 /* EditMacros */ = {
+			isa = PBXGroup;
+			children = (
+				01355F6624C4F59900743CC0 /* Cells */,
+				01355F6424C4F46F00743CC0 /* UARTEditMacrosVC.swift */,
+			);
+			path = EditMacros;
+			sourceTree = "<group>";
+		};
+		01355F6624C4F59900743CC0 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				01355F6724C4F5DC00743CC0 /* UARTColorSelectorCell.swift */,
+				01355F6824C4F5DC00743CC0 /* UARTColorSelectorCell.xib */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		01363A842417DD2C0030821E /* View */ = {
@@ -961,10 +1017,11 @@
 		01B5A78324AF452300B0FF97 /* MacrosEdit */ = {
 			isa = PBXGroup;
 			children = (
+				01355F6324C3194400743CC0 /* EditMacros */,
+				01355F6124C318E800743CC0 /* Util */,
+				01355F5C24C1BA7E00743CC0 /* Viewes */,
 				01B5A78624AF521F00B0FF97 /* Cell */,
-				01B5A78424AF520C00B0FF97 /* UARTMacrosEditViewController.swift */,
-				01135D6324B5F7BC00DA0434 /* UARTIncrementViewController.swift */,
-				01135D6524B60D6D00DA0434 /* UARTIncrementViewController.xib */,
+				01355F6224C3193900743CC0 /* MacroEditCommandListVC */,
 			);
 			path = MacrosEdit;
 			sourceTree = "<group>";
@@ -1250,9 +1307,9 @@
 		04CD51502DA0CA668E27A6C1 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				D62327A873D12FFF32D56808 /* Pods-nRF Toolbox.debug.xcconfig */,
-				795B8C42D5AC43A6FBF291A1 /* Pods-nRF Toolbox.beta.xcconfig */,
-				7A46CD9CE0D0B16A147EBAED /* Pods-nRF Toolbox.release.xcconfig */,
+				BF008B5997DF0183C4AE3C0D /* Pods-nRF Toolbox.debug.xcconfig */,
+				AC073E5A52E936C1CBCED363 /* Pods-nRF Toolbox.beta.xcconfig */,
+				059DE8FB6492C95975B7AA0C /* Pods-nRF Toolbox.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1488,6 +1545,7 @@
 				01BEADD7241AE6BF00FC7183 /* UILabel+Ext.swift */,
 				CC7B93FA695799F95D065492 /* NumberFormatter+Ext.swift */,
 				01E2B57424ADCE4F00D22FB1 /* UIColor+Ext.swift */,
+				01355F6D24C4F97300743CC0 /* CGRect+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1921,7 +1979,7 @@
 				5217F3E71859EE0000F2D5BB /* CoreGraphics.framework */,
 				5217F3E91859EE0000F2D5BB /* UIKit.framework */,
 				89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */,
-				3F7F8A53E0E1660A9EBBE469 /* Pods_nRF_Toolbox.framework */,
+				D88C78097BEB88EBDE194CE7 /* Pods_nRF_Toolbox.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2014,12 +2072,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5217F4141859EE0000F2D5BB /* Build configuration list for PBXNativeTarget "nRF Toolbox" */;
 			buildPhases = (
-				FACB7C9D8FFF65291695C663 /* [CP] Check Pods Manifest.lock */,
+				37D72EC0439DCE0DA75AB3DF /* [CP] Check Pods Manifest.lock */,
 				5217F3DE1859EE0000F2D5BB /* Sources */,
 				5217F3DF1859EE0000F2D5BB /* Frameworks */,
 				5217F3E01859EE0000F2D5BB /* Resources */,
 				0E645A0E1CBF943000D36AD0 /* Embed Frameworks */,
-				EE8E5CCD1F2453F21D553893 /* [CP] Embed Pods Frameworks */,
+				CE0665F5E4F763B934D4E48A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2111,9 +2169,11 @@
 				01135D6024B5B55600DA0434 /* UARTMacroRepeatCommandCell.xib in Resources */,
 				20E07B682306975700FCB205 /* GT-Eesti-Display-ULight-Italic.ttf in Resources */,
 				0197AFD02420DAAC00ADF105 /* NotConnectedViewController.xib in Resources */,
+				01355F6024C1BAC300743CC0 /* MacrosAddNewCommand.xib in Resources */,
 				0151170C240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.xib in Resources */,
 				01D6D2B924067B0500E1A66F /* Resources.xcassets in Resources */,
 				01135D6624B60D6D00DA0434 /* UARTIncrementViewController.xib in Resources */,
+				01355F6A24C4F5DC00743CC0 /* UARTColorSelectorCell.xib in Resources */,
 				433A900A2451AA1900107822 /* SliderTableViewCell.xib in Resources */,
 				20E07B602306975700FCB205 /* GT-Eesti-Display-UBold-Italic.ttf in Resources */,
 				43645AA02499092700231247 /* AddUARTPresetCell.xib in Resources */,
@@ -2165,7 +2225,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		EE8E5CCD1F2453F21D553893 /* [CP] Embed Pods Frameworks */ = {
+		37D72EC0439DCE0DA75AB3DF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-nRF Toolbox-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CE0665F5E4F763B934D4E48A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2193,28 +2275,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-nRF Toolbox/Pods-nRF Toolbox-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FACB7C9D8FFF65291695C663 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-nRF Toolbox-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -2293,6 +2353,7 @@
 				20B25F382319568B006AF321 /* PeripheralTableViewController.swift in Sources */,
 				52D9BC9E1DD0CB760030E824 /* Data+Ext.swift in Sources */,
 				43645AA2249909D100231247 /* AddUARTPresetCell.swift in Sources */,
+				01355F5E24C1BAAA00743CC0 /* MacrosAddNewCommand.swift in Sources */,
 				01F94C5724BDC2A200D34EC4 /* UARTMacroWaitCell.swift in Sources */,
 				4389183E24360F0900175A94 /* CGMSpecificOperations.swift in Sources */,
 				306ECD621CE61A3600E48BBD /* AppDelegate.swift in Sources */,
@@ -2323,6 +2384,7 @@
 				4322034423CC9D31009840DD /* UARTCommandModel1.swift in Sources */,
 				2002A002231FB8E800C43E06 /* UIImage+Ext.swift in Sources */,
 				20D08E06232A569B00569587 /* Identifiable.swift in Sources */,
+				01355F6524C4F46F00743CC0 /* UARTEditMacrosVC.swift in Sources */,
 				01AA707F241291C00018DB29 /* LogObserver.swift in Sources */,
 				433A90092451AA1900107822 /* SliderTableViewCell.swift in Sources */,
 				01006201234D08700078CEFA /* LinearChartTableViewCell.swift in Sources */,
@@ -2406,6 +2468,7 @@
 				01BEADCF2418FB1800FC7183 /* DFUUpdateProgressView.swift in Sources */,
 				01AF929423D72AC900C1BFD6 /* UARTJsonCoder.swift in Sources */,
 				433A900F2453042900107822 /* LogObserver+DFU.swift in Sources */,
+				01355F6E24C4F97300743CC0 /* CGRect+Ext.swift in Sources */,
 				01AF929023D1DA5700C1BFD6 /* UARTPresetCollectionView.swift in Sources */,
 				20B7979A2338B8C0001328E1 /* MeasurementFormatter+Ext.swift in Sources */,
 				01E2B57224ACCAEE00D22FB1 /* SearchCollectionReusableView.swift in Sources */,
@@ -2415,6 +2478,7 @@
 				01BEADD8241AE6BF00FC7183 /* UILabel+Ext.swift in Sources */,
 				0169B59E23FBD8BE00907C1B /* NordicTextFieldCell.swift in Sources */,
 				20B7979823350584001328E1 /* Peripheral+Cycling.swift in Sources */,
+				01355F6924C4F5DC00743CC0 /* UARTColorSelectorCell.swift in Sources */,
 				01FBC51724081A1C00B1056B /* DFUFirmwareSizeSection.swift in Sources */,
 				019985F123E07CFB000CDCB6 /* XMLDocument.swift in Sources */,
 				20B797942334FE1B001328E1 /* Identifier+GlucoseMonitorViewController.swift in Sources */,
@@ -2438,7 +2502,7 @@
 				4350CFFA244CEFC90068EEEA /* DistanceView.swift in Sources */,
 				4353A5122431856A00159CDF /* AccessoriesSection.swift in Sources */,
 				33976F79FE2EA20D94F68B69 /* ContinuousGlucoseChartData.swift in Sources */,
-				01B5A78524AF520C00B0FF97 /* UARTMacrosEditViewController.swift in Sources */,
+				01B5A78524AF520C00B0FF97 /* UARTMacroEditCommandListVC.swift in Sources */,
 				339764F85119305F6958B516 /* LastDataSection.swift in Sources */,
 				015F1098240FA06D00FDAC49 /* DFUActionSection.swift in Sources */,
 				339763D0A0642AF6C7E7AA85 /* StartStopSection.swift in Sources */,
@@ -2639,7 +2703,7 @@
 		};
 		20FDA43623154494006EEBC1 /* Beta */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 795B8C42D5AC43A6FBF291A1 /* Pods-nRF Toolbox.beta.xcconfig */;
+			baseConfigurationReference = AC073E5A52E936C1CBCED363 /* Pods-nRF Toolbox.beta.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -2803,7 +2867,7 @@
 		};
 		5217F4151859EE0000F2D5BB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D62327A873D12FFF32D56808 /* Pods-nRF Toolbox.debug.xcconfig */;
+			baseConfigurationReference = BF008B5997DF0183C4AE3C0D /* Pods-nRF Toolbox.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -2854,7 +2918,7 @@
 		};
 		5217F4161859EE0000F2D5BB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7A46CD9CE0D0B16A147EBAED /* Pods-nRF Toolbox.release.xcconfig */;
+			baseConfigurationReference = 059DE8FB6492C95975B7AA0C /* Pods-nRF Toolbox.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;

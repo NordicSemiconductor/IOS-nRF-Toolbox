@@ -38,7 +38,7 @@ class UARTMacrosCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView.register(type: UARTMacrosCollectionViewCell.self)
+        collectionView.registerCellNib(type: UARTMacrosCollectionViewCell.self)
         collectionView.registerViewNib(type: SearchCollectionReusableView.self, ofKind: UICollectionView.elementKindSectionHeader)
         
         self.macros = fetchMacros()
@@ -62,7 +62,7 @@ class UARTMacrosCollectionViewController: UICollectionViewController {
         
         let cell = collectionView.dequeueCell(ofType: UARTMacrosCollectionViewCell.self, for: indexPath)
         cell.editMacros = { _ in
-            let vc = UARTMacrosEditViewController(macros: macro)
+            let vc = UARTMacroEditCommandListVC(macros: macro)
             let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: true)
             self.present(nc, animated: true, completion: nil)
         }

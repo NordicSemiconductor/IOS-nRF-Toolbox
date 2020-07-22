@@ -74,7 +74,7 @@ class UARTNewCommandViewController: UIViewController {
         setupTextView()
         createButton.style = .mainAction
         navigationItem.title = "Create new command"
-        collectionView.register(type: ImageCollectionViewCell.self)
+        collectionView.registerCellNib(type: ImageCollectionViewCell.self)
         
         command.map { self.setupUI(with: $0) }
 

@@ -60,4 +60,8 @@ extension UARTColor {
     static let grey1 = UARTColor(rawValue: .grey1)!
     static let grey2 = UARTColor(rawValue: .grey2)!
     static let nordic = UARTColor(rawValue: .nordic)!
+    
+    static var allCases: [UARTColor] {
+        [.red, .flame, .orange, .yellow, .green, .lake, .blue, .deepBlue1, .deepBlue2, .purple1, .purple2, .rose, .grey1, .grey2, .nordic]
+    }
 }

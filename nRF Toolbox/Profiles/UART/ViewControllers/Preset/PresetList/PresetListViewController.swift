@@ -41,8 +41,8 @@ class PresetListViewController: UICollectionViewController {
         let flowLayout = UICollectionViewFlowLayout()
         super.init(collectionViewLayout: flowLayout)
         
-        collectionView.register(type: PresetListUtilityCell.self)
-        collectionView.register(type: PresetListCell.self)
+        collectionView.registerCellNib(type: PresetListUtilityCell.self)
+        collectionView.registerCellNib(type: PresetListCell.self)
         collectionView.registerViewNib(type: PresetListSectionTitleView.self, ofKind: UICollectionView.elementKindSectionHeader)
         collectionView.backgroundColor = .tableViewBackground
     }

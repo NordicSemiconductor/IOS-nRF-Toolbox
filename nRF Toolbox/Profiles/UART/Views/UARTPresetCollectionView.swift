@@ -50,7 +50,7 @@ class UARTPresetCollectionView: UICollectionView {
     private func initialize() {
         dataSource = self
         delegate = self
-        register(type: UARTActionCollectionViewCell.self)
+        registerCellNib(type: UARTActionCollectionViewCell.self)
         longPress.addTarget(self, action: #selector(longPressed))
         addGestureRecognizer(longPress)
     }

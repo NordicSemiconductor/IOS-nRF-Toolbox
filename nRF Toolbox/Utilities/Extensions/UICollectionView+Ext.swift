@@ -42,10 +42,15 @@ extension UICollectionView {
         return cell
     }
     
-    func register<T>(type: T.Type) where T: UICollectionViewCell {
+    func registerCellNib<T>(type: T.Type) where T: UICollectionViewCell {
         let cellId = String(describing: type)
         let nib = UINib(nibName: cellId, bundle: .main)
         register(nib, forCellWithReuseIdentifier: cellId)
+    }
+    
+    func registerCellClass<T>(type: T.Type) where T: UICollectionViewCell {
+        let cellId = String(describing: type)
+        self.register(T.self, forCellWithReuseIdentifier: cellId)
     }
     
     func registerViewNib<T>(type: T.Type, ofKind kind: String) where T: UICollectionReusableView {

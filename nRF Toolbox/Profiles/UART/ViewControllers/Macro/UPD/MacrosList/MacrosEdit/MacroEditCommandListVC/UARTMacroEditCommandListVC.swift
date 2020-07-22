@@ -8,13 +8,9 @@
 
 import UIKit
 
-private protocol SectionDescriptor {
-    
-}
+private protocol SectionDescriptor { }
 
-extension UARTMacroTimeInterval: SectionDescriptor {
-    
-}
+extension UARTMacroTimeInterval: SectionDescriptor { }
 
 private struct CommandWrapper: SectionDescriptor {
     var element: UARTMacroCommandWrapper
@@ -23,7 +19,12 @@ private struct CommandWrapper: SectionDescriptor {
     var timeIntervalEnabled: Bool = true
 }
 
-class UARTMacrosEditViewController: UITableViewController {
+class UARTMacroEditCommandListVC: UITableViewController {
+    
+    let macros: UARTMacro
+    private var elements: [SectionDescriptor]
+    
+    private var navBarEditButton: UIButton!
 
     init(macros: UARTMacro) {
         self.macros = macros
@@ -43,14 +44,6 @@ class UARTMacrosEditViewController: UITableViewController {
         } else {
             super.init(style: .grouped)
         }
-        
-        
-        let cancelItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismsiss))
-        let saveItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
-        
-        navigationItem.leftBarButtonItem = cancelItem
-        navigationItem.rightBarButtonItem = saveItem
-        navigationItem.title = "Edit macros"
     }
     
     required init?(coder: NSCoder) {
@@ -60,16 +53,22 @@ class UARTMacrosEditViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.registerCellNib(cell: UARTMacroCommandCell.self)
-        tableView.registerCellNib(cell: UARTMacroRepeatCommandCell.self)
-        tableView.registerCellNib(cell: UARTMacroWaitCell.self)
-        tableView.reloadData()
+        setupTableView()
+        setupNavigationBar()
     }
-
-    let macros: UARTMacro
-    private var elements: [SectionDescriptor]
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navBarEditButton.isHidden = false
+        (navigationController?.navigationBar.frame.height).map { self.setVisibleNavigationButton(for: $0) }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navBarEditButton.isHidden = true
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         elements.count
     }
@@ -94,14 +93,96 @@ class UARTMacrosEditViewController: UITableViewController {
         
     }
     
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard let height = navigationController?.navigationBar.frame.height else { return }
+        setVisibleNavigationButton(for: height)
+    }
+        
+}
+
+extension UARTMacroEditCommandListVC {
     @IBAction private func save() {
         
     }
     
+    @IBAction private func editMacros() {
+        let vc = UARTEditMacrosVC(macros: self.macros)
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+}
+
+//MARK: - Setup UI
+extension UARTMacroEditCommandListVC {
+    private struct SizeConst {
+        static let imageSizeForLargeState: CGFloat = 40
+        static let imageRightMargin: CGFloat = 16
+        static let imageBottomMarginForLargeState: CGFloat = 26
+        static let navBarHeightLargeState: CGFloat = 96.5
+        static let navBarHeightSmallState: CGFloat = 80
+    }
+    
+    private func setupTableView() {
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.registerCellNib(cell: UARTMacroCommandCell.self)
+        tableView.registerCellNib(cell: UARTMacroRepeatCommandCell.self)
+        tableView.registerCellNib(cell: UARTMacroWaitCell.self)
+        tableView.reloadData()
+        
+        let addView = MacrosAddNewCommand.instance()
+        addView.frame = CGRect(x: 0, y: 0, width: 100, height: 50)
+        tableView.tableFooterView = addView
+        
+        addView.addButtonCallback = { [weak self] in
+            let vc = UARTNewCommandViewController(command: nil, index: -1)
+            vc.delegate = self
+            self?.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    private func setupNavigationBar() {
+        let cancelItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismsiss))
+        let saveItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
+        
+        navigationItem.leftBarButtonItem = cancelItem
+        navigationItem.rightBarButtonItem = saveItem
+        navigationItem.title = "Edit macros"
+        
+        navBarEditButton = UIButton()
+        navBarEditButton.addTarget(self, action: #selector(editMacros), for: .touchUpInside)
+        if #available(iOS 13, *) {
+            navBarEditButton.setImage(ModernIcon.plus(.circle)(.fill).image, for: .normal)
+            navBarEditButton.tintColor = .nordicLake
+            navBarEditButton.contentHorizontalAlignment = .fill
+            navBarEditButton.contentVerticalAlignment = .fill
+        }
+        
+        guard let navigationBar = navigationController?.navigationBar else {
+            return
+        }
+        
+        navigationBar.addSubview(navBarEditButton)
+        
+        navBarEditButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            navBarEditButton.centerYAnchor.constraint(equalTo: navigationBar.centerYAnchor, constant: SizeConst.imageBottomMarginForLargeState),
+            navBarEditButton.rightAnchor.constraint(equalTo: navigationBar.rightAnchor, constant: -SizeConst.imageRightMargin),
+            navBarEditButton.heightAnchor.constraint(equalToConstant: SizeConst.imageSizeForLargeState),
+            navBarEditButton.widthAnchor.constraint(equalTo: navBarEditButton.heightAnchor)
+        ])
+    }
+    
+    private func setVisibleNavigationButton(for height: CGFloat) {
+        let maxDiff = SizeConst.navBarHeightLargeState - SizeConst.navBarHeightSmallState
+        let diff = SizeConst.navBarHeightLargeState - height
+        let alpha = 1 - (diff / maxDiff)
+        navBarEditButton.alpha = alpha
+    }
 }
 
 //MARK: - Table View
-extension UARTMacrosEditViewController {
+extension UARTMacroEditCommandListVC {
     private func tableView(_ tableView: UITableView, timeIntervalCellForRowAt indexPath: IndexPath, timeInterval: UARTMacroTimeInterval) -> UITableViewCell {
         let cell = tableView.dequeueCell(ofType: UARTMacroWaitCell.self)
         
@@ -196,8 +277,18 @@ extension UARTMacrosEditViewController {
     }
 }
 
-extension UARTMacrosEditViewController: UIPopoverPresentationControllerDelegate {
+extension UARTMacroEditCommandListVC: UIPopoverPresentationControllerDelegate {
     func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.none
     }
+}
+
+extension UARTMacroEditCommandListVC: UARTNewCommandDelegate {
+    func createdNewCommand(_ viewController: UARTNewCommandViewController, command: UARTCommandModel, index: Int) {
+        self.elements.append(CommandWrapper(element: UARTMacroCommandWrapper(command: command), expanded: false))
+        self.tableView.insertSections([elements.count - 1], with: .automatic)
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    
 }

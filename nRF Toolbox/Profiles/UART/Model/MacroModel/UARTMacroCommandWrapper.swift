@@ -29,7 +29,7 @@ class UARTMacroCommandWrapper: NSObject, UARTMacroElement {
         self.command = coder.decodeObject(forKey: CodingKey.command) as! UARTCommandModel
     }
     
-    init(command: UARTCommandModel, repeatCount: Int = 0, timeInterval: Int = 0) {
+    init(command: UARTCommandModel, repeatCount: Int = 1, timeInterval: Int = 0) {
         self.repeatCount = repeatCount
         self.timeInterval = timeInterval
         self.command = command

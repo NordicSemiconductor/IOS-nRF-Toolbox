@@ -88,8 +88,8 @@ class UARTViewController: UIViewController, AlertPresenter {
         
         disconnectBtn.style = .destructive
         
-        collectionView.register(type: UARTPresetCollectionViewCell.self)
-        collectionView.register(type: AddUARTPresetCell.self)
+        collectionView.registerCellNib(type: UARTPresetCollectionViewCell.self)
+        collectionView.registerCellNib(type: AddUARTPresetCell.self)
         
         self.presets = try! coreDataUtil.getPresets(options: .favorite)
         

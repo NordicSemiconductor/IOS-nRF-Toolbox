@@ -53,6 +53,7 @@ extension ModernIcon {
     static let doc = ModernIcon(name: "doc")
     static let on = ModernIcon(name: "on")
     static let pencil = ModernIcon(name: "pencil")
+    static let plus = ModernIcon(name: "plus")
     
     static let play = ModernIcon(name: "play")
     static let pause = ModernIcon(name: "pause")
