@@ -45,6 +45,7 @@ struct FSNodeRepresentation {
     var modificationDate: Date?
     var sizeInfo: String
     var valid: Bool
+    var isDirectory: Bool
 }
 
 struct FSDataSource {
@@ -76,7 +77,7 @@ struct FSDataSource {
                 infoText = ByteCountFormatter().string(fromByteCount: Int64((node as! File).size))
             }
             
-            res.append(FSNodeRepresentation(node: node, level: level, name: node.name, collapsed: false, size: 0, image: image!, modificationDate: node.resourceModificationDate, sizeInfo: infoText, valid: valid))
+            res.append(FSNodeRepresentation(node: node, level: level, name: node.name, collapsed: false, size: 0, image: image!, modificationDate: node.resourceModificationDate, sizeInfo: infoText, valid: valid, isDirectory: (node is Directory)))
             if let dir = node as? Directory {
                 res.append(contentsOf: self.items(dir, level: level + 1))
             }

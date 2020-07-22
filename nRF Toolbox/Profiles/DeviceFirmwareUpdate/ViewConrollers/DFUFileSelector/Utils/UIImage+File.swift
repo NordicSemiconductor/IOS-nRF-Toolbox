@@ -44,8 +44,8 @@ extension UIImage {
 
         // allIcons is guaranteed to have at least one image
         switch preferredSize {
-        case .smallest: return allIcons.first!
-        case .largest: return allIcons.last!
+        case .smallest: return allIcons.first ?? UIImage()
+        case .largest: return allIcons.last ?? UIImage()
         }
     }
 }

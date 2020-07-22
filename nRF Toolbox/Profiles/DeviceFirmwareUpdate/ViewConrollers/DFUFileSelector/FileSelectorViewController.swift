@@ -65,11 +65,11 @@ class FileSelectorViewController<T>: UIViewController, AlertPresenter, UITableVi
         tableView.registerCellNib(cell: FileTableViewCell.self)
         tableView.registerCellClass(cell: NordicActionTableViewCell.self)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadList), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: UIApplication.willEnterForegroundNotification, object: nil)
         
         selectButton.style = .mainAction
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(reloadList))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(reloadData))
         
         if #available(iOS 13, *) {
             UIImage(systemName: "doc").map { self.docImage.image = $0 }
@@ -82,11 +82,10 @@ class FileSelectorViewController<T>: UIViewController, AlertPresenter, UITableVi
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        reloadList()
+        reloadData()
     }
     
-    @objc
-    func reloadList() {
+    private func reloadItemList() {
         do {
             let directory = try documentFileManager.buildDocumentDir()
             dataSource.updateItems(directory)
@@ -94,6 +93,11 @@ class FileSelectorViewController<T>: UIViewController, AlertPresenter, UITableVi
             displayErrorAlert(error: error)
             return
         }
+    }
+    
+    @objc
+    func reloadData() {
+        reloadItemList()
         
         if !dataSource.items.isEmpty {
             view = tableView
@@ -158,12 +162,78 @@ class FileSelectorViewController<T>: UIViewController, AlertPresenter, UITableVi
         } else if let file = dataSource.items[indexPath.row].node as? File, dataSource.items[indexPath.row].valid {
             fileWasSelected(file: file)
         }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         section == 0 ? "Documents Directory" : ""
     }
     
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        indexPath.section == 0
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard editingStyle == .delete else { return }
+        let item = self.dataSource.items[indexPath.row]
+        
+        let deleteItem: (FSNode) -> (Error?) = { [weak self] node in
+            guard let `self` = self else { return QuickError(message: "Unknown Error") }
+            
+            do {
+                try self.documentFileManager.deleteNode(node)
+            } catch let error {
+                return error
+            }
+            return nil
+        }
+        
+        if let directory = item.node as? Directory {
+            let alert = UIAlertController(title: "Remove Directory", message: "Do you want to delete entire directory with all nested items?", preferredStyle: .alert)
+            let delete = UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
+                self.removeDirectory(directory, rootItem: item, deleteAction: deleteItem)
+            })
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            
+            alert.addAction(delete)
+            alert.addAction(cancel)
+            
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            deleteFile(item.node, deleteAction: deleteItem)
+        }
+        
+    }
+    
+    private func removeDirectory(_ dir: Directory, rootItem: FSNodeRepresentation, deleteAction: (FSNode) -> (Error?)) {
+        let indexPaths = ([rootItem] + dataSource.items(dir))
+            .compactMap { item in
+                self.dataSource.items.firstIndex { item.node.url == $0.node.url }
+            }
+            .map { IndexPath(row: $0, section: 0)}
+        if let error = deleteAction(rootItem.node) {
+            displayErrorAlert(error: error)
+            return
+        }
+        self.reloadItemList()
+        tableView.deleteRows(at: indexPaths, with: .automatic)
+    }
+    
+    private func deleteFile(_ item: FSNode, deleteAction: (FSNode) -> (Error?)) {
+        guard let ip = self.dataSource.items
+            .firstIndex (where: { item.url == $0.node.url })
+            .map ({ IndexPath(row: $0, section: 0) }) else {
+            return
+        }
+        
+        if let error = deleteAction(item) {
+            displayErrorAlert(error: error)
+            return
+        }
+        self.reloadItemList()
+        tableView.deleteRows(at: [ip], with: .automatic)
+    }
 }
 
 class DFUFileSelectorViewController: FileSelectorViewController<DFUFirmware> {
