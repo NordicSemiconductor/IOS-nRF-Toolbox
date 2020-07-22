@@ -68,4 +68,8 @@ class DocumentFileManager: FileManager {
             return []
         }
     }
+    
+    func deleteNode(_ node: FSNode) throws {
+        try removeItem(at: node.url)
+    }
 }
