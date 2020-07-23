@@ -7,6 +7,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="GT-Eesti-Display-Regular.ttf">
+            <string>GTEestiDisplay-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -15,26 +20,38 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W8p-of-2II">
-                    <rect key="frame" x="186" y="44" width="89" height="89"/>
-                    <constraints>
-                        <constraint firstAttribute="width" secondItem="W8p-of-2II" secondAttribute="height" multiplier="1:1" id="t01-GY-8AR"/>
-                    </constraints>
-                    <state key="normal" image="plus.circle.fill" catalog="system"/>
+                    <rect key="frame" x="12" y="60" width="437" height="57"/>
+                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" name="GTEestiDisplay-Regular" family="GT Eesti Display" pointSize="20"/>
+                    <state key="normal" title="Add Action" image="plus.circle.fill" catalog="system">
+                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <action selector="addButtonClicked:" destination="iN0-l3-epB" eventType="touchUpInside" id="dvb-ZR-4RI"/>
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="W8p-of-2II" secondAttribute="bottom" id="2EB-VX-PY6"/>
-                <constraint firstItem="W8p-of-2II" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="F6l-9H-9IT"/>
-                <constraint firstItem="W8p-of-2II" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Xl8-N7-4mM"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="W8p-of-2II" secondAttribute="bottom" constant="16" id="2EB-VX-PY6"/>
+                <constraint firstItem="W8p-of-2II" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="16" id="F6l-9H-9IT"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="W8p-of-2II" secondAttribute="trailing" constant="12" id="lFF-b2-oQs"/>
+                <constraint firstItem="W8p-of-2II" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="12" id="tgg-yz-vHy"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                    <real key="value" value="10"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
             <connections>
                 <outlet property="addButton" destination="W8p-of-2II" id="pjW-ei-xHw"/>
             </connections>

@@ -39,6 +39,7 @@ class UARTMacrosCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         
         collectionView.registerCellNib(type: UARTMacrosCollectionViewCell.self)
+        collectionView.registerCellNib(type: UARTNewMacrosCollectionViewCell.self)
         collectionView.registerViewNib(type: SearchCollectionReusableView.self, ofKind: UICollectionView.elementKindSectionHeader)
         
         self.macros = fetchMacros()
@@ -54,10 +55,14 @@ class UARTMacrosCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        macros.count
+        macros.count + 1
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard indexPath.item != macros.count else {
+            return collectionView.dequeueCell(ofType: UARTNewMacrosCollectionViewCell.self, for: indexPath)
+        }
+        
         let macro = macros[indexPath.item]
         
         let cell = collectionView.dequeueCell(ofType: UARTMacrosCollectionViewCell.self, for: indexPath)
@@ -77,6 +82,15 @@ class UARTMacrosCollectionViewController: UICollectionViewController {
         }
         
         return collectionView.dequeueView(type: SearchCollectionReusableView.self, ofKind: UICollectionView.elementKindSectionHeader, for: indexPath)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard indexPath.item < macros.count else {
+            let vc = UARTMacroEditCommandListVC(macros: nil)
+            let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: true)
+            self.present(nc, animated: true, completion: nil)
+            return
+        }
     }
     
 }

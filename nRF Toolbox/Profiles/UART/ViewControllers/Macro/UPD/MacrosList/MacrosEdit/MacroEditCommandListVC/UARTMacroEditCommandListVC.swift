@@ -21,14 +21,13 @@ private struct CommandWrapper: SectionDescriptor {
 
 class UARTMacroEditCommandListVC: UITableViewController {
     
-    let macros: UARTMacro
+    let macros: UARTMacro?
     private var elements: [SectionDescriptor]
-    
-    private var navBarEditButton: UIButton!
+    private var headerView: ActionHeaderView!
 
-    init(macros: UARTMacro) {
+    init(macros: UARTMacro?) {
         self.macros = macros
-        self.elements = macros.elements.compactMap {
+        self.elements = macros?.elements.compactMap {
             switch $0 {
             case let c as UARTMacroCommandWrapper:
                 return CommandWrapper(element: c, expanded: c.repeatCount > 1)
@@ -37,7 +36,7 @@ class UARTMacroEditCommandListVC: UITableViewController {
             default:
                 return nil
             }
-        }
+        } ?? []
 
         if #available(iOS 13, *) {
             super.init(style: .insetGrouped)
@@ -55,18 +54,6 @@ class UARTMacroEditCommandListVC: UITableViewController {
         
         setupTableView()
         setupNavigationBar()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        navBarEditButton.isHidden = false
-        (navigationController?.navigationBar.frame.height).map { self.setVisibleNavigationButton(for: $0) }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navBarEditButton.isHidden = true
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -94,8 +81,7 @@ class UARTMacroEditCommandListVC: UITableViewController {
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard let height = navigationController?.navigationBar.frame.height else { return }
-        setVisibleNavigationButton(for: height)
+        navigationItem.title = scrollView.contentOffset.y > -30 ? "Edit Macros Commands" : ""
     }
         
 }
@@ -114,6 +100,7 @@ extension UARTMacroEditCommandListVC {
 
 //MARK: - Setup UI
 extension UARTMacroEditCommandListVC {
+    
     private struct SizeConst {
         static let imageSizeForLargeState: CGFloat = 40
         static let imageRightMargin: CGFloat = 16
@@ -130,7 +117,7 @@ extension UARTMacroEditCommandListVC {
         tableView.reloadData()
         
         let addView = MacrosAddNewCommand.instance()
-        addView.frame = CGRect(x: 0, y: 0, width: 100, height: 50)
+        addView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
         tableView.tableFooterView = addView
         
         addView.addButtonCallback = { [weak self] in
@@ -148,36 +135,17 @@ extension UARTMacroEditCommandListVC {
         navigationItem.rightBarButtonItem = saveItem
         navigationItem.title = "Edit macros"
         
-        navBarEditButton = UIButton()
-        navBarEditButton.addTarget(self, action: #selector(editMacros), for: .touchUpInside)
-        if #available(iOS 13, *) {
-            navBarEditButton.setImage(ModernIcon.plus(.circle)(.fill).image, for: .normal)
-            navBarEditButton.tintColor = .nordicLake
-            navBarEditButton.contentHorizontalAlignment = .fill
-            navBarEditButton.contentVerticalAlignment = .fill
+        headerView = ActionHeaderView.instance()
+        headerView.editButtonCallback = {
+            self.editMacros()
         }
         
-        guard let navigationBar = navigationController?.navigationBar else {
-            return
+        headerView.frame = CGRect(x: 0, y: 0, width: 100, height: 58)
+        tableView.tableHeaderView = headerView
+        
+        if #available(iOS 11.0, *) {
+            navigationItem.largeTitleDisplayMode = .never
         }
-        
-        navigationBar.addSubview(navBarEditButton)
-        
-        navBarEditButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            navBarEditButton.centerYAnchor.constraint(equalTo: navigationBar.centerYAnchor, constant: SizeConst.imageBottomMarginForLargeState),
-            navBarEditButton.rightAnchor.constraint(equalTo: navigationBar.rightAnchor, constant: -SizeConst.imageRightMargin),
-            navBarEditButton.heightAnchor.constraint(equalToConstant: SizeConst.imageSizeForLargeState),
-            navBarEditButton.widthAnchor.constraint(equalTo: navBarEditButton.heightAnchor)
-        ])
-    }
-    
-    private func setVisibleNavigationButton(for height: CGFloat) {
-        let maxDiff = SizeConst.navBarHeightLargeState - SizeConst.navBarHeightSmallState
-        let diff = SizeConst.navBarHeightLargeState - height
-        let alpha = 1 - (diff / maxDiff)
-        navBarEditButton.alpha = alpha
     }
 }
 

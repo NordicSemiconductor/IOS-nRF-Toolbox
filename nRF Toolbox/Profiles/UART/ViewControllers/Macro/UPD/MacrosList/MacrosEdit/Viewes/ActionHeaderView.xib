@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ActionHeaderView" customModule="nRF_Toolbox" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="553" height="122"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edit Command List" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Fy-cc-0nJ">
+                    <rect key="frame" x="20" y="40.5" width="310" height="41"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="34"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B0v-Pr-R3C">
+                    <rect key="frame" x="493" y="40.5" width="40" height="41"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="B0v-Pr-R3C" secondAttribute="height" multiplier="44:45" id="xZY-8H-Far"/>
+                    </constraints>
+                    <state key="normal" image="ellipsis.circle.fill" catalog="system"/>
+                    <connections>
+                        <action selector="editBtnPressed" destination="iN0-l3-epB" eventType="touchUpInside" id="egK-rP-LFO"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="5Fy-cc-0nJ" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="3af-XH-anr"/>
+                <constraint firstItem="B0v-Pr-R3C" firstAttribute="centerY" secondItem="5Fy-cc-0nJ" secondAttribute="centerY" id="69P-zX-Lpd"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="B0v-Pr-R3C" secondAttribute="trailing" constant="20" id="EBx-db-meT"/>
+                <constraint firstItem="5Fy-cc-0nJ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="SM4-a6-3i2"/>
+                <constraint firstItem="B0v-Pr-R3C" firstAttribute="height" secondItem="5Fy-cc-0nJ" secondAttribute="height" id="pc7-EY-emB"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="editButton" destination="B0v-Pr-R3C" id="pdH-rf-mlG"/>
+                <outlet property="titleLabel" destination="5Fy-cc-0nJ" id="p92-lX-d1r"/>
+            </connections>
+            <point key="canvasLocation" x="238.40579710144928" y="353.57142857142856"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="ellipsis.circle.fill" catalog="system" width="128" height="121"/>
+    </resources>
+</document>

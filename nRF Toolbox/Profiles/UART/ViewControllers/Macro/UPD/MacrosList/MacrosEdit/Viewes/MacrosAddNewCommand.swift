@@ -16,8 +16,8 @@ class MacrosAddNewCommand: UIView, XibInstantiable {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        addButton.contentVerticalAlignment = .fill
-        addButton.contentHorizontalAlignment = .fill
+//        addButton.contentVerticalAlignment = .fill
+//        addButton.contentHorizontalAlignment = .fill
     }
     
     @IBAction private func addButtonClicked(_ sender: UIButton) {

@@ -110,6 +110,10 @@
 		01BEADD8241AE6BF00FC7183 /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BEADD7241AE6BF00FC7183 /* UILabel+Ext.swift */; };
 		01CA8B3C24A1ED36009FC4C8 /* PresetListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CA8B3A24A1ED36009FC4C8 /* PresetListCell.swift */; };
 		01CA8B3D24A1ED36009FC4C8 /* PresetListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01CA8B3B24A1ED36009FC4C8 /* PresetListCell.xib */; };
+		01CAF02E24C99D7000716C32 /* UARTNewMacrosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CAF02C24C99D7000716C32 /* UARTNewMacrosCollectionViewCell.swift */; };
+		01CAF02F24C99D7000716C32 /* UARTNewMacrosCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01CAF02D24C99D7000716C32 /* UARTNewMacrosCollectionViewCell.xib */; };
+		01CAF03124C9A78B00716C32 /* ActionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CAF03024C9A78B00716C32 /* ActionHeaderView.swift */; };
+		01CAF03324C9A79500716C32 /* ActionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01CAF03224C9A79500716C32 /* ActionHeaderView.xib */; };
 		01D6D2B924067B0500E1A66F /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01D6D2B824067B0500E1A66F /* Resources.xcassets */; };
 		01D6D2BB240696D000E1A66F /* DFURouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6D2BA240696D000E1A66F /* DFURouter.swift */; };
 		01D6D2C02406A1EF00E1A66F /* DFUStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6D2BE2406A1EF00E1A66F /* DFUStartViewController.swift */; };
@@ -454,6 +458,10 @@
 		01BEADD7241AE6BF00FC7183 /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
 		01CA8B3A24A1ED36009FC4C8 /* PresetListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetListCell.swift; sourceTree = "<group>"; };
 		01CA8B3B24A1ED36009FC4C8 /* PresetListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PresetListCell.xib; sourceTree = "<group>"; };
+		01CAF02C24C99D7000716C32 /* UARTNewMacrosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTNewMacrosCollectionViewCell.swift; sourceTree = "<group>"; };
+		01CAF02D24C99D7000716C32 /* UARTNewMacrosCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTNewMacrosCollectionViewCell.xib; sourceTree = "<group>"; };
+		01CAF03024C9A78B00716C32 /* ActionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionHeaderView.swift; sourceTree = "<group>"; };
+		01CAF03224C9A79500716C32 /* ActionHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActionHeaderView.xib; sourceTree = "<group>"; };
 		01D6D2B824067B0500E1A66F /* Resources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resources.xcassets; sourceTree = "<group>"; };
 		01D6D2BA240696D000E1A66F /* DFURouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFURouter.swift; sourceTree = "<group>"; };
 		01D6D2BE2406A1EF00E1A66F /* DFUStartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUStartViewController.swift; sourceTree = "<group>"; };
@@ -805,6 +813,8 @@
 			children = (
 				01355F5D24C1BAAA00743CC0 /* MacrosAddNewCommand.swift */,
 				01355F5F24C1BAC300743CC0 /* MacrosAddNewCommand.xib */,
+				01CAF03024C9A78B00716C32 /* ActionHeaderView.swift */,
+				01CAF03224C9A79500716C32 /* ActionHeaderView.xib */,
 			);
 			path = Viewes;
 			sourceTree = "<group>";
@@ -1227,6 +1237,8 @@
 			children = (
 				01E2B56C24ACA04600D22FB1 /* UARTMacrosCollectionViewCell.swift */,
 				01E2B56D24ACA04600D22FB1 /* UARTMacrosCollectionViewCell.xib */,
+				01CAF02C24C99D7000716C32 /* UARTNewMacrosCollectionViewCell.swift */,
+				01CAF02D24C99D7000716C32 /* UARTNewMacrosCollectionViewCell.xib */,
 				01E2B57024ACCAEE00D22FB1 /* SearchCollectionReusableView.swift */,
 				01E2B57124ACCAEE00D22FB1 /* SearchCollectionReusableView.xib */,
 			);
@@ -2180,6 +2192,7 @@
 				20E07B3F23055B0B00FCB205 /* InteractionServiceList.plist in Resources */,
 				20C7FE032306C72000B06FD8 /* IoTServices.plist in Resources */,
 				20C7FE59230E9BDC00B06FD8 /* ServiceTableViewCell.xib in Resources */,
+				01CAF02F24C99D7000716C32 /* UARTNewMacrosCollectionViewCell.xib in Resources */,
 				43F837282433FB29003D88F0 /* BGMDisplayItemTableViewCell.xib in Resources */,
 				01A1B76D23CF43590062FADC /* UART.xcassets in Resources */,
 				20E07B5B2306975700FCB205 /* GT-Eesti-Display-Thin.ttf in Resources */,
@@ -2195,6 +2208,7 @@
 				01E2B56A24ACA01600D22FB1 /* UARTMacrosCollectionViewController.xib in Resources */,
 				7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */,
 				52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */,
+				01CAF03324C9A79500716C32 /* ActionHeaderView.xib in Resources */,
 				4350CFFF244D20AE0068EEEA /* ProximityViewController.xib in Resources */,
 				01CA8B3D24A1ED36009FC4C8 /* PresetListCell.xib in Resources */,
 				5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */,
@@ -2452,6 +2466,7 @@
 				01B6D3DC234CB755000942C4 /* HeartRateLocationCharacteristic.swift in Sources */,
 				01D98C8E242E2B3C000A3B35 /* Dirrectory.swift in Sources */,
 				01A870D823F409BB00D9202E /* UARTFilterLogViewController.swift in Sources */,
+				01CAF02E24C99D7000716C32 /* UARTNewMacrosCollectionViewCell.swift in Sources */,
 				20C7FE50230E789F00B06FD8 /* MainRouter.swift in Sources */,
 				201364FF2345D0EA00C5AF1F /* CuffPressureSection.swift in Sources */,
 				4381AD1B23BA057000FB1A1F /* UARTViewController.swift in Sources */,
@@ -2495,6 +2510,7 @@
 				01268AF724218BED00E83156 /* ZephyrFileSelector.swift in Sources */,
 				20027B08233E116600A0B5ED /* StrideSection.swift in Sources */,
 				433A900C24525CDA00107822 /* WheelSizeSection.swift in Sources */,
+				01CAF03124C9A78B00716C32 /* ActionHeaderView.swift in Sources */,
 				01E2B55E24A4887500D22FB1 /* PresetListUtilityCell.swift in Sources */,
 				339761A6176917F548C7B465 /* ContinuousGlucoseMonitor.swift in Sources */,
 				433A9012245304DE00107822 /* McuMgrLogObserver.swift in Sources */,
