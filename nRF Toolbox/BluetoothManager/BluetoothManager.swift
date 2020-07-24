@@ -76,7 +76,11 @@ enum BluetoothManagerError: Error {
     
 }
 
-class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate {
+protocol UARTCommandSendManager {
+    mutating func send(command aCommand: UARTCommandModel)
+}
+
+class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate, UARTCommandSendManager {
     
     //MARK: - Delegate Properties
     var delegate: BluetoothManagerDelegate?

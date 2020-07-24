@@ -45,6 +45,17 @@ extension UIImage {
 }
 
 class UARTViewController: UIViewController, AlertPresenter {
+    
+    enum State {
+        case record, normal
+        
+        func toggle() -> State {
+            switch self {
+            case .normal: return .record
+            case .record: return .normal
+            }
+        }
+    }
 
     let btManager: BluetoothManager!
     
@@ -53,6 +64,7 @@ class UARTViewController: UIViewController, AlertPresenter {
     @IBOutlet private var saveLoadButton: UIButton!
     @IBOutlet private var presetName: UILabel!
     @IBOutlet private var pageControl: UIPageControl!
+    @IBOutlet private var toggleStateBtn: NordicButton!
     
     @IBOutlet private var collectionView: UICollectionView!
     
@@ -62,6 +74,26 @@ class UARTViewController: UIViewController, AlertPresenter {
     
     private weak var router: UARTRouter?
     private var activePresetView: UARTPresetCollectionView?
+    
+    private var commandHandler: UARTCommandSendManager
+    private var macrosBuilder: UARTMacrosBuilder = UARTMacrosBuilder()
+    
+    private var state: State = .normal {
+        didSet {
+            switch state {
+            case .normal:
+                commandHandler = btManager
+                toggleStateBtn.style = .default
+                toggleStateBtn.setTitle("Record Macross", for: .normal)
+            case .record:
+                commandHandler = macrosBuilder
+                toggleStateBtn.style = .destructive
+                toggleStateBtn.setTitle("Stop", for: .normal)
+            }
+            
+            collectionView.reloadData()
+        }
+    }
     
     var deviceName: String = "" {
         didSet {
@@ -73,6 +105,7 @@ class UARTViewController: UIViewController, AlertPresenter {
         btManager = bluetoothManager
         router = uartRouter
         self.coreDataUtil = coreDataUtil
+        self.commandHandler = btManager
         super.init(nibName: nil, bundle: .main)
     }
     
@@ -99,16 +132,33 @@ class UARTViewController: UIViewController, AlertPresenter {
         pageControl.tintColor = .nordicBlue
     }
     
+}
+
+// MARK: - Actions
+extension UARTViewController {
     @IBAction func disconnect() {
         btManager.cancelPeripheralConnection()
     }
     
-    @IBAction func recordMacros() {
-        
-    }
-    
     @IBAction func pageSelected() {
         moveToPresetIndex(pageControl.currentPage)
+    }
+    
+    @IBAction func toggleMacrosRecording() {
+        if case .record = self.state {
+            createNewMacros(with: macrosBuilder.commands)
+            macrosBuilder.reset()
+        }
+        self.state = self.state.toggle()
+    }
+}
+
+extension UARTViewController {
+    private func createNewMacros(with commands: [UARTCommandModel]) {
+        let vc = UARTMacroEditCommandListVC(commonds: commands)
+        vc.editCommandDelegate = self
+        let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false)
+        present(nc, animated: true, completion: nil)
     }
 }
 
@@ -123,6 +173,19 @@ extension UARTViewController: UARTNewCommandDelegate {
     
 }
 
+extension UARTViewController: UARTMacroEditCommandProtocol {
+    func saveMacroUpdate(_ macros: UARTMacro?, commandSet: [UARTMacroElement], name: String, color: UARTColor) {
+        _ = UARTMacro(name: name, color: color, commands: commandSet)
+        do {
+            try coreDataStack.viewContext.save()
+        } catch let error {
+            displayErrorAlert(error: error)
+        }
+        
+        dismsiss()
+    }
+}
+
 extension UARTViewController: UARTPresetCollectionViewDelegate {
     func selectedCommand(_ presetView: UARTPresetCollectionView, command: UARTCommandModel, at index: Int) {
         activePresetView = presetView
@@ -132,7 +195,7 @@ extension UARTViewController: UARTPresetCollectionViewDelegate {
             return
         }
         
-        btManager.send(command: command)
+        commandHandler.send(command: command)
     }
     
     func longTapAtCommand(_ presetView: UARTPresetCollectionView, command: UARTCommandModel, at index: Int) {
@@ -159,6 +222,7 @@ extension UARTViewController: UICollectionViewDataSource {
         cell.presetCollectionView.presetDelegate = self
         cell.presetDelegate = self
         cell.preset = presets[indexPath.row]
+        cell.presetCollectionView.state = state
         
         return cell
     }

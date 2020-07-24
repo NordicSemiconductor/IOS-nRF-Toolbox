@@ -33,11 +33,18 @@
 import UIKit
 
 class UARTPresetCollectionView: UICollectionView {
+    
+    var state: UARTViewController.State = .normal {
+        didSet {
+            reloadData()
+        }
+    }
     var preset: UARTPreset! {
         didSet {
             reloadData()
         }
     }
+    
     weak var presetDelegate: UARTPresetCollectionViewDelegate?
     
     private var longPress = UILongPressGestureRecognizer()
@@ -93,7 +100,10 @@ extension UARTPresetCollectionView: UICollectionViewDataSource {
         
         let cell = collectionView.dequeueCell(ofType: UARTActionCollectionViewCell.self, for: indexPath)
         cell.apply(command: command)
-        if #available(iOS 13.0, *) {
+        
+        if state == .record {
+            cell.contentView.backgroundColor = .nordicRed
+        } else if #available(iOS 13.0, *) {
             cell.contentView.backgroundColor = UIColor.dynamicColor(light: .systemBackground, dark: .secondarySystemBackground)
         } else {
             cell.contentView.backgroundColor = .white

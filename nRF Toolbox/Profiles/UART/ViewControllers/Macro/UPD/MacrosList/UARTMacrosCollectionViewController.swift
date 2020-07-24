@@ -130,7 +130,6 @@ extension UARTMacrosCollectionViewController: UARTMacroEditCommandProtocol {
         tryToSaveContext()
         
         collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
-        
     }
     
     private func tryToSaveContext() {

@@ -114,6 +114,7 @@
 		01CAF02F24C99D7000716C32 /* UARTNewMacrosCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01CAF02D24C99D7000716C32 /* UARTNewMacrosCollectionViewCell.xib */; };
 		01CAF03124C9A78B00716C32 /* ActionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CAF03024C9A78B00716C32 /* ActionHeaderView.swift */; };
 		01CAF03324C9A79500716C32 /* ActionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01CAF03224C9A79500716C32 /* ActionHeaderView.xib */; };
+		01CAF03524CB281F00716C32 /* UARTMacrosBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CAF03424CB281F00716C32 /* UARTMacrosBuilder.swift */; };
 		01D6D2B924067B0500E1A66F /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01D6D2B824067B0500E1A66F /* Resources.xcassets */; };
 		01D6D2BB240696D000E1A66F /* DFURouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6D2BA240696D000E1A66F /* DFURouter.swift */; };
 		01D6D2C02406A1EF00E1A66F /* DFUStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6D2BE2406A1EF00E1A66F /* DFUStartViewController.swift */; };
@@ -462,6 +463,7 @@
 		01CAF02D24C99D7000716C32 /* UARTNewMacrosCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTNewMacrosCollectionViewCell.xib; sourceTree = "<group>"; };
 		01CAF03024C9A78B00716C32 /* ActionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionHeaderView.swift; sourceTree = "<group>"; };
 		01CAF03224C9A79500716C32 /* ActionHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActionHeaderView.xib; sourceTree = "<group>"; };
+		01CAF03424CB281F00716C32 /* UARTMacrosBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosBuilder.swift; sourceTree = "<group>"; };
 		01D6D2B824067B0500E1A66F /* Resources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resources.xcassets; sourceTree = "<group>"; };
 		01D6D2BA240696D000E1A66F /* DFURouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFURouter.swift; sourceTree = "<group>"; };
 		01D6D2BE2406A1EF00E1A66F /* DFUStartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUStartViewController.swift; sourceTree = "<group>"; };
@@ -906,6 +908,7 @@
 				014C4E8A2403F9BD0003E601 /* UARTMacroSaver.swift */,
 				43D34723246D58D70060DBE2 /* UARTShortcutManager.swift */,
 				43645A9D24978A4000231247 /* UARTCoreDataUtil.swift */,
+				01CAF03424CB281F00716C32 /* UARTMacrosBuilder.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2438,6 +2441,7 @@
 				01E2B56524AB4D9900D22FB1 /* UARTPresetUIUtil.swift in Sources */,
 				01E2B56E24ACA04600D22FB1 /* UARTMacrosCollectionViewCell.swift in Sources */,
 				4389183C24360EAB00175A94 /* Logger.swift in Sources */,
+				01CAF03524CB281F00716C32 /* UARTMacrosBuilder.swift in Sources */,
 				01A1B77523CF5A080062FADC /* UICollectionView+Ext.swift in Sources */,
 				430901A7249B868E0030EE00 /* EmptyModel.swift in Sources */,
 				01797E8323F4242500B26BF2 /* ModernIcon.swift in Sources */,

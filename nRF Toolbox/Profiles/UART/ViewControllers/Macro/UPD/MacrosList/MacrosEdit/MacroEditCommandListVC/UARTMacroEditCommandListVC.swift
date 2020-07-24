@@ -65,6 +65,8 @@ class UARTMacroEditCommandListVC: UITableViewController {
             switch $0 {
             case let c as UARTMacroCommandWrapper:
                 return CommandWrapper(element: c, expanded: c.repeatCount > 1)
+            case let command as UARTCommandModel:
+                return CommandWrapper(element: UARTMacroCommandWrapper(command: command), expanded: false)
             case let ti as UARTMacroTimeInterval:
                 return ti
             default:

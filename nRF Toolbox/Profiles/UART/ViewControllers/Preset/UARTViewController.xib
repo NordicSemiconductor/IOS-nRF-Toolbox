@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -19,6 +19,7 @@
                 <outlet property="deviceNameLabel" destination="UL0-4i-YtI" id="I99-7Z-Ish"/>
                 <outlet property="disconnectBtn" destination="PdZ-kf-qsF" id="hJ1-BY-yWz"/>
                 <outlet property="pageControl" destination="vcL-8T-gcU" id="oAW-6O-DYu"/>
+                <outlet property="toggleStateBtn" destination="YAx-as-MR9" id="tOi-TN-JaD"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -84,6 +85,17 @@
                         <action selector="pageSelected" destination="-1" eventType="valueChanged" id="LkN-qu-8zd"/>
                     </connections>
                 </pageControl>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YAx-as-MR9" customClass="NordicButton" customModule="nRF_Toolbox" customModuleProvider="target">
+                    <rect key="frame" x="147" y="523" width="120" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="120" id="T4u-fP-ej1"/>
+                        <constraint firstAttribute="height" constant="40" id="rC4-oN-EDe"/>
+                    </constraints>
+                    <state key="normal" title="Record Macros"/>
+                    <connections>
+                        <action selector="toggleMacrosRecording" destination="-1" eventType="touchUpInside" id="gt1-Ig-0p0"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
             <constraints>
@@ -95,8 +107,10 @@
                 <constraint firstItem="vcL-8T-gcU" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Spr-qI-hOv"/>
                 <constraint firstItem="PdZ-kf-qsF" firstAttribute="centerY" secondItem="UL0-4i-YtI" secondAttribute="centerY" id="THu-nB-o1b"/>
                 <constraint firstItem="pIh-Or-s4q" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ZAI-nD-3dJ"/>
+                <constraint firstItem="YAx-as-MR9" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Zgk-ri-bzk"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="PdZ-kf-qsF" secondAttribute="bottom" constant="12" id="drJ-6o-9yR"/>
                 <constraint firstItem="vcL-8T-gcU" firstAttribute="top" secondItem="pIh-Or-s4q" secondAttribute="bottom" constant="8" id="uN8-U7-HjA"/>
+                <constraint firstItem="YAx-as-MR9" firstAttribute="top" secondItem="vcL-8T-gcU" secondAttribute="bottom" constant="8" id="w3d-I7-A54"/>
                 <constraint firstItem="UL0-4i-YtI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="xKo-Sf-yOF"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
