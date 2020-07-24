@@ -23,9 +23,10 @@ extension UICollectionViewFlowLayout {
     }
 }
 
-class UARTMacrosCollectionViewController: UICollectionViewController {
+class UARTMacrosCollectionViewController: UICollectionViewController, AlertPresenter {
     
     var macros: [UARTMacro] = []
+    let coreDataStack: CoreDataStack = CoreDataStack.uart
     
     init() {
         super.init(nibName: "UARTMacrosCollectionViewController", bundle: .main)
@@ -68,6 +69,7 @@ class UARTMacrosCollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueCell(ofType: UARTMacrosCollectionViewCell.self, for: indexPath)
         cell.editMacros = { _ in
             let vc = UARTMacroEditCommandListVC(macros: macro)
+            vc.editCommandDelegate = self
             let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: true)
             self.present(nc, animated: true, completion: nil)
         }
@@ -87,6 +89,7 @@ class UARTMacrosCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard indexPath.item < macros.count else {
             let vc = UARTMacroEditCommandListVC(macros: nil)
+            vc.editCommandDelegate = self
             let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: true)
             self.present(nc, animated: true, completion: nil)
             return
@@ -100,4 +103,43 @@ extension UARTMacrosCollectionViewController: UICollectionViewDelegateFlowLayout
         let itemWidth = (collectionViewLayout as! UICollectionViewFlowLayout).itemWidth(minimumCellWidth: 160)
         return CGSize(width: itemWidth, height: 116)
     }
+}
+
+extension UARTMacrosCollectionViewController: UARTMacroEditCommandProtocol {
+    func saveMacroUpdate(_ macros: UARTMacro?, commandSet: [UARTMacroElement], name: String, color: UARTColor) {
+        defer {
+            dismsiss()
+        }
+        
+        guard let macros = macros else {
+            let newMacros = UARTMacro(name: name, color: color, commands: commandSet)
+            self.macros.append(newMacros)
+            tryToSaveContext()
+            collectionView.insertItems(at: [IndexPath(item: self.macros.count - 1, section: 0)])
+            return
+        }
+        
+        guard let index = self.macros.firstIndex(of: macros) else {
+            return
+        }
+        
+        macros.name = name
+        macros.color = color
+        macros.elements = commandSet
+        
+        tryToSaveContext()
+        
+        collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+        
+    }
+    
+    private func tryToSaveContext() {
+        do {
+            try coreDataStack.viewContext.save()
+        } catch let error {
+            displayErrorAlert(error: error)
+        }
+    }
+    
+    
 }

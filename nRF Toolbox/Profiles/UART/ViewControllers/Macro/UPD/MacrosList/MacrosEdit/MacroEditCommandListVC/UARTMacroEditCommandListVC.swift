@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol UARTMacroEditCommandProtocol: class {
+    func saveMacroUpdate(_ macros: UARTMacro?, commandSet: [UARTMacroElement], name: String, color: UARTColor)
+}
+
 private protocol SectionDescriptor { }
 
 extension UARTMacroTimeInterval: SectionDescriptor { }
@@ -22,8 +26,16 @@ private struct CommandWrapper: SectionDescriptor {
 class UARTMacroEditCommandListVC: UITableViewController {
     
     let macros: UARTMacro?
+    
+    weak var editCommandDelegate: UARTMacroEditCommandProtocol?
+    
     private var elements: [SectionDescriptor]
     private var headerView: ActionHeaderView!
+    
+    private var name: String?
+    private var color: UARTColor?
+    
+    private var postponedAction: (() -> ())?
 
     init(macros: UARTMacro?) {
         self.macros = macros
@@ -37,12 +49,39 @@ class UARTMacroEditCommandListVC: UITableViewController {
                 return nil
             }
         } ?? []
+        
+        self.name = macros?.name
+        self.color = macros?.color
 
         if #available(iOS 13, *) {
             super.init(style: .insetGrouped)
         } else {
             super.init(style: .grouped)
         }
+    }
+    
+    init(commonds: [UARTMacroElement]) {
+        self.elements = commonds.compactMap {
+            switch $0 {
+            case let c as UARTMacroCommandWrapper:
+                return CommandWrapper(element: c, expanded: c.repeatCount > 1)
+            case let ti as UARTMacroTimeInterval:
+                return ti
+            default:
+                return nil
+            }
+        }
+        
+        self.macros = nil
+        self.color = nil
+        self.name = nil
+        
+        if #available(iOS 13, *) {
+            super.init(style: .insetGrouped)
+        } else {
+            super.init(style: .grouped)
+        }
+        
     }
     
     required init?(coder: NSCoder) {
@@ -88,12 +127,31 @@ class UARTMacroEditCommandListVC: UITableViewController {
 
 extension UARTMacroEditCommandListVC {
     @IBAction private func save() {
+        guard let name = self.name, let color = self.color else {
+            editMacros()
+            postponedAction = { [weak self] in
+                self?.save()
+            }
+            return
+        }
         
+        
+        let commands: [UARTMacroElement] = self.elements.compactMap {
+            switch $0 {
+            case let ti as UARTMacroTimeInterval: return ti
+            case let command as CommandWrapper: return command.element
+            default: return nil
+            }
+        }
+        
+        self.editCommandDelegate?.saveMacroUpdate(macros, commandSet: commands, name: name, color: color)
     }
     
     @IBAction private func editMacros() {
-        let vc = UARTEditMacrosVC(macros: self.macros)
+        let vc = UARTEditMacrosVC(name: name, color: color)
+        vc.editMacrosDelegate = self
         navigationController?.pushViewController(vc, animated: true)
+        postponedAction = nil
     }
     
 }
@@ -256,6 +314,19 @@ extension UARTMacroEditCommandListVC: UARTNewCommandDelegate {
         self.elements.append(CommandWrapper(element: UARTMacroCommandWrapper(command: command), expanded: false))
         self.tableView.insertSections([elements.count - 1], with: .automatic)
         self.navigationController?.popViewController(animated: true)
+    }
+}
+
+extension UARTMacroEditCommandListVC: UARTEditMacrosDelegate {
+    func saveMacrosUpdate(name: String, color: UARTColor) {
+        self.name = name
+        self.color = color
+        
+        if let action = postponedAction {
+            action()
+        } else {
+            navigationController?.popViewController(animated: true)
+        }
     }
     
     

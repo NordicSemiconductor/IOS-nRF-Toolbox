@@ -29,6 +29,8 @@ private class UARTColorCollectionViewCell: UICollectionViewCell {
 
 class UARTColorSelectorCell: UITableViewCell {
     
+    var colorUpdated: ((UARTColor?) -> ())?
+    
     @IBOutlet private var collectionView: UICollectionView!
     var color: UARTColor? {
         didSet {
@@ -66,6 +68,7 @@ extension UARTColorSelectorCell: UICollectionViewDataSource {
 extension UARTColorSelectorCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.color = UARTColor.allCases[indexPath.row]
+        self.colorUpdated?(self.color)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

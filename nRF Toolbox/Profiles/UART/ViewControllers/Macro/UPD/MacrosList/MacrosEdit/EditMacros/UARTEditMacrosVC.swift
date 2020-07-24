@@ -8,12 +8,21 @@
 
 import UIKit
 
-class UARTEditMacrosVC: UITableViewController {
+protocol UARTEditMacrosDelegate: class {
+    func saveMacrosUpdate(name: String, color: UARTColor)
+}
+
+class UARTEditMacrosVC: UITableViewController, AlertPresenter {
     
-    let macros: UARTMacro?
+    private var name: String?
+    private var color: UARTColor?
     
-    init(macros: UARTMacro?) {
-        self.macros = macros
+    weak var editMacrosDelegate: UARTEditMacrosDelegate!
+    
+    init(name: String?, color: UARTColor?) {
+        self.name = name
+        self.color = color
+        
         if #available(iOS 13, *) {
             super.init(style: .insetGrouped)
         } else {
@@ -56,12 +65,22 @@ class UARTEditMacrosVC: UITableViewController {
         switch indexPath.section {
         case 0:
             let cell = tableView.dequeueCell(ofType: NordicTextFieldCell.self)
-            cell.textField.text = macros?.name
+            cell.textField.text = name
             cell.textField.font = UIFont.gtEestiDisplay(.regular, size: 17)
+            
+            cell.textChanged = { [weak self] name in
+                self?.name = name
+            }
+            
             return cell 
         case 1:
             let cell = tableView.dequeueCell(ofType: UARTColorSelectorCell.self)
-            cell.color = macros?.color
+            cell.color = color
+            
+            cell.colorUpdated = { [weak self] color in
+                self?.color = color
+            }
+            
             return cell
         default:
             SystemLog.fault("Section data not found", category: .ui)
@@ -73,7 +92,12 @@ class UARTEditMacrosVC: UITableViewController {
 
 extension UARTEditMacrosVC {
     @IBAction private func save() {
+        guard let name = self.name, let color = self.color, !name.isEmpty else {
+            displayErrorAlert(error: QuickError(message: "Name should not be empty and color should be selected"))
+            return
+        }
         
+        editMacrosDelegate.saveMacrosUpdate(name: name, color: color)
     }
     
     @IBAction private func cancel() {
