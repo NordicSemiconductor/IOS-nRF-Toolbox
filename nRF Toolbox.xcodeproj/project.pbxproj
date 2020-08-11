@@ -59,6 +59,8 @@
 		016EF388241632AF005FFA30 /* LoggerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016EF386241632AF005FFA30 /* LoggerTableViewController.swift */; };
 		016EF389241632AF005FFA30 /* LoggerTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 016EF387241632AF005FFA30 /* LoggerTableViewController.xib */; };
 		01797E8323F4242500B26BF2 /* ModernIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01797E8223F4242500B26BF2 /* ModernIcon.swift */; };
+		0180AAC324E16799006FECBA /* UARTMacroCommandWrapperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0180AAC124E16799006FECBA /* UARTMacroCommandWrapperCell.swift */; };
+		0180AAC424E16799006FECBA /* UARTMacroCommandWrapperCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0180AAC224E16799006FECBA /* UARTMacroCommandWrapperCell.xib */; };
 		0192BB352428E63C003F7F6B /* DFUFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0192BB342428E63C003F7F6B /* DFUFileManager.swift */; };
 		0197AFCF2420DAAC00ADF105 /* NotConnectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0197AFCD2420DAAC00ADF105 /* NotConnectedViewController.swift */; };
 		0197AFD02420DAAC00ADF105 /* NotConnectedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0197AFCE2420DAAC00ADF105 /* NotConnectedViewController.xib */; };
@@ -408,6 +410,8 @@
 		016EF386241632AF005FFA30 /* LoggerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerTableViewController.swift; sourceTree = "<group>"; };
 		016EF387241632AF005FFA30 /* LoggerTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoggerTableViewController.xib; sourceTree = "<group>"; };
 		01797E8223F4242500B26BF2 /* ModernIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernIcon.swift; sourceTree = "<group>"; };
+		0180AAC124E16799006FECBA /* UARTMacroCommandWrapperCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacroCommandWrapperCell.swift; sourceTree = "<group>"; };
+		0180AAC224E16799006FECBA /* UARTMacroCommandWrapperCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTMacroCommandWrapperCell.xib; sourceTree = "<group>"; };
 		0192BB342428E63C003F7F6B /* DFUFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFileManager.swift; sourceTree = "<group>"; };
 		0197AFCD2420DAAC00ADF105 /* NotConnectedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotConnectedViewController.swift; sourceTree = "<group>"; };
 		0197AFCE2420DAAC00ADF105 /* NotConnectedViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotConnectedViewController.xib; sourceTree = "<group>"; };
@@ -1056,6 +1060,8 @@
 				01135D5F24B5B55600DA0434 /* UARTMacroRepeatCommandCell.xib */,
 				01F94C5524BDC2A200D34EC4 /* UARTMacroWaitCell.swift */,
 				01F94C5624BDC2A200D34EC4 /* UARTMacroWaitCell.xib */,
+				0180AAC124E16799006FECBA /* UARTMacroCommandWrapperCell.swift */,
+				0180AAC224E16799006FECBA /* UARTMacroCommandWrapperCell.xib */,
 			);
 			path = UARTMacroCommandCell;
 			sourceTree = "<group>";
@@ -2229,6 +2235,7 @@
 				01B5A78A24AF52F600B0FF97 /* UARTMacroCommandCell.xib in Resources */,
 				01E2B55F24A4887500D22FB1 /* PresetListUtilityCell.xib in Resources */,
 				20E07B612306975700FCB205 /* GT-Eesti-Display-Medium.ttf in Resources */,
+				0180AAC424E16799006FECBA /* UARTMacroCommandWrapperCell.xib in Resources */,
 				20F15C3C2313D2C7000C5503 /* InfoActionView.xib in Resources */,
 				4353A50F243175C300159CDF /* HMAccessoryListTableViewController.xib in Resources */,
 				4381AD1C23BA057000FB1A1F /* UARTViewController.xib in Resources */,
@@ -2529,6 +2536,7 @@
 				01D98C85242E2855000A3B35 /* FileTableViewCell.swift in Sources */,
 				3397653E200A1711DC0AA009 /* ContinuousGlucoseMonitorMeasurement.swift in Sources */,
 				33976843D672C14301E9C917 /* SessionStartTime.swift in Sources */,
+				0180AAC324E16799006FECBA /* UARTMacroCommandWrapperCell.swift in Sources */,
 				339762F1FAFD0B4E24D99501 /* GlucoseValueList.swift in Sources */,
 				0192BB352428E63C003F7F6B /* DFUFileManager.swift in Sources */,
 				01675E7123F6D1BE00FC0519 /* UARTPresetTableViewCell.swift in Sources */,

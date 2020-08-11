@@ -12,16 +12,16 @@ protocol UARTMacroEditCommandProtocol: class {
     func saveMacroUpdate(_ macros: UARTMacro?, commandSet: [UARTMacroElement], name: String, color: UARTColor)
 }
 
-private protocol SectionDescriptor { }
-
-extension UARTMacroTimeInterval: SectionDescriptor { }
-
-private struct CommandWrapper: SectionDescriptor {
+struct CommandWrapper {
     var element: UARTMacroCommandWrapper
     var expanded: Bool = true
     var repeatEnabled: Bool = true
     var timeIntervalEnabled: Bool = true
 }
+
+private protocol SectionDescriptor { }
+extension UARTMacroTimeInterval: SectionDescriptor { }
+extension CommandWrapper: SectionDescriptor { }
 
 class UARTMacroEditCommandListVC: UITableViewController {
     
@@ -102,10 +102,7 @@ class UARTMacroEditCommandListVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let command = self.elements[section] as? CommandWrapper else {
-            return 1
-        }
-        return command.expanded ? 3 : 1
+        1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -116,7 +113,7 @@ class UARTMacroEditCommandListVC: UITableViewController {
         case let ti as UARTMacroTimeInterval:
             return self.tableView(tableView, timeIntervalCellForRowAt: indexPath, timeInterval: ti)
         default:
-            fatalError()
+            SystemLog.fault("Unknown command type", category: .app)
         }
         
     }
@@ -124,7 +121,8 @@ class UARTMacroEditCommandListVC: UITableViewController {
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         navigationItem.title = scrollView.contentOffset.y > -30 ? "Edit Macros Commands" : ""
     }
-        
+    
+    
 }
 
 extension UARTMacroEditCommandListVC {
@@ -161,19 +159,12 @@ extension UARTMacroEditCommandListVC {
 //MARK: - Setup UI
 extension UARTMacroEditCommandListVC {
     
-    private struct SizeConst {
-        static let imageSizeForLargeState: CGFloat = 40
-        static let imageRightMargin: CGFloat = 16
-        static let imageBottomMarginForLargeState: CGFloat = 26
-        static let navBarHeightLargeState: CGFloat = 96.5
-        static let navBarHeightSmallState: CGFloat = 80
-    }
-    
     private func setupTableView() {
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.registerCellNib(cell: UARTMacroCommandCell.self)
-        tableView.registerCellNib(cell: UARTMacroRepeatCommandCell.self)
         tableView.registerCellNib(cell: UARTMacroWaitCell.self)
+        tableView.registerCellNib(cell: UARTMacroCommandWrapperCell.self)
+        
+        
         tableView.reloadData()
         
         let addView = MacrosAddNewCommand.instance()
@@ -232,64 +223,32 @@ extension UARTMacroEditCommandListVC {
     
     private func tableView(_ tableView: UITableView, commandCellForRowAt indexPath: IndexPath, command: CommandWrapper) -> UITableViewCell {
 
-        switch indexPath.row {
-        case 0:
-            let cell = tableView.dequeueCell(ofType: UARTMacroCommandCell.self)
-            cell.apply(command.element.command)
-            
-            cell.expandAction = { [weak self] sender in
-                guard var command = self?.elements[indexPath.section] as? CommandWrapper else {
-                    return
-                }
-                
-                command.expanded.toggle()
-                sender.isHighlighted = command.expanded
-                
-                self?.elements[indexPath.section] = command
-                tableView.reloadSections([indexPath.section], with: .automatic)
+        let cell = tableView.dequeueCell(ofType: UARTMacroCommandWrapperCell.self)
+
+        cell.timeIntervalCanged = { [weak self] val in
+            (self?.elements[indexPath.section] as! CommandWrapper).element.timeInterval = val
+        }
+
+        cell.repeatCountCanged = { [weak self] val in
+            (self?.elements[indexPath.section] as! CommandWrapper).element.repeatCount = val
+        }
+
+        cell.expandAction = { [weak self] sender in
+            guard var command = self?.elements[indexPath.section] as? CommandWrapper else {
+                return
             }
-            
-            return cell
-        case 1:
-            return self.tableView(tableView, repeatCellForRowAt: indexPath, command: command)
-        case 2:
-            return self.tableView(tableView, tiCellForRowAt: indexPath, command: command)
-        default:
-            fatalError()
-        }
-    }
 
-    private func tableView(_ tableView: UITableView, repeatCellForRowAt indexPath: IndexPath, command: CommandWrapper) -> UITableViewCell {
-        let cell = tableView.dequeueCell(ofType: UARTMacroRepeatCommandCell.self)
-        cell.title.text = "Repeat"
-        cell.argument.text = "\(command.element.repeatCount) times"
-        cell.argument.labelDidPressed = { [weak self] label, controller in
-            self?.setupAndShowStepper(controller, on: label)
-            controller.stepperSetup = (1, 100, command.element.repeatCount, 1)
+            command.expanded.toggle()
+            sender.isHighlighted = command.expanded
+
+            self?.elements[indexPath.section] = command
+            tableView.reloadSections([indexPath.section], with: .automatic)
         }
 
-        cell.argument.stepperValueChanged = { [weak cell] val in
-            cell?.argument.text = "\(val) times"
-            (self.elements[indexPath.section] as! CommandWrapper).element.repeatCount = val
-        }
-        
-        return cell
-    }
+        weak var `self` = self
+        cell.setupAndShowStepper = self?.setupAndShowStepper
 
-    private func tableView(_ tableView: UITableView, tiCellForRowAt indexPath: IndexPath, command: CommandWrapper) -> UITableViewCell {
-        let cell = tableView.dequeueCell(ofType: UARTMacroRepeatCommandCell.self)
-        cell.title.text = "Time Interval"
-        cell.argument.text = "\(command.element.timeInterval) milliseconds"
-        cell.argument.labelDidPressed = { [weak self] label, controller in
-            self?.setupAndShowStepper(controller, on: label)
-            controller.stepperSetup = (100, 10_000, command.element.timeInterval, 100)
-        }
-
-        cell.argument.stepperValueChanged = { [weak cell] val in
-            cell?.argument.text = "\(val) milliseconds"
-            (self.elements[indexPath.section] as! CommandWrapper).element.timeInterval = val
-        }
-        
+        cell.apply(command)
         return cell
     }
     
