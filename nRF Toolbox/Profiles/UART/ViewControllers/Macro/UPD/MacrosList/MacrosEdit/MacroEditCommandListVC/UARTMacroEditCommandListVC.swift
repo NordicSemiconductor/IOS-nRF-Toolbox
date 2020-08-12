@@ -95,6 +95,82 @@ class UARTMacroEditCommandListVC: UITableViewController {
         
         setupTableView()
         setupNavigationBar()
+        
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressed(sender:)))
+        tableView.addGestureRecognizer(longPress)
+    }
+    
+    private var sourceIndexPath: IndexPath?
+    private var snapshot: UIView?
+    
+    @objc
+    func longPressed(sender: UILongPressGestureRecognizer) {
+        let state = sender.state
+        let location = sender.location(in: tableView)
+        
+        guard let indexPath = tableView.indexPathForRow(at: location) else { return }
+        
+        switch state {
+        case .began:
+            sourceIndexPath = indexPath
+            guard let cell = self.tableView.cellForRow(at: indexPath) else { return }
+            snapshot = self.customSnapshotFromView(inputView: cell)
+            guard  let snapshot = self.snapshot else { return }
+            var center = cell.center
+            snapshot.center = center
+            snapshot.alpha = 0.0
+            tableView.addSubview(snapshot)
+            UIView.animate(withDuration: 0.25, animations: {
+                center.y = location.y
+                snapshot.center = center
+                snapshot.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
+                snapshot.alpha = 0.98
+                cell.alpha = 0.0
+            }, completion: { (finished) in
+                cell.isHidden = true
+            })
+        case .changed:
+            guard  let snapshot = self.snapshot else { return }
+            
+            var center = snapshot.center
+            center.y = location.y
+            snapshot.center = center
+            guard let sourceIndexPath = self.sourceIndexPath  else {
+                return
+            }
+            if indexPath != sourceIndexPath {
+                elements.swapAt(indexPath.section, sourceIndexPath.section)
+                tableView.moveSection(sourceIndexPath.section, toSection: indexPath.section)
+                
+                let cell = tableView.cellForRow(at: indexPath)
+                cell?.alpha = 0
+                
+                self.sourceIndexPath = indexPath
+            }
+        default:
+            guard let cell = self.tableView.cellForRow(at: indexPath) else {
+                return
+            }
+            guard  let snapshot = self.snapshot else {
+                return
+            }
+            cell.isHidden = false
+            cell.alpha = 0.0
+            UIView.animate(withDuration: 0.25, animations: {
+                snapshot.center = cell.center
+                snapshot.transform = CGAffineTransform.identity
+                snapshot.alpha = 0
+                cell.alpha = 1
+            }, completion: { (finished) in
+                self.cleanup()
+            })
+        }
+    }
+    
+    private func cleanup() {
+        self.sourceIndexPath = nil
+        snapshot?.removeFromSuperview()
+        self.snapshot = nil
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -163,7 +239,6 @@ extension UARTMacroEditCommandListVC {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.registerCellNib(cell: UARTMacroWaitCell.self)
         tableView.registerCellNib(cell: UARTMacroCommandWrapperCell.self)
-        
         
         tableView.reloadData()
         
@@ -261,6 +336,25 @@ extension UARTMacroEditCommandListVC {
         controller.popoverPresentationController?.delegate = self
         
         self.present(controller, animated: true)
+    }
+
+    private func customSnapshotFromView(inputView: UIView) -> UIView? {
+        UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, false, 0)
+        if let CurrentContext = UIGraphicsGetCurrentContext() {
+            inputView.layer.render(in: CurrentContext)
+        }
+        guard let image = UIGraphicsGetImageFromCurrentImageContext() else {
+            UIGraphicsEndImageContext()
+            return nil
+        }
+        UIGraphicsEndImageContext()
+        let snapshot = UIImageView(image: image)
+        snapshot.layer.masksToBounds = false
+        snapshot.layer.cornerRadius = 0
+        snapshot.layer.shadowOffset = CGSize(width: -5, height: 0)
+        snapshot.layer.shadowRadius = 5
+        snapshot.layer.shadowOpacity = 0.4
+        return snapshot
     }
 }
 
