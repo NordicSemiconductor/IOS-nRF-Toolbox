@@ -293,6 +293,10 @@ extension UARTMacroEditCommandListVC {
             cell?.intervalLabel.text = "\(ti) milliseconds"
         }
         
+        cell.removeAction = { [weak self, weak cell] in
+            self?.askForRemoveCell(cell)
+        }
+        
         return cell
     }
     
@@ -318,6 +322,10 @@ extension UARTMacroEditCommandListVC {
 
             self?.elements[indexPath.section] = command
             tableView.reloadSections([indexPath.section], with: .automatic)
+        }
+        
+        cell.removeCommand = { [weak self, weak cell] in
+            self?.askForRemoveCell(cell)
         }
 
         weak var `self` = self
@@ -355,6 +363,24 @@ extension UARTMacroEditCommandListVC {
         snapshot.layer.shadowRadius = 5
         snapshot.layer.shadowOpacity = 0.4
         return snapshot
+    }
+    
+    private func askForRemoveCell(_ cell: UITableViewCell?) {
+        guard let ip = cell.flatMap ({ self.tableView.indexPath(for: $0) }) else { return }
+        
+        let alert = UIAlertController(title: "Remove command?", message: "Are you sure you want to remove the command?", preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
+            self?.elements.remove(at: ip.section)
+            self?.tableView.deleteSections([ip.section], with: .automatic)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
     }
 }
 

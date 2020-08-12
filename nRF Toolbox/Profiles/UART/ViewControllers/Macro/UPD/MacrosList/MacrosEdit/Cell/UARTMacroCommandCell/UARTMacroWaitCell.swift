@@ -14,6 +14,7 @@ class UARTMacroWaitCell: UITableViewCell {
     
     var timeIntervalChanged: ((Int) -> ())?
     var presentController: ((ArgumentLabel, UARTIncrementViewController) -> ())?
+    var removeAction: (() -> ())?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,6 +27,10 @@ class UARTMacroWaitCell: UITableViewCell {
             self?.timeIntervalChanged?(ti)
         }
         
+    }
+    
+    @IBAction private func remove() {
+        removeAction?()
     }
     
 }

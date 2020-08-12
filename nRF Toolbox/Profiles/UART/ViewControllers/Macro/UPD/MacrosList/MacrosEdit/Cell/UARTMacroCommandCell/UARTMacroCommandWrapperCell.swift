@@ -25,6 +25,7 @@ class UARTMacroCommandWrapperCell: UITableViewCell {
     var setupAndShowStepper: ((UARTIncrementViewController, UIView) -> ())?
     var timeIntervalCanged: ((Int) -> ())?
     var repeatCountCanged: ((Int) -> ())?
+    var removeCommand: (() -> ())?
     
     func apply(_ model: CommandWrapper) {
         self.model = model
@@ -44,13 +45,12 @@ class UARTMacroCommandWrapperCell: UITableViewCell {
         tableView.backgroundColor = nil
         
     }
+}
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+extension UARTMacroCommandWrapperCell {
+    @IBAction private func remove() {
+        removeCommand?()
     }
-    
 }
 
 extension UARTMacroCommandWrapperCell: UITableViewDataSource {
@@ -68,6 +68,8 @@ extension UARTMacroCommandWrapperCell: UITableViewDataSource {
 
             cell.expandAction = self.expandAction
             cell.backgroundColor = nil
+            
+            cell.deleteBtn.addTarget(self, action: #selector(remove), for: .touchUpInside)
 
             return cell
         case 1:
@@ -94,7 +96,6 @@ extension UARTMacroCommandWrapperCell: UITableViewDataSource {
         }
 
         cell.backgroundColor = nil
-//        cell.contentView.backgroundColor = nil
         
         return cell
     }
@@ -109,7 +110,6 @@ extension UARTMacroCommandWrapperCell: UITableViewDataSource {
         }
 
         cell.backgroundColor = nil
-//        cell.contentView.backgroundColor = nil
         
         cell.argument.stepperValueChanged = { [weak cell] val in
             self.timeIntervalCanged?(val)
