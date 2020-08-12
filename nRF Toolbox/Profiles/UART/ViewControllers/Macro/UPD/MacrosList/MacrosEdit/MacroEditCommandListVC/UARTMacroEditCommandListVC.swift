@@ -247,9 +247,7 @@ extension UARTMacroEditCommandListVC {
         tableView.tableFooterView = addView
         
         addView.addButtonCallback = { [weak self] in
-            let vc = UARTNewCommandViewController(command: nil, index: -1)
-            vc.delegate = self
-            self?.navigationController?.pushViewController(vc, animated: true)
+            self?.addCommand()
         }
     }
     
@@ -272,6 +270,29 @@ extension UARTMacroEditCommandListVC {
         if #available(iOS 11.0, *) {
             navigationItem.largeTitleDisplayMode = .never
         }
+    }
+    
+    private func addCommand() {
+        let alert = UIAlertController(title: "Add commond", message: nil, preferredStyle: .actionSheet)
+        
+        let command = UIAlertAction(title: "Command", style: .default) { [weak self] (_) in
+            let vc = UARTNewCommandViewController(command: nil, index: -1)
+            vc.delegate = self
+            self?.navigationController?.pushViewController(vc, animated: true)
+        }
+        
+        let delay = UIAlertAction(title: "Delay", style: .default) { [weak self] (_) in
+            self?.elements.append(UARTMacroTimeInterval(milliseconds: 100))
+            let index = (self?.elements.count).flatMap { $0 - 1 }
+            self?.tableView.insertSections([index ?? 0], with: .automatic)
+        }
+        
+        alert.addAction(command)
+        alert.addAction(delay)
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

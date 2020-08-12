@@ -48,7 +48,6 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
     
     private var presetCollectionView: UARTPresetCollectionView?
     private var macros: UARTMacro
-//    private let fileManager = UARTMacroFileManager()
     private let editingMode: Bool
     private let bluetoothManager: BluetoothManager
 
