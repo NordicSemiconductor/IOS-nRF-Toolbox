@@ -96,6 +96,14 @@ class UARTMacrosCollectionViewController: UICollectionViewController, AlertPrese
         }
     }
     
+    override func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+        indexPath.item == macros.count
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        macros.swapAt(sourceIndexPath.item, destinationIndexPath.item)
+    }
+    
 }
 
 extension UARTMacrosCollectionViewController: UICollectionViewDelegateFlowLayout {
@@ -138,6 +146,20 @@ extension UARTMacrosCollectionViewController: UARTMacroEditCommandProtocol {
         } catch let error {
             displayErrorAlert(error: error)
         }
+    }
+    
+    
+}
+
+@available(iOS 11.0, *)
+extension UARTMacrosCollectionViewController: UICollectionViewDragDelegate {
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        let item = macros[indexPath.item]
+        let itemProvider = NSItemProvider(item: item, typeIdentifier: "macro")
+        let dragItem = UIDragItem(itemProvider: itemProvider)
+        dragItem.localObject = item
+        
+        return [dragItem]
     }
     
     

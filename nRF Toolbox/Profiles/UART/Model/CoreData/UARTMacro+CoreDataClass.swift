@@ -10,7 +10,19 @@ import Foundation
 import CoreData
 
 @objc(UARTMacro)
-class UARTMacro: NSManagedObject {
+class UARTMacro: NSManagedObject, NSSecureCoding {
+    
+    static var supportsSecureCoding: Bool {
+        true
+    }
+    
+    func encode(with coder: NSCoder) {
+        
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
     
     var commands: [UARTMacroCommandWrapper] {
         elements.compactMap { $0 as? UARTMacroCommandWrapper }
