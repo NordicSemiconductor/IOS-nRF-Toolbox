@@ -71,7 +71,8 @@ class UARTTabBarController: UITabBarController {
     
     private var bufferView: UIView!
     private var emptyView: InfoActionView!
-    let btManager = BluetoothManager()
+    
+    let btManager = BluetoothManager.shared
     private lazy var bSettings: InfoActionView.ButtonSettings = ("Connect", { [unowned self] in
         let scanner = PeripheralScanner(services: nil)
         let vc = ConnectionViewController(scanner: scanner)
@@ -113,6 +114,10 @@ class UARTTabBarController: UITabBarController {
 }
 
 extension UARTTabBarController: BluetoothManagerDelegate {
+    func requestDeviceList() {
+        bSettings.1()
+    }
+
     func didConnectPeripheral(deviceName aName: String?) {
         uartViewController.deviceName = aName ?? ""
         emptyView.removeFromSuperview()

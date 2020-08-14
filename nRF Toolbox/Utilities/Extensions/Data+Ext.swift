@@ -83,9 +83,9 @@ extension Data {
         let exponent = Int8(bitPattern: UInt8(tempData >> 24))
         
         var output : Float32 = 0
-        
+         
         if mantissa >= Int32(ReservedFloatValues.firstReservedValue.rawValue) && mantissa <= Int32(ReservedFloatValues.negativeInfinity.rawValue) {
-            output = Float32(Double.reservedValues[Int(mantissa - Int32(ReservedSFloatValues.firstReservedValue.rawValue))])
+            output = Float32(Double.reservedValues[Int(mantissa - Int32(ReservedFloatValues.firstReservedValue.rawValue))])
         } else {
             if mantissa >= 0x800000 {
                 mantissa = -((0xFFFFFF + 1) - mantissa)

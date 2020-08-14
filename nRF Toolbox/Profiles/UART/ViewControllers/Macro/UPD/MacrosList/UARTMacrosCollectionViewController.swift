@@ -28,7 +28,10 @@ class UARTMacrosCollectionViewController: UICollectionViewController, AlertPrese
     var macros: [UARTMacro] = []
     let coreDataStack: CoreDataStack = CoreDataStack.uart
     
-    init() {
+    let btManager: BluetoothManager
+    
+    init(bluetoothManager: BluetoothManager = .shared) {
+        self.btManager = bluetoothManager
         super.init(nibName: "UARTMacrosCollectionViewController", bundle: .main)
     }
     
@@ -94,6 +97,9 @@ class UARTMacrosCollectionViewController: UICollectionViewController, AlertPrese
             self.present(nc, animated: true, completion: nil)
             return
         }
+        
+        let macro = macros[indexPath.item]
+        btManager.send(macro: macro)
     }
     
     override func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
@@ -151,6 +157,8 @@ extension UARTMacrosCollectionViewController: UARTMacroEditCommandProtocol {
     
 }
 
+
+// TODO: Complete macros exporter
 @available(iOS 11.0, *)
 extension UARTMacrosCollectionViewController: UICollectionViewDragDelegate {
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {

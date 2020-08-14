@@ -54,6 +54,7 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 protocol BluetoothManagerDelegate {
+    func requestDeviceList()
     func requestedConnect(peripheral: CBPeripheral)
     func didConnectPeripheral(deviceName aName : String?)
     func didDisconnectPeripheral()
@@ -82,6 +83,8 @@ protocol UARTCommandSendManager {
 
 class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate, UARTCommandSendManager {
     
+    static let shared = BluetoothManager.init()
+    
     //MARK: - Delegate Properties
     var delegate: BluetoothManagerDelegate?
     var macroPlayerDelegate: UARTMacroPlayerDelegate?
@@ -93,14 +96,18 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
     fileprivate let UARTTXCharacteristicUUID    : CBUUID
     
     fileprivate var centralManager              : CBCentralManager
-    fileprivate var bluetoothPeripheral         : CBPeripheral?
+
     fileprivate var uartRXCharacteristic        : CBCharacteristic?
     fileprivate var uartTXCharacteristic        : CBCharacteristic?
     
     fileprivate var connected = false
     private var connectingPeripheral: CBPeripheral!
+
+    private(set) var bluetoothPeripheral: CBPeripheral?
     
     private let btQueue = DispatchQueue(label: "com.nRF-toolbox.bluetoothManager", qos: .utility)
+
+    private var postponedAction: (() -> ())?
     
     //MARK: - BluetoothManager API
     
@@ -162,6 +169,8 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
             bluetoothPeripheral = nil
             delegate?.didDisconnectPeripheral()
         }
+
+        postponedAction = nil
     }
     
     /**
@@ -169,7 +178,7 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
      * - returns: true if device is connected
      */
     func isConnected() -> Bool {
-        return connected
+        connected
     }
     
     /**
@@ -181,6 +190,16 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
      * - parameter aText: text to be sent to the peripheral using Nordic UART Service
      */
     func send(text aText : String) {
+
+        guard let _ = bluetoothPeripheral else {
+            postponedAction = { [weak self] in
+                self?.send(text: aText)
+            }
+
+            delegate?.requestDeviceList()
+            return
+        }
+
         guard let uartRXCharacteristic = uartRXCharacteristic else {
             log(withLevel: .warning, andMessage: "UART RX Characteristic not found")
             return
@@ -207,6 +226,16 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
      *     - aType: write type to be used
      */
     func send(text aText : String, withType aType : CBCharacteristicWriteType) {
+
+        guard let _ = bluetoothPeripheral else {
+            postponedAction = { [weak self] in
+                self?.send(text: aText, withType: aType)
+            }
+
+            delegate?.requestDeviceList()
+            return
+        }
+
         guard uartRXCharacteristic != nil else {
             log(withLevel: .warning, andMessage: "UART RX Characteristic not found")
             return
@@ -228,6 +257,16 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
     /// Sends the given command to the UART characteristic
     /// - Parameter aCommand: command that will be send to UART peripheral.
     func send(command aCommand: UARTCommandModel) {
+
+        guard let _ = bluetoothPeripheral else {
+            postponedAction = { [unowned self] in
+                self.send(command: aCommand)
+            }
+
+            delegate?.requestDeviceList()
+            return
+        }
+
         guard let uartRXCharacteristic = self.uartRXCharacteristic else {
             log(withLevel: .warning, andMessage: "UART RX Characteristic not found")
             return
@@ -248,14 +287,31 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
         log(withLevel: .application, andMessage: "Sent command: \(aCommand.title)")
         
     }
+
+
     
     func send(macro: UARTMacro) {
+
+        guard let _ = bluetoothPeripheral else {
+            postponedAction = { [weak self] in
+                self?.send(macro: macro)
+            }
+
+            delegate?.requestDeviceList()
+            return
+        }
         
         btQueue.async {
             macro.elements.forEach { (element) in
                 switch element {
-                case let command as UARTCommandModel:
-                    self.send(command: command)
+                case let command as UARTMacroCommandWrapper:
+                    for _ in 0..<command.repeatCount {
+                        if command.timeInterval > 0 {
+                            usleep(useconds_t(command.timeInterval * 1000))
+                        }
+
+                        self.send(command: command.command)
+                    }
                 case let timeInterval as UARTMacroTimeInterval:
                     usleep(useconds_t(timeInterval.timeInterval * 1000))
                 default:
@@ -312,6 +368,11 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
         log(withLevel: .verbose, andMessage: "Discovering services...")
         log(withLevel: .debug, andMessage: "peripheral.discoverServices([\(UARTServiceUUID.uuidString)])")
         peripheral.discoverServices([UARTServiceUUID])
+
+        if let action = postponedAction {
+            postponedAction?()
+            postponedAction = nil
+        }
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
@@ -326,6 +387,8 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
         delegate?.didDisconnectPeripheral()
         bluetoothPeripheral?.delegate = nil
         bluetoothPeripheral = nil
+
+        postponedAction = nil
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
@@ -341,6 +404,8 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
         delegate?.didDisconnectPeripheral()
         bluetoothPeripheral!.delegate = nil
         bluetoothPeripheral = nil
+
+        postponedAction = nil
     }
     
     //MARK: - CBPeripheralDelegate
