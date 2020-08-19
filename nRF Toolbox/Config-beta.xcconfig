@@ -1,0 +1,17 @@
+//
+//  Config-beta.xcconfig
+//  nRF Toolbox
+//
+//  Created by Nick Kibysh on 17/08/2020.
+//  Copyright © 2020 Nordic Semiconductor. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+#include "Config.xcconfig"
+
+PRODUCT_MODULE_NAME = nRF_Toolbox_Beta
+PRODUCT_NAME = nRF Toolbox Beta
+
+BUNDLE_IDENTIFIER = com.nordicsemi.nRF-Toolbox

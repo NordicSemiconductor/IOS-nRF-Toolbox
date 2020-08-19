@@ -32,6 +32,7 @@
 
 import UIKit
 import CoreBluetooth.CBPeripheral
+import Intents
 
 protocol UARTRouter: class {
     func displayMacros(with preset: UARTPreset)
@@ -161,6 +162,10 @@ extension UARTTabBarController {
         emptyView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         emptyView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         emptyView.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    private func requestSiriAuth() {
+        
     }
 }
 

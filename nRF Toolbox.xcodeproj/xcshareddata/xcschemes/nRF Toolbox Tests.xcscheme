@@ -16,7 +16,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0169B5A423FBEA9600907C1B"
+               BlueprintIdentifier = "014C4E8F2404038A0003E601"
                BuildableName = "nRF Toolbox Tests.xctest"
                BlueprintName = "nRF Toolbox Tests"
                ReferencedContainer = "container:nRF Toolbox.xcodeproj">
