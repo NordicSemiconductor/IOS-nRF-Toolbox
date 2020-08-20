@@ -478,9 +478,8 @@
 		01B6D3E1234CCC9F000942C4 /* HeartRateChartSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateChartSection.swift; sourceTree = "<group>"; };
 		01BC2ED024EE727200F7D499 /* UARTMacrosExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = UARTMacrosExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		01BC2ED224EE727200F7D499 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
-		01BC2ED424EE727200F7D499 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		01BC2ED424EE727200F7D499 /* Info-UARTMacrosExtension.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-UARTMacrosExtension.plist"; sourceTree = "<group>"; };
 		01BC2EDC24EE89D600F7D499 /* UARTMacroExtinsion-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "UARTMacroExtinsion-Release.xcconfig"; sourceTree = "<group>"; };
-		01BC2EDD24EE89E000F7D499 /* UARTMacroExtinsion-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "UARTMacroExtinsion-Debug.xcconfig"; sourceTree = "<group>"; };
 		01BE094E2349F71B006ACF06 /* HealthTermometerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTermometerTableViewController.swift; sourceTree = "<group>"; };
 		01BE0952234A1C48006ACF06 /* HealthTermometerCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTermometerCharacteristic.swift; sourceTree = "<group>"; };
 		01BE0954234A7500006ACF06 /* HealthTemperatureSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTemperatureSection.swift; sourceTree = "<group>"; };
@@ -698,7 +697,7 @@
 		5211EFAB1885642F007CC40D /* icon-dfu-320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-320.png"; sourceTree = "<group>"; };
 		5211EFAC1885642F007CC40D /* icon-hex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-hex.png"; sourceTree = "<group>"; };
 		5211EFAD1885642F007CC40D /* icon-hex@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-hex@2x.png"; sourceTree = "<group>"; };
-		5217F3E21859EE0000F2D5BB /* nRF Toolbox Beta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nRF Toolbox Beta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5217F3E21859EE0000F2D5BB /* nRF Toolbox Debug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nRF Toolbox Debug.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5217F3E51859EE0000F2D5BB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5217F3E71859EE0000F2D5BB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		5217F3E91859EE0000F2D5BB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -1146,7 +1145,7 @@
 			isa = PBXGroup;
 			children = (
 				01BC2ED224EE727200F7D499 /* IntentHandler.swift */,
-				01BC2ED424EE727200F7D499 /* Info.plist */,
+				01BC2ED424EE727200F7D499 /* Info-UARTMacrosExtension.plist */,
 			);
 			path = UARTMacrosExtension;
 			sourceTree = "<group>";
@@ -1154,10 +1153,9 @@
 		01BC2EDB24EE88FB00F7D499 /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				0195DFB624EAFD1400D24BB1 /* Config-Release.xcconfig */,
 				0195DFB724EAFE0600D24BB1 /* Config-Debug.xcconfig */,
+				0195DFB624EAFD1400D24BB1 /* Config-Release.xcconfig */,
 				01BC2EDC24EE89D600F7D499 /* UARTMacroExtinsion-Release.xcconfig */,
-				01BC2EDD24EE89E000F7D499 /* UARTMacroExtinsion-Debug.xcconfig */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -2040,7 +2038,7 @@
 		5217F3E31859EE0000F2D5BB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5217F3E21859EE0000F2D5BB /* nRF Toolbox Beta.app */,
+				5217F3E21859EE0000F2D5BB /* nRF Toolbox Debug.app */,
 				014C4E902404038A0003E601 /* nRF Toolbox Tests.xctest */,
 				01BC2ED024EE727200F7D499 /* UARTMacrosExtension.appex */,
 			);
@@ -2185,7 +2183,7 @@
 			);
 			name = "nRF Toolbox";
 			productName = "nRF Toolbox";
-			productReference = 5217F3E21859EE0000F2D5BB /* nRF Toolbox Beta.app */;
+			productReference = 5217F3E21859EE0000F2D5BB /* nRF Toolbox Debug.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -2738,7 +2736,7 @@
 		};
 		01BC2ED824EE727200F7D499 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0195DFB724EAFE0600D24BB1 /* Config-Debug.xcconfig */;
+			baseConfigurationReference = 01BC2EDC24EE89D600F7D499 /* UARTMacroExtinsion-Release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -2752,12 +2750,12 @@
 				DEVELOPMENT_TEAM = P3R8YQEV4L;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = UARTMacrosExtension/Info.plist;
+				INFOPLIST_FILE = "$(inherited)";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "$(UART_EXTENSION_BUNDLE_ID)";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -2769,7 +2767,7 @@
 		};
 		01BC2ED924EE727200F7D499 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0195DFB624EAFD1400D24BB1 /* Config-Release.xcconfig */;
+			baseConfigurationReference = 01BC2EDC24EE89D600F7D499 /* UARTMacroExtinsion-Release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -2784,12 +2782,12 @@
 				DEVELOPMENT_TEAM = P3R8YQEV4L;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = UARTMacrosExtension/Info.plist;
+				INFOPLIST_FILE = "$(inherited)";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "$(UART_EXTENSION_BUNDLE_ID)";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -2851,6 +2849,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(inherited)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -2904,7 +2903,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(inherited)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -2951,9 +2950,9 @@
 					"-ObjC",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -D RAND";
-				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER)";
-				PRODUCT_MODULE_NAME = "$(PRODUCT_MODULE_NAME)";
-				PRODUCT_NAME = "$(PRODUCT_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(inherited)";
+				PRODUCT_MODULE_NAME = "$(inherited)";
+				PRODUCT_NAME = "$(inherited)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
@@ -3003,9 +3002,9 @@
 					"-ObjC",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS";
-				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER)";
-				PRODUCT_MODULE_NAME = "$(PRODUCT_MODULE_NAME)";
-				PRODUCT_NAME = "$(PRODUCT_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(inherited)";
+				PRODUCT_MODULE_NAME = "$(inherited)";
+				PRODUCT_NAME = "$(inherited)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "";

@@ -9,8 +9,7 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-PRODUCT_MODULE_NAME = nRF_Toolbox
-PRODUCT_NAME = nRF Toolbox
+PRODUCT_BUNDLE_IDENTIFIER = com.nordicsemi.nRF-Toolbox
 
-BUNDLE_IDENTIFIER = com.nordicsemi.nRF-Toolbox
-UART_EXTENSION_BUNDLE_ID = $(BUNDLE_IDENTIFIER).UARTMacrosExtension
+PRODUCT_NAME = nRF Toolbox
+//PRODUCT_MODULE_NAME = nRF_Toolbox
