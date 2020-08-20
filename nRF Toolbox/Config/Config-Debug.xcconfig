@@ -9,9 +9,10 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-#include "Config.xcconfig"
+#include "Config-Release.xcconfig"
 
-PRODUCT_MODULE_NAME = nRF_Toolbox_Beta
+PRODUCT_MODULE_NAME = $(inherited)
 PRODUCT_NAME = nRF Toolbox Beta
 
-BUNDLE_IDENTIFIER = com.nordicsemi.nRF-Toolbox
+BUNDLE_IDENTIFIER = com.nordicsemi.nRF-Toolbox-beta
+UART_EXTENSION_BUNDLE_ID = $(BUNDLE_IDENTIFIER).UARTMacrosExtension

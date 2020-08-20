@@ -1,15 +1,15 @@
 //
-//  Config.xcconfig
+//  UARTMacroExtinsion-Release.xcconfig
 //  nRF Toolbox
 //
-//  Created by Nick Kibysh on 17/08/2020.
+//  Created by Nick Kibysh on 20/08/2020.
 //  Copyright © 2020 Nordic Semiconductor. All rights reserved.
 //
 
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
+#include "Config-Release.xcconfig"
+
 PRODUCT_MODULE_NAME = nRF_Toolbox
 PRODUCT_NAME = nRF Toolbox
-
-BUNDLE_IDENTIFIER = com.nordicsemi.nRF-Toolbox

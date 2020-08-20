@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import IntentsUI
 
 protocol UARTEditMacrosDelegate: class {
     func saveMacrosUpdate(name: String, color: UARTColor)
@@ -39,6 +40,9 @@ class UARTEditMacrosVC: UITableViewController, AlertPresenter {
         
         tableView.registerCellNib(cell: UARTColorSelectorCell.self)
         tableView.registerCellNib(cell: NordicTextFieldCell.self)
+        if #available(iOS 12.0, *) {
+            tableView.registerCellClass(cell: AddSiriShortcutTableViewCell.self)
+        }
         setupNavigationAppearance()
     }
 
@@ -48,12 +52,12 @@ class UARTEditMacrosVC: UITableViewController, AlertPresenter {
         switch indexPath.section {
         case 0: return 60
         case 1: return 190
-        default: return 0
+        default: return 50
         }
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -82,6 +86,18 @@ class UARTEditMacrosVC: UITableViewController, AlertPresenter {
             }
             
             return cell
+            
+        case 2:
+            if #available(iOS 12.0, *) {
+                let cell = tableView.dequeueCell(ofType: AddSiriShortcutTableViewCell.self)
+                cell.shortcutDelegate = self 
+                return cell
+                
+            } else {
+                fatalError()
+            }
+            
+            
         default:
             SystemLog.fault("Section data not found", category: .ui)
         }
@@ -117,3 +133,27 @@ extension UARTEditMacrosVC {
     }
 }
 
+@available(iOS 12.0, *)
+extension UARTEditMacrosVC: INUIAddVoiceShortcutButtonDelegate {
+    func present(_ addVoiceShortcutViewController: INUIAddVoiceShortcutViewController, for addVoiceShortcutButton: INUIAddVoiceShortcutButton) {
+        addVoiceShortcutViewController.delegate = self
+        present(addVoiceShortcutViewController, animated: true, completion: nil)
+    }
+    
+    func present(_ editVoiceShortcutViewController: INUIEditVoiceShortcutViewController, for addVoiceShortcutButton: INUIAddVoiceShortcutButton) {
+        present(editVoiceShortcutViewController, animated: true, completion: nil)
+    }
+}
+
+@available(iOS 12.0, *)
+extension UARTEditMacrosVC: INUIAddVoiceShortcutViewControllerDelegate {
+    func addVoiceShortcutViewController(_ controller: INUIAddVoiceShortcutViewController, didFinishWith voiceShortcut: INVoiceShortcut?, error: Error?) {
+        
+    }
+    
+    func addVoiceShortcutViewControllerDidCancel(_ controller: INUIAddVoiceShortcutViewController) {
+        
+    }
+    
+    
+}

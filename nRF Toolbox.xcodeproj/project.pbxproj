@@ -101,6 +101,8 @@
 		01B6D3DE234CBBE5000942C4 /* SernsorLocationSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3DD234CBBE5000942C4 /* SernsorLocationSection.swift */; };
 		01B6D3E0234CC090000942C4 /* Peripheral+HeartRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3DF234CC090000942C4 /* Peripheral+HeartRate.swift */; };
 		01B6D3E2234CCC9F000942C4 /* HeartRateChartSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3E1234CCC9F000942C4 /* HeartRateChartSection.swift */; };
+		01BC2ED324EE727200F7D499 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BC2ED224EE727200F7D499 /* IntentHandler.swift */; };
+		01BC2ED724EE727200F7D499 /* UARTMacrosExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 01BC2ED024EE727200F7D499 /* UARTMacrosExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		01BE094F2349F71B006ACF06 /* HealthTermometerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE094E2349F71B006ACF06 /* HealthTermometerTableViewController.swift */; };
 		01BE0953234A1C48006ACF06 /* HealthTermometerCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE0952234A1C48006ACF06 /* HealthTermometerCharacteristic.swift */; };
 		01BE0955234A7500006ACF06 /* HealthTemperatureSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE0954234A7500006ACF06 /* HealthTemperatureSection.swift */; };
@@ -341,6 +343,13 @@
 			remoteGlobalIDString = 5217F3E11859EE0000F2D5BB;
 			remoteInfo = "nRF Toolbox";
 		};
+		01BC2ED524EE727200F7D499 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5217F3DA1859EE0000F2D5BB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01BC2ECF24EE727200F7D499;
+			remoteInfo = UARTMacrosExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -350,6 +359,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				01BC2ED724EE727200F7D499 /* UARTMacrosExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -425,8 +435,8 @@
 		0180AAC224E16799006FECBA /* UARTMacroCommandWrapperCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTMacroCommandWrapperCell.xib; sourceTree = "<group>"; };
 		0192BB342428E63C003F7F6B /* DFUFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFileManager.swift; sourceTree = "<group>"; };
 		0195DF9E24EAFC4300D24BB1 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
-		0195DFB624EAFD1400D24BB1 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
-		0195DFB724EAFE0600D24BB1 /* Config-beta.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config-beta.xcconfig"; sourceTree = "<group>"; };
+		0195DFB624EAFD1400D24BB1 /* Config-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config-Release.xcconfig"; sourceTree = "<group>"; };
+		0195DFB724EAFE0600D24BB1 /* Config-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config-Debug.xcconfig"; sourceTree = "<group>"; };
 		0197AFCD2420DAAC00ADF105 /* NotConnectedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotConnectedViewController.swift; sourceTree = "<group>"; };
 		0197AFCE2420DAAC00ADF105 /* NotConnectedViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotConnectedViewController.xib; sourceTree = "<group>"; };
 		019985E323DEF23F000CDCB6 /* NordicTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicTextTableViewCell.swift; sourceTree = "<group>"; };
@@ -466,6 +476,11 @@
 		01B6D3DD234CBBE5000942C4 /* SernsorLocationSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SernsorLocationSection.swift; sourceTree = "<group>"; };
 		01B6D3DF234CC090000942C4 /* Peripheral+HeartRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Peripheral+HeartRate.swift"; sourceTree = "<group>"; };
 		01B6D3E1234CCC9F000942C4 /* HeartRateChartSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateChartSection.swift; sourceTree = "<group>"; };
+		01BC2ED024EE727200F7D499 /* UARTMacrosExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = UARTMacrosExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		01BC2ED224EE727200F7D499 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		01BC2ED424EE727200F7D499 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		01BC2EDC24EE89D600F7D499 /* UARTMacroExtinsion-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "UARTMacroExtinsion-Release.xcconfig"; sourceTree = "<group>"; };
+		01BC2EDD24EE89E000F7D499 /* UARTMacroExtinsion-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "UARTMacroExtinsion-Debug.xcconfig"; sourceTree = "<group>"; };
 		01BE094E2349F71B006ACF06 /* HealthTermometerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTermometerTableViewController.swift; sourceTree = "<group>"; };
 		01BE0952234A1C48006ACF06 /* HealthTermometerCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTermometerCharacteristic.swift; sourceTree = "<group>"; };
 		01BE0954234A7500006ACF06 /* HealthTemperatureSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTemperatureSection.swift; sourceTree = "<group>"; };
@@ -708,6 +723,13 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		014C4E8D2404038A0003E601 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01BC2ECD24EE727200F7D499 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1118,6 +1140,26 @@
 				01B6D3E1234CCC9F000942C4 /* HeartRateChartSection.swift */,
 			);
 			path = Sections;
+			sourceTree = "<group>";
+		};
+		01BC2ED124EE727200F7D499 /* UARTMacrosExtension */ = {
+			isa = PBXGroup;
+			children = (
+				01BC2ED224EE727200F7D499 /* IntentHandler.swift */,
+				01BC2ED424EE727200F7D499 /* Info.plist */,
+			);
+			path = UARTMacrosExtension;
+			sourceTree = "<group>";
+		};
+		01BC2EDB24EE88FB00F7D499 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				0195DFB624EAFD1400D24BB1 /* Config-Release.xcconfig */,
+				0195DFB724EAFE0600D24BB1 /* Config-Debug.xcconfig */,
+				01BC2EDC24EE89D600F7D499 /* UARTMacroExtinsion-Release.xcconfig */,
+				01BC2EDD24EE89E000F7D499 /* UARTMacroExtinsion-Debug.xcconfig */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 		01BE094D2349F6CF006ACF06 /* HealthThermometer */ = {
@@ -1988,6 +2030,7 @@
 			children = (
 				5217F3EB1859EE0000F2D5BB /* nRF Toolbox */,
 				014C4E912404038A0003E601 /* nRF Toolbox Tests */,
+				01BC2ED124EE727200F7D499 /* UARTMacrosExtension */,
 				5217F3E41859EE0000F2D5BB /* Frameworks */,
 				5217F3E31859EE0000F2D5BB /* Products */,
 				04CD51502DA0CA668E27A6C1 /* Pods */,
@@ -1999,6 +2042,7 @@
 			children = (
 				5217F3E21859EE0000F2D5BB /* nRF Toolbox Beta.app */,
 				014C4E902404038A0003E601 /* nRF Toolbox Tests.xctest */,
+				01BC2ED024EE727200F7D499 /* UARTMacrosExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2034,8 +2078,6 @@
 				5236E166187EA7AA0057E974 /* Scanner */,
 				5214D0CF18881D0200460637 /* Utilities */,
 				306ECD611CE61A3600E48BBD /* AppDelegate.swift */,
-				0195DFB624EAFD1400D24BB1 /* Config.xcconfig */,
-				0195DFB724EAFE0600D24BB1 /* Config-beta.xcconfig */,
 				5217F3FD1859EE0000F2D5BB /* Images.xcassets */,
 				20E07B4A23068D0300FCB205 /* Colors.xcassets */,
 				5217F3EC1859EE0000F2D5BB /* Supporting Files */,
@@ -2046,6 +2088,7 @@
 		5217F3EC1859EE0000F2D5BB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				01BC2EDB24EE88FB00F7D499 /* Config */,
 				20E07B4C2306974000FCB205 /* Fonts */,
 				A85667DD1B222AA7004A6D3C /* AppImages */,
 				7E1B422818A8DF4D006BA1BC /* high.mp3 */,
@@ -2106,6 +2149,23 @@
 			productReference = 014C4E902404038A0003E601 /* nRF Toolbox Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		01BC2ECF24EE727200F7D499 /* UARTMacrosExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01BC2EDA24EE727200F7D499 /* Build configuration list for PBXNativeTarget "UARTMacrosExtension" */;
+			buildPhases = (
+				01BC2ECC24EE727200F7D499 /* Sources */,
+				01BC2ECD24EE727200F7D499 /* Frameworks */,
+				01BC2ECE24EE727200F7D499 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UARTMacrosExtension;
+			productName = UARTMacrosExtension;
+			productReference = 01BC2ED024EE727200F7D499 /* UARTMacrosExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		5217F3E11859EE0000F2D5BB /* nRF Toolbox */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5217F4141859EE0000F2D5BB /* Build configuration list for PBXNativeTarget "nRF Toolbox" */;
@@ -2121,6 +2181,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				01BC2ED624EE727200F7D499 /* PBXTargetDependency */,
 			);
 			name = "nRF Toolbox";
 			productName = "nRF Toolbox";
@@ -2142,6 +2203,11 @@
 						DevelopmentTeam = TQL72QW32W;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 5217F3E11859EE0000F2D5BB;
+					};
+					01BC2ECF24EE727200F7D499 = {
+						CreatedOnToolsVersion = 11.6;
+						DevelopmentTeam = P3R8YQEV4L;
+						ProvisioningStyle = Automatic;
 					};
 					5217F3E11859EE0000F2D5BB = {
 						DevelopmentTeam = P3R8YQEV4L;
@@ -2173,12 +2239,20 @@
 			targets = (
 				5217F3E11859EE0000F2D5BB /* nRF Toolbox */,
 				014C4E8F2404038A0003E601 /* nRF Toolbox Tests */,
+				01BC2ECF24EE727200F7D499 /* UARTMacrosExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		014C4E8E2404038A0003E601 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01BC2ECE24EE727200F7D499 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2328,6 +2402,14 @@
 				014C4E9F240403A00003E601 /* UARTMacroFileManagerTests.swift in Sources */,
 				014C4E9E240403A00003E601 /* UARTPresetTest.swift in Sources */,
 				014C4E932404038A0003E601 /* nRF_Toolbox_Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01BC2ECC24EE727200F7D499 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01BC2ED324EE727200F7D499 /* IntentHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2587,6 +2669,11 @@
 			target = 5217F3E11859EE0000F2D5BB /* nRF Toolbox */;
 			targetProxy = 014C4E952404038A0003E601 /* PBXContainerItemProxy */;
 		};
+		01BC2ED624EE727200F7D499 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01BC2ECF24EE727200F7D499 /* UARTMacrosExtension */;
+			targetProxy = 01BC2ED524EE727200F7D499 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -2649,9 +2736,70 @@
 			};
 			name = Release;
 		};
+		01BC2ED824EE727200F7D499 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0195DFB724EAFE0600D24BB1 /* Config-Debug.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = P3R8YQEV4L;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = UARTMacrosExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(UART_EXTENSION_BUNDLE_ID)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		01BC2ED924EE727200F7D499 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0195DFB624EAFD1400D24BB1 /* Config-Release.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = P3R8YQEV4L;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = UARTMacrosExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(UART_EXTENSION_BUNDLE_ID)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		5217F4121859EE0000F2D5BB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0195DFB724EAFE0600D24BB1 /* Config-beta.xcconfig */;
+			baseConfigurationReference = 0195DFB724EAFE0600D24BB1 /* Config-Debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -2712,7 +2860,7 @@
 		};
 		5217F4131859EE0000F2D5BB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0195DFB624EAFD1400D24BB1 /* Config.xcconfig */;
+			baseConfigurationReference = 0195DFB624EAFD1400D24BB1 /* Config-Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -2876,6 +3024,15 @@
 			buildConfigurations = (
 				014C4E982404038A0003E601 /* Debug */,
 				014C4E9A2404038A0003E601 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		01BC2EDA24EE727200F7D499 /* Build configuration list for PBXNativeTarget "UARTMacrosExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01BC2ED824EE727200F7D499 /* Debug */,
+				01BC2ED924EE727200F7D499 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
