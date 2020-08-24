@@ -119,6 +119,18 @@
 		01CAF03124C9A78B00716C32 /* ActionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CAF03024C9A78B00716C32 /* ActionHeaderView.swift */; };
 		01CAF03324C9A79500716C32 /* ActionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01CAF03224C9A79500716C32 /* ActionHeaderView.xib */; };
 		01CAF03524CB281F00716C32 /* UARTMacrosBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CAF03424CB281F00716C32 /* UARTMacrosBuilder.swift */; };
+		01D4CD2E24F3D2F400B48FA8 /* UART.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01D4CD2524F3D2F400B48FA8 /* UART.framework */; };
+		01D4CD3524F3D2F400B48FA8 /* UARTTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D4CD3424F3D2F400B48FA8 /* UARTTests.swift */; };
+		01D4CD3724F3D2F400B48FA8 /* UART.h in Headers */ = {isa = PBXBuildFile; fileRef = 01D4CD2724F3D2F400B48FA8 /* UART.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		01D4CD3A24F3D2F400B48FA8 /* UART.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01D4CD2524F3D2F400B48FA8 /* UART.framework */; };
+		01D4CD3B24F3D2F400B48FA8 /* UART.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 01D4CD2524F3D2F400B48FA8 /* UART.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		01D4CD4324F3D78900B48FA8 /* UARTColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E2B57624ADF8BD00D22FB1 /* UARTColor.swift */; };
+		01D4CD4624F3D8F300B48FA8 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D4CD4524F3D8F300B48FA8 /* UIColor+Ext.swift */; };
+		01D4CD5924F3DA1E00B48FA8 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01D4CD5024F3DA1E00B48FA8 /* Core.framework */; };
+		01D4CD6024F3DA1E00B48FA8 /* CoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D4CD5F24F3DA1E00B48FA8 /* CoreTests.swift */; };
+		01D4CD6224F3DA1E00B48FA8 /* Core.h in Headers */ = {isa = PBXBuildFile; fileRef = 01D4CD5224F3DA1E00B48FA8 /* Core.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		01D4CD6524F3DA1E00B48FA8 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01D4CD5024F3DA1E00B48FA8 /* Core.framework */; };
+		01D4CD6624F3DA1E00B48FA8 /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 01D4CD5024F3DA1E00B48FA8 /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		01D6D2B924067B0500E1A66F /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01D6D2B824067B0500E1A66F /* Resources.xcassets */; };
 		01D6D2BB240696D000E1A66F /* DFURouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6D2BA240696D000E1A66F /* DFURouter.swift */; };
 		01D6D2C02406A1EF00E1A66F /* DFUStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6D2BE2406A1EF00E1A66F /* DFUStartViewController.swift */; };
@@ -144,7 +156,6 @@
 		01E2B57224ACCAEE00D22FB1 /* SearchCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E2B57024ACCAEE00D22FB1 /* SearchCollectionReusableView.swift */; };
 		01E2B57324ACCAEE00D22FB1 /* SearchCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E2B57124ACCAEE00D22FB1 /* SearchCollectionReusableView.xib */; };
 		01E2B57524ADCE4F00D22FB1 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E2B57424ADCE4F00D22FB1 /* UIColor+Ext.swift */; };
-		01E2B57724ADF8BD00D22FB1 /* UARTColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E2B57624ADF8BD00D22FB1 /* UARTColor.swift */; };
 		01E5910923DB3BC5008F15A4 /* QuickError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910823DB3BC4008F15A4 /* QuickError.swift */; };
 		01E5910B23DECF61008F15A4 /* UARTMacrosList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */; };
 		01F66FC524E6C60B0065C703 /* ContextMenuBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F66FC424E6C60B0065C703 /* ContextMenuBuilder.swift */; };
@@ -350,6 +361,48 @@
 			remoteGlobalIDString = 01BC2ECF24EE727200F7D499;
 			remoteInfo = UARTMacrosExtension;
 		};
+		01D4CD2F24F3D2F400B48FA8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5217F3DA1859EE0000F2D5BB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01D4CD2424F3D2F400B48FA8;
+			remoteInfo = UART;
+		};
+		01D4CD3124F3D2F400B48FA8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5217F3DA1859EE0000F2D5BB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5217F3E11859EE0000F2D5BB;
+			remoteInfo = "nRF Toolbox";
+		};
+		01D4CD3824F3D2F400B48FA8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5217F3DA1859EE0000F2D5BB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01D4CD2424F3D2F400B48FA8;
+			remoteInfo = UART;
+		};
+		01D4CD5A24F3DA1E00B48FA8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5217F3DA1859EE0000F2D5BB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01D4CD4F24F3DA1E00B48FA8;
+			remoteInfo = Core;
+		};
+		01D4CD5C24F3DA1E00B48FA8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5217F3DA1859EE0000F2D5BB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5217F3E11859EE0000F2D5BB;
+			remoteInfo = "nRF Toolbox";
+		};
+		01D4CD6324F3DA1E00B48FA8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5217F3DA1859EE0000F2D5BB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01D4CD4F24F3DA1E00B48FA8;
+			remoteInfo = Core;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -370,6 +423,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				01D4CD3B24F3D2F400B48FA8 /* UART.framework in Embed Frameworks */,
+				01D4CD6624F3DA1E00B48FA8 /* Core.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -496,6 +551,19 @@
 		01CAF03024C9A78B00716C32 /* ActionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionHeaderView.swift; sourceTree = "<group>"; };
 		01CAF03224C9A79500716C32 /* ActionHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActionHeaderView.xib; sourceTree = "<group>"; };
 		01CAF03424CB281F00716C32 /* UARTMacrosBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosBuilder.swift; sourceTree = "<group>"; };
+		01D4CD2524F3D2F400B48FA8 /* UART.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UART.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		01D4CD2724F3D2F400B48FA8 /* UART.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UART.h; sourceTree = "<group>"; };
+		01D4CD2824F3D2F400B48FA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		01D4CD2D24F3D2F400B48FA8 /* UARTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UARTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		01D4CD3424F3D2F400B48FA8 /* UARTTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTTests.swift; sourceTree = "<group>"; };
+		01D4CD3624F3D2F400B48FA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		01D4CD4524F3D8F300B48FA8 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
+		01D4CD5024F3DA1E00B48FA8 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		01D4CD5224F3DA1E00B48FA8 /* Core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
+		01D4CD5324F3DA1E00B48FA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		01D4CD5824F3DA1E00B48FA8 /* CoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		01D4CD5F24F3DA1E00B48FA8 /* CoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreTests.swift; sourceTree = "<group>"; };
+		01D4CD6124F3DA1E00B48FA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		01D6D2B824067B0500E1A66F /* Resources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resources.xcassets; sourceTree = "<group>"; };
 		01D6D2BA240696D000E1A66F /* DFURouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFURouter.swift; sourceTree = "<group>"; };
 		01D6D2BE2406A1EF00E1A66F /* DFUStartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUStartViewController.swift; sourceTree = "<group>"; };
@@ -735,6 +803,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		01D4CD2224F3D2F400B48FA8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01D4CD2A24F3D2F400B48FA8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01D4CD2E24F3D2F400B48FA8 /* UART.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01D4CD4D24F3DA1E00B48FA8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01D4CD5524F3DA1E00B48FA8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01D4CD5924F3DA1E00B48FA8 /* Core.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5217F3DF1859EE0000F2D5BB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -747,6 +845,8 @@
 				5217F3E81859EE0000F2D5BB /* CoreGraphics.framework in Frameworks */,
 				5217F3EA1859EE0000F2D5BB /* UIKit.framework in Frameworks */,
 				5217F3E61859EE0000F2D5BB /* Foundation.framework in Frameworks */,
+				01D4CD6524F3DA1E00B48FA8 /* Core.framework in Frameworks */,
+				01D4CD3A24F3D2F400B48FA8 /* UART.framework in Frameworks */,
 				32837721C75DD9967799766F /* Pods_nRF_Toolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1219,6 +1319,95 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		01D4CD2624F3D2F400B48FA8 /* UART */ = {
+			isa = PBXGroup;
+			children = (
+				01D4CD4424F3D8E200B48FA8 /* Extensions */,
+				01D4CD4224F3D38D00B48FA8 /* Model */,
+				01D4CD2724F3D2F400B48FA8 /* UART.h */,
+				01D4CD2824F3D2F400B48FA8 /* Info.plist */,
+			);
+			path = UART;
+			sourceTree = "<group>";
+		};
+		01D4CD3324F3D2F400B48FA8 /* UARTTests */ = {
+			isa = PBXGroup;
+			children = (
+				01D4CD3424F3D2F400B48FA8 /* UARTTests.swift */,
+				01D4CD3624F3D2F400B48FA8 /* Info.plist */,
+			);
+			path = UARTTests;
+			sourceTree = "<group>";
+		};
+		01D4CD4224F3D38D00B48FA8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				01E2B57624ADF8BD00D22FB1 /* UARTColor.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		01D4CD4424F3D8E200B48FA8 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				01D4CD4524F3D8F300B48FA8 /* UIColor+Ext.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		01D4CD4824F3D9A400B48FA8 /* UART */ = {
+			isa = PBXGroup;
+			children = (
+				01D4CD2624F3D2F400B48FA8 /* UART */,
+				01D4CD3324F3D2F400B48FA8 /* UARTTests */,
+			);
+			path = UART;
+			sourceTree = "<group>";
+		};
+		01D4CD4924F3D9DF00B48FA8 /* nRF Toolbox */ = {
+			isa = PBXGroup;
+			children = (
+				5217F3EB1859EE0000F2D5BB /* nRF Toolbox */,
+				014C4E912404038A0003E601 /* nRF Toolbox Tests */,
+			);
+			path = "nRF Toolbox";
+			sourceTree = "<group>";
+		};
+		01D4CD4A24F3DA0700B48FA8 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				01D4CD5124F3DA1E00B48FA8 /* Core */,
+				01D4CD5E24F3DA1E00B48FA8 /* CoreTests */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		01D4CD5124F3DA1E00B48FA8 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				01D4CD6D24F3DAD100B48FA8 /* Extensions */,
+				01D4CD5224F3DA1E00B48FA8 /* Core.h */,
+				01D4CD5324F3DA1E00B48FA8 /* Info.plist */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		01D4CD5E24F3DA1E00B48FA8 /* CoreTests */ = {
+			isa = PBXGroup;
+			children = (
+				01D4CD5F24F3DA1E00B48FA8 /* CoreTests.swift */,
+				01D4CD6124F3DA1E00B48FA8 /* Info.plist */,
+			);
+			path = CoreTests;
+			sourceTree = "<group>";
+		};
+		01D4CD6D24F3DAD100B48FA8 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		01D6D2BC24069FE000E1A66F /* DeviceFirmwareUpdate */ = {
 			isa = PBXGroup;
 			children = (
@@ -1620,6 +1809,7 @@
 				01BEADD7241AE6BF00FC7183 /* UILabel+Ext.swift */,
 				CC7B93FA695799F95D065492 /* NumberFormatter+Ext.swift */,
 				01E2B57424ADCE4F00D22FB1 /* UIColor+Ext.swift */,
+				5231403122FB1E130074325A /* UIColor+Nordic.swift */,
 				01355F6D24C4F97300743CC0 /* CGRect+Ext.swift */,
 			);
 			path = Extensions;
@@ -1870,7 +2060,6 @@
 			children = (
 				4309019F249B802B0030EE00 /* MacroModel */,
 				4325A6AF247FC60F007A8868 /* EOL.swift */,
-				01E2B57624ADF8BD00D22FB1 /* UARTColor.swift */,
 				431F62EB247DDB3F00DC32DA /* CoreData */,
 				4322034323CC9D31009840DD /* UARTCommandModel1.swift */,
 				01AF929123D5A9CD00C1BFD6 /* UARTMacro.swift */,
@@ -2006,7 +2195,6 @@
 				01AF929923DB17C100C1BFD6 /* AlertPresenter.swift */,
 				300143281CEC59F4008379DF /* ServiceIdentifiers.swift */,
 				3001432C1CECADFB008379DF /* CharacteristicReader.swift */,
-				5231403122FB1E130074325A /* UIColor+Nordic.swift */,
 				01FEB0FC23969BD1000767C1 /* UIView+Ext.swift */,
 				20C7FE042306D02400B06FD8 /* SystemLog.swift */,
 				20C7FE15230ADD1E00B06FD8 /* StoryboardInstantiable.swift */,
@@ -2026,8 +2214,9 @@
 		5217F3D91859EE0000F2D5BB = {
 			isa = PBXGroup;
 			children = (
-				5217F3EB1859EE0000F2D5BB /* nRF Toolbox */,
-				014C4E912404038A0003E601 /* nRF Toolbox Tests */,
+				01D4CD4A24F3DA0700B48FA8 /* Core */,
+				01D4CD4924F3D9DF00B48FA8 /* nRF Toolbox */,
+				01D4CD4824F3D9A400B48FA8 /* UART */,
 				01BC2ED124EE727200F7D499 /* UARTMacrosExtension */,
 				5217F3E41859EE0000F2D5BB /* Frameworks */,
 				5217F3E31859EE0000F2D5BB /* Products */,
@@ -2041,6 +2230,10 @@
 				5217F3E21859EE0000F2D5BB /* nRF Toolbox Debug.app */,
 				014C4E902404038A0003E601 /* nRF Toolbox Tests.xctest */,
 				01BC2ED024EE727200F7D499 /* UARTMacrosExtension.appex */,
+				01D4CD2524F3D2F400B48FA8 /* UART.framework */,
+				01D4CD2D24F3D2F400B48FA8 /* UARTTests.xctest */,
+				01D4CD5024F3DA1E00B48FA8 /* Core.framework */,
+				01D4CD5824F3DA1E00B48FA8 /* CoreTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2128,6 +2321,25 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		01D4CD2024F3D2F400B48FA8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01D4CD3724F3D2F400B48FA8 /* UART.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01D4CD4B24F3DA1E00B48FA8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01D4CD6224F3DA1E00B48FA8 /* Core.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		014C4E8F2404038A0003E601 /* nRF Toolbox Tests */ = {
 			isa = PBXNativeTarget;
@@ -2164,6 +2376,80 @@
 			productReference = 01BC2ED024EE727200F7D499 /* UARTMacrosExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		01D4CD2424F3D2F400B48FA8 /* UART */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01D4CD3C24F3D2F400B48FA8 /* Build configuration list for PBXNativeTarget "UART" */;
+			buildPhases = (
+				01D4CD2024F3D2F400B48FA8 /* Headers */,
+				01D4CD2124F3D2F400B48FA8 /* Sources */,
+				01D4CD2224F3D2F400B48FA8 /* Frameworks */,
+				01D4CD2324F3D2F400B48FA8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UART;
+			productName = UART;
+			productReference = 01D4CD2524F3D2F400B48FA8 /* UART.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		01D4CD2C24F3D2F400B48FA8 /* UARTTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01D4CD3F24F3D2F400B48FA8 /* Build configuration list for PBXNativeTarget "UARTTests" */;
+			buildPhases = (
+				01D4CD2924F3D2F400B48FA8 /* Sources */,
+				01D4CD2A24F3D2F400B48FA8 /* Frameworks */,
+				01D4CD2B24F3D2F400B48FA8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				01D4CD3024F3D2F400B48FA8 /* PBXTargetDependency */,
+				01D4CD3224F3D2F400B48FA8 /* PBXTargetDependency */,
+			);
+			name = UARTTests;
+			productName = UARTTests;
+			productReference = 01D4CD2D24F3D2F400B48FA8 /* UARTTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		01D4CD4F24F3DA1E00B48FA8 /* Core */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01D4CD6724F3DA1F00B48FA8 /* Build configuration list for PBXNativeTarget "Core" */;
+			buildPhases = (
+				01D4CD4B24F3DA1E00B48FA8 /* Headers */,
+				01D4CD4C24F3DA1E00B48FA8 /* Sources */,
+				01D4CD4D24F3DA1E00B48FA8 /* Frameworks */,
+				01D4CD4E24F3DA1E00B48FA8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Core;
+			productName = Core;
+			productReference = 01D4CD5024F3DA1E00B48FA8 /* Core.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		01D4CD5724F3DA1E00B48FA8 /* CoreTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01D4CD6A24F3DA1F00B48FA8 /* Build configuration list for PBXNativeTarget "CoreTests" */;
+			buildPhases = (
+				01D4CD5424F3DA1E00B48FA8 /* Sources */,
+				01D4CD5524F3DA1E00B48FA8 /* Frameworks */,
+				01D4CD5624F3DA1E00B48FA8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				01D4CD5B24F3DA1E00B48FA8 /* PBXTargetDependency */,
+				01D4CD5D24F3DA1E00B48FA8 /* PBXTargetDependency */,
+			);
+			name = CoreTests;
+			productName = CoreTests;
+			productReference = 01D4CD5824F3DA1E00B48FA8 /* CoreTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		5217F3E11859EE0000F2D5BB /* nRF Toolbox */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5217F4141859EE0000F2D5BB /* Build configuration list for PBXNativeTarget "nRF Toolbox" */;
@@ -2180,6 +2466,8 @@
 			);
 			dependencies = (
 				01BC2ED624EE727200F7D499 /* PBXTargetDependency */,
+				01D4CD3924F3D2F400B48FA8 /* PBXTargetDependency */,
+				01D4CD6424F3DA1E00B48FA8 /* PBXTargetDependency */,
 			);
 			name = "nRF Toolbox";
 			productName = "nRF Toolbox";
@@ -2206,6 +2494,26 @@
 						CreatedOnToolsVersion = 11.6;
 						DevelopmentTeam = P3R8YQEV4L;
 						ProvisioningStyle = Automatic;
+					};
+					01D4CD2424F3D2F400B48FA8 = {
+						CreatedOnToolsVersion = 11.6;
+						ProvisioningStyle = Automatic;
+					};
+					01D4CD2C24F3D2F400B48FA8 = {
+						CreatedOnToolsVersion = 11.6;
+						DevelopmentTeam = P3R8YQEV4L;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 5217F3E11859EE0000F2D5BB;
+					};
+					01D4CD4F24F3DA1E00B48FA8 = {
+						CreatedOnToolsVersion = 11.6;
+						ProvisioningStyle = Automatic;
+					};
+					01D4CD5724F3DA1E00B48FA8 = {
+						CreatedOnToolsVersion = 11.6;
+						DevelopmentTeam = P3R8YQEV4L;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 5217F3E11859EE0000F2D5BB;
 					};
 					5217F3E11859EE0000F2D5BB = {
 						DevelopmentTeam = P3R8YQEV4L;
@@ -2238,6 +2546,10 @@
 				5217F3E11859EE0000F2D5BB /* nRF Toolbox */,
 				014C4E8F2404038A0003E601 /* nRF Toolbox Tests */,
 				01BC2ECF24EE727200F7D499 /* UARTMacrosExtension */,
+				01D4CD2424F3D2F400B48FA8 /* UART */,
+				01D4CD2C24F3D2F400B48FA8 /* UARTTests */,
+				01D4CD4F24F3DA1E00B48FA8 /* Core */,
+				01D4CD5724F3DA1E00B48FA8 /* CoreTests */,
 			);
 		};
 /* End PBXProject section */
@@ -2251,6 +2563,34 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		01BC2ECE24EE727200F7D499 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01D4CD2324F3D2F400B48FA8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01D4CD2B24F3D2F400B48FA8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01D4CD4E24F3DA1E00B48FA8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01D4CD5624F3DA1E00B48FA8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2408,6 +2748,38 @@
 			buildActionMask = 2147483647;
 			files = (
 				01BC2ED324EE727200F7D499 /* IntentHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01D4CD2124F3D2F400B48FA8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01D4CD4324F3D78900B48FA8 /* UARTColor.swift in Sources */,
+				01D4CD4624F3D8F300B48FA8 /* UIColor+Ext.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01D4CD2924F3D2F400B48FA8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01D4CD3524F3D2F400B48FA8 /* UARTTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01D4CD4C24F3DA1E00B48FA8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01D4CD5424F3DA1E00B48FA8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01D4CD6024F3DA1E00B48FA8 /* CoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2587,7 +2959,6 @@
 				20F15C3A2313D2B9000C5503 /* InfoActionView.swift in Sources */,
 				01FEB0FD23969BD1000767C1 /* UIView+Ext.swift in Sources */,
 				20F15C3F2313D606000C5503 /* NoContentViewController.swift in Sources */,
-				01E2B57724ADF8BD00D22FB1 /* UARTColor.swift in Sources */,
 				0125D5B623F44FE6003A1812 /* UIBarButtonItem+Ext.swift in Sources */,
 				014C4E8B2403F9BD0003E601 /* UARTMacroSaver.swift in Sources */,
 				01BEADCF2418FB1800FC7183 /* DFUUpdateProgressView.swift in Sources */,
@@ -2671,6 +3042,36 @@
 			isa = PBXTargetDependency;
 			target = 01BC2ECF24EE727200F7D499 /* UARTMacrosExtension */;
 			targetProxy = 01BC2ED524EE727200F7D499 /* PBXContainerItemProxy */;
+		};
+		01D4CD3024F3D2F400B48FA8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01D4CD2424F3D2F400B48FA8 /* UART */;
+			targetProxy = 01D4CD2F24F3D2F400B48FA8 /* PBXContainerItemProxy */;
+		};
+		01D4CD3224F3D2F400B48FA8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5217F3E11859EE0000F2D5BB /* nRF Toolbox */;
+			targetProxy = 01D4CD3124F3D2F400B48FA8 /* PBXContainerItemProxy */;
+		};
+		01D4CD3924F3D2F400B48FA8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01D4CD2424F3D2F400B48FA8 /* UART */;
+			targetProxy = 01D4CD3824F3D2F400B48FA8 /* PBXContainerItemProxy */;
+		};
+		01D4CD5B24F3DA1E00B48FA8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01D4CD4F24F3DA1E00B48FA8 /* Core */;
+			targetProxy = 01D4CD5A24F3DA1E00B48FA8 /* PBXContainerItemProxy */;
+		};
+		01D4CD5D24F3DA1E00B48FA8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5217F3E11859EE0000F2D5BB /* nRF Toolbox */;
+			targetProxy = 01D4CD5C24F3DA1E00B48FA8 /* PBXContainerItemProxy */;
+		};
+		01D4CD6424F3DA1E00B48FA8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01D4CD4F24F3DA1E00B48FA8 /* Core */;
+			targetProxy = 01D4CD6324F3DA1E00B48FA8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2792,6 +3193,270 @@
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		01D4CD3D24F3D2F400B48FA8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = UART/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = no.nordicsemi.UART;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		01D4CD3E24F3D2F400B48FA8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = UART/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = no.nordicsemi.UART;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		01D4CD4024F3D2F400B48FA8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = P3R8YQEV4L;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = UARTTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = no.nordicsemi.UARTTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox Debug.app/nRF Toolbox Debug";
+			};
+			name = Debug;
+		};
+		01D4CD4124F3D2F400B48FA8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = P3R8YQEV4L;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = UARTTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = no.nordicsemi.UARTTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox Debug.app/nRF Toolbox Debug";
+			};
+			name = Release;
+		};
+		01D4CD6824F3DA1F00B48FA8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = Core/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = no.nordicsemi.Core;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		01D4CD6924F3DA1F00B48FA8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = Core/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = no.nordicsemi.Core;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		01D4CD6B24F3DA1F00B48FA8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = P3R8YQEV4L;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = CoreTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = no.nordicsemi.CoreTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox Debug.app/nRF Toolbox Debug";
+			};
+			name = Debug;
+		};
+		01D4CD6C24F3DA1F00B48FA8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = P3R8YQEV4L;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = CoreTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = no.nordicsemi.CoreTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox Debug.app/nRF Toolbox Debug";
 			};
 			name = Release;
 		};
@@ -3032,6 +3697,42 @@
 			buildConfigurations = (
 				01BC2ED824EE727200F7D499 /* Debug */,
 				01BC2ED924EE727200F7D499 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		01D4CD3C24F3D2F400B48FA8 /* Build configuration list for PBXNativeTarget "UART" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01D4CD3D24F3D2F400B48FA8 /* Debug */,
+				01D4CD3E24F3D2F400B48FA8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		01D4CD3F24F3D2F400B48FA8 /* Build configuration list for PBXNativeTarget "UARTTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01D4CD4024F3D2F400B48FA8 /* Debug */,
+				01D4CD4124F3D2F400B48FA8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		01D4CD6724F3DA1F00B48FA8 /* Build configuration list for PBXNativeTarget "Core" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01D4CD6824F3DA1F00B48FA8 /* Debug */,
+				01D4CD6924F3DA1F00B48FA8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		01D4CD6A24F3DA1F00B48FA8 /* Build configuration list for PBXNativeTarget "CoreTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01D4CD6B24F3DA1F00B48FA8 /* Debug */,
+				01D4CD6C24F3DA1F00B48FA8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
