@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum EOL: String {
+public enum EOL: String {
     case lf = "\n"
     case cr = "\r"
     case lfcr = "\n\r"
@@ -26,5 +26,5 @@ enum EOL: String {
 }
 
 extension EOL: CaseIterable {
-    static var allCases: [EOL] { [.lf, .cr, .lfcr] }
+    public static var allCases: [EOL] { [.lf, .cr, .lfcr] }
 }

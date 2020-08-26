@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="MacrosObject" representedClassName="MacrosObject" syncable="YES">
+        <attribute name="colorName" optional="YES" attributeType="String"/>
+        <attribute name="commandSet" optional="YES" attributeType="Transformable"/>
+        <attribute name="name" attributeType="String"/>
+    </entity>
+    <entity name="PresetObject" representedClassName="PresetObject" syncable="YES">
+        <attribute name="commandSet" optional="YES" attributeType="Transformable"/>
+        <attribute name="isFavorite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String"/>
+    </entity>
+    <fetchRequest name="FetchRequest" entity="PresetObject" predicateString="isFavorite == 0"/>
+    <elements>
+        <element name="MacrosObject" positionX="-27" positionY="27" width="128" height="88"/>
+        <element name="PresetObject" positionX="-27" positionY="27" width="128" height="88"/>
+    </elements>
+</model>

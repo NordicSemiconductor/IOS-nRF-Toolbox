@@ -30,28 +30,22 @@
 
 
 
-import UIKit
+import Foundation
 
-import AEXML
-
-class XMLDocument: UIDocument {
-    enum Error: Swift.Error {
-        case unableToEncodeXML
-    }
-    
-    var doc: AEXMLDocument!
-    
-    init(name: String) {
-        let tempDir = FileManager.default.temporaryDirectory
-        let url = tempDir.appendingPathComponent("\(name).xml")
-        super.init(fileURL: url)
-    }
-    
-    override func contents(forType typeName: String) throws -> Any {
-        guard let data = doc.xml.data(using: .utf8) else {
-            throw Error.unableToEncodeXML
+public extension StringProtocol {
+    var hexa: [UInt8] {
+        if count % 2 != 0 {
+            return ("0" + self).hexa
         }
-        
-        return data as Any
+        var startIndex = self.startIndex
+        return stride(from: 0, to: count, by: 2).compactMap { _ in
+            let endIndex = index(startIndex, offsetBy: 2, limitedBy: self.endIndex) ?? self.endIndex
+            defer { startIndex = endIndex }
+            return UInt8(self[startIndex..<endIndex], radix: 16)
+        }
+    }
+    
+    func nilOnEmpty() -> Self? {
+        return self.isEmpty ? nil : self
     }
 }

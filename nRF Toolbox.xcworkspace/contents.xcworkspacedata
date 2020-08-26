@@ -2,6 +2,18 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:UART/UART/CoreData/UARTPreset+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:UART/UART/CoreData/UARTPreset+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
+      location = "group:UART/UART/CoreData/UARTMacro+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:UART/UART/CoreData/UARTMacro+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
       location = "group:nRF Toolbox.xcodeproj">
    </FileRef>
    <FileRef

@@ -1,5 +1,5 @@
 //
-//  UARTPreset+View.swift
+//  PresetObject+View.swift
 //  nRF Toolbox
 //
 //  Created by Nick Kibysh on 22/06/2020.

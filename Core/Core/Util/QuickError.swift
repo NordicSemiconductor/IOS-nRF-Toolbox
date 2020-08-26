@@ -30,28 +30,23 @@
 
 
 
-import UIKit
+import Foundation
 
-import AEXML
+public protocol ReadableError: Error {
+    var title: String { get }
+    var readableMessage: String { get }
+}
 
-class XMLDocument: UIDocument {
-    enum Error: Swift.Error {
-        case unableToEncodeXML
+public extension ReadableError {
+    var title: String {
+        return "Error"
     }
+}
+
+public struct QuickError: ReadableError {
+    public let readableMessage: String
     
-    var doc: AEXMLDocument!
-    
-    init(name: String) {
-        let tempDir = FileManager.default.temporaryDirectory
-        let url = tempDir.appendingPathComponent("\(name).xml")
-        super.init(fileURL: url)
-    }
-    
-    override func contents(forType typeName: String) throws -> Any {
-        guard let data = doc.xml.data(using: .utf8) else {
-            throw Error.unableToEncodeXML
-        }
-        
-        return data as Any
+    public init(message: String) {
+        readableMessage = message
     }
 }

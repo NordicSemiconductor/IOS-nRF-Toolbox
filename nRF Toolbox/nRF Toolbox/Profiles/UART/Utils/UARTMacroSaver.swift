@@ -44,7 +44,7 @@ class UARTMacroFileManager {
         self.fileManager = fileManager
     }
     
-    func save(_ macro: UARTMacro, shodUpdate: Bool = false) throws {
+    func save(_ macro: MacrosObject, shodUpdate: Bool = false) throws {
         let data = try JSONEncoder().encode(macro)
         let fileUrl = try self.fileUrl(for: macro.name)
         

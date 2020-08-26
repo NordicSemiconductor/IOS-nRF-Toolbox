@@ -30,28 +30,34 @@
 
 
 
-import UIKit
+import Foundation
 
-import AEXML
+public struct Identifier<Value>: Equatable {
+    public let string: String
+}
 
-class XMLDocument: UIDocument {
-    enum Error: Swift.Error {
-        case unableToEncodeXML
+public func ==<T>(lhs: Identifier<T>, rhs: Identifier<T>) -> Bool {
+    return lhs.string == rhs.string
+}
+
+public func ~=<T>(pattern: Identifier<T>, value: Identifier<T>) -> Bool {
+    return pattern.string == value.string
+}
+
+extension Identifier: ExpressibleByStringLiteral {
+    public init(stringLiteral value: String) {
+        string = value
     }
-    
-    var doc: AEXMLDocument!
-    
-    init(name: String) {
-        let tempDir = FileManager.default.temporaryDirectory
-        let url = tempDir.appendingPathComponent("\(name).xml")
-        super.init(fileURL: url)
+}
+
+extension Identifier: CustomStringConvertible {
+    public var description: String {
+        return string
     }
-    
-    override func contents(forType typeName: String) throws -> Any {
-        guard let data = doc.xml.data(using: .utf8) else {
-            throw Error.unableToEncodeXML
-        }
-        
-        return data as Any
+}
+
+extension Identifier: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(string)
     }
 }

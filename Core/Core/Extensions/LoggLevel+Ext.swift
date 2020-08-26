@@ -30,28 +30,21 @@
 
 
 
-import UIKit
+import UIKit.UIColor
 
-import AEXML
-
-class XMLDocument: UIDocument {
-    enum Error: Swift.Error {
-        case unableToEncodeXML
-    }
-    
-    var doc: AEXMLDocument!
-    
-    init(name: String) {
-        let tempDir = FileManager.default.temporaryDirectory
-        let url = tempDir.appendingPathComponent("\(name).xml")
-        super.init(fileURL: url)
-    }
-    
-    override func contents(forType typeName: String) throws -> Any {
-        guard let data = doc.xml.data(using: .utf8) else {
-            throw Error.unableToEncodeXML
+public extension LogType {
+    public var color: UIColor {
+        switch self {
+        case .warning: return .nordicFall
+        case .application: return .nordicGreen
+        case .info: return UIColor.Text.systemText
+        case .verbose: return .nordicFall
+        case .debug, .default:
+            return .nordicLake
+        case .error, .fault:
+            return .nordicRed
+        default:
+            return UIColor.Text.systemText
         }
-        
-        return data as Any
     }
 }

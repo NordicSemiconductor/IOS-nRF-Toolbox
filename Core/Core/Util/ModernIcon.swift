@@ -30,28 +30,28 @@
 
 
 
-import UIKit
+import UIKit.UIImage
 
-import AEXML
-
-class XMLDocument: UIDocument {
-    enum Error: Swift.Error {
-        case unableToEncodeXML
+public struct ModernIcon: Codable, Equatable {
+    private (set) public var name: String
+    public init(name: String) {
+        self.name = name
     }
     
-    var doc: AEXMLDocument!
-    
-    init(name: String) {
-        let tempDir = FileManager.default.temporaryDirectory
-        let url = tempDir.appendingPathComponent("\(name).xml")
-        super.init(fileURL: url)
+    public init(digit: Int) {
+        name = "\(digit)"
     }
     
-    override func contents(forType typeName: String) throws -> Any {
-        guard let data = doc.xml.data(using: .utf8) else {
-            throw Error.unableToEncodeXML
-        }
-        
-        return data as Any
+    public func add(_ icon: ModernIcon) -> ModernIcon {
+        return ModernIcon(name: "\(name).\(icon.name)")
+    }
+    
+    public func callAsFunction(_ icon: ModernIcon) -> ModernIcon {
+        return ModernIcon(name: "\(name).\(icon.name)")
+    }
+    
+    @available(iOS 13.0, *)
+    public var image: UIImage? {
+        return UIImage(systemName: name)
     }
 }

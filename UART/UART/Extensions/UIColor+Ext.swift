@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Core
 
 extension UIColor {
     struct UART {

@@ -30,28 +30,12 @@
 
 
 
-import UIKit
+import Foundation
 
-import AEXML
+public extension Bool {
+    public mutating func toggle() {
+        self = !self
+    }
 
-class XMLDocument: UIDocument {
-    enum Error: Swift.Error {
-        case unableToEncodeXML
-    }
-    
-    var doc: AEXMLDocument!
-    
-    init(name: String) {
-        let tempDir = FileManager.default.temporaryDirectory
-        let url = tempDir.appendingPathComponent("\(name).xml")
-        super.init(fileURL: url)
-    }
-    
-    override func contents(forType typeName: String) throws -> Any {
-        guard let data = doc.xml.data(using: .utf8) else {
-            throw Error.unableToEncodeXML
-        }
-        
-        return data as Any
-    }
+    public func toggled() -> Bool { !self }
 }
