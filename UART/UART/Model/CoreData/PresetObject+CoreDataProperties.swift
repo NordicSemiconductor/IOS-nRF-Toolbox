@@ -16,7 +16,7 @@ extension PresetObject {
         return NSFetchRequest<PresetObject>(entityName: "UARTPreset")
     }
 
-    @NSManaged public var commandSet: NSObject?
+    @NSManaged public var commandSet: [NSObject]?
     @NSManaged public var isFavorite: Bool
     @NSManaged public var name: String?
 

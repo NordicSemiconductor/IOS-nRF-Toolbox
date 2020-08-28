@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UART
 
 extension UIImage {
 
@@ -27,7 +28,7 @@ extension UIImage {
 }
 
 
-extension UARTPreset {
+extension Preset {
     func renderImage(size: CGSize, spacing: CGFloat = 4) -> UIImage {
         let renderer = UIGraphicsImageRenderer(size: size)
         
@@ -48,7 +49,7 @@ extension UARTPreset {
                 for j in 0..<3 {
                     let commandIndex = i * 3 + j
                     let command = self.commands[commandIndex]
-                    guard !(command is EmptyModel), let img = command.image else { continue }
+                    guard !(command is EmptyCommand), let img = command.image else { continue }
                     
                     let color: UIColor = UIColor.nordicBlue
                     guard let newImage = img

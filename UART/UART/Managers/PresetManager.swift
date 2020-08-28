@@ -28,8 +28,8 @@ open class PresetManager {
         
     }
     
-    /// Dupplicates provided preset.
-    /// IMPORTANT: The method doesn't save new preset to the storage.
+    /// Duplicates provided preset.
+    /// - IMPORTANT: The method doesn't save new preset to the storage.
     /// - Parameters:
     ///   - preset: Preset to be copied
     ///   - name: Name of dupplicated preset. If the name is `nil` or the `copy` suffix will be added to original name

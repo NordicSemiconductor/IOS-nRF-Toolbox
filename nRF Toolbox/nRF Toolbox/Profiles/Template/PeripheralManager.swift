@@ -32,6 +32,7 @@
 
 import Foundation
 import CoreBluetooth
+import Core
 
 enum PeripheralStatus: CustomDebugStringConvertible, Equatable {
     

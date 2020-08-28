@@ -31,6 +31,7 @@
 
 
 import UIKit
+import Core
 
 struct GlucoseReadingContext {
 

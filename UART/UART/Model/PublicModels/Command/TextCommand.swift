@@ -24,7 +24,3 @@ public struct TextCommand: Command {
         self.eol = eol
     }
 }
-
-fileprivate extension UARTCommandModelKey {
-    static let eolSymbol = "UARTCommandModel.Key.eolSymbol"
-}

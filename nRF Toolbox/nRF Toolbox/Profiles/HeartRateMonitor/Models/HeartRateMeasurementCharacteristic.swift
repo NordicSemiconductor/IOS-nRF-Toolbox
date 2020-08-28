@@ -31,6 +31,7 @@
 
 
 import Foundation
+import Core
 
 private extension Flag {
     static let heartRateType: Flag = 0x01

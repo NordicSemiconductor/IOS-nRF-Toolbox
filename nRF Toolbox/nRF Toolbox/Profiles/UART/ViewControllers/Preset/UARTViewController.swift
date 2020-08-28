@@ -32,7 +32,7 @@
 
 import UIKit
 import CoreBluetooth
-import AEXML
+import UART
 
 extension UIImage {
     convenience init?(name: String, systemName: String) {

@@ -32,6 +32,7 @@
 
 import UIKit
 import CoreBluetooth
+import Core
 
 private extension Identifier where Value == Section {
     static let sensorLocation: Identifier<Section> = "SensorLocation"

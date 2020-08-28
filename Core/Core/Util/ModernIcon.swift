@@ -43,15 +43,15 @@ public struct ModernIcon: Codable, Equatable {
     }
     
     public func add(_ icon: ModernIcon) -> ModernIcon {
-        return ModernIcon(name: "\(name).\(icon.name)")
+        ModernIcon(name: "\(name).\(icon.name)")
     }
     
     public func callAsFunction(_ icon: ModernIcon) -> ModernIcon {
-        return ModernIcon(name: "\(name).\(icon.name)")
+        ModernIcon(name: "\(name).\(icon.name)")
     }
     
     @available(iOS 13.0, *)
     public var image: UIImage? {
-        return UIImage(systemName: name)
+        UIImage(systemName: name)
     }
 }

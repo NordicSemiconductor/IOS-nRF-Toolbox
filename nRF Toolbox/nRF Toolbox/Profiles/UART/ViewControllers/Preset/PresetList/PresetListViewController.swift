@@ -8,33 +8,35 @@
 
 import UIKit
 import CoreData
+import Core
+import UART
 
 protocol PresetListDelegate: class {
-    func didSelectPreset(_ preset: UARTPreset)
-    func presetWasDeleted(_ preset: UARTPreset)
-    func presetWasRenamed(_ preset: UARTPreset)
+    func didSelectPreset(_ preset: Preset)
+    func presetWasDeleted(_ preset: Preset)
+    func presetWasRenamed(_ preset: Preset)
 }
 
 @available(iOS 13.0, *)
 class PresetContextMenuInteraction: UIContextMenuInteraction {
-    var preset: UARTPreset?
+    var preset: Preset?
 }
 
 class PresetListViewController: UICollectionViewController {
     
     private struct DataSource {
-        var favoritePresets: [UARTPreset] = []
-        var notFavoritePresets: [UARTPreset] = []
-        var inQuickAccess: [UARTPreset] = []
+        var favoritePresets: [Preset] = []
+        var notFavoritePresets: [Preset] = []
+        var inQuickAccess: [Preset] = []
     }
     
-    private let coreDataStack: CoreDataStack
+    private let presetManager: PresetManager
     private var dataSource: DataSource = DataSource()
     
     weak var presetDelegate: PresetListDelegate?
     
-    init(inQuickAccess: [UARTPreset], stack: CoreDataStack = CoreDataStack.uart) {
-        self.coreDataStack = stack
+    init(inQuickAccess: [Preset], presetManager: PresetManager) {
+        self.presetManager = presetManager
         
         self.dataSource = DataSource(favoritePresets: [], notFavoritePresets: [], inQuickAccess: inQuickAccess)
         
@@ -48,13 +50,12 @@ class PresetListViewController: UICollectionViewController {
     }
     
     required init?(coder: NSCoder) {
-        self.coreDataStack = CoreDataStack.uart
-        super.init(coder: coder)
+        fatalError()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let presets = getPresetList()
+        let presets = presetManager.loadPresets()
         dataSource.favoritePresets = presets.filter { $0.isFavorite }
         dataSource.notFavoritePresets = presets.filter { !$0.isFavorite }
         
@@ -62,15 +63,6 @@ class PresetListViewController: UICollectionViewController {
         if #available(iOS 13.0, *) {
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(dismsiss))
         }
-    }
-    
-    private func getPresetList() -> [UARTPreset] {
-        let request: NSFetchRequest<UARTPreset> = UARTPreset.fetchRequest()
-        let sortDescriptor: NSSortDescriptor = NSSortDescriptor(key: "isFavorite", ascending: false)
-        let sortDate: NSSortDescriptor = NSSortDescriptor(key: "name", ascending: true, selector: #selector(NSString.caseInsensitiveCompare(_:)))
-        request.sortDescriptors = [sortDescriptor, sortDate]
-        
-        return try! coreDataStack.viewContext.fetch(request)
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -120,7 +112,7 @@ class PresetListViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard indexPath.section != 2 else {
-            self.presetDelegate?.didSelectPreset(UARTPreset.empty)
+            self.presetDelegate?.didSelectPreset(Preset)
             return
         }
         

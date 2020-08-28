@@ -1,5 +1,5 @@
 //
-//  EmptyModel.swift
+//  EmptyCommand.swift
 //  nRF Toolbox
 //
 //  Created by Nick Kibish on 18.06.2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-public struct EmptyModel: Command {
+public struct EmptyCommand: Command {
     public let data: Data
     public let icon: CommandImage
     public let title: String

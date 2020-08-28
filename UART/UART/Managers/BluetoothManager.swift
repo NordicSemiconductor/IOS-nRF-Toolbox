@@ -54,7 +54,7 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
     }
 }
 
-protocol BluetoothManagerDelegate {
+public protocol BluetoothManagerDelegate {
     func requestedConnect(peripheral: CBPeripheral)
     func didConnectPeripheral(deviceName aName : String?)
     func didDisconnectPeripheral()
@@ -63,29 +63,25 @@ protocol BluetoothManagerDelegate {
     func failed(with error: Error)
 }
 
-protocol UARTMacroPlayerDelegate {
-    func startPlaying(macros: MacrosObject)
-    func playedCommand(_ command: UARTCommandModel, in macro: MacrosObject)
-    func macroPlayed(_ macro: MacrosObject)
+public protocol UARTMacroPlayerDelegate {
+    func startPlaying(macros: Macros)
+    func playedCommand(_ command: Command, in macro: Macros)
+    func macroPlayed(_ macro: Macros)
 }
 
-enum BluetoothManagerError: Error {
-    case cannotFindPeripheral
-    
-    var localizedDescription: String {
-        "Can not find peripheral"
-    }
-    
-}
-
-protocol UARTCommandSendManager {
-    mutating func send(command aCommand: UARTCommandModel)
+public protocol UARTCommandSendManager {
+    mutating func send(command aCommand: Command)
 }
 
 open class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate, UARTCommandSendManager {
     
     public enum Errors: Error {
         case noDeviceConnected
+        case cannotFindPeripheral
+        
+        var localizedDescription: String {
+            "Can not find peripheral"
+        }
     }
     
     static let shared = BluetoothManager.init()
@@ -145,7 +141,7 @@ open class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDel
         log(withLevel: .debug, andMessage: "centralManager.connect(peripheral, options:nil)")
         
         guard let p = centralManager.retrievePeripherals(withIdentifiers: [aPeripheral.identifier]).first else {
-            centralManager.delegate?.centralManager?(centralManager, didFailToConnect: aPeripheral, error: BluetoothManagerError.cannotFindPeripheral)
+            centralManager.delegate?.centralManager?(centralManager, didFailToConnect: aPeripheral, error: Errors.cannotFindPeripheral)
             return
         }
         connectingPeripheral = p
@@ -261,7 +257,7 @@ open class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDel
     
     /// Sends the given command to the UART characteristic
     /// - Parameter aCommand: command that will be send to UART peripheral.
-    func send(command aCommand: UARTCommandModel) {
+    open func send(command aCommand: Command) {
 
         guard let _ = bluetoothPeripheral else {
             postponedAction = { [unowned self] in
@@ -309,16 +305,16 @@ open class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDel
         btQueue.async {
             macro.elements.forEach { (element) in
                 switch element {
-                case let command as UARTMacroCommandWrapper:
+                case let command as MacrosCommandContainer:
                     for _ in 0..<command.repeatCount {
-                        if command.timeInterval > 0 {
-                            usleep(useconds_t(command.timeInterval * 1000))
+                        if command.delay > 0 {
+                            usleep(useconds_t(command.delay))
                         }
 
                         self.send(command: command.command)
                     }
-                case let timeInterval as UARTMacroTimeInterval:
-                    usleep(useconds_t(timeInterval.timeInterval * 1000))
+                case let pause as MacrosDelay:
+                    usleep(useconds_t(pause.delay * 1000))
                 default:
                     break
                 }
