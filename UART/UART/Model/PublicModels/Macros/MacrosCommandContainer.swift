@@ -14,5 +14,11 @@ public struct MacrosCommandContainer {
     public var repeatCount: Int
     /// Delay between repeats in milliseconds
     public var delay: Int
+    
+    public init(command: Command, repeatCount: Int = 1, delay: Int = 0) {
+        self.command = command
+        self.repeatCount = repeatCount
+        self.delay = delay
+    }
 }
 

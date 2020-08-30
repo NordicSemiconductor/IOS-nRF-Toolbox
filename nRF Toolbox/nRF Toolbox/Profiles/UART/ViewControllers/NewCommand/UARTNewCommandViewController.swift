@@ -31,9 +31,11 @@
 
 
 import UIKit
+import UART
+import Core
 
 protocol UARTNewCommandDelegate: class {
-    func createdNewCommand(_ viewController: UARTNewCommandViewController, command: UARTCommandModel, index: Int)
+    func createdNewCommand(_ viewController: UARTNewCommandViewController, command: Command, index: Int)
 }
 
 class UARTNewCommandViewController: UIViewController {
@@ -50,10 +52,10 @@ class UARTNewCommandViewController: UIViewController {
     
     weak var delegate: UARTNewCommandDelegate?
     
-    private var command: UARTCommandModel?
+    private var command: Command?
     private var index: Int
     
-    init(command: UARTCommandModel?, index: Int) {
+    init(command: Command?, index: Int) {
         self.command = command
         self.index = index
         super.init(nibName: "UARTNewCommandViewController", bundle: .main)
@@ -111,7 +113,7 @@ class UARTNewCommandViewController: UIViewController {
     }
     
     @IBAction func createCommand() {
-        let command: UARTCommandModel
+        let command: Command
         let selectedItem = (collectionView.indexPathsForSelectedItems?.first?.item)!
         let image = CommandImage.allCases[selectedItem]
         
@@ -126,12 +128,12 @@ class UARTNewCommandViewController: UIViewController {
     }
     
     @IBAction func deleteBtnPressed() {
-        delegate?.createdNewCommand(self, command: EmptyModel(), index: index)
+        delegate?.createdNewCommand(self, command: EmptyCommand(), index: index)
     }
 }
 
 extension UARTNewCommandViewController {
-    private func setupUI(with command: UARTCommandModel) {
+    private func setupUI(with command: Command) {
         let typeIndex: Int
         let title: String
         switch command {
@@ -152,7 +154,7 @@ extension UARTNewCommandViewController {
         typeChanged(typeSegmentControl)
         
         CommandImage.allCases.enumerated()
-            .first(where: { $0.element.name == command.icon?.name })
+            .first(where: { $0.element.name == command.icon.name })
             .map { self.collectionView.selectItem(at: IndexPath(item: $0.offset, section: 0), animated: false, scrollPosition: .top) }
         
         deleteButton.isHidden = false

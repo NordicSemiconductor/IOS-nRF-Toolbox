@@ -29,7 +29,7 @@
 */
 
 
-
+import Core 
 import UIKit
 
 private extension Identifier where Value == DetailsTableViewCellModel {

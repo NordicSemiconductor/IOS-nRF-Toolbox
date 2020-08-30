@@ -13,7 +13,7 @@ public struct EmptyCommand: Command {
     public let icon: CommandImage
     public let title: String
     
-    init() {
+    public init() {
         data = Data()
         icon = CommandImage.empty
         title = ""

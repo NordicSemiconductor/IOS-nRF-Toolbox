@@ -32,7 +32,7 @@
 
 import UIKit
 import iOSDFULibrary
-
+import Core 
 
 struct LogMessage {
     let level: LogType

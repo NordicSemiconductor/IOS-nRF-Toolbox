@@ -31,6 +31,7 @@
 
 
 import UIKit
+import Core 
 
 protocol DetailsTableViewCellModel {
     var title: String { get set }

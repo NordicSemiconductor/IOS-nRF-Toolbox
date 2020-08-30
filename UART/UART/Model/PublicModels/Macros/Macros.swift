@@ -8,14 +8,14 @@
 
 import Foundation
 
-//public protocol MacrosElement {
-//
-//}
-
 public struct Macros {
     public var elements: [MacrosElement]
     public var name: String
     public var color: Color
     
     var macrosObject: MacrosObject?
+    
+    public static var empty: Macros {
+        Macros(elements: [], name: "", color: .nordic, macrosObject: nil)
+    }
 }

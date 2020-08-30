@@ -29,7 +29,7 @@
 */
 
 
-
+import Core 
 import Foundation
 
 class HealthTemperatureAditionalSection: DetailsTableViewSection<HealthTermometerCharacteristic> {

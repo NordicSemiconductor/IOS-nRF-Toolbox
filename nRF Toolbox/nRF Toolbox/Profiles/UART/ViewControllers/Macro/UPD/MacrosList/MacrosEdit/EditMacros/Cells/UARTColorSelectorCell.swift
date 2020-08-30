@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UART
 
 private class UARTColorCollectionViewCell: UICollectionViewCell {
     override var isSelected: Bool {
@@ -19,7 +20,7 @@ private class UARTColorCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func apply(color: UARTColor) {
+    func apply(color: Color) {
         contentView.cornerRadius = contentView.frame.minSide / 2
         contentView.backgroundColor = color.color
         cornerRadius = contentView.frame.minSide / 2
@@ -29,12 +30,12 @@ private class UARTColorCollectionViewCell: UICollectionViewCell {
 
 class UARTColorSelectorCell: UITableViewCell {
     
-    var colorUpdated: ((UARTColor?) -> ())?
+    var colorUpdated: ((Color?) -> ())?
     
     @IBOutlet private var collectionView: UICollectionView!
-    var color: UARTColor? {
+    var color: Color? {
         didSet {
-            UARTColor.allCases
+            Color.allCases
                     .firstIndex {
                         $0.rawValue == self.color?.rawValue
                     }
@@ -52,11 +53,11 @@ class UARTColorSelectorCell: UITableViewCell {
 
 extension UARTColorSelectorCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        UARTColor.allCases.count
+        Color.allCases.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let color = UARTColor.allCases[indexPath.item]
+        let color = Color.allCases[indexPath.item]
         let cell = collectionView.dequeueCell(ofType: UARTColorCollectionViewCell.self, for: indexPath)
         cell.apply(color: color)
         
@@ -67,7 +68,7 @@ extension UARTColorSelectorCell: UICollectionViewDataSource {
 
 extension UARTColorSelectorCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.color = UARTColor.allCases[indexPath.row]
+        self.color = Color.allCases[indexPath.row]
         self.colorUpdated?(self.color)
     }
     

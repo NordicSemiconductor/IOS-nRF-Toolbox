@@ -37,6 +37,11 @@ protocol NordicTextTableViewCellModel {
     var text: String? { get }
 }
 
+struct DefaultNordicTextTableViewCellModel: NordicTextTableViewCellModel {
+    var image: UIImage?
+    var text: String?
+}
+
 class NordicTextTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {

@@ -29,12 +29,13 @@
 */
 
 
-
+import UART
 import UIKit
+import Core
 
 protocol UARTMacroViewControllerDelegate: class {
-    func macrosController(_ controller: UARTMacrosTableViewController, created macros: UARTMacro)
-    func macrosController(_ controller: UARTMacrosTableViewController, changed macros: UARTMacro)
+    func macrosController(_ controller: UARTMacrosTableViewController, created macros: Macros)
+    func macrosController(_ controller: UARTMacrosTableViewController, changed macros: Macros)
 }
 
 class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
@@ -47,7 +48,7 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
     }
     
     private var presetCollectionView: UARTPresetCollectionView?
-    private var macros: UARTMacro
+    private var macros: Macros
     private let editingMode: Bool
     private let bluetoothManager: BluetoothManager
 
@@ -55,7 +56,7 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
     
     weak var macrosDelegate: UARTMacroViewControllerDelegate?
     
-    init(preset: UARTPreset, bluetoothManager: BluetoothManager, presentationType: PresentationType = .push) {
+    init(bluetoothManager: BluetoothManager, presentationType: PresentationType = .push) {
         macros = .empty
         editingMode = false
         self.bluetoothManager = bluetoothManager
@@ -65,7 +66,7 @@ class UARTMacrosTableViewController: UITableViewController, AlertPresenter {
         self.setupLeftNavButton(presentationType: presentationType)
     }
     
-    init(macros: UARTMacro = .empty, bluetoothManager: BluetoothManager, presentationType: PresentationType = .push) {
+    init(macros: Macros = .empty, bluetoothManager: BluetoothManager, presentationType: PresentationType = .push) {
         self.macros = macros
         editingMode = true
         self.bluetoothManager = bluetoothManager
@@ -245,31 +246,34 @@ extension UARTMacrosTableViewController {
 }
 
 extension UARTMacrosTableViewController: UARTPresetCollectionViewDelegate {
-    func selectedCommand(_ presetView: UARTPresetCollectionView, command: UARTCommandModel, at index: Int) {
+    func selectedCommand(_ presetView: UARTPresetCollectionView, command: Command, at index: Int) {
         
     }
     
-    func longTapAtCommand(_ presetView: UARTPresetCollectionView, command: UARTCommandModel, at index: Int) {
+    func longTapAtCommand(_ presetView: UARTPresetCollectionView, command: Command, at index: Int) {
         
     }
     
-    func selectedCommand(_ command: UARTCommandModel, at index: Int) {
-        guard !(command is EmptyModel) else {
+    func selectedCommand(_ command: Command, at index: Int) {
+        guard !(command is EmptyCommand) else {
             openPresetEditor(with: command, index: index)
             return
         }
         
-        macros.elements.append(command)
+        let container = MacrosCommandContainer(command: command)
+        let commandElement = MacrosElement.commandContainer(container)
+        macros.elements.append(commandElement)
+        
         tableView.insertRows(at: [IndexPath(item: macros.elements.count - 1, section: Section.commands)], with: .automatic)
     }
     
-    func longTapAtCommand(_ command: UARTCommandModel, at index: Int) {
+    func longTapAtCommand(_ command: Command, at index: Int) {
         openPresetEditor(with: command, index: index)
     }
 }
 
 extension UARTMacrosTableViewController: UARTNewCommandDelegate {
-    func createdNewCommand(_ viewController: UARTNewCommandViewController, command: UARTCommandModel, index: Int) {
+    func createdNewCommand(_ viewController: UARTNewCommandViewController, command: Command, index: Int) {
         presetCollectionView?.reloadData()
         viewController.dismsiss()
     }
@@ -305,21 +309,27 @@ extension UARTMacrosTableViewController {
         
         let element = macros.elements[index]
         switch element {
-        case let timeInterval as UARTMacroTimeInterval:
+        case .delay(let timeInterval):
             let cell = tableView.dequeueCell(ofType: TimeIntervalTableViewCell.self)
-            cell.apply(timeInterval: timeInterval, index: index)
+            cell.apply(timeInterval: Int(timeInterval * 1000), index: index)
             cell.callback = { [unowned self] ti, index in
 //                self.macros.replaceCommandsSet(at: index, with: ti)
             }
             cell.selectionStyle = .none
             return cell
-        case let command as UARTCommandModel:
+        case .commandContainer(let container):
             let cell = tableView.dequeueCell(ofType: NordicTextTableViewCell.self)
-            cell.apply(command)
+            cell.apply(command: container.command)
             cell.selectionStyle = .none
             return cell
         default:
             SystemLog(category: .app, type: .fault).fault("Unknown command type")
         }
+    }
+}
+
+private extension NordicTextTableViewCell {
+    func apply(command: Command) {
+        apply(DefaultNordicTextTableViewCellModel(image: command.image, text: command.title))
     }
 }

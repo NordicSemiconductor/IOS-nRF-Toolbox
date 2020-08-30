@@ -7,9 +7,16 @@
 //
 
 import Foundation
+import UIKit.UIImage
 
 public protocol Command {
     var data: Data { get }
     var icon: CommandImage { get }
     var title: String { get }
+}
+
+public extension Command {
+    var image: UIImage? {
+        icon.image
+    }
 }

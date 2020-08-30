@@ -8,19 +8,21 @@
 
 import UIKit
 import IntentsUI
+import UART
+import Core
 
 protocol UARTEditMacrosDelegate: class {
-    func saveMacrosUpdate(name: String, color: UARTColor)
+    func saveMacrosUpdate(name: String, color: Color)
 }
 
 class UARTEditMacrosVC: UITableViewController, AlertPresenter {
     
     private var name: String?
-    private var color: UARTColor?
+    private var color: Color?
     
     weak var editMacrosDelegate: UARTEditMacrosDelegate!
     
-    init(name: String?, color: UARTColor?) {
+    init(name: String?, color: Color?) {
         self.name = name
         self.color = color
         

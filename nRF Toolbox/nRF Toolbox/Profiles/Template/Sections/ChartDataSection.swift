@@ -31,6 +31,7 @@
 
 
 import UIKit
+import Core 
 
 class ChartDataSection<T>: Section {
     var items: [T] = []

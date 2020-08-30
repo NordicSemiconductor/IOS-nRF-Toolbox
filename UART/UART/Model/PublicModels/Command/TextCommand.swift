@@ -18,7 +18,7 @@ public struct TextCommand: Command {
         title.data(using: .utf8)!
     }
     
-    init(text: String, image: CommandImage, eol: EOL = .cr) {
+    public init(text: String, image: CommandImage, eol: EOL = .cr) {
         self.title = text
         self.icon = image
         self.eol = eol

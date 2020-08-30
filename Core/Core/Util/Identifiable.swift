@@ -34,6 +34,10 @@ import Foundation
 
 public struct Identifier<Value>: Equatable {
     public let string: String
+    
+    public init(string: String) {
+        self.string = string
+    }
 }
 
 public func ==<T>(lhs: Identifier<T>, rhs: Identifier<T>) -> Bool {

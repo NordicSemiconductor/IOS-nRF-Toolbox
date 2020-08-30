@@ -11,12 +11,9 @@ import CoreData
 
 @objc(MacrosObject)
 class MacrosObject: NSManagedObject {
-    init(commands: [MacrosElement], name: String, color: Color, context: NSManagedObjectContext) {
+    init(commands: [NSObject], name: String, colorName: String, context: NSManagedObjectContext) {
         let entity = Self.getEntity(context: context)!
         super.init(entity: entity, insertInto: context)
-
-
-        self.name = name
     }
     
     override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {

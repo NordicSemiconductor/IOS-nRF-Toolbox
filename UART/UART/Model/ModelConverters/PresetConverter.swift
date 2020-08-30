@@ -31,6 +31,6 @@ struct PresetConverter: ModelConverter {
             .map { $0.command } ?? []
         let name = object.name ?? ""
         
-        return Preset(commands: commands, name: name, isFavorite: object.isFavorite)
+        return Preset(commands: commands, name: name, isFavorite: object.isFavorite, storedObject: object)
     }
 }

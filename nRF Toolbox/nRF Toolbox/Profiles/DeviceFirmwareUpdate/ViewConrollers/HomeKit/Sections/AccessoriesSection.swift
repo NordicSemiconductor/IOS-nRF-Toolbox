@@ -32,6 +32,7 @@
 
 import UIKit
 import HomeKit
+import Core 
 
 struct AccessoriesSection: Section {
     var items: [HMAccessory] = []

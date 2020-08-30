@@ -16,8 +16,8 @@ extension MacrosObject {
         return NSFetchRequest<MacrosObject>(entityName: "UARTMacro")
     }
 
-    @NSManaged public var colorName: String?
-    @NSManaged public var commandSet: NSObject?
-    @NSManaged public var name: String?
+    @NSManaged public var colorName: String
+    @NSManaged public var commandSet: [NSObject]
+    @NSManaged public var name: String
 
 }

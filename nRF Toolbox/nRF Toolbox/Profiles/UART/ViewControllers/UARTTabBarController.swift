@@ -28,14 +28,14 @@
 * POSSIBILITY OF SUCH DAMAGE.
 */
 
-
-
+import Core
+import UART
 import UIKit
 import CoreBluetooth.CBPeripheral
 import Intents
 
 protocol UARTRouter: class {
-    func displayMacros(with preset: UARTPreset)
+    func displayMacros(with preset: Preset)
 }
 
 struct TabBarIcon {
@@ -183,7 +183,7 @@ extension UARTTabBarController: UITabBarControllerDelegate {
 }
 
 extension UARTTabBarController: UARTRouter {
-    func displayMacros(with preset: UARTPreset) {
+    func displayMacros(with preset: Preset) {
         let newMacroVC = UARTMacrosTableViewController(preset: preset, bluetoothManager: btManager, presentationType: .present)
         let nc = UINavigationController.nordicBranded(rootViewController: newMacroVC, prefersLargeTitles: false)
         

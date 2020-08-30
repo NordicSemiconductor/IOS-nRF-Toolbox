@@ -206,8 +206,8 @@ extension UIColor {
 
 // MARK: - Buttons
 extension UIColor {
-    struct Button {
-        static let action: UIColor = {
+    public struct Button {
+        public static let action: UIColor = {
             let dark: UIColor
             if #available(iOS 13.0, *) {
                 dark = .systemBlue
@@ -218,7 +218,7 @@ extension UIColor {
             return .dynamicColor(light: .nordicLake, dark: dark)
         }()
         
-        static let destructive: UIColor = {
+        public static let destructive: UIColor = {
             let dark: UIColor
             if #available(iOS 13.0, *) {
                 dark = .systemRed
@@ -232,9 +232,9 @@ extension UIColor {
 }
 
 // MARK: - Text Colors
-extension UIColor {
+public extension UIColor {
     struct Text {
-        static let systemText: UIColor = {
+        public static let systemText: UIColor = {
             if #available(iOS 13.0, *) {
                 return .label
             } else {
@@ -242,7 +242,7 @@ extension UIColor {
             }
         }()
         
-        static let secondarySystemText: UIColor = {
+        public static let secondarySystemText: UIColor = {
             if #available(iOS 13, *) {
                 return .secondaryLabel
             } else {
@@ -250,7 +250,7 @@ extension UIColor {
             }
         }()
         
-        static let inactive: UIColor = {
+        public static let inactive: UIColor = {
             if #available(iOS 13, *) {
                 return .systemGray4
             } else {

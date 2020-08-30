@@ -21,6 +21,11 @@ public struct Preset {
         self.isFavorite = isFavorite
     }
     
+    init(commands: [Command], name: String, isFavorite: Bool, storedObject: PresetObject? = nil) {
+        self.init(commands: commands, name: name, isFavorite: isFavorite)
+        self.storedObject = storedObject
+    }
+    
     init(object: PresetObject) {
         self.storedObject = object
         

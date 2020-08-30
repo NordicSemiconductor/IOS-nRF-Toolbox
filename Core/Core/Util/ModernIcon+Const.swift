@@ -32,7 +32,7 @@
 
 import Foundation
 
-extension ModernIcon {
+public extension ModernIcon {
     static let exportIcon = ModernIcon.square(.and)(.arrow)(.up)
     static let duplicateIcon = ModernIcon.doc(.on)(.doc)
 }

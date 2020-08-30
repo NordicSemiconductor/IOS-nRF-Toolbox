@@ -31,6 +31,8 @@
 
 
 import UIKit
+import UART
+import Core
 
 class UARTActionCollectionViewCell: UICollectionViewCell {
 
@@ -59,7 +61,7 @@ class UARTActionCollectionViewCell: UICollectionViewCell {
         layer.masksToBounds = true
     }
 
-    func apply(command: UARTCommandModel) {
+    func apply(command: Command) {
         title.text = command.title
         title.textColor = {
             if command is DataCommand {
@@ -69,6 +71,6 @@ class UARTActionCollectionViewCell: UICollectionViewCell {
             }
         }()
         
-        image.image = command.image
+        image.image = command.image 
     }
 }

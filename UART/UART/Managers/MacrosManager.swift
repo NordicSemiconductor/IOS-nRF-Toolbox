@@ -8,6 +8,12 @@
 
 import Foundation
 
-class MacrosManager {
+open class MacrosManager {
+    open func loadMacros() -> [Macros] {
+        return []
+    }
     
+    init() {
+        
+    }
 }

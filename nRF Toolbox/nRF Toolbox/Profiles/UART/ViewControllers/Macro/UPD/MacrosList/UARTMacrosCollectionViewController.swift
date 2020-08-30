@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import UART
 
 extension UICollectionViewFlowLayout {
     func itemWidth(minimumCellWidth minWidth: CGFloat) -> CGFloat {
@@ -25,12 +26,12 @@ extension UICollectionViewFlowLayout {
 
 class UARTMacrosCollectionViewController: UICollectionViewController, AlertPresenter {
     
-    var macros: [UARTMacro] = []
-    let coreDataStack: CoreDataStack = CoreDataStack.uart
+    var macros: [Macros] = []
     
+    let macrosManager = MacrosManager
     let btManager: BluetoothManager
     
-    init(bluetoothManager: BluetoothManager = .shared) {
+    init(bluetoothManager: BluetoothManager = .shared, macrosManager: MacrosManager = MacrosManager()) {
         self.btManager = bluetoothManager
         super.init(nibName: "UARTMacrosCollectionViewController", bundle: .main)
     }

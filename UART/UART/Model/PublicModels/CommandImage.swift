@@ -34,10 +34,10 @@ import UIKit.UIImage
 import Core
 
 public struct CommandImage {
-    var name: String
-    var systemIcon: ModernIcon?
+    public var name: String
+    public var systemIcon: ModernIcon?
     
-    var image: UIImage? {
+    public var image: UIImage? {
         if #available(iOS 13, *), let image = systemIcon?.image {
             return image
         } else {
@@ -64,7 +64,7 @@ extension CommandImage: CaseIterable {
     public static let allCases: [CommandImage] = [.pause, .play, .record, .repeat, .rewind, .start, .stop, .number1, .number2, .number3, .number4, .number5, .number6, .number7, .number8, .number9, .up, .down, .left, .right]
 }
 
-extension CommandImage {
+public extension CommandImage {
     static let empty = CommandImage(name: "")
     static let number1 = CommandImage(name: "NUMBER_1", modernIcon: ModernIcon(digit: 1)(.circle))
     static let number2 = CommandImage(name: "NUMBER_2", modernIcon: ModernIcon(digit: 2)(.circle))

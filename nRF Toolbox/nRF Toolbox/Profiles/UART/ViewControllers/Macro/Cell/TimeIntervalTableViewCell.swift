@@ -31,40 +31,24 @@
 
 
 import UIKit
+import UART
 
 class TimeIntervalTableViewCell: UITableViewCell {
     
     @IBOutlet private var stepper: UIStepper!
     @IBOutlet private var label: UILabel!
     
-    var callback: ((UARTMacroTimeInterval, Int) -> ())!
+    var callback: ((Int, Int) -> ())!
     private var index: Int!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
     
     @IBAction func changedTimeInterval(_ sender: UIStepper) {
         let value = Int(sender.value)
         label.text = "\(value) ms"
-//        let ti = UARTMacroTimeInterval(milliseconds: value)
-//        callback(ti, index)
+        callback(value, index)
     }
     
-    func apply(timeInterval: UARTMacroTimeInterval, index: Int) {
-        
-        /*
-        let ti = timeInterval.milliseconds
-        self.index = index 
-        stepper.value = Double(ti)
-        label.text = "\(ti) ms"
- */
+    func apply(timeInterval: Int, index: Int) {
+        stepper.value = Double(timeInterval)
+        label.text = "\(timeInterval) ms"
     }
 }

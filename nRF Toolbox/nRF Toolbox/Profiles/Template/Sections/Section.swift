@@ -31,6 +31,7 @@
 
 
 import UIKit
+import Core
 
 protocol Section {
     func dequeCell(for index: Int, from tableView: UITableView) -> UITableViewCell

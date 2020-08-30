@@ -29,16 +29,16 @@
 */
 
 
-
+import UART
 import UIKit
 
 protocol UARTPresetCollectionViewDelegate: class {
-    func selectedCommand(_ presetView: UARTPresetCollectionView, command: UARTCommandModel, at index: Int)
-    func longTapAtCommand(_ presetView: UARTPresetCollectionView, command: UARTCommandModel, at index: Int)
+    func selectedCommand(_ presetView: UARTPresetCollectionView, command: Command, at index: Int)
+    func longTapAtCommand(_ presetView: UARTPresetCollectionView, command: Command, at index: Int)
 }
 
 extension UARTPresetCollectionViewDelegate where Self: UIViewController & UARTNewCommandDelegate {
-    func openPresetEditor(with command: UARTCommandModel?, index: Int) {
+    func openPresetEditor(with command: Command?, index: Int) {
         let vc = UARTNewCommandViewController(command: command, index: index)
         vc.delegate = self
         let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false)

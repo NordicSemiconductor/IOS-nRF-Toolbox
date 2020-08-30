@@ -28,9 +28,8 @@
 * POSSIBILITY OF SUCH DAMAGE.
 */
 
-
-
 import UIKit
+import Core
 
 class DetailsTableViewSection<C>: Section {
     var isHidden: Bool {

@@ -98,7 +98,6 @@
 		019985EA23DF1EED000CDCB6 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019985E923DF1EED000CDCB6 /* UIViewController+Ext.swift */; };
 		019985EE23E0622B000CDCB6 /* UARTLoggerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019985EC23E0622B000CDCB6 /* UARTLoggerViewController.swift */; };
 		019985EF23E0622B000CDCB6 /* UARTLoggerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 019985ED23E0622B000CDCB6 /* UARTLoggerViewController.xib */; };
-		019985F123E07CFB000CDCB6 /* XMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019985F023E07CFB000CDCB6 /* XMLDocument.swift */; };
 		01A1B76723CF13A50062FADC /* UARTNewCommandViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A1B76523CF13A50062FADC /* UARTNewCommandViewController.swift */; };
 		01A1B76823CF13A50062FADC /* UARTNewCommandViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01A1B76623CF13A50062FADC /* UARTNewCommandViewController.xib */; };
 		01A1B76D23CF43590062FADC /* UART.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01A1B76C23CF43590062FADC /* UART.xcassets */; };
@@ -199,7 +198,6 @@
 		01E2B56F24ACA04600D22FB1 /* UARTMacrosCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E2B56D24ACA04600D22FB1 /* UARTMacrosCollectionViewCell.xib */; };
 		01E2B57224ACCAEE00D22FB1 /* SearchCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E2B57024ACCAEE00D22FB1 /* SearchCollectionReusableView.swift */; };
 		01E2B57324ACCAEE00D22FB1 /* SearchCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E2B57124ACCAEE00D22FB1 /* SearchCollectionReusableView.xib */; };
-		01E5910B23DECF61008F15A4 /* UARTMacrosList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */; };
 		01F66FC524E6C60B0065C703 /* ContextMenuBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F66FC424E6C60B0065C703 /* ContextMenuBuilder.swift */; };
 		01F66FE924EA067A0065C703 /* AddSiriShortcutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F66FE824EA067A0065C703 /* AddSiriShortcutTableViewCell.swift */; };
 		01F94C5724BDC2A200D34EC4 /* UARTMacroWaitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F94C5524BDC2A200D34EC4 /* UARTMacroWaitCell.swift */; };
@@ -211,6 +209,8 @@
 		01FBC5102408101B00B1056B /* NordicRightDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC50F2408101B00B1056B /* NordicRightDetailTableViewCell.swift */; };
 		01FBC5132408132800B1056B /* DFUDeviceInfoSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5122408132800B1056B /* DFUDeviceInfoSection.swift */; };
 		01FBC51724081A1C00B1056B /* DFUFirmwareSizeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC51624081A1C00B1056B /* DFUFirmwareSizeSection.swift */; };
+		01FD05F224F9373B003DE51D /* MacrosElementCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FD05F124F9373B003DE51D /* MacrosElementCoder.swift */; };
+		01FD05F924F9452F003DE51D /* MacrosElementCoderCoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FD05F724F93FE0003DE51D /* MacrosElementCoderCoderTests.swift */; };
 		01FEB0FD23969BD1000767C1 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FEB0FC23969BD1000767C1 /* UIView+Ext.swift */; };
 		20027B08233E116600A0B5ED /* StrideSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20027B07233E116600A0B5ED /* StrideSection.swift */; };
 		2002A000231FAFD100C43E06 /* PeripheralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20029FFF231FAFD100C43E06 /* PeripheralManager.swift */; };
@@ -307,7 +307,6 @@
 		33976F79FE2EA20D94F68B69 /* ContinuousGlucoseChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33976B66D7A581F01631AE52 /* ContinuousGlucoseChartData.swift */; };
 		4322034123CC773F009840DD /* UARTActionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4322033F23CC773F009840DD /* UARTActionCollectionViewCell.swift */; };
 		4322034223CC773F009840DD /* UARTActionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4322034023CC773F009840DD /* UARTActionCollectionViewCell.xib */; };
-		4325A6B0247FC60F007A8868 /* EOL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4325A6AF247FC60F007A8868 /* EOL.swift */; };
 		432DCD53244E5FEE00C6828F /* RSSI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432DCD52244E5FEE00C6828F /* RSSI.swift */; };
 		433A90092451AA1900107822 /* SliderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A90072451AA1900107822 /* SliderTableViewCell.swift */; };
 		433A900A2451AA1900107822 /* SliderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 433A90082451AA1900107822 /* SliderTableViewCell.xib */; };
@@ -536,7 +535,6 @@
 		019985E923DF1EED000CDCB6 /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
 		019985EC23E0622B000CDCB6 /* UARTLoggerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTLoggerViewController.swift; sourceTree = "<group>"; };
 		019985ED23E0622B000CDCB6 /* UARTLoggerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTLoggerViewController.xib; sourceTree = "<group>"; };
-		019985F023E07CFB000CDCB6 /* XMLDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLDocument.swift; sourceTree = "<group>"; };
 		01A1B76523CF13A50062FADC /* UARTNewCommandViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTNewCommandViewController.swift; sourceTree = "<group>"; };
 		01A1B76623CF13A50062FADC /* UARTNewCommandViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTNewCommandViewController.xib; sourceTree = "<group>"; };
 		01A1B76C23CF43590062FADC /* UART.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = UART.xcassets; sourceTree = "<group>"; };
@@ -626,7 +624,6 @@
 		01E2B57424ADCE4F00D22FB1 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		01E2B57624ADF8BD00D22FB1 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		01E5910823DB3BC4008F15A4 /* QuickError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickError.swift; sourceTree = "<group>"; };
-		01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosList.swift; sourceTree = "<group>"; };
 		01F66FC424E6C60B0065C703 /* ContextMenuBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuBuilder.swift; sourceTree = "<group>"; };
 		01F66FE824EA067A0065C703 /* AddSiriShortcutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSiriShortcutTableViewCell.swift; sourceTree = "<group>"; };
 		01F94C5524BDC2A200D34EC4 /* UARTMacroWaitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacroWaitCell.swift; sourceTree = "<group>"; };
@@ -639,6 +636,8 @@
 		01FBC5122408132800B1056B /* DFUDeviceInfoSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUDeviceInfoSection.swift; sourceTree = "<group>"; };
 		01FBC5142408158F00B1056B /* CBPeripheralState+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CBPeripheralState+Ext.swift"; sourceTree = "<group>"; };
 		01FBC51624081A1C00B1056B /* DFUFirmwareSizeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFirmwareSizeSection.swift; sourceTree = "<group>"; };
+		01FD05F124F9373B003DE51D /* MacrosElementCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacrosElementCoder.swift; sourceTree = "<group>"; };
+		01FD05F724F93FE0003DE51D /* MacrosElementCoderCoderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacrosElementCoderCoderTests.swift; sourceTree = "<group>"; };
 		01FEB0FC23969BD1000767C1 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		20027B07233E116600A0B5ED /* StrideSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrideSection.swift; sourceTree = "<group>"; };
 		20029FFF231FAFD100C43E06 /* PeripheralManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralManager.swift; sourceTree = "<group>"; };
@@ -747,7 +746,6 @@
 		400375E31A4FA0869A2465C1 /* Pods_UART.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UART.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4322033F23CC773F009840DD /* UARTActionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTActionCollectionViewCell.swift; sourceTree = "<group>"; };
 		4322034023CC773F009840DD /* UARTActionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTActionCollectionViewCell.xib; sourceTree = "<group>"; };
-		4325A6AF247FC60F007A8868 /* EOL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EOL.swift; sourceTree = "<group>"; };
 		4325A6B2247FCBE6007A8868 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		432DCD52244E5FEE00C6828F /* RSSI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSI.swift; sourceTree = "<group>"; };
 		433A90072451AA1900107822 /* SliderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderTableViewCell.swift; sourceTree = "<group>"; };
@@ -1098,6 +1096,7 @@
 		016102A124F5303F00A184B2 /* PublicModels */ = {
 			isa = PBXGroup;
 			children = (
+				0124A52424F8EB3C00039E1C /* Macros */,
 				016102A824F53A6D00A184B2 /* Command */,
 				016102A424F530DB00A184B2 /* Preset.swift */,
 				0161027824F4F91900A184B2 /* CommandImage.swift */,
@@ -1163,6 +1162,7 @@
 				339761BD5044EFD62D259CB1 /* TextCommandCoder.swift */,
 				01C3B1CB24F7F3740038C9F5 /* EmptyCommandCoder.swift */,
 				339769BC157728376722BCE7 /* CommandDelayCoder.swift */,
+				01FD05F124F9373B003DE51D /* MacrosElementCoder.swift */,
 			);
 			path = CommandCoders;
 			sourceTree = "<group>";
@@ -1221,7 +1221,6 @@
 				014C4E882403F8AE0003E601 /* UARTMacrosTableViewController.swift */,
 				0119609C23F9FDC700A7EF29 /* Views */,
 				01DDD79923EC5941003786ED /* Cell */,
-				01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */,
 			);
 			path = Macro;
 			sourceTree = "<group>";
@@ -1433,6 +1432,7 @@
 		01D4CD3324F3D2F400B48FA8 /* UARTTests */ = {
 			isa = PBXGroup;
 			children = (
+				01FD05F324F93EB6003DE51D /* Model */,
 				01D4CD3424F3D2F400B48FA8 /* UARTTests.swift */,
 				01D4CD3624F3D2F400B48FA8 /* Info.plist */,
 			);
@@ -1442,10 +1442,9 @@
 		01D4CD4224F3D38D00B48FA8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				016102A124F5303F00A184B2 /* PublicModels */,
 				0124A52524F8F59600039E1C /* ModelConverters */,
 				0161028124F4F91900A184B2 /* CoreData */,
-				016102A124F5303F00A184B2 /* PublicModels */,
-				0124A52424F8EB3C00039E1C /* Macros */,
 				0161027324F4F91800A184B2 /* EOL.swift */,
 				01E2B57624ADF8BD00D22FB1 /* Color.swift */,
 			);
@@ -1704,6 +1703,30 @@
 				015F1097240FA06D00FDAC49 /* DFUActionSection.swift */,
 			);
 			path = Sections;
+			sourceTree = "<group>";
+		};
+		01FD05F324F93EB6003DE51D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				01FD05F524F93EC1003DE51D /* CoreData */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		01FD05F524F93EC1003DE51D /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				01FD05F624F93FBF003DE51D /* CommandCoders */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		01FD05F624F93FBF003DE51D /* CommandCoders */ = {
+			isa = PBXGroup;
+			children = (
+				01FD05F724F93FE0003DE51D /* MacrosElementCoderCoderTests.swift */,
+			);
+			path = CommandCoders;
 			sourceTree = "<group>";
 		};
 		04CD51502DA0CA668E27A6C1 /* Pods */ = {
@@ -2161,8 +2184,6 @@
 		4322034523CC9D43009840DD /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4325A6AF247FC60F007A8868 /* EOL.swift */,
-				019985F023E07CFB000CDCB6 /* XMLDocument.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2599,7 +2620,6 @@
 						CreatedOnToolsVersion = 11.6;
 						DevelopmentTeam = P3R8YQEV4L;
 						ProvisioningStyle = Automatic;
-						TestTargetID = 5217F3E11859EE0000F2D5BB;
 					};
 					5217F3E11859EE0000F2D5BB = {
 						DevelopmentTeam = P3R8YQEV4L;
@@ -2895,6 +2915,7 @@
 				016102AD24F53C7D00A184B2 /* MacrosManager.swift in Sources */,
 				33976F72A4454D823D7D0400 /* CommandDelayCoder.swift in Sources */,
 				3397648A908E87EFAB572697 /* MacrosElement.swift in Sources */,
+				01FD05F224F9373B003DE51D /* MacrosElementCoder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2903,6 +2924,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				01D4CD3524F3D2F400B48FA8 /* UARTTests.swift in Sources */,
+				01FD05F924F9452F003DE51D /* MacrosElementCoderCoderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2989,7 +3011,6 @@
 				200973D32341DBAB0091951B /* CyclingCharacteristic.swift in Sources */,
 				0119609E23FA063700A7EF29 /* UARTMacrosHeaderView.swift in Sources */,
 				203D0F0E23325E0A00C0340D /* CyclingTableViewSection.swift in Sources */,
-				4325A6B0247FC60F007A8868 /* EOL.swift in Sources */,
 				0197AFCF2420DAAC00ADF105 /* NotConnectedViewController.swift in Sources */,
 				20D08E28232B940400569587 /* OptionSelectionSection.swift in Sources */,
 				016EF388241632AF005FFA30 /* LoggerTableViewController.swift in Sources */,
@@ -3102,7 +3123,6 @@
 				20B7979823350584001328E1 /* Peripheral+Cycling.swift in Sources */,
 				01355F6924C4F5DC00743CC0 /* UARTColorSelectorCell.swift in Sources */,
 				01FBC51724081A1C00B1056B /* DFUFirmwareSizeSection.swift in Sources */,
-				019985F123E07CFB000CDCB6 /* XMLDocument.swift in Sources */,
 				20B797942334FE1B001328E1 /* Identifier+GlucoseMonitorViewController.swift in Sources */,
 				01A870DA23F40E2F00D9202E /* CheckmarkTableViewCell.swift in Sources */,
 				01DFC55C2420F0AB00AF2EF0 /* ZephyrDFURouter.swift in Sources */,
@@ -3135,7 +3155,6 @@
 				339762F1FAFD0B4E24D99501 /* GlucoseValueList.swift in Sources */,
 				0192BB352428E63C003F7F6B /* DFUFileManager.swift in Sources */,
 				01675E7123F6D1BE00FC0519 /* UARTPresetTableViewCell.swift in Sources */,
-				01E5910B23DECF61008F15A4 /* UARTMacrosList.swift in Sources */,
 				43D34724246D58D70060DBE2 /* UARTShortcutManager.swift in Sources */,
 				33976B2C1CE8194EFAEB7341 /* Randomizer.swift in Sources */,
 				01363A872417E4FA0030821E /* ControlSection.swift in Sources */,
@@ -3222,7 +3241,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox Beta.app/nRF Toolbox Beta";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox Debug.app/nRF Toolbox Debug";
 			};
 			name = Debug;
 		};
@@ -3251,7 +3270,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox Beta.app/nRF Toolbox Beta";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox Debug.app/nRF Toolbox Debug";
 			};
 			name = Release;
 		};
@@ -3549,7 +3568,6 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox Debug.app/nRF Toolbox Debug";
 			};
 			name = Debug;
 		};
@@ -3578,7 +3596,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox Debug.app/nRF Toolbox Debug";
 			};
 			name = Release;
 		};

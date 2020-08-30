@@ -84,12 +84,12 @@ open class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDel
         }
     }
     
-    static let shared = BluetoothManager.init()
+    public static let shared = BluetoothManager.init()
     
     //MARK: - Delegate Properties
     var delegate: BluetoothManagerDelegate?
     var macroPlayerDelegate: UARTMacroPlayerDelegate?
-    var logger: Logger?
+    open var logger: Logger?
     
     //MARK: - Class Properties
     private let UARTServiceUUID: CBUUID
@@ -190,7 +190,7 @@ open class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDel
      *
      * - parameter aText: text to be sent to the peripheral using Nordic UART Service
      */
-    func send(text aText : String) {
+    open func send(text aText : String) {
 
         guard let _ = bluetoothPeripheral else {
             postponedAction = { [weak self] in
@@ -291,7 +291,7 @@ open class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDel
 
 
     
-    func send(macro: Macros) {
+    open func send(macro: Macros) {
 
         guard let _ = bluetoothPeripheral else {
             postponedAction = { [weak self] in
@@ -305,18 +305,16 @@ open class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDel
         btQueue.async {
             macro.elements.forEach { (element) in
                 switch element {
-                case let command as MacrosCommandContainer:
-                    for _ in 0..<command.repeatCount {
-                        if command.delay > 0 {
-                            usleep(useconds_t(command.delay))
+                case .commandContainer(let container):
+                    for _ in 0..<container.repeatCount {
+                        if container.delay > 0 {
+                            usleep(useconds_t(container.delay))
                         }
-
-                        self.send(command: command.command)
+                        
+                        self.send(command: container.command)
                     }
-                case let pause as MacrosDelay:
-                    usleep(useconds_t(pause.delay * 1000))
-                default:
-                    break
+                case .delay(let ti):
+                    usleep(useconds_t(ti * 1000))
                 }
             }
         }

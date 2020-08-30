@@ -28,9 +28,8 @@
 * POSSIBILITY OF SUCH DAMAGE.
 */
 
-
-
 import Foundation
+import Core
 
 class BloodPressureSection: DetailsTableViewSection<BloodPressureCharacteristic> {
     

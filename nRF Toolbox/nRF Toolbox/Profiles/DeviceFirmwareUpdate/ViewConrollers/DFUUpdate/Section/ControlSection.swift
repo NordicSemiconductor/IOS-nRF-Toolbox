@@ -31,6 +31,7 @@
 
 
 import UIKit
+import Core
 
 extension Identifier where Value == ControlSection.Item {
     static let resume = Identifier<Value>(string: "resume")

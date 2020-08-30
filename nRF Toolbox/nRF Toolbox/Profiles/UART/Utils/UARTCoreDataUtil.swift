@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import UART
 
 class UARTCoreDataUtil {
     
@@ -16,10 +17,10 @@ class UARTCoreDataUtil {
         case all, favorite, notFavorite
     }
     
-    let stack: CoreDataStack
+    let manager: PresetManager
     
-    init(stack: CoreDataStack = .uart) {
-        self.stack = stack
+    init(presetManager: PresetManager = PresetManager()) {
+        self.manager = presetManager
         
         let saved = UserDefaults.standard.bool(forKey: presetsWereSavedKey)
         if saved != true {
@@ -27,43 +28,34 @@ class UARTCoreDataUtil {
         }
     }
     
-    func getPresets(options: PresetFilter) throws -> [UARTPreset] {
-        let request: NSFetchRequest<UARTPreset> = UARTPreset.fetchRequest()
-        
+    func getPresets(options: PresetFilter) throws -> [Preset] {
+        var presets = try manager.loadPresets()
         switch options {
         case .favorite:
-            request.predicate = NSPredicate(format: "isFavorite == YES")
+            presets = presets.filter { $0.isFavorite }
         case .notFavorite:
-            request.predicate = NSPredicate(format: "isFavorite == NO")
-        case .all:
+            presets = presets.filter { !$0.isFavorite }
+        default:
             break
         }
-        
-        let context = stack.viewContext
-        let presets = try context.fetch(request)
         return presets
     }
 }
 
 extension UARTCoreDataUtil {
     private func firstSave() {
-        stack.viewContext.insert(UARTPreset.default)
-        stack.viewContext.insert(UARTPreset.walkman)
-        stack.viewContext.insert(UARTPreset.numbers)
-
-        stack.viewContext.insert(UARTMacro.walkman)
-        stack.viewContext.insert(UARTMacro.numbers)
-        stack.viewContext.insert(UARTMacro.controller)
         
-        try! stack.viewContext.save()
+        try? manager.savePreset(Preset.default)
+        try? manager.savePreset(Preset.numbers)
+        try? manager.savePreset(Preset.walkman)
         
         UserDefaults.standard.set(true, forKey: presetsWereSavedKey)
     }
 }
 
-extension UARTPreset {
-    static var `default`: UARTPreset {
-        UARTPreset(commands: [
+extension Preset {
+    static var `default`: Preset {
+        Preset(commands: [
             DataCommand(data: Data([0x01]), image: .number1),
             DataCommand(data: Data([0x02]), image: .number2),
             DataCommand(data: Data([0x03]), image: .number3),
@@ -76,8 +68,8 @@ extension UARTPreset {
         ], name: "Demo", isFavorite: true)
     }
     
-    static var numbers: UARTPreset {
-        UARTPreset(commands: [
+    static var numbers: Preset {
+        Preset(commands: [
             DataCommand(data: Data([0x01]), image: .number1),
             DataCommand(data: Data([0x02]), image: .number2),
             DataCommand(data: Data([0x03]), image: .number3),
@@ -90,17 +82,17 @@ extension UARTPreset {
         ], name: "Numbers", isFavorite: false)
     }
     
-    static  var walkman: UARTPreset {
-        UARTPreset(commands: [
+    static var walkman: Preset {
+        Preset(commands: [
             TextCommand(text: "Pause", image: .pause),
             TextCommand(text: "Play", image: .play),
             TextCommand(text: "Stop", image: .stop),
             TextCommand(text: "Start", image: .start),
-            EmptyModel(),
+            EmptyCommand(),
             TextCommand(text: "Repeat", image: .repeat),
-            EmptyModel(),
+            EmptyCommand(),
             TextCommand(text: "Rew", image: .rewind),
-            EmptyModel()
+            EmptyCommand()
         ], name: "Walkman", isFavorite: true)
     }
     

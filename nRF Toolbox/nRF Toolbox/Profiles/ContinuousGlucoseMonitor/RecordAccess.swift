@@ -28,7 +28,7 @@
 * POSSIBILITY OF SUCH DAMAGE.
 */
 
-
+import Core 
 
 
 enum BGMOpCode : UInt8 {

@@ -22,7 +22,7 @@ class PresetContextMenuInteraction: UIContextMenuInteraction {
     var preset: Preset?
 }
 
-class PresetListViewController: UICollectionViewController {
+class PresetListViewController: UICollectionViewController, AlertPresenter {
     
     private struct DataSource {
         var favoritePresets: [Preset] = []
@@ -55,7 +55,15 @@ class PresetListViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let presets = presetManager.loadPresets()
+        
+        let presets: [Preset]
+        do {
+            presets = try presetManager.loadPresets()
+        } catch let error {
+            presets = []
+            displayErrorAlert(error: error)
+        }
+        
         dataSource.favoritePresets = presets.filter { $0.isFavorite }
         dataSource.notFavoritePresets = presets.filter { !$0.isFavorite }
         
@@ -112,7 +120,7 @@ class PresetListViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard indexPath.section != 2 else {
-            self.presetDelegate?.didSelectPreset(Preset)
+//            self.presetDelegate?.didSelectPreset(Preset)
             return
         }
         
@@ -181,9 +189,7 @@ extension PresetListViewController: UIContextMenuInteractionDelegate {
                     
                     self.collectionView.deleteItems(at: [ip])
                     
-                    self.coreDataStack.viewContext.delete(preset)
-                    try? self.coreDataStack.viewContext.save()
-                    
+                    try? self.presetManager.removePreset(preset)
                     self.presetDelegate?.presetWasDeleted(preset)
                 }
                 
@@ -199,12 +205,13 @@ extension PresetListViewController: UIContextMenuInteractionDelegate {
         }
     }
     
-    private func toggleAction(_ preset: UARTPreset) -> UIAction {
+    private func toggleAction(_ preset: Preset) -> UIAction {
         let title = preset.isFavorite ? "Remove from favorite" : "Add to favorite"
         let systemIconName = preset.isFavorite ? "star" : "star.fill"
         
         return UIAction(title: title, image: UIImage(systemName: systemIconName)) { [weak self] (_) in
             guard let `self` = self else { return }
+            var preset = preset
             preset.isFavorite.toggle()
             
             if let index = self.dataSource.favoritePresets.firstIndex(of: preset) {
@@ -225,14 +232,14 @@ extension PresetListViewController: UIContextMenuInteractionDelegate {
                 self.collectionView.moveItem(at: atIP, to: toIP)
             }
             
-            try? self.coreDataStack.viewContext.save()
+            try? self.presetManager.savePreset(preset)
             self.collectionView.reloadData()
         }
     }
     
-    private func duplicateAction(_ preset: UARTPreset) -> UIAction {
+    private func duplicateAction(_ preset: Preset) -> UIAction {
         UIAction(title: "Duplicate", image: ModernIcon.duplicateIcon.image) { [unowned self] (_) in
-            let alert = UARTPresetUIUtil().dupplicatePreset(preset, intoContext: self.coreDataStack.viewContext) { (new) in
+            let alert = UARTPresetUIUtil(presetManager: self.presetManager).dupplicatePreset(preset) { (new) in
                 self.dataSource.notFavoritePresets.append(new)
                 self.collectionView.insertItems(at: [IndexPath(item: self.dataSource.notFavoritePresets.count-1, section: 1)])
             }
@@ -241,9 +248,9 @@ extension PresetListViewController: UIContextMenuInteractionDelegate {
         }
     }
     
-    private func renameAction(_ preset: UARTPreset) -> UIAction {
+    private func renameAction(_ preset: Preset) -> UIAction {
         UIAction(title: "Rename", image: ModernIcon.pencil.image) { (_) in
-            let alert = UARTPresetUIUtil().renameAlert(for: preset) { [weak self] in
+            let alert = UARTPresetUIUtil(presetManager: self.presetManager).renameAlert(for: preset) { [weak self] in
                 self?.collectionView.reloadData()
                 self?.presetDelegate?.presetWasRenamed(preset)
             }
@@ -252,13 +259,13 @@ extension PresetListViewController: UIContextMenuInteractionDelegate {
         }
     }
     
-    private func exportAction(_ preset: UARTPreset) -> UIAction {
+    private func exportAction(_ preset: Preset) -> UIAction {
         UIAction(title: "Export", image: ModernIcon.exportIcon.image) { (_) in
             
         }
     }
     
-    private func getIndexPath(for preset: UARTPreset) -> IndexPath? {
+    private func getIndexPath(for preset: Preset) -> IndexPath? {
         dataSource.favoritePresets.firstIndex(of: preset).map { IndexPath(item: $0, section: 0) }
             ?? dataSource.notFavoritePresets.firstIndex(of: preset).map { IndexPath(item: $0, section: 1) }
     }

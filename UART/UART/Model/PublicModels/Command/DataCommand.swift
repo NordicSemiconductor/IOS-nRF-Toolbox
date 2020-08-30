@@ -16,7 +16,7 @@ public struct DataCommand: Command {
         "0x" + data.hexString
     }
     
-    init(data: Data, image: CommandImage) {
+    public init(data: Data, image: CommandImage) {
         self.data = data
         self.icon = image
     }

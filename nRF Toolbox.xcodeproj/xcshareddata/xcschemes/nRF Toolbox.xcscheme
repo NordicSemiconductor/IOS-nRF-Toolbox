@@ -52,16 +52,6 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "01D4CD2C24F3D2F400B48FA8"
-               BuildableName = "UARTTests.xctest"
-               BlueprintName = "UARTTests"
-               ReferencedContainer = "container:nRF Toolbox.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "01D4CD5724F3DA1E00B48FA8"
                BuildableName = "CoreTests.xctest"
                BlueprintName = "CoreTests"
