@@ -34,10 +34,6 @@ import UIKit
 import CoreBluetooth.CBPeripheral
 import Intents
 
-protocol UARTRouter: class {
-    func displayMacros(with preset: Preset)
-}
-
 struct TabBarIcon {
     private var imageName: String
     private var modernIcon: ModernIcon
@@ -74,6 +70,9 @@ class UARTTabBarController: UITabBarController {
     private var emptyView: InfoActionView!
     
     let btManager = BluetoothManager.shared
+    let presetManager = PresetManager()
+    let macrosManager = MacrosManager()
+    
     private lazy var bSettings: InfoActionView.ButtonSettings = ("Connect", { [unowned self] in
         let scanner = PeripheralScanner(services: nil)
         let vc = ConnectionViewController(scanner: scanner)
@@ -82,13 +81,12 @@ class UARTTabBarController: UITabBarController {
         self.present(nc, animated: true, completion: nil)
     })
     
-    private lazy var uartViewController = UARTViewController(bluetoothManager: btManager, uartRouter: self)
-    private lazy var uartMacroViewController = UARTMacrosList(bluetoothManager: btManager)
+    private lazy var uartViewController = UARTViewController(bluetoothManager: btManager, presetManager: self.presetManager, macrosManager: self.macrosManager)
     private lazy var uartLoggerViewController = UARTLoggerViewController(bluetoothManager: btManager)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let viewControllers: [UIViewController] = [uartViewController, uartMacroViewController, uartLoggerViewController, UARTMacrosCollectionViewController()]
+        let viewControllers: [UIViewController] = [uartViewController, uartLoggerViewController, UARTMacrosCollectionViewController()]
         
         setViewControllers(viewControllers, animated: true)
         
@@ -115,6 +113,10 @@ class UARTTabBarController: UITabBarController {
 }
 
 extension UARTTabBarController: BluetoothManagerDelegate {
+    func failed(with error: Error) {
+        
+    }
+    
     func requestDeviceList() {
         bSettings.1()
     }
@@ -179,15 +181,5 @@ extension UARTTabBarController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         navigationItem.title = viewController.navigationItem.title
         navigationItem.rightBarButtonItems = viewController.navigationItem.rightBarButtonItems
-    }
-}
-
-extension UARTTabBarController: UARTRouter {
-    func displayMacros(with preset: Preset) {
-        let newMacroVC = UARTMacrosTableViewController(preset: preset, bluetoothManager: btManager, presentationType: .present)
-        let nc = UINavigationController.nordicBranded(rootViewController: newMacroVC, prefersLargeTitles: false)
-        
-        selectedViewController?.present(nc, animated: true, completion: nil)
-        newMacroVC.macrosDelegate = uartMacroViewController
     }
 }

@@ -190,8 +190,8 @@ public extension UIColor {
 
 // MARK: - System Colors
 extension UIColor {
-    struct NavigationBar {
-        static let barTint: UIColor = {
+    public struct NavigationBar {
+        public static let barTint: UIColor = {
             let dark: UIColor
             if #available(iOS 13.0, *) {
                 dark = .systemBackground
@@ -263,7 +263,7 @@ public extension UIColor {
 extension UIColor {
     typealias RGBA = (Int, Int, Int, CGFloat)
     
-    static func dynamicColor(light: UIColor, dark: UIColor) -> UIColor {
+    public static func dynamicColor(light: UIColor, dark: UIColor) -> UIColor {
         if #available(iOS 13.0, *) {
             return UIColor { (traitCollection) -> UIColor in
                 traitCollection.userInterfaceStyle == .dark ? dark : light

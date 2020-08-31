@@ -15,7 +15,35 @@ public struct Macros {
     
     var macrosObject: MacrosObject?
     
+    public init(elements: [MacrosElement], name: String, color: Color) {
+        self.elements = elements
+        self.name = name
+        self.color = color
+        self.macrosObject = nil 
+    }
+    
+    init(elements: [MacrosElement], name: String, color: Color, macrosObject: MacrosObject?) {
+        self.elements = elements
+        self.name = name
+        self.color = color
+        self.macrosObject = macrosObject
+    }
+    
     public static var empty: Macros {
         Macros(elements: [], name: "", color: .nordic, macrosObject: nil)
     }
+}
+
+extension Macros: Equatable {
+    public static func == (lhs: Macros, rhs: Macros) -> Bool {
+        guard let lhsObj = lhs.macrosObject, let rhsObj = rhs.macrosObject else {
+            return lhs.name == rhs.name &&
+                lhs.color == rhs.color &&
+                lhs.elements == rhs.elements
+        }
+        
+        return lhsObj == rhsObj
+    }
+    
+    
 }

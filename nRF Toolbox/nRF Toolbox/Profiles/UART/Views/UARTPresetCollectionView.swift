@@ -28,8 +28,8 @@
 * POSSIBILITY OF SUCH DAMAGE.
 */
 
-
-
+import Core 
+import UART
 import UIKit
 
 class UARTPresetCollectionView: UICollectionView {
@@ -39,7 +39,7 @@ class UARTPresetCollectionView: UICollectionView {
             reloadData()
         }
     }
-    var preset: UARTPreset! {
+    var preset: Preset! {
         didSet {
             reloadData()
         }

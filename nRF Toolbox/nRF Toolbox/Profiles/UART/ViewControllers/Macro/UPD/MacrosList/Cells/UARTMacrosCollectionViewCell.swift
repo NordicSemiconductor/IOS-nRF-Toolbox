@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UART
 
 class UARTMacrosCollectionViewCell: UICollectionViewCell {
     
@@ -15,34 +16,41 @@ class UARTMacrosCollectionViewCell: UICollectionViewCell {
     @IBOutlet private var imageStack: UIStackView!
     @IBOutlet private var macroColorView: UIView!
     
-    private var macro: UARTMacro!
+    private var macro: Macros!
     private var gradientLayer = CAGradientLayer()
     
-    var editMacros: ((UARTMacro) -> ())?
+    var editMacros: ((Macros) -> ())?
     
     @IBAction private func editButtonPressed() {
         editMacros?(macro)
     }
     
-    func applyMacro(_ macro: UARTMacro) {
+    func applyMacro(_ macro: Macros) {
         self.macro = macro
         
         nameLabel.text = macro.name
-        commandsLabel.text = "\(macro.commands.count) commands"
+        commandsLabel.text = "\(macro.elements.count) commands"
         
         imageStack
             .arrangedSubviews.compactMap { $0 as? UIImageView }
             .forEach { $0.image = nil }
         
+        let commands = macro.elements.compactMap { element -> Command? in
+            switch element {
+            case .commandContainer(let command):
+                return command.command
+            default:
+                return nil
+            }
+        }
+        
         zip(
-            macro.commands.prefix(3),
+            commands.prefix(3),
             imageStack.arrangedSubviews.compactMap { $0 as? UIImageView }
         )
         .forEach {
-            $0.1.image = $0.0.command.image
+            $0.1.image = $0.0.image
         }
-        
-//        macroColorView.backgroundColor = macro.color.color
         
         if macroColorView.layer.sublayers?.contains(gradientLayer) != true {
             macroColorView.layer.insertSublayer(gradientLayer, at: 0)

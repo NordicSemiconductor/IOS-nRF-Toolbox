@@ -7,6 +7,18 @@
 //
 
 import UIKit
+import UART
+
+private extension Command {
+    var typeName: String {
+        switch self {
+        case is TextCommand: return "Text Command"
+        case is DataCommand: return "Data Command"
+        case is EmptyCommand: return "Empty Command"
+        default: return ""
+        }
+    }
+}
 
 class UARTMacroCommandCell: UITableViewCell {
     @IBOutlet var icon: UIImageView!
@@ -19,7 +31,7 @@ class UARTMacroCommandCell: UITableViewCell {
     var expandAction: ((UIButton) -> ())?
     var deleteAction: ((UIButton) -> ())?
     
-    func apply(_ command: UARTCommandModel) {
+    func apply(_ command: Command) {
         icon.image = command.image
         title.text = command.title
         commandDescription.text = command.typeName

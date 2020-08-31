@@ -7,12 +7,13 @@
 //
 
 import Foundation
+import UART
 
 class UARTMacrosBuilder: UARTCommandSendManager {
-    var commands: [UARTCommandModel] = []
+    var commands: [Command] = []
     
-    func send(command aCommand: UARTCommandModel) {
-        guard !(aCommand is EmptyModel) else {
+    func send(command aCommand: Command) {
+        guard !(aCommand is EmptyCommand) else {
             return 
         }
         commands.append(aCommand)

@@ -45,21 +45,21 @@ extension Color: RawRepresentable {
 }
 
 extension Color: CaseIterable {
-    static let red = Color(rawValue: .red)!
-    static let flame = Color(rawValue: .flame)!
-    static let orange = Color(rawValue: .orange)!
-    static let yellow = Color(rawValue: .yellow)!
-    static let green = Color(rawValue: .green)!
-    static let lake = Color(rawValue: .lake)!
-    static let blue = Color(rawValue: .blue)!
-    static let deepBlue1 = Color(rawValue: .deepBlue1)!
-    static let deepBlue2 = Color(rawValue: .deepBlue2)!
-    static let purple1 = Color(rawValue: .purple1)!
-    static let purple2 = Color(rawValue: .purple2)!
-    static let rose = Color(rawValue: .rose)!
-    static let grey1 = Color(rawValue: .grey1)!
-    static let grey2 = Color(rawValue: .grey2)!
-    static let nordic = Color(rawValue: .nordic)!
+    public static let red = Color(rawValue: .red)!
+    public static let flame = Color(rawValue: .flame)!
+    public static let orange = Color(rawValue: .orange)!
+    public static let yellow = Color(rawValue: .yellow)!
+    public static let green = Color(rawValue: .green)!
+    public static let lake = Color(rawValue: .lake)!
+    public static let blue = Color(rawValue: .blue)!
+    public static let deepBlue1 = Color(rawValue: .deepBlue1)!
+    public static let deepBlue2 = Color(rawValue: .deepBlue2)!
+    public static let purple1 = Color(rawValue: .purple1)!
+    public static let purple2 = Color(rawValue: .purple2)!
+    public static let rose = Color(rawValue: .rose)!
+    public static let grey1 = Color(rawValue: .grey1)!
+    public static let grey2 = Color(rawValue: .grey2)!
+    public static let nordic = Color(rawValue: .nordic)!
     
     public static var allCases: [Color] {
         [.red, .flame, .orange, .yellow, .green, .lake, .blue, .deepBlue1, .deepBlue2, .purple1, .purple2, .rose, .grey1, .grey2, .nordic]

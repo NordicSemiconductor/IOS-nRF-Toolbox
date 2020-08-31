@@ -7,14 +7,15 @@
 //
 
 import UIKit
+import UART
 
 protocol UARTPresetDelegate {
-    func save(preset: UARTPreset)
-    func saveAs(preset: UARTPreset)
-    func toggleFavorite(preset: UARTPreset)
-    func export(preset: UARTPreset)
-    func removeFromQuickAccess(preset: UARTPreset)
-    func rename(preset: UARTPreset)
+    func save(preset: Preset)
+    func saveAs(preset: Preset)
+    func toggleFavorite(preset: Preset)
+    func export(preset: Preset)
+    func removeFromQuickAccess(preset: Preset)
+    func rename(preset: Preset)
 }
 
 class UARTPresetCollectionViewCell: UICollectionViewCell {
@@ -22,7 +23,7 @@ class UARTPresetCollectionViewCell: UICollectionViewCell {
     weak var viewController: UIViewController?
     var presetDelegate: UARTPresetDelegate?
     
-    var preset: UARTPreset! {
+    var preset: Preset! {
         didSet {
             presetCollectionView.preset = preset
             presetCollectionView.reloadData()

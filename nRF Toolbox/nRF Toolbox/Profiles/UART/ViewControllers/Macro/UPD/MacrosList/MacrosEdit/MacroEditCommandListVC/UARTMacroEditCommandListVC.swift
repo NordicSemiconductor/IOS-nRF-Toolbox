@@ -7,52 +7,42 @@
 //
 
 import UIKit
+import UART
+import Core
 
 protocol UARTMacroEditCommandProtocol: class {
-    func saveMacroUpdate(_ macros: UARTMacro?, commandSet: [UARTMacroElement], name: String, color: UARTColor)
+    func saveMacroUpdate(_ macros: Macros?, commandSet: [MacrosElement], name: String, color: Color)
 }
-
-struct CommandWrapper {
-    var element: UARTMacroCommandWrapper
-    var expanded: Bool = true
-    var repeatEnabled: Bool = true
-    var timeIntervalEnabled: Bool = true
-}
-
-private protocol SectionDescriptor { }
-extension UARTMacroTimeInterval: SectionDescriptor { }
-extension CommandWrapper: SectionDescriptor { }
 
 class UARTMacroEditCommandListVC: UITableViewController {
+    enum SectionDescriptor {
+        case delay(TimeInterval)
+        case command(MacrosCommandContainer, Bool)
+    }
     
-    let macros: UARTMacro?
+    var macros: Macros?
+    var elements: [SectionDescriptor]
     
     weak var editCommandDelegate: UARTMacroEditCommandProtocol?
     
-    private var elements: [SectionDescriptor]
     private var headerView: ActionHeaderView!
     
     private var name: String?
-    private var color: UARTColor?
+    private var color: Color?
     
     private var postponedAction: (() -> ())?
+    
+    private var sourceIndexPath: IndexPath?
+    private var snapshot: UIView?
 
-    init(macros: UARTMacro?) {
+    init(macros: Macros?) {
         self.macros = macros
-        self.elements = macros?.elements.compactMap {
-            switch $0 {
-            case let c as UARTMacroCommandWrapper:
-                return CommandWrapper(element: c, expanded: c.repeatCount > 1)
-            case let ti as UARTMacroTimeInterval:
-                return ti
-            default:
-                return nil
-            }
-        } ?? []
         
         self.name = macros?.name
-        self.color = macros?.color
+        self.color = macros?.color ?? Color.nordic
 
+        self.elements = macros?.elements.map { self.map(macrosElement: $0) } ?? []
+        
         if #available(iOS 13, *) {
             super.init(style: .insetGrouped)
         } else {
@@ -60,21 +50,15 @@ class UARTMacroEditCommandListVC: UITableViewController {
         }
     }
     
-    init(commonds: [UARTMacroElement]) {
-        self.elements = commonds.compactMap {
-            switch $0 {
-            case let c as UARTMacroCommandWrapper:
-                return CommandWrapper(element: c, expanded: c.repeatCount > 1)
-            case let command as UARTCommandModel:
-                return CommandWrapper(element: UARTMacroCommandWrapper(command: command), expanded: false)
-            case let ti as UARTMacroTimeInterval:
-                return ti
-            default:
-                return nil
-            }
+    init(commands: [Command]) {
+        let containers = commands.map { MacrosCommandContainer(command: $0) }
+        self.elements = containers.map {
+            SectionDescriptor.command($0, false)
         }
         
-        self.macros = nil
+        self.macros = .empty
+        self.macros?.elements = containers.map { MacrosElement.commandContainer($0) }
+        
         self.color = nil
         self.name = nil
         
@@ -99,9 +83,6 @@ class UARTMacroEditCommandListVC: UITableViewController {
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressed(sender:)))
         tableView.addGestureRecognizer(longPress)
     }
-    
-    private var sourceIndexPath: IndexPath?
-    private var snapshot: UIView?
     
     @objc
     func longPressed(sender: UILongPressGestureRecognizer) {
@@ -184,9 +165,9 @@ class UARTMacroEditCommandListVC: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         switch elements[indexPath.section] {
-        case let e as CommandWrapper:
-            return self.tableView(tableView, commandCellForRowAt: indexPath, command: e)
-        case let ti as UARTMacroTimeInterval:
+        case .command(let element, let expanded):
+            return self.tableView(tableView, commandCellForRowAt: indexPath, command: element)
+        case .delay(let ti):
             return self.tableView(tableView, timeIntervalCellForRowAt: indexPath, timeInterval: ti)
         default:
             SystemLog.fault("Unknown command type", category: .app)
@@ -201,6 +182,19 @@ class UARTMacroEditCommandListVC: UITableViewController {
     
 }
 
+//MARK: - Private methods
+extension UARTMacroEditCommandListVC {
+    private func map(macrosElement: MacrosElement) -> SectionDescriptor {
+        switch macrosElement {
+        case .commandContainer(let container):
+            return .command(container, container.repeatCount > 1 && container.delay > 0)
+        case .delay(let ti):
+            return .delay(ti)
+        }
+    }
+}
+
+//MARK: - Actions
 extension UARTMacroEditCommandListVC {
     @IBAction private func save() {
         guard let name = self.name, let color = self.color else {
@@ -212,11 +206,12 @@ extension UARTMacroEditCommandListVC {
         }
         
         
-        let commands: [UARTMacroElement] = self.elements.compactMap {
+        let commands: [MacrosElement] = self.elements.map {
             switch $0 {
-            case let ti as UARTMacroTimeInterval: return ti
-            case let command as CommandWrapper: return command.element
-            default: return nil
+            case .command(let container, _):
+                return .commandContainer(container)
+            case .delay(let ti):
+                return .delay(ti)
             }
         }
         
@@ -282,7 +277,7 @@ extension UARTMacroEditCommandListVC {
         }
         
         let delay = UIAlertAction(title: "Delay", style: .default) { [weak self] (_) in
-            self?.elements.append(UARTMacroTimeInterval(milliseconds: 100))
+            self?.elements.append(.delay(0.1))
             let index = (self?.elements.count).flatMap { $0 - 1 }
             self?.tableView.insertSections([index ?? 0], with: .automatic)
         }
@@ -298,10 +293,10 @@ extension UARTMacroEditCommandListVC {
 
 //MARK: - Table View
 extension UARTMacroEditCommandListVC {
-    private func tableView(_ tableView: UITableView, timeIntervalCellForRowAt indexPath: IndexPath, timeInterval: UARTMacroTimeInterval) -> UITableViewCell {
+    private func tableView(_ tableView: UITableView, timeIntervalCellForRowAt indexPath: IndexPath, timeInterval: TimeInterval) -> UITableViewCell {
         let cell = tableView.dequeueCell(ofType: UARTMacroWaitCell.self)
         
-        let milliseconds = Int(timeInterval.timeInterval * 1000)
+        let milliseconds = Int(timeInterval * 1000)
         cell.intervalLabel.text = "\(milliseconds) milliseconds"
         cell.presentController = { [weak self] label, controller in
             self?.setupAndShowStepper(controller, on: label)
@@ -309,8 +304,7 @@ extension UARTMacroEditCommandListVC {
         }
         
         cell.timeIntervalChanged = { [weak cell, unowned self] ti in
-            
-            (self.elements[indexPath.section] as! UARTMacroTimeInterval).timeInterval = Double(ti) / 1000.0
+            self.elements[indexPath.section] = .delay(Double(ti) / 1000.0)
             cell?.intervalLabel.text = "\(ti) milliseconds"
         }
         
@@ -321,27 +315,42 @@ extension UARTMacroEditCommandListVC {
         return cell
     }
     
-    private func tableView(_ tableView: UITableView, commandCellForRowAt indexPath: IndexPath, command: CommandWrapper) -> UITableViewCell {
+    private func tableView(_ tableView: UITableView, commandCellForRowAt indexPath: IndexPath, command: MacrosCommandContainer) -> UITableViewCell {
 
         let cell = tableView.dequeueCell(ofType: UARTMacroCommandWrapperCell.self)
 
         cell.timeIntervalCanged = { [weak self] val in
-            (self?.elements[indexPath.section] as! CommandWrapper).element.timeInterval = val
+            guard let `self` = self else { return }
+            guard case .command(var container, let exp) = self.elements[indexPath.section] else {
+                return
+            }
+            
+            container.delay = val
+            
+            self.elements[indexPath.section] = .command(container, exp)
         }
 
         cell.repeatCountCanged = { [weak self] val in
-            (self?.elements[indexPath.section] as! CommandWrapper).element.repeatCount = val
+            guard let `self` = self else { return }
+            guard case .command(var container, let exp) = self.elements[indexPath.section] else {
+                return
+            }
+            
+            container.repeatCount = val
+            
+            self.elements[indexPath.section] = .command(container, exp)
         }
 
         cell.expandAction = { [weak self] sender in
-            guard var command = self?.elements[indexPath.section] as? CommandWrapper else {
+            
+            guard let `self` = self else { return }
+            guard case .command(var container, let exp) = self.elements[indexPath.section] else {
                 return
             }
+            
+            sender.isHighlighted = exp
 
-            command.expanded.toggle()
-            sender.isHighlighted = command.expanded
-
-            self?.elements[indexPath.section] = command
+            self.elements[indexPath.section] = .command(container, !exp)
             tableView.reloadSections([indexPath.section], with: .automatic)
         }
         
@@ -412,15 +421,15 @@ extension UARTMacroEditCommandListVC: UIPopoverPresentationControllerDelegate {
 }
 
 extension UARTMacroEditCommandListVC: UARTNewCommandDelegate {
-    func createdNewCommand(_ viewController: UARTNewCommandViewController, command: UARTCommandModel, index: Int) {
-        self.elements.append(CommandWrapper(element: UARTMacroCommandWrapper(command: command), expanded: false))
+    func createdNewCommand(_ viewController: UARTNewCommandViewController, command: Command, index: Int) {
+        self.elements.append(.command(MacrosCommandContainer(command: command), false))
         self.tableView.insertSections([elements.count - 1], with: .automatic)
         self.navigationController?.popViewController(animated: true)
     }
 }
 
 extension UARTMacroEditCommandListVC: UARTEditMacrosDelegate {
-    func saveMacrosUpdate(name: String, color: UARTColor) {
+    func saveMacrosUpdate(name: String, color: Color) {
         self.name = name
         self.color = color
         

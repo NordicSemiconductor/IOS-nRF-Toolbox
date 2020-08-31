@@ -29,7 +29,7 @@
 */
 
 
-
+import Core
 import iOSDFULibrary
 
 extension LogLevel {

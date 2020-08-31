@@ -87,7 +87,7 @@ open class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDel
     public static let shared = BluetoothManager.init()
     
     //MARK: - Delegate Properties
-    var delegate: BluetoothManagerDelegate?
+    public var delegate: BluetoothManagerDelegate?
     var macroPlayerDelegate: UARTMacroPlayerDelegate?
     open var logger: Logger?
     
@@ -127,7 +127,7 @@ open class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDel
      * 
      * - parameter aPeripheral: target peripheral to connect to
      */
-    func connectPeripheral(peripheral aPeripheral : CBPeripheral) {
+    open func connectPeripheral(peripheral aPeripheral : CBPeripheral) {
         delegate?.requestedConnect(peripheral: aPeripheral)
 
         bluetoothPeripheral = aPeripheral
@@ -152,7 +152,7 @@ open class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDel
      * Disconnects or cancels pending connection.
      * The delegate's didDisconnectPeripheral() method will be called when device got disconnected.
      */
-    func cancelPeripheralConnection() {
+    open func cancelPeripheralConnection() {
         guard bluetoothPeripheral != nil else {
             log(withLevel: .warning, andMessage: "Peripheral not set")
             return

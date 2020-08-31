@@ -28,11 +28,12 @@ class UARTMacrosCollectionViewController: UICollectionViewController, AlertPrese
     
     var macros: [Macros] = []
     
-    let macrosManager = MacrosManager
+    let macrosManager: MacrosManager
     let btManager: BluetoothManager
     
     init(bluetoothManager: BluetoothManager = .shared, macrosManager: MacrosManager = MacrosManager()) {
         self.btManager = bluetoothManager
+        self.macrosManager = macrosManager
         super.init(nibName: "UARTMacrosCollectionViewController", bundle: .main)
     }
     
@@ -47,12 +48,7 @@ class UARTMacrosCollectionViewController: UICollectionViewController, AlertPrese
         collectionView.registerCellNib(type: UARTNewMacrosCollectionViewCell.self)
         collectionView.registerViewNib(type: SearchCollectionReusableView.self, ofKind: UICollectionView.elementKindSectionHeader)
         
-        self.macros = fetchMacros()
-    }
-    
-    private func fetchMacros() -> [UARTMacro] {
-        let request: NSFetchRequest<UARTMacro> = UARTMacro.fetchRequest()
-        return try! CoreDataStack.uart.viewContext.fetch(request)
+        self.macros = try! macrosManager.loadMacros()
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -121,15 +117,14 @@ extension UARTMacrosCollectionViewController: UICollectionViewDelegateFlowLayout
 }
 
 extension UARTMacrosCollectionViewController: UARTMacroEditCommandProtocol {
-    func saveMacroUpdate(_ macros: UARTMacro?, commandSet: [UARTMacroElement], name: String, color: UARTColor) {
+    func saveMacroUpdate(_ macros: Macros?, commandSet: [MacrosElement], name: String, color: Color) {
         defer {
             dismsiss()
         }
         
-        guard let macros = macros else {
-            let newMacros = UARTMacro(name: name, color: color, commands: commandSet)
-            self.macros.append(newMacros)
-            tryToSaveContext()
+        guard var macros = macros else {
+            let newMacros = Macros(elements: commandSet, name: name, color: color)
+            self.macros.append(try! macrosManager.save(macros: newMacros))
             collectionView.insertItems(at: [IndexPath(item: self.macros.count - 1, section: 0)])
             return
         }
@@ -142,34 +137,9 @@ extension UARTMacrosCollectionViewController: UARTMacroEditCommandProtocol {
         macros.color = color
         macros.elements = commandSet
         
-        tryToSaveContext()
+        self.macros[index] = try! macrosManager.save(macros: macros)
         
         collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
     }
-    
-    private func tryToSaveContext() {
-        do {
-            try coreDataStack.viewContext.save()
-        } catch let error {
-            displayErrorAlert(error: error)
-        }
-    }
-    
-    
-}
-
-
-// TODO: Complete macros exporter
-@available(iOS 11.0, *)
-extension UARTMacrosCollectionViewController: UICollectionViewDragDelegate {
-    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        let item = macros[indexPath.item]
-        let itemProvider = NSItemProvider(item: item, typeIdentifier: "macro")
-        let dragItem = UIDragItem(itemProvider: itemProvider)
-        dragItem.localObject = item
-        
-        return [dragItem]
-    }
-    
     
 }

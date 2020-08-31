@@ -6,6 +6,7 @@
 //  Copyright © 2020 Nordic Semiconductor. All rights reserved.
 //
 import UIKit
+import Core
 
 class PresetListUtilityCell: UICollectionViewCell {
     enum CellStyle {

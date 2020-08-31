@@ -32,11 +32,11 @@
 
 import UIKit.UIImage
 
-struct ImageWrapper {
-    var modernIcon: ModernIcon
-    var legacyIcon: UIImage?
+public struct ImageWrapper {
+    public var modernIcon: ModernIcon
+    public var legacyIcon: UIImage?
     
-    var image: UIImage? {
+    public var image: UIImage? {
         if #available(iOS 13, *) {
             return modernIcon.image
         } else {
@@ -44,12 +44,12 @@ struct ImageWrapper {
         }
     }
     
-    init(icon: ModernIcon, image: UIImage?) {
+    public init(icon: ModernIcon, image: UIImage?) {
         modernIcon = icon
         legacyIcon = image
     }
     
-    init(icon: ModernIcon, imageName: String) {
+    public init(icon: ModernIcon, imageName: String) {
         modernIcon = icon
         legacyIcon = UIImage(named: imageName)
     }

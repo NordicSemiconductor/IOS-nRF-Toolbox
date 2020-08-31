@@ -68,11 +68,12 @@ class UARTViewController: UIViewController, AlertPresenter {
     
     @IBOutlet private var collectionView: UICollectionView!
     
-    private var presets: [UARTPreset] = []
-    private let coreDataUtil: UARTCoreDataUtil
-    private let coreDataStack: CoreDataStack = .uart
+    private var presets: [Preset] = []
     
-    private weak var router: UARTRouter?
+    private let coreDataUtil: UARTCoreDataUtil
+    private let presetManager: PresetManager
+    private let macrosManager: MacrosManager
+    
     private var activePresetView: UARTPresetCollectionView?
     
     private var commandHandler: UARTCommandSendManager
@@ -101,11 +102,12 @@ class UARTViewController: UIViewController, AlertPresenter {
         }
     }
     
-    init(bluetoothManager: BluetoothManager, uartRouter: UARTRouter, coreDataUtil: UARTCoreDataUtil = UARTCoreDataUtil()) {
+    init(bluetoothManager: BluetoothManager, presetManager: PresetManager, macrosManager: MacrosManager, coreDataUtil: UARTCoreDataUtil = UARTCoreDataUtil()) {
         btManager = bluetoothManager
-        router = uartRouter
         self.coreDataUtil = coreDataUtil
         self.commandHandler = btManager
+        self.presetManager = presetManager
+        self.macrosManager = macrosManager
         super.init(nibName: nil, bundle: .main)
     }
     
@@ -154,8 +156,8 @@ extension UARTViewController {
 }
 
 extension UARTViewController {
-    private func createNewMacros(with commands: [UARTCommandModel]) {
-        let vc = UARTMacroEditCommandListVC(commonds: commands)
+    private func createNewMacros(with commands: [Command]) {
+        let vc = UARTMacroEditCommandListVC(commands: commands)
         vc.editCommandDelegate = self
         let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false)
         present(nc, animated: true, completion: nil)
@@ -163,18 +165,24 @@ extension UARTViewController {
 }
 
 extension UARTViewController: UARTNewCommandDelegate {
-    func createdNewCommand(_ viewController: UARTNewCommandViewController, command: UARTCommandModel, index: Int) {
+    func createdNewCommand(_ viewController: UARTNewCommandViewController, command: Command, index: Int) {
         viewController.dismsiss()
         
         activePresetView?.preset.commands[index] = command
         activePresetView?.reloadData()
-        try! CoreDataStack.uart.viewContext.save()
+        if let preset = activePresetView?.preset {
+            try! presetManager.savePreset(preset)
+        }
     }
     
 }
 
 extension UARTViewController: UARTMacroEditCommandProtocol {
-    func saveMacroUpdate(_ macros: UARTMacro?, commandSet: [UARTMacroElement], name: String, color: UARTColor) {
+    func saveMacroUpdate(_ macros: Macros?, commandSet: [MacrosElement], name: String, color: Color) {
+        /*
+        let macros = Macros
+        
+        
         _ = UARTMacro(name: name, color: color, commands: commandSet)
         do {
             try coreDataStack.viewContext.save()
@@ -183,14 +191,15 @@ extension UARTViewController: UARTMacroEditCommandProtocol {
         }
         
         dismsiss()
+ */
     }
 }
 
 extension UARTViewController: UARTPresetCollectionViewDelegate {
-    func selectedCommand(_ presetView: UARTPresetCollectionView, command: UARTCommandModel, at index: Int) {
+    func selectedCommand(_ presetView: UARTPresetCollectionView, command: Command, at index: Int) {
         activePresetView = presetView
         
-        guard !(command is EmptyModel) else {
+        guard !(command is EmptyCommand) else {
             openPresetEditor(with: command, index: index)
             return
         }
@@ -198,7 +207,7 @@ extension UARTViewController: UARTPresetCollectionViewDelegate {
         commandHandler.send(command: command)
     }
     
-    func longTapAtCommand(_ presetView: UARTPresetCollectionView, command: UARTCommandModel, at index: Int) {
+    func longTapAtCommand(_ presetView: UARTPresetCollectionView, command: Command, at index: Int) {
         openPresetEditor(with: command, index: index)
         
         activePresetView = presetView
@@ -262,7 +271,7 @@ extension UARTViewController: UICollectionViewDelegateFlowLayout {
             return
         }
         
-        let vc = PresetListViewController(inQuickAccess: presets, stack: .uart)
+        let vc = PresetListViewController(inQuickAccess: presets, presetManager: presetManager)
         vc.presetDelegate = self
         let nc = UINavigationController.nordicBranded(rootViewController: vc, prefersLargeTitles: false)
         
@@ -271,7 +280,7 @@ extension UARTViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension UARTViewController: PresetListDelegate {
-    func didSelectPreset(_ preset: UARTPreset) {
+    func didSelectPreset(_ preset: Preset) {
         dismsiss()
         guard !presets.contains(preset) else {
             moveToPreset(preset)
@@ -282,7 +291,7 @@ extension UARTViewController: PresetListDelegate {
         collectionView.reloadData()
     }
     
-    func presetWasDeleted(_ preset: UARTPreset) {
+    func presetWasDeleted(_ preset: Preset) {
         guard let index = presets.firstIndex(of: preset) else {
             return
         }
@@ -291,7 +300,7 @@ extension UARTViewController: PresetListDelegate {
         collectionView.deleteItems(at: [IndexPath(item: index, section: 0)])
     }
     
-    func presetWasRenamed(_ preset: UARTPreset) {
+    func presetWasRenamed(_ preset: Preset) {
         guard let index = presets.firstIndex(of: preset) else {
             return
         }
@@ -299,7 +308,7 @@ extension UARTViewController: PresetListDelegate {
         collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
     }
     
-    private func moveToPreset(_ preset: UARTPreset) {
+    private func moveToPreset(_ preset: Preset) {
         guard let index = presets.firstIndex(of: preset) else {
             return
         }
@@ -320,12 +329,12 @@ extension UARTViewController: PresetListDelegate {
 }
 
 extension UARTViewController: UARTPresetDelegate {
-    func save(preset: UARTPreset) {
+    func save(preset: Preset) {
         
     }
     
-    func saveAs(preset: UARTPreset) {
-        let alert = UARTPresetUIUtil().dupplicatePreset(preset, intoContext: coreDataStack.viewContext) { [weak self] (copy) in
+    func saveAs(preset: Preset) {
+        let alert = UARTPresetUIUtil(presetManager: presetManager).dupplicatePreset(preset) { [weak self] (copy) in
             self?.presets.append(copy)
             self?.collectionView.reloadData()
         }
@@ -333,21 +342,22 @@ extension UARTViewController: UARTPresetDelegate {
         present(alert, animated: true, completion: nil)
     }
     
-    func toggleFavorite(preset: UARTPreset) {
-        preset.isFavorite.toggle()
-        try! coreDataStack.viewContext.save()
+    func toggleFavorite(preset: Preset) {
+        var newPreset = preset
+        newPreset.isFavorite.toggle()
+        try! presetManager.savePreset(newPreset)
     }
     
-    func export(preset: UARTPreset) {
+    func export(preset: Preset) {
         
     }
     
-    func removeFromQuickAccess(preset: UARTPreset) {
+    func removeFromQuickAccess(preset: Preset) {
         
     }
     
-    func rename(preset: UARTPreset) {
-        let alert = UARTPresetUIUtil().renameAlert(for: preset) { [weak self] in
+    func rename(preset: Preset) {
+        let alert = UARTPresetUIUtil(presetManager: presetManager).renameAlert(for: preset) { [weak self] in
             self?.collectionView.reloadData()
         }
         

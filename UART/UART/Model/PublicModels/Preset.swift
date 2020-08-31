@@ -15,6 +15,10 @@ public struct Preset {
     
     var storedObject: PresetObject?
     
+    public var isEmpty: Bool {
+        commands.reduce(true) { $0 && ($1 is EmptyCommand) }
+    }
+    
     public init(commands: [Command], name: String, isFavorite: Bool) {
         self.commands = commands
         self.name = name
