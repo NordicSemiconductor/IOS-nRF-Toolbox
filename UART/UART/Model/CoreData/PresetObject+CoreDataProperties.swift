@@ -13,7 +13,7 @@ import CoreData
 extension PresetObject {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<PresetObject> {
-        return NSFetchRequest<PresetObject>(entityName: "UARTPreset")
+        return NSFetchRequest<PresetObject>(entityName: "PresetObject")
     }
 
     @NSManaged public var commandSet: [NSObject]?

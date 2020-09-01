@@ -13,7 +13,7 @@ import CoreData
 extension MacrosObject {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<MacrosObject> {
-        return NSFetchRequest<MacrosObject>(entityName: "UARTMacro")
+        return NSFetchRequest<MacrosObject>(entityName: "MacrosObject")
     }
 
     @NSManaged public var colorName: String

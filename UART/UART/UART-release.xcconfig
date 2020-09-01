@@ -1,13 +1,14 @@
 //
-//  Config-beta.xcconfig
+//  UART-release.xcconfig
 //  nRF Toolbox
 //
-//  Created by Nick Kibysh on 17/08/2020.
+//  Created by Nick Kibysh on 01/09/2020.
 //  Copyright © 2020 Nordic Semiconductor. All rights reserved.
 //
 
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-PRODUCT_BUNDLE_IDENTIFIER = com.nordicsemi.nRF-Toolbox.debug
-PRODUCT_NAME = nRF Toolbox Debug
+#include "../../Pods/Target Support Files/Pods-UART/Pods-UART.release.xcconfig"
+
+PRODUCT_BUNDLE_IDENTIFIER = $(inherited).UART

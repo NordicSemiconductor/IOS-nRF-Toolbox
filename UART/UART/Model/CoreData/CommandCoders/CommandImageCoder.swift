@@ -9,7 +9,7 @@
 import Foundation
 import Core
 
-class CommandImageCoder: NSObject {
+class CommandImageCoder: NSObject, NSCoding {
     
     private struct Key {
         static let modernName = "CommandImageCoder.Key.modernName"

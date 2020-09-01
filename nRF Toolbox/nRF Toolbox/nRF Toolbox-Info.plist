@@ -100,7 +100,9 @@
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>We use this feature in order to be able to correctly communicate with your bluetooth peripherals, we do not save, log nor send any of the data used and the app will fully function with no internet connection</string>
 	<key>NSHomeKitUsageDescription</key>
-	<string>nRF Toolbox uses HomeKit to showcase the ability to update the HomeKit enabled peripherals' firmware Over the air (OTA DFU)</string>
+	<string>nRF Toolbox uses HomeKit to showcase the ability to update the HomeKit enabled peripherals&apos; firmware Over the air (OTA DFU)</string>
+	<key>NSSiriUsageDescription</key>
+	<string>You can lounch UART Shourtcuts using Siri.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>GT-Eesti-Display-Bold-Italic.ttf</string>

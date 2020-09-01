@@ -10,6 +10,4 @@
 // https://help.apple.com/xcode/#/dev745c5c974
 
 PRODUCT_BUNDLE_IDENTIFIER = com.nordicsemi.nRF-Toolbox
-
 PRODUCT_NAME = nRF Toolbox
-//PRODUCT_MODULE_NAME = nRF_Toolbox

@@ -19,4 +19,8 @@ class PresetObject: NSManagedObject {
         self.isFavorite = isFavorite
         self.commandSet = commands
     }
+    
+    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
+    }
 }

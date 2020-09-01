@@ -9,8 +9,12 @@
 import CoreData
 
 open class CoreDataStack {
-    public init(containerName: String) {
-        persistantContainer = NSPersistentContainer(name: containerName)
+    public init(containerName: String, managedObjectModel: NSManagedObjectModel? = nil) {
+        if let model = managedObjectModel {
+            persistantContainer = NSPersistentContainer(name: containerName, managedObjectModel: model)
+        } else {
+            persistantContainer = NSPersistentContainer(name: containerName)
+        }
         persistantContainer.loadPersistentStores { (storeDescription, error) in
             if let e = error {
                 fatalError(e.localizedDescription)

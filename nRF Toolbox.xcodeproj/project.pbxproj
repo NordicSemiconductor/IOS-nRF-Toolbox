@@ -47,10 +47,10 @@
 		01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */; };
 		014C4E8B2403F9BD0003E601 /* UARTMacroSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E8A2403F9BD0003E601 /* UARTMacroSaver.swift */; };
 		014C4E932404038A0003E601 /* nRF_Toolbox_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E922404038A0003E601 /* nRF_Toolbox_Tests.swift */; };
-		014C4E9E240403A00003E601 /* UARTPresetTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E9C240403A00003E601 /* UARTPresetTest.swift */; };
-		014C4E9F240403A00003E601 /* UARTMacroFileManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E9D240403A00003E601 /* UARTMacroFileManagerTests.swift */; };
 		0151170B240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01511709240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift */; };
 		0151170C240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0151170A240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.xib */; };
+		0151BC9324FE6DC700352EDB /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0151BC9224FE6DC700352EDB /* Configuration.swift */; };
+		0151BC9724FEF5B000352EDB /* UART.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 0151BC9624FEF5B000352EDB /* UART.intentdefinition */; };
 		015F1098240FA06D00FDAC49 /* DFUActionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015F1097240FA06D00FDAC49 /* DFUActionSection.swift */; };
 		015F109B240FA82400FDAC49 /* DFUDocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015F109A240FA82400FDAC49 /* DFUDocumentPicker.swift */; };
 		0161028924F4F91900A184B2 /* EOL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0161027324F4F91800A184B2 /* EOL.swift */; };
@@ -486,10 +486,12 @@
 		014C4E902404038A0003E601 /* nRF Toolbox Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "nRF Toolbox Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		014C4E922404038A0003E601 /* nRF_Toolbox_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nRF_Toolbox_Tests.swift; sourceTree = "<group>"; };
 		014C4E942404038A0003E601 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		014C4E9C240403A00003E601 /* UARTPresetTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTPresetTest.swift; sourceTree = "<group>"; };
-		014C4E9D240403A00003E601 /* UARTMacroFileManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTMacroFileManagerTests.swift; sourceTree = "<group>"; };
 		01511709240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFirmwareSizeSchemeCell.swift; sourceTree = "<group>"; };
 		0151170A240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DFUFirmwareSizeSchemeCell.xib; sourceTree = "<group>"; };
+		0151BC9224FE6DC700352EDB /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		0151BC9424FE6EF600352EDB /* UART-debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "UART-debug.xcconfig"; sourceTree = "<group>"; };
+		0151BC9524FE6F8E00352EDB /* UART-release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "UART-release.xcconfig"; sourceTree = "<group>"; };
+		0151BC9624FEF5B000352EDB /* UART.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = UART.intentdefinition; sourceTree = "<group>"; };
 		015F1097240FA06D00FDAC49 /* DFUActionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUActionSection.swift; sourceTree = "<group>"; };
 		015F109A240FA82400FDAC49 /* DFUDocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUDocumentPicker.swift; sourceTree = "<group>"; };
 		0161027324F4F91800A184B2 /* EOL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EOL.swift; path = "nRF Toolbox/nRF Toolbox/Profiles/UART/Model/EOL.swift"; sourceTree = SOURCE_ROOT; };
@@ -1081,8 +1083,6 @@
 		014C4E9B240403A00003E601 /* UART */ = {
 			isa = PBXGroup;
 			children = (
-				014C4E9C240403A00003E601 /* UARTPresetTest.swift */,
-				014C4E9D240403A00003E601 /* UARTMacroFileManagerTests.swift */,
 			);
 			path = UART;
 			sourceTree = "<group>";
@@ -1350,6 +1350,7 @@
 			isa = PBXGroup;
 			children = (
 				01BC2ED224EE727200F7D499 /* IntentHandler.swift */,
+				0151BC9624FEF5B000352EDB /* UART.intentdefinition */,
 				01BC2ED424EE727200F7D499 /* Info-UARTMacrosExtension.plist */,
 			);
 			path = UARTMacrosExtension;
@@ -1433,6 +1434,8 @@
 				012F703924FD087100019F6F /* Util */,
 				01D4CD2724F3D2F400B48FA8 /* UART.h */,
 				01D4CD2824F3D2F400B48FA8 /* Info.plist */,
+				0151BC9424FE6EF600352EDB /* UART-debug.xcconfig */,
+				0151BC9524FE6F8E00352EDB /* UART-release.xcconfig */,
 			);
 			path = UART;
 			sourceTree = "<group>";
@@ -1548,6 +1551,7 @@
 				436C0ACF2456FD3300B03B61 /* ModernIcon+Const.swift */,
 				436C0AD12456FDD700B03B61 /* ImageWrapper.swift */,
 				300143281CEC59F4008379DF /* ServiceIdentifiers.swift */,
+				0151BC9224FE6DC700352EDB /* Configuration.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -2873,8 +2877,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				014C4E9F240403A00003E601 /* UARTMacroFileManagerTests.swift in Sources */,
-				014C4E9E240403A00003E601 /* UARTPresetTest.swift in Sources */,
 				014C4E932404038A0003E601 /* nRF_Toolbox_Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2883,6 +2885,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0151BC9724FEF5B000352EDB /* UART.intentdefinition in Sources */,
 				01BC2ED324EE727200F7D499 /* IntentHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2947,6 +2950,7 @@
 				01D4CD6E24F3DB9800B48FA8 /* SystemLog.swift in Sources */,
 				01D4CD7724F3E18500B48FA8 /* Bool+Ext.swift in Sources */,
 				01D4CD7424F3DDD200B48FA8 /* Identifiable.swift in Sources */,
+				0151BC9324FE6DC700352EDB /* Configuration.swift in Sources */,
 				01D4CD7E24F3E27F00B48FA8 /* UIColor+Ext.swift in Sources */,
 				01D4CD7324F3DD9B00B48FA8 /* TitledError.swift in Sources */,
 				01D4CD7224F3DD7F00B48FA8 /* CharacteristicReader.swift in Sources */,
@@ -3238,12 +3242,12 @@
 				DEVELOPMENT_TEAM = TQL72QW32W;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = "nRF Toolbox Tests/Info.plist";
+				INFOPLIST_FILE = "nRF Toolbox/nRF Toolbox Tests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "no.nordicsemi.nRF-Toolbox-Tests";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(inherited)-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -3269,12 +3273,12 @@
 				DEVELOPMENT_TEAM = TQL72QW32W;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = "nRF Toolbox Tests/Info.plist";
+				INFOPLIST_FILE = "nRF Toolbox/nRF Toolbox Tests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "no.nordicsemi.nRF-Toolbox-Tests";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(inherited)-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3345,7 +3349,7 @@
 		};
 		01D4CD3D24F3D2F400B48FA8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E7251FAC9E6A5084E857ABBD /* Pods-UART.debug.xcconfig */;
+			baseConfigurationReference = 0151BC9424FE6EF600352EDB /* UART-debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -3370,7 +3374,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = no.nordicsemi.UART;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nordicsemi.uart;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -3384,7 +3388,7 @@
 		};
 		01D4CD3E24F3D2F400B48FA8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6C22BFBCDA9C8D7FC199BAE7 /* Pods-UART.release.xcconfig */;
+			baseConfigurationReference = E7251FAC9E6A5084E857ABBD /* Pods-UART.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -3410,7 +3414,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = no.nordicsemi.UART;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nordicsemi.uart;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -3569,7 +3573,7 @@
 				DEVELOPMENT_TEAM = P3R8YQEV4L;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = CoreTests/Info.plist;
+				INFOPLIST_FILE = Core/CoreTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -3599,7 +3603,7 @@
 				DEVELOPMENT_TEAM = P3R8YQEV4L;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = CoreTests/Info.plist;
+				INFOPLIST_FILE = Core/CoreTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;

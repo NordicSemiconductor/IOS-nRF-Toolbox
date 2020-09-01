@@ -31,8 +31,10 @@ class DataCommandCoder: NSObject, CommandCoding {
     }
     
     func encode(with coder: NSCoder) {
+        let imageCoder = CommandImageCoder(icon: dataCommand.icon)
+        coder.encode(imageCoder, forKey: Key.iconKey)
         coder.encode(dataCommand.data, forKey: Key.dataKey)
-        coder.encode(CommandImageCoder(icon: dataCommand.icon), forKey: Key.iconKey)
+        
     }
     
 }
