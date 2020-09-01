@@ -29,7 +29,7 @@
 */
 
 
-
+import UART
 import UIKit
 
 class UARTPresetTableViewCell: UITableViewCell {
@@ -44,7 +44,7 @@ class UARTPresetTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated) 
     }
     
-    func apply(preset: UARTPreset, delegate: UARTPresetCollectionViewDelegate?) {
+    func apply(preset: Preset, delegate: UARTPresetCollectionViewDelegate?) {
         presetCollectionView.preset = preset
         presetCollectionView.presetDelegate = delegate
     }

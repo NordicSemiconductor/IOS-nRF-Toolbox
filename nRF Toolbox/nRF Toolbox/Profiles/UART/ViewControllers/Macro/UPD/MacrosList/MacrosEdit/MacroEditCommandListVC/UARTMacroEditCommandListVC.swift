@@ -20,8 +20,8 @@ class UARTMacroEditCommandListVC: UITableViewController {
         case command(MacrosCommandContainer, Bool)
     }
     
+    var elements: [SectionDescriptor] = []
     var macros: Macros?
-    var elements: [SectionDescriptor]
     
     weak var editCommandDelegate: UARTMacroEditCommandProtocol?
     
@@ -41,13 +41,13 @@ class UARTMacroEditCommandListVC: UITableViewController {
         self.name = macros?.name
         self.color = macros?.color ?? Color.nordic
 
-        self.elements = macros?.elements.map { self.map(macrosElement: $0) } ?? []
-        
         if #available(iOS 13, *) {
             super.init(style: .insetGrouped)
         } else {
             super.init(style: .grouped)
         }
+        
+        self.elements = macros?.elements.map { self.map(macrosElement: $0) } ?? []
     }
     
     init(commands: [Command]) {
@@ -166,11 +166,9 @@ class UARTMacroEditCommandListVC: UITableViewController {
 
         switch elements[indexPath.section] {
         case .command(let element, let expanded):
-            return self.tableView(tableView, commandCellForRowAt: indexPath, command: element)
+            return self.tableView(tableView, commandCellForRowAt: indexPath, command: element, extended: expanded)
         case .delay(let ti):
             return self.tableView(tableView, timeIntervalCellForRowAt: indexPath, timeInterval: ti)
-        default:
-            SystemLog.fault("Unknown command type", category: .app)
         }
         
     }
@@ -315,7 +313,7 @@ extension UARTMacroEditCommandListVC {
         return cell
     }
     
-    private func tableView(_ tableView: UITableView, commandCellForRowAt indexPath: IndexPath, command: MacrosCommandContainer) -> UITableViewCell {
+    private func tableView(_ tableView: UITableView, commandCellForRowAt indexPath: IndexPath, command: MacrosCommandContainer, extended: Bool) -> UITableViewCell {
 
         let cell = tableView.dequeueCell(ofType: UARTMacroCommandWrapperCell.self)
 
@@ -361,7 +359,7 @@ extension UARTMacroEditCommandListVC {
         weak var `self` = self
         cell.setupAndShowStepper = self?.setupAndShowStepper
 
-        cell.apply(command)
+        cell.apply(command, expanded: extended)
         return cell
     }
     

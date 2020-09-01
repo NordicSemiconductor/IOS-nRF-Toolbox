@@ -32,7 +32,7 @@
 import Core
 import Foundation
 
-extension Identifier: CaseIterable where Value == GlucoseMonitorViewController {
+extension Identifier where Value == GlucoseMonitorViewController {
     static var allCases: [Identifier<GlucoseMonitorViewController>] {
         return [.all, .first, .last]
     }

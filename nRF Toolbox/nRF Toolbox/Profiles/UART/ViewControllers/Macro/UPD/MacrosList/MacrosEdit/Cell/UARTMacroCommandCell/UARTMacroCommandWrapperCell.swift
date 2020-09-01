@@ -8,6 +8,7 @@
 
 import UIKit
 import UART
+import Core
 
 class UARTMacroCommandWrapperCell: UITableViewCell {
 
@@ -17,7 +18,7 @@ class UARTMacroCommandWrapperCell: UITableViewCell {
     }
     
     var model: MacrosCommandContainer!
-    var expanded: Bool
+    var expanded: Bool = false
     
     @IBOutlet private var tvHeightConstraint: NSLayoutConstraint!
     @IBOutlet private var tableView: UITableView!
@@ -29,8 +30,9 @@ class UARTMacroCommandWrapperCell: UITableViewCell {
     var repeatCountCanged: ((Int) -> ())?
     var removeCommand: (() -> ())?
     
-    func apply(_ model: MacrosCommandContainer, expanded: Bool) {
+    func apply(_ model: MacrosCommandContainer, expanded: Bool = false) {
         self.model = model
+        self.expanded = expanded
 
         tvHeightConstraint.constant = expanded
                 ? Constants.utilCellHeight * 2 + Constants.titleHeight
@@ -61,11 +63,10 @@ extension UARTMacroCommandWrapperCell: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let command = model.element.command
         switch indexPath.row {
         case 0:
             let cell = tableView.dequeueCell(ofType: UARTMacroCommandCell.self)
-            cell.apply(command)
+            cell.apply(model.command)
 
             cell.expandAction = self.expandAction
             cell.backgroundColor = nil
@@ -74,9 +75,9 @@ extension UARTMacroCommandWrapperCell: UITableViewDataSource {
 
             return cell
         case 1:
-            return self.tableView(tableView, repeatCellForRowAt: indexPath, command: model)
+            return self.tableView(tableView, repeatCellForRowAt: indexPath, repeatConut: model.repeatCount)
         case 2:
-            return self.tableView(tableView, tiCellForRowAt: indexPath, command: model)
+            return self.tableView(tableView, tiCellForRowAt: indexPath, delay: model.delay)
         default:
             fatalError()
         }
@@ -101,16 +102,14 @@ extension UARTMacroCommandWrapperCell: UITableViewDataSource {
         return cell
     }
 
-    private func tableView(_ tableView: UITableView, tiCellForRowAt indexPath: IndexPath, command: MacrosElement) -> UITableViewCell {
-        
-        guard case .
-        
+    private func tableView(_ tableView: UITableView, tiCellForRowAt indexPath: IndexPath, delay: Int) -> UITableViewCell {
+                
         let cell = tableView.dequeueCell(ofType: UARTMacroRepeatCommandCell.self)
         cell.title.text = "Time Interval"
-        cell.argument.text = "\(command.element.timeInterval) milliseconds"
+        cell.argument.text = "\(delay) milliseconds"
         cell.argument.labelDidPressed = { [weak self] label, controller in
             self?.setupAndShowStepper?(controller, label)
-            controller.stepperSetup = (100, 10_000, command.element.timeInterval, 100)
+            controller.stepperSetup = (100, 10_000, delay, 100)
         }
 
         cell.backgroundColor = nil

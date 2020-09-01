@@ -13,7 +13,7 @@ public enum MacrosElement {
 extension MacrosElement: Equatable {
     public static func == (lhs: MacrosElement, rhs: MacrosElement) -> Bool {
         
-        if case .delay(let lti) = lhs, case .delay(let rti) = rhs {u
+        if case .delay(let lti) = lhs, case .delay(let rti) = rhs {
             return lti == rti
         } else if case .commandContainer(let lCommand) = lhs, case .commandContainer(let rCommand) = rhs {
             return CommandComparator.compare(lCommand: lCommand.command, rCommand: rCommand.command)
