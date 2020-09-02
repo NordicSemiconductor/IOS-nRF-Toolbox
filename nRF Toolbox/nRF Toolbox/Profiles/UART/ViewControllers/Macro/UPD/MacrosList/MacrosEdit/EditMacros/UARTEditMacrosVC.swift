@@ -92,7 +92,8 @@ class UARTEditMacrosVC: UITableViewController, AlertPresenter {
         case 2:
             if #available(iOS 12.0, *) {
                 let cell = tableView.dequeueCell(ofType: AddSiriShortcutTableViewCell.self)
-                cell.shortcutDelegate = self 
+                cell.shortcutDelegate = self
+                cell.apply(name ?? "")
                 return cell
                 
             } else {

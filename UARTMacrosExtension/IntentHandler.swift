@@ -7,6 +7,8 @@
 //
 
 import Intents
+import UIKit
+
 
 class IntentHandler: INExtension {
     

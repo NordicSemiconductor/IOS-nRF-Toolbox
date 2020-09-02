@@ -35,6 +35,9 @@ class UARTMacrosCollectionViewController: UICollectionViewController, AlertPrese
         self.btManager = bluetoothManager
         self.macrosManager = macrosManager
         super.init(nibName: "UARTMacrosCollectionViewController", bundle: .main)
+        
+        tabBarItem = UITabBarItem(title: "Macros", image: TabBarIcon.uartMacros.image, selectedImage: TabBarIcon.uartMacros.filledImage)
+
     }
     
     required init?(coder: NSCoder) {
@@ -49,6 +52,8 @@ class UARTMacrosCollectionViewController: UICollectionViewController, AlertPrese
         collectionView.registerViewNib(type: SearchCollectionReusableView.self, ofKind: UICollectionView.elementKindSectionHeader)
         
         self.macros = try! macrosManager.loadMacros()
+        
+        
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {

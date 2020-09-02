@@ -45,12 +45,14 @@
 		01468B052361A30A00C29E4C /* StepperTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B032361A30A00C29E4C /* StepperTableViewCell.swift */; };
 		01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01468B042361A30A00C29E4C /* StepperTableViewCell.xib */; };
 		01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */; };
-		014C4E8B2403F9BD0003E601 /* UARTMacroSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E8A2403F9BD0003E601 /* UARTMacroSaver.swift */; };
+		014BE3D224FF13FC00CC2572 /* UART.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01D4CD2524F3D2F400B48FA8 /* UART.framework */; };
+		014BE3D324FF13FC00CC2572 /* UART.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 01D4CD2524F3D2F400B48FA8 /* UART.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		014C4E932404038A0003E601 /* nRF_Toolbox_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E922404038A0003E601 /* nRF_Toolbox_Tests.swift */; };
 		0151170B240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01511709240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift */; };
 		0151170C240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0151170A240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.xib */; };
 		0151BC9324FE6DC700352EDB /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0151BC9224FE6DC700352EDB /* Configuration.swift */; };
 		0151BC9724FEF5B000352EDB /* UART.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 0151BC9624FEF5B000352EDB /* UART.intentdefinition */; };
+		0151BC9924FEFF9700352EDB /* Macros+Shortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0151BC9824FEFF9700352EDB /* Macros+Shortcut.swift */; };
 		015F1098240FA06D00FDAC49 /* DFUActionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015F1097240FA06D00FDAC49 /* DFUActionSection.swift */; };
 		015F109B240FA82400FDAC49 /* DFUDocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015F109A240FA82400FDAC49 /* DFUDocumentPicker.swift */; };
 		0161028924F4F91900A184B2 /* EOL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0161027324F4F91800A184B2 /* EOL.swift */; };
@@ -336,7 +338,6 @@
 		4389184124360F7300175A94 /* GlucoseReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4389183F24360F7300175A94 /* GlucoseReading.swift */; };
 		4389184224360F7300175A94 /* GlucoseReadingContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4389184024360F7300175A94 /* GlucoseReadingContext.swift */; };
 		438918442436108E00175A94 /* RecordAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438918432436108E00175A94 /* RecordAccess.swift */; };
-		43D34724246D58D70060DBE2 /* UARTShortcutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D34723246D58D70060DBE2 /* UARTShortcutManager.swift */; };
 		43E2F73F2462E31400912BD6 /* AutoReszableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E2F73E2462E31400912BD6 /* AutoReszableTextView.swift */; };
 		43F837242433FA7C003D88F0 /* BGMActionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F837232433FA7C003D88F0 /* BGMActionSection.swift */; };
 		43F837262433FB1F003D88F0 /* BGMDisplayItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F837252433FB1F003D88F0 /* BGMDisplayItemTableViewCell.swift */; };
@@ -359,6 +360,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		014BE3D424FF13FC00CC2572 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5217F3DA1859EE0000F2D5BB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01D4CD2424F3D2F400B48FA8;
+			remoteInfo = UART;
+		};
 		014C4E952404038A0003E601 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5217F3DA1859EE0000F2D5BB /* Project object */;
@@ -418,6 +426,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		014BE3D624FF13FC00CC2572 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				014BE3D324FF13FC00CC2572 /* UART.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0195DFB524EAFC4300D24BB1 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -482,7 +501,6 @@
 		01468B032361A30A00C29E4C /* StepperTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperTableViewCell.swift; sourceTree = "<group>"; };
 		01468B042361A30A00C29E4C /* StepperTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StepperTableViewCell.xib; sourceTree = "<group>"; };
 		01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalSection.swift; sourceTree = "<group>"; };
-		014C4E8A2403F9BD0003E601 /* UARTMacroSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTMacroSaver.swift; sourceTree = "<group>"; };
 		014C4E902404038A0003E601 /* nRF Toolbox Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "nRF Toolbox Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		014C4E922404038A0003E601 /* nRF_Toolbox_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nRF_Toolbox_Tests.swift; sourceTree = "<group>"; };
 		014C4E942404038A0003E601 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -492,6 +510,7 @@
 		0151BC9424FE6EF600352EDB /* UART-debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "UART-debug.xcconfig"; sourceTree = "<group>"; };
 		0151BC9524FE6F8E00352EDB /* UART-release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "UART-release.xcconfig"; sourceTree = "<group>"; };
 		0151BC9624FEF5B000352EDB /* UART.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = UART.intentdefinition; sourceTree = "<group>"; };
+		0151BC9824FEFF9700352EDB /* Macros+Shortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Macros+Shortcut.swift"; sourceTree = "<group>"; };
 		015F1097240FA06D00FDAC49 /* DFUActionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUActionSection.swift; sourceTree = "<group>"; };
 		015F109A240FA82400FDAC49 /* DFUDocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUDocumentPicker.swift; sourceTree = "<group>"; };
 		0161027324F4F91800A184B2 /* EOL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EOL.swift; path = "nRF Toolbox/nRF Toolbox/Profiles/UART/Model/EOL.swift"; sourceTree = SOURCE_ROOT; };
@@ -783,7 +802,6 @@
 		4389184024360F7300175A94 /* GlucoseReadingContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlucoseReadingContext.swift; sourceTree = "<group>"; };
 		438918432436108E00175A94 /* RecordAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordAccess.swift; sourceTree = "<group>"; };
 		4392FF0123AA6CBE00E6ACEA /* DateFormatter+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Ext.swift"; sourceTree = "<group>"; };
-		43D34723246D58D70060DBE2 /* UARTShortcutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTShortcutManager.swift; sourceTree = "<group>"; };
 		43E2F73E2462E31400912BD6 /* AutoReszableTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoReszableTextView.swift; sourceTree = "<group>"; };
 		43F837232433FA7C003D88F0 /* BGMActionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGMActionSection.swift; sourceTree = "<group>"; };
 		43F837252433FB1F003D88F0 /* BGMDisplayItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGMDisplayItemTableViewCell.swift; sourceTree = "<group>"; };
@@ -828,6 +846,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				014BE3D224FF13FC00CC2572 /* UART.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1137,8 +1156,6 @@
 			isa = PBXGroup;
 			children = (
 				01078F4B24A0C425009A170E /* Extension */,
-				014C4E8A2403F9BD0003E601 /* UARTMacroSaver.swift */,
-				43D34723246D58D70060DBE2 /* UARTShortcutManager.swift */,
 				43645A9D24978A4000231247 /* UARTCoreDataUtil.swift */,
 				01CAF03424CB281F00716C32 /* UARTMacrosBuilder.swift */,
 			);
@@ -1350,6 +1367,7 @@
 			isa = PBXGroup;
 			children = (
 				01BC2ED224EE727200F7D499 /* IntentHandler.swift */,
+				0151BC9824FEFF9700352EDB /* Macros+Shortcut.swift */,
 				0151BC9624FEF5B000352EDB /* UART.intentdefinition */,
 				01BC2ED424EE727200F7D499 /* Info-UARTMacrosExtension.plist */,
 			);
@@ -2484,10 +2502,12 @@
 				01BC2ECC24EE727200F7D499 /* Sources */,
 				01BC2ECD24EE727200F7D499 /* Frameworks */,
 				01BC2ECE24EE727200F7D499 /* Resources */,
+				014BE3D624FF13FC00CC2572 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				014BE3D524FF13FC00CC2572 /* PBXTargetDependency */,
 			);
 			name = UARTMacrosExtension;
 			productName = UARTMacrosExtension;
@@ -2887,6 +2907,7 @@
 			files = (
 				0151BC9724FEF5B000352EDB /* UART.intentdefinition in Sources */,
 				01BC2ED324EE727200F7D499 /* IntentHandler.swift in Sources */,
+				0151BC9924FEFF9700352EDB /* Macros+Shortcut.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3121,7 +3142,6 @@
 				01FEB0FD23969BD1000767C1 /* UIView+Ext.swift in Sources */,
 				20F15C3F2313D606000C5503 /* NoContentViewController.swift in Sources */,
 				0125D5B623F44FE6003A1812 /* UIBarButtonItem+Ext.swift in Sources */,
-				014C4E8B2403F9BD0003E601 /* UARTMacroSaver.swift in Sources */,
 				01BEADCF2418FB1800FC7183 /* DFUUpdateProgressView.swift in Sources */,
 				433A900F2453042900107822 /* LogObserver+DFU.swift in Sources */,
 				01355F6E24C4F97300743CC0 /* CGRect+Ext.swift in Sources */,
@@ -3167,7 +3187,6 @@
 				339762F1FAFD0B4E24D99501 /* GlucoseValueList.swift in Sources */,
 				0192BB352428E63C003F7F6B /* DFUFileManager.swift in Sources */,
 				01675E7123F6D1BE00FC0519 /* UARTPresetTableViewCell.swift in Sources */,
-				43D34724246D58D70060DBE2 /* UARTShortcutManager.swift in Sources */,
 				33976B2C1CE8194EFAEB7341 /* Randomizer.swift in Sources */,
 				01363A872417E4FA0030821E /* ControlSection.swift in Sources */,
 				339765E57CA5E940D960B675 /* ChartDataSection.swift in Sources */,
@@ -3184,6 +3203,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		014BE3D524FF13FC00CC2572 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01D4CD2424F3D2F400B48FA8 /* UART */;
+			targetProxy = 014BE3D424FF13FC00CC2572 /* PBXContainerItemProxy */;
+		};
 		014C4E962404038A0003E601 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5217F3E11859EE0000F2D5BB /* nRF Toolbox */;
@@ -3303,7 +3327,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = "$(inherited)";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -3335,7 +3359,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = "$(inherited)";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -3388,7 +3412,7 @@
 		};
 		01D4CD3E24F3D2F400B48FA8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E7251FAC9E6A5084E857ABBD /* Pods-UART.debug.xcconfig */;
+			baseConfigurationReference = 6C22BFBCDA9C8D7FC199BAE7 /* Pods-UART.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;

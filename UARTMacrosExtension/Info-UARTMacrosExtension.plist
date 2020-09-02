@@ -26,9 +26,11 @@
 		<dict>
 			<key>IntentsRestrictedWhileLocked</key>
 			<array/>
+			<key>IntentsRestrictedWhileProtectedDataUnavailable</key>
+			<array/>
 			<key>IntentsSupported</key>
 			<array>
-				<string>UARTMacrosIntent</string>
+				<string>MacrosIntent</string>
 			</array>
 		</dict>
 		<key>NSExtensionPointIdentifier</key>
