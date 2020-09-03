@@ -16,19 +16,22 @@ class MacrosCommandContainerCoder: NSObject, NSCoding {
     let container: MacrosCommandContainer
     
     func encode(with coder: NSCoder) {
-        coder.encode(container.delay, forKey: Key.delay)
-        coder.encode(container.repeatCount, forKey: Key.repeatCont)
-        coder.encode(container.command, forKey: Key.command)
+        
+        coder.encode(Int32(container.delay), forKey: Key.delay)
+        coder.encode(Int32(container.repeatCount), forKey: Key.repeatCont)
+        coder.encode(CommandCoderMethod.coder(for: container.command), forKey: Key.command)
     }
     
     required init?(coder: NSCoder) {
-        guard let delay = coder.decodeObject(forKey: Key.delay) as? Int,
-            let command = coder.decodeObject(forKey: Key.command) as? Command,
-            let repeatCont = coder.decodeObject(forKey: Key.repeatCont) as? Int else {
-                return nil
+        guard let commandCoder = coder.decodeObject(forKey: Key.command) as? CommandCoding else {
+            fatalError()
+            return nil
         }
         
-        self.container = MacrosCommandContainer(command: command, repeatCount: repeatCont, delay: delay)
+        let delay = coder.decodeInt32(forKey: Key.delay)
+        let repeatCont = coder.decodeInt32(forKey: Key.repeatCont)
+        
+        self.container = MacrosCommandContainer(command: commandCoder.command, repeatCount: Int(repeatCont), delay: Int(delay))
     }
     
     init(container: MacrosCommandContainer) {

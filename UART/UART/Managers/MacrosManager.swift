@@ -43,6 +43,8 @@ open class MacrosManager {
         var newMacros = macros
         newMacros.macrosObject = obj
         
+        try! storage.viewContext.save()
+        
         return newMacros
     }
     

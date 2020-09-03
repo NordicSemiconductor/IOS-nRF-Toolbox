@@ -28,7 +28,7 @@ class UARTMacrosCollectionViewController: UICollectionViewController, AlertPrese
     
     var macros: [Macros] = []
     
-    let macrosManager: MacrosManager
+    let macrosManager: UART.MacrosManager
     let btManager: BluetoothManager
     
     init(bluetoothManager: BluetoothManager = .shared, macrosManager: MacrosManager = MacrosManager()) {
@@ -128,8 +128,8 @@ extension UARTMacrosCollectionViewController: UARTMacroEditCommandProtocol {
         }
         
         guard var macros = macros else {
-            let newMacros = Macros(elements: commandSet, name: name, color: color)
-            self.macros.append(try! macrosManager.save(macros: newMacros))
+            let newMacros = try! macrosManager.save(macros: Macros(elements: commandSet, name: name, color: color))
+            self.macros.append(newMacros)
             collectionView.insertItems(at: [IndexPath(item: self.macros.count - 1, section: 0)])
             return
         }

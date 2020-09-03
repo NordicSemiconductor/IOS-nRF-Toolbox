@@ -14,8 +14,6 @@
 		01135D6224B5B9B000DA0434 /* ArgumentLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01135D6124B5B9B000DA0434 /* ArgumentLabel.swift */; };
 		01135D6424B5F7BC00DA0434 /* UARTIncrementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01135D6324B5F7BC00DA0434 /* UARTIncrementViewController.swift */; };
 		01135D6624B60D6D00DA0434 /* UARTIncrementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01135D6524B60D6D00DA0434 /* UARTIncrementViewController.xib */; };
-		0119609E23FA063700A7EF29 /* UARTMacrosHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0119609D23FA063700A7EF29 /* UARTMacrosHeaderView.swift */; };
-		011960A023FA064100A7EF29 /* UARTMacrosHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0119609F23FA064100A7EF29 /* UARTMacrosHeaderView.xib */; };
 		0124A52324F7F9B300039E1C /* LogCategory+UART.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0124A52224F7F9B300039E1C /* LogCategory+UART.swift */; };
 		0124A52724F8F5A800039E1C /* ModelConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0124A52624F8F5A800039E1C /* ModelConverter.swift */; };
 		0124A52924F8F8CB00039E1C /* PresetConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0124A52824F8F8CB00039E1C /* PresetConverter.swift */; };
@@ -470,8 +468,6 @@
 		01135D6124B5B9B000DA0434 /* ArgumentLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentLabel.swift; sourceTree = "<group>"; };
 		01135D6324B5F7BC00DA0434 /* UARTIncrementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTIncrementViewController.swift; sourceTree = "<group>"; };
 		01135D6524B60D6D00DA0434 /* UARTIncrementViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTIncrementViewController.xib; sourceTree = "<group>"; };
-		0119609D23FA063700A7EF29 /* UARTMacrosHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosHeaderView.swift; sourceTree = "<group>"; };
-		0119609F23FA064100A7EF29 /* UARTMacrosHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTMacrosHeaderView.xib; sourceTree = "<group>"; };
 		0124A52224F7F9B300039E1C /* LogCategory+UART.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogCategory+UART.swift"; sourceTree = "<group>"; };
 		0124A52624F8F5A800039E1C /* ModelConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelConverter.swift; sourceTree = "<group>"; };
 		0124A52824F8F8CB00039E1C /* PresetConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetConverter.swift; sourceTree = "<group>"; };
@@ -922,8 +918,6 @@
 		0119609C23F9FDC700A7EF29 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				0119609D23FA063700A7EF29 /* UARTMacrosHeaderView.swift */,
-				0119609F23FA064100A7EF29 /* UARTMacrosHeaderView.xib */,
 				01135D6124B5B9B000DA0434 /* ArgumentLabel.swift */,
 			);
 			path = Views;
@@ -1242,7 +1236,10 @@
 		01AF928423D1A76100C1BFD6 /* Macro */ = {
 			isa = PBXGroup;
 			children = (
-				01E2B56624AC9FF400D22FB1 /* UPD */,
+				01B5A78324AF452300B0FF97 /* MacrosEdit */,
+				01E2B56B24ACA02500D22FB1 /* Cells */,
+				01E2B56724ACA01600D22FB1 /* UARTMacrosCollectionViewController.swift */,
+				01E2B56824ACA01600D22FB1 /* UARTMacrosCollectionViewController.xib */,
 				0119609C23F9FDC700A7EF29 /* Views */,
 				01DDD79923EC5941003786ED /* Cell */,
 			);
@@ -1276,17 +1273,6 @@
 				01AD26E62395084000F56210 /* ConnectionViewController.swift */,
 			);
 			path = Connection;
-			sourceTree = "<group>";
-		};
-		01B5A78224AF451700B0FF97 /* MacrosList */ = {
-			isa = PBXGroup;
-			children = (
-				01B5A78324AF452300B0FF97 /* MacrosEdit */,
-				01E2B56B24ACA02500D22FB1 /* Cells */,
-				01E2B56724ACA01600D22FB1 /* UARTMacrosCollectionViewController.swift */,
-				01E2B56824ACA01600D22FB1 /* UARTMacrosCollectionViewController.xib */,
-			);
-			path = MacrosList;
 			sourceTree = "<group>";
 		};
 		01B5A78324AF452300B0FF97 /* MacrosEdit */ = {
@@ -1641,14 +1627,6 @@
 				01268AF12421595200E83156 /* NotConnectedViewController */,
 			);
 			path = NotConnectedViewController;
-			sourceTree = "<group>";
-		};
-		01E2B56624AC9FF400D22FB1 /* UPD */ = {
-			isa = PBXGroup;
-			children = (
-				01B5A78224AF451700B0FF97 /* MacrosList */,
-			);
-			path = UPD;
 			sourceTree = "<group>";
 		};
 		01E2B56B24ACA02500D22FB1 /* Cells */ = {
@@ -2791,7 +2769,6 @@
 				5211EFAE18856430007CC40D /* icon-dfu-64.png in Resources */,
 				01675E7223F6D1BE00FC0519 /* UARTPresetTableViewCell.xib in Resources */,
 				20E07B632306975700FCB205 /* GT-Eesti-Display-Regular.ttf in Resources */,
-				011960A023FA064100A7EF29 /* UARTMacrosHeaderView.xib in Resources */,
 				01E2B56F24ACA04600D22FB1 /* UARTMacrosCollectionViewCell.xib in Resources */,
 				5211EFB118856430007CC40D /* icon-hex@2x.png in Resources */,
 				4389183924360D0100175A94 /* LogTableViewCell.xib in Resources */,
@@ -3043,7 +3020,6 @@
 				20F15C432313F821000C5503 /* XibInstantiable.swift in Sources */,
 				43E2F73F2462E31400912BD6 /* AutoReszableTextView.swift in Sources */,
 				200973D32341DBAB0091951B /* CyclingCharacteristic.swift in Sources */,
-				0119609E23FA063700A7EF29 /* UARTMacrosHeaderView.swift in Sources */,
 				203D0F0E23325E0A00C0340D /* CyclingTableViewSection.swift in Sources */,
 				0197AFCF2420DAAC00ADF105 /* NotConnectedViewController.swift in Sources */,
 				20D08E28232B940400569587 /* OptionSelectionSection.swift in Sources */,
