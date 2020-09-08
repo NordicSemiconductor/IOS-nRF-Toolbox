@@ -50,7 +50,6 @@
 		0151170C240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0151170A240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.xib */; };
 		0151BC9324FE6DC700352EDB /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0151BC9224FE6DC700352EDB /* Configuration.swift */; };
 		0151BC9724FEF5B000352EDB /* UART.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 0151BC9624FEF5B000352EDB /* UART.intentdefinition */; };
-		0151BC9924FEFF9700352EDB /* Macros+Shortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0151BC9824FEFF9700352EDB /* Macros+Shortcut.swift */; };
 		015F1098240FA06D00FDAC49 /* DFUActionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015F1097240FA06D00FDAC49 /* DFUActionSection.swift */; };
 		015F109B240FA82400FDAC49 /* DFUDocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015F109A240FA82400FDAC49 /* DFUDocumentPicker.swift */; };
 		0161028924F4F91900A184B2 /* EOL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0161027324F4F91800A184B2 /* EOL.swift */; };
@@ -84,6 +83,7 @@
 		0169B5A023FBD90E00907C1B /* NordicTextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0169B59F23FBD90E00907C1B /* NordicTextFieldCell.xib */; };
 		016EF388241632AF005FFA30 /* LoggerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016EF386241632AF005FFA30 /* LoggerTableViewController.swift */; };
 		016EF389241632AF005FFA30 /* LoggerTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 016EF387241632AF005FFA30 /* LoggerTableViewController.xib */; };
+		017F51F2250270D7001876CE /* Macros+Shortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0151BC9824FEFF9700352EDB /* Macros+Shortcut.swift */; };
 		0180AAC324E16799006FECBA /* UARTMacroCommandWrapperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0180AAC124E16799006FECBA /* UARTMacroCommandWrapperCell.swift */; };
 		0180AAC424E16799006FECBA /* UARTMacroCommandWrapperCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0180AAC224E16799006FECBA /* UARTMacroCommandWrapperCell.xib */; };
 		0192BB352428E63C003F7F6B /* DFUFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0192BB342428E63C003F7F6B /* DFUFileManager.swift */; };
@@ -1053,6 +1053,7 @@
 				01355F6724C4F5DC00743CC0 /* UARTColorSelectorCell.swift */,
 				01355F6824C4F5DC00743CC0 /* UARTColorSelectorCell.xib */,
 				01F66FE824EA067A0065C703 /* AddSiriShortcutTableViewCell.swift */,
+				0151BC9824FEFF9700352EDB /* Macros+Shortcut.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1353,7 +1354,6 @@
 			isa = PBXGroup;
 			children = (
 				01BC2ED224EE727200F7D499 /* IntentHandler.swift */,
-				0151BC9824FEFF9700352EDB /* Macros+Shortcut.swift */,
 				0151BC9624FEF5B000352EDB /* UART.intentdefinition */,
 				01BC2ED424EE727200F7D499 /* Info-UARTMacrosExtension.plist */,
 			);
@@ -2884,7 +2884,6 @@
 			files = (
 				0151BC9724FEF5B000352EDB /* UART.intentdefinition in Sources */,
 				01BC2ED324EE727200F7D499 /* IntentHandler.swift in Sources */,
-				0151BC9924FEFF9700352EDB /* Macros+Shortcut.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3135,6 +3134,7 @@
 				01A870DA23F40E2F00D9202E /* CheckmarkTableViewCell.swift in Sources */,
 				01DFC55C2420F0AB00AF2EF0 /* ZephyrDFURouter.swift in Sources */,
 				43F837262433FB1F003D88F0 /* BGMDisplayItemTableViewCell.swift in Sources */,
+				017F51F2250270D7001876CE /* Macros+Shortcut.swift in Sources */,
 				204485E1233A148700A8A3A3 /* RunningTableViewController.swift in Sources */,
 				01BEADD6241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift in Sources */,
 				203D0F09232F782200C0340D /* CyclingTableViewController.swift in Sources */,

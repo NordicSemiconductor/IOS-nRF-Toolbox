@@ -19,5 +19,5 @@ extension MacrosObject {
     @NSManaged public var colorName: String
     @NSManaged public var commandSet: [NSObject]
     @NSManaged public var name: String
-
+    @NSManaged public var played: Bool
 }

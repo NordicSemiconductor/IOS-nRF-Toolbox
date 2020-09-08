@@ -30,10 +30,9 @@ class MacrosElementContainerCoder: NSObject, NSCoding {
     required init?(coder: NSCoder) {
         if let container = coder.decodeObject(forKey: Key.commandContainer) as? MacrosCommandContainerCoder {
             self.container = .commandContainer(container.container)
-        } else if let ti = coder.decodeObject(forKey: Key.delay) as? TimeInterval {
-            self.container = .delay(ti)
         } else {
-            return nil
+            let ti = coder.decodeDouble(forKey: Key.delay)
+            self.container = .delay(ti)
         }
     }
     

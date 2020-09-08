@@ -15,6 +15,10 @@ public struct Macros {
     
     var macrosObject: MacrosObject?
     
+    public var played: Bool {
+        return macrosObject?.played ?? false
+    }
+    
     public init(elements: [MacrosElement], name: String, color: Color) {
         self.elements = elements
         self.name = name

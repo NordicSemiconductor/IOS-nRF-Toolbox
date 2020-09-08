@@ -4,6 +4,7 @@
         <attribute name="colorName" optional="YES" attributeType="String"/>
         <attribute name="commandSet" optional="YES" attributeType="Transformable"/>
         <attribute name="name" attributeType="String"/>
+        <attribute name="played" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
     </entity>
     <entity name="PresetObject" representedClassName="PresetObject" syncable="YES">
         <attribute name="commandSet" optional="YES" attributeType="Transformable"/>
@@ -12,7 +13,7 @@
     </entity>
     <fetchRequest name="FetchRequest" entity="PresetObject" predicateString="isFavorite == 0"/>
     <elements>
-        <element name="MacrosObject" positionX="-27" positionY="27" width="128" height="88"/>
+        <element name="MacrosObject" positionX="-27" positionY="27" width="128" height="103"/>
         <element name="PresetObject" positionX="-27" positionY="27" width="128" height="88"/>
     </elements>
 </model>

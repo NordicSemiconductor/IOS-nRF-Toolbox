@@ -92,9 +92,9 @@ open class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDel
     open var logger: Logger?
     
     //MARK: - Class Properties
-    private let UARTServiceUUID: CBUUID
-    private let UARTRXCharacteristicUUID: CBUUID
-    private let UARTTXCharacteristicUUID: CBUUID
+    private let uartServiceUUID = CBUUID(string: ServiceIdentifiers.uartServiceUUIDString)
+    private let uartRXCharacteristicUUID = CBUUID(string: ServiceIdentifiers.uartTXCharacteristicUUIDString)
+    private let uartTXCharacteristicUUID = CBUUID(string: ServiceIdentifiers.uartRXCharacteristicUUIDString)
     
     private var centralManager: CBCentralManager
 
@@ -110,13 +110,21 @@ open class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDel
 
     private var postponedAction: (() -> ())?
     
+    private let macrosManager: MacrosManager
+    
     //MARK: - BluetoothManager API
     
     required public init(withManager aManager : CBCentralManager = CBCentralManager()) {
         centralManager = aManager
-        UARTServiceUUID          = CBUUID(string: ServiceIdentifiers.uartServiceUUIDString)
-        UARTTXCharacteristicUUID = CBUUID(string: ServiceIdentifiers.uartTXCharacteristicUUIDString)
-        UARTRXCharacteristicUUID = CBUUID(string: ServiceIdentifiers.uartRXCharacteristicUUIDString)
+        macrosManager = MacrosManager()
+        super.init()
+        
+        centralManager.delegate = self
+    }
+    
+    init(macrosManager: MacrosManager, centralManager: CBCentralManager) {
+        self.centralManager = centralManager
+        self.macrosManager = macrosManager
         super.init()
         
         centralManager.delegate = self
@@ -290,7 +298,9 @@ open class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDel
     }
 
 
-    
+    /// Sends the given macros to the UART characteristic.
+    /// Macros commands are played one by one in respect to their order ard delay between them
+    /// - Parameter macro: macros that will be send to UART peripheral.
     open func send(macro: Macros) {
 
         guard let _ = bluetoothPeripheral else {
@@ -315,6 +325,13 @@ open class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDel
                     }
                 case .delay(let ti):
                     usleep(useconds_t(ti * 1000))
+                }
+            }
+            
+            DispatchQueue.main.async {
+                if macro.macrosObject?.played != true {
+                    macro.macrosObject?.played.toggle()
+                    _ = try? self.macrosManager.save(macros: macro)
                 }
             }
         }
@@ -365,8 +382,8 @@ open class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDel
         bluetoothPeripheral!.delegate = self
         delegate?.didConnectPeripheral(deviceName: peripheral.name)
         log(withLevel: .verbose, andMessage: "Discovering services...")
-        log(withLevel: .debug, andMessage: "peripheral.discoverServices([\(UARTServiceUUID.uuidString)])")
-        peripheral.discoverServices([UARTServiceUUID])
+        log(withLevel: .debug, andMessage: "peripheral.discoverServices([\(uartServiceUUID.uuidString)])")
+        peripheral.discoverServices([uartServiceUUID])
 
         if let action = postponedAction {
             action()
@@ -420,7 +437,7 @@ open class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDel
         log(withLevel: .info, andMessage: "Services discovered")
         
         for aService: CBService in peripheral.services! {
-            if aService.uuid.isEqual(UARTServiceUUID) {
+            if aService.uuid.isEqual(uartServiceUUID) {
                 log(withLevel: .verbose, andMessage: "Nordic UART Service found")
                 log(withLevel: .verbose, andMessage: "Discovering characteristics...")
                 log(withLevel: .debug, andMessage: "peripheral.discoverCharacteristics(nil, for: \(aService.uuid.uuidString))")
@@ -443,12 +460,12 @@ open class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDel
         }
         log(withLevel: .info, andMessage: "Characteristics discovered")
         
-        if service.uuid.isEqual(UARTServiceUUID) {
+        if service.uuid.isEqual(uartServiceUUID) {
             for aCharacteristic : CBCharacteristic in service.characteristics! {
-                if aCharacteristic.uuid.isEqual(UARTTXCharacteristicUUID) {
+                if aCharacteristic.uuid.isEqual(uartTXCharacteristicUUID) {
                     log(withLevel: .verbose, andMessage: "TX Characteristic found")
                     uartTXCharacteristic = aCharacteristic
-                } else if aCharacteristic.uuid.isEqual(UARTRXCharacteristicUUID) {
+                } else if aCharacteristic.uuid.isEqual(uartRXCharacteristicUUID) {
                     log(withLevel: .verbose, andMessage: "RX Characteristic found")
                     uartRXCharacteristic = aCharacteristic
                 }

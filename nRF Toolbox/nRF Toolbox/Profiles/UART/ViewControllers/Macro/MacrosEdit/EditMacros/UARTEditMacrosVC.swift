@@ -19,13 +19,27 @@ class UARTEditMacrosVC: UITableViewController, AlertPresenter {
     
     private var name: String?
     private var color: Color?
+    private var macros: Macros?
     
     weak var editMacrosDelegate: UARTEditMacrosDelegate!
     
+    init(macros: Macros?) {
+        self.macros = macros
+        self.name = macros?.name
+        self.color = macros?.color
+
+        if #available(iOS 13, *) {
+            super.init(style: .insetGrouped)
+        } else {
+            super.init(style: .grouped)
+        }
+    }
+
     init(name: String?, color: Color?) {
+        self.macros = nil
         self.name = name
         self.color = color
-        
+
         if #available(iOS 13, *) {
             super.init(style: .insetGrouped)
         } else {
@@ -59,7 +73,11 @@ class UARTEditMacrosVC: UITableViewController, AlertPresenter {
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        if case .some = macros {
+            return 3
+        } else {
+            return 2
+        }
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -93,7 +111,7 @@ class UARTEditMacrosVC: UITableViewController, AlertPresenter {
             if #available(iOS 12.0, *) {
                 let cell = tableView.dequeueCell(ofType: AddSiriShortcutTableViewCell.self)
                 cell.shortcutDelegate = self
-                cell.apply(name ?? "")
+                cell.apply(macros!)
                 return cell
                 
             } else {
@@ -151,11 +169,11 @@ extension UARTEditMacrosVC: INUIAddVoiceShortcutButtonDelegate {
 @available(iOS 12.0, *)
 extension UARTEditMacrosVC: INUIAddVoiceShortcutViewControllerDelegate {
     func addVoiceShortcutViewController(_ controller: INUIAddVoiceShortcutViewController, didFinishWith voiceShortcut: INVoiceShortcut?, error: Error?) {
-        
+        controller.dismsiss()
     }
     
     func addVoiceShortcutViewControllerDidCancel(_ controller: INUIAddVoiceShortcutViewController) {
-        
+        controller.dismsiss()
     }
     
     

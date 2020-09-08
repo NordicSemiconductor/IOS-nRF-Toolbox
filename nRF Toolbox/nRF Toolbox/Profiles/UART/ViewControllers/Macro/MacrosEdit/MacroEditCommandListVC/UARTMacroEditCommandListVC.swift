@@ -217,7 +217,13 @@ extension UARTMacroEditCommandListVC {
     }
     
     @IBAction private func editMacros() {
-        let vc = UARTEditMacrosVC(name: name, color: color)
+        let vc: UARTEditMacrosVC
+        if let macros = self.macros {
+            vc = UARTEditMacrosVC(macros: macros)
+        } else {
+            vc = UARTEditMacrosVC(name: name, color: color)
+        }
+        
         vc.editMacrosDelegate = self
         navigationController?.pushViewController(vc, animated: true)
         postponedAction = nil

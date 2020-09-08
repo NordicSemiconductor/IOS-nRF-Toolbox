@@ -38,7 +38,8 @@ open class MacrosManager {
         
         obj.name = macros.name
         obj.colorName = macros.color.name.rawValue
-        obj.commandSet = macros.elements.compactMap { MacrosElementContainerCoder(container: $0) }
+        let elements = macros.elements.compactMap { MacrosElementContainerCoder(container: $0) }
+        obj.commandSet = elements
         
         var newMacros = macros
         newMacros.macrosObject = obj
