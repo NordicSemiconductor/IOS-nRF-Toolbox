@@ -64,11 +64,7 @@ struct TabBarIcon {
     static let uartLogs = TabBarIcon(imageName: "uart_log", modernIcon: ModernIcon.list.add(.dash))
 }
 
-class UARTTabBarController: UITabBarController {
-    
-    private var bufferView: UIView!
-    private var emptyView: InfoActionView!
-    
+class UARTTabBarController: UITabBarController, AlertPresenter {
     let btManager = BluetoothManager.shared
     let presetManager = PresetManager()
     let macrosManager = MacrosManager()
@@ -92,13 +88,7 @@ class UARTTabBarController: UITabBarController {
         
         tabBar.tintColor = .nordicBlue
         navigationItem.title = "UART"
-        
-        bufferView = view
 
-        let emptyView = InfoActionView.instanceWithParams(message: "Device is not connected", buttonSettings: bSettings)
-        emptyView.actionButton.style = .mainAction
-        self.emptyView = emptyView
-//        addEmptyView()
         btManager.delegate = self
         
         delegate = self
@@ -114,7 +104,17 @@ class UARTTabBarController: UITabBarController {
 
 extension UARTTabBarController: BluetoothManagerDelegate {
     func failed(with error: Error) {
-        
+        guard let e = error as? BluetoothManager.Errors else {
+            displayErrorAlert(error: error)
+            return
+        }
+
+        switch e {
+        case .noDeviceConnected:
+            bSettings.1()
+        case .cannotFindPeripheral:
+            break
+        }
     }
     
     func requestDeviceList() {
@@ -122,50 +122,36 @@ extension UARTTabBarController: BluetoothManagerDelegate {
     }
 
     func didConnectPeripheral(deviceName aName: String?) {
+        // TODO: Change device view mode
         uartViewController.deviceName = aName ?? ""
-        emptyView.removeFromSuperview()
     }
     
     func didDisconnectPeripheral() {
-        return
-        addEmptyView()
-        self.emptyView.buttonSettings = bSettings
-        self.emptyView.titleLabel.text = "Device is not connected"
-        
-        uartLoggerViewController.reset()
+        // TODO: should we reset logView?
+//        uartLoggerViewController.reset()
     }
     
     func peripheralReady() {
-        self.emptyView.removeFromSuperview()
+        // TODO: Device view mode should be changed
     }
     
     func peripheralNotSupported() {
-        addEmptyView()
-        self.emptyView.buttonSettings = bSettings
-        self.emptyView.titleLabel.text = "Device is not supported"
+        // TODO: Display notification
+//        self.emptyView.titleLabel.text = "Device is not supported"
     }
 
     func requestedConnect(peripheral: CBPeripheral) {
         dismiss(animated: true) {
-            self.emptyView.buttonSettings = nil
-            self.emptyView.titleLabel.text = "Connecting..."
-            self.emptyView.buttonSettings = ("Cancel", { [unowned self] in
-                self.btManager.cancelPeripheralConnection()
-            })
+            // TODO: change device view
         }
     }
 }
 
 extension UARTTabBarController {
-    private func addEmptyView() {
-        view.addSubview(emptyView)
-        emptyView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        emptyView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        emptyView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        emptyView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        emptyView.translatesAutoresizingMaskIntoConstraints = false
+    private func setDisconnected() {
+
     }
-    
+
     private func requestSiriAuth() {
         
     }

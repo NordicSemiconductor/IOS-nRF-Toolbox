@@ -84,7 +84,7 @@ open class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDel
         }
     }
     
-    public static let shared = BluetoothManager.init()
+    public static let shared = BluetoothManager()
     
     //MARK: - Delegate Properties
     public var delegate: BluetoothManagerDelegate?

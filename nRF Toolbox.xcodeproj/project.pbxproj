@@ -2189,13 +2189,6 @@
 			path = CollectionViewCells;
 			sourceTree = "<group>";
 		};
-		4322034523CC9D43009840DD /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		4325A6B1247FCBDC007A8868 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
@@ -2289,7 +2282,6 @@
 				01675E6A23F6CF8000FC0519 /* Utils */,
 				01AF928E23D1D9EC00C1BFD6 /* Views */,
 				01A1B76B23CF43120062FADC /* Resources */,
-				4322034523CC9D43009840DD /* Model */,
 				4322033E23CC76DC009840DD /* CollectionViewCells */,
 			);
 			path = UART;

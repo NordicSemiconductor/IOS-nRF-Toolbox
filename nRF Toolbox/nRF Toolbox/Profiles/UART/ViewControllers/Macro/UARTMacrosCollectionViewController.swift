@@ -52,8 +52,6 @@ class UARTMacrosCollectionViewController: UICollectionViewController, AlertPrese
         collectionView.registerViewNib(type: SearchCollectionReusableView.self, ofKind: UICollectionView.elementKindSectionHeader)
         
         self.macros = try! macrosManager.loadMacros()
-        
-        
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {

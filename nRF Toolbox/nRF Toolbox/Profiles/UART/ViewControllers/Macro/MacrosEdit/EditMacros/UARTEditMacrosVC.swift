@@ -73,7 +73,7 @@ class UARTEditMacrosVC: UITableViewController, AlertPresenter {
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        if case .some = macros {
+        if #available(iOS 12.0, *), case .some = macros, macros?.played == true {
             return 3
         } else {
             return 2
