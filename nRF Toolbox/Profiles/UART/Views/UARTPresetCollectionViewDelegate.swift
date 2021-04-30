@@ -32,7 +32,7 @@
 
 import UIKit
 
-protocol UARTPresetCollectionViewDelegate: class {
+protocol UARTPresetCollectionViewDelegate: AnyObject {
     func selectedCommand(_ command: UARTCommandModel, at index: Int)
     func longTapAtCommand(_ command: UARTCommandModel, at index: Int)
 }

@@ -32,7 +32,7 @@
 
 import UIKit
 
-protocol UARTNewCommandDelegate: class {
+protocol UARTNewCommandDelegate: AnyObject {
     func createdNewCommand(_ viewController: UARTNewCommandViewController, command: UARTCommandModel, index: Int)
 }
 

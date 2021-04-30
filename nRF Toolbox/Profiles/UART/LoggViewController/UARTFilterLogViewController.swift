@@ -32,7 +32,7 @@
 
 import UIKit
 
-protocol UARTFilterApplierDelegate: class {
+protocol UARTFilterApplierDelegate: AnyObject {
     func setLevels(_ levels: [LogType])
 }
 

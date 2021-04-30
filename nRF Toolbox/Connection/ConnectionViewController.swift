@@ -32,7 +32,7 @@
 
 import UIKit
 
-protocol ConnectionViewControllerDelegate: class {
+protocol ConnectionViewControllerDelegate: AnyObject {
     func requestConnection(to peripheral: Peripheral)
 }
 

@@ -33,7 +33,7 @@
 import UIKit
 import CoreBluetooth.CBPeripheral
 
-protocol UARTRouter: class {
+protocol UARTRouter: AnyObject {
     func displayMacros(with preset: UARTPreset)
 }
 
