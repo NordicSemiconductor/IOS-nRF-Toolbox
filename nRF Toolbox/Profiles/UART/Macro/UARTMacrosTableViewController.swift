@@ -32,7 +32,7 @@
 
 import UIKit
 
-protocol UARTMacroViewControllerDelegate: class {
+protocol UARTMacroViewControllerDelegate: AnyObject {
     func macrosController(_ controller: UARTMacrosTableViewController, created macros: UARTMacro)
     func macrosController(_ controller: UARTMacrosTableViewController, changed macros: UARTMacro)
 }

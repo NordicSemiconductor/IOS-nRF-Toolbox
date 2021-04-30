@@ -38,7 +38,7 @@ enum PresentationType {
     case push, present
 }
 
-protocol DFURouterType: class {
+protocol DFURouterType: AnyObject {
     @discardableResult
     func initialState() -> UIViewController
     

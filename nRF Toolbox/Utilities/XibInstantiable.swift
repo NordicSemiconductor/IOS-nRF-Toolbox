@@ -32,7 +32,7 @@
 
 import UIKit
 
-protocol XibInstantiable: class {
+protocol XibInstantiable: AnyObject {
     static func instance() -> Self
 }
 

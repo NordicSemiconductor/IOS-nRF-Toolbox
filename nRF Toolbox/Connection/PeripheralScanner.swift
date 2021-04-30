@@ -33,7 +33,7 @@
 import CoreBluetooth
 import os.log
 
-protocol PeripheralScannerDelegate: class {
+protocol PeripheralScannerDelegate: AnyObject {
     func statusChanges(_ status: PeripheralScanner.Status)
     func newPeripherals(_ peripherals: [Peripheral], willBeAddedTo existing: [Peripheral])
     func peripherals(_ peripherals: [Peripheral], addedTo old: [Peripheral])

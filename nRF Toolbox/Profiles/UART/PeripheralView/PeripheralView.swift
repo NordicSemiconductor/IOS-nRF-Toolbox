@@ -32,7 +32,7 @@
 
 import UIKit
 
-protocol PeripheralViewDelegate: class {
+protocol PeripheralViewDelegate: AnyObject {
     func requestConnect()
     func requestDisconnect()
 }

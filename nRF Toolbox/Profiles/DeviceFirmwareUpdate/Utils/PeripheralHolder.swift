@@ -32,7 +32,7 @@
 
 import UIKit
 
-protocol PeripheralConnectionCallback: class {
+protocol PeripheralConnectionCallback: AnyObject {
     func peripheralWasSelected(_ peripheral: Peripheral)
 }
 
