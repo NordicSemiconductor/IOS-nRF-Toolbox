@@ -31,7 +31,6 @@
 
 
 import Foundation
-import CorePlot
 
 class HeartRateChartSection: ChartDataSection<HeartRateMeasurementCharacteristic> {
     override var sectionTitle: String { "Heart Rate" }

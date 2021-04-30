@@ -33,7 +33,7 @@
 import UIKit
 import iOSDFULibrary
 
-protocol DFUUpdateRouter: class {
+protocol DFUUpdateRouter: AnyObject {
     func showLogs()
     func done()
 }

@@ -32,7 +32,7 @@
 
 import UIKit
 
-protocol ZephyrDFURouterType: class {
+protocol ZephyrDFURouterType: AnyObject {
     @discardableResult func setInitialState() -> UIViewController
     @discardableResult func goToPeripheralSelector(scanner: PeripheralScanner, presentationType: PresentationType, callback: @escaping (Peripheral) -> ()) -> ConnectionViewController
     @discardableResult func goToFileSelector() -> ZephyrFileSelector
