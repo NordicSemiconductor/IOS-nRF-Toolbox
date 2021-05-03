@@ -3,7 +3,7 @@ PODS:
   - Charts (3.6.0):
     - Charts/Core (= 3.6.0)
   - Charts/Core (3.6.0)
-  - iOSDFULibrary (4.10.1):
+  - iOSDFULibrary (4.10.2):
     - ZIPFoundation (= 0.9.11)
   - McuManager (0.12.0):
     - SwiftCBOR (= 0.4.3)
@@ -14,7 +14,7 @@ PODS:
 DEPENDENCIES:
   - AEXML (~> 4.6)
   - Charts (~> 3.6)
-  - iOSDFULibrary (~> 4.10.1)
+  - iOSDFULibrary (~> 4.10)
   - McuManager (~> 0.12)
   - SWRevealViewController (~> 2.3)
 
@@ -31,12 +31,12 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   AEXML: 2fbb73d8724797ed2cde888731e176fa4d44dd83
   Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
-  iOSDFULibrary: 54dfe3f729cabc2250b0420147d0f864d76e7b54
+  iOSDFULibrary: 1887af06ea6ad34a9ac40880cf5e8147674999b0
   McuManager: 04fbec94566eaaf5508175246b1d5b0c5f1b83dd
   SwiftCBOR: c7d740966575e0fd5d971466de2b6776db3f10c3
   SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
   ZIPFoundation: b1f0de4eed33e74a676f76e12559ab6b75990197
 
-PODFILE CHECKSUM: 886189cf4c5addbc3754f4b102eb11c866fab740
+PODFILE CHECKSUM: 2a2122b5d8bc0c431768a4c31fb8bec2653374c4
 
 COCOAPODS: 1.10.1
