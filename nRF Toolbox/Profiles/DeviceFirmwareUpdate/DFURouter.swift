@@ -31,7 +31,7 @@
 
 
 import UIKit
-import iOSDFULibrary
+import NordicDFU
 import CoreBluetooth
 
 enum PresentationType {

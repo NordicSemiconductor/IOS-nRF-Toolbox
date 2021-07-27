@@ -31,7 +31,7 @@
 
 
 import UIKit
-import iOSDFULibrary
+import NordicDFU
 
 class DocumentPicker<T>: NSObject, UIDocumentPickerDelegate {
     typealias Callback = (Result<T, Error>) -> ()

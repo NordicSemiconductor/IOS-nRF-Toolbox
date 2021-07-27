@@ -31,7 +31,7 @@
 
 
 import UIKit
-import iOSDFULibrary
+import NordicDFU
 
 class FileSelectorViewController<T>: UIViewController, AlertPresenter, UITableViewDataSource, UITableViewDelegate {
     

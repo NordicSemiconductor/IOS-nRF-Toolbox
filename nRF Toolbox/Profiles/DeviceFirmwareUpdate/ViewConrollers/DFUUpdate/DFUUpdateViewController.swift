@@ -31,7 +31,7 @@
 
 
 import UIKit
-import iOSDFULibrary
+import NordicDFU
 
 protocol UpgradeManager {
     func stop()

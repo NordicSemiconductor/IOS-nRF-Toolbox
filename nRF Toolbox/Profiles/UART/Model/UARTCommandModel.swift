@@ -31,6 +31,7 @@
 
 
 import Foundation
+import UIKit.UIImage
 import AEXML
 
 protocol UARTCommandModel: Codable, XMLRepresentable, UARTMacroElement, NordicTextTableViewCellModel {

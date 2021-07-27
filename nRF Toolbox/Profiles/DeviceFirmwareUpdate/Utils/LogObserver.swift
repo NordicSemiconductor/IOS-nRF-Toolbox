@@ -31,7 +31,7 @@
 
 
 import Foundation
-import iOSDFULibrary
+import NordicDFU
 
 extension Notification.Name {
     static let newMessage = Notification.Name("newMessage")
