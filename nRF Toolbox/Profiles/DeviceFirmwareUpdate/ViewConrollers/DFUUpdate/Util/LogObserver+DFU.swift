@@ -31,7 +31,7 @@
 
 
 import Foundation
-import iOSDFULibrary
+import NordicDFU
 
 
 class DFULogObserver: LogObserver, LoggerDelegate {

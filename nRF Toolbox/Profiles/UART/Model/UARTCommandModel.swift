@@ -31,6 +31,7 @@
 
 
 import Foundation
+import UIKit.UIImage
 import AEXML
 
 protocol UARTCommandModel: Codable, XMLRepresentable, UARTMacroElement, NordicTextTableViewCellModel {
@@ -80,7 +81,7 @@ struct TextCommand: UARTCommandModel, Equatable {
         ])
     }
     
-    var title: String { text }
+    var title: String { text.split(whereSeparator: \.isNewline).joined() }
     
     var data: Data {
         text.data(using: .utf8)!

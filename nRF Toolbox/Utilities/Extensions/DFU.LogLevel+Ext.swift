@@ -30,7 +30,7 @@
 
 
 
-import iOSDFULibrary
+import NordicDFU
 
 extension LogLevel {
     var level: LogType {

@@ -116,7 +116,9 @@ class UARTNewCommandViewController: UIViewController {
         let image = CommandImage.allCases[selectedItem]
         
         if typeSegmentControl.selectedSegmentIndex == 0 {
-            let text = textView.text.split(separator: "\n").joined(separator: self.eolSymbol())
+            let slices = textView.text.split(omittingEmptySubsequences: false, whereSeparator: \.isNewline)
+            let text = slices.joined(separator: eolSymbol())
+            
             command = TextCommand(text: text, image: image, eol: self.eolSymbol())
         } else {
             command = DataCommand(data: Data(valueTextField.text!.hexa), image: image)

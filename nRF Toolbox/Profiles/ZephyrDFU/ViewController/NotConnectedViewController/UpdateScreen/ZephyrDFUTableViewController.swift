@@ -32,7 +32,7 @@
 
 import UIKit
 import McuManager
-import iOSDFULibrary
+import NordicDFU
 
 extension FirmwareUpgradeManager: UpgradeManager {
     func stop() {

@@ -33,7 +33,7 @@
 import UIKit
 import Charts
 
-extension DateFormatter: IAxisValueFormatter {
+extension DateFormatter: AxisValueFormatter {
     public func stringForValue(_ value: Double,
                         axis: AxisBase?) -> String {
         let date = Date(timeIntervalSince1970: value)
@@ -131,7 +131,7 @@ class LinearChartTableViewCell: UITableViewCell {
         chartsView.xAxis.axisMaximum = xMax
         chartsView.xAxis.axisMinimum = first
         
-        let set = LineChartDataSet(entries: chartValues, label: nil)
+        let set = LineChartDataSet(entries: chartValues, label: "")
         set.drawCirclesEnabled = false
         set.drawValuesEnabled = false
         

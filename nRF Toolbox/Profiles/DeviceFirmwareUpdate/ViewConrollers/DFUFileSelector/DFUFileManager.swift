@@ -31,7 +31,7 @@
 
 
 import Foundation
-import iOSDFULibrary
+import NordicDFU
 
 protocol DFUPacket {
     var url: URL { get }
