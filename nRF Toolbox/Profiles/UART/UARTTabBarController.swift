@@ -73,7 +73,7 @@ class UARTTabBarController: UITabBarController {
     private var emptyView: InfoActionView!
     let btManager = BluetoothManager()
     private lazy var bSettings: InfoActionView.ButtonSettings = ("Connect", { [unowned self] in
-        let scanner = PeripheralScanner(services: nil)
+        let scanner = PeripheralScanner(services: [CBUUID(string: ServiceIdentifiers.uartServiceUUIDString)])
         let vc = ConnectionViewController(scanner: scanner)
         vc.delegate = self
         let nc = UINavigationController.nordicBranded(rootViewController: vc)

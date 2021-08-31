@@ -184,7 +184,7 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
         
         // Check what kind of Write Type is supported. By default it will try Without Response.
         // If the RX charactereisrtic have Write property the Write Request type will be used.
-        let type: CBCharacteristicWriteType = uartRXCharacteristic.properties.contains(.write) ? .withResponse : .withoutResponse
+        let type: CBCharacteristicWriteType = uartRXCharacteristic.properties.contains(.writeWithoutResponse) ? .withoutResponse : .withResponse
         let mtu  = bluetoothPeripheral?.maximumWriteValueLength(for: type) ?? 20
         
         // The following code will split the text into packets
@@ -231,16 +231,16 @@ class BluetoothManager: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate
         
         // Check what kind of Write Type is supported. By default it will try Without Response.
         // If the RX characteristic have Write property the Write Request type will be used.
-        let type: CBCharacteristicWriteType = uartRXCharacteristic.properties.contains(.write) ? .withResponse : .withoutResponse
+        let type: CBCharacteristicWriteType = uartRXCharacteristic.properties.contains(.writeWithoutResponse) ? .withoutResponse : .withResponse
         let mtu = bluetoothPeripheral?.maximumWriteValueLength(for: type) ?? 20
 
         let data = aCommand.data.split(by: mtu)
-        data.forEach {
-            self.bluetoothPeripheral!.writeValue($0, for: uartRXCharacteristic, type: type)
-        }
         log(withLevel: .verbose, andMessage: "Writing to characteristic: \(uartRXCharacteristic.uuid.uuidString)")
         let typeAsString = type == .withoutResponse ? ".withoutResponse" : ".withResponse"
-        log(withLevel: .debug, andMessage: "peripheral.writeValue(0x\(aCommand.data.hexString), for: \(uartRXCharacteristic.uuid.uuidString), type: \(typeAsString))")
+        data.forEach {
+            self.bluetoothPeripheral!.writeValue($0, for: uartRXCharacteristic, type: type)
+            log(withLevel: .debug, andMessage: "peripheral.writeValue(0x\($0.hexString), for: \(uartRXCharacteristic.uuid.uuidString), type: \(typeAsString))")
+        }
         log(withLevel: .application, andMessage: "Sent command: \(aCommand.title)")
         
     }

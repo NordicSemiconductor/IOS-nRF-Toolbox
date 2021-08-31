@@ -2323,7 +2323,7 @@
 					"$(PROJECT_DIR)",
 					"$(PODS_ROOT)",
 				);
-				MARKETING_VERSION = 5.0.3;
+				MARKETING_VERSION = 5.0.4;
 				NEW_SETTING = "";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -2490,7 +2490,7 @@
 					"$(PROJECT_DIR)",
 					"$(PODS_ROOT)",
 				);
-				MARKETING_VERSION = 5.0.3;
+				MARKETING_VERSION = 5.0.4;
 				NEW_SETTING = "";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -2541,7 +2541,7 @@
 					"$(PROJECT_DIR)",
 					"$(PODS_ROOT)",
 				);
-				MARKETING_VERSION = 5.0.3;
+				MARKETING_VERSION = 5.0.4;
 				NEW_SETTING = "";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
