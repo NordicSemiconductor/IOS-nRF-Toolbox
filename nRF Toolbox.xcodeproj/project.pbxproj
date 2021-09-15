@@ -271,6 +271,8 @@
 		C3CD27D826B0977F0026FE67 /* McuManager in Frameworks */ = {isa = PBXBuildFile; productRef = C3CD27D726B0977F0026FE67 /* McuManager */; };
 		C3CD27DB26B097AB0026FE67 /* NordicDFU in Frameworks */ = {isa = PBXBuildFile; productRef = C3CD27DA26B097AB0026FE67 /* NordicDFU */; };
 		C3CD27DE26B098070026FE67 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = C3CD27DD26B098070026FE67 /* Charts */; };
+		C3E8C1AC26F21FD0000A3737 /* FilterSwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E8C1AB26F21FD0000A3737 /* FilterSwitchView.swift */; };
+		C3E8C1AE26F21FE4000A3737 /* FilterSwitchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3E8C1AD26F21FE3000A3737 /* FilterSwitchView.xib */; };
 		CC7B90D148FC21C73B54BFAB /* NumberFormatter+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7B93FA695799F95D065492 /* NumberFormatter+Ext.swift */; };
 		CC7B91DDFD7EF39F27FEC85A /* CommandImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7B95845343A3D826B220D5 /* CommandImage.swift */; };
 /* End PBXBuildFile section */
@@ -567,6 +569,8 @@
 		52D9BC9D1DD0CB760030E824 /* Data+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Ext.swift"; sourceTree = "<group>"; };
 		7E1B422818A8DF4D006BA1BC /* high.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = high.mp3; sourceTree = "<group>"; };
 		89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3E8C1AB26F21FD0000A3737 /* FilterSwitchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSwitchView.swift; sourceTree = "<group>"; };
+		C3E8C1AD26F21FE3000A3737 /* FilterSwitchView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterSwitchView.xib; sourceTree = "<group>"; };
 		CC7B93FA695799F95D065492 /* NumberFormatter+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NumberFormatter+Ext.swift"; sourceTree = "<group>"; };
 		CC7B95845343A3D826B220D5 /* CommandImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -818,6 +822,7 @@
 			children = (
 				01B56C1523A11FB600140A1C /* PeripheralScanner.swift */,
 				01AD26E62395084000F56210 /* ConnectionViewController.swift */,
+				C3E8C1AA26F21F80000A3737 /* FilterSwitch */,
 			);
 			path = Connection;
 			sourceTree = "<group>";
@@ -1725,6 +1730,15 @@
 			name = StoryBoard;
 			sourceTree = "<group>";
 		};
+		C3E8C1AA26F21F80000A3737 /* FilterSwitch */ = {
+			isa = PBXGroup;
+			children = (
+				C3E8C1AB26F21FD0000A3737 /* FilterSwitchView.swift */,
+				C3E8C1AD26F21FE3000A3737 /* FilterSwitchView.xib */,
+			);
+			path = FilterSwitch;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1885,6 +1899,7 @@
 				20E07B652306975700FCB205 /* GT-Eesti-Display-ULight.ttf in Resources */,
 				016EF389241632AF005FFA30 /* LoggerTableViewController.xib in Resources */,
 				20E07B612306975700FCB205 /* GT-Eesti-Display-Medium.ttf in Resources */,
+				C3E8C1AE26F21FE4000A3737 /* FilterSwitchView.xib in Resources */,
 				20F15C3C2313D2C7000C5503 /* InfoActionView.xib in Resources */,
 				4353A50F243175C300159CDF /* HMAccessoryListTableViewController.xib in Resources */,
 				4381AD1C23BA057000FB1A1F /* UARTViewController.xib in Resources */,
@@ -2070,6 +2085,7 @@
 				204485E1233A148700A8A3A3 /* RunningTableViewController.swift in Sources */,
 				01BEADD6241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift in Sources */,
 				203D0F09232F782200C0340D /* CyclingTableViewController.swift in Sources */,
+				C3E8C1AC26F21FD0000A3737 /* FilterSwitchView.swift in Sources */,
 				203D0F0C232FB7D100C0340D /* DetailsTableViewSection.swift in Sources */,
 				01D98C8F242E2B3C000A3B35 /* DocumentFileManager.swift in Sources */,
 				01B6D3DA234CB6B3000942C4 /* HeartRateSection.swift in Sources */,
@@ -2302,7 +2318,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "nRF Toolbox/nRF Toolbox.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEFINES_MODULE = NO;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2469,7 +2485,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "nRF Toolbox/nRF Toolbox.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEFINES_MODULE = NO;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2520,7 +2536,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "nRF Toolbox/nRF Toolbox.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEFINES_MODULE = NO;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (

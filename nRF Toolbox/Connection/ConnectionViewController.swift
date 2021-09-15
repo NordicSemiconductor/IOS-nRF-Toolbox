@@ -55,6 +55,21 @@ class ConnectionViewController: UITableViewController {
         super.viewDidLoad()
         scanner.scannerDelegate = self 
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        
+        tableView.tableHeaderView = nil
+        tableView.tableHeaderView = scanner.scanServices.flatMap { _ in
+            let headerView = FilterSwitchView.instance()
+            headerView.toggleAction = { [weak self] isOn in
+                self?.scanner.serviceFilterEnabled = isOn
+                self?.tableView.reloadData()
+            }
+            return headerView
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.tableHeaderView?.frame.size.height = 44
     }
     
     @objc func close() {
@@ -87,7 +102,6 @@ class ConnectionViewController: UITableViewController {
         navigationItem.leftBarButtonItem = leftButton
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int { 1 }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return scanner.peripherals.count
     }
