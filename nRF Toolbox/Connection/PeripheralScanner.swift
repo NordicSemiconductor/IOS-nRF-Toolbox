@@ -69,6 +69,11 @@ open class PeripheralScanner: NSObject {
     }
     
     let scanServices: [CBUUID]?
+    var serviceFilterEnabled = true {
+        didSet {
+            refresh()
+        }
+    }
     
     private (set) var status: Status = .uninitialized {
         didSet {
@@ -118,15 +123,17 @@ open class PeripheralScanner: NSObject {
     }
     
     open func startScanning() {
-        centralManager.scanForPeripherals(withServices: scanServices, options:
-            [CBCentralManagerScanOptionAllowDuplicatesKey:true])
+        rescan()
         dispatchSource.schedule(deadline: .now() + .seconds(1), repeating: 1)
         dispatchSource.activate()
         status = .scanning
     }
     
     open func refresh() {
+        stopScanning()
         peripherals.removeAll()
+        tmpPeripherals.removeAll()
+        rescan()
     }
     
     open func stopScanning() {
@@ -137,6 +144,13 @@ open class PeripheralScanner: NSObject {
     open func connect(to peripheral: Peripheral) {
         stopScanning()
         status = .connecting(peripheral)
+    }
+    
+    private func rescan() {
+        let services = serviceFilterEnabled ? scanServices : nil
+        centralManager.scanForPeripherals(withServices: services, options:
+            [CBCentralManagerScanOptionAllowDuplicatesKey:true])
+        status = .scanning
     }
 }
 
