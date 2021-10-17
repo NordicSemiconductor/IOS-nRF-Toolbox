@@ -164,7 +164,6 @@ extension HMAccessoryListTableViewController: HMHomeManagerDelegate {
         
     }
     
-    @available(iOS 13.0, *)
     func homeManager(_ manager: HMHomeManager, didReceiveAddAccessoryRequest request: HMAddAccessoryRequest) {
         
     }

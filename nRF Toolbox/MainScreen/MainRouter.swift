@@ -49,6 +49,7 @@ enum ServiceId: String, CaseIterable {
 
 protocol MainRouter {
     var rootViewController: UIViewController { get }
+    func handleUrl(_ url: URL) -> Bool
 }
 
 protocol ServiceRouter {
@@ -117,6 +118,27 @@ extension DefaultMainRouter: ServiceRouter {
 
 extension DefaultMainRouter: MainRouter {
     var rootViewController: UIViewController { splitViewController }
+    
+    @discardableResult
+    func handleUrl(_ url: URL) -> Bool {
+        guard url.scheme == "nrf-toolbox" else {
+            return false
+        }
+        
+        let pathComponents = url.pathComponents
+        
+        guard pathComponents.count > 1 else {
+            return false
+        }
+        
+        guard let serviceId = ServiceId(rawValue: pathComponents[1]) else {
+            return false
+        }
+        
+        showServiceController(with: serviceId)
+        
+        return true
+    }
 }
 
 extension DefaultMainRouter {
