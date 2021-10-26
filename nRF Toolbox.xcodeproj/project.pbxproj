@@ -552,7 +552,7 @@
 		5211EFAB1885642F007CC40D /* icon-dfu-320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-dfu-320.png"; sourceTree = "<group>"; };
 		5211EFAC1885642F007CC40D /* icon-hex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-hex.png"; sourceTree = "<group>"; };
 		5211EFAD1885642F007CC40D /* icon-hex@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-hex@2x.png"; sourceTree = "<group>"; };
-		5217F3E21859EE0000F2D5BB /* nRF Toolbox Beta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nRF Toolbox Beta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5217F3E21859EE0000F2D5BB /* nRF Toolbox Debug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nRF Toolbox Debug.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5217F3E51859EE0000F2D5BB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5217F3E71859EE0000F2D5BB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		5217F3E91859EE0000F2D5BB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -1645,7 +1645,7 @@
 		5217F3E31859EE0000F2D5BB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5217F3E21859EE0000F2D5BB /* nRF Toolbox Beta.app */,
+				5217F3E21859EE0000F2D5BB /* nRF Toolbox Debug.app */,
 				014C4E902404038A0003E601 /* nRF Toolbox Tests.xctest */,
 			);
 			name = Products;
@@ -1781,7 +1781,7 @@
 				C3CD27DD26B098070026FE67 /* Charts */,
 			);
 			productName = "nRF Toolbox";
-			productReference = 5217F3E21859EE0000F2D5BB /* nRF Toolbox Beta.app */;
+			productReference = 5217F3E21859EE0000F2D5BB /* nRF Toolbox Debug.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -2339,8 +2339,7 @@
 					"$(PROJECT_DIR)",
 					"$(PODS_ROOT)",
 				);
-				MARKETING_VERSION = 5.0.5;
-				NEW_SETTING = "";
+				MARKETING_VERSION = 5.0.6;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2349,7 +2348,6 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -D BETA";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nordicsemi.nRF-Toolbox-beta";
 				PRODUCT_NAME = "$(TARGET_NAME) Beta";
-				PROVISIONING_PROFILE = "";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2506,17 +2504,15 @@
 					"$(PROJECT_DIR)",
 					"$(PODS_ROOT)",
 				);
-				MARKETING_VERSION = 5.0.5;
-				NEW_SETTING = "";
+				MARKETING_VERSION = 5.0.6;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -D RAND";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nordicsemi.nRF-Toolbox-beta";
-				PRODUCT_NAME = "$(TARGET_NAME) Beta";
-				PROVISIONING_PROFILE = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nordicsemi.nRF-Toolbox-debug";
+				PRODUCT_NAME = "$(TARGET_NAME) Debug";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2557,8 +2553,7 @@
 					"$(PROJECT_DIR)",
 					"$(PODS_ROOT)",
 				);
-				MARKETING_VERSION = 5.0.5;
-				NEW_SETTING = "";
+				MARKETING_VERSION = 5.0.6;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2567,7 +2562,6 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nordicsemi.nRF-Toolbox";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
@@ -2588,7 +2582,7 @@
 				014C4E9A2404038A0003E601 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Beta;
+			defaultConfigurationName = Debug;
 		};
 		5217F3DD1859EE0000F2D5BB /* Build configuration list for PBXProject "nRF Toolbox" */ = {
 			isa = XCConfigurationList;
@@ -2598,7 +2592,7 @@
 				5217F4131859EE0000F2D5BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Beta;
+			defaultConfigurationName = Debug;
 		};
 		5217F4141859EE0000F2D5BB /* Build configuration list for PBXNativeTarget "nRF Toolbox" */ = {
 			isa = XCConfigurationList;
@@ -2608,7 +2602,7 @@
 				5217F4161859EE0000F2D5BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Beta;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 

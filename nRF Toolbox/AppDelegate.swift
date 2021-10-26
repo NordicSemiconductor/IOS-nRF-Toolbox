@@ -84,6 +84,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if DFUPacketManager().handleUrl(url) {
             router.showServiceController(with: .deviceFirmwareUpgrade)
+        } else {
+            router.handleUrl(url)
         }
         
         return true
