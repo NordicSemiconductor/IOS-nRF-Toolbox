@@ -106,6 +106,7 @@
 		01DFC55C2420F0AB00AF2EF0 /* ZephyrDFURouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DFC55B2420F0AB00AF2EF0 /* ZephyrDFURouter.swift */; };
 		01E5910923DB3BC5008F15A4 /* QuickError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910823DB3BC4008F15A4 /* QuickError.swift */; };
 		01E5910B23DECF61008F15A4 /* UARTMacrosList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */; };
+		01EC2464272F55E300F50469 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 01EC2463272F55E300F50469 /* ZIPFoundation */; };
 		01FBC5012407BF8F00B1056B /* PeripheralHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */; };
 		01FBC5062407C2B000B1056B /* FileSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5042407C2B000B1056B /* FileSelectorViewController.swift */; };
 		01FBC5072407C2B000B1056B /* FileSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01FBC5052407C2B000B1056B /* FileSelectorViewController.xib */; };
@@ -268,7 +269,6 @@
 		52D9BC9E1DD0CB760030E824 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9BC9D1DD0CB760030E824 /* Data+Ext.swift */; };
 		7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B422818A8DF4D006BA1BC /* high.mp3 */; };
 		C3CD27D526B097510026FE67 /* AEXML in Frameworks */ = {isa = PBXBuildFile; productRef = C3CD27D426B097510026FE67 /* AEXML */; };
-		C3CD27D826B0977F0026FE67 /* McuManager in Frameworks */ = {isa = PBXBuildFile; productRef = C3CD27D726B0977F0026FE67 /* McuManager */; };
 		C3CD27DB26B097AB0026FE67 /* NordicDFU in Frameworks */ = {isa = PBXBuildFile; productRef = C3CD27DA26B097AB0026FE67 /* NordicDFU */; };
 		C3CD27DE26B098070026FE67 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = C3CD27DD26B098070026FE67 /* Charts */; };
 		C3E8C1AC26F21FD0000A3737 /* FilterSwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E8C1AB26F21FD0000A3737 /* FilterSwitchView.swift */; };
@@ -595,10 +595,10 @@
 				309F08681E6D706B00B7546A /* HomeKit.framework in Frameworks */,
 				5217F41B1859EEF400F2D5BB /* CoreBluetooth.framework in Frameworks */,
 				C3CD27DE26B098070026FE67 /* Charts in Frameworks */,
-				C3CD27D826B0977F0026FE67 /* McuManager in Frameworks */,
 				5217F3E81859EE0000F2D5BB /* CoreGraphics.framework in Frameworks */,
 				5217F3EA1859EE0000F2D5BB /* UIKit.framework in Frameworks */,
 				5217F3E61859EE0000F2D5BB /* Foundation.framework in Frameworks */,
+				01EC2464272F55E300F50469 /* ZIPFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1776,9 +1776,9 @@
 			name = "nRF Toolbox";
 			packageProductDependencies = (
 				C3CD27D426B097510026FE67 /* AEXML */,
-				C3CD27D726B0977F0026FE67 /* McuManager */,
 				C3CD27DA26B097AB0026FE67 /* NordicDFU */,
 				C3CD27DD26B098070026FE67 /* Charts */,
+				01EC2463272F55E300F50469 /* ZIPFoundation */,
 			);
 			productName = "nRF Toolbox";
 			productReference = 5217F3E21859EE0000F2D5BB /* nRF Toolbox Debug.app */;
@@ -1825,9 +1825,10 @@
 			mainGroup = 5217F3D91859EE0000F2D5BB;
 			packageReferences = (
 				C3CD27D326B097510026FE67 /* XCRemoteSwiftPackageReference "AEXML" */,
-				C3CD27D626B0977F0026FE67 /* XCRemoteSwiftPackageReference "mcumgr-ios" */,
 				C3CD27D926B097AB0026FE67 /* XCRemoteSwiftPackageReference "IOS-Pods-DFU-Library" */,
 				C3CD27DC26B098070026FE67 /* XCRemoteSwiftPackageReference "Charts" */,
+				0113C0AD272F523000D82BBB /* XCRemoteSwiftPackageReference "IOS-nRF-Connect-Device-Manager" */,
+				01EC2462272F55E300F50469 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
 			);
 			productRefGroup = 5217F3E31859EE0000F2D5BB /* Products */;
 			projectDirPath = "";
@@ -2607,20 +2608,28 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		0113C0AD272F523000D82BBB /* XCRemoteSwiftPackageReference "IOS-nRF-Connect-Device-Manager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/NickKibish/IOS-nRF-Connect-Device-Manager.git";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
+		01EC2462272F55E300F50469 /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/weichsel/ZIPFoundation.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.9;
+			};
+		};
 		C3CD27D326B097510026FE67 /* XCRemoteSwiftPackageReference "AEXML" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tadija/AEXML.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 4.6.0;
-			};
-		};
-		C3CD27D626B0977F0026FE67 /* XCRemoteSwiftPackageReference "mcumgr-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/JuulLabs-OSS/mcumgr-ios.git";
-			requirement = {
-				branch = master;
-				kind = branch;
 			};
 		};
 		C3CD27D926B097AB0026FE67 /* XCRemoteSwiftPackageReference "IOS-Pods-DFU-Library" */ = {
@@ -2642,15 +2651,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		01EC2463272F55E300F50469 /* ZIPFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01EC2462272F55E300F50469 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			productName = ZIPFoundation;
+		};
 		C3CD27D426B097510026FE67 /* AEXML */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C3CD27D326B097510026FE67 /* XCRemoteSwiftPackageReference "AEXML" */;
 			productName = AEXML;
-		};
-		C3CD27D726B0977F0026FE67 /* McuManager */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C3CD27D626B0977F0026FE67 /* XCRemoteSwiftPackageReference "mcumgr-ios" */;
-			productName = McuManager;
 		};
 		C3CD27DA26B097AB0026FE67 /* NordicDFU */ = {
 			isa = XCSwiftPackageProductDependency;

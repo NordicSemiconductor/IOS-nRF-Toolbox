@@ -34,7 +34,7 @@ import UIKit
 
 struct ZephyrPacket: DFUPacket {
     var url: URL
-    var data: Data
+    var data: [Data]
     
     var name: String {
         return url.lastPathComponent
@@ -72,17 +72,24 @@ class ZephyrFileManager: DFUFileManager<ZephyrPacket> {
         return try fileManager
         .contentsOfDirectory(atPath: try tmpDir().path)
         .compactMap { str -> ZephyrPacket? in
+            if let url = URL(string: str) {
+                if url.pathExtension == "bin" {
+                    
+                } else if url.pathExtension == "zip" {
+                    
+                }
+            }
             guard let url = URL(string: str), url.pathExtension == "bin" else {
                 return nil
             }
             let data = try Data(contentsOf: url)
             
-            return ZephyrPacket(url: url, data: data)
+            return ZephyrPacket(url: url, data: [data])
         }
     }
 }
 
-class ZephyrFileSelector: FileSelectorViewController<Data> {
+class ZephyrFileSelector: FileSelectorViewController<[Data]> {
     weak var router: ZephyrDFURouterType?
     
     init(router: ZephyrDFURouterType? = nil, documentPicker: DocumentPicker<Data>) {
