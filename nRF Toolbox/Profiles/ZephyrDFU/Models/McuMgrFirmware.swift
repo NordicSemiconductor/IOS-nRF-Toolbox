@@ -28,56 +28,20 @@
 * POSSIBILITY OF SUCH DAMAGE.
 */
 
+import Foundation
 
-
-import UIKit
-
-class ZephyrDFUTabBarViewController: UITabBarController {
+struct McuMgrFirmware {
+    let images: [Int : Data]
     
-    let logger = McuMgrLogObserver()
-    
-    private let router: ZephyrDFURouterType?
-    private let firmware: McuMgrFirmware
-    private let peripheral: Peripheral
-    private lazy var updateVC = ZephyrDFUTableViewController(firmware: firmware, peripheral: peripheral, router: self, logger: logger)
-    private let loggerVC: LoggerTableViewController
-    
-    init(router: ZephyrDFURouterType, firmware: McuMgrFirmware, peripheral: Peripheral) {
-        self.loggerVC = LoggerTableViewController(observer: logger)
-        self.router = router
-        self.firmware = firmware
-        self.peripheral = peripheral
-        super.init(nibName: nil, bundle: nil)
+    init(data: Data) {
+        images = [0: data]
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    init(images: [Int : Data]) {
+        self.images = images 
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        tabBar.tintColor = .nordicBlue
-        navigationItem.title = "Update"
-        setViewControllers([updateVC, loggerVC], animated: true)
-        delegate = self
-        selectedIndex = 0
+    var tupleRepresentation: [(Int, Data)] {
+        images.enumerated().map { ($0.element.key, $0.element.value) }
     }
-}
-
-extension ZephyrDFUTabBarViewController: UITabBarControllerDelegate {
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        navigationItem.title = viewController.navigationItem.title
-    }
-}
-
-extension ZephyrDFUTabBarViewController: DFUUpdateRouter {
-    func showLogs() {
-        selectedIndex = 1
-    }
-    
-    func done() {
-        router?.setInitialState()
-    }
-    
-    
 }

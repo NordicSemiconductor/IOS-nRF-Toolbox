@@ -41,12 +41,12 @@ extension FirmwareUpgradeManager: UpgradeManager {
 }
 
 class ZephyrDFUTableViewController: UpgradeTableViewController<FirmwareUpgradeManager> {
-    private let data: Data
+    private let firmware: McuMgrFirmware
     
     private let logger: McuMgrLogObserver
     
-    init(data: Data, peripheral: Peripheral, router: DFUUpdateRouter, logger: McuMgrLogObserver) {
-        self.data = data
+    init(firmware: McuMgrFirmware, peripheral: Peripheral, router: DFUUpdateRouter, logger: McuMgrLogObserver) {
+        self.firmware = firmware
         self.logger = logger
         
         super.init(peripheral: peripheral, router: router)
@@ -62,7 +62,7 @@ class ZephyrDFUTableViewController: UpgradeTableViewController<FirmwareUpgradeMa
     
     override func update() {
         do {
-            try manager?.start(data: data)
+            try manager?.start(images: firmware.tupleRepresentation)
         } catch let error {
             headerView.style = .error
             headerView.statusLabel.text = error.localizedDescription

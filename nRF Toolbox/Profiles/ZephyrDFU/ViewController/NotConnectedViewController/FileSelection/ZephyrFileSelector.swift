@@ -32,15 +32,6 @@
 
 import UIKit
 
-struct ZephyrPacket: DFUPacket {
-    var url: URL
-    var data: [Data]
-    
-    var name: String {
-        return url.lastPathComponent
-    }
-}
-
 class ZephyrFileManager: DFUFileManager<ZephyrPacket> {
     private var fileManager: FileManager
     
@@ -59,7 +50,7 @@ class ZephyrFileManager: DFUFileManager<ZephyrPacket> {
             .map { (packet) -> ZephyrPacket in
                 let newUrl = packetDir.appendingPathComponent(packet.name)
                 try fileManager.moveItem(atPath: packet.url.path, toPath: newUrl.path)
-                return ZephyrPacket(url: newUrl, data: packet.data)
+                return ZephyrPacket(url: newUrl, firmware: packet.firmware)
             }
     }
     
@@ -72,6 +63,7 @@ class ZephyrFileManager: DFUFileManager<ZephyrPacket> {
         return try fileManager
         .contentsOfDirectory(atPath: try tmpDir().path)
         .compactMap { str -> ZephyrPacket? in
+            
             if let url = URL(string: str) {
                 if url.pathExtension == "bin" {
                     
@@ -89,10 +81,10 @@ class ZephyrFileManager: DFUFileManager<ZephyrPacket> {
     }
 }
 
-class ZephyrFileSelector: FileSelectorViewController<[Data]> {
+class ZephyrFileSelector: FileSelectorViewController<McuMgrFirmware> {
     weak var router: ZephyrDFURouterType?
     
-    init(router: ZephyrDFURouterType? = nil, documentPicker: DocumentPicker<Data>) {
+    init(router: ZephyrDFURouterType? = nil, documentPicker: DocumentPicker<McuMgrFirmware>) {
         self.router = router
         super.init(documentPicker: documentPicker)
         filterExtension = "bin"
@@ -102,7 +94,7 @@ class ZephyrFileSelector: FileSelectorViewController<[Data]> {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func documentWasOpened(document: Data) {
+    override func documentWasOpened(document: McuMgrFirmware) {
         router?.goToUpdateScreen(data: document)
     }
     

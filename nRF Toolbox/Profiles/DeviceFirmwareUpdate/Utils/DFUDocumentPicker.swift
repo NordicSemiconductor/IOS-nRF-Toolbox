@@ -32,6 +32,7 @@
 
 import UIKit
 import NordicDFU
+import UniformTypeIdentifiers
 
 class DocumentPicker<T>: NSObject, UIDocumentPickerDelegate {
     typealias Callback = (Result<T, Error>) -> ()
@@ -44,7 +45,12 @@ class DocumentPicker<T>: NSObject, UIDocumentPickerDelegate {
     }
     
     func openDocumentPicker(presentOn controller: UIViewController, callback: @escaping Callback) {
-        let documentPickerVC = UIDocumentPickerViewController(documentTypes: types, in: .import)
+        let documentPickerVC: UIDocumentPickerViewController
+        if #available(iOS 14.0, *) {
+            documentPickerVC = UIDocumentPickerViewController(forOpeningContentTypes: self.types.map { UTTypeReference(importedAs: $0) as UTType })
+        } else {
+            documentPickerVC = UIDocumentPickerViewController(documentTypes: types, in: .import)
+        }
         documentPickerVC.delegate = self
         controller.present(documentPickerVC, animated: true)
         self.callback = callback
