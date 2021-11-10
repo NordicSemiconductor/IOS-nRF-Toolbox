@@ -31,7 +31,7 @@
 
 
 import XCTest
-@testable import nRF_Toolbox_Beta
+@testable import nRF_Toolbox_Debug
 
 class MockFileManager: FileManager {
     override func url(for directory: FileManager.SearchPathDirectory, in domain: FileManager.SearchPathDomainMask, appropriateFor url: URL?, create shouldCreate: Bool) throws -> URL {
