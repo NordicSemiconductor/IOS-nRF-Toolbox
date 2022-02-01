@@ -112,6 +112,7 @@ extension LogCategory {
     static let ble = LogCategory(rawValue: "ble")!
     static let util = LogCategory(rawValue: "util")!
     static let app = LogCategory(rawValue: "application")!
+    static let update = LogCategory(rawValue: "update")!
 }
 
 struct SystemLog {
