@@ -31,62 +31,126 @@
 
 
 import UIKit
+import ZIPFoundation
 
-struct ZephyrPacket: DFUPacket {
-    var url: URL
-    var data: Data
-    
-    var name: String {
-        return url.lastPathComponent
+private struct JSONManifest: Codable {
+    struct FirmwareFile: Codable {
+        let file: String
+        let imageIndex: Int
+        
+        enum CodingKeys: String, CodingKey {
+            case file
+            case imageIndex = "image_index"
+        }
+        
+        struct BadIndex: Swift.Error {
+            var localizedDescription: String {
+                "Can't parse image index"
+            }
+        }
+        
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            self.file = try container.decode(String.self, forKey: .file)
+            self.imageIndex = Int(try container.decode(String.self, forKey: .imageIndex)) ?? -1
+            
+            if self.imageIndex < 0 {
+                throw BadIndex()
+            }
+        }
     }
+    
+    let files: [FirmwareFile]
 }
 
-class ZephyrFileManager: DFUFileManager<ZephyrPacket> {
-    private var fileManager: FileManager
+private enum FileType {
+    case bin, zip, unknown
     
-    init(fileManager: FileManager = .default) {
-        self.fileManager = fileManager
-    }
-    
-    private func tmpDir() throws -> URL {
-        return try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-    }
-    
-    override func checkAndMoveFiles() throws -> [ZephyrPacket] {
-        let packetDir = try tmpDir().appendingPathComponent("dfu")
-        
-        return try content(of: try tmpDir())
-            .map { (packet) -> ZephyrPacket in
-                let newUrl = packetDir.appendingPathComponent(packet.name)
-                try fileManager.moveItem(atPath: packet.url.path, toPath: newUrl.path)
-                return ZephyrPacket(url: newUrl, data: packet.data)
-            }
-    }
-    
-    override func readList() throws -> [ZephyrPacket] {
-        let packetDir = try tmpDir().appendingPathComponent("zephyr_dfu")
-        return try content(of: packetDir)
-    }
-    
-    func content(of dir: URL) throws -> [ZephyrPacket] {
-        return try fileManager
-        .contentsOfDirectory(atPath: try tmpDir().path)
-        .compactMap { str -> ZephyrPacket? in
-            guard let url = URL(string: str), url.pathExtension == "bin" else {
-                return nil
-            }
-            let data = try Data(contentsOf: url)
-            
-            return ZephyrPacket(url: url, data: data)
+    init(url: URL) {
+        guard url.startAccessingSecurityScopedResource() else {
+            self = .unknown
+            return
+        }
+        do {
+        if #available(iOS 14.0, *) {
+            let typeId = try url.resourceValues(forKeys: [.contentTypeKey]).contentType
+            self = typeId == .zip
+                ? .zip
+                : typeId == .data
+                    ? .bin
+                    : .unknown
+        } else {
+            // public.zip-archive
+            let typeId = try url.resourceValues(forKeys: [.typeIdentifierKey]).typeIdentifier
+            self = typeId == "public.zip-archive"
+                ? .zip
+                : typeId == "public.data"
+                    ? .bin
+                    : .unknown
+        }
+        } catch let e {
+            print(e.localizedDescription)
+            self = .unknown
         }
     }
 }
 
-class ZephyrFileSelector: FileSelectorViewController<Data> {
-    weak var router: ZephyrDFURouterType?
+class ZephyrFileManager {
+    enum Error: Swift.Error {
+        case unknownFileType, badArchive
+        
+        var localizedDescription: String {
+            switch self {
+            case .unknownFileType: return "Unsupported file format"
+            case .badArchive: return "Archive doesn't contain required files"
+            }
+        }
+    }
     
-    init(router: ZephyrDFURouterType? = nil, documentPicker: DocumentPicker<Data>) {
+    let fileManager: FileManager
+    
+    init(fileManager: FileManager = FileManager.default) {
+        self.fileManager = fileManager
+    }
+    
+    func createFirmware(from file: URL) throws -> McuMgrFirmware {
+        switch FileType(url: file) {
+        case .bin:
+            return McuMgrFirmware(data: try Data(contentsOf: file))
+        case .zip:
+            return try extract(file: file)
+        case .unknown:
+            throw Error.unknownFileType
+        }
+    }
+    
+    func extract(file: URL) throws -> McuMgrFirmware {
+        let fileManager = FileManager()
+        let destinationDir = fileManager.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        
+        do {
+            try fileManager.createDirectory(at: destinationDir, withIntermediateDirectories: true, attributes: nil)
+            try fileManager.unzipItem(at: file, to: destinationDir)
+            let manifestData = try Data(contentsOf: destinationDir.appendingPathComponent("manifest.json"))
+            let manifest = try JSONDecoder().decode(JSONManifest.self, from: manifestData)
+            let images = try manifest.files
+                .map { ($0.imageIndex, destinationDir.appendingPathComponent($0.file)) }
+                .map { ($0.0, try Data(contentsOf: $0.1)) }
+                .reduce(into: [Int: Data]()) { $0[$1.0] = $1.1 }
+            return McuMgrFirmware(images: images)
+        } catch {
+            throw Error.badArchive
+        }
+    }
+}
+
+class ZephyrFileSelector: FileSelectorViewController<McuMgrFirmware> {
+    weak var router: ZephyrDFURouterType?
+    let fileHandler: ZephyrFileManager
+    
+    init(router: ZephyrDFURouterType? = nil, fileHandler: ZephyrFileManager = ZephyrFileManager(), documentPicker: DocumentPicker<McuMgrFirmware>) {
         self.router = router
+        self.fileHandler = fileHandler
         super.init(documentPicker: documentPicker)
         filterExtension = "bin"
     }
@@ -95,14 +159,13 @@ class ZephyrFileSelector: FileSelectorViewController<Data> {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func documentWasOpened(document: Data) {
-        router?.goToUpdateScreen(data: document)
+    override func documentWasOpened(document: McuMgrFirmware) {
+        router?.goToUpdateScreen(firmware: document)
     }
     
     override func fileWasSelected(file: File) {
         do {
-            let data = try Data(contentsOf: file.url)
-            documentWasOpened(document: data)
+            documentWasOpened(document: try fileHandler.createFirmware(from: file.url))
         } catch let error {
             displayErrorAlert(error: error)
         }

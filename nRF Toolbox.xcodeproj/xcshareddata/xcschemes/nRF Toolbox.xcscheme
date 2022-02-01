@@ -48,6 +48,16 @@
                ReferencedContainer = "container:nRF Toolbox.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "C39941C6273BCC4600E7AA33"
+               BuildableName = "nRF Toolbox DebugTests.xctest"
+               BlueprintName = "nRF Toolbox DebugTests"
+               ReferencedContainer = "container:nRF Toolbox.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

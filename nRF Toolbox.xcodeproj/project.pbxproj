@@ -29,9 +29,6 @@
 		01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */; };
 		014C4E892403F8AE0003E601 /* UARTMacrosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E882403F8AE0003E601 /* UARTMacrosTableViewController.swift */; };
 		014C4E8B2403F9BD0003E601 /* UARTMacroSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E8A2403F9BD0003E601 /* UARTMacroSaver.swift */; };
-		014C4E932404038A0003E601 /* nRF_Toolbox_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E922404038A0003E601 /* nRF_Toolbox_Tests.swift */; };
-		014C4E9E240403A00003E601 /* UARTPresetTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E9C240403A00003E601 /* UARTPresetTest.swift */; };
-		014C4E9F240403A00003E601 /* UARTMacroFileManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E9D240403A00003E601 /* UARTMacroFileManagerTests.swift */; };
 		0151170B240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01511709240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift */; };
 		0151170C240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0151170A240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.xib */; };
 		015F1098240FA06D00FDAC49 /* DFUActionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015F1097240FA06D00FDAC49 /* DFUActionSection.swift */; };
@@ -267,18 +264,22 @@
 		52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */; };
 		52D9BC9E1DD0CB760030E824 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9BC9D1DD0CB760030E824 /* Data+Ext.swift */; };
 		7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B422818A8DF4D006BA1BC /* high.mp3 */; };
+		C39941B6273402FA00E7AA33 /* McuManager in Frameworks */ = {isa = PBXBuildFile; productRef = C39941B5273402FA00E7AA33 /* McuManager */; };
+		C39941BC27341AAE00E7AA33 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = C39941BB27341AAE00E7AA33 /* ZIPFoundation */; };
+		C39941C027352BDF00E7AA33 /* McuMgrFirmware.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39941BF27352BDF00E7AA33 /* McuMgrFirmware.swift */; };
+		C39941C227352FC600E7AA33 /* ZephyrPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39941C127352FC600E7AA33 /* ZephyrPacket.swift */; };
+		C39941E6273BCE0500E7AA33 /* nRF_Toolbox_DebugTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39941E5273BCE0500E7AA33 /* nRF_Toolbox_DebugTests.swift */; };
 		C3CD27D526B097510026FE67 /* AEXML in Frameworks */ = {isa = PBXBuildFile; productRef = C3CD27D426B097510026FE67 /* AEXML */; };
-		C3CD27D826B0977F0026FE67 /* McuManager in Frameworks */ = {isa = PBXBuildFile; productRef = C3CD27D726B0977F0026FE67 /* McuManager */; };
-		C3CD27DB26B097AB0026FE67 /* NordicDFU in Frameworks */ = {isa = PBXBuildFile; productRef = C3CD27DA26B097AB0026FE67 /* NordicDFU */; };
 		C3CD27DE26B098070026FE67 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = C3CD27DD26B098070026FE67 /* Charts */; };
 		C3E8C1AC26F21FD0000A3737 /* FilterSwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E8C1AB26F21FD0000A3737 /* FilterSwitchView.swift */; };
 		C3E8C1AE26F21FE4000A3737 /* FilterSwitchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3E8C1AD26F21FE3000A3737 /* FilterSwitchView.xib */; };
+		C3EFCAF027A943EE00BFE8C4 /* NordicDFU in Frameworks */ = {isa = PBXBuildFile; productRef = C3EFCAEF27A943EE00BFE8C4 /* NordicDFU */; };
 		CC7B90D148FC21C73B54BFAB /* NumberFormatter+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7B93FA695799F95D065492 /* NumberFormatter+Ext.swift */; };
 		CC7B91DDFD7EF39F27FEC85A /* CommandImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7B95845343A3D826B220D5 /* CommandImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		014C4E952404038A0003E601 /* PBXContainerItemProxy */ = {
+		C39941E7273BCE0500E7AA33 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5217F3DA1859EE0000F2D5BB /* Project object */;
 			proxyType = 1;
@@ -323,7 +324,6 @@
 		01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalSection.swift; sourceTree = "<group>"; };
 		014C4E882403F8AE0003E601 /* UARTMacrosTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTMacrosTableViewController.swift; sourceTree = "<group>"; };
 		014C4E8A2403F9BD0003E601 /* UARTMacroSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTMacroSaver.swift; sourceTree = "<group>"; };
-		014C4E902404038A0003E601 /* nRF Toolbox Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "nRF Toolbox Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		014C4E922404038A0003E601 /* nRF_Toolbox_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nRF_Toolbox_Tests.swift; sourceTree = "<group>"; };
 		014C4E942404038A0003E601 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		014C4E9C240403A00003E601 /* UARTPresetTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTPresetTest.swift; sourceTree = "<group>"; };
@@ -569,6 +569,10 @@
 		52D9BC9D1DD0CB760030E824 /* Data+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Ext.swift"; sourceTree = "<group>"; };
 		7E1B422818A8DF4D006BA1BC /* high.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = high.mp3; sourceTree = "<group>"; };
 		89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C39941BF27352BDF00E7AA33 /* McuMgrFirmware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = McuMgrFirmware.swift; sourceTree = "<group>"; };
+		C39941C127352FC600E7AA33 /* ZephyrPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrPacket.swift; sourceTree = "<group>"; };
+		C39941E3273BCE0500E7AA33 /* nRF Toolbox DebugTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "nRF Toolbox DebugTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C39941E5273BCE0500E7AA33 /* nRF_Toolbox_DebugTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nRF_Toolbox_DebugTests.swift; sourceTree = "<group>"; };
 		C3E8C1AB26F21FD0000A3737 /* FilterSwitchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSwitchView.swift; sourceTree = "<group>"; };
 		C3E8C1AD26F21FE3000A3737 /* FilterSwitchView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterSwitchView.xib; sourceTree = "<group>"; };
 		CC7B93FA695799F95D065492 /* NumberFormatter+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NumberFormatter+Ext.swift"; sourceTree = "<group>"; };
@@ -576,29 +580,30 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		014C4E8D2404038A0003E601 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5217F3DF1859EE0000F2D5BB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3EFCAF027A943EE00BFE8C4 /* NordicDFU in Frameworks */,
 				522636371C60FFB00054A550 /* libz.tbd in Frameworks */,
-				C3CD27DB26B097AB0026FE67 /* NordicDFU in Frameworks */,
 				52BDCB191C3FD31F00E2680F /* Accelerate.framework in Frameworks */,
 				52BDCBBE1C3FD86900E2680F /* QuartzCore.framework in Frameworks */,
 				C3CD27D526B097510026FE67 /* AEXML in Frameworks */,
 				309F08681E6D706B00B7546A /* HomeKit.framework in Frameworks */,
 				5217F41B1859EEF400F2D5BB /* CoreBluetooth.framework in Frameworks */,
 				C3CD27DE26B098070026FE67 /* Charts in Frameworks */,
-				C3CD27D826B0977F0026FE67 /* McuManager in Frameworks */,
 				5217F3E81859EE0000F2D5BB /* CoreGraphics.framework in Frameworks */,
 				5217F3EA1859EE0000F2D5BB /* UIKit.framework in Frameworks */,
 				5217F3E61859EE0000F2D5BB /* Foundation.framework in Frameworks */,
+				C39941BC27341AAE00E7AA33 /* ZIPFoundation in Frameworks */,
+				C39941B6273402FA00E7AA33 /* McuManager in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C39941E0273BCE0500E7AA33 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -743,6 +748,7 @@
 		0197AFCC2420DA3500ADF105 /* ZephyrDFU */ = {
 			isa = PBXGroup;
 			children = (
+				C39941BE27352BC400E7AA33 /* Models */,
 				01DFC5592420EFED00AF2EF0 /* ViewController */,
 			);
 			path = ZephyrDFU;
@@ -1637,6 +1643,7 @@
 			children = (
 				5217F3EB1859EE0000F2D5BB /* nRF Toolbox */,
 				014C4E912404038A0003E601 /* nRF Toolbox Tests */,
+				C39941E4273BCE0500E7AA33 /* nRF Toolbox DebugTests */,
 				5217F3E41859EE0000F2D5BB /* Frameworks */,
 				5217F3E31859EE0000F2D5BB /* Products */,
 			);
@@ -1646,7 +1653,7 @@
 			isa = PBXGroup;
 			children = (
 				5217F3E21859EE0000F2D5BB /* nRF Toolbox Debug.app */,
-				014C4E902404038A0003E601 /* nRF Toolbox Tests.xctest */,
+				C39941E3273BCE0500E7AA33 /* nRF Toolbox DebugTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1730,6 +1737,23 @@
 			name = StoryBoard;
 			sourceTree = "<group>";
 		};
+		C39941BE27352BC400E7AA33 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C39941BF27352BDF00E7AA33 /* McuMgrFirmware.swift */,
+				C39941C127352FC600E7AA33 /* ZephyrPacket.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C39941E4273BCE0500E7AA33 /* nRF Toolbox DebugTests */ = {
+			isa = PBXGroup;
+			children = (
+				C39941E5273BCE0500E7AA33 /* nRF_Toolbox_DebugTests.swift */,
+			);
+			path = "nRF Toolbox DebugTests";
+			sourceTree = "<group>";
+		};
 		C3E8C1AA26F21F80000A3737 /* FilterSwitch */ = {
 			isa = PBXGroup;
 			children = (
@@ -1742,24 +1766,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		014C4E8F2404038A0003E601 /* nRF Toolbox Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 014C4E972404038A0003E601 /* Build configuration list for PBXNativeTarget "nRF Toolbox Tests" */;
-			buildPhases = (
-				014C4E8C2404038A0003E601 /* Sources */,
-				014C4E8D2404038A0003E601 /* Frameworks */,
-				014C4E8E2404038A0003E601 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				014C4E962404038A0003E601 /* PBXTargetDependency */,
-			);
-			name = "nRF Toolbox Tests";
-			productName = "nRF Toolbox Tests";
-			productReference = 014C4E902404038A0003E601 /* nRF Toolbox Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		5217F3E11859EE0000F2D5BB /* nRF Toolbox */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5217F4141859EE0000F2D5BB /* Build configuration list for PBXNativeTarget "nRF Toolbox" */;
@@ -1776,13 +1782,34 @@
 			name = "nRF Toolbox";
 			packageProductDependencies = (
 				C3CD27D426B097510026FE67 /* AEXML */,
-				C3CD27D726B0977F0026FE67 /* McuManager */,
-				C3CD27DA26B097AB0026FE67 /* NordicDFU */,
 				C3CD27DD26B098070026FE67 /* Charts */,
+				C39941B5273402FA00E7AA33 /* McuManager */,
+				C39941BB27341AAE00E7AA33 /* ZIPFoundation */,
+				C3EFCAEF27A943EE00BFE8C4 /* NordicDFU */,
 			);
 			productName = "nRF Toolbox";
 			productReference = 5217F3E21859EE0000F2D5BB /* nRF Toolbox Debug.app */;
 			productType = "com.apple.product-type.application";
+		};
+		C39941E2273BCE0500E7AA33 /* nRF Toolbox DebugTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C39941E9273BCE0500E7AA33 /* Build configuration list for PBXNativeTarget "nRF Toolbox DebugTests" */;
+			buildPhases = (
+				C39941DF273BCE0500E7AA33 /* Sources */,
+				C39941E0273BCE0500E7AA33 /* Frameworks */,
+				C39941E1273BCE0500E7AA33 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C39941E8273BCE0500E7AA33 /* PBXTargetDependency */,
+			);
+			name = "nRF Toolbox DebugTests";
+			packageProductDependencies = (
+			);
+			productName = "nRF Toolbox DebugTests";
+			productReference = C39941E3273BCE0500E7AA33 /* nRF Toolbox DebugTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -1790,16 +1817,10 @@
 		5217F3DA1859EE0000F2D5BB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1140;
+				LastSwiftUpdateCheck = 1310;
 				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = "Nordic Semiconductor";
 				TargetAttributes = {
-					014C4E8F2404038A0003E601 = {
-						CreatedOnToolsVersion = 11.4;
-						DevelopmentTeam = TQL72QW32W;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 5217F3E11859EE0000F2D5BB;
-					};
 					5217F3E11859EE0000F2D5BB = {
 						DevelopmentTeam = P3R8YQEV4L;
 						LastSwiftMigration = 1030;
@@ -1811,6 +1832,10 @@
 								enabled = 1;
 							};
 						};
+					};
+					C39941E2273BCE0500E7AA33 = {
+						CreatedOnToolsVersion = 13.1;
+						TestTargetID = 5217F3E11859EE0000F2D5BB;
 					};
 				};
 			};
@@ -1825,28 +1850,22 @@
 			mainGroup = 5217F3D91859EE0000F2D5BB;
 			packageReferences = (
 				C3CD27D326B097510026FE67 /* XCRemoteSwiftPackageReference "AEXML" */,
-				C3CD27D626B0977F0026FE67 /* XCRemoteSwiftPackageReference "mcumgr-ios" */,
-				C3CD27D926B097AB0026FE67 /* XCRemoteSwiftPackageReference "IOS-Pods-DFU-Library" */,
 				C3CD27DC26B098070026FE67 /* XCRemoteSwiftPackageReference "Charts" */,
+				C39941B4273402FA00E7AA33 /* XCRemoteSwiftPackageReference "IOS-nRF-Connect-Device-Manager" */,
+				C39941BA27341AAE00E7AA33 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
+				C3EFCAEE27A943EE00BFE8C4 /* XCRemoteSwiftPackageReference "IOS-DFU-Library" */,
 			);
 			productRefGroup = 5217F3E31859EE0000F2D5BB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				5217F3E11859EE0000F2D5BB /* nRF Toolbox */,
-				014C4E8F2404038A0003E601 /* nRF Toolbox Tests */,
+				C39941E2273BCE0500E7AA33 /* nRF Toolbox DebugTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		014C4E8E2404038A0003E601 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5217F3E01859EE0000F2D5BB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1910,19 +1929,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
-		014C4E8C2404038A0003E601 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
+		C39941E1273BCE0500E7AA33 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				014C4E9F240403A00003E601 /* UARTMacroFileManagerTests.swift in Sources */,
-				014C4E9E240403A00003E601 /* UARTPresetTest.swift in Sources */,
-				014C4E932404038A0003E601 /* nRF_Toolbox_Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
 		5217F3DE1859EE0000F2D5BB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2018,6 +2034,7 @@
 				432DCD53244E5FEE00C6828F /* RSSI.swift in Sources */,
 				012C2BE32410682D005EC1A0 /* SegmentedView.swift in Sources */,
 				01BE0955234A7500006ACF06 /* HealthTemperatureSection.swift in Sources */,
+				C39941C027352BDF00E7AA33 /* McuMgrFirmware.swift in Sources */,
 				01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */,
 				01A1B76723CF13A50062FADC /* UARTNewCommandViewController.swift in Sources */,
 				20C7FE082306EB5600B06FD8 /* UITableView+Ext.swift in Sources */,
@@ -2026,6 +2043,7 @@
 				01AA707D24124F270018DB29 /* DFUUpdateTabBarViewController.swift in Sources */,
 				20C7FE53230E811B00B06FD8 /* ServiceProvider.swift in Sources */,
 				20C7FE5E230EC37000B06FD8 /* ServiceTableViewCell.swift in Sources */,
+				C39941C227352FC600E7AA33 /* ZephyrPacket.swift in Sources */,
 				01268AF924218E5800E83156 /* ZephyrDFUDocumentPicker.swift in Sources */,
 				4389183824360D0100175A94 /* LogTableViewCell.swift in Sources */,
 				012C2BE72410F8AA005EC1A0 /* DFUUpdateViewController.swift in Sources */,
@@ -2127,13 +2145,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C39941DF273BCE0500E7AA33 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C39941E6273BCE0500E7AA33 /* nRF_Toolbox_DebugTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		014C4E962404038A0003E601 /* PBXTargetDependency */ = {
+		C39941E8273BCE0500E7AA33 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5217F3E11859EE0000F2D5BB /* nRF Toolbox */;
-			targetProxy = 014C4E952404038A0003E601 /* PBXContainerItemProxy */;
+			targetProxy = C39941E7273BCE0500E7AA33 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2149,106 +2175,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		014C4E982404038A0003E601 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = TQL72QW32W;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = "nRF Toolbox Tests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "no.nordicsemi.nRF-Toolbox-Tests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox Beta.app/nRF Toolbox Beta";
-			};
-			name = Debug;
-		};
-		014C4E992404038A0003E601 /* Beta */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = TQL72QW32W;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = "nRF Toolbox Tests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "no.nordicsemi.nRF-Toolbox-Tests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox Beta.app/nRF Toolbox Beta";
-			};
-			name = Beta;
-		};
-		014C4E9A2404038A0003E601 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = TQL72QW32W;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = "nRF Toolbox Tests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "no.nordicsemi.nRF-Toolbox-Tests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox Beta.app/nRF Toolbox Beta";
-			};
-			name = Release;
-		};
 		20FDA43523154494006EEBC1 /* Beta */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2571,19 +2497,118 @@
 			};
 			name = Release;
 		};
+		C39941EA273BCE0500E7AA33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = P3R8YQEV4L;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nordicsemi.nRF-Toolbox-DebugTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox Debug.app/nRF Toolbox Debug";
+			};
+			name = Debug;
+		};
+		C39941EB273BCE0500E7AA33 /* Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = P3R8YQEV4L;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nordicsemi.nRF-Toolbox-DebugTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox Debug.app/nRF Toolbox Debug";
+			};
+			name = Beta;
+		};
+		C39941EC273BCE0500E7AA33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = P3R8YQEV4L;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nordicsemi.nRF-Toolbox-DebugTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox Debug.app/nRF Toolbox Debug";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		014C4E972404038A0003E601 /* Build configuration list for PBXNativeTarget "nRF Toolbox Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				014C4E982404038A0003E601 /* Debug */,
-				014C4E992404038A0003E601 /* Beta */,
-				014C4E9A2404038A0003E601 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
 		5217F3DD1859EE0000F2D5BB /* Build configuration list for PBXProject "nRF Toolbox" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2604,31 +2629,41 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
+		C39941E9273BCE0500E7AA33 /* Build configuration list for PBXNativeTarget "nRF Toolbox DebugTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C39941EA273BCE0500E7AA33 /* Debug */,
+				C39941EB273BCE0500E7AA33 /* Beta */,
+				C39941EC273BCE0500E7AA33 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		C39941B4273402FA00E7AA33 /* XCRemoteSwiftPackageReference "IOS-nRF-Connect-Device-Manager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/NickKibish/IOS-nRF-Connect-Device-Manager.git";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
+		C39941BA27341AAE00E7AA33 /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/weichsel/ZIPFoundation.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.9;
+			};
+		};
 		C3CD27D326B097510026FE67 /* XCRemoteSwiftPackageReference "AEXML" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tadija/AEXML.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 4.6.0;
-			};
-		};
-		C3CD27D626B0977F0026FE67 /* XCRemoteSwiftPackageReference "mcumgr-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/JuulLabs-OSS/mcumgr-ios.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-		C3CD27D926B097AB0026FE67 /* XCRemoteSwiftPackageReference "IOS-Pods-DFU-Library" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.10.4;
 			};
 		};
 		C3CD27DC26B098070026FE67 /* XCRemoteSwiftPackageReference "Charts" */ = {
@@ -2639,28 +2674,41 @@
 				minimumVersion = 4.0.1;
 			};
 		};
+		C3EFCAEE27A943EE00BFE8C4 /* XCRemoteSwiftPackageReference "IOS-DFU-Library" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/NordicSemiconductor/IOS-DFU-Library.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C39941B5273402FA00E7AA33 /* McuManager */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C39941B4273402FA00E7AA33 /* XCRemoteSwiftPackageReference "IOS-nRF-Connect-Device-Manager" */;
+			productName = McuManager;
+		};
+		C39941BB27341AAE00E7AA33 /* ZIPFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C39941BA27341AAE00E7AA33 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			productName = ZIPFoundation;
+		};
 		C3CD27D426B097510026FE67 /* AEXML */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C3CD27D326B097510026FE67 /* XCRemoteSwiftPackageReference "AEXML" */;
 			productName = AEXML;
 		};
-		C3CD27D726B0977F0026FE67 /* McuManager */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C3CD27D626B0977F0026FE67 /* XCRemoteSwiftPackageReference "mcumgr-ios" */;
-			productName = McuManager;
-		};
-		C3CD27DA26B097AB0026FE67 /* NordicDFU */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C3CD27D926B097AB0026FE67 /* XCRemoteSwiftPackageReference "IOS-Pods-DFU-Library" */;
-			productName = NordicDFU;
-		};
 		C3CD27DD26B098070026FE67 /* Charts */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C3CD27DC26B098070026FE67 /* XCRemoteSwiftPackageReference "Charts" */;
 			productName = Charts;
+		};
+		C3EFCAEF27A943EE00BFE8C4 /* NordicDFU */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C3EFCAEE27A943EE00BFE8C4 /* XCRemoteSwiftPackageReference "IOS-DFU-Library" */;
+			productName = NordicDFU;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

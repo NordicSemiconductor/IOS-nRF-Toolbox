@@ -36,7 +36,7 @@ protocol ZephyrDFURouterType: AnyObject {
     @discardableResult func setInitialState() -> UIViewController
     @discardableResult func goToPeripheralSelector(scanner: PeripheralScanner, presentationType: PresentationType, callback: @escaping (Peripheral) -> ()) -> ConnectionViewController
     @discardableResult func goToFileSelector() -> ZephyrFileSelector
-    @discardableResult func goToUpdateScreen(data: Data) -> ZephyrDFUTabBarViewController
+    @discardableResult func goToUpdateScreen(firmware: McuMgrFirmware) -> ZephyrDFUTabBarViewController
 }
 
 class ZephyrDFURouter: ZephyrDFURouterType {
@@ -46,8 +46,8 @@ class ZephyrDFURouter: ZephyrDFURouterType {
         return vc
     }
     
-    func goToUpdateScreen(data: Data) -> ZephyrDFUTabBarViewController {
-        let vc = ZephyrDFUTabBarViewController(router: self, data: data, peripheral: btManager.peripheral)
+    func goToUpdateScreen(firmware: McuMgrFirmware) -> ZephyrDFUTabBarViewController {
+        let vc = ZephyrDFUTabBarViewController(router: self, firmware: firmware, peripheral: btManager.peripheral)
         navigationController.pushViewController(vc, animated: true)
         return vc
     }

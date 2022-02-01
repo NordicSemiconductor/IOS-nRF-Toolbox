@@ -50,8 +50,20 @@ class McuMgrLogObserver: LogObserver, McuMgrLogDelegate {
     var shouldLog: Bool = true
     
     func log(_ msg: String, ofCategory category: McuMgrLogCategory, atLevel level: McuMgrLogLevel) {
-//        guard shouldLog else { return }
+        SystemLog(category: .update, type: toSystemLogLevel(level: level)).log(message: msg)
+        
         logWith(level.level, message: msg)
+    }
+    
+    private func toSystemLogLevel(level: McuMgrLogLevel) -> LogType {
+        switch (level) {
+        case .error: return .error
+        case .application: return .application
+        case .debug: return .debug
+        case .info: return .info
+        case .verbose: return .verbose
+        case .warning: return .warning
+        }
     }
     
     

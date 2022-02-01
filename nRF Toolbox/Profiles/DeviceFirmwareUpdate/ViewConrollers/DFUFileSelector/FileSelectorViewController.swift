@@ -28,11 +28,11 @@
 * POSSIBILITY OF SUCH DAMAGE.
 */
 
-
-
 import UIKit
 import NordicDFU
 
+/// Displays list of directories and files (firmware packets).
+/// Also can open `UIDocumentPickerViewController` to import firmware from different locations.
 class FileSelectorViewController<T>: UIViewController, AlertPresenter, UITableViewDataSource, UITableViewDelegate {
     
     private let documentPicker: DocumentPicker<T>

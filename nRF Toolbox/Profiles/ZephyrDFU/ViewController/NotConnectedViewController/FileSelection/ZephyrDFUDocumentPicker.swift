@@ -28,21 +28,23 @@
 * POSSIBILITY OF SUCH DAMAGE.
 */
 
-
-
 import UIKit.UIDocumentPickerViewController
 
-class ZephyrDFUDocumentPicker: DocumentPicker<Data> {
-    init() {
-        super.init(documentTypes: ["public.data"])
+class ZephyrDFUDocumentPicker: DocumentPicker<McuMgrFirmware> {
+    let fileManager: ZephyrFileManager
+    
+    init(fileManager: ZephyrFileManager = ZephyrFileManager()) {
+        self.fileManager = fileManager
+        super.init(documentTypes: ["public.data", "public.zip"])
     }
     
     override func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
         do {
-            let data = try Data(contentsOf: url)
-            callback(.success(data))
-        } catch let error {
-            callback(.failure(error))
+            let fw = try fileManager.createFirmware(from: url)
+            callback(.success(fw))
+        } catch let e {
+            print(e.localizedDescription)
+            callback(.failure(e))
         }
     }
 }
