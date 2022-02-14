@@ -264,7 +264,7 @@
 		52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */; };
 		52D9BC9E1DD0CB760030E824 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9BC9D1DD0CB760030E824 /* Data+Ext.swift */; };
 		7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B422818A8DF4D006BA1BC /* high.mp3 */; };
-		C39941B6273402FA00E7AA33 /* McuManager in Frameworks */ = {isa = PBXBuildFile; productRef = C39941B5273402FA00E7AA33 /* McuManager */; };
+		AAFC9CD227BA85EA00860638 /* McuManager in Frameworks */ = {isa = PBXBuildFile; productRef = AAFC9CD127BA85EA00860638 /* McuManager */; };
 		C39941BC27341AAE00E7AA33 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = C39941BB27341AAE00E7AA33 /* ZIPFoundation */; };
 		C39941C027352BDF00E7AA33 /* McuMgrFirmware.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39941BF27352BDF00E7AA33 /* McuMgrFirmware.swift */; };
 		C39941C227352FC600E7AA33 /* ZephyrPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39941C127352FC600E7AA33 /* ZephyrPacket.swift */; };
@@ -596,7 +596,7 @@
 				5217F3EA1859EE0000F2D5BB /* UIKit.framework in Frameworks */,
 				5217F3E61859EE0000F2D5BB /* Foundation.framework in Frameworks */,
 				C39941BC27341AAE00E7AA33 /* ZIPFoundation in Frameworks */,
-				C39941B6273402FA00E7AA33 /* McuManager in Frameworks */,
+				AAFC9CD227BA85EA00860638 /* McuManager in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1783,9 +1783,9 @@
 			packageProductDependencies = (
 				C3CD27D426B097510026FE67 /* AEXML */,
 				C3CD27DD26B098070026FE67 /* Charts */,
-				C39941B5273402FA00E7AA33 /* McuManager */,
 				C39941BB27341AAE00E7AA33 /* ZIPFoundation */,
 				C3EFCAEF27A943EE00BFE8C4 /* NordicDFU */,
+				AAFC9CD127BA85EA00860638 /* McuManager */,
 			);
 			productName = "nRF Toolbox";
 			productReference = 5217F3E21859EE0000F2D5BB /* nRF Toolbox Debug.app */;
@@ -1851,9 +1851,9 @@
 			packageReferences = (
 				C3CD27D326B097510026FE67 /* XCRemoteSwiftPackageReference "AEXML" */,
 				C3CD27DC26B098070026FE67 /* XCRemoteSwiftPackageReference "Charts" */,
-				C39941B4273402FA00E7AA33 /* XCRemoteSwiftPackageReference "IOS-nRF-Connect-Device-Manager" */,
 				C39941BA27341AAE00E7AA33 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
 				C3EFCAEE27A943EE00BFE8C4 /* XCRemoteSwiftPackageReference "IOS-DFU-Library" */,
+				AAFC9CD027BA85EA00860638 /* XCRemoteSwiftPackageReference "IOS-nRF-Connect-Device-Manager" */,
 			);
 			productRefGroup = 5217F3E31859EE0000F2D5BB /* Products */;
 			projectDirPath = "";
@@ -2642,11 +2642,11 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		C39941B4273402FA00E7AA33 /* XCRemoteSwiftPackageReference "IOS-nRF-Connect-Device-Manager" */ = {
+		AAFC9CD027BA85EA00860638 /* XCRemoteSwiftPackageReference "IOS-nRF-Connect-Device-Manager" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/NickKibish/IOS-nRF-Connect-Device-Manager.git";
+			repositoryURL = "https://github.com/NordicSemiconductor/IOS-nRF-Connect-Device-Manager";
 			requirement = {
-				branch = develop;
+				branch = master;
 				kind = branch;
 			};
 		};
@@ -2685,9 +2685,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		C39941B5273402FA00E7AA33 /* McuManager */ = {
+		AAFC9CD127BA85EA00860638 /* McuManager */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C39941B4273402FA00E7AA33 /* XCRemoteSwiftPackageReference "IOS-nRF-Connect-Device-Manager" */;
+			package = AAFC9CD027BA85EA00860638 /* XCRemoteSwiftPackageReference "IOS-nRF-Connect-Device-Manager" */;
 			productName = McuManager;
 		};
 		C39941BB27341AAE00E7AA33 /* ZIPFoundation */ = {
