@@ -264,7 +264,8 @@
 		52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */; };
 		52D9BC9E1DD0CB760030E824 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9BC9D1DD0CB760030E824 /* Data+Ext.swift */; };
 		7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B422818A8DF4D006BA1BC /* high.mp3 */; };
-		AAFC9CD227BA85EA00860638 /* McuManager in Frameworks */ = {isa = PBXBuildFile; productRef = AAFC9CD127BA85EA00860638 /* McuManager */; };
+		AA2CB314286C75450083DB9A /* iOSMcuManagerLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = AA2CB313286C75450083DB9A /* iOSMcuManagerLibrary */; };
+		AA2CB316286C75AA0083DB9A /* NordicDFU in Frameworks */ = {isa = PBXBuildFile; productRef = AA2CB315286C75AA0083DB9A /* NordicDFU */; };
 		C39941BC27341AAE00E7AA33 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = C39941BB27341AAE00E7AA33 /* ZIPFoundation */; };
 		C39941C027352BDF00E7AA33 /* McuMgrFirmware.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39941BF27352BDF00E7AA33 /* McuMgrFirmware.swift */; };
 		C39941C227352FC600E7AA33 /* ZephyrPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39941C127352FC600E7AA33 /* ZephyrPacket.swift */; };
@@ -273,7 +274,6 @@
 		C3CD27DE26B098070026FE67 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = C3CD27DD26B098070026FE67 /* Charts */; };
 		C3E8C1AC26F21FD0000A3737 /* FilterSwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E8C1AB26F21FD0000A3737 /* FilterSwitchView.swift */; };
 		C3E8C1AE26F21FE4000A3737 /* FilterSwitchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3E8C1AD26F21FE3000A3737 /* FilterSwitchView.xib */; };
-		C3EFCAF027A943EE00BFE8C4 /* NordicDFU in Frameworks */ = {isa = PBXBuildFile; productRef = C3EFCAEF27A943EE00BFE8C4 /* NordicDFU */; };
 		CC7B90D148FC21C73B54BFAB /* NumberFormatter+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7B93FA695799F95D065492 /* NumberFormatter+Ext.swift */; };
 		CC7B91DDFD7EF39F27FEC85A /* CommandImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7B95845343A3D826B220D5 /* CommandImage.swift */; };
 /* End PBXBuildFile section */
@@ -584,7 +584,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C3EFCAF027A943EE00BFE8C4 /* NordicDFU in Frameworks */,
+				AA2CB316286C75AA0083DB9A /* NordicDFU in Frameworks */,
 				522636371C60FFB00054A550 /* libz.tbd in Frameworks */,
 				52BDCB191C3FD31F00E2680F /* Accelerate.framework in Frameworks */,
 				52BDCBBE1C3FD86900E2680F /* QuartzCore.framework in Frameworks */,
@@ -595,8 +595,8 @@
 				5217F3E81859EE0000F2D5BB /* CoreGraphics.framework in Frameworks */,
 				5217F3EA1859EE0000F2D5BB /* UIKit.framework in Frameworks */,
 				5217F3E61859EE0000F2D5BB /* Foundation.framework in Frameworks */,
+				AA2CB314286C75450083DB9A /* iOSMcuManagerLibrary in Frameworks */,
 				C39941BC27341AAE00E7AA33 /* ZIPFoundation in Frameworks */,
-				AAFC9CD227BA85EA00860638 /* McuManager in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1784,8 +1784,8 @@
 				C3CD27D426B097510026FE67 /* AEXML */,
 				C3CD27DD26B098070026FE67 /* Charts */,
 				C39941BB27341AAE00E7AA33 /* ZIPFoundation */,
-				C3EFCAEF27A943EE00BFE8C4 /* NordicDFU */,
-				AAFC9CD127BA85EA00860638 /* McuManager */,
+				AA2CB313286C75450083DB9A /* iOSMcuManagerLibrary */,
+				AA2CB315286C75AA0083DB9A /* NordicDFU */,
 			);
 			productName = "nRF Toolbox";
 			productReference = 5217F3E21859EE0000F2D5BB /* nRF Toolbox Debug.app */;
@@ -2670,25 +2670,30 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/danielgindi/Charts.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.1;
+				kind = exactVersion;
+				version = 4.0.1;
 			};
 		};
 		C3EFCAEE27A943EE00BFE8C4 /* XCRemoteSwiftPackageReference "IOS-DFU-Library" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/NordicSemiconductor/IOS-DFU-Library.git";
 			requirement = {
-				branch = master;
+				branch = main;
 				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		AAFC9CD127BA85EA00860638 /* McuManager */ = {
+		AA2CB313286C75450083DB9A /* iOSMcuManagerLibrary */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AAFC9CD027BA85EA00860638 /* XCRemoteSwiftPackageReference "IOS-nRF-Connect-Device-Manager" */;
-			productName = McuManager;
+			productName = iOSMcuManagerLibrary;
+		};
+		AA2CB315286C75AA0083DB9A /* NordicDFU */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C3EFCAEE27A943EE00BFE8C4 /* XCRemoteSwiftPackageReference "IOS-DFU-Library" */;
+			productName = NordicDFU;
 		};
 		C39941BB27341AAE00E7AA33 /* ZIPFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -2704,11 +2709,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C3CD27DC26B098070026FE67 /* XCRemoteSwiftPackageReference "Charts" */;
 			productName = Charts;
-		};
-		C3EFCAEF27A943EE00BFE8C4 /* NordicDFU */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C3EFCAEE27A943EE00BFE8C4 /* XCRemoteSwiftPackageReference "IOS-DFU-Library" */;
-			productName = NordicDFU;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

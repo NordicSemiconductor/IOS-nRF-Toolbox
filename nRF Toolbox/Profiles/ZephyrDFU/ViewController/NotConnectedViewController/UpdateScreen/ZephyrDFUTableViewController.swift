@@ -31,7 +31,7 @@
 
 
 import UIKit
-import McuManager
+import iOSMcuManagerLibrary
 import NordicDFU
 
 extension FirmwareUpgradeManager: UpgradeManager {
