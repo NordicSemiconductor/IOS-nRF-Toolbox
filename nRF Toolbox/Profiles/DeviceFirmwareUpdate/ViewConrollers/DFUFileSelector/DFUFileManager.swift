@@ -112,7 +112,7 @@ class DFUPacketManager: DFUFileManager<DFUDistributionPacket> {
             .contentsOfDirectory(atPath: dir.path)
         .compactMap { str -> DFUDistributionPacket? in
             let fileUrl = dir.appendingPathComponent(str)
-            guard let firmware = DFUFirmware(urlToZipFile: fileUrl) else {
+            guard let firmware = try? DFUFirmware(urlToZipFile: fileUrl) else {
                 return nil
             }
             return DFUDistributionPacket(url: fileUrl, firmware: firmware)

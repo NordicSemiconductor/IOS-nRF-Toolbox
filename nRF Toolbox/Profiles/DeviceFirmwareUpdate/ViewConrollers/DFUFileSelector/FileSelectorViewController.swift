@@ -254,7 +254,7 @@ class DFUFileSelectorViewController: FileSelectorViewController<DFUFirmware> {
     }
     
     override func fileWasSelected(file: File) {
-        guard let firmware = DFUFirmware(urlToZipFile: file.url) else {
+        guard let firmware = try? DFUFirmware(urlToZipFile: file.url) else {
             displayErrorAlert(error: QuickError(message: "Can not create Firmware from selected file"))
             return
         }

@@ -218,8 +218,8 @@ class DFUUpdateViewController: UpgradeTableViewController<DFUServiceController> 
 
 extension DFUUpdateViewController: DFUServiceDelegate {
     func dfuStateDidChange(to state: DFUState) {
-        headerView.statusLabel.text = state.description()
-        print(state.description())
+        headerView.statusLabel.text = state.description
+        print(state.description)
         currentState = state
         
         headerView.stopAnimating()
