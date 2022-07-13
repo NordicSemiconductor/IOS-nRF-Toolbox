@@ -66,7 +66,7 @@ class DFUDocumentPicker: DocumentPicker<DFUFirmware> {
     }
     
     override func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
-        guard let firmware = DFUFirmware(urlToZipFile: url) else {
+        guard let firmware = try? DFUFirmware(urlToZipFile: url) else {
             callback(.failure(QuickError(message: "Can not create Firmware")))
             return
         }
