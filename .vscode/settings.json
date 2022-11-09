@@ -1,0 +1,3 @@
+{
+    "nrf-connect.toolchain.path": "${nrf-connect.toolchain:1.9.1}"
+}

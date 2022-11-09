@@ -53,6 +53,9 @@ class UARTLoggerViewController: UIViewController, CloseButtonPresenter {
     
     private lazy var filterBtn = UIBarButtonItem(image: UIImage.getFilterIcon(isFilled: false), style: .plain, target: self, action: #selector(openFilter))
     
+    private var liveUpdate: Bool = true
+    private lazy var liveUpdateBtn = UIBarButtonItem(image: liveUpdateIcon, style: .plain, target: self, action: #selector(toggleLiveUpdate))
+    
     init(bluetoothManager: BluetoothManager) {
         btManager = bluetoothManager
         super.init(nibName: "UARTLoggerViewController", bundle: .main)
@@ -77,6 +80,12 @@ class UARTLoggerViewController: UIViewController, CloseButtonPresenter {
         present(nc, animated: true)
     }
     
+    @objc func toggleLiveUpdate() {
+        liveUpdate.toggle()
+        loggerTableView.autoscroll = liveUpdate
+        liveUpdateBtn.image = liveUpdateIcon
+    }
+    
     func reset() {
         loggerTableView.reset()
     }
@@ -95,9 +104,19 @@ extension UARTLoggerViewController {
             }
         }()
         let clearItem = UIBarButtonItem(image: trashImage, style: .plain, target: self, action: #selector(clear))
-        navigationItem.rightBarButtonItems = [clearItem, filterBtn]
+        navigationItem.rightBarButtonItems = [clearItem, filterBtn, liveUpdateBtn]
         
         btManager.logger = loggerTableView
+        
+//        navigationItem.leftBarButtonItems = [liveUpdateBtn]
+    }
+    
+    private var liveUpdateIcon: UIImage? {
+        if #available(iOS 13, *) {
+            return liveUpdate ? ModernIcon.play(.circle)(.fill).image : ModernIcon.play(.circle).image
+        } else {
+            return liveUpdate ? UIImage(named: "Pause") : UIImage(named: "Play")
+        }
     }
     
     @objc private func clear() {

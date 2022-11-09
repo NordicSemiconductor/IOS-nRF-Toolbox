@@ -47,6 +47,7 @@ struct LogMessage {
 
 class LoggerTableView: UITableView {
     var logs: [LogMessage] = []
+    var autoscroll: Bool = true
     
     var filter: [LogType] = LogType.allCases {
         didSet {
@@ -85,7 +86,9 @@ extension LoggerTableView {
         guard self.filter.contains(message.level) else { return }
         let insertIndexPath = IndexPath(row: self.filteredData.count-1, section: 0)
         self.insertRows(at: [insertIndexPath], with: .none)
-        self.scrollToRow(at: insertIndexPath, at: .bottom, animated: true)
+        if autoscroll {
+            self.scrollToRow(at: insertIndexPath, at: .bottom, animated: true)            
+        }
     }
     
     func reset() {
@@ -129,7 +132,6 @@ extension LoggerTableView: LogPresenter, Logger {
 
 extension LoggerTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        print("count: \(filteredData.count)")
         return filteredData.count
     }
     
