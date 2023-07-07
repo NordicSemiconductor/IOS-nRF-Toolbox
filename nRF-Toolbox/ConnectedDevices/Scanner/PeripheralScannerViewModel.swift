@@ -10,12 +10,15 @@ import Foundation
 
 extension PeripheralScannerView {
     class ViewModel: ObservableObject {
+        let bluetoothManager: BluetoothManager
+        
         var state: State = .scanning
         var devices: [ScanResult] = []
         
-        init(state: State, devices: [ScanResult]) {
+        init(bluetoothManager: BluetoothManager, state: State = .scanning, devices: [ScanResult] = []) {
             self.state = state
             self.devices = devices
+            self.bluetoothManager = bluetoothManager
         }
     }
 }

@@ -12,9 +12,15 @@ import iOS_Common_Libraries
 struct PeripheralScannerView: View {
     @StateObject var viewModel: ViewModel
     
-    fileprivate init(state: ViewModel.State, devices: [ViewModel.ScanResult] = []) {
-        self._viewModel = StateObject(wrappedValue: ViewModel(state: state, devices: devices))
+    init(viewModel: ViewModel) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
     }
+    
+    #if DEBUG
+    fileprivate init(state: ViewModel.State, devices: [ViewModel.ScanResult] = []) {
+        self._viewModel = StateObject(wrappedValue: ViewModel(bluetoothManager: BluetoothManager(), state: state, devices: devices))
+    }
+    #endif
     
     var body: some View {
         VStack {
@@ -76,6 +82,7 @@ struct PeripheralScannerView: View {
     }
 }
 
+#if DEBUG
 struct PeripheralScannerView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
@@ -86,3 +93,4 @@ struct PeripheralScannerView_Previews: PreviewProvider {
         }
     }
 }
+#endif
