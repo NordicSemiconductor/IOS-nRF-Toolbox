@@ -19,6 +19,15 @@
       }
     },
     {
+      "identity" : "ios-corebluetooth-mock",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/NickKibish/IOS-CoreBluetooth-Mock.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "de20de42538eb4bf6156543a3576f5286ea5f22b"
+      }
+    },
+    {
       "identity" : "ios-dfu-library",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/NordicSemiconductor/IOS-DFU-Library.git",

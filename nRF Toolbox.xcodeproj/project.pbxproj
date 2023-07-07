@@ -52,6 +52,10 @@
 		018873C02A58320600253273 /* ConnectedDevicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873BF2A58320600253273 /* ConnectedDevicesView.swift */; };
 		018873C22A58322C00253273 /* ConnectedDevicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873C12A58322C00253273 /* ConnectedDevicesViewModel.swift */; };
 		018873C42A58332400253273 /* iOSCommonLibraries in Frameworks */ = {isa = PBXBuildFile; productRef = 018873C32A58332400253273 /* iOSCommonLibraries */; };
+		018873C72A583A9900253273 /* PeripheralScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873C62A583A9900253273 /* PeripheralScannerView.swift */; };
+		018873C92A583B0000253273 /* PeripheralScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873C82A583B0000253273 /* PeripheralScannerViewModel.swift */; };
+		018873CC2A583C3300253273 /* iOS-BLE-Library in Frameworks */ = {isa = PBXBuildFile; productRef = 018873CB2A583C3300253273 /* iOS-BLE-Library */; };
+		018873CF2A583CE000253273 /* iOS-BLE-Library in Frameworks */ = {isa = PBXBuildFile; productRef = 018873CE2A583CE000253273 /* iOS-BLE-Library */; };
 		0192BB352428E63C003F7F6B /* DFUFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0192BB342428E63C003F7F6B /* DFUFileManager.swift */; };
 		0197AFCF2420DAAC00ADF105 /* NotConnectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0197AFCD2420DAAC00ADF105 /* NotConnectedViewController.swift */; };
 		0197AFD02420DAAC00ADF105 /* NotConnectedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0197AFCE2420DAAC00ADF105 /* NotConnectedViewController.xib */; };
@@ -379,6 +383,9 @@
 		017D105C2A580DCD00E38E5F /* IOS-Common-Libraries */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "IOS-Common-Libraries"; path = "../IOS-Common-Libraries"; sourceTree = "<group>"; };
 		018873BF2A58320600253273 /* ConnectedDevicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedDevicesView.swift; sourceTree = "<group>"; };
 		018873C12A58322C00253273 /* ConnectedDevicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedDevicesViewModel.swift; sourceTree = "<group>"; };
+		018873C62A583A9900253273 /* PeripheralScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralScannerView.swift; sourceTree = "<group>"; };
+		018873C82A583B0000253273 /* PeripheralScannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralScannerViewModel.swift; sourceTree = "<group>"; };
+		018873CD2A583C4E00253273 /* IOS-BLE-Library */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "IOS-BLE-Library"; path = "../IOS-BLE-Library"; sourceTree = "<group>"; };
 		0192BB342428E63C003F7F6B /* DFUFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFileManager.swift; sourceTree = "<group>"; };
 		0197AFCD2420DAAC00ADF105 /* NotConnectedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotConnectedViewController.swift; sourceTree = "<group>"; };
 		0197AFCE2420DAAC00ADF105 /* NotConnectedViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotConnectedViewController.xib; sourceTree = "<group>"; };
@@ -623,6 +630,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				018873CF2A583CE000253273 /* iOS-BLE-Library in Frameworks */,
 				018873C42A58332400253273 /* iOSCommonLibraries in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -657,6 +665,7 @@
 				5217F3E81859EE0000F2D5BB /* CoreGraphics.framework in Frameworks */,
 				5217F3EA1859EE0000F2D5BB /* UIKit.framework in Frameworks */,
 				5217F3E61859EE0000F2D5BB /* Foundation.framework in Frameworks */,
+				018873CC2A583C3300253273 /* iOS-BLE-Library in Frameworks */,
 				AA2CB314286C75450083DB9A /* iOSMcuManagerLibrary in Frameworks */,
 				C39941BC27341AAE00E7AA33 /* ZIPFoundation in Frameworks */,
 			);
@@ -848,10 +857,20 @@
 		018873BE2A5831ED00253273 /* ConnectedDevices */ = {
 			isa = PBXGroup;
 			children = (
+				018873C52A5839C700253273 /* Scanner */,
 				018873BF2A58320600253273 /* ConnectedDevicesView.swift */,
 				018873C12A58322C00253273 /* ConnectedDevicesViewModel.swift */,
 			);
 			path = ConnectedDevices;
+			sourceTree = "<group>";
+		};
+		018873C52A5839C700253273 /* Scanner */ = {
+			isa = PBXGroup;
+			children = (
+				018873C62A583A9900253273 /* PeripheralScannerView.swift */,
+				018873C82A583B0000253273 /* PeripheralScannerViewModel.swift */,
+			);
+			path = Scanner;
 			sourceTree = "<group>";
 		};
 		0197AFCC2420DA3500ADF105 /* ZephyrDFU */ = {
@@ -1750,6 +1769,7 @@
 		5217F3D91859EE0000F2D5BB = {
 			isa = PBXGroup;
 			children = (
+				018873CD2A583C4E00253273 /* IOS-BLE-Library */,
 				017D105C2A580DCD00E38E5F /* IOS-Common-Libraries */,
 				5217F3EB1859EE0000F2D5BB /* nRF Toolbox Legacy */,
 				014C4E912404038A0003E601 /* nRF Toolbox Tests */,
@@ -1897,6 +1917,7 @@
 			name = "nRF-Toolbox";
 			packageProductDependencies = (
 				018873C32A58332400253273 /* iOSCommonLibraries */,
+				018873CE2A583CE000253273 /* iOS-BLE-Library */,
 			);
 			productName = "nRF-Toolbox";
 			productReference = 017D102B2A5809E300E38E5F /* nRF-Toolbox.app */;
@@ -1959,6 +1980,7 @@
 				AA2CB313286C75450083DB9A /* iOSMcuManagerLibrary */,
 				AA2CB315286C75AA0083DB9A /* NordicDFU */,
 				017D105A2A580D3800E38E5F /* iOSCommonLibraries */,
+				018873CB2A583C3300253273 /* iOS-BLE-Library */,
 			);
 			productName = "nRF Toolbox";
 			productReference = 5217F3E21859EE0000F2D5BB /* nRF Toolbox Debug.app */;
@@ -2039,6 +2061,7 @@
 				C3EFCAEE27A943EE00BFE8C4 /* XCRemoteSwiftPackageReference "IOS-DFU-Library" */,
 				AAFC9CD027BA85EA00860638 /* XCRemoteSwiftPackageReference "IOS-nRF-Connect-Device-Manager" */,
 				017D10592A580D3800E38E5F /* XCRemoteSwiftPackageReference "IOS-Common-Libraries" */,
+				018873CA2A583C3300253273 /* XCRemoteSwiftPackageReference "IOS-BLE-Library" */,
 			);
 			productRefGroup = 5217F3E31859EE0000F2D5BB /* Products */;
 			projectDirPath = "";
@@ -2154,7 +2177,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				018873C72A583A9900253273 /* PeripheralScannerView.swift in Sources */,
 				018873C22A58322C00253273 /* ConnectedDevicesViewModel.swift in Sources */,
+				018873C92A583B0000253273 /* PeripheralScannerViewModel.swift in Sources */,
 				017D10302A5809E300E38E5F /* ContentView.swift in Sources */,
 				017D102E2A5809E300E38E5F /* nRF_ToolboxApp.swift in Sources */,
 				018873C02A58320600253273 /* ConnectedDevicesView.swift in Sources */,
@@ -3291,6 +3316,14 @@
 				kind = branch;
 			};
 		};
+		018873CA2A583C3300253273 /* XCRemoteSwiftPackageReference "IOS-BLE-Library" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/NordicSemiconductor/IOS-BLE-Library.git";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
 		AAFC9CD027BA85EA00860638 /* XCRemoteSwiftPackageReference "IOS-nRF-Connect-Device-Manager" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/NordicSemiconductor/IOS-nRF-Connect-Device-Manager";
@@ -3342,6 +3375,15 @@
 		018873C32A58332400253273 /* iOSCommonLibraries */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = iOSCommonLibraries;
+		};
+		018873CB2A583C3300253273 /* iOS-BLE-Library */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 018873CA2A583C3300253273 /* XCRemoteSwiftPackageReference "IOS-BLE-Library" */;
+			productName = "iOS-BLE-Library";
+		};
+		018873CE2A583CE000253273 /* iOS-BLE-Library */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "iOS-BLE-Library";
 		};
 		AA2CB313286C75450083DB9A /* iOSMcuManagerLibrary */ = {
 			isa = XCSwiftPackageProductDependency;
