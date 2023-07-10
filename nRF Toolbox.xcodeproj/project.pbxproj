@@ -22,6 +22,7 @@
 		012C2BE22410682D005EC1A0 /* Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDF2410682D005EC1A0 /* Segment.swift */; };
 		012C2BE32410682D005EC1A0 /* SegmentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BE02410682D005EC1A0 /* SegmentedView.swift */; };
 		012C2BE72410F8AA005EC1A0 /* DFUUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BE52410F8AA005EC1A0 /* DFUUpdateViewController.swift */; };
+		0132082A2A5C142100DCEA11 /* ScanResultItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013208292A5C142100DCEA11 /* ScanResultItem.swift */; };
 		0133C73B23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0133C73A23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift */; };
 		01363A872417E4FA0030821E /* ControlSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01363A862417E4FA0030821E /* ControlSection.swift */; };
 		01468B052361A30A00C29E4C /* StepperTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B032361A30A00C29E4C /* StepperTableViewCell.swift */; };
@@ -347,6 +348,7 @@
 		012C2BDF2410682D005EC1A0 /* Segment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Segment.swift; sourceTree = "<group>"; };
 		012C2BE02410682D005EC1A0 /* SegmentedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedView.swift; sourceTree = "<group>"; };
 		012C2BE52410F8AA005EC1A0 /* DFUUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUUpdateViewController.swift; sourceTree = "<group>"; };
+		013208292A5C142100DCEA11 /* ScanResultItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanResultItem.swift; sourceTree = "<group>"; };
 		0133C73A23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTPresetCollectionViewDelegate.swift; sourceTree = "<group>"; };
 		01363A862417E4FA0030821E /* ControlSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSection.swift; sourceTree = "<group>"; };
 		01468B032361A30A00C29E4C /* StepperTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperTableViewCell.swift; sourceTree = "<group>"; };
@@ -871,6 +873,7 @@
 			isa = PBXGroup;
 			children = (
 				018873C62A583A9900253273 /* PeripheralScannerView.swift */,
+				013208292A5C142100DCEA11 /* ScanResultItem.swift */,
 				018873C82A583B0000253273 /* PeripheralScannerViewModel.swift */,
 			);
 			path = Scanner;
@@ -2190,6 +2193,7 @@
 			files = (
 				018873C72A583A9900253273 /* PeripheralScannerView.swift in Sources */,
 				018873C22A58322C00253273 /* ConnectedDevicesViewModel.swift in Sources */,
+				0132082A2A5C142100DCEA11 /* ScanResultItem.swift in Sources */,
 				018873C92A583B0000253273 /* PeripheralScannerViewModel.swift in Sources */,
 				018873D22A58707900253273 /* BluetoothManager.swift in Sources */,
 				017D10302A5809E300E38E5F /* ContentView.swift in Sources */,
@@ -2483,6 +2487,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Application requires access to Bluetooth to be able to comunicate with devices.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -2535,6 +2540,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Application requires access to Bluetooth to be able to comunicate with devices.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -2586,6 +2592,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Application requires access to Bluetooth to be able to comunicate with devices.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

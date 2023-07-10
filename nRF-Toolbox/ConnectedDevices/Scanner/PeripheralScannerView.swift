@@ -10,15 +10,13 @@ import SwiftUI
 import iOS_Common_Libraries
 
 struct PeripheralScannerView: View {
-    @StateObject var viewModel: ViewModel
+    @StateObject var viewModel = ViewModel()
     
-    init(viewModel: ViewModel) {
-        self._viewModel = StateObject(wrappedValue: viewModel)
-    }
-    
+    init() {}
+   
     #if DEBUG
     fileprivate init(state: ViewModel.State, devices: [ViewModel.ScanResult] = []) {
-        self._viewModel = StateObject(wrappedValue: ViewModel(bluetoothManager: BluetoothManager(), state: state, devices: devices))
+        self._viewModel = StateObject(wrappedValue: MockVM(state: state, devices: devices))
     }
     #endif
     
@@ -35,8 +33,11 @@ struct PeripheralScannerView: View {
                 }
             case .unsupported:
                 unsupported
+            case .unauthorized:
+                unauthorized
             }
         }
+        .navigationTitle("Scanner")
     }
     
     @ViewBuilder
@@ -48,6 +49,22 @@ struct PeripheralScannerView: View {
                 systemName: "hand.thumbsdown"
             )
         )
+        .padding()
+    }
+    
+    @ViewBuilder
+    var unauthorized: some View {
+        ContentUnavailableView(
+            configuration: ContentUnavailableConfiguration(
+                text: "No Permission Granted",
+                secondaryText: "Bluetooth is not authorized. Open settings and give access the application to use Bluetooth.",
+                systemName: "xmark.seal",
+                buttonConfiguration: ContentUnavailableConfiguration.ButtonConfiguration(title: "Open Settings", action: {
+                    
+                })
+            )
+        )
+        .padding()
     }
     
     @ViewBuilder
@@ -62,6 +79,7 @@ struct PeripheralScannerView: View {
                 })
             )
         )
+        .padding()
     }
     
     @ViewBuilder
@@ -77,19 +95,30 @@ struct PeripheralScannerView: View {
     @ViewBuilder
     var deviceList: some View {
         List(viewModel.devices) { device in
-            Text(device.name)
+            ScanResultItem(name: device.name, rssi: device.rssi)
         }
     }
 }
 
 #if DEBUG
+fileprivate class MockVM: PeripheralScannerView.ViewModel {
+    override init(bluetoothManager: BluetoothManager = BluetoothManager.shared, state: PeripheralScannerView.ViewModel.State = .scanning, devices: [PeripheralScannerView.ViewModel.ScanResult] = []) {
+        
+    }
+}
+
 struct PeripheralScannerView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             PeripheralScannerView(state: .scanning)
-            PeripheralScannerView(state: .scanning, devices: [PeripheralScannerView.ViewModel.ScanResult(name: "Device 1", id: UUID())])
             PeripheralScannerView(state: .disabled)
             PeripheralScannerView(state: .unsupported)
+            PeripheralScannerView(state: .unauthorized)
+//            PeripheralScannerView(state: .scanning)
+//            PeripheralScannerView(state: .scanning, devices: [PeripheralScannerView.ViewModel.ScanResult(name: "Device 1", id: UUID())])
+//            PeripheralScannerView(state: .disabled)
+//            PeripheralScannerView(state: .unsupported)
+//            PeripheralScannerView(state: .unauthorized)
         }
     }
 }

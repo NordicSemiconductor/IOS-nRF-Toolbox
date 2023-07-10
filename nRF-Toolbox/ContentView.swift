@@ -17,6 +17,7 @@ struct ContentView: View {
         } detail: {
             Text("Device Details")
         }
+        .environmentObject(BluetoothManager())
 
     }
 }

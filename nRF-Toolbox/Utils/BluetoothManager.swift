@@ -9,26 +9,45 @@
 import Foundation
 import iOS_BLE_Library
 import iOS_Common_Libraries
+import Combine
 
 class BluetoothManager: ObservableObject {
+    private var cancelables = Set<AnyCancellable>()
+    
     let centralManager = CentralManager()
+    
+    static var shared = BluetoothManager()
     
     @Published var state: CBManagerState = .unknown
     @Published var scanResults: [ScanResult] = []
     
+    var sr: [ScanResult] = []
+    
+    // Connected Devices
+    
     init() {
         centralManager.stateChannel.assign(to: &$state)
-        
-        
     }
     
-    func startScan() {
+    func startScan(removeExistingResults: Bool = false) {
+        if removeExistingResults {
+            scanResults.removeAll()
+        }
+        
         centralManager.scanForPeripherals(withServices: nil)
+            .scan([ScanResult](), { acc, sr in
+                return acc.replaceOrAppend(sr, compareBy: \.peripheral.identifier)
+            })
             .sink { completion in
                 
             } receiveValue: { scanResult in
-                _ = self.scanResults.replacedOrAppended(scanResult, compareBy: \.peripheral.identifier)
+//                self.sr.replacedOrAppended(scanResult, compareBy: \.peripheral.identifier)
+//                self.scanResults.replacedOrAppended(scanResult, compareBy: \.peripheral.identifier)
+//                self.scanResults.append(scanResult)
+                self.scanResults = scanResult
+//                self.sr = scanResult
             }
+            .store(in: &cancelables)
 
     }
     
