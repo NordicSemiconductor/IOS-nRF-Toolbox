@@ -12,6 +12,8 @@ import iOS_Common_Libraries
 struct ConnectedDevicesView: View {
     @StateObject var viewModel = ViewModel()
     
+    @State var showScanner = false
+    
     var body: some View {
         VStack {
             if viewModel.devices.isEmpty {
@@ -29,13 +31,18 @@ struct ConnectedDevicesView: View {
                 text: "No Connected Devices",
                 // TODO: Is it correct message?
                 secondaryText: "Scan for devices and connect to peripheral to begin",
-                systemName: "flipphone",
+                systemName: "antenna.radiowaves.left.and.right",
                 buttonConfiguration: ContentUnavailableConfiguration.ButtonConfiguration(
                     title: "Start Scan", action: {
-                        
+                        showScanner = true 
                     })
             )
         )
+        .sheet(isPresented: $showScanner) {
+            NavigationStack {
+                PeripheralScannerView()
+            }
+        }
     }
     
     var deviceList: some View {
