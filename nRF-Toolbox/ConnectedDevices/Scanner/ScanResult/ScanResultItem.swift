@@ -35,14 +35,20 @@ struct ScanResultItem: View {
                 ServiceBadge(image: $0.icon, name: $0.name, color: $0.color)
             }
         case (0, let o) where o > 0:
-            ServiceBadge(name: "\(otherServices) services")
+            ServiceBadge(name: "\(serviceString(otherServices))")
         case (let s, let o) where s > 0 && o > 0:
             ForEach(services, id: \.name) {
                 ServiceBadge(image: $0.icon, name: $0.name, color: $0.color)
             }
-            ServiceBadge(name: "+\(otherServices) services")
+            ServiceBadge(name: "+\(serviceString(otherServices))")
         default: EmptyView()
         }
+    }
+    
+    private func serviceString(_ count: Int) -> String {
+        let formatString : String = NSLocalizedString("service_count", comment: "")
+        let resultString : String = String.localizedStringWithFormat(formatString, count)
+        return resultString
     }
 }
 

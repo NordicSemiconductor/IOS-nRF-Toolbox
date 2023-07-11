@@ -109,6 +109,7 @@
 		01C81AD22A5CB2860011B41E /* iOS-Bluetooth-Numbers-Database in Frameworks */ = {isa = PBXBuildFile; productRef = 01C81AD12A5CB2860011B41E /* iOS-Bluetooth-Numbers-Database */; };
 		01C81AD52A5CB6420011B41E /* ServiceBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C81AD42A5CB6420011B41E /* ServiceBadge.swift */; };
 		01C81AD72A5D8FEA0011B41E /* ReadableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C81AD62A5D8FEA0011B41E /* ReadableError.swift */; };
+		01C81ADA2A5DFA8E0011B41E /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 01C81ADC2A5DFA8E0011B41E /* Localizable.stringsdict */; };
 		01D6D2B924067B0500E1A66F /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01D6D2B824067B0500E1A66F /* Resources.xcassets */; };
 		01D6D2BB240696D000E1A66F /* DFURouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6D2BA240696D000E1A66F /* DFURouter.swift */; };
 		01D6D2C02406A1EF00E1A66F /* DFUStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6D2BE2406A1EF00E1A66F /* DFUStartViewController.swift */; };
@@ -444,6 +445,7 @@
 		01C81ACF2A5CB1B50011B41E /* ServiceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceHelper.swift; sourceTree = "<group>"; };
 		01C81AD42A5CB6420011B41E /* ServiceBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBadge.swift; sourceTree = "<group>"; };
 		01C81AD62A5D8FEA0011B41E /* ReadableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadableError.swift; sourceTree = "<group>"; };
+		01C81ADB2A5DFA8E0011B41E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		01D6D2B824067B0500E1A66F /* Resources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resources.xcassets; sourceTree = "<group>"; };
 		01D6D2BA240696D000E1A66F /* DFURouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFURouter.swift; sourceTree = "<group>"; };
 		01D6D2BE2406A1EF00E1A66F /* DFUStartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUStartViewController.swift; sourceTree = "<group>"; };
@@ -824,6 +826,7 @@
 				017D102F2A5809E300E38E5F /* ContentView.swift */,
 				017D10312A5809E400E38E5F /* Assets.xcassets */,
 				017D10332A5809E400E38E5F /* nRF_Toolbox.entitlements */,
+				01C81ADC2A5DFA8E0011B41E /* Localizable.stringsdict */,
 				017D10342A5809E400E38E5F /* Preview Content */,
 			);
 			path = "nRF-Toolbox";
@@ -2121,6 +2124,7 @@
 			files = (
 				017D10362A5809E400E38E5F /* Preview Assets.xcassets in Resources */,
 				017D10322A5809E400E38E5F /* Assets.xcassets in Resources */,
+				01C81ADA2A5DFA8E0011B41E /* Localizable.stringsdict in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2481,6 +2485,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		01C81ADC2A5DFA8E0011B41E /* Localizable.stringsdict */ = {
+			isa = PBXVariantGroup;
+			children = (
+				01C81ADB2A5DFA8E0011B41E /* en */,
+			);
+			name = Localizable.stringsdict;
+			sourceTree = "<group>";
+		};
 		5217F3EE1859EE0000F2D5BB /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
