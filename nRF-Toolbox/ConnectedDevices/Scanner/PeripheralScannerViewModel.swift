@@ -36,6 +36,19 @@ extension PeripheralScannerView.ViewModel {
         let name: String?
         let rssi: Int
         let id: UUID
+        
+        let services: [String]
+        
+        var knownServices: [ServiceRepresentation] {
+            services.compactMap { ServiceRepresentation(identifier: $0) }
+        }
+        
+        init(name: String?, rssi: Int, id: UUID, services: [String]) {
+            self.name = name
+            self.rssi = rssi
+            self.id = id
+            self.services = services
+        }
     }
 }
 
@@ -54,7 +67,12 @@ extension PeripheralScannerView.ViewModel {
         
         btManager.$scanResults
             .map { sr -> [ScanResult] in
-                sr.map { ScanResult(name: $0.name, rssi: $0.rssi.value, id: $0.peripheral.identifier) }
+                sr.map { ScanResult(
+                    name: $0.name,
+                    rssi: $0.rssi.value,
+                    id: $0.peripheral.identifier,
+                    services: $0.advertisementData.serviceUUIDs?.compactMap { $0.uuidString } ?? []
+                ) }
             }
             .assign(to: &$devices)
     }

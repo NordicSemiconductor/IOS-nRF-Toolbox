@@ -95,7 +95,12 @@ struct PeripheralScannerView: View {
     @ViewBuilder
     var deviceList: some View {
         List(viewModel.devices) { device in
-            ScanResultItem(name: device.name, rssi: device.rssi)
+            ScanResultItem(
+                name: device.name,
+                rssi: device.rssi,
+                services: device.knownServices,
+                otherServices: device.services.count - device.knownServices.count
+            )
         }
     }
 }

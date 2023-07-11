@@ -7,12 +7,17 @@
 //
 
 import SwiftUI
+import iOS_BLE_Library
 
 @main
 struct nRF_ToolboxApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .onAppear {
+                    BluetoothEmulation.simulateState()
+                    BluetoothEmulation.simulatePeripherals()
+                }
         }
     }
 }
