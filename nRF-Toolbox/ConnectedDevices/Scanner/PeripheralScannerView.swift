@@ -10,6 +10,7 @@ import SwiftUI
 import iOS_Common_Libraries
 
 struct PeripheralScannerView: View {
+    @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = ViewModel()
     
     init() {}
@@ -37,6 +38,8 @@ struct PeripheralScannerView: View {
                 unauthorized
             }
         }
+        .alert(isPresented: $viewModel.showError, error: viewModel.error, actions: { })
+
         .navigationTitle("Scanner")
     }
     
@@ -94,13 +97,40 @@ struct PeripheralScannerView: View {
     
     @ViewBuilder
     var deviceList: some View {
-        List(viewModel.devices) { device in
-            ScanResultItem(
-                name: device.name,
-                rssi: device.rssi,
-                services: device.knownServices,
-                otherServices: device.services.count - device.knownServices.count
-            )
+        List{
+            Section {
+                ForEach(viewModel.devices) { device in
+                    Button {
+                        Task {
+                            await viewModel.tryToConnect(device: device) {
+                                dismiss()
+                            }
+                        }
+                    } label: {
+                        HStack {
+                            ScanResultItem(
+                                name: device.name,
+                                rssi: device.rssi,
+                                services: device.knownServices,
+                                otherServices: device.services.count - device.knownServices.count
+                            )
+                            Spacer()
+                            if viewModel.connectingDevice == device {
+                                ProgressView()
+                            } else {
+                                Button {
+                                    // TODO: Open info screen
+                                } label: {
+                                    Image(systemName: "info.circle")
+                                }
+                            }
+                        }
+                    }
+                }
+            } footer: {
+                Text("Select the device to establish connection or press 􀅴 to open detailed information")
+            }
+
         }
     }
 }
@@ -119,11 +149,6 @@ struct PeripheralScannerView_Previews: PreviewProvider {
             PeripheralScannerView(state: .disabled)
             PeripheralScannerView(state: .unsupported)
             PeripheralScannerView(state: .unauthorized)
-//            PeripheralScannerView(state: .scanning)
-//            PeripheralScannerView(state: .scanning, devices: [PeripheralScannerView.ViewModel.ScanResult(name: "Device 1", id: UUID())])
-//            PeripheralScannerView(state: .disabled)
-//            PeripheralScannerView(state: .unsupported)
-//            PeripheralScannerView(state: .unauthorized)
         }
     }
 }

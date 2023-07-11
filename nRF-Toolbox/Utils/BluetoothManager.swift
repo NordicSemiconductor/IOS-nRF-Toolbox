@@ -12,6 +12,10 @@ import iOS_Common_Libraries
 import Combine
 
 class BluetoothManager: ObservableObject {
+    enum Error: Swift.Error {
+        case peripheralNotFound
+    }
+    
     private var cancelables = Set<AnyCancellable>()
     
     let centralManager = CentralManager()
@@ -41,14 +45,19 @@ class BluetoothManager: ObservableObject {
             .sink { completion in
                 
             } receiveValue: { scanResult in
-//                self.sr.replacedOrAppended(scanResult, compareBy: \.peripheral.identifier)
-//                self.scanResults.replacedOrAppended(scanResult, compareBy: \.peripheral.identifier)
-//                self.scanResults.append(scanResult)
                 self.scanResults = scanResult
-//                self.sr = scanResult
             }
             .store(in: &cancelables)
-
+    }
+    
+    func tryToConnect(deviceId: UUID) async throws -> CBPeripheral {
+        guard let sr = scanResults.first(where: { $0.peripheral.identifier == deviceId }) else {
+            throw Error.peripheralNotFound
+        }
+        
+        return try await centralManager.connect(sr.peripheral)
+            .autoconnect()
+            .value
     }
     
 }

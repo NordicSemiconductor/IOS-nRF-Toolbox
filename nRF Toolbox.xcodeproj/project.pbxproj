@@ -108,6 +108,7 @@
 		01C81AD02A5CB1B50011B41E /* ServiceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C81ACF2A5CB1B50011B41E /* ServiceHelper.swift */; };
 		01C81AD22A5CB2860011B41E /* iOS-Bluetooth-Numbers-Database in Frameworks */ = {isa = PBXBuildFile; productRef = 01C81AD12A5CB2860011B41E /* iOS-Bluetooth-Numbers-Database */; };
 		01C81AD52A5CB6420011B41E /* ServiceBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C81AD42A5CB6420011B41E /* ServiceBadge.swift */; };
+		01C81AD72A5D8FEA0011B41E /* ReadableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C81AD62A5D8FEA0011B41E /* ReadableError.swift */; };
 		01D6D2B924067B0500E1A66F /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01D6D2B824067B0500E1A66F /* Resources.xcassets */; };
 		01D6D2BB240696D000E1A66F /* DFURouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6D2BA240696D000E1A66F /* DFURouter.swift */; };
 		01D6D2C02406A1EF00E1A66F /* DFUStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6D2BE2406A1EF00E1A66F /* DFUStartViewController.swift */; };
@@ -442,6 +443,7 @@
 		01BEADD7241AE6BF00FC7183 /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
 		01C81ACF2A5CB1B50011B41E /* ServiceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceHelper.swift; sourceTree = "<group>"; };
 		01C81AD42A5CB6420011B41E /* ServiceBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBadge.swift; sourceTree = "<group>"; };
+		01C81AD62A5D8FEA0011B41E /* ReadableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadableError.swift; sourceTree = "<group>"; };
 		01D6D2B824067B0500E1A66F /* Resources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resources.xcassets; sourceTree = "<group>"; };
 		01D6D2BA240696D000E1A66F /* DFURouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFURouter.swift; sourceTree = "<group>"; };
 		01D6D2BE2406A1EF00E1A66F /* DFUStartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUStartViewController.swift; sourceTree = "<group>"; };
@@ -892,6 +894,7 @@
 			children = (
 				018873D12A58707900253273 /* BluetoothManager.swift */,
 				01C81ACF2A5CB1B50011B41E /* ServiceHelper.swift */,
+				01C81AD62A5D8FEA0011B41E /* ReadableError.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2212,6 +2215,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01C81AD72A5D8FEA0011B41E /* ReadableError.swift in Sources */,
 				018873C72A583A9900253273 /* PeripheralScannerView.swift in Sources */,
 				018873C22A58322C00253273 /* ConnectedDevicesViewModel.swift in Sources */,
 				0132082A2A5C142100DCEA11 /* ScanResultItem.swift in Sources */,
