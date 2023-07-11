@@ -74,11 +74,12 @@ extension PeripheralScannerView.ViewModel {
         
         do {
             _ = try await bluetoothManager.tryToConnect(deviceId: device.id)
-            connectingDevice = nil
             completion()
         } catch {
             self.error = ReadableError(title: "Error", message: "Failed to connect the peripheral")
         }
+        
+        connectingDevice = nil
     }
 }
 

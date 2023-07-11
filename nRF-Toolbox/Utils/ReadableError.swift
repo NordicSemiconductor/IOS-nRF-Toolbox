@@ -27,6 +27,10 @@ struct ReadableError: LocalizedError {
     }
     
     var failureReason: String? {
-        message ?? title
+        title
+    }
+    
+    var errorDescription: String? {
+        message
     }
 }

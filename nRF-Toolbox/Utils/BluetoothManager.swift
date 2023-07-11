@@ -13,7 +13,7 @@ import Combine
 
 class BluetoothManager: ObservableObject {
     enum Error: Swift.Error {
-        case peripheralNotFound
+        case peripheralNotFound, timeout
     }
     
     private var cancelables = Set<AnyCancellable>()
@@ -57,6 +57,7 @@ class BluetoothManager: ObservableObject {
         
         return try await centralManager.connect(sr.peripheral)
             .autoconnect()
+            .timeout(.seconds(3), scheduler: DispatchQueue.main, customError: { Error.timeout })
             .value
     }
     
