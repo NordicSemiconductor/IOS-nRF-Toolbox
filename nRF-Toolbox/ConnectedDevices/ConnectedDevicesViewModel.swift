@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 extension ConnectedDevicesView {
     struct Device: Identifiable {
@@ -16,5 +17,20 @@ extension ConnectedDevicesView {
     
     class ViewModel: ObservableObject {
         var devices: [Device] = []
+        
+        let bluetoothManager: BluetoothManager
+        
+        init(devices: [Device], bluetoothManager: BluetoothManager = .shared) {
+            self.devices = devices
+            self.bluetoothManager = bluetoothManager
+        }
+        
+    }
+}
+
+extension ConnectedDevicesView.ViewModel {
+    private func setupBluetoothManager() {
+        Task {
+        }
     }
 }
