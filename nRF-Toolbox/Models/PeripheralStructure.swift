@@ -10,14 +10,14 @@ import Foundation
 import iOS_BLE_Library
 import iOS_Bluetooth_Numbers_Database
 
-struct PeripheralStructure: Identifiable {
+struct PeripheralStructure: Identifiable, Equatable {
     private typealias S = iOS_Bluetooth_Numbers_Database.Service
     private typealias C = iOS_Bluetooth_Numbers_Database.Characteristic
     private typealias D = iOS_Bluetooth_Numbers_Database.Descriptor
     
-    struct Service: Identifiable {
-        struct Characteristic: Identifiable {
-            struct Descriptor: Identifiable {
+    struct Service: Identifiable, Equatable {
+        struct Characteristic: Identifiable, Equatable {
+            struct Descriptor: Identifiable, Equatable {
                 let cbDescriptor: CBDescriptor
                 let id: String
                 let name: String?
@@ -37,11 +37,20 @@ struct PeripheralStructure: Identifiable {
     
     let cbPeripheral: CBPeripheral
     let id: String
+    
+    var name: String {
+        cbPeripheral.name ?? "n/a"
+    }
+    
     private (set) var services: [Service] = []
     
     init(cbPeripheral: CBPeripheral) {
         self.cbPeripheral = cbPeripheral
         self.id = cbPeripheral.identifier.uuidString
+    }
+    
+    static func == (lhs: PeripheralStructure, rhs: PeripheralStructure) -> Bool {
+        lhs.id == rhs.id && lhs.services == rhs.services
     }
     
     mutating func addService(_ cbService: CBService) {

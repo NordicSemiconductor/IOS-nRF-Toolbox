@@ -9,6 +9,7 @@
 import Foundation
 
 extension PeripheralScannerView {
+    @MainActor
     class ViewModel: ObservableObject {
         @Published var state: State = .scanning
         @Published var devices: [ScanResult] = []

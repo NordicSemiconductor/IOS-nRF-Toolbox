@@ -17,6 +17,7 @@
 		01268AF924218E5800E83156 /* ZephyrDFUDocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01268AF824218E5800E83156 /* ZephyrDFUDocumentPicker.swift */; };
 		01268AFB2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01268AFA2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift */; };
 		0126B53F2A5EA8B70033BCC3 /* PeripheralStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0126B53E2A5EA8B70033BCC3 /* PeripheralStructure.swift */; };
+		0126B5412A5EC1120033BCC3 /* PeripheralHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0126B5402A5EC1120033BCC3 /* PeripheralHandler.swift */; };
 		0129126B23E4487000EB3CCD /* UARTTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129126A23E4486F00EB3CCD /* UARTTabBarController.swift */; };
 		012C2BDC240FCD0C005EC1A0 /* DFUUpdateSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDB240FCD0C005EC1A0 /* DFUUpdateSection.swift */; };
 		012C2BE12410682D005EC1A0 /* LegendLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDE2410682D005EC1A0 /* LegendLabel.swift */; };
@@ -69,6 +70,7 @@
 		019985EE23E0622B000CDCB6 /* UARTLoggerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019985EC23E0622B000CDCB6 /* UARTLoggerViewController.swift */; };
 		019985EF23E0622B000CDCB6 /* UARTLoggerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 019985ED23E0622B000CDCB6 /* UARTLoggerViewController.xib */; };
 		019985F123E07CFB000CDCB6 /* XMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019985F023E07CFB000CDCB6 /* XMLDocument.swift */; };
+		019ABF1D2A600A480019BD21 /* DeviceItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019ABF1C2A600A480019BD21 /* DeviceItem.swift */; };
 		01A1B76723CF13A50062FADC /* UARTNewCommandViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A1B76523CF13A50062FADC /* UARTNewCommandViewController.swift */; };
 		01A1B76823CF13A50062FADC /* UARTNewCommandViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01A1B76623CF13A50062FADC /* UARTNewCommandViewController.xib */; };
 		01A1B76D23CF43590062FADC /* UART.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01A1B76C23CF43590062FADC /* UART.xcassets */; };
@@ -350,6 +352,7 @@
 		01268AF824218E5800E83156 /* ZephyrDFUDocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFUDocumentPicker.swift; sourceTree = "<group>"; };
 		01268AFA2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFUTabBarViewController.swift; sourceTree = "<group>"; };
 		0126B53E2A5EA8B70033BCC3 /* PeripheralStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralStructure.swift; sourceTree = "<group>"; };
+		0126B5402A5EC1120033BCC3 /* PeripheralHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralHandler.swift; sourceTree = "<group>"; };
 		0129126A23E4486F00EB3CCD /* UARTTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTTabBarController.swift; sourceTree = "<group>"; };
 		012C2BDB240FCD0C005EC1A0 /* DFUUpdateSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUUpdateSection.swift; sourceTree = "<group>"; };
 		012C2BDE2410682D005EC1A0 /* LegendLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegendLabel.swift; sourceTree = "<group>"; };
@@ -408,6 +411,7 @@
 		019985EC23E0622B000CDCB6 /* UARTLoggerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTLoggerViewController.swift; sourceTree = "<group>"; };
 		019985ED23E0622B000CDCB6 /* UARTLoggerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTLoggerViewController.xib; sourceTree = "<group>"; };
 		019985F023E07CFB000CDCB6 /* XMLDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLDocument.swift; sourceTree = "<group>"; };
+		019ABF1C2A600A480019BD21 /* DeviceItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceItem.swift; sourceTree = "<group>"; };
 		01A1B76523CF13A50062FADC /* UARTNewCommandViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTNewCommandViewController.swift; sourceTree = "<group>"; };
 		01A1B76623CF13A50062FADC /* UARTNewCommandViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTNewCommandViewController.xib; sourceTree = "<group>"; };
 		01A1B76C23CF43590062FADC /* UART.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = UART.xcassets; sourceTree = "<group>"; };
@@ -886,6 +890,8 @@
 		018873BE2A5831ED00253273 /* ConnectedDevices */ = {
 			isa = PBXGroup;
 			children = (
+				019ABF1E2A6044B90019BD21 /* DeviceDetails */,
+				019ABF1B2A600A3A0019BD21 /* DeviceItem */,
 				018873C52A5839C700253273 /* Scanner */,
 				018873BF2A58320600253273 /* ConnectedDevicesView.swift */,
 				018873C12A58322C00253273 /* ConnectedDevicesViewModel.swift */,
@@ -907,6 +913,7 @@
 			isa = PBXGroup;
 			children = (
 				018873D12A58707900253273 /* BluetoothManager.swift */,
+				0126B5402A5EC1120033BCC3 /* PeripheralHandler.swift */,
 				01C81ACF2A5CB1B50011B41E /* ServiceHelper.swift */,
 				01C81AD62A5D8FEA0011B41E /* ReadableError.swift */,
 			);
@@ -941,6 +948,21 @@
 				01A870D923F40E2F00D9202E /* CheckmarkTableViewCell.swift */,
 			);
 			path = LoggViewController;
+			sourceTree = "<group>";
+		};
+		019ABF1B2A600A3A0019BD21 /* DeviceItem */ = {
+			isa = PBXGroup;
+			children = (
+				019ABF1C2A600A480019BD21 /* DeviceItem.swift */,
+			);
+			path = DeviceItem;
+			sourceTree = "<group>";
+		};
+		019ABF1E2A6044B90019BD21 /* DeviceDetails */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DeviceDetails;
 			sourceTree = "<group>";
 		};
 		01A1B76423CF13810062FADC /* NewCommand */ = {
@@ -2242,6 +2264,8 @@
 				0126B53F2A5EA8B70033BCC3 /* PeripheralStructure.swift in Sources */,
 				017D102E2A5809E300E38E5F /* nRF_ToolboxApp.swift in Sources */,
 				018873C02A58320600253273 /* ConnectedDevicesView.swift in Sources */,
+				019ABF1D2A600A480019BD21 /* DeviceItem.swift in Sources */,
+				0126B5412A5EC1120033BCC3 /* PeripheralHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

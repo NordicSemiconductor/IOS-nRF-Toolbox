@@ -15,14 +15,33 @@ extension ConnectedDevicesView {
         let id: UUID
     }
     
+    @MainActor
     class ViewModel: ObservableObject {
-        var devices: [Device] = []
+        private var cancelables = Set<AnyCancellable>()
+        
+        @Published var devices: [PeripheralStructure] = []
+        @Published var handlers: [PeripheralHandler] = []
         
         let bluetoothManager: BluetoothManager
         
-        init(devices: [Device], bluetoothManager: BluetoothManager = .shared) {
-            self.devices = devices
+        init(bluetoothManager: BluetoothManager = .shared) {
             self.bluetoothManager = bluetoothManager
+            
+            bluetoothManager.$peripheralManagers
+                .sink { _ in
+                    
+                } receiveValue: { v in
+                    self.devices = v.map(\.peripheralRepresentation)
+                }
+                .store(in: &cancelables)
+            
+            bluetoothManager.$peripheralManagers
+                .assign(to: &$handlers)
+
+            $handlers.sink { v in
+                print("number of services: \(v.count)")
+            }
+            .store(in: &cancelables)
         }
         
     }

@@ -11,6 +11,7 @@ import iOS_Common_Libraries
 
 struct ConnectedDevicesView: View {
     @StateObject var viewModel = ViewModel()
+    @State var selectedService: String?
     
     @State var showScanner = false
     
@@ -46,7 +47,19 @@ struct ConnectedDevicesView: View {
     }
     
     var deviceList: some View {
-        Text("Devices")
+        List {
+            ForEach($viewModel.handlers) { $device in
+                VStack {
+                    Text(device.peripheralRepresentation.name)
+                    Text("\(device.peripheralRepresentation.services.count)")
+                    HStack {
+                        ForEach(device.peripheralRepresentation.services) {
+                            Text($0.name ?? "some service")
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 

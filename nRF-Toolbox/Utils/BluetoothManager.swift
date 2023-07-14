@@ -27,10 +27,14 @@ class BluetoothManager: ObservableObject {
     
     var sr: [ScanResult] = []
     
+    @Published var peripheralManagers: [PeripheralHandler] = []
+    
     // Connected Devices
     
     init() {
         centralManager.stateChannel.assign(to: &$state)
+        
+        handleConnectedDevices()
     }
     
     func startScan(removeExistingResults: Bool = false) {
@@ -39,6 +43,9 @@ class BluetoothManager: ObservableObject {
         }
         
         centralManager.scanForPeripherals(withServices: nil)
+            .filter { sr in
+                sr.name != nil 
+            }
             .scan([ScanResult](), { acc, sr in
                 return acc.replaceOrAppend(sr, compareBy: \.peripheral.identifier)
             })
@@ -61,4 +68,17 @@ class BluetoothManager: ObservableObject {
             .value
     }
     
+    private func handleConnectedDevices() {
+        Task {
+            for await peripheral in centralManager.connectedPeripheralChannel.values {
+                if peripheral.1 != nil {
+                    continue
+                }
+                
+                DispatchQueue.main.async {
+                    self.peripheralManagers.replacedOrAppended(PeripheralHandler(cbPeripheral: peripheral.0), compareBy: \.cbPeripheral.identifier)
+                }
+            }
+        }
+    }
 }
