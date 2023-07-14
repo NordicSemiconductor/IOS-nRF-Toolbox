@@ -16,7 +16,7 @@ extension PeripheralScannerView {
         @Published var connectingDevice: ScanResult? = nil
         @Published var showError: Bool = false
         
-        let bluetoothManager: BluetoothManager
+        let bluetoothManager: CentralManagerHelper
         private (set) var error: ReadableError? {
             didSet {
                 if error != nil {
@@ -25,7 +25,7 @@ extension PeripheralScannerView {
             }
         }
         
-        init(bluetoothManager: BluetoothManager = BluetoothManager.shared, state: State = .scanning, devices: [ScanResult] = []) {
+        init(bluetoothManager: CentralManagerHelper = CentralManagerHelper.shared, state: State = .scanning, devices: [ScanResult] = []) {
             self.state = state
             self.devices = devices
             
@@ -85,7 +85,7 @@ extension PeripheralScannerView.ViewModel {
 }
 
 extension PeripheralScannerView.ViewModel {
-    private func setupManager(btManager: BluetoothManager) {
+    private func setupManager(btManager: CentralManagerHelper) {
         btManager.centralManager.stateChannel
             .map { state -> State in
                 switch state {

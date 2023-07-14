@@ -23,29 +23,30 @@ struct PeripheralStructure: Identifiable, Equatable {
                 let name: String?
             }
             
-            let cbCharacteristic: CBCharacteristic
+//            let cbCharacteristic: CBCharacteristic
             let id: String
             let name: String?
             fileprivate (set) var descriptors: [Descriptor] = []
         }
         
-        let cbService: CBService
+//        let cbService: CBService
         let id: String
         let name: String?
         fileprivate (set) var characteristics: [Characteristic] = []
     }
     
-    let cbPeripheral: CBPeripheral
+//    let cbPeripheral: CBPeripheral
     let id: String
+    let name: String?
     
-    var name: String {
-        cbPeripheral.name ?? "n/a"
-    }
+//    var name: String {
+//        cbPeripheral.name ?? "n/a"
+//    }
     
     private (set) var services: [Service] = []
     
     init(cbPeripheral: CBPeripheral) {
-        self.cbPeripheral = cbPeripheral
+        self.name = cbPeripheral.name
         self.id = cbPeripheral.identifier.uuidString
     }
     
@@ -55,12 +56,13 @@ struct PeripheralStructure: Identifiable, Equatable {
     
     mutating func addService(_ cbService: CBService) {
         let service = Service(
-            cbService: cbService,
+//            cbService: cbService,
             id: cbService.uuid.uuidString,
             name: S.find(by: cbService.uuid)?.name
         )
-        
         services.append(service)
+        
+        print("added service: \(service.name ?? "no name")")
     }
     
     mutating func addCharacteristic(_ cbCharacteristic: CBCharacteristic) {
@@ -69,11 +71,10 @@ struct PeripheralStructure: Identifiable, Equatable {
         }
         
         let charateristic = Service.Characteristic(
-            cbCharacteristic: cbCharacteristic,
+//            cbCharacteristic: cbCharacteristic,
             id: cbCharacteristic.uuid.uuidString,
             name: C.find(by: cbCharacteristic.uuid)?.name
         )
-        
         services[serviceIndex].characteristics.append(charateristic)
     }
     
@@ -96,7 +97,6 @@ struct PeripheralStructure: Identifiable, Equatable {
             id: cbDescriptor.uuid.uuidString,
             name: D.find(by: cbDescriptor.uuid)?.name
         )
-        
         services[serviceIndex].characteristics[characteristicIndex].descriptors.append(descriptor)
     }
 }

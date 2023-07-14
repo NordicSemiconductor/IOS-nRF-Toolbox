@@ -9,15 +9,14 @@
 import SwiftUI
 
 struct DeviceItem: View {
-    let name: String
-    let services: [ServiceRepresentation]
+    @ObservedObject var peripheral: PeripheralHelper
     
     var body: some View {
         VStack {
-            Text(name)
+            Text(peripheral.peripheralRepresentation.name ?? "n/a")
                 .font(.headline)
             HStack {
-                ForEach(services, id: \.name) { service in
+                ForEach(peripheral.peripheralRepresentation.services, id: \.name) { service in
                     ServiceBadge(serviceRepresentatino: service)
                 }
             }

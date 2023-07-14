@@ -14,6 +14,7 @@ struct ConnectedDevicesView: View {
     @State var selectedService: String?
     
     @State var showScanner = false
+    @State var counter = 0
     
     var body: some View {
         VStack {
@@ -48,16 +49,21 @@ struct ConnectedDevicesView: View {
     
     var deviceList: some View {
         List {
-            ForEach($viewModel.handlers) { $device in
+            ForEach($viewModel.handlers) { $handler in
                 VStack {
-                    Text(device.peripheralRepresentation.name)
-                    Text("\(device.peripheralRepresentation.services.count)")
+                    // try to use funtion
+                    Text(handler.peripheralRepresentation.name ?? "n/a")
+                    
+                    Text("\(handler.serviceCount())")
                     HStack {
-                        ForEach(device.peripheralRepresentation.services) {
+                        ForEach(handler.peripheralRepresentation.services) {
                             Text($0.name ?? "some service")
                         }
                     }
                 }
+            }
+            Button("Refresh \(counter)") {
+                counter += 1
             }
         }
     }

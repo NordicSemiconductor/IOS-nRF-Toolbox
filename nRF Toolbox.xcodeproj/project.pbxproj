@@ -17,7 +17,7 @@
 		01268AF924218E5800E83156 /* ZephyrDFUDocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01268AF824218E5800E83156 /* ZephyrDFUDocumentPicker.swift */; };
 		01268AFB2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01268AFA2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift */; };
 		0126B53F2A5EA8B70033BCC3 /* PeripheralStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0126B53E2A5EA8B70033BCC3 /* PeripheralStructure.swift */; };
-		0126B5412A5EC1120033BCC3 /* PeripheralHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0126B5402A5EC1120033BCC3 /* PeripheralHandler.swift */; };
+		0126B5412A5EC1120033BCC3 /* PeripheralHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0126B5402A5EC1120033BCC3 /* PeripheralHelper.swift */; };
 		0129126B23E4487000EB3CCD /* UARTTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129126A23E4486F00EB3CCD /* UARTTabBarController.swift */; };
 		012C2BDC240FCD0C005EC1A0 /* DFUUpdateSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDB240FCD0C005EC1A0 /* DFUUpdateSection.swift */; };
 		012C2BE12410682D005EC1A0 /* LegendLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDE2410682D005EC1A0 /* LegendLabel.swift */; };
@@ -59,7 +59,7 @@
 		018873C92A583B0000253273 /* PeripheralScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873C82A583B0000253273 /* PeripheralScannerViewModel.swift */; };
 		018873CC2A583C3300253273 /* iOS-BLE-Library in Frameworks */ = {isa = PBXBuildFile; productRef = 018873CB2A583C3300253273 /* iOS-BLE-Library */; };
 		018873CF2A583CE000253273 /* iOS-BLE-Library in Frameworks */ = {isa = PBXBuildFile; productRef = 018873CE2A583CE000253273 /* iOS-BLE-Library */; };
-		018873D22A58707900253273 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873D12A58707900253273 /* BluetoothManager.swift */; };
+		018873D22A58707900253273 /* CentralManagerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873D12A58707900253273 /* CentralManagerHelper.swift */; };
 		0192BB352428E63C003F7F6B /* DFUFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0192BB342428E63C003F7F6B /* DFUFileManager.swift */; };
 		0197AFCF2420DAAC00ADF105 /* NotConnectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0197AFCD2420DAAC00ADF105 /* NotConnectedViewController.swift */; };
 		0197AFD02420DAAC00ADF105 /* NotConnectedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0197AFCE2420DAAC00ADF105 /* NotConnectedViewController.xib */; };
@@ -352,7 +352,7 @@
 		01268AF824218E5800E83156 /* ZephyrDFUDocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFUDocumentPicker.swift; sourceTree = "<group>"; };
 		01268AFA2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFUTabBarViewController.swift; sourceTree = "<group>"; };
 		0126B53E2A5EA8B70033BCC3 /* PeripheralStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralStructure.swift; sourceTree = "<group>"; };
-		0126B5402A5EC1120033BCC3 /* PeripheralHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralHandler.swift; sourceTree = "<group>"; };
+		0126B5402A5EC1120033BCC3 /* PeripheralHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralHelper.swift; sourceTree = "<group>"; };
 		0129126A23E4486F00EB3CCD /* UARTTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTTabBarController.swift; sourceTree = "<group>"; };
 		012C2BDB240FCD0C005EC1A0 /* DFUUpdateSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUUpdateSection.swift; sourceTree = "<group>"; };
 		012C2BDE2410682D005EC1A0 /* LegendLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegendLabel.swift; sourceTree = "<group>"; };
@@ -400,7 +400,7 @@
 		018873C62A583A9900253273 /* PeripheralScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralScannerView.swift; sourceTree = "<group>"; };
 		018873C82A583B0000253273 /* PeripheralScannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralScannerViewModel.swift; sourceTree = "<group>"; };
 		018873CD2A583C4E00253273 /* IOS-BLE-Library */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "IOS-BLE-Library"; path = "../IOS-BLE-Library"; sourceTree = "<group>"; };
-		018873D12A58707900253273 /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
+		018873D12A58707900253273 /* CentralManagerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CentralManagerHelper.swift; sourceTree = "<group>"; };
 		0192BB342428E63C003F7F6B /* DFUFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFileManager.swift; sourceTree = "<group>"; };
 		0197AFCD2420DAAC00ADF105 /* NotConnectedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotConnectedViewController.swift; sourceTree = "<group>"; };
 		0197AFCE2420DAAC00ADF105 /* NotConnectedViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotConnectedViewController.xib; sourceTree = "<group>"; };
@@ -912,8 +912,8 @@
 		018873D02A58706C00253273 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				018873D12A58707900253273 /* BluetoothManager.swift */,
-				0126B5402A5EC1120033BCC3 /* PeripheralHandler.swift */,
+				018873D12A58707900253273 /* CentralManagerHelper.swift */,
+				0126B5402A5EC1120033BCC3 /* PeripheralHelper.swift */,
 				01C81ACF2A5CB1B50011B41E /* ServiceHelper.swift */,
 				01C81AD62A5D8FEA0011B41E /* ReadableError.swift */,
 			);
@@ -2257,7 +2257,7 @@
 				018873C22A58322C00253273 /* ConnectedDevicesViewModel.swift in Sources */,
 				0132082A2A5C142100DCEA11 /* ScanResultItem.swift in Sources */,
 				018873C92A583B0000253273 /* PeripheralScannerViewModel.swift in Sources */,
-				018873D22A58707900253273 /* BluetoothManager.swift in Sources */,
+				018873D22A58707900253273 /* CentralManagerHelper.swift in Sources */,
 				01C81AD52A5CB6420011B41E /* ServiceBadge.swift in Sources */,
 				01C81AD02A5CB1B50011B41E /* ServiceHelper.swift in Sources */,
 				017D10302A5809E300E38E5F /* ContentView.swift in Sources */,
@@ -2265,7 +2265,7 @@
 				017D102E2A5809E300E38E5F /* nRF_ToolboxApp.swift in Sources */,
 				018873C02A58320600253273 /* ConnectedDevicesView.swift in Sources */,
 				019ABF1D2A600A480019BD21 /* DeviceItem.swift in Sources */,
-				0126B5412A5EC1120033BCC3 /* PeripheralHandler.swift in Sources */,
+				0126B5412A5EC1120033BCC3 /* PeripheralHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

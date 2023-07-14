@@ -137,7 +137,7 @@ struct PeripheralScannerView: View {
 
 #if DEBUG
 fileprivate class MockVM: PeripheralScannerView.ViewModel {
-    override init(bluetoothManager: BluetoothManager = BluetoothManager.shared, state: PeripheralScannerView.ViewModel.State = .scanning, devices: [PeripheralScannerView.ViewModel.ScanResult] = []) {
+    override init(bluetoothManager: CentralManagerHelper = CentralManagerHelper.shared, state: PeripheralScannerView.ViewModel.State = .scanning, devices: [PeripheralScannerView.ViewModel.ScanResult] = []) {
         
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 import iOS_BLE_Library
 import Combine
 
-class PeripheralHandler: ObservableObject, Identifiable {
+class PeripheralHelper: ObservableObject, Identifiable {
     private var cancelables = Set<AnyCancellable>()
     
     let cbPeripheral: CBPeripheral
@@ -27,16 +27,29 @@ class PeripheralHandler: ObservableObject, Identifiable {
         self.peripheralManager = PeripheralManager(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
         self.peripheralRepresentation = PeripheralStructure(cbPeripheral: cbPeripheral)
         
+        $peripheralRepresentation.sink { p in
+            print("\(p.name ?? "na"), services: \(p.services.count)")
+            self.objectWillChange.send()
+        }
+        .store(in: &cancelables)
+        
         self.discover()
     }
     
+    func serviceCount() -> Int {
+        return peripheralRepresentation.services.count
+    }
 }
 
-private extension PeripheralHandler {
+private extension PeripheralHelper {
+    
     func discover() {
         Task {
-        for try await service in peripheralManager.discoverServices(serviceUUIDs: nil).autoconnect().receive(on: DispatchQueue.main).values {
+            for try await service in peripheralManager.discoverServices(serviceUUIDs: nil).autoconnect().receive(on: DispatchQueue.main).values {
                 self.peripheralRepresentation.addService(service)
+                    
+                print(#function)
+                objectWillChange.send()
                 
                 Task {
                     for try await characteristic in peripheralManager.discoverCharacteristics(nil, for: service).autoconnect().receive(on: DispatchQueue.main).values {
@@ -45,6 +58,7 @@ private extension PeripheralHandler {
                         Task {
                             for try await descriptor in peripheralManager.discoverDescriptors(for: characteristic).autoconnect().receive(on: DispatchQueue.main).values {
                                 self.peripheralRepresentation.addDescriptor(descriptor)
+                                
                             }
                         }
                     }
