@@ -9,12 +9,13 @@
 import Foundation
 import iOS_BLE_Library
 import Combine
+import CoreBluetoothMock
 
 class PeripheralHelper: ObservableObject, Identifiable {
     private var cancelables = Set<AnyCancellable>()
     
-    let cbPeripheral: CBPeripheral
-    let peripheralManager: PeripheralManager
+    let cbPeripheral: CBMPeripheral
+    let peripheralManager: Peripheral
     
     var id: String {
         cbPeripheral.identifier.uuidString
@@ -22,9 +23,9 @@ class PeripheralHelper: ObservableObject, Identifiable {
     
     @Published var peripheralRepresentation: PeripheralStructure
     
-    init(cbPeripheral: CBPeripheral) {
+    init(cbPeripheral: CBMPeripheral) {
         self.cbPeripheral = cbPeripheral
-        self.peripheralManager = PeripheralManager(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
+        self.peripheralManager = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
         self.peripheralRepresentation = PeripheralStructure(cbPeripheral: cbPeripheral)
         
         $peripheralRepresentation.sink { p in

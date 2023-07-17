@@ -23,31 +23,31 @@ struct PeripheralStructure: Identifiable, Equatable {
                 let name: String?
             }
             
-//            let cbCharacteristic: CBCharacteristic
+            let cbCharacteristic: CBCharacteristic
             let id: String
             let name: String?
             fileprivate (set) var descriptors: [Descriptor] = []
         }
         
-//        let cbService: CBService
+        let cbService: CBService
         let id: String
         let name: String?
         fileprivate (set) var characteristics: [Characteristic] = []
     }
     
-//    let cbPeripheral: CBPeripheral
-    let id: String
-    let name: String?
+    let cbPeripheral: CBPeripheral
+    var id: String {
+        cbPeripheral.identifier.uuidString
+    }
     
-//    var name: String {
-//        cbPeripheral.name ?? "n/a"
-//    }
+    var name: String {
+        cbPeripheral.name ?? "n/a"
+    }
     
     private (set) var services: [Service] = []
     
     init(cbPeripheral: CBPeripheral) {
-        self.name = cbPeripheral.name
-        self.id = cbPeripheral.identifier.uuidString
+        self.cbPeripheral = cbPeripheral
     }
     
     static func == (lhs: PeripheralStructure, rhs: PeripheralStructure) -> Bool {
@@ -56,7 +56,7 @@ struct PeripheralStructure: Identifiable, Equatable {
     
     mutating func addService(_ cbService: CBService) {
         let service = Service(
-//            cbService: cbService,
+            cbService: cbService,
             id: cbService.uuid.uuidString,
             name: S.find(by: cbService.uuid)?.name
         )
@@ -71,7 +71,7 @@ struct PeripheralStructure: Identifiable, Equatable {
         }
         
         let charateristic = Service.Characteristic(
-//            cbCharacteristic: cbCharacteristic,
+            cbCharacteristic: cbCharacteristic,
             id: cbCharacteristic.uuid.uuidString,
             name: C.find(by: cbCharacteristic.uuid)?.name
         )

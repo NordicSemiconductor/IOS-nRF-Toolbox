@@ -27,6 +27,7 @@
 		0132082A2A5C142100DCEA11 /* ScanResultItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013208292A5C142100DCEA11 /* ScanResultItem.swift */; };
 		0133C73B23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0133C73A23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift */; };
 		01363A872417E4FA0030821E /* ControlSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01363A862417E4FA0030821E /* ControlSection.swift */; };
+		01407CB92A65417900A5B279 /* CBMPeripheralPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01407CB82A65417900A5B279 /* CBMPeripheralPreview.swift */; };
 		01468B052361A30A00C29E4C /* StepperTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B032361A30A00C29E4C /* StepperTableViewCell.swift */; };
 		01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01468B042361A30A00C29E4C /* StepperTableViewCell.xib */; };
 		01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */; };
@@ -362,6 +363,7 @@
 		013208292A5C142100DCEA11 /* ScanResultItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanResultItem.swift; sourceTree = "<group>"; };
 		0133C73A23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTPresetCollectionViewDelegate.swift; sourceTree = "<group>"; };
 		01363A862417E4FA0030821E /* ControlSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSection.swift; sourceTree = "<group>"; };
+		01407CB82A65417900A5B279 /* CBMPeripheralPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBMPeripheralPreview.swift; sourceTree = "<group>"; };
 		01468B032361A30A00C29E4C /* StepperTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperTableViewCell.swift; sourceTree = "<group>"; };
 		01468B042361A30A00C29E4C /* StepperTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StepperTableViewCell.xib; sourceTree = "<group>"; };
 		01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalSection.swift; sourceTree = "<group>"; };
@@ -795,6 +797,14 @@
 			path = Section;
 			sourceTree = "<group>";
 		};
+		01407CB72A65415500A5B279 /* Peripheral */ = {
+			isa = PBXGroup;
+			children = (
+				01407CB82A65417900A5B279 /* CBMPeripheralPreview.swift */,
+			);
+			path = Peripheral;
+			sourceTree = "<group>";
+		};
 		01468B022361A23300C29E4C /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -850,6 +860,7 @@
 		017D10342A5809E400E38E5F /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
+				01407CB72A65415500A5B279 /* Peripheral */,
 				017D10352A5809E400E38E5F /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
@@ -2260,6 +2271,7 @@
 				018873D22A58707900253273 /* CentralManagerHelper.swift in Sources */,
 				01C81AD52A5CB6420011B41E /* ServiceBadge.swift in Sources */,
 				01C81AD02A5CB1B50011B41E /* ServiceHelper.swift in Sources */,
+				01407CB92A65417900A5B279 /* CBMPeripheralPreview.swift in Sources */,
 				017D10302A5809E300E38E5F /* ContentView.swift in Sources */,
 				0126B53F2A5EA8B70033BCC3 /* PeripheralStructure.swift in Sources */,
 				017D102E2A5809E300E38E5F /* nRF_ToolboxApp.swift in Sources */,
