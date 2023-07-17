@@ -1,5 +1,5 @@
 //
-//  BluetoothManager.swift
+//  CentralManagerHelper.swift
 //  nRF-Toolbox
 //
 //  Created by Nick Kibysh on 07/07/2023.
@@ -11,7 +11,7 @@ import iOS_BLE_Library
 import iOS_Common_Libraries
 import Combine
 
-class BluetoothManager: ObservableObject {
+class CentralManagerHelper: ObservableObject {
     enum Error: Swift.Error {
         case peripheralNotFound, timeout
     }
@@ -20,18 +20,10 @@ class BluetoothManager: ObservableObject {
     
     let centralManager = CentralManager()
     
-    static var shared = BluetoothManager()
+    static var shared = CentralManagerHelper()
     
-    @Published var state: CBManagerState = .unknown
     @Published var scanResults: [ScanResult] = []
-    
-    var sr: [ScanResult] = []
-    
-    // Connected Devices
-    
-    init() {
-        centralManager.stateChannel.assign(to: &$state)
-    }
+    @Published var peripheralManagers: [PeripheralHelper] = []
     
     func startScan(removeExistingResults: Bool = false) {
         if removeExistingResults {
@@ -39,6 +31,9 @@ class BluetoothManager: ObservableObject {
         }
         
         centralManager.scanForPeripherals(withServices: nil)
+            .filter { sr in
+                sr.name != nil 
+            }
             .scan([ScanResult](), { acc, sr in
                 return acc.replaceOrAppend(sr, compareBy: \.peripheral.identifier)
             })
@@ -55,10 +50,13 @@ class BluetoothManager: ObservableObject {
             throw Error.peripheralNotFound
         }
         
-        return try await centralManager.connect(sr.peripheral)
+        let peripheral = try await centralManager.connect(sr.peripheral)
             .autoconnect()
             .timeout(.seconds(3), scheduler: DispatchQueue.main, customError: { Error.timeout })
             .value
+        
+        self.peripheralManagers.append(PeripheralHelper(cbPeripheral: peripheral))
+        
+        return peripheral
     }
-    
 }

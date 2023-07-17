@@ -25,6 +25,12 @@ struct ServiceBadge: View {
         self.color = .secondary
     }
     
+    init(serviceRepresentatino: ServiceRepresentation) {
+        self.image = serviceRepresentatino.icon
+        self.name = serviceRepresentatino.name
+        self.color = serviceRepresentatino.color
+    }
+    
     var body: some View {
         HStack {
             image?

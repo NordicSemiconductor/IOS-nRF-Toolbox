@@ -11,8 +11,10 @@ import iOS_Common_Libraries
 
 struct ConnectedDevicesView: View {
     @StateObject var viewModel = ViewModel()
+    @State var selectedService: String?
     
     @State var showScanner = false
+    @State var counter = 0
     
     var body: some View {
         VStack {
@@ -46,7 +48,9 @@ struct ConnectedDevicesView: View {
     }
     
     var deviceList: some View {
-        Text("Devices")
+        List(viewModel.handlers) {
+            DeviceItem(peripheral: $0)
+        }
     }
 }
 
