@@ -16,10 +16,10 @@ private extension PeripheralStructure {
 }
 
 struct DeviceItem: View {
-    @ObservedObject var peripheral: PeripheralHelper
+    @ObservedObject var peripheral: DeviceDetailsViewModel
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             Text(peripheral.peripheralRepresentation.name)
                 .font(.headline)
             HStack {
@@ -34,7 +34,7 @@ struct DeviceItem: View {
 struct DeviceItem_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            DeviceItem(peripheral: PeripheralHelper(cbPeripheral: CBMPeripheralPreview(blinky)))
+            DeviceItem(peripheral: DeviceDetailsViewModel(cbPeripheral: CBMPeripheralPreview(blinky)))
         }
     }
 }

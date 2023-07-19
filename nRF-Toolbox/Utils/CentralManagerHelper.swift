@@ -23,7 +23,7 @@ class CentralManagerHelper: ObservableObject {
     static var shared = CentralManagerHelper()
     
     @Published var scanResults: [ScanResult] = []
-    @Published var peripheralManagers: [PeripheralHelper] = []
+    @Published var peripheralManagers: [DeviceDetailsViewModel] = []
     
     func startScan(removeExistingResults: Bool = false) {
         if removeExistingResults {
@@ -55,7 +55,9 @@ class CentralManagerHelper: ObservableObject {
             .timeout(.seconds(3), scheduler: DispatchQueue.main, customError: { Error.timeout })
             .value
         
-        self.peripheralManagers.append(PeripheralHelper(cbPeripheral: peripheral))
+        DispatchQueue.main.async {
+            self.peripheralManagers.append(DeviceDetailsViewModel(cbPeripheral: peripheral))            
+        }
         
         return peripheral
     }

@@ -18,7 +18,7 @@ struct ConnectedDevicesView: View {
     
     var body: some View {
         VStack {
-            if viewModel.devices.isEmpty {
+            if viewModel.handlers.isEmpty {
                 emptyState.padding()
             } else {
                 deviceList
@@ -43,13 +43,21 @@ struct ConnectedDevicesView: View {
         .sheet(isPresented: $showScanner) {
             NavigationStack {
                 PeripheralScannerView()
+                #if os(macOS)
+                    .frame(minWidth: 400, minHeight: 450)
+                #endif
             }
         }
     }
     
     var deviceList: some View {
-        List(viewModel.handlers) {
-            DeviceItem(peripheral: $0)
+        List(viewModel.handlers) { peripheral in
+            NavigationLink {
+                DeviceDetailsView(peripheralHandler: peripheral)
+            } label: {
+                DeviceItem(peripheral: peripheral)
+            }
+
         }
     }
 }

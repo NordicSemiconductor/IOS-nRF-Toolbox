@@ -17,8 +17,12 @@
 		01268AF924218E5800E83156 /* ZephyrDFUDocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01268AF824218E5800E83156 /* ZephyrDFUDocumentPicker.swift */; };
 		01268AFB2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01268AFA2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift */; };
 		0126B53F2A5EA8B70033BCC3 /* PeripheralStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0126B53E2A5EA8B70033BCC3 /* PeripheralStructure.swift */; };
-		0126B5412A5EC1120033BCC3 /* PeripheralHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0126B5402A5EC1120033BCC3 /* PeripheralHelper.swift */; };
+		0126B5412A5EC1120033BCC3 /* DeviceDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0126B5402A5EC1120033BCC3 /* DeviceDetailsViewModel.swift */; };
 		0129126B23E4487000EB3CCD /* UARTTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129126A23E4486F00EB3CCD /* UARTTabBarController.swift */; };
+		0129F21D2A66F8EE002FB3F5 /* DeviceDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129F21C2A66F8EE002FB3F5 /* DeviceDetailsView.swift */; };
+		0129F2202A67FD43002FB3F5 /* ServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129F21F2A67FD43002FB3F5 /* ServiceView.swift */; };
+		0129F2222A67FE39002FB3F5 /* RunningServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129F2212A67FE39002FB3F5 /* RunningServiceView.swift */; };
+		0129F2252A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129F2242A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift */; };
 		012C2BDC240FCD0C005EC1A0 /* DFUUpdateSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDB240FCD0C005EC1A0 /* DFUUpdateSection.swift */; };
 		012C2BE12410682D005EC1A0 /* LegendLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDE2410682D005EC1A0 /* LegendLabel.swift */; };
 		012C2BE22410682D005EC1A0 /* Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDF2410682D005EC1A0 /* Segment.swift */; };
@@ -28,6 +32,7 @@
 		0133C73B23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0133C73A23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift */; };
 		01363A872417E4FA0030821E /* ControlSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01363A862417E4FA0030821E /* ControlSection.swift */; };
 		01407CB92A65417900A5B279 /* CBMPeripheralPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01407CB82A65417900A5B279 /* CBMPeripheralPreview.swift */; };
+		01407CBC2A65819B00A5B279 /* ServiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01407CBB2A65819B00A5B279 /* ServiceHandler.swift */; };
 		01468B052361A30A00C29E4C /* StepperTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B032361A30A00C29E4C /* StepperTableViewCell.swift */; };
 		01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01468B042361A30A00C29E4C /* StepperTableViewCell.xib */; };
 		01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */; };
@@ -127,6 +132,10 @@
 		01DDD79C23EC5CDA003786ED /* TimeIntervalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DDD79A23EC5CDA003786ED /* TimeIntervalTableViewCell.swift */; };
 		01DDD79D23EC5CDA003786ED /* TimeIntervalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01DDD79B23EC5CDA003786ED /* TimeIntervalTableViewCell.xib */; };
 		01DDD7A023EC6351003786ED /* UARTMarcoElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DDD79F23EC6351003786ED /* UARTMarcoElement.swift */; };
+		01DEB4A42A6588CA00D4C1E8 /* RunningServiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DEB4A32A6588CA00D4C1E8 /* RunningServiceHandler.swift */; };
+		01DEB4A62A65E35F00D4C1E8 /* Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DEB4A52A65E35F00D4C1E8 /* Flag.swift */; };
+		01DEB4A82A65E90C00D4C1E8 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DEB4A72A65E90C00D4C1E8 /* Data+Ext.swift */; };
+		01DEB4AA2A65E9D900D4C1E8 /* CharacteristicReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DEB4A92A65E9D900D4C1E8 /* CharacteristicReader.swift */; };
 		01DFC55C2420F0AB00AF2EF0 /* ZephyrDFURouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DFC55B2420F0AB00AF2EF0 /* ZephyrDFURouter.swift */; };
 		01E5910923DB3BC5008F15A4 /* QuickError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910823DB3BC4008F15A4 /* QuickError.swift */; };
 		01E5910B23DECF61008F15A4 /* UARTMacrosList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */; };
@@ -353,8 +362,12 @@
 		01268AF824218E5800E83156 /* ZephyrDFUDocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFUDocumentPicker.swift; sourceTree = "<group>"; };
 		01268AFA2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFUTabBarViewController.swift; sourceTree = "<group>"; };
 		0126B53E2A5EA8B70033BCC3 /* PeripheralStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralStructure.swift; sourceTree = "<group>"; };
-		0126B5402A5EC1120033BCC3 /* PeripheralHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralHelper.swift; sourceTree = "<group>"; };
+		0126B5402A5EC1120033BCC3 /* DeviceDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailsViewModel.swift; sourceTree = "<group>"; };
 		0129126A23E4486F00EB3CCD /* UARTTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTTabBarController.swift; sourceTree = "<group>"; };
+		0129F21C2A66F8EE002FB3F5 /* DeviceDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailsView.swift; sourceTree = "<group>"; };
+		0129F21F2A67FD43002FB3F5 /* ServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceView.swift; sourceTree = "<group>"; };
+		0129F2212A67FE39002FB3F5 /* RunningServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningServiceView.swift; sourceTree = "<group>"; };
+		0129F2242A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningServiceHandlerPreview.swift; sourceTree = "<group>"; };
 		012C2BDB240FCD0C005EC1A0 /* DFUUpdateSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUUpdateSection.swift; sourceTree = "<group>"; };
 		012C2BDE2410682D005EC1A0 /* LegendLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegendLabel.swift; sourceTree = "<group>"; };
 		012C2BDF2410682D005EC1A0 /* Segment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Segment.swift; sourceTree = "<group>"; };
@@ -364,6 +377,7 @@
 		0133C73A23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTPresetCollectionViewDelegate.swift; sourceTree = "<group>"; };
 		01363A862417E4FA0030821E /* ControlSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSection.swift; sourceTree = "<group>"; };
 		01407CB82A65417900A5B279 /* CBMPeripheralPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBMPeripheralPreview.swift; sourceTree = "<group>"; };
+		01407CBB2A65819B00A5B279 /* ServiceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceHandler.swift; sourceTree = "<group>"; };
 		01468B032361A30A00C29E4C /* StepperTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperTableViewCell.swift; sourceTree = "<group>"; };
 		01468B042361A30A00C29E4C /* StepperTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StepperTableViewCell.xib; sourceTree = "<group>"; };
 		01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalSection.swift; sourceTree = "<group>"; };
@@ -467,6 +481,10 @@
 		01DDD79A23EC5CDA003786ED /* TimeIntervalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalTableViewCell.swift; sourceTree = "<group>"; };
 		01DDD79B23EC5CDA003786ED /* TimeIntervalTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeIntervalTableViewCell.xib; sourceTree = "<group>"; };
 		01DDD79F23EC6351003786ED /* UARTMarcoElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMarcoElement.swift; sourceTree = "<group>"; };
+		01DEB4A32A6588CA00D4C1E8 /* RunningServiceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningServiceHandler.swift; sourceTree = "<group>"; };
+		01DEB4A52A65E35F00D4C1E8 /* Flag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flag.swift; sourceTree = "<group>"; };
+		01DEB4A72A65E90C00D4C1E8 /* Data+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Ext.swift"; sourceTree = "<group>"; };
+		01DEB4A92A65E9D900D4C1E8 /* CharacteristicReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacteristicReader.swift; sourceTree = "<group>"; };
 		01DFC55B2420F0AB00AF2EF0 /* ZephyrDFURouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFURouter.swift; sourceTree = "<group>"; };
 		01E5910823DB3BC4008F15A4 /* QuickError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickError.swift; sourceTree = "<group>"; };
 		01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosList.swift; sourceTree = "<group>"; };
@@ -756,6 +774,33 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		0129F21B2A66F8DB002FB3F5 /* RunningSensor */ = {
+			isa = PBXGroup;
+			children = (
+				01DEB4A32A6588CA00D4C1E8 /* RunningServiceHandler.swift */,
+				0129F2212A67FE39002FB3F5 /* RunningServiceView.swift */,
+			);
+			path = RunningSensor;
+			sourceTree = "<group>";
+		};
+		0129F21E2A67F4B4002FB3F5 /* ServiceViews */ = {
+			isa = PBXGroup;
+			children = (
+				0129F21B2A66F8DB002FB3F5 /* RunningSensor */,
+				01407CBB2A65819B00A5B279 /* ServiceHandler.swift */,
+				0129F21F2A67FD43002FB3F5 /* ServiceView.swift */,
+			);
+			path = ServiceViews;
+			sourceTree = "<group>";
+		};
+		0129F2232A6802BF002FB3F5 /* ServiceHandlers */ = {
+			isa = PBXGroup;
+			children = (
+				0129F2242A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift */,
+			);
+			path = ServiceHandlers;
+			sourceTree = "<group>";
+		};
 		012C2BDD24106811005EC1A0 /* Viewes */ = {
 			isa = PBXGroup;
 			children = (
@@ -860,6 +905,7 @@
 		017D10342A5809E400E38E5F /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
+				0129F2232A6802BF002FB3F5 /* ServiceHandlers */,
 				01407CB72A65415500A5B279 /* Peripheral */,
 				017D10352A5809E400E38E5F /* Preview Assets.xcassets */,
 			);
@@ -923,10 +969,12 @@
 		018873D02A58706C00253273 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				01DEB4A92A65E9D900D4C1E8 /* CharacteristicReader.swift */,
+				01DEB4A72A65E90C00D4C1E8 /* Data+Ext.swift */,
 				018873D12A58707900253273 /* CentralManagerHelper.swift */,
-				0126B5402A5EC1120033BCC3 /* PeripheralHelper.swift */,
 				01C81ACF2A5CB1B50011B41E /* ServiceHelper.swift */,
 				01C81AD62A5D8FEA0011B41E /* ReadableError.swift */,
+				01DEB4A52A65E35F00D4C1E8 /* Flag.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -972,6 +1020,9 @@
 		019ABF1E2A6044B90019BD21 /* DeviceDetails */ = {
 			isa = PBXGroup;
 			children = (
+				0129F21E2A67F4B4002FB3F5 /* ServiceViews */,
+				0129F21C2A66F8EE002FB3F5 /* DeviceDetailsView.swift */,
+				0126B5402A5EC1120033BCC3 /* DeviceDetailsViewModel.swift */,
 			);
 			path = DeviceDetails;
 			sourceTree = "<group>";
@@ -2270,14 +2321,23 @@
 				018873C92A583B0000253273 /* PeripheralScannerViewModel.swift in Sources */,
 				018873D22A58707900253273 /* CentralManagerHelper.swift in Sources */,
 				01C81AD52A5CB6420011B41E /* ServiceBadge.swift in Sources */,
+				01DEB4A82A65E90C00D4C1E8 /* Data+Ext.swift in Sources */,
 				01C81AD02A5CB1B50011B41E /* ServiceHelper.swift in Sources */,
+				01DEB4AA2A65E9D900D4C1E8 /* CharacteristicReader.swift in Sources */,
 				01407CB92A65417900A5B279 /* CBMPeripheralPreview.swift in Sources */,
 				017D10302A5809E300E38E5F /* ContentView.swift in Sources */,
+				0129F2202A67FD43002FB3F5 /* ServiceView.swift in Sources */,
 				0126B53F2A5EA8B70033BCC3 /* PeripheralStructure.swift in Sources */,
 				017D102E2A5809E300E38E5F /* nRF_ToolboxApp.swift in Sources */,
 				018873C02A58320600253273 /* ConnectedDevicesView.swift in Sources */,
+				01DEB4A62A65E35F00D4C1E8 /* Flag.swift in Sources */,
 				019ABF1D2A600A480019BD21 /* DeviceItem.swift in Sources */,
-				0126B5412A5EC1120033BCC3 /* PeripheralHelper.swift in Sources */,
+				0129F21D2A66F8EE002FB3F5 /* DeviceDetailsView.swift in Sources */,
+				0129F2252A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift in Sources */,
+				01DEB4A42A6588CA00D4C1E8 /* RunningServiceHandler.swift in Sources */,
+				0129F2222A67FE39002FB3F5 /* RunningServiceView.swift in Sources */,
+				01407CBC2A65819B00A5B279 /* ServiceHandler.swift in Sources */,
+				0126B5412A5EC1120033BCC3 /* DeviceDetailsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2574,6 +2634,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Application requires access to Bluetooth to be able to comunicate with devices.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -2592,7 +2653,7 @@
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nordicsemi.nRF-Toolbox";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nordicsemi.nRF-Toolbox-d";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -2627,6 +2688,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Application requires access to Bluetooth to be able to comunicate with devices.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -2679,6 +2741,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Application requires access to Bluetooth to be able to comunicate with devices.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;

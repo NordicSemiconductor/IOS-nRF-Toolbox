@@ -19,8 +19,7 @@ extension ConnectedDevicesView {
     class ViewModel: ObservableObject {
         private var cancelables = Set<AnyCancellable>()
         
-        @Published var devices: [PeripheralStructure] = []
-        @Published var handlers: [PeripheralHelper] = []
+        @Published var handlers: [DeviceDetailsViewModel] = []
         
         let bluetoothManager: CentralManagerHelper
         
@@ -28,25 +27,9 @@ extension ConnectedDevicesView {
             self.bluetoothManager = bluetoothManager
             
             bluetoothManager.$peripheralManagers
-                .sink { _ in
-                    
-                } receiveValue: { v in
-                    self.devices = v.map(\.peripheralRepresentation)
-                }
-                .store(in: &cancelables)
-            
-            bluetoothManager.$peripheralManagers
                 .assign(to: &$handlers)
-
-            $handlers.map {
-                print(#function)
-                $0.forEach { d in print(d.serviceCount()) }
-                self.objectWillChange.send()
-                return $0.map(\.peripheralRepresentation)
-            }
-            .assign(to: &$devices)
+            
         }
-        
     }
     
 }

@@ -100,33 +100,39 @@ struct PeripheralScannerView: View {
         List{
             Section {
                 ForEach(viewModel.devices) { device in
-                    Button {
-                        Task {
-                            await viewModel.tryToConnect(device: device) {
-                                dismiss()
+                    VStack {
+                        Button {
+                            Task {
+                                await viewModel.tryToConnect(device: device) {
+                                    dismiss()
+                                }
                             }
-                        }
-                    } label: {
-                        HStack {
-                            ScanResultItem(
-                                name: device.name,
-                                rssi: device.rssi,
-                                services: device.knownServices,
-                                otherServices: device.services.count - device.knownServices.count
-                            )
-                            Spacer()
-                            if viewModel.connectingDevice == device {
-                                ProgressView()
-                            } else {
-                                Button {
-                                    // TODO: Open info screen
-                                } label: {
-                                    Image(systemName: "info.circle")
+                        } label: {
+                            HStack {
+                                ScanResultItem(
+                                    name: device.name,
+                                    rssi: device.rssi,
+                                    services: device.knownServices,
+                                    otherServices: device.services.count - device.knownServices.count
+                                )
+                                Spacer()
+                                if viewModel.connectingDevice == device {
+                                    ProgressView()
+                                } else {
+                                    Button {
+                                        // TODO: Open info screen
+                                    } label: {
+                                        Image(systemName: "info.circle")
+                                    }
                                 }
                             }
                         }
+                        #if os(macOS)
+                        Divider()
+                        #endif
                     }
                 }
+                .buttonStyle(PlainButtonStyle())
             } footer: {
                 Text("Select the device to establish connection or press 􀅴 to open detailed information")
             }
