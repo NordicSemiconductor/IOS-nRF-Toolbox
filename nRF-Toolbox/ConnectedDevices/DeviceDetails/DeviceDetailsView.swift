@@ -13,13 +13,37 @@ struct DeviceDetailsView: View {
     @ObservedObject var peripheralHandler: DeviceDetailsViewModel
     
     var body: some View {
-        ServiceView(services: peripheralHandler.serviceHandlers)
-            .navigationTitle(peripheralHandler.deviceName)
+        TabView {
+            ServiceView(services: peripheralHandler.serviceHandlers)
+                .tabItem {
+                    Label {
+                        Text("Services")
+                    } icon: {
+                        Image(systemName: "plus")
+                    }
+
+                }
+            Text("Device Details")
+                .tabItem {
+                    Label {
+                        Text("Device Details")
+                    } icon: {
+                        Image(systemName: "person.fill")
+                    }
+
+                }
+        }
+        .navigationTitle(peripheralHandler.peripheralRepresentation.name)
     }
 }
 
 struct DeviceDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        DeviceDetailsView(peripheralHandler: DeviceDetailsViewModel(cbPeripheral: CBMPeripheralPreview(blinky)))
+        NavigationStack {
+            //        List {
+            DeviceDetailsView(peripheralHandler: DeviceDetailsViewModel(cbPeripheral: CBMPeripheralPreview(runningSpeedCadenceSensor)))
+            //        }
+            //        .navigationTitle("Device")
+        }
     }
 }

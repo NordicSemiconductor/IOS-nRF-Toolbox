@@ -28,15 +28,7 @@ extension ConnectedDevicesView {
             
             bluetoothManager.$peripheralManagers
                 .assign(to: &$handlers)
-            
         }
     }
-    
 }
 
-extension ConnectedDevicesView.ViewModel {
-    private func setupBluetoothManager() {
-        Task {
-        }
-    }
-}

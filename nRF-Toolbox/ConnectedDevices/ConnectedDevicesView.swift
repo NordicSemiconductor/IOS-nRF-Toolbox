@@ -10,7 +10,7 @@ import SwiftUI
 import iOS_Common_Libraries
 
 struct ConnectedDevicesView: View {
-    @StateObject var viewModel = ViewModel()
+    @EnvironmentObject var viewModel: CentralManagerHelper
     @State var selectedService: String?
     
     @State var showScanner = false
@@ -18,7 +18,7 @@ struct ConnectedDevicesView: View {
     
     var body: some View {
         VStack {
-            if viewModel.handlers.isEmpty {
+            if viewModel.peripheralManagers.isEmpty {
                 emptyState.padding()
             } else {
                 deviceList
@@ -51,7 +51,7 @@ struct ConnectedDevicesView: View {
     }
     
     var deviceList: some View {
-        List(viewModel.handlers) { peripheral in
+        List(viewModel.peripheralManagers) { peripheral in
             NavigationLink {
                 DeviceDetailsView(peripheralHandler: peripheral)
             } label: {
@@ -64,9 +64,18 @@ struct ConnectedDevicesView: View {
 
 struct ConnectedDevicesView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationStack {
-            ConnectedDevicesView()
-                .navigationTitle("Connected Devices")
+        Group {
+            NavigationStack {
+                ConnectedDevicesView()
+                    .navigationTitle("Connected Devices")
+                    .environmentObject(CentralManagerHelperPreview() as CentralManagerHelper)
+            }
+            
+            NavigationStack {
+                ConnectedDevicesView()
+                    .navigationTitle("Connected Devices")
+                    .environmentObject(CentralManagerHelperPreview(generateDevices: true) as CentralManagerHelper)
+            }
         }
     }
 }

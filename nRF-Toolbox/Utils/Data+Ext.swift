@@ -49,7 +49,9 @@ extension Data {
     func read<R: FixedWidthInteger>(fromOffset offset: Int = 0) throws -> R {
         let length = MemoryLayout<R>.size
 
-        guard offset + length <= count else { throw DataError.outOfRange }
+        guard offset + length <= count else {
+            throw DataError.outOfRange
+        }
 
         return subdata(in: offset ..< offset + length).withUnsafeBytes { $0.load(as: R.self) }
     }

@@ -34,7 +34,8 @@ struct DeviceItem: View {
 struct DeviceItem_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            DeviceItem(peripheral: DeviceDetailsViewModel(cbPeripheral: CBMPeripheralPreview(blinky)))
+            DeviceItem(peripheral: DeviceDetailsViewModel(cbPeripheral: CBMPeripheralPreview(hrm)))
         }
     }
 }
+

@@ -14,6 +14,6 @@ protocol Flag {
 
 extension Flag {
     func enabled(at bit: Int) -> Bool {
-        (2 ^ bit) & value != 0
+        Int(pow(2, Double(bit))) & value != 0
     }
 }
