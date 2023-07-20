@@ -17,12 +17,12 @@ class CentralManagerHelperPreview: CentralManagerHelper {
     override var peripheralManagers: [DeviceDetailsViewModel] {
         get {
             if mocDevices {
-                [
+                return [
                     DeviceDetailsViewModel(cbPeripheral: CBMPeripheralPreview(hrm)),
                     DeviceDetailsViewModel(cbPeripheral: CBMPeripheralPreview(runningSpeedCadenceSensor))
                 ]
             } else {
-                []
+                return Array<DeviceDetailsViewModel>()
             }
         }
         set {

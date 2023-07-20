@@ -21,14 +21,12 @@ struct RunningServiceView: View {
             SomeValueView(someValue: viewModel.instantaneousStrideLength)
             SomeValueView(someValue: viewModel.totalDistance)
         }
-//        .padding()
-        .background(.yellow.opacity(0.15))
-        .cornerRadius(12)
+        .background(.clear)
     }
 }
 
 struct RunningServiceView_Previews: PreviewProvider {
     static var previews: some View {
-        RunningServiceView(viewModel: RunningServiceHandlerPreview()!)
+        RunningServiceView(viewModel: RunningServiceHandlerPreview()! as RunningServiceHandler)
     }
 }

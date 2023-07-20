@@ -12,25 +12,33 @@ import iOS_BLE_Library
 import iOS_Bluetooth_Numbers_Database
 
 class RunningServiceHandlerPreview: RunningServiceHandler {
+    
+    override var measurement: RSCMeasurement? {
+        get {
+            RSCMeasurement(
+                data: Data(),
+                flags: RSCMeasurementFlags(value: 0xffff),
+                instantaneousSpeed: Measurement<UnitSpeed>.init(value: 10.0, unit: .kilometersPerHour),
+                instantaneousCadence: 2,
+                instantaneousStrideLength: Measurement<UnitLength>.init(value: 1.1, unit: .meters),
+                totalDistance: Measurement<UnitLength>.init(value: 10.1, unit: .kilometers)
+            )
+        }
+        set {
+            
+        }
+    }
+    
     init?() {
         super.init(
             peripheral: Peripheral(
-                peripheral: CBMPeripheralPreview(blinky),
+                peripheral: CBMPeripheralPreview(runningSpeedCadenceSensor),
                 delegate: ReactivePeripheralDelegate()
             ),
             service: CBMServiceMock(
-                type: CBMUUID(string: Service.Nordicsemi.LEDAndButton.nordicLEDAndButtonService.uuidString),
+                type: CBMUUID(string: Service.RunningSpeedAndCadence.runningSpeedAndCadence.uuidString),
                 primary: true
             )
-        )
-        
-        self.measurement = RSCMeasurement(
-            data: Data(),
-            flags: RSCMeasurementFlags(value: 0xffff),
-            instantaneousSpeed: Measurement<UnitSpeed>.init(value: 10.0, unit: .kilometersPerHour),
-            instantaneousCadence: 2,
-            instantaneousStrideLength: Measurement<UnitLength>.init(value: 1.1, unit: .meters),
-            totalDistance: Measurement<UnitLength>.init(value: 10.1, unit: .kilometers)
         )
     }
     

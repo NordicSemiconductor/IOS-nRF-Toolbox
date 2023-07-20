@@ -14,7 +14,17 @@ struct ServiceView: View {
     
     var body: some View {
         List(services) { service in
-            serviceView(service: service)
+            Section(
+                content: {
+                    ZStack(alignment: .topLeading) {
+                        serviceView(service: service)
+                            .background(.clear)
+                        
+                    }
+                }, header: {
+                    ServiceBadge(serviceRepresentatino: ServiceRepresentation(identifier: service.id)!)
+                }
+            )
         }
     }
     
