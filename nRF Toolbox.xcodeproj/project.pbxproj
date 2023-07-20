@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -23,6 +23,8 @@
 		0129F2202A67FD43002FB3F5 /* ServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129F21F2A67FD43002FB3F5 /* ServiceView.swift */; };
 		0129F2222A67FE39002FB3F5 /* RunningServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129F2212A67FE39002FB3F5 /* RunningServiceView.swift */; };
 		0129F2252A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129F2242A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift */; };
+		0129F2282A684059002FB3F5 /* SomeValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129F2272A684059002FB3F5 /* SomeValueView.swift */; };
+		0129F22A2A693375002FB3F5 /* CentralManagerHelperPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129F2292A693375002FB3F5 /* CentralManagerHelperPreview.swift */; };
 		012C2BDC240FCD0C005EC1A0 /* DFUUpdateSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDB240FCD0C005EC1A0 /* DFUUpdateSection.swift */; };
 		012C2BE12410682D005EC1A0 /* LegendLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDE2410682D005EC1A0 /* LegendLabel.swift */; };
 		012C2BE22410682D005EC1A0 /* Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDF2410682D005EC1A0 /* Segment.swift */; };
@@ -368,6 +370,8 @@
 		0129F21F2A67FD43002FB3F5 /* ServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceView.swift; sourceTree = "<group>"; };
 		0129F2212A67FE39002FB3F5 /* RunningServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningServiceView.swift; sourceTree = "<group>"; };
 		0129F2242A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningServiceHandlerPreview.swift; sourceTree = "<group>"; };
+		0129F2272A684059002FB3F5 /* SomeValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SomeValueView.swift; sourceTree = "<group>"; };
+		0129F2292A693375002FB3F5 /* CentralManagerHelperPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CentralManagerHelperPreview.swift; sourceTree = "<group>"; };
 		012C2BDB240FCD0C005EC1A0 /* DFUUpdateSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUUpdateSection.swift; sourceTree = "<group>"; };
 		012C2BDE2410682D005EC1A0 /* LegendLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegendLabel.swift; sourceTree = "<group>"; };
 		012C2BDF2410682D005EC1A0 /* Segment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Segment.swift; sourceTree = "<group>"; };
@@ -801,6 +805,14 @@
 			path = ServiceHandlers;
 			sourceTree = "<group>";
 		};
+		0129F2262A68404C002FB3F5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0129F2272A684059002FB3F5 /* SomeValueView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		012C2BDD24106811005EC1A0 /* Viewes */ = {
 			isa = PBXGroup;
 			children = (
@@ -889,6 +901,7 @@
 		017D102C2A5809E300E38E5F /* nRF-Toolbox */ = {
 			isa = PBXGroup;
 			children = (
+				0129F2262A68404C002FB3F5 /* Views */,
 				0126B53D2A5EA89F0033BCC3 /* Models */,
 				018873D02A58706C00253273 /* Utils */,
 				018873BE2A5831ED00253273 /* ConnectedDevices */,
@@ -908,6 +921,7 @@
 				0129F2232A6802BF002FB3F5 /* ServiceHandlers */,
 				01407CB72A65415500A5B279 /* Peripheral */,
 				017D10352A5809E400E38E5F /* Preview Assets.xcassets */,
+				0129F2292A693375002FB3F5 /* CentralManagerHelperPreview.swift */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -2320,7 +2334,9 @@
 				0132082A2A5C142100DCEA11 /* ScanResultItem.swift in Sources */,
 				018873C92A583B0000253273 /* PeripheralScannerViewModel.swift in Sources */,
 				018873D22A58707900253273 /* CentralManagerHelper.swift in Sources */,
+				0129F2282A684059002FB3F5 /* SomeValueView.swift in Sources */,
 				01C81AD52A5CB6420011B41E /* ServiceBadge.swift in Sources */,
+				0129F22A2A693375002FB3F5 /* CentralManagerHelperPreview.swift in Sources */,
 				01DEB4A82A65E90C00D4C1E8 /* Data+Ext.swift in Sources */,
 				01C81AD02A5CB1B50011B41E /* ServiceHelper.swift in Sources */,
 				01DEB4AA2A65E9D900D4C1E8 /* CharacteristicReader.swift in Sources */,
@@ -2646,10 +2662,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -2700,10 +2716,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -2753,10 +2769,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;

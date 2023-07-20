@@ -10,6 +10,7 @@ import iOS_BLE_Library
 import iOS_Bluetooth_Numbers_Database
 import Foundation
 import Combine
+import SwiftUI
 
 struct RSCFeature: Flag {
     let value: Int
@@ -29,7 +30,17 @@ struct RSCMeasurementFlags: Flag {
     var walkingOrRunningStatus: Bool { enabled(at: 2) }
 }
 
-struct RSCMeasurement {
+struct RSCMeasurement: CustomDebugStringConvertible {
+    var debugDescription: String {
+        let mirror = Mirror(reflecting: self)
+        var str: String = ""
+        for e in mirror.children {
+            str += "\(e.label ?? "no-label"): \(e.value) "
+        }
+        
+        return str
+    }
+    
     let data: Data 
 
     let flags: RSCMeasurementFlags
@@ -75,6 +86,7 @@ struct RSCMeasurement {
     }
 }
 
+
 class RunningServiceHandler: ServiceHandler, ObservableObject {
     
     private var cancelables = Set<AnyCancellable>()
@@ -93,6 +105,11 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
     
     @Published var measurement: RSCMeasurement?
     @Published var error: ReadableError?
+    
+    @Published var instantaneousSpeed: SomeValue = SomeValue(systemName: "hare.fill", text: "Instantaneous Speed", value: "--", isActive: false, color: .green)
+    @Published var instantaneousCadence: SomeValue = SomeValue(systemName: "shoeprints.fill", text: "Instantaneous Cadence", value: "--", isActive: false, color: .blue)
+    @Published var instantaneousStrideLength: SomeValue = SomeValue(systemName: "ruler.fill", text: "Instantaneous Stride Length", value: "--", isActive: false, color: .purple)
+    @Published var totalDistance: SomeValue = SomeValue(systemName: "map.fill", text: "Total Distance", value: "--", isActive: false, color: .cyan)
     
     override init?(peripheral: Peripheral, service: CBService) {
         guard service.uuid.uuidString == Service.RunningSpeedAndCadence.runningSpeedAndCadence.uuidString else {
@@ -161,6 +178,7 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
             
         peripheral.listenValues(for: rscMeasurement)
             .tryMap { try RSCMeasurement(data: $0) }
+            .print()
             .mapError { error in
                 ReadableError(error: error)
             }
@@ -170,6 +188,23 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
                 }
             } receiveValue: { [unowned self] value in
                 self.measurement = value
+                
+                let formatter = MeasurementFormatter()
+                formatter.unitOptions = .naturalScale
+                self.instantaneousSpeed.updateValue(formatter.string(from: value.instantaneousSpeed))
+                self.instantaneousCadence.updateValue("\(value.instantaneousCadence) spm")
+                
+                if let strideLength = value.instantaneousStrideLength {
+                    self.instantaneousStrideLength.updateValue(formatter.string(from: strideLength))
+                } else {
+                    self.instantaneousStrideLength.isActive = false
+                }
+                
+                if let totalDistance = value.totalDistance {
+                    self.totalDistance.updateValue(formatter.string(from: totalDistance))
+                } else {
+                    self.totalDistance.isActive = false
+                }
             }
             .store(in: &cancelables)
     }

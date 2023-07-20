@@ -14,10 +14,10 @@ struct ContentView: View {
         NavigationSplitView {
             ConnectedDevicesView()
                 .navigationTitle("Connected Devices")
+                .environmentObject(CentralManagerHelper.shared)
         } detail: {
             Text("Device Details")
         }
-        .environmentObject(CentralManagerHelper())
 
     }
 }

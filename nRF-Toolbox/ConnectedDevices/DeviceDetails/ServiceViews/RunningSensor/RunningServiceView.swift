@@ -14,20 +14,16 @@ struct RunningServiceView: View {
     @ObservedObject var viewModel: RunningServiceHandler
     private let formatter = MeasurementFormatter()
     
-    /*
-     let instantaneousSpeed: Measurement<UnitSpeed>
-     let instantaneousCadence: Int
-     let instantaneousStrideLength: Measurement<UnitLength>?
-     let totalDistance: Measurement<UnitLength>?
-     */
-    
     var body: some View {
-        speadView
-    }
-    
-    @ViewBuilder
-    var speadView: some View {
-        Text("")
+        VStack(alignment: .leading) {
+            SomeValueView(someValue: viewModel.instantaneousSpeed)
+            SomeValueView(someValue: viewModel.instantaneousCadence)
+            SomeValueView(someValue: viewModel.instantaneousStrideLength)
+            SomeValueView(someValue: viewModel.totalDistance)
+        }
+//        .padding()
+        .background(.yellow.opacity(0.15))
+        .cornerRadius(12)
     }
 }
 
