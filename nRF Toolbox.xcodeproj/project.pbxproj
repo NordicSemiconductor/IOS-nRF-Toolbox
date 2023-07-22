@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,7 +16,7 @@
 		01268AF724218BED00E83156 /* ZephyrFileSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01268AF624218BED00E83156 /* ZephyrFileSelector.swift */; };
 		01268AF924218E5800E83156 /* ZephyrDFUDocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01268AF824218E5800E83156 /* ZephyrDFUDocumentPicker.swift */; };
 		01268AFB2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01268AFA2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift */; };
-		0126B53F2A5EA8B70033BCC3 /* PeripheralStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0126B53E2A5EA8B70033BCC3 /* PeripheralStructure.swift */; };
+		0126B53F2A5EA8B70033BCC3 /* AttributeTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0126B53E2A5EA8B70033BCC3 /* AttributeTable.swift */; };
 		0126B5412A5EC1120033BCC3 /* DeviceDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0126B5402A5EC1120033BCC3 /* DeviceDetailsViewModel.swift */; };
 		0129126B23E4487000EB3CCD /* UARTTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129126A23E4486F00EB3CCD /* UARTTabBarController.swift */; };
 		0129F21D2A66F8EE002FB3F5 /* DeviceDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129F21C2A66F8EE002FB3F5 /* DeviceDetailsView.swift */; };
@@ -30,6 +30,11 @@
 		012C2BE22410682D005EC1A0 /* Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDF2410682D005EC1A0 /* Segment.swift */; };
 		012C2BE32410682D005EC1A0 /* SegmentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BE02410682D005EC1A0 /* SegmentedView.swift */; };
 		012C2BE72410F8AA005EC1A0 /* DFUUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BE52410F8AA005EC1A0 /* DFUUpdateViewController.swift */; };
+		012E228C2A69A4E900B14064 /* AttributeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012E228B2A69A4E900B14064 /* AttributeTableView.swift */; };
+		012E228E2A69A54B00B14064 /* AttributeTablePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012E228D2A69A54B00B14064 /* AttributeTablePreview.swift */; };
+		012E22902A69AFC200B14064 /* String+Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012E228F2A69AFC200B14064 /* String+Name.swift */; };
+		012E22922A6ACD8400B14064 /* AttributeTableItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012E22912A6ACD8400B14064 /* AttributeTableItemView.swift */; };
+		012E22942A6AD5BE00B14064 /* NamedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012E22932A6AD5BE00B14064 /* NamedItem.swift */; };
 		0132082A2A5C142100DCEA11 /* ScanResultItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013208292A5C142100DCEA11 /* ScanResultItem.swift */; };
 		0133C73B23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0133C73A23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift */; };
 		01363A872417E4FA0030821E /* ControlSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01363A862417E4FA0030821E /* ControlSection.swift */; };
@@ -363,7 +368,7 @@
 		01268AF624218BED00E83156 /* ZephyrFileSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrFileSelector.swift; sourceTree = "<group>"; };
 		01268AF824218E5800E83156 /* ZephyrDFUDocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFUDocumentPicker.swift; sourceTree = "<group>"; };
 		01268AFA2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFUTabBarViewController.swift; sourceTree = "<group>"; };
-		0126B53E2A5EA8B70033BCC3 /* PeripheralStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralStructure.swift; sourceTree = "<group>"; };
+		0126B53E2A5EA8B70033BCC3 /* AttributeTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeTable.swift; sourceTree = "<group>"; };
 		0126B5402A5EC1120033BCC3 /* DeviceDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailsViewModel.swift; sourceTree = "<group>"; };
 		0129126A23E4486F00EB3CCD /* UARTTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTTabBarController.swift; sourceTree = "<group>"; };
 		0129F21C2A66F8EE002FB3F5 /* DeviceDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailsView.swift; sourceTree = "<group>"; };
@@ -377,6 +382,11 @@
 		012C2BDF2410682D005EC1A0 /* Segment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Segment.swift; sourceTree = "<group>"; };
 		012C2BE02410682D005EC1A0 /* SegmentedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedView.swift; sourceTree = "<group>"; };
 		012C2BE52410F8AA005EC1A0 /* DFUUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUUpdateViewController.swift; sourceTree = "<group>"; };
+		012E228B2A69A4E900B14064 /* AttributeTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeTableView.swift; sourceTree = "<group>"; };
+		012E228D2A69A54B00B14064 /* AttributeTablePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeTablePreview.swift; sourceTree = "<group>"; };
+		012E228F2A69AFC200B14064 /* String+Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Name.swift"; sourceTree = "<group>"; };
+		012E22912A6ACD8400B14064 /* AttributeTableItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeTableItemView.swift; sourceTree = "<group>"; };
+		012E22932A6AD5BE00B14064 /* NamedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamedItem.swift; sourceTree = "<group>"; };
 		013208292A5C142100DCEA11 /* ScanResultItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanResultItem.swift; sourceTree = "<group>"; };
 		0133C73A23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTPresetCollectionViewDelegate.swift; sourceTree = "<group>"; };
 		01363A862417E4FA0030821E /* ControlSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSection.swift; sourceTree = "<group>"; };
@@ -773,7 +783,7 @@
 		0126B53D2A5EA89F0033BCC3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				0126B53E2A5EA8B70033BCC3 /* PeripheralStructure.swift */,
+				0126B53E2A5EA8B70033BCC3 /* AttributeTable.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -837,6 +847,15 @@
 			path = DFUUpdate;
 			sourceTree = "<group>";
 		};
+		012E228A2A69A48A00B14064 /* AttributeTable */ = {
+			isa = PBXGroup;
+			children = (
+				012E228B2A69A4E900B14064 /* AttributeTableView.swift */,
+				012E22912A6ACD8400B14064 /* AttributeTableItemView.swift */,
+			);
+			path = AttributeTable;
+			sourceTree = "<group>";
+		};
 		01363A842417DD2C0030821E /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -858,6 +877,7 @@
 			isa = PBXGroup;
 			children = (
 				01407CB82A65417900A5B279 /* CBMPeripheralPreview.swift */,
+				012E228D2A69A54B00B14064 /* AttributeTablePreview.swift */,
 			);
 			path = Peripheral;
 			sourceTree = "<group>";
@@ -989,6 +1009,8 @@
 				01C81ACF2A5CB1B50011B41E /* ServiceHelper.swift */,
 				01C81AD62A5D8FEA0011B41E /* ReadableError.swift */,
 				01DEB4A52A65E35F00D4C1E8 /* Flag.swift */,
+				012E228F2A69AFC200B14064 /* String+Name.swift */,
+				012E22932A6AD5BE00B14064 /* NamedItem.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1034,6 +1056,7 @@
 		019ABF1E2A6044B90019BD21 /* DeviceDetails */ = {
 			isa = PBXGroup;
 			children = (
+				012E228A2A69A48A00B14064 /* AttributeTable */,
 				0129F21E2A67F4B4002FB3F5 /* ServiceViews */,
 				0129F21C2A66F8EE002FB3F5 /* DeviceDetailsView.swift */,
 				0126B5402A5EC1120033BCC3 /* DeviceDetailsViewModel.swift */,
@@ -2332,9 +2355,13 @@
 				018873C72A583A9900253273 /* PeripheralScannerView.swift in Sources */,
 				018873C22A58322C00253273 /* ConnectedDevicesViewModel.swift in Sources */,
 				0132082A2A5C142100DCEA11 /* ScanResultItem.swift in Sources */,
+				012E228E2A69A54B00B14064 /* AttributeTablePreview.swift in Sources */,
+				012E228C2A69A4E900B14064 /* AttributeTableView.swift in Sources */,
 				018873C92A583B0000253273 /* PeripheralScannerViewModel.swift in Sources */,
 				018873D22A58707900253273 /* CentralManagerHelper.swift in Sources */,
 				0129F2282A684059002FB3F5 /* SomeValueView.swift in Sources */,
+				012E22922A6ACD8400B14064 /* AttributeTableItemView.swift in Sources */,
+				012E22902A69AFC200B14064 /* String+Name.swift in Sources */,
 				01C81AD52A5CB6420011B41E /* ServiceBadge.swift in Sources */,
 				0129F22A2A693375002FB3F5 /* CentralManagerHelperPreview.swift in Sources */,
 				01DEB4A82A65E90C00D4C1E8 /* Data+Ext.swift in Sources */,
@@ -2343,10 +2370,11 @@
 				01407CB92A65417900A5B279 /* CBMPeripheralPreview.swift in Sources */,
 				017D10302A5809E300E38E5F /* ContentView.swift in Sources */,
 				0129F2202A67FD43002FB3F5 /* ServiceView.swift in Sources */,
-				0126B53F2A5EA8B70033BCC3 /* PeripheralStructure.swift in Sources */,
+				0126B53F2A5EA8B70033BCC3 /* AttributeTable.swift in Sources */,
 				017D102E2A5809E300E38E5F /* nRF_ToolboxApp.swift in Sources */,
 				018873C02A58320600253273 /* ConnectedDevicesView.swift in Sources */,
 				01DEB4A62A65E35F00D4C1E8 /* Flag.swift in Sources */,
+				012E22942A6AD5BE00B14064 /* NamedItem.swift in Sources */,
 				019ABF1D2A600A480019BD21 /* DeviceItem.swift in Sources */,
 				0129F21D2A66F8EE002FB3F5 /* DeviceDetailsView.swift in Sources */,
 				0129F2252A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift in Sources */,

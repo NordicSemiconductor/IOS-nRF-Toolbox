@@ -23,16 +23,16 @@ class DeviceDetailsViewModel: ObservableObject, Identifiable {
     }
     
     var deviceName: String {
-        cbPeripheral.name ?? "Unnamed Device"
+        cbPeripheral.name.deviceName
     }
     
-    @Published var peripheralRepresentation: PeripheralStructure
+    @Published var peripheralRepresentation: AttributeTable
     @Published var serviceHandlers: [ServiceHandler] = []
     
     init(cbPeripheral: CBMPeripheral) {
         self.cbPeripheral = cbPeripheral
         self.peripheralManager = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
-        self.peripheralRepresentation = PeripheralStructure(cbPeripheral: cbPeripheral)
+        self.peripheralRepresentation = AttributeTable()
         
         self.discoverAllServices()
     }

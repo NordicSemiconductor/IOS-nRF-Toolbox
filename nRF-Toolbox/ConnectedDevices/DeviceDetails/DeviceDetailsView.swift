@@ -33,7 +33,7 @@ struct DeviceDetailsView: View {
 
                 }
         }
-        .navigationTitle(peripheralHandler.peripheralRepresentation.name)
+        .navigationTitle(peripheralHandler.cbPeripheral.name.deviceName)
     }
 }
 
