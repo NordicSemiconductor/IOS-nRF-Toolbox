@@ -9,7 +9,7 @@
 import SwiftUI
 import CoreBluetoothMock
 
-private extension PeripheralStructure {
+private extension AttributeTable {
     var serviceRepresentation: [ServiceRepresentation] {
         services.compactMap { ServiceRepresentation(identifier: $0.id) }
     }
@@ -20,11 +20,11 @@ struct DeviceItem: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(peripheral.peripheralRepresentation.name)
+            Text(peripheral.cbPeripheral.name.deviceName)
                 .font(.headline)
             HStack {
-                ForEach(peripheral.peripheralRepresentation.serviceRepresentation, id: \.name) { service in
-                    ServiceBadge(serviceRepresentatino: service)
+                ForEach(peripheral.serviceHandlers) { service in
+                    ServiceBadge(serviceRepresentatino: ServiceRepresentation(identifier: service.service.uuid.uuidString)!)
                 }
             }
         }
