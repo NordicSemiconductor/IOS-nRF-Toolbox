@@ -23,8 +23,8 @@ struct DeviceItem: View {
             Text(peripheral.cbPeripheral.name.deviceName)
                 .font(.headline)
             HStack {
-                ForEach(peripheral.peripheralRepresentation.serviceRepresentation, id: \.name) { service in
-                    ServiceBadge(serviceRepresentatino: service)
+                ForEach(peripheral.serviceHandlers) { service in
+                    ServiceBadge(serviceRepresentatino: ServiceRepresentation(identifier: service.service.uuid.uuidString)!)
                 }
             }
         }

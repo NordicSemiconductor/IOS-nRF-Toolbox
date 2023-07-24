@@ -105,7 +105,7 @@ struct AttributeTable {
             )
         } ?? []
         
-        services[serviceIndex].characteristics.append(charateristic)
+        services[serviceIndex].characteristics.replacedOrAppended(charateristic)
     }
     
     mutating func addDescriptor(_ cbDescriptor: CBDescriptor) {
@@ -122,6 +122,6 @@ struct AttributeTable {
             name: D.find(by: cbDescriptor.uuid)?.name
         )
         
-        services[serviceIndex].characteristics[characteristicIndex].descriptors.append(descriptor)
+        services[serviceIndex].characteristics[characteristicIndex].descriptors.replacedOrAppended(descriptor)
     }
 }

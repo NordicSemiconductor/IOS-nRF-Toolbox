@@ -26,28 +26,51 @@ class DeviceDetailsViewModel: ObservableObject, Identifiable {
         cbPeripheral.name.deviceName
     }
     
-    @Published var peripheralRepresentation: AttributeTable
     @Published var serviceHandlers: [ServiceHandler] = []
+    @Published var attributeTable = AttributeTable()
     
     init(cbPeripheral: CBMPeripheral) {
         self.cbPeripheral = cbPeripheral
         self.peripheralManager = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
-        self.peripheralRepresentation = AttributeTable()
         
         self.discoverAllServices()
+    }
+    
+    func discover() {
+        Task {
+            for try await service in peripheralManager.discoverServices(serviceUUIDs: nil).autoconnect().values {
+                DispatchQueue.main.async {
+                    self.attributeTable.addService(service)
+                }
+                
+                for try await characteristic in peripheralManager.discoverCharacteristics(nil, for: service).autoconnect().values {
+                    DispatchQueue.main.async {
+                        self.attributeTable.addCharacteristic(characteristic)
+                    }
+                    
+                    for try await descriptor in peripheralManager.discoverDescriptors(for: characteristic).autoconnect().values {
+                        DispatchQueue.main.async {
+                            self.attributeTable.addDescriptor(descriptor)
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
 private extension DeviceDetailsViewModel {
+    
     func discoverAllServices() {
         Task {
-            for try await service in peripheralManager.discoverServices(serviceUUIDs: nil).autoconnect().values {
+            for try await service in peripheralManager.discoverServices(serviceUUIDs: nil).autoconnect().timeout(.seconds(5), scheduler: DispatchQueue.main).values {
                 DispatchQueue.main.async {
-                    self.peripheralRepresentation.addService(service)
+//                    self.peripheralRepresentation.addService(service)
                     
                     switch service.uuid.uuidString {
                     case Service.RunningSpeedAndCadence.runningSpeedAndCadence.uuidString:
-                        RunningServiceHandler(peripheral: self.peripheralManager, service: service).map { self.serviceHandlers.append($0) }
+                        _ = RunningServiceHandler(peripheral: self.peripheralManager, service: service).map { self.serviceHandlers.replacedOrAppended($0, compareBy: \.id) }
+//                        RunningServiceHandler(peripheral: self.peripheralManager, service: service).map { self.serviceHandlers.append($0) }
                     default:
                         break
                     }

@@ -11,12 +11,15 @@ import iOS_Common_Libraries
 
 struct AttributeTableView: View {
     let attributeTable: AttributeTable
+    let discoverTableAction: () -> ()
     
     var body: some View {
         if attributeTable.services.isEmpty {
             emptyView
         } else {
-            attributeTableView
+            List {
+                attributeTableView
+            }
         }
     }
     
@@ -26,21 +29,19 @@ struct AttributeTableView: View {
             text: "Attribute Table is not discovered",
             secondaryText: "Would you like to discover all available services, characteristics and descriptors",
             systemName: "list.bullet.rectangle",
-            buttonConfiguration: ContentUnavailableConfiguration.ButtonConfiguration(title: "Discover", action: {
-                
-            })
+            buttonConfiguration: ContentUnavailableConfiguration.ButtonConfiguration(title: "Discover", action: self.discoverTableAction)
         ))
     }
     
     @ViewBuilder
     private var attributeTableView: some View {
         ForEach(attributeTable.services) { service in
-            Text(service.name ?? "no name")
+            AttributeTableItemView(type: .service(service))
             ForEach(service.characteristics) { characteristic in
-                Text(characteristic.name ?? "no name")
+                AttributeTableItemView(type: .characteristic(characteristic))
                 
                 ForEach(characteristic.descriptors) { descriptor in
-                    Text(descriptor.name ?? "no name")
+                    AttributeTableItemView(type: .descriptor(descriptor))
                 }
             }
         }
@@ -50,10 +51,9 @@ struct AttributeTableView: View {
 struct AttributeTableView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            AttributeTableView(attributeTable: AttributeTable())
-            List {
-                AttributeTableView(attributeTable: AttributeTable.preview)
-            }
+            AttributeTableView(attributeTable: AttributeTable(), discoverTableAction: {})
+            
+            AttributeTableView(attributeTable: AttributeTable.preview, discoverTableAction: {})
         }
     }
 }

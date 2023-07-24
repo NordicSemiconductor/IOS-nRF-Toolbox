@@ -21,17 +21,17 @@ struct DeviceDetailsView: View {
                     } icon: {
                         Image(systemName: "plus")
                     }
-
                 }
-            Text("Device Details")
-                .tabItem {
-                    Label {
-                        Text("Device Details")
-                    } icon: {
-                        Image(systemName: "person.fill")
-                    }
-
+            AttributeTableView(attributeTable: peripheralHandler.attributeTable, discoverTableAction: {
+                peripheralHandler.discover()
+            })
+            .tabItem {
+                Label {
+                    Text("Device Details")
+                } icon: {
+                    Image(systemName: "person.fill")
                 }
+            }
         }
         .navigationTitle(peripheralHandler.cbPeripheral.name.deviceName)
     }
