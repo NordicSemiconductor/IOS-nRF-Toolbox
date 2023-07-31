@@ -12,16 +12,29 @@ import CoreBluetoothMock
 
 struct RunningServiceView: View {
     @ObservedObject var viewModel: RunningServiceHandler
-    private let formatter = MeasurementFormatter()
     
     var body: some View {
-        VStack(alignment: .leading) {
-            SomeValueView(someValue: viewModel.instantaneousSpeed)
-            SomeValueView(someValue: viewModel.instantaneousCadence)
-            SomeValueView(someValue: viewModel.instantaneousStrideLength)
-            SomeValueView(someValue: viewModel.totalDistance)
+        List {
+            Section("Measurement") {
+                MeasurementView(
+                    instantaneousSpeed: viewModel.instantaneousSpeed,
+                    instantaneousCadence: viewModel.instantaneousCadence,
+                    instantaneousStrideLength: viewModel.instantaneousStrideLength,
+                    totalDistance: viewModel.totalDistance
+                )
+            }
+            
+            viewModel.sensorLocationValue.map { location in
+                Section("Sensor Location") {
+                    SensorLocationView(sensorLocation: location, readingSensorLocation: $viewModel.readingSersorLocation) {
+                        Task {
+                            try? await viewModel.readSensorLocation()
+                        }
+                    }
+                    .padding()
+                }
+            }
         }
-        .background(.clear)
     }
 }
 

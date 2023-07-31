@@ -30,63 +30,7 @@ struct RSCMeasurementFlags: Flag {
     var walkingOrRunningStatus: Bool { enabled(at: 2) }
 }
 
-struct RSCMeasurement: CustomDebugStringConvertible {
-    var debugDescription: String {
-        let mirror = Mirror(reflecting: self)
-        var str: String = ""
-        for e in mirror.children {
-            str += "\(e.label ?? "no-label"): \(e.value) "
-        }
-        
-        return str
-    }
-    
-    let data: Data 
-
-    let flags: RSCMeasurementFlags
-    let instantaneousSpeed: Measurement<UnitSpeed>
-    let instantaneousCadence: Int
-    let instantaneousStrideLength: Measurement<UnitLength>?
-    let totalDistance: Measurement<UnitLength>?
-
-    init(data: Data, flags: RSCMeasurementFlags, instantaneousSpeed: Measurement<UnitSpeed>, instantaneousCadence: Int, instantaneousStrideLength: Measurement<UnitLength>?, totalDistance: Measurement<UnitLength>?) {
-        self.data = data
-        self.flags = flags
-        self.instantaneousSpeed = instantaneousSpeed
-        self.instantaneousCadence = instantaneousCadence
-        self.instantaneousStrideLength = instantaneousStrideLength
-        self.totalDistance = totalDistance
-    }
-
-    init(data: Data) throws {
-        self.data = data    
-
-        self.flags = RSCMeasurementFlags(value: Int(data[0]))
-        let spead: UInt16 = try data.read(fromOffset: 1)
-        self.instantaneousSpeed = Measurement(value: Double(spead) / 256.0, unit: .metersPerSecond)
-
-        self.instantaneousCadence = Int(data[3])
-
-        var offset: Int = 4
-
-        if flags.instantaneousStrideLengthPresent {
-            let strideLength: UInt16 = try data.read(fromOffset: offset)
-            self.instantaneousStrideLength = Measurement(value: Double(strideLength) / 100.0, unit: .meters)
-            offset += 2
-        } else {
-            self.instantaneousStrideLength = nil
-        }
-
-        if flags.totalDistancePresent {
-            let totalDistance: UInt32 = try data.read(fromOffset: offset)
-            self.totalDistance = Measurement(value: Double(totalDistance) / 10.0, unit: .meters)
-        } else {
-            self.totalDistance = nil
-        }
-    }
-}
-
-
+@MainActor
 class RunningServiceHandler: ServiceHandler, ObservableObject {
     
     private var cancelables = Set<AnyCancellable>()
@@ -111,6 +55,10 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
     @Published var instantaneousStrideLength: SomeValue = SomeValue(systemName: "ruler.fill", text: "Instantaneous Stride Length", value: "--", isActive: false, color: .purple)
     @Published var totalDistance: SomeValue = SomeValue(systemName: "map.fill", text: "Total Distance", value: "--", isActive: false, color: .cyan)
     
+    // MARK: Sensor Location
+    @Published var sensorLocationValue: SensorLocation?
+    @Published var readingSersorLocation: Bool = false 
+    
     override init?(peripheral: Peripheral, service: CBService) {
         guard service.uuid.uuidString == Service.RunningSpeedAndCadence.runningSpeedAndCadence.uuidString else {
             return nil
@@ -119,26 +67,29 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
         super.init(peripheral: peripheral, service: service)
         
         Task {
-            try? await prepare()
-            enableMeasurement()
+            do {
+                try await prepare()
+                enableMeasurement()
+            } catch let e {
+                print(e.localizedDescription)
+            }
         }
     }
     
+    override var image: Image {
+        Image(systemName: "figure.run")
+    }
+    
     func prepare() async throws {
-        let characteristicIDs = [
-            Characteristic.RscMeasurement.rscMeasurement,
-            Characteristic.RscFeature.rscFeature
-        ].map { CBUUID(string: $0.uuidString) }
-        
-        let characteristicsSeq = peripheral.discoverCharacteristics(characteristicIDs, for: service)
+        let characteristicsSeq = peripheral.discoverCharacteristics([.rscFeature, .rscMeasurement], for: service)
             .autoconnect()
             .timeout(.seconds(3), scheduler: DispatchQueue.main, customError: { Error.timeout })
         
         for try await ch in characteristicsSeq.values {
-            switch ch.uuid.uuidString {
-            case Characteristic.RscMeasurement.rscMeasurement.uuidString:
+            switch ch.uuid {
+            case .rscMeasurement:
                 rscMeasurement = ch
-            case Characteristic.RscFeature.rscFeature.uuidString:
+            case .rscFeature:
                 rscFeature = ch
             default:
                 break
@@ -153,24 +104,22 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
             throw Error.noData
         }
         
-        self.features = RSCFeature(value: try feauturesData.read() as Int)
+        let data = try feauturesData.read() as UInt16
+        self.features = RSCFeature(value: Int(data))
         
         if features.multipleSensorLocation {
-            let uuid = CBUUID(string: Characteristic.SensorLocation.sensorLocation.uuidString)
-            
-            self.sensorLocation = try await peripheral.discoverCharacteristics([uuid], for: service)
+            self.sensorLocation = try await peripheral.discoverCharacteristics([.sensorLocation], for: service)
                 .autoconnect()
                 .value
+            
+            self.sensorLocationValue = .unknown
         }
         
         if features.sensorCalibrationProcedure {
-            let uuid = CBUUID(string: Characteristic.ScControlPoint.scControlPoint.uuidString)
-            
-            self.scControlPoint = try await peripheral.discoverCharacteristics([uuid], for: service)
+            self.scControlPoint = try await peripheral.discoverCharacteristics([.scControlPoint], for: service)
                 .autoconnect()
                 .value
         }
-        
     }
     
     func enableMeasurement() {
@@ -178,7 +127,6 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
             
         peripheral.listenValues(for: rscMeasurement)
             .tryMap { try RSCMeasurement(data: $0) }
-            .print()
             .mapError { error in
                 ReadableError(error: error)
             }
@@ -207,5 +155,21 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
                 }
             }
             .store(in: &cancelables)
+    }
+    
+    func readSensorLocation() async throws {
+        readingSersorLocation = true
+        defer {
+            readingSersorLocation = false
+        }
+        guard let sensorLocation else {
+            throw Error.noMandatoryCharacteristic
+        }
+        
+        guard let v = try await peripheral.readValue(for: sensorLocation).value else {
+            throw Error.noData
+        }
+        
+        self.sensorLocationValue = SensorLocation(data: v)
     }
 }

@@ -24,6 +24,14 @@ struct ConnectedDevicesView: View {
                 deviceList
             }
         }
+        .sheet(isPresented: $showScanner) {
+            NavigationStack {
+                PeripheralScannerView()
+                #if os(macOS)
+                    .frame(minWidth: 400, minHeight: 450)
+                #endif
+            }
+        }
     }
     
     @ViewBuilder
@@ -40,24 +48,21 @@ struct ConnectedDevicesView: View {
                     })
             )
         )
-        .sheet(isPresented: $showScanner) {
-            NavigationStack {
-                PeripheralScannerView()
-                #if os(macOS)
-                    .frame(minWidth: 400, minHeight: 450)
-                #endif
-            }
-        }
+        
     }
     
     var deviceList: some View {
-        List(viewModel.peripheralManagers) { peripheral in
-            NavigationLink {
-                DeviceDetailsView(peripheralHandler: peripheral)
-            } label: {
-                DeviceItem(peripheral: peripheral)
+        List {
+            ForEach(viewModel.peripheralManagers) { peripheral in
+                NavigationLink {
+                    DeviceDetailsView(peripheralHandler: peripheral)
+                } label: {
+                    DeviceItem(peripheral: peripheral)
+                }
             }
-
+            Button("Connect another device") {
+               showScanner = true
+            }
         }
     }
 }

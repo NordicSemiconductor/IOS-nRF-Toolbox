@@ -8,11 +8,18 @@
 
 import Foundation
 import iOS_BLE_Library
+import iOS_Bluetooth_Numbers_Database
+import SwiftUI
 
+@MainActor
 class ServiceHandler: Identifiable {
     let peripheral: Peripheral
     let service: CBService
-    var id: String { service.uuid.uuidString }
+    
+    nonisolated var id: String { service.uuid.uuidString }
+    
+    var name: String { Service.find(by: id)?.name ?? "Unknown Service" }
+    var image: Image { Image(systemName: "circle.hexagongrid.circle")  }
     
     init?(peripheral: Peripheral, service: CBService) {
         self.peripheral = peripheral
