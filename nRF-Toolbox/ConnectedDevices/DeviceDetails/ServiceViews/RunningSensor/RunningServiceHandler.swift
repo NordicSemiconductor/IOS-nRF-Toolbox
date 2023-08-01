@@ -30,13 +30,56 @@ struct RSCMeasurementFlags: Flag {
     var walkingOrRunningStatus: Bool { enabled(at: 2) }
 }
 
+enum OpCode: UInt8, CustomStringConvertible {
+    case setCumulativeValue = 0x01
+    case startSensorCalibration
+    case updateSensorLocation
+    case requestSupportedSensorLocations
+    case responseCode = 0x10
+
+    var description: String {
+        switch self {
+        case .setCumulativeValue:
+            return "Set Cumulative Value"
+        case .startSensorCalibration:
+            return "Start Sensor Calibration"
+        case .updateSensorLocation:
+            return "Update Sensor Location"
+        case .requestSupportedSensorLocations:
+            return "Request Supported Sensor Locations"
+        case .responseCode:
+            return "Response Code"
+        }
+    }
+}
+
+enum ResponseValue: UInt8, CustomStringConvertible {
+    case success = 0x01
+    case opCodeNotSupported = 0x02
+    case invalidParameter = 0x03
+    case operationFailed = 0x04
+
+    var description: String {
+        switch self {
+        case .success:
+            return "Success"
+        case .opCodeNotSupported:
+            return "Op Code Not Supported"
+        case .invalidParameter:
+            return "Invalid Parameter"
+        case .operationFailed:
+            return "Operation Failed"
+        }
+    }
+}
+
 @MainActor
 class RunningServiceHandler: ServiceHandler, ObservableObject {
     
     private var cancelables = Set<AnyCancellable>()
     
     enum Error: Swift.Error {
-        case timeout, noMandatoryCharacteristic, noData, parseError
+        case timeout, noMandatoryCharacteristic, noData, parseError, controlPointError(ResponseValue)
     }
     
     // MARK: Characteristics
@@ -57,6 +100,7 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
     
     // MARK: Sensor Location
     @Published var sensorLocationValue: SensorLocation?
+    @Published var sensorLocationSupported: Bool = false
     @Published var readingSersorLocation: Bool = false 
     
     override init?(peripheral: Peripheral, service: CBService) {
@@ -112,19 +156,35 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
                 .autoconnect()
                 .value
             
-            self.sensorLocationValue = .unknown
+            self.sensorLocationSupported = true
         }
         
         if features.sensorCalibrationProcedure {
             self.scControlPoint = try await peripheral.discoverCharacteristics([.scControlPoint], for: service)
                 .autoconnect()
                 .value
+            
+            self.peripheral.peripheral.setNotifyValue(true, for: scControlPoint!)
+//            self.peripheral.listenValues(for: scControlPoint!)
+//                .map { data in
+//                    let opCode = OpCode(rawValue: data[1])!
+//                    let responseValue = ResponseValue(rawValue: data[2])!
+//                    return (opCode, responseValue)
+//                }
+//                .sink { _ in
+//
+//                } receiveValue: { data in
+//                    print(data.0.description)
+//                    print(data.1.description)
+//                }
+//                .store(in: &cancelables)
+
         }
     }
     
     func enableMeasurement() {
         peripheral.peripheral.setNotifyValue(true, for: rscMeasurement)
-            
+        
         peripheral.listenValues(for: rscMeasurement)
             .tryMap { try RSCMeasurement(data: $0) }
             .mapError { error in
@@ -163,13 +223,67 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
             readingSersorLocation = false
         }
         guard let sensorLocation else {
-            throw Error.noMandatoryCharacteristic
+            fatalError("there should not be UI that can call this method")
         }
         
         guard let v = try await peripheral.readValue(for: sensorLocation).value else {
             throw Error.noData
         }
         
-        self.sensorLocationValue = SensorLocation(data: v)
+        self.sensorLocationValue = SensorLocation(rawValue: v[0])
+    }
+    
+    func writeCommand(opCode: OpCode, parameter: Data?) async throws -> Data? {
+        guard let scControlPoint else {
+            fatalError("control point should not be nil")
+        }
+        
+        var data = Data()
+        data.append(opCode.rawValue)
+        
+        if let parameter {
+            data.append(parameter)
+        }
+        
+        let publisher = self.peripheral.listenValues(for: scControlPoint)
+            .tryCompactMap { data -> Data? in
+                let responseOpCode = OpCode(rawValue: data[1])!
+                guard responseOpCode == opCode else {
+                    return nil
+                }
+
+                let responseValue = ResponseValue(rawValue: data[2])!
+
+                if responseValue != .success {
+                    throw Error.controlPointError(responseValue)
+                }
+
+                if data.count > 3 {
+                    return data[3...]
+                } else {
+                    return nil
+                }
+            }
+            .first()
+        
+        return try await peripheral.writeValueWithResponse(data, for: scControlPoint)
+            .flatMap { _ in publisher }
+            .value
+    }
+    
+    func writeControlPoint() async throws {
+        
+    }
+    
+    func requestSupportedSensorLocations() async throws {
+        guard let data = try await writeCommand(opCode: .requestSupportedSensorLocations, parameter: nil) else {
+            throw Error.noData
+        }
+
+        // convert data to array of [UInt8]
+        let locationsData = [UInt8](data)
+        let locations = locationsData.compactMap { SensorLocation(rawValue: $0) }
+        
+        print(locations)
     }
 }

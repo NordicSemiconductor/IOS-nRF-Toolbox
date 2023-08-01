@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct SensorLocationView: View {
-    let sensorLocation: SensorLocation
+    let sensorLocation: SensorLocation?
     @Binding var readingSensorLocation: Bool
     
     let readSensorLocation: () -> ()
@@ -17,7 +17,7 @@ struct SensorLocationView: View {
     var body: some View {
         HStack {
             Label {
-                Text(sensorLocation.description)
+                Text(sensorLocation?.description ?? "unknown")
             } icon: {
                 Image(systemName: "sensor.tag.radiowaves.forward")
             }

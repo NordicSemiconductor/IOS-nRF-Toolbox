@@ -24,14 +24,27 @@ struct RunningServiceView: View {
                 )
             }
             
-            viewModel.sensorLocationValue.map { location in
+            if viewModel.sensorLocationSupported {
                 Section("Sensor Location") {
-                    SensorLocationView(sensorLocation: location, readingSensorLocation: $viewModel.readingSersorLocation) {
+                    SensorLocationView(sensorLocation: viewModel.sensorLocationValue, readingSensorLocation: $viewModel.readingSersorLocation) {
                         Task {
                             try? await viewModel.readSensorLocation()
                         }
                     }
                     .padding()
+                }
+            }
+            
+            Section("Control") {
+                Button("Send OP Code") {
+                    Task {
+                        try? await viewModel.writeControlPoint()
+                    }
+                }
+                Button("Request sensor locations") {
+                    Task {
+                        try? await viewModel.requestSupportedSensorLocations()
+                    }
                 }
             }
         }

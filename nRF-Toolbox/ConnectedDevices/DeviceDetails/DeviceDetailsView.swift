@@ -24,9 +24,12 @@ struct DeviceDetailsView: View {
                         }
                     }
             }
-            AttributeTableView(attributeTable: peripheralHandler.attributeTable, discoverTableAction: {
-                peripheralHandler.discover()
-            })
+            AttributeTableView(
+                attributeTable: peripheralHandler.attributeTable,
+                discoverTableAction: {
+                    peripheralHandler.discover()
+                }
+            )
             .tabItem {
                 Label {
                     Text("Device Details")
