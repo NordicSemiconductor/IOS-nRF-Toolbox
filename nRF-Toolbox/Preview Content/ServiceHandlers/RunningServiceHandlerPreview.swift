@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreBluetoothMock
+import CoreBluetoothMock_Collection
 import iOS_BLE_Library
 import iOS_Bluetooth_Numbers_Database
 
@@ -17,7 +18,7 @@ class RunningServiceHandlerPreview: RunningServiceHandler {
         get {
             RSCMeasurement(
                 data: Data(),
-                flags: RSCMeasurementFlags(value: 0xffff),
+                flags: .all,
                 instantaneousSpeed: Measurement<UnitSpeed>.init(value: 10.0, unit: .kilometersPerHour),
                 instantaneousCadence: 2,
                 instantaneousStrideLength: Measurement<UnitLength>.init(value: 1.1, unit: .meters),
@@ -36,7 +37,7 @@ class RunningServiceHandlerPreview: RunningServiceHandler {
                 delegate: ReactivePeripheralDelegate()
             ),
             service: CBMServiceMock(
-                type: CBMUUID(string: Service.RunningSpeedAndCadence.runningSpeedAndCadence.uuidString),
+                type: CBMUUID(string: Service.runningSpeedAndCadence.uuidString),
                 primary: true
             )
         )

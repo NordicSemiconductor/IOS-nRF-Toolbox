@@ -10,8 +10,8 @@ import CoreBluetoothMock
 import iOS_Bluetooth_Numbers_Database
 
 extension CBMUUID {
-    static let rscMeasurement = CBMUUID(string: Characteristic.RscMeasurement.rscMeasurement.uuidString)
-    static let rscFeature = CBMUUID(string: Characteristic.RscFeature.rscFeature.uuidString)
-    static let sensorLocation = CBMUUID(string: Characteristic.SensorLocation.sensorLocation.uuidString)
-    static let scControlPoint = CBMUUID(string: Characteristic.ScControlPoint.scControlPoint.uuidString)
+    static let rscMeasurement = CBMUUID(string: Characteristic.rscMeasurement.uuidString)
+    static let rscFeature = CBMUUID(string: Characteristic.rscFeature.uuidString)
+    static let sensorLocation = CBMUUID(string: Characteristic.sensorLocation.uuidString)
+    static let scControlPoint = CBMUUID(string: Characteristic.scControlPoint.uuidString)
 }

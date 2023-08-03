@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreBluetoothMock_Collection
 
 struct RSCMeasurement: CustomDebugStringConvertible {
     var debugDescription: String {
@@ -21,13 +22,13 @@ struct RSCMeasurement: CustomDebugStringConvertible {
     
     let data: Data
 
-    let flags: RSCMeasurementFlags
+    let flags: RunningSpeedAndCadence.RSCMeasurementFlags
     let instantaneousSpeed: Measurement<UnitSpeed>
     let instantaneousCadence: Int
     let instantaneousStrideLength: Measurement<UnitLength>?
     let totalDistance: Measurement<UnitLength>?
 
-    init(data: Data, flags: RSCMeasurementFlags, instantaneousSpeed: Measurement<UnitSpeed>, instantaneousCadence: Int, instantaneousStrideLength: Measurement<UnitLength>?, totalDistance: Measurement<UnitLength>?) {
+    init(data: Data, flags: RunningSpeedAndCadence.RSCMeasurementFlags, instantaneousSpeed: Measurement<UnitSpeed>, instantaneousCadence: Int, instantaneousStrideLength: Measurement<UnitLength>?, totalDistance: Measurement<UnitLength>?) {
         self.data = data
         self.flags = flags
         self.instantaneousSpeed = instantaneousSpeed
@@ -39,7 +40,7 @@ struct RSCMeasurement: CustomDebugStringConvertible {
     init(data: Data) throws {
         self.data = data
 
-        self.flags = RSCMeasurementFlags(value: Int(data[0]))
+        self.flags = RunningSpeedAndCadence.RSCMeasurementFlags(rawValue: UInt8(data[0]))
         let spead: UInt16 = try data.read(fromOffset: 1)
         self.instantaneousSpeed = Measurement(value: Double(spead) / 256.0, unit: .metersPerSecond)
 
@@ -47,7 +48,7 @@ struct RSCMeasurement: CustomDebugStringConvertible {
 
         var offset: Int = 4
 
-        if flags.instantaneousStrideLengthPresent {
+        if flags.contains(.instantaneousStrideLengthPresent) {
             let strideLength: UInt16 = try data.read(fromOffset: offset)
             self.instantaneousStrideLength = Measurement(value: Double(strideLength) / 100.0, unit: .meters)
             offset += 2
@@ -55,7 +56,7 @@ struct RSCMeasurement: CustomDebugStringConvertible {
             self.instantaneousStrideLength = nil
         }
 
-        if flags.totalDistancePresent {
+        if flags.contains(.totalDistancePresent) {
             let totalDistance: UInt32 = try data.read(fromOffset: offset)
             self.totalDistance = Measurement(value: Double(totalDistance) / 10.0, unit: .meters)
         } else {

@@ -8,70 +8,10 @@
 
 import iOS_BLE_Library
 import iOS_Bluetooth_Numbers_Database
+import CoreBluetoothMock_Collection
 import Foundation
 import Combine
 import SwiftUI
-
-struct RSCFeature: Flag {
-    let value: Int
-    
-    var instantaneousStrideLengthMeasurement: Bool { enabled(at: 0) }
-    var totalDistanceMeasurement: Bool { enabled(at: 1) }
-    var walkingOrRunningStatus: Bool { enabled(at: 2) }
-    var sensorCalibrationProcedure: Bool { enabled(at: 3) }
-    var multipleSensorLocation: Bool { enabled(at: 4) }
-}
-
-struct RSCMeasurementFlags: Flag {
-    let value: Int
-
-    var instantaneousStrideLengthPresent: Bool { enabled(at: 0) }
-    var totalDistancePresent: Bool { enabled(at: 1) }
-    var walkingOrRunningStatus: Bool { enabled(at: 2) }
-}
-
-enum OpCode: UInt8, CustomStringConvertible {
-    case setCumulativeValue = 0x01
-    case startSensorCalibration
-    case updateSensorLocation
-    case requestSupportedSensorLocations
-    case responseCode = 0x10
-
-    var description: String {
-        switch self {
-        case .setCumulativeValue:
-            return "Set Cumulative Value"
-        case .startSensorCalibration:
-            return "Start Sensor Calibration"
-        case .updateSensorLocation:
-            return "Update Sensor Location"
-        case .requestSupportedSensorLocations:
-            return "Request Supported Sensor Locations"
-        case .responseCode:
-            return "Response Code"
-        }
-    }
-}
-
-enum ResponseValue: UInt8, CustomStringConvertible {
-    case success = 0x01
-    case opCodeNotSupported = 0x02
-    case invalidParameter = 0x03
-    case operationFailed = 0x04
-
-    var description: String {
-        switch self {
-        case .success:
-            return "Success"
-        case .opCodeNotSupported:
-            return "Op Code Not Supported"
-        case .invalidParameter:
-            return "Invalid Parameter"
-        case .operationFailed:
-            return "Operation Failed"
-        }
-    }
-}
 
 @MainActor
 class RunningServiceHandler: ServiceHandler, ObservableObject {
@@ -79,19 +19,20 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
     private var cancelables = Set<AnyCancellable>()
     
     enum Error: Swift.Error {
-        case timeout, noMandatoryCharacteristic, noData, parseError, controlPointError(ResponseValue)
+        case timeout, noMandatoryCharacteristic, noData, parseError, controlPointError(RunningSpeedAndCadence.ResponseValue)
     }
     
     // MARK: Characteristics
     var rscMeasurement: CBCharacteristic!
     var rscFeature: CBCharacteristic!
-    var features: RSCFeature!
+    var features: RunningSpeedAndCadence.RSCFeature!
     
     var sensorLocation: CBCharacteristic?
     var scControlPoint: CBCharacteristic?
     
     @Published var measurement: RSCMeasurement?
     @Published var error: ReadableError?
+    @Published var showError: Bool = false
     
     @Published var instantaneousSpeed: SomeValue = SomeValue(systemName: "hare.fill", text: "Instantaneous Speed", value: "--", isActive: false, color: .green)
     @Published var instantaneousCadence: SomeValue = SomeValue(systemName: "shoeprints.fill", text: "Instantaneous Cadence", value: "--", isActive: false, color: .blue)
@@ -104,7 +45,7 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
     @Published var readingSersorLocation: Bool = false 
     
     override init?(peripheral: Peripheral, service: CBService) {
-        guard service.uuid.uuidString == Service.RunningSpeedAndCadence.runningSpeedAndCadence.uuidString else {
+        guard service.uuid.uuidString == Service.runningSpeedAndCadence.uuidString else {
             return nil
         }
 
@@ -148,10 +89,9 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
             throw Error.noData
         }
         
-        let data = try feauturesData.read() as UInt16
-        self.features = RSCFeature(value: Int(data))
+        self.features = RunningSpeedAndCadence.RSCFeature(rawValue: feauturesData[1])
         
-        if features.multipleSensorLocation {
+        if features.contains(.multipleSensorLocation) {
             self.sensorLocation = try await peripheral.discoverCharacteristics([.sensorLocation], for: service)
                 .autoconnect()
                 .value
@@ -159,26 +99,12 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
             self.sensorLocationSupported = true
         }
         
-        if features.sensorCalibrationProcedure {
+        if features.contains(.sensorCalibrationProcedure) {
             self.scControlPoint = try await peripheral.discoverCharacteristics([.scControlPoint], for: service)
                 .autoconnect()
                 .value
             
             self.peripheral.peripheral.setNotifyValue(true, for: scControlPoint!)
-//            self.peripheral.listenValues(for: scControlPoint!)
-//                .map { data in
-//                    let opCode = OpCode(rawValue: data[1])!
-//                    let responseValue = ResponseValue(rawValue: data[2])!
-//                    return (opCode, responseValue)
-//                }
-//                .sink { _ in
-//
-//                } receiveValue: { data in
-//                    print(data.0.description)
-//                    print(data.1.description)
-//                }
-//                .store(in: &cancelables)
-
         }
     }
     
@@ -233,7 +159,8 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
         self.sensorLocationValue = SensorLocation(rawValue: v[0])
     }
     
-    func writeCommand(opCode: OpCode, parameter: Data?) async throws -> Data? {
+    @discardableResult
+    func writeCommand(opCode: RunningSpeedAndCadence.OpCode, parameter: Data?) async throws -> Data? {
         guard let scControlPoint else {
             fatalError("control point should not be nil")
         }
@@ -247,12 +174,12 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
         
         let publisher = self.peripheral.listenValues(for: scControlPoint)
             .tryCompactMap { data -> Data? in
-                let responseOpCode = OpCode(rawValue: data[1])!
+                let responseOpCode = RunningSpeedAndCadence.OpCode(rawValue: data[1])!
                 guard responseOpCode == opCode else {
                     return nil
                 }
 
-                let responseValue = ResponseValue(rawValue: data[2])!
+                let responseValue = RunningSpeedAndCadence.ResponseValue(rawValue: data[2])!
 
                 if responseValue != .success {
                     throw Error.controlPointError(responseValue)
@@ -271,19 +198,44 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
             .value
     }
     
-    func writeControlPoint() async throws {
-        
-    }
-    
-    func requestSupportedSensorLocations() async throws {
+    func requestSupportedSensorLocations() async throws -> [SensorLocation] {
         guard let data = try await writeCommand(opCode: .requestSupportedSensorLocations, parameter: nil) else {
             throw Error.noData
         }
 
-        // convert data to array of [UInt8]
         let locationsData = [UInt8](data)
-        let locations = locationsData.compactMap { SensorLocation(rawValue: $0) }
+        return locationsData.compactMap { SensorLocation(rawValue: $0) }
+    }
+    
+    func setCumulativeValue(newDistance: Measurement<UnitLength>) async throws {
+        var meters = Int(newDistance.converted(to: .meters).value)
+        let data = Data(bytes: &meters, count: MemoryLayout.size(ofValue: meters))
         
-        print(locations)
+        try await writeCommand(opCode: .setCumulativeValue, parameter: data)
+    }
+    
+    func updateSensorLocation(newLocation: SensorLocation) async throws {
+        let data = Data([newLocation.rawValue])
+        try await writeCommand(opCode: .updateSensorLocation, parameter: data)
+    }
+}
+
+extension RunningServiceHandler {
+    public func presentError(_ error: Swift.Error) {
+        self.error = ReadableError(error: error)
+        self.showError = true
+    }
+    
+    func updateValues(distance: Measurement<UnitLength>?, sensorLocation: SensorLocation?) async {
+        do {
+            if let distance {
+                try await setCumulativeValue(newDistance: distance)
+            }
+            if let sensorLocation {
+                try await updateSensorLocation(newLocation: sensorLocation)
+            }
+        } catch let e {
+            self.presentError(e)
+        }
     }
 }

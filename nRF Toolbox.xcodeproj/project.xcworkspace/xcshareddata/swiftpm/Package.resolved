@@ -24,7 +24,7 @@
       "location" : "https://github.com/NickKibish/iOS-Bluetooth-Numbers-Database.git",
       "state" : {
         "branch" : "main",
-        "revision" : "ead23545962110ae44d7deb2a87279fa9dff83b6"
+        "revision" : "71c3d1d0e1bb6e7a59da3aed8e2a2a2ddfd5fd8c"
       }
     },
     {
@@ -42,7 +42,7 @@
       "location" : "https://github.com/NordicSemiconductor/IOS-DFU-Library.git",
       "state" : {
         "branch" : "main",
-        "revision" : "5906bc522a3eb2040644b1063019e3516456fdb1"
+        "revision" : "4f9db204fd7d702a8d3f380e017ce7395d0b39c0"
       }
     },
     {
@@ -51,7 +51,7 @@
       "location" : "https://github.com/NordicSemiconductor/IOS-nRF-Connect-Device-Manager",
       "state" : {
         "branch" : "master",
-        "revision" : "c9beefcdaae3c24a95c249ae20333fcf9a3b8ec6"
+        "revision" : "3b4a636069a12f6ba842db03564c3a44327b36d1"
       }
     },
     {

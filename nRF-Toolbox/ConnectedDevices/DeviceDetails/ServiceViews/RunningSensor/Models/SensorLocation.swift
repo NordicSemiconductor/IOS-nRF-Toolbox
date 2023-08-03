@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum SensorLocation: UInt8, CustomStringConvertible {
+enum SensorLocation: UInt8, CustomStringConvertible, CaseIterable {
     case other, topOfShoe, inShoe, hip, frontWheel, leftCrank, rightCrank, leftPedal, rightPedal, frontHub, rearDropout, chainstay, rearWheel, rearHub, chest, spider, chainRing
 
     var description: String {

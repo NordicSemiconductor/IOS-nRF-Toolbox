@@ -68,7 +68,7 @@ private extension DeviceDetailsViewModel {
 //                    self.peripheralRepresentation.addService(service)
                     
                     switch service.uuid.uuidString {
-                    case Service.RunningSpeedAndCadence.runningSpeedAndCadence.uuidString:
+                    case Service.runningSpeedAndCadence.uuidString:
                         _ = RunningServiceHandler(peripheral: self.peripheralManager, service: service).map { self.serviceHandlers.replacedOrAppended($0, compareBy: \.id) }
 //                        RunningServiceHandler(peripheral: self.peripheralManager, service: service).map { self.serviceHandlers.append($0) }
                     default:

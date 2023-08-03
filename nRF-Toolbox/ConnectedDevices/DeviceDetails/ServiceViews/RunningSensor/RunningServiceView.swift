@@ -9,9 +9,13 @@
 import SwiftUI
 import iOS_BLE_Library
 import CoreBluetoothMock
+import iOS_Common_Libraries
 
 struct RunningServiceView: View {
     @ObservedObject var viewModel: RunningServiceHandler
+    @State var showCalibration = false
+    @State var waitingForCalibration = false
+    @State private var availableLocations: [SensorLocation] = []
     
     var body: some View {
         List {
@@ -36,16 +40,35 @@ struct RunningServiceView: View {
             }
             
             Section("Control") {
-                Button("Send OP Code") {
+                Button("Calibrate Sensor") {
+                    waitingForCalibration = true
                     Task {
-                        try? await viewModel.writeControlPoint()
+                        defer {
+                            waitingForCalibration = false 
+                        }
+                        do {
+                            availableLocations = try await viewModel.requestSupportedSensorLocations()
+                            showCalibration = true
+                        } catch let e {
+                            viewModel.presentError(e)
+                        }
                     }
                 }
-                Button("Request sensor locations") {
-                    Task {
-                        try? await viewModel.requestSupportedSensorLocations()
+                .disabled(waitingForCalibration)
+                .sheet(isPresented: $showCalibration) {
+                    NavigationStack {
+                        CalibrateSensor(sensorLocations: availableLocations) {
+                            
+                        } updateData: {
+                            
+                        }
                     }
                 }
+            }
+        }
+        .alert(isPresented: $viewModel.showError, error: viewModel.error) {
+            Button("Cancel") {
+                
             }
         }
     }
