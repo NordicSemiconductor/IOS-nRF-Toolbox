@@ -43,6 +43,10 @@
 		01468B052361A30A00C29E4C /* StepperTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B032361A30A00C29E4C /* StepperTableViewCell.swift */; };
 		01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01468B042361A30A00C29E4C /* StepperTableViewCell.xib */; };
 		01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */; };
+		014BBD7A2A6FD54500BCFCA8 /* MeasurementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014BBD792A6FD54500BCFCA8 /* MeasurementView.swift */; };
+		014BBD7D2A70004B00BCFCA8 /* RSCMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014BBD7C2A70004B00BCFCA8 /* RSCMeasurement.swift */; };
+		014BBD7F2A70007D00BCFCA8 /* SensorLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014BBD7E2A70007D00BCFCA8 /* SensorLocation.swift */; };
+		014BBD812A700D1600BCFCA8 /* SensorLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014BBD802A700D1600BCFCA8 /* SensorLocationView.swift */; };
 		014C4E892403F8AE0003E601 /* UARTMacrosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E882403F8AE0003E601 /* UARTMacrosTableViewController.swift */; };
 		014C4E8B2403F9BD0003E601 /* UARTMacroSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E8A2403F9BD0003E601 /* UARTMacroSaver.swift */; };
 		0151170B240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01511709240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift */; };
@@ -94,6 +98,7 @@
 		01A870DA23F40E2F00D9202E /* CheckmarkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A870D923F40E2F00D9202E /* CheckmarkTableViewCell.swift */; };
 		01AA707D24124F270018DB29 /* DFUUpdateTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AA707C24124F270018DB29 /* DFUUpdateTabBarViewController.swift */; };
 		01AA707F241291C00018DB29 /* LogObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AA707E241291C00018DB29 /* LogObserver.swift */; };
+		01AB7B752A77BFB400AEDDCD /* CBUUID+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AB7B742A77BFB400AEDDCD /* CBUUID+Ext.swift */; };
 		01AD26E82395084000F56210 /* ConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26E62395084000F56210 /* ConnectionViewController.swift */; };
 		01AF928323D0AC3200C1BFD6 /* StringProtocol+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AF928223D0AC3200C1BFD6 /* StringProtocol+Ext.swift */; };
 		01AF928723D1A7D400C1BFD6 /* PeripheralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AF928623D1A7D400C1BFD6 /* PeripheralView.swift */; };
@@ -120,6 +125,8 @@
 		01BEADD4241A992300FC7183 /* HMAccessoryListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BEADD3241A992300FC7183 /* HMAccessoryListTableViewController.swift */; };
 		01BEADD6241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BEADD5241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift */; };
 		01BEADD8241AE6BF00FC7183 /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BEADD7241AE6BF00FC7183 /* UILabel+Ext.swift */; };
+		01C575B92A798D65007FE4F0 /* CalibrateSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C575B82A798D65007FE4F0 /* CalibrateSensor.swift */; };
+		01C575BC2A7BF2E4007FE4F0 /* CoreBluetoothMock-Collection in Frameworks */ = {isa = PBXBuildFile; productRef = 01C575BB2A7BF2E4007FE4F0 /* CoreBluetoothMock-Collection */; };
 		01C81ACE2A5CAC350011B41E /* iOS-Bluetooth-Numbers-Database in Frameworks */ = {isa = PBXBuildFile; productRef = 01C81ACD2A5CAC350011B41E /* iOS-Bluetooth-Numbers-Database */; };
 		01C81AD02A5CB1B50011B41E /* ServiceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C81ACF2A5CB1B50011B41E /* ServiceHelper.swift */; };
 		01C81AD22A5CB2860011B41E /* iOS-Bluetooth-Numbers-Database in Frameworks */ = {isa = PBXBuildFile; productRef = 01C81AD12A5CB2860011B41E /* iOS-Bluetooth-Numbers-Database */; };
@@ -395,6 +402,10 @@
 		01468B032361A30A00C29E4C /* StepperTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperTableViewCell.swift; sourceTree = "<group>"; };
 		01468B042361A30A00C29E4C /* StepperTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StepperTableViewCell.xib; sourceTree = "<group>"; };
 		01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalSection.swift; sourceTree = "<group>"; };
+		014BBD792A6FD54500BCFCA8 /* MeasurementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementView.swift; sourceTree = "<group>"; };
+		014BBD7C2A70004B00BCFCA8 /* RSCMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSCMeasurement.swift; sourceTree = "<group>"; };
+		014BBD7E2A70007D00BCFCA8 /* SensorLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorLocation.swift; sourceTree = "<group>"; };
+		014BBD802A700D1600BCFCA8 /* SensorLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorLocationView.swift; sourceTree = "<group>"; };
 		014C4E882403F8AE0003E601 /* UARTMacrosTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTMacrosTableViewController.swift; sourceTree = "<group>"; };
 		014C4E8A2403F9BD0003E601 /* UARTMacroSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTMacroSaver.swift; sourceTree = "<group>"; };
 		014C4E922404038A0003E601 /* nRF_Toolbox_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nRF_Toolbox_Tests.swift; sourceTree = "<group>"; };
@@ -452,6 +463,7 @@
 		01A870D923F40E2F00D9202E /* CheckmarkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkTableViewCell.swift; sourceTree = "<group>"; };
 		01AA707C24124F270018DB29 /* DFUUpdateTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUUpdateTabBarViewController.swift; sourceTree = "<group>"; };
 		01AA707E241291C00018DB29 /* LogObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogObserver.swift; sourceTree = "<group>"; };
+		01AB7B742A77BFB400AEDDCD /* CBUUID+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CBUUID+Ext.swift"; sourceTree = "<group>"; };
 		01AD26E62395084000F56210 /* ConnectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionViewController.swift; sourceTree = "<group>"; };
 		01AF928223D0AC3200C1BFD6 /* StringProtocol+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StringProtocol+Ext.swift"; sourceTree = "<group>"; };
 		01AF928623D1A7D400C1BFD6 /* PeripheralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralView.swift; sourceTree = "<group>"; };
@@ -478,6 +490,8 @@
 		01BEADD3241A992300FC7183 /* HMAccessoryListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HMAccessoryListTableViewController.swift; sourceTree = "<group>"; };
 		01BEADD5241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicBottomDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		01BEADD7241AE6BF00FC7183 /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
+		01C575B82A798D65007FE4F0 /* CalibrateSensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrateSensor.swift; sourceTree = "<group>"; };
+		01C575BA2A7A8E1F007FE4F0 /* CoreBluetoothMock-Collection */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "CoreBluetoothMock-Collection"; path = "../CoreBluetoothMock-Collection"; sourceTree = "<group>"; };
 		01C81ACF2A5CB1B50011B41E /* ServiceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceHelper.swift; sourceTree = "<group>"; };
 		01C81AD42A5CB6420011B41E /* ServiceBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBadge.swift; sourceTree = "<group>"; };
 		01C81AD62A5D8FEA0011B41E /* ReadableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadableError.swift; sourceTree = "<group>"; };
@@ -686,6 +700,7 @@
 			files = (
 				01C81AD22A5CB2860011B41E /* iOS-Bluetooth-Numbers-Database in Frameworks */,
 				018873CF2A583CE000253273 /* iOS-BLE-Library in Frameworks */,
+				01C575BC2A7BF2E4007FE4F0 /* CoreBluetoothMock-Collection in Frameworks */,
 				018873C42A58332400253273 /* iOSCommonLibraries in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -791,8 +806,12 @@
 		0129F21B2A66F8DB002FB3F5 /* RunningSensor */ = {
 			isa = PBXGroup;
 			children = (
+				014BBD7B2A70003D00BCFCA8 /* Models */,
 				01DEB4A32A6588CA00D4C1E8 /* RunningServiceHandler.swift */,
 				0129F2212A67FE39002FB3F5 /* RunningServiceView.swift */,
+				01C575B82A798D65007FE4F0 /* CalibrateSensor.swift */,
+				014BBD792A6FD54500BCFCA8 /* MeasurementView.swift */,
+				014BBD802A700D1600BCFCA8 /* SensorLocationView.swift */,
 			);
 			path = RunningSensor;
 			sourceTree = "<group>";
@@ -889,6 +908,15 @@
 				01468B042361A30A00C29E4C /* StepperTableViewCell.xib */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		014BBD7B2A70003D00BCFCA8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				014BBD7C2A70004B00BCFCA8 /* RSCMeasurement.swift */,
+				014BBD7E2A70007D00BCFCA8 /* SensorLocation.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		014C4E912404038A0003E601 /* nRF Toolbox Tests */ = {
@@ -1011,6 +1039,7 @@
 				01DEB4A52A65E35F00D4C1E8 /* Flag.swift */,
 				012E228F2A69AFC200B14064 /* String+Name.swift */,
 				012E22932A6AD5BE00B14064 /* NamedItem.swift */,
+				01AB7B742A77BFB400AEDDCD /* CBUUID+Ext.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1939,6 +1968,7 @@
 		5217F3D91859EE0000F2D5BB = {
 			isa = PBXGroup;
 			children = (
+				01C575BA2A7A8E1F007FE4F0 /* CoreBluetoothMock-Collection */,
 				018873CD2A583C4E00253273 /* IOS-BLE-Library */,
 				017D105C2A580DCD00E38E5F /* IOS-Common-Libraries */,
 				5217F3EB1859EE0000F2D5BB /* nRF Toolbox Legacy */,
@@ -2089,6 +2119,7 @@
 				018873C32A58332400253273 /* iOSCommonLibraries */,
 				018873CE2A583CE000253273 /* iOS-BLE-Library */,
 				01C81AD12A5CB2860011B41E /* iOS-Bluetooth-Numbers-Database */,
+				01C575BB2A7BF2E4007FE4F0 /* CoreBluetoothMock-Collection */,
 			);
 			productName = "nRF-Toolbox";
 			productReference = 017D102B2A5809E300E38E5F /* nRF-Toolbox.app */;
@@ -2359,22 +2390,28 @@
 				012E228C2A69A4E900B14064 /* AttributeTableView.swift in Sources */,
 				018873C92A583B0000253273 /* PeripheralScannerViewModel.swift in Sources */,
 				018873D22A58707900253273 /* CentralManagerHelper.swift in Sources */,
+				01C575B92A798D65007FE4F0 /* CalibrateSensor.swift in Sources */,
 				0129F2282A684059002FB3F5 /* SomeValueView.swift in Sources */,
 				012E22922A6ACD8400B14064 /* AttributeTableItemView.swift in Sources */,
+				014BBD7F2A70007D00BCFCA8 /* SensorLocation.swift in Sources */,
 				012E22902A69AFC200B14064 /* String+Name.swift in Sources */,
 				01C81AD52A5CB6420011B41E /* ServiceBadge.swift in Sources */,
 				0129F22A2A693375002FB3F5 /* CentralManagerHelperPreview.swift in Sources */,
 				01DEB4A82A65E90C00D4C1E8 /* Data+Ext.swift in Sources */,
+				01AB7B752A77BFB400AEDDCD /* CBUUID+Ext.swift in Sources */,
 				01C81AD02A5CB1B50011B41E /* ServiceHelper.swift in Sources */,
 				01DEB4AA2A65E9D900D4C1E8 /* CharacteristicReader.swift in Sources */,
 				01407CB92A65417900A5B279 /* CBMPeripheralPreview.swift in Sources */,
+				014BBD7A2A6FD54500BCFCA8 /* MeasurementView.swift in Sources */,
 				017D10302A5809E300E38E5F /* ContentView.swift in Sources */,
 				0129F2202A67FD43002FB3F5 /* ServiceView.swift in Sources */,
 				0126B53F2A5EA8B70033BCC3 /* AttributeTable.swift in Sources */,
 				017D102E2A5809E300E38E5F /* nRF_ToolboxApp.swift in Sources */,
 				018873C02A58320600253273 /* ConnectedDevicesView.swift in Sources */,
 				01DEB4A62A65E35F00D4C1E8 /* Flag.swift in Sources */,
+				014BBD7D2A70004B00BCFCA8 /* RSCMeasurement.swift in Sources */,
 				012E22942A6AD5BE00B14064 /* NamedItem.swift in Sources */,
+				014BBD812A700D1600BCFCA8 /* SensorLocationView.swift in Sources */,
 				019ABF1D2A600A480019BD21 /* DeviceItem.swift in Sources */,
 				0129F21D2A66F8EE002FB3F5 /* DeviceDetailsView.swift in Sources */,
 				0129F2252A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift in Sources */,
@@ -3605,6 +3642,10 @@
 		018873CE2A583CE000253273 /* iOS-BLE-Library */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "iOS-BLE-Library";
+		};
+		01C575BB2A7BF2E4007FE4F0 /* CoreBluetoothMock-Collection */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "CoreBluetoothMock-Collection";
 		};
 		01C81ACD2A5CAC350011B41E /* iOS-Bluetooth-Numbers-Database */ = {
 			isa = XCSwiftPackageProductDependency;

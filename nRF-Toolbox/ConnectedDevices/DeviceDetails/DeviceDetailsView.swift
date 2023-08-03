@@ -14,17 +14,22 @@ struct DeviceDetailsView: View {
     
     var body: some View {
         TabView {
-            ServiceView(services: peripheralHandler.serviceHandlers)
-                .tabItem {
-                    Label {
-                        Text("Services")
-                    } icon: {
-                        Image(systemName: "plus")
+            ForEach(peripheralHandler.serviceHandlers, id: \.id) { service in
+                ServiceView(service: service)
+                    .tabItem {
+                        Label {
+                            Text(service.name)
+                        } icon: {
+                            service.image
+                        }
                     }
+            }
+            AttributeTableView(
+                attributeTable: peripheralHandler.attributeTable,
+                discoverTableAction: {
+                    peripheralHandler.discover()
                 }
-            AttributeTableView(attributeTable: peripheralHandler.attributeTable, discoverTableAction: {
-                peripheralHandler.discover()
-            })
+            )
             .tabItem {
                 Label {
                     Text("Device Details")

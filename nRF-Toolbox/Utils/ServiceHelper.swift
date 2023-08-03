@@ -22,17 +22,17 @@ struct ServiceRepresentation {
         }
         
         switch service {
-        case .HeartRate.heartRate:
+        case .heartRate:
             icon = Image(systemName: "heart.fill")
-            name = Service.HeartRate.heartRate.name
+            name = Service.heartRate.name
             color = .red
-        case .RunningSpeedAndCadence.runningSpeedAndCadence:
+        case .runningSpeedAndCadence:
             icon = Image(systemName: "figure.run")
-            name = Service.RunningSpeedAndCadence.runningSpeedAndCadence.name
+            name = Service.runningSpeedAndCadence.name
             color = .yellow
-        case .WeightScale.weightScale:
+        case .weightScale:
             icon = Image(systemName: "scalemass.fill")
-            name = Service.WeightScale.weightScale.name
+            name = Service.weightScale.name
             color = .green
         default:
             return nil

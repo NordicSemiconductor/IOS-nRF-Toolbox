@@ -66,10 +66,10 @@ struct ScanResultItem_Previews: PreviewProvider {
         static let mocks: [Mock] = [
             Mock(name: "Blinki", rssi: -50, services: [
                 ServiceRepresentation(
-                    identifier: S.HeartRate.heartRate.identifier
+                    identifier: S.heartRate.identifier
                 ),
                 ServiceRepresentation(
-                    identifier: S.WeightScale.weightScale.identifier
+                    identifier: S.weightScale.identifier
                 ),
             ].compactMap {$0} ),
             Mock(name: "Heart Rate", rssi: -80, services: []),

@@ -15,45 +15,45 @@ extension AttributeTable {
         var at = AttributeTable()
         
         let genericAccess = CBMServiceMock(
-            type: CBMUUID(string: S.GenericAccess.genericAccess.uuidString),
+            type: CBMUUID(string: S.genericAccess.uuidString),
             primary: true,
             includedService: nil,
             characteristics: nil
         )
         
         let genericAttribute = CBMServiceMock(
-            type: CBMUUID(string: S.GenericAttribute.genericAttribute.uuidString),
+            type: CBMUUID(string: S.genericAttribute.uuidString),
             primary: true,
             includedService: nil,
             characteristics: nil
         )
         
-        let clientCharacteristicConfiguration = CBMDescriptorMock(type: CBMUUID(string: D.Gatt.ClientCharacteristicConfiguration.clientCharacteristicConfiguration.uuidString))
+        let clientCharacteristicConfiguration = CBMDescriptorMock(type: CBMUUID(string: D.gattClientCharacteristicConfiguration.uuidString))
         
         let rscMeasurement = CBMCharacteristicMock(
-            type: CBMUUID(string: C.RscMeasurement.rscMeasurement.uuidString),
+            type: CBMUUID(string: C.rscMeasurement.uuidString),
             properties: .notify,
             descriptors: clientCharacteristicConfiguration
         )
         
         let rscFeature = CBMCharacteristicMock(
-            type: CBMUUID(string: C.RscFeature.rscFeature.uuidString),
+            type: CBMUUID(string: C.rscFeature.uuidString),
             properties: .read
         )
         
         let scControlPoint = CBMCharacteristicMock(
-            type: CBMUUID(string: C.ScControlPoint.scControlPoint.uuidString),
+            type: CBMUUID(string: C.scControlPoint.uuidString),
             properties: [.write, .indicate],
             descriptors: clientCharacteristicConfiguration
         )
         
         let sensorLocation = CBMCharacteristicMock(
-            type: CBMUUID(string: C.SensorLocation.sensorLocation.uuidString),
+            type: CBMUUID(string: C.sensorLocation.uuidString),
             properties: .read
         )
         
         let runningSpeedAndCadence = CBMServiceMock(
-            type: CBMUUID(string: S.RunningSpeedAndCadence.runningSpeedAndCadence.uuidString),
+            type: CBMUUID(string: S.runningSpeedAndCadence.uuidString),
             primary: true,
             characteristics: rscMeasurement, rscFeature, scControlPoint, sensorLocation
         )
