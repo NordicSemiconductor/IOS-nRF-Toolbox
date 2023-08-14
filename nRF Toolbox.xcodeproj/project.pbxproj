@@ -45,7 +45,6 @@
 		01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */; };
 		014BBD7A2A6FD54500BCFCA8 /* MeasurementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014BBD792A6FD54500BCFCA8 /* MeasurementView.swift */; };
 		014BBD7D2A70004B00BCFCA8 /* RSCMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014BBD7C2A70004B00BCFCA8 /* RSCMeasurement.swift */; };
-		014BBD7F2A70007D00BCFCA8 /* SensorLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014BBD7E2A70007D00BCFCA8 /* SensorLocation.swift */; };
 		014BBD812A700D1600BCFCA8 /* SensorLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014BBD802A700D1600BCFCA8 /* SensorLocationView.swift */; };
 		014C4E892403F8AE0003E601 /* UARTMacrosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E882403F8AE0003E601 /* UARTMacrosTableViewController.swift */; };
 		014C4E8B2403F9BD0003E601 /* UARTMacroSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E8A2403F9BD0003E601 /* UARTMacroSaver.swift */; };
@@ -125,8 +124,9 @@
 		01BEADD4241A992300FC7183 /* HMAccessoryListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BEADD3241A992300FC7183 /* HMAccessoryListTableViewController.swift */; };
 		01BEADD6241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BEADD5241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift */; };
 		01BEADD8241AE6BF00FC7183 /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BEADD7241AE6BF00FC7183 /* UILabel+Ext.swift */; };
-		01C575B92A798D65007FE4F0 /* CalibrateSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C575B82A798D65007FE4F0 /* CalibrateSensor.swift */; };
+		01C575B92A798D65007FE4F0 /* SensorSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C575B82A798D65007FE4F0 /* SensorSettings.swift */; };
 		01C575BC2A7BF2E4007FE4F0 /* CoreBluetoothMock-Collection in Frameworks */ = {isa = PBXBuildFile; productRef = 01C575BB2A7BF2E4007FE4F0 /* CoreBluetoothMock-Collection */; };
+		01C575BE2A7D00EF007FE4F0 /* Alias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C575BD2A7D00EF007FE4F0 /* Alias.swift */; };
 		01C81ACE2A5CAC350011B41E /* iOS-Bluetooth-Numbers-Database in Frameworks */ = {isa = PBXBuildFile; productRef = 01C81ACD2A5CAC350011B41E /* iOS-Bluetooth-Numbers-Database */; };
 		01C81AD02A5CB1B50011B41E /* ServiceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C81ACF2A5CB1B50011B41E /* ServiceHelper.swift */; };
 		01C81AD22A5CB2860011B41E /* iOS-Bluetooth-Numbers-Database in Frameworks */ = {isa = PBXBuildFile; productRef = 01C81AD12A5CB2860011B41E /* iOS-Bluetooth-Numbers-Database */; };
@@ -153,6 +153,11 @@
 		01DFC55C2420F0AB00AF2EF0 /* ZephyrDFURouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DFC55B2420F0AB00AF2EF0 /* ZephyrDFURouter.swift */; };
 		01E5910923DB3BC5008F15A4 /* QuickError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910823DB3BC4008F15A4 /* QuickError.swift */; };
 		01E5910B23DECF61008F15A4 /* UARTMacrosList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */; };
+		01F6A9602A812D6200540B45 /* Emulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F6A95F2A812D6200540B45 /* Emulator.swift */; };
+		01F6A9632A812DD300540B45 /* CoreBluetoothMock-Collection in Frameworks */ = {isa = PBXBuildFile; productRef = 01F6A9622A812DD300540B45 /* CoreBluetoothMock-Collection */; };
+		01F6A9662A829EE300540B45 /* SensorSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F6A9652A829EE300540B45 /* SensorSettingsViewModel.swift */; };
+		01F6A9692A839C4800540B45 /* JGProgressHUD-SwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 01F6A9682A839C4800540B45 /* JGProgressHUD-SwiftUI */; };
+		01F6A96B2A839C8200540B45 /* JGProgressHUD-SwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 01F6A96A2A839C8200540B45 /* JGProgressHUD-SwiftUI */; };
 		01FBC5012407BF8F00B1056B /* PeripheralHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */; };
 		01FBC5062407C2B000B1056B /* FileSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5042407C2B000B1056B /* FileSelectorViewController.swift */; };
 		01FBC5072407C2B000B1056B /* FileSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01FBC5052407C2B000B1056B /* FileSelectorViewController.xib */; };
@@ -404,7 +409,6 @@
 		01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalSection.swift; sourceTree = "<group>"; };
 		014BBD792A6FD54500BCFCA8 /* MeasurementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementView.swift; sourceTree = "<group>"; };
 		014BBD7C2A70004B00BCFCA8 /* RSCMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSCMeasurement.swift; sourceTree = "<group>"; };
-		014BBD7E2A70007D00BCFCA8 /* SensorLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorLocation.swift; sourceTree = "<group>"; };
 		014BBD802A700D1600BCFCA8 /* SensorLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorLocationView.swift; sourceTree = "<group>"; };
 		014C4E882403F8AE0003E601 /* UARTMacrosTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTMacrosTableViewController.swift; sourceTree = "<group>"; };
 		014C4E8A2403F9BD0003E601 /* UARTMacroSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTMacroSaver.swift; sourceTree = "<group>"; };
@@ -490,8 +494,9 @@
 		01BEADD3241A992300FC7183 /* HMAccessoryListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HMAccessoryListTableViewController.swift; sourceTree = "<group>"; };
 		01BEADD5241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicBottomDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		01BEADD7241AE6BF00FC7183 /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
-		01C575B82A798D65007FE4F0 /* CalibrateSensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrateSensor.swift; sourceTree = "<group>"; };
+		01C575B82A798D65007FE4F0 /* SensorSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorSettings.swift; sourceTree = "<group>"; };
 		01C575BA2A7A8E1F007FE4F0 /* CoreBluetoothMock-Collection */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "CoreBluetoothMock-Collection"; path = "../CoreBluetoothMock-Collection"; sourceTree = "<group>"; };
+		01C575BD2A7D00EF007FE4F0 /* Alias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alias.swift; sourceTree = "<group>"; };
 		01C81ACF2A5CB1B50011B41E /* ServiceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceHelper.swift; sourceTree = "<group>"; };
 		01C81AD42A5CB6420011B41E /* ServiceBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBadge.swift; sourceTree = "<group>"; };
 		01C81AD62A5D8FEA0011B41E /* ReadableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadableError.swift; sourceTree = "<group>"; };
@@ -516,6 +521,9 @@
 		01DFC55B2420F0AB00AF2EF0 /* ZephyrDFURouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFURouter.swift; sourceTree = "<group>"; };
 		01E5910823DB3BC4008F15A4 /* QuickError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickError.swift; sourceTree = "<group>"; };
 		01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosList.swift; sourceTree = "<group>"; };
+		01F6A95D2A81055F00540B45 /* IOS-CoreBluetooth-Mock */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "IOS-CoreBluetooth-Mock"; path = "../IOS-CoreBluetooth-Mock"; sourceTree = "<group>"; };
+		01F6A95F2A812D6200540B45 /* Emulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emulator.swift; sourceTree = "<group>"; };
+		01F6A9652A829EE300540B45 /* SensorSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorSettingsViewModel.swift; sourceTree = "<group>"; };
 		01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralHolder.swift; sourceTree = "<group>"; };
 		01FBC5042407C2B000B1056B /* FileSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSelectorViewController.swift; sourceTree = "<group>"; };
 		01FBC5052407C2B000B1056B /* FileSelectorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FileSelectorViewController.xib; sourceTree = "<group>"; };
@@ -700,6 +708,7 @@
 			files = (
 				01C81AD22A5CB2860011B41E /* iOS-Bluetooth-Numbers-Database in Frameworks */,
 				018873CF2A583CE000253273 /* iOS-BLE-Library in Frameworks */,
+				01F6A96B2A839C8200540B45 /* JGProgressHUD-SwiftUI in Frameworks */,
 				01C575BC2A7BF2E4007FE4F0 /* CoreBluetoothMock-Collection in Frameworks */,
 				018873C42A58332400253273 /* iOSCommonLibraries in Frameworks */,
 			);
@@ -723,6 +732,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01F6A9692A839C4800540B45 /* JGProgressHUD-SwiftUI in Frameworks */,
 				AA2CB316286C75AA0083DB9A /* NordicDFU in Frameworks */,
 				522636371C60FFB00054A550 /* libz.tbd in Frameworks */,
 				52BDCB191C3FD31F00E2680F /* Accelerate.framework in Frameworks */,
@@ -733,6 +743,7 @@
 				01C81ACE2A5CAC350011B41E /* iOS-Bluetooth-Numbers-Database in Frameworks */,
 				017D105B2A580D3800E38E5F /* iOSCommonLibraries in Frameworks */,
 				C3CD27DE26B098070026FE67 /* Charts in Frameworks */,
+				01F6A9632A812DD300540B45 /* CoreBluetoothMock-Collection in Frameworks */,
 				5217F3E81859EE0000F2D5BB /* CoreGraphics.framework in Frameworks */,
 				5217F3EA1859EE0000F2D5BB /* UIKit.framework in Frameworks */,
 				5217F3E61859EE0000F2D5BB /* Foundation.framework in Frameworks */,
@@ -809,7 +820,7 @@
 				014BBD7B2A70003D00BCFCA8 /* Models */,
 				01DEB4A32A6588CA00D4C1E8 /* RunningServiceHandler.swift */,
 				0129F2212A67FE39002FB3F5 /* RunningServiceView.swift */,
-				01C575B82A798D65007FE4F0 /* CalibrateSensor.swift */,
+				01F6A9642A829D4B00540B45 /* SensorSettings */,
 				014BBD792A6FD54500BCFCA8 /* MeasurementView.swift */,
 				014BBD802A700D1600BCFCA8 /* SensorLocationView.swift */,
 			);
@@ -895,6 +906,7 @@
 		01407CB72A65415500A5B279 /* Peripheral */ = {
 			isa = PBXGroup;
 			children = (
+				01F6A95E2A812D5500540B45 /* Mock */,
 				01407CB82A65417900A5B279 /* CBMPeripheralPreview.swift */,
 				012E228D2A69A54B00B14064 /* AttributeTablePreview.swift */,
 			);
@@ -914,7 +926,6 @@
 			isa = PBXGroup;
 			children = (
 				014BBD7C2A70004B00BCFCA8 /* RSCMeasurement.swift */,
-				014BBD7E2A70007D00BCFCA8 /* SensorLocation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1032,6 +1043,7 @@
 			isa = PBXGroup;
 			children = (
 				01DEB4A92A65E9D900D4C1E8 /* CharacteristicReader.swift */,
+				01C575BD2A7D00EF007FE4F0 /* Alias.swift */,
 				01DEB4A72A65E90C00D4C1E8 /* Data+Ext.swift */,
 				018873D12A58707900253273 /* CentralManagerHelper.swift */,
 				01C81ACF2A5CB1B50011B41E /* ServiceHelper.swift */,
@@ -1320,6 +1332,23 @@
 				01268AF12421595200E83156 /* NotConnectedViewController */,
 			);
 			path = NotConnectedViewController;
+			sourceTree = "<group>";
+		};
+		01F6A95E2A812D5500540B45 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				01F6A95F2A812D6200540B45 /* Emulator.swift */,
+			);
+			path = Mock;
+			sourceTree = "<group>";
+		};
+		01F6A9642A829D4B00540B45 /* SensorSettings */ = {
+			isa = PBXGroup;
+			children = (
+				01C575B82A798D65007FE4F0 /* SensorSettings.swift */,
+				01F6A9652A829EE300540B45 /* SensorSettingsViewModel.swift */,
+			);
+			path = SensorSettings;
 			sourceTree = "<group>";
 		};
 		01FBC4FF2407BF5600B1056B /* Utils */ = {
@@ -1968,6 +1997,7 @@
 		5217F3D91859EE0000F2D5BB = {
 			isa = PBXGroup;
 			children = (
+				01F6A95D2A81055F00540B45 /* IOS-CoreBluetooth-Mock */,
 				01C575BA2A7A8E1F007FE4F0 /* CoreBluetoothMock-Collection */,
 				018873CD2A583C4E00253273 /* IOS-BLE-Library */,
 				017D105C2A580DCD00E38E5F /* IOS-Common-Libraries */,
@@ -2120,6 +2150,7 @@
 				018873CE2A583CE000253273 /* iOS-BLE-Library */,
 				01C81AD12A5CB2860011B41E /* iOS-Bluetooth-Numbers-Database */,
 				01C575BB2A7BF2E4007FE4F0 /* CoreBluetoothMock-Collection */,
+				01F6A96A2A839C8200540B45 /* JGProgressHUD-SwiftUI */,
 			);
 			productName = "nRF-Toolbox";
 			productReference = 017D102B2A5809E300E38E5F /* nRF-Toolbox.app */;
@@ -2184,6 +2215,8 @@
 				017D105A2A580D3800E38E5F /* iOSCommonLibraries */,
 				018873CB2A583C3300253273 /* iOS-BLE-Library */,
 				01C81ACD2A5CAC350011B41E /* iOS-Bluetooth-Numbers-Database */,
+				01F6A9622A812DD300540B45 /* CoreBluetoothMock-Collection */,
+				01F6A9682A839C4800540B45 /* JGProgressHUD-SwiftUI */,
 			);
 			productName = "nRF Toolbox";
 			productReference = 5217F3E21859EE0000F2D5BB /* nRF Toolbox Debug.app */;
@@ -2266,6 +2299,8 @@
 				017D10592A580D3800E38E5F /* XCRemoteSwiftPackageReference "IOS-Common-Libraries" */,
 				018873CA2A583C3300253273 /* XCRemoteSwiftPackageReference "IOS-BLE-Library" */,
 				01C81ACC2A5CAC350011B41E /* XCRemoteSwiftPackageReference "iOS-Bluetooth-Numbers-Database" */,
+				01F6A9612A812DD300540B45 /* XCRemoteSwiftPackageReference "CoreBluetoothMock-Collection" */,
+				01F6A9672A839C4800540B45 /* XCRemoteSwiftPackageReference "JGProgressHUD-SwiftUI" */,
 			);
 			productRefGroup = 5217F3E31859EE0000F2D5BB /* Products */;
 			projectDirPath = "";
@@ -2385,15 +2420,15 @@
 				01C81AD72A5D8FEA0011B41E /* ReadableError.swift in Sources */,
 				018873C72A583A9900253273 /* PeripheralScannerView.swift in Sources */,
 				018873C22A58322C00253273 /* ConnectedDevicesViewModel.swift in Sources */,
+				01F6A9662A829EE300540B45 /* SensorSettingsViewModel.swift in Sources */,
 				0132082A2A5C142100DCEA11 /* ScanResultItem.swift in Sources */,
 				012E228E2A69A54B00B14064 /* AttributeTablePreview.swift in Sources */,
 				012E228C2A69A4E900B14064 /* AttributeTableView.swift in Sources */,
 				018873C92A583B0000253273 /* PeripheralScannerViewModel.swift in Sources */,
 				018873D22A58707900253273 /* CentralManagerHelper.swift in Sources */,
-				01C575B92A798D65007FE4F0 /* CalibrateSensor.swift in Sources */,
+				01C575B92A798D65007FE4F0 /* SensorSettings.swift in Sources */,
 				0129F2282A684059002FB3F5 /* SomeValueView.swift in Sources */,
 				012E22922A6ACD8400B14064 /* AttributeTableItemView.swift in Sources */,
-				014BBD7F2A70007D00BCFCA8 /* SensorLocation.swift in Sources */,
 				012E22902A69AFC200B14064 /* String+Name.swift in Sources */,
 				01C81AD52A5CB6420011B41E /* ServiceBadge.swift in Sources */,
 				0129F22A2A693375002FB3F5 /* CentralManagerHelperPreview.swift in Sources */,
@@ -2410,12 +2445,14 @@
 				018873C02A58320600253273 /* ConnectedDevicesView.swift in Sources */,
 				01DEB4A62A65E35F00D4C1E8 /* Flag.swift in Sources */,
 				014BBD7D2A70004B00BCFCA8 /* RSCMeasurement.swift in Sources */,
+				01C575BE2A7D00EF007FE4F0 /* Alias.swift in Sources */,
 				012E22942A6AD5BE00B14064 /* NamedItem.swift in Sources */,
 				014BBD812A700D1600BCFCA8 /* SensorLocationView.swift in Sources */,
 				019ABF1D2A600A480019BD21 /* DeviceItem.swift in Sources */,
 				0129F21D2A66F8EE002FB3F5 /* DeviceDetailsView.swift in Sources */,
 				0129F2252A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift in Sources */,
 				01DEB4A42A6588CA00D4C1E8 /* RunningServiceHandler.swift in Sources */,
+				01F6A9602A812D6200540B45 /* Emulator.swift in Sources */,
 				0129F2222A67FE39002FB3F5 /* RunningServiceView.swift in Sources */,
 				01407CBC2A65819B00A5B279 /* ServiceHandler.swift in Sources */,
 				0126B5412A5EC1120033BCC3 /* DeviceDetailsViewModel.swift in Sources */,
@@ -3582,6 +3619,22 @@
 				kind = branch;
 			};
 		};
+		01F6A9612A812DD300540B45 /* XCRemoteSwiftPackageReference "CoreBluetoothMock-Collection" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/NickKibish/CoreBluetoothMock-Collection.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		01F6A9672A839C4800540B45 /* XCRemoteSwiftPackageReference "JGProgressHUD-SwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/JonasGessner/JGProgressHUD-SwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.1;
+			};
+		};
 		AAFC9CD027BA85EA00860638 /* XCRemoteSwiftPackageReference "IOS-nRF-Connect-Device-Manager" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/NordicSemiconductor/IOS-nRF-Connect-Device-Manager";
@@ -3656,6 +3709,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 01C81ACC2A5CAC350011B41E /* XCRemoteSwiftPackageReference "iOS-Bluetooth-Numbers-Database" */;
 			productName = "iOS-Bluetooth-Numbers-Database";
+		};
+		01F6A9622A812DD300540B45 /* CoreBluetoothMock-Collection */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01F6A9612A812DD300540B45 /* XCRemoteSwiftPackageReference "CoreBluetoothMock-Collection" */;
+			productName = "CoreBluetoothMock-Collection";
+		};
+		01F6A9682A839C4800540B45 /* JGProgressHUD-SwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01F6A9672A839C4800540B45 /* XCRemoteSwiftPackageReference "JGProgressHUD-SwiftUI" */;
+			productName = "JGProgressHUD-SwiftUI";
+		};
+		01F6A96A2A839C8200540B45 /* JGProgressHUD-SwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01F6A9672A839C4800540B45 /* XCRemoteSwiftPackageReference "JGProgressHUD-SwiftUI" */;
+			productName = "JGProgressHUD-SwiftUI";
 		};
 		AA2CB313286C75450083DB9A /* iOSMcuManagerLibrary */ = {
 			isa = XCSwiftPackageProductDependency;

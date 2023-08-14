@@ -36,31 +36,19 @@ struct RSCMeasurement: CustomDebugStringConvertible {
         self.instantaneousStrideLength = instantaneousStrideLength
         self.totalDistance = totalDistance
     }
-
-    init(data: Data) throws {
-        self.data = data
-
-        self.flags = RunningSpeedAndCadence.RSCMeasurementFlags(rawValue: UInt8(data[0]))
-        let spead: UInt16 = try data.read(fromOffset: 1)
-        self.instantaneousSpeed = Measurement(value: Double(spead) / 256.0, unit: .metersPerSecond)
-
-        self.instantaneousCadence = Int(data[3])
-
-        var offset: Int = 4
-
-        if flags.contains(.instantaneousStrideLengthPresent) {
-            let strideLength: UInt16 = try data.read(fromOffset: offset)
-            self.instantaneousStrideLength = Measurement(value: Double(strideLength) / 100.0, unit: .meters)
-            offset += 2
-        } else {
-            self.instantaneousStrideLength = nil
-        }
-
-        if flags.contains(.totalDistancePresent) {
-            let totalDistance: UInt32 = try data.read(fromOffset: offset)
-            self.totalDistance = Measurement(value: Double(totalDistance) / 10.0, unit: .meters)
-        } else {
-            self.totalDistance = nil
-        }
+    
+    init(rawData: RunningSpeedAndCadence.RSCSMeasurement) {
+        self.data = rawData.data
+        self.flags = rawData.flags
+        self.instantaneousSpeed = Measurement(value: Double(rawData.instantaneousSpeed) / 256.0, unit: .metersPerSecond)
+        self.instantaneousCadence = Int(rawData.instantaneousCadence)
+        
+        self.instantaneousStrideLength = flags.contains(.instantaneousStrideLengthPresent)
+        ? Measurement(value: Double(rawData.instantaneousStrideLength!), unit: .centimeters)
+        : nil
+        
+        self.totalDistance = flags.contains(.totalDistancePresent)
+        ? Measurement(value: Double(rawData.totalDistance!), unit: .meters)
+        : nil
     }
 }

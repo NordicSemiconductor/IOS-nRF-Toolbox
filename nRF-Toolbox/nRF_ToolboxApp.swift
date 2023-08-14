@@ -8,6 +8,7 @@
 
 import SwiftUI
 import iOS_BLE_Library
+import JGProgressHUD_SwiftUI
 
 @main
 struct nRF_ToolboxApp: App {
@@ -15,8 +16,8 @@ struct nRF_ToolboxApp: App {
         WindowGroup {
             ContentView()
                 .onAppear {
-                    BluetoothEmulation.simulateState()
-                    BluetoothEmulation.simulatePeripherals()
+                    BluetoothEmulation.shared.simulateState()
+                    BluetoothEmulation.shared.simulatePeripherals()
                 }
         }
     }

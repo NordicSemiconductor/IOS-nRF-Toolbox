@@ -8,17 +8,19 @@
 
 import SwiftUI
 import iOS_Common_Libraries
+import JGProgressHUD_SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        NavigationSplitView {
-            ConnectedDevicesView()
-                .navigationTitle("Connected Devices")
-                .environmentObject(CentralManagerHelper.shared)
-        } detail: {
-            Text("Device Details")
+        JGProgressHUDPresenter {
+            NavigationSplitView {
+                ConnectedDevicesView()
+                    .navigationTitle("Connected Devices")
+                    .environmentObject(CentralManagerHelper.shared)
+            } detail: {
+                Text("Device Details")
+            }
         }
-
     }
 }
 

@@ -8,10 +8,18 @@
 
 import iOS_BLE_Library
 import iOS_Bluetooth_Numbers_Database
+import CoreBluetoothMock
 import CoreBluetoothMock_Collection
 import Foundation
 import Combine
 import SwiftUI
+
+private extension CBMUUID {
+    static let rscMeasurement = CBMUUID(characteristic: .rscMeasurement)
+    static let rscFeature = CBMUUID(characteristic: .rscFeature)
+    static let sensorLocation = CBMUUID(characteristic: .sensorLocation)
+    static let scControlPoint = CBMUUID(characteristic: .scControlPoint)
+}
 
 @MainActor
 class RunningServiceHandler: ServiceHandler, ObservableObject {
@@ -19,7 +27,7 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
     private var cancelables = Set<AnyCancellable>()
     
     enum Error: Swift.Error {
-        case timeout, noMandatoryCharacteristic, noData, parseError, controlPointError(RunningSpeedAndCadence.ResponseValue)
+        case timeout, noMandatoryCharacteristic, noData, badData, parseError, controlPointError(RunningSpeedAndCadence.ResponseCode)
     }
     
     // MARK: Characteristics
@@ -27,8 +35,8 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
     var rscFeature: CBCharacteristic!
     var features: RunningSpeedAndCadence.RSCFeature!
     
-    var sensorLocation: CBCharacteristic?
-    var scControlPoint: CBCharacteristic?
+    @Published var sensorLocationCh: CBCharacteristic?
+    @Published var scControlPointCh: CBCharacteristic?
     
     @Published var measurement: RSCMeasurement?
     @Published var error: ReadableError?
@@ -85,14 +93,10 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
             throw Error.noMandatoryCharacteristic
         }
         
-        guard let feauturesData = try await peripheral.readValue(for: rscFeature).value else {
-            throw Error.noData
-        }
-        
-        self.features = RunningSpeedAndCadence.RSCFeature(rawValue: feauturesData[1])
-        
+        self.features = try await readSupportedFeatures()
+       
         if features.contains(.multipleSensorLocation) {
-            self.sensorLocation = try await peripheral.discoverCharacteristics([.sensorLocation], for: service)
+            self.sensorLocationCh = try await peripheral.discoverCharacteristics([.sensorLocation], for: service)
                 .autoconnect()
                 .value
             
@@ -100,11 +104,11 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
         }
         
         if features.contains(.sensorCalibrationProcedure) {
-            self.scControlPoint = try await peripheral.discoverCharacteristics([.scControlPoint], for: service)
+            self.scControlPointCh = try await peripheral.discoverCharacteristics([.scControlPoint], for: service)
                 .autoconnect()
                 .value
             
-            self.peripheral.peripheral.setNotifyValue(true, for: scControlPoint!)
+            self.peripheral.peripheral.setNotifyValue(true, for: scControlPointCh!)
         }
     }
     
@@ -112,7 +116,7 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
         peripheral.peripheral.setNotifyValue(true, for: rscMeasurement)
         
         peripheral.listenValues(for: rscMeasurement)
-            .tryMap { try RSCMeasurement(data: $0) }
+            .map { RSCMeasurement(rawData: RunningSpeedAndCadence.RSCSMeasurement(from: $0)) }
             .mapError { error in
                 ReadableError(error: error)
             }
@@ -123,8 +127,14 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
             } receiveValue: { [unowned self] value in
                 self.measurement = value
                 
+                let nf = NumberFormatter()
+                nf.numberStyle = .decimal
+                nf.maximumFractionDigits = 1
+                
                 let formatter = MeasurementFormatter()
+                formatter.numberFormatter = nf
                 formatter.unitOptions = .naturalScale
+                
                 self.instantaneousSpeed.updateValue(formatter.string(from: value.instantaneousSpeed))
                 self.instantaneousCadence.updateValue("\(value.instantaneousCadence) spm")
                 
@@ -143,80 +153,13 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
             .store(in: &cancelables)
     }
     
-    func readSensorLocation() async throws {
+    func updateSensorLocation() async throws {
         readingSersorLocation = true
         defer {
             readingSersorLocation = false
         }
-        guard let sensorLocation else {
-            fatalError("there should not be UI that can call this method")
-        }
         
-        guard let v = try await peripheral.readValue(for: sensorLocation).value else {
-            throw Error.noData
-        }
-        
-        self.sensorLocationValue = SensorLocation(rawValue: v[0])
-    }
-    
-    @discardableResult
-    func writeCommand(opCode: RunningSpeedAndCadence.OpCode, parameter: Data?) async throws -> Data? {
-        guard let scControlPoint else {
-            fatalError("control point should not be nil")
-        }
-        
-        var data = Data()
-        data.append(opCode.rawValue)
-        
-        if let parameter {
-            data.append(parameter)
-        }
-        
-        let publisher = self.peripheral.listenValues(for: scControlPoint)
-            .tryCompactMap { data -> Data? in
-                let responseOpCode = RunningSpeedAndCadence.OpCode(rawValue: data[1])!
-                guard responseOpCode == opCode else {
-                    return nil
-                }
-
-                let responseValue = RunningSpeedAndCadence.ResponseValue(rawValue: data[2])!
-
-                if responseValue != .success {
-                    throw Error.controlPointError(responseValue)
-                }
-
-                if data.count > 3 {
-                    return data[3...]
-                } else {
-                    return nil
-                }
-            }
-            .first()
-        
-        return try await peripheral.writeValueWithResponse(data, for: scControlPoint)
-            .flatMap { _ in publisher }
-            .value
-    }
-    
-    func requestSupportedSensorLocations() async throws -> [SensorLocation] {
-        guard let data = try await writeCommand(opCode: .requestSupportedSensorLocations, parameter: nil) else {
-            throw Error.noData
-        }
-
-        let locationsData = [UInt8](data)
-        return locationsData.compactMap { SensorLocation(rawValue: $0) }
-    }
-    
-    func setCumulativeValue(newDistance: Measurement<UnitLength>) async throws {
-        var meters = Int(newDistance.converted(to: .meters).value)
-        let data = Data(bytes: &meters, count: MemoryLayout.size(ofValue: meters))
-        
-        try await writeCommand(opCode: .setCumulativeValue, parameter: data)
-    }
-    
-    func updateSensorLocation(newLocation: SensorLocation) async throws {
-        let data = Data([newLocation.rawValue])
-        try await writeCommand(opCode: .updateSensorLocation, parameter: data)
+        self.sensorLocationValue = try await readSensorLocation()
     }
 }
 
@@ -229,13 +172,102 @@ extension RunningServiceHandler {
     func updateValues(distance: Measurement<UnitLength>?, sensorLocation: SensorLocation?) async {
         do {
             if let distance {
-                try await setCumulativeValue(newDistance: distance)
+                try await writeCumulativeValue(newDistance: distance)
             }
             if let sensorLocation {
-                try await updateSensorLocation(newLocation: sensorLocation)
+                try await writeSensorLocation(newLocation: sensorLocation)
             }
         } catch let e {
             self.presentError(e)
         }
     }
 }
+
+// MARK: - Sensor Settings
+extension RunningServiceHandler {
+    // MARK: Read Values
+    func readSensorLocation() async throws -> SensorLocation {
+        guard let sensorLocationCh else {
+            throw Error.noMandatoryCharacteristic
+        }
+        
+        guard let value = try await peripheral.readValue(for: sensorLocationCh).value else {
+            throw Error.noData
+        }
+        
+        guard let location = SensorLocation(rawValue: value[0]) else {
+            throw Error.badData
+        }
+        
+        return location
+    }
+    
+    func readSupportedFeatures() async throws -> RSCFeature {
+        guard let feauturesData = try await peripheral.readValue(for: rscFeature).value else {
+            throw Error.noData
+        }
+        
+        return RunningSpeedAndCadence.RSCFeature(rawValue: feauturesData[0])
+    }
+    
+    func readAvailableLocations() async throws -> [SensorLocation] {
+        guard let data = try await writeCommand(opCode: .requestSupportedSensorLocations, parameter: nil) else {
+            throw Error.noData
+        }
+        
+        return data.compactMap { SensorLocation(rawValue: $0) }
+    }
+    
+    // MARK: Write Values
+    @discardableResult
+    func writeCommand(opCode: RunningSpeedAndCadence.OpCode, parameter: Data?) async throws -> Data? {
+        guard let scControlPointCh else {
+            throw Error.noMandatoryCharacteristic
+        }
+        
+        var data = opCode.data
+        
+        if let parameter {
+            data.append(parameter)
+        }
+        
+        let valuePublisher = self.peripheral.listenValues(for: scControlPointCh)
+            .compactMap { RunningSpeedAndCadence.SCControlPointResponse(from: $0) }
+            .first(where: { response in response.opCode == opCode })
+            .map { response -> Data? in
+                response.parameter
+            }
+        
+        let writePublisher = peripheral.writeValueWithResponse(data, for: scControlPointCh).autoconnect()
+        
+        return try await writePublisher.combineLatest(valuePublisher)
+            .map { $0.1 }
+            .value
+    }
+    
+    func writeCumulativeValue(newDistance: Measurement<UnitLength>) async throws {
+        var meters = Int(newDistance.converted(to: .meters).value)
+        let data = Data(bytes: &meters, count: MemoryLayout.size(ofValue: meters))
+        
+        try await writeCommand(opCode: .setCumulativeValue, parameter: data)
+    }
+    
+    func writeSensorLocation(newLocation: SensorLocation) async throws {
+        let data = Data([newLocation.rawValue])
+        try await writeCommand(opCode: .updateSensorLocation, parameter: data)
+    }
+}
+
+#if DEBUG
+
+class MockRunningServiceHandler: RunningServiceHandler {
+    init() {
+        super.init(
+            peripheral: Peripheral(
+                peripheral: CBMPeripheralPreview(RunningSpeedAndCadence().peripheral),
+                delegate: ReactivePeripheralDelegate()),
+            service: CBMServiceMock.runningSpeedCadence)!
+    }
+}
+
+#endif

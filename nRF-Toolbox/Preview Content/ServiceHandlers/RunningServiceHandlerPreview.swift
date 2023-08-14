@@ -13,7 +13,6 @@ import iOS_BLE_Library
 import iOS_Bluetooth_Numbers_Database
 
 class RunningServiceHandlerPreview: RunningServiceHandler {
-    
     override var measurement: RSCMeasurement? {
         get {
             RSCMeasurement(

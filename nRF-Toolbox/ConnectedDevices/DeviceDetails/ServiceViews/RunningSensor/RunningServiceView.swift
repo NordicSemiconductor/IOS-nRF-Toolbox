@@ -13,9 +13,8 @@ import iOS_Common_Libraries
 
 struct RunningServiceView: View {
     @ObservedObject var viewModel: RunningServiceHandler
+    
     @State var showCalibration = false
-    @State var waitingForCalibration = false
-    @State private var availableLocations: [SensorLocation] = []
     
     var body: some View {
         List {
@@ -32,35 +31,21 @@ struct RunningServiceView: View {
                 Section("Sensor Location") {
                     SensorLocationView(sensorLocation: viewModel.sensorLocationValue, readingSensorLocation: $viewModel.readingSersorLocation) {
                         Task {
-                            try? await viewModel.readSensorLocation()
+                            try? await viewModel.updateSensorLocation()
                         }
                     }
                     .padding()
                 }
             }
             
-            Section("Control") {
-                Button("Calibrate Sensor") {
-                    waitingForCalibration = true
-                    Task {
-                        defer {
-                            waitingForCalibration = false 
-                        }
-                        do {
-                            availableLocations = try await viewModel.requestSupportedSensorLocations()
-                            showCalibration = true
-                        } catch let e {
-                            viewModel.presentError(e)
-                        }
+            if viewModel.scControlPointCh != nil {
+                Section("Control") {
+                    Button("Calibrate Sensor") {
+                        showCalibration = true
                     }
-                }
-                .disabled(waitingForCalibration)
-                .sheet(isPresented: $showCalibration) {
-                    NavigationStack {
-                        CalibrateSensor(sensorLocations: availableLocations) {
-                            
-                        } updateData: {
-                            
+                    .sheet(isPresented: $showCalibration) {
+                        NavigationStack {
+                            SensorSettings(viewModel: SensorSettings.ViewModel(handler: viewModel))
                         }
                     }
                 }
