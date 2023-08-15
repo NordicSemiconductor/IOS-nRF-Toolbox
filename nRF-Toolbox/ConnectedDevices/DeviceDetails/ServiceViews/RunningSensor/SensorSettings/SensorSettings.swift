@@ -9,15 +9,12 @@
 import SwiftUI
 import Combine
 import iOS_Common_Libraries
-import JGProgressHUD_SwiftUI
 import CoreBluetoothMock
 import iOS_BLE_Library
 
 struct SensorSettings: View {
-    @EnvironmentObject var hudCoordinator: JGProgressHUDCoordinator
     @StateObject var viewModel: ViewModel
-    
-    @State var selectedSensorLocation: UInt8 = 0
+    @EnvironmentObject var hudState: HUDState
     
     @State var showConfirmationAlert = false
     
@@ -41,8 +38,7 @@ struct SensorSettings: View {
             Task {
                 await viewModel.updateFeature()
                 if viewModel.supportedFeatures.contains(.multipleSensorLocation) {
-                    await viewModel.updateCurrentSensorLocation()
-                    await viewModel.updateAvailableLocations()
+                    await viewModel.updateLocationSection()
                 }
             }
         }
@@ -99,7 +95,7 @@ struct SensorSettings: View {
             
             if viewModel.supportedFeatures.contains(.multipleSensorLocation) {
                 Section("Sensor Location") {
-                    Picker("Sensor Location", selection: $viewModel.currentSensorLocation) {
+                    Picker("Sensor Location", selection: $viewModel.selectedSensorLocation) {
                         ForEach(viewModel.availableLocation, id: \.rawValue) { location in
                             Text(location.description)
                                 .disabled(!viewModel.availableLocation.contains(location))
@@ -110,10 +106,12 @@ struct SensorSettings: View {
                     Button("Update Sensor Location") {
                         updateLocationDisabled = true
                         Task {
-                            // TODO: ViewModel.updateSensorLocation
+                            await viewModel.writeNewSensorLocation()
+                            await viewModel.updateLocationSection()
+                            updateLocationDisabled = false
                         }
                     }
-                    .disabled(updateLocationDisabled)
+                    .disabled(updateLocationDisabled || viewModel.currentSensorLocation == viewModel.selectedSensorLocation)
                 }
             }
             

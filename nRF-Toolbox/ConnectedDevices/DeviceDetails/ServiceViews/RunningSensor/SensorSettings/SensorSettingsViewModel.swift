@@ -27,6 +27,9 @@ extension SensorSettings {
         @Published var availableLocation: [RunningSpeedAndCadence.SensorLocation] = []
         @Published var supportedFeatures: RunningSpeedAndCadence.RSCFeature = .none
         @Published var currentSensorLocation: UInt8 = SensorLocation.other.rawValue
+        @Published var selectedSensorLocation: UInt8 = SensorLocation.other.rawValue
+        
+        @Published var updateLocationDisabled = true
         
         let handler: RunningServiceHandler
         
@@ -46,6 +49,11 @@ extension SensorSettings.ViewModel {
         }
     }
     
+    func updateLocationSection() async {
+        async let _ = await updateAvailableLocations()
+        async let _ = await updateCurrentSensorLocation()
+    }
+    
     func updateAvailableLocations() async {
         await wrappError {
             self.availableLocation = try await self.handler.readAvailableLocations()
@@ -55,6 +63,13 @@ extension SensorSettings.ViewModel {
     func updateCurrentSensorLocation() async {
         await wrappError {
             self.currentSensorLocation = try await self.handler.readSensorLocation().rawValue
+            self.selectedSensorLocation = self.currentSensorLocation
+        }
+    }
+    
+    func writeNewSensorLocation() async {
+        await wrappError {
+            try await handler.writeSensorLocation(newLocation: SensorLocation(rawValue: selectedSensorLocation)!)
         }
     }
     
