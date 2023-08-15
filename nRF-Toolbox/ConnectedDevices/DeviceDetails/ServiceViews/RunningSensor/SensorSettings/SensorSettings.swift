@@ -11,6 +11,7 @@ import Combine
 import iOS_Common_Libraries
 import CoreBluetoothMock
 import iOS_BLE_Library
+import CoreBluetoothMock_Collection
 
 struct SensorSettings: View {
     @StateObject var viewModel: ViewModel
@@ -109,6 +110,7 @@ struct SensorSettings: View {
                             await viewModel.writeNewSensorLocation()
                             await viewModel.updateLocationSection()
                             updateLocationDisabled = false
+                            hudState.show(title: "New Sensor Location: \(SensorLocation(rawValue: viewModel.selectedSensorLocation)!.description)", systemImage: "sensor")
                         }
                     }
                     .disabled(updateLocationDisabled || viewModel.currentSensorLocation == viewModel.selectedSensorLocation)

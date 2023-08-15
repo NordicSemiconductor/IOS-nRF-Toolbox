@@ -13,6 +13,7 @@ import iOS_Common_Libraries
 
 struct RunningServiceView: View {
     @ObservedObject var viewModel: RunningServiceHandler
+    @StateObject var settingsHud = HUDState()
     
     @State var showCalibration = false
     
@@ -46,6 +47,10 @@ struct RunningServiceView: View {
                     .sheet(isPresented: $showCalibration) {
                         NavigationStack {
                             SensorSettings(viewModel: SensorSettings.ViewModel(handler: viewModel))
+                                .environmentObject(settingsHud)
+                                .hud(isPresented: $settingsHud.isPresented) {
+                                    Label(settingsHud.title, systemImage: settingsHud.systemImage)
+                                }
                         }
                     }
                 }

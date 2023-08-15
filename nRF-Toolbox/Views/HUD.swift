@@ -17,8 +17,8 @@ struct HUD<Content: View>: View {
             .padding(16)
             .background(
                 Capsule()
-                    .foregroundColor(Color.white)
-                    .shadow(color: Color(.black).opacity(0.16), radius: 12, x: 0, y: 5)
+                    .foregroundColor(Color.secondarySystemBackground)
+                    .shadow(color: Color(.secondaryLabel).opacity(0.16), radius: 12, x: 0, y: 5)
             )
     }
 }
@@ -41,7 +41,7 @@ extension View {
                             }
                         }
                     }
-                    .zIndex(1)
+                    .zIndex(Double(Int.max))
             }
         }
     }
