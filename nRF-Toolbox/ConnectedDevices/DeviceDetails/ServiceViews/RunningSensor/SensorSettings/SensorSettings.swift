@@ -16,6 +16,7 @@ import CoreBluetoothMock_Collection
 struct SensorSettings: View {
     @StateObject var viewModel: ViewModel
     @EnvironmentObject var hudState: HUDState
+    @Environment(\.dismiss) var dismiss
     
     @State var showConfirmationAlert = false
     
@@ -41,6 +42,7 @@ struct SensorSettings: View {
                 if viewModel.supportedFeatures.contains(.multipleSensorLocation) {
                     await viewModel.updateLocationSection()
                 }
+                viewModel.hudState = hudState
             }
         }
         .alert(isPresented: $viewModel.showError, error: viewModel.error, actions: { 
@@ -50,7 +52,7 @@ struct SensorSettings: View {
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button("Close") {
-                    // TODO: Close
+                    dismiss()
                 }
             }
         }
@@ -80,9 +82,9 @@ struct SensorSettings: View {
                     .disabled(resetDistanceDisabled)
                     .alert("Reset distance?", isPresented: $showConfirmationAlert) {
                         Button("Yes") {
-                            resetDistanceDisabled = false
                             Task {
-                                // TODO: ViewModel.resetDistance
+                                await viewModel.resetDistance()
+                                resetDistanceDisabled = false
                             }
                         }
                         Button("No") {
@@ -110,7 +112,6 @@ struct SensorSettings: View {
                             await viewModel.writeNewSensorLocation()
                             await viewModel.updateLocationSection()
                             updateLocationDisabled = false
-                            hudState.show(title: "New Sensor Location: \(SensorLocation(rawValue: viewModel.selectedSensorLocation)!.description)", systemImage: "sensor")
                         }
                     }
                     .disabled(updateLocationDisabled || viewModel.currentSensorLocation == viewModel.selectedSensorLocation)

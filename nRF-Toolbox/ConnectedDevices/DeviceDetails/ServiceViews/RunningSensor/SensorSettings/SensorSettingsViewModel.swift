@@ -31,6 +31,8 @@ extension SensorSettings {
         
         @Published var updateLocationDisabled = true
         
+        var hudState: HUDState?
+        
         let handler: RunningServiceHandler
         
         init(handler: RunningServiceHandler) {
@@ -69,7 +71,24 @@ extension SensorSettings.ViewModel {
     
     func writeNewSensorLocation() async {
         await wrappError {
-            try await handler.writeSensorLocation(newLocation: SensorLocation(rawValue: selectedSensorLocation)!)
+//            try await handler.writeSensorLocation(newLocation: SensorLocation(rawValue: selectedSensorLocation)!)
+            try await handler.writeSensorLocation(newLocation: .chainRing)
+            
+            hudState?.show(title: "New Sensor Location: \(SensorLocation(rawValue: selectedSensorLocation)!.description)", systemImage: "sensor")
+        }
+    }
+    
+    func resetDistance() async {
+        await wrappError {
+            try await handler.writeCumulativeValue(newDistance: Measurement(value: 1, unit: .meters))
+            
+            hudState?.show(title: "Distance was reset", systemImage: "ruler")
+        }
+    }
+    
+    func startCalibration() async {
+        await wrappError {
+            try await handler.startCalibration()
         }
     }
     

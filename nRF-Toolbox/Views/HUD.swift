@@ -12,6 +12,7 @@ struct HUD<Content: View>: View {
     @ViewBuilder let content: Content
     
     var body: some View {
+        #if os(iOS)
         content
             .padding(.horizontal, 12)
             .padding(16)
@@ -20,6 +21,9 @@ struct HUD<Content: View>: View {
                     .foregroundColor(Color.secondarySystemBackground)
                     .shadow(color: Color(.secondaryLabel).opacity(0.16), radius: 12, x: 0, y: 5)
             )
+        #else
+        EmptyView()
+        #endif
     }
 }
 

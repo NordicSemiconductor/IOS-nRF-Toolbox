@@ -252,6 +252,10 @@ extension RunningServiceHandler {
         try await writeCommand(opCode: .setCumulativeValue, parameter: data)
     }
     
+    func startCalibration() async throws {
+        try await writeCommand(opCode: .startSensorCalibration, parameter: nil)
+    }
+    
     func writeSensorLocation(newLocation: SensorLocation) async throws {
         let data = Data([newLocation.rawValue])
         try await writeCommand(opCode: .updateSensorLocation, parameter: data)
