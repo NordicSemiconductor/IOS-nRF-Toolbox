@@ -9,17 +9,17 @@
 import SwiftUI
 
 struct MeasurementView: View {
-    let instantaneousSpeed: SomeValue
-    let instantaneousCadence: SomeValue
-    let instantaneousStrideLength: SomeValue
-    let totalDistance: SomeValue
+    let instantaneousSpeed: LabledValue
+    let instantaneousCadence: LabledValue
+    let instantaneousStrideLength: LabledValue
+    let totalDistance: LabledValue
     
     var body: some View {
         VStack(alignment: .leading) {
-            SomeValueView(someValue: instantaneousSpeed)
-            SomeValueView(someValue: instantaneousCadence)
-            SomeValueView(someValue: instantaneousStrideLength)
-            SomeValueView(someValue: totalDistance)
+            LabledValueView(someValue: instantaneousSpeed)
+            LabledValueView(someValue: instantaneousCadence)
+            LabledValueView(someValue: instantaneousStrideLength)
+            LabledValueView(someValue: totalDistance)
         }
     }
 }
@@ -27,28 +27,28 @@ struct MeasurementView: View {
 struct MeasurementView_Previews: PreviewProvider {
     static var previews: some View {
         MeasurementView(
-            instantaneousSpeed: SomeValue(
+            instantaneousSpeed: LabledValue(
                 systemName: "figure.run",
                 text: "Speed",
                 value: "12 mph",
                 isActive: true,
                 color: .purple
             ),
-            instantaneousCadence: SomeValue(
+            instantaneousCadence: LabledValue(
                 systemName: "basketball",
                 text: "Cadence",
                 value: "12 mph",
                 isActive: false,
                 color: .cyan
             ),
-            instantaneousStrideLength: SomeValue(
+            instantaneousStrideLength: LabledValue(
                 systemName: "tennis.racket",
                 text: "Stride Length",
                 value: "12 mph",
                 isActive: true,
                 color: .nordicFall
             ),
-            totalDistance: SomeValue(
+            totalDistance: LabledValue(
                 systemName: "flag.checkered",
                 text: "Speed",
                 value: "12 mph",

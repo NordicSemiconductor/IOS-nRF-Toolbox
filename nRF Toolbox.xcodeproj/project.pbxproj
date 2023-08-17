@@ -23,7 +23,7 @@
 		0129F2202A67FD43002FB3F5 /* ServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129F21F2A67FD43002FB3F5 /* ServiceView.swift */; };
 		0129F2222A67FE39002FB3F5 /* RunningServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129F2212A67FE39002FB3F5 /* RunningServiceView.swift */; };
 		0129F2252A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129F2242A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift */; };
-		0129F2282A684059002FB3F5 /* SomeValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129F2272A684059002FB3F5 /* SomeValueView.swift */; };
+		0129F2282A684059002FB3F5 /* LabledValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129F2272A684059002FB3F5 /* LabledValueView.swift */; };
 		0129F22A2A693375002FB3F5 /* CentralManagerHelperPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129F2292A693375002FB3F5 /* CentralManagerHelperPreview.swift */; };
 		012C2BDC240FCD0C005EC1A0 /* DFUUpdateSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDB240FCD0C005EC1A0 /* DFUUpdateSection.swift */; };
 		012C2BE12410682D005EC1A0 /* LegendLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDE2410682D005EC1A0 /* LegendLabel.swift */; };
@@ -44,7 +44,6 @@
 		01468B052361A30A00C29E4C /* StepperTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B032361A30A00C29E4C /* StepperTableViewCell.swift */; };
 		01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01468B042361A30A00C29E4C /* StepperTableViewCell.xib */; };
 		01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */; };
-		014BBD7A2A6FD54500BCFCA8 /* MeasurementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014BBD792A6FD54500BCFCA8 /* MeasurementView.swift */; };
 		014BBD7D2A70004B00BCFCA8 /* RSCMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014BBD7C2A70004B00BCFCA8 /* RSCMeasurement.swift */; };
 		014BBD812A700D1600BCFCA8 /* SensorLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014BBD802A700D1600BCFCA8 /* SensorLocationView.swift */; };
 		014C4E892403F8AE0003E601 /* UARTMacrosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E882403F8AE0003E601 /* UARTMacrosTableViewController.swift */; };
@@ -386,7 +385,7 @@
 		0129F21F2A67FD43002FB3F5 /* ServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceView.swift; sourceTree = "<group>"; };
 		0129F2212A67FE39002FB3F5 /* RunningServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningServiceView.swift; sourceTree = "<group>"; };
 		0129F2242A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningServiceHandlerPreview.swift; sourceTree = "<group>"; };
-		0129F2272A684059002FB3F5 /* SomeValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SomeValueView.swift; sourceTree = "<group>"; };
+		0129F2272A684059002FB3F5 /* LabledValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabledValueView.swift; sourceTree = "<group>"; };
 		0129F2292A693375002FB3F5 /* CentralManagerHelperPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CentralManagerHelperPreview.swift; sourceTree = "<group>"; };
 		012C2BDB240FCD0C005EC1A0 /* DFUUpdateSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUUpdateSection.swift; sourceTree = "<group>"; };
 		012C2BDE2410682D005EC1A0 /* LegendLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegendLabel.swift; sourceTree = "<group>"; };
@@ -407,7 +406,6 @@
 		01468B032361A30A00C29E4C /* StepperTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperTableViewCell.swift; sourceTree = "<group>"; };
 		01468B042361A30A00C29E4C /* StepperTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StepperTableViewCell.xib; sourceTree = "<group>"; };
 		01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalSection.swift; sourceTree = "<group>"; };
-		014BBD792A6FD54500BCFCA8 /* MeasurementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementView.swift; sourceTree = "<group>"; };
 		014BBD7C2A70004B00BCFCA8 /* RSCMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSCMeasurement.swift; sourceTree = "<group>"; };
 		014BBD802A700D1600BCFCA8 /* SensorLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorLocationView.swift; sourceTree = "<group>"; };
 		014C4E882403F8AE0003E601 /* UARTMacrosTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTMacrosTableViewController.swift; sourceTree = "<group>"; };
@@ -819,7 +817,6 @@
 				01DEB4A32A6588CA00D4C1E8 /* RunningServiceHandler.swift */,
 				0129F2212A67FE39002FB3F5 /* RunningServiceView.swift */,
 				01F6A9642A829D4B00540B45 /* SensorSettings */,
-				014BBD792A6FD54500BCFCA8 /* MeasurementView.swift */,
 				014BBD802A700D1600BCFCA8 /* SensorLocationView.swift */,
 			);
 			path = RunningSensor;
@@ -846,7 +843,7 @@
 		0129F2262A68404C002FB3F5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				0129F2272A684059002FB3F5 /* SomeValueView.swift */,
+				0129F2272A684059002FB3F5 /* LabledValueView.swift */,
 				0130DAB92A8B87E100C332BA /* HUD.swift */,
 			);
 			path = Views;
@@ -2423,7 +2420,7 @@
 				018873C92A583B0000253273 /* PeripheralScannerViewModel.swift in Sources */,
 				018873D22A58707900253273 /* CentralManagerHelper.swift in Sources */,
 				01C575B92A798D65007FE4F0 /* SensorSettings.swift in Sources */,
-				0129F2282A684059002FB3F5 /* SomeValueView.swift in Sources */,
+				0129F2282A684059002FB3F5 /* LabledValueView.swift in Sources */,
 				012E22922A6ACD8400B14064 /* AttributeTableItemView.swift in Sources */,
 				012E22902A69AFC200B14064 /* String+Name.swift in Sources */,
 				01C81AD52A5CB6420011B41E /* ServiceBadge.swift in Sources */,
@@ -2433,7 +2430,6 @@
 				01C81AD02A5CB1B50011B41E /* ServiceHelper.swift in Sources */,
 				01DEB4AA2A65E9D900D4C1E8 /* CharacteristicReader.swift in Sources */,
 				01407CB92A65417900A5B279 /* CBMPeripheralPreview.swift in Sources */,
-				014BBD7A2A6FD54500BCFCA8 /* MeasurementView.swift in Sources */,
 				0130DABA2A8B87E100C332BA /* HUD.swift in Sources */,
 				017D10302A5809E300E38E5F /* ContentView.swift in Sources */,
 				0129F2202A67FD43002FB3F5 /* ServiceView.swift in Sources */,

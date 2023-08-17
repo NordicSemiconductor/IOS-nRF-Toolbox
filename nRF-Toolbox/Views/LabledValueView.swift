@@ -1,5 +1,5 @@
 //
-//  SomeValueView.swift
+//  LabledValueView.swift
 //  nRF-Toolbox
 //
 //  Created by Nick Kibysh on 19/07/2023.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct SomeValue {
+struct LabledValue {
     var icon: Image?
     var text: String
     var value: String
@@ -37,20 +37,21 @@ struct SomeValue {
     }
 }
 
-struct SomeValueView: View {
-    let someValue: SomeValue
+struct LabledValueView: View {
+    let someValue: LabledValue
     
     var body: some View {
         HStack {
-            someValue.icon?.foregroundColor(color)
-                .frame(width: 20)
-            Text(someValue.text)
+            Label {
+                Text(someValue.text)
+            } icon: {
+                someValue.icon?.foregroundColor(color)
+            }
+
             Spacer()
             Text(someValue.value)
         }
-//        .background(color.opacity(0.15))
         .disabled(!someValue.isActive)
-        .padding()
     }
     
     var color: Color {
@@ -60,6 +61,6 @@ struct SomeValueView: View {
 
 struct SomeValueView_Previews: PreviewProvider {
     static var previews: some View {
-        SomeValueView(someValue: SomeValue(systemName: "map.fill", text: "Total Distance", value: "10 km", isActive: true, color: .red))
+        LabledValueView(someValue: LabledValue(systemName: "map.fill", text: "Total Distance", value: "10 km", isActive: true, color: .red))
     }
 }

@@ -20,12 +20,19 @@ struct RunningServiceView: View {
     var body: some View {
         List {
             Section("Measurement") {
-                MeasurementView(
-                    instantaneousSpeed: viewModel.instantaneousSpeed,
-                    instantaneousCadence: viewModel.instantaneousCadence,
-                    instantaneousStrideLength: viewModel.instantaneousStrideLength,
-                    totalDistance: viewModel.totalDistance
-                )
+                ForEach([viewModel.instantaneousSpeed, viewModel.instantaneousCadence, viewModel.instantaneousStrideLength, viewModel.totalDistance], id: \.text) {
+                    LabledValueView(someValue: $0)
+                }
+            }
+            
+            if let running = viewModel.runningOrWalking {
+                Section("Running or Walking") {
+                    if running {
+                        Label("Running", systemImage: "figure.run")
+                    } else {
+                        Label("Walking", systemImage: "figure.walk")
+                    }
+                }
             }
             
             if viewModel.sensorLocationSupported {
@@ -41,7 +48,7 @@ struct RunningServiceView: View {
             
             if viewModel.scControlPointCh != nil {
                 Section("Control") {
-                    Button("Calibrate Sensor") {
+                    Button("Sensor Settings") {
                         showCalibration = true
                     }
                     .sheet(isPresented: $showCalibration) {

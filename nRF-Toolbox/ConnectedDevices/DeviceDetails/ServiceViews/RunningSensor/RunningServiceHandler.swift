@@ -61,15 +61,17 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
     @Published var error: ReadableError?
     @Published var showError: Bool = false
     
-    @Published var instantaneousSpeed: SomeValue = SomeValue(systemName: "hare.fill", text: "Instantaneous Speed", value: "--", isActive: false, color: .green)
-    @Published var instantaneousCadence: SomeValue = SomeValue(systemName: "shoeprints.fill", text: "Instantaneous Cadence", value: "--", isActive: false, color: .blue)
-    @Published var instantaneousStrideLength: SomeValue = SomeValue(systemName: "ruler.fill", text: "Instantaneous Stride Length", value: "--", isActive: false, color: .purple)
-    @Published var totalDistance: SomeValue = SomeValue(systemName: "map.fill", text: "Total Distance", value: "--", isActive: false, color: .cyan)
+    @Published var instantaneousSpeed: LabledValue = LabledValue(systemName: "hare.fill", text: "Instantaneous Speed", value: "--", isActive: false, color: .green)
+    @Published var instantaneousCadence: LabledValue = LabledValue(systemName: "shoeprints.fill", text: "Instantaneous Cadence", value: "--", isActive: false, color: .blue)
+    @Published var instantaneousStrideLength: LabledValue = LabledValue(systemName: "ruler.fill", text: "Instantaneous Stride Length", value: "--", isActive: false, color: .purple)
+    @Published var totalDistance: LabledValue = LabledValue(systemName: "map.fill", text: "Total Distance", value: "--", isActive: false, color: .cyan)
     
     // MARK: Sensor Location
     @Published var sensorLocationValue: SensorLocation?
     @Published var sensorLocationSupported: Bool = false
-    @Published var readingSersorLocation: Bool = false 
+    @Published var readingSersorLocation: Bool = false
+    
+    @Published var runningOrWalking: Bool? = nil
     
     override init?(peripheral: Peripheral, service: CBService) {
         guard service.uuid.uuidString == Service.runningSpeedAndCadence.uuidString else {
@@ -171,6 +173,10 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
                     self.totalDistance.updateValue(formatter.string(from: totalDistance))
                 } else {
                     self.totalDistance.isActive = false
+                }
+                
+                if self.features.contains(.walkingOrRunningStatus) {
+                    self.runningOrWalking = true 
                 }
             }
             .store(in: &cancelables)
