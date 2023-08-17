@@ -26,8 +26,27 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
     
     private var cancelables = Set<AnyCancellable>()
     
-    enum Error: Swift.Error {
-        case timeout, noMandatoryCharacteristic, noData, badData, parseError, controlPointError(RunningSpeedAndCadence.ResponseCode)
+    enum Error: LocalizedError {
+        case timeout, noMandatoryCharacteristic(CBMCharacteristic?), noData, badData, controlPointError(RunningSpeedAndCadence.ResponseCode)
+        
+        var errorDescription: String? {
+            switch self {
+            case .timeout:
+                return "Operation timed out"
+            case .noMandatoryCharacteristic(let ch):
+                if let ch, let characteristic = Characteristic.find(by: ch.uuid) {
+                    return "No \(characteristic.name) characteristic"
+                } else {
+                    return "No mandatory characteristic"
+                }
+            case .badData:
+                return "Can't parse data"
+            case .noData:
+                return "Empty data"
+            case .controlPointError(let code):
+                return "Control point error: \(code.description)"
+            }
+        }
     }
     
     // MARK: Characteristics
@@ -89,8 +108,12 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
             }
         }
         
-        guard rscMeasurement != nil && rscFeature != nil else {
-            throw Error.noMandatoryCharacteristic
+        guard rscMeasurement != nil else {
+            throw Error.noMandatoryCharacteristic(rscMeasurement)
+        }
+        
+        guard rscFeature != nil else {
+            throw Error.noMandatoryCharacteristic(rscFeature)
         }
         
         self.features = try await readSupportedFeatures()
@@ -163,32 +186,12 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
     }
 }
 
-extension RunningServiceHandler {
-    public func presentError(_ error: Swift.Error) {
-        self.error = ReadableError(error: error)
-        self.showError = true
-    }
-    
-    func updateValues(distance: Measurement<UnitLength>?, sensorLocation: SensorLocation?) async {
-        do {
-            if let distance {
-                try await writeCumulativeValue(newDistance: distance)
-            }
-            if let sensorLocation {
-                try await writeSensorLocation(newLocation: sensorLocation)
-            }
-        } catch let e {
-            self.presentError(e)
-        }
-    }
-}
-
 // MARK: - Sensor Settings
 extension RunningServiceHandler {
     // MARK: Read Values
     func readSensorLocation() async throws -> SensorLocation {
         guard let sensorLocationCh else {
-            throw Error.noMandatoryCharacteristic
+            throw Error.noMandatoryCharacteristic(sensorLocationCh)
         }
         
         guard let value = try await peripheral.readValue(for: sensorLocationCh).value else {
@@ -222,7 +225,7 @@ extension RunningServiceHandler {
     @discardableResult
     func writeCommand(opCode: RunningSpeedAndCadence.OpCode, parameter: Data?) async throws -> Data? {
         guard let scControlPointCh else {
-            throw Error.noMandatoryCharacteristic
+            throw Error.noMandatoryCharacteristic(scControlPointCh)
         }
         
         var data = opCode.data
@@ -234,8 +237,11 @@ extension RunningServiceHandler {
         let valuePublisher = self.peripheral.listenValues(for: scControlPointCh)
             .compactMap { RunningSpeedAndCadence.SCControlPointResponse(from: $0) }
             .first(where: { response in response.opCode == opCode })
-            .map { response -> Data? in
-                response.parameter
+            .tryMap { response -> Data? in
+                guard response.responseValue == .success else {
+                    throw Error.controlPointError(response.responseValue)
+                }
+                return response.parameter
             }
         
         let writePublisher = peripheral.writeValueWithResponse(data, for: scControlPointCh).autoconnect()
@@ -246,7 +252,7 @@ extension RunningServiceHandler {
     }
     
     func writeCumulativeValue(newDistance: Measurement<UnitLength>) async throws {
-        var meters = Int(newDistance.converted(to: .meters).value)
+        var meters = UInt32(newDistance.converted(to: .decimeters).value)
         let data = Data(bytes: &meters, count: MemoryLayout.size(ofValue: meters))
         
         try await writeCommand(opCode: .setCumulativeValue, parameter: data)

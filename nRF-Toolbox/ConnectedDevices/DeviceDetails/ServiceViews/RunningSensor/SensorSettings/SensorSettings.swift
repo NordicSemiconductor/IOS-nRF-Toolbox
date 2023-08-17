@@ -123,7 +123,7 @@ struct SensorSettings: View {
                     Button("Start Calibration") {
                         startCalibrationDisabled = true
                         Task {
-                            // TODO: ViewModel.startCalibration
+                            await viewModel.startCalibration()
                         }
                     }
                     .disabled(startCalibrationDisabled)

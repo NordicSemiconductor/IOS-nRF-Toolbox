@@ -52,8 +52,8 @@ extension SensorSettings.ViewModel {
     }
     
     func updateLocationSection() async {
-        async let _ = await updateAvailableLocations()
-        async let _ = await updateCurrentSensorLocation()
+        await updateAvailableLocations()
+        await updateCurrentSensorLocation()
     }
     
     func updateAvailableLocations() async {
@@ -71,8 +71,7 @@ extension SensorSettings.ViewModel {
     
     func writeNewSensorLocation() async {
         await wrappError {
-//            try await handler.writeSensorLocation(newLocation: SensorLocation(rawValue: selectedSensorLocation)!)
-            try await handler.writeSensorLocation(newLocation: .chainRing)
+            try await handler.writeSensorLocation(newLocation: SensorLocation(rawValue: selectedSensorLocation)!)
             
             hudState?.show(title: "New Sensor Location: \(SensorLocation(rawValue: selectedSensorLocation)!.description)", systemImage: "sensor")
         }
@@ -80,7 +79,7 @@ extension SensorSettings.ViewModel {
     
     func resetDistance() async {
         await wrappError {
-            try await handler.writeCumulativeValue(newDistance: Measurement(value: 1, unit: .meters))
+            try await handler.writeCumulativeValue(newDistance: Measurement(value: 0, unit: .meters))
             
             hudState?.show(title: "Distance was reset", systemImage: "ruler")
         }
@@ -89,6 +88,7 @@ extension SensorSettings.ViewModel {
     func startCalibration() async {
         await wrappError {
             try await handler.startCalibration()
+            hudState?.show(title: "Calibration procedure was started", systemImage: "slider.horizontal.2.gobackward")
         }
     }
     
