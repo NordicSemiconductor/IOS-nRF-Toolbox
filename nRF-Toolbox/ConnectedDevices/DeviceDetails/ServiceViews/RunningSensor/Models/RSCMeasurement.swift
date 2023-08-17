@@ -27,6 +27,10 @@ struct RSCMeasurement: CustomDebugStringConvertible {
     let instantaneousCadence: Int
     let instantaneousStrideLength: Measurement<UnitLength>?
     let totalDistance: Measurement<UnitLength>?
+    
+    var isRunning: Bool {
+        flags.contains(.walkingOrRunningStatus)
+    }
 
     init(data: Data, flags: RunningSpeedAndCadence.RSCMeasurementFlags, instantaneousSpeed: Measurement<UnitSpeed>, instantaneousCadence: Int, instantaneousStrideLength: Measurement<UnitLength>?, totalDistance: Measurement<UnitLength>?) {
         self.data = data

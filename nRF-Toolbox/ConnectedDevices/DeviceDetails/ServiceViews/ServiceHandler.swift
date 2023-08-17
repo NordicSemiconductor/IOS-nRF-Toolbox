@@ -18,6 +18,8 @@ class ServiceHandler: Identifiable {
     
     nonisolated var id: String { service.uuid.uuidString }
     
+    @Published private (set) var state: CBPeripheralState = .connecting
+    
     var name: String { Service.find(by: id)?.name ?? "Unknown Service" }
     var image: Image { Image(systemName: "circle.hexagongrid.circle")  }
     
@@ -28,5 +30,10 @@ class ServiceHandler: Identifiable {
         guard peripheral.peripheral.services?.contains(where: { $0.uuid == service.uuid }) == true else {
             return nil
         }
+    }
+    
+    func manageConnection() {
+        peripheral.peripheralStateChannel
+            .assign(to: &$state)
     }
 }

@@ -8,16 +8,21 @@
 
 import SwiftUI
 import iOS_BLE_Library
-import JGProgressHUD_SwiftUI
 
 @main
 struct nRF_ToolboxApp: App {
+    @StateObject var hudState = HUDState()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .onAppear {
                     BluetoothEmulation.shared.simulateState()
                     BluetoothEmulation.shared.simulatePeripherals()
+                }
+                .environmentObject(hudState)
+                .hud(isPresented: $hudState.isPresented) {
+                    Label(hudState.title, systemImage: hudState.systemImage)
                 }
         }
     }

@@ -8,11 +8,12 @@
 
 import SwiftUI
 import iOS_Common_Libraries
-import JGProgressHUD_SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var hudState: HUDState
+    
     var body: some View {
-        JGProgressHUDPresenter {
+        ZStack {
             NavigationSplitView {
                 ConnectedDevicesView()
                     .navigationTitle("Connected Devices")

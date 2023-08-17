@@ -9,15 +9,14 @@
 import SwiftUI
 import Combine
 import iOS_Common_Libraries
-import JGProgressHUD_SwiftUI
 import CoreBluetoothMock
 import iOS_BLE_Library
+import CoreBluetoothMock_Collection
 
 struct SensorSettings: View {
-    @EnvironmentObject var hudCoordinator: JGProgressHUDCoordinator
     @StateObject var viewModel: ViewModel
-    
-    @State var selectedSensorLocation: UInt8 = 0
+    @EnvironmentObject var hudState: HUDState
+    @Environment(\.dismiss) var dismiss
     
     @State var showConfirmationAlert = false
     
@@ -41,9 +40,9 @@ struct SensorSettings: View {
             Task {
                 await viewModel.updateFeature()
                 if viewModel.supportedFeatures.contains(.multipleSensorLocation) {
-                    await viewModel.updateCurrentSensorLocation()
-                    await viewModel.updateAvailableLocations()
+                    await viewModel.updateLocationSection()
                 }
+                viewModel.hudState = hudState
             }
         }
         .alert(isPresented: $viewModel.showError, error: viewModel.error, actions: { 
@@ -53,7 +52,7 @@ struct SensorSettings: View {
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button("Close") {
-                    // TODO: Close
+                    dismiss()
                 }
             }
         }
@@ -83,9 +82,9 @@ struct SensorSettings: View {
                     .disabled(resetDistanceDisabled)
                     .alert("Reset distance?", isPresented: $showConfirmationAlert) {
                         Button("Yes") {
-                            resetDistanceDisabled = false
                             Task {
-                                // TODO: ViewModel.resetDistance
+                                await viewModel.resetDistance()
+                                resetDistanceDisabled = false
                             }
                         }
                         Button("No") {
@@ -99,7 +98,7 @@ struct SensorSettings: View {
             
             if viewModel.supportedFeatures.contains(.multipleSensorLocation) {
                 Section("Sensor Location") {
-                    Picker("Sensor Location", selection: $viewModel.currentSensorLocation) {
+                    Picker("Sensor Location", selection: $viewModel.selectedSensorLocation) {
                         ForEach(viewModel.availableLocation, id: \.rawValue) { location in
                             Text(location.description)
                                 .disabled(!viewModel.availableLocation.contains(location))
@@ -110,10 +109,12 @@ struct SensorSettings: View {
                     Button("Update Sensor Location") {
                         updateLocationDisabled = true
                         Task {
-                            // TODO: ViewModel.updateSensorLocation
+                            await viewModel.writeNewSensorLocation()
+                            await viewModel.updateLocationSection()
+                            updateLocationDisabled = false
                         }
                     }
-                    .disabled(updateLocationDisabled)
+                    .disabled(updateLocationDisabled || viewModel.currentSensorLocation == viewModel.selectedSensorLocation)
                 }
             }
             
@@ -122,7 +123,7 @@ struct SensorSettings: View {
                     Button("Start Calibration") {
                         startCalibrationDisabled = true
                         Task {
-                            // TODO: ViewModel.startCalibration
+                            await viewModel.startCalibration()
                         }
                     }
                     .disabled(startCalibrationDisabled)

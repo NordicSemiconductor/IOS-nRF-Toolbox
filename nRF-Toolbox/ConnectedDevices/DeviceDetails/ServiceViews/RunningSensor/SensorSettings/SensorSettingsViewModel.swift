@@ -27,6 +27,11 @@ extension SensorSettings {
         @Published var availableLocation: [RunningSpeedAndCadence.SensorLocation] = []
         @Published var supportedFeatures: RunningSpeedAndCadence.RSCFeature = .none
         @Published var currentSensorLocation: UInt8 = SensorLocation.other.rawValue
+        @Published var selectedSensorLocation: UInt8 = SensorLocation.other.rawValue
+        
+        @Published var updateLocationDisabled = true
+        
+        var hudState: HUDState?
         
         let handler: RunningServiceHandler
         
@@ -46,6 +51,11 @@ extension SensorSettings.ViewModel {
         }
     }
     
+    func updateLocationSection() async {
+        await updateAvailableLocations()
+        await updateCurrentSensorLocation()
+    }
+    
     func updateAvailableLocations() async {
         await wrappError {
             self.availableLocation = try await self.handler.readAvailableLocations()
@@ -55,6 +65,30 @@ extension SensorSettings.ViewModel {
     func updateCurrentSensorLocation() async {
         await wrappError {
             self.currentSensorLocation = try await self.handler.readSensorLocation().rawValue
+            self.selectedSensorLocation = self.currentSensorLocation
+        }
+    }
+    
+    func writeNewSensorLocation() async {
+        await wrappError {
+            try await handler.writeSensorLocation(newLocation: SensorLocation(rawValue: selectedSensorLocation)!)
+            
+            hudState?.show(title: "New Sensor Location: \(SensorLocation(rawValue: selectedSensorLocation)!.description)", systemImage: "sensor")
+        }
+    }
+    
+    func resetDistance() async {
+        await wrappError {
+            try await handler.writeCumulativeValue(newDistance: Measurement(value: 0, unit: .meters))
+            
+            hudState?.show(title: "Distance was reset", systemImage: "ruler")
+        }
+    }
+    
+    func startCalibration() async {
+        await wrappError {
+            try await handler.startCalibration()
+            hudState?.show(title: "Calibration procedure was started", systemImage: "slider.horizontal.2.gobackward")
         }
     }
     

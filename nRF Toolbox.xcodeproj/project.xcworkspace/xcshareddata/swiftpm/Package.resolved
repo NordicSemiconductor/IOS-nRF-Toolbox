@@ -46,24 +46,6 @@
       }
     },
     {
-      "identity" : "jgprogresshud",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/JonasGessner/JGProgressHUD.git",
-      "state" : {
-        "revision" : "78d7cd35f1d90ff74fd82e486f2cbe4b24be8cf9",
-        "version" : "2.2.0"
-      }
-    },
-    {
-      "identity" : "jgprogresshud-swiftui",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/JonasGessner/JGProgressHUD-SwiftUI.git",
-      "state" : {
-        "revision" : "a173f018132a48e11b5e0bbca9a3dac30ce3f0ae",
-        "version" : "0.1.1"
-      }
-    },
-    {
       "identity" : "swift-algorithms",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-algorithms",
