@@ -16,7 +16,6 @@ import CoreBluetoothMock_Collection
 struct SensorSettings: View {
     @StateObject var viewModel: ViewModel
     @EnvironmentObject var hudState: HUDState
-    @Environment(\.dismiss) var dismiss
     
     @State var showConfirmationAlert = false
     
@@ -24,35 +23,40 @@ struct SensorSettings: View {
     @State var updateLocationDisabled = false
     @State var startCalibrationDisabled = false
     
-    init(viewModel: ViewModel) {
+    @Binding var displaySettings: Bool
+    
+    init(viewModel: ViewModel, displaySettings: Binding<Bool>) {
         self._viewModel = StateObject(wrappedValue: viewModel)
+        self._displaySettings = displaySettings
     }
     
     var body: some View {
-        VStack {
-            if viewModel.supportedFeatures.contains(.totalDistanceMeasurement) || viewModel.supportedFeatures.contains(.multipleSensorLocation) || viewModel.supportedFeatures.contains(.sensorCalibrationProcedure) {
-                settings
-            } else {
-                noContent
-            }
-        }
-        .onAppear {
-            Task {
-                await viewModel.updateFeature()
-                if viewModel.supportedFeatures.contains(.multipleSensorLocation) {
-                    await viewModel.updateLocationSection()
+        List {
+            VStack(alignment: .leading) {
+                if viewModel.supportedFeatures.contains(.totalDistanceMeasurement) || viewModel.supportedFeatures.contains(.multipleSensorLocation) || viewModel.supportedFeatures.contains(.sensorCalibrationProcedure) {
+                    settings
+                } else {
+                    noContent
                 }
-                viewModel.hudState = hudState
             }
-        }
-        .alert(isPresented: $viewModel.showError, error: viewModel.error, actions: { 
-            Button("Cancel") { }
-        })
-        .navigationTitle("Sensor Calibration")
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button("Close") {
-                    dismiss()
+            .onAppear {
+                Task {
+                    await viewModel.updateFeature()
+                    if viewModel.supportedFeatures.contains(.multipleSensorLocation) {
+                        await viewModel.updateLocationSection()
+                    }
+                    viewModel.hudState = hudState
+                }
+            }
+            .alert(isPresented: $viewModel.showError, error: viewModel.error, actions: {
+                Button("Cancel") { }
+            })
+            .navigationTitle("Sensor Calibration")
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Close") {
+                        displaySettings = false 
+                    }
                 }
             }
         }
@@ -136,7 +140,7 @@ struct SensorSettings: View {
 struct CalibrateSensor_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            SensorSettings(viewModel: SensorSettings.MockViewModel())
+            SensorSettings(viewModel: SensorSettings.MockViewModel(), displaySettings: .constant(false))
         }
     }
 }

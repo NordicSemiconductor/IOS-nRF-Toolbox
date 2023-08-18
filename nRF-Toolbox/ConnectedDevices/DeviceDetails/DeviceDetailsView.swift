@@ -11,9 +11,10 @@ import CoreBluetoothMock
 
 struct DeviceDetailsView: View {
     @ObservedObject var peripheralHandler: DeviceDetailsViewModel
+    @State private var activeTab = ""
     
     var body: some View {
-        TabView {
+        TabView(selection: $activeTab) {
             ForEach(peripheralHandler.serviceHandlers, id: \.id) { service in
                 ServiceView(service: service)
                     .tabItem {
@@ -23,7 +24,9 @@ struct DeviceDetailsView: View {
                             service.image
                         }
                     }
+                    .tag(service.id)
             }
+            
             AttributeTableView(
                 attributeTable: peripheralHandler.attributeTable,
                 discoverTableAction: {
@@ -37,6 +40,7 @@ struct DeviceDetailsView: View {
                     Image(systemName: "person.fill")
                 }
             }
+            .tag("attribute")
         }
         .navigationTitle(peripheralHandler.cbPeripheral.name.deviceName)
     }

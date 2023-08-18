@@ -19,7 +19,12 @@ struct ContentView: View {
                     .navigationTitle("Connected Devices")
                     .environmentObject(CentralManagerHelper.shared)
             } detail: {
-                Text("Device Details")
+                ContentUnavailableView(
+                    configuration: ContentUnavailableConfiguration(
+                        text: "Device is not selected",
+                        secondaryText: "Select any device from the list of connected devices",
+                        systemName: "filemenu.and.selection"
+                    ))
             }
         }
     }

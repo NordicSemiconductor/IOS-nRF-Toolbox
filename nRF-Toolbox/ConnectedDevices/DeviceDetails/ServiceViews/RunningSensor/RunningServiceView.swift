@@ -53,11 +53,14 @@ struct RunningServiceView: View {
                     }
                     .sheet(isPresented: $showCalibration) {
                         NavigationStack {
-                            SensorSettings(viewModel: SensorSettings.ViewModel(handler: viewModel))
+                            SensorSettings(viewModel: SensorSettings.ViewModel(handler: viewModel), displaySettings: $showCalibration)
                                 .environmentObject(settingsHud)
                                 .hud(isPresented: $settingsHud.isPresented) {
                                     Label(settingsHud.title, systemImage: settingsHud.systemImage)
                                 }
+#if os(macOS)
+                                .frame(minWidth: 400, minHeight: 450)
+#endif
                         }
                     }
                 }
