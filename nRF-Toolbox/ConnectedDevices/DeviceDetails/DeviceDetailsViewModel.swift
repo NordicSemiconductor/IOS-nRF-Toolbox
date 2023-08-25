@@ -12,10 +12,11 @@ import Combine
 import CoreBluetoothMock
 import iOS_Bluetooth_Numbers_Database
 
+@MainActor
 class DeviceDetailsViewModel: ObservableObject, Identifiable {
     private var cancelables = Set<AnyCancellable>()
     
-    let cbPeripheral: CBMPeripheral
+    let cbPeripheral: CBPeripheral
     let peripheralManager: Peripheral
     
     var id: String {
@@ -29,14 +30,37 @@ class DeviceDetailsViewModel: ObservableObject, Identifiable {
     @Published var serviceHandlers: [ServiceHandler] = []
     @Published var attributeTable = AttributeTable()
     
-    init(cbPeripheral: CBMPeripheral) {
+    @Published var disconnectedError: Error? = nil
+    
+    private let requestReconnect: (CBPeripheral) -> ()
+    
+    init(cbPeripheral: CBMPeripheral, requestReconnect: @escaping (CBPeripheral) -> ()) {
         self.cbPeripheral = cbPeripheral
         self.peripheralManager = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
+        self.requestReconnect = requestReconnect
         
         self.discoverAllServices()
     }
     
     func discover() {
+        peripheralManager.discoverServices(serviceUUIDs: nil)
+            .autoconnect()
+            .receive(on: DispatchQueue.main)
+            .flatMap { service in
+                self.attributeTable.addService(service)
+                return self.peripheralManager.discoverCharacteristics(nil, for: service).autoconnect()
+            }
+            .flatMap { characteristic in
+                self.attributeTable.addCharacteristic(characteristic)
+                return self.peripheralManager.discoverDescriptors(for: characteristic).autoconnect()
+            }
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { descriptor in
+                self.attributeTable.addDescriptor(descriptor)
+            })
+            .store(in: &cancelables)
+        /*
         Task {
             for try await service in peripheralManager.discoverServices(serviceUUIDs: nil).autoconnect().values {
                 DispatchQueue.main.async {
@@ -55,7 +79,8 @@ class DeviceDetailsViewModel: ObservableObject, Identifiable {
                     }
                 }
             }
-        }
+         }
+         */
     }
 }
 

@@ -50,7 +50,7 @@ struct DeviceDetailsView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             //        List {
-            DeviceDetailsView(peripheralHandler: DeviceDetailsViewModel(cbPeripheral: CBMPeripheralPreview(runningSpeedCadenceSensor)))
+            DeviceDetailsView(peripheralHandler: DeviceDetailsViewModel(cbPeripheral: CBMPeripheralPreview(runningSpeedCadenceSensor), requestReconnect: { _ in }))
             //        }
             //        .navigationTitle("Device")
         }

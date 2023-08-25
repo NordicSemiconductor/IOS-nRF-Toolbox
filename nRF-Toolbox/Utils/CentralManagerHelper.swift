@@ -12,7 +12,7 @@ import iOS_Common_Libraries
 import Combine
 
 class CentralManagerHelper: ObservableObject {
-    enum Error: Swift.Error {
+    enum Err: Swift.Error {
         case peripheralNotFound, timeout
     }
     
@@ -23,7 +23,7 @@ class CentralManagerHelper: ObservableObject {
     static var shared = CentralManagerHelper()
     
     @Published var scanResults: [ScanResult] = []
-    @Published var peripheralManagers: [DeviceDetailsViewModel] = []
+    @MainActor @Published var peripheralManagers: [DeviceDetailsViewModel] = []
     
     func startScan(removeExistingResults: Bool = false) {
         if removeExistingResults {
@@ -31,6 +31,7 @@ class CentralManagerHelper: ObservableObject {
         }
         
         centralManager.scanForPeripherals(withServices: nil)
+            .autoconnect()
             .filter { sr in
                 sr.name != nil 
             }
@@ -45,20 +46,41 @@ class CentralManagerHelper: ObservableObject {
             .store(in: &cancelables)
     }
     
-    func tryToConnect(deviceId: UUID) async throws -> CBPeripheral {
+    func tryToConnect(deviceId: UUID) async throws {
         guard let sr = scanResults.first(where: { $0.peripheral.identifier == deviceId }) else {
-            throw Error.peripheralNotFound
+            throw Err.peripheralNotFound
         }
         
-        let peripheral = try await centralManager.connect(sr.peripheral)
+        let connectionPublisher = centralManager.connect(sr.peripheral)
             .autoconnect()
-            .timeout(.seconds(3), scheduler: DispatchQueue.main, customError: { Error.timeout })
-            .value
+            .timeout(.seconds(3), scheduler: DispatchQueue.main, customError: { Err.timeout })
+            .share()
+        
+        let connectedPeripheral = try await connectionPublisher.value
+        
+        let handler = await DeviceDetailsViewModel(cbPeripheral: connectedPeripheral) { p  in
+            
+        }
+        
+//        connectionPublisher
+//            .receive(on: DispatchQueue.main)
+//            .sink { completion in
+//                DispatchQueue.main.async {
+//                    switch completion {
+//                    case .finished:
+//                        self.peripheralManagers.removeAll(where: { $0.cbPeripheral.identifier == deviceId })
+//                    case .failure(let e):
+//                        handler.disconnectedError = e
+//                    }
+//                }
+//            } receiveValue: { _ in
+//                
+//            }
+//            .store(in: &cancelables)
+
         
         DispatchQueue.main.async {
-            self.peripheralManagers.append(DeviceDetailsViewModel(cbPeripheral: peripheral))            
+            self.peripheralManagers.append(handler)
         }
-        
-        return peripheral
     }
 }
