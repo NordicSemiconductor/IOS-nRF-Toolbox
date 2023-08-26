@@ -53,34 +53,38 @@ class CentralManagerHelper: ObservableObject {
         
         let connectionPublisher = centralManager.connect(sr.peripheral)
             .autoconnect()
-            .timeout(.seconds(3), scheduler: DispatchQueue.main, customError: { Err.timeout })
             .share()
         
-        let connectedPeripheral = try await connectionPublisher.value
+        let connectedPeripheral = try await connectionPublisher
+            .timeout(.seconds(3), scheduler: DispatchQueue.main, customError: { Err.timeout })
+            .value
         
-        let handler = await DeviceDetailsViewModel(cbPeripheral: connectedPeripheral) { p  in
-            
+        let handler = DeviceDetailsViewModel(cbPeripheral: connectedPeripheral) { [weak self] p  in
+            try await self?.tryReconnect(peripheral: connectedPeripheral)
         }
         
-//        connectionPublisher
-//            .receive(on: DispatchQueue.main)
-//            .sink { completion in
-//                DispatchQueue.main.async {
-//                    switch completion {
-//                    case .finished:
-//                        self.peripheralManagers.removeAll(where: { $0.cbPeripheral.identifier == deviceId })
-//                    case .failure(let e):
-//                        handler.disconnectedError = e
-//                    }
-//                }
-//            } receiveValue: { _ in
-//                
-//            }
-//            .store(in: &cancelables)
-
+        connectionPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                DispatchQueue.main.async {
+                    switch completion {
+                    case .finished:
+                        self.peripheralManagers.removeAll(where: { $0.cbPeripheral.identifier == deviceId })
+                    case .failure(let e):
+                        handler.disconnectedError = e
+                    }
+                }
+            } receiveValue: { _ in
+                
+            }
+            .store(in: &cancelables)
         
         DispatchQueue.main.async {
             self.peripheralManagers.append(handler)
         }
+    }
+    
+    private func tryReconnect(peripheral: CBPeripheral) async throws {
+        
     }
 }

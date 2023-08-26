@@ -22,4 +22,8 @@ public struct BluetoothEmulation {
     public func simulatePeripherals() {
         CBMCentralManagerMock.simulatePeripherals([rscs.peripheral])
     }
+    
+    public func simulateDisconnect() {
+        rscs.peripheral.simulateDisconnection()
+    }
 }

@@ -12,7 +12,6 @@ import Combine
 import CoreBluetoothMock
 import iOS_Bluetooth_Numbers_Database
 
-@MainActor
 class DeviceDetailsViewModel: ObservableObject, Identifiable {
     private var cancelables = Set<AnyCancellable>()
     
@@ -32,9 +31,9 @@ class DeviceDetailsViewModel: ObservableObject, Identifiable {
     
     @Published var disconnectedError: Error? = nil
     
-    private let requestReconnect: (CBPeripheral) -> ()
+    private let requestReconnect: (CBPeripheral) async throws -> ()
     
-    init(cbPeripheral: CBMPeripheral, requestReconnect: @escaping (CBPeripheral) -> ()) {
+    init(cbPeripheral: CBMPeripheral, requestReconnect: @escaping (CBPeripheral) async throws -> ()) {
         self.cbPeripheral = cbPeripheral
         self.peripheralManager = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
         self.requestReconnect = requestReconnect
@@ -43,6 +42,9 @@ class DeviceDetailsViewModel: ObservableObject, Identifiable {
     }
     
     func discover() {
+        #warning("DEMO CODE")
+        BluetoothEmulation.shared.simulateDisconnect()
+        return
         peripheralManager.discoverServices(serviceUUIDs: nil)
             .autoconnect()
             .receive(on: DispatchQueue.main)

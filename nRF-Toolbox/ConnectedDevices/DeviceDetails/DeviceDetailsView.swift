@@ -8,12 +8,22 @@
 
 import SwiftUI
 import CoreBluetoothMock
+import iOS_Common_Libraries
 
 struct DeviceDetailsView: View {
     @ObservedObject var peripheralHandler: DeviceDetailsViewModel
     @State private var activeTab = ""
     
     var body: some View {
+        if let e = peripheralHandler.disconnectedError {
+            errorView(error: e)
+        } else {
+            serviceView()
+        }
+    }
+    
+    @ViewBuilder
+    private func serviceView() -> some View {
         TabView(selection: $activeTab) {
             ForEach(peripheralHandler.serviceHandlers, id: \.id) { service in
                 ServiceView(service: service)
@@ -43,6 +53,21 @@ struct DeviceDetailsView: View {
             .tag("attribute")
         }
         .navigationTitle(peripheralHandler.cbPeripheral.name.deviceName)
+    }
+    
+    @ViewBuilder
+    private func errorView(error: Error) -> some View {
+        ContentUnavailableView(
+            configuration: ContentUnavailableConfiguration(
+                text: "Peripheral Disconnected",
+                secondaryText: error.localizedDescription,
+                systemName: "point.3.connected.trianglepath.dotted",
+                buttonConfiguration: ContentUnavailableConfiguration.ButtonConfiguration(
+                    title: "Reconnect", action: {
+                        
+                    })
+            )
+        )
     }
 }
 
