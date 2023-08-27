@@ -64,7 +64,9 @@ struct DeviceDetailsView: View {
                 systemName: "point.3.connected.trianglepath.dotted",
                 buttonConfiguration: ContentUnavailableConfiguration.ButtonConfiguration(
                     title: "Reconnect", action: {
-                        
+                        Task {
+                            await peripheralHandler.tryToReconnect()
+                        }
                     })
             )
         )

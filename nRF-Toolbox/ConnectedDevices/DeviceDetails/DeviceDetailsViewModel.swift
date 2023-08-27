@@ -41,6 +41,15 @@ class DeviceDetailsViewModel: ObservableObject, Identifiable {
         self.discoverAllServices()
     }
     
+    func tryToReconnect() async {
+        do {
+            try await requestReconnect(cbPeripheral)
+            disconnectedError = nil 
+        } catch let e {
+            self.disconnectedError = e
+        }
+    }
+    
     func discover() {
         #warning("DEMO CODE")
         BluetoothEmulation.shared.simulateDisconnect()
