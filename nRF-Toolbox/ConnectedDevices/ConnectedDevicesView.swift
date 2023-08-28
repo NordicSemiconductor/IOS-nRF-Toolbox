@@ -41,12 +41,14 @@ struct ConnectedDevicesView: View {
                 text: "No Connected Devices",
                 // TODO: Is it correct message?
                 secondaryText: "Scan for devices and connect to peripheral to begin",
-                systemName: "antenna.radiowaves.left.and.right",
-                buttonConfiguration: ContentUnavailableConfiguration.ButtonConfiguration(
-                    title: "Start Scan", action: {
-                        showScanner = true 
-                    })
-            )
+                systemName: "antenna.radiowaves.left.and.right"
+            ),
+            actions: {
+                Button("Start Scan") {
+                    showScanner = true
+                }
+                .buttonStyle(NordicPrimary())
+            }
         )
         
     }

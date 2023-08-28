@@ -44,7 +44,9 @@ class DeviceDetailsViewModel: ObservableObject, Identifiable {
     func tryToReconnect() async {
         do {
             try await requestReconnect(cbPeripheral)
-            disconnectedError = nil 
+            DispatchQueue.main.async {
+                self.disconnectedError = nil
+            }
         } catch let e {
             self.disconnectedError = e
         }
@@ -71,27 +73,6 @@ class DeviceDetailsViewModel: ObservableObject, Identifiable {
                 self.attributeTable.addDescriptor(descriptor)
             })
             .store(in: &cancelables)
-        /*
-        Task {
-            for try await service in peripheralManager.discoverServices(serviceUUIDs: nil).autoconnect().values {
-                DispatchQueue.main.async {
-                    self.attributeTable.addService(service)
-                }
-                
-                for try await characteristic in peripheralManager.discoverCharacteristics(nil, for: service).autoconnect().values {
-                    DispatchQueue.main.async {
-                        self.attributeTable.addCharacteristic(characteristic)
-                    }
-                    
-                    for try await descriptor in peripheralManager.discoverDescriptors(for: characteristic).autoconnect().values {
-                        DispatchQueue.main.async {
-                            self.attributeTable.addDescriptor(descriptor)
-                        }
-                    }
-                }
-            }
-         }
-         */
     }
 }
 

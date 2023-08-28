@@ -61,14 +61,23 @@ struct DeviceDetailsView: View {
             configuration: ContentUnavailableConfiguration(
                 text: "Peripheral Disconnected",
                 secondaryText: error.localizedDescription,
-                systemName: "point.3.connected.trianglepath.dotted",
-                buttonConfiguration: ContentUnavailableConfiguration.ButtonConfiguration(
-                    title: "Reconnect", action: {
+                systemName: "point.3.connected.trianglepath.dotted"
+            ),
+            actions: {
+                VStack {
+                    Button("Reconnect") {
                         Task {
                             await peripheralHandler.tryToReconnect()
                         }
-                    })
-            )
+                    }
+                    .buttonStyle(NordicPrimary())
+                    
+                    Button("Remove device") {
+                        // TODO: Remove Device
+                    }
+                    .buttonStyle(NordicSecondaryDistructive())
+                }
+            }
         )
     }
 }

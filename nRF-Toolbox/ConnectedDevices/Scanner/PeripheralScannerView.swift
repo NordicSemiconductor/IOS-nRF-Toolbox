@@ -61,11 +61,14 @@ struct PeripheralScannerView: View {
             configuration: ContentUnavailableConfiguration(
                 text: "No Permission Granted",
                 secondaryText: "Bluetooth is not authorized. Open settings and give access the application to use Bluetooth.",
-                systemName: "xmark.seal",
-                buttonConfiguration: ContentUnavailableConfiguration.ButtonConfiguration(title: "Open Settings", action: {
-                    
-                })
-            )
+                systemName: "xmark.seal"
+            ),
+            actions: {
+                Button("Open Settings") {
+                    // TODO: Open Settings
+                }
+                .buttonStyle(NordicSecondary())
+            }
         )
         .padding()
     }
@@ -76,11 +79,14 @@ struct PeripheralScannerView: View {
             configuration: ContentUnavailableConfiguration(
                 text: "Bluetooth is Turned Off",
                 secondaryText: "It looks like Bluetooth is turnd off. You can turn it on in Settings",
-                systemName: "gear",
-                buttonConfiguration: ContentUnavailableConfiguration.ButtonConfiguration(title: "Open Settings", action: {
-                    
-                })
-            )
+                systemName: "gear"
+            ),
+            actions: {
+                Button("Open Settings") {
+                    // TODO: Open Settings
+                }
+                .buttonStyle(NordicSecondary())
+            }
         )
         .padding()
     }
