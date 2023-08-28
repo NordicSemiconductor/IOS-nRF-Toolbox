@@ -18,8 +18,8 @@ class CentralManagerHelperPreview: CentralManagerHelper {
         get {
             if mocDevices {
                 return [
-                    DeviceDetailsViewModel(cbPeripheral: CBMPeripheralPreview(hrm)),
-                    DeviceDetailsViewModel(cbPeripheral: CBMPeripheralPreview(runningSpeedCadenceSensor))
+                    DeviceDetailsViewModel(cbPeripheral: CBMPeripheralPreview(hrm), requestReconnect: { _ in }, cancelConnection: { _ in }),
+                    DeviceDetailsViewModel(cbPeripheral: CBMPeripheralPreview(runningSpeedCadenceSensor), requestReconnect: { _ in }, cancelConnection: { _ in })
                 ]
             } else {
                 return Array<DeviceDetailsViewModel>()

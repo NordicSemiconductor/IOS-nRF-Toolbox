@@ -15,7 +15,7 @@ import iOS_Bluetooth_Numbers_Database
 class DeviceDetailsViewModel: ObservableObject, Identifiable {
     private var cancelables = Set<AnyCancellable>()
     
-    let cbPeripheral: CBMPeripheral
+    let cbPeripheral: CBPeripheral
     let peripheralManager: Peripheral
     
     var id: String {
@@ -29,33 +29,63 @@ class DeviceDetailsViewModel: ObservableObject, Identifiable {
     @Published var serviceHandlers: [ServiceHandler] = []
     @Published var attributeTable = AttributeTable()
     
-    init(cbPeripheral: CBMPeripheral) {
+    @Published var disconnectedError: Error? = nil
+    
+    private let requestReconnect: (CBPeripheral) async throws -> ()
+    private let cancelConnection: (CBPeripheral) async throws -> ()
+    
+    init(cbPeripheral: CBMPeripheral,
+         requestReconnect: @escaping (CBPeripheral) async throws -> (),
+         cancelConnection: @escaping (CBPeripheral) async throws -> ()
+    ) {
         self.cbPeripheral = cbPeripheral
         self.peripheralManager = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
+        self.requestReconnect = requestReconnect
+        self.cancelConnection = cancelConnection
         
         self.discoverAllServices()
     }
     
-    func discover() {
-        Task {
-            for try await service in peripheralManager.discoverServices(serviceUUIDs: nil).autoconnect().values {
-                DispatchQueue.main.async {
-                    self.attributeTable.addService(service)
-                }
-                
-                for try await characteristic in peripheralManager.discoverCharacteristics(nil, for: service).autoconnect().values {
-                    DispatchQueue.main.async {
-                        self.attributeTable.addCharacteristic(characteristic)
-                    }
-                    
-                    for try await descriptor in peripheralManager.discoverDescriptors(for: characteristic).autoconnect().values {
-                        DispatchQueue.main.async {
-                            self.attributeTable.addDescriptor(descriptor)
-                        }
-                    }
-                }
+    func tryToReconnect() async {
+        do {
+            try await requestReconnect(cbPeripheral)
+            
+            DispatchQueue.main.async {
+                self.disconnectedError = nil
+                self.serviceHandlers.removeAll()
+                self.discoverAllServices()
             }
+        } catch let e {
+            self.disconnectedError = e
         }
+    }
+    
+    func cancelPeripheralConnection() async {
+        do {
+            try await cancelConnection(cbPeripheral)
+        } catch let e {
+            self.disconnectedError = e
+        }
+    }
+    
+    func discover() {
+        peripheralManager.discoverServices(serviceUUIDs: nil)
+            .autoconnect()
+            .receive(on: DispatchQueue.main)
+            .flatMap { service in
+                self.attributeTable.addService(service)
+                return self.peripheralManager.discoverCharacteristics(nil, for: service).autoconnect()
+            }
+            .flatMap { characteristic in
+                self.attributeTable.addCharacteristic(characteristic)
+                return self.peripheralManager.discoverDescriptors(for: characteristic).autoconnect()
+            }
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { descriptor in
+                self.attributeTable.addDescriptor(descriptor)
+            })
+            .store(in: &cancelables)
     }
 }
 

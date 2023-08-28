@@ -28,9 +28,12 @@ struct AttributeTableView: View {
         ContentUnavailableView(configuration: ContentUnavailableConfiguration(
             text: "Attribute Table is not discovered",
             secondaryText: "Would you like to discover all available services, characteristics and descriptors",
-            systemName: "list.bullet.rectangle",
-            buttonConfiguration: ContentUnavailableConfiguration.ButtonConfiguration(title: "Discover", action: self.discoverTableAction)
-        ))
+            systemName: "list.bullet.rectangle"
+        ),
+        actions: {
+            Button("Discover", action: self.discoverTableAction)
+                .buttonStyle(NordicPrimary())
+        })
     }
     
     @ViewBuilder

@@ -26,7 +26,7 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
     
     private var cancelables = Set<AnyCancellable>()
     
-    enum Error: LocalizedError {
+    enum Err: LocalizedError {
         case timeout, noMandatoryCharacteristic(CBMCharacteristic?), noData, badData, controlPointError(RunningSpeedAndCadence.ResponseCode)
         
         var errorDescription: String? {
@@ -97,7 +97,7 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
     func prepare() async throws {
         let characteristicsSeq = peripheral.discoverCharacteristics([.rscFeature, .rscMeasurement], for: service)
             .autoconnect()
-            .timeout(.seconds(3), scheduler: DispatchQueue.main, customError: { Error.timeout })
+            .timeout(.seconds(3), scheduler: DispatchQueue.main, customError: { Err.timeout })
         
         for try await ch in characteristicsSeq.values {
             switch ch.uuid {
@@ -111,11 +111,11 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
         }
         
         guard rscMeasurement != nil else {
-            throw Error.noMandatoryCharacteristic(rscMeasurement)
+            throw Err.noMandatoryCharacteristic(rscMeasurement)
         }
         
         guard rscFeature != nil else {
-            throw Error.noMandatoryCharacteristic(rscFeature)
+            throw Err.noMandatoryCharacteristic(rscFeature)
         }
         
         self.features = try await readSupportedFeatures()
@@ -197,15 +197,15 @@ extension RunningServiceHandler {
     // MARK: Read Values
     func readSensorLocation() async throws -> SensorLocation {
         guard let sensorLocationCh else {
-            throw Error.noMandatoryCharacteristic(sensorLocationCh)
+            throw Err.noMandatoryCharacteristic(sensorLocationCh)
         }
         
         guard let value = try await peripheral.readValue(for: sensorLocationCh).value else {
-            throw Error.noData
+            throw Err.noData
         }
         
         guard let location = SensorLocation(rawValue: value[0]) else {
-            throw Error.badData
+            throw Err.badData
         }
         
         return location
@@ -213,7 +213,7 @@ extension RunningServiceHandler {
     
     func readSupportedFeatures() async throws -> RSCFeature {
         guard let feauturesData = try await peripheral.readValue(for: rscFeature).value else {
-            throw Error.noData
+            throw Err.noData
         }
         
         return RunningSpeedAndCadence.RSCFeature(rawValue: feauturesData[0])
@@ -221,7 +221,7 @@ extension RunningServiceHandler {
     
     func readAvailableLocations() async throws -> [SensorLocation] {
         guard let data = try await writeCommand(opCode: .requestSupportedSensorLocations, parameter: nil) else {
-            throw Error.noData
+            throw Err.noData
         }
         
         return data.compactMap { SensorLocation(rawValue: $0) }
@@ -231,7 +231,7 @@ extension RunningServiceHandler {
     @discardableResult
     func writeCommand(opCode: RunningSpeedAndCadence.OpCode, parameter: Data?) async throws -> Data? {
         guard let scControlPointCh else {
-            throw Error.noMandatoryCharacteristic(scControlPointCh)
+            throw Err.noMandatoryCharacteristic(scControlPointCh)
         }
         
         var data = opCode.data
@@ -242,10 +242,10 @@ extension RunningServiceHandler {
         
         let valuePublisher = self.peripheral.listenValues(for: scControlPointCh)
             .compactMap { RunningSpeedAndCadence.SCControlPointResponse(from: $0) }
-            .first(where: { response in response.opCode == opCode })
+            .first(where: { $0.opCode == opCode })
             .tryMap { response -> Data? in
                 guard response.responseValue == .success else {
-                    throw Error.controlPointError(response.responseValue)
+                    throw Err.controlPointError(response.responseValue)
                 }
                 return response.parameter
             }
