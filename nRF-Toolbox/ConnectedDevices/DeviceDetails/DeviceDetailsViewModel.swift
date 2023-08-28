@@ -32,11 +32,16 @@ class DeviceDetailsViewModel: ObservableObject, Identifiable {
     @Published var disconnectedError: Error? = nil
     
     private let requestReconnect: (CBPeripheral) async throws -> ()
+    private let cancelConnection: (CBPeripheral) async throws -> ()
     
-    init(cbPeripheral: CBMPeripheral, requestReconnect: @escaping (CBPeripheral) async throws -> ()) {
+    init(cbPeripheral: CBMPeripheral,
+         requestReconnect: @escaping (CBPeripheral) async throws -> (),
+         cancelConnection: @escaping (CBPeripheral) async throws -> ()
+    ) {
         self.cbPeripheral = cbPeripheral
         self.peripheralManager = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
         self.requestReconnect = requestReconnect
+        self.cancelConnection = cancelConnection
         
         self.discoverAllServices()
     }
@@ -44,18 +49,26 @@ class DeviceDetailsViewModel: ObservableObject, Identifiable {
     func tryToReconnect() async {
         do {
             try await requestReconnect(cbPeripheral)
+            
             DispatchQueue.main.async {
                 self.disconnectedError = nil
+                self.serviceHandlers.removeAll()
+                self.discoverAllServices()
             }
         } catch let e {
             self.disconnectedError = e
         }
     }
     
+    func cancelPeripheralConnection() async {
+        do {
+            try await cancelConnection(cbPeripheral)
+        } catch let e {
+            self.disconnectedError = e
+        }
+    }
+    
     func discover() {
-        #warning("DEMO CODE")
-        BluetoothEmulation.shared.simulateDisconnect()
-        return
         peripheralManager.discoverServices(serviceUUIDs: nil)
             .autoconnect()
             .receive(on: DispatchQueue.main)

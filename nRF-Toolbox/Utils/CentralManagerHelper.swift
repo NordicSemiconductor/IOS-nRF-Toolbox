@@ -47,11 +47,11 @@ class CentralManagerHelper: ObservableObject {
     }
     
     func tryToConnect(deviceId: UUID) async throws {
-        guard let sr = scanResults.first(where: { $0.peripheral.identifier == deviceId }) else {
+        guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [deviceId]).first else {
             throw Err.peripheralNotFound
         }
         
-        let connectionPublisher = centralManager.connect(sr.peripheral)
+        let connectionPublisher = centralManager.connect(peripheral)
             .autoconnect()
             .share()
         
@@ -59,9 +59,12 @@ class CentralManagerHelper: ObservableObject {
             .timeout(.seconds(3), scheduler: DispatchQueue.main, customError: { Err.timeout })
             .value
         
-        let handler = DeviceDetailsViewModel(cbPeripheral: connectedPeripheral) { [weak self] p  in
-            try await self?.tryReconnect(peripheral: connectedPeripheral)
+        let handler = DeviceDetailsViewModel(cbPeripheral: connectedPeripheral) { [weak self] p in
+            try await self?.tryReconnect(peripheral: p)
+        } cancelConnection: { [weak self] p in
+            try await self?.cancelConnection(peripheral: p)
         }
+
         
         connectionPublisher
             .receive(on: DispatchQueue.main)
@@ -104,6 +107,18 @@ class CentralManagerHelper: ObservableObject {
             } receiveValue: { _ in
             }
             .store(in: &cancelables)
+    }
+    
+    @MainActor
+    private func cancelConnection(peripheral: CBPeripheral) async throws {
+        guard let handlerIndex = peripheralManagers.firstIndex(where: { $0.cbPeripheral.identifier == peripheral.identifier }) else {
+            throw Err.peripheralNotFound
+        }
         
+        if peripheral.state != .disconnected && peripheral.state != .disconnecting {
+            _ = try await centralManager.cancelPeripheralConnection(peripheral).autoconnect().value
+        }
+        
+        peripheralManagers.remove(at: handlerIndex)
     }
 }

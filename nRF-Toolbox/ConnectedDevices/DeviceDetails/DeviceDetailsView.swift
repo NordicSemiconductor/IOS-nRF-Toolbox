@@ -12,7 +12,10 @@ import iOS_Common_Libraries
 
 struct DeviceDetailsView: View {
     @ObservedObject var peripheralHandler: DeviceDetailsViewModel
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var activeTab = ""
+    
+    @State var errorActionsDisabled = false
     
     var body: some View {
         if let e = peripheralHandler.disconnectedError {
@@ -67,15 +70,24 @@ struct DeviceDetailsView: View {
                 VStack {
                     Button("Reconnect") {
                         Task {
+                            errorActionsDisabled = true
                             await peripheralHandler.tryToReconnect()
+                            errorActionsDisabled = false
                         }
                     }
                     .buttonStyle(NordicPrimary())
+                    .disabled(errorActionsDisabled)
                     
                     Button("Remove device") {
-                        // TODO: Remove Device
+                        Task {
+                            errorActionsDisabled = true
+                            await peripheralHandler.cancelPeripheralConnection()
+                            errorActionsDisabled = false
+                            presentationMode.wrappedValue.dismiss()
+                        }
                     }
                     .buttonStyle(NordicSecondaryDistructive())
+                    .disabled(errorActionsDisabled)
                 }
             }
         )
@@ -85,10 +97,7 @@ struct DeviceDetailsView: View {
 struct DeviceDetailsView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            //        List {
-            DeviceDetailsView(peripheralHandler: DeviceDetailsViewModel(cbPeripheral: CBMPeripheralPreview(runningSpeedCadenceSensor), requestReconnect: { _ in }))
-            //        }
-            //        .navigationTitle("Device")
+            DeviceDetailsView(peripheralHandler: DeviceDetailsViewModel(cbPeripheral: CBMPeripheralPreview(runningSpeedCadenceSensor), requestReconnect: { _ in }, cancelConnection: { _ in }))
         }
     }
 }
