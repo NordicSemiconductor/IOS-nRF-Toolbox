@@ -50,6 +50,7 @@
 		014C4E8B2403F9BD0003E601 /* UARTMacroSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E8A2403F9BD0003E601 /* UARTMacroSaver.swift */; };
 		0151170B240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01511709240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift */; };
 		0151170C240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0151170A240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.xib */; };
+		015642472AA4E640005A0A44 /* iOS-BLE-Library-Mock in Frameworks */ = {isa = PBXBuildFile; productRef = 015642462AA4E640005A0A44 /* iOS-BLE-Library-Mock */; };
 		015F1098240FA06D00FDAC49 /* DFUActionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015F1097240FA06D00FDAC49 /* DFUActionSection.swift */; };
 		015F109B240FA82400FDAC49 /* DFUDocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015F109A240FA82400FDAC49 /* DFUDocumentPicker.swift */; };
 		0162BA91234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0162BA90234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift */; };
@@ -74,7 +75,6 @@
 		018873C72A583A9900253273 /* PeripheralScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873C62A583A9900253273 /* PeripheralScannerView.swift */; };
 		018873C92A583B0000253273 /* PeripheralScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873C82A583B0000253273 /* PeripheralScannerViewModel.swift */; };
 		018873CC2A583C3300253273 /* iOS-BLE-Library in Frameworks */ = {isa = PBXBuildFile; productRef = 018873CB2A583C3300253273 /* iOS-BLE-Library */; };
-		018873CF2A583CE000253273 /* iOS-BLE-Library in Frameworks */ = {isa = PBXBuildFile; productRef = 018873CE2A583CE000253273 /* iOS-BLE-Library */; };
 		018873D22A58707900253273 /* CentralManagerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873D12A58707900253273 /* CentralManagerHelper.swift */; };
 		0192BB352428E63C003F7F6B /* DFUFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0192BB342428E63C003F7F6B /* DFUFileManager.swift */; };
 		0197AFCF2420DAAC00ADF105 /* NotConnectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0197AFCD2420DAAC00ADF105 /* NotConnectedViewController.swift */; };
@@ -704,8 +704,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				015642472AA4E640005A0A44 /* iOS-BLE-Library-Mock in Frameworks */,
 				01C81AD22A5CB2860011B41E /* iOS-Bluetooth-Numbers-Database in Frameworks */,
-				018873CF2A583CE000253273 /* iOS-BLE-Library in Frameworks */,
 				01C575BC2A7BF2E4007FE4F0 /* CoreBluetoothMock-Collection in Frameworks */,
 				018873C42A58332400253273 /* iOSCommonLibraries in Frameworks */,
 			);
@@ -2143,9 +2143,9 @@
 			name = "nRF-Toolbox";
 			packageProductDependencies = (
 				018873C32A58332400253273 /* iOSCommonLibraries */,
-				018873CE2A583CE000253273 /* iOS-BLE-Library */,
 				01C81AD12A5CB2860011B41E /* iOS-Bluetooth-Numbers-Database */,
 				01C575BB2A7BF2E4007FE4F0 /* CoreBluetoothMock-Collection */,
+				015642462AA4E640005A0A44 /* iOS-BLE-Library-Mock */,
 			);
 			productName = "nRF-Toolbox";
 			productReference = 017D102B2A5809E300E38E5F /* nRF-Toolbox.app */;
@@ -3663,6 +3663,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		015642462AA4E640005A0A44 /* iOS-BLE-Library-Mock */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "iOS-BLE-Library-Mock";
+		};
 		017D105A2A580D3800E38E5F /* iOSCommonLibraries */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 017D10592A580D3800E38E5F /* XCRemoteSwiftPackageReference "IOS-Common-Libraries" */;
@@ -3675,10 +3679,6 @@
 		018873CB2A583C3300253273 /* iOS-BLE-Library */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 018873CA2A583C3300253273 /* XCRemoteSwiftPackageReference "IOS-BLE-Library" */;
-			productName = "iOS-BLE-Library";
-		};
-		018873CE2A583CE000253273 /* iOS-BLE-Library */ = {
-			isa = XCSwiftPackageProductDependency;
 			productName = "iOS-BLE-Library";
 		};
 		01C575BB2A7BF2E4007FE4F0 /* CoreBluetoothMock-Collection */ = {

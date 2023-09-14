@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import iOS_BLE_Library
+import iOS_BLE_Library_Mock
 import CoreBluetoothMock
 
 // MARK: - Constants

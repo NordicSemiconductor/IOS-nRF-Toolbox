@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import iOS_BLE_Library
+import iOS_BLE_Library_Mock
 import CoreBluetoothMock
 import iOS_Common_Libraries
 

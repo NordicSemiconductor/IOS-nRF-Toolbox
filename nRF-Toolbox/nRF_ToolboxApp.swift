@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import iOS_BLE_Library
+import iOS_BLE_Library_Mock
 
 @main
 struct nRF_ToolboxApp: App {
