@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/NickKibish/iOS-Bluetooth-Numbers-Database.git",
       "state" : {
-        "branch" : "main",
-        "revision" : "46dae550b89af3f8897070d331930f7e231748ff"
+        "revision" : "40ae8d7050d16fc2603c314dd560a7992c35f56f",
+        "version" : "1.0.0"
       }
     },
     {

@@ -31,32 +31,44 @@ struct SensorSettings: View {
     }
     
     var body: some View {
+#if os(iOS)
+        VStack(alignment: .leading) {
+            settingsContent()
+        }
+#else
         List {
-            VStack(alignment: .leading) {
-                if viewModel.supportedFeatures.contains(.totalDistanceMeasurement) || viewModel.supportedFeatures.contains(.multipleSensorLocation) || viewModel.supportedFeatures.contains(.sensorCalibrationProcedure) {
-                    settings
-                } else {
-                    noContent
-                }
+            settingsContent()
+        }
+#endif
+        
+    }
+    
+    @ViewBuilder
+    func settingsContent() -> some View {
+        VStack {
+            if viewModel.supportedFeatures.contains(.totalDistanceMeasurement) || viewModel.supportedFeatures.contains(.multipleSensorLocation) || viewModel.supportedFeatures.contains(.sensorCalibrationProcedure) {
+                settings
+            } else {
+                noContent
             }
-            .onAppear {
-                Task {
-                    await viewModel.updateFeature()
-                    if viewModel.supportedFeatures.contains(.multipleSensorLocation) {
-                        await viewModel.updateLocationSection()
-                    }
-                    viewModel.hudState = hudState
+        }
+        .onAppear {
+            Task {
+                await viewModel.updateFeature()
+                if viewModel.supportedFeatures.contains(.multipleSensorLocation) {
+                    await viewModel.updateLocationSection()
                 }
+                viewModel.hudState = hudState
             }
-            .alert(isPresented: $viewModel.showError, error: viewModel.error, actions: {
-                Button("Cancel") { }
-            })
-            .navigationTitle("Sensor Calibration")
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Close") {
-                        displaySettings = false 
-                    }
+        }
+        .alert(isPresented: $viewModel.showError, error: viewModel.error, actions: {
+            Button("Cancel") { }
+        })
+        .navigationTitle("Sensor Calibration")
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Close") {
+                    displaySettings = false
                 }
             }
         }

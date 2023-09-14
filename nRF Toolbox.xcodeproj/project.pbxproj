@@ -3608,8 +3608,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/NickKibish/iOS-Bluetooth-Numbers-Database.git";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
 			};
 		};
 		01F6A9612A812DD300540B45 /* XCRemoteSwiftPackageReference "CoreBluetoothMock-Collection" */ = {
