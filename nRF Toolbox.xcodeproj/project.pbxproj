@@ -115,6 +115,7 @@
 		01B6D3DE234CBBE5000942C4 /* SernsorLocationSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3DD234CBBE5000942C4 /* SernsorLocationSection.swift */; };
 		01B6D3E0234CC090000942C4 /* Peripheral+HeartRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3DF234CC090000942C4 /* Peripheral+HeartRate.swift */; };
 		01B6D3E2234CCC9F000942C4 /* HeartRateChartSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3E1234CCC9F000942C4 /* HeartRateChartSection.swift */; };
+		01B861872AB34DBF0001118F /* iOS-Bluetooth-Numbers-Database in Frameworks */ = {isa = PBXBuildFile; productRef = 01B861862AB34DBF0001118F /* iOS-Bluetooth-Numbers-Database */; };
 		01BE094F2349F71B006ACF06 /* HealthTermometerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE094E2349F71B006ACF06 /* HealthTermometerTableViewController.swift */; };
 		01BE0953234A1C48006ACF06 /* HealthTermometerCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE0952234A1C48006ACF06 /* HealthTermometerCharacteristic.swift */; };
 		01BE0955234A7500006ACF06 /* HealthTemperatureSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE0954234A7500006ACF06 /* HealthTemperatureSection.swift */; };
@@ -129,7 +130,6 @@
 		01C575BE2A7D00EF007FE4F0 /* Alias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C575BD2A7D00EF007FE4F0 /* Alias.swift */; };
 		01C81ACE2A5CAC350011B41E /* iOS-Bluetooth-Numbers-Database in Frameworks */ = {isa = PBXBuildFile; productRef = 01C81ACD2A5CAC350011B41E /* iOS-Bluetooth-Numbers-Database */; };
 		01C81AD02A5CB1B50011B41E /* ServiceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C81ACF2A5CB1B50011B41E /* ServiceHelper.swift */; };
-		01C81AD22A5CB2860011B41E /* iOS-Bluetooth-Numbers-Database in Frameworks */ = {isa = PBXBuildFile; productRef = 01C81AD12A5CB2860011B41E /* iOS-Bluetooth-Numbers-Database */; };
 		01C81AD52A5CB6420011B41E /* ServiceBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C81AD42A5CB6420011B41E /* ServiceBadge.swift */; };
 		01C81AD72A5D8FEA0011B41E /* ReadableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C81AD62A5D8FEA0011B41E /* ReadableError.swift */; };
 		01C81ADA2A5DFA8E0011B41E /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 01C81ADC2A5DFA8E0011B41E /* Localizable.stringsdict */; };
@@ -705,9 +705,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				015642472AA4E640005A0A44 /* iOS-BLE-Library-Mock in Frameworks */,
-				01C81AD22A5CB2860011B41E /* iOS-Bluetooth-Numbers-Database in Frameworks */,
 				01C575BC2A7BF2E4007FE4F0 /* CoreBluetoothMock-Collection in Frameworks */,
 				018873C42A58332400253273 /* iOSCommonLibraries in Frameworks */,
+				01B861872AB34DBF0001118F /* iOS-Bluetooth-Numbers-Database in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2143,9 +2143,9 @@
 			name = "nRF-Toolbox";
 			packageProductDependencies = (
 				018873C32A58332400253273 /* iOSCommonLibraries */,
-				01C81AD12A5CB2860011B41E /* iOS-Bluetooth-Numbers-Database */,
 				01C575BB2A7BF2E4007FE4F0 /* CoreBluetoothMock-Collection */,
 				015642462AA4E640005A0A44 /* iOS-BLE-Library-Mock */,
+				01B861862AB34DBF0001118F /* iOS-Bluetooth-Numbers-Database */,
 			);
 			productName = "nRF-Toolbox";
 			productReference = 017D102B2A5809E300E38E5F /* nRF-Toolbox.app */;
@@ -3681,16 +3681,16 @@
 			package = 018873CA2A583C3300253273 /* XCRemoteSwiftPackageReference "IOS-BLE-Library" */;
 			productName = "iOS-BLE-Library";
 		};
+		01B861862AB34DBF0001118F /* iOS-Bluetooth-Numbers-Database */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01C81ACC2A5CAC350011B41E /* XCRemoteSwiftPackageReference "iOS-Bluetooth-Numbers-Database" */;
+			productName = "iOS-Bluetooth-Numbers-Database";
+		};
 		01C575BB2A7BF2E4007FE4F0 /* CoreBluetoothMock-Collection */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "CoreBluetoothMock-Collection";
 		};
 		01C81ACD2A5CAC350011B41E /* iOS-Bluetooth-Numbers-Database */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 01C81ACC2A5CAC350011B41E /* XCRemoteSwiftPackageReference "iOS-Bluetooth-Numbers-Database" */;
-			productName = "iOS-Bluetooth-Numbers-Database";
-		};
-		01C81AD12A5CB2860011B41E /* iOS-Bluetooth-Numbers-Database */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 01C81ACC2A5CAC350011B41E /* XCRemoteSwiftPackageReference "iOS-Bluetooth-Numbers-Database" */;
 			productName = "iOS-Bluetooth-Numbers-Database";

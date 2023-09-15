@@ -9,6 +9,22 @@
 import SwiftUI
 import iOS_Common_Libraries
 
+private extension AttributeTable {
+    var items: [AttributeTableItemView.AttributeType] {
+        var itms: [AttributeTableItemView.AttributeType] = []
+        for s in services {
+            itms.append(.service(s))
+            for c in s.characteristics {
+                itms.append(.characteristic(c))
+                for d in c.descriptors {
+                    itms.append(.descriptor(d))
+                }
+            }
+        }
+        return itms
+    }
+}
+
 struct AttributeTableView: View {
     let attributeTable: AttributeTable
     let discoverTableAction: () -> ()
@@ -18,7 +34,9 @@ struct AttributeTableView: View {
             emptyView
         } else {
             List {
-                attributeTableView
+                ForEach(attributeTable.items) {
+                    AttributeTableItemView(type: $0)
+                }
             }
         }
     }
@@ -34,20 +52,6 @@ struct AttributeTableView: View {
             Button("Discover", action: self.discoverTableAction)
                 .buttonStyle(NordicPrimary())
         })
-    }
-    
-    @ViewBuilder
-    private var attributeTableView: some View {
-        ForEach(attributeTable.services) { service in
-            AttributeTableItemView(type: .service(service))
-            ForEach(service.characteristics) { characteristic in
-                AttributeTableItemView(type: .characteristic(characteristic))
-                
-                ForEach(characteristic.descriptors) { descriptor in
-                    AttributeTableItemView(type: .descriptor(descriptor))
-                }
-            }
-        }
     }
 }
 

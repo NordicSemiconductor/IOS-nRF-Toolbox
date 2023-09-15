@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct AttributeTableItemView: View {
-    enum AttributeType {
+    enum AttributeType: Identifiable {
         case service(AttributeTable.Service)
         case characteristic(AttributeTable.Service.Characteristic)
         case descriptor(AttributeTable.Service.Characteristic.Descriptor)
@@ -19,6 +19,14 @@ struct AttributeTableItemView: View {
             case .characteristic(let i): return i
             case .descriptor(let i): return i
             case .service(let i): return i
+            }
+        }
+        
+        var id: String {
+            switch self {
+            case .service(let s): return s.id
+            case .characteristic(let c): return c.id
+            case .descriptor(let d): return d.id
             }
         }
     }
@@ -41,7 +49,7 @@ struct AttributeTableItemView: View {
                 .foregroundColor(item.name != nil ? .primary : .secondary)
             HStack {
                 Text("Type: ")
-                Text(item.id)
+                Text(item.identifier)
                     .foregroundColor(.secondary)
             }
             (item as? AttributeTable.Service.Characteristic)
