@@ -64,7 +64,7 @@ struct HealthTermometerCharacteristic {
     let type: TemperatureType?
     
     init(data: Data) throws {
-        let flags: UInt8 = try data.read()
+        let flags: UInt8 = try data.read(fromOffset: 0)
         let unit: UnitTemperature = Flag.isAvailable(bits: flags, flag: .unit) ? .fahrenheit : .celsius
         
         let temperatureValue = try data.readFloat(from: 1)

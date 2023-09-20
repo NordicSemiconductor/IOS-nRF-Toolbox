@@ -36,7 +36,7 @@ struct BatteryCharacteristic {
     let batteryLevel: Int
     
     init(with data: Data) throws {
-        let batteryLevelValue: Int8 = try data.read()
+        let batteryLevelValue: Int8 = try data.read(fromOffset: 0)
         batteryLevel = Int(batteryLevelValue)
     }
 }

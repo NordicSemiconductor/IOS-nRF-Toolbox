@@ -31,7 +31,7 @@
 
 
 import UIKit
-import Charts
+import DGCharts
 
 extension DateFormatter: AxisValueFormatter {
     public func stringForValue(_ value: Double,

@@ -43,7 +43,7 @@ struct HeartRateMeasurementCharacteristic {
     init(with data: Data, date: Date) throws {
         self.date = date
 
-        let flags: UInt8 = try data.read()
+        let flags: UInt8 = try data.read(fromOffset: 0)
         
         heartRate = Flag.isAvailable(bits: flags, flag: .heartRateType)
             ? Int(try data.read(fromOffset: 1) as UInt16)
