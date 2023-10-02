@@ -50,7 +50,6 @@ struct ConnectedDevicesView: View {
                 .buttonStyle(NordicPrimary())
             }
         )
-        
     }
     
     var deviceList: some View {
