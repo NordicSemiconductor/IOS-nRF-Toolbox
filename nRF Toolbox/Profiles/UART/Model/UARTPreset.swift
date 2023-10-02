@@ -91,12 +91,19 @@ struct UARTPreset {
                 continue
             }
             
+            let eol: EOL
+            if let eolName = node.attributes["eol"] {
+                eol = EOL(name: eolName)
+            } else {
+                eol = .none
+            }
+            
             let image = CommandImage(name: (node.attributes["icon"] ?? ""), modernIcon: node.attributes["system_icon"].map({ModernIcon(name: $0)}))
 
             if let type = node.attributes["type"], type == "data" {
                 commands.append(DataCommand(data: Data(text.hexa), image: image))
             } else {
-                commands.append(TextCommand(text: text, image: image))
+                commands.append(TextCommand(text: text, image: image, eol: eol))
             }
 
         }

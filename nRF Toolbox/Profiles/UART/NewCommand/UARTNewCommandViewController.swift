@@ -53,6 +53,9 @@ class UARTNewCommandViewController: UIViewController {
     private var command: UARTCommandModel?
     private var index: Int
     
+    private let CR: UInt8 = 0x0D
+    private let LF: UInt8 = 0x0A
+    
     init(command: UARTCommandModel?, index: Int) {
         self.command = command
         self.index = index
@@ -116,10 +119,9 @@ class UARTNewCommandViewController: UIViewController {
         let image = CommandImage.allCases[selectedItem]
         
         if typeSegmentControl.selectedSegmentIndex == 0 {
-            let slices = textView.text.split(omittingEmptySubsequences: false, whereSeparator: \.isNewline)
-            let text = slices.joined(separator: eolSymbol())
+            let text = textView.text ?? ""
             
-            command = TextCommand(text: text, image: image, eol: self.eolSymbol())
+            command = TextCommand(text: text, image: image, eol: self.eol())
         } else {
             command = DataCommand(data: Data(valueTextField.text!.hexa), image: image)
         }
@@ -180,9 +182,9 @@ extension UARTNewCommandViewController {
         }
     }
     
-    private func updateEOLSegment(eol: String) {
-        let symbols = ["\n", "\r", "\n\r"]
-        eolSegment.selectedSegmentIndex = symbols.enumerated().first(where: { eol == $0.element })?.offset ?? 0
+    private func updateEOLSegment(eol: EOL) {
+        let arr: [EOL] = [.lf, .cr, .crlf, .none]
+        self.eolSegment.selectedSegmentIndex = arr.firstIndex(of: eol) ?? 3
     }
     
     private func setupTextField() {
@@ -211,13 +213,12 @@ extension UARTNewCommandViewController {
         return selectedItem && dataIsReady
     }
     
-    private func eolSymbol() -> String {
+    private func eol() -> EOL {
         switch eolSegment.selectedSegmentIndex {
-        case 0: return "\n"
-        case 1: return "\r"
-        case 2: return "\n\r"
-        default:
-            return ""
+        case 0: return .lf
+        case 1: return .cr
+        case 2: return .crlf
+        default: return .none
         }
     }
 }

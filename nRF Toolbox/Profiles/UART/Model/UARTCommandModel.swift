@@ -54,6 +54,57 @@ protocol XMLRepresentable {
     var xml: AEXMLElement { get }
 }
 
+enum EOL: Codable {
+    static let CR: UInt8 = 0x0d
+    static let LF: UInt8 = 0x0a
+    
+    case cr, lf, crlf, none
+    
+    var data: Data {
+        switch self {
+        case .cr:
+            Data([Self.CR])
+        case .lf:
+            Data([Self.LF])
+        case .crlf:
+            Data([Self.CR, Self.LF])
+        case .none:
+            Data()
+        }
+    }
+    
+    var name: String {
+        switch self {
+        case .cr:
+            return "CR"
+        case .lf:
+            return "LF"
+        case .crlf:
+            return "CR+LF"
+        case .none:
+            return "None"
+        }
+    }
+    
+    init(data: Data) {
+        switch data {
+        case Data([Self.CR]): self = .cr
+        case Data([Self.LF]): self = .lf
+        case Data([Self.CR, Self.LF]): self = .crlf
+        default: self = .none
+        }
+    }
+    
+    init(name: String) {
+        switch name {
+        case EOL.cr.name: self = .cr
+        case EOL.lf.name: self = .lf
+        case EOL.crlf.name: self = .crlf
+        default: self = .none
+        }
+    }
+}
+
 struct EmptyModel: UARTCommandModel, Equatable {
     var xml: AEXMLElement {
         AEXMLElement(name: "command")
@@ -75,7 +126,7 @@ struct TextCommand: UARTCommandModel, Equatable {
         AEXMLElement(name: "command", value: text, attributes: [
             "icon":image.name,
             "active":"true",
-            "eol":"CR",
+            "eol":eol.name,
             "type":"text",
             "system_icon":image.systemIcon?.name ?? ""
         ])
@@ -84,12 +135,12 @@ struct TextCommand: UARTCommandModel, Equatable {
     var title: String { text.split(whereSeparator: \.isNewline).joined() }
     
     var data: Data {
-        text.data(using: .utf8)!
+        text.data(using: .utf8)! + eol.data
     }
     
     let text: String
     let image: CommandImage
-    var eol: String = "\n"
+    var eol: EOL = .none
 }
 
 struct DataCommand: UARTCommandModel, Equatable {
@@ -97,7 +148,7 @@ struct DataCommand: UARTCommandModel, Equatable {
         AEXMLElement(name: "command", value: data.hexString, attributes: [
             "icon":image.name,
             "active":"true",
-            "eol":"CR",
+            "eol":"none",
             "type":"data",
             "system_icon":image.systemIcon?.name ?? ""
         ])
