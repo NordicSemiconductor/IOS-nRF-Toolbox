@@ -31,7 +31,7 @@
 
 
 import UIKit
-import Charts
+import DGCharts
 
 class ContinuousGlucoseChartData: ChartDataSection<ContinuousGlucoseMonitorMeasurement> {
     override var numberOfItems: Int { 2 }

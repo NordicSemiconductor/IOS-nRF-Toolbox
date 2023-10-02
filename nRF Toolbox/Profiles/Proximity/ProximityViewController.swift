@@ -123,7 +123,7 @@ class ProximityViewController: PeripheralViewController {
     override func didUpdateValue(for characteristic: CBCharacteristic) {
         switch characteristic.uuid {
         case .txPowerLevelCharacteristic:
-            let value: Int8? = try? characteristic.value?.read()
+            let value: Int8? = try? characteristic.value?.read(fromOffset: 0)
             txValue = value.map(Int.init)
             self.update(rssi: rssi, txValue: txValue)
         default:
@@ -277,7 +277,7 @@ extension ProximityViewController: CBPeripheralManagerDelegate {
         let alertLevel: UInt8
             
         do {
-            alertLevel = try value.read()
+            alertLevel = try value.read(fromOffset: 0)
         } catch let error {
             displayErrorAlert(error: error)
             return

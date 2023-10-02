@@ -52,7 +52,7 @@ struct CyclingCharacteristic {
     }
     
     init(data: Data) throws {
-        let flags: UInt8 = try data.read()
+        let flags: UInt8 = try data.read(fromOffset: 0)
         
         wheelRevolutionsAndTime = try Flag.isAvailable(bits: flags, flag: .wheelData) ? {
                 (

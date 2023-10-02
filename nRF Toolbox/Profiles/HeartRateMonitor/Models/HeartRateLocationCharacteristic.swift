@@ -57,7 +57,7 @@ enum BodySensorLocationCharacteristic: Int, CustomStringConvertible {
     }
     
     init(with data: Data) throws {
-        let value: UInt8 = try data.read()
+        let value: UInt8 = try data.read(fromOffset: 0)
         
         guard value < 7 else {
             throw ParsingError.parsError

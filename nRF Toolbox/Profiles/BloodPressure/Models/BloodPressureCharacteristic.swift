@@ -47,7 +47,7 @@ struct BloodPressureCharacteristic {
     let pulseRate: Int?
     
     init(data: Data) throws {
-        let flags: UInt8 = try data.read()
+        let flags: UInt8 = try data.read(fromOffset: 0)
         let unit: UnitPressure = Flag.isAvailable(bits: flags, flag: .unitFlag) ? .millimetersOfMercury : .kilopascals
         
         let systolicValue: Float32 = try data.readSFloat(from: 1)

@@ -40,7 +40,7 @@ struct CuffPressureCharacteristic {
     let cuffPressure: Measurement<UnitPressure>
     
     init(data: Data) throws {
-        let flags: UInt8 = try data.read()
+        let flags: UInt8 = try data.read(fromOffset: 0)
         let unit: UnitPressure = Flag.isAvailable(bits: flags, flag: .unitFlag) ? .millimetersOfMercury : .kilopascals
         
         let cuffPressureValue: Float32 = try data.readSFloat(from: 1)
