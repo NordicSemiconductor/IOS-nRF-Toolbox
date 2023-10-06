@@ -956,6 +956,7 @@
 		017D102C2A5809E300E38E5F /* nRF-Toolbox */ = {
 			isa = PBXGroup;
 			children = (
+				019E77792ACC289500760124 /* Screens */,
 				0129F2262A68404C002FB3F5 /* Views */,
 				0126B53D2A5EA89F0033BCC3 /* Models */,
 				018873D02A58706C00253273 /* Utils */,
@@ -1099,6 +1100,13 @@
 				0126B5402A5EC1120033BCC3 /* DeviceDetailsViewModel.swift */,
 			);
 			path = DeviceDetails;
+			sourceTree = "<group>";
+		};
+		019E77792ACC289500760124 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Screens;
 			sourceTree = "<group>";
 		};
 		01A1B76423CF13810062FADC /* NewCommand */ = {

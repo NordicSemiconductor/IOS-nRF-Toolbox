@@ -31,7 +31,6 @@ class CentralManagerHelper: ObservableObject {
         }
         
         centralManager.scanForPeripherals(withServices: nil)
-            .autoconnect()
             .filter { sr in
                 sr.name != nil 
             }
@@ -52,7 +51,6 @@ class CentralManagerHelper: ObservableObject {
         }
         
         let connectionPublisher = centralManager.connect(peripheral)
-            .autoconnect()
             .share()
         
         let connectedPeripheral = try await connectionPublisher
@@ -89,7 +87,7 @@ class CentralManagerHelper: ObservableObject {
     
     private func tryReconnect(peripheral: CBPeripheral) async throws {
         let handler = await peripheralManagers.first(where: { $0.cbPeripheral.identifier == peripheral.identifier })
-        let connectionPublisher = centralManager.connect(peripheral).autoconnect()
+        let connectionPublisher = centralManager.connect(peripheral)
         _ = try await connectionPublisher.share()
             .timeout(.seconds(3), scheduler: DispatchQueue.main, customError: { Err.timeout })
             .value
@@ -116,7 +114,7 @@ class CentralManagerHelper: ObservableObject {
         }
         
         if peripheral.state != .disconnected && peripheral.state != .disconnecting {
-            _ = try await centralManager.cancelPeripheralConnection(peripheral).autoconnect().value
+            _ = try await centralManager.cancelPeripheralConnection(peripheral).value
         }
         
         peripheralManagers.remove(at: handlerIndex)

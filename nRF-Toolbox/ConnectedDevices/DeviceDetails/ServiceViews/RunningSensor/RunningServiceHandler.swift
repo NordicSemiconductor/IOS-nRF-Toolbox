@@ -95,11 +95,11 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
     }
     
     func prepare() async throws {
-        let characteristicsSeq = peripheral.discoverCharacteristics([.rscFeature, .rscMeasurement], for: service)
-            .autoconnect()
+        let characteristicsSeq = try await peripheral.discoverCharacteristics([.rscFeature, .rscMeasurement], for: service)
             .timeout(.seconds(3), scheduler: DispatchQueue.main, customError: { Err.timeout })
+            .value
         
-        for try await ch in characteristicsSeq.values {
+        for ch in characteristicsSeq {
             switch ch.uuid {
             case .rscMeasurement:
                 rscMeasurement = ch
@@ -121,17 +121,13 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
         self.features = try await readSupportedFeatures()
        
         if features.contains(.multipleSensorLocation) {
-            self.sensorLocationCh = try await peripheral.discoverCharacteristics([.sensorLocation], for: service)
-                .autoconnect()
-                .value
+            self.sensorLocationCh = try await peripheral.discoverCharacteristics([.sensorLocation], for: service).value.first
             
             self.sensorLocationSupported = true
         }
         
         if features.contains(.sensorCalibrationProcedure) {
-            self.scControlPointCh = try await peripheral.discoverCharacteristics([.scControlPoint], for: service)
-                .autoconnect()
-                .value
+            self.scControlPointCh = try await peripheral.discoverCharacteristics([.scControlPoint], for: service).value.first
             
             self.peripheral.peripheral.setNotifyValue(true, for: scControlPointCh!)
         }
@@ -250,9 +246,8 @@ extension RunningServiceHandler {
                 return response.parameter
             }
         
-        let writePublisher = peripheral.writeValueWithResponse(data, for: scControlPointCh).autoconnect()
-        
-        return try await writePublisher.combineLatest(valuePublisher)
+        return try await peripheral.writeValueWithResponse(data, for: scControlPointCh)
+            .combineLatest(valuePublisher)
             .map { $0.1 }
             .value
     }

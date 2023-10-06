@@ -12,11 +12,14 @@ import Combine
 import CoreBluetoothMock
 import iOS_Bluetooth_Numbers_Database
 
+
 class DeviceDetailsViewModel: ObservableObject, Identifiable {
     private var cancelables = Set<AnyCancellable>()
     
     let cbPeripheral: CBPeripheral
-    let peripheralManager: Peripheral
+    let peripheral: Peripheral
+    
+    private let supportedServices: [CBUUID] = [.runningSpeedCadence]
     
     var id: String {
         cbPeripheral.identifier.uuidString
@@ -39,7 +42,7 @@ class DeviceDetailsViewModel: ObservableObject, Identifiable {
          cancelConnection: @escaping (CBPeripheral) async throws -> ()
     ) {
         self.cbPeripheral = cbPeripheral
-        self.peripheralManager = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
+        self.peripheral = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
         self.requestReconnect = requestReconnect
         self.cancelConnection = cancelConnection
         
@@ -68,24 +71,17 @@ class DeviceDetailsViewModel: ObservableObject, Identifiable {
         }
     }
     
-    func discover() {
-        peripheralManager.discoverServices(serviceUUIDs: nil)
-            .autoconnect()
-            .receive(on: DispatchQueue.main)
-            .flatMap { service in
-                self.attributeTable.addService(service)
-                return self.peripheralManager.discoverCharacteristics(nil, for: service).autoconnect()
+    func discover() async throws {
+        let services = try await peripheral.discoverServices(serviceUUIDs: nil).value
+        for s in services {
+            let characteristics = try await peripheral.discoverCharacteristics(nil, for: s).value
+            for c in characteristics {
+                let descriptors = try await peripheral.discoverDescriptors(for: c).value
             }
-            .flatMap { characteristic in
-                self.attributeTable.addCharacteristic(characteristic)
-                return self.peripheralManager.discoverDescriptors(for: characteristic).autoconnect()
+            DispatchQueue.main.async {
+                self.attributeTable.addService(s)
             }
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { descriptor in
-                self.attributeTable.addDescriptor(descriptor)
-            })
-            .store(in: &cancelables)
+        }
     }
 }
 
@@ -93,14 +89,13 @@ private extension DeviceDetailsViewModel {
     
     func discoverAllServices() {
         Task {
-            for try await service in peripheralManager.discoverServices(serviceUUIDs: nil).autoconnect().timeout(.seconds(5), scheduler: DispatchQueue.main).values {
+            let services = try await peripheral.discoverServices(serviceUUIDs: supportedServices).timeout(.seconds(5), scheduler: DispatchQueue.main).value
+            
+            for service in services {
                 DispatchQueue.main.async {
-//                    self.peripheralRepresentation.addService(service)
-                    
-                    switch service.uuid.uuidString {
-                    case Service.runningSpeedAndCadence.uuidString:
-                        _ = RunningServiceHandler(peripheral: self.peripheralManager, service: service).map { self.serviceHandlers.replacedOrAppended($0, compareBy: \.id) }
-//                        RunningServiceHandler(peripheral: self.peripheralManager, service: service).map { self.serviceHandlers.append($0) }
+                    switch service.uuid {
+                    case .runningSpeedCadence:
+                        _ = RunningServiceHandler(peripheral: self.peripheral, service: service).map { self.serviceHandlers.replacedOrAppended($0, compareBy: \.id) }
                     default:
                         break
                     }

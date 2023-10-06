@@ -43,7 +43,9 @@ struct DeviceDetailsView: View {
             AttributeTableView(
                 attributeTable: peripheralHandler.attributeTable,
                 discoverTableAction: {
-                    peripheralHandler.discover()
+                    Task {
+                        try await peripheralHandler.discover()
+                    }
                 }
             )
             .tabItem {
