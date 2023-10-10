@@ -26,7 +26,7 @@ struct ConnectedDevicesView: View {
         }
         .sheet(isPresented: $showScanner) {
             NavigationStack {
-                PeripheralScannerView()
+                PeripheralScannerScreen()
                 #if os(macOS)
                     .frame(minWidth: 400, minHeight: 450)
                 #endif
