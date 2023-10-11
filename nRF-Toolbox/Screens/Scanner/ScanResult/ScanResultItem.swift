@@ -29,23 +29,39 @@ struct ScanResultItem: View {
     
     @ViewBuilder
     var servicesView: some View {
-        ForEach(services.filter({ $0.isSupported })) {
-            ServiceBadge(image: $0.systemImage, name: $0.name, color: $0.color ?? .primary)
+        HStack {
+            ForEach(services.filter({ $0.isSupported })) {
+                ServiceBadge(image: $0.systemImage, name: $0.name, color: $0.color ?? .primary)
+            }
+            
+            otherServiceBadge(count: services.reduce(0, { $0 + ($1.isSupported ? 0 : 1)  }))
         }
-        
-        ServiceBadge(name: otherServiceString())
     }
     
-    private func otherServiceString() -> String {
-        let otherServiceCount = services.reduce(0, { $0 + ($1.isSupported ? 0 : 1)  })
-        let prefixSymbol = otherServiceCount == services.count ? "" : " +"
+    @ViewBuilder
+    func otherServiceBadge(count: Int) -> some View {
+        if count > 0 {
+            ServiceBadge(name: otherServiceString(count: count))
+        } else {
+            EmptyView()
+        }
+    }
+    
+    private func otherServiceString(count: Int) -> String {
+        let prefixSymbol = count == services.count ? "" : " +"
         
         let formatString : String = NSLocalizedString("service_count", comment: "")
-        let resultString : String = String.localizedStringWithFormat(formatString, otherServiceCount)
+        let resultString : String = String.localizedStringWithFormat(formatString, count)
         return prefixSymbol + resultString
     }
 }
 
 #Preview {
-    ScanResultItem(name: "Service", rssi: -60, services: [.glucose])
+    List {
+        ScanResultItem(name: "Service", rssi: -60, services: [.glucose])
+        ScanResultItem(name: "Service", rssi: -70, services: [.glucose, .weightScale])
+        ScanResultItem(name: "Service", rssi: -70, services: [.weightScale])
+        ScanResultItem(name: "Service", rssi: -70, services: [.weightScale, .adafruitAccelerometer])
+        ScanResultItem(name: "Service", rssi: -190, services: [])
+    }
 }

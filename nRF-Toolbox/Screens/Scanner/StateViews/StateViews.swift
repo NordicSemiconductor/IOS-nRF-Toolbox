@@ -76,3 +76,15 @@ struct StateViews {
 #Preview {
     StateViews.Unsupported()
 }
+
+#Preview {
+    StateViews.Unauthorized()
+}
+
+#Preview {
+    StateViews.Disabled()
+}
+
+#Preview {
+    StateViews.EmptyResults()
+}
