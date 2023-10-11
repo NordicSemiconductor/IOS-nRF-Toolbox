@@ -10,18 +10,17 @@ import SwiftUI
 import iOS_Common_Libraries
 
 struct PeripheralScannerScreen: View {
-    @Environment(\.dismiss) var dismiss
     @ObservedObject var viewModel: ViewModel
     
     var body: some View {
-        
-        EmptyView()
+        PeripheralScannerView()
+            .environmentObject(viewModel.environment)
     }
 }
 
+fileprivate typealias ViewModel = PeripheralScannerScreen.ViewModel
 struct PeripheralScannerView: View {
-    typealias ViewModel = PeripheralScannerScreen.ViewModel
-    @EnvironmentObject var environment: ViewModel.PreviewEnvironment
+    @EnvironmentObject private var environment: ViewModel.PreviewEnvironment
     
     var body: some View {
         VStack {
@@ -33,7 +32,6 @@ struct PeripheralScannerView: View {
                     StateViews.EmptyResults()
                 } else {
                     ScanResultList()
-                        .environmentObject(environment)
                 }
             case .unsupported:
                 StateViews.Unsupported()
@@ -45,28 +43,27 @@ struct PeripheralScannerView: View {
 
         .navigationTitle("Scanner")
     }
-    
-    @ViewBuilder
-    var deviceList: some View {
-        
+}
+
+#Preview {
+    NavigationStack {
+        PeripheralScannerView()
+            .environmentObject(ViewModel.PreviewEnvironment(
+                devices: [
+                    PeripheralScannerScreen.ViewModel.ScanResult(name: "Device", rssi: -59, id: UUID(), services: []),
+                    PeripheralScannerScreen.ViewModel.ScanResult(name: "Device", rssi: -69, id: UUID(), services: []),
+                    PeripheralScannerScreen.ViewModel.ScanResult(name: "Device", rssi: -79, id: UUID(), services: []),
+                ],
+                state: .scanning))
     }
 }
 
-#if DEBUG
-fileprivate class MockVM: PeripheralScannerScreen.ViewModel {
-    override init(bluetoothManager: CentralManagerHelper = CentralManagerHelper.shared, state: PeripheralScannerScreen.ViewModel.State = .scanning, devices: [PeripheralScannerScreen.ViewModel.ScanResult] = []) {
-        
-    }
+#Preview {
+    PeripheralScannerView()
+        .environmentObject(ViewModel.PreviewEnvironment(state: .scanning))
 }
 
-struct PeripheralScannerView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            PeripheralScannerScreen(state: .scanning)
-            PeripheralScannerScreen(state: .disabled)
-            PeripheralScannerScreen(state: .unsupported)
-            PeripheralScannerScreen(state: .unauthorized)
-        }
-    }
+#Preview {
+    PeripheralScannerView()
+        .environmentObject(ViewModel.PreviewEnvironment())
 }
-#endif

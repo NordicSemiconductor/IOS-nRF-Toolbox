@@ -8,6 +8,7 @@
 
 import Foundation
 import iOS_BLE_Library_Mock
+import iOS_Bluetooth_Numbers_Database
 import Combine
 
 extension PeripheralScannerScreen {
@@ -19,15 +20,17 @@ extension PeripheralScannerScreen {
         private var cancelables = Set<AnyCancellable>()
         
         init(centralManager: CentralManager) {
-            self.environment = PreviewEnvironment(devices: [], connect: { sr in
-                Task {
-                    await self.tryToConnect(device: sr)
-                }
-            })
+            self.environment = PreviewEnvironment()
             self.centralManager = centralManager
             
             setupManager(centralManager: centralManager)
-            
+            setupEnvironment()
+        }
+        
+        private func setupEnvironment() {
+            environment.connect = { [weak self] device in
+                await self?.tryToConnect(device: device)
+            }
         }
     }
 }
@@ -42,17 +45,15 @@ extension PeripheralScannerScreen.ViewModel {
         let rssi: Int
         let id: UUID
         
-        let services: [String]
-        
-        var knownServices: [ServiceRepresentation] {
-            services.compactMap { ServiceRepresentation(identifier: $0) }
-        }
+        let services: [Service]
         
         init(name: String?, rssi: Int, id: UUID, services: [String]) {
             self.name = name
             self.rssi = rssi
             self.id = id
-            self.services = services
+            self.services = services.map {
+                Service.find(by: CBUUID(string: $0)) ?? Service(name: "unknown", identifier: "service-\($0)", uuidString: $0, source: "unknown")
+            }
         }
         
         static func ==(lhs: ScanResult, rhs: ScanResult) -> Bool {
@@ -72,7 +73,7 @@ extension PeripheralScannerScreen.ViewModel {
         let peripheral = centralManager.retrievePeripherals(withIdentifiers: [device.id]).first!
         
         do {
-            let connected = try await centralManager.connect(peripheral).first().value
+            _ = try await centralManager.connect(peripheral).first().value
         } catch let e {
             environment.error = ReadableError(error: e)
         }
@@ -121,7 +122,7 @@ extension PeripheralScannerScreen.ViewModel {
         @Published fileprivate (set) var connectingDevice: ScanResult?
         @Published fileprivate (set) var state: State
         
-        let connect: (ScanResult) -> ()
+        fileprivate (set) var connect: (ScanResult) async -> ()
         
         init(error: ReadableError? = nil, devices: [ScanResult] = [], connectingDevice: ScanResult? = nil, state: State = .disabled, connect: @escaping (ScanResult) -> Void = { _ in}) {
             self.error = error

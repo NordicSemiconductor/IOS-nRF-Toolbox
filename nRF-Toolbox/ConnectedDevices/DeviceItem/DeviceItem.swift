@@ -8,12 +8,13 @@
 
 import SwiftUI
 import CoreBluetoothMock
+import iOS_Bluetooth_Numbers_Database
 
-private extension AttributeTable {
-    var serviceRepresentation: [ServiceRepresentation] {
-        services.compactMap { ServiceRepresentation(identifier: $0.id) }
-    }
-}
+//private extension AttributeTable {
+//    var serviceRepresentation: [ServiceRepresentation] {
+//        services.compactMap { ServiceRepresentation(identifier: $0.id) }
+//    }
+//}
 
 struct DeviceItem: View {
     @ObservedObject var peripheral: DeviceDetailsViewModel
@@ -23,8 +24,8 @@ struct DeviceItem: View {
             Text(peripheral.cbPeripheral.name.deviceName)
                 .font(.headline)
             HStack {
-                ForEach(peripheral.serviceHandlers) { service in
-                    ServiceBadge(serviceRepresentatino: ServiceRepresentation(identifier: service.service.uuid.uuidString)!)
+                ForEach(peripheral.serviceHandlers.compactMap ({ Service.find(by: $0.service.uuid) })) { service in
+                    ServiceBadge(service: service)
                 }
             }
         }

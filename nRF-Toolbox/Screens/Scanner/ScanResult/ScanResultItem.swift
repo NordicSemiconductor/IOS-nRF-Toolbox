@@ -8,12 +8,12 @@
 
 import SwiftUI
 import iOS_Common_Libraries
+import iOS_Bluetooth_Numbers_Database
 
 struct ScanResultItem: View {
     let name: String?
     let rssi: Int
-    let services: [ServiceRepresentation]
-    let otherServices: Int
+    let services: [Service]
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -29,61 +29,23 @@ struct ScanResultItem: View {
     
     @ViewBuilder
     var servicesView: some View {
-        switch (services.count, otherServices) {
-        case (let s, 0) where s > 0:
-            ForEach(services, id: \.name) {
-                ServiceBadge(image: $0.icon, name: $0.name, color: $0.color)
-            }
-        case (0, let o) where o > 0:
-            ServiceBadge(name: "\(serviceString(otherServices))")
-        case (let s, let o) where s > 0 && o > 0:
-            ForEach(services, id: \.name) {
-                ServiceBadge(image: $0.icon, name: $0.name, color: $0.color)
-            }
-            ServiceBadge(name: "+\(serviceString(otherServices))")
-        default: EmptyView()
+        ForEach(services.filter({ $0.isSupported })) {
+            ServiceBadge(image: $0.systemImage, name: $0.name, color: $0.color ?? .primary)
         }
-    }
-    
-    private func serviceString(_ count: Int) -> String {
-        let formatString : String = NSLocalizedString("service_count", comment: "")
-        let resultString : String = String.localizedStringWithFormat(formatString, count)
-        return resultString
-    }
-}
-
-#if DEBUG
-import iOS_Bluetooth_Numbers_Database
-
-struct ScanResultItem_Previews: PreviewProvider {
-    typealias S = iOS_Bluetooth_Numbers_Database.Service
-    
-    private struct Mock {
-        let name: String
-        let rssi: Int
-        let services: [ServiceRepresentation]
         
-        static let mocks: [Mock] = [
-            Mock(name: "Blinki", rssi: -50, services: [
-                ServiceRepresentation(
-                    identifier: S.heartRate.identifier
-                ),
-                ServiceRepresentation(
-                    identifier: S.weightScale.identifier
-                ),
-            ].compactMap {$0} ),
-            Mock(name: "Heart Rate", rssi: -80, services: []),
-            Mock(name: "Running Sensor", rssi: -90, services: []),
-            Mock(name: "Body Weight", rssi: -90, services: []),
-            Mock(name: "Gluecose Sensor", rssi: -100, services: []),
-            Mock(name: "Continious Gluecose Sensor", rssi: -110, services: []),
-        ]
+        ServiceBadge(name: otherServiceString())
     }
     
-    static var previews: some View {
-        List(Mock.mocks, id: \.name) {
-            ScanResultItem(name: $0.name, rssi: $0.rssi, services: [], otherServices: 1)
-        }
+    private func otherServiceString() -> String {
+        let otherServiceCount = services.reduce(0, { $0 + ($1.isSupported ? 0 : 1)  })
+        let prefixSymbol = otherServiceCount == services.count ? "" : " +"
+        
+        let formatString : String = NSLocalizedString("service_count", comment: "")
+        let resultString : String = String.localizedStringWithFormat(formatString, otherServiceCount)
+        return prefixSymbol + resultString
     }
 }
-#endif
+
+#Preview {
+    ScanResultItem(name: "Service", rssi: -60, services: [.glucose])
+}
