@@ -55,7 +55,7 @@ extension AttributeTable {
         let runningSpeedAndCadence = CBMServiceMock(
             type: CBMUUID(string: S.runningSpeedAndCadence.uuidString),
             primary: true,
-            characteristics: rscMeasurement, rscFeature, scControlPoint, sensorLocation
+            characteristics: nil // sensorLocation, rscMeasurement, rscFeature, scControlPoint, sensorLocation
         )
         
         at.addService(genericAccess)

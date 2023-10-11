@@ -56,6 +56,18 @@ struct DeviceDetailsView: View {
                 }
             }
             .tag("attribute")
+            
+            if #available(iOS 17, *) {
+                RSSIChartView(rssiValues: RSSIItem.preview)
+                    .navigationTitle("Signal Chart")
+                    .tabItem {
+                        Label {
+                            Text("Signal Chart")
+                        } icon: {
+                            Image(systemName: "chart.xyaxis.line")
+                        }
+                    }
+            }
         }
         .navigationTitle(peripheralHandler.cbPeripheral.name.deviceName)
     }

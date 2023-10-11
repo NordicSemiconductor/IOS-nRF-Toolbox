@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import iOS_Bluetooth_Numbers_Database
 
 struct ServiceBadge: View {
     let image: Image?
@@ -25,10 +26,10 @@ struct ServiceBadge: View {
         self.color = .secondary
     }
     
-    init(serviceRepresentatino: ServiceRepresentation) {
-        self.image = serviceRepresentatino.icon
-        self.name = serviceRepresentatino.name
-        self.color = serviceRepresentatino.color
+    init(service: Service) {
+        self.image = service.systemImage ?? Image(systemName: "")
+        self.name = service.name
+        self.color = service.color ?? .secondary
     }
     
     var body: some View {

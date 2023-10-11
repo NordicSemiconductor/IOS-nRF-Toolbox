@@ -22,6 +22,9 @@ class CentralManagerHelper: ObservableObject {
     
     static var shared = CentralManagerHelper()
     
+    @MainActor
+    lazy private (set) var scannerViewModel: PeripheralScannerScreen.ViewModel! = PeripheralScannerScreen.ViewModel(centralManager: centralManager)
+    
     @Published var scanResults: [ScanResult] = []
     @MainActor @Published var peripheralManagers: [DeviceDetailsViewModel] = []
     
