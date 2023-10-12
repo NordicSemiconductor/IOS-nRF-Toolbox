@@ -10,7 +10,7 @@ import Foundation
 import iOS_BLE_Library_Mock
 import iOS_Common_Libraries
 import Combine
-
+/*
 class CentralManagerHelper: ObservableObject {
     enum Err: Swift.Error {
         case peripheralNotFound, timeout
@@ -123,3 +123,4 @@ class CentralManagerHelper: ObservableObject {
         peripheralManagers.remove(at: handlerIndex)
     }
 }
+*/

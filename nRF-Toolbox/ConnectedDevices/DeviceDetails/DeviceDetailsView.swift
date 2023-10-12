@@ -10,7 +10,7 @@ import SwiftUI
 import CoreBluetoothMock
 import iOS_Common_Libraries
 
-struct DeviceDetailsView: View {
+struct DeviceDetailsView1: View {
     @ObservedObject var peripheralHandler: DeviceDetailsViewModel
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var activeTab = ""
@@ -107,7 +107,7 @@ struct DeviceDetailsView: View {
         )
     }
 }
-
+/*
 struct DeviceDetailsView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
@@ -115,3 +115,4 @@ struct DeviceDetailsView_Previews: PreviewProvider {
         }
     }
 }
+*/

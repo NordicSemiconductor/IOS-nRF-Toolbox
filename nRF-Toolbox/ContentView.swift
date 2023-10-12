@@ -15,7 +15,7 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             NavigationSplitView {
-                ConnectedDevicesView()
+                ConnectedDevicesScreen()
                     .navigationTitle("Connected Devices")
                     .environmentObject(CentralManagerHelper.shared)
             } detail: {

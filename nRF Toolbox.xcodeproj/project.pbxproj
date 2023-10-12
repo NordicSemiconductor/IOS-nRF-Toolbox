@@ -59,6 +59,11 @@
 		0164A4712AD593B40093E501 /* ScanResultList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A4702AD593B40093E501 /* ScanResultList.swift */; };
 		0164A4742AD5A4630093E501 /* StateViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A4732AD5A4630093E501 /* StateViews.swift */; };
 		0164A4762AD698650093E501 /* NumberDatabase+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A4752AD698650093E501 /* NumberDatabase+Ext.swift */; };
+		0164A4792AD741200093E501 /* ConnectedDevicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A4782AD741200093E501 /* ConnectedDevicesViewModel.swift */; };
+		0164A47C2AD7F8B10093E501 /* ConnectedDeviceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A47B2AD7F8B10093E501 /* ConnectedDeviceList.swift */; };
+		0164A47F2AD831640093E501 /* ConnectedScreenInitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A47E2AD831640093E501 /* ConnectedScreenInitial.swift */; };
+		0164A4812AD8330E0093E501 /* ServiceBadgeGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A4802AD8330E0093E501 /* ServiceBadgeGroup.swift */; };
+		0164A4842AD840B60093E501 /* DeviceDetailsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A4832AD840B60093E501 /* DeviceDetailsScreen.swift */; };
 		01675E7123F6D1BE00FC0519 /* UARTPresetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01675E6F23F6D1BE00FC0519 /* UARTPresetTableViewCell.swift */; };
 		01675E7223F6D1BE00FC0519 /* UARTPresetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01675E7023F6D1BE00FC0519 /* UARTPresetTableViewCell.xib */; };
 		0169B59E23FBD8BE00907C1B /* NordicTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0169B59D23FBD8BE00907C1B /* NordicTextFieldCell.swift */; };
@@ -74,8 +79,8 @@
 		017D104A2A5809E500E38E5F /* nRF_ToolboxUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017D10492A5809E500E38E5F /* nRF_ToolboxUITests.swift */; };
 		017D104C2A5809E500E38E5F /* nRF_ToolboxUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017D104B2A5809E500E38E5F /* nRF_ToolboxUITestsLaunchTests.swift */; };
 		017D105B2A580D3800E38E5F /* iOSCommonLibraries in Frameworks */ = {isa = PBXBuildFile; productRef = 017D105A2A580D3800E38E5F /* iOSCommonLibraries */; };
-		018873C02A58320600253273 /* ConnectedDevicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873BF2A58320600253273 /* ConnectedDevicesView.swift */; };
-		018873C22A58322C00253273 /* ConnectedDevicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873C12A58322C00253273 /* ConnectedDevicesViewModel.swift */; };
+		018873C02A58320600253273 /* ConnectedDevicesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873BF2A58320600253273 /* ConnectedDevicesScreen.swift */; };
+		018873C22A58322C00253273 /* ee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873C12A58322C00253273 /* ee.swift */; };
 		018873C42A58332400253273 /* iOSCommonLibraries in Frameworks */ = {isa = PBXBuildFile; productRef = 018873C32A58332400253273 /* iOSCommonLibraries */; };
 		018873C72A583A9900253273 /* PeripheralScannerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873C62A583A9900253273 /* PeripheralScannerScreen.swift */; };
 		018873C92A583B0000253273 /* PeripheralScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873C82A583B0000253273 /* PeripheralScannerViewModel.swift */; };
@@ -427,6 +432,11 @@
 		0164A4702AD593B40093E501 /* ScanResultList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanResultList.swift; sourceTree = "<group>"; };
 		0164A4732AD5A4630093E501 /* StateViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateViews.swift; sourceTree = "<group>"; };
 		0164A4752AD698650093E501 /* NumberDatabase+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NumberDatabase+Ext.swift"; sourceTree = "<group>"; };
+		0164A4782AD741200093E501 /* ConnectedDevicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedDevicesViewModel.swift; sourceTree = "<group>"; };
+		0164A47B2AD7F8B10093E501 /* ConnectedDeviceList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedDeviceList.swift; sourceTree = "<group>"; };
+		0164A47E2AD831640093E501 /* ConnectedScreenInitial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedScreenInitial.swift; sourceTree = "<group>"; };
+		0164A4802AD8330E0093E501 /* ServiceBadgeGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBadgeGroup.swift; sourceTree = "<group>"; };
+		0164A4832AD840B60093E501 /* DeviceDetailsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailsScreen.swift; sourceTree = "<group>"; };
 		01675E6F23F6D1BE00FC0519 /* UARTPresetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTPresetTableViewCell.swift; sourceTree = "<group>"; };
 		01675E7023F6D1BE00FC0519 /* UARTPresetTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTPresetTableViewCell.xib; sourceTree = "<group>"; };
 		0169B59D23FBD8BE00907C1B /* NordicTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicTextFieldCell.swift; sourceTree = "<group>"; };
@@ -446,8 +456,8 @@
 		017D10492A5809E500E38E5F /* nRF_ToolboxUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nRF_ToolboxUITests.swift; sourceTree = "<group>"; };
 		017D104B2A5809E500E38E5F /* nRF_ToolboxUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nRF_ToolboxUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		017D105C2A580DCD00E38E5F /* IOS-Common-Libraries */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "IOS-Common-Libraries"; path = "../IOS-Common-Libraries"; sourceTree = "<group>"; };
-		018873BF2A58320600253273 /* ConnectedDevicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedDevicesView.swift; sourceTree = "<group>"; };
-		018873C12A58322C00253273 /* ConnectedDevicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedDevicesViewModel.swift; sourceTree = "<group>"; };
+		018873BF2A58320600253273 /* ConnectedDevicesScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedDevicesScreen.swift; sourceTree = "<group>"; };
+		018873C12A58322C00253273 /* ee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ee.swift; sourceTree = "<group>"; };
 		018873C62A583A9900253273 /* PeripheralScannerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralScannerScreen.swift; sourceTree = "<group>"; };
 		018873C82A583B0000253273 /* PeripheralScannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralScannerViewModel.swift; sourceTree = "<group>"; };
 		018873CD2A583C4E00253273 /* IOS-BLE-Library */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "IOS-BLE-Library"; path = "../IOS-BLE-Library"; sourceTree = "<group>"; };
@@ -851,6 +861,7 @@
 			children = (
 				0129F2272A684059002FB3F5 /* LabledValueView.swift */,
 				0130DAB92A8B87E100C332BA /* HUD.swift */,
+				0164A4802AD8330E0093E501 /* ServiceBadgeGroup.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -976,6 +987,41 @@
 			path = StateViews;
 			sourceTree = "<group>";
 		};
+		0164A4772AD7409C0093E501 /* ConnectedDevices */ = {
+			isa = PBXGroup;
+			children = (
+				0164A47D2AD8313F0093E501 /* EmptyState */,
+				0164A47A2AD7F8930093E501 /* ConnectedDeviceList */,
+				018873BF2A58320600253273 /* ConnectedDevicesScreen.swift */,
+				0164A4782AD741200093E501 /* ConnectedDevicesViewModel.swift */,
+			);
+			path = ConnectedDevices;
+			sourceTree = "<group>";
+		};
+		0164A47A2AD7F8930093E501 /* ConnectedDeviceList */ = {
+			isa = PBXGroup;
+			children = (
+				0164A47B2AD7F8B10093E501 /* ConnectedDeviceList.swift */,
+			);
+			path = ConnectedDeviceList;
+			sourceTree = "<group>";
+		};
+		0164A47D2AD8313F0093E501 /* EmptyState */ = {
+			isa = PBXGroup;
+			children = (
+				0164A47E2AD831640093E501 /* ConnectedScreenInitial.swift */,
+			);
+			path = EmptyState;
+			sourceTree = "<group>";
+		};
+		0164A4822AD840A10093E501 /* DeviceDetails */ = {
+			isa = PBXGroup;
+			children = (
+				0164A4832AD840B60093E501 /* DeviceDetailsScreen.swift */,
+			);
+			path = DeviceDetails;
+			sourceTree = "<group>";
+		};
 		01675E6A23F6CF8000FC0519 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -1050,8 +1096,7 @@
 			children = (
 				019ABF1E2A6044B90019BD21 /* DeviceDetails */,
 				019ABF1B2A600A3A0019BD21 /* DeviceItem */,
-				018873BF2A58320600253273 /* ConnectedDevicesView.swift */,
-				018873C12A58322C00253273 /* ConnectedDevicesViewModel.swift */,
+				018873C12A58322C00253273 /* ee.swift */,
 			);
 			path = ConnectedDevices;
 			sourceTree = "<group>";
@@ -1137,6 +1182,8 @@
 		019E77792ACC289500760124 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				0164A4822AD840A10093E501 /* DeviceDetails */,
+				0164A4772AD7409C0093E501 /* ConnectedDevices */,
 				018873C52A5839C700253273 /* Scanner */,
 			);
 			path = Screens;
@@ -2451,17 +2498,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				01C81AD72A5D8FEA0011B41E /* ReadableError.swift in Sources */,
+				0164A4812AD8330E0093E501 /* ServiceBadgeGroup.swift in Sources */,
 				018873C72A583A9900253273 /* PeripheralScannerScreen.swift in Sources */,
-				018873C22A58322C00253273 /* ConnectedDevicesViewModel.swift in Sources */,
+				018873C22A58322C00253273 /* ee.swift in Sources */,
 				01F6A9662A829EE300540B45 /* SensorSettingsViewModel.swift in Sources */,
 				0164A46B2AD550000093E501 /* RSSIChartView.swift in Sources */,
+				0164A47C2AD7F8B10093E501 /* ConnectedDeviceList.swift in Sources */,
+				0164A47F2AD831640093E501 /* ConnectedScreenInitial.swift in Sources */,
 				0132082A2A5C142100DCEA11 /* ScanResultItem.swift in Sources */,
 				012E228E2A69A54B00B14064 /* AttributeTablePreview.swift in Sources */,
+				0164A4842AD840B60093E501 /* DeviceDetailsScreen.swift in Sources */,
 				012E228C2A69A4E900B14064 /* AttributeTableView.swift in Sources */,
 				018873C92A583B0000253273 /* PeripheralScannerViewModel.swift in Sources */,
 				018873D22A58707900253273 /* CentralManagerHelper.swift in Sources */,
 				01C575B92A798D65007FE4F0 /* SensorSettings.swift in Sources */,
 				0129F2282A684059002FB3F5 /* LabledValueView.swift in Sources */,
+				0164A4792AD741200093E501 /* ConnectedDevicesViewModel.swift in Sources */,
 				012E22922A6ACD8400B14064 /* AttributeTableItemView.swift in Sources */,
 				012E22902A69AFC200B14064 /* String+Name.swift in Sources */,
 				01C81AD52A5CB6420011B41E /* ServiceBadge.swift in Sources */,
@@ -2477,7 +2529,7 @@
 				0129F2202A67FD43002FB3F5 /* ServiceView.swift in Sources */,
 				0126B53F2A5EA8B70033BCC3 /* AttributeTable.swift in Sources */,
 				017D102E2A5809E300E38E5F /* nRF_ToolboxApp.swift in Sources */,
-				018873C02A58320600253273 /* ConnectedDevicesView.swift in Sources */,
+				018873C02A58320600253273 /* ConnectedDevicesScreen.swift in Sources */,
 				01DEB4A62A65E35F00D4C1E8 /* Flag.swift in Sources */,
 				014BBD7D2A70004B00BCFCA8 /* RSCMeasurement.swift in Sources */,
 				01C575BE2A7D00EF007FE4F0 /* Alias.swift in Sources */,
