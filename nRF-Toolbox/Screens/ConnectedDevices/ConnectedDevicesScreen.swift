@@ -22,7 +22,6 @@ struct ConnectedDevicesScreen: View {
             }
         }
         .environmentObject(viewModel.environment)
-            
     }
 }
 
@@ -39,7 +38,9 @@ struct ConnectedDevicesView<ScannerContent: View>: View {
     var body: some View {
         VStack {
             if environment.connectedDevices.isEmpty {
-                emptyState.padding()
+                ConnectedDevicesScreen.InitialStace()
+                    .padding()
+                    .environmentObject(environment)
             } else {
                 ConnectedDeviceList()
                     .environmentObject(environment)
@@ -47,24 +48,6 @@ struct ConnectedDevicesView<ScannerContent: View>: View {
         }
         .sheet(isPresented: $environment.showScanner, content: scannerContent)
         
-    }
-    
-    @ViewBuilder
-    var emptyState: some View {
-        ContentUnavailableView(
-            configuration: ContentUnavailableConfiguration(
-                text: "No Connected Devices",
-                // TODO: Is it correct message?
-                secondaryText: "Scan for devices and connect to peripheral to begin",
-                systemName: "antenna.radiowaves.left.and.right"
-            ),
-            actions: {
-                Button("Start Scan") {
-                    environment.showScanner = true
-                }
-                .buttonStyle(NordicPrimary())
-            }
-        )
     }
     /*
     var deviceList: some View {
@@ -85,8 +68,21 @@ struct ConnectedDevicesView<ScannerContent: View>: View {
 }
 
 #Preview {
-    ConnectedDevicesView {
-        EmptyView()
-            .environmentObject(ConnectedDevicesScreen.ViewModel.Environment())
+    NavigationStack {
+        ConnectedDevicesView {
+            EmptyView()
+        }
+        .environmentObject(ConnectedDevicesScreen.ViewModel.Environment(connectedDevices: [
+            ConnectedDevicesScreen.ViewModel.Device(name: "Device", id: UUID())
+        ]))
+    }
+}
+
+#Preview {
+    NavigationStack {
+        ConnectedDevicesView {
+            EmptyView()
+        }
+        .environmentObject(ConnectedDevicesScreen.ViewModel.Environment(connectedDevices: []))
     }
 }

@@ -14,8 +14,12 @@ struct ConnectedDeviceList: View {
     @EnvironmentObject var environment: ConnectedDevicesScreen.ViewModel.Environment
     
     var body: some View {
-        List(environment.connectedDevices) {
-            Text($0.name ?? "n/a")
+        List(environment.connectedDevices) { device in
+            NavigationLink {
+                EmptyView()
+            } label: {
+                Text(device.name ?? "n/a")
+            }
         }
     }
 }

@@ -61,6 +61,8 @@
 		0164A4762AD698650093E501 /* NumberDatabase+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A4752AD698650093E501 /* NumberDatabase+Ext.swift */; };
 		0164A4792AD741200093E501 /* ConnectedDevicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A4782AD741200093E501 /* ConnectedDevicesViewModel.swift */; };
 		0164A47C2AD7F8B10093E501 /* ConnectedDeviceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A47B2AD7F8B10093E501 /* ConnectedDeviceList.swift */; };
+		0164A47F2AD831640093E501 /* ConnectedScreenInitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A47E2AD831640093E501 /* ConnectedScreenInitial.swift */; };
+		0164A4812AD8330E0093E501 /* ServiceBadgeGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A4802AD8330E0093E501 /* ServiceBadgeGroup.swift */; };
 		01675E7123F6D1BE00FC0519 /* UARTPresetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01675E6F23F6D1BE00FC0519 /* UARTPresetTableViewCell.swift */; };
 		01675E7223F6D1BE00FC0519 /* UARTPresetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01675E7023F6D1BE00FC0519 /* UARTPresetTableViewCell.xib */; };
 		0169B59E23FBD8BE00907C1B /* NordicTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0169B59D23FBD8BE00907C1B /* NordicTextFieldCell.swift */; };
@@ -431,6 +433,8 @@
 		0164A4752AD698650093E501 /* NumberDatabase+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NumberDatabase+Ext.swift"; sourceTree = "<group>"; };
 		0164A4782AD741200093E501 /* ConnectedDevicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedDevicesViewModel.swift; sourceTree = "<group>"; };
 		0164A47B2AD7F8B10093E501 /* ConnectedDeviceList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedDeviceList.swift; sourceTree = "<group>"; };
+		0164A47E2AD831640093E501 /* ConnectedScreenInitial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedScreenInitial.swift; sourceTree = "<group>"; };
+		0164A4802AD8330E0093E501 /* ServiceBadgeGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBadgeGroup.swift; sourceTree = "<group>"; };
 		01675E6F23F6D1BE00FC0519 /* UARTPresetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTPresetTableViewCell.swift; sourceTree = "<group>"; };
 		01675E7023F6D1BE00FC0519 /* UARTPresetTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTPresetTableViewCell.xib; sourceTree = "<group>"; };
 		0169B59D23FBD8BE00907C1B /* NordicTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicTextFieldCell.swift; sourceTree = "<group>"; };
@@ -855,6 +859,7 @@
 			children = (
 				0129F2272A684059002FB3F5 /* LabledValueView.swift */,
 				0130DAB92A8B87E100C332BA /* HUD.swift */,
+				0164A4802AD8330E0093E501 /* ServiceBadgeGroup.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -983,6 +988,7 @@
 		0164A4772AD7409C0093E501 /* ConnectedDevices */ = {
 			isa = PBXGroup;
 			children = (
+				0164A47D2AD8313F0093E501 /* EmptyState */,
 				0164A47A2AD7F8930093E501 /* ConnectedDeviceList */,
 				018873BF2A58320600253273 /* ConnectedDevicesScreen.swift */,
 				0164A4782AD741200093E501 /* ConnectedDevicesViewModel.swift */,
@@ -996,6 +1002,14 @@
 				0164A47B2AD7F8B10093E501 /* ConnectedDeviceList.swift */,
 			);
 			path = ConnectedDeviceList;
+			sourceTree = "<group>";
+		};
+		0164A47D2AD8313F0093E501 /* EmptyState */ = {
+			isa = PBXGroup;
+			children = (
+				0164A47E2AD831640093E501 /* ConnectedScreenInitial.swift */,
+			);
+			path = EmptyState;
 			sourceTree = "<group>";
 		};
 		01675E6A23F6CF8000FC0519 /* Utils */ = {
@@ -2473,11 +2487,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				01C81AD72A5D8FEA0011B41E /* ReadableError.swift in Sources */,
+				0164A4812AD8330E0093E501 /* ServiceBadgeGroup.swift in Sources */,
 				018873C72A583A9900253273 /* PeripheralScannerScreen.swift in Sources */,
 				018873C22A58322C00253273 /* ee.swift in Sources */,
 				01F6A9662A829EE300540B45 /* SensorSettingsViewModel.swift in Sources */,
 				0164A46B2AD550000093E501 /* RSSIChartView.swift in Sources */,
 				0164A47C2AD7F8B10093E501 /* ConnectedDeviceList.swift in Sources */,
+				0164A47F2AD831640093E501 /* ConnectedScreenInitial.swift in Sources */,
 				0132082A2A5C142100DCEA11 /* ScanResultItem.swift in Sources */,
 				012E228E2A69A54B00B14064 /* AttributeTablePreview.swift in Sources */,
 				012E228C2A69A4E900B14064 /* AttributeTableView.swift in Sources */,
