@@ -9,29 +9,44 @@
 import SwiftUI
 import iOS_Common_Libraries
 
-struct ConnectedDevicesView: View {
-    @EnvironmentObject var viewModel: CentralManagerHelper
+struct ConnectedDevicesScreen: View {
+    @StateObject var viewModel = ViewModel()
+    
+    var body: some View {
+        ConnectedDevicesView {
+            NavigationStack {
+                PeripheralScannerScreen(viewModel: viewModel.scannerViewModel)
+#if os(macOS)
+                    .frame(minWidth: 400, minHeight: 450)
+#endif
+            }
+        }
+        .environmentObject(viewModel.environment)
+            
+    }
+}
+
+struct ConnectedDevicesView<ScannerContent: View>: View {
+    @EnvironmentObject var environment: ConnectedDevicesScreen.ViewModel.Environment
     @State var selectedService: String?
     
-    @State var showScanner = false
-    @State var counter = 0
+    let scannerContent: () -> ScannerContent
+    
+    init(scannerContent: @escaping () -> ScannerContent) {
+        self.scannerContent = scannerContent
+    }
     
     var body: some View {
         VStack {
-            if viewModel.peripheralManagers.isEmpty {
+            if environment.connectedDevices.isEmpty {
                 emptyState.padding()
             } else {
-                deviceList
+                ConnectedDeviceList()
+                    .environmentObject(environment)
             }
         }
-        .sheet(isPresented: $showScanner) {
-            NavigationStack {
-                PeripheralScannerScreen(viewModel: viewModel.scannerViewModel)
-                #if os(macOS)
-                    .frame(minWidth: 400, minHeight: 450)
-                #endif
-            }
-        }
+        .sheet(isPresented: $environment.showScanner, content: scannerContent)
+        
     }
     
     @ViewBuilder
@@ -45,13 +60,13 @@ struct ConnectedDevicesView: View {
             ),
             actions: {
                 Button("Start Scan") {
-                    showScanner = true
+                    environment.showScanner = true
                 }
                 .buttonStyle(NordicPrimary())
             }
         )
     }
-    
+    /*
     var deviceList: some View {
         List {
             ForEach(viewModel.peripheralManagers) { peripheral in
@@ -62,26 +77,16 @@ struct ConnectedDevicesView: View {
                 }
             }
             Button("Connect another device") {
-               showScanner = true
+//               showScanner = true
             }
         }
     }
+     */
 }
 
-struct ConnectedDevicesView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            NavigationStack {
-                ConnectedDevicesView()
-                    .navigationTitle("Connected Devices")
-                    .environmentObject(CentralManagerHelperPreview() as CentralManagerHelper)
-            }
-            
-            NavigationStack {
-                ConnectedDevicesView()
-                    .navigationTitle("Connected Devices")
-                    .environmentObject(CentralManagerHelperPreview(generateDevices: true) as CentralManagerHelper)
-            }
-        }
+#Preview {
+    ConnectedDevicesView {
+        EmptyView()
+            .environmentObject(ConnectedDevicesScreen.ViewModel.Environment())
     }
 }

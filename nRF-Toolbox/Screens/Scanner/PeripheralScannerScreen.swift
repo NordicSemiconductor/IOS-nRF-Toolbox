@@ -39,8 +39,8 @@ struct PeripheralScannerView: View {
                 StateViews.Unauthorized()
             }
         }
+        // TODO: Handle Error
 //        .alert(isPresented: $viewModel.showError, error: viewModel.error, actions: { })
-
         .navigationTitle("Scanner")
     }
 }

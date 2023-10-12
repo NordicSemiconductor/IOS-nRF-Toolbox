@@ -9,12 +9,10 @@
 import Foundation
 import Combine
 
-extension ConnectedDevicesView {
-    struct Device: Identifiable {
-        let name: String
-        let id: UUID
-    }
+extension ConnectedDevicesScreen {
     
+    
+/*
     @MainActor
     class ViewModel: ObservableObject {
         private var cancelables = Set<AnyCancellable>()
@@ -30,5 +28,6 @@ extension ConnectedDevicesView {
                 .assign(to: &$handlers)
         }
     }
+ */
 }
 
