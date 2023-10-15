@@ -10,15 +10,22 @@ import SwiftUI
 
 fileprivate typealias Device = ConnectedDevicesScreen.ViewModel.Device
 
-struct ConnectedDeviceList: View {
+struct ConnectedDeviceList<DetailedScreen: View>: View {
     @EnvironmentObject var environment: ConnectedDevicesScreen.ViewModel.Environment
+    
+    typealias DetailedScreenBuilder = (ConnectedDevicesScreen.ViewModel.Device) -> DetailedScreen
+    let detailedScreen: DetailedScreenBuilder
+    
+    init(@ViewBuilder detailedScreen: @escaping DetailedScreenBuilder) {
+        self.detailedScreen = detailedScreen
+    }
     
     var body: some View {
         List(environment.connectedDevices) { device in
             NavigationLink {
-                EmptyView()
+                detailedScreen(device)
             } label: {
-                Text(device.name ?? "n/a")
+                Text(device.name ?? "unnamed")
             }
         }
     }
@@ -26,8 +33,12 @@ struct ConnectedDeviceList: View {
 
 
 #Preview {
-    ConnectedDeviceList()
+    NavigationStack {
+        ConnectedDeviceList {
+            Text("connected device: \($0.name ?? "unnamed")")
+        }
         .environmentObject(ConnectedDevicesScreen.ViewModel.Environment(connectedDevices: [
             Device(name: "Device 1", id: UUID())
         ]))
+    }
 }

@@ -20,19 +20,28 @@ struct ConnectedDevicesScreen: View {
                     .frame(minWidth: 400, minHeight: 450)
 #endif
             }
+        } detailedScreen: { device in
+            DeviceDetailsScreen(viewModel: viewModel.environment.deviceViewModel(device))
         }
         .environmentObject(viewModel.environment)
     }
 }
 
-struct ConnectedDevicesView<ScannerContent: View>: View {
+struct ConnectedDevicesView<ScannerScreen: View, DetailedScreen: View>: View {
     @EnvironmentObject var environment: ConnectedDevicesScreen.ViewModel.Environment
     @State var selectedService: String?
     
-    let scannerContent: () -> ScannerContent
+    let scannerScreen: () -> ScannerScreen
     
-    init(scannerContent: @escaping () -> ScannerContent) {
-        self.scannerContent = scannerContent
+    typealias DetailedScreenBuilder = (ConnectedDevicesScreen.ViewModel.Device) -> DetailedScreen
+    let detailedScreen: (ConnectedDevicesScreen.ViewModel.Device) -> DetailedScreen
+    
+    init(
+        @ViewBuilder scannerScreen: @escaping () -> ScannerScreen,
+        @ViewBuilder detailedScreen: @escaping DetailedScreenBuilder
+    ) {
+        self.scannerScreen = scannerScreen
+        self.detailedScreen = detailedScreen
     }
     
     var body: some View {
@@ -42,11 +51,11 @@ struct ConnectedDevicesView<ScannerContent: View>: View {
                     .padding()
                     .environmentObject(environment)
             } else {
-                ConnectedDeviceList()
+                ConnectedDeviceList(detailedScreen: detailedScreen)
                     .environmentObject(environment)
             }
         }
-        .sheet(isPresented: $environment.showScanner, content: scannerContent)
+        .sheet(isPresented: $environment.showScanner, content: scannerScreen)
         
     }
     /*
@@ -69,9 +78,11 @@ struct ConnectedDevicesView<ScannerContent: View>: View {
 
 #Preview {
     NavigationStack {
-        ConnectedDevicesView {
+        ConnectedDevicesView(scannerScreen: {
             EmptyView()
-        }
+        }, detailedScreen: { _ in
+            EmptyView()
+        })
         .environmentObject(ConnectedDevicesScreen.ViewModel.Environment(connectedDevices: [
             ConnectedDevicesScreen.ViewModel.Device(name: "Device", id: UUID())
         ]))
@@ -80,9 +91,11 @@ struct ConnectedDevicesView<ScannerContent: View>: View {
 
 #Preview {
     NavigationStack {
-        ConnectedDevicesView {
+        ConnectedDevicesView(scannerScreen: {
             EmptyView()
-        }
+        }, detailedScreen: { _ in
+            EmptyView()
+        })
         .environmentObject(ConnectedDevicesScreen.ViewModel.Environment(connectedDevices: []))
     }
 }

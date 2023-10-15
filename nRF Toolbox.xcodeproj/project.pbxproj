@@ -17,14 +17,13 @@
 		01268AF924218E5800E83156 /* ZephyrDFUDocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01268AF824218E5800E83156 /* ZephyrDFUDocumentPicker.swift */; };
 		01268AFB2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01268AFA2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift */; };
 		0126B53F2A5EA8B70033BCC3 /* AttributeTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0126B53E2A5EA8B70033BCC3 /* AttributeTable.swift */; };
-		0126B5412A5EC1120033BCC3 /* DeviceDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0126B5402A5EC1120033BCC3 /* DeviceDetailsViewModel.swift */; };
+		0126B5412A5EC1120033BCC3 /* DeviceDetailsViewModel1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0126B5402A5EC1120033BCC3 /* DeviceDetailsViewModel1.swift */; };
 		0129126B23E4487000EB3CCD /* UARTTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129126A23E4486F00EB3CCD /* UARTTabBarController.swift */; };
 		0129F21D2A66F8EE002FB3F5 /* DeviceDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129F21C2A66F8EE002FB3F5 /* DeviceDetailsView.swift */; };
 		0129F2202A67FD43002FB3F5 /* ServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129F21F2A67FD43002FB3F5 /* ServiceView.swift */; };
 		0129F2222A67FE39002FB3F5 /* RunningServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129F2212A67FE39002FB3F5 /* RunningServiceView.swift */; };
 		0129F2252A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129F2242A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift */; };
 		0129F2282A684059002FB3F5 /* LabledValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129F2272A684059002FB3F5 /* LabledValueView.swift */; };
-		0129F22A2A693375002FB3F5 /* CentralManagerHelperPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129F2292A693375002FB3F5 /* CentralManagerHelperPreview.swift */; };
 		012C2BDC240FCD0C005EC1A0 /* DFUUpdateSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDB240FCD0C005EC1A0 /* DFUUpdateSection.swift */; };
 		012C2BE12410682D005EC1A0 /* LegendLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDE2410682D005EC1A0 /* LegendLabel.swift */; };
 		012C2BE22410682D005EC1A0 /* Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDF2410682D005EC1A0 /* Segment.swift */; };
@@ -64,6 +63,7 @@
 		0164A47F2AD831640093E501 /* ConnectedScreenInitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A47E2AD831640093E501 /* ConnectedScreenInitial.swift */; };
 		0164A4812AD8330E0093E501 /* ServiceBadgeGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A4802AD8330E0093E501 /* ServiceBadgeGroup.swift */; };
 		0164A4842AD840B60093E501 /* DeviceDetailsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A4832AD840B60093E501 /* DeviceDetailsScreen.swift */; };
+		0164A4862AD84A170093E501 /* DeviceDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A4852AD84A170093E501 /* DeviceDetailsViewModel.swift */; };
 		01675E7123F6D1BE00FC0519 /* UARTPresetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01675E6F23F6D1BE00FC0519 /* UARTPresetTableViewCell.swift */; };
 		01675E7223F6D1BE00FC0519 /* UARTPresetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01675E7023F6D1BE00FC0519 /* UARTPresetTableViewCell.xib */; };
 		0169B59E23FBD8BE00907C1B /* NordicTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0169B59D23FBD8BE00907C1B /* NordicTextFieldCell.swift */; };
@@ -387,14 +387,13 @@
 		01268AF824218E5800E83156 /* ZephyrDFUDocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFUDocumentPicker.swift; sourceTree = "<group>"; };
 		01268AFA2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFUTabBarViewController.swift; sourceTree = "<group>"; };
 		0126B53E2A5EA8B70033BCC3 /* AttributeTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeTable.swift; sourceTree = "<group>"; };
-		0126B5402A5EC1120033BCC3 /* DeviceDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailsViewModel.swift; sourceTree = "<group>"; };
+		0126B5402A5EC1120033BCC3 /* DeviceDetailsViewModel1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailsViewModel1.swift; sourceTree = "<group>"; };
 		0129126A23E4486F00EB3CCD /* UARTTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTTabBarController.swift; sourceTree = "<group>"; };
 		0129F21C2A66F8EE002FB3F5 /* DeviceDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailsView.swift; sourceTree = "<group>"; };
 		0129F21F2A67FD43002FB3F5 /* ServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceView.swift; sourceTree = "<group>"; };
 		0129F2212A67FE39002FB3F5 /* RunningServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningServiceView.swift; sourceTree = "<group>"; };
 		0129F2242A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningServiceHandlerPreview.swift; sourceTree = "<group>"; };
 		0129F2272A684059002FB3F5 /* LabledValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabledValueView.swift; sourceTree = "<group>"; };
-		0129F2292A693375002FB3F5 /* CentralManagerHelperPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CentralManagerHelperPreview.swift; sourceTree = "<group>"; };
 		012C2BDB240FCD0C005EC1A0 /* DFUUpdateSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUUpdateSection.swift; sourceTree = "<group>"; };
 		012C2BDE2410682D005EC1A0 /* LegendLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegendLabel.swift; sourceTree = "<group>"; };
 		012C2BDF2410682D005EC1A0 /* Segment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Segment.swift; sourceTree = "<group>"; };
@@ -437,6 +436,7 @@
 		0164A47E2AD831640093E501 /* ConnectedScreenInitial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedScreenInitial.swift; sourceTree = "<group>"; };
 		0164A4802AD8330E0093E501 /* ServiceBadgeGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBadgeGroup.swift; sourceTree = "<group>"; };
 		0164A4832AD840B60093E501 /* DeviceDetailsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailsScreen.swift; sourceTree = "<group>"; };
+		0164A4852AD84A170093E501 /* DeviceDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailsViewModel.swift; sourceTree = "<group>"; };
 		01675E6F23F6D1BE00FC0519 /* UARTPresetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTPresetTableViewCell.swift; sourceTree = "<group>"; };
 		01675E7023F6D1BE00FC0519 /* UARTPresetTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTPresetTableViewCell.xib; sourceTree = "<group>"; };
 		0169B59D23FBD8BE00907C1B /* NordicTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicTextFieldCell.swift; sourceTree = "<group>"; };
@@ -1018,6 +1018,7 @@
 			isa = PBXGroup;
 			children = (
 				0164A4832AD840B60093E501 /* DeviceDetailsScreen.swift */,
+				0164A4852AD84A170093E501 /* DeviceDetailsViewModel.swift */,
 			);
 			path = DeviceDetails;
 			sourceTree = "<group>";
@@ -1054,7 +1055,6 @@
 				0129F2232A6802BF002FB3F5 /* ServiceHandlers */,
 				01407CB72A65415500A5B279 /* Peripheral */,
 				017D10352A5809E400E38E5F /* Preview Assets.xcassets */,
-				0129F2292A693375002FB3F5 /* CentralManagerHelperPreview.swift */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -1115,16 +1115,16 @@
 		018873D02A58706C00253273 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				01AB7B742A77BFB400AEDDCD /* CBUUID+Ext.swift */,
+				01DEB4A72A65E90C00D4C1E8 /* Data+Ext.swift */,
 				01DEB4A92A65E9D900D4C1E8 /* CharacteristicReader.swift */,
 				0164A4752AD698650093E501 /* NumberDatabase+Ext.swift */,
 				01C575BD2A7D00EF007FE4F0 /* Alias.swift */,
-				01DEB4A72A65E90C00D4C1E8 /* Data+Ext.swift */,
 				018873D12A58707900253273 /* CentralManagerHelper.swift */,
 				01C81AD62A5D8FEA0011B41E /* ReadableError.swift */,
 				01DEB4A52A65E35F00D4C1E8 /* Flag.swift */,
 				012E228F2A69AFC200B14064 /* String+Name.swift */,
 				012E22932A6AD5BE00B14064 /* NamedItem.swift */,
-				01AB7B742A77BFB400AEDDCD /* CBUUID+Ext.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1174,7 +1174,7 @@
 				012E228A2A69A48A00B14064 /* AttributeTable */,
 				0129F21E2A67F4B4002FB3F5 /* ServiceViews */,
 				0129F21C2A66F8EE002FB3F5 /* DeviceDetailsView.swift */,
-				0126B5402A5EC1120033BCC3 /* DeviceDetailsViewModel.swift */,
+				0126B5402A5EC1120033BCC3 /* DeviceDetailsViewModel1.swift */,
 			);
 			path = DeviceDetails;
 			sourceTree = "<group>";
@@ -2517,7 +2517,6 @@
 				012E22922A6ACD8400B14064 /* AttributeTableItemView.swift in Sources */,
 				012E22902A69AFC200B14064 /* String+Name.swift in Sources */,
 				01C81AD52A5CB6420011B41E /* ServiceBadge.swift in Sources */,
-				0129F22A2A693375002FB3F5 /* CentralManagerHelperPreview.swift in Sources */,
 				01DEB4A82A65E90C00D4C1E8 /* Data+Ext.swift in Sources */,
 				0164A4712AD593B40093E501 /* ScanResultList.swift in Sources */,
 				01AB7B752A77BFB400AEDDCD /* CBUUID+Ext.swift in Sources */,
@@ -2525,6 +2524,7 @@
 				01DEB4AA2A65E9D900D4C1E8 /* CharacteristicReader.swift in Sources */,
 				01407CB92A65417900A5B279 /* CBMPeripheralPreview.swift in Sources */,
 				0130DABA2A8B87E100C332BA /* HUD.swift in Sources */,
+				0164A4862AD84A170093E501 /* DeviceDetailsViewModel.swift in Sources */,
 				017D10302A5809E300E38E5F /* ContentView.swift in Sources */,
 				0129F2202A67FD43002FB3F5 /* ServiceView.swift in Sources */,
 				0126B53F2A5EA8B70033BCC3 /* AttributeTable.swift in Sources */,
@@ -2544,7 +2544,7 @@
 				0129F2222A67FE39002FB3F5 /* RunningServiceView.swift in Sources */,
 				0164A4762AD698650093E501 /* NumberDatabase+Ext.swift in Sources */,
 				01407CBC2A65819B00A5B279 /* ServiceHandler.swift in Sources */,
-				0126B5412A5EC1120033BCC3 /* DeviceDetailsViewModel.swift in Sources */,
+				0126B5412A5EC1120033BCC3 /* DeviceDetailsViewModel1.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
