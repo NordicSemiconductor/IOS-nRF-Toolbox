@@ -14,16 +14,24 @@ struct ConnectedDeviceList<DetailedScreen: View>: View {
     @EnvironmentObject var environment: ConnectedDevicesScreen.ViewModel.Environment
     
     typealias DetailedScreenBuilder = (ConnectedDevicesScreen.ViewModel.Device) -> DetailedScreen
-    let detailedScreen: DetailedScreenBuilder
+    let detailedScreen: DetailedScreenBuilder?
     
     init(@ViewBuilder detailedScreen: @escaping DetailedScreenBuilder) {
         self.detailedScreen = detailedScreen
     }
     
+    init() where DetailedScreen == DeviceDetailsScreen {
+        self.detailedScreen = nil
+    }
+    
     var body: some View {
         List(environment.connectedDevices) { device in
             NavigationLink {
-                detailedScreen(device)
+                if let detailedScreen = detailedScreen {
+                    detailedScreen(device)
+                } else {
+                    DeviceDetailsScreen(viewModel: environment.deviceViewModel(device))
+                }
             } label: {
                 Text(device.name ?? "unnamed")
             }

@@ -20,28 +20,21 @@ struct ConnectedDevicesScreen: View {
                     .frame(minWidth: 400, minHeight: 450)
 #endif
             }
-        } detailedScreen: { device in
-            DeviceDetailsScreen(viewModel: viewModel.environment.deviceViewModel(device))
         }
         .environmentObject(viewModel.environment)
     }
 }
 
-struct ConnectedDevicesView<ScannerScreen: View, DetailedScreen: View>: View {
+struct ConnectedDevicesView<ScannerScreen: View> : View {
     @EnvironmentObject var environment: ConnectedDevicesScreen.ViewModel.Environment
     @State var selectedService: String?
     
     let scannerScreen: () -> ScannerScreen
     
-    typealias DetailedScreenBuilder = (ConnectedDevicesScreen.ViewModel.Device) -> DetailedScreen
-    let detailedScreen: (ConnectedDevicesScreen.ViewModel.Device) -> DetailedScreen
-    
     init(
-        @ViewBuilder scannerScreen: @escaping () -> ScannerScreen,
-        @ViewBuilder detailedScreen: @escaping DetailedScreenBuilder
+        @ViewBuilder scannerScreen: @escaping () -> ScannerScreen
     ) {
         self.scannerScreen = scannerScreen
-        self.detailedScreen = detailedScreen
     }
     
     var body: some View {
@@ -51,51 +44,18 @@ struct ConnectedDevicesView<ScannerScreen: View, DetailedScreen: View>: View {
                     .padding()
                     .environmentObject(environment)
             } else {
-                ConnectedDeviceList(detailedScreen: detailedScreen)
-                    .environmentObject(environment)
+                ConnectedDeviceList()
             }
         }
         .sheet(isPresented: $environment.showScanner, content: scannerScreen)
-        
     }
-    /*
-    var deviceList: some View {
-        List {
-            ForEach(viewModel.peripheralManagers) { peripheral in
-                NavigationLink {
-                    DeviceDetailsView(peripheralHandler: peripheral)
-                } label: {
-                    DeviceItem(peripheral: peripheral)
-                }
-            }
-            Button("Connect another device") {
-//               showScanner = true
-            }
+}
+
+#Preview {
+    NavigationStack {
+        ConnectedDevicesView {
+            EmptyView()
         }
-    }
-     */
-}
-
-#Preview {
-    NavigationStack {
-        ConnectedDevicesView(scannerScreen: {
-            EmptyView()
-        }, detailedScreen: { _ in
-            EmptyView()
-        })
-        .environmentObject(ConnectedDevicesScreen.ViewModel.Environment(connectedDevices: [
-            ConnectedDevicesScreen.ViewModel.Device(name: "Device", id: UUID())
-        ]))
-    }
-}
-
-#Preview {
-    NavigationStack {
-        ConnectedDevicesView(scannerScreen: {
-            EmptyView()
-        }, detailedScreen: { _ in
-            EmptyView()
-        })
         .environmentObject(ConnectedDevicesScreen.ViewModel.Environment(connectedDevices: []))
     }
 }
