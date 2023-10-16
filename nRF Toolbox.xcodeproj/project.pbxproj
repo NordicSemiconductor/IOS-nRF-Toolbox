@@ -38,6 +38,8 @@
 		0132082A2A5C142100DCEA11 /* ScanResultItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013208292A5C142100DCEA11 /* ScanResultItem.swift */; };
 		0133C73B23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0133C73A23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift */; };
 		01363A872417E4FA0030821E /* ControlSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01363A862417E4FA0030821E /* ControlSection.swift */; };
+		013E5D8A2ADD33E000B9C475 /* RunningServiceScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013E5D892ADD33E000B9C475 /* RunningServiceScreen.swift */; };
+		013E5D8C2ADD33EF00B9C475 /* RunningServiceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013E5D8B2ADD33EF00B9C475 /* RunningServiceViewModel.swift */; };
 		01407CB92A65417900A5B279 /* CBMPeripheralPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01407CB82A65417900A5B279 /* CBMPeripheralPreview.swift */; };
 		01407CBC2A65819B00A5B279 /* ServiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01407CBB2A65819B00A5B279 /* ServiceHandler.swift */; };
 		01468B052361A30A00C29E4C /* StepperTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B032361A30A00C29E4C /* StepperTableViewCell.swift */; };
@@ -408,6 +410,8 @@
 		013208292A5C142100DCEA11 /* ScanResultItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanResultItem.swift; sourceTree = "<group>"; };
 		0133C73A23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTPresetCollectionViewDelegate.swift; sourceTree = "<group>"; };
 		01363A862417E4FA0030821E /* ControlSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSection.swift; sourceTree = "<group>"; };
+		013E5D892ADD33E000B9C475 /* RunningServiceScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningServiceScreen.swift; sourceTree = "<group>"; };
+		013E5D8B2ADD33EF00B9C475 /* RunningServiceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningServiceViewModel.swift; sourceTree = "<group>"; };
 		01407CB82A65417900A5B279 /* CBMPeripheralPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBMPeripheralPreview.swift; sourceTree = "<group>"; };
 		01407CBB2A65819B00A5B279 /* ServiceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceHandler.swift; sourceTree = "<group>"; };
 		01468B032361A30A00C29E4C /* StepperTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperTableViewCell.swift; sourceTree = "<group>"; };
@@ -916,6 +920,23 @@
 			path = Section;
 			sourceTree = "<group>";
 		};
+		013E5D872ADD337300B9C475 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				013E5D882ADD33BF00B9C475 /* Running */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		013E5D882ADD33BF00B9C475 /* Running */ = {
+			isa = PBXGroup;
+			children = (
+				013E5D892ADD33E000B9C475 /* RunningServiceScreen.swift */,
+				013E5D8B2ADD33EF00B9C475 /* RunningServiceViewModel.swift */,
+			);
+			path = Running;
+			sourceTree = "<group>";
+		};
 		01407CB72A65415500A5B279 /* Peripheral */ = {
 			isa = PBXGroup;
 			children = (
@@ -1182,6 +1203,7 @@
 		019E77792ACC289500760124 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				013E5D872ADD337300B9C475 /* Services */,
 				0164A4822AD840A10093E501 /* DeviceDetails */,
 				0164A4772AD7409C0093E501 /* ConnectedDevices */,
 				018873C52A5839C700253273 /* Scanner */,
@@ -2503,6 +2525,7 @@
 				018873C22A58322C00253273 /* ee.swift in Sources */,
 				01F6A9662A829EE300540B45 /* SensorSettingsViewModel.swift in Sources */,
 				0164A46B2AD550000093E501 /* RSSIChartView.swift in Sources */,
+				013E5D8C2ADD33EF00B9C475 /* RunningServiceViewModel.swift in Sources */,
 				0164A47C2AD7F8B10093E501 /* ConnectedDeviceList.swift in Sources */,
 				0164A47F2AD831640093E501 /* ConnectedScreenInitial.swift in Sources */,
 				0132082A2A5C142100DCEA11 /* ScanResultItem.swift in Sources */,
@@ -2525,6 +2548,7 @@
 				01407CB92A65417900A5B279 /* CBMPeripheralPreview.swift in Sources */,
 				0130DABA2A8B87E100C332BA /* HUD.swift in Sources */,
 				0164A4862AD84A170093E501 /* DeviceDetailsViewModel.swift in Sources */,
+				013E5D8A2ADD33E000B9C475 /* RunningServiceScreen.swift in Sources */,
 				017D10302A5809E300E38E5F /* ContentView.swift in Sources */,
 				0129F2202A67FD43002FB3F5 /* ServiceView.swift in Sources */,
 				0126B53F2A5EA8B70033BCC3 /* AttributeTable.swift in Sources */,

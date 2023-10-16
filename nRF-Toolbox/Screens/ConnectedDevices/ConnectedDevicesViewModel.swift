@@ -90,11 +90,11 @@ extension ConnectedDevicesScreen.ViewModel {
         
         @Published fileprivate (set) var connectedDevices: [Device]
         
-        let deviceViewModel: (Device) -> (DeviceDetailsScreen.ViewModel)
+        let deviceViewModel: ((Device) -> (DeviceDetailsScreen.ViewModel))?
         
         init(
             connectedDevices: [Device] = [],
-            deviceViewModel: @escaping (Device) -> (DeviceDetailsScreen.ViewModel) = { _ in fatalError() }
+            deviceViewModel: ((Device) -> (DeviceDetailsScreen.ViewModel))? = nil
         ) {
             self.connectedDevices = connectedDevices
             self.deviceViewModel = deviceViewModel

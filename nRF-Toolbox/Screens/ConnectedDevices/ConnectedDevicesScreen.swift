@@ -56,6 +56,17 @@ struct ConnectedDevicesView<ScannerScreen: View> : View {
         ConnectedDevicesView {
             EmptyView()
         }
+        .environmentObject(ConnectedDevicesScreen.ViewModel.Environment(connectedDevices: [
+            ConnectedDevicesScreen.ViewModel.Device(name: "Device 1", id: UUID())
+        ]))
+    }
+}
+
+#Preview {
+    NavigationStack {
+        ConnectedDevicesView {
+            EmptyView()
+        }
         .environmentObject(ConnectedDevicesScreen.ViewModel.Environment(connectedDevices: []))
     }
 }

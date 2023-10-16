@@ -15,7 +15,7 @@ struct ServiceView: View {
     var body: some View {
         switch service {
         case let running as RunningServiceHandler:
-            RunningServiceView(viewModel: running)
+            RunningServiceView1(viewModel: running)
         default:
             fatalError()
         }
