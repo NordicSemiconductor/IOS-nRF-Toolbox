@@ -9,6 +9,7 @@
 import Foundation
 import iOS_Bluetooth_Numbers_Database
 import SwiftUI
+import iOS_BLE_Library_Mock
 
 extension Service: Hashable {
     
@@ -49,6 +50,14 @@ extension Service: Hashable {
     var systemImage: Image? { Service.serviceIcons[self].flatMap { Image(systemName: $0) } }
     var color: Color? { Service.colors[self] }
     var isSupported: Bool { Service.supportedServices.contains(self) }
+    
+    init(cbService: CBService, defaultName: String = "Unknown") {
+        if let service = Service.find(by: cbService.uuid) {
+            self = service
+        } else {
+            self = Service(name: defaultName, identifier: cbService.uuid.uuidString, uuidString: cbService.uuid.uuidString, source: "unknown")
+        }
+    }
 }
 
 extension Service: Identifiable {

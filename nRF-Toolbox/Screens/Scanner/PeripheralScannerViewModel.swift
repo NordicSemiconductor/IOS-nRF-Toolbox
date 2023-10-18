@@ -23,7 +23,6 @@ extension PeripheralScannerScreen {
             self.environment = PreviewEnvironment()
             self.centralManager = centralManager
             
-            setupManager(centralManager: centralManager)
             setupEnvironment()
         }
         
@@ -83,7 +82,7 @@ extension PeripheralScannerScreen.ViewModel {
 }
 
 extension PeripheralScannerScreen.ViewModel {
-    private func setupManager(centralManager: CentralManager) {
+    func setupManager() {
         centralManager.stateChannel
             .map { state -> State in
                 switch state {
@@ -96,6 +95,7 @@ extension PeripheralScannerScreen.ViewModel {
             .assign(to: &environment.$state)
         
         centralManager.scanForPeripherals(withServices: nil)
+            .filter { $0.name != nil }
             .map { sr -> ScanResult in
                 ScanResult(
                     name: sr.name,

@@ -12,13 +12,21 @@ fileprivate typealias Device = ConnectedDevicesScreen.ViewModel.Device
 
 struct ConnectedDeviceList: View {
     @EnvironmentObject var environment: ConnectedDevicesScreen.ViewModel.Environment
-    
+   
     var body: some View {
         List(environment.connectedDevices) { device in
             NavigationLink {
-                EmptyView()
+                if let builder = environment.deviceViewModel {
+                    DeviceDetailsScreen(viewModel: builder(device))
+                } else {
+                    #if DEBUG
+                    Text("Device Preview")
+                    #else
+                    fatalError()
+                    #endif
+                }
             } label: {
-                Text(device.name ?? "n/a")
+                Text(device.name ?? "unnamed")
             }
         }
     }
@@ -26,8 +34,10 @@ struct ConnectedDeviceList: View {
 
 
 #Preview {
-    ConnectedDeviceList()
-        .environmentObject(ConnectedDevicesScreen.ViewModel.Environment(connectedDevices: [
-            Device(name: "Device 1", id: UUID())
-        ]))
+    NavigationStack {
+        ConnectedDeviceList()
+            .environmentObject(ConnectedDevicesScreen.ViewModel.Environment(connectedDevices: [
+                Device(name: "Device 1", id: UUID())
+            ]))
+    }
 }

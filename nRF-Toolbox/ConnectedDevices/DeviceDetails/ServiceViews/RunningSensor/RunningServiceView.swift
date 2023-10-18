@@ -11,7 +11,7 @@ import iOS_BLE_Library_Mock
 import CoreBluetoothMock
 import iOS_Common_Libraries
 
-struct RunningServiceView: View {
+struct RunningServiceView1: View {
     @ObservedObject var viewModel: RunningServiceHandler
     @StateObject var settingsHud = HUDState()
     
@@ -73,9 +73,10 @@ struct RunningServiceView: View {
         }
     }
 }
-
+/*
 struct RunningServiceView_Previews: PreviewProvider {
     static var previews: some View {
         RunningServiceView(viewModel: RunningServiceHandlerPreview()! as RunningServiceHandler)
     }
 }
+*/

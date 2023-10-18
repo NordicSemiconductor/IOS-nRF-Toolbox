@@ -15,9 +15,10 @@ extension ConnectedDevicesScreen {
     class ViewModel: ObservableObject {
         typealias ScannerVM = PeripheralScannerScreen.ViewModel
         
+        private var deviceViewModels: [UUID: DeviceDetailsScreen.ViewModel] = [:]
         private var cancelable = Set<AnyCancellable>()
         
-        private (set) lazy var environment: Environment = Environment()
+        private (set) lazy var environment: Environment = Environment(deviceViewModel: { [unowned self] in self.deviceViewModel(for: $0) })
         let centralManager: CentralManager
         
         private (set) lazy var scannerViewModel: ScannerVM! = ScannerVM(centralManager: centralManager)
@@ -27,6 +28,21 @@ extension ConnectedDevicesScreen {
             
             observeConnections()
             observeDisconnections()
+        }
+    }
+}
+
+extension ConnectedDevicesScreen.ViewModel {
+    private func deviceViewModel(for device: Device) -> DeviceDetailsScreen.ViewModel {
+        if let vm = deviceViewModels[device.id] {
+            return vm
+        } else {
+            guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [device.id]).first else {
+                fatalError()
+            }
+            let newViewModel = DeviceDetailsScreen.ViewModel(cbPeripheral: peripheral)
+            deviceViewModels[device.id] = newViewModel
+            return newViewModel
         }
     }
 }
@@ -74,9 +90,14 @@ extension ConnectedDevicesScreen.ViewModel {
         
         @Published fileprivate (set) var connectedDevices: [Device]
         
-        init(connectedDevices: [Device] = []) {
+        let deviceViewModel: ((Device) -> (DeviceDetailsScreen.ViewModel))?
+        
+        init(
+            connectedDevices: [Device] = [],
+            deviceViewModel: ((Device) -> (DeviceDetailsScreen.ViewModel))? = nil
+        ) {
             self.connectedDevices = connectedDevices
-            self.showScanner = showScanner
+            self.deviceViewModel = deviceViewModel
         }
     }
 }

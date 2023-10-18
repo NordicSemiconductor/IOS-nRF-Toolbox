@@ -17,7 +17,6 @@ struct ContentView: View {
             NavigationSplitView {
                 ConnectedDevicesScreen()
                     .navigationTitle("Connected Devices")
-                    .environmentObject(CentralManagerHelper.shared)
             } detail: {
                 ContentUnavailableView(
                     configuration: ContentUnavailableConfiguration(

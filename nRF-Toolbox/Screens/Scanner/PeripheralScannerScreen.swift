@@ -14,7 +14,11 @@ struct PeripheralScannerScreen: View {
     
     var body: some View {
         PeripheralScannerView()
+            .onFirstAppear {
+                viewModel.setupManager()
+            }
             .environmentObject(viewModel.environment)
+            
     }
 }
 

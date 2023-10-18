@@ -25,14 +25,16 @@ struct ConnectedDevicesScreen: View {
     }
 }
 
-struct ConnectedDevicesView<ScannerContent: View>: View {
+struct ConnectedDevicesView<ScannerScreen: View> : View {
     @EnvironmentObject var environment: ConnectedDevicesScreen.ViewModel.Environment
     @State var selectedService: String?
     
-    let scannerContent: () -> ScannerContent
+    let scannerScreen: () -> ScannerScreen
     
-    init(scannerContent: @escaping () -> ScannerContent) {
-        self.scannerContent = scannerContent
+    init(
+        @ViewBuilder scannerScreen: @escaping () -> ScannerScreen
+    ) {
+        self.scannerScreen = scannerScreen
     }
     
     var body: some View {
@@ -43,28 +45,10 @@ struct ConnectedDevicesView<ScannerContent: View>: View {
                     .environmentObject(environment)
             } else {
                 ConnectedDeviceList()
-                    .environmentObject(environment)
             }
         }
-        .sheet(isPresented: $environment.showScanner, content: scannerContent)
-        
+        .sheet(isPresented: $environment.showScanner, content: scannerScreen)
     }
-    /*
-    var deviceList: some View {
-        List {
-            ForEach(viewModel.peripheralManagers) { peripheral in
-                NavigationLink {
-                    DeviceDetailsView(peripheralHandler: peripheral)
-                } label: {
-                    DeviceItem(peripheral: peripheral)
-                }
-            }
-            Button("Connect another device") {
-//               showScanner = true
-            }
-        }
-    }
-     */
 }
 
 #Preview {
@@ -73,7 +57,7 @@ struct ConnectedDevicesView<ScannerContent: View>: View {
             EmptyView()
         }
         .environmentObject(ConnectedDevicesScreen.ViewModel.Environment(connectedDevices: [
-            ConnectedDevicesScreen.ViewModel.Device(name: "Device", id: UUID())
+            ConnectedDevicesScreen.ViewModel.Device(name: "Device 1", id: UUID())
         ]))
     }
 }
