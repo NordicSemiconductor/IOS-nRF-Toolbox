@@ -8,23 +8,49 @@
 
 import SwiftUI
 
+fileprivate typealias VM = RunningServiceScreen.ViewModel.Environment
+
 struct RunningServiceScreen: View {
     @ObservedObject var viewModel: ViewModel
     
     var body: some View {
         RunningServiceView()
-            .task {
-                // TODO: Start Bluetooth tasks
+            .environmentObject(viewModel.environment)
+            .onFirstAppear {
+                await viewModel.enableDeviceCommunication()
             }
     }
 }
 
 struct RunningServiceView: View {
+    @EnvironmentObject private var environment: VM
+    
     var body: some View {
-        Text("Running View")
+        List {
+            Section {
+                RunningValuesGrid()
+            }
+            Section {
+                Button("Sensor Calibration") {
+                    
+                }
+            }
+        }
+       
     }
 }
 
 #Preview {
-    RunningServiceView()
+    NavigationStack {
+        RunningServiceView()
+            .environmentObject(
+                VM(
+                    rscFeature: .all,
+                    instantaneousSpeed: Measurement<UnitSpeed>(value: 1, unit: .metersPerSecond),
+                    instantaneousCadence: 2,
+                    instantaneousStrideLength: Measurement<UnitLength>(value: 2, unit: .meters)
+                )
+            )
+            .navigationTitle("Running")
+    }
 }

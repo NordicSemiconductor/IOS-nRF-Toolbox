@@ -32,8 +32,8 @@ struct RSSIChartView: View {
             )
             .foregroundStyle(r.color)
         }
-        .chartScrollableAxes(.horizontal)
-        .chartXVisibleDomain(length: 200)
+//        .chartScrollableAxes(.horizontal)
+//        .chartXVisibleDomain(length: 200)
         .padding()
     }
 }

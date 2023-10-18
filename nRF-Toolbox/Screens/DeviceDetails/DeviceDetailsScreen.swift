@@ -14,10 +14,13 @@ struct DeviceDetailsScreen: View {
     
     var body: some View {
         DeviceDetailsView { service in
-            if service.isSupported {
-                Image(systemName: "42")
-            } else {
-                Image(systemName: "42")
+            switch service {
+            case .runningSpeedAndCadence:
+                if let vm = viewModel.runningServiceViewModel {
+                    RunningServiceScreen(viewModel: vm)
+                }
+            default:
+                EmptyView()
             }
         }
         .environmentObject(viewModel.environment)
@@ -58,6 +61,7 @@ struct DeviceDetailsView<ServiceView: View>: View {
                     Label("Signal Chart", systemImage: "chart.bar")
                 }
         }
+        .navigationTitle(environment.peripheralName ?? "Device Details")
     }
 }
 

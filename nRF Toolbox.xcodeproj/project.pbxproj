@@ -40,6 +40,12 @@
 		01363A872417E4FA0030821E /* ControlSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01363A862417E4FA0030821E /* ControlSection.swift */; };
 		013E5D8A2ADD33E000B9C475 /* RunningServiceScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013E5D892ADD33E000B9C475 /* RunningServiceScreen.swift */; };
 		013E5D8C2ADD33EF00B9C475 /* RunningServiceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013E5D8B2ADD33EF00B9C475 /* RunningServiceViewModel.swift */; };
+		013E5D8F2ADFDDC600B9C475 /* NumberedColumnGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013E5D8E2ADFDDC600B9C475 /* NumberedColumnGrid.swift */; };
+		013E5D912ADFDF1300B9C475 /* Array+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013E5D902ADFDF1300B9C475 /* Array+Ext.swift */; };
+		013E5D932AE027A000B9C475 /* ChunkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013E5D922AE027A000B9C475 /* ChunkTests.swift */; };
+		013E5D962AE02A1700B9C475 /* RunningValuesGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013E5D952AE02A1700B9C475 /* RunningValuesGrid.swift */; };
+		013E5D982AE02A2400B9C475 /* RunningValuesGridItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013E5D972AE02A2400B9C475 /* RunningValuesGridItem.swift */; };
+		013E5D9B2AE0545F00B9C475 /* OnFirstAppear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013E5D9A2AE0545F00B9C475 /* OnFirstAppear.swift */; };
 		01407CB92A65417900A5B279 /* CBMPeripheralPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01407CB82A65417900A5B279 /* CBMPeripheralPreview.swift */; };
 		01407CBC2A65819B00A5B279 /* ServiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01407CBB2A65819B00A5B279 /* ServiceHandler.swift */; };
 		01468B052361A30A00C29E4C /* StepperTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B032361A30A00C29E4C /* StepperTableViewCell.swift */; };
@@ -412,6 +418,12 @@
 		01363A862417E4FA0030821E /* ControlSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSection.swift; sourceTree = "<group>"; };
 		013E5D892ADD33E000B9C475 /* RunningServiceScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningServiceScreen.swift; sourceTree = "<group>"; };
 		013E5D8B2ADD33EF00B9C475 /* RunningServiceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningServiceViewModel.swift; sourceTree = "<group>"; };
+		013E5D8E2ADFDDC600B9C475 /* NumberedColumnGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberedColumnGrid.swift; sourceTree = "<group>"; };
+		013E5D902ADFDF1300B9C475 /* Array+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Ext.swift"; sourceTree = "<group>"; };
+		013E5D922AE027A000B9C475 /* ChunkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChunkTests.swift; sourceTree = "<group>"; };
+		013E5D952AE02A1700B9C475 /* RunningValuesGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningValuesGrid.swift; sourceTree = "<group>"; };
+		013E5D972AE02A2400B9C475 /* RunningValuesGridItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningValuesGridItem.swift; sourceTree = "<group>"; };
+		013E5D9A2AE0545F00B9C475 /* OnFirstAppear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnFirstAppear.swift; sourceTree = "<group>"; };
 		01407CB82A65417900A5B279 /* CBMPeripheralPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBMPeripheralPreview.swift; sourceTree = "<group>"; };
 		01407CBB2A65819B00A5B279 /* ServiceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceHandler.swift; sourceTree = "<group>"; };
 		01468B032361A30A00C29E4C /* StepperTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperTableViewCell.swift; sourceTree = "<group>"; };
@@ -863,9 +875,11 @@
 		0129F2262A68404C002FB3F5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				013E5D992AE0545100B9C475 /* Modifiers */,
 				0129F2272A684059002FB3F5 /* LabledValueView.swift */,
 				0130DAB92A8B87E100C332BA /* HUD.swift */,
 				0164A4802AD8330E0093E501 /* ServiceBadgeGroup.swift */,
+				013E5D8E2ADFDDC600B9C475 /* NumberedColumnGrid.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -931,10 +945,28 @@
 		013E5D882ADD33BF00B9C475 /* Running */ = {
 			isa = PBXGroup;
 			children = (
+				013E5D942AE02A0700B9C475 /* RunningValuesGrid */,
 				013E5D892ADD33E000B9C475 /* RunningServiceScreen.swift */,
 				013E5D8B2ADD33EF00B9C475 /* RunningServiceViewModel.swift */,
 			);
 			path = Running;
+			sourceTree = "<group>";
+		};
+		013E5D942AE02A0700B9C475 /* RunningValuesGrid */ = {
+			isa = PBXGroup;
+			children = (
+				013E5D952AE02A1700B9C475 /* RunningValuesGrid.swift */,
+				013E5D972AE02A2400B9C475 /* RunningValuesGridItem.swift */,
+			);
+			path = RunningValuesGrid;
+			sourceTree = "<group>";
+		};
+		013E5D992AE0545100B9C475 /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				013E5D9A2AE0545F00B9C475 /* OnFirstAppear.swift */,
+			);
+			path = Modifiers;
 			sourceTree = "<group>";
 		};
 		01407CB72A65415500A5B279 /* Peripheral */ = {
@@ -1084,6 +1116,7 @@
 			isa = PBXGroup;
 			children = (
 				017D103F2A5809E500E38E5F /* nRF_ToolboxTests.swift */,
+				013E5D922AE027A000B9C475 /* ChunkTests.swift */,
 			);
 			path = "nRF-ToolboxTests";
 			sourceTree = "<group>";
@@ -1137,6 +1170,7 @@
 			isa = PBXGroup;
 			children = (
 				01AB7B742A77BFB400AEDDCD /* CBUUID+Ext.swift */,
+				013E5D902ADFDF1300B9C475 /* Array+Ext.swift */,
 				01DEB4A72A65E90C00D4C1E8 /* Data+Ext.swift */,
 				01DEB4A92A65E9D900D4C1E8 /* CharacteristicReader.swift */,
 				0164A4752AD698650093E501 /* NumberDatabase+Ext.swift */,
@@ -2520,10 +2554,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				01C81AD72A5D8FEA0011B41E /* ReadableError.swift in Sources */,
+				013E5D912ADFDF1300B9C475 /* Array+Ext.swift in Sources */,
 				0164A4812AD8330E0093E501 /* ServiceBadgeGroup.swift in Sources */,
 				018873C72A583A9900253273 /* PeripheralScannerScreen.swift in Sources */,
 				018873C22A58322C00253273 /* ee.swift in Sources */,
 				01F6A9662A829EE300540B45 /* SensorSettingsViewModel.swift in Sources */,
+				013E5D962AE02A1700B9C475 /* RunningValuesGrid.swift in Sources */,
 				0164A46B2AD550000093E501 /* RSSIChartView.swift in Sources */,
 				013E5D8C2ADD33EF00B9C475 /* RunningServiceViewModel.swift in Sources */,
 				0164A47C2AD7F8B10093E501 /* ConnectedDeviceList.swift in Sources */,
@@ -2539,11 +2575,14 @@
 				0164A4792AD741200093E501 /* ConnectedDevicesViewModel.swift in Sources */,
 				012E22922A6ACD8400B14064 /* AttributeTableItemView.swift in Sources */,
 				012E22902A69AFC200B14064 /* String+Name.swift in Sources */,
+				013E5D9B2AE0545F00B9C475 /* OnFirstAppear.swift in Sources */,
 				01C81AD52A5CB6420011B41E /* ServiceBadge.swift in Sources */,
 				01DEB4A82A65E90C00D4C1E8 /* Data+Ext.swift in Sources */,
 				0164A4712AD593B40093E501 /* ScanResultList.swift in Sources */,
+				013E5D8F2ADFDDC600B9C475 /* NumberedColumnGrid.swift in Sources */,
 				01AB7B752A77BFB400AEDDCD /* CBUUID+Ext.swift in Sources */,
 				0164A46E2AD58EB00093E501 /* RSSIItem_Preview.swift in Sources */,
+				013E5D982AE02A2400B9C475 /* RunningValuesGridItem.swift in Sources */,
 				01DEB4AA2A65E9D900D4C1E8 /* CharacteristicReader.swift in Sources */,
 				01407CB92A65417900A5B279 /* CBMPeripheralPreview.swift in Sources */,
 				0130DABA2A8B87E100C332BA /* HUD.swift in Sources */,
@@ -2577,6 +2616,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				017D10402A5809E500E38E5F /* nRF_ToolboxTests.swift in Sources */,
+				013E5D932AE027A000B9C475 /* ChunkTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
