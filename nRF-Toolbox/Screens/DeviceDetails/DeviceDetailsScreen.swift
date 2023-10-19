@@ -22,6 +22,8 @@ struct DeviceDetailsScreen: View {
             default:
                 EmptyView()
             }
+        } signalChartContent: {
+            SignalChartScreen(viewModel: viewModel.signalChartViewModel)
         }
         .environmentObject(viewModel.environment)
         .task {
@@ -30,13 +32,18 @@ struct DeviceDetailsScreen: View {
     }
 }
 
-struct DeviceDetailsView<ServiceView: View>: View {
+struct DeviceDetailsView<ServiceView: View, SignalView: View>: View {
     @EnvironmentObject var environment: DeviceDetailsScreen.ViewModel.Environment
     
     let serviceViewContent: (Service) -> ServiceView
+    let signalChartContent: () -> SignalView
     
-    init(@ViewBuilder serviceViewContent: @escaping (Service) -> ServiceView) {
+    init(
+        @ViewBuilder serviceViewContent: @escaping (Service) -> ServiceView,
+        @ViewBuilder signalChartContent: @escaping () -> SignalView
+    ) {
         self.serviceViewContent = serviceViewContent
+        self.signalChartContent = signalChartContent
     }
     
     var body: some View {
@@ -56,7 +63,7 @@ struct DeviceDetailsView<ServiceView: View>: View {
                     Label("Attribute table", systemImage: "table")
                 }
             
-            Text("Signal Chart")
+            signalChartContent()
                 .tabItem {
                     Label("Signal Chart", systemImage: "chart.bar")
                 }
@@ -69,9 +76,11 @@ private typealias Environment = DeviceDetailsScreen.ViewModel.Environment
 
 #Preview {
     NavigationStack {
-        DeviceDetailsView { s in
-            Text(s.name)
-        }
+        DeviceDetailsView(serviceViewContent: { service in
+            Text(service.name)
+        }, signalChartContent: {
+            Text("Chart View")
+        })
         .navigationTitle("Device Name")
         .environmentObject(Environment(services: [.runningSpeedAndCadence, .heartRate, .adafruitAccelerometer]))
     }

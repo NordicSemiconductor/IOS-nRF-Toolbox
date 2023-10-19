@@ -94,6 +94,10 @@
 		018873C92A583B0000253273 /* PeripheralScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873C82A583B0000253273 /* PeripheralScannerViewModel.swift */; };
 		018873CC2A583C3300253273 /* iOS-BLE-Library in Frameworks */ = {isa = PBXBuildFile; productRef = 018873CB2A583C3300253273 /* iOS-BLE-Library */; };
 		018873D22A58707900253273 /* CentralManagerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873D12A58707900253273 /* CentralManagerHelper.swift */; };
+		018C05392AE08417007CE0FE /* SignalChartScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018C05382AE08417007CE0FE /* SignalChartScreen.swift */; };
+		018C053B2AE0844E007CE0FE /* SignalChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018C053A2AE0844E007CE0FE /* SignalChartViewModel.swift */; };
+		018C053E2AE16682007CE0FE /* SignalChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018C053D2AE16682007CE0FE /* SignalChartView.swift */; };
+		018C05412AE1670C007CE0FE /* ChartData+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018C05402AE1670C007CE0FE /* ChartData+Preview.swift */; };
 		0192BB352428E63C003F7F6B /* DFUFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0192BB342428E63C003F7F6B /* DFUFileManager.swift */; };
 		0197AFCF2420DAAC00ADF105 /* NotConnectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0197AFCD2420DAAC00ADF105 /* NotConnectedViewController.swift */; };
 		0197AFD02420DAAC00ADF105 /* NotConnectedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0197AFCE2420DAAC00ADF105 /* NotConnectedViewController.xib */; };
@@ -478,6 +482,10 @@
 		018873C82A583B0000253273 /* PeripheralScannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralScannerViewModel.swift; sourceTree = "<group>"; };
 		018873CD2A583C4E00253273 /* IOS-BLE-Library */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "IOS-BLE-Library"; path = "../IOS-BLE-Library"; sourceTree = "<group>"; };
 		018873D12A58707900253273 /* CentralManagerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CentralManagerHelper.swift; sourceTree = "<group>"; };
+		018C05382AE08417007CE0FE /* SignalChartScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalChartScreen.swift; sourceTree = "<group>"; };
+		018C053A2AE0844E007CE0FE /* SignalChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalChartViewModel.swift; sourceTree = "<group>"; };
+		018C053D2AE16682007CE0FE /* SignalChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalChartView.swift; sourceTree = "<group>"; };
+		018C05402AE1670C007CE0FE /* ChartData+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChartData+Preview.swift"; sourceTree = "<group>"; };
 		0192BB342428E63C003F7F6B /* DFUFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFileManager.swift; sourceTree = "<group>"; };
 		0197AFCD2420DAAC00ADF105 /* NotConnectedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotConnectedViewController.swift; sourceTree = "<group>"; };
 		0197AFCE2420DAAC00ADF105 /* NotConnectedViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotConnectedViewController.xib; sourceTree = "<group>"; };
@@ -1070,6 +1078,7 @@
 		0164A4822AD840A10093E501 /* DeviceDetails */ = {
 			isa = PBXGroup;
 			children = (
+				018C05372AE083F5007CE0FE /* RSSIChart */,
 				0164A4832AD840B60093E501 /* DeviceDetailsScreen.swift */,
 				0164A4852AD84A170093E501 /* DeviceDetailsViewModel.swift */,
 			);
@@ -1105,6 +1114,7 @@
 		017D10342A5809E400E38E5F /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
+				018C053F2AE166FE007CE0FE /* RSSI */,
 				0129F2232A6802BF002FB3F5 /* ServiceHandlers */,
 				01407CB72A65415500A5B279 /* Peripheral */,
 				017D10352A5809E400E38E5F /* Preview Assets.xcassets */,
@@ -1182,6 +1192,32 @@
 				012E22932A6AD5BE00B14064 /* NamedItem.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		018C05372AE083F5007CE0FE /* RSSIChart */ = {
+			isa = PBXGroup;
+			children = (
+				018C053C2AE16673007CE0FE /* ChartView */,
+				018C05382AE08417007CE0FE /* SignalChartScreen.swift */,
+				018C053A2AE0844E007CE0FE /* SignalChartViewModel.swift */,
+			);
+			path = RSSIChart;
+			sourceTree = "<group>";
+		};
+		018C053C2AE16673007CE0FE /* ChartView */ = {
+			isa = PBXGroup;
+			children = (
+				018C053D2AE16682007CE0FE /* SignalChartView.swift */,
+			);
+			path = ChartView;
+			sourceTree = "<group>";
+		};
+		018C053F2AE166FE007CE0FE /* RSSI */ = {
+			isa = PBXGroup;
+			children = (
+				018C05402AE1670C007CE0FE /* ChartData+Preview.swift */,
+			);
+			path = RSSI;
 			sourceTree = "<group>";
 		};
 		0197AFCC2420DA3500ADF105 /* ZephyrDFU */ = {
@@ -2563,11 +2599,15 @@
 				0164A46B2AD550000093E501 /* RSSIChartView.swift in Sources */,
 				013E5D8C2ADD33EF00B9C475 /* RunningServiceViewModel.swift in Sources */,
 				0164A47C2AD7F8B10093E501 /* ConnectedDeviceList.swift in Sources */,
+				018C05392AE08417007CE0FE /* SignalChartScreen.swift in Sources */,
 				0164A47F2AD831640093E501 /* ConnectedScreenInitial.swift in Sources */,
 				0132082A2A5C142100DCEA11 /* ScanResultItem.swift in Sources */,
 				012E228E2A69A54B00B14064 /* AttributeTablePreview.swift in Sources */,
 				0164A4842AD840B60093E501 /* DeviceDetailsScreen.swift in Sources */,
+				018C053E2AE16682007CE0FE /* SignalChartView.swift in Sources */,
+				018C05412AE1670C007CE0FE /* ChartData+Preview.swift in Sources */,
 				012E228C2A69A4E900B14064 /* AttributeTableView.swift in Sources */,
+				018C053B2AE0844E007CE0FE /* SignalChartViewModel.swift in Sources */,
 				018873C92A583B0000253273 /* PeripheralScannerViewModel.swift in Sources */,
 				018873D22A58707900253273 /* CentralManagerHelper.swift in Sources */,
 				01C575B92A798D65007FE4F0 /* SensorSettings.swift in Sources */,
