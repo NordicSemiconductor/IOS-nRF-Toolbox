@@ -42,7 +42,11 @@ extension SignalChartScreen.ViewModel {
                 case .failure: print("failure")
                 }
             } receiveValue: { [unowned self] rssi in
-                self.environment.chartData.append(Environment.ChartData(date: Date(), signal: rssi.intValue))
+                let newSignalItem = Environment.ChartData(date: Date(), signal: rssi.intValue)
+                if newSignalItem.date.timeIntervalSince1970 - environment.scrolPosition.timeIntervalSince1970 < CGFloat(environment.visibleDomain + 5) || environment.chartData.isEmpty {
+                    environment.scrolPosition = Date()
+                }
+                self.environment.chartData.append(newSignalItem)
             }
             .store(in: &cancelable)
     }
@@ -57,7 +61,10 @@ extension SignalChartScreen.ViewModel {
             var id: TimeInterval { date.timeIntervalSince1970 }
         }
         
+        let visibleDomain = 60
+        
         @Published fileprivate (set) var chartData: [ChartData] = []
+        @Published var scrolPosition: Date = Date()
         
         init(chartData: [ChartData] = []) {
             self.chartData = chartData
