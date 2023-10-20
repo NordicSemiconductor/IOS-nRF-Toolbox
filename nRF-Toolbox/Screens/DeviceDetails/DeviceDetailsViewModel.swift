@@ -26,6 +26,7 @@ extension DeviceDetailsScreen {
                 return nil
             }
         }()
+        lazy private (set) var signalChartViewModel = SignalChartScreen.ViewModel(peripheral: peripheral)
         
         init(cbPeripheral: CBPeripheral) {
             self.peripheral = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
