@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct SensorLocationView: View {
+struct SensorLocationView1: View {
     let sensorLocation: SensorLocation?
     @Binding var readingSensorLocation: Bool
     
@@ -40,7 +40,7 @@ struct SensorLocationView: View {
 
 struct SensorLocationView_Previews: PreviewProvider {
     static var previews: some View {
-        SensorLocationView(sensorLocation: .chainRing, readingSensorLocation: .constant(false)) {
+        SensorLocationView1(sensorLocation: .chainRing, readingSensorLocation: .constant(false)) {
             
         }
     }
