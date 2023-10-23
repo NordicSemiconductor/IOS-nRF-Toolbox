@@ -11,13 +11,15 @@ import SwiftUI
 import iOS_BLE_Library_Mock
 import CoreBluetoothMock_Collection
 import iOS_Bluetooth_Numbers_Database
+import iOS_Common_Libraries
 
 extension SensorCalibrationScreen {
     @MainActor
     class ViewModel: ObservableObject {
         private (set) lazy var environment = Environment(
             resetCumulativeValue: { [unowned self] in await self.resetCumulativeValue() },
-            startSensorCalibration: { [unowned self] in await self.startSensorCalibration() }
+            startSensorCalibration: { [unowned self] in await self.startSensorCalibration() },
+            updateSensorLocation: { [unowned self] in await self.updateSensorLocation() }
         )
         
         let peripheral: Peripheral
@@ -26,6 +28,9 @@ extension SensorCalibrationScreen {
         private let rscService: CBService
         private var scControlPoint: CBCharacteristic!
         private var sensorLocationCharacteristic: CBCharacteristic?
+        
+        private let logger = L(subsystem: "\(#file)", category: "SensorCalibrationScreen")
+        private var cancelable = Set<AnyCancellable>()
         
         init(peripheral: Peripheral, rscService: CBService, rscFeature: RSCFeature) {
             self.peripheral = peripheral
@@ -48,6 +53,11 @@ extension SensorCalibrationScreen.ViewModel {
                 environment.criticalError = .noMandatoryCharacteristic
                 return
             }
+            self.scControlPoint = scControlPoint
+            guard try await peripheral.setNotifyValue(true, for: self.scControlPoint).value else {
+                environment.criticalError = .cantEnableNotifyCharacteristic
+                return 
+            }
             
             self.sensorLocationCharacteristic = discovered.first(where: { $0.uuid == Characteristic.sensorLocation.uuid })
         } catch {
@@ -63,14 +73,16 @@ extension SensorCalibrationScreen.ViewModel {
         
         do {
             environment.availableSensorLocations = try await readAvailableLocations()
-            environment.currentSensorLocation = try await readSensorLocation()
+            let sensorLocation = try await readSensorLocation()
+            environment.currentSensorLocation = sensorLocation.rawValue
+            environment.pickerSensorLocation = sensorLocation.rawValue
             
             guard !environment.availableSensorLocations.isEmpty else {
-                environment.alertError = .unableReadSensorLocation
+                environment.internalError = .unableReadSensorLocation
                 return
             }
         } catch {
-            environment.alertError = .unableReadSensorLocation
+            environment.internalError = .unableReadSensorLocation
             return
         }
         
@@ -86,8 +98,9 @@ extension SensorCalibrationScreen.ViewModel {
         
         do {
             try await writeCommand(opCode: .setCumulativeValue, parameter: data)
-        } catch {
-            environment.alertError = .unableResetCumulativeValue
+        } catch let e {
+            logger.e(e.localizedDescription)
+            environment.internalError = .unableResetCumulativeValue
         }
     }
     
@@ -95,7 +108,18 @@ extension SensorCalibrationScreen.ViewModel {
         do {
             try await writeCommand(opCode: .startSensorCalibration, parameter: nil)
         } catch {
-            environment.alertError = .unableStartCalibration
+            environment.internalError = .unableStartCalibration
+        }
+    }
+    
+    private func updateSensorLocation() async {
+        do {
+            let data = Data([environment.pickerSensorLocation])
+            try await writeCommand(opCode: .updateSensorLocation, parameter: data)
+            environment.currentSensorLocation = environment.pickerSensorLocation
+        } catch {
+            environment.internalError = .unableWriteSensorLocation
+            environment.updateSensorLocationDisabled = false 
         }
     }
     
@@ -152,6 +176,7 @@ extension SensorCalibrationScreen.ViewModel {
     }
 }
 
+// MARK: - Internal Error
 private extension SensorCalibrationScreen.ViewModel {
     enum Err: Error {
         case controlPointError(RunningSpeedAndCadence.ResponseCode)
@@ -160,6 +185,7 @@ private extension SensorCalibrationScreen.ViewModel {
     }
 }
 
+// MARK: - Environment
 extension SensorCalibrationScreen.ViewModel {
     @MainActor
     class Environment: ObservableObject {
@@ -169,53 +195,84 @@ extension SensorCalibrationScreen.ViewModel {
         @Published fileprivate (set) var sensorLocationEnabled = false
                 
         @Published var updateSensorLocationDisabled = false
-        @Published fileprivate (set) var currentSensorLocation: SensorLocation = .other
+        @Published fileprivate (set) var currentSensorLocation: SensorLocation.RawValue = 0
+        @Published var pickerSensorLocation: SensorLocation.RawValue = 0
+        
         @Published fileprivate (set) var availableSensorLocations: [SensorLocation] = []
         
-        @Published fileprivate (set) var alertError: AlertError? = nil
+        fileprivate var internalError: AlertError? = nil {
+            didSet {
+                self.alertError = internalError
+            }
+        }
+        @Published var alertError: Error? = nil
         @Published fileprivate (set) var criticalError: CriticalError? = nil
         
         let resetCumulativeValue: () async -> ()
         let startSensorCalibration: () async -> ()
-        let updateSensorLocation: (SensorLocation) async -> ()
+        let updateSensorLocation: () async -> ()
         
         init(
             setCumulativeValueEnabled: Bool = false,
             startSensorCalibrationEnabled: Bool = false,
             sensorLocationEnabled: Bool = false,
             updateSensorLocationDisabled: Bool = false,
-            currentSensorLocation: SensorLocation = .other,
+            currentSensorLocation: SensorLocation.RawValue = 0,
+            pickerSensorLocation: SensorLocation.RawValue = 0,
             availableSensorLocations: [SensorLocation] = [],
+            
             alertError: AlertError? = nil,
             criticalError: CriticalError? = nil,
+            
             resetCumulativeValue: @escaping () async -> () = { },
             startSensorCalibration: @escaping () async -> () = { },
-            updateSensorLocation: @escaping (SensorLocation) async -> () = { _ in }
+            updateSensorLocation: @escaping () async -> () = { }
         ) {
             self.setCumulativeValueEnabled = setCumulativeValueEnabled
             self.startSensorCalibrationEnabled = startSensorCalibrationEnabled
             self.sensorLocationEnabled = sensorLocationEnabled
             self.updateSensorLocationDisabled = updateSensorLocationDisabled
             self.currentSensorLocation = currentSensorLocation
+            self.pickerSensorLocation = pickerSensorLocation
             self.availableSensorLocations = availableSensorLocations
             self.alertError = alertError
             self.criticalError = criticalError
             self.resetCumulativeValue = resetCumulativeValue
             self.startSensorCalibration = startSensorCalibration
             self.updateSensorLocation = updateSensorLocation
+            
+            Publishers.CombineLatest($pickerSensorLocation, $currentSensorLocation)
+                .map { $0 == $1 }
+                .assign(to: &$updateSensorLocationDisabled)
         }
         
     }
 }
 
+// MARK: - Error Types
 extension SensorCalibrationScreen.ViewModel.Environment {
-    enum CriticalError: Error {
+    enum CriticalError: LocalizedError {
         case noMandatoryCharacteristic
+        case cantEnableNotifyCharacteristic
     }
     
-    enum AlertError: Error {
+    enum AlertError: LocalizedError {
         case unableResetCumulativeValue
         case unableStartCalibration
         case unableReadSensorLocation
+        case unableWriteSensorLocation
+        
+        var errorDescription: String? {
+            switch self {
+            case .unableResetCumulativeValue:
+                return "Unable to reset cumulative value"
+            case .unableStartCalibration:
+                return "Unable to start calibration"
+            case .unableReadSensorLocation:
+                return "Unable to read sensor location"
+            case .unableWriteSensorLocation:
+                return "Unable to write sensor location"
+            }
+        }
     }
 }

@@ -39,7 +39,7 @@ struct SignalChart: View {
                 .foregroundStyle(.secondary)
             Text("Signal Strength")
                 .font(.title2.bold())
-            if #available(iOS 17, *) {
+            if #available(iOS 17, macOS 14, *) {
                 scalableChart()
             } else {
                 pureChart()
@@ -48,6 +48,7 @@ struct SignalChart: View {
         .padding()
     }
     
+    @available(macOS 14.0, *)
     @available(iOS 17.0, *)
     @ViewBuilder
     private func scalableChart() -> some View {

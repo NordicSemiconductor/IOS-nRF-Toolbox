@@ -136,7 +136,6 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
     func enableMeasurement() {
         peripheral.peripheral.setNotifyValue(true, for: rscMeasurement)
         
-        
         peripheral.listenValues(for: rscMeasurement)
             .map { RSCMeasurement(rawData: RunningSpeedAndCadence.RSCSMeasurement(from: $0)) }
             .mapError { error in

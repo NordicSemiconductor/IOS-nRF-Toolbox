@@ -18,7 +18,7 @@ struct SensorCalibrationScreen: View {
     var body: some View {
         SensorCalibrationView()
             .environmentObject(viewModel.environment)
-            .onFirstAppear {
+            .task {
                 await viewModel.discoverCharacteristic()
                 await viewModel.readLocations()
             }
@@ -33,7 +33,7 @@ struct SensorCalibrationView: View {
     @State private var resetCumulativeValueDisabled = false
     @State private var startSensorCalibrationDisabled = false
     
-    @State private var currentLocation: SensorLocation = .other
+    
     
     var body: some View {
         List {
@@ -61,19 +61,21 @@ struct SensorCalibrationView: View {
                     buttonDisabled: $environment.updateSensorLocationDisabled) {
                         environment.updateSensorLocationDisabled = true
                         Task {
-                            await environment.updateSensorLocation(.other)
+                            await environment.updateSensorLocation()
                         }
                     } content: {
-                        Picker("Location", selection: $currentLocation) {
-                            ForEach(SensorLocation.allCases, id: \.rawValue) {
+                        // TECHNICAL DEBT: Blinking Picker. Not critical but annoying.
+                        Picker("Location", selection: $environment.pickerSensorLocation) {
+                            ForEach(environment.availableSensorLocations, id: \.rawValue) {
                                 Text($0.description)
+                                    .tag($0.rawValue)
                             }
                         }
                     }
-
             }
         }
         .navigationTitle("Sensor Calibration")
+        .errorAlert(error: $environment.alertError)
     }
     
     @ViewBuilder

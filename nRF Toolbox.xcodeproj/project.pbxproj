@@ -174,6 +174,7 @@
 		01DFC55C2420F0AB00AF2EF0 /* ZephyrDFURouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DFC55B2420F0AB00AF2EF0 /* ZephyrDFURouter.swift */; };
 		01E5910923DB3BC5008F15A4 /* QuickError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910823DB3BC4008F15A4 /* QuickError.swift */; };
 		01E5910B23DECF61008F15A4 /* UARTMacrosList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */; };
+		01EBE6192AE4845100960672 /* View+ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EBE6182AE4845100960672 /* View+ErrorAlert.swift */; };
 		01F6A9602A812D6200540B45 /* Emulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F6A95F2A812D6200540B45 /* Emulator.swift */; };
 		01F6A9632A812DD300540B45 /* CoreBluetoothMock-Collection in Frameworks */ = {isa = PBXBuildFile; productRef = 01F6A9622A812DD300540B45 /* CoreBluetoothMock-Collection */; };
 		01F6A9662A829EE300540B45 /* SensorSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F6A9652A829EE300540B45 /* SensorSettingsViewModel.swift */; };
@@ -562,6 +563,7 @@
 		01DFC55B2420F0AB00AF2EF0 /* ZephyrDFURouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFURouter.swift; sourceTree = "<group>"; };
 		01E5910823DB3BC4008F15A4 /* QuickError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickError.swift; sourceTree = "<group>"; };
 		01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosList.swift; sourceTree = "<group>"; };
+		01EBE6182AE4845100960672 /* View+ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ErrorAlert.swift"; sourceTree = "<group>"; };
 		01F6A95D2A81055F00540B45 /* IOS-CoreBluetooth-Mock */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "IOS-CoreBluetooth-Mock"; path = "../IOS-CoreBluetooth-Mock"; sourceTree = "<group>"; };
 		01F6A95F2A812D6200540B45 /* Emulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emulator.swift; sourceTree = "<group>"; };
 		01F6A9652A829EE300540B45 /* SensorSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorSettingsViewModel.swift; sourceTree = "<group>"; };
@@ -1195,6 +1197,7 @@
 				01DEB4A52A65E35F00D4C1E8 /* Flag.swift */,
 				012E228F2A69AFC200B14064 /* String+Name.swift */,
 				012E22932A6AD5BE00B14064 /* NamedItem.swift */,
+				01EBE6182AE4845100960672 /* View+ErrorAlert.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2657,6 +2660,7 @@
 				0129F21D2A66F8EE002FB3F5 /* DeviceDetailsView.swift in Sources */,
 				0164A4742AD5A4630093E501 /* StateViews.swift in Sources */,
 				0129F2252A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift in Sources */,
+				01EBE6192AE4845100960672 /* View+ErrorAlert.swift in Sources */,
 				01DEB4A42A6588CA00D4C1E8 /* RunningServiceHandler.swift in Sources */,
 				01F6A9602A812D6200540B45 /* Emulator.swift in Sources */,
 				0129F2222A67FE39002FB3F5 /* RunningServiceView.swift in Sources */,
