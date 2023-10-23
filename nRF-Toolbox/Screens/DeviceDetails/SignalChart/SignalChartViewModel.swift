@@ -46,7 +46,20 @@ extension SignalChartScreen.ViewModel {
                 if newSignalItem.date.timeIntervalSince1970 - environment.scrolPosition.timeIntervalSince1970 < CGFloat(environment.visibleDomain + 5) || environment.chartData.isEmpty {
                     environment.scrolPosition = Date()
                 }
-                self.environment.chartData.append(newSignalItem)
+                environment.chartData.append(newSignalItem)
+                
+                if #unavailable(iOS 17, macOS 14) {
+                    let toDrop = environment.chartData.count - environment.visibleDomain
+                    if toDrop > 0 {
+                        environment.chartData.removeFirst(toDrop)
+                    }
+                }
+                
+                let min = (environment.chartData.min { $0.signal < $1.signal }?.signal ?? -100)
+                let max  = (environment.chartData.max { $0.signal < $1.signal }?.signal ?? -40)
+                
+                environment.lowest = min - 5
+                environment.highest = max + 5
             }
             .store(in: &cancelable)
     }
@@ -65,6 +78,9 @@ extension SignalChartScreen.ViewModel {
         
         @Published fileprivate (set) var chartData: [ChartData] = []
         @Published var scrolPosition: Date = Date()
+        
+        @Published var lowest: Int = -100
+        @Published var highest: Int = -40
         
         init(chartData: [ChartData] = []) {
             self.chartData = chartData

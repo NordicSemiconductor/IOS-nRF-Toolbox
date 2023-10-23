@@ -1085,7 +1085,7 @@
 		0164A4822AD840A10093E501 /* DeviceDetails */ = {
 			isa = PBXGroup;
 			children = (
-				018C05372AE083F5007CE0FE /* RSSIChart */,
+				018C05372AE083F5007CE0FE /* SignalChart */,
 				0164A4832AD840B60093E501 /* DeviceDetailsScreen.swift */,
 				0164A4852AD84A170093E501 /* DeviceDetailsViewModel.swift */,
 			);
@@ -1202,14 +1202,14 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		018C05372AE083F5007CE0FE /* RSSIChart */ = {
+		018C05372AE083F5007CE0FE /* SignalChart */ = {
 			isa = PBXGroup;
 			children = (
 				018C053C2AE16673007CE0FE /* ChartView */,
 				018C05382AE08417007CE0FE /* SignalChartScreen.swift */,
 				018C053A2AE0844E007CE0FE /* SignalChartViewModel.swift */,
 			);
-			path = RSSIChart;
+			path = SignalChart;
 			sourceTree = "<group>";
 		};
 		018C053C2AE16673007CE0FE /* ChartView */ = {

@@ -65,7 +65,7 @@ struct SignalChart: View {
                 .foregroundStyle(data.style)
         }
         .chartXAxis(.hidden)
-        .chartYScale(domain: [-110, -35], range: .plotDimension(padding: 8))
+        .chartYScale(domain: [environment.lowest, environment.highest], range: .plotDimension(padding: 8))
     }
     
     
