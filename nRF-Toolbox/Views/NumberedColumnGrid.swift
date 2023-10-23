@@ -31,7 +31,7 @@ struct NumberedColumnGrid<Data: RandomAccessCollection, ID: Hashable, Content: V
     }
     
     var body: some View {
-        Grid(alignment: .leading, horizontalSpacing: 54) {
+        Grid(alignment: .leading, horizontalSpacing: 54, verticalSpacing: 12) {
             ForEach(
                 data.chunk(columns),
                 id: (\Array<Data.Element>.first!).appending(path: self.id))

@@ -37,7 +37,7 @@ struct RunningServiceView1: View {
             
             if viewModel.sensorLocationSupported {
                 Section("Sensor Location") {
-                    SensorLocationView(sensorLocation: viewModel.sensorLocationValue, readingSensorLocation: $viewModel.readingSersorLocation) {
+                    SensorLocationView1(sensorLocation: viewModel.sensorLocationValue, readingSensorLocation: $viewModel.readingSersorLocation) {
                         Task {
                             try? await viewModel.updateSensorLocation()
                         }

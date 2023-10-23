@@ -52,7 +52,7 @@
 		01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01468B042361A30A00C29E4C /* StepperTableViewCell.xib */; };
 		01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */; };
 		014BBD7D2A70004B00BCFCA8 /* RSCMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014BBD7C2A70004B00BCFCA8 /* RSCMeasurement.swift */; };
-		014BBD812A700D1600BCFCA8 /* SensorLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014BBD802A700D1600BCFCA8 /* SensorLocationView.swift */; };
+		014BBD812A700D1600BCFCA8 /* SensorLocationView1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014BBD802A700D1600BCFCA8 /* SensorLocationView1.swift */; };
 		014C4E892403F8AE0003E601 /* UARTMacrosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E882403F8AE0003E601 /* UARTMacrosTableViewController.swift */; };
 		014C4E8B2403F9BD0003E601 /* UARTMacroSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E8A2403F9BD0003E601 /* UARTMacroSaver.swift */; };
 		0151170B240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01511709240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift */; };
@@ -174,9 +174,12 @@
 		01DFC55C2420F0AB00AF2EF0 /* ZephyrDFURouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DFC55B2420F0AB00AF2EF0 /* ZephyrDFURouter.swift */; };
 		01E5910923DB3BC5008F15A4 /* QuickError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910823DB3BC4008F15A4 /* QuickError.swift */; };
 		01E5910B23DECF61008F15A4 /* UARTMacrosList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */; };
+		01EBE6192AE4845100960672 /* View+ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EBE6182AE4845100960672 /* View+ErrorAlert.swift */; };
 		01F6A9602A812D6200540B45 /* Emulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F6A95F2A812D6200540B45 /* Emulator.swift */; };
 		01F6A9632A812DD300540B45 /* CoreBluetoothMock-Collection in Frameworks */ = {isa = PBXBuildFile; productRef = 01F6A9622A812DD300540B45 /* CoreBluetoothMock-Collection */; };
 		01F6A9662A829EE300540B45 /* SensorSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F6A9652A829EE300540B45 /* SensorSettingsViewModel.swift */; };
+		01FB19D02AE3DB0D006DAB9F /* SensorCalibrationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FB19CF2AE3DB0D006DAB9F /* SensorCalibrationScreen.swift */; };
+		01FB19D22AE3DB70006DAB9F /* SensorCalibrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FB19D12AE3DB70006DAB9F /* SensorCalibrationViewModel.swift */; };
 		01FBC5012407BF8F00B1056B /* PeripheralHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */; };
 		01FBC5062407C2B000B1056B /* FileSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5042407C2B000B1056B /* FileSelectorViewController.swift */; };
 		01FBC5072407C2B000B1056B /* FileSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01FBC5052407C2B000B1056B /* FileSelectorViewController.xib */; };
@@ -434,7 +437,7 @@
 		01468B042361A30A00C29E4C /* StepperTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StepperTableViewCell.xib; sourceTree = "<group>"; };
 		01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalSection.swift; sourceTree = "<group>"; };
 		014BBD7C2A70004B00BCFCA8 /* RSCMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSCMeasurement.swift; sourceTree = "<group>"; };
-		014BBD802A700D1600BCFCA8 /* SensorLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorLocationView.swift; sourceTree = "<group>"; };
+		014BBD802A700D1600BCFCA8 /* SensorLocationView1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorLocationView1.swift; sourceTree = "<group>"; };
 		014C4E882403F8AE0003E601 /* UARTMacrosTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTMacrosTableViewController.swift; sourceTree = "<group>"; };
 		014C4E8A2403F9BD0003E601 /* UARTMacroSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTMacroSaver.swift; sourceTree = "<group>"; };
 		014C4E922404038A0003E601 /* nRF_Toolbox_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nRF_Toolbox_Tests.swift; sourceTree = "<group>"; };
@@ -560,9 +563,12 @@
 		01DFC55B2420F0AB00AF2EF0 /* ZephyrDFURouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFURouter.swift; sourceTree = "<group>"; };
 		01E5910823DB3BC4008F15A4 /* QuickError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickError.swift; sourceTree = "<group>"; };
 		01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosList.swift; sourceTree = "<group>"; };
+		01EBE6182AE4845100960672 /* View+ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ErrorAlert.swift"; sourceTree = "<group>"; };
 		01F6A95D2A81055F00540B45 /* IOS-CoreBluetooth-Mock */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "IOS-CoreBluetooth-Mock"; path = "../IOS-CoreBluetooth-Mock"; sourceTree = "<group>"; };
 		01F6A95F2A812D6200540B45 /* Emulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emulator.swift; sourceTree = "<group>"; };
 		01F6A9652A829EE300540B45 /* SensorSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorSettingsViewModel.swift; sourceTree = "<group>"; };
+		01FB19CF2AE3DB0D006DAB9F /* SensorCalibrationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorCalibrationScreen.swift; sourceTree = "<group>"; };
+		01FB19D12AE3DB70006DAB9F /* SensorCalibrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorCalibrationViewModel.swift; sourceTree = "<group>"; };
 		01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralHolder.swift; sourceTree = "<group>"; };
 		01FBC5042407C2B000B1056B /* FileSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSelectorViewController.swift; sourceTree = "<group>"; };
 		01FBC5052407C2B000B1056B /* FileSelectorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FileSelectorViewController.xib; sourceTree = "<group>"; };
@@ -857,7 +863,7 @@
 				01DEB4A32A6588CA00D4C1E8 /* RunningServiceHandler.swift */,
 				0129F2212A67FE39002FB3F5 /* RunningServiceView.swift */,
 				01F6A9642A829D4B00540B45 /* SensorSettings */,
-				014BBD802A700D1600BCFCA8 /* SensorLocationView.swift */,
+				014BBD802A700D1600BCFCA8 /* SensorLocationView1.swift */,
 			);
 			path = RunningSensor;
 			sourceTree = "<group>";
@@ -953,6 +959,7 @@
 		013E5D882ADD33BF00B9C475 /* Running */ = {
 			isa = PBXGroup;
 			children = (
+				01FB19CE2AE3DAFC006DAB9F /* SensorCalibrationScreen */,
 				013E5D942AE02A0700B9C475 /* RunningValuesGrid */,
 				013E5D892ADD33E000B9C475 /* RunningServiceScreen.swift */,
 				013E5D8B2ADD33EF00B9C475 /* RunningServiceViewModel.swift */,
@@ -1078,7 +1085,7 @@
 		0164A4822AD840A10093E501 /* DeviceDetails */ = {
 			isa = PBXGroup;
 			children = (
-				018C05372AE083F5007CE0FE /* RSSIChart */,
+				018C05372AE083F5007CE0FE /* SignalChart */,
 				0164A4832AD840B60093E501 /* DeviceDetailsScreen.swift */,
 				0164A4852AD84A170093E501 /* DeviceDetailsViewModel.swift */,
 			);
@@ -1190,18 +1197,19 @@
 				01DEB4A52A65E35F00D4C1E8 /* Flag.swift */,
 				012E228F2A69AFC200B14064 /* String+Name.swift */,
 				012E22932A6AD5BE00B14064 /* NamedItem.swift */,
+				01EBE6182AE4845100960672 /* View+ErrorAlert.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		018C05372AE083F5007CE0FE /* RSSIChart */ = {
+		018C05372AE083F5007CE0FE /* SignalChart */ = {
 			isa = PBXGroup;
 			children = (
 				018C053C2AE16673007CE0FE /* ChartView */,
 				018C05382AE08417007CE0FE /* SignalChartScreen.swift */,
 				018C053A2AE0844E007CE0FE /* SignalChartViewModel.swift */,
 			);
-			path = RSSIChart;
+			path = SignalChart;
 			sourceTree = "<group>";
 		};
 		018C053C2AE16673007CE0FE /* ChartView */ = {
@@ -1526,6 +1534,15 @@
 				01F6A9652A829EE300540B45 /* SensorSettingsViewModel.swift */,
 			);
 			path = SensorSettings;
+			sourceTree = "<group>";
+		};
+		01FB19CE2AE3DAFC006DAB9F /* SensorCalibrationScreen */ = {
+			isa = PBXGroup;
+			children = (
+				01FB19CF2AE3DB0D006DAB9F /* SensorCalibrationScreen.swift */,
+				01FB19D12AE3DB70006DAB9F /* SensorCalibrationViewModel.swift */,
+			);
+			path = SensorCalibrationScreen;
 			sourceTree = "<group>";
 		};
 		01FBC4FF2407BF5600B1056B /* Utils */ = {
@@ -2617,6 +2634,7 @@
 				012E22902A69AFC200B14064 /* String+Name.swift in Sources */,
 				013E5D9B2AE0545F00B9C475 /* OnFirstAppear.swift in Sources */,
 				01C81AD52A5CB6420011B41E /* ServiceBadge.swift in Sources */,
+				01FB19D22AE3DB70006DAB9F /* SensorCalibrationViewModel.swift in Sources */,
 				01DEB4A82A65E90C00D4C1E8 /* Data+Ext.swift in Sources */,
 				0164A4712AD593B40093E501 /* ScanResultList.swift in Sources */,
 				013E5D8F2ADFDDC600B9C475 /* NumberedColumnGrid.swift in Sources */,
@@ -2637,16 +2655,18 @@
 				014BBD7D2A70004B00BCFCA8 /* RSCMeasurement.swift in Sources */,
 				01C575BE2A7D00EF007FE4F0 /* Alias.swift in Sources */,
 				012E22942A6AD5BE00B14064 /* NamedItem.swift in Sources */,
-				014BBD812A700D1600BCFCA8 /* SensorLocationView.swift in Sources */,
+				014BBD812A700D1600BCFCA8 /* SensorLocationView1.swift in Sources */,
 				019ABF1D2A600A480019BD21 /* DeviceItem.swift in Sources */,
 				0129F21D2A66F8EE002FB3F5 /* DeviceDetailsView.swift in Sources */,
 				0164A4742AD5A4630093E501 /* StateViews.swift in Sources */,
 				0129F2252A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift in Sources */,
+				01EBE6192AE4845100960672 /* View+ErrorAlert.swift in Sources */,
 				01DEB4A42A6588CA00D4C1E8 /* RunningServiceHandler.swift in Sources */,
 				01F6A9602A812D6200540B45 /* Emulator.swift in Sources */,
 				0129F2222A67FE39002FB3F5 /* RunningServiceView.swift in Sources */,
 				0164A4762AD698650093E501 /* NumberDatabase+Ext.swift in Sources */,
 				01407CBC2A65819B00A5B279 /* ServiceHandler.swift in Sources */,
+				01FB19D02AE3DB0D006DAB9F /* SensorCalibrationScreen.swift in Sources */,
 				0126B5412A5EC1120033BCC3 /* DeviceDetailsViewModel1.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

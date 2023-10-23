@@ -25,6 +25,8 @@ struct RunningServiceScreen: View {
 struct RunningServiceView: View {
     @EnvironmentObject private var environment: VM
     
+    @State private var showSensorCalibration = false
+    
     var body: some View {
         List {
             Section {
@@ -32,8 +34,15 @@ struct RunningServiceView: View {
             }
             Section {
                 Button("Sensor Calibration") {
-                    
+                    showSensorCalibration = true 
                 }
+                .sheet(isPresented: $showSensorCalibration, content: {
+                    if let vm = environment.sensorCalibrationViewModel() {
+                        NavigationStack {
+                            SensorCalibrationScreen(viewModel: vm)
+                        }
+                    }
+                })
             }
         }
        
