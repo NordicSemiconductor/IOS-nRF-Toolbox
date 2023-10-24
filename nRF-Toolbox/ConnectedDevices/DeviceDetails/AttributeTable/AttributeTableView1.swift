@@ -1,5 +1,5 @@
 //
-//  AttributeTableView.swift
+//  AttributeTableView1.swift
 //  nRF-Toolbox
 //
 //  Created by Nick Kibysh on 20/07/2023.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 import iOS_Common_Libraries
-
+/*
 private extension AttributeTable {
     var items: [AttributeTableItemView.AttributeType] {
         var itms: [AttributeTableItemView.AttributeType] = []
@@ -25,7 +25,7 @@ private extension AttributeTable {
     }
 }
 
-struct AttributeTableView: View {
+struct AttributeTableView1: View {
     let attributeTable: AttributeTable
     let discoverTableAction: () -> ()
     
@@ -58,9 +58,10 @@ struct AttributeTableView: View {
 struct AttributeTableView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            AttributeTableView(attributeTable: AttributeTable(), discoverTableAction: {})
+            AttributeTableView1(attributeTable: AttributeTable(), discoverTableAction: {})
             
-            AttributeTableView(attributeTable: AttributeTable.preview, discoverTableAction: {})
+            AttributeTableView1(attributeTable: AttributeTable.preview, discoverTableAction: {})
         }
     }
 }
+*/

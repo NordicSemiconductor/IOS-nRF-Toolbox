@@ -39,8 +39,8 @@ struct DeviceDetailsView1: View {
                     }
                     .tag(service.id)
             }
-            
-            AttributeTableView(
+           /*
+            AttributeTableView1(
                 attributeTable: peripheralHandler.attributeTable,
                 discoverTableAction: {
                     Task {
@@ -48,6 +48,8 @@ struct DeviceDetailsView1: View {
                     }
                 }
             )
+            */
+            Text("placeholder")
             .tabItem {
                 Label {
                     Text("Device Details")

@@ -15,92 +15,6 @@ protocol StringIdentifiable  {
 }
 
 struct AttributeTable {
-    typealias S = iOS_Bluetooth_Numbers_Database.Service
-    typealias C = iOS_Bluetooth_Numbers_Database.Characteristic
-    typealias D = iOS_Bluetooth_Numbers_Database.Descriptor
-    
-    struct Service: Identifiable, StringIdentifiable, Equatable, NamedItem {
-        struct Characteristic: Identifiable, StringIdentifiable, Equatable, NamedItem {
-            struct Descriptor: Identifiable, StringIdentifiable, Equatable, NamedItem {
-                let cbDescriptor: CBDescriptor
-                let id: String
-                let identifier: String
-                let name: String?
-                
-                init(cbDescriptor: CBDescriptor, id: String, identifier: String, name: String?) {
-                    self.cbDescriptor = cbDescriptor
-                    self.id = id
-                    self.identifier = identifier
-                    self.name = name
-                }
-                
-                init(cbDescriptor: CBDescriptor) {
-                    self.cbDescriptor = cbDescriptor
-                    self.identifier = cbDescriptor.uuid.uuidString
-                    self.id = ((cbDescriptor.characteristic?.service?.uuid.uuidString).map { "s" + $0 } ?? "")
-                        + ((cbDescriptor.characteristic?.uuid.uuidString).map { "c" + $0 } ?? "")
-                        + "d" + cbDescriptor.uuid.uuidString
-                    
-                    self.name = D.find(by: cbDescriptor.uuid)?.name
-                }
-            }
-            
-            let cbCharacteristic: CBCharacteristic
-            let id: String
-            let identifier: String
-            let name: String?
-            fileprivate (set) var descriptors: [Descriptor] = []
-            
-            var prepertiesDescription: String {
-                switch cbCharacteristic.properties {
-                case [.read, .write, .notify]: return "RWN"
-                case [.read, .write]: return "RW"
-                case [.read, .notify]: return "RN"
-                case [.read]: return "R"
-                case [.write]: return "W"
-                case [.notify]: return "N"
-                default: return ""
-                }
-            }
-            
-            init(cbCharacteristic: CBCharacteristic, id: String, identifier: String, name: String?, descriptors: [Descriptor]) {
-                self.cbCharacteristic = cbCharacteristic
-                self.id = id
-                self.identifier = identifier
-                self.name = name
-                self.descriptors = descriptors
-            }
-            
-            init(cbCharacteristic: CBCharacteristic) {
-                self.cbCharacteristic = cbCharacteristic
-                self.id = ((cbCharacteristic.service?.uuid.uuidString).map { "s" + $0 } ?? "") + "c" + cbCharacteristic.uuid.uuidString
-                self.identifier = cbCharacteristic.uuid.uuidString
-                self.name = C.find(by: cbCharacteristic.uuid)?.name
-            }
-        }
-        
-        let cbService: CBService
-        let id: String
-        let identifier: String
-        let name: String?
-        fileprivate (set) var characteristics: [Characteristic] = []
-        
-        init(cbService: CBService, id: String, identifier: String, name: String?, characteristics: [Characteristic]) {
-            self.cbService = cbService
-            self.id = id
-            self.identifier = identifier
-            self.name = name
-            self.characteristics = characteristics
-        }
-        
-        init(cbService: CBService) {
-            self.cbService = cbService
-            self.id = "s" + cbService.uuid.uuidString
-            self.identifier = cbService.uuid.uuidString
-            self.name = S.find(by: cbService.uuid)?.name
-        }
-    }
-    
     private (set) var services: [Service] = []
     
     mutating func addService(_ cbService: CBService) {
@@ -155,4 +69,129 @@ struct AttributeTable {
         
         services[serviceIndex].characteristics[characteristicIndex].descriptors.replacedOrAppended(descriptor, compareBy: \.identifier)
     }
+    
+    var attributeList: [Attribute] {
+        var list: [Attribute] = []
+        
+        for s in services {
+            list.append(s)
+            for c in s.characteristics {
+                list.append(c)
+                
+                for d in c.descriptors {
+                    list.append(d)
+                }
+            }
+        }
+        
+        return list 
+    }
 }
+
+extension AttributeTable {
+    struct Service: Identifiable, StringIdentifiable, Equatable, Attribute {
+        typealias S = iOS_Bluetooth_Numbers_Database.Service
+        
+        var uuidString: String { cbService.uuid.uuidString }
+        
+        let cbService: CBService
+        let id: String
+        let identifier: String
+        let name: String
+        var level: UInt { 1 }
+        fileprivate (set) var characteristics: [Characteristic] = []
+        
+        init(cbService: CBService, id: String, identifier: String, name: String, characteristics: [Characteristic]) {
+            self.cbService = cbService
+            self.id = id
+            self.identifier = identifier
+            self.name = name
+            self.characteristics = characteristics
+        }
+        
+        init(cbService: CBService, defaultName: String = "Unknown Service") {
+            self.cbService = cbService
+            self.id = "s" + cbService.uuid.uuidString
+            self.identifier = cbService.uuid.uuidString
+            self.name = S.find(by: cbService.uuid)?.name ?? defaultName
+        }
+    }
+}
+
+extension AttributeTable.Service {
+    struct Characteristic: Identifiable, StringIdentifiable, Equatable, Attribute {
+        
+        typealias C = iOS_Bluetooth_Numbers_Database.Characteristic
+        
+        var uuidString: String {
+            cbCharacteristic.uuid.uuidString
+        }
+        
+        
+        let cbCharacteristic: CBCharacteristic
+        let id: String
+        let identifier: String
+        let name: String
+        var level: UInt { 2 }
+        fileprivate (set) var descriptors: [Descriptor] = []
+        
+        var prepertiesDescription: String {
+            switch cbCharacteristic.properties {
+            case [.read, .write, .notify]: return "RWN"
+            case [.read, .write]: return "RW"
+            case [.read, .notify]: return "RN"
+            case [.read]: return "R"
+            case [.write]: return "W"
+            case [.notify]: return "N"
+            default: return ""
+            }
+        }
+        
+        init(cbCharacteristic: CBCharacteristic, id: String, identifier: String, name: String, descriptors: [Descriptor]) {
+            self.cbCharacteristic = cbCharacteristic
+            self.id = id
+            self.identifier = identifier
+            self.name = name
+            self.descriptors = descriptors
+        }
+        
+        init(cbCharacteristic: CBCharacteristic, defaultName: String = "Unknown Characteristic") {
+            self.cbCharacteristic = cbCharacteristic
+            self.id = ((cbCharacteristic.service?.uuid.uuidString).map { "s" + $0 } ?? "") + "c" + cbCharacteristic.uuid.uuidString
+            self.identifier = cbCharacteristic.uuid.uuidString
+            self.name = C.find(by: cbCharacteristic.uuid)?.name ?? defaultName
+        }
+    }
+}
+
+extension AttributeTable.Service.Characteristic {
+    struct Descriptor: Identifiable, StringIdentifiable, Equatable, Attribute {
+        typealias D = iOS_Bluetooth_Numbers_Database.Descriptor
+        
+        let cbDescriptor: CBDescriptor
+        let id: String
+        let identifier: String
+        let name: String
+        var level: UInt { 3 }
+        
+        var uuidString: String { cbDescriptor.uuid.uuidString }
+        
+        init(cbDescriptor: CBDescriptor, id: String, identifier: String, name: String) {
+            self.cbDescriptor = cbDescriptor
+            self.id = id
+            self.identifier = identifier
+            self.name = name
+        }
+        
+        init(cbDescriptor: CBDescriptor, defaultName: String = "Unknown Descriptor") {
+            self.cbDescriptor = cbDescriptor
+            self.identifier = cbDescriptor.uuid.uuidString
+            self.id = ((cbDescriptor.characteristic?.service?.uuid.uuidString).map { "s" + $0 } ?? "")
+                + ((cbDescriptor.characteristic?.uuid.uuidString).map { "c" + $0 } ?? "")
+                + "d" + cbDescriptor.uuid.uuidString
+            
+            self.name = D.find(by: cbDescriptor.uuid)?.name ?? defaultName
+        }
+    }
+}
+

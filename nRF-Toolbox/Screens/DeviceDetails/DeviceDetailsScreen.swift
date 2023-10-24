@@ -58,15 +58,18 @@ struct DeviceDetailsView<ServiceView: View, SignalView: View>: View {
                     }
             }
             
-            Text("Attribue Table")
-                .tabItem {
-                    Label("Attribute table", systemImage: "table")
-                }
+            if let vm = environment.attributeTableViewModel?() {
+                AttributeTableScreen(viewModel: vm)
+                    .tabItem {
+                        Label("Attribute table", systemImage: "table")
+                    }
+            }
             
             signalChartContent()
                 .tabItem {
                     Label("Signal Chart", systemImage: "chart.bar")
                 }
+            
         }
         .navigationTitle(environment.peripheralName ?? "Device Details")
     }

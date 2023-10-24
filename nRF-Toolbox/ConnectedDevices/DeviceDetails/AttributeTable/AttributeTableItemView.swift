@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+/*
 struct AttributeTableItemView: View {
     enum AttributeType: Identifiable {
         case service(AttributeTable.Service)
@@ -99,3 +100,4 @@ struct AttributeTableItemView_Previews: PreviewProvider {
         }
     }
 }
+*/

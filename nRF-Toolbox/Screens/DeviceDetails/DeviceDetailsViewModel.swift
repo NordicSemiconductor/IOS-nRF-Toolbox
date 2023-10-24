@@ -27,11 +27,14 @@ extension DeviceDetailsScreen {
             }
         }()
         lazy private (set) var signalChartViewModel = SignalChartScreen.ViewModel(peripheral: peripheral)
+        lazy private var attributeTableViewModel = AttributeTableScreen.ViewModel(peripheral: peripheral)
         
         init(cbPeripheral: CBPeripheral) {
             self.peripheral = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
             
             self.environment.peripheralName = peripheral.name
+            
+            self.environment.attributeTableViewModel = { [unowned self] in self.attributeTableViewModel }
         }
         
         func discoverSupportedServices() async {
@@ -59,9 +62,12 @@ extension DeviceDetailsScreen.ViewModel {
         
         @Published var peripheralName: String?
         
-        init(services: [Service] = [], error: ReadableError? = nil) {
+        fileprivate (set) var attributeTableViewModel: (() -> (AttributeTableScreen.ViewModel))?
+        
+        init(services: [Service] = [], error: ReadableError? = nil, attributeTableViewModel: (() -> (AttributeTableScreen.ViewModel))? = nil) {
             self.services = services
             self.error = error
+            self.attributeTableViewModel = attributeTableViewModel
         }
     }
 }

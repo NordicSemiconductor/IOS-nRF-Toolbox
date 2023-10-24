@@ -9,7 +9,7 @@
 import Foundation
 import CoreBluetoothMock
 import iOS_Bluetooth_Numbers_Database
-
+/*
 extension AttributeTable {
     static var preview: AttributeTable {
         var at = AttributeTable()
@@ -66,3 +66,4 @@ extension AttributeTable {
         
     }
 }
+*/
