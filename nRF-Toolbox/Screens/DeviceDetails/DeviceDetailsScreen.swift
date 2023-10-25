@@ -19,6 +19,10 @@ struct DeviceDetailsScreen: View {
                 if let vm = viewModel.runningServiceViewModel {
                     RunningServiceScreen(viewModel: vm)
                 }
+            case .heartRate:
+                if let vm = viewModel.heartRateServiceViewModel {
+                    HeartRateScreen(viewModel: vm)
+                }
             default:
                 EmptyView()
             }

@@ -26,6 +26,14 @@ extension DeviceDetailsScreen {
                 return nil
             }
         }()
+        lazy private (set) var heartRateServiceViewModel: HeartRateScreen.ViewModel? = {
+            if let service = discoveredServices.first(where: { $0.uuid == Service.heartRate.uuid }) {
+                return HeartRateScreen.ViewModel(peripheral: peripheral, hrService: service)
+            } else {
+                return nil
+            }
+        }()
+    
         lazy private (set) var signalChartViewModel = SignalChartScreen.ViewModel(peripheral: peripheral)
         lazy private var attributeTableViewModel = AttributeTableScreen.ViewModel(peripheral: peripheral)
         

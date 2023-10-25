@@ -74,13 +74,13 @@ extension SignalChartScreen.ViewModel {
             var id: TimeInterval { date.timeIntervalSince1970 }
         }
         
-        let visibleDomain = 60
         
         @Published fileprivate (set) var chartData: [ChartData] = []
         @Published var scrolPosition: Date = Date()
         
-        @Published var lowest: Int = -100
-        @Published var highest: Int = -40
+        let visibleDomain = 60
+        @Published fileprivate (set) var lowest: Int = -100
+        @Published fileprivate (set) var highest: Int = -40
         
         init(chartData: [ChartData] = []) {
             self.chartData = chartData

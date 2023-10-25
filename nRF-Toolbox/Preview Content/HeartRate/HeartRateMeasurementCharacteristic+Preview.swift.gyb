@@ -1,0 +1,36 @@
+%{  
+import random
+import time
+
+TEXT="hello"
+
+def mock():
+    unix_time = int(time.time())
+    hr = 70
+
+    time_signal = []
+
+    for i in range(0, 100):
+        unix_time -= 1
+        hr += random.randint(-2, 2)
+
+        if hr > 200:
+            hr = 198
+        elif hr < 40:
+            hr = 42
+        
+        time_signal.append([unix_time, hr])
+
+    return time_signal
+}%
+
+import Foundation
+
+extension HeartRateMeasurementCharacteristic {
+    static let mock: [HeartRateMeasurementCharacteristic] = [
+% for data in mock():
+        .init(heartRate: ${data[1]}, date: Date(timeIntervalSince1970: ${data[0]})),
+% end
+    ]
+}
+
