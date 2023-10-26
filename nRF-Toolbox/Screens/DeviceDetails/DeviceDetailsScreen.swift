@@ -75,6 +75,7 @@ struct DeviceDetailsView<ServiceView: View, SignalView: View>: View {
                 }
             
         }
+        .padding()
         .navigationTitle(environment.peripheralName ?? "Device Details")
     }
 }

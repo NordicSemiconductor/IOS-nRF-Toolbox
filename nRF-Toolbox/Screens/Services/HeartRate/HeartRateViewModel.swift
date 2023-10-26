@@ -93,7 +93,15 @@ private extension ViewModel {
                     self.env.internalAlertError = .measurement
                 }
             } receiveValue: { [unowned self] v in
+                if v.date.timeIntervalSince1970 - env.scrolPosition.timeIntervalSince1970 < CGFloat(env.visibleDomain + 5) || env.data.isEmpty {
+                    env.scrolPosition = Date()
+                }
+
                 env.data.append(v)
+                
+                if env.data.count > env.capacity {
+                    env.data.removeFirst()
+                }
                 
                 let min = (env.data.min { $0.heartRate < $1.heartRate }?.heartRate ?? 40)
                 let max  = (env.data.max { $0.heartRate < $1.heartRate }?.heartRate ?? 140)
@@ -127,6 +135,8 @@ extension HeartRateScreen.ViewModel {
         @Published var alertError: Error?
         
         let visibleDomain = 120
+        let capacity = 360
+        
         @Published fileprivate (set) var lowest: Int = 40
         @Published fileprivate (set) var highest: Int = 200
         
@@ -140,6 +150,8 @@ extension HeartRateScreen.ViewModel {
             self.data = data
             self.criticalError = criticalError
             self.alertError = alertError
+            
+            assert(capacity >= visibleDomain)
         }
     }
 }

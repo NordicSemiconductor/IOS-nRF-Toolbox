@@ -34,7 +34,6 @@ extension SignalChartScreen.ViewModel {
                     .timeout(0.9, scheduler: DispatchQueue.main)
                     .first()
             }
-        
             .sink { completion in
                 // TODO: Update handling
                 switch completion {
@@ -48,11 +47,8 @@ extension SignalChartScreen.ViewModel {
                 }
                 environment.chartData.append(newSignalItem)
                 
-                if #unavailable(iOS 17, macOS 14) {
-                    let toDrop = environment.chartData.count - environment.visibleDomain
-                    if toDrop > 0 {
-                        environment.chartData.removeFirst(toDrop)
-                    }
+                if environment.chartData.count > environment.capacity {
+                    environment.chartData.removeFirst()
                 }
                 
                 let min = (environment.chartData.min { $0.signal < $1.signal }?.signal ?? -100)
@@ -79,11 +75,14 @@ extension SignalChartScreen.ViewModel {
         @Published var scrolPosition: Date = Date()
         
         let visibleDomain = 60
+        let capacity = 180
+        
         @Published fileprivate (set) var lowest: Int = -100
         @Published fileprivate (set) var highest: Int = -40
         
         init(chartData: [ChartData] = []) {
             self.chartData = chartData
+            assert(capacity >= visibleDomain)
         }
     }
 }

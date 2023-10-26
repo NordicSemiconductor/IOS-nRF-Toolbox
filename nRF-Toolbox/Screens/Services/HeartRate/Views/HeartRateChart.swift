@@ -32,7 +32,7 @@ struct HeartRateChart: View {
             }
             .font(.title2.bold())
             
-            if #available(iOS 17, *) {
+            if #available(iOS 17, macOS 14, *) {
                 scalableChart()
             } else {
                 chart
