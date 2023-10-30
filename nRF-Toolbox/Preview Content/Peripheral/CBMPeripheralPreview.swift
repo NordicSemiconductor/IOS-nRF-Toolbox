@@ -212,3 +212,7 @@ let weightScale = CBMPeripheralSpec
         delegate: WeightCBMPeripheralSpecDelegate() // TODO: Change
     )
     .build()
+
+extension Peripheral {
+    static let preview: Peripheral = Peripheral(peripheral: CBMPeripheralPreview(hrm), delegate: ReactivePeripheralDelegate())
+}

@@ -16,6 +16,7 @@ struct SignalChartScreen: View {
     
     var body: some View {
         SignalChartView()
+            .padding()
             .onFirstAppear {
                 viewModel.readSignal()
             }

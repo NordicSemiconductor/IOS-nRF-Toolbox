@@ -134,7 +134,7 @@ extension HeartRateScreen.ViewModel {
         @Published fileprivate (set) var criticalError: CriticalError?
         @Published var alertError: Error?
         
-        let visibleDomain = 120
+        let visibleDomain = 60
         let capacity = 360
         
         @Published fileprivate (set) var lowest: Int = 40

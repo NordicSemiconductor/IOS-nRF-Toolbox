@@ -30,7 +30,6 @@
 		012C2BE32410682D005EC1A0 /* SegmentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BE02410682D005EC1A0 /* SegmentedView.swift */; };
 		012C2BE72410F8AA005EC1A0 /* DFUUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BE52410F8AA005EC1A0 /* DFUUpdateViewController.swift */; };
 		012E228C2A69A4E900B14064 /* AttributeTableView1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012E228B2A69A4E900B14064 /* AttributeTableView1.swift */; };
-		012E228E2A69A54B00B14064 /* AttributeTablePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012E228D2A69A54B00B14064 /* AttributeTablePreview.swift */; };
 		012E22902A69AFC200B14064 /* String+Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012E228F2A69AFC200B14064 /* String+Name.swift */; };
 		012E22922A6ACD8400B14064 /* AttributeTableItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012E22912A6ACD8400B14064 /* AttributeTableItemView.swift */; };
 		012E22942A6AD5BE00B14064 /* NamedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012E22932A6AD5BE00B14064 /* NamedItem.swift */; };
@@ -87,6 +86,8 @@
 		017D104A2A5809E500E38E5F /* nRF_ToolboxUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017D10492A5809E500E38E5F /* nRF_ToolboxUITests.swift */; };
 		017D104C2A5809E500E38E5F /* nRF_ToolboxUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017D104B2A5809E500E38E5F /* nRF_ToolboxUITestsLaunchTests.swift */; };
 		017D105B2A580D3800E38E5F /* iOSCommonLibraries in Frameworks */ = {isa = PBXBuildFile; productRef = 017D105A2A580D3800E38E5F /* iOSCommonLibraries */; };
+		0180A29C2AEFBBC200090F6D /* PeripheralScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0180A29A2AEFBBC200090F6D /* PeripheralScreen.swift */; };
+		0180A29D2AEFBBC200090F6D /* PeripheralViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0180A29B2AEFBBC200090F6D /* PeripheralViewModel.swift */; };
 		018873C02A58320600253273 /* ConnectedDevicesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873BF2A58320600253273 /* ConnectedDevicesScreen.swift */; };
 		018873C22A58322C00253273 /* ee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873C12A58322C00253273 /* ee.swift */; };
 		018873C42A58332400253273 /* iOSCommonLibraries in Frameworks */ = {isa = PBXBuildFile; productRef = 018873C32A58332400253273 /* iOSCommonLibraries */; };
@@ -425,7 +426,6 @@
 		012C2BE02410682D005EC1A0 /* SegmentedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedView.swift; sourceTree = "<group>"; };
 		012C2BE52410F8AA005EC1A0 /* DFUUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUUpdateViewController.swift; sourceTree = "<group>"; };
 		012E228B2A69A4E900B14064 /* AttributeTableView1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeTableView1.swift; sourceTree = "<group>"; };
-		012E228D2A69A54B00B14064 /* AttributeTablePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeTablePreview.swift; sourceTree = "<group>"; };
 		012E228F2A69AFC200B14064 /* String+Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Name.swift"; sourceTree = "<group>"; };
 		012E22912A6ACD8400B14064 /* AttributeTableItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeTableItemView.swift; sourceTree = "<group>"; };
 		012E22932A6AD5BE00B14064 /* NamedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamedItem.swift; sourceTree = "<group>"; };
@@ -489,6 +489,8 @@
 		017D10492A5809E500E38E5F /* nRF_ToolboxUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nRF_ToolboxUITests.swift; sourceTree = "<group>"; };
 		017D104B2A5809E500E38E5F /* nRF_ToolboxUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nRF_ToolboxUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		017D105C2A580DCD00E38E5F /* IOS-Common-Libraries */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "IOS-Common-Libraries"; path = "../IOS-Common-Libraries"; sourceTree = "<group>"; };
+		0180A29A2AEFBBC200090F6D /* PeripheralScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralScreen.swift; sourceTree = "<group>"; };
+		0180A29B2AEFBBC200090F6D /* PeripheralViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralViewModel.swift; sourceTree = "<group>"; };
 		018873BF2A58320600253273 /* ConnectedDevicesScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedDevicesScreen.swift; sourceTree = "<group>"; };
 		018873C12A58322C00253273 /* ee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ee.swift; sourceTree = "<group>"; };
 		018873C62A583A9900253273 /* PeripheralScannerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralScannerScreen.swift; sourceTree = "<group>"; };
@@ -1011,7 +1013,6 @@
 				0164A46C2AD58EA20093E501 /* RSSI */,
 				01F6A95E2A812D5500540B45 /* Mock */,
 				01407CB82A65417900A5B279 /* CBMPeripheralPreview.swift */,
-				012E228D2A69A54B00B14064 /* AttributeTablePreview.swift */,
 			);
 			path = Peripheral;
 			sourceTree = "<group>";
@@ -1106,6 +1107,7 @@
 		0164A4822AD840A10093E501 /* DeviceDetails */ = {
 			isa = PBXGroup;
 			children = (
+				0180A2992AEFBB9E00090F6D /* Peripheral */,
 				01ABB05E2AE6B35200615A21 /* AttributeTable */,
 				018C05372AE083F5007CE0FE /* SignalChart */,
 				0164A4832AD840B60093E501 /* DeviceDetailsScreen.swift */,
@@ -1169,6 +1171,15 @@
 				017D104B2A5809E500E38E5F /* nRF_ToolboxUITestsLaunchTests.swift */,
 			);
 			path = "nRF-ToolboxUITests";
+			sourceTree = "<group>";
+		};
+		0180A2992AEFBB9E00090F6D /* Peripheral */ = {
+			isa = PBXGroup;
+			children = (
+				0180A29A2AEFBBC200090F6D /* PeripheralScreen.swift */,
+				0180A29B2AEFBBC200090F6D /* PeripheralViewModel.swift */,
+			);
+			path = Peripheral;
 			sourceTree = "<group>";
 		};
 		01816D49235DD7180040F574 /* ContinuousGlucoseMonitor */ = {
@@ -2707,7 +2718,6 @@
 				018C05392AE08417007CE0FE /* SignalChartScreen.swift in Sources */,
 				0164A47F2AD831640093E501 /* ConnectedScreenInitial.swift in Sources */,
 				0132082A2A5C142100DCEA11 /* ScanResultItem.swift in Sources */,
-				012E228E2A69A54B00B14064 /* AttributeTablePreview.swift in Sources */,
 				0164A4842AD840B60093E501 /* DeviceDetailsScreen.swift in Sources */,
 				018C053E2AE16682007CE0FE /* SignalChartView.swift in Sources */,
 				018C05412AE1670C007CE0FE /* ChartData+Preview.swift in Sources */,
@@ -2729,6 +2739,7 @@
 				013E5D8F2ADFDDC600B9C475 /* NumberedColumnGrid.swift in Sources */,
 				01AB7B752A77BFB400AEDDCD /* CBUUID+Ext.swift in Sources */,
 				01FD68D02AE82C330021101C /* Attribute+Preview.swift in Sources */,
+				0180A29C2AEFBBC200090F6D /* PeripheralScreen.swift in Sources */,
 				0164A46E2AD58EB00093E501 /* RSSIItem_Preview.swift in Sources */,
 				01ABB07E2AE700E100615A21 /* AttributeTableViewModel.swift in Sources */,
 				013E5D982AE02A2400B9C475 /* RunningValuesGridItem.swift in Sources */,
@@ -2759,6 +2770,7 @@
 				01DEB4A42A6588CA00D4C1E8 /* RunningServiceHandler.swift in Sources */,
 				01F6A9602A812D6200540B45 /* Emulator.swift in Sources */,
 				0129F2222A67FE39002FB3F5 /* RunningServiceView.swift in Sources */,
+				0180A29D2AEFBBC200090F6D /* PeripheralViewModel.swift in Sources */,
 				0164A4762AD698650093E501 /* NumberDatabase+Ext.swift in Sources */,
 				01407CBC2A65819B00A5B279 /* ServiceHandler.swift in Sources */,
 				01FB19D02AE3DB0D006DAB9F /* SensorCalibrationScreen.swift in Sources */,
