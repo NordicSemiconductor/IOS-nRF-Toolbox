@@ -20,6 +20,7 @@ struct AttributeTableScreen: View {
             .task {
                 await viewModel.readAttributeTable()
             }
+            .navigationTitle("Attribute Table")
     }
 }
 

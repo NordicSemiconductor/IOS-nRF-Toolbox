@@ -22,15 +22,26 @@ struct PeripheralScreen: View {
 
 struct PeripheralView: View {
     @EnvironmentObject private var environment: Env
+    @State private var disconnectAlertShow = false
+    @State private var showAttributeTable = false
 
     var body: some View {
         List {
             Section {
-                NavigationLink {
-                    // TODO: Attribuet Table Screen
-                    Text("Attribute Table")
-                } label: {
-                    Text("Attribute Table")
+                Button("Show Attribute Table") {
+                    showAttributeTable = true
+                }
+                .sheet(isPresented: $showAttributeTable) {
+                    NavigationStack {
+                        AttributeTableScreen(viewModel: environment.attributeTableViewModel)
+                            .toolbar {
+                                ToolbarItem(placement: .cancellationAction) {
+                                    Button("Cancel") {
+                                        showAttributeTable = false
+                                    }
+                                }
+                            }
+                    }
                 }
             }
             
@@ -39,8 +50,18 @@ struct PeripheralView: View {
             
             Section {
                 Button("Disconnect") {
-                    
+                    disconnectAlertShow = true
                 }
+                .foregroundStyle(.red)
+                .alert("Disconnect", isPresented: $disconnectAlertShow) {
+                    Button("Yes") {
+                        // TODO: Cancel Connection
+                    }
+                    Button("No") { }
+                } message: {
+                    Text("Are you sure you want to cancel peripheral connectior?")
+                }
+
             }
         }
     }

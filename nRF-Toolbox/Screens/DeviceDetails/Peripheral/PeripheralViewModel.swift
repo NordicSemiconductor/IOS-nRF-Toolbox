@@ -25,7 +25,8 @@ extension PeripheralScreen {
             self.peripheral = peripheral
             
             self.env = Environment(
-                signalChartViewModel: SignalChartScreen.ViewModel(peripheral: peripheral)
+                signalChartViewModel: SignalChartScreen.ViewModel(peripheral: peripheral),
+                attributeTableViewModel: AttributeTableScreen.ViewModel(peripheral: peripheral)
             )
             
             env.signalChartViewModel.readSignal()
