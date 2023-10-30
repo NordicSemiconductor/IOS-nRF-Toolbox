@@ -30,6 +30,15 @@ extension AttributeTableScreen {
             }
         }
     }
+    
+    @MainActor
+    class MockViewModel: ViewModel {
+        static let shared = MockViewModel(peripheral: .preview)
+        
+        override func readAttributeTable() async {
+            
+        }
+    }
 }
 
 private typealias ViewModel = AttributeTableScreen.ViewModel

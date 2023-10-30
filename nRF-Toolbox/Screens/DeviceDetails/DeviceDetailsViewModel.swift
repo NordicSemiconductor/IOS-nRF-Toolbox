@@ -18,7 +18,7 @@ extension DeviceDetailsScreen {
         let peripheral: Peripheral
         var id: UUID { peripheral.peripheral.identifier }
         
-        lazy private (set) var environment = Environment()
+        let environment: Environment
         lazy private (set) var runningServiceViewModel: RunningServiceScreen.ViewModel? = {
             if let service = discoveredServices.first(where: { $0.uuid == Service.runningSpeedAndCadence.uuid }) {
                 return RunningServiceScreen.ViewModel(peripheral: peripheral, runningService: service)
@@ -35,14 +35,11 @@ extension DeviceDetailsScreen {
         }()
     
         lazy private (set) var signalChartViewModel = SignalChartScreen.ViewModel(peripheral: peripheral)
-        lazy private var attributeTableViewModel = AttributeTableScreen.ViewModel(peripheral: peripheral)
         
         init(cbPeripheral: CBPeripheral) {
             self.peripheral = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
-            
+            self.environment = Environment(peripheralViewModel: PeripheralScreen.ViewModel(peripheral: peripheral))
             self.environment.peripheralName = peripheral.name
-            
-            self.environment.attributeTableViewModel = { [unowned self] in self.attributeTableViewModel }
         }
         
         func discoverSupportedServices() async {
@@ -70,12 +67,16 @@ extension DeviceDetailsScreen.ViewModel {
         
         @Published var peripheralName: String?
         
-        fileprivate (set) var attributeTableViewModel: (() -> (AttributeTableScreen.ViewModel))?
+        fileprivate (set) var peripheralViewModel: PeripheralScreen.ViewModel
         
-        init(services: [Service] = [], error: ReadableError? = nil, attributeTableViewModel: (() -> (AttributeTableScreen.ViewModel))? = nil) {
+        init(
+            services: [Service] = [],
+            error: ReadableError? = nil,
+            peripheralViewModel: PeripheralScreen.ViewModel = PeripheralScreen.MockViewModel.shared
+        ) {
             self.services = services
             self.error = error
-            self.attributeTableViewModel = attributeTableViewModel
+            self.peripheralViewModel = peripheralViewModel
         }
     }
 }

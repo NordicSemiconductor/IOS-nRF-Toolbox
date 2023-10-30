@@ -45,7 +45,6 @@ struct SignalChart: View {
                 pureChart()
             }
         }
-        .padding()
     }
     
     @available(macOS 14.0, *)
@@ -73,5 +72,5 @@ struct SignalChart: View {
 
 #Preview {
     SignalChart()
-        .environmentObject(Env(chartData: ChartDataPreview.data))
+        .environmentObject(Env(chartData: Env.ChartData.preview))
 }

@@ -22,42 +22,51 @@ extension SignalChartScreen {
         init(peripheral: Peripheral) {
             self.peripheral = peripheral
         }
+        
+        public func readSignal() {
+            Timer.publish(every: 1, on: .main, in: .default)
+                .autoconnect()
+                .flatMap { _ in
+                    self.peripheral.readRSSI()
+                        .timeout(0.9, scheduler: DispatchQueue.main)
+//                        .first()
+                }
+                .map { Environment.ChartData(date: Date(), signal: $0.intValue) }
+                .sink { completion in
+                    // TODO: Update handling
+                    switch completion {
+                    case .finished: print("finished")
+                    case .failure: print("failure")
+                    }
+                } receiveValue: { [unowned self] newSignalItem in
+//                    print(newSignalItem.signal)
+                    if newSignalItem.date.timeIntervalSince1970 - environment.scrolPosition.timeIntervalSince1970 < CGFloat(environment.visibleDomain + 5) || environment.chartData.isEmpty {
+                        environment.scrolPosition = Date()
+                    }
+                    environment.chartData.append(newSignalItem)
+                    
+                    if environment.chartData.count > environment.capacity {
+                        environment.chartData.removeFirst()
+                    }
+                    
+                    let min = (environment.chartData.min { $0.signal < $1.signal }?.signal ?? -100)
+                    let max  = (environment.chartData.max { $0.signal < $1.signal }?.signal ?? -40)
+                    
+                    environment.lowest = min - 5
+                    environment.highest = max + 5
+                }
+                .store(in: &cancelable)
+        }
     }
-}
-
-extension SignalChartScreen.ViewModel {
-    public func readSignal() {
-        Timer.publish(every: 1, on: .main, in: .default)
-            .autoconnect()
-            .flatMap { _ in 
-                self.peripheral.readRSSI()
-                    .timeout(0.9, scheduler: DispatchQueue.main)
-                    .first()
-            }
-            .sink { completion in
-                // TODO: Update handling
-                switch completion {
-                case .finished: print("finished")
-                case .failure: print("failure")
-                }
-            } receiveValue: { [unowned self] rssi in
-                let newSignalItem = Environment.ChartData(date: Date(), signal: rssi.intValue)
-                if newSignalItem.date.timeIntervalSince1970 - environment.scrolPosition.timeIntervalSince1970 < CGFloat(environment.visibleDomain + 5) || environment.chartData.isEmpty {
-                    environment.scrolPosition = Date()
-                }
-                environment.chartData.append(newSignalItem)
-                
-                if environment.chartData.count > environment.capacity {
-                    environment.chartData.removeFirst()
-                }
-                
-                let min = (environment.chartData.min { $0.signal < $1.signal }?.signal ?? -100)
-                let max  = (environment.chartData.max { $0.signal < $1.signal }?.signal ?? -40)
-                
-                environment.lowest = min - 5
-                environment.highest = max + 5
-            }
-            .store(in: &cancelable)
+    
+    // MARK: - Mock
+    @MainActor
+    class MockViewModel: ViewModel {
+        static let shared = MockViewModel(peripheral: .preview)
+        
+        override func readSignal() {
+            environment.chartData = Environment.ChartData.preview
+        }
     }
 }
 
