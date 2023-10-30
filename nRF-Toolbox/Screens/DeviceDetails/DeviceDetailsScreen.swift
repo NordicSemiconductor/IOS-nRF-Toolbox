@@ -39,8 +39,14 @@ struct DeviceDetailsScreen: View {
 struct DeviceDetailsView<ServiceView: View, SignalView: View>: View {
     @EnvironmentObject var environment: DeviceDetailsScreen.ViewModel.Environment
     
+    @State private var showInspector: Bool = false
+    
     let serviceViewContent: (Service) -> ServiceView
     let signalChartContent: () -> SignalView
+    
+    #if os(iOS)
+    private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
+    #endif
     
     init(
         @ViewBuilder serviceViewContent: @escaping (Service) -> ServiceView,
@@ -51,23 +57,87 @@ struct DeviceDetailsView<ServiceView: View, SignalView: View>: View {
     }
     
     var body: some View {
-        TabView {
-            ForEach(environment.services.filter(\.isSupported)) { service in
-                serviceViewContent(service)
-                    .tabItem {
-                        Label(
-                            title: { Text(service.name) },
-                            icon: { service.systemImage }
-                        )
+        mainView
+            .navigationTitle(environment.peripheralName ?? "Device Details")
+    }
+    
+    @ViewBuilder
+    private var mainView: some View {
+        if #available(iOS 17, macOS 14, *) {
+            newView
+                .toolbar {
+                    ToolbarItem {
+                        Button {
+                            showInspector.toggle()
+                        } label: {
+                            Image(systemName: "square.trailingthird.inset.filled")
+                        }
+
                     }
+                }
+                .inspector(isPresented: $showInspector) {
+                    inspectorContent
+                }
+                
+        } else {
+            oldView
+        }
+    }
+    
+    @ViewBuilder
+    private var inspectorContent: some View {
+        #if os(macOS)
+        peripheralScreen
+        #else
+        if idiom == .phone {
+            NavigationView {
+                peripheralScreen
+                    .navigationTitle("Peripheral")
             }
-            
-            PeripheralScreen(viewModel: environment.peripheralViewModel)
+        } else {
+            peripheralScreen
+        }
+        #endif
+    }
+
+    @ViewBuilder
+    private var newView: some View {
+        if environment.services.filter(\.isSupported).count > 1 {
+            TabView {
+                serviceViews
+            }
+        } else {
+            serviceViews
+        }
+    }
+    
+    @ViewBuilder
+    private var oldView: some View {
+        TabView {
+            serviceViews
+            peripheralScreen
+        }
+    }
+
+    @ViewBuilder
+    private var serviceViews: some View {
+        ForEach(environment.services.filter(\.isSupported)) { service in
+            serviceViewContent(service)
                 .tabItem {
-                    Label("Peripheral", systemImage: "terminal")
+                    Label(
+                        title: { Text(service.name) },
+                        icon: { service.systemImage }
+                    )
                 }
         }
-        .navigationTitle(environment.peripheralName ?? "Device Details")
+    }
+    
+    @ViewBuilder
+    private var peripheralScreen: some View {
+        PeripheralScreen(viewModel: environment.peripheralViewModel)
+            .tabItem {
+                Label("Peripheral", systemImage: "terminal")
+            }
     }
 }
 

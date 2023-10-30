@@ -24,29 +24,21 @@ struct PeripheralView: View {
     @EnvironmentObject private var environment: Env
     @State private var disconnectAlertShow = false
     @State private var showAttributeTable = false
+    
+    #if os(iOS)
+    private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
+    #endif 
 
     var body: some View {
         List {
             Section {
-                Button("Show Attribute Table") {
-                    showAttributeTable = true
-                }
-                .sheet(isPresented: $showAttributeTable) {
-                    NavigationStack {
-                        AttributeTableScreen(viewModel: environment.attributeTableViewModel)
-                            .toolbar {
-                                ToolbarItem(placement: .cancellationAction) {
-                                    Button("Cancel") {
-                                        showAttributeTable = false
-                                    }
-                                }
-                            }
-                    }
-                }
+                attributeTableNavigator
             }
             
-            SignalChartView()
-                .environmentObject(environment.signalChartViewModel.environment)
+            Section {
+                SignalChartView()
+                    .environmentObject(environment.signalChartViewModel.environment)
+            }
             
             Section {
                 Button("Disconnect") {
@@ -62,6 +54,50 @@ struct PeripheralView: View {
                     Text("Are you sure you want to cancel peripheral connectior?")
                 }
 
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private var attributeTableNavigator: some View {
+#if os(macOS)
+        attributeTableButton
+#else
+        if idiom == .phone {
+            attributeTableNavLink
+        } else {
+            attributeTableButton
+        }
+#endif
+    }
+    
+    @ViewBuilder
+    private var attributeTableNavLink: some View {
+        NavigationLink {
+            AttributeTableScreen(viewModel: environment.attributeTableViewModel)
+        } label: {
+            Text("Attribute Table")
+        }
+    }
+    
+    @ViewBuilder
+    private var attributeTableButton: some View {
+        Button("Show Attribute Table") {
+            showAttributeTable = true
+        }
+        .sheet(isPresented: $showAttributeTable) {
+            NavigationStack {
+                AttributeTableScreen(viewModel: environment.attributeTableViewModel)
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button("Cancel") {
+                                showAttributeTable = false
+                            }
+                        }
+                    }
+                #if os(macOS)
+                    .frame(width: 400, height: 500)
+                #endif
             }
         }
     }
