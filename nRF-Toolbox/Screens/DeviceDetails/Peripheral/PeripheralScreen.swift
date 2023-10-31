@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import CoreBluetoothMock_Collection
 
 private typealias Env = PeripheralScreen.ViewModel.Environment
 
@@ -38,6 +39,12 @@ struct PeripheralView: View {
             Section {
                 SignalChartView()
                     .environmentObject(environment.signalChartViewModel.environment)
+            }
+            
+            if environment.batteryLevelAvailable {
+                Section {
+                    BatteryChart(data: environment.batteryLevelData)
+                }
             }
             
             Section {
@@ -107,7 +114,10 @@ struct PeripheralView: View {
     NavigationStack {
         TabView {
             PeripheralView()
-                .environmentObject(Env())
+                .environmentObject(Env(
+                    batteryLevelData: Battery.preview,
+                    batteryLevelAvailable: true
+                ))
                 .tabItem { Label("Device", systemImage: "apple.terminal") }
         }
         .navigationTitle("Device Info")

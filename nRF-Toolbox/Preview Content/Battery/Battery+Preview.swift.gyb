@@ -1,0 +1,36 @@
+%{  
+import random
+import time
+
+TEXT="hello"
+
+def mock():
+    unix_time = int(time.time())
+    lvl = 70
+    k = -1
+
+    time_signal = []
+
+    for i in range(0, 100):
+        unix_time -= 1
+        lvl += k
+        time_signal.append([unix_time, lvl])
+
+        if lvl == 100:
+            k = -1
+        elif lvl == 3:
+            k = 1
+
+    return time_signal
+}%
+
+import Foundation
+import CoreBluetoothMock_Collection
+
+extension Battery {
+    static let preview: [ChartTimeData<Battery.Level>] = [
+% for data in mock():
+        .init(value: ${data[1]}, date: Date(timeIntervalSince1970: ${data[0]})),
+% end
+    ]
+}

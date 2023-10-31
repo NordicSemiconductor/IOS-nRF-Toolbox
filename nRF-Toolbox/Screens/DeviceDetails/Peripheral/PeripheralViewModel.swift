@@ -9,6 +9,8 @@
 import Combine 
 import SwiftUI
 import iOS_BLE_Library_Mock
+import iOS_Bluetooth_Numbers_Database
+import CoreBluetoothMock_Collection
 
 private typealias ViewModel = PeripheralScreen.ViewModel
 
@@ -30,6 +32,8 @@ extension PeripheralScreen {
             )
             
             env.signalChartViewModel.readSignal()
+            
+            setupBattery()
         }
     }
     
@@ -43,7 +47,78 @@ extension PeripheralScreen {
 
 // MARK: Private Methods
 private extension ViewModel {
+    private func setupBattery() {
+        Task {
+            try? await discoverServices()
+        }
+    }
+    
+    private func discoverServices() async throws {
+        // Discover Services
+        let services: [Service] = [.batteryService]
+        let cbServices = try await peripheral
+            .discoverServices(serviceUUIDs: services.map(\.uuid))
+            .timeout(1, scheduler: DispatchQueue.main)
+            .value
+        
+        // Check if battery service was discovered
+        guard let cbBatteryLevel = cbServices.first,
+                cbBatteryLevel.uuid == Service.batteryService.uuid else {
+            return
+        }
+        
+        // Discover Characteristics
+        let characteristics: [Characteristic] = [.batteryLevel]
+        let cbCharacteristics = try await peripheral
+            .discoverCharacteristics(characteristics.map(\.uuid), for: cbBatteryLevel)
+            .timeout(1, scheduler: DispatchQueue.main)
+            .value
+        
+        // Check if `batteryLevel` characteristic was discovered
+        guard let cbBatteryLevel = cbCharacteristics.first, cbBatteryLevel.uuid == Characteristic.batteryLevel.uuid else {
+            return
+        }
+        
+        env.batteryLevelAvailable = true
+        
+        do {
+            // try to enable notifications for
+            if try await peripheral.setNotifyValue(true, for: cbBatteryLevel).timeout(1, scheduler: DispatchQueue.main).value {
+                listen(for: cbBatteryLevel)
+            } else {
+                try? await readBatteryLevelOnTimer(cbBatteryLevel)
+            }
+        } catch {
+            try? await readBatteryLevelOnTimer(cbBatteryLevel)
+        }
+        
+    }
+    
+    private func readBatteryLevelOnTimer(_ batteryLevelCh: CBCharacteristic, timeInterval: TimeInterval = 1) async throws {
+        Timer.publish(every: 60, on: .main, in: .default)
+            .autoconnect()
+            .flatMap { [unowned self] _ in self.peripheral.readValue(for: batteryLevelCh) }
+            .compactMap { $0 }
+            .map { Battery.Level(data: $0) }
+            .sink { completion in
+                
+            } receiveValue: { [unowned self] level in
+                self.env.batteryLevelData.append(.init(value: level))
+            }
+            .store(in: &cancellables)
 
+    }
+    
+    private func listen(for batteryLevelCh: CBCharacteristic) {
+        peripheral.listenValues(for: batteryLevelCh)
+            .map { Battery.Level(data: $0) }
+            .sink { _ in
+                
+            } receiveValue: { [unowned self] level in
+                self.env.batteryLevelData.append(.init(value: level))
+            }
+            .store(in: &cancellables)
+    }
 }
 
 private extension ViewModel {
@@ -64,6 +139,9 @@ extension PeripheralScreen.ViewModel {
             }
         }
         
+        @Published fileprivate (set) var batteryLevelData: [ChartTimeData<Battery.Level>]
+        @Published fileprivate (set) var batteryLevelAvailable: Bool = false
+        
         let signalChartViewModel: SignalChartScreen.ViewModel
         let attributeTableViewModel: AttributeTableScreen.ViewModel
         
@@ -73,6 +151,8 @@ extension PeripheralScreen.ViewModel {
             criticalError: CriticalError? = nil,
             alertError: Error? = nil,
             internalAlertError: AlertError? = nil,
+            batteryLevelData: [ChartTimeData<Battery.Level>] = [],
+            batteryLevelAvailable: Bool = false,
             signalChartViewModel: SignalChartScreen.ViewModel = SignalChartScreen.MockViewModel.shared,
             attributeTableViewModel: AttributeTableScreen.ViewModel = AttributeTableScreen.MockViewModel.shared,
             disconnect: @escaping () -> () = { }
@@ -80,6 +160,8 @@ extension PeripheralScreen.ViewModel {
             self.criticalError = criticalError
             self.alertError = alertError
             self.internalAlertError = internalAlertError
+            self.batteryLevelData = batteryLevelData
+            self.batteryLevelAvailable = batteryLevelAvailable
             self.signalChartViewModel = signalChartViewModel
             self.attributeTableViewModel = attributeTableViewModel
             self.disconnect = disconnect

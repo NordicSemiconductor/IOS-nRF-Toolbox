@@ -72,7 +72,6 @@ struct DeviceDetailsView<ServiceView: View, SignalView: View>: View {
                         } label: {
                             Image(systemName: "square.trailingthird.inset.filled")
                         }
-
                     }
                 }
                 .inspector(isPresented: $showInspector) {
