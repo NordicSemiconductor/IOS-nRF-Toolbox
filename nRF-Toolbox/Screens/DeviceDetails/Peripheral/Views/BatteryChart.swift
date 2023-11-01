@@ -12,19 +12,61 @@ import Charts
 
 struct BatteryChart: View {
     let data: [ChartTimeData<Battery.Level>]
+    let currentLevel: UInt?
     
     var body: some View {
-        Chart {
-            ForEach(data, id: \.date) {
-                BarMark(
-                    x: .value("Date", $0.date),
-                    y: .value("Battery Level", $0.value.level),
-                    width: .automatic,
-                    height: .automatic,
-                    stacking: .standard
-                )
-                .foregroundStyle(batteryStyle(level: $0.value.level))
+        VStack(alignment: .leading) {
+            Text("Battery level for the last 2 minutes")
+                .foregroundStyle(.secondary)
+            HStack {
+                if let lvl = currentLevel {
+                    Text("Battery Level \(lvl)%")
+                } else {
+                    Text("Battery Level")
+                }
             }
+            .font(.title2.bold())
+            
+            chartView
+        }
+    }
+    
+    @ViewBuilder
+    var chartView: some View {
+        if #available(iOS 17, macOS 14, *) {
+            newChartView
+        } else {
+            pureChart
+        }
+    }
+    
+    @available(iOS 17, macOS 14.0, *)
+    @ViewBuilder
+    var newChartView: some View {
+        pureChart
+            .chartXVisibleDomain(length: 200)
+    }
+    
+    @ViewBuilder
+    var pureChart: some View {
+        Chart(data, id: \.date) {
+            BarMark(
+                x: .value("Date", $0.date),
+                y: .value("Battery Level", $0.value.level),
+                width: .automatic,
+                height: .automatic,
+                stacking: .standard
+            )
+            .foregroundStyle(batteryStyle(level: $0.value.level))
+        }
+        .chartYAxis {
+            AxisMarks(
+                format: Decimal.FormatStyle.Percent.percent.scale(1),
+                values: [0, 50, 100]
+            )
+        }
+        .chartXAxis {
+            AxisMarks(values: .stride(by: .minute)) 
         }
     }
     
@@ -40,6 +82,7 @@ struct BatteryChart: View {
 
 #Preview {
     BatteryChart(
-        data: Battery.preview
+        data: Battery.preview,
+        currentLevel: 20
     )
 }

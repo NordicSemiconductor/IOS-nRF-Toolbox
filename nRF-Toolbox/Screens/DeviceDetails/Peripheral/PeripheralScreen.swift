@@ -43,7 +43,7 @@ struct PeripheralView: View {
             
             if environment.batteryLevelAvailable {
                 Section {
-                    BatteryChart(data: environment.batteryLevelData)
+                    BatteryChart(data: environment.batteryLevelData, currentLevel: environment.currentBatteryLevel)
                 }
             }
             
