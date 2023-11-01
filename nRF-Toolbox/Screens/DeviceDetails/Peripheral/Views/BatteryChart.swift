@@ -33,22 +33,6 @@ struct BatteryChart: View {
     
     @ViewBuilder
     var chartView: some View {
-        if #available(iOS 17, macOS 14, *) {
-            newChartView
-        } else {
-            pureChart
-        }
-    }
-    
-    @available(iOS 17, macOS 14.0, *)
-    @ViewBuilder
-    var newChartView: some View {
-        pureChart
-            .chartXVisibleDomain(length: 200)
-    }
-    
-    @ViewBuilder
-    var pureChart: some View {
         Chart(data, id: \.date) {
             BarMark(
                 x: .value("Date", $0.date),
