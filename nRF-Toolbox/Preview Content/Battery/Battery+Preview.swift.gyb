@@ -20,6 +20,7 @@ def mock():
             k = -1
         elif lvl == 3:
             k = 1
+    time_signal.reverse()
 
     return time_signal
 }%

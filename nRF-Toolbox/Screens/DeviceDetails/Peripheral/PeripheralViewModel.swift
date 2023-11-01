@@ -18,6 +18,7 @@ extension PeripheralScreen {
     @MainActor 
     class ViewModel: ObservableObject {
         let env: Environment
+        private static let batteryLevelDataLength = 120
 
         private var cancellables = Set<AnyCancellable>()
         
@@ -84,8 +85,10 @@ private extension ViewModel {
         do {
             // try to enable notifications for
             if try await peripheral.setNotifyValue(true, for: cbBatteryLevel).timeout(1, scheduler: DispatchQueue.main).value {
+                // in case of success - listen
                 listen(for: cbBatteryLevel)
             } else {
+                // otherwise - read
                 try? await readBatteryLevelOnTimer(cbBatteryLevel)
             }
         } catch {
@@ -95,27 +98,44 @@ private extension ViewModel {
     }
     
     private func readBatteryLevelOnTimer(_ batteryLevelCh: CBCharacteristic, timeInterval: TimeInterval = 1) async throws {
-        Timer.publish(every: 60, on: .main, in: .default)
+        let publisher = Timer.publish(every: 60, on: .main, in: .default)
             .autoconnect()
             .flatMap { [unowned self] _ in self.peripheral.readValue(for: batteryLevelCh) }
             .compactMap { $0 }
-            .map { Battery.Level(data: $0) }
-            .sink { completion in
-                
-            } receiveValue: { [unowned self] level in
-                self.env.batteryLevelData.append(.init(value: level))
-            }
-            .store(in: &cancellables)
+            .eraseToAnyPublisher()
 
+        handleBatteryPublisher(publisher)
     }
     
     private func listen(for batteryLevelCh: CBCharacteristic) {
-        peripheral.listenValues(for: batteryLevelCh)
+        let publisher = peripheral.listenValues(for: batteryLevelCh)
+            .eraseToAnyPublisher()
+        
+        handleBatteryPublisher(publisher)
+    }
+    
+    private func handleBatteryPublisher(_ publisher: AnyPublisher<Data, Error>) {
+        publisher
             .map { Battery.Level(data: $0) }
-            .sink { _ in
+            .map { ChartTimeData<Battery.Level>(value: $0) }
+            .scan(Array<ChartTimeData<Battery.Level>>(), { result, lvl in
+                var res = result
+                res.append(lvl)
+                if res.count > Self.batteryLevelDataLength {
+                    res.removeFirst()
+                }
+                return res
+            })
+            .sink { completion in
                 
             } receiveValue: { [unowned self] level in
-                self.env.batteryLevelData.append(.init(value: level))
+                var lvlData = level
+                while lvlData.count < Self.batteryLevelDataLength {
+                    let date = (lvlData.last?.date).map { Date(timeInterval: 1, since: $0) } ?? Date()
+                    lvlData.append(.init(value: 0, date: date))
+                }
+                
+                self.env.batteryLevelData = lvlData
             }
             .store(in: &cancellables)
     }
@@ -140,6 +160,7 @@ extension PeripheralScreen.ViewModel {
         }
         
         @Published fileprivate (set) var batteryLevelData: [ChartTimeData<Battery.Level>]
+        @Published fileprivate (set) var currentBatteryLevel: UInt? = nil
         @Published fileprivate (set) var batteryLevelAvailable: Bool = false
         
         let signalChartViewModel: SignalChartScreen.ViewModel
@@ -152,6 +173,7 @@ extension PeripheralScreen.ViewModel {
             alertError: Error? = nil,
             internalAlertError: AlertError? = nil,
             batteryLevelData: [ChartTimeData<Battery.Level>] = [],
+            currentBatteryLevel: UInt? = nil,
             batteryLevelAvailable: Bool = false,
             signalChartViewModel: SignalChartScreen.ViewModel = SignalChartScreen.MockViewModel.shared,
             attributeTableViewModel: AttributeTableScreen.ViewModel = AttributeTableScreen.MockViewModel.shared,
@@ -161,6 +183,7 @@ extension PeripheralScreen.ViewModel {
             self.alertError = alertError
             self.internalAlertError = internalAlertError
             self.batteryLevelData = batteryLevelData
+            self.currentBatteryLevel = currentBatteryLevel
             self.batteryLevelAvailable = batteryLevelAvailable
             self.signalChartViewModel = signalChartViewModel
             self.attributeTableViewModel = attributeTableViewModel
