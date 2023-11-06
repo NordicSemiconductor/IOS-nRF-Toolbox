@@ -15,6 +15,8 @@ struct AttributeList: View {
     
     var body: some View {
         if attributes.isEmpty {
+            EmptyView()
+            /*
             NoContentView(
                 configuration:
                     ContentUnavailableConfiguration(
@@ -22,6 +24,7 @@ struct AttributeList: View {
                         systemName: "table"
                     )
             )
+             */
         } else {
             List(attributes, id: \.id) {
                 AttributeItemView(attribute: $0)
