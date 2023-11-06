@@ -8,23 +8,15 @@
 
 import SwiftUI
 import iOS_Bluetooth_Numbers_Database
-import iOS_Common_Libraries
 
 struct AttributeList: View {
     let attributes: [Attribute]
     
     var body: some View {
         if attributes.isEmpty {
-            EmptyView()
-            /*
             NoContentView(
-                configuration:
-                    ContentUnavailableConfiguration(
-                        text: "Attributes not found",
-                        systemName: "table"
-                    )
-            )
-             */
+                title: "Attributes not found",
+                systemImage: "table")
         } else {
             List(attributes, id: \.id) {
                 AttributeItemView(attribute: $0)

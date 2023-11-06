@@ -34,7 +34,7 @@ struct NoContentView: View {
                 switch style {
                 case .normal:
                     new
-                        .foregroundStyle(Color.nordicBlue)
+//                        .foregroundStyle(Color.nordicBlue)
                 case .error:
                     new
                         .foregroundStyle(Color.nordicRed)

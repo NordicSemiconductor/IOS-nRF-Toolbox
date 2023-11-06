@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import iOS_Common_Libraries
 
 private typealias Env = HeartRateScreen.ViewModel.Environment
 
@@ -29,7 +28,7 @@ struct HeartRateView: View {
     
     var body: some View {
         if environment.data.isEmpty {
-            ContentUnavailableView(configuration: ContentUnavailableConfiguration(text: "No HR Data", systemName: "waveform.path.ecg.rectangle"))
+            NoContentView(title: "No Heart Rate Data", systemImage: "waveform.path.ecg.rectangle")
         } else {
             HeartRateChart()
         }

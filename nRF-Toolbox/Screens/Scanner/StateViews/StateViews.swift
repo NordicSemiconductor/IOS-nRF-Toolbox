@@ -7,17 +7,14 @@
 //
 
 import SwiftUI
-import iOS_Common_Libraries
 
 struct StateViews {
     struct Unsupported: View {
         var body: some View {
-            ContentUnavailableView(
-                configuration: ContentUnavailableConfiguration(
-                    text: "Bluetooth is Unavailable",
-                    secondaryText: "It looks like your device doesn't support bluetooth",
-                    systemName: "hand.thumbsdown"
-                )
+            NoContentView(
+                title: "Bluetooth is Unavailable",
+                systemImage: "hand.thumbsdown",
+                description: "It looks like your device doesn't support bluetooth"
             )
             .padding()
         }
@@ -25,49 +22,43 @@ struct StateViews {
     
     struct Unauthorized: View {
         var body: some View {
-            ContentUnavailableView(
-                configuration: ContentUnavailableConfiguration(
-                    text: "No Permission Granted",
-                    secondaryText: "Bluetooth is not authorized. Open settings and give access the application to use Bluetooth.",
-                    systemName: "xmark.seal"
-                ),
-                actions: {
-                    Button("Open Settings") {
-                        // TODO: Open Settings
-                    }
-                    .buttonStyle(NordicSecondary())
+            VStack {
+                NoContentView(
+                    title: "No Permission Granted",
+                    systemImage: "xmark.seal",
+                    description: "Bluetooth is not authorized. Open settings and give access the application to use Bluetooth."
+                )
+                Button("Open Settings") {
+                    // TODO: Open Settings
                 }
-            )
+                .buttonStyle(.bordered)
+            }
             .padding()
         }
     }
     
     struct Disabled: View {
         var body: some View {
-            ContentUnavailableView(
-                configuration: ContentUnavailableConfiguration(
-                    text: "Bluetooth is Turned Off",
-                    secondaryText: "It looks like Bluetooth is turnd off. You can turn it on in Settings",
-                    systemName: "gear"
-                ),
-                actions: {
-                    Button("Open Settings") {
-                        // TODO: Open Settings
-                    }
-                    .buttonStyle(NordicSecondary())
+            VStack {
+                NoContentView(
+                    title: "Bluetooth is Turned Off",
+                    systemImage: "gear",
+                    description: "It looks like Bluetooth is turnd off. You can turn it on in Settings"
+                )
+                Button("Open Settings") {
+                    // TODO: Open Settings
                 }
-            )
+                .buttonStyle(.bordered)
+            }
             .padding()
         }
     }
     
     struct EmptyResults: View {
         var body: some View {
-            ContentUnavailableView(
-                configuration: ContentUnavailableConfiguration(
-                    text: "Scanning ...",
-                    systemName: "binoculars"
-                )
+            NoContentView(
+                title: "Scanning ...",
+                systemImage: "binoculars"
             )
         }
     }

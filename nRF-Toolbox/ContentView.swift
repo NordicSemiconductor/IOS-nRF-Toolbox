@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import iOS_Common_Libraries
 
 struct ContentView: View {
     @EnvironmentObject var hudState: HUDState
@@ -18,12 +17,10 @@ struct ContentView: View {
                 ConnectedDevicesScreen()
                     .navigationTitle("Connected Devices")
             } detail: {
-                ContentUnavailableView(
-                    configuration: ContentUnavailableConfiguration(
-                        text: "Device is not selected",
-                        secondaryText: "Select any device from the list of connected devices",
-                        systemName: "filemenu.and.selection"
-                    ))
+                NoContentView(
+                    title: "Device is not selected",
+                    systemImage: "filemenu.and.selection",
+                    description: "Select any device from the list of connected devices")
             }
         }
     }

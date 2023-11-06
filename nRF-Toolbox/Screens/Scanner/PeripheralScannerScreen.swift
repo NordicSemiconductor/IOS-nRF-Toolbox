@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import iOS_Common_Libraries
 
 struct PeripheralScannerScreen: View {
     @ObservedObject var viewModel: ViewModel
