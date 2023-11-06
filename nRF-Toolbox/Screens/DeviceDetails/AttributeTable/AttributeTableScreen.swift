@@ -37,9 +37,12 @@ struct AttributeTableView: View {
     
     @ViewBuilder
     private var placeholder: some View {
+        /*
         NoContentView(configuration:
                 .init(text: "Discovering . . .", systemName: "table")
         )
+         */
+        EmptyView()
     }
 }
 

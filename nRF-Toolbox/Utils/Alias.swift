@@ -8,9 +8,7 @@
 
 import Foundation
 import CoreBluetoothMock_Collection
-import iOS_Common_Libraries
 
 typealias SensorLocation = RunningSpeedAndCadence.SensorLocation
 typealias RSCFeature = RunningSpeedAndCadence.RSCFeature
 typealias SupportedSensorLocationsResponse = RunningSpeedAndCadence.SupportedSensorLocations
-typealias NoContentView = iOS_Common_Libraries.ContentUnavailableView

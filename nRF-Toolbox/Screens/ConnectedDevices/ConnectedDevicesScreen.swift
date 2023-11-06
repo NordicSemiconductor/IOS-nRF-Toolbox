@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import iOS_Common_Libraries
 
 struct ConnectedDevicesScreen: View {
     @StateObject var viewModel = ViewModel()

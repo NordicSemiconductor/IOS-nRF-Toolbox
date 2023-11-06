@@ -8,7 +8,6 @@
 
 import SwiftUI
 import Combine
-import iOS_Common_Libraries
 import CoreBluetoothMock
 import iOS_BLE_Library_Mock
 import CoreBluetoothMock_Collection
@@ -76,13 +75,7 @@ struct SensorSettings: View {
     
     @ViewBuilder
     var noContent: some View {
-        ContentUnavailableView(
-            configuration: ContentUnavailableConfiguration(
-                text: "Settings Unavailable",
-                secondaryText: "There's no settings to edit",
-                image: Image(systemName: "sensor")
-            )
-        )
+        NoContentView(title: "Settings Unavailable", systemImage: "sensor", description: "There's no settings to edit")
     }
     
     @ViewBuilder
