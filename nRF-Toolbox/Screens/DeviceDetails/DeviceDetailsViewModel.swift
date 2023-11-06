@@ -40,15 +40,9 @@ extension DeviceDetailsScreen {
             self.peripheral = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
             self.environment = Environment(peripheralViewModel: PeripheralScreen.ViewModel(peripheral: peripheral))
             self.environment.peripheralName = peripheral.name
-        }
-        
-        func discoverSupportedServices() async {
-            let supportedServices = Service.supportedServices.map { CBUUID(service: $0) }
-            do {
-                discoveredServices = try await peripheral.discoverServices(serviceUUIDs: supportedServices).value
-                self.environment.services = discoveredServices.map { Service(cbService: $0) }
-            } catch {
-                environment.error = ReadableError(title: "Error", message: "Unnable to discover services")
+            
+            Task {
+                await discoverSupportedServices()
             }
         }
     }
@@ -56,10 +50,19 @@ extension DeviceDetailsScreen {
 
 // MARK: - Service View Models
 extension DeviceDetailsScreen.ViewModel {
-    
+    private func discoverSupportedServices() async {
+        let supportedServices = Service.supportedServices.map { CBUUID(service: $0) }
+        do {
+            discoveredServices = try await peripheral.discoverServices(serviceUUIDs: supportedServices).value
+            self.environment.services = discoveredServices.map { Service(cbService: $0) }
+        } catch {
+            environment.error = ReadableError(title: "Error", message: "Unnable to discover services")
+        }
+    }
 }
 
 extension DeviceDetailsScreen.ViewModel {
+    @MainActor
     class Environment: ObservableObject {
         @Published fileprivate (set) var services: [Service]
         

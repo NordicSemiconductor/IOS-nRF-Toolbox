@@ -36,6 +36,12 @@ extension PeripheralScreen {
             
             setupBattery()
         }
+        
+        func setupBattery() {
+            Task {
+                try? await discoverServices()
+            }
+        }
     }
     
     #if DEBUG
@@ -48,11 +54,6 @@ extension PeripheralScreen {
 
 // MARK: Private Methods
 private extension ViewModel {
-    private func setupBattery() {
-        Task {
-            try? await discoverServices()
-        }
-    }
     
     private func discoverServices() async throws {
         // Discover Services

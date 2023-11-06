@@ -24,36 +24,26 @@ struct DeviceDetailsScreen: View {
                     HeartRateScreen(viewModel: vm)
                 }
             default:
-                EmptyView()
+                Text("No Supported Services")
             }
-        } signalChartContent: {
-            SignalChartScreen(viewModel: viewModel.signalChartViewModel)
         }
         .environmentObject(viewModel.environment)
-        .task {
-            await viewModel.discoverSupportedServices()
-        }
     }
 }
 
-struct DeviceDetailsView<ServiceView: View, SignalView: View>: View {
+struct DeviceDetailsView<ServiceView: View>: View {
     @EnvironmentObject var environment: DeviceDetailsScreen.ViewModel.Environment
     
     @State private var showInspector: Bool = false
     
     let serviceViewContent: (Service) -> ServiceView
-    let signalChartContent: () -> SignalView
     
     #if os(iOS)
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     #endif
     
-    init(
-        @ViewBuilder serviceViewContent: @escaping (Service) -> ServiceView,
-        @ViewBuilder signalChartContent: @escaping () -> SignalView
-    ) {
+    init(@ViewBuilder serviceViewContent: @escaping (Service) -> ServiceView) {
         self.serviceViewContent = serviceViewContent
-        self.signalChartContent = signalChartContent
     }
     
     var body: some View {
@@ -146,8 +136,6 @@ private typealias Environment = DeviceDetailsScreen.ViewModel.Environment
     NavigationStack {
         DeviceDetailsView(serviceViewContent: { service in
             Text(service.name)
-        }, signalChartContent: {
-            Text("Chart View")
         })
         .navigationTitle("Device Name")
         .environmentObject(Environment(services: [.runningSpeedAndCadence, .heartRate, .adafruitAccelerometer]))

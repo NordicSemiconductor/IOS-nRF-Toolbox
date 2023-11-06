@@ -17,6 +17,9 @@ struct PeripheralScreen: View {
 
     var body: some View {
         PeripheralView()
+            .task {
+                viewModel.setupBattery()
+            }
             .environmentObject(viewModel.env)
     }
 }

@@ -45,6 +45,12 @@ struct ConnectedDevicesView<ScannerScreen: View> : View {
                     .environmentObject(environment)
             } else {
                 ConnectedDeviceList()
+                Button("Connect Another") {
+                    environment.showScanner = true 
+                }
+#if os(macOS)
+                .padding()
+#endif
             }
         }
         .sheet(isPresented: $environment.showScanner, content: scannerScreen)
