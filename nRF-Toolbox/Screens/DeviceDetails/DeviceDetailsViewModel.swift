@@ -38,7 +38,7 @@ extension DeviceDetailsScreen {
         
         init(cbPeripheral: CBPeripheral) {
             self.peripheral = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
-            self.environment = Environment(peripheralViewModel: PeripheralScreen.ViewModel(peripheral: peripheral))
+            self.environment = Environment(peripheralViewModel: PeripheralInspectorScreen.ViewModel(peripheral: peripheral))
             self.environment.peripheralName = peripheral.name
             
             Task {
@@ -70,12 +70,12 @@ extension DeviceDetailsScreen.ViewModel {
         
         @Published var peripheralName: String?
         
-        fileprivate (set) var peripheralViewModel: PeripheralScreen.ViewModel
+        fileprivate (set) var peripheralViewModel: PeripheralInspectorScreen.ViewModel
         
         init(
             services: [Service] = [],
             error: ReadableError? = nil,
-            peripheralViewModel: PeripheralScreen.ViewModel = PeripheralScreen.MockViewModel.shared
+            peripheralViewModel: PeripheralInspectorScreen.ViewModel = PeripheralInspectorScreen.MockViewModel.shared
         ) {
             self.services = services
             self.error = error

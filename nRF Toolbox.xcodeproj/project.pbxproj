@@ -86,7 +86,7 @@
 		017D104A2A5809E500E38E5F /* nRF_ToolboxUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017D10492A5809E500E38E5F /* nRF_ToolboxUITests.swift */; };
 		017D104C2A5809E500E38E5F /* nRF_ToolboxUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017D104B2A5809E500E38E5F /* nRF_ToolboxUITestsLaunchTests.swift */; };
 		017D105B2A580D3800E38E5F /* iOSCommonLibraries in Frameworks */ = {isa = PBXBuildFile; productRef = 017D105A2A580D3800E38E5F /* iOSCommonLibraries */; };
-		0180A29C2AEFBBC200090F6D /* PeripheralScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0180A29A2AEFBBC200090F6D /* PeripheralScreen.swift */; };
+		0180A29C2AEFBBC200090F6D /* PeripheralInspectorScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0180A29A2AEFBBC200090F6D /* PeripheralInspectorScreen.swift */; };
 		0180A29D2AEFBBC200090F6D /* PeripheralViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0180A29B2AEFBBC200090F6D /* PeripheralViewModel.swift */; };
 		018873C02A58320600253273 /* ConnectedDevicesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873BF2A58320600253273 /* ConnectedDevicesScreen.swift */; };
 		018873C22A58322C00253273 /* ee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873C12A58322C00253273 /* ee.swift */; };
@@ -488,7 +488,7 @@
 		017D10492A5809E500E38E5F /* nRF_ToolboxUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nRF_ToolboxUITests.swift; sourceTree = "<group>"; };
 		017D104B2A5809E500E38E5F /* nRF_ToolboxUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nRF_ToolboxUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		017D105C2A580DCD00E38E5F /* IOS-Common-Libraries */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "IOS-Common-Libraries"; path = "../IOS-Common-Libraries"; sourceTree = "<group>"; };
-		0180A29A2AEFBBC200090F6D /* PeripheralScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralScreen.swift; sourceTree = "<group>"; };
+		0180A29A2AEFBBC200090F6D /* PeripheralInspectorScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralInspectorScreen.swift; sourceTree = "<group>"; };
 		0180A29B2AEFBBC200090F6D /* PeripheralViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralViewModel.swift; sourceTree = "<group>"; };
 		018873BF2A58320600253273 /* ConnectedDevicesScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedDevicesScreen.swift; sourceTree = "<group>"; };
 		018873C12A58322C00253273 /* ee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ee.swift; sourceTree = "<group>"; };
@@ -1199,7 +1199,7 @@
 			isa = PBXGroup;
 			children = (
 				0108E87C2AF1654000C8B096 /* Views */,
-				0180A29A2AEFBBC200090F6D /* PeripheralScreen.swift */,
+				0180A29A2AEFBBC200090F6D /* PeripheralInspectorScreen.swift */,
 				0180A29B2AEFBBC200090F6D /* PeripheralViewModel.swift */,
 			);
 			path = Peripheral;
@@ -2759,7 +2759,7 @@
 				013E5D8F2ADFDDC600B9C475 /* NumberedColumnGrid.swift in Sources */,
 				01AB7B752A77BFB400AEDDCD /* CBUUID+Ext.swift in Sources */,
 				01FD68D02AE82C330021101C /* Attribute+Preview.swift in Sources */,
-				0180A29C2AEFBBC200090F6D /* PeripheralScreen.swift in Sources */,
+				0180A29C2AEFBBC200090F6D /* PeripheralInspectorScreen.swift in Sources */,
 				0164A46E2AD58EB00093E501 /* RSSIItem_Preview.swift in Sources */,
 				01ABB07E2AE700E100615A21 /* AttributeTableViewModel.swift in Sources */,
 				013E5D982AE02A2400B9C475 /* RunningValuesGridItem.swift in Sources */,

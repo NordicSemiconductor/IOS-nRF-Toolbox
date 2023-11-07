@@ -83,5 +83,11 @@ extension AttributeTableScreen.ViewModel {
 extension AttributeTableScreen.ViewModel.Environment {
     enum CriticalError: Error {
         case unableBuildAttributeTable
+        
+        var localizedDescription: String {
+            switch self {
+            case .unableBuildAttributeTable: "Unable to build attribute table." 
+            }
+        }
     }
 }

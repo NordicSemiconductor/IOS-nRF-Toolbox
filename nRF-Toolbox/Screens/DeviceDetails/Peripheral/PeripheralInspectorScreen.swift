@@ -9,14 +9,14 @@
 import SwiftUI
 import CoreBluetoothMock_Collection
 
-private typealias Env = PeripheralScreen.ViewModel.Environment
+private typealias Env = PeripheralInspectorScreen.ViewModel.Environment
 
-struct PeripheralScreen: View {
+struct PeripheralInspectorScreen: View {
 
     @ObservedObject var viewModel: ViewModel
 
     var body: some View {
-        PeripheralView()
+        PeripheralInspectorView()
             .task {
                 viewModel.setupBattery()
             }
@@ -24,7 +24,7 @@ struct PeripheralScreen: View {
     }
 }
 
-struct PeripheralView: View {
+struct PeripheralInspectorView: View {
     @EnvironmentObject private var environment: Env
     @State private var disconnectAlertShow = false
     @State private var showAttributeTable = false
@@ -116,7 +116,7 @@ struct PeripheralView: View {
 #Preview {
     NavigationStack {
         TabView {
-            PeripheralView()
+            PeripheralInspectorView()
                 .environmentObject(Env(
                     batteryLevelData: Battery.preview,
                     batteryLevelAvailable: true

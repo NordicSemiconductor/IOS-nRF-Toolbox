@@ -28,7 +28,9 @@ struct AttributeTableView: View {
     @EnvironmentObject private var environment: Env
 
     var body: some View {
-        if let attributeTable = environment.attributeTable {
+        if let criticalError = environment.criticalError {
+            NoContentView(title: "Error", systemImage: "exclamationmark.triangle", description: criticalError.localizedDescription, style: .error)
+        } else if let attributeTable = environment.attributeTable {
            AttributeList(attributes: attributeTable)
         } else {
             placeholder
@@ -37,12 +39,7 @@ struct AttributeTableView: View {
     
     @ViewBuilder
     private var placeholder: some View {
-        /*
-        NoContentView(configuration:
-                .init(text: "Discovering . . .", systemName: "table")
-        )
-         */
-        EmptyView()
+        NoContentView(title: "Discovering . . .", systemImage: "table")
     }
 }
 
@@ -57,5 +54,12 @@ struct AttributeTableView: View {
     AttributeTableView()
         .environmentObject(Env(
             attributeTable: nil
+        ))
+}
+
+#Preview {
+    AttributeTableView()
+        .environmentObject(Env(
+            criticalError: .unableBuildAttributeTable
         ))
 }

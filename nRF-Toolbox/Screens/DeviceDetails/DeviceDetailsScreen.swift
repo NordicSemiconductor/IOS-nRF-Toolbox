@@ -123,7 +123,7 @@ struct DeviceDetailsView<ServiceView: View>: View {
     
     @ViewBuilder
     private var peripheralScreen: some View {
-        PeripheralScreen(viewModel: environment.peripheralViewModel)
+        PeripheralInspectorScreen(viewModel: environment.peripheralViewModel)
             .tabItem {
                 Label("Peripheral", systemImage: "terminal")
             }

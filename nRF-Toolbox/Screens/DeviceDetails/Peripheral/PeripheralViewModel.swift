@@ -12,9 +12,9 @@ import iOS_BLE_Library_Mock
 import iOS_Bluetooth_Numbers_Database
 import CoreBluetoothMock_Collection
 
-private typealias ViewModel = PeripheralScreen.ViewModel
+private typealias ViewModel = PeripheralInspectorScreen.ViewModel
 
-extension PeripheralScreen {
+extension PeripheralInspectorScreen {
     @MainActor 
     class ViewModel: ObservableObject {
         let env: Environment
@@ -149,7 +149,7 @@ private extension ViewModel {
 }
 
 // MARK: - Environment
-extension PeripheralScreen.ViewModel {
+extension PeripheralInspectorScreen.ViewModel {
     @MainActor
     class Environment: ObservableObject {
         @Published fileprivate (set) var criticalError: CriticalError?
@@ -194,7 +194,7 @@ extension PeripheralScreen.ViewModel {
 }
 
 // MARK: - Errors
-extension PeripheralScreen.ViewModel.Environment {
+extension PeripheralInspectorScreen.ViewModel.Environment {
     enum CriticalError: LocalizedError {
         case unknown
     }
@@ -204,7 +204,7 @@ extension PeripheralScreen.ViewModel.Environment {
     }
 }
 
-extension PeripheralScreen.ViewModel.Environment.CriticalError {
+extension PeripheralInspectorScreen.ViewModel.Environment.CriticalError {
     var errorDescription: String? {
         switch self {
         case .unknown:
@@ -213,7 +213,7 @@ extension PeripheralScreen.ViewModel.Environment.CriticalError {
     }
 }
 
-extension PeripheralScreen.ViewModel.Environment.AlertError {
+extension PeripheralInspectorScreen.ViewModel.Environment.AlertError {
     var errorDescription: String? {
         switch self {
         case .unknown:
