@@ -24,7 +24,11 @@ struct DeviceDetailsScreen: View {
                     HeartRateScreen(viewModel: vm)
                 }
             default:
-                Text("No Supported Services")
+                NoContentView(
+                    title: "No Services",
+                    systemImage: "list.bullet.rectangle.portrait",
+                    description: "No Supported Services"
+                )
             }
         }
         .environmentObject(viewModel.environment)
@@ -53,6 +57,15 @@ struct DeviceDetailsView<ServiceView: View>: View {
     
     @ViewBuilder
     private var mainView: some View {
+        if let criticalError = environment.criticalError {
+            NoContentView(title: criticalError.title, systemImage: "exclamationmark.triangle", description: criticalError.message, style: .error)
+        } else {
+            serviceView
+        }
+    }
+    
+    @ViewBuilder
+    private var serviceView: some View {
         if #available(iOS 17, macOS 14, *) {
             newView
                 .toolbar {
@@ -110,14 +123,20 @@ struct DeviceDetailsView<ServiceView: View>: View {
 
     @ViewBuilder
     private var serviceViews: some View {
-        ForEach(environment.services.filter(\.isSupported)) { service in
-            serviceViewContent(service)
-                .tabItem {
-                    Label(
-                        title: { Text(service.name) },
-                        icon: { service.systemImage }
-                    )
-                }
+        if environment.services.filter(\.isSupported).isEmpty {
+            NoContentView(
+                title: "No Supported Services",
+                systemImage: "list.bullet.rectangle.portrait")
+        } else {
+            ForEach(environment.services.filter(\.isSupported)) { service in
+                serviceViewContent(service)
+                    .tabItem {
+                        Label(
+                            title: { Text(service.name) },
+                            icon: { service.systemImage }
+                        )
+                    }
+            }
         }
     }
     
@@ -137,7 +156,30 @@ private typealias Environment = DeviceDetailsScreen.ViewModel.Environment
         DeviceDetailsView(serviceViewContent: { service in
             Text(service.name)
         })
-        .navigationTitle("Device Name")
         .environmentObject(Environment(services: [.runningSpeedAndCadence, .heartRate, .adafruitAccelerometer]))
+    }
+}
+
+#Preview {
+    NavigationStack {
+        DeviceDetailsView(serviceViewContent: { service in
+            Text(service.name)
+        })
+        .environmentObject(
+            Environment(
+                services: []))
+    }
+}
+
+#Preview {
+    NavigationStack {
+        DeviceDetailsView(serviceViewContent: { service in
+            Text(service.name)
+        })
+        .environmentObject(
+            Environment(
+                criticalError: .disconnectedWithError(nil)
+            )
+        )
     }
 }

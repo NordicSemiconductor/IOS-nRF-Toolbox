@@ -56,7 +56,7 @@ extension DeviceDetailsScreen.ViewModel {
             discoveredServices = try await peripheral.discoverServices(serviceUUIDs: supportedServices).value
             self.environment.services = discoveredServices.map { Service(cbService: $0) }
         } catch {
-            environment.error = ReadableError(title: "Error", message: "Unnable to discover services")
+            environment.alertError = .servicesNotFount
         }
     }
 }
@@ -66,7 +66,8 @@ extension DeviceDetailsScreen.ViewModel {
     class Environment: ObservableObject {
         @Published fileprivate (set) var services: [Service]
         
-        @Published var error: ReadableError?
+        @Published var criticalError: CriticalError?
+        @Published var alertError: AlertError?
         
         @Published var peripheralName: String?
         
@@ -74,12 +75,52 @@ extension DeviceDetailsScreen.ViewModel {
         
         init(
             services: [Service] = [],
-            error: ReadableError? = nil,
+            criticalError: CriticalError? = nil,
+            alertError: AlertError? = nil,
             peripheralViewModel: PeripheralInspectorScreen.ViewModel = PeripheralInspectorScreen.MockViewModel.shared
         ) {
             self.services = services
-            self.error = error
+            self.criticalError = criticalError
+            self.alertError = alertError
             self.peripheralViewModel = peripheralViewModel
+        }
+    }
+}
+
+extension DeviceDetailsScreen.ViewModel {
+    enum CriticalError: Error {
+        case disconnectedWithError(Error?)
+
+        var title: String {
+            switch self {
+            case .disconnectedWithError:
+                return "Disconnected"
+            }
+        }
+
+        var message: String {
+            switch self {
+            case .disconnectedWithError(let error):
+                return error?.localizedDescription ?? "Disconnected with unknown error."
+            }
+        }
+    }
+
+    enum AlertError: Error {
+        case servicesNotFount
+
+        var title: String {
+            switch self {
+            case .servicesNotFount:
+                return "Services not found"
+            }
+        }
+
+        var message: String {
+            switch self {
+            case .servicesNotFount:
+                return "Error occured while discovering services."
+            }
         }
     }
 }
