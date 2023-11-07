@@ -66,7 +66,7 @@ extension ConnectedDevicesScreen.ViewModel {
                 }
                 
                 if let err = device.1 {
-                    // TODO: Show that the device was disconnected unexpectadly
+                    self.environment.connectedDevices[deviceIndex].error = err
                 } else {
                     self.environment.connectedDevices.remove(at: deviceIndex)
                 }
@@ -79,6 +79,7 @@ extension ConnectedDevicesScreen.ViewModel {
     struct Device: Identifiable, Equatable {
         let name: String?
         let id: UUID
+        var error: Error?
         
         static func == (lhs: Device, rhs: Device) -> Bool {
             lhs.id == rhs.id

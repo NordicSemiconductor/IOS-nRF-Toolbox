@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import iOS_Common_Libraries
 
 fileprivate typealias Device = ConnectedDevicesScreen.ViewModel.Device
 
@@ -26,7 +27,14 @@ struct ConnectedDeviceList: View {
                     #endif
                 }
             } label: {
-                Text(device.name ?? "unnamed")
+                HStack {
+                    Text(device.name ?? "unnamed")
+                    Spacer()
+                    if case .some = device.error {
+                        Image(systemName: "exclamationmark.circle")
+                            .foregroundStyle(Color.nordicRed)
+                    }
+                }
             }
         }
     }
@@ -37,7 +45,8 @@ struct ConnectedDeviceList: View {
     NavigationStack {
         ConnectedDeviceList()
             .environmentObject(ConnectedDevicesScreen.ViewModel.Environment(connectedDevices: [
-                Device(name: "Device 1", id: UUID())
+                Device(name: "Device 1", id: UUID()),
+                Device(name: "Device 1", id: UUID(), error: ReadableError(title: "some", message: nil))
             ]))
     }
 }
