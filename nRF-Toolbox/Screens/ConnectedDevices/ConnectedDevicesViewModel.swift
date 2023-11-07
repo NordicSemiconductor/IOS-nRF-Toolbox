@@ -40,7 +40,7 @@ extension ConnectedDevicesScreen.ViewModel {
             guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [device.id]).first else {
                 fatalError()
             }
-            let newViewModel = DeviceDetailsScreen.ViewModel(cbPeripheral: peripheral)
+            let newViewModel = DeviceDetailsScreen.ViewModel(cbPeripheral: peripheral, centralManager: centralManager)
             deviceViewModels[device.id] = newViewModel
             return newViewModel
         }

@@ -10,7 +10,7 @@ import SwiftUI
 import iOS_Bluetooth_Numbers_Database
 
 struct DeviceDetailsScreen: View {
-    @ObservedObject var viewModel: ViewModel
+    let viewModel: ViewModel
     
     var body: some View {
         DeviceDetailsView { service in
@@ -35,6 +35,8 @@ struct DeviceDetailsScreen: View {
     }
 }
 
+private typealias VM = DeviceDetailsScreen.ViewModel
+
 struct DeviceDetailsView<ServiceView: View>: View {
     @EnvironmentObject var environment: DeviceDetailsScreen.ViewModel.Environment
     
@@ -57,10 +59,33 @@ struct DeviceDetailsView<ServiceView: View>: View {
     
     @ViewBuilder
     private var mainView: some View {
-        if let criticalError = environment.criticalError {
-            NoContentView(title: criticalError.title, systemImage: "exclamationmark.triangle", description: criticalError.message, style: .error)
+        if environment.reconnecting {
+            NoContentView(title: "Reconnecting . . .", systemImage: "arrow.circlepath")
+        } else if let criticalError = environment.criticalError {
+            errorView(criticalError)
         } else {
             serviceView
+        }
+    }
+    
+    @ViewBuilder
+    private func errorView(_ error: VM.CriticalError) -> some View {
+        VStack {
+            NoContentView(title: error.title, systemImage: "exclamationmark.triangle", description: error.message, style: .error)
+            
+            Button("Reconnect") {
+                Task {
+                    await environment.reconnect?()
+                }
+            }
+            .buttonStyle(.borderedProminent)
+            .padding()
+            
+            Button("Remove Device") {
+                
+            }
+            .buttonStyle(.bordered)
+            .foregroundStyle(Color.nordicRed)
         }
     }
     
@@ -168,6 +193,20 @@ private typealias Environment = DeviceDetailsScreen.ViewModel.Environment
         .environmentObject(
             Environment(
                 services: []))
+    }
+}
+
+#Preview {
+    NavigationStack {
+        DeviceDetailsView(serviceViewContent: { service in
+            Text(service.name)
+        })
+        .environmentObject(
+            Environment(
+                reconnecting: true,
+                criticalError: .disconnectedWithError(nil)
+            )
+        )
     }
 }
 

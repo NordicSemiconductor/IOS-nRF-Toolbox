@@ -67,6 +67,16 @@ extension HeartRateScreen {
     }
 }
 
+extension HeartRateScreen.ViewModel: SupportedServiceViewModel {
+    func onConnect() {
+        
+    }
+    
+    func onDisconnect() {
+        
+    }
+}
+
 // MARK: Private Methods
 private extension ViewModel {
     func discoverCharacteristics() async throws {
