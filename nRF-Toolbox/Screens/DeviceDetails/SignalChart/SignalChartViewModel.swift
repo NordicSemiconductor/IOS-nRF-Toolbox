@@ -13,7 +13,7 @@ import Charts
 
 extension SignalChartScreen {
     @MainActor
-    class ViewModel: ObservableObject {
+    class ViewModel {
         let environment = Environment()
         let peripheral: Peripheral
         
@@ -23,13 +23,12 @@ extension SignalChartScreen {
             self.peripheral = peripheral
         }
         
-        public func readSignal() {
-            Timer.publish(every: 1, on: .main, in: .default)
+        private func readSignal() {
+            Timer.publish(every: 1, on: .main, in: .common)
                 .autoconnect()
-                .flatMap { _ in
+                .flatMap { [unowned self] _ in
                     self.peripheral.readRSSI()
                         .timeout(0.9, scheduler: DispatchQueue.main)
-//                        .first()
                 }
                 .map { Environment.ChartData(date: Date(), signal: $0.intValue) }
                 .sink { completion in
@@ -39,7 +38,6 @@ extension SignalChartScreen {
                     case .failure: print("failure")
                     }
                 } receiveValue: { [unowned self] newSignalItem in
-//                    print(newSignalItem.signal)
                     if newSignalItem.date.timeIntervalSince1970 - environment.scrolPosition.timeIntervalSince1970 < CGFloat(environment.visibleDomain + 5) || environment.chartData.isEmpty {
                         environment.scrolPosition = Date()
                     }
@@ -57,6 +55,14 @@ extension SignalChartScreen {
                 }
                 .store(in: &cancelable)
         }
+        
+        func onConnect() {
+            readSignal()
+        }
+        
+        func onDisconnect() {
+            self.cancelable.removeAll()
+        }
     }
     
     // MARK: - Mock
@@ -64,8 +70,10 @@ extension SignalChartScreen {
     class MockViewModel: ViewModel {
         static let shared = MockViewModel(peripheral: .preview)
         
-        override func readSignal() {
-            environment.chartData = Environment.ChartData.preview
+        override func onConnect() {
+            DispatchQueue.main.async {
+                self.environment.chartData = Environment.ChartData.preview
+            }
         }
     }
 }

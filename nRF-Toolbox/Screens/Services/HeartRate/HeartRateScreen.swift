@@ -18,7 +18,7 @@ struct HeartRateScreen: View {
         HeartRateView()
             .environmentObject(viewModel.env)
             .task {
-                await viewModel.prepare()
+                viewModel.onConnect()
             }
     }
 }

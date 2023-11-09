@@ -39,7 +39,7 @@ struct ConnectedDevicesView<ScannerScreen: View> : View {
     var body: some View {
         VStack {
             if environment.connectedDevices.isEmpty {
-                ConnectedDevicesScreen.InitialStace()
+                ConnectedDevicesScreen.InitialState()
                     .padding()
                     .environmentObject(environment)
             } else {

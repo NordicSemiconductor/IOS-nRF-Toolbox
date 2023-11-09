@@ -40,7 +40,11 @@ extension ConnectedDevicesScreen.ViewModel {
             guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [device.id]).first else {
                 fatalError()
             }
-            let newViewModel = DeviceDetailsScreen.ViewModel(cbPeripheral: peripheral, centralManager: centralManager)
+            let newViewModel = DeviceDetailsScreen.ViewModel(cbPeripheral: peripheral, centralManager: centralManager) { [unowned self] uuid, vm in
+                _ = try await centralManager.cancelPeripheralConnection(peripheral).value
+                self.deviceViewModels.removeValue(forKey: uuid)
+                vm.onDisconnect()
+            }
             deviceViewModels[device.id] = newViewModel
             return newViewModel
         }
@@ -90,6 +94,7 @@ extension ConnectedDevicesScreen.ViewModel {
         @Published var showScanner: Bool = false
         
         @Published fileprivate (set) var connectedDevices: [Device]
+        @Published var selectedDevice: Device?
         
         let deviceViewModel: ((Device) -> (DeviceDetailsScreen.ViewModel))?
         

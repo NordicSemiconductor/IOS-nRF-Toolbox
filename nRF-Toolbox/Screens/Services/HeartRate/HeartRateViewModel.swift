@@ -69,11 +69,14 @@ extension HeartRateScreen {
 
 extension HeartRateScreen.ViewModel: SupportedServiceViewModel {
     func onConnect() {
-        
+        Task {
+            await prepare()
+        }
     }
     
     func onDisconnect() {
-        
+        cancelable.removeAll()
+        env.clear()
     }
 }
 
@@ -162,6 +165,12 @@ extension HeartRateScreen.ViewModel {
             self.alertError = alertError
             
             assert(capacity >= visibleDomain)
+        }
+        
+        fileprivate func clear() {
+//            data.removeAll()
+//            lowest = 40
+//            highest = 200
         }
     }
 }

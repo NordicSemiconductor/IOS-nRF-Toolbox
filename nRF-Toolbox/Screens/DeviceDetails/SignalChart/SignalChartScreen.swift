@@ -12,13 +12,13 @@ import Charts
 private typealias Env = SignalChartScreen.ViewModel.Environment
 
 struct SignalChartScreen: View {
-    @ObservedObject var viewModel: ViewModel
+    let viewModel: ViewModel
     
     var body: some View {
         SignalChartView()
             .padding()
             .onFirstAppear {
-                viewModel.readSignal()
+                viewModel.onConnect()
             }
             .environmentObject(viewModel.environment)
     }
