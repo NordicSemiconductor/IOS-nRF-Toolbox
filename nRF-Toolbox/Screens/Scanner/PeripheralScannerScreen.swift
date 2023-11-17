@@ -7,9 +7,14 @@
 //
 
 import SwiftUI
+import iOS_BLE_Library_Mock
 
 struct PeripheralScannerScreen: View {
-    @ObservedObject var viewModel: ViewModel
+    @StateObject var viewModel: ViewModel
+    
+    init(centralManager: CentralManager) {
+        self._viewModel = StateObject(wrappedValue: ViewModel(centralManager: centralManager))
+    }
     
     var body: some View {
         PeripheralScannerView()

@@ -10,7 +10,7 @@ import SwiftUI
 
 extension ConnectedDevicesScreen {
     struct InitialState: View {
-        @EnvironmentObject var environment: ViewModel.Environment
+        @EnvironmentObject var environment: ConnectedDevicesViewModel.Environment
         
         var body: some View {
             VStack {

@@ -13,6 +13,8 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
+            ConnectedDevicesScreen()
+            /*
             NavigationSplitView {
                 ConnectedDevicesScreen()
                     .navigationTitle("Connected Devices")
@@ -22,6 +24,7 @@ struct ContentView: View {
                     systemImage: "filemenu.and.selection",
                     description: "Select any device from the list of connected devices")
             }
+             */
         }
     }
 }
