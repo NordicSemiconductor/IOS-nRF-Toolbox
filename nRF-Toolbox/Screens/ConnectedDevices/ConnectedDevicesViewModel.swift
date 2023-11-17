@@ -14,7 +14,7 @@ import Combine
 class ConnectedDevicesViewModel: ObservableObject {
     typealias ScannerVM = PeripheralScannerScreen.ViewModel
     
-    private var deviceViewModels: [UUID: DeviceDetailsScreen.ViewModel] = [:]
+    private var deviceViewModels: [UUID: DeviceDetailsScreen.DeviceDetailsViewModel] = [:]
     private var cancelable = Set<AnyCancellable>()
     
     private (set) lazy var environment: Environment = Environment(deviceViewModel: { [unowned self] in self.deviceViewModel(for: $0.id)! })
@@ -29,17 +29,20 @@ class ConnectedDevicesViewModel: ObservableObject {
 }
 
 extension ConnectedDevicesViewModel {
-    func deviceViewModel(for deviceID: Device.ID) -> DeviceDetailsScreen.ViewModel? {
+    func deviceViewModel(for deviceID: Device.ID) -> DeviceDetailsScreen.DeviceDetailsViewModel? {
         if let vm = deviceViewModels[deviceID] {
             return vm
         } else {
             guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [deviceID]).first else {
                 return nil
             }
-            let newViewModel = DeviceDetailsScreen.ViewModel(cbPeripheral: peripheral, centralManager: centralManager) { [unowned self] uuid, vm in
+            let newViewModel = DeviceDetailsScreen.DeviceDetailsViewModel(cbPeripheral: peripheral, centralManager: centralManager) { [unowned self] uuid, vm in
                 _ = try await centralManager.cancelPeripheralConnection(peripheral).value
-                self.deviceViewModels.removeValue(forKey: uuid)
-                vm.onDisconnect()
+                // WORKAROND: DispatchQueue.main.asyncAfter is needed to make SwiftUI navigate back to empty list
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                    self.deviceViewModels.removeValue(forKey: uuid)
+                    vm.onDisconnect()
+                }
             }
             deviceViewModels[deviceID] = newViewModel
             return newViewModel
@@ -104,11 +107,11 @@ extension ConnectedDevicesViewModel {
             }
         }
         
-        let deviceViewModel: ((Device) -> (DeviceDetailsScreen.ViewModel))?
+        let deviceViewModel: ((Device) -> (DeviceDetailsScreen.DeviceDetailsViewModel))?
         
         init(
             connectedDevices: [Device] = [],
-            deviceViewModel: ((Device) -> (DeviceDetailsScreen.ViewModel))? = nil
+            deviceViewModel: ((Device) -> (DeviceDetailsScreen.DeviceDetailsViewModel))? = nil
         ) {
             self.connectedDevices = connectedDevices
             self.deviceViewModel = deviceViewModel

@@ -10,7 +10,7 @@ import SwiftUI
 import iOS_Bluetooth_Numbers_Database
 
 struct DeviceDetailsScreen: View {
-    let viewModel: ViewModel
+    let viewModel: DeviceDetailsViewModel
     
     var body: some View {
         DeviceDetailsView { service in
@@ -35,10 +35,11 @@ struct DeviceDetailsScreen: View {
     }
 }
 
-private typealias VM = DeviceDetailsScreen.ViewModel
+private typealias VM = DeviceDetailsScreen.DeviceDetailsViewModel
 
 struct DeviceDetailsView<ServiceView: View>: View {
-    @EnvironmentObject var environment: DeviceDetailsScreen.ViewModel.Environment
+    @EnvironmentObject var environment: DeviceDetailsScreen.DeviceDetailsViewModel.Environment
+    @EnvironmentObject var rootNavigationVM: RootNavigationViewModel
     
     @State private var showInspector: Bool = false
     
@@ -82,7 +83,13 @@ struct DeviceDetailsView<ServiceView: View>: View {
             .padding()
             
             Button("Remove Device") {
+                rootNavigationVM.selectedDevice = nil 
                 
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                    Task {
+                        try await environment.disconnectAndRemove?()
+                    }
+                }
             }
             .buttonStyle(.bordered)
             .foregroundStyle(Color.nordicRed)
@@ -174,7 +181,7 @@ struct DeviceDetailsView<ServiceView: View>: View {
     }
 }
 
-private typealias Environment = DeviceDetailsScreen.ViewModel.Environment
+private typealias Environment = DeviceDetailsScreen.DeviceDetailsViewModel.Environment
 
 #Preview {
     NavigationStack {

@@ -26,7 +26,9 @@ struct PeripheralInspectorScreen: View {
 
 struct PeripheralInspectorView: View {
     @EnvironmentObject private var environment: Env
-    @EnvironmentObject private var rootEnv: DeviceDetailsScreen.ViewModel.Environment
+    @EnvironmentObject private var rootEnv: DeviceDetailsScreen.DeviceDetailsViewModel.Environment
+    @EnvironmentObject private var rootNavigationMV: RootNavigationViewModel
+    
     @State private var disconnectAlertShow = false
     @State private var showAttributeTable = false
     
@@ -58,8 +60,11 @@ struct PeripheralInspectorView: View {
                 .foregroundStyle(.red)
                 .alert("Disconnect", isPresented: $disconnectAlertShow) {
                     Button("Yes") {
-                        Task {
-                            try await rootEnv.disconnectAndRemove?(environment.deviceId)                            
+                        rootNavigationMV.selectedDevice = nil
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                            Task {
+                                try await rootEnv.disconnectAndRemove?()
+                            }
                         }
                     }
                     Button("No") { }

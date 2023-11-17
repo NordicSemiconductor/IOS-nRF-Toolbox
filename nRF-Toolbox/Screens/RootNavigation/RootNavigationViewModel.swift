@@ -23,7 +23,7 @@ extension RootNavigationView {
 @MainActor
 class RootNavigationViewModel: ObservableObject {
     @Published var selectedCategory: RootNavigationView.MenuCategory.ID? = RootNavigationView.MenuCategory.devices.id
-    @Published var selectedDevice: ConnectedDevicesViewModel.Device.ID?
+    @Published var selectedDevice: ConnectedDevicesViewModel.Device.ID? = nil 
     
     static let shared = RootNavigationViewModel()
 }

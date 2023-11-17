@@ -25,14 +25,14 @@ protocol SupportedServiceViewModel {
 
 extension DeviceDetailsScreen {
     @MainActor
-    class ViewModel {
+    class DeviceDetailsViewModel {
         private var discoveredServices: [CBService] = []
         private var cancelable = Set<AnyCancellable>()
         
         let centralManager: CentralManager
         let peripheral: Peripheral
         
-        let disconnectAndRemove: (UUID, ViewModel) async throws -> ()
+        let disconnectAndRemove: (UUID, DeviceDetailsViewModel) async throws -> ()
         
         var id: UUID { peripheral.peripheral.identifier }
         
@@ -52,7 +52,7 @@ extension DeviceDetailsScreen {
         init (
             cbPeripheral: CBPeripheral,
             centralManager: CentralManager,
-            disconnectAndRemove: @escaping (UUID, ViewModel) async throws -> ()
+            disconnectAndRemove: @escaping (UUID, DeviceDetailsViewModel) async throws -> ()
         ) {
             self.peripheral = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
             self.centralManager = centralManager
@@ -61,7 +61,7 @@ extension DeviceDetailsScreen {
                 peripheralViewModel: PeripheralInspectorScreen.ViewModel(peripheral: peripheral)
             )
             self.environment.peripheralName = peripheral.name
-            self.environment.disconnectAndRemove = { [unowned self] id in try await disconnectAndRemove(id, self) }
+            self.environment.disconnectAndRemove = { [unowned self] in try await disconnectAndRemove(id, self) }
             
             l.i(#function)
             
@@ -82,7 +82,7 @@ extension DeviceDetailsScreen {
     }
 }
 
-extension DeviceDetailsScreen.ViewModel {
+extension DeviceDetailsScreen.DeviceDetailsViewModel {
     private struct TimeoutError: Error { }
     
     func onDisconnect() {
@@ -109,7 +109,7 @@ extension DeviceDetailsScreen.ViewModel {
 }
 
 // MARK: - Service View Models
-extension DeviceDetailsScreen.ViewModel {
+extension DeviceDetailsScreen.DeviceDetailsViewModel {
     private func discoverSupportedServices() async {
         let supportedServices = Service.supportedServices.map { CBUUID(service: $0) }
         do {
@@ -152,7 +152,7 @@ extension DeviceDetailsScreen.ViewModel {
     }
 }
 
-extension DeviceDetailsScreen.ViewModel {
+extension DeviceDetailsScreen.DeviceDetailsViewModel {
     @MainActor
     class Environment: ObservableObject {
         @Published fileprivate (set) var services: [Service]
@@ -167,7 +167,7 @@ extension DeviceDetailsScreen.ViewModel {
         
         fileprivate (set) var reconnect: (() async -> ())?
         
-        fileprivate (set) var disconnectAndRemove: ((UUID) async throws -> ())?
+        fileprivate (set) var disconnectAndRemove: (() async throws -> ())?
         
         private let l = L(subsystem: "com.nrf-toolbox", category: #function)
         
@@ -178,7 +178,7 @@ extension DeviceDetailsScreen.ViewModel {
             alertError: AlertError? = nil,
             peripheralViewModel: PeripheralInspectorScreen.ViewModel = PeripheralInspectorScreen.MockViewModel.shared,
             reconnect: (() async -> ())? = nil,
-            disconnectAndRemove: ((UUID) async throws -> ())? = nil
+            disconnectAndRemove: (() async throws -> ())? = nil
         ) {
             self.services = services
             self.reconnecting = reconnecting
@@ -196,7 +196,7 @@ extension DeviceDetailsScreen.ViewModel {
     
 }
 
-extension DeviceDetailsScreen.ViewModel {
+extension DeviceDetailsScreen.DeviceDetailsViewModel {
     enum CriticalError: Error {
         case disconnectedWithError(Error?)
 
