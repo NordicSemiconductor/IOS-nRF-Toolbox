@@ -28,6 +28,7 @@ struct PeripheralInspectorView: View {
     @EnvironmentObject private var environment: Env
     @EnvironmentObject private var rootEnv: DeviceDetailsScreen.DeviceDetailsViewModel.Environment
     @EnvironmentObject private var rootNavigationMV: RootNavigationViewModel
+    @EnvironmentObject private var connectedDeviceViewModel: ConnectedDevicesViewModel
     
     @State private var disconnectAlertShow = false
     @State private var showAttributeTable = false
@@ -63,7 +64,7 @@ struct PeripheralInspectorView: View {
                         rootNavigationMV.selectedDevice = nil
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
                             Task {
-                                try await rootEnv.disconnectAndRemove?()
+                                try await connectedDeviceViewModel.disconnectAndRemoveViewModel(environment.deviceId)
                             }
                         }
                     }

@@ -32,8 +32,6 @@ extension DeviceDetailsScreen {
         let centralManager: CentralManager
         let peripheral: Peripheral
         
-        let disconnectAndRemove: (UUID, DeviceDetailsViewModel) async throws -> ()
-        
         var id: UUID { peripheral.peripheral.identifier }
         
         let environment: Environment
@@ -51,17 +49,14 @@ extension DeviceDetailsScreen {
     
         init (
             cbPeripheral: CBPeripheral,
-            centralManager: CentralManager,
-            disconnectAndRemove: @escaping (UUID, DeviceDetailsViewModel) async throws -> ()
+            centralManager: CentralManager
         ) {
             self.peripheral = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
             self.centralManager = centralManager
-            self.disconnectAndRemove = disconnectAndRemove
             self.environment = Environment(
                 peripheralViewModel: PeripheralInspectorScreen.ViewModel(peripheral: peripheral)
             )
             self.environment.peripheralName = peripheral.name
-            self.environment.disconnectAndRemove = { [unowned self] in try await disconnectAndRemove(id, self) }
             
             l.i(#function)
             
@@ -167,8 +162,6 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
         
         fileprivate (set) var reconnect: (() async -> ())?
         
-        fileprivate (set) var disconnectAndRemove: (() async throws -> ())?
-        
         private let l = L(subsystem: "com.nrf-toolbox", category: #function)
         
         init(
@@ -177,8 +170,7 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
             criticalError: CriticalError? = nil,
             alertError: AlertError? = nil,
             peripheralViewModel: PeripheralInspectorScreen.ViewModel = PeripheralInspectorScreen.MockViewModel.shared,
-            reconnect: (() async -> ())? = nil,
-            disconnectAndRemove: (() async throws -> ())? = nil
+            reconnect: (() async -> ())? = nil
         ) {
             self.services = services
             self.reconnecting = reconnecting
@@ -186,7 +178,6 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
             self.alertError = alertError
             self.peripheralViewModel = peripheralViewModel
             self.reconnect = reconnect
-            self.disconnectAndRemove = disconnectAndRemove
         }
         
         deinit {

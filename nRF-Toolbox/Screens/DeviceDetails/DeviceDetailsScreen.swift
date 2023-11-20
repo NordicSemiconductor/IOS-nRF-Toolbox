@@ -40,6 +40,7 @@ private typealias VM = DeviceDetailsScreen.DeviceDetailsViewModel
 struct DeviceDetailsView<ServiceView: View>: View {
     @EnvironmentObject var environment: DeviceDetailsScreen.DeviceDetailsViewModel.Environment
     @EnvironmentObject var rootNavigationVM: RootNavigationViewModel
+    @EnvironmentObject var connectedDeviceVM: ConnectedDevicesViewModel
     
     @State private var showInspector: Bool = false
     
@@ -87,7 +88,7 @@ struct DeviceDetailsView<ServiceView: View>: View {
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
                     Task {
-                        try await environment.disconnectAndRemove?()
+                        try await connectedDeviceVM.disconnectAndRemoveViewModel()
                     }
                 }
             }
