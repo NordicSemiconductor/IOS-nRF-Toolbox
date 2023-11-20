@@ -37,16 +37,30 @@ extension ConnectedDevicesViewModel {
                 return nil
             }
             let newViewModel = DeviceDetailsScreen.DeviceDetailsViewModel(cbPeripheral: peripheral, centralManager: centralManager) { [unowned self] uuid, vm in
-                _ = try await centralManager.cancelPeripheralConnection(peripheral).value
-                // WORKAROND: DispatchQueue.main.asyncAfter is needed to make SwiftUI navigate back to empty list
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-                    self.deviceViewModels.removeValue(forKey: uuid)
-                    vm.onDisconnect()
+                /*
+                if case .disconnectedWithError = vm.environment.criticalError {
+                    // peripheral already disconnected 
+                } else {
+                    _ = try await centralManager.cancelPeripheralConnection(peripheral).value
                 }
+                 */
+                 
+                // Here we don't need to waint 
+                centralManager.centralManager.cancelPeripheralConnection(peripheral)
+                
+                self.deviceViewModels.removeValue(forKey: uuid)
+                print("View Model count: \(self.deviceViewModels.count)")
+                vm.onDisconnect()
+                
+                environment.connectedDevices.removeAll(where: { $0.id == uuid })
             }
             deviceViewModels[deviceID] = newViewModel
             return newViewModel
         }
+    }
+    
+    func removeDeviceViewModel(_ deviceID: Device.ID) {
+        
     }
 }
 

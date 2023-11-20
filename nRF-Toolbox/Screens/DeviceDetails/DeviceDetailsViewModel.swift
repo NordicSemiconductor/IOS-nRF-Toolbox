@@ -77,7 +77,7 @@ extension DeviceDetailsScreen {
         }
         
         deinit {
-            l.i(#function)
+            l.i("Deinit of View Model")
         }
     }
 }
