@@ -127,6 +127,7 @@ struct PeripheralInspectorView: View {
         TabView {
             PeripheralInspectorView()
                 .environmentObject(Env(
+                    deviceId: UUID(),
                     batteryLevelData: Battery.preview,
                     batteryLevelAvailable: true
                 ))

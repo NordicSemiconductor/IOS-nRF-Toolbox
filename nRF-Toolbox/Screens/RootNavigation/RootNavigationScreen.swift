@@ -23,6 +23,7 @@ struct RootNavigationView: View {
             if let deviceId = viewModel.selectedDevice {
                 if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: deviceId) {
                     DeviceDetailsScreen(viewModel: deviceVM)
+                        .environmentObject(connectedDevicesViewModel)
                 } else {
                     NoContentView(title: "Device is not connected", systemImage: "laptopcomputer.slash")
                 }

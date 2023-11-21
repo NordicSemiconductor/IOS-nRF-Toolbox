@@ -36,17 +36,7 @@ extension ConnectedDevicesViewModel {
             guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [deviceID]).first else {
                 return nil
             }
-            let newViewModel = DeviceDetailsScreen.DeviceDetailsViewModel(cbPeripheral: peripheral, centralManager: centralManager) { [unowned self] uuid, vm in
-                
-                if case .disconnectedWithError = vm.environment.criticalError {
-                    environment.connectedDevices.removeAll(where: { $0.id == uuid })
-                } else {
-                    _ = try await centralManager.cancelPeripheralConnection(peripheral).value
-                }
-                
-                self.deviceViewModels.removeValue(forKey: uuid)
-                vm.onDisconnect()
-            }
+            let newViewModel = DeviceDetailsScreen.DeviceDetailsViewModel(cbPeripheral: peripheral, centralManager: centralManager)
             deviceViewModels[deviceID] = newViewModel
             return newViewModel
         }

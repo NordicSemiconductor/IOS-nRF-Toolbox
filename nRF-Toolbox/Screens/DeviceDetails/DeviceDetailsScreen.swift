@@ -88,7 +88,7 @@ struct DeviceDetailsView<ServiceView: View>: View {
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
                     Task {
-                        try await connectedDeviceVM.disconnectAndRemoveViewModel()
+                        try await connectedDeviceVM.disconnectAndRemoveViewModel(environment.deviceID)
                     }
                 }
             }
@@ -189,7 +189,11 @@ private typealias Environment = DeviceDetailsScreen.DeviceDetailsViewModel.Envir
         DeviceDetailsView(serviceViewContent: { service in
             Text(service.name)
         })
-        .environmentObject(Environment(services: [.runningSpeedAndCadence, .heartRate, .adafruitAccelerometer]))
+        .environmentObject(
+            Environment(
+                deviceID: UUID(),
+                services: [.runningSpeedAndCadence, .heartRate, .adafruitAccelerometer])
+        )
     }
 }
 
@@ -200,6 +204,7 @@ private typealias Environment = DeviceDetailsScreen.DeviceDetailsViewModel.Envir
         })
         .environmentObject(
             Environment(
+                deviceID: UUID(),
                 services: []))
     }
 }
@@ -211,6 +216,7 @@ private typealias Environment = DeviceDetailsScreen.DeviceDetailsViewModel.Envir
         })
         .environmentObject(
             Environment(
+                deviceID: UUID(),
                 reconnecting: true,
                 criticalError: .disconnectedWithError(nil)
             )
@@ -225,6 +231,7 @@ private typealias Environment = DeviceDetailsScreen.DeviceDetailsViewModel.Envir
         })
         .environmentObject(
             Environment(
+                deviceID: UUID(),
                 criticalError: .disconnectedWithError(nil)
             )
         )

@@ -8,11 +8,11 @@
 
 import SwiftUI
 
-private typealias Env = HeartRateScreen.ViewModel.Environment
+private typealias Env = HeartRateScreen.HeartRateViewModel.Environment
 
 struct HeartRateScreen: View {
 
-    @ObservedObject var viewModel: ViewModel
+    @ObservedObject var viewModel: HeartRateViewModel
 
     var body: some View {
         HeartRateView()

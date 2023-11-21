@@ -22,6 +22,7 @@ struct ConnectedDevicesScreen: View {
             }
             .navigationTitle("Connected Devices")
             .environmentObject(viewModel.environment)
+            .environmentObject(viewModel)
     }
 }
 

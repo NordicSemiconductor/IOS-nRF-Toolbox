@@ -29,6 +29,7 @@ extension PeripheralInspectorScreen {
             self.peripheral = peripheral
             
             self.env = Environment(
+                deviceId: peripheral.peripheral.identifier,
                 signalChartViewModel: SignalChartScreen.ViewModel(peripheral: peripheral),
                 attributeTableViewModel: AttributeTableScreen.ViewModel(peripheral: peripheral)
             )
@@ -178,7 +179,7 @@ extension PeripheralInspectorScreen.ViewModel {
         fileprivate (set) var disconnect: () -> ()
         
         init(
-            deviceId: UUID = UUID(),
+            deviceId: UUID,
             criticalError: CriticalError? = nil,
             alertError: Error? = nil,
             internalAlertError: AlertError? = nil,

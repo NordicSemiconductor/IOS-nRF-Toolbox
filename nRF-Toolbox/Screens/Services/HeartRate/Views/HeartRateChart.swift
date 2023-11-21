@@ -9,7 +9,7 @@
 import SwiftUI
 import Charts
 
-private typealias Env = HeartRateScreen.ViewModel.Environment
+private typealias Env = HeartRateScreen.HeartRateViewModel.Environment
 
 struct HeartRateChart: View {
     @EnvironmentObject private var env: Env
