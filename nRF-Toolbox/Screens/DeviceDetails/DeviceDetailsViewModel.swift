@@ -59,7 +59,7 @@ extension DeviceDetailsScreen {
             )
             self.environment.peripheralName = peripheral.name
             
-            l.i(#function)
+//            l.i(#function)
             
             self.subscribeOnConnection()
             
@@ -112,7 +112,8 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
         do {
             discoveredServices = try await peripheral.discoverServices(serviceUUIDs: supportedServices).value
             self.environment.services = discoveredServices.map { Service(cbService: $0) }
-            
+           
+            /*
             for s in discoveredServices {
                 l.d(s.uuid.uuidString)
             }
@@ -120,6 +121,7 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
             if discoveredServices.isEmpty {
                 l.d("No Service found")
             }
+             */
             
             for service in discoveredServices {
                 switch service.uuid {

@@ -9,6 +9,7 @@
 import SwiftUI
 import iOS_BLE_Library_Mock
 import iOS_Bluetooth_Numbers_Database
+import iOS_Common_Libraries
 import CoreBluetoothMock_Collection
 import Combine
 
@@ -41,10 +42,18 @@ extension RunningServiceScreen {
         
         private var sensorCalibrationViewModel: SensorCalibrationScreen.ViewModel?
         
+        private let l = L(category: "RunningService.ViewModel")
+        
         init(peripheral: Peripheral, runningService: CBService) {
             assert(runningService.uuid.uuidString == Service.runningSpeedAndCadence.uuidString, "bad service")
             self.peripheral = peripheral
             self.runningService = runningService
+            
+            l.construct()
+        }
+        
+        deinit {
+            l.descruct()
         }
     }
 }
@@ -171,6 +180,8 @@ extension RunningServiceScreen.ViewModel {
         
         let sensorCalibrationViewModel: (() -> (SensorCalibrationScreen.ViewModel?))
         
+        private let l = L(category: "RunningService.ViewModel.Environment")
+        
         init(
             criticalError: CriticalError? = nil,
             alertError: AlertError? = nil,
@@ -191,6 +202,12 @@ extension RunningServiceScreen.ViewModel {
             self.totalDistance = totalDistance
             self.isRunning = isRunning
             self.sensorCalibrationViewModel = sensorCalibrationViewModel
+            
+            l.construct()
+        }
+        
+        deinit {
+            l.descruct()
         }
     }
 }

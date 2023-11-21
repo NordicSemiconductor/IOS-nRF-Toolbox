@@ -10,6 +10,7 @@ import Combine
 import SwiftUI
 import iOS_BLE_Library_Mock
 import iOS_Bluetooth_Numbers_Database
+import iOS_Common_Libraries
 import CoreBluetoothMock_Collection
 
 private typealias ViewModel = PeripheralInspectorScreen.ViewModel
@@ -25,6 +26,8 @@ extension PeripheralInspectorScreen {
         
         private let peripheral: Peripheral
         
+        private let l = L(category: "PeripheralInspector.ViewModel")
+        
         init(peripheral: Peripheral) {
             self.peripheral = peripheral
             
@@ -35,6 +38,12 @@ extension PeripheralInspectorScreen {
             )
             
             onConnect()
+            
+            l.construct()
+        }
+        
+        deinit {
+            l.descruct()
         }
         
         func onConnect() {
@@ -178,6 +187,8 @@ extension PeripheralInspectorScreen.ViewModel {
         
         fileprivate (set) var disconnect: () -> ()
         
+        private let l = L(category: "PeripheralInspector.ViewModel.Environment")
+        
         init(
             deviceId: UUID,
             criticalError: CriticalError? = nil,
@@ -200,6 +211,12 @@ extension PeripheralInspectorScreen.ViewModel {
             self.signalChartViewModel = signalChartViewModel
             self.attributeTableViewModel = attributeTableViewModel
             self.disconnect = disconnect
+            
+            l.construct()
+        }
+        
+        deinit {
+            l.descruct()
         }
     }
 }

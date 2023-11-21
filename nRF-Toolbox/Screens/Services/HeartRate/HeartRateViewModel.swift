@@ -10,6 +10,7 @@ import Combine
 import SwiftUI
 import iOS_BLE_Library_Mock
 import iOS_Bluetooth_Numbers_Database
+import iOS_Common_Libraries
 
 // MARK: Model
 
@@ -49,12 +50,19 @@ extension HeartRateScreen {
         
         private var cancelable = Set<AnyCancellable>()
         
+        private let l = L(category: "HeartRateScreen")
+        
         init(peripheral: Peripheral, hrService: CBService) {
             self.peripheral = peripheral
             
             assert(hrService.uuid == Service.heartRate.uuid)
             
             self.hrService = hrService
+            l.construct()
+        }
+        
+        deinit {
+            l.descruct()
         }
         
         func prepare() async {
@@ -159,12 +167,20 @@ extension HeartRateScreen.HeartRateViewModel {
             }
         }
         
+        private let l = L(category: "HeartRateViewModel.Environment")
+        
         init(data: [HeartRateMeasurementCharacteristic] = [], criticalError: CriticalError? = nil, alertError: Error? = nil) {
             self.data = data
             self.criticalError = criticalError
             self.alertError = alertError
             
             assert(capacity >= visibleDomain)
+            
+            l.construct()
+        }
+        
+        deinit {
+            l.descruct()
         }
         
         fileprivate func clear() {

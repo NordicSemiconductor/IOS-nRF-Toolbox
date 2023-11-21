@@ -10,6 +10,7 @@ import Combine
 import SwiftUI
 import iOS_Bluetooth_Numbers_Database
 import iOS_BLE_Library_Mock
+import iOS_Common_Libraries
 
 extension AttributeTableScreen {
     @MainActor 
@@ -18,8 +19,16 @@ extension AttributeTableScreen {
         
         let peripheral: Peripheral
         
+        private let l = L(category: "AttributeTableViewModel")
+        
         init(peripheral: Peripheral) {
             self.peripheral = peripheral
+            
+            l.construct()
+        }
+        
+        deinit {
+            l.descruct()
         }
         
         func readAttributeTable() async {
@@ -31,6 +40,7 @@ extension AttributeTableScreen {
         }
     }
     
+    #if DEBUG
     @MainActor
     class MockViewModel: ViewModel {
         static let shared = MockViewModel(peripheral: .preview)
@@ -39,6 +49,7 @@ extension AttributeTableScreen {
             
         }
     }
+    #endif
 }
 
 private typealias ViewModel = AttributeTableScreen.ViewModel
@@ -73,9 +84,17 @@ extension AttributeTableScreen.ViewModel {
         @Published fileprivate (set) var attributeTable: [Attribute]?
         @Published fileprivate (set) var criticalError: CriticalError?
         
+        private let l = L(category: "AttributeTableViewModel.Environment")
+        
         init(attributeTable: [Attribute]? = nil, criticalError: CriticalError? = nil) {
             self.attributeTable = attributeTable
             self.criticalError = criticalError
+            
+            l.construct()
+        }
+        
+        deinit {
+            l.descruct()
         }
     }
 }
