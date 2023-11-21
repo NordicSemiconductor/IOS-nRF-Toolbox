@@ -39,7 +39,7 @@ private typealias ViewModel = HeartRateScreen.HeartRateViewModel
 
 extension HeartRateScreen {
     @MainActor 
-    class HeartRateViewModel: ObservableObject {
+    class HeartRateViewModel {
         let env = Environment()
         
         private let peripheral: Peripheral

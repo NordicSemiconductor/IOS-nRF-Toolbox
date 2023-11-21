@@ -67,8 +67,9 @@ extension DeviceDetailsScreen {
                 await discoverSupportedServices()
             }
             
-            self.environment.reconnect = {
-                await self.reconnect()
+            
+            self.environment.reconnect = { [weak self] in
+                await self?.reconnect()
             }
         }
         

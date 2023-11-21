@@ -12,7 +12,7 @@ private typealias Env = HeartRateScreen.HeartRateViewModel.Environment
 
 struct HeartRateScreen: View {
 
-    @ObservedObject var viewModel: HeartRateViewModel
+    let viewModel: HeartRateViewModel
 
     var body: some View {
         HeartRateView()
