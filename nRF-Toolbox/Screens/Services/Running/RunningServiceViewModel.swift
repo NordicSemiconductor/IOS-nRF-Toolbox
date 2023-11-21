@@ -49,6 +49,18 @@ extension RunningServiceScreen {
     }
 }
 
+extension RunningServiceScreen.ViewModel: SupportedServiceViewModel {
+    func onConnect() {
+        Task {
+            await enableDeviceCommunication()
+        }
+    }
+    
+    func onDisconnect() {
+        cancelable.removeAll()
+    }
+}
+
 extension RunningServiceScreen.ViewModel {
     public func enableDeviceCommunication() async {
         do {

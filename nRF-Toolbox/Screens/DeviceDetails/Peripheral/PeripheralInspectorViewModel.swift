@@ -15,8 +15,9 @@ import CoreBluetoothMock_Collection
 private typealias ViewModel = PeripheralInspectorScreen.ViewModel
 
 extension PeripheralInspectorScreen {
-    @MainActor 
-    class ViewModel: ObservableObject {
+    
+    @MainActor
+    class ViewModel {
         let env: Environment
         private static let batteryLevelDataLength = 120
 
@@ -28,19 +29,25 @@ extension PeripheralInspectorScreen {
             self.peripheral = peripheral
             
             self.env = Environment(
+                deviceId: peripheral.peripheral.identifier,
                 signalChartViewModel: SignalChartScreen.ViewModel(peripheral: peripheral),
                 attributeTableViewModel: AttributeTableScreen.ViewModel(peripheral: peripheral)
             )
             
-            env.signalChartViewModel.readSignal()
-            
-            setupBattery()
+            onConnect()
         }
         
-        func setupBattery() {
+        func onConnect() {
+            env.signalChartViewModel.onConnect()
+            
             Task {
                 try? await discoverServices()
             }
+        }
+        
+        func onDisconnect() {
+            cancellables.removeAll()
+            env.signalChartViewModel.onDisconnect()
         }
     }
     
@@ -164,12 +171,15 @@ extension PeripheralInspectorScreen.ViewModel {
         @Published fileprivate (set) var currentBatteryLevel: UInt? = nil
         @Published fileprivate (set) var batteryLevelAvailable: Bool = false
         
+        let deviceId: UUID
+        
         let signalChartViewModel: SignalChartScreen.ViewModel
         let attributeTableViewModel: AttributeTableScreen.ViewModel
         
         fileprivate (set) var disconnect: () -> ()
         
         init(
+            deviceId: UUID,
             criticalError: CriticalError? = nil,
             alertError: Error? = nil,
             internalAlertError: AlertError? = nil,
@@ -180,6 +190,7 @@ extension PeripheralInspectorScreen.ViewModel {
             attributeTableViewModel: AttributeTableScreen.ViewModel = AttributeTableScreen.MockViewModel.shared,
             disconnect: @escaping () -> () = { }
         ) {
+            self.deviceId = deviceId
             self.criticalError = criticalError
             self.alertError = alertError
             self.internalAlertError = internalAlertError

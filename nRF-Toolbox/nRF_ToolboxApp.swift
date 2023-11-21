@@ -15,7 +15,7 @@ struct nRF_ToolboxApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootNavigationView()
                 .onAppear {
                     BluetoothEmulation.shared.simulateState()
                     BluetoothEmulation.shared.simulatePeripherals()

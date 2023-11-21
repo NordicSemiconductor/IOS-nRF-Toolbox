@@ -10,44 +10,54 @@ import SwiftUI
 import iOS_BLE_Library_Mock
 import Combine
 
-extension ConnectedDevicesScreen {
-    @MainActor
-    class ViewModel: ObservableObject {
-        typealias ScannerVM = PeripheralScannerScreen.ViewModel
+@MainActor
+class ConnectedDevicesViewModel: ObservableObject {
+    typealias ScannerVM = PeripheralScannerScreen.ViewModel
+    
+    private var deviceViewModels: [UUID: DeviceDetailsScreen.DeviceDetailsViewModel] = [:]
+    private var cancelable = Set<AnyCancellable>()
+    
+    private (set) lazy var environment: Environment = Environment(deviceViewModel: { [unowned self] in self.deviceViewModel(for: $0.id)! })
+    let centralManager: CentralManager
+    
+    init(centralManager: CentralManager = CentralManager()) {
+        self.centralManager = centralManager
         
-        private var deviceViewModels: [UUID: DeviceDetailsScreen.ViewModel] = [:]
-        private var cancelable = Set<AnyCancellable>()
-        
-        private (set) lazy var environment: Environment = Environment(deviceViewModel: { [unowned self] in self.deviceViewModel(for: $0) })
-        let centralManager: CentralManager
-        
-        private (set) lazy var scannerViewModel: ScannerVM! = ScannerVM(centralManager: centralManager)
-        
-        init(centralManager: CentralManager = CentralManager()) {
-            self.centralManager = centralManager
-            
-            observeConnections()
-            observeDisconnections()
-        }
+        observeConnections()
+        observeDisconnections()
     }
 }
 
-extension ConnectedDevicesScreen.ViewModel {
-    private func deviceViewModel(for device: Device) -> DeviceDetailsScreen.ViewModel {
-        if let vm = deviceViewModels[device.id] {
+extension ConnectedDevicesViewModel {
+    func deviceViewModel(for deviceID: Device.ID) -> DeviceDetailsScreen.DeviceDetailsViewModel? {
+        if let vm = deviceViewModels[deviceID] {
             return vm
         } else {
-            guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [device.id]).first else {
-                fatalError()
+            guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [deviceID]).first else {
+                return nil
             }
-            let newViewModel = DeviceDetailsScreen.ViewModel(cbPeripheral: peripheral)
-            deviceViewModels[device.id] = newViewModel
+            let newViewModel = DeviceDetailsScreen.DeviceDetailsViewModel(cbPeripheral: peripheral, centralManager: centralManager)
+            deviceViewModels[deviceID] = newViewModel
             return newViewModel
         }
     }
+    
+    func disconnectAndRemoveViewModel(_ deviceID: Device.ID) async throws {
+        guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [deviceID]).first else { return }
+        guard let vm = deviceViewModels[deviceID] else { return }
+        
+        if case .disconnectedWithError = vm.environment.criticalError {
+            environment.connectedDevices.removeAll(where: { $0.id == deviceID })
+        } else {
+            _ = try await centralManager.cancelPeripheralConnection(peripheral).value
+        }
+        
+        self.deviceViewModels.removeValue(forKey: deviceID)
+        vm.onDisconnect()
+    }
 }
 
-extension ConnectedDevicesScreen.ViewModel {
+extension ConnectedDevicesViewModel {
     private func observeConnections() {
         centralManager.connectedPeripheralChannel
             .filter { $0.1 == nil } // No connection error
@@ -66,7 +76,7 @@ extension ConnectedDevicesScreen.ViewModel {
                 }
                 
                 if let err = device.1 {
-                    // TODO: Show that the device was disconnected unexpectadly
+                    self.environment.connectedDevices[deviceIndex].error = err
                 } else {
                     self.environment.connectedDevices.remove(at: deviceIndex)
                 }
@@ -75,13 +85,18 @@ extension ConnectedDevicesScreen.ViewModel {
     }
 }
 
-extension ConnectedDevicesScreen.ViewModel {
-    struct Device: Identifiable, Equatable {
+extension ConnectedDevicesViewModel {
+    struct Device: Identifiable, Equatable, Hashable {
         let name: String?
         let id: UUID
+        var error: Error?
         
         static func == (lhs: Device, rhs: Device) -> Bool {
             lhs.id == rhs.id
+        }
+        
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(id)
         }
     }
     
@@ -89,12 +104,21 @@ extension ConnectedDevicesScreen.ViewModel {
         @Published var showScanner: Bool = false
         
         @Published fileprivate (set) var connectedDevices: [Device]
+        @Published var selectedDevice: Device.ID? {
+            didSet {
+                if let d = connectedDevices.first(where: { $0.id == selectedDevice }) {
+                    print(d.name!)
+                } else {
+                    print("no selection")
+                }
+            }
+        }
         
-        let deviceViewModel: ((Device) -> (DeviceDetailsScreen.ViewModel))?
+        let deviceViewModel: ((Device) -> (DeviceDetailsScreen.DeviceDetailsViewModel))?
         
         init(
             connectedDevices: [Device] = [],
-            deviceViewModel: ((Device) -> (DeviceDetailsScreen.ViewModel))? = nil
+            deviceViewModel: ((Device) -> (DeviceDetailsScreen.DeviceDetailsViewModel))? = nil
         ) {
             self.connectedDevices = connectedDevices
             self.deviceViewModel = deviceViewModel

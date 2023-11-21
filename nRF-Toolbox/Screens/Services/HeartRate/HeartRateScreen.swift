@@ -8,17 +8,17 @@
 
 import SwiftUI
 
-private typealias Env = HeartRateScreen.ViewModel.Environment
+private typealias Env = HeartRateScreen.HeartRateViewModel.Environment
 
 struct HeartRateScreen: View {
 
-    @ObservedObject var viewModel: ViewModel
+    let viewModel: HeartRateViewModel
 
     var body: some View {
         HeartRateView()
             .environmentObject(viewModel.env)
             .task {
-                await viewModel.prepare()
+                viewModel.onConnect()
             }
     }
 }

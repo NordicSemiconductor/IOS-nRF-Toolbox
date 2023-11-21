@@ -24,6 +24,12 @@ extension PeripheralScannerScreen {
             self.centralManager = centralManager
             
             setupEnvironment()
+            
+            print("created VM")
+        }
+        
+        deinit {
+            print("destroyed VM")
         }
         
         private func setupEnvironment() {

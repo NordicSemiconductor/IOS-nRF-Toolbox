@@ -9,17 +9,10 @@
 import SwiftUI
 import Charts
 
-private typealias Env = HeartRateScreen.ViewModel.Environment
+private typealias Env = HeartRateScreen.HeartRateViewModel.Environment
 
 struct HeartRateChart: View {
     @EnvironmentObject private var env: Env
-    
-    let stops = [
-        Gradient.Stop(color: .red, location: 0.0),
-        Gradient.Stop(color: .red, location: 0.5),
-        Gradient.Stop(color: .green, location: 0.50001),
-        Gradient.Stop(color: .green, location: 1.0)
-    ]
     
     var body: some View {
         VStack(alignment: .leading) {

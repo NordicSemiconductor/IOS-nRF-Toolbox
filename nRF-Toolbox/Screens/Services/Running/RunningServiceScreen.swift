@@ -17,7 +17,7 @@ struct RunningServiceScreen: View {
         RunningServiceView()
             .environmentObject(viewModel.environment)
             .onFirstAppear {
-                await viewModel.enableDeviceCommunication()
+                viewModel.onConnect()
             }
     }
 }

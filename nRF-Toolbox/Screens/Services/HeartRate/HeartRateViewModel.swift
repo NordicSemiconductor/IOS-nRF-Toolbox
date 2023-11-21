@@ -35,11 +35,11 @@ struct HeartRateMeasurementCharacteristic {
 }
 
 
-private typealias ViewModel = HeartRateScreen.ViewModel
+private typealias ViewModel = HeartRateScreen.HeartRateViewModel
 
 extension HeartRateScreen {
     @MainActor 
-    class ViewModel: ObservableObject {
+    class HeartRateViewModel {
         let env = Environment()
         
         private let peripheral: Peripheral
@@ -64,6 +64,19 @@ extension HeartRateScreen {
                 env.criticalError = .noMandatoryCharacteristic
             }
         }
+    }
+}
+
+extension HeartRateScreen.HeartRateViewModel: SupportedServiceViewModel {
+    func onConnect() {
+        Task {
+            await prepare()
+        }
+    }
+    
+    func onDisconnect() {
+        cancelable.removeAll()
+        env.clear()
     }
 }
 
@@ -125,7 +138,7 @@ private extension ViewModel {
 }
 
 // MARK: - Environment
-extension HeartRateScreen.ViewModel {
+extension HeartRateScreen.HeartRateViewModel {
     @MainActor
     class Environment: ObservableObject {
         @Published fileprivate (set) var data: [HeartRateMeasurementCharacteristic] = []
@@ -153,11 +166,17 @@ extension HeartRateScreen.ViewModel {
             
             assert(capacity >= visibleDomain)
         }
+        
+        fileprivate func clear() {
+//            data.removeAll()
+//            lowest = 40
+//            highest = 200
+        }
     }
 }
 
 // MARK: - Errors
-extension HeartRateScreen.ViewModel.Environment {
+extension HeartRateScreen.HeartRateViewModel.Environment {
     enum CriticalError: LocalizedError {
         case unknown
         case noMandatoryCharacteristic
@@ -169,7 +188,7 @@ extension HeartRateScreen.ViewModel.Environment {
     }
 }
 
-extension HeartRateScreen.ViewModel.Environment.CriticalError {
+extension HeartRateScreen.HeartRateViewModel.Environment.CriticalError {
     var errorDescription: String? {
         switch self {
         case .unknown:
@@ -180,7 +199,7 @@ extension HeartRateScreen.ViewModel.Environment.CriticalError {
     }
 }
 
-extension HeartRateScreen.ViewModel.Environment.AlertError {
+extension HeartRateScreen.HeartRateViewModel.Environment.AlertError {
     var errorDescription: String? {
         switch self {
         case .unknown:

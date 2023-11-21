@@ -13,12 +13,12 @@ private typealias Env = PeripheralInspectorScreen.ViewModel.Environment
 
 struct PeripheralInspectorScreen: View {
 
-    @ObservedObject var viewModel: ViewModel
+    let viewModel: ViewModel
 
     var body: some View {
         PeripheralInspectorView()
             .task {
-                viewModel.setupBattery()
+                viewModel.onConnect()
             }
             .environmentObject(viewModel.env)
     }
@@ -26,6 +26,10 @@ struct PeripheralInspectorScreen: View {
 
 struct PeripheralInspectorView: View {
     @EnvironmentObject private var environment: Env
+    @EnvironmentObject private var rootEnv: DeviceDetailsScreen.DeviceDetailsViewModel.Environment
+    @EnvironmentObject private var rootNavigationMV: RootNavigationViewModel
+    @EnvironmentObject private var connectedDeviceViewModel: ConnectedDevicesViewModel
+    
     @State private var disconnectAlertShow = false
     @State private var showAttributeTable = false
     
@@ -57,7 +61,12 @@ struct PeripheralInspectorView: View {
                 .foregroundStyle(.red)
                 .alert("Disconnect", isPresented: $disconnectAlertShow) {
                     Button("Yes") {
-                        // TODO: Cancel Connection
+                        rootNavigationMV.selectedDevice = nil
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                            Task {
+                                try await connectedDeviceViewModel.disconnectAndRemoveViewModel(environment.deviceId)
+                            }
+                        }
                     }
                     Button("No") { }
                 } message: {
@@ -118,6 +127,7 @@ struct PeripheralInspectorView: View {
         TabView {
             PeripheralInspectorView()
                 .environmentObject(Env(
+                    deviceId: UUID(),
                     batteryLevelData: Battery.preview,
                     batteryLevelAvailable: true
                 ))

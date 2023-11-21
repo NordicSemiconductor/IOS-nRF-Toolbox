@@ -10,7 +10,7 @@ import SwiftUI
 import iOS_Bluetooth_Numbers_Database
 
 struct DeviceDetailsScreen: View {
-    @ObservedObject var viewModel: ViewModel
+    let viewModel: DeviceDetailsViewModel
     
     var body: some View {
         DeviceDetailsView { service in
@@ -24,15 +24,23 @@ struct DeviceDetailsScreen: View {
                     HeartRateScreen(viewModel: vm)
                 }
             default:
-                Text("No Supported Services")
+                NoContentView(
+                    title: "No Services",
+                    systemImage: "list.bullet.rectangle.portrait",
+                    description: "No Supported Services"
+                )
             }
         }
         .environmentObject(viewModel.environment)
     }
 }
 
+private typealias VM = DeviceDetailsScreen.DeviceDetailsViewModel
+
 struct DeviceDetailsView<ServiceView: View>: View {
-    @EnvironmentObject var environment: DeviceDetailsScreen.ViewModel.Environment
+    @EnvironmentObject var environment: DeviceDetailsScreen.DeviceDetailsViewModel.Environment
+    @EnvironmentObject var rootNavigationVM: RootNavigationViewModel
+    @EnvironmentObject var connectedDeviceVM: ConnectedDevicesViewModel
     
     @State private var showInspector: Bool = false
     
@@ -53,6 +61,44 @@ struct DeviceDetailsView<ServiceView: View>: View {
     
     @ViewBuilder
     private var mainView: some View {
+        if environment.reconnecting {
+            NoContentView(title: "Reconnecting . . .", systemImage: "arrow.circlepath")
+        } else if let criticalError = environment.criticalError {
+            errorView(criticalError)
+        } else {
+            serviceView
+        }
+    }
+    
+    @ViewBuilder
+    private func errorView(_ error: VM.CriticalError) -> some View {
+        VStack {
+            NoContentView(title: error.title, systemImage: "exclamationmark.triangle", description: error.message, style: .error)
+            
+            Button("Reconnect") {
+                Task {
+                    await environment.reconnect?()
+                }
+            }
+            .buttonStyle(.borderedProminent)
+            .padding()
+            
+            Button("Remove Device") {
+                rootNavigationVM.selectedDevice = nil 
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                    Task {
+                        try await connectedDeviceVM.disconnectAndRemoveViewModel(environment.deviceID)
+                    }
+                }
+            }
+            .buttonStyle(.bordered)
+            .foregroundStyle(Color.nordicRed)
+        }
+    }
+    
+    @ViewBuilder
+    private var serviceView: some View {
         if #available(iOS 17, macOS 14, *) {
             newView
                 .toolbar {
@@ -110,14 +156,20 @@ struct DeviceDetailsView<ServiceView: View>: View {
 
     @ViewBuilder
     private var serviceViews: some View {
-        ForEach(environment.services.filter(\.isSupported)) { service in
-            serviceViewContent(service)
-                .tabItem {
-                    Label(
-                        title: { Text(service.name) },
-                        icon: { service.systemImage }
-                    )
-                }
+        if environment.services.filter(\.isSupported).isEmpty {
+            NoContentView(
+                title: "No Supported Services",
+                systemImage: "list.bullet.rectangle.portrait")
+        } else {
+            ForEach(environment.services.filter(\.isSupported)) { service in
+                serviceViewContent(service)
+                    .tabItem {
+                        Label(
+                            title: { Text(service.name) },
+                            icon: { service.systemImage }
+                        )
+                    }
+            }
         }
     }
     
@@ -130,14 +182,58 @@ struct DeviceDetailsView<ServiceView: View>: View {
     }
 }
 
-private typealias Environment = DeviceDetailsScreen.ViewModel.Environment
+private typealias Environment = DeviceDetailsScreen.DeviceDetailsViewModel.Environment
 
 #Preview {
     NavigationStack {
         DeviceDetailsView(serviceViewContent: { service in
             Text(service.name)
         })
-        .navigationTitle("Device Name")
-        .environmentObject(Environment(services: [.runningSpeedAndCadence, .heartRate, .adafruitAccelerometer]))
+        .environmentObject(
+            Environment(
+                deviceID: UUID(),
+                services: [.runningSpeedAndCadence, .heartRate, .adafruitAccelerometer])
+        )
+    }
+}
+
+#Preview {
+    NavigationStack {
+        DeviceDetailsView(serviceViewContent: { service in
+            Text(service.name)
+        })
+        .environmentObject(
+            Environment(
+                deviceID: UUID(),
+                services: []))
+    }
+}
+
+#Preview {
+    NavigationStack {
+        DeviceDetailsView(serviceViewContent: { service in
+            Text(service.name)
+        })
+        .environmentObject(
+            Environment(
+                deviceID: UUID(),
+                reconnecting: true,
+                criticalError: .disconnectedWithError(nil)
+            )
+        )
+    }
+}
+
+#Preview {
+    NavigationStack {
+        DeviceDetailsView(serviceViewContent: { service in
+            Text(service.name)
+        })
+        .environmentObject(
+            Environment(
+                deviceID: UUID(),
+                criticalError: .disconnectedWithError(nil)
+            )
+        )
     }
 }

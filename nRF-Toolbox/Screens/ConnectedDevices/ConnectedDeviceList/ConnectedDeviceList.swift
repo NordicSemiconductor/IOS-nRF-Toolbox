@@ -7,37 +7,35 @@
 //
 
 import SwiftUI
+import iOS_Common_Libraries
 
-fileprivate typealias Device = ConnectedDevicesScreen.ViewModel.Device
+fileprivate typealias Device = ConnectedDevicesViewModel.Device
 
 struct ConnectedDeviceList: View {
-    @EnvironmentObject var environment: ConnectedDevicesScreen.ViewModel.Environment
+    @EnvironmentObject var environment: ConnectedDevicesViewModel.Environment
+    @EnvironmentObject var rootNavigationVM: RootNavigationViewModel
    
     var body: some View {
-        List(environment.connectedDevices) { device in
-            NavigationLink {
-                if let builder = environment.deviceViewModel {
-                    DeviceDetailsScreen(viewModel: builder(device))
-                } else {
-                    #if DEBUG
-                    Text("Device Preview")
-                    #else
-                    fatalError()
-                    #endif
-                }
-            } label: {
+        List(environment.connectedDevices, selection: $rootNavigationVM.selectedDevice) { device in
+            HStack {
                 Text(device.name ?? "unnamed")
+                Spacer()
+                if case .some = device.error {
+                    Image(systemName: "exclamationmark.circle")
+                        .foregroundStyle(Color.nordicRed)
+                }
             }
+            .tag(device.id)
         }
     }
 }
 
-
 #Preview {
     NavigationStack {
         ConnectedDeviceList()
-            .environmentObject(ConnectedDevicesScreen.ViewModel.Environment(connectedDevices: [
-                Device(name: "Device 1", id: UUID())
+            .environmentObject(ConnectedDevicesViewModel.Environment(connectedDevices: [
+                Device(name: "Device 1", id: UUID()),
+                Device(name: "Device 1", id: UUID(), error: ReadableError(title: "some", message: nil))
             ]))
     }
 }

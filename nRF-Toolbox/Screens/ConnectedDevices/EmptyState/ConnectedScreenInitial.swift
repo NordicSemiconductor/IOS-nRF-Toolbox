@@ -9,8 +9,8 @@
 import SwiftUI
 
 extension ConnectedDevicesScreen {
-    struct InitialStace: View {
-        @EnvironmentObject var environment: ViewModel.Environment
+    struct InitialState: View {
+        @EnvironmentObject var environment: ConnectedDevicesViewModel.Environment
         
         var body: some View {
             VStack {
@@ -25,5 +25,5 @@ extension ConnectedDevicesScreen {
 }
 
 #Preview {
-    ConnectedDevicesScreen.InitialStace()
+    ConnectedDevicesScreen.InitialState()
 }
