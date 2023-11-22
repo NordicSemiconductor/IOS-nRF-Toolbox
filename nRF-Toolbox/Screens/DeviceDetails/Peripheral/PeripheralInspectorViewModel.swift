@@ -13,12 +13,12 @@ import iOS_Bluetooth_Numbers_Database
 import iOS_Common_Libraries
 import CoreBluetoothMock_Collection
 
-private typealias ViewModel = PeripheralInspectorScreen.ViewModel
+private typealias ViewModel = PeripheralInspectorScreen.PeripheralInspectorViewModel
 
 extension PeripheralInspectorScreen {
     
     @MainActor
-    class ViewModel {
+    class PeripheralInspectorViewModel {
         let env: Environment
         private static let batteryLevelDataLength = 120
 
@@ -26,17 +26,15 @@ extension PeripheralInspectorScreen {
         
         private let peripheral: Peripheral
         
-        private let l = L(category: "PeripheralInspector.ViewModel")
+        private let l = L(category: "PeripheralInspector.VM")
         
         init(peripheral: Peripheral) {
             self.peripheral = peripheral
-            
             self.env = Environment(
                 deviceId: peripheral.peripheral.identifier,
-                signalChartViewModel: SignalChartScreen.ViewModel(peripheral: peripheral),
-                attributeTableViewModel: AttributeTableScreen.ViewModel(peripheral: peripheral)
+                signalChartViewModel: SignalChartScreen.SignalChartViewModel(peripheral: peripheral),
+                attributeTableViewModel: AttributeTableScreen.AttributeTableViewModel(peripheral: peripheral)
             )
-            
             onConnect()
             
             l.construct()
@@ -62,7 +60,7 @@ extension PeripheralInspectorScreen {
     
     #if DEBUG
     @MainActor
-    class MockViewModel: ViewModel {
+    class MockViewModel: PeripheralInspectorViewModel {
         static let shared = MockViewModel(peripheral: .preview)
     }
     #endif
@@ -165,7 +163,7 @@ private extension ViewModel {
 }
 
 // MARK: - Environment
-extension PeripheralInspectorScreen.ViewModel {
+extension PeripheralInspectorScreen.PeripheralInspectorViewModel {
     @MainActor
     class Environment: ObservableObject {
         @Published fileprivate (set) var criticalError: CriticalError?
@@ -182,12 +180,12 @@ extension PeripheralInspectorScreen.ViewModel {
         
         let deviceId: UUID
         
-        let signalChartViewModel: SignalChartScreen.ViewModel
-        let attributeTableViewModel: AttributeTableScreen.ViewModel
+        let signalChartViewModel: SignalChartScreen.SignalChartViewModel
+        let attributeTableViewModel: AttributeTableScreen.AttributeTableViewModel
         
         fileprivate (set) var disconnect: () -> ()
         
-        private let l = L(category: "PeripheralInspector.ViewModel.Environment")
+        private let l = L(category: "PeripheralInspector.Env")
         
         init(
             deviceId: UUID,
@@ -197,8 +195,8 @@ extension PeripheralInspectorScreen.ViewModel {
             batteryLevelData: [ChartTimeData<Battery.Level>] = [],
             currentBatteryLevel: UInt? = nil,
             batteryLevelAvailable: Bool = false,
-            signalChartViewModel: SignalChartScreen.ViewModel = SignalChartScreen.MockViewModel.shared,
-            attributeTableViewModel: AttributeTableScreen.ViewModel = AttributeTableScreen.MockViewModel.shared,
+            signalChartViewModel: SignalChartScreen.SignalChartViewModel = SignalChartScreen.MockViewModel.shared,
+            attributeTableViewModel: AttributeTableScreen.AttributeTableViewModel = AttributeTableScreen.MockViewModel.shared,
             disconnect: @escaping () -> () = { }
         ) {
             self.deviceId = deviceId
@@ -222,7 +220,7 @@ extension PeripheralInspectorScreen.ViewModel {
 }
 
 // MARK: - Errors
-extension PeripheralInspectorScreen.ViewModel.Environment {
+extension PeripheralInspectorScreen.PeripheralInspectorViewModel.Environment {
     enum CriticalError: LocalizedError {
         case unknown
     }
@@ -232,7 +230,7 @@ extension PeripheralInspectorScreen.ViewModel.Environment {
     }
 }
 
-extension PeripheralInspectorScreen.ViewModel.Environment.CriticalError {
+extension PeripheralInspectorScreen.PeripheralInspectorViewModel.Environment.CriticalError {
     var errorDescription: String? {
         switch self {
         case .unknown:
@@ -241,7 +239,7 @@ extension PeripheralInspectorScreen.ViewModel.Environment.CriticalError {
     }
 }
 
-extension PeripheralInspectorScreen.ViewModel.Environment.AlertError {
+extension PeripheralInspectorScreen.PeripheralInspectorViewModel.Environment.AlertError {
     var errorDescription: String? {
         switch self {
         case .unknown:

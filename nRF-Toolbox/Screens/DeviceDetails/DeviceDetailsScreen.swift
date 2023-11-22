@@ -42,8 +42,6 @@ struct DeviceDetailsView<ServiceView: View>: View {
     @EnvironmentObject var rootNavigationVM: RootNavigationViewModel
     @EnvironmentObject var connectedDeviceVM: ConnectedDevicesViewModel
     
-    @State private var showInspector: Bool = false
-    
     let serviceViewContent: (Service) -> ServiceView
     
     #if os(iOS)
@@ -104,13 +102,13 @@ struct DeviceDetailsView<ServiceView: View>: View {
                 .toolbar {
                     ToolbarItem {
                         Button {
-                            showInspector.toggle()
+                            environment.showInspector.toggle()
                         } label: {
                             Image(systemName: "square.trailingthird.inset.filled")
                         }
                     }
                 }
-                .inspector(isPresented: $showInspector) {
+                .inspector(isPresented: $environment.showInspector) {
                     inspectorContent
                 }
                 
@@ -122,15 +120,15 @@ struct DeviceDetailsView<ServiceView: View>: View {
     @ViewBuilder
     private var inspectorContent: some View {
         #if os(macOS)
-        peripheralScreen
+        peripheralInspectorScreen
         #else
         if idiom == .phone {
             NavigationView {
-                peripheralScreen
+                peripheralInspectorScreen
                     .navigationTitle("Peripheral")
             }
         } else {
-            peripheralScreen
+            peripheralInspectorScreen
         }
         #endif
     }
@@ -150,7 +148,7 @@ struct DeviceDetailsView<ServiceView: View>: View {
     private var oldView: some View {
         TabView {
             serviceViews
-            peripheralScreen
+            peripheralInspectorScreen
         }
     }
 
@@ -174,7 +172,7 @@ struct DeviceDetailsView<ServiceView: View>: View {
     }
     
     @ViewBuilder
-    private var peripheralScreen: some View {
+    private var peripheralInspectorScreen: some View {
         PeripheralInspectorScreen(viewModel: environment.peripheralViewModel)
             .tabItem {
                 Label("Peripheral", systemImage: "terminal")

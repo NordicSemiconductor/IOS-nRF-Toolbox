@@ -9,10 +9,10 @@
 import SwiftUI
 import Charts
 
-private typealias Env = SignalChartScreen.ViewModel.Environment
+private typealias Env = SignalChartScreen.SignalChartViewModel.Environment
 
 struct SignalChartScreen: View {
-    let viewModel: ViewModel
+    let viewModel: SignalChartViewModel
     
     var body: some View {
         SignalChartView()

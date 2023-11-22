@@ -37,10 +37,10 @@ extension DeviceDetailsScreen {
         let environment: Environment
         private var supportedServiceViewModels: [SupportedServiceViewModel] = []
         
-        private let l = L(subsystem: "com.nrf-toolbox", category: #function)
+        private let l = L(category: "DeviceDetails.VM")
         
-        var runningServiceViewModel: RunningServiceScreen.ViewModel? {
-            supportedServiceViewModels.firstOfType(type: RunningServiceScreen.ViewModel.self)
+        var runningServiceViewModel: RunningServiceScreen.RunningServiceViewModel? {
+            supportedServiceViewModels.firstOfType(type: RunningServiceScreen.RunningServiceViewModel.self)
         }
         
         var heartRateServiceViewModel: HeartRateScreen.HeartRateViewModel? {
@@ -55,11 +55,9 @@ extension DeviceDetailsScreen {
             self.centralManager = centralManager
             self.environment = Environment(
                 deviceID: peripheral.peripheral.identifier,
-                peripheralViewModel: PeripheralInspectorScreen.ViewModel(peripheral: peripheral)
+                peripheralViewModel: PeripheralInspectorScreen.PeripheralInspectorViewModel(peripheral: peripheral)
             )
             self.environment.peripheralName = peripheral.name
-            
-//            l.i(#function)
             
             self.subscribeOnConnection()
             
@@ -67,14 +65,15 @@ extension DeviceDetailsScreen {
                 await discoverSupportedServices()
             }
             
-            
             self.environment.reconnect = { [weak self] in
                 await self?.reconnect()
             }
+            
+            l.construct()
         }
         
         deinit {
-            l.i("Deinit of View Model")
+            l.descruct()
         }
     }
 }
@@ -113,20 +112,10 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
             discoveredServices = try await peripheral.discoverServices(serviceUUIDs: supportedServices).value
             self.environment.services = discoveredServices.map { Service(cbService: $0) }
            
-            /*
-            for s in discoveredServices {
-                l.d(s.uuid.uuidString)
-            }
-            
-            if discoveredServices.isEmpty {
-                l.d("No Service found")
-            }
-             */
-            
             for service in discoveredServices {
                 switch service.uuid {
                 case .runningSpeedCadence:
-                    supportedServiceViewModels.append(RunningServiceScreen.ViewModel(peripheral: peripheral, runningService: service))
+                    supportedServiceViewModels.append(RunningServiceScreen.RunningServiceViewModel(peripheral: peripheral, runningService: service))
                 case .heartRate:
                     supportedServiceViewModels.append(HeartRateScreen.HeartRateViewModel(peripheral: peripheral, hrService: service))
                 default:
@@ -162,13 +151,15 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
         
         @Published var peripheralName: String?
         
+        @Published var showInspector: Bool = false 
+        
         let deviceID: UUID
         
-        fileprivate (set) var peripheralViewModel: PeripheralInspectorScreen.ViewModel
+        fileprivate (set) var peripheralViewModel: PeripheralInspectorScreen.PeripheralInspectorViewModel
         
         fileprivate (set) var reconnect: (() async -> ())?
         
-        private let l = L(subsystem: "com.nrf-toolbox", category: #function)
+        private let l = L(category: "DeviceDetails.Env")
         
         init(
             deviceID: UUID,
@@ -176,7 +167,7 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
             reconnecting: Bool = false,
             criticalError: CriticalError? = nil,
             alertError: AlertError? = nil,
-            peripheralViewModel: PeripheralInspectorScreen.ViewModel = PeripheralInspectorScreen.MockViewModel.shared,
+            peripheralViewModel: PeripheralInspectorScreen.PeripheralInspectorViewModel = PeripheralInspectorScreen.MockViewModel.shared,
             reconnect: (() async -> ())? = nil
         ) {
             self.deviceID = deviceID
@@ -186,10 +177,12 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
             self.alertError = alertError
             self.peripheralViewModel = peripheralViewModel
             self.reconnect = reconnect
+            
+            l.construct()
         }
         
         deinit {
-            l.i(#function)
+            l.descruct()
         }
     }
     

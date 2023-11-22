@@ -14,12 +14,12 @@ import iOS_Common_Libraries
 
 extension AttributeTableScreen {
     @MainActor 
-    class ViewModel: ObservableObject {
+    class AttributeTableViewModel: ObservableObject {
         let env = Environment()
         
         let peripheral: Peripheral
         
-        private let l = L(category: "AttributeTableViewModel")
+        private let l = L(category: "AttributeTable.VM")
         
         init(peripheral: Peripheral) {
             self.peripheral = peripheral
@@ -42,7 +42,7 @@ extension AttributeTableScreen {
     
     #if DEBUG
     @MainActor
-    class MockViewModel: ViewModel {
+    class MockViewModel: AttributeTableViewModel {
         static let shared = MockViewModel(peripheral: .preview)
         
         override func readAttributeTable() async {
@@ -52,10 +52,12 @@ extension AttributeTableScreen {
     #endif
 }
 
-private typealias ViewModel = AttributeTableScreen.ViewModel
+private typealias ViewModel = AttributeTableScreen.AttributeTableViewModel
 
 private extension ViewModel {
     func readAttributes() async throws -> [Attribute] {
+        return []
+        /*
         var at = AttributeTable()
         
         let services = try await peripheral.discoverServices(serviceUUIDs: nil).timeout(10, scheduler: DispatchQueue.main).value
@@ -75,16 +77,17 @@ private extension ViewModel {
         }
         
         return at.attributeList
+         */
     }
 }
 
-extension AttributeTableScreen.ViewModel {
+extension AttributeTableScreen.AttributeTableViewModel {
     @MainActor
     class Environment: ObservableObject {
         @Published fileprivate (set) var attributeTable: [Attribute]?
         @Published fileprivate (set) var criticalError: CriticalError?
         
-        private let l = L(category: "AttributeTableViewModel.Environment")
+        private let l = L(category: "AttributeTable.Env")
         
         init(attributeTable: [Attribute]? = nil, criticalError: CriticalError? = nil) {
             self.attributeTable = attributeTable
@@ -99,7 +102,7 @@ extension AttributeTableScreen.ViewModel {
     }
 }
 
-extension AttributeTableScreen.ViewModel.Environment {
+extension AttributeTableScreen.AttributeTableViewModel.Environment {
     enum CriticalError: Error {
         case unableBuildAttributeTable
         

@@ -19,6 +19,6 @@ extension L {
     }
     
     func descruct() {
-        d("life-cycle-destroyed")
+        w("life-cycle-destroyed")
     }
 }

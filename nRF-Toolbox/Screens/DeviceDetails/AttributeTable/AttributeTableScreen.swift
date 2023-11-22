@@ -8,11 +8,11 @@
 
 import SwiftUI
 
-private typealias Env = AttributeTableScreen.ViewModel.Environment
+private typealias Env = AttributeTableScreen.AttributeTableViewModel.Environment
 
 struct AttributeTableScreen: View {
 
-    @ObservedObject var viewModel: ViewModel
+    @ObservedObject var viewModel: AttributeTableViewModel
 
     var body: some View {
         AttributeTableView()

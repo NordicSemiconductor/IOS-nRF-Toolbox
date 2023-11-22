@@ -8,10 +8,10 @@
 
 import SwiftUI
 
-fileprivate typealias VM = RunningServiceScreen.ViewModel.Environment
+fileprivate typealias VM = RunningServiceScreen.RunningServiceViewModel.Environment
 
 struct RunningServiceScreen: View {
-    @ObservedObject var viewModel: ViewModel
+    @ObservedObject var viewModel: RunningServiceViewModel
     
     var body: some View {
         RunningServiceView()

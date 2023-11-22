@@ -9,27 +9,30 @@
 import Foundation
 import iOS_BLE_Library_Mock
 import iOS_Bluetooth_Numbers_Database
+import iOS_Common_Libraries
 import Combine
 
 extension PeripheralScannerScreen {
     @MainActor
-    class ViewModel: ObservableObject {
+    class PeripheralScannerViewModel: ObservableObject {
         let centralManager: CentralManager
-        let environment: PreviewEnvironment
+        let environment: Environment
         
         private var cancelables = Set<AnyCancellable>()
         
+        private let l = L(category: "PeripheralScanner.VM")
+        
         init(centralManager: CentralManager) {
-            self.environment = PreviewEnvironment()
+            self.environment = Environment()
             self.centralManager = centralManager
             
             setupEnvironment()
             
-            print("created VM")
+            l.construct()
         }
         
         deinit {
-            print("destroyed VM")
+            l.descruct()
         }
         
         private func setupEnvironment() {
@@ -40,7 +43,7 @@ extension PeripheralScannerScreen {
     }
 }
 
-extension PeripheralScannerScreen.ViewModel {
+extension PeripheralScannerScreen.PeripheralScannerViewModel {
     enum State {
         case scanning, unsupported, disabled, unauthorized
     }
@@ -67,7 +70,7 @@ extension PeripheralScannerScreen.ViewModel {
     }
 }
 
-extension PeripheralScannerScreen.ViewModel {
+extension PeripheralScannerScreen.PeripheralScannerViewModel {
     func tryToConnect(device: ScanResult) async {
         if environment.connectingDevice != nil {
             return
@@ -87,7 +90,7 @@ extension PeripheralScannerScreen.ViewModel {
     }
 }
 
-extension PeripheralScannerScreen.ViewModel {
+extension PeripheralScannerScreen.PeripheralScannerViewModel {
     func setupManager() {
         centralManager.stateChannel
             .map { state -> State in
@@ -121,8 +124,8 @@ extension PeripheralScannerScreen.ViewModel {
     }
 }
 
-extension PeripheralScannerScreen.ViewModel {
-    class PreviewEnvironment: ObservableObject {
+extension PeripheralScannerScreen.PeripheralScannerViewModel {
+    class Environment: ObservableObject {
         @Published fileprivate (set) var error: ReadableError?
         @Published fileprivate (set) var devices: [ScanResult]
         @Published fileprivate (set) var connectingDevice: ScanResult?
@@ -130,12 +133,20 @@ extension PeripheralScannerScreen.ViewModel {
         
         fileprivate (set) var connect: (ScanResult) async -> ()
         
+        private let l = L(category: "PeripheralScanner.Env")
+        
         init(error: ReadableError? = nil, devices: [ScanResult] = [], connectingDevice: ScanResult? = nil, state: State = .disabled, connect: @escaping (ScanResult) -> Void = { _ in}) {
             self.error = error
             self.devices = devices
             self.connectingDevice = connectingDevice
             self.state = state
             self.connect = connect
+            
+            l.construct()
+        }
+        
+        deinit {
+            l.descruct()
         }
     }
 }
