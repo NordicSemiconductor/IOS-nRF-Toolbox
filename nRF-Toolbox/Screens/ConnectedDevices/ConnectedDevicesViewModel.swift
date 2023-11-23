@@ -12,7 +12,7 @@ import Combine
 
 @MainActor
 class ConnectedDevicesViewModel: ObservableObject {
-    typealias ScannerVM = PeripheralScannerScreen.ViewModel
+    typealias ScannerVM = PeripheralScannerScreen.PeripheralScannerViewModel
     
     private var deviceViewModels: [UUID: DeviceDetailsScreen.DeviceDetailsViewModel] = [:]
     private var cancelable = Set<AnyCancellable>()

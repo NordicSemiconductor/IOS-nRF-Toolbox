@@ -9,7 +9,7 @@
 import SwiftUI
 import iOS_Bluetooth_Numbers_Database
 
-fileprivate typealias Env = PeripheralScannerScreen.ViewModel.PreviewEnvironment
+fileprivate typealias Env = PeripheralScannerScreen.PeripheralScannerViewModel.Environment
 
 struct ScanResultList: View {
     @EnvironmentObject private var environment: Env
@@ -57,8 +57,8 @@ struct ScanResultList: View {
 #Preview {
     ScanResultList()
         .environmentObject(Env(devices: [
-            PeripheralScannerScreen.ViewModel.ScanResult(name: "Device", rssi: -59, id: UUID(), services: []),
-            PeripheralScannerScreen.ViewModel.ScanResult(name: "Device", rssi: -69, id: UUID(), services: []),
-            PeripheralScannerScreen.ViewModel.ScanResult(name: "Device", rssi: -79, id: UUID(), services: []),
+            PeripheralScannerScreen.PeripheralScannerViewModel.ScanResult(name: "Device", rssi: -59, id: UUID(), services: []),
+            PeripheralScannerScreen.PeripheralScannerViewModel.ScanResult(name: "Device", rssi: -69, id: UUID(), services: []),
+            PeripheralScannerScreen.PeripheralScannerViewModel.ScanResult(name: "Device", rssi: -79, id: UUID(), services: []),
         ]))
 }

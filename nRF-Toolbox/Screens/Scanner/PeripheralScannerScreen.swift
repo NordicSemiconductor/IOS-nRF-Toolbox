@@ -10,10 +10,10 @@ import SwiftUI
 import iOS_BLE_Library_Mock
 
 struct PeripheralScannerScreen: View {
-    @StateObject var viewModel: ViewModel
+    @StateObject var viewModel: PeripheralScannerViewModel
     
     init(centralManager: CentralManager) {
-        self._viewModel = StateObject(wrappedValue: ViewModel(centralManager: centralManager))
+        self._viewModel = StateObject(wrappedValue: PeripheralScannerViewModel(centralManager: centralManager))
     }
     
     var body: some View {
@@ -26,9 +26,9 @@ struct PeripheralScannerScreen: View {
     }
 }
 
-fileprivate typealias ViewModel = PeripheralScannerScreen.ViewModel
+fileprivate typealias ViewModel = PeripheralScannerScreen.PeripheralScannerViewModel
 struct PeripheralScannerView: View {
-    @EnvironmentObject private var environment: ViewModel.PreviewEnvironment
+    @EnvironmentObject private var environment: ViewModel.Environment
     
     var body: some View {
         VStack {
@@ -56,11 +56,11 @@ struct PeripheralScannerView: View {
 #Preview {
     NavigationStack {
         PeripheralScannerView()
-            .environmentObject(ViewModel.PreviewEnvironment(
+            .environmentObject(ViewModel.Environment(
                 devices: [
-                    PeripheralScannerScreen.ViewModel.ScanResult(name: "Device", rssi: -59, id: UUID(), services: []),
-                    PeripheralScannerScreen.ViewModel.ScanResult(name: "Device", rssi: -69, id: UUID(), services: []),
-                    PeripheralScannerScreen.ViewModel.ScanResult(name: "Device", rssi: -79, id: UUID(), services: []),
+                    PeripheralScannerScreen.PeripheralScannerViewModel.ScanResult(name: "Device", rssi: -59, id: UUID(), services: []),
+                    PeripheralScannerScreen.PeripheralScannerViewModel.ScanResult(name: "Device", rssi: -69, id: UUID(), services: []),
+                    PeripheralScannerScreen.PeripheralScannerViewModel.ScanResult(name: "Device", rssi: -79, id: UUID(), services: []),
                 ],
                 state: .scanning))
     }
@@ -68,10 +68,10 @@ struct PeripheralScannerView: View {
 
 #Preview {
     PeripheralScannerView()
-        .environmentObject(ViewModel.PreviewEnvironment(state: .scanning))
+        .environmentObject(ViewModel.Environment(state: .scanning))
 }
 
 #Preview {
     PeripheralScannerView()
-        .environmentObject(ViewModel.PreviewEnvironment())
+        .environmentObject(ViewModel.Environment())
 }

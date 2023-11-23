@@ -9,18 +9,27 @@
 import Combine
 import Foundation
 import iOS_BLE_Library_Mock
+import iOS_Common_Libraries
 import Charts
 
 extension SignalChartScreen {
     @MainActor
-    class ViewModel {
+    class SignalChartViewModel {
         let environment = Environment()
         let peripheral: Peripheral
         
         private var cancelable = Set<AnyCancellable>()
         
+        private let l = L(category: "SignalChart.ViewModel")
+        
         init(peripheral: Peripheral) {
             self.peripheral = peripheral
+            
+            l.construct()
+        }
+        
+        deinit {
+            l.descruct()
         }
         
         private func readSignal() {
@@ -67,7 +76,7 @@ extension SignalChartScreen {
     
     // MARK: - Mock
     @MainActor
-    class MockViewModel: ViewModel {
+    class MockViewModel: SignalChartViewModel {
         static let shared = MockViewModel(peripheral: .preview)
         
         override func onConnect() {
@@ -78,7 +87,7 @@ extension SignalChartScreen {
     }
 }
 
-extension SignalChartScreen.ViewModel {
+extension SignalChartScreen.SignalChartViewModel {
     @MainActor
     class Environment: ObservableObject {
         struct ChartData: Identifiable {
@@ -97,9 +106,17 @@ extension SignalChartScreen.ViewModel {
         @Published fileprivate (set) var lowest: Int = -100
         @Published fileprivate (set) var highest: Int = -40
         
+        private let l = L(category: "SignalChart.Environment")
+        
         init(chartData: [ChartData] = []) {
             self.chartData = chartData
             assert(capacity >= visibleDomain)
+            
+            l.construct()
+        }
+        
+        deinit {
+            l.descruct()
         }
     }
 }

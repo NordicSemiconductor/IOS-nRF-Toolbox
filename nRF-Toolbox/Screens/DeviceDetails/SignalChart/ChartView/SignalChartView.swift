@@ -9,7 +9,7 @@
 import SwiftUI
 import Charts
 
-private typealias Env = SignalChartScreen.ViewModel.Environment
+private typealias Env = SignalChartScreen.SignalChartViewModel.Environment
 
 private extension Env.ChartData {
     var pointMark: PointMark {

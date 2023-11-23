@@ -9,9 +9,9 @@
 import SwiftUI
 
 struct SensorCalibrationScreen: View {
-    @ObservedObject private var viewModel: ViewModel
+    @ObservedObject private var viewModel: SensorCalibrationViewModel
     
-    init(viewModel: ViewModel) {
+    init(viewModel: SensorCalibrationViewModel) {
         self.viewModel = viewModel
     }
     
@@ -25,7 +25,7 @@ struct SensorCalibrationScreen: View {
     }
 }
 
-private typealias Env = SensorCalibrationScreen.ViewModel.Environment
+private typealias Env = SensorCalibrationScreen.SensorCalibrationViewModel.Environment
 
 struct SensorCalibrationView: View {
     @EnvironmentObject private var environment: Env

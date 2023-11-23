@@ -10,12 +10,13 @@ import Foundation
 import CoreBluetoothMock_Collection
 import iOS_BLE_Library_Mock
 import iOS_Bluetooth_Numbers_Database
+import iOS_Common_Libraries
 import CoreBluetoothMock
 import Combine
 
 extension SensorSettings {
     @MainActor
-    class ViewModel: ObservableObject {
+    class SensorSettingsViewModel: ObservableObject {
         private var cancelables = Set<AnyCancellable>()
         
         @Published var error: ReadableError? = nil {
@@ -35,16 +36,25 @@ extension SensorSettings {
         
         let handler: RunningServiceHandler
         
+        private let l = L(category: "SensorSettingsViewModel")
+        
         init(handler: RunningServiceHandler) {
             self.handler = handler
             Task {
                 await updateFeature()
             }
+            
+            l.construct()
         }
+        
+        deinit {
+            l.descruct()
+        }
+        
     }
 }
 
-extension SensorSettings.ViewModel {
+extension SensorSettings.SensorSettingsViewModel {
     func updateFeature() async {
         await wrappError {
             self.supportedFeatures = try await handler.readSupportedFeatures()
@@ -101,14 +111,14 @@ extension SensorSettings.ViewModel {
     }
 }
 
-extension SensorSettings.ViewModel {
+extension SensorSettings.SensorSettingsViewModel {
     
 }
 
 #if DEBUG
 
 extension SensorSettings {
-    class MockViewModel: ViewModel {
+    class MockViewModel: SensorSettingsViewModel {
         init() {
             super.init(handler: MockRunningServiceHandler())
         }

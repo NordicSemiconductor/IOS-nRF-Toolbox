@@ -9,11 +9,11 @@
 import SwiftUI
 import CoreBluetoothMock_Collection
 
-private typealias Env = PeripheralInspectorScreen.ViewModel.Environment
+private typealias Env = PeripheralInspectorScreen.PeripheralInspectorViewModel.Environment
 
 struct PeripheralInspectorScreen: View {
 
-    let viewModel: ViewModel
+    let viewModel: PeripheralInspectorViewModel
 
     var body: some View {
         PeripheralInspectorView()
@@ -53,7 +53,6 @@ struct PeripheralInspectorView: View {
                     BatteryChart(data: environment.batteryLevelData, currentLevel: environment.currentBatteryLevel)
                 }
             }
-            
             Section {
                 Button("Disconnect") {
                     disconnectAlertShow = true
@@ -62,6 +61,7 @@ struct PeripheralInspectorView: View {
                 .alert("Disconnect", isPresented: $disconnectAlertShow) {
                     Button("Yes") {
                         rootNavigationMV.selectedDevice = nil
+                        rootEnv.showInspector = false
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
                             Task {
                                 try await connectedDeviceViewModel.disconnectAndRemoveViewModel(environment.deviceId)

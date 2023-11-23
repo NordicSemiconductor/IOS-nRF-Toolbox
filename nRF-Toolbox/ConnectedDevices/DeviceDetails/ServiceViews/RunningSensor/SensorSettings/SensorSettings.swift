@@ -13,7 +13,7 @@ import iOS_BLE_Library_Mock
 import CoreBluetoothMock_Collection
 
 struct SensorSettings: View {
-    @StateObject var viewModel: ViewModel
+    @StateObject var viewModel: SensorSettingsViewModel
     @EnvironmentObject var hudState: HUDState
     
     @State var showConfirmationAlert = false
@@ -24,7 +24,7 @@ struct SensorSettings: View {
     
     @Binding var displaySettings: Bool
     
-    init(viewModel: ViewModel, displaySettings: Binding<Bool>) {
+    init(viewModel: SensorSettingsViewModel, displaySettings: Binding<Bool>) {
         self._viewModel = StateObject(wrappedValue: viewModel)
         self._displaySettings = displaySettings
     }

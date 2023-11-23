@@ -15,7 +15,7 @@ import iOS_Common_Libraries
 
 extension SensorCalibrationScreen {
     @MainActor
-    class ViewModel: ObservableObject {
+    class SensorCalibrationViewModel: ObservableObject {
         private (set) lazy var environment = Environment(
             resetCumulativeValue: { [unowned self] in await self.resetCumulativeValue() },
             startSensorCalibration: { [unowned self] in await self.startSensorCalibration() },
@@ -29,7 +29,7 @@ extension SensorCalibrationScreen {
         private var scControlPoint: CBCharacteristic!
         private var sensorLocationCharacteristic: CBCharacteristic?
         
-        private let logger = L(subsystem: "\(#file)", category: "SensorCalibrationScreen")
+        private let logger = L(category: "SensorCalibration.VM")
         private var cancelable = Set<AnyCancellable>()
         
         init(peripheral: Peripheral, rscService: CBService, rscFeature: RSCFeature) {
@@ -39,11 +39,17 @@ extension SensorCalibrationScreen {
             
             environment.setCumulativeValueEnabled = rscFeature.contains(.totalDistanceMeasurement)
             environment.startSensorCalibrationEnabled = rscFeature.contains(.sensorCalibrationProcedure)
+            
+            logger.construct()
+        }
+        
+        deinit {
+            logger.descruct()
         }
     }
 }
 
-extension SensorCalibrationScreen.ViewModel {
+extension SensorCalibrationScreen.SensorCalibrationViewModel {
     func discoverCharacteristic() async {
         do {
             let characteristics: [Characteristic] = [.scControlPoint, .sensorLocation]
@@ -91,7 +97,7 @@ extension SensorCalibrationScreen.ViewModel {
 
 }
 
-extension SensorCalibrationScreen.ViewModel {
+extension SensorCalibrationScreen.SensorCalibrationViewModel {
     private func resetCumulativeValue() async {
         var meters: UInt32 = 0
         let data = Data(bytes: &meters, count: MemoryLayout.size(ofValue: meters))
@@ -177,7 +183,7 @@ extension SensorCalibrationScreen.ViewModel {
 }
 
 // MARK: - Internal Error
-private extension SensorCalibrationScreen.ViewModel {
+private extension SensorCalibrationScreen.SensorCalibrationViewModel {
     enum Err: Error {
         case controlPointError(RunningSpeedAndCadence.ResponseCode)
         case noMandatoryCharacteristic
@@ -186,7 +192,7 @@ private extension SensorCalibrationScreen.ViewModel {
 }
 
 // MARK: - Environment
-extension SensorCalibrationScreen.ViewModel {
+extension SensorCalibrationScreen.SensorCalibrationViewModel {
     @MainActor
     class Environment: ObservableObject {
         // MARK: Features
@@ -211,6 +217,8 @@ extension SensorCalibrationScreen.ViewModel {
         let resetCumulativeValue: () async -> ()
         let startSensorCalibration: () async -> ()
         let updateSensorLocation: () async -> ()
+        
+        private let l = L(category: "SensorCalibrationViewModel.Environment")
         
         init(
             setCumulativeValueEnabled: Bool = false,
@@ -244,13 +252,19 @@ extension SensorCalibrationScreen.ViewModel {
             Publishers.CombineLatest($pickerSensorLocation, $currentSensorLocation)
                 .map { $0 == $1 }
                 .assign(to: &$updateSensorLocationDisabled)
+            
+            l.construct()
+        }
+        
+        deinit {
+            l.descruct()
         }
         
     }
 }
 
 // MARK: - Error Types
-extension SensorCalibrationScreen.ViewModel.Environment {
+extension SensorCalibrationScreen.SensorCalibrationViewModel.Environment {
     enum CriticalError: LocalizedError {
         case noMandatoryCharacteristic
         case cantEnableNotifyCharacteristic

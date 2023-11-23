@@ -10,16 +10,25 @@ import Combine
 import SwiftUI
 import iOS_Bluetooth_Numbers_Database
 import iOS_BLE_Library_Mock
+import iOS_Common_Libraries
 
 extension AttributeTableScreen {
     @MainActor 
-    class ViewModel: ObservableObject {
+    class AttributeTableViewModel: ObservableObject {
         let env = Environment()
         
         let peripheral: Peripheral
         
+        private let l = L(category: "AttributeTable.VM")
+        
         init(peripheral: Peripheral) {
             self.peripheral = peripheral
+            
+            l.construct()
+        }
+        
+        deinit {
+            l.descruct()
         }
         
         func readAttributeTable() async {
@@ -31,20 +40,24 @@ extension AttributeTableScreen {
         }
     }
     
+    #if DEBUG
     @MainActor
-    class MockViewModel: ViewModel {
+    class MockViewModel: AttributeTableViewModel {
         static let shared = MockViewModel(peripheral: .preview)
         
         override func readAttributeTable() async {
             
         }
     }
+    #endif
 }
 
-private typealias ViewModel = AttributeTableScreen.ViewModel
+private typealias ViewModel = AttributeTableScreen.AttributeTableViewModel
 
 private extension ViewModel {
     func readAttributes() async throws -> [Attribute] {
+        return []
+        /*
         var at = AttributeTable()
         
         let services = try await peripheral.discoverServices(serviceUUIDs: nil).timeout(10, scheduler: DispatchQueue.main).value
@@ -64,23 +77,32 @@ private extension ViewModel {
         }
         
         return at.attributeList
+         */
     }
 }
 
-extension AttributeTableScreen.ViewModel {
+extension AttributeTableScreen.AttributeTableViewModel {
     @MainActor
     class Environment: ObservableObject {
         @Published fileprivate (set) var attributeTable: [Attribute]?
         @Published fileprivate (set) var criticalError: CriticalError?
         
+        private let l = L(category: "AttributeTable.Env")
+        
         init(attributeTable: [Attribute]? = nil, criticalError: CriticalError? = nil) {
             self.attributeTable = attributeTable
             self.criticalError = criticalError
+            
+            l.construct()
+        }
+        
+        deinit {
+            l.descruct()
         }
     }
 }
 
-extension AttributeTableScreen.ViewModel.Environment {
+extension AttributeTableScreen.AttributeTableViewModel.Environment {
     enum CriticalError: Error {
         case unableBuildAttributeTable
         

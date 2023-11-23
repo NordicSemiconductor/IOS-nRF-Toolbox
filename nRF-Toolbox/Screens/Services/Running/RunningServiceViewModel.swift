@@ -9,6 +9,7 @@
 import SwiftUI
 import iOS_BLE_Library_Mock
 import iOS_Bluetooth_Numbers_Database
+import iOS_Common_Libraries
 import CoreBluetoothMock_Collection
 import Combine
 
@@ -21,7 +22,7 @@ private extension CBUUID {
 
 extension RunningServiceScreen {
     @MainActor
-    class ViewModel: ObservableObject {
+    class RunningServiceViewModel: ObservableObject {
         private enum Err: Error {
             case unknown, noData, timeout, noMandatoryCharacteristic
         }
@@ -39,17 +40,25 @@ extension RunningServiceScreen {
         
         private var cancelable = Set<AnyCancellable>()
         
-        private var sensorCalibrationViewModel: SensorCalibrationScreen.ViewModel?
+        private var sensorCalibrationViewModel: SensorCalibrationScreen.SensorCalibrationViewModel?
+        
+        private let l = L(category: "RunningService.ViewModel")
         
         init(peripheral: Peripheral, runningService: CBService) {
             assert(runningService.uuid.uuidString == Service.runningSpeedAndCadence.uuidString, "bad service")
             self.peripheral = peripheral
             self.runningService = runningService
+            
+            l.construct()
+        }
+        
+        deinit {
+            l.descruct()
         }
     }
 }
 
-extension RunningServiceScreen.ViewModel: SupportedServiceViewModel {
+extension RunningServiceScreen.RunningServiceViewModel: SupportedServiceViewModel {
     func onConnect() {
         Task {
             await enableDeviceCommunication()
@@ -61,7 +70,7 @@ extension RunningServiceScreen.ViewModel: SupportedServiceViewModel {
     }
 }
 
-extension RunningServiceScreen.ViewModel {
+extension RunningServiceScreen.RunningServiceViewModel {
     public func enableDeviceCommunication() async {
         do {
             try await discoverCharacteristics()
@@ -89,7 +98,7 @@ extension RunningServiceScreen.ViewModel {
     }
 }
 
-extension RunningServiceScreen.ViewModel {
+extension RunningServiceScreen.RunningServiceViewModel {
     private func discoverCharacteristics() async throws {
         let serviceCharacteristics: [Characteristic] = [.rscMeasurement, .rscFeature]
         let discoveredCharacteristics: [CBCharacteristic]
@@ -120,7 +129,7 @@ extension RunningServiceScreen.ViewModel {
         .timeout(.seconds(1), scheduler: DispatchQueue.main, customError: { Err.timeout })
         .value
         
-        sensorCalibrationViewModel = SensorCalibrationScreen.ViewModel(peripheral: peripheral, rscService: runningService, rscFeature: rscFeature )
+        sensorCalibrationViewModel = SensorCalibrationScreen.SensorCalibrationViewModel(peripheral: peripheral, rscService: runningService, rscFeature: rscFeature )
         environment.rscFeature = rscFeature
     }
     
@@ -156,7 +165,7 @@ extension RunningServiceScreen.ViewModel {
 }
 
 // MARK: - Environment
-extension RunningServiceScreen.ViewModel {
+extension RunningServiceScreen.RunningServiceViewModel {
     class Environment: ObservableObject {
         @Published fileprivate (set) var criticalError: CriticalError?
         @Published fileprivate (set) var alertError: AlertError?
@@ -169,7 +178,9 @@ extension RunningServiceScreen.ViewModel {
         @Published var totalDistance: Measurement<UnitLength>?
         @Published var isRunning: Bool?
         
-        let sensorCalibrationViewModel: (() -> (SensorCalibrationScreen.ViewModel?))
+        let sensorCalibrationViewModel: (() -> (SensorCalibrationScreen.SensorCalibrationViewModel?))
+        
+        private let l = L(category: "RunningService.ViewModel.Environment")
         
         init(
             criticalError: CriticalError? = nil,
@@ -180,7 +191,7 @@ extension RunningServiceScreen.ViewModel {
             instantaneousStrideLength: Measurement<UnitLength>? = nil,
             totalDistance: Measurement<UnitLength>? = nil,
             isRunning: Bool? = nil,
-            sensorCalibrationViewModel: @escaping (() -> (SensorCalibrationScreen.ViewModel?)) = { nil }
+            sensorCalibrationViewModel: @escaping (() -> (SensorCalibrationScreen.SensorCalibrationViewModel?)) = { nil }
         ) {
             self.criticalError = criticalError
             self.alertError = alertError
@@ -191,11 +202,17 @@ extension RunningServiceScreen.ViewModel {
             self.totalDistance = totalDistance
             self.isRunning = isRunning
             self.sensorCalibrationViewModel = sensorCalibrationViewModel
+            
+            l.construct()
+        }
+        
+        deinit {
+            l.descruct()
         }
     }
 }
 
-extension RunningServiceScreen.ViewModel.Environment {
+extension RunningServiceScreen.RunningServiceViewModel.Environment {
     enum CriticalError: Error {
         case noMandatoryCharacteristics
         case noData
@@ -205,7 +222,7 @@ extension RunningServiceScreen.ViewModel.Environment {
     enum AlertError: Error { }
 }
 
-extension RunningServiceScreen.ViewModel.Environment.CriticalError {
+extension RunningServiceScreen.RunningServiceViewModel.Environment.CriticalError {
     var readableError: ReadableError {
         switch self {
         case .noMandatoryCharacteristics:
@@ -218,6 +235,6 @@ extension RunningServiceScreen.ViewModel.Environment.CriticalError {
     }
 }
 
-extension RunningServiceScreen.ViewModel.Environment.AlertError {
+extension RunningServiceScreen.RunningServiceViewModel.Environment.AlertError {
     
 }
