@@ -38,7 +38,7 @@ struct DeviceDetailsScreen: View {
 private typealias VM = DeviceDetailsScreen.DeviceDetailsViewModel
 
 struct DeviceDetailsView<ServiceView: View>: View {
-    @EnvironmentObject var environment: DeviceDetailsScreen.DeviceDetailsViewModel.Environment
+    @EnvironmentObject private var environment: VM.Environment
     @EnvironmentObject var rootNavigationVM: RootNavigationViewModel
     @EnvironmentObject var connectedDeviceVM: ConnectedDevicesViewModel
     
@@ -99,40 +99,22 @@ struct DeviceDetailsView<ServiceView: View>: View {
     private var serviceView: some View {
         if #available(iOS 17, macOS 14, *) {
             newView
+                .inspector(isPresented: $environment.showInspector) {
+                    peripheralInspectorScreen
+                }
                 .toolbar {
-                    ToolbarItem {
-                        Button {
-                            environment.showInspector.toggle()
-                        } label: {
-                            Image(systemName: "square.trailingthird.inset.filled")
-                        }
+                    Button {
+                        environment.showInspector.toggle()
+                    } label: {
+                        Image(systemName: "info")
+                            .symbolVariant(.circle)
                     }
                 }
-                .inspector(isPresented: $environment.showInspector) {
-                    inspectorContent
-                }
-                
         } else {
             oldView
         }
     }
     
-    @ViewBuilder
-    private var inspectorContent: some View {
-        #if os(macOS)
-        peripheralInspectorScreen
-        #else
-        if idiom == .phone {
-            NavigationView {
-                peripheralInspectorScreen
-                    .navigationTitle("Peripheral")
-            }
-        } else {
-            peripheralInspectorScreen
-        }
-        #endif
-    }
-
     @ViewBuilder
     private var newView: some View {
         if environment.services.filter(\.isSupported).count > 1 {
@@ -173,14 +155,18 @@ struct DeviceDetailsView<ServiceView: View>: View {
     
     @ViewBuilder
     private var peripheralInspectorScreen: some View {
-        PeripheralInspectorScreen(viewModel: environment.peripheralViewModel)
-            .tabItem {
-                Label("Peripheral", systemImage: "terminal")
-            }
+        if let vm = environment.peripheralViewModel {
+            PeripheralInspectorScreen(viewModel: vm)
+                .tabItem {
+                    Label("Peripheral", systemImage: "terminal")
+                }
+        } else {
+            NoContentView(title: "No View Model", systemImage: "plus")
+        }
     }
 }
 
-private typealias Environment = DeviceDetailsScreen.DeviceDetailsViewModel.Environment
+private typealias Environment = VM.Environment
 
 #Preview {
     NavigationStack {

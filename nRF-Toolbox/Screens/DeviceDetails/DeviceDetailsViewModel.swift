@@ -57,6 +57,7 @@ extension DeviceDetailsScreen {
                 deviceID: peripheral.peripheral.identifier,
                 peripheralViewModel: PeripheralInspectorScreen.PeripheralInspectorViewModel(peripheral: peripheral)
             )
+            
             self.environment.peripheralName = peripheral.name
             
             self.subscribeOnConnection()
@@ -83,7 +84,7 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
     
     func onDisconnect() {
         supportedServiceViewModels.forEach { $0.onDisconnect() }
-        environment.peripheralViewModel.onDisconnect()
+        environment.peripheralViewModel?.onDisconnect()
     }
     
     func reconnect() async {
@@ -133,7 +134,7 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
             .compactMap { $0.1 }
             .sink { [unowned self] err in
                 supportedServiceViewModels.forEach { $0.onDisconnect() }
-                environment.peripheralViewModel.env.signalChartViewModel.onDisconnect()
+                environment.peripheralViewModel?.env.signalChartViewModel.onDisconnect()
                 environment.criticalError = .disconnectedWithError(err)
             }
             .store(in: &cancelable)
@@ -150,12 +151,11 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
         @Published var alertError: AlertError?
         
         @Published var peripheralName: String?
-        
         @Published var showInspector: Bool = false 
         
         let deviceID: UUID
         
-        fileprivate (set) var peripheralViewModel: PeripheralInspectorScreen.PeripheralInspectorViewModel
+        fileprivate (set) var peripheralViewModel: PeripheralInspectorScreen.PeripheralInspectorViewModel?
         
         fileprivate (set) var reconnect: (() async -> ())?
         
@@ -167,7 +167,7 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
             reconnecting: Bool = false,
             criticalError: CriticalError? = nil,
             alertError: AlertError? = nil,
-            peripheralViewModel: PeripheralInspectorScreen.PeripheralInspectorViewModel = PeripheralInspectorScreen.MockViewModel.shared,
+            peripheralViewModel: PeripheralInspectorScreen.PeripheralInspectorViewModel? = nil, // PeripheralInspectorScreen.MockViewModel.shared,
             reconnect: (() async -> ())? = nil
         ) {
             self.deviceID = deviceID
