@@ -71,11 +71,11 @@ class DeviceDetailsViewModel: ObservableObject, Identifiable {
     }
     
     func discover() async throws {
-        let services = try await peripheral.discoverServices(serviceUUIDs: nil).value
+        let services = try await peripheral.discoverServices(serviceUUIDs: nil).firstValue
         for s in services {
-            let characteristics = try await peripheral.discoverCharacteristics(nil, for: s).value
+            let characteristics = try await peripheral.discoverCharacteristics(nil, for: s).firstValue
             for c in characteristics {
-                let descriptors = try await peripheral.discoverDescriptors(for: c).value
+                let descriptors = try await peripheral.discoverDescriptors(for: c).firstValue
             }
             DispatchQueue.main.async {
                 self.attributeTable.addService(s)
@@ -88,7 +88,7 @@ private extension DeviceDetailsViewModel {
     
     func discoverAllServices() {
         Task {
-            let services = try await peripheral.discoverServices(serviceUUIDs: supportedServices).timeout(.seconds(5), scheduler: DispatchQueue.main).value
+            let services = try await peripheral.discoverServices(serviceUUIDs: supportedServices).timeout(.seconds(5), scheduler: DispatchQueue.main).firstValue
             
             for service in services {
                 DispatchQueue.main.async {

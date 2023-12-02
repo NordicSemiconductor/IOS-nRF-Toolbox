@@ -94,7 +94,7 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
                 .timeout(5, scheduler: DispatchQueue.main, customError: {
                     TimeoutError()
                 })
-                .value
+                .firstValue
             
             self.onDisconnect()
             environment.criticalError = nil
@@ -110,7 +110,7 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
     private func discoverSupportedServices() async {
         let supportedServices = Service.supportedServices.map { CBUUID(service: $0) }
         do {
-            discoveredServices = try await peripheral.discoverServices(serviceUUIDs: supportedServices).value
+            discoveredServices = try await peripheral.discoverServices(serviceUUIDs: supportedServices).firstValue
             self.environment.services = discoveredServices.map { Service(cbService: $0) }
            
             for service in discoveredServices {

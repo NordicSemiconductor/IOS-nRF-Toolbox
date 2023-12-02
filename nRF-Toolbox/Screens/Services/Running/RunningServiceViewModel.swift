@@ -103,7 +103,7 @@ extension RunningServiceScreen.RunningServiceViewModel {
         let serviceCharacteristics: [Characteristic] = [.rscMeasurement, .rscFeature]
         let discoveredCharacteristics: [CBCharacteristic]
         
-        discoveredCharacteristics = try await peripheral.discoverCharacteristics(serviceCharacteristics.map(\.uuid), for: runningService).value
+        discoveredCharacteristics = try await peripheral.discoverCharacteristics(serviceCharacteristics.map(\.uuid), for: runningService).firstValue
         
         for ch in discoveredCharacteristics {
             switch ch.uuid {
@@ -127,7 +127,7 @@ extension RunningServiceScreen.RunningServiceViewModel {
             return RSCFeature(rawValue: data[0])
         }
         .timeout(.seconds(1), scheduler: DispatchQueue.main, customError: { Err.timeout })
-        .value
+        .firstValue
         
         sensorCalibrationViewModel = SensorCalibrationScreen.SensorCalibrationViewModel(peripheral: peripheral, rscService: runningService, rscFeature: rscFeature )
         environment.rscFeature = rscFeature
@@ -160,7 +160,7 @@ extension RunningServiceScreen.RunningServiceViewModel {
             }
             .store(in: &cancelable)
         
-        _ = try await peripheral.setNotifyValue(true, for: rscMeasurement).value
+        _ = try await peripheral.setNotifyValue(true, for: rscMeasurement).firstValue
     }
 }
 

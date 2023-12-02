@@ -95,7 +95,7 @@ private extension ViewModel {
         
         let hrCbCh = try await peripheral.discoverCharacteristics(hrCharacteristics.map(\.uuid), for: hrService)
             .timeout(1, scheduler: DispatchQueue.main)
-            .value
+            .firstValue
         
         for ch in hrCbCh {
             if ch.uuid == Characteristic.heartRateMeasurement.uuid {
@@ -133,7 +133,7 @@ private extension ViewModel {
             }
             .store(in: &cancelable)
         
-        _ = try await peripheral.setNotifyValue(true, for: characteristic).value
+        _ = try await peripheral.setNotifyValue(true, for: characteristic).firstValue
     }
 }
 

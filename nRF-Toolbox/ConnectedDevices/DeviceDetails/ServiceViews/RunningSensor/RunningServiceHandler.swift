@@ -97,7 +97,7 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
     func prepare() async throws {
         let characteristicsSeq = try await peripheral.discoverCharacteristics([.rscFeature, .rscMeasurement], for: service)
             .timeout(.seconds(3), scheduler: DispatchQueue.main, customError: { Err.timeout })
-            .value
+            .firstValue
         
         for ch in characteristicsSeq {
             switch ch.uuid {
@@ -121,13 +121,13 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
         self.features = try await readSupportedFeatures()
        
         if features.contains(.multipleSensorLocation) {
-            self.sensorLocationCh = try await peripheral.discoverCharacteristics([.sensorLocation], for: service).value.first
+            self.sensorLocationCh = try await peripheral.discoverCharacteristics([.sensorLocation], for: service).firstValue.first
             
             self.sensorLocationSupported = true
         }
         
         if features.contains(.sensorCalibrationProcedure) {
-            self.scControlPointCh = try await peripheral.discoverCharacteristics([.scControlPoint], for: service).value.first
+            self.scControlPointCh = try await peripheral.discoverCharacteristics([.scControlPoint], for: service).firstValue.first
             
             self.peripheral.peripheral.setNotifyValue(true, for: scControlPointCh!)
         }
@@ -249,7 +249,7 @@ extension RunningServiceHandler {
         return try await peripheral.writeValueWithResponse(data, for: scControlPointCh)
             .combineLatest(valuePublisher)
             .map { $0.1 }
-            .value
+            .firstValue
     }
     
     func writeCumulativeValue(newDistance: Measurement<UnitLength>) async throws {

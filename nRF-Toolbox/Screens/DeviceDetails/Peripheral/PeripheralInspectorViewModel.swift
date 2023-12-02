@@ -75,7 +75,7 @@ private extension ViewModel {
         let cbServices = try await peripheral
             .discoverServices(serviceUUIDs: services.map(\.uuid))
             .timeout(1, scheduler: DispatchQueue.main)
-            .value
+            .firstValue
         
         // Check if battery service was discovered
         guard let cbBatteryLevel = cbServices.first,
@@ -88,7 +88,7 @@ private extension ViewModel {
         let cbCharacteristics = try await peripheral
             .discoverCharacteristics(characteristics.map(\.uuid), for: cbBatteryLevel)
             .timeout(1, scheduler: DispatchQueue.main)
-            .value
+            .firstValue
         
         // Check if `batteryLevel` characteristic was discovered
         guard let cbBatteryLevel = cbCharacteristics.first, cbBatteryLevel.uuid == Characteristic.batteryLevel.uuid else {
@@ -99,7 +99,7 @@ private extension ViewModel {
         
         do {
             // try to enable notifications for
-            if try await peripheral.setNotifyValue(true, for: cbBatteryLevel).timeout(1, scheduler: DispatchQueue.main).value {
+            if try await peripheral.setNotifyValue(true, for: cbBatteryLevel).timeout(1, scheduler: DispatchQueue.main).firstValue {
                 // in case of success - listen
                 listen(for: cbBatteryLevel)
             } else {

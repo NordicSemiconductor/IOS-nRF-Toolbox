@@ -53,14 +53,14 @@ extension SensorCalibrationScreen.SensorCalibrationViewModel {
     func discoverCharacteristic() async {
         do {
             let characteristics: [Characteristic] = [.scControlPoint, .sensorLocation]
-            let discovered = try await peripheral.discoverCharacteristics(characteristics.map(\.uuid), for: rscService).value
+            let discovered = try await peripheral.discoverCharacteristics(characteristics.map(\.uuid), for: rscService).firstValue
             
             guard let scControlPoint = discovered.first(where: { $0.uuid == Characteristic.scControlPoint.uuid }) else {
                 environment.criticalError = .noMandatoryCharacteristic
                 return
             }
             self.scControlPoint = scControlPoint
-            guard try await peripheral.setNotifyValue(true, for: self.scControlPoint).value else {
+            guard try await peripheral.setNotifyValue(true, for: self.scControlPoint).firstValue else {
                 environment.criticalError = .cantEnableNotifyCharacteristic
                 return 
             }
@@ -154,7 +154,7 @@ extension SensorCalibrationScreen.SensorCalibrationViewModel {
         return try await peripheral.writeValueWithResponse(data, for: scControlPoint)
             .combineLatest(valuePublisher)
             .map { $0.1 }
-            .value
+            .firstValue
     }
     
     func readSensorLocation() async throws -> SensorLocation {

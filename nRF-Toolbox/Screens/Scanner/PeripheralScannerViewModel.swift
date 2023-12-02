@@ -81,7 +81,7 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
         let peripheral = centralManager.retrievePeripherals(withIdentifiers: [device.id]).first!
         
         do {
-            _ = try await centralManager.connect(peripheral).first().value
+            _ = try await centralManager.connect(peripheral).first().firstValue
         } catch let e {
             environment.error = ReadableError(error: e)
         }

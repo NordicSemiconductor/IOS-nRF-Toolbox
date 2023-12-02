@@ -49,7 +49,7 @@ extension ConnectedDevicesViewModel {
         if case .disconnectedWithError = vm.environment.criticalError {
             environment.connectedDevices.removeAll(where: { $0.id == deviceID })
         } else {
-            _ = try await centralManager.cancelPeripheralConnection(peripheral).value
+            _ = try await centralManager.cancelPeripheralConnection(peripheral).firstValue
         }
         
         self.deviceViewModels.removeValue(forKey: deviceID)
