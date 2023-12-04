@@ -18,47 +18,25 @@ struct AttributeTable {
     private (set) var services: [Service] = []
     
     mutating func addService(_ cbService: CBService) {
-        var service = Service(cbService: cbService)
-        
-        service.characteristics = cbService.characteristics?.map { cbch in
-            var ch = Service.Characteristic(cbCharacteristic: cbch)
-            
-            ch.descriptors = cbch.descriptors?.map { cbd in
-                Service.Characteristic.Descriptor(cbDescriptor: cbd)
-            } ?? []
-            
-            return ch
-        } ?? []
-        
+        let service = Service(cbService: cbService)
         services.replacedOrAppended(service, compareBy: \.identifier)
     }
     
-    mutating func addCharacteristic(_ cbCharacteristic: CBCharacteristic) {
-        guard let service = cbCharacteristic.service else {
-            return
-        }
+    mutating func addCharacteristic(_ cbCharacteristic: CBCharacteristic, to service: CBService) {
         guard let serviceIndex = services.enumerated()
             .first(where: { $0.element.identifier == service.uuid.uuidString })?
             .offset else {
             return
         }
         
-        var charateristic = Service.Characteristic(
+        let charateristic = Service.Characteristic(
             cbCharacteristic: cbCharacteristic
         )
-        
-        charateristic.descriptors = cbCharacteristic.descriptors?.map { cbd in
-            Service.Characteristic.Descriptor(
-                cbDescriptor: cbd
-            )
-        } ?? []
         
         services[serviceIndex].characteristics.replacedOrAppended(charateristic, compareBy: \.identifier)
     }
     
-    mutating func addDescriptor(_ cbDescriptor: CBDescriptor) {
-        guard let service = cbDescriptor.characteristic?.service, let characteristic = cbDescriptor.characteristic else { return }
-        
+    mutating func addDescriptor(_ cbDescriptor: CBDescriptor, to characteristic: CBCharacteristic, in service: CBService) {
         guard let serviceIndex = services.enumerated().first(where: { $0.element.identifier == service.uuid.uuidString })?.offset else { return }
                 
         guard let characteristicIndex = services[serviceIndex].characteristics.enumerated().first(where: { $0.element.identifier == characteristic.uuid.uuidString })?.offset else { return }
@@ -86,6 +64,15 @@ struct AttributeTable {
         
         return list 
     }
+    
+    #if DEBUG
+    func printAttributeList() {
+        for attr in attributeList {
+            let prefix = Array<String>(repeating: "-", count: Int(attr.level)).joined()
+            print("|\(prefix): \(attr.name)")
+        }
+    }
+    #endif
 }
 
 extension AttributeTable {
