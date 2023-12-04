@@ -15,10 +15,10 @@ extension L {
     }
     
     func construct() {
-        d("life-cycle-created")
+//        d("life-cycle-created")
     }
     
     func descruct() {
-        w("life-cycle-destroyed")
+//        w("life-cycle-destroyed")
     }
 }

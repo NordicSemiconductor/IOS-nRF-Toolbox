@@ -78,8 +78,7 @@ private extension ViewModel {
             .firstValue
         
         // Check if battery service was discovered
-        guard let cbBatteryLevel = cbServices.first,
-                cbBatteryLevel.uuid == Service.batteryService.uuid else {
+        guard let cbBatteryLevel = cbServices.first(where: { $0.uuid == Service.batteryService.uuid }) else {
             return
         }
         
