@@ -91,6 +91,7 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
         do {
             environment.reconnecting = true
             _ = try await centralManager.connect(peripheral.peripheral)
+                // Set timeout for 5 seconds
                 .timeout(5, scheduler: DispatchQueue.main, customError: {
                     TimeoutError()
                 })
@@ -130,11 +131,12 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
     
     private func subscribeOnConnection() {
         centralManager.disconnectedPeripheralsChannel
-            .filter { [unowned self] in $0.0.identifier == self.id }
-            .compactMap { $0.1 }
+            .filter { [unowned self] in $0.0.identifier == self.id }    // Filter other peripherals
+            .compactMap { $0.1 }                                        // Handle only disconnections with error
             .sink { [unowned self] err in
                 supportedServiceViewModels.forEach { $0.onDisconnect() }
                 environment.peripheralViewModel?.env.signalChartViewModel.onDisconnect()
+                // Display error
                 environment.criticalError = .disconnectedWithError(err)
             }
             .store(in: &cancelable)

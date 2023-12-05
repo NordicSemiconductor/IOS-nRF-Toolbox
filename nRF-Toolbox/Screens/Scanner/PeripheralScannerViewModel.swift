@@ -78,9 +78,11 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
         
         environment.connectingDevice = device
         
+        // Get CBPeripheral's instance
         let peripheral = centralManager.retrievePeripherals(withIdentifiers: [device.id]).first!
         
         do {
+            // `connect` method returns Publisher that sends connected CBPeripheral
             _ = try await centralManager.connect(peripheral).first().firstValue
         } catch let e {
             environment.error = ReadableError(error: e)
@@ -92,6 +94,7 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
 
 extension PeripheralScannerScreen.PeripheralScannerViewModel {
     func setupManager() {
+        // Track state CBCentralManager's state changes
         centralManager.stateChannel
             .map { state -> State in
                 switch state {
@@ -104,7 +107,8 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
             .assign(to: &environment.$state)
         
         centralManager.scanForPeripherals(withServices: nil)
-            .filter { $0.name != nil }
+            // Filter unnamed and unconnectable devices
+            .filter { $0.name != nil && $0.advertisementData.isConnectable == true }
             .map { sr -> ScanResult in
                 ScanResult(
                     name: sr.name,
@@ -118,9 +122,17 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
                     self.environment.error = ReadableError(error: e)
                 }
             } receiveValue: { sr in
+                // Publisher can send Scan Results many times. You need to check if previously discovered Scan Results are already in the list
                 self.environment.devices.replacedOrAppended(sr)
             }
             .store(in: &cancelables)
+    }
+    
+    func refresh() {
+        centralManager.stopScan()
+        environment.devices.removeAll()
+        cancelables.removeAll()
+        setupManager()
     }
 }
 

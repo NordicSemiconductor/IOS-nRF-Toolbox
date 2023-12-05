@@ -18,6 +18,9 @@ struct PeripheralScannerScreen: View {
     
     var body: some View {
         PeripheralScannerView()
+            .refreshable {
+                viewModel.refresh()
+            }
             .onFirstAppear {
                 viewModel.setupManager()
             }

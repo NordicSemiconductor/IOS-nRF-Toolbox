@@ -126,6 +126,7 @@ extension RunningServiceScreen.RunningServiceViewModel {
             guard let data = data else { throw Err.noData }
             return RSCFeature(rawValue: data[0])
         }
+        // Set reasonable Timeout
         .timeout(.seconds(1), scheduler: DispatchQueue.main, customError: { Err.timeout })
         .firstValue
         
@@ -134,8 +135,8 @@ extension RunningServiceScreen.RunningServiceViewModel {
     }
     
     private func enableMeasurementNotifications() async throws {
-        peripheral.listenValues(for: rscMeasurement)
-            .map { RunningSpeedAndCadence.RSCSMeasurement(from: $0) }
+        peripheral.listenValues(for: rscMeasurement)                    // Listen for values
+            .map { RunningSpeedAndCadence.RSCSMeasurement(from: $0) }   // Map Data into readable struct
             .sink { completion in
                 switch completion {
                 case .finished:

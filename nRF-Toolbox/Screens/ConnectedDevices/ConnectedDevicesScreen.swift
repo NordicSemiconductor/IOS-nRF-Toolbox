@@ -19,6 +19,7 @@ struct ConnectedDevicesScreen: View {
                         .frame(minWidth: 400, minHeight: 450)
 #endif
                 }
+                .interactiveDismissDisabled()
             }
             .navigationTitle("Connected Devices")
             .environmentObject(viewModel.environment)

@@ -56,10 +56,24 @@ struct StateViews {
     
     struct EmptyResults: View {
         var body: some View {
-            NoContentView(
-                title: "Scanning ...",
-                systemImage: "binoculars"
-            )
+            List {
+                ScanResultItem(
+                    name: "Two Words",
+                    rssi: -90,
+                    services: [.heartRate, .runningSpeedAndCadence]
+                )
+                ScanResultItem(
+                    name: "Three Words Name",
+                    rssi: -50,
+                    services: []
+                )
+                ScanResultItem(
+                    name: "Two Words",
+                    rssi: -60,
+                    services: [.runningSpeedAndCadence]
+                )
+            }
+            .redacted(reason: .placeholder) // <- HERE
         }
     }
 }

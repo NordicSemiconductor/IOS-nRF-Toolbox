@@ -143,7 +143,7 @@ extension SensorCalibrationScreen.SensorCalibrationViewModel {
         
         let valuePublisher = self.peripheral.listenValues(for: scControlPoint)
             .compactMap { RunningSpeedAndCadence.SCControlPointResponse(from: $0) }
-            .first(where: { $0.opCode == opCode })
+            .first(where: { $0.opCode == opCode }) // Listen to response with the same OpCode
             .tryMap { response -> Data? in
                 guard response.responseValue == .success else {
                     throw Err.controlPointError(response.responseValue)

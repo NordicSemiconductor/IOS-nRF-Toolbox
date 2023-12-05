@@ -33,12 +33,15 @@ extension SignalChartScreen {
         }
         
         private func readSignal() {
+            // Run Timer every 1 second
             Timer.publish(every: 1, on: .main, in: .common)
                 .autoconnect()
+                // Run `readRSSI` on every timer's execution
                 .flatMap { [unowned self] _ in
                     self.peripheral.readRSSI()
                         .timeout(0.9, scheduler: DispatchQueue.main)
                 }
+                // Convert RSSI to SwiftUI's ChartData
                 .map { Environment.ChartData(date: Date(), signal: $0.intValue) }
                 .sink { completion in
                     // TODO: Update handling
@@ -56,6 +59,7 @@ extension SignalChartScreen {
                         environment.chartData.removeFirst()
                     }
                     
+                    // Set chart's Y bounds
                     let min = (environment.chartData.min { $0.signal < $1.signal }?.signal ?? -100)
                     let max  = (environment.chartData.max { $0.signal < $1.signal }?.signal ?? -40)
                     
