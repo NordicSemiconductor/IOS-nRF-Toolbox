@@ -14,7 +14,10 @@ import iOS_Bluetooth_Numbers_Database
 You can find example of the Health Thermometer peripheral here: TODO add link
 */
 
-let cbPeripheral = try await scanAndConnect(to: "99027DE5-3248-5D9B-55DA-616266D395DF")
+/**
+To discover the UUID of the peripheral you want to connect to, run the app and copy the UUID from the console. 
+*/
+let cbPeripheral = try await scanAndConnect(to: "")
 
 let peripheral = Peripheral(peripheral: cbPeripheral)
 
