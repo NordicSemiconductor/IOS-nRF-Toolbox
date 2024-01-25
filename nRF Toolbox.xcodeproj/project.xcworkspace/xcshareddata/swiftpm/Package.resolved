@@ -19,6 +19,33 @@
       }
     },
     {
+      "identity" : "ios-ble-library",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/NordicSemiconductor/IOS-BLE-Library.git",
+      "state" : {
+        "revision" : "3594cbe5f6993b801bc87442620118abb735e33d",
+        "version" : "0.3.0"
+      }
+    },
+    {
+      "identity" : "ios-bluetooth-numbers-database",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/NickKibish/iOS-Bluetooth-Numbers-Database.git",
+      "state" : {
+        "revision" : "40ae8d7050d16fc2603c314dd560a7992c35f56f",
+        "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "ios-corebluetooth-mock",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/NordicSemiconductor/IOS-CoreBluetooth-Mock.git",
+      "state" : {
+        "revision" : "194863075520d244f710fddd66f4f111c21661ef",
+        "version" : "0.17.0"
+      }
+    },
+    {
       "identity" : "ios-dfu-library",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/NordicSemiconductor/IOS-DFU-Library.git",
