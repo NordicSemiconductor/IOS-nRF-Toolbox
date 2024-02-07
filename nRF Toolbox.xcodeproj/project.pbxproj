@@ -157,6 +157,8 @@
 		01C575B92A798D65007FE4F0 /* SensorSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C575B82A798D65007FE4F0 /* SensorSettings.swift */; };
 		01C575BC2A7BF2E4007FE4F0 /* CoreBluetoothMock-Collection in Frameworks */ = {isa = PBXBuildFile; productRef = 01C575BB2A7BF2E4007FE4F0 /* CoreBluetoothMock-Collection */; };
 		01C575BE2A7D00EF007FE4F0 /* Alias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C575BD2A7D00EF007FE4F0 /* Alias.swift */; };
+		01C62AE52B72463F00CDEE31 /* DeviceInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C62AE42B72463F00CDEE31 /* DeviceInformation.swift */; };
+		01C62AE72B72480C00CDEE31 /* DeviceInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C62AE62B72480C00CDEE31 /* DeviceInformationView.swift */; };
 		01C81ACE2A5CAC350011B41E /* iOS-Bluetooth-Numbers-Database in Frameworks */ = {isa = PBXBuildFile; productRef = 01C81ACD2A5CAC350011B41E /* iOS-Bluetooth-Numbers-Database */; };
 		01C81AD52A5CB6420011B41E /* ServiceBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C81AD42A5CB6420011B41E /* ServiceBadge.swift */; };
 		01C81AD72A5D8FEA0011B41E /* ReadableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C81AD62A5D8FEA0011B41E /* ReadableError.swift */; };
@@ -561,6 +563,8 @@
 		01C575B82A798D65007FE4F0 /* SensorSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorSettings.swift; sourceTree = "<group>"; };
 		01C575BA2A7A8E1F007FE4F0 /* CoreBluetoothMock-Collection */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "CoreBluetoothMock-Collection"; path = "../CoreBluetoothMock-Collection"; sourceTree = "<group>"; };
 		01C575BD2A7D00EF007FE4F0 /* Alias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alias.swift; sourceTree = "<group>"; };
+		01C62AE42B72463F00CDEE31 /* DeviceInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInformation.swift; sourceTree = "<group>"; };
+		01C62AE62B72480C00CDEE31 /* DeviceInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInformationView.swift; sourceTree = "<group>"; };
 		01C81AD42A5CB6420011B41E /* ServiceBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBadge.swift; sourceTree = "<group>"; };
 		01C81AD62A5D8FEA0011B41E /* ReadableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadableError.swift; sourceTree = "<group>"; };
 		01C81ADB2A5DFA8E0011B41E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
@@ -845,6 +849,7 @@
 			isa = PBXGroup;
 			children = (
 				0108E87D2AF1654D00C8B096 /* BatteryChart.swift */,
+				01C62AE62B72480C00CDEE31 /* DeviceInformationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1223,6 +1228,7 @@
 		0180A2992AEFBB9E00090F6D /* Peripheral */ = {
 			isa = PBXGroup;
 			children = (
+				01C62AE32B72462D00CDEE31 /* Model */,
 				0108E87C2AF1654000C8B096 /* Views */,
 				0180A29A2AEFBBC200090F6D /* PeripheralInspectorScreen.swift */,
 				0180A29B2AEFBBC200090F6D /* PeripheralInspectorViewModel.swift */,
@@ -1535,6 +1541,14 @@
 				4353A50E243175C300159CDF /* HMAccessoryListTableViewController.xib */,
 			);
 			path = HomeKit;
+			sourceTree = "<group>";
+		};
+		01C62AE32B72462D00CDEE31 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				01C62AE42B72463F00CDEE31 /* DeviceInformation.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		01C81AD32A5CB62D0011B41E /* ScanResult */ = {
@@ -2793,6 +2807,8 @@
 				0132082A2A5C142100DCEA11 /* ScanResultItem.swift in Sources */,
 				0164A4842AD840B60093E501 /* DeviceDetailsScreen.swift in Sources */,
 				018C053E2AE16682007CE0FE /* SignalChartView.swift in Sources */,
+				01C62AE52B72463F00CDEE31 /* DeviceInformation.swift in Sources */,
+				01C62AE72B72480C00CDEE31 /* DeviceInformationView.swift in Sources */,
 				018C05412AE1670C007CE0FE /* ChartData+Preview.swift in Sources */,
 				018C053B2AE0844E007CE0FE /* SignalChartViewModel.swift in Sources */,
 				018873C92A583B0000253273 /* PeripheralScannerViewModel.swift in Sources */,

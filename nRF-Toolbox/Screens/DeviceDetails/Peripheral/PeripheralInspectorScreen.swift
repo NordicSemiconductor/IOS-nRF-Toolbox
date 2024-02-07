@@ -53,6 +53,13 @@ struct PeripheralInspectorView: View {
                     BatteryChart(data: environment.batteryLevelData, currentLevel: environment.currentBatteryLevel)
                 }
             }
+            
+            if environment.deviceInfoAvailable {
+                Section("Device Information") {
+                    DeviceInformationView(deviceInformation: environment.deviceInfo)
+                }
+            }
+            
             Section {
                 Button("Disconnect") {
                     disconnectAlertShow = true
@@ -129,7 +136,12 @@ struct PeripheralInspectorView: View {
                 .environmentObject(Env(
                     deviceId: UUID(),
                     batteryLevelData: Battery.preview,
-                    batteryLevelAvailable: true
+                    batteryLevelAvailable: true,
+                    deviceInfoAvailable: true,
+                    deviceInfo: DeviceInformation(
+                        manufacturerName: "Nordic Semiconductor",
+                        modelNumber: "nRF52840"
+                    )
                 ))
                 .tabItem { Label("Device", systemImage: "apple.terminal") }
         }

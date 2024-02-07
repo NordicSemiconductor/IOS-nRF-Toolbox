@@ -71,18 +71,23 @@ private extension ViewModel {
     
     private func discoverServices() async throws {
         // Discover Services
-        let services: [Service] = [.batteryService]
+        let services: [Service] = [.batteryService, .deviceInformation]
         let cbServices = try await peripheral
             .discoverServices(serviceUUIDs: services.map(\.uuid))
             .timeout(1, scheduler: DispatchQueue.main)
             .firstValue
         
         // Check if battery service was discovered
-        guard let cbBatteryLevel = cbServices.first(where: { $0.uuid == Service.batteryService.uuid }) else {
-            return
+        if let cbBatteryLevel = cbServices.first(where: { $0.uuid == Service.batteryService.uuid }) {
+            try await handleBatteryService(cbBatteryLevel, peripheral: peripheral)
         }
         
-        // Discover Characteristics
+        if let cbDeviceInfo = cbServices.first(where: { $0.uuid == Service.deviceInformation.uuid }) {
+            try await handleDeviceInformation(cbDeviceInfo, peripheral: peripheral)
+        }
+    }
+    
+    private func handleBatteryService(_ cbBatteryLevel: CBService, peripheral: Peripheral) async throws {
         let characteristics: [Characteristic] = [.batteryLevel]
         let cbCharacteristics = try await peripheral
             .discoverCharacteristics(characteristics.map(\.uuid), for: cbBatteryLevel)
@@ -108,8 +113,71 @@ private extension ViewModel {
         } catch {
             try? await readBatteryLevelOnTimer(cbBatteryLevel)
         }
-        
     }
+    
+    private func handleDeviceInformation(_ cbDeviceInfo: CBService, peripheral: Peripheral) async throws {
+        let deviceInfo = try await readDeviceInformation(from: cbDeviceInfo, peripheral: peripheral)
+        
+        env.deviceInfoAvailable = true
+        env.deviceInfo = deviceInfo
+    }
+    
+    private func readDeviceInformation(from service: CBService, peripheral: Peripheral) async throws -> DeviceInformation {
+        let characteristics = try await peripheral.discoverCharacteristics(nil, for: service).firstValue
+
+        var di = DeviceInformation()
+        
+        if let c = characteristics.first(where: { $0.uuid == CBUUID(string: Characteristic.manufacturerNameString.uuidString) }) {
+            if let data = try await peripheral.readValue(for: c).firstValue {
+                di.manufacturerName = String(data: data, encoding: .utf8)
+            }
+        }
+
+        if let c = characteristics.first(where: { $0.uuid == CBUUID(string: Characteristic.modelNumberString.uuidString) }) {
+            if let data = try await peripheral.readValue(for: c).firstValue {
+                di.modelNumber = String(data: data, encoding: .utf8)
+            }
+        }
+
+        if let c = characteristics.first(where: { $0.uuid == CBUUID(string: Characteristic.serialNumberString.uuidString) }) {
+            if let data = try await peripheral.readValue(for: c).firstValue {
+                di.serialNumber = String(data: data, encoding: .utf8)
+            }
+        }
+
+        if let c = characteristics.first(where: { $0.uuid == CBUUID(string: Characteristic.hardwareRevisionString.uuidString) }) {
+            if let data = try await peripheral.readValue(for: c).firstValue {
+                di.hardwareRevision = String(data: data, encoding: .utf8)
+            }
+        }
+
+        if let c = characteristics.first(where: { $0.uuid == CBUUID(string: Characteristic.firmwareRevisionString.uuidString) }) {
+            if let data = try await peripheral.readValue(for: c).firstValue {
+                di.firmwareRevision = String(data: data, encoding: .utf8)
+            }
+        }
+
+        if let c = characteristics.first(where: { $0.uuid == CBUUID(string: Characteristic.softwareRevisionString.uuidString) }) {
+            if let data = try await peripheral.readValue(for: c).firstValue {
+                di.softwareRevision = String(data: data, encoding: .utf8)
+            }
+        }
+
+        if let c = characteristics.first(where: { $0.uuid == CBUUID(string: Characteristic.systemId.uuidString) }) {
+            if let data = try await peripheral.readValue(for: c).firstValue {
+                di.systemID = String(data: data, encoding: .utf8)
+            }
+        }
+
+        if let c = characteristics.first(where: { $0.uuid == CBUUID(string: Characteristic.ieee11073_20601RegulatoryCertificationDataList.uuidString) }) {
+            if let data = try await peripheral.readValue(for: c).firstValue {
+                di.ieee11073 = String(data: data, encoding: .utf8)
+            }
+        }
+        
+        return di
+    }
+
     
     private func readBatteryLevelOnTimer(_ batteryLevelCh: CBCharacteristic, timeInterval: TimeInterval = 1) async throws {
         let publisher = Timer.publish(every: 60, on: .main, in: .default)
@@ -176,6 +244,8 @@ extension PeripheralInspectorScreen.PeripheralInspectorViewModel {
         @Published fileprivate (set) var batteryLevelData: [ChartTimeData<Battery.Level>]
         @Published fileprivate (set) var currentBatteryLevel: UInt? = nil
         @Published fileprivate (set) var batteryLevelAvailable: Bool = false
+        @Published fileprivate (set) var deviceInfoAvailable: Bool = false
+        @Published fileprivate (set) var deviceInfo: DeviceInformation = DeviceInformation()
         
         let deviceId: UUID
         
@@ -194,6 +264,8 @@ extension PeripheralInspectorScreen.PeripheralInspectorViewModel {
             batteryLevelData: [ChartTimeData<Battery.Level>] = [],
             currentBatteryLevel: UInt? = nil,
             batteryLevelAvailable: Bool = false,
+            deviceInfoAvailable: Bool = false,
+            deviceInfo: DeviceInformation = DeviceInformation(),
             signalChartViewModel: SignalChartScreen.SignalChartViewModel = SignalChartScreen.MockViewModel.shared,
             attributeTableViewModel: AttributeTableScreen.AttributeTableViewModel = AttributeTableScreen.MockViewModel.shared,
             disconnect: @escaping () -> () = { }
@@ -205,6 +277,8 @@ extension PeripheralInspectorScreen.PeripheralInspectorViewModel {
             self.batteryLevelData = batteryLevelData
             self.currentBatteryLevel = currentBatteryLevel
             self.batteryLevelAvailable = batteryLevelAvailable
+            self.deviceInfoAvailable = deviceInfoAvailable
+            self.deviceInfo = deviceInfo
             self.signalChartViewModel = signalChartViewModel
             self.attributeTableViewModel = attributeTableViewModel
             self.disconnect = disconnect
