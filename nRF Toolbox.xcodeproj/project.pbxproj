@@ -11,6 +11,8 @@
 		0108E87B2AF140D800C8B096 /* ChartTimeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0108E87A2AF140D800C8B096 /* ChartTimeData.swift */; };
 		0108E87E2AF1654D00C8B096 /* BatteryChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0108E87D2AF1654D00C8B096 /* BatteryChart.swift */; };
 		0108E8812AF169B800C8B096 /* Battery+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0108E8802AF169B800C8B096 /* Battery+Preview.swift */; };
+		0118C82B2B739B1D00204AED /* HealthThermometerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0118C8292B739B1D00204AED /* HealthThermometerScreen.swift */; };
+		0118C82C2B739B1D00204AED /* HealthThermometerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0118C82A2B739B1D00204AED /* HealthThermometerViewModel.swift */; };
 		0119609E23FA063700A7EF29 /* UARTMacrosHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0119609D23FA063700A7EF29 /* UARTMacrosHeaderView.swift */; };
 		011960A023FA064100A7EF29 /* UARTMacrosHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0119609F23FA064100A7EF29 /* UARTMacrosHeaderView.xib */; };
 		0125D5B623F44FE6003A1812 /* UIBarButtonItem+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0125D5B523F44FE6003A1812 /* UIBarButtonItem+Ext.swift */; };
@@ -412,6 +414,8 @@
 		0108E87A2AF140D800C8B096 /* ChartTimeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartTimeData.swift; sourceTree = "<group>"; };
 		0108E87D2AF1654D00C8B096 /* BatteryChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryChart.swift; sourceTree = "<group>"; };
 		0108E8802AF169B800C8B096 /* Battery+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Battery+Preview.swift"; sourceTree = "<group>"; };
+		0118C8292B739B1D00204AED /* HealthThermometerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthThermometerScreen.swift; sourceTree = "<group>"; };
+		0118C82A2B739B1D00204AED /* HealthThermometerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthThermometerViewModel.swift; sourceTree = "<group>"; };
 		0119609D23FA063700A7EF29 /* UARTMacrosHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosHeaderView.swift; sourceTree = "<group>"; };
 		0119609F23FA064100A7EF29 /* UARTMacrosHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTMacrosHeaderView.xib; sourceTree = "<group>"; };
 		0125D5B523F44FE6003A1812 /* UIBarButtonItem+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Ext.swift"; sourceTree = "<group>"; };
@@ -862,6 +866,15 @@
 			path = Battery;
 			sourceTree = "<group>";
 		};
+		0118C8282B739AE500204AED /* HealthThermometer */ = {
+			isa = PBXGroup;
+			children = (
+				0118C8292B739B1D00204AED /* HealthThermometerScreen.swift */,
+				0118C82A2B739B1D00204AED /* HealthThermometerViewModel.swift */,
+			);
+			path = HealthThermometer;
+			sourceTree = "<group>";
+		};
 		0119609C23F9FDC700A7EF29 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -999,6 +1012,7 @@
 		013E5D872ADD337300B9C475 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				0118C8282B739AE500204AED /* HealthThermometer */,
 				01ABB0752AE6FDCF00615A21 /* HeartRate */,
 				013E5D882ADD33BF00B9C475 /* Running */,
 			);
@@ -2787,6 +2801,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0118C82B2B739B1D00204AED /* HealthThermometerScreen.swift in Sources */,
 				016C0FA02AF925FA00F6CFDF /* NoContentView.swift in Sources */,
 				01C81AD72A5D8FEA0011B41E /* ReadableError.swift in Sources */,
 				013E5D912ADFDF1300B9C475 /* Array+Ext.swift in Sources */,
@@ -2852,6 +2867,7 @@
 				01C575BE2A7D00EF007FE4F0 /* Alias.swift in Sources */,
 				012E22942A6AD5BE00B14064 /* NamedItem.swift in Sources */,
 				014BBD812A700D1600BCFCA8 /* SensorLocationView1.swift in Sources */,
+				0118C82C2B739B1D00204AED /* HealthThermometerViewModel.swift in Sources */,
 				019ABF1D2A600A480019BD21 /* DeviceItem.swift in Sources */,
 				0164A4742AD5A4630093E501 /* StateViews.swift in Sources */,
 				0129F2252A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift in Sources */,
