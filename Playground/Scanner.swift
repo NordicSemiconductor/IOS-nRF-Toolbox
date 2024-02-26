@@ -24,7 +24,7 @@ public func scanAndConnect(to uuidString: String) async throws -> CBPeripheral {
     for try await scanResult in scanResultPublisher.values {
         // Filter already discovered devices
         if !alreadyDiscovered.contains(where: { $0.peripheral.identifier == scanResult.peripheral.identifier }) {
-            print("\(scanResult.name!): \(scanResult.peripheral.identifier.uuidString)")
+            l.debug("\(scanResult.name!): \(scanResult.peripheral.identifier.uuidString)")
             alreadyDiscovered.append(scanResult)
             
             if scanResult.peripheral.identifier.uuidString == uuidString {

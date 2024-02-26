@@ -24,15 +24,8 @@
 		012C2BE72410F8AA005EC1A0 /* DFUUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BE52410F8AA005EC1A0 /* DFUUpdateViewController.swift */; };
 		0133C73B23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0133C73A23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift */; };
 		01363A872417E4FA0030821E /* ControlSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01363A862417E4FA0030821E /* ControlSection.swift */; };
-		0141F1B32B62C2FB004A0789 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0141F1B22B62C2FB004A0789 /* main.swift */; };
 		0141F1BA2B62C53E004A0789 /* iOS-BLE-Library in Frameworks */ = {isa = PBXBuildFile; productRef = 0141F1B92B62C53E004A0789 /* iOS-BLE-Library */; };
 		0141F1BC2B62CA3D004A0789 /* Scanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0141F1BB2B62CA3D004A0789 /* Scanner.swift */; };
-		0141F1C52B62CEC0004A0789 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0141F1C42B62CEC0004A0789 /* main.swift */; };
-		0141F1CA2B62CECC004A0789 /* Scanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0141F1BB2B62CA3D004A0789 /* Scanner.swift */; };
-		0141F1CC2B62CF00004A0789 /* iOS-BLE-Library in Frameworks */ = {isa = PBXBuildFile; productRef = 0141F1CB2B62CF00004A0789 /* iOS-BLE-Library */; };
-		0141F1CE2B62CF79004A0789 /* iOS-Bluetooth-Numbers-Database in Frameworks */ = {isa = PBXBuildFile; productRef = 0141F1CD2B62CF79004A0789 /* iOS-Bluetooth-Numbers-Database */; };
-		0141F1D02B62D0C2004A0789 /* DeviceInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0141F1CF2B62D0C2004A0789 /* DeviceInformation.swift */; };
-		0141F1D22B62D1D2004A0789 /* TemperatureMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0141F1D12B62D1D2004A0789 /* TemperatureMeasurement.swift */; };
 		01468B052361A30A00C29E4C /* StepperTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B032361A30A00C29E4C /* StepperTableViewCell.swift */; };
 		01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01468B042361A30A00C29E4C /* StepperTableViewCell.xib */; };
 		01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */; };
@@ -52,6 +45,11 @@
 		01797E8323F4242500B26BF2 /* ModernIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01797E8223F4242500B26BF2 /* ModernIcon.swift */; };
 		017D93C62ABAEAA70062287E /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 017D93C52ABAEAA70062287E /* DGCharts */; };
 		0192BB352428E63C003F7F6B /* DFUFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0192BB342428E63C003F7F6B /* DFUFileManager.swift */; };
+		0197A5BD2B8C9B84005E704A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0141F1C42B62CEC0004A0789 /* main.swift */; };
+		0197A5BE2B8CA1B1005E704A /* TemperatureMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0141F1D12B62D1D2004A0789 /* TemperatureMeasurement.swift */; };
+		0197A5BF2B8CA1B1005E704A /* DeviceInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0141F1CF2B62D0C2004A0789 /* DeviceInformation.swift */; };
+		0197A5C12B8CA20B005E704A /* iOS-Bluetooth-Numbers-Database in Frameworks */ = {isa = PBXBuildFile; productRef = 0197A5C02B8CA20B005E704A /* iOS-Bluetooth-Numbers-Database */; };
+		0197A5C52B8CA5FE005E704A /* BatteryServiceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0197A5C42B8CA5FE005E704A /* BatteryServiceParser.swift */; };
 		0197AFCF2420DAAC00ADF105 /* NotConnectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0197AFCD2420DAAC00ADF105 /* NotConnectedViewController.swift */; };
 		0197AFD02420DAAC00ADF105 /* NotConnectedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0197AFCE2420DAAC00ADF105 /* NotConnectedViewController.xib */; };
 		019985E423DEF23F000CDCB6 /* NordicTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019985E323DEF23F000CDCB6 /* NordicTextTableViewCell.swift */; };
@@ -307,15 +305,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
-		0141F1C02B62CEBF004A0789 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
 		0E645A0E1CBF943000D36AD0 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
@@ -346,10 +335,8 @@
 		012C2BE52410F8AA005EC1A0 /* DFUUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUUpdateViewController.swift; sourceTree = "<group>"; };
 		0133C73A23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTPresetCollectionViewDelegate.swift; sourceTree = "<group>"; };
 		01363A862417E4FA0030821E /* ControlSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSection.swift; sourceTree = "<group>"; };
-		0141F1B02B62C2FB004A0789 /* scanner */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = scanner; sourceTree = BUILT_PRODUCTS_DIR; };
-		0141F1B22B62C2FB004A0789 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		0141F1B02B62C2FB004A0789 /* Playground */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Playground; sourceTree = BUILT_PRODUCTS_DIR; };
 		0141F1BB2B62CA3D004A0789 /* Scanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scanner.swift; sourceTree = "<group>"; };
-		0141F1C22B62CEBF004A0789 /* Health Thermometer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Health Thermometer"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0141F1C42B62CEC0004A0789 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		0141F1CF2B62D0C2004A0789 /* DeviceInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInformation.swift; sourceTree = "<group>"; };
 		0141F1D12B62D1D2004A0789 /* TemperatureMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureMeasurement.swift; sourceTree = "<group>"; };
@@ -375,6 +362,8 @@
 		016EF387241632AF005FFA30 /* LoggerTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoggerTableViewController.xib; sourceTree = "<group>"; };
 		01797E8223F4242500B26BF2 /* ModernIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernIcon.swift; sourceTree = "<group>"; };
 		0192BB342428E63C003F7F6B /* DFUFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFileManager.swift; sourceTree = "<group>"; };
+		0197A5BC2B8BDAFB005E704A /* IOS-BLE-Library */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "IOS-BLE-Library"; path = "../IOS-BLE-Library"; sourceTree = "<group>"; };
+		0197A5C42B8CA5FE005E704A /* BatteryServiceParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryServiceParser.swift; sourceTree = "<group>"; };
 		0197AFCD2420DAAC00ADF105 /* NotConnectedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotConnectedViewController.swift; sourceTree = "<group>"; };
 		0197AFCE2420DAAC00ADF105 /* NotConnectedViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotConnectedViewController.xib; sourceTree = "<group>"; };
 		019985E323DEF23F000CDCB6 /* NordicTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicTextTableViewCell.swift; sourceTree = "<group>"; };
@@ -619,15 +608,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0141F1BA2B62C53E004A0789 /* iOS-BLE-Library in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0141F1BF2B62CEBF004A0789 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				0141F1CC2B62CF00004A0789 /* iOS-BLE-Library in Frameworks */,
-				0141F1CE2B62CF79004A0789 /* iOS-Bluetooth-Numbers-Database in Frameworks */,
+				0197A5C12B8CA20B005E704A /* iOS-Bluetooth-Numbers-Database in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -745,19 +726,20 @@
 			path = Section;
 			sourceTree = "<group>";
 		};
-		0141F1B12B62C2FB004A0789 /* scanner */ = {
+		0141F1B12B62C2FB004A0789 /* Playground */ = {
 			isa = PBXGroup;
 			children = (
-				0141F1B22B62C2FB004A0789 /* main.swift */,
+				0141F1C42B62CEC0004A0789 /* main.swift */,
+				0197A5C32B8CA5E5005E704A /* Battery */,
+				0141F1C32B62CEC0004A0789 /* Health Thermometer */,
 				0141F1BB2B62CA3D004A0789 /* Scanner.swift */,
 			);
-			path = scanner;
+			path = Playground;
 			sourceTree = "<group>";
 		};
 		0141F1C32B62CEC0004A0789 /* Health Thermometer */ = {
 			isa = PBXGroup;
 			children = (
-				0141F1C42B62CEC0004A0789 /* main.swift */,
 				0141F1CF2B62D0C2004A0789 /* DeviceInformation.swift */,
 				0141F1D12B62D1D2004A0789 /* TemperatureMeasurement.swift */,
 			);
@@ -813,6 +795,14 @@
 				339765764F70C52AC5738A3F /* Models */,
 			);
 			path = ContinuousGlucoseMonitor;
+			sourceTree = "<group>";
+		};
+		0197A5C32B8CA5E5005E704A /* Battery */ = {
+			isa = PBXGroup;
+			children = (
+				0197A5C42B8CA5FE005E704A /* BatteryServiceParser.swift */,
+			);
+			path = Battery;
 			sourceTree = "<group>";
 		};
 		0197AFCC2420DA3500ADF105 /* ZephyrDFU */ = {
@@ -1711,11 +1701,11 @@
 		5217F3D91859EE0000F2D5BB = {
 			isa = PBXGroup;
 			children = (
+				0197A5BC2B8BDAFB005E704A /* IOS-BLE-Library */,
 				5217F3EB1859EE0000F2D5BB /* nRF Toolbox */,
 				014C4E912404038A0003E601 /* nRF Toolbox Tests */,
 				C39941E4273BCE0500E7AA33 /* nRF Toolbox DebugTests */,
-				0141F1B12B62C2FB004A0789 /* scanner */,
-				0141F1C32B62CEC0004A0789 /* Health Thermometer */,
+				0141F1B12B62C2FB004A0789 /* Playground */,
 				5217F3E41859EE0000F2D5BB /* Frameworks */,
 				5217F3E31859EE0000F2D5BB /* Products */,
 			);
@@ -1726,8 +1716,7 @@
 			children = (
 				5217F3E21859EE0000F2D5BB /* nRF Toolbox Debug.app */,
 				C39941E3273BCE0500E7AA33 /* nRF Toolbox DebugTests.xctest */,
-				0141F1B02B62C2FB004A0789 /* scanner */,
-				0141F1C22B62CEBF004A0789 /* Health Thermometer */,
+				0141F1B02B62C2FB004A0789 /* Playground */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1840,9 +1829,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0141F1AF2B62C2FB004A0789 /* scanner */ = {
+		0141F1AF2B62C2FB004A0789 /* Playground */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0141F1B72B62C2FB004A0789 /* Build configuration list for PBXNativeTarget "scanner" */;
+			buildConfigurationList = 0141F1B72B62C2FB004A0789 /* Build configuration list for PBXNativeTarget "Playground" */;
 			buildPhases = (
 				0141F1AC2B62C2FB004A0789 /* Sources */,
 				0141F1AD2B62C2FB004A0789 /* Frameworks */,
@@ -1852,33 +1841,13 @@
 			);
 			dependencies = (
 			);
-			name = scanner;
+			name = Playground;
 			packageProductDependencies = (
 				0141F1B92B62C53E004A0789 /* iOS-BLE-Library */,
+				0197A5C02B8CA20B005E704A /* iOS-Bluetooth-Numbers-Database */,
 			);
 			productName = scanner;
-			productReference = 0141F1B02B62C2FB004A0789 /* scanner */;
-			productType = "com.apple.product-type.tool";
-		};
-		0141F1C12B62CEBF004A0789 /* Health Thermometer */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0141F1C62B62CEC0004A0789 /* Build configuration list for PBXNativeTarget "Health Thermometer" */;
-			buildPhases = (
-				0141F1BE2B62CEBF004A0789 /* Sources */,
-				0141F1BF2B62CEBF004A0789 /* Frameworks */,
-				0141F1C02B62CEBF004A0789 /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Health Thermometer";
-			packageProductDependencies = (
-				0141F1CB2B62CF00004A0789 /* iOS-BLE-Library */,
-				0141F1CD2B62CF79004A0789 /* iOS-Bluetooth-Numbers-Database */,
-			);
-			productName = "Health Thermometer";
-			productReference = 0141F1C22B62CEBF004A0789 /* Health Thermometer */;
+			productReference = 0141F1B02B62C2FB004A0789 /* Playground */;
 			productType = "com.apple.product-type.tool";
 		};
 		5217F3E11859EE0000F2D5BB /* nRF Toolbox */ = {
@@ -1939,9 +1908,6 @@
 					0141F1AF2B62C2FB004A0789 = {
 						CreatedOnToolsVersion = 15.2;
 					};
-					0141F1C12B62CEBF004A0789 = {
-						CreatedOnToolsVersion = 15.2;
-					};
 					5217F3E11859EE0000F2D5BB = {
 						LastSwiftMigration = 1030;
 						SystemCapabilities = {
@@ -1983,8 +1949,7 @@
 			targets = (
 				5217F3E11859EE0000F2D5BB /* nRF Toolbox */,
 				C39941E2273BCE0500E7AA33 /* nRF Toolbox DebugTests */,
-				0141F1AF2B62C2FB004A0789 /* scanner */,
-				0141F1C12B62CEBF004A0789 /* Health Thermometer */,
+				0141F1AF2B62C2FB004A0789 /* Playground */,
 			);
 		};
 /* End PBXProject section */
@@ -2067,19 +2032,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0197A5BF2B8CA1B1005E704A /* DeviceInformation.swift in Sources */,
+				0197A5BE2B8CA1B1005E704A /* TemperatureMeasurement.swift in Sources */,
+				0197A5BD2B8C9B84005E704A /* main.swift in Sources */,
+				0197A5C52B8CA5FE005E704A /* BatteryServiceParser.swift in Sources */,
 				0141F1BC2B62CA3D004A0789 /* Scanner.swift in Sources */,
-				0141F1B32B62C2FB004A0789 /* main.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0141F1BE2B62CEBF004A0789 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				0141F1CA2B62CECC004A0789 /* Scanner.swift in Sources */,
-				0141F1D02B62D0C2004A0789 /* DeviceInformation.swift in Sources */,
-				0141F1C52B62CEC0004A0789 /* main.swift in Sources */,
-				0141F1D22B62D1D2004A0789 /* TemperatureMeasurement.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2377,91 +2334,6 @@
 			name = Beta;
 		};
 		0141F1B62B62C2FB004A0789 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = P3R8YQEV4L;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.2;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
-		0141F1C72B62CEC0004A0789 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = P3R8YQEV4L;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.2;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		0141F1C82B62CEC0004A0789 /* Beta */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = P3R8YQEV4L;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.2;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Beta;
-		};
-		0141F1C92B62CEC0004A0789 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -2929,22 +2801,12 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0141F1B72B62C2FB004A0789 /* Build configuration list for PBXNativeTarget "scanner" */ = {
+		0141F1B72B62C2FB004A0789 /* Build configuration list for PBXNativeTarget "Playground" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0141F1B42B62C2FB004A0789 /* Debug */,
 				0141F1B52B62C2FB004A0789 /* Beta */,
 				0141F1B62B62C2FB004A0789 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		0141F1C62B62CEC0004A0789 /* Build configuration list for PBXNativeTarget "Health Thermometer" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				0141F1C72B62CEC0004A0789 /* Debug */,
-				0141F1C82B62CEC0004A0789 /* Beta */,
-				0141F1C92B62CEC0004A0789 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -3046,20 +2908,15 @@
 			package = 0141F1B82B62C53E004A0789 /* XCRemoteSwiftPackageReference "IOS-BLE-Library" */;
 			productName = "iOS-BLE-Library";
 		};
-		0141F1CB2B62CF00004A0789 /* iOS-BLE-Library */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0141F1B82B62C53E004A0789 /* XCRemoteSwiftPackageReference "IOS-BLE-Library" */;
-			productName = "iOS-BLE-Library";
-		};
-		0141F1CD2B62CF79004A0789 /* iOS-Bluetooth-Numbers-Database */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0141F1BD2B62CAA3004A0789 /* XCRemoteSwiftPackageReference "iOS-Bluetooth-Numbers-Database" */;
-			productName = "iOS-Bluetooth-Numbers-Database";
-		};
 		017D93C52ABAEAA70062287E /* DGCharts */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 017D93C42ABAEAA70062287E /* XCRemoteSwiftPackageReference "Charts" */;
 			productName = DGCharts;
+		};
+		0197A5C02B8CA20B005E704A /* iOS-Bluetooth-Numbers-Database */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0141F1BD2B62CAA3004A0789 /* XCRemoteSwiftPackageReference "iOS-Bluetooth-Numbers-Database" */;
+			productName = "iOS-Bluetooth-Numbers-Database";
 		};
 		AA2CB313286C75450083DB9A /* iOSMcuManagerLibrary */ = {
 			isa = XCSwiftPackageProductDependency;
