@@ -35,20 +35,39 @@ private extension HealthThermometerScreen.VM {
 
 // MARK: - Environment
 extension HealthThermometerScreen.VM {
+    typealias Env = Environment
+    
+    struct TemperatureRecord {
+        let temperature: Measurement<UnitTemperature>
+        let date: Date
+    }
+    
     @MainActor
     class Environment: ObservableObject {
-        @Published var currentTemperature: Measurement<UnitTemperature>?
+        var currentTemperature: Measurement<UnitTemperature>? {
+            records.last?.temperature
+        }
+        
+        @Published var records: [TemperatureRecord] {
+            didSet {
+                min = (records.min(by: { $0.temperature < $1.temperature })?.temperature.value ?? 35 ) - 2
+                max = (records.max(by: { $0.temperature > $1.temperature })?.temperature.value ?? 42 ) + 2
+            }
+        }
         
         @Published fileprivate (set) var criticalError: CriticalError?
         @Published var alertError: Error?
         
+        @Published fileprivate (set) var min: Double = 32
+        @Published fileprivate (set) var max: Double = 45
+        
         init(
-            currentTemperature: Measurement<UnitTemperature>? = nil,
+            records: [TemperatureRecord] = [],
             alertError: Error? = nil
         ) {
-            self.criticalError = criticalError
+            self.criticalError = nil
             self.alertError = alertError
-            self.currentTemperature = currentTemperature
+            self.records = records
         }
         
         fileprivate var internalAlertError: AlertError? {

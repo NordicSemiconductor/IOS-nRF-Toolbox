@@ -28,3 +28,12 @@ extension RandomAccessCollection {
         }
     }
 }
+
+extension Array {
+    mutating func append(_ e: Element, removeIfExceed capacity: Int) {
+        self.append(e)
+        if self.count > capacity {
+            removeFirst()
+        }
+    }
+}

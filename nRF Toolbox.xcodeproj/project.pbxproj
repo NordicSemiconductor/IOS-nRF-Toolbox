@@ -207,6 +207,7 @@
 		01FD68D02AE82C330021101C /* Attribute+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FD68CF2AE82C330021101C /* Attribute+Preview.swift */; };
 		01FD68D32AE82EB90021101C /* AttributeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FD68D22AE82EB90021101C /* AttributeList.swift */; };
 		01FEB0FD23969BD1000767C1 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FEB0FC23969BD1000767C1 /* UIView+Ext.swift */; };
+		01FF81F82B9375070024E191 /* HealthThermometer+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FF81F72B9375070024E191 /* HealthThermometer+Preview.swift */; };
 		20027B08233E116600A0B5ED /* StrideSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20027B07233E116600A0B5ED /* StrideSection.swift */; };
 		2002A000231FAFD100C43E06 /* PeripheralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20029FFF231FAFD100C43E06 /* PeripheralManager.swift */; };
 		2002A002231FB8E800C43E06 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2002A001231FB8E800C43E06 /* UIImage+Ext.swift */; };
@@ -614,6 +615,7 @@
 		01FD68CF2AE82C330021101C /* Attribute+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attribute+Preview.swift"; sourceTree = "<group>"; };
 		01FD68D22AE82EB90021101C /* AttributeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeList.swift; sourceTree = "<group>"; };
 		01FEB0FC23969BD1000767C1 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
+		01FF81F72B9375070024E191 /* HealthThermometer+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthThermometer+Preview.swift"; sourceTree = "<group>"; };
 		20027B07233E116600A0B5ED /* StrideSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrideSection.swift; sourceTree = "<group>"; };
 		20029FFF231FAFD100C43E06 /* PeripheralManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralManager.swift; sourceTree = "<group>"; };
 		2002A001231FB8E800C43E06 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
@@ -1210,6 +1212,7 @@
 		017D10342A5809E400E38E5F /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
+				01FF81F62B9374ED0024E191 /* HealthTermometer */,
 				0108E87F2AF169AE00C8B096 /* Battery */,
 				01CEB42B2AE9859A00945105 /* HeartRate */,
 				01FD68CE2AE82C200021101C /* Extensions */,
@@ -1788,6 +1791,14 @@
 				01FD68D22AE82EB90021101C /* AttributeList.swift */,
 			);
 			path = AttributeList;
+			sourceTree = "<group>";
+		};
+		01FF81F62B9374ED0024E191 /* HealthTermometer */ = {
+			isa = PBXGroup;
+			children = (
+				01FF81F72B9375070024E191 /* HealthThermometer+Preview.swift */,
+			);
+			path = HealthTermometer;
 			sourceTree = "<group>";
 		};
 		2002A003232260CA00C43E06 /* Glucose */ = {
@@ -2808,6 +2819,7 @@
 				0164A4812AD8330E0093E501 /* ServiceBadgeGroup.swift in Sources */,
 				01CEB4262AE9100300945105 /* HeartRateScreen.swift in Sources */,
 				018873C72A583A9900253273 /* PeripheralScannerScreen.swift in Sources */,
+				01FF81F82B9375070024E191 /* HealthThermometer+Preview.swift in Sources */,
 				018873C22A58322C00253273 /* ee.swift in Sources */,
 				01F6A9662A829EE300540B45 /* SensorSettingsViewModel.swift in Sources */,
 				013E5D962AE02A1700B9C475 /* RunningValuesGrid.swift in Sources */,
