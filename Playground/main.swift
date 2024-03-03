@@ -9,6 +9,7 @@
 import Foundation
 import iOS_BLE_Library
 import iOS_Bluetooth_Numbers_Database
+import Combine
 
 import OSLog
 
@@ -22,12 +23,14 @@ You can find example of the Health Thermometer peripheral here: TODO add link
 To discover the UUID of the peripheral you want to connect to, run the app and copy the UUID from the console. 
 */
 
-let deviceUUIDString = "9D3F50D4-0273-1129-1F15-3143EAFDB299"
+let deviceUUIDString = "99027DE5-3248-5D9B-55DA-616266D395DF"
 let cbPeripheral = try await scanAndConnect(to: deviceUUIDString)
 
 let peripheral = Peripheral(peripheral: cbPeripheral)
 
 let services = try await peripheral.discoverServices(serviceUUIDs: nil).firstValue
+
+var cancelable = Set<AnyCancellable>()
 
 l.info("ATTRIBUTE TABLE")
 for service in services {
@@ -46,7 +49,7 @@ for service in services {
         }
     }
 }
-
+/*
 if let userData = services.first(where: { $0.uuid == Service.userData.uuid }) {
     l.debug("Discovered UserData service")
     if let characteristic = userData.characteristics?.first(where: { $0.uuid == Characteristic.firstName.uuid }) {
@@ -78,22 +81,43 @@ if let userData = services.first(where: { $0.uuid == Service.userData.uuid }) {
 } else {
     l.error("No Required Service")
 }
-
+*/
 l.info("BATTERY")
 
 if let batteryService = (peripheral.peripheral.services?.first(where: { $0.uuid == Service.batteryService.uuid })) {
     do {
         let batteryServiceParser = BatteryServiceParser(batteryService: batteryService)
+        _ = try await peripheral.setNotifyValue(true, for: batteryServiceParser.batteryLevelCharacteristic).firstValue
         
-        let descriptor = batteryServiceParser.batteryLevelDescriptor!
-        
-        try! await peripheral.writeValue(Data([1]), for: descriptor).firstValue
-        
-        let data = try await peripheral.readValue(for: descriptor).firstValue
-        l.debug("\(data.debugDescription)")
-         
+        peripheral.listenValues(for: batteryServiceParser.batteryLevelCharacteristic)
+            .sink { completion in
+                switch completion {
+                case .finished: l.info("Battery Level completed sending values")
+                case .failure(let error): l.error("Battery Level completed with failure: \(error.localizedDescription)")
+                }
+            } receiveValue: { batteryData in
+                l.debug("\(batteryData[0])")
+            }
+            .store(in: &cancelable)
+
     } catch {
         l.error("\(error.localizedDescription)")
+    }
+}
+
+l.info("HEALTH THERMOMETER")
+if let htService = (peripheral.peripheral.services?.first(where: { $0.uuid == Service.healthThermometer.uuid })) {
+    do {
+        let parser = HealthThermometerServiceParser(htService: htService)
+        
+        _ = try await peripheral.setNotifyValue(true, for: parser.temperatureMeasurementCharacteristic).firstValue
+        
+        let stream = peripheral.listenValues(for: parser.temperatureMeasurementCharacteristic)
+            .map { TemperatureMeasurement(data: $0) }
+        
+        for try await m in stream.values {
+            l.debug("Measurement: \(m.debugDescription )")
+        }
     }
 }
 

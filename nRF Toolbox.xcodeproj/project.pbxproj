@@ -29,6 +29,7 @@
 		01468B052361A30A00C29E4C /* StepperTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B032361A30A00C29E4C /* StepperTableViewCell.swift */; };
 		01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01468B042361A30A00C29E4C /* StepperTableViewCell.xib */; };
 		01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */; };
+		014AC0AA2B94C4CF0094723E /* HealthThermometerServiceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014AC0A92B94C4CF0094723E /* HealthThermometerServiceParser.swift */; };
 		014C4E892403F8AE0003E601 /* UARTMacrosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E882403F8AE0003E601 /* UARTMacrosTableViewController.swift */; };
 		014C4E8B2403F9BD0003E601 /* UARTMacroSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E8A2403F9BD0003E601 /* UARTMacroSaver.swift */; };
 		0151170B240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01511709240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift */; };
@@ -343,6 +344,7 @@
 		01468B032361A30A00C29E4C /* StepperTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperTableViewCell.swift; sourceTree = "<group>"; };
 		01468B042361A30A00C29E4C /* StepperTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StepperTableViewCell.xib; sourceTree = "<group>"; };
 		01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalSection.swift; sourceTree = "<group>"; };
+		014AC0A92B94C4CF0094723E /* HealthThermometerServiceParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthThermometerServiceParser.swift; sourceTree = "<group>"; };
 		014C4E882403F8AE0003E601 /* UARTMacrosTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTMacrosTableViewController.swift; sourceTree = "<group>"; };
 		014C4E8A2403F9BD0003E601 /* UARTMacroSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTMacroSaver.swift; sourceTree = "<group>"; };
 		014C4E922404038A0003E601 /* nRF_Toolbox_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nRF_Toolbox_Tests.swift; sourceTree = "<group>"; };
@@ -742,6 +744,7 @@
 			children = (
 				0141F1CF2B62D0C2004A0789 /* DeviceInformation.swift */,
 				0141F1D12B62D1D2004A0789 /* TemperatureMeasurement.swift */,
+				014AC0A92B94C4CF0094723E /* HealthThermometerServiceParser.swift */,
 			);
 			path = "Health Thermometer";
 			sourceTree = "<group>";
@@ -2037,6 +2040,7 @@
 				0197A5BD2B8C9B84005E704A /* main.swift in Sources */,
 				0197A5C52B8CA5FE005E704A /* BatteryServiceParser.swift in Sources */,
 				0141F1BC2B62CA3D004A0789 /* Scanner.swift in Sources */,
+				014AC0AA2B94C4CF0094723E /* HealthThermometerServiceParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2286,9 +2290,10 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = P3R8YQEV4L;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -2315,10 +2320,11 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = P3R8YQEV4L;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -2343,10 +2349,11 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = P3R8YQEV4L;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
