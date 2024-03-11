@@ -8,6 +8,7 @@
 
 import Combine 
 import SwiftUI
+import iOS_BLE_Library_Mock
 
 private typealias ViewModel = HealthThermometerScreen.VM
 
@@ -16,10 +17,31 @@ extension HealthThermometerScreen {
 
     @MainActor 
     class HealthThermometerViewModel: ObservableObject {
+       
         let env = Environment()
 
         private var cancellables = Set<AnyCancellable>()
+        
+        let peripheral: Peripheral
+        let service: CBService
+        
+        init(peripheral: Peripheral, service: CBService) {
+            self.peripheral = peripheral
+            self.service = service
+        }
     }
+}
+
+extension HealthThermometerScreen.VM: SupportedServiceViewModel {
+    func onConnect() {
+        
+    }
+    
+    func onDisconnect() {
+        cancellables.removeAll()
+    }
+    
+    
 }
 
 // MARK: Private Methods

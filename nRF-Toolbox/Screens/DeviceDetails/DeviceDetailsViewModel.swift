@@ -38,13 +38,9 @@ extension DeviceDetailsScreen {
         private var supportedServiceViewModels: [SupportedServiceViewModel] = []
         
         private let l = L(category: "DeviceDetails.VM")
-        
-        var runningServiceViewModel: RunningServiceScreen.RunningServiceViewModel? {
-            supportedServiceViewModels.firstOfType(type: RunningServiceScreen.RunningServiceViewModel.self)
-        }
-        
-        var heartRateServiceViewModel: HeartRateScreen.HeartRateViewModel? {
-            supportedServiceViewModels.firstOfType(type: HeartRateScreen.HeartRateViewModel.self)
+         
+        func viewModel<T>(ofType type: T.Type) -> T? {
+            supportedServiceViewModels.firstOfType(type: type.self)
         }
     
         init (
@@ -120,6 +116,8 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
                     supportedServiceViewModels.append(RunningServiceScreen.RunningServiceViewModel(peripheral: peripheral, runningService: service))
                 case .heartRate:
                     supportedServiceViewModels.append(HeartRateScreen.HeartRateViewModel(peripheral: peripheral, hrService: service))
+                case .healthThermometer:
+                    supportedServiceViewModels.append(HealthThermometerScreen.VM(peripheral: peripheral, service: service))
                 default:
                     break
                 }
