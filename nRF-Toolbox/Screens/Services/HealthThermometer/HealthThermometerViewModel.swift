@@ -9,6 +9,7 @@
 import Combine 
 import SwiftUI
 import iOS_BLE_Library_Mock
+import iOS_Bluetooth_Numbers_Database
 
 private typealias ViewModel = HealthThermometerScreen.VM
 
@@ -34,7 +35,13 @@ extension HealthThermometerScreen {
 
 extension HealthThermometerScreen.VM: SupportedServiceViewModel {
     func onConnect() {
-        
+        Task {
+            do {
+                try await setup()
+            } catch {
+                self.env.alertError = Alert(title: "BLE Error", message: "Can not discover required services or characteristics")
+            }
+        }
     }
     
     func onDisconnect() {
@@ -46,7 +53,17 @@ extension HealthThermometerScreen.VM: SupportedServiceViewModel {
 
 // MARK: Private Methods
 private extension HealthThermometerScreen.VM {
-
+    func setup() async throws {
+        let service = try await peripheral.discoverServices(serviceUUIDs: [Service.healthThermometer.uuid])
+            .timeout(1, scheduler: DispatchQueue.main)
+            .firstValue
+        
+        let measurement = try await  peripheral.discoverCharacteristics([Characteristic.temperatureMeasurement.uuid], for: service)
+            .timeout(1, scheduler: DispatchQueue.main)
+            .firstValue
+        
+        
+    }
 }
 
 private extension HealthThermometerScreen.VM {
