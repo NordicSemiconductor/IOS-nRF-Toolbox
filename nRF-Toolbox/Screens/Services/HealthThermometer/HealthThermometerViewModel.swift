@@ -39,7 +39,8 @@ extension HealthThermometerScreen.VM: SupportedServiceViewModel {
             do {
                 try await setup()
             } catch {
-                self.env.alertError = Alert(title: "BLE Error", message: "Can not discover required services or characteristics")
+                // TODO: Check the error
+                //                self.env.alertError = Alert(title: "BLE Error", message: "Can not discover required services or characteristics")
             }
         }
     }
@@ -54,21 +55,44 @@ extension HealthThermometerScreen.VM: SupportedServiceViewModel {
 // MARK: Private Methods
 private extension HealthThermometerScreen.VM {
     func setup() async throws {
-        let service = try await peripheral.discoverServices(serviceUUIDs: [Service.healthThermometer.uuid])
+        guard let service = try await peripheral.discoverServices(serviceUUIDs: [Service.healthThermometer.uuid])
             .timeout(1, scheduler: DispatchQueue.main)
             .firstValue
+            .first else { throw Err.invalidService }
         
-        let measurement = try await  peripheral.discoverCharacteristics([Characteristic.temperatureMeasurement.uuid], for: service)
-            .timeout(1, scheduler: DispatchQueue.main)
-            .firstValue
+        let characteristics = try await peripheral.discoverCharacteristics([
+            Characteristic.temperatureMeasurement.uuid,
+            Characteristic.temperatureType.uuid,
+            Characteristic.intermediateTemperature.uuid,
+            Characteristic.measurementInterval.uuid
+        ], for: service).timeout(1, scheduler: DispatchQueue.main).firstValue
         
+        guard let temperatureMeasurementCharacteristic = characteristics.first (where: { $0.uuid == Characteristic.temperatureMeasurement.uuid }) else {
+            throw Err.invalidCharacteristic
+        }
+
+        let temperatureTypeCharacteristic = characteristics.first { $0.uuid == Characteristic.temperatureType.uuid }
+        let intermediateTemperatureCharacteristic = characteristics.first { $0.uuid == Characteristic.intermediateTemperature.uuid }
+        let measurementIntervalCharacteristic = characteristics.first { $0.uuid == Characteristic.measurementInterval.uuid }
         
+        _ = try await peripheral.setNotifyValue(true, for: temperatureMeasurementCharacteristic).firstValue
+        
+        peripheral.listenValues(for: temperatureMeasurementCharacteristic)
+        // TODO: Parse the data
+            .sink { _ in
+                
+            } receiveValue: { _ in
+                
+            }
+
     }
 }
 
 private extension HealthThermometerScreen.VM {
     enum Err: Error {
         case unknown
+        case invalidService
+        case invalidCharacteristic
     }
 }
 
