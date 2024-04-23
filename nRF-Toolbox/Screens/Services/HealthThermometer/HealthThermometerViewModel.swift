@@ -11,6 +11,8 @@ import SwiftUI
 import iOS_BLE_Library_Mock
 import iOS_Bluetooth_Numbers_Database
 
+import os
+
 private typealias ViewModel = HealthThermometerScreen.VM
 
 extension HealthThermometerScreen {
@@ -71,19 +73,30 @@ private extension HealthThermometerScreen.VM {
             throw Err.invalidCharacteristic
         }
 
+        /*
         let temperatureTypeCharacteristic = characteristics.first { $0.uuid == Characteristic.temperatureType.uuid }
         let intermediateTemperatureCharacteristic = characteristics.first { $0.uuid == Characteristic.intermediateTemperature.uuid }
         let measurementIntervalCharacteristic = characteristics.first { $0.uuid == Characteristic.measurementInterval.uuid }
+        */
         
         _ = try await peripheral.setNotifyValue(true, for: temperatureMeasurementCharacteristic).firstValue
         
         peripheral.listenValues(for: temperatureMeasurementCharacteristic)
         // TODO: Parse the data
+            .print()
             .sink { _ in
                 
-            } receiveValue: { _ in
-                
+            } receiveValue: { data in
+                let tm = TemperatureMeasurement(data: data)
+                if let tValue = tm.temperature {
+                    let record = TemperatureRecord(
+                        temperature: .init(value: tValue, unit: tm.unit == .celsius ? .celsius : .fahrenheit),
+                        date: tm.timestamp ?? Date()
+                    )
+                    self.env.addTemperature(record)
+                }
             }
+            .store(in: &cancellables)
 
     }
 }
@@ -137,6 +150,10 @@ extension HealthThermometerScreen.VM {
             didSet {
                 alertError = internalAlertError
             }
+        }
+        
+        fileprivate func addTemperature(_ record: TemperatureRecord) {
+            records.append(record)
         }
     }
 }

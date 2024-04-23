@@ -147,6 +147,7 @@
 		01B6D3E0234CC090000942C4 /* Peripheral+HeartRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3DF234CC090000942C4 /* Peripheral+HeartRate.swift */; };
 		01B6D3E2234CCC9F000942C4 /* HeartRateChartSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3E1234CCC9F000942C4 /* HeartRateChartSection.swift */; };
 		01B861872AB34DBF0001118F /* iOS-Bluetooth-Numbers-Database in Frameworks */ = {isa = PBXBuildFile; productRef = 01B861862AB34DBF0001118F /* iOS-Bluetooth-Numbers-Database */; };
+		01BBC7952BD8382E00494A39 /* TemperatureMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BBC7942BD8382E00494A39 /* TemperatureMeasurement.swift */; };
 		01BE094F2349F71B006ACF06 /* HealthTermometerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE094E2349F71B006ACF06 /* HealthTermometerTableViewController.swift */; };
 		01BE0953234A1C48006ACF06 /* HealthTermometerCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE0952234A1C48006ACF06 /* HealthTermometerCharacteristic.swift */; };
 		01BE0955234A7500006ACF06 /* HealthTemperatureSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE0954234A7500006ACF06 /* HealthTemperatureSection.swift */; };
@@ -556,6 +557,7 @@
 		01B6D3DD234CBBE5000942C4 /* SernsorLocationSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SernsorLocationSection.swift; sourceTree = "<group>"; };
 		01B6D3DF234CC090000942C4 /* Peripheral+HeartRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Peripheral+HeartRate.swift"; sourceTree = "<group>"; };
 		01B6D3E1234CCC9F000942C4 /* HeartRateChartSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateChartSection.swift; sourceTree = "<group>"; };
+		01BBC7942BD8382E00494A39 /* TemperatureMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureMeasurement.swift; sourceTree = "<group>"; };
 		01BE094E2349F71B006ACF06 /* HealthTermometerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTermometerTableViewController.swift; sourceTree = "<group>"; };
 		01BE0952234A1C48006ACF06 /* HealthTermometerCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTermometerCharacteristic.swift; sourceTree = "<group>"; };
 		01BE0954234A7500006ACF06 /* HealthTemperatureSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTemperatureSection.swift; sourceTree = "<group>"; };
@@ -873,6 +875,7 @@
 			children = (
 				0118C8292B739B1D00204AED /* HealthThermometerScreen.swift */,
 				0118C82A2B739B1D00204AED /* HealthThermometerViewModel.swift */,
+				01BBC7942BD8382E00494A39 /* TemperatureMeasurement.swift */,
 			);
 			path = HealthThermometer;
 			sourceTree = "<group>";
@@ -2875,6 +2878,7 @@
 				01DEB4A62A65E35F00D4C1E8 /* Flag.swift in Sources */,
 				014BBD7D2A70004B00BCFCA8 /* RSCMeasurement.swift in Sources */,
 				0108E87B2AF140D800C8B096 /* ChartTimeData.swift in Sources */,
+				01BBC7952BD8382E00494A39 /* TemperatureMeasurement.swift in Sources */,
 				01CEB42D2AE9956600945105 /* HeartRateMeasurementCharacteristic+Preview.swift in Sources */,
 				01C575BE2A7D00EF007FE4F0 /* Alias.swift in Sources */,
 				012E22942A6AD5BE00B14064 /* NamedItem.swift in Sources */,

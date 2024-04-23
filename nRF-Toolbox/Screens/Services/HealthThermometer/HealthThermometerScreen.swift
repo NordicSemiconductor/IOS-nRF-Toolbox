@@ -18,6 +18,9 @@ struct HealthThermometerScreen: View {
     var body: some View {
         HealthThermometerView()
             .environmentObject(viewModel.env)
+            .task {
+                viewModel.onConnect()
+            }
     }
 }
 
