@@ -42,7 +42,6 @@ extension HealthThermometerScreen.VM: SupportedServiceViewModel {
                 try await setup()
             } catch {
                 // TODO: Check the error
-                //                self.env.alertError = Alert(title: "BLE Error", message: "Can not discover required services or characteristics")
             }
         }
     }
@@ -50,8 +49,6 @@ extension HealthThermometerScreen.VM: SupportedServiceViewModel {
     func onDisconnect() {
         cancellables.removeAll()
     }
-    
-    
 }
 
 // MARK: Private Methods
@@ -124,18 +121,15 @@ extension HealthThermometerScreen.VM {
             records.last?.temperature
         }
         
-        @Published var records: [TemperatureRecord] {
-            didSet {
-                min = (records.min(by: { $0.temperature < $1.temperature })?.temperature.value ?? 35 ) - 2
-                max = (records.max(by: { $0.temperature > $1.temperature })?.temperature.value ?? 42 ) + 2
-            }
-        }
+        @Published var records: [TemperatureRecord]
         
         @Published fileprivate (set) var criticalError: CriticalError?
         @Published var alertError: Error?
         
         @Published fileprivate (set) var min: Double = 32
         @Published fileprivate (set) var max: Double = 45
+        
+        let capacity: Int = 50
         
         init(
             records: [TemperatureRecord] = [],
@@ -153,7 +147,14 @@ extension HealthThermometerScreen.VM {
         }
         
         fileprivate func addTemperature(_ record: TemperatureRecord) {
+            if records.count >= capacity {
+                records.removeFirst()
+            }
+            
             records.append(record)
+            
+            min = (records.min(by: { $0.temperature < $1.temperature })?.temperature.value ?? 35 ) - 2
+            max = (records.max(by: { $0.temperature > $1.temperature })?.temperature.value ?? 42 ) + 2
         }
     }
 }

@@ -63,7 +63,7 @@ struct HealthThermometerView: View {
         if let temp = environment.currentTemperature {
             Gauge(
                 value: temp.value,
-                in: 29...45,
+                in: environment.min...environment.max,
                 label: {
                     
                 },
