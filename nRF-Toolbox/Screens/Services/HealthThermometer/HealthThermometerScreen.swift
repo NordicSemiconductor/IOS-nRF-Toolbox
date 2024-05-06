@@ -31,14 +31,13 @@ struct HealthThermometerView: View {
     var body: some View {
         VStack {
             HStack {
-                currentTemperature()
+                currentTemperatureGauge()
                 VStack(alignment: .leading) {
                     
                     Text("Health Thermometer")
                         .foregroundStyle(.secondary)
                     Label {
-                        //                Text("\(env.data.last!.heartRate) bpm")
-                        Text("Temperature (C)")
+                        Text("Temperature (\(environment.currentTemperature?.unit.symbol ?? "--"))")
                     } icon: {
                         Image(systemName: "medical.thermometer")
                             .tint(.blue)
@@ -54,12 +53,10 @@ struct HealthThermometerView: View {
             }
         }
         .padding()
-        
-        
     }
     
     @ViewBuilder
-    func currentTemperature() -> some View {
+    func currentTemperatureGauge() -> some View {
         if let temp = environment.currentTemperature {
             Gauge(
                 value: temp.value,

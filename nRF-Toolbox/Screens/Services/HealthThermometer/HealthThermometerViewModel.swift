@@ -17,7 +17,7 @@ private typealias ViewModel = HealthThermometerScreen.VM
 
 extension HealthThermometerScreen {
     typealias VM = HealthThermometerViewModel
-
+    
     @MainActor 
     class HealthThermometerViewModel: ObservableObject {
        
@@ -27,6 +27,8 @@ extension HealthThermometerScreen {
         
         let peripheral: Peripheral
         let service: CBService
+        
+        private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "health-thermometer-view-model")
         
         init(peripheral: Peripheral, service: CBService) {
             self.peripheral = peripheral
@@ -41,7 +43,8 @@ extension HealthThermometerScreen.VM: SupportedServiceViewModel {
             do {
                 try await setup()
             } catch {
-                // TODO: Check the error
+                logger.error("\(error.localizedDescription)")
+                env.criticalError = .peripheralError
             }
         }
     }
@@ -71,6 +74,7 @@ private extension HealthThermometerScreen.VM {
         }
 
         /*
+         // TODO: Handle optional characteistics
         let temperatureTypeCharacteristic = characteristics.first { $0.uuid == Characteristic.temperatureType.uuid }
         let intermediateTemperatureCharacteristic = characteristics.first { $0.uuid == Characteristic.intermediateTemperature.uuid }
         let measurementIntervalCharacteristic = characteristics.first { $0.uuid == Characteristic.measurementInterval.uuid }
@@ -79,8 +83,6 @@ private extension HealthThermometerScreen.VM {
         _ = try await peripheral.setNotifyValue(true, for: temperatureMeasurementCharacteristic).firstValue
         
         peripheral.listenValues(for: temperatureMeasurementCharacteristic)
-        // TODO: Parse the data
-            .print()
             .sink { _ in
                 
             } receiveValue: { data in
@@ -163,6 +165,7 @@ extension HealthThermometerScreen.VM {
 extension HealthThermometerScreen.VM.Environment {
     enum CriticalError: LocalizedError {
         case unknown
+        case peripheralError
     }
 
     enum AlertError: LocalizedError {
@@ -175,6 +178,8 @@ extension HealthThermometerScreen.VM.Environment.CriticalError {
         switch self {
         case .unknown:
             return "Unknown error"
+        case .peripheralError:
+            return "Can't setup peripheral"
         }
     }
 }

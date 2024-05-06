@@ -8,17 +8,6 @@
 
 import Foundation
 
-//struct ReservedFloatValues {
-//    static let positiveInfinity: UInt32 = 0x007FFFFE
-//    static let nan: UInt32 = 0x007FFFFF
-//    static let nres: UInt32 = 0x00800000
-//    static let reserved: UInt32 = 0x00800001
-//    static let negativeInfinity: UInt32 = 0x00800002
-//    
-//    static let firstReservedValue = ReservedFloatValues.positiveInfinity
-//}
-
-
 func read<R: FixedWidthInteger>(_ data: Data, fromOffset offset: Int = 0) -> R {
     let length = MemoryLayout<R>.size
     guard offset + length <= data.count else { fatalError() }
