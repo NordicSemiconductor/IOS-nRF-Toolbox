@@ -9,6 +9,7 @@
 import Foundation
 import iOS_BLE_Library_Mock
 import CoreBluetoothMock
+import iOS_Bluetooth_Numbers_Database
 
 // MARK: - Constants
 
@@ -21,6 +22,8 @@ extension CBMUUID {
     static let runningSpeedCadence  = CBMUUID(string: "1814")
     static let weightScale          = CBMUUID(string: "181D")
     static let cyclingSpeedCadence  = CBMUUID(string: "1816")
+    
+    static let healthThermometer    = Service.healthThermometer.cbmUUID
 }
 
 // MARK: - Services

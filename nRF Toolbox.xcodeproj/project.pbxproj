@@ -11,6 +11,8 @@
 		0108E87B2AF140D800C8B096 /* ChartTimeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0108E87A2AF140D800C8B096 /* ChartTimeData.swift */; };
 		0108E87E2AF1654D00C8B096 /* BatteryChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0108E87D2AF1654D00C8B096 /* BatteryChart.swift */; };
 		0108E8812AF169B800C8B096 /* Battery+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0108E8802AF169B800C8B096 /* Battery+Preview.swift */; };
+		0118C82B2B739B1D00204AED /* HealthThermometerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0118C8292B739B1D00204AED /* HealthThermometerScreen.swift */; };
+		0118C82C2B739B1D00204AED /* HealthThermometerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0118C82A2B739B1D00204AED /* HealthThermometerViewModel.swift */; };
 		0119609E23FA063700A7EF29 /* UARTMacrosHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0119609D23FA063700A7EF29 /* UARTMacrosHeaderView.swift */; };
 		011960A023FA064100A7EF29 /* UARTMacrosHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0119609F23FA064100A7EF29 /* UARTMacrosHeaderView.xib */; };
 		0125D5B623F44FE6003A1812 /* UIBarButtonItem+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0125D5B523F44FE6003A1812 /* UIBarButtonItem+Ext.swift */; };
@@ -145,6 +147,7 @@
 		01B6D3E0234CC090000942C4 /* Peripheral+HeartRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3DF234CC090000942C4 /* Peripheral+HeartRate.swift */; };
 		01B6D3E2234CCC9F000942C4 /* HeartRateChartSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B6D3E1234CCC9F000942C4 /* HeartRateChartSection.swift */; };
 		01B861872AB34DBF0001118F /* iOS-Bluetooth-Numbers-Database in Frameworks */ = {isa = PBXBuildFile; productRef = 01B861862AB34DBF0001118F /* iOS-Bluetooth-Numbers-Database */; };
+		01BBC7952BD8382E00494A39 /* TemperatureMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BBC7942BD8382E00494A39 /* TemperatureMeasurement.swift */; };
 		01BE094F2349F71B006ACF06 /* HealthTermometerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE094E2349F71B006ACF06 /* HealthTermometerTableViewController.swift */; };
 		01BE0953234A1C48006ACF06 /* HealthTermometerCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE0952234A1C48006ACF06 /* HealthTermometerCharacteristic.swift */; };
 		01BE0955234A7500006ACF06 /* HealthTemperatureSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE0954234A7500006ACF06 /* HealthTemperatureSection.swift */; };
@@ -205,6 +208,7 @@
 		01FD68D02AE82C330021101C /* Attribute+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FD68CF2AE82C330021101C /* Attribute+Preview.swift */; };
 		01FD68D32AE82EB90021101C /* AttributeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FD68D22AE82EB90021101C /* AttributeList.swift */; };
 		01FEB0FD23969BD1000767C1 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FEB0FC23969BD1000767C1 /* UIView+Ext.swift */; };
+		01FF81F82B9375070024E191 /* HealthThermometer+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FF81F72B9375070024E191 /* HealthThermometer+Preview.swift */; };
 		20027B08233E116600A0B5ED /* StrideSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20027B07233E116600A0B5ED /* StrideSection.swift */; };
 		2002A000231FAFD100C43E06 /* PeripheralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20029FFF231FAFD100C43E06 /* PeripheralManager.swift */; };
 		2002A002231FB8E800C43E06 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2002A001231FB8E800C43E06 /* UIImage+Ext.swift */; };
@@ -412,6 +416,8 @@
 		0108E87A2AF140D800C8B096 /* ChartTimeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartTimeData.swift; sourceTree = "<group>"; };
 		0108E87D2AF1654D00C8B096 /* BatteryChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryChart.swift; sourceTree = "<group>"; };
 		0108E8802AF169B800C8B096 /* Battery+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Battery+Preview.swift"; sourceTree = "<group>"; };
+		0118C8292B739B1D00204AED /* HealthThermometerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthThermometerScreen.swift; sourceTree = "<group>"; };
+		0118C82A2B739B1D00204AED /* HealthThermometerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthThermometerViewModel.swift; sourceTree = "<group>"; };
 		0119609D23FA063700A7EF29 /* UARTMacrosHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosHeaderView.swift; sourceTree = "<group>"; };
 		0119609F23FA064100A7EF29 /* UARTMacrosHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTMacrosHeaderView.xib; sourceTree = "<group>"; };
 		0125D5B523F44FE6003A1812 /* UIBarButtonItem+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Ext.swift"; sourceTree = "<group>"; };
@@ -551,6 +557,7 @@
 		01B6D3DD234CBBE5000942C4 /* SernsorLocationSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SernsorLocationSection.swift; sourceTree = "<group>"; };
 		01B6D3DF234CC090000942C4 /* Peripheral+HeartRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Peripheral+HeartRate.swift"; sourceTree = "<group>"; };
 		01B6D3E1234CCC9F000942C4 /* HeartRateChartSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateChartSection.swift; sourceTree = "<group>"; };
+		01BBC7942BD8382E00494A39 /* TemperatureMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureMeasurement.swift; sourceTree = "<group>"; };
 		01BE094E2349F71B006ACF06 /* HealthTermometerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTermometerTableViewController.swift; sourceTree = "<group>"; };
 		01BE0952234A1C48006ACF06 /* HealthTermometerCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTermometerCharacteristic.swift; sourceTree = "<group>"; };
 		01BE0954234A7500006ACF06 /* HealthTemperatureSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTemperatureSection.swift; sourceTree = "<group>"; };
@@ -610,6 +617,7 @@
 		01FD68CF2AE82C330021101C /* Attribute+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attribute+Preview.swift"; sourceTree = "<group>"; };
 		01FD68D22AE82EB90021101C /* AttributeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeList.swift; sourceTree = "<group>"; };
 		01FEB0FC23969BD1000767C1 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
+		01FF81F72B9375070024E191 /* HealthThermometer+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthThermometer+Preview.swift"; sourceTree = "<group>"; };
 		20027B07233E116600A0B5ED /* StrideSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrideSection.swift; sourceTree = "<group>"; };
 		20029FFF231FAFD100C43E06 /* PeripheralManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralManager.swift; sourceTree = "<group>"; };
 		2002A001231FB8E800C43E06 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
@@ -862,6 +870,16 @@
 			path = Battery;
 			sourceTree = "<group>";
 		};
+		0118C8282B739AE500204AED /* HealthThermometer */ = {
+			isa = PBXGroup;
+			children = (
+				0118C8292B739B1D00204AED /* HealthThermometerScreen.swift */,
+				0118C82A2B739B1D00204AED /* HealthThermometerViewModel.swift */,
+				01BBC7942BD8382E00494A39 /* TemperatureMeasurement.swift */,
+			);
+			path = HealthThermometer;
+			sourceTree = "<group>";
+		};
 		0119609C23F9FDC700A7EF29 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -999,6 +1017,7 @@
 		013E5D872ADD337300B9C475 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				0118C8282B739AE500204AED /* HealthThermometer */,
 				01ABB0752AE6FDCF00615A21 /* HeartRate */,
 				013E5D882ADD33BF00B9C475 /* Running */,
 			);
@@ -1196,6 +1215,7 @@
 		017D10342A5809E400E38E5F /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
+				01FF81F62B9374ED0024E191 /* HealthTermometer */,
 				0108E87F2AF169AE00C8B096 /* Battery */,
 				01CEB42B2AE9859A00945105 /* HeartRate */,
 				01FD68CE2AE82C200021101C /* Extensions */,
@@ -1774,6 +1794,14 @@
 				01FD68D22AE82EB90021101C /* AttributeList.swift */,
 			);
 			path = AttributeList;
+			sourceTree = "<group>";
+		};
+		01FF81F62B9374ED0024E191 /* HealthTermometer */ = {
+			isa = PBXGroup;
+			children = (
+				01FF81F72B9375070024E191 /* HealthThermometer+Preview.swift */,
+			);
+			path = HealthTermometer;
 			sourceTree = "<group>";
 		};
 		2002A003232260CA00C43E06 /* Glucose */ = {
@@ -2787,12 +2815,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0118C82B2B739B1D00204AED /* HealthThermometerScreen.swift in Sources */,
 				016C0FA02AF925FA00F6CFDF /* NoContentView.swift in Sources */,
 				01C81AD72A5D8FEA0011B41E /* ReadableError.swift in Sources */,
 				013E5D912ADFDF1300B9C475 /* Array+Ext.swift in Sources */,
 				0164A4812AD8330E0093E501 /* ServiceBadgeGroup.swift in Sources */,
 				01CEB4262AE9100300945105 /* HeartRateScreen.swift in Sources */,
 				018873C72A583A9900253273 /* PeripheralScannerScreen.swift in Sources */,
+				01FF81F82B9375070024E191 /* HealthThermometer+Preview.swift in Sources */,
 				018873C22A58322C00253273 /* ee.swift in Sources */,
 				01F6A9662A829EE300540B45 /* SensorSettingsViewModel.swift in Sources */,
 				013E5D962AE02A1700B9C475 /* RunningValuesGrid.swift in Sources */,
@@ -2848,10 +2878,12 @@
 				01DEB4A62A65E35F00D4C1E8 /* Flag.swift in Sources */,
 				014BBD7D2A70004B00BCFCA8 /* RSCMeasurement.swift in Sources */,
 				0108E87B2AF140D800C8B096 /* ChartTimeData.swift in Sources */,
+				01BBC7952BD8382E00494A39 /* TemperatureMeasurement.swift in Sources */,
 				01CEB42D2AE9956600945105 /* HeartRateMeasurementCharacteristic+Preview.swift in Sources */,
 				01C575BE2A7D00EF007FE4F0 /* Alias.swift in Sources */,
 				012E22942A6AD5BE00B14064 /* NamedItem.swift in Sources */,
 				014BBD812A700D1600BCFCA8 /* SensorLocationView1.swift in Sources */,
+				0118C82C2B739B1D00204AED /* HealthThermometerViewModel.swift in Sources */,
 				019ABF1D2A600A480019BD21 /* DeviceItem.swift in Sources */,
 				0164A4742AD5A4630093E501 /* StateViews.swift in Sources */,
 				0129F2252A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift in Sources */,
@@ -3152,11 +3184,12 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "nRF-Toolbox/nRF_Toolbox.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_ASSET_PATHS = "\"nRF-Toolbox/Preview Content\"";
-				DEVELOPMENT_TEAM = P3R8YQEV4L;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -3210,7 +3243,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"nRF-Toolbox/Preview Content\"";
-				DEVELOPMENT_TEAM = P3R8YQEV4L;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -3263,7 +3296,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"nRF-Toolbox/Preview Content\"";
-				DEVELOPMENT_TEAM = P3R8YQEV4L;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;

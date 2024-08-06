@@ -11,6 +11,7 @@ import iOS_BLE_Library_Mock
 
 struct PeripheralScannerScreen: View {
     @StateObject var viewModel: PeripheralScannerViewModel
+    @Environment(\.dismiss) var dismiss
     
     init(centralManager: CentralManager) {
         self._viewModel = StateObject(wrappedValue: PeripheralScannerViewModel(centralManager: centralManager))
@@ -23,6 +24,13 @@ struct PeripheralScannerScreen: View {
             }
             .onFirstAppear {
                 viewModel.setupManager()
+            }
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Close") {
+                        dismiss()
+                    }
+                }
             }
             .environmentObject(viewModel.environment)
             

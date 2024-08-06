@@ -22,3 +22,21 @@ extension CBMUUID {
         self.init(string: descriptor.uuidString)
     }
 }
+
+extension Service {
+    var cbmUUID: CBMUUID {
+        CBMUUID(string: uuidString)
+    }
+}
+
+extension Characteristic {
+    var cbmUUID: CBMUUID {
+        CBMUUID(string: uuidString)
+    }
+}
+
+extension Descriptor {
+    var cbmUUID: CBMUUID {
+        CBMUUID(string: uuidString)
+    }
+}

@@ -8,9 +8,11 @@
 
 import SwiftUI
 
-fileprivate typealias VM = RunningServiceScreen.RunningServiceViewModel.Environment
+fileprivate typealias Env = RunningServiceScreen.RunningServiceViewModel.Environment
 
 struct RunningServiceScreen: View {
+    typealias VM = RunningServiceScreen.RunningServiceViewModel
+    
     @ObservedObject var viewModel: RunningServiceViewModel
     
     var body: some View {
@@ -23,7 +25,8 @@ struct RunningServiceScreen: View {
 }
 
 struct RunningServiceView: View {
-    @EnvironmentObject private var environment: VM
+    
+    @EnvironmentObject private var environment: Env
     
     @State private var showSensorCalibration = false
     
@@ -53,7 +56,7 @@ struct RunningServiceView: View {
     NavigationStack {
         RunningServiceView()
             .environmentObject(
-                VM(
+                Env(
                     rscFeature: .all,
                     instantaneousSpeed: Measurement<UnitSpeed>(value: 1, unit: .metersPerSecond),
                     instantaneousCadence: 2,

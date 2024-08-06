@@ -16,12 +16,16 @@ struct DeviceDetailsScreen: View {
         DeviceDetailsView { service in
             switch service {
             case .runningSpeedAndCadence:
-                if let vm = viewModel.runningServiceViewModel {
+                if let vm = viewModel.viewModel(ofType: RunningServiceScreen.VM.self) {
                     RunningServiceScreen(viewModel: vm)
                 }
             case .heartRate:
-                if let vm = viewModel.heartRateServiceViewModel {
+                if let vm = viewModel.viewModel(ofType: HeartRateScreen.VM.self) {
                     HeartRateScreen(viewModel: vm)
+                }
+            case .healthThermometer:
+                if let vm = viewModel.viewModel(ofType: HealthThermometerScreen.VM.self) {
+                    HealthThermometerScreen(viewModel: vm)
                 }
             default:
                 NoContentView(

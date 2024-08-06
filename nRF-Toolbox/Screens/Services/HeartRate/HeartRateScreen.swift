@@ -11,6 +11,7 @@ import SwiftUI
 private typealias Env = HeartRateScreen.HeartRateViewModel.Environment
 
 struct HeartRateScreen: View {
+    typealias VM = HeartRateScreen.HeartRateViewModel
 
     let viewModel: HeartRateViewModel
 

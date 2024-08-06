@@ -15,7 +15,7 @@ struct DeviceInformationView: View {
         ForEach(deviceInformation.characteristics) { characteristic in
             deviceInformationCharacteristicView(characteristic: characteristic)
         }
-        .listStyle(GroupedListStyle())
+//        .listStyle(GroupedListStyle())
     }
 
     @ViewBuilder
