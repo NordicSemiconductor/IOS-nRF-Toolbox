@@ -1,39 +1,12 @@
 {
   "pins" : [
     {
-      "identity" : "aexml",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/tadija/AEXML.git",
-      "state" : {
-        "revision" : "38f7d00b23ecd891e1ee656fa6aeebd6ba04ecc3",
-        "version" : "4.6.1"
-      }
-    },
-    {
       "identity" : "ios-bluetooth-numbers-database",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/NickKibish/iOS-Bluetooth-Numbers-Database.git",
       "state" : {
         "revision" : "40ae8d7050d16fc2603c314dd560a7992c35f56f",
         "version" : "1.0.0"
-      }
-    },
-    {
-      "identity" : "ios-dfu-library",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/NordicSemiconductor/IOS-DFU-Library.git",
-      "state" : {
-        "branch" : "main",
-        "revision" : "5906bc522a3eb2040644b1063019e3516456fdb1"
-      }
-    },
-    {
-      "identity" : "ios-nrf-connect-device-manager",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/NordicSemiconductor/IOS-nRF-Connect-Device-Manager",
-      "state" : {
-        "branch" : "master",
-        "revision" : "c9beefcdaae3c24a95c249ae20333fcf9a3b8ec6"
       }
     },
     {
@@ -52,24 +25,6 @@
       "state" : {
         "revision" : "b45d1f2ed151d057b54504d653e0da5552844e34",
         "version" : "1.0.0"
-      }
-    },
-    {
-      "identity" : "swiftcbor",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/unrelentingtech/SwiftCBOR.git",
-      "state" : {
-        "revision" : "895c9aa84ce3b04106905e398ac870e0cca59d26",
-        "version" : "0.4.4"
-      }
-    },
-    {
-      "identity" : "zipfoundation",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/weichsel/ZIPFoundation.git",
-      "state" : {
-        "revision" : "ec32d62d412578542c0ffb7a6ce34d3e64b43b94",
-        "version" : "0.9.11"
       }
     }
   ],

@@ -83,6 +83,8 @@
 		016C0FA02AF925FA00F6CFDF /* NoContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016C0F9F2AF925FA00F6CFDF /* NoContentView.swift */; };
 		016EF388241632AF005FFA30 /* LoggerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016EF386241632AF005FFA30 /* LoggerTableViewController.swift */; };
 		016EF389241632AF005FFA30 /* LoggerTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 016EF387241632AF005FFA30 /* LoggerTableViewController.xib */; };
+		0171309B2C62A0C90013716E /* ContinuousGlucoseMonitoringScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0171309A2C62A0C90013716E /* ContinuousGlucoseMonitoringScreen.swift */; };
+		0171309D2C62A0D10013716E /* ContinuousGlucoseMonitoringViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0171309C2C62A0D10013716E /* ContinuousGlucoseMonitoringViewModel.swift */; };
 		01797E8323F4242500B26BF2 /* ModernIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01797E8223F4242500B26BF2 /* ModernIcon.swift */; };
 		017D102E2A5809E300E38E5F /* nRF_ToolboxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017D102D2A5809E300E38E5F /* nRF_ToolboxApp.swift */; };
 		017D10302A5809E300E38E5F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017D102F2A5809E300E38E5F /* ContentView.swift */; };
@@ -491,6 +493,8 @@
 		016C0F9F2AF925FA00F6CFDF /* NoContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoContentView.swift; sourceTree = "<group>"; };
 		016EF386241632AF005FFA30 /* LoggerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerTableViewController.swift; sourceTree = "<group>"; };
 		016EF387241632AF005FFA30 /* LoggerTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoggerTableViewController.xib; sourceTree = "<group>"; };
+		0171309A2C62A0C90013716E /* ContinuousGlucoseMonitoringScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinuousGlucoseMonitoringScreen.swift; sourceTree = "<group>"; };
+		0171309C2C62A0D10013716E /* ContinuousGlucoseMonitoringViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinuousGlucoseMonitoringViewModel.swift; sourceTree = "<group>"; };
 		01797E8223F4242500B26BF2 /* ModernIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernIcon.swift; sourceTree = "<group>"; };
 		017D102B2A5809E300E38E5F /* nRF-Toolbox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nRF-Toolbox.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		017D102D2A5809E300E38E5F /* nRF_ToolboxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nRF_ToolboxApp.swift; sourceTree = "<group>"; };
@@ -1017,6 +1021,7 @@
 		013E5D872ADD337300B9C475 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				017130992C629F7D0013716E /* ContinuousGlucoseMonitoring */,
 				0118C8282B739AE500204AED /* HealthThermometer */,
 				01ABB0752AE6FDCF00615A21 /* HeartRate */,
 				013E5D882ADD33BF00B9C475 /* Running */,
@@ -1192,6 +1197,15 @@
 				016C0F9F2AF925FA00F6CFDF /* NoContentView.swift */,
 			);
 			path = NoContentView;
+			sourceTree = "<group>";
+		};
+		017130992C629F7D0013716E /* ContinuousGlucoseMonitoring */ = {
+			isa = PBXGroup;
+			children = (
+				0171309A2C62A0C90013716E /* ContinuousGlucoseMonitoringScreen.swift */,
+				0171309C2C62A0D10013716E /* ContinuousGlucoseMonitoringViewModel.swift */,
+			);
+			path = ContinuousGlucoseMonitoring;
 			sourceTree = "<group>";
 		};
 		017D102C2A5809E300E38E5F /* nRF-Toolbox */ = {
@@ -2839,6 +2853,7 @@
 				018C053E2AE16682007CE0FE /* SignalChartView.swift in Sources */,
 				01C62AE52B72463F00CDEE31 /* DeviceInformation.swift in Sources */,
 				01C62AE72B72480C00CDEE31 /* DeviceInformationView.swift in Sources */,
+				0171309B2C62A0C90013716E /* ContinuousGlucoseMonitoringScreen.swift in Sources */,
 				018C05412AE1670C007CE0FE /* ChartData+Preview.swift in Sources */,
 				018C053B2AE0844E007CE0FE /* SignalChartViewModel.swift in Sources */,
 				018873C92A583B0000253273 /* PeripheralScannerViewModel.swift in Sources */,
@@ -2870,6 +2885,7 @@
 				013E5D8A2ADD33E000B9C475 /* RunningServiceScreen.swift in Sources */,
 				01ABB0802AE703D400615A21 /* AttributeItemView.swift in Sources */,
 				017D10302A5809E300E38E5F /* ContentView.swift in Sources */,
+				0171309D2C62A0D10013716E /* ContinuousGlucoseMonitoringViewModel.swift in Sources */,
 				0108E87E2AF1654D00C8B096 /* BatteryChart.swift in Sources */,
 				015AAE712B063D6200D79833 /* RootNavigationViewModel.swift in Sources */,
 				0126B53F2A5EA8B70033BCC3 /* AttributeTable.swift in Sources */,
