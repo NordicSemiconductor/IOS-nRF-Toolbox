@@ -2778,7 +2778,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export PATH=/usr/local/bin:$PATH\ncd \"$WORKSPACE_PATH\"../IOS-BLE-Library\n\npython3 code_gen/code_gen.py Sources\n\n";
+			shellScript = "export PATH=/usr/local/bin:$PATH\n\n# Check if the directory exists\nif [ -d \"$WORKSPACE_PATH/../IOS-BLE-Library\" ]; then\n  cd \"$WORKSPACE_PATH/../IOS-BLE-Library\"\n  python3 code_gen/code_gen.py Sources\nelse\n  echo \"Directory does not exist, doing nothing.\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -4017,7 +4017,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/NordicSemiconductor/IOS-BLE-Library.git";
 			requirement = {
-				branch = develop;
+				branch = main;
 				kind = branch;
 			};
 		};

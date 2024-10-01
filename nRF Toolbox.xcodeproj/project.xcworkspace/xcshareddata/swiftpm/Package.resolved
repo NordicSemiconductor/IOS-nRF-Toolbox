@@ -1,4 +1,5 @@
 {
+  "originHash" : "71fd58c2da3a7adfdb7adeb7c7d87a271abf6a0897b6b5077f104835c12577c1",
   "pins" : [
     {
       "identity" : "aexml",
@@ -10,12 +11,48 @@
       }
     },
     {
+      "identity" : "corebluetoothmock-collection",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/NickKibish/CoreBluetoothMock-Collection.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "4499ea7ecaec704c42899cc1a6857a565241b375"
+      }
+    },
+    {
+      "identity" : "ios-ble-library",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/NordicSemiconductor/IOS-BLE-Library.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "981328ba3a9ab47ac31ea81625746fb115a5252e"
+      }
+    },
+    {
       "identity" : "ios-bluetooth-numbers-database",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/NickKibish/iOS-Bluetooth-Numbers-Database.git",
       "state" : {
         "revision" : "40ae8d7050d16fc2603c314dd560a7992c35f56f",
         "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "ios-common-libraries",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/NordicPlayground/IOS-Common-Libraries.git",
+      "state" : {
+        "branch" : "feature/reduce_pckage_version",
+        "revision" : "214120c1ac5e7d4b336b6421f42e9836ecbfa271"
+      }
+    },
+    {
+      "identity" : "ios-corebluetooth-mock",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/NordicSemiconductor/IOS-CoreBluetooth-Mock.git",
+      "state" : {
+        "revision" : "500b23852e7d46b63ef8e2a826c2b6f3f6ed50ef",
+        "version" : "0.18.0"
       }
     },
     {
@@ -37,24 +74,6 @@
       }
     },
     {
-      "identity" : "swift-docc-plugin",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-docc-plugin",
-      "state" : {
-        "revision" : "26ac5758409154cc448d7ab82389c520fa8a8247",
-        "version" : "1.3.0"
-      }
-    },
-    {
-      "identity" : "swift-docc-symbolkit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-docc-symbolkit",
-      "state" : {
-        "revision" : "b45d1f2ed151d057b54504d653e0da5552844e34",
-        "version" : "1.0.0"
-      }
-    },
-    {
       "identity" : "swiftcbor",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/unrelentingtech/SwiftCBOR.git",
@@ -73,5 +92,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
