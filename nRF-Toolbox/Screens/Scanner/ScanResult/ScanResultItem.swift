@@ -18,7 +18,7 @@ struct ScanResultItem: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                RSSIView(rssi: BluetoothRSSI(rawValue: rssi))
+                RSSIView(rssi: RSSI(rawValue: rssi) ?? RSSI.outOfRange)
                 Text(name ?? "n/a")
                     .foregroundColor(name == nil ? .secondary : .primary)
             }

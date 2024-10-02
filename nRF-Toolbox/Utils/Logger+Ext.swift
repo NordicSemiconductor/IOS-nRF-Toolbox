@@ -9,16 +9,8 @@
 import Foundation
 import iOS_Common_Libraries
 
-extension L {
+extension NordicLog {
     init(category: String) {
-        self.init(subsystem: "com.nordicsemi.nrf-toolbox", category: category)
-    }
-    
-    func construct() {
-//        d("life-cycle-created")
-    }
-    
-    func descruct() {
-//        w("life-cycle-destroyed")
+        self.init(category: category, subsystem: "com.nordicsemi.nrf-toolbox")
     }
 }

@@ -42,18 +42,18 @@ extension RunningServiceScreen {
         
         private var sensorCalibrationViewModel: SensorCalibrationScreen.SensorCalibrationViewModel?
         
-        private let l = L(category: "RunningService.ViewModel")
+        private let l = NordicLog(category: "RunningService.ViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
         
         init(peripheral: Peripheral, runningService: CBService) {
             assert(runningService.uuid.uuidString == Service.runningSpeedAndCadence.uuidString, "bad service")
             self.peripheral = peripheral
             self.runningService = runningService
             
-            l.construct()
+            l.debug(#function)
         }
         
         deinit {
-            l.descruct()
+            l.debug(#function)
         }
     }
 }
@@ -181,7 +181,7 @@ extension RunningServiceScreen.RunningServiceViewModel {
         
         let sensorCalibrationViewModel: (() -> (SensorCalibrationScreen.SensorCalibrationViewModel?))
         
-        private let l = L(category: "RunningService.ViewModel.Environment")
+        private let l = NordicLog(category: "RunningService.ViewModel.Environment")
         
         init(
             criticalError: CriticalError? = nil,
@@ -204,11 +204,11 @@ extension RunningServiceScreen.RunningServiceViewModel {
             self.isRunning = isRunning
             self.sensorCalibrationViewModel = sensorCalibrationViewModel
             
-            l.construct()
+            l.debug(#function)
         }
         
         deinit {
-            l.descruct()
+            l.debug(#function)
         }
     }
 }

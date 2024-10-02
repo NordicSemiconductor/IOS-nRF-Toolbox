@@ -19,16 +19,16 @@ extension AttributeTableScreen {
         
         let peripheral: Peripheral
         
-        private let l = L(category: "AttributeTable.VM")
+        private let l = NordicLog(category: "AttributeTable.VM", subsystem: "com.nordicsemi.nrf-toolbox")
         
         init(peripheral: Peripheral) {
             self.peripheral = peripheral
             
-            l.construct()
+            l.debug(#function)
         }
         
         deinit {
-            l.descruct()
+            l.debug(#function)
         }
         
         func readAttributeTable() async {
@@ -83,17 +83,17 @@ extension AttributeTableScreen.AttributeTableViewModel {
         @Published fileprivate (set) var attributeTable: [Attribute]?
         @Published fileprivate (set) var criticalError: CriticalError?
         
-        private let l = L(category: "AttributeTable.Env")
+        private let l = NordicLog(category: "AttributeTable.Env", subsystem: "com.nordicsemi.nrf-toolbox")
         
         init(attributeTable: [Attribute]? = nil, criticalError: CriticalError? = nil) {
             self.attributeTable = attributeTable
             self.criticalError = criticalError
             
-            l.construct()
+            l.debug(#function)
         }
         
         deinit {
-            l.descruct()
+            l.debug(#function)
         }
     }
 }

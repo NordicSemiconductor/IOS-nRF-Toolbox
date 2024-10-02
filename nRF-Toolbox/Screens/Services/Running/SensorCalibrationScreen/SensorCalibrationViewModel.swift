@@ -29,7 +29,7 @@ extension SensorCalibrationScreen {
         private var scControlPoint: CBCharacteristic!
         private var sensorLocationCharacteristic: CBCharacteristic?
         
-        private let logger = L(category: "SensorCalibration.VM")
+        private let logger = NordicLog(category: "SensorCalibration.VM")
         private var cancelable = Set<AnyCancellable>()
         
         init(peripheral: Peripheral, rscService: CBService, rscFeature: RSCFeature) {
@@ -40,11 +40,11 @@ extension SensorCalibrationScreen {
             environment.setCumulativeValueEnabled = rscFeature.contains(.totalDistanceMeasurement)
             environment.startSensorCalibrationEnabled = rscFeature.contains(.sensorCalibrationProcedure)
             
-            logger.construct()
+            logger.debug(#function)
         }
         
         deinit {
-            logger.descruct()
+            logger.debug(#function)
         }
     }
 }
@@ -105,7 +105,7 @@ extension SensorCalibrationScreen.SensorCalibrationViewModel {
         do {
             try await writeCommand(opCode: .setCumulativeValue, parameter: data)
         } catch let e {
-            logger.e(e.localizedDescription)
+            logger.error(e.localizedDescription)
             environment.internalError = .unableResetCumulativeValue
         }
     }
@@ -218,7 +218,7 @@ extension SensorCalibrationScreen.SensorCalibrationViewModel {
         let startSensorCalibration: () async -> ()
         let updateSensorLocation: () async -> ()
         
-        private let l = L(category: "SensorCalibrationViewModel.Environment")
+        private let l = NordicLog(category: "SensorCalibrationViewModel.Environment")
         
         init(
             setCumulativeValueEnabled: Bool = false,
@@ -253,11 +253,11 @@ extension SensorCalibrationScreen.SensorCalibrationViewModel {
                 .map { $0 == $1 }
                 .assign(to: &$updateSensorLocationDisabled)
             
-            l.construct()
+            l.debug(#function)
         }
         
         deinit {
-            l.descruct()
+            l.debug(#function)
         }
         
     }

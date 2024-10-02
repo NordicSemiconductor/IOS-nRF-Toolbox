@@ -37,7 +37,7 @@ extension DeviceDetailsScreen {
         let environment: Environment
         private var supportedServiceViewModels: [SupportedServiceViewModel] = []
         
-        private let l = L(category: "DeviceDetails.VM")
+        private let l = NordicLog(category: "DeviceDetails.VM", subsystem: "com.nordicsemi.nrf-toolbox")
         
         var runningServiceViewModel: RunningServiceScreen.RunningServiceViewModel? {
             supportedServiceViewModels.firstOfType(type: RunningServiceScreen.RunningServiceViewModel.self)
@@ -70,11 +70,11 @@ extension DeviceDetailsScreen {
                 await self?.reconnect()
             }
             
-            l.construct()
+            l.debug(#function)
         }
         
         deinit {
-            l.descruct()
+            l.debug(#function)
         }
     }
 }
@@ -161,7 +161,7 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
         
         fileprivate (set) var reconnect: (() async -> ())?
         
-        private let l = L(category: "DeviceDetails.Env")
+        private let l = NordicLog(category: "DeviceDetails.Env", subsystem: "com.nordicsemi.nrf-toolbox")
         
         init(
             deviceID: UUID,
@@ -180,11 +180,11 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
             self.peripheralViewModel = peripheralViewModel
             self.reconnect = reconnect
             
-            l.construct()
+            l.debug(#function)
         }
         
         deinit {
-            l.descruct()
+            l.debug(#function)
         }
     }
     

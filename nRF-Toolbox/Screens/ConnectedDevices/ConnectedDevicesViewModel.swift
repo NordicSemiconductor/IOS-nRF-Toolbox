@@ -63,7 +63,14 @@ extension ConnectedDevicesViewModel {
             .filter { $0.1 == nil } // No connection error
             .map { Device(name: $0.0.name, id: $0.0.identifier) }
             .sink { [unowned self] device in
-                self.environment.connectedDevices.replacedOrAppended(device)
+                if let i = self.environment.connectedDevices.firstIndex(where: {
+                    $0.id == device.id
+                }) {
+                    self.environment.connectedDevices[i] = device
+                } else {
+                    self.environment.connectedDevices.append(device)
+                }
+//                self.environment.connectedDevices.replacedOrAppended(device)
             }
             .store(in: &cancelable)
     }

@@ -26,7 +26,7 @@ extension PeripheralInspectorScreen {
         
         private let peripheral: Peripheral
         
-        private let l = L(category: "PeripheralInspector.VM")
+        private let l = NordicLog(category: "PeripheralInspector.VM")
         
         init(peripheral: Peripheral) {
             self.peripheral = peripheral
@@ -37,11 +37,11 @@ extension PeripheralInspectorScreen {
             )
             onConnect()
             
-            l.construct()
+            l.debug(#function)
         }
         
         deinit {
-            l.descruct()
+            l.debug(#function)
         }
         
         func onConnect() {
@@ -254,7 +254,7 @@ extension PeripheralInspectorScreen.PeripheralInspectorViewModel {
         
         fileprivate (set) var disconnect: () -> ()
         
-        private let l = L(category: "PeripheralInspector.Env")
+        private let l = NordicLog(category: "PeripheralInspector.Env")
         
         init(
             deviceId: UUID,
@@ -283,11 +283,11 @@ extension PeripheralInspectorScreen.PeripheralInspectorViewModel {
             self.attributeTableViewModel = attributeTableViewModel
             self.disconnect = disconnect
             
-            l.construct()
+            l.debug(#function)
         }
         
         deinit {
-            l.descruct()
+            l.debug(#function)
         }
     }
 }

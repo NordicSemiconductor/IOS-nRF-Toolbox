@@ -50,7 +50,7 @@ extension HeartRateScreen {
         
         private var cancelable = Set<AnyCancellable>()
         
-        private let l = L(category: "HeartRateScreen")
+        private let l = NordicLog(category: "HeartRateScreen", subsystem: "com.nordicsemi.nrf-toolbox")
         
         init(peripheral: Peripheral, hrService: CBService) {
             self.peripheral = peripheral
@@ -58,11 +58,11 @@ extension HeartRateScreen {
             assert(hrService.uuid == Service.heartRate.uuid)
             
             self.hrService = hrService
-            l.construct()
+            l.debug(#function)
         }
         
         deinit {
-            l.descruct()
+            l.debug(#function)
         }
         
         func prepare() async {
@@ -167,7 +167,7 @@ extension HeartRateScreen.HeartRateViewModel {
             }
         }
         
-        private let l = L(category: "HeartRateViewModel.Environment")
+        private let l = NordicLog(category: "HeartRateViewModel.Environment", subsystem: "com.nordicsemi.nrf-toolbox")
         
         init(data: [HeartRateMeasurementCharacteristic] = [], criticalError: CriticalError? = nil, alertError: Error? = nil) {
             self.data = data
@@ -176,11 +176,11 @@ extension HeartRateScreen.HeartRateViewModel {
             
             assert(capacity >= visibleDomain)
             
-            l.construct()
+            l.debug(#function)
         }
         
         deinit {
-            l.descruct()
+            l.debug(#function)
         }
         
         fileprivate func clear() {

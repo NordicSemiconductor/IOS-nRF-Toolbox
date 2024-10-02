@@ -94,7 +94,16 @@ private extension DeviceDetailsViewModel {
                 DispatchQueue.main.async {
                     switch service.uuid {
                     case .runningSpeedCadence:
-                        _ = RunningServiceHandler(peripheral: self.peripheral, service: service).map { self.serviceHandlers.replacedOrAppended($0, compareBy: \.id) }
+                        _ = RunningServiceHandler(peripheral: self.peripheral, service: service).map {
+                            if let i = self.serviceHandlers.firstIndex(where: {
+                                $0.id == service.uuid.uuidString
+                            }) {
+                                self.serviceHandlers[i] = $0
+                            } else {
+                                self.serviceHandlers.append($0)
+                            }
+                        }
+                        break
                     default:
                         break
                     }

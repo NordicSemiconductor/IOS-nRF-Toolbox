@@ -19,7 +19,14 @@ struct AttributeTable {
     
     mutating func addService(_ cbService: CBService) {
         let service = Service(cbService: cbService)
-        services.replacedOrAppended(service, compareBy: \.identifier)
+        if let i = services.firstIndex(where: {
+            $0.id == service.id
+        }) {
+            services[i] = service
+        } else {
+            services.append(service)
+        }
+//        services.replacedOrAppended(service, compareBy: \.identifier)
     }
     
     mutating func addCharacteristic(_ cbCharacteristic: CBCharacteristic, to service: CBService) {
@@ -33,7 +40,14 @@ struct AttributeTable {
             cbCharacteristic: cbCharacteristic
         )
         
-        services[serviceIndex].characteristics.replacedOrAppended(charateristic, compareBy: \.identifier)
+        if let i = services[serviceIndex].characteristics.firstIndex(where: {
+            $0.id == charateristic.id
+        }) {
+            services[serviceIndex].characteristics[i] = charateristic
+        } else {
+            services[serviceIndex].characteristics.append(charateristic)
+        }
+//        services[serviceIndex].characteristics.replacedOrAppended(charateristic, compareBy: \.identifier)
     }
     
     mutating func addDescriptor(_ cbDescriptor: CBDescriptor, to characteristic: CBCharacteristic, in service: CBService) {
@@ -45,7 +59,14 @@ struct AttributeTable {
             cbDescriptor: cbDescriptor
         )
         
-        services[serviceIndex].characteristics[characteristicIndex].descriptors.replacedOrAppended(descriptor, compareBy: \.identifier)
+        if let i = services[serviceIndex].characteristics[characteristicIndex].descriptors.firstIndex(where: {
+            $0.id == descriptor.id
+        }) {
+            services[serviceIndex].characteristics[characteristicIndex].descriptors[i] = descriptor
+        } else {
+            services[serviceIndex].characteristics[characteristicIndex].descriptors.append(descriptor)
+        }
+//        services[serviceIndex].characteristics[characteristicIndex].descriptors.replacedOrAppended(descriptor, compareBy: \.identifier)
     }
     
     var attributeList: [Attribute] {

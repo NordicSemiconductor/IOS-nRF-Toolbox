@@ -9,7 +9,7 @@
 import SwiftUI
 import iOS_Common_Libraries
 
-fileprivate typealias OldNoContent = iOS_Common_Libraries.ContentUnavailableView
+//fileprivate typealias OldNoContent = iOS_Common_Libraries.ContentUnavailableView
 
 struct NoContentView: View {
     enum Style {
@@ -48,13 +48,14 @@ struct NoContentView: View {
     
     @ViewBuilder
     private var old: some View {
-        OldNoContent(configuration:
-                        ContentUnavailableConfiguration(
-                            text: title,
-                            secondaryText: description,
-                            systemName: systemImage
-                        )
-        )
+        Text("Content Not Available")
+//        OldNoContent(configuration:
+//                        ContentUnavailableConfiguration(
+//                            text: title,
+//                            secondaryText: description,
+//                            systemName: systemImage
+//                        )
+//        )
     }
     
     @available(macOS 14.0, *)

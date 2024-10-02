@@ -36,7 +36,7 @@ extension SensorSettings {
         
         let handler: RunningServiceHandler
         
-        private let l = L(category: "SensorSettingsViewModel")
+        private let l = NordicLog(category: "SensorSettingsViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
         
         init(handler: RunningServiceHandler) {
             self.handler = handler
@@ -44,11 +44,11 @@ extension SensorSettings {
                 await updateFeature()
             }
             
-            l.construct()
+            l.debug(#function)
         }
         
         deinit {
-            l.descruct()
+            l.debug(#function)
         }
         
     }

@@ -20,16 +20,16 @@ extension SignalChartScreen {
         
         private var cancelable = Set<AnyCancellable>()
         
-        private let l = L(category: "SignalChart.ViewModel")
+        private let l = NordicLog(category: "SignalChart.ViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
         
         init(peripheral: Peripheral) {
             self.peripheral = peripheral
             
-            l.construct()
+            l.debug(#function)
         }
         
         deinit {
-            l.descruct()
+            l.debug(#function)
         }
         
         private func readSignal() {
@@ -110,17 +110,17 @@ extension SignalChartScreen.SignalChartViewModel {
         @Published fileprivate (set) var lowest: Int = -100
         @Published fileprivate (set) var highest: Int = -40
         
-        private let l = L(category: "SignalChart.Environment")
+        private let l = NordicLog(category: "SignalChart.Environment", subsystem: "com.nordicsemi.nrf-toolbox")
         
         init(chartData: [ChartData] = []) {
             self.chartData = chartData
             assert(capacity >= visibleDomain)
             
-            l.construct()
+            l.debug(#function)
         }
         
         deinit {
-            l.descruct()
+            l.debug(#function)
         }
     }
 }

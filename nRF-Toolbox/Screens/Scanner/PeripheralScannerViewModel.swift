@@ -20,7 +20,7 @@ extension PeripheralScannerScreen {
         
         private var cancelables = Set<AnyCancellable>()
         
-        private let l = L(category: "PeripheralScanner.VM")
+        private let l = NordicLog(category: "PeripheralScanner.VM")
         
         init(centralManager: CentralManager) {
             self.environment = Environment()
@@ -28,11 +28,11 @@ extension PeripheralScannerScreen {
             
             setupEnvironment()
             
-            l.construct()
+            l.debug(#function)
         }
         
         deinit {
-            l.descruct()
+            l.debug(#function)
         }
         
         private func setupEnvironment() {
@@ -123,7 +123,13 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
                 }
             } receiveValue: { sr in
                 // Publisher can send Scan Results many times. You need to check if previously discovered Scan Results are already in the list
-                self.environment.devices.replacedOrAppended(sr)
+                if let i = self.environment.devices.firstIndex(where: {
+                    $0.id == sr.id
+                }) {
+                    self.environment.devices[i] = sr
+                } else {
+                    self.environment.devices.append(sr)
+                }
             }
             .store(in: &cancelables)
     }
@@ -145,7 +151,7 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
         
         fileprivate (set) var connect: (ScanResult) async -> ()
         
-        private let l = L(category: "PeripheralScanner.Env")
+        private let l = NordicLog(category: "PeripheralScanner.Env")
         
         init(error: ReadableError? = nil, devices: [ScanResult] = [], connectingDevice: ScanResult? = nil, state: State = .disabled, connect: @escaping (ScanResult) -> Void = { _ in}) {
             self.error = error
@@ -154,11 +160,11 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
             self.state = state
             self.connect = connect
             
-            l.construct()
+            l.debug(#function)
         }
         
         deinit {
-            l.descruct()
+            l.debug(#function)
         }
     }
 }
