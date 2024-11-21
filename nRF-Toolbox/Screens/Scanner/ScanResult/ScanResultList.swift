@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import iOS_Bluetooth_Numbers_Database
+import iOS_Common_Libraries
 
 fileprivate typealias Env = PeripheralScannerScreen.PeripheralScannerViewModel.Environment
 fileprivate typealias ScanResult = PeripheralScannerScreen.PeripheralScannerViewModel.ScanResult
@@ -24,10 +24,16 @@ struct ScanResultList: View {
     
     var body: some View {
         List(selection: $selectedDevice) {
-            devicesSection
+            Section {
+                ForEach(environment.devices) { device in
+                    deviceView(device: device)
+                }
+            } footer: {
+                Text("Select the device to establish connection")
+            }
         }
         .onChange(of: selectedDevice) { newValue in
-            guard let newValue, let device = environment.devices.first(where: { $0.id == newValue }) else {
+            guard let newValue, let device = environment.devices.first(where: \.id, isEqualsTo: newValue) else {
                 return
             }
 
@@ -70,19 +76,6 @@ struct ScanResultList: View {
 #if os(macOS)
             Divider()
 #endif
-        }
-    }
-    
-    // MARK: devicesSection
-    
-    @ViewBuilder
-    private var devicesSection: some View {
-        Section {
-            ForEach(environment.devices) { device in
-                deviceView(device: device)
-            }
-        } footer: {
-            Text("Select the device to establish connection")
         }
     }
 }
