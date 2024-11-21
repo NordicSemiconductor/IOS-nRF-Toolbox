@@ -9,27 +9,53 @@
 import SwiftUI
 import iOS_BLE_Library_Mock
 
+// MARK: - PeripheralScannerScreen
+
 struct PeripheralScannerScreen: View {
-    @StateObject var viewModel: PeripheralScannerViewModel
+    
+    @Environment(\.dismiss) private var dismiss
+    
+    // MARK: Properties
+    
+    @StateObject private var viewModel: PeripheralScannerViewModel
+    
+    // MARK: init
     
     init(centralManager: CentralManager) {
         self._viewModel = StateObject(wrappedValue: PeripheralScannerViewModel(centralManager: centralManager))
     }
+    
+    // MARK: view
     
     var body: some View {
         PeripheralScannerView()
             .refreshable {
                 viewModel.refresh()
             }
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Dismiss", systemImage: "chevron.down") {
+                        dismiss()
+                    }
+                }
+                
+                ToolbarItem(placement: .destructiveAction) {
+                    Button("Refresh", systemImage: "arrow.circlepath") {
+                        viewModel.refresh()
+                    }
+                }
+            }
             .onFirstAppear {
                 viewModel.setupManager()
             }
             .environmentObject(viewModel.environment)
-            
     }
 }
 
+// MARK: - PeripheralScannerView
+
 fileprivate typealias ViewModel = PeripheralScannerScreen.PeripheralScannerViewModel
+
 struct PeripheralScannerView: View {
     @EnvironmentObject private var environment: ViewModel.Environment
     
@@ -54,27 +80,4 @@ struct PeripheralScannerView: View {
 //        .alert(isPresented: $viewModel.showError, error: viewModel.error, actions: { })
         .navigationTitle("Scanner")
     }
-}
-
-#Preview {
-    NavigationStack {
-        PeripheralScannerView()
-            .environmentObject(ViewModel.Environment(
-                devices: [
-                    PeripheralScannerScreen.PeripheralScannerViewModel.ScanResult(name: "Device", rssi: -59, id: UUID(), services: []),
-                    PeripheralScannerScreen.PeripheralScannerViewModel.ScanResult(name: "Device", rssi: -69, id: UUID(), services: []),
-                    PeripheralScannerScreen.PeripheralScannerViewModel.ScanResult(name: "Device", rssi: -79, id: UUID(), services: []),
-                ],
-                state: .scanning))
-    }
-}
-
-#Preview {
-    PeripheralScannerView()
-        .environmentObject(ViewModel.Environment(state: .scanning))
-}
-
-#Preview {
-    PeripheralScannerView()
-        .environmentObject(ViewModel.Environment())
 }
