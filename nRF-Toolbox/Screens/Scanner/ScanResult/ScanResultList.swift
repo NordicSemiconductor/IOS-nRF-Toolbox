@@ -23,22 +23,17 @@ struct ScanResultList: View {
     // MARK: view
     
     var body: some View {
-        if #available(macOS 14.0, iOS 17, *) {
-            List(selection: $selectedDevice) {
-                devicesSection
+        List(selection: $selectedDevice) {
+            devicesSection
+        }
+        .onChange(of: selectedDevice) { newValue in
+            guard let newValue, let device = environment.devices.first(where: { $0.id == newValue }) else {
+                return
             }
-            .onChange(of: selectedDevice) { oldValue, newValue in
-                guard let deviceId = newValue else { return }
-                guard let device = environment.devices.first(where: { $0.id == deviceId }) else { return }
-                
-                Task {
-                    await environment.connect(device)
-                    dismiss()
-                }
-            }
-        } else {
-            List {
-                devicesSection
+
+            Task {
+                await environment.connect(device)
+                dismiss()
             }
         }
     }
