@@ -29,6 +29,8 @@ struct PeripheralScannerScreen: View {
     
     var body: some View {
         PeripheralScannerView()
+            .navigationTitle("Scanner")
+            .navigationBarTitleDisplayMode(.inline)
             .refreshable {
                 viewModel.refresh()
             }
