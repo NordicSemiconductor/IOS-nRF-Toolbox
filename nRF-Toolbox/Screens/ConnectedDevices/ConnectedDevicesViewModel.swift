@@ -17,7 +17,9 @@ class ConnectedDevicesViewModel: ObservableObject {
     private var deviceViewModels: [UUID: DeviceDetailsScreen.DeviceDetailsViewModel] = [:]
     private var cancelable = Set<AnyCancellable>()
     
-    private (set) lazy var environment: Environment = Environment(deviceViewModel: { [unowned self] in self.deviceViewModel(for: $0.id)! })
+    private(set) lazy var environment: Environment = Environment(deviceViewModel: {
+        [unowned self] in self.deviceViewModel(for: $0.id)!
+    })
     let centralManager: CentralManager
     
     init(centralManager: CentralManager = CentralManager()) {
@@ -110,7 +112,7 @@ extension ConnectedDevicesViewModel {
     class Environment: ObservableObject {
         @Published var showScanner: Bool = false
         
-        @Published fileprivate (set) var connectedDevices: [Device]
+        @Published fileprivate(set) var connectedDevices: [Device]
         @Published var selectedDevice: Device.ID? {
             didSet {
                 if let d = connectedDevices.first(where: { $0.id == selectedDevice }) {

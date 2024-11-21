@@ -15,7 +15,7 @@ protocol StringIdentifiable  {
 }
 
 struct AttributeTable {
-    private (set) var services: [Service] = []
+    private(set) var services: [Service] = []
     
     mutating func addService(_ cbService: CBService) {
         let service = Service(cbService: cbService)
@@ -107,7 +107,7 @@ extension AttributeTable {
         let identifier: String
         let name: String
         var level: UInt { 1 }
-        fileprivate (set) var characteristics: [Characteristic] = []
+        fileprivate(set) var characteristics: [Characteristic] = []
         
         init(cbService: CBService, id: String, identifier: String, name: String, characteristics: [Characteristic]) {
             self.cbService = cbService
@@ -141,7 +141,7 @@ extension AttributeTable.Service {
         let identifier: String
         let name: String
         var level: UInt { 2 }
-        fileprivate (set) var descriptors: [Descriptor] = []
+        fileprivate(set) var descriptors: [Descriptor] = []
         
         var prepertiesDescription: String {
             switch cbCharacteristic.properties {

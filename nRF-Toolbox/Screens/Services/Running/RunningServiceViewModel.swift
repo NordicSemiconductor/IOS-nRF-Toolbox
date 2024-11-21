@@ -30,7 +30,7 @@ extension RunningServiceScreen {
         let peripheral: Peripheral
         let runningService: CBService
         
-        lazy private (set) var environment = Environment(
+        lazy private(set) var environment = Environment(
             sensorCalibrationViewModel: { [unowned self] in self.sensorCalibrationViewModel }
         )
         
@@ -168,10 +168,10 @@ extension RunningServiceScreen.RunningServiceViewModel {
 // MARK: - Environment
 extension RunningServiceScreen.RunningServiceViewModel {
     class Environment: ObservableObject {
-        @Published fileprivate (set) var criticalError: CriticalError?
-        @Published fileprivate (set) var alertError: AlertError?
+        @Published fileprivate(set) var criticalError: CriticalError?
+        @Published fileprivate(set) var alertError: AlertError?
         
-        @Published fileprivate (set) var rscFeature: RSCFeature = .none
+        @Published fileprivate(set) var rscFeature: RSCFeature = .none
         
         @Published var instantaneousSpeed: Measurement<UnitSpeed>?
         @Published var instantaneousCadence: Int?

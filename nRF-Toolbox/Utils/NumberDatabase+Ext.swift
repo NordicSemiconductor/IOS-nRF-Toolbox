@@ -11,7 +11,7 @@ import iOS_Bluetooth_Numbers_Database
 import SwiftUI
 import iOS_BLE_Library_Mock
 
-extension Service: Hashable {
+extension Service: @retroactive Hashable {
     
     private static let serviceIcons: [Service : String] = [
         .runningSpeedAndCadence : "figure.run",
@@ -60,7 +60,7 @@ extension Service: Hashable {
     }
 }
 
-extension Service: Identifiable {
+extension Service: @retroactive Identifiable {
     public var id: String {
         uuidString
     }

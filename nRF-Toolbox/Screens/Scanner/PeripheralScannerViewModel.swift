@@ -144,12 +144,12 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
 
 extension PeripheralScannerScreen.PeripheralScannerViewModel {
     class Environment: ObservableObject {
-        @Published fileprivate (set) var error: ReadableError?
-        @Published fileprivate (set) var devices: [ScanResult]
-        @Published fileprivate (set) var connectingDevice: ScanResult?
-        @Published fileprivate (set) var state: State
+        @Published fileprivate(set) var error: ReadableError?
+        @Published fileprivate(set) var devices: [ScanResult]
+        @Published fileprivate(set) var connectingDevice: ScanResult?
+        @Published fileprivate(set) var state: State
         
-        fileprivate (set) var connect: (ScanResult) async -> ()
+        fileprivate(set) var connect: (ScanResult) async -> ()
         
         private let l = NordicLog(category: "PeripheralScanner.Env")
         

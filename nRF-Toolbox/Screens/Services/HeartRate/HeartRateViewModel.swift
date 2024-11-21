@@ -149,17 +149,17 @@ private extension ViewModel {
 extension HeartRateScreen.HeartRateViewModel {
     @MainActor
     class Environment: ObservableObject {
-        @Published fileprivate (set) var data: [HeartRateMeasurementCharacteristic] = []
+        @Published fileprivate(set) var data: [HeartRateMeasurementCharacteristic] = []
         @Published var scrolPosition: Date = Date()
         
-        @Published fileprivate (set) var criticalError: CriticalError?
+        @Published fileprivate(set) var criticalError: CriticalError?
         @Published var alertError: Error?
         
         let visibleDomain = 60
         let capacity = 360
         
-        @Published fileprivate (set) var lowest: Int = 40
-        @Published fileprivate (set) var highest: Int = 200
+        @Published fileprivate(set) var lowest: Int = 40
+        @Published fileprivate(set) var highest: Int = 200
         
         fileprivate var internalAlertError: AlertError? {
             didSet {

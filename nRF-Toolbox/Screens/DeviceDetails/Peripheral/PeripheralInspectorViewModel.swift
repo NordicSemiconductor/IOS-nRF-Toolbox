@@ -233,7 +233,7 @@ private extension ViewModel {
 extension PeripheralInspectorScreen.PeripheralInspectorViewModel {
     @MainActor
     class Environment: ObservableObject {
-        @Published fileprivate (set) var criticalError: CriticalError?
+        @Published fileprivate(set) var criticalError: CriticalError?
         @Published var alertError: Error?
         fileprivate var internalAlertError: AlertError? {
             didSet {
@@ -241,18 +241,18 @@ extension PeripheralInspectorScreen.PeripheralInspectorViewModel {
             }
         }
         
-        @Published fileprivate (set) var batteryLevelData: [ChartTimeData<Battery.Level>]
-        @Published fileprivate (set) var currentBatteryLevel: UInt? = nil
-        @Published fileprivate (set) var batteryLevelAvailable: Bool = false
-        @Published fileprivate (set) var deviceInfoAvailable: Bool = false
-        @Published fileprivate (set) var deviceInfo: DeviceInformation = DeviceInformation()
+        @Published fileprivate(set) var batteryLevelData: [ChartTimeData<Battery.Level>]
+        @Published fileprivate(set) var currentBatteryLevel: UInt? = nil
+        @Published fileprivate(set) var batteryLevelAvailable: Bool = false
+        @Published fileprivate(set) var deviceInfoAvailable: Bool = false
+        @Published fileprivate(set) var deviceInfo: DeviceInformation = DeviceInformation()
         
         let deviceId: UUID
         
         let signalChartViewModel: SignalChartScreen.SignalChartViewModel
         let attributeTableViewModel: AttributeTableScreen.AttributeTableViewModel
         
-        fileprivate (set) var disconnect: () -> ()
+        fileprivate(set) var disconnect: () -> ()
         
         private let l = NordicLog(category: "PeripheralInspector.Env")
         

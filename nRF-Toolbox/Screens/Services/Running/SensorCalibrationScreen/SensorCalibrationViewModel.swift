@@ -16,7 +16,7 @@ import iOS_Common_Libraries
 extension SensorCalibrationScreen {
     @MainActor
     class SensorCalibrationViewModel: ObservableObject {
-        private (set) lazy var environment = Environment(
+        private(set) lazy var environment = Environment(
             resetCumulativeValue: { [unowned self] in await self.resetCumulativeValue() },
             startSensorCalibration: { [unowned self] in await self.startSensorCalibration() },
             updateSensorLocation: { [unowned self] in await self.updateSensorLocation() }
@@ -196,15 +196,15 @@ extension SensorCalibrationScreen.SensorCalibrationViewModel {
     @MainActor
     class Environment: ObservableObject {
         // MARK: Features
-        @Published fileprivate (set) var setCumulativeValueEnabled = false
-        @Published fileprivate (set) var startSensorCalibrationEnabled = false
-        @Published fileprivate (set) var sensorLocationEnabled = false
+        @Published fileprivate(set) var setCumulativeValueEnabled = false
+        @Published fileprivate(set) var startSensorCalibrationEnabled = false
+        @Published fileprivate(set) var sensorLocationEnabled = false
                 
         @Published var updateSensorLocationDisabled = false
-        @Published fileprivate (set) var currentSensorLocation: SensorLocation.RawValue = 0
+        @Published fileprivate(set) var currentSensorLocation: SensorLocation.RawValue = 0
         @Published var pickerSensorLocation: SensorLocation.RawValue = 0
         
-        @Published fileprivate (set) var availableSensorLocations: [SensorLocation] = []
+        @Published fileprivate(set) var availableSensorLocations: [SensorLocation] = []
         
         fileprivate var internalError: AlertError? = nil {
             didSet {
@@ -212,7 +212,7 @@ extension SensorCalibrationScreen.SensorCalibrationViewModel {
             }
         }
         @Published var alertError: Error? = nil
-        @Published fileprivate (set) var criticalError: CriticalError? = nil
+        @Published fileprivate(set) var criticalError: CriticalError? = nil
         
         let resetCumulativeValue: () async -> ()
         let startSensorCalibration: () async -> ()

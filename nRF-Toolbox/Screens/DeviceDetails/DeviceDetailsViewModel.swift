@@ -146,7 +146,7 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
 extension DeviceDetailsScreen.DeviceDetailsViewModel {
     @MainActor
     class Environment: ObservableObject {
-        @Published fileprivate (set) var services: [Service]
+        @Published fileprivate(set) var services: [Service]
         
         @Published var reconnecting: Bool
         @Published var criticalError: CriticalError?
@@ -157,9 +157,9 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
         
         let deviceID: UUID
         
-        fileprivate (set) var peripheralViewModel: PeripheralInspectorScreen.PeripheralInspectorViewModel?
+        fileprivate(set) var peripheralViewModel: PeripheralInspectorScreen.PeripheralInspectorViewModel?
         
-        fileprivate (set) var reconnect: (() async -> ())?
+        fileprivate(set) var reconnect: (() async -> ())?
         
         private let l = NordicLog(category: "DeviceDetails.Env", subsystem: "com.nordicsemi.nrf-toolbox")
         

@@ -80,8 +80,8 @@ private extension ViewModel {
 extension AttributeTableScreen.AttributeTableViewModel {
     @MainActor
     class Environment: ObservableObject {
-        @Published fileprivate (set) var attributeTable: [Attribute]?
-        @Published fileprivate (set) var criticalError: CriticalError?
+        @Published fileprivate(set) var attributeTable: [Attribute]?
+        @Published fileprivate(set) var criticalError: CriticalError?
         
         private let l = NordicLog(category: "AttributeTable.Env", subsystem: "com.nordicsemi.nrf-toolbox")
         

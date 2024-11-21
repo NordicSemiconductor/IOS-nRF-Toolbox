@@ -101,14 +101,14 @@ extension SignalChartScreen.SignalChartViewModel {
         }
         
         
-        @Published fileprivate (set) var chartData: [ChartData] = []
+        @Published fileprivate(set) var chartData: [ChartData] = []
         @Published var scrolPosition: Date = Date()
         
         let visibleDomain = 60
         let capacity = 180
         
-        @Published fileprivate (set) var lowest: Int = -100
-        @Published fileprivate (set) var highest: Int = -40
+        @Published fileprivate(set) var lowest: Int = -100
+        @Published fileprivate(set) var highest: Int = -40
         
         private let l = NordicLog(category: "SignalChart.Environment", subsystem: "com.nordicsemi.nrf-toolbox")
         

@@ -75,7 +75,7 @@ class DeviceDetailsViewModel: ObservableObject, Identifiable {
         for s in services {
             let characteristics = try await peripheral.discoverCharacteristics(nil, for: s).firstValue
             for c in characteristics {
-                let descriptors = try await peripheral.discoverDescriptors(for: c).firstValue
+                let _ = try await peripheral.discoverDescriptors(for: c).firstValue
             }
             DispatchQueue.main.async {
                 self.attributeTable.addService(s)
