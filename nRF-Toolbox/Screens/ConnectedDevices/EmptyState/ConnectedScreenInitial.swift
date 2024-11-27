@@ -15,15 +15,14 @@ extension ConnectedDevicesScreen {
         var body: some View {
             VStack {
                 NoContentView(title: "No Connected Devices", systemImage: "antenna.radiowaves.left.and.right", description: "Scan for devices and connect to peripheral to begin")
+                
                 Button("Start Scan") {
                     environment.showScanner = true
                 }
+                .tint(Color.universalAccentColor)
                 .buttonStyle(.borderedProminent)
+                
             }
         }
     }
-}
-
-#Preview {
-    ConnectedDevicesScreen.InitialState()
 }

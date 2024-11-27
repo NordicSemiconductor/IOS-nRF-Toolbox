@@ -19,7 +19,9 @@ struct ConnectedDeviceList: View {
         List(environment.connectedDevices, selection: $rootNavigationVM.selectedDevice) { device in
             HStack {
                 Text(device.name ?? "unnamed")
+                
                 Spacer()
+                
                 if case .some = device.error {
                     Image(systemName: "exclamationmark.circle")
                         .foregroundStyle(Color.nordicRed)
@@ -27,15 +29,5 @@ struct ConnectedDeviceList: View {
             }
             .tag(device.id)
         }
-    }
-}
-
-#Preview {
-    NavigationStack {
-        ConnectedDeviceList()
-            .environmentObject(ConnectedDevicesViewModel.Environment(connectedDevices: [
-                Device(name: "Device 1", id: UUID()),
-                Device(name: "Device 1", id: UUID(), error: ReadableError(title: "some", message: nil))
-            ]))
     }
 }
