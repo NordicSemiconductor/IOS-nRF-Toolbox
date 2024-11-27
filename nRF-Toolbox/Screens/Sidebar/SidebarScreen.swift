@@ -33,17 +33,18 @@ struct SidebarView: View {
             
             Section {
                 Text("Open Scanner")
-                    .accentColor(.universalAccentColor)
+                    .foregroundStyle(Color.universalAccentColor)
                     .centered()
                     .tag(RootNavigationView.MenuCategory.devices.id)
             }
             
             Section("Other") {
-                Text("About")
+                Text("About nRF Toolbox")
                     .tag(RootNavigationView.MenuCategory.about.id)
                     .disabled(true)
             }
         }
         .navigationTitle("nRF Toolbox")
+        .setupNavBarBackground(with: Color.universalAccentColor)
     }
 }

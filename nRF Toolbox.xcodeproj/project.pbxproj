@@ -3589,7 +3589,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nRF Toolbox/nRF Toolbox-Prefix.pch";
 				INFOPLIST_FILE = "nRF Toolbox/nRF Toolbox-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3754,7 +3754,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nRF Toolbox/nRF Toolbox-Prefix.pch";
 				INFOPLIST_FILE = "nRF Toolbox/nRF Toolbox-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3803,7 +3803,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nRF Toolbox/nRF Toolbox-Prefix.pch";
 				INFOPLIST_FILE = "nRF Toolbox/nRF Toolbox-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4010,7 +4010,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/NordicPlayground/IOS-Common-Libraries.git";
 			requirement = {
-				branch = feature/reduce_pckage_version;
+				branch = main;
 				kind = branch;
 			};
 		};
