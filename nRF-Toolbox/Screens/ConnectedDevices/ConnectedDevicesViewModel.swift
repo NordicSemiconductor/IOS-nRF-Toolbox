@@ -31,6 +31,7 @@ class ConnectedDevicesViewModel: ObservableObject {
 }
 
 extension ConnectedDevicesViewModel {
+    
     func deviceViewModel(for deviceID: Device.ID) -> DeviceDetailsScreen.DeviceDetailsViewModel? {
         if let vm = deviceViewModels[deviceID] {
             return vm
@@ -60,6 +61,7 @@ extension ConnectedDevicesViewModel {
 }
 
 extension ConnectedDevicesViewModel {
+    
     private func observeConnections() {
         centralManager.connectedPeripheralChannel
             .filter { $0.1 == nil } // No connection error
@@ -80,7 +82,8 @@ extension ConnectedDevicesViewModel {
     private func observeDisconnections() {
         centralManager.disconnectedPeripheralsChannel
             .sink { [unowned self] device in
-                guard let deviceIndex = self.environment.connectedDevices.firstIndex(where: { $0.id == device.0.identifier }) else {
+                guard let deviceIndex = self.environment.connectedDevices.firstIndex(where: {
+                    $0.id == device.0.identifier }) else {
                     return
                 }
                 
@@ -95,6 +98,7 @@ extension ConnectedDevicesViewModel {
 }
 
 extension ConnectedDevicesViewModel {
+    
     struct Device: Identifiable, Equatable, Hashable {
         let name: String?
         let id: UUID
@@ -125,10 +129,8 @@ extension ConnectedDevicesViewModel {
         
         let deviceViewModel: ((Device) -> (DeviceDetailsScreen.DeviceDetailsViewModel))?
         
-        init(
-            connectedDevices: [Device] = [],
-            deviceViewModel: ((Device) -> (DeviceDetailsScreen.DeviceDetailsViewModel))? = nil
-        ) {
+        init(connectedDevices: [Device] = [],
+             deviceViewModel: ((Device) -> (DeviceDetailsScreen.DeviceDetailsViewModel))? = nil) {
             self.connectedDevices = connectedDevices
             self.deviceViewModel = deviceViewModel
         }
