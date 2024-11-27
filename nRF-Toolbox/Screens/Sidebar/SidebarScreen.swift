@@ -45,6 +45,6 @@ struct SidebarView: View {
             }
         }
         .navigationTitle("nRF Toolbox")
-        .setupNavBarBackground(with: Color.universalAccentColor)
+        .setupNavBarBackground(with: Assets.navBar.color)
     }
 }

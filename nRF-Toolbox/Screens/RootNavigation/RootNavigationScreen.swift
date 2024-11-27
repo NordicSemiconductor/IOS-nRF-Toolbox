@@ -32,6 +32,7 @@ struct RootNavigationView: View {
                 NoContentView(title: "Device is not selected", systemImage: "laptopcomputer.slash")
             }
         }
+        .accentColor(.white)
         .environmentObject(viewModel)
     }
 }
