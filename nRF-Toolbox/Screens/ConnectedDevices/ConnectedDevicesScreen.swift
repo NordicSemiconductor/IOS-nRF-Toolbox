@@ -11,21 +11,54 @@ import SwiftUI
 // MARK: - ConnectedDevicesScreen
 
 struct ConnectedDevicesScreen: View {
-    @EnvironmentObject var viewModel: ConnectedDevicesViewModel
+    
+    @EnvironmentObject private var viewModel: ConnectedDevicesViewModel
+    @EnvironmentObject private var scannerViewModel: PeripheralScannerScreen.PeripheralScannerViewModel
     
     var body: some View {
-            ConnectedDevicesView {
-                NavigationStack {
-                    PeripheralScannerScreen(centralManager: viewModel.centralManager)
+        ConnectedDevicesView {
+            NavigationStack {
+                PeripheralScannerScreen(centralManager: viewModel.centralManager)
 #if os(macOS)
-                        .frame(minWidth: 400, minHeight: 450)
+                    .frame(minWidth: 400, minHeight: 450)
 #endif
-                }
-                .interactiveDismissDisabled()
             }
-            .navigationTitle("Connected Devices")
-            .environmentObject(viewModel.environment)
-            .environmentObject(viewModel)
+        }
+//        VStack {
+//            switch scannerViewModel.environment.state {
+//            case .disabled:
+//                StateViews.Disabled()
+//            case .scanning:
+//                if scannerViewModel.environment.devices.isEmpty {
+//                    StateViews.EmptyResults()
+//                } else {
+//                    ScanResultList()
+//                }
+//            case .unsupported:
+//                StateViews.Unsupported()
+//            case .unauthorized:
+//                StateViews.Unauthorized()
+//            }
+//        }
+        .toolbar {
+//            ToolbarItem(placement: .cancellationAction) {
+//                Button("Dismiss", systemImage: "chevron.down") {
+//                    dismiss()
+//                }
+//            }
+            
+            ToolbarItem(placement: .destructiveAction) {
+                Button("Refresh", systemImage: "arrow.circlepath") {
+                    scannerViewModel.refresh()
+                }
+            }
+        }
+        .onFirstAppear {
+            scannerViewModel.setupManager()
+        }
+        .navigationTitle("Device Scanner")
+        .environmentObject(viewModel.environment)
+        .environmentObject(viewModel)
     }
 }
 

@@ -7,11 +7,14 @@
 //
 
 import SwiftUI
+import iOS_BLE_Library_Mock
 
 struct RootNavigationView: View {
 
     @StateObject var viewModel = RootNavigationViewModel.shared
     @StateObject var connectedDevicesViewModel = ConnectedDevicesViewModel()
+    
+    @StateObject var scannerViewModel = PeripheralScannerScreen.PeripheralScannerViewModel(centralManager: CentralManager())
 
     var body: some View {
         NavigationSplitView {
@@ -20,6 +23,7 @@ struct RootNavigationView: View {
         } content: {
             ConnectedDevicesScreen()
                 .environmentObject(connectedDevicesViewModel)
+                .environmentObject(scannerViewModel)
         } detail: {
             if let deviceId = viewModel.selectedDevice {
                 if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: deviceId) {
