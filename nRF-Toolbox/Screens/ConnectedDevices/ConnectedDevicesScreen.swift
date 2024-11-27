@@ -8,6 +8,8 @@
 
 import SwiftUI
 
+// MARK: - ConnectedDevicesScreen
+
 struct ConnectedDevicesScreen: View {
     @EnvironmentObject var viewModel: ConnectedDevicesViewModel
     
@@ -27,6 +29,8 @@ struct ConnectedDevicesScreen: View {
     }
 }
 
+// MARK: - ConnectedDevicesView
+
 struct ConnectedDevicesView<ScannerScreen: View> : View {
     @EnvironmentObject var environment: ConnectedDevicesViewModel.Environment
     
@@ -34,9 +38,7 @@ struct ConnectedDevicesView<ScannerScreen: View> : View {
     
     let scannerScreen: () -> ScannerScreen
     
-    init(
-        @ViewBuilder scannerScreen: @escaping () -> ScannerScreen
-    ) {
+    init(@ViewBuilder scannerScreen: @escaping () -> ScannerScreen) {
         self.scannerScreen = scannerScreen
     }
     
@@ -48,8 +50,9 @@ struct ConnectedDevicesView<ScannerScreen: View> : View {
                     .environmentObject(environment)
             } else {
                 ConnectedDeviceList()
+                
                 Button("Connect Another") {
-                    environment.showScanner = true 
+                    environment.showScanner = true
                 }
 #if os(macOS)
                 .padding()
@@ -57,25 +60,5 @@ struct ConnectedDevicesView<ScannerScreen: View> : View {
             }
         }
         .sheet(isPresented: $environment.showScanner, content: scannerScreen)
-    }
-}
-
-#Preview {
-    NavigationStack {
-        ConnectedDevicesView {
-            EmptyView()
-        }
-        .environmentObject(ConnectedDevicesViewModel.Environment(connectedDevices: [
-            ConnectedDevicesViewModel.Device(name: "Device 1", id: UUID())
-        ]))
-    }
-}
-
-#Preview {
-    NavigationStack {
-        ConnectedDevicesView {
-            EmptyView()
-        }
-        .environmentObject(ConnectedDevicesViewModel.Environment(connectedDevices: []))
     }
 }

@@ -8,15 +8,36 @@
 
 import SwiftUI
 
+// MARK: - SidebarView
+
 struct SidebarView: View {
+    
+    // MARK: Environment
+    
     @EnvironmentObject var rootViewModel: RootNavigationViewModel
+    @EnvironmentObject var viewModel: ConnectedDevicesViewModel
+    
+    // MARK: view
     
     var body: some View {
         List(selection: $rootViewModel.selectedCategory) {
             Section("Devices") {
-                Text("Connected Devices")
+                if viewModel.environment.connectedDevices.isEmpty {
+                    Text("No Connected Devices")
+                } else {
+                    ForEach(viewModel.environment.connectedDevices) { device in
+                        Text(device.name ?? "Unnamed Device")
+                    }
+                }
+            }
+            
+            Section {
+                Text("Open Scanner")
+                    .accentColor(.universalAccentColor)
+                    .centered()
                     .tag(RootNavigationView.MenuCategory.devices.id)
             }
+            
             Section("Other") {
                 Text("About")
                     .tag(RootNavigationView.MenuCategory.about.id)
@@ -25,8 +46,4 @@ struct SidebarView: View {
         }
         .navigationTitle("nRF Toolbox")
     }
-}
-
-#Preview {
-    SidebarView()
 }

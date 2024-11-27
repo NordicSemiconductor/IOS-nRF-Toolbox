@@ -16,6 +16,7 @@ struct RootNavigationView: View {
     var body: some View {
         NavigationSplitView {
             SidebarView()
+                .environmentObject(connectedDevicesViewModel)
         } content: {
             ConnectedDevicesScreen()
                 .environmentObject(connectedDevicesViewModel)
@@ -33,8 +34,4 @@ struct RootNavigationView: View {
         }
         .environmentObject(viewModel)
     }
-}
-
-#Preview {
-    RootNavigationView()
 }
