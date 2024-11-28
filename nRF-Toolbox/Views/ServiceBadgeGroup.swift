@@ -27,7 +27,7 @@ struct ServiceBadgeGroup: View {
     
     var body: some View {
         HStack {
-            ForEach(services.filter({ $0.isSupported })) {
+            ForEach(services.filter(\.isSupported)) {
                 ServiceBadge(image: $0.systemImage, name: $0.name, color: $0.color ?? .primary)
             }
 
