@@ -65,7 +65,6 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
         let name: String?
         let rssi: Int
         let id: UUID
-        
         let services: [Service]
         
         init(name: String?, rssi: Int, id: UUID, services: [String]) {
@@ -75,6 +74,12 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
             self.services = services.map {
                 Service.find(by: CBUUID(string: $0)) ?? Service(name: "unknown", identifier: "service-\($0)", uuidString: $0, source: "unknown")
             }
+        }
+        
+        func extend(using scanResult: ScanResult) -> ScanResult {
+            var extendedServices = services.map(\.uuidString)
+            extendedServices.append(contentsOf: scanResult.services.map(\.uuidString))
+            return ScanResult(name: self.name ?? scanResult.name, rssi: scanResult.rssi, id: id, services: extendedServices)
         }
         
         static func ==(lhs: ScanResult, rhs: ScanResult) -> Bool {
@@ -140,14 +145,12 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
                 if case .failure(let e) = completion {
                     self.environment.error = ReadableError(error: e)
                 }
-            } receiveValue: { sr in
-                // Publisher can send Scan Results many times. You need to check if previously discovered Scan Results are already in the list
-                if let i = self.environment.devices.firstIndex(where: {
-                    $0.id == sr.id
-                }) {
-                    self.environment.devices[i] = sr
+            } receiveValue: { result in
+                if let i = self.environment.devices.firstIndex(where: \.id, equals: result.id) {
+                    let existingDevice = self.environment.devices[i]
+                    self.environment.devices[i] = existingDevice.extend(using: result)
                 } else {
-                    self.environment.devices.append(sr)
+                    self.environment.devices.append(result)
                 }
             }
             .store(in: &cancelables)
