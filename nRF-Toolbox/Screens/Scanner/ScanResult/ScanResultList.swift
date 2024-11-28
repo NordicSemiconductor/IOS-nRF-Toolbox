@@ -16,8 +16,13 @@ fileprivate typealias ScanResult = PeripheralScannerScreen.PeripheralScannerView
 
 struct ScanResultList: View {
     
+    // MARK: Environment
+    
     @EnvironmentObject private var environment: Env
     @Environment(\.dismiss) var dismiss
+    
+    // MARK: Properties
+    
     @State private var selectedDevice: ScanResult.ID?
     
     // MARK: view
@@ -28,8 +33,11 @@ struct ScanResultList: View {
                 ForEach(environment.devices) { device in
                     deviceView(device: device)
                 }
-            } footer: {
-                Text("Select the device to establish connection")
+            }
+            
+            Section {
+                Label("Tap a device to connect", systemImage: "hand.tap.fill")
+                    .centered()
             }
         }
         .onChange(of: selectedDevice) { newValue in
