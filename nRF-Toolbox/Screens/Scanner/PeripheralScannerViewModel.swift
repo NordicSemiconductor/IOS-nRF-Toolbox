@@ -65,15 +65,15 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
         let name: String?
         let rssi: Int
         let id: UUID
-        let services: [Service]
+        let services: Set<Service>
         
         init(name: String?, rssi: Int, id: UUID, services: [String]) {
             self.name = name
             self.rssi = rssi
             self.id = id
-            self.services = services.map {
+            self.services = Set(services.map {
                 Service.find(by: CBUUID(string: $0)) ?? Service(name: "unknown", identifier: "service-\($0)", uuidString: $0, source: "unknown")
-            }
+            })
         }
         
         func extend(using scanResult: ScanResult) -> ScanResult {
@@ -133,12 +133,12 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
         centralManager.scanForPeripherals(withServices: nil)
             // Filter unnamed and unconnectable devices
             .filter { $0.name != nil && $0.advertisementData.isConnectable == true }
-            .map { sr -> ScanResult in
+            .map { result -> ScanResult in
                 ScanResult(
-                    name: sr.name,
-                    rssi: sr.rssi.value,
-                    id: sr.peripheral.identifier,
-                    services: sr.advertisementData.serviceUUIDs?.compactMap { $0.uuidString } ?? []
+                    name: result.name,
+                    rssi: result.rssi.value,
+                    id: result.peripheral.identifier,
+                    services: result.advertisementData.serviceUUIDs?.compactMap { $0.uuidString } ?? []
                 )
             }
             .sink { completion in

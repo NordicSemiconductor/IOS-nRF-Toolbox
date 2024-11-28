@@ -12,6 +12,12 @@ import iOS_Bluetooth_Numbers_Database
 struct ServiceBadgeGroup: View {
     let services: [Service]
     
+    init(_ services: Set<Service>) {
+        self.services = services.map({ $0 }).sorted(by: { a, b in
+            a.name < b.name
+        })
+    }
+    
     var body: some View {
         HStack {
             if services.isEmpty {
@@ -46,12 +52,12 @@ struct ServiceBadgeGroup: View {
 
 #Preview {
     List {
-        ServiceBadgeGroup(services: [.runningSpeedAndCadence])
-        ServiceBadgeGroup(services: [.runningSpeedAndCadence, .healthThermometer])
-        ServiceBadgeGroup(services: [.weightScale])
-        ServiceBadgeGroup(services: [.weightScale, .IORuntimeMCUMGRBLESMP])
-        ServiceBadgeGroup(services: [.weightScale, .IORuntimeMCUMGRBLESMP, .heartRate, .healthThermometer])
-        ServiceBadgeGroup(services: [.weightScale, .heartRate, .healthThermometer])
-        ServiceBadgeGroup(services: [])
+        ServiceBadgeGroup([.runningSpeedAndCadence])
+        ServiceBadgeGroup( [.runningSpeedAndCadence, .healthThermometer])
+        ServiceBadgeGroup([.weightScale])
+        ServiceBadgeGroup([.weightScale, .IORuntimeMCUMGRBLESMP])
+        ServiceBadgeGroup([.weightScale, .IORuntimeMCUMGRBLESMP, .heartRate, .healthThermometer])
+        ServiceBadgeGroup([.weightScale, .heartRate, .healthThermometer])
+        ServiceBadgeGroup([])
     }
 }

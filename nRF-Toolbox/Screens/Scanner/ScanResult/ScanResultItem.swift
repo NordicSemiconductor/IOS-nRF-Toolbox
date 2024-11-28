@@ -16,7 +16,7 @@ struct ScanResultItem: View {
     
     let name: String?
     let rssi: Int
-    let services: [Service]
+    let services: Set<Service>
     
     // MARK: view
     
@@ -25,7 +25,7 @@ struct ScanResultItem: View {
             Text(name ?? "n/a")
                 .foregroundColor(name == nil ? .secondary : .primary)
             
-            ServiceBadgeGroup(services: services)
+            ServiceBadgeGroup(services)
         }
     }
 }
