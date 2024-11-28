@@ -13,8 +13,6 @@ import iOS_BLE_Library_Mock
 
 struct PeripheralScannerScreen: View {
     
-    @Environment(\.dismiss) private var dismiss
-    
     // MARK: Properties
     
     @StateObject private var viewModel: PeripheralScannerViewModel
@@ -35,12 +33,6 @@ struct PeripheralScannerScreen: View {
                 viewModel.refresh()
             }
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Dismiss", systemImage: "chevron.down") {
-                        dismiss()
-                    }
-                }
-                
                 ToolbarItem(placement: .destructiveAction) {
                     Button("Refresh", systemImage: "arrow.circlepath") {
                         viewModel.refresh()
@@ -59,7 +51,12 @@ struct PeripheralScannerScreen: View {
 fileprivate typealias ViewModel = PeripheralScannerScreen.PeripheralScannerViewModel
 
 struct PeripheralScannerView: View {
+    
+    // MARK: Environment
+    
     @EnvironmentObject private var environment: ViewModel.Environment
+    
+    // MARK: view
     
     var body: some View {
         VStack {
