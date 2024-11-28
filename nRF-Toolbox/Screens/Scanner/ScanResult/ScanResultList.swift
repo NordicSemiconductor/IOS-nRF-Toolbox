@@ -28,10 +28,18 @@ struct ScanResultList: View {
     // MARK: view
     
     var body: some View {
-        List(selection: $selectedDevice) {
+        List {
             Section {
                 ForEach(environment.devices) { device in
-                    deviceView(device: device)
+                    Button {
+                        Task {
+                            await environment.connect(device)
+                            dismiss()
+                        }
+                    } label: {
+                        ScanDeviceView(device)
+                    }
+                    .buttonStyle(.plain)
                 }
             }
             
@@ -40,36 +48,36 @@ struct ScanResultList: View {
                     .centered()
             }
         }
-        .onChange(of: selectedDevice) { newValue in
-            guard let newValue, let device = environment.devices.first(where: \.id, isEqualsTo: newValue) else {
-                return
-            }
+    }
+}
 
-            Task {
-                await environment.connect(device)
-                dismiss()
-            }
-        }
+// MARK: - ScanDeviceView
+
+struct ScanDeviceView: View {
+    
+    // MARK: Environment
+    
+    @EnvironmentObject private var environment: Env
+    
+    // MARK: Properties
+    
+    private let device: ScanResult
+    
+    // MARK: Init
+    
+    fileprivate init(_ device: ScanResult) {
+        self.device = device
     }
     
-    // MARK: deviceView
+    // MARK: view
     
-    @ViewBuilder
-    private func deviceView(device: ScanResult) -> some View {
-        Button {
-            Task {
-                await environment.connect(device)
-                dismiss()
+    var body: some View {
+        HStack {
+            if environment.connectingDevice == device {
+                ProgressView()
             }
-        } label: {
-            HStack {
-                if environment.connectingDevice == device {
-                    ProgressView()
-                }
-                
-                ScanResultItem(name: device.name, rssi: device.rssi, services: device.services)
-            }
+            
+            ScanResultItem(name: device.name, rssi: device.rssi, services: device.services)
         }
-        .buttonStyle(.plain)
     }
 }
