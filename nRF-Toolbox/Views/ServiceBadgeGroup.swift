@@ -9,8 +9,13 @@
 import SwiftUI
 import iOS_Bluetooth_Numbers_Database
 
+// MARK: - ServiceBadgeGroup
+
 struct ServiceBadgeGroup: View {
-    let services: [Service]
+    
+    private let services: [Service]
+    
+    // MARK: init
     
     init(_ services: Set<Service>) {
         self.services = services.map({ $0 }).sorted(by: { a, b in
@@ -18,22 +23,22 @@ struct ServiceBadgeGroup: View {
         })
     }
     
+    // MARK: view
+    
     var body: some View {
         HStack {
-            if services.isEmpty {
-                EmptyView()
-            } else {
-                ForEach(services.filter({ $0.isSupported })) {
-                    ServiceBadge(image: $0.systemImage, name: $0.name, color: $0.color ?? .primary)
-                }
-                
-                otherServiceBadge(count: services.reduce(0, { $0 + ($1.isSupported ? 0 : 1)  }))
+            ForEach(services.filter({ $0.isSupported })) {
+                ServiceBadge(image: $0.systemImage, name: $0.name, color: $0.color ?? .primary)
             }
+
+            otherServicesBadge(count: services.reduce(0, { $0 + ($1.isSupported ? 0 : 1)  }))
         }
     }
     
+    // MARK: otherServicesBadge(count:)
+    
     @ViewBuilder
-    func otherServiceBadge(count: Int) -> some View {
+    func otherServicesBadge(count: Int) -> some View {
         if count > 0 {
             ServiceBadge(name: otherServiceString(count: count))
         } else {
@@ -41,23 +46,13 @@ struct ServiceBadgeGroup: View {
         }
     }
     
+    // MARK: otherServiceString(count:)
+    
     private func otherServiceString(count: Int) -> String {
         let prefixSymbol = count == services.count ? "" : " +"
         
-        let formatString : String = NSLocalizedString("service_count", comment: "")
-        let resultString : String = String.localizedStringWithFormat(formatString, count)
+        let formatString: String = NSLocalizedString("service_count", comment: "")
+        let resultString: String = String.localizedStringWithFormat(formatString, count)
         return prefixSymbol + resultString
-    }
-}
-
-#Preview {
-    List {
-        ServiceBadgeGroup([.runningSpeedAndCadence])
-        ServiceBadgeGroup( [.runningSpeedAndCadence, .healthThermometer])
-        ServiceBadgeGroup([.weightScale])
-        ServiceBadgeGroup([.weightScale, .IORuntimeMCUMGRBLESMP])
-        ServiceBadgeGroup([.weightScale, .IORuntimeMCUMGRBLESMP, .heartRate, .healthThermometer])
-        ServiceBadgeGroup([.weightScale, .heartRate, .healthThermometer])
-        ServiceBadgeGroup([])
     }
 }
