@@ -16,8 +16,13 @@ struct RootNavigationView: View {
     
     @StateObject var scannerViewModel = PeripheralScannerScreen.PeripheralScannerViewModel(centralManager: CentralManager())
 
+    @State private var visibility: NavigationSplitViewVisibility = .all
+    @State private var compactPreferredColumn: NavigationSplitViewColumn = .sidebar
+    
+    // MARK: view
+    
     var body: some View {
-        NavigationSplitView {
+        NavigationSplitView(columnVisibility: $visibility, preferredCompactColumn: $compactPreferredColumn) {
             SidebarView()
                 .environmentObject(connectedDevicesViewModel)
         } content: {
@@ -36,6 +41,7 @@ struct RootNavigationView: View {
                 NoContentView(title: "Device is not selected", systemImage: "laptopcomputer.slash")
             }
         }
+        .navigationSplitViewStyle(.balanced)
         .accentColor(.white)
         .environmentObject(viewModel)
     }
