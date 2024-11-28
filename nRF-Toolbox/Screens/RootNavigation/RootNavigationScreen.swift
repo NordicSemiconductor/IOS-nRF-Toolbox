@@ -11,10 +11,14 @@ import iOS_BLE_Library_Mock
 
 struct RootNavigationView: View {
 
-    @StateObject var viewModel = RootNavigationViewModel.shared
-    @StateObject var connectedDevicesViewModel = ConnectedDevicesViewModel()
+    // MARK: Properties
     
-    @StateObject var scannerViewModel = PeripheralScannerScreen.PeripheralScannerViewModel(centralManager: CentralManager())
+    private static let centralManager = CentralManager()
+    
+    @StateObject var viewModel = RootNavigationViewModel.shared
+    @StateObject var connectedDevicesViewModel = ConnectedDevicesViewModel(centralManager: centralManager)
+    
+    @StateObject var scannerViewModel = PeripheralScannerScreen.PeripheralScannerViewModel(centralManager: centralManager)
 
     @State private var visibility: NavigationSplitViewVisibility = .all
     @State private var compactPreferredColumn: NavigationSplitViewColumn = .sidebar

@@ -22,7 +22,7 @@ class ConnectedDevicesViewModel: ObservableObject {
     })
     let centralManager: CentralManager
     
-    init(centralManager: CentralManager = CentralManager()) {
+    init(centralManager: CentralManager) {
         self.centralManager = centralManager
         
         observeConnections()
