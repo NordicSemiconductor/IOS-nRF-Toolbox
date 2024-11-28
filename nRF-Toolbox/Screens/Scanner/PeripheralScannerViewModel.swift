@@ -12,15 +12,21 @@ import iOS_Bluetooth_Numbers_Database
 import iOS_Common_Libraries
 import Combine
 
+// MARK: - PeripheralScannerViewModel
+
 extension PeripheralScannerScreen {
+    
     @MainActor
     class PeripheralScannerViewModel: ObservableObject {
+        
         let centralManager: CentralManager
         let environment: Environment
         
         private var cancelables = Set<AnyCancellable>()
         
-        private let l = NordicLog(category: "PeripheralScanner.VM")
+        private let log = NordicLog(category: "PeripheralScanner.VM")
+        
+        // MARK: init
         
         init(centralManager: CentralManager) {
             self.environment = Environment()
@@ -28,11 +34,13 @@ extension PeripheralScannerScreen {
             
             setupEnvironment()
             
-            l.debug(#function)
+            log.debug(#function)
         }
         
+        // MARK: deinit
+        
         deinit {
-            l.debug(#function)
+            log.debug(#function)
         }
         
         private func setupEnvironment() {
@@ -44,9 +52,14 @@ extension PeripheralScannerScreen {
 }
 
 extension PeripheralScannerScreen.PeripheralScannerViewModel {
+    
+    // MARK: State
+    
     enum State {
         case scanning, unsupported, disabled, unauthorized
     }
+    
+    // MARK: ScanResult
     
     struct ScanResult: Identifiable, Equatable {
         let name: String?
@@ -71,6 +84,9 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
 }
 
 extension PeripheralScannerScreen.PeripheralScannerViewModel {
+    
+    // MARK: tryToConnect(device:)
+    
     func tryToConnect(device: ScanResult) async {
         if environment.connectingDevice != nil {
             return
@@ -93,6 +109,9 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
 }
 
 extension PeripheralScannerScreen.PeripheralScannerViewModel {
+    
+    // MARK: setupManager()
+    
     func setupManager() {
         // Track state CBCentralManager's state changes
         centralManager.stateChannel
@@ -134,6 +153,8 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
             .store(in: &cancelables)
     }
     
+    // MARK: refresh()
+    
     func refresh() {
         centralManager.stopScan()
         environment.devices.removeAll()
@@ -143,7 +164,13 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
 }
 
 extension PeripheralScannerScreen.PeripheralScannerViewModel {
+    
+    // MARK: Environment
+    
     class Environment: ObservableObject {
+        
+        // MARK: Properties
+        
         @Published fileprivate(set) var error: ReadableError?
         @Published fileprivate(set) var devices: [ScanResult]
         @Published fileprivate(set) var connectingDevice: ScanResult?
@@ -151,7 +178,9 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
         
         fileprivate(set) var connect: (ScanResult) async -> ()
         
-        private let l = NordicLog(category: "PeripheralScanner.Env")
+        private let log = NordicLog(category: "PeripheralScanner.Env")
+        
+        // MARK: init
         
         init(error: ReadableError? = nil, devices: [ScanResult] = [], connectingDevice: ScanResult? = nil, state: State = .disabled, connect: @escaping (ScanResult) -> Void = { _ in}) {
             self.error = error
@@ -160,11 +189,11 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
             self.state = state
             self.connect = connect
             
-            l.debug(#function)
+            log.debug(#function)
         }
         
         deinit {
-            l.debug(#function)
+            log.debug(#function)
         }
     }
 }
