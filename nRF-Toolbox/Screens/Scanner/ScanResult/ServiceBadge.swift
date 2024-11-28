@@ -9,10 +9,17 @@
 import SwiftUI
 import iOS_Bluetooth_Numbers_Database
 
+// MARK: - ServiceBadge
+
 struct ServiceBadge: View {
-    let image: Image?
-    let name: String
-    let color: Color
+    
+    // MARK: Private Properties
+    
+    private let image: Image?
+    private let name: String
+    private let color: Color
+    
+    // MARK: init
     
     init(image: Image?, name: String, color: Color) {
         self.image = image
@@ -32,6 +39,8 @@ struct ServiceBadge: View {
         self.color = service.color ?? .secondary
     }
     
+    // MARK: view
+    
     var body: some View {
         HStack {
             image?
@@ -39,6 +48,7 @@ struct ServiceBadge: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(maxWidth: 12, maxHeight: 12)
                 .foregroundColor(color)
+            
             Text(name)
                 .foregroundColor(.secondary)
                 .font(.caption)
