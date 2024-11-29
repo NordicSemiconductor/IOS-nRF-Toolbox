@@ -41,13 +41,28 @@ struct ScanResultList: View {
                     }
                     .buttonStyle(.plain)
                 }
+                
+                HStack {
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                    
+                    Text("Scanning...")
+                }
+                .centered()
+                
+                IndeterminateProgressView()
+                    .accentColor(.universalAccentColor)
+                    .padding(.leading, 6)
+                    .listRowSeparator(.hidden)
             }
             
             Section {
                 Label("Tap a device to connect", systemImage: "hand.tap.fill")
+                    .listRowBackground(Color.clear)
                     .centered()
             }
         }
+        .listStyle(.insetGrouped)
     }
 }
 
