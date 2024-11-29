@@ -7,9 +7,16 @@
 //
 
 import SwiftUI
+import CoreBluetooth
+
+// MARK: - StateViews
 
 struct StateViews {
+    
+    // MARK: Unsupported
+    
     struct Unsupported: View {
+        
         var body: some View {
             NoContentView(
                 title: "Bluetooth is Unavailable",
@@ -20,7 +27,10 @@ struct StateViews {
         }
     }
     
+    // MARK: Unauthorized
+    
     struct Unauthorized: View {
+        
         var body: some View {
             VStack {
                 NoContentView(
@@ -28,8 +38,12 @@ struct StateViews {
                     systemImage: "xmark.seal",
                     description: "Bluetooth is not authorized. Open settings and give access the application to use Bluetooth."
                 )
+                
                 Button("Open Settings") {
-                    // TODO: Open Settings
+                    guard let settingsURL = URL(string: "App-Prefs:root=General") else { return }
+                    UIApplication.shared.open(settingsURL) { _ in
+                        // No-op.
+                    }
                 }
                 .buttonStyle(.bordered)
             }
@@ -37,7 +51,10 @@ struct StateViews {
         }
     }
     
+    // MARK: Disabled
+    
     struct Disabled: View {
+        
         var body: some View {
             VStack {
                 NoContentView(
@@ -54,7 +71,10 @@ struct StateViews {
         }
     }
     
+    // MARK: EmptyResults
+    
     struct EmptyResults: View {
+        
         var body: some View {
             List {
                 ScanResultItem(
