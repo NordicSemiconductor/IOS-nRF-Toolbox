@@ -15,13 +15,7 @@ struct PeripheralScannerScreen: View {
     
     // MARK: Properties
     
-    @StateObject private var viewModel: PeripheralScannerViewModel
-    
-    // MARK: init
-    
-    init(centralManager: CentralManager) {
-        self._viewModel = StateObject(wrappedValue: PeripheralScannerViewModel(centralManager: centralManager))
-    }
+    @EnvironmentObject private var viewModel: PeripheralScannerViewModel
     
     // MARK: view
     

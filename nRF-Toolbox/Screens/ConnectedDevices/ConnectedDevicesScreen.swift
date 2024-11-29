@@ -15,7 +15,7 @@ struct ConnectedDevicesScreen: View {
     @EnvironmentObject private var viewModel: ConnectedDevicesViewModel
     
     var body: some View {
-        PeripheralScannerScreen(centralManager: viewModel.centralManager)
+        PeripheralScannerScreen()
             .navigationTitle("Device Scanner")
             .environmentObject(viewModel.environment)
             .environmentObject(viewModel)
