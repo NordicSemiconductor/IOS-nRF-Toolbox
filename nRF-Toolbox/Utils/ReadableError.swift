@@ -8,19 +8,28 @@
 
 import Foundation
 
+// MARK: - ReadableError
+
 struct ReadableError: LocalizedError {
+    
+    // MARK: Properties
+    
     let title: String
     let message: String?
+    
+    // MARK: init
     
     init(title: String, message: String?) {
         self.title = title
         self.message = message
     }
     
-    init(error: Error) {
+    init(_ error: Error) {
         title = "Error"
         message = error.localizedDescription
     }
+    
+    // MARK: Computed Properties
     
     var localizedDescription: String {
         message ?? title

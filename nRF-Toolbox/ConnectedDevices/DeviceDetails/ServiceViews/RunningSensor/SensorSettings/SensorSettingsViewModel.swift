@@ -105,8 +105,8 @@ extension SensorSettings.SensorSettingsViewModel {
     private func wrappError(_ wrapper: () async throws -> ()) async {
         do {
             try await wrapper()
-        } catch let e {
-            self.error = ReadableError(error: e)
+        } catch let error {
+            self.error = ReadableError(error)
         }
     }
 }

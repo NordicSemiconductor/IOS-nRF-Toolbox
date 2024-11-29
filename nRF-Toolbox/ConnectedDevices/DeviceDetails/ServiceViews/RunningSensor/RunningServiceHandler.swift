@@ -139,7 +139,7 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
         peripheral.listenValues(for: rscMeasurement)
             .map { RSCMeasurement(rawData: RunningSpeedAndCadence.RSCSMeasurement(from: $0)) }
             .mapError { error in
-                ReadableError(error: error)
+                ReadableError(error)
             }
             .sink { [unowned self] completion in
                 if case .failure(let e) = completion {

@@ -105,8 +105,8 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
         do {
             // `connect` method returns Publisher that sends connected CBPeripheral
             _ = try await centralManager.connect(peripheral).first().firstValue
-        } catch let e {
-            environment.error = ReadableError(error: e)
+        } catch let error {
+            environment.error = ReadableError(error)
         }
         
         environment.connectingDevice = nil
@@ -118,6 +118,7 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
     // MARK: setupManager()
     
     func setupManager() {
+        guard cancelables.isEmpty else { return }
         // Track state CBCentralManager's state changes
         centralManager.stateChannel
             .map { state -> State in
@@ -130,6 +131,8 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
             }
             .assign(to: &environment.$state)
         
+        
+        guard centralManager.centralManager.state == .poweredOn else { return }
         centralManager.scanForPeripherals(withServices: nil)
             // Filter unnamed and unconnectable devices
             .filter { $0.name != nil && $0.advertisementData.isConnectable == true }
@@ -142,8 +145,8 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
                 )
             }
             .sink { completion in
-                if case .failure(let e) = completion {
-                    self.environment.error = ReadableError(error: e)
+                if case .failure(let error) = completion {
+                    self.environment.error = ReadableError(error)
                 }
             } receiveValue: { result in
                 if let i = self.environment.devices.firstIndex(where: \.id, equals: result.id) {
