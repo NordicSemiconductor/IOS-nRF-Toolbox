@@ -45,6 +45,9 @@ struct RootNavigationView: View {
                 NoContentView(title: "Device is not selected", systemImage: "laptopcomputer.slash")
             }
         }
+        .onAppear {
+            scannerViewModel.setupManager()
+        }
         .navigationSplitViewStyle(.balanced)
         .accentColor(.white)
         .environmentObject(viewModel)

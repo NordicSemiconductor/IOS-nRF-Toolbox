@@ -83,24 +83,32 @@ struct StateViews {
         
         var body: some View {
             List {
-                ScanResultItem(
-                    name: "Two Words",
-                    rssi: -90,
-                    services: [.heartRate, .runningSpeedAndCadence]
-                )
-                ScanResultItem(
-                    name: "Three Words Name",
-                    rssi: -50,
-                    services: []
-                )
-                ScanResultItem(
-                    name: "Two Words",
-                    rssi: -60,
-                    services: [.runningSpeedAndCadence]
-                )
+                Section {
+                    ScanResultItem(
+                        name: "Two Words",
+                        rssi: -90,
+                        services: [.heartRate, .runningSpeedAndCadence]
+                    )
+                    ScanResultItem(
+                        name: "Three Words Name",
+                        rssi: -50,
+                        services: []
+                    )
+                    ScanResultItem(
+                        name: "Two Words",
+                        rssi: -60,
+                        services: [.runningSpeedAndCadence]
+                    )
+                }
+                .redacted(reason: .placeholder)
+                
+                Button("Start", systemImage: "play.fill") {
+                    viewModel.startScanning()
+                }
+                .accentColor(.nordicBlue)
+                .centered()
             }
             .listStyle(.insetGrouped)
-            .redacted(reason: .placeholder)
         }
     }
 }

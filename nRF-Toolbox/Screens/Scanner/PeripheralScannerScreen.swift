@@ -49,8 +49,5 @@ struct PeripheralScannerScreen: View {
                 }
             }
         }
-        .onFirstAppear {
-            viewModel.setupManager()
-        }
     }
 }
