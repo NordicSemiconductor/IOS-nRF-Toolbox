@@ -108,7 +108,6 @@
 		019985EE23E0622B000CDCB6 /* UARTLoggerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019985EC23E0622B000CDCB6 /* UARTLoggerViewController.swift */; };
 		019985EF23E0622B000CDCB6 /* UARTLoggerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 019985ED23E0622B000CDCB6 /* UARTLoggerViewController.xib */; };
 		019985F123E07CFB000CDCB6 /* XMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019985F023E07CFB000CDCB6 /* XMLDocument.swift */; };
-		019ABF1D2A600A480019BD21 /* DeviceItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019ABF1C2A600A480019BD21 /* DeviceItem.swift */; };
 		01A1B76723CF13A50062FADC /* UARTNewCommandViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A1B76523CF13A50062FADC /* UARTNewCommandViewController.swift */; };
 		01A1B76823CF13A50062FADC /* UARTNewCommandViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01A1B76623CF13A50062FADC /* UARTNewCommandViewController.xib */; };
 		01A1B76D23CF43590062FADC /* UART.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01A1B76C23CF43590062FADC /* UART.xcassets */; };
@@ -513,7 +512,6 @@
 		019985EC23E0622B000CDCB6 /* UARTLoggerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTLoggerViewController.swift; sourceTree = "<group>"; };
 		019985ED23E0622B000CDCB6 /* UARTLoggerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTLoggerViewController.xib; sourceTree = "<group>"; };
 		019985F023E07CFB000CDCB6 /* XMLDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLDocument.swift; sourceTree = "<group>"; };
-		019ABF1C2A600A480019BD21 /* DeviceItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceItem.swift; sourceTree = "<group>"; };
 		01A1B76523CF13A50062FADC /* UARTNewCommandViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTNewCommandViewController.swift; sourceTree = "<group>"; };
 		01A1B76623CF13A50062FADC /* UARTNewCommandViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTNewCommandViewController.xib; sourceTree = "<group>"; };
 		01A1B76C23CF43590062FADC /* UART.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = UART.xcassets; sourceTree = "<group>"; };
@@ -1233,7 +1231,6 @@
 			isa = PBXGroup;
 			children = (
 				019ABF1E2A6044B90019BD21 /* DeviceDetails */,
-				019ABF1B2A600A3A0019BD21 /* DeviceItem */,
 			);
 			path = ConnectedDevices;
 			sourceTree = "<group>";
@@ -1323,14 +1320,6 @@
 				01A870D923F40E2F00D9202E /* CheckmarkTableViewCell.swift */,
 			);
 			path = LoggViewController;
-			sourceTree = "<group>";
-		};
-		019ABF1B2A600A3A0019BD21 /* DeviceItem */ = {
-			isa = PBXGroup;
-			children = (
-				019ABF1C2A600A480019BD21 /* DeviceItem.swift */,
-			);
-			path = DeviceItem;
 			sourceTree = "<group>";
 		};
 		019ABF1E2A6044B90019BD21 /* DeviceDetails */ = {
@@ -2829,7 +2818,6 @@
 				01C575BE2A7D00EF007FE4F0 /* Alias.swift in Sources */,
 				012E22942A6AD5BE00B14064 /* NamedItem.swift in Sources */,
 				014BBD812A700D1600BCFCA8 /* SensorLocationView1.swift in Sources */,
-				019ABF1D2A600A480019BD21 /* DeviceItem.swift in Sources */,
 				0164A4742AD5A4630093E501 /* StateViews.swift in Sources */,
 				0129F2252A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift in Sources */,
 				01EBE6192AE4845100960672 /* View+ErrorAlert.swift in Sources */,
