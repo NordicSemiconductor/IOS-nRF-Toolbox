@@ -21,7 +21,7 @@ struct SidebarView: View {
     
     var body: some View {
         List(selection: $rootViewModel.selectedCategory) {
-            Section("Devices") {
+            Section("Connected Devices") {
                 if viewModel.environment.connectedDevices.isEmpty {
                     Text("No Connected Devices")
                 } else {

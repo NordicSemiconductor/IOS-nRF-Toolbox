@@ -11,14 +11,21 @@ import iOS_Common_Libraries
 
 fileprivate typealias Device = ConnectedDevicesViewModel.Device
 
+// MARK: - ConnectedDeviceList
+
 struct ConnectedDeviceList: View {
+    
+    // MARK: Environment
+    
     @EnvironmentObject var environment: ConnectedDevicesViewModel.Environment
     @EnvironmentObject var rootNavigationVM: RootNavigationViewModel
    
+    // MARK: view
+    
     var body: some View {
         List(environment.connectedDevices, selection: $rootNavigationVM.selectedDevice) { device in
             HStack {
-                Text(device.name ?? "unnamed")
+                Text(device.name ?? "Unnamed")
                 
                 Spacer()
                 
