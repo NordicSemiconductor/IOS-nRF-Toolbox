@@ -25,16 +25,32 @@ struct ConnectedDeviceView: View {
     // MARK: view
     
     var body: some View {
-        HStack {
-            Text(device.name ?? "Unnamed")
+        HStack(alignment: .firstTextBaseline) {
+            VStack(alignment: .leading) {
+                Text(device.name ?? "Unnamed")
+                    .padding(.bottom, 4)
+                
+                switch device.status {
+                case .connected:
+                    Label("Connected", systemImage: "checkmark.circle.fill")
+                        .accentColor(.green)
+                        .font(.caption)
+                case .error(let error):
+                    Label("Error: \(error.localizedDescription)", systemImage: "exclamationmark.circle")
+                        .accentColor(.nordicRed)
+                        .font(.caption)
+                }
+            }
             
             Spacer()
             
-            if case .some = device.error {
-                Image(systemName: "exclamationmark.circle")
-                    .foregroundStyle(Color.nordicRed)
+            Button("Disconnect") {
+                print("Disconnect")
             }
+            .accentColor(.nordicMiddleGrey)
+            .buttonStyle(.borderedProminent)
         }
+        .listRowSeparator(.hidden)
     }
 }
 

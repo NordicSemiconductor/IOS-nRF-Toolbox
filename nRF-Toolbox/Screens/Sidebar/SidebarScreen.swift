@@ -26,7 +26,8 @@ struct SidebarView: View {
                     Text("No Connected Devices")
                 } else {
                     ForEach(viewModel.environment.connectedDevices) { device in
-                        Text(device.name ?? "Unnamed Device")
+                        ConnectedDeviceView(device)
+                            .tag(device.id)
                     }
                 }
             }

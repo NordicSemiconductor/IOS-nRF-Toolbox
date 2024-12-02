@@ -73,11 +73,11 @@ extension ConnectedDevicesViewModel {
     private func observeConnections() {
         centralManager.connectedPeripheralChannel
             .filter { $0.1 == nil } // No connection error
-            .map { Device(name: $0.0.name, id: $0.0.identifier) }
+            .map {
+                Device(name: $0.0.name, id: $0.0.identifier, status: .connected)
+            }
             .sink { [unowned self] device in
-                if let i = self.environment.connectedDevices.firstIndex(where: {
-                    $0.id == device.id
-                }) {
+                if let i = self.environment.connectedDevices.firstIndex(where: \.id, equals: device.id) {
                     self.environment.connectedDevices[i] = device
                 } else {
                     self.environment.connectedDevices.append(device)
@@ -98,7 +98,7 @@ extension ConnectedDevicesViewModel {
                 }
                 
                 if let err = device.1 {
-                    self.environment.connectedDevices[deviceIndex].error = err
+                    self.environment.connectedDevices[deviceIndex].status = .error(err)
                 } else {
                     self.environment.connectedDevices.remove(at: deviceIndex)
                 }
@@ -113,11 +113,16 @@ extension ConnectedDevicesViewModel {
     
     struct Device: Identifiable, Equatable, Hashable {
         
+        enum Status {
+            case connected
+            case error(_: Error)
+        }
+        
         // MARK: Properties
         
         let name: String?
         let id: UUID
-        var error: Error?
+        var status: Status
         
         // MARK: Equatable
         
