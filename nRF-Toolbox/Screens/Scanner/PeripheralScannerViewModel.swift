@@ -125,15 +125,25 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
         centralManager.stateChannel
             .map { state -> State in
                 switch state {
-                case .poweredOff: return .disabled
-                case .unauthorized: return .unauthorized
-                case .unsupported: return .unsupported
-                default: return .scanning
+                case .poweredOff:
+                    return .disabled
+                case .unauthorized:
+                    return .unauthorized
+                case .unsupported:
+                    return .unsupported
+                default:
+                    return .scanning
                 }
             }
             .assign(to: &environment.$state)
         
-        
+        guard centralManager.centralManager.state == .poweredOn else { return }
+    }
+    
+    // MARK: startScanning()
+    
+    func startScanning() {
+        log.debug(#function)
         guard centralManager.centralManager.state == .poweredOn else { return }
         centralManager.scanForPeripherals(withServices: nil)
             // Filter unnamed and unconnectable devices
@@ -169,6 +179,7 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
         environment.devices.removeAll()
         cancelables.removeAll()
         setupManager()
+        startScanning()
     }
 }
 
