@@ -9,6 +9,7 @@
 import SwiftUI
 import iOS_BLE_Library_Mock
 import Combine
+import iOS_Bluetooth_Numbers_Database
 
 // MARK: - ConnectedDevicesViewModel
 
@@ -72,9 +73,14 @@ extension ConnectedDevicesViewModel {
     
     private func observeConnections() {
         centralManager.connectedPeripheralChannel
+            .map { $0 } // Remove <Never> as $1
             .filter { $0.1 == nil } // No connection error
-            .map {
-                Device(name: $0.0.name, id: $0.0.identifier, status: .connected)
+            .map { (peripheral: CBPeripheral, error: Error?) -> Device in
+                let services: Set<Service> = Set<Service>(peripheral.services?.compactMap {
+                    Service.find(by: $0.uuid) ?? Service(name: "unknown", identifier: "service-\($0.uuid.uuidString)", uuidString: $0.uuid.uuidString, source: "unknown")
+                } ?? [])
+                return Device(name: peripheral.name, id: peripheral.identifier,
+                              services: services, status: .connected)
             }
             .sink { [unowned self] device in
                 if let i = self.environment.connectedDevices.firstIndex(where: \.id, equals: device.id) {
@@ -122,7 +128,17 @@ extension ConnectedDevicesViewModel {
         
         let name: String?
         let id: UUID
+        let services: Set<Service>
         var status: Status
+        
+        // MARK: init
+        
+        init(name: String?, id: UUID, services: Set<Service>, status: Status) {
+            self.name = name
+            self.id = id
+            self.services = services
+            self.status = status
+        }
         
         // MARK: Equatable
         
