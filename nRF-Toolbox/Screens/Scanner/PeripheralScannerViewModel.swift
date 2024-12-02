@@ -24,7 +24,7 @@ extension PeripheralScannerScreen {
         private let centralManager: CentralManager
         let environment: Environment
         
-        private var cancelables = Set<AnyCancellable>()
+        private var cancellables = Set<AnyCancellable>()
         private let log = NordicLog(category: "PeripheralScanner.VM")
         
         // MARK: init
@@ -120,7 +120,7 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
     
     func setupManager() {
         log.debug(#function)
-        guard cancelables.isEmpty else { return }
+        guard cancellables.isEmpty else { return }
         // Track state CBCentralManager's state changes
         centralManager.stateChannel
             .map { state -> State in
@@ -168,7 +168,7 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
                     self.environment.devices.append(result)
                 }
             }
-            .store(in: &cancelables)
+            .store(in: &cancellables)
     }
     
     // MARK: refresh()
@@ -177,7 +177,7 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
         log.debug(#function)
         centralManager.stopScan()
         environment.devices.removeAll()
-        cancelables.removeAll()
+        cancellables.removeAll()
         setupManager()
         startScanning()
     }
