@@ -1117,18 +1117,10 @@
 		0164A4772AD7409C0093E501 /* ConnectedDevices */ = {
 			isa = PBXGroup;
 			children = (
-				0164A47A2AD7F8930093E501 /* ConnectedDeviceList */,
+				0164A47B2AD7F8B10093E501 /* ConnectedDeviceList.swift */,
 				0164A4782AD741200093E501 /* ConnectedDevicesViewModel.swift */,
 			);
 			path = ConnectedDevices;
-			sourceTree = "<group>";
-		};
-		0164A47A2AD7F8930093E501 /* ConnectedDeviceList */ = {
-			isa = PBXGroup;
-			children = (
-				0164A47B2AD7F8B10093E501 /* ConnectedDeviceList.swift */,
-			);
-			path = ConnectedDeviceList;
 			sourceTree = "<group>";
 		};
 		0164A4822AD840A10093E501 /* DeviceDetails */ = {
