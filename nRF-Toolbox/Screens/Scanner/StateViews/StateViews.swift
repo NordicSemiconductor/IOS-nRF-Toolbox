@@ -75,6 +75,12 @@ struct StateViews {
     
     struct EmptyResults: View {
         
+        // MARK: Environment
+        
+        @EnvironmentObject private var viewModel: PeripheralScannerScreen.PeripheralScannerViewModel
+        
+        // MARK: view
+        
         var body: some View {
             List {
                 ScanResultItem(
@@ -93,23 +99,8 @@ struct StateViews {
                     services: [.runningSpeedAndCadence]
                 )
             }
-            .redacted(reason: .placeholder) // <- HERE
+            .listStyle(.insetGrouped)
+            .redacted(reason: .placeholder)
         }
     }
-}
-
-#Preview {
-    StateViews.Unsupported()
-}
-
-#Preview {
-    StateViews.Unauthorized()
-}
-
-#Preview {
-    StateViews.Disabled()
-}
-
-#Preview {
-    StateViews.EmptyResults()
 }
