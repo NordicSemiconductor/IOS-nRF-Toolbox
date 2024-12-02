@@ -17,13 +17,14 @@ import Combine
 extension PeripheralScannerScreen {
     
     @MainActor
-    class PeripheralScannerViewModel: ObservableObject {
+    final class PeripheralScannerViewModel: ObservableObject {
         
-        let centralManager: CentralManager
+        // MARK: Properties
+        
+        private let centralManager: CentralManager
         let environment: Environment
         
         private var cancelables = Set<AnyCancellable>()
-        
         private let log = NordicLog(category: "PeripheralScanner.VM")
         
         // MARK: init
@@ -31,9 +32,7 @@ extension PeripheralScannerScreen {
         init(centralManager: CentralManager) {
             self.environment = Environment()
             self.centralManager = centralManager
-            
             setupEnvironment()
-            
             log.debug(#function)
         }
         
@@ -44,6 +43,7 @@ extension PeripheralScannerScreen {
         }
         
         private func setupEnvironment() {
+            log.debug(#function)
             environment.connect = { [weak self] device in
                 await self?.tryToConnect(device: device)
             }
@@ -93,6 +93,7 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
     // MARK: tryToConnect(device:)
     
     func tryToConnect(device: ScanResult) async {
+        log.debug(#function)
         if environment.connectingDevice != nil {
             return
         }
@@ -118,6 +119,7 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
     // MARK: setupManager()
     
     func setupManager() {
+        log.debug(#function)
         guard cancelables.isEmpty else { return }
         // Track state CBCentralManager's state changes
         centralManager.stateChannel
@@ -162,6 +164,7 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
     // MARK: refresh()
     
     func refresh() {
+        log.debug(#function)
         centralManager.stopScan()
         environment.devices.removeAll()
         cancelables.removeAll()
@@ -169,9 +172,9 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
     }
 }
 
+// MARK: - Environment
+
 extension PeripheralScannerScreen.PeripheralScannerViewModel {
-    
-    // MARK: Environment
     
     class Environment: ObservableObject {
         

@@ -16,39 +16,7 @@ struct PeripheralScannerScreen: View {
     // MARK: Properties
     
     @EnvironmentObject private var viewModel: PeripheralScannerViewModel
-    
-    // MARK: view
-    
-    var body: some View {
-        PeripheralScannerView()
-            .navigationTitle("Scanner")
-            .navigationBarTitleDisplayMode(.inline)
-            .refreshable {
-                viewModel.refresh()
-            }
-            .toolbar {
-                ToolbarItem(placement: .destructiveAction) {
-                    Button("Refresh", systemImage: "arrow.circlepath") {
-                        viewModel.refresh()
-                    }
-                }
-            }
-            .onFirstAppear {
-                viewModel.setupManager()
-            }
-            .environmentObject(viewModel.environment)
-    }
-}
-
-// MARK: - PeripheralScannerView
-
-fileprivate typealias ViewModel = PeripheralScannerScreen.PeripheralScannerViewModel
-
-struct PeripheralScannerView: View {
-    
-    // MARK: Environment
-    
-    @EnvironmentObject private var environment: ViewModel.Environment
+    @EnvironmentObject private var environment: PeripheralScannerViewModel.Environment
     
     // MARK: view
     
@@ -69,8 +37,20 @@ struct PeripheralScannerView: View {
                 StateViews.Unauthorized()
             }
         }
-        // TODO: Handle Error
-//        .alert(isPresented: $viewModel.showError, error: viewModel.error, actions: { })
         .navigationTitle("Scanner")
+        .navigationBarTitleDisplayMode(.inline)
+        .refreshable {
+            viewModel.refresh()
+        }
+        .toolbar {
+            ToolbarItem(placement: .destructiveAction) {
+                Button("Refresh", systemImage: "arrow.circlepath") {
+                    viewModel.refresh()
+                }
+            }
+        }
+        .onFirstAppear {
+            viewModel.setupManager()
+        }
     }
 }

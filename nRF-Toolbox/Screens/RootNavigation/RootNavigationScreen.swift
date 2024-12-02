@@ -31,8 +31,8 @@ struct RootNavigationView: View {
                 .environmentObject(connectedDevicesViewModel)
         } content: {
             PeripheralScannerScreen()
-                .environmentObject(connectedDevicesViewModel)
                 .environmentObject(scannerViewModel)
+                .environmentObject(scannerViewModel.environment)
         } detail: {
             if let deviceId = viewModel.selectedDevice {
                 if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: deviceId) {
