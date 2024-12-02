@@ -24,17 +24,8 @@ struct ConnectedDeviceList: View {
     
     var body: some View {
         List(environment.connectedDevices, selection: $rootNavigationVM.selectedDevice) { device in
-            HStack {
-                Text(device.name ?? "Unnamed")
-                
-                Spacer()
-                
-                if case .some = device.error {
-                    Image(systemName: "exclamationmark.circle")
-                        .foregroundStyle(Color.nordicRed)
-                }
-            }
-            .tag(device.id)
+            ConnectedDeviceView(device)
+                .tag(device.id)
         }
     }
 }

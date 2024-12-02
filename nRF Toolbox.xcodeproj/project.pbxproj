@@ -356,6 +356,7 @@
 		AA0AEA022CF7438200F93A0B /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0AEA012CF7438200F93A0B /* Assets.swift */; };
 		AA2CB314286C75450083DB9A /* iOSMcuManagerLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = AA2CB313286C75450083DB9A /* iOSMcuManagerLibrary */; };
 		AA2CB316286C75AA0083DB9A /* NordicDFU in Frameworks */ = {isa = PBXBuildFile; productRef = AA2CB315286C75AA0083DB9A /* NordicDFU */; };
+		AAF7DE622CFDD4BC000A347A /* ConnectedDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF7DE612CFDD4BC000A347A /* ConnectedDeviceView.swift */; };
 		C39941BC27341AAE00E7AA33 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = C39941BB27341AAE00E7AA33 /* ZIPFoundation */; };
 		C39941C027352BDF00E7AA33 /* McuMgrFirmware.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39941BF27352BDF00E7AA33 /* McuMgrFirmware.swift */; };
 		C39941C227352FC600E7AA33 /* ZephyrPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39941C127352FC600E7AA33 /* ZephyrPacket.swift */; };
@@ -762,6 +763,7 @@
 		7E1B422818A8DF4D006BA1BC /* high.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = high.mp3; sourceTree = "<group>"; };
 		89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA0AEA012CF7438200F93A0B /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
+		AAF7DE612CFDD4BC000A347A /* ConnectedDeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedDeviceView.swift; sourceTree = "<group>"; };
 		C39941BF27352BDF00E7AA33 /* McuMgrFirmware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = McuMgrFirmware.swift; sourceTree = "<group>"; };
 		C39941C127352FC600E7AA33 /* ZephyrPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrPacket.swift; sourceTree = "<group>"; };
 		C39941E3273BCE0500E7AA33 /* nRF Toolbox DebugTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "nRF Toolbox DebugTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1117,6 +1119,7 @@
 		0164A4772AD7409C0093E501 /* ConnectedDevices */ = {
 			isa = PBXGroup;
 			children = (
+				AAF7DE612CFDD4BC000A347A /* ConnectedDeviceView.swift */,
 				0164A47B2AD7F8B10093E501 /* ConnectedDeviceList.swift */,
 				0164A4782AD741200093E501 /* ConnectedDevicesViewModel.swift */,
 			);
@@ -2801,6 +2804,7 @@
 				013E5D8F2ADFDDC600B9C475 /* NumberedColumnGrid.swift in Sources */,
 				01AB7B752A77BFB400AEDDCD /* CBUUID+Ext.swift in Sources */,
 				01FD68D02AE82C330021101C /* Attribute+Preview.swift in Sources */,
+				AAF7DE622CFDD4BC000A347A /* ConnectedDeviceView.swift in Sources */,
 				0180A29C2AEFBBC200090F6D /* PeripheralInspectorScreen.swift in Sources */,
 				0164A46E2AD58EB00093E501 /* RSSIItem_Preview.swift in Sources */,
 				01ABB07E2AE700E100615A21 /* AttributeTableViewModel.swift in Sources */,
