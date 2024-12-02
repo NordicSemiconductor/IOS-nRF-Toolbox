@@ -30,7 +30,7 @@ struct RootNavigationView: View {
             SidebarView()
                 .environmentObject(connectedDevicesViewModel)
         } content: {
-            ConnectedDevicesScreen()
+            PeripheralScannerScreen()
                 .environmentObject(connectedDevicesViewModel)
                 .environmentObject(scannerViewModel)
         } detail: {
