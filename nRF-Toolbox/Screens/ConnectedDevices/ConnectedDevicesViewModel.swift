@@ -10,8 +10,10 @@ import SwiftUI
 import iOS_BLE_Library_Mock
 import Combine
 
+// MARK: - ConnectedDevicesViewModel
+
 @MainActor
-class ConnectedDevicesViewModel: ObservableObject {
+final class ConnectedDevicesViewModel: ObservableObject {
     typealias ScannerVM = PeripheralScannerScreen.PeripheralScannerViewModel
     
     private var deviceViewModels: [UUID: DeviceDetailsScreen.DeviceDetailsViewModel] = [:]
@@ -32,6 +34,8 @@ class ConnectedDevicesViewModel: ObservableObject {
 
 extension ConnectedDevicesViewModel {
     
+    // MARK: deviceViewModel(for:)
+    
     func deviceViewModel(for deviceID: Device.ID) -> DeviceDetailsScreen.DeviceDetailsViewModel? {
         if let vm = deviceViewModels[deviceID] {
             return vm
@@ -44,6 +48,8 @@ extension ConnectedDevicesViewModel {
             return newViewModel
         }
     }
+    
+    // MARK: disconnectAndRemoveViewModel()
     
     func disconnectAndRemoveViewModel(_ deviceID: Device.ID) async throws {
         guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [deviceID]).first else { return }
@@ -62,6 +68,8 @@ extension ConnectedDevicesViewModel {
 
 extension ConnectedDevicesViewModel {
     
+    // MARK: observeConnections()
+    
     private func observeConnections() {
         centralManager.connectedPeripheralChannel
             .filter { $0.1 == nil } // No connection error
@@ -78,6 +86,8 @@ extension ConnectedDevicesViewModel {
             }
             .store(in: &cancelable)
     }
+    
+    // MARK: observeDisconnections()
     
     private func observeDisconnections() {
         centralManager.disconnectedPeripheralsChannel
@@ -97,25 +107,39 @@ extension ConnectedDevicesViewModel {
     }
 }
 
+// MARK: - Device
+
 extension ConnectedDevicesViewModel {
     
     struct Device: Identifiable, Equatable, Hashable {
+        
+        // MARK: Properties
+        
         let name: String?
         let id: UUID
         var error: Error?
+        
+        // MARK: Equatable
         
         static func == (lhs: Device, rhs: Device) -> Bool {
             lhs.id == rhs.id
         }
         
+        // MARK: Hashable
+        
         func hash(into hasher: inout Hasher) {
             hasher.combine(id)
         }
     }
+}
+
+// MARK: - Environment
+
+extension ConnectedDevicesViewModel {
     
-    class Environment: ObservableObject {
-        @Published var showScanner: Bool = false
+    final class Environment: ObservableObject {
         
+        @Published var showScanner: Bool = false
         @Published fileprivate(set) var connectedDevices: [Device]
         @Published var selectedDevice: Device.ID? {
             didSet {
