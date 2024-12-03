@@ -33,18 +33,21 @@ struct SidebarView: View {
                         }
                     }
                 }
-            }
-            
-            Section {
+                
                 Text("Open Scanner")
                     .foregroundStyle(Color.universalAccentColor)
                     .centered()
-                    .tag(RootNavigationView.MenuCategory.devices.id)
+                    .tag(RootNavigationView.MenuCategory.scanner)
+            }
+            
+            Section("Services") {
+                Label("Heart Rate Monitor (HRM)", systemImage: "heart.fill")
+                    .tag(RootNavigationView.MenuCategory.hrm)
             }
             
             Section("Other") {
                 Text("About nRF Toolbox")
-                    .tag(RootNavigationView.MenuCategory.about.id)
+                    .tag(RootNavigationView.MenuCategory.about)
                     .disabled(true)
             }
         }

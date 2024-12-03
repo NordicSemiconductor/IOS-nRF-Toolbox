@@ -10,18 +10,40 @@ import SwiftUI
 
 private typealias Env = HeartRateScreen.HeartRateViewModel.Environment
 
+// MARK: - HeartRateScreen
+
 struct HeartRateScreen: View {
 
-    let viewModel: HeartRateViewModel
+    // MARK: Environment
+    
+//    let viewModel: HeartRateViewModel
+    @EnvironmentObject var connectedDevicesViewModel: ConnectedDevicesViewModel
+    
+    // MARK: view
 
     var body: some View {
-        HeartRateView()
-            .environmentObject(viewModel.env)
-            .task {
-                viewModel.onConnect()
-            }
+//        if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: deviceId) {
+//            DeviceDetailsScreen(viewModel: deviceVM)
+//                .environmentObject(connectedDevicesViewModel)
+//        } else {
+//            NoContentView(title: "Device is not connected", systemImage: "laptopcomputer.slash")
+//        }
+        NoContentView(
+            title: "No Services",
+            systemImage: "list.bullet.rectangle.portrait",
+            description: "No Supported Services"
+        )
+        
+        
+//        HeartRateView()
+//            .environmentObject(viewModel.env)
+//            .task {
+//                viewModel.onConnect()
+//            }
     }
 }
+
+// MARK: - HeartRateView
 
 struct HeartRateView: View {
     @EnvironmentObject private var environment: Env
@@ -33,9 +55,4 @@ struct HeartRateView: View {
             HeartRateChart()
         }
     }
-}
-
-#Preview {
-    HeartRateView()
-        .environmentObject(Env())
 }

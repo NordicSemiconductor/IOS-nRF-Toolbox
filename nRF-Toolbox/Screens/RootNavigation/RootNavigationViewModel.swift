@@ -11,7 +11,8 @@ import SwiftUI
 
 extension RootNavigationView {
     enum MenuCategory: String, CaseIterable, Identifiable {
-        case devices = "Devices"
+        case scanner = "Scanner"
+        case hrm = "HRM"
         case about = "About"
         
         var id: String {
@@ -22,7 +23,7 @@ extension RootNavigationView {
 
 @MainActor
 class RootNavigationViewModel: ObservableObject {
-    @Published var selectedCategory: RootNavigationView.MenuCategory.ID?
+    @Published var selectedCategory: RootNavigationView.MenuCategory?
     @Published var selectedDevice: ConnectedDevicesViewModel.Device.ID? 
     
     static let shared = RootNavigationViewModel()

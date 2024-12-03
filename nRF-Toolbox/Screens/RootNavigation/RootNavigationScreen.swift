@@ -30,9 +30,17 @@ struct RootNavigationView: View {
             SidebarView()
                 .environmentObject(connectedDevicesViewModel)
         } content: {
-            PeripheralScannerScreen()
-                .environmentObject(scannerViewModel)
-                .environmentObject(scannerViewModel.environment)
+            switch viewModel.selectedCategory {
+            case .scanner:
+                PeripheralScannerScreen()
+                    .environmentObject(scannerViewModel)
+                    .environmentObject(scannerViewModel.environment)
+            case .hrm:
+                HeartRateScreen()
+                    .environmentObject(connectedDevicesViewModel)
+            default:
+                EmptyView()
+            }
         } detail: {
             if let deviceId = viewModel.selectedDevice {
                 if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: deviceId) {
