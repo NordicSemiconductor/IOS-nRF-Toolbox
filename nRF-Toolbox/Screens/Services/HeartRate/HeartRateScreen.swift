@@ -22,17 +22,21 @@ struct HeartRateScreen: View {
     // MARK: view
 
     var body: some View {
-//        if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: deviceId) {
-//            DeviceDetailsScreen(viewModel: deviceVM)
-//                .environmentObject(connectedDevicesViewModel)
-//        } else {
-//            NoContentView(title: "Device is not connected", systemImage: "laptopcomputer.slash")
-//        }
-        NoContentView(
-            title: "No Services",
-            systemImage: "list.bullet.rectangle.portrait",
-            description: "No Supported Services"
-        )
+        VStack {
+            ConnectedDevicePicker()
+            
+            //        if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: deviceId) {
+            //            DeviceDetailsScreen(viewModel: deviceVM)
+            //                .environmentObject(connectedDevicesViewModel)
+            //        } else {
+            //            NoContentView(title: "Device is not connected", systemImage: "laptopcomputer.slash")
+            //        }
+            NoContentView(
+                title: "No Services",
+                systemImage: "list.bullet.rectangle.portrait",
+                description: "No Supported Services"
+            )
+        }
         
         
 //        HeartRateView()
