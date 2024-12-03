@@ -70,9 +70,13 @@ extension ConnectedDevicesViewModel {
         log.debug(#function)
         guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [deviceID]).first else { return }
         guard let vm = deviceViewModels[deviceID] else { return }
+        defer {
+            objectWillChange.send()
+        }
         
         if let i = environment.connectedDevices.firstIndex(where: \.id, equals: deviceID) {
             environment.connectedDevices[i].status = .busy
+            objectWillChange.send()
         }
         
         if case .disconnectedWithError = vm.environment.criticalError {
@@ -142,14 +146,27 @@ extension ConnectedDevicesViewModel {
     
     struct Device: Identifiable, CustomStringConvertible, CustomDebugStringConvertible, Hashable, Equatable {
         
+        // MARK: Unselected
+        
         static let Unselected = Device(name: "Unselected", id: UUID(), services: [], status: .connected)
         
         // MARK: Status
         
         enum Status {
-            case busy
             case connected
+            case busy
             case error(_: Error)
+            
+            var hashValue: Int {
+                switch self {
+                case .connected:
+                    return 0
+                case .busy:
+                    return 1
+                case .error:
+                    return 99
+                }
+            }
         }
         
         // MARK: Properties
@@ -173,13 +190,14 @@ extension ConnectedDevicesViewModel {
         // MARK: Equatable
         
         static func == (lhs: Device, rhs: Device) -> Bool {
-            lhs.id == rhs.id
+            return lhs.hashValue == rhs.hashValue
         }
         
         // MARK: Hashable
         
         func hash(into hasher: inout Hasher) {
             hasher.combine(id)
+            hasher.combine(status.hashValue)
         }
     }
 }

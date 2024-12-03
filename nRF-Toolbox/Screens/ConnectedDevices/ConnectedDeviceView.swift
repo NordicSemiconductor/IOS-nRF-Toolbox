@@ -39,8 +39,7 @@ struct ConnectedDeviceView: View {
                 
                 switch device.status {
                 case .busy:
-                    ProgressView()
-                        .progressViewStyle(.circular)
+                    EmptyView()
                 case .connected:
                     Label("Connected", systemImage: "powerplug.fill")
                         .accentColor(.nordicBlue)
@@ -60,15 +59,23 @@ struct ConnectedDeviceView: View {
             
             Spacer()
             
-            Button("Disconnect") {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-                    Task {
-                        try await connectedDevicesViewModel.disconnectAndRemoveViewModel(device.id)
+            switch device.status {
+            case .busy:
+                ProgressView()
+                    .progressViewStyle(.circular)
+            case .connected:
+                Button("Disconnect") {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                        Task {
+                            try await connectedDevicesViewModel.disconnectAndRemoveViewModel(device.id)
+                        }
                     }
                 }
+                .accentColor(.nordicDarkGrey)
+                .buttonStyle(.borderedProminent)
+            case .error:
+                EmptyView()
             }
-            .accentColor(.nordicDarkGrey)
-            .buttonStyle(.borderedProminent)
         }
         .listRowSeparator(.hidden)
     }
