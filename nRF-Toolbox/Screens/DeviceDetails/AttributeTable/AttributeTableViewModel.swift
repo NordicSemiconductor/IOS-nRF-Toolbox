@@ -12,23 +12,26 @@ import iOS_Bluetooth_Numbers_Database
 import iOS_BLE_Library_Mock
 import iOS_Common_Libraries
 
+// MARK: - AttributeTableViewModel
+
 extension AttributeTableScreen {
-    @MainActor 
+    
+    @MainActor
     class AttributeTableViewModel: ObservableObject {
+        
         let env = Environment()
         
-        let peripheral: Peripheral
-        
-        private let l = NordicLog(category: "AttributeTable.VM", subsystem: "com.nordicsemi.nrf-toolbox")
+        private let peripheral: Peripheral
+        private let log = NordicLog(category: "AttributeTable.VM", subsystem: "com.nordicsemi.nrf-toolbox")
         
         init(peripheral: Peripheral) {
             self.peripheral = peripheral
             
-            l.debug(#function)
+            log.debug(#function)
         }
         
         deinit {
-            l.debug(#function)
+            log.debug(#function)
         }
         
         func readAttributeTable() async {
@@ -54,51 +57,60 @@ extension AttributeTableScreen {
 
 private typealias ViewModel = AttributeTableScreen.AttributeTableViewModel
 
+// MARK: - ViewModel Extension
+
 private extension ViewModel {
+    
     func readAttributes() async throws -> [Attribute] {
-        var at = AttributeTable()
+        var table = AttributeTable()
         
         let services = try await peripheral.discoverServices(serviceUUIDs: nil).timeout(10, scheduler: DispatchQueue.main).firstValue
-        for s in services {
-            at.addService(s)
+        for service in services {
+            table.addService(service)
             
-            let characteristics = try await peripheral.discoverCharacteristics(nil, for: s).timeout(10, scheduler: DispatchQueue.main).firstValue
-            for c in characteristics {
-                at.addCharacteristic(c, to: s)
+            let characteristics = try await peripheral.discoverCharacteristics(nil, for: service).timeout(10, scheduler: DispatchQueue.main).firstValue
+            for characteristic in characteristics {
+                table.addCharacteristic(characteristic, to: service)
                 
-                let descriptors = try await peripheral.discoverDescriptors(for: c).timeout(10, scheduler: DispatchQueue.main).firstValue
-                for d in descriptors {
-                    at.addDescriptor(d, to: c, in: s)
+                let descriptors = try await peripheral.discoverDescriptors(for: characteristic).timeout(10, scheduler: DispatchQueue.main).firstValue
+                for descriptor in descriptors {
+                    table.addDescriptor(descriptor, to: characteristic, in: service)
                 }
             }
         }
         
-        return at.attributeList
+        return table.attributeList
     }
 }
 
+// MARK: - Environment
+
 extension AttributeTableScreen.AttributeTableViewModel {
+    
     @MainActor
     class Environment: ObservableObject {
         @Published fileprivate(set) var attributeTable: [Attribute]?
         @Published fileprivate(set) var criticalError: CriticalError?
         
-        private let l = NordicLog(category: "AttributeTable.Env", subsystem: "com.nordicsemi.nrf-toolbox")
+        private let log = NordicLog(category: "AttributeTable.Env", subsystem: "com.nordicsemi.nrf-toolbox")
         
         init(attributeTable: [Attribute]? = nil, criticalError: CriticalError? = nil) {
             self.attributeTable = attributeTable
             self.criticalError = criticalError
             
-            l.debug(#function)
+            log.debug(#function)
         }
         
         deinit {
-            l.debug(#function)
+            log.debug(#function)
         }
     }
 }
 
+// MARK: - CriticalError
+
 extension AttributeTableScreen.AttributeTableViewModel.Environment {
+    
     enum CriticalError: Error {
         case unableBuildAttributeTable
         
