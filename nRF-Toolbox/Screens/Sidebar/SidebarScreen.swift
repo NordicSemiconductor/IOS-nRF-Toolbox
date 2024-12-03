@@ -26,8 +26,11 @@ struct SidebarView: View {
                     Text("No Connected Devices")
                 } else {
                     ForEach(viewModel.environment.connectedDevices) { device in
-                        ConnectedDeviceView(device)
-                            .tag(device.id)
+                        Button {
+                            rootViewModel.selectedDevice = device.id
+                        } label: {
+                            ConnectedDeviceView(device)
+                        }
                     }
                 }
             }
