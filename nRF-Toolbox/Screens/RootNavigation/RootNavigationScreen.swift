@@ -42,8 +42,8 @@ struct RootNavigationView: View {
                 EmptyView()
             }
         } detail: {
-            if let deviceId = viewModel.selectedDevice {
-                if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: deviceId) {
+            if connectedDevicesViewModel.hasSelectedDevice {
+                if let deviceVM = connectedDevicesViewModel.selectedDeviceModel() {
                     DeviceDetailsScreen(viewModel: deviceVM)
                         .environmentObject(connectedDevicesViewModel)
                 } else {

@@ -25,6 +25,10 @@ final class ConnectedDevicesViewModel: ObservableObject {
     })
     let centralManager: CentralManager
     
+    var hasSelectedDevice: Bool {
+        environment.selectedDevice != .Unselected
+    }
+    
     init(centralManager: CentralManager) {
         self.centralManager = centralManager
         
@@ -34,6 +38,11 @@ final class ConnectedDevicesViewModel: ObservableObject {
 }
 
 extension ConnectedDevicesViewModel {
+    
+    func selectedDeviceModel() -> DeviceDetailsScreen.DeviceDetailsViewModel? {
+        guard environment.selectedDevice != .Unselected else { return nil }
+        return deviceViewModel(for: environment.selectedDevice.id)
+    }
     
     // MARK: deviceViewModel(for:)
     

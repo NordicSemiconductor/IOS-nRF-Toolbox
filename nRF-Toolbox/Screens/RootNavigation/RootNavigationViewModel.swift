@@ -24,7 +24,6 @@ extension RootNavigationView {
 @MainActor
 class RootNavigationViewModel: ObservableObject {
     @Published var selectedCategory: RootNavigationView.MenuCategory?
-    @Published var selectedDevice: ConnectedDevicesViewModel.Device.ID? 
     
     static let shared = RootNavigationViewModel()
 }

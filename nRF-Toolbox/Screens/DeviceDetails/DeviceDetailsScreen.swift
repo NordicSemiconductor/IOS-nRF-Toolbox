@@ -82,7 +82,8 @@ struct DeviceDetailsView<ServiceView: View>: View {
             .padding()
             
             Button("Remove Device") {
-                rootNavigationVM.selectedDevice = nil 
+                // TODO: Unselect Device instead
+//                rootNavigationVM.selectedDevice = nil
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
                     Task {

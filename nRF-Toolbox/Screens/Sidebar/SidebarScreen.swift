@@ -26,11 +26,7 @@ struct SidebarView: View {
                     Text("No Connected Devices")
                 } else {
                     ForEach(viewModel.environment.connectedDevices) { device in
-                        Button {
-                            rootViewModel.selectedDevice = device.id
-                        } label: {
-                            ConnectedDeviceView(device)
-                        }
+                        ConnectedDeviceView(device)
                     }
                 }
                 
@@ -42,6 +38,7 @@ struct SidebarView: View {
             
             Section("Services") {
                 Label("Heart Rate Monitor (HRM)", systemImage: "heart.fill")
+                    .accentColor(.nordicRed)
                     .tag(RootNavigationView.MenuCategory.hrm)
             }
             

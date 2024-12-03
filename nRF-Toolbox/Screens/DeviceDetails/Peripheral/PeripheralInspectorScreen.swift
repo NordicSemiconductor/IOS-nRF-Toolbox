@@ -67,7 +67,8 @@ struct PeripheralInspectorView: View {
                 .foregroundStyle(.red)
                 .alert("Disconnect", isPresented: $disconnectAlertShow) {
                     Button("Yes") {
-                        rootNavigationMV.selectedDevice = nil
+                        // TODO: Unselect Device instead
+//                        rootNavigationMV.selectedDevice = nil
                         rootEnv.showInspector = false
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
                             Task {
