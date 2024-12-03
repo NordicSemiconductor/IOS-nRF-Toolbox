@@ -16,40 +16,38 @@ struct HeartRateScreen: View {
 
     // MARK: Environment
     
-//    let viewModel: HeartRateViewModel
     @EnvironmentObject var connectedDevicesViewModel: ConnectedDevicesViewModel
     
     // MARK: view
 
     var body: some View {
-        VStack {
-            ConnectedDevicePicker()
+        List {
+            Section {
+                ConnectedDevicePicker()
+            }
+            .listRowSeparator(.hidden)
             
-            //        if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: deviceId) {
-            //            DeviceDetailsScreen(viewModel: deviceVM)
-            //                .environmentObject(connectedDevicesViewModel)
-            //        } else {
-            //            NoContentView(title: "Device is not connected", systemImage: "laptopcomputer.slash")
-            //        }
-            NoContentView(
-                title: "No Services",
-                systemImage: "list.bullet.rectangle.portrait",
-                description: "No Supported Services"
-            )
+            if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: connectedDevicesViewModel.environment.selectedDevice.id),
+               let heartRateServiceViewModel = deviceVM.heartRateServiceViewModel {
+                HeartRateView()
+                    .environmentObject(heartRateServiceViewModel.env)
+            } else {
+                NoContentView(
+                    title: "No Services",
+                    systemImage: "list.bullet.rectangle.portrait",
+                    description: "No Supported Services"
+                )
+            }
         }
-        
-        
-//        HeartRateView()
-//            .environmentObject(viewModel.env)
-//            .task {
-//                viewModel.onConnect()
-//            }
+        .listStyle(.insetGrouped)
+        .navigationTitle("Heart Rate Monitor")
     }
 }
 
 // MARK: - HeartRateView
 
 struct HeartRateView: View {
+    
     @EnvironmentObject private var environment: Env
     
     var body: some View {

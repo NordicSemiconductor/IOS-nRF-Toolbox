@@ -21,12 +21,7 @@ struct ConnectedDevicePicker: View {
     // MARK: view
     
     var body: some View {
-        List {
-            Section("Connected") {
-                ForEach(connectedDevicesViewModel.environment.connectedDevices) { device in
-                    Text(device.name ?? "Unnamed")
-                }
-            }
-        }
+        InlinePicker(title: "Device", selectedValue: $connectedDevicesViewModel.environment.selectedDevice, possibleValues: connectedDevicesViewModel.environment.connectedDevices)
+            .labeledContentStyle(.accentedContent)
     }
 }

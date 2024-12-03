@@ -20,7 +20,7 @@ final class ConnectedDevicesViewModel: ObservableObject {
     private var deviceViewModels: [UUID: DeviceDetailsScreen.DeviceDetailsViewModel] = [:]
     private var cancelable = Set<AnyCancellable>()
     
-    private(set) lazy var environment: Environment = Environment(deviceViewModel: {
+    lazy var environment: Environment = Environment(deviceViewModel: {
         [unowned self] in self.deviceViewModel(for: $0.id)!
     })
     let centralManager: CentralManager
@@ -76,9 +76,10 @@ extension ConnectedDevicesViewModel {
             .map { $0 } // Remove <Never> as $1
             .filter { $0.1 == nil } // No connection error
             .map { (peripheral: CBPeripheral, error: Error?) -> Device in
-                let services: Set<Service> = Set<Service>(peripheral.services?.compactMap {
+                let services = Set<Service>(peripheral.services?.compactMap {
                     Service.find(by: $0.uuid) ?? Service(name: "unknown", identifier: "service-\($0.uuid.uuidString)", uuidString: $0.uuid.uuidString, source: "unknown")
                 } ?? [])
+                
                 return Device(name: peripheral.name, id: peripheral.identifier,
                               services: services, status: .connected)
             }
@@ -117,7 +118,11 @@ extension ConnectedDevicesViewModel {
 
 extension ConnectedDevicesViewModel {
     
-    struct Device: Identifiable, Equatable, Hashable {
+    struct Device: Identifiable, CustomStringConvertible, CustomDebugStringConvertible, Hashable, Equatable {
+        
+        static let Unselected = Device(name: "Unselected", id: UUID(), services: [], status: .connected)
+        
+        // MARK: Status
         
         enum Status {
             case connected
@@ -130,6 +135,8 @@ extension ConnectedDevicesViewModel {
         let id: UUID
         let services: Set<Service>
         var status: Status
+        var description: String { name ?? "Unnamed" }
+        var debugDescription: String { description }
         
         // MARK: init
         
@@ -162,9 +169,9 @@ extension ConnectedDevicesViewModel {
         
         @Published var showScanner: Bool = false
         @Published fileprivate(set) var connectedDevices: [Device]
-        @Published var selectedDevice: Device.ID? {
+        @Published var selectedDevice: Device {
             didSet {
-                if let d = connectedDevices.first(where: { $0.id == selectedDevice }) {
+                if let d = connectedDevices.first(where: { $0 == selectedDevice }) {
                     print(d.name!)
                 } else {
                     print("no selection")
@@ -174,10 +181,10 @@ extension ConnectedDevicesViewModel {
         
         let deviceViewModel: ((Device) -> (DeviceDetailsScreen.DeviceDetailsViewModel))?
         
-        init(connectedDevices: [Device] = [],
-             deviceViewModel: ((Device) -> (DeviceDetailsScreen.DeviceDetailsViewModel))? = nil) {
-            self.connectedDevices = connectedDevices
+        init(deviceViewModel: ((Device) -> (DeviceDetailsScreen.DeviceDetailsViewModel))? = nil) {
             self.deviceViewModel = deviceViewModel
+            self.connectedDevices = [.Unselected]
+            self.selectedDevice = .Unselected
         }
     }
 }
