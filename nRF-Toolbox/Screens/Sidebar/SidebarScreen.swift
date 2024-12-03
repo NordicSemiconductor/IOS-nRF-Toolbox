@@ -26,7 +26,9 @@ struct SidebarView: View {
                     Text("No Connected Devices")
                 } else {
                     ForEach(viewModel.environment.connectedDevices) { device in
-                        ConnectedDeviceView(device)
+                        if device != .Unselected {
+                            ConnectedDeviceView(device, isSelected: viewModel.environment.selectedDevice == device)
+                        }
                     }
                 }
                 
