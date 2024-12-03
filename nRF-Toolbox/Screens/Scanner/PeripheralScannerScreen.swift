@@ -21,7 +21,7 @@ struct PeripheralScannerScreen: View {
     // MARK: view
     
     var body: some View {
-        VStack {
+        ZStack {
             switch environment.state {
             case .disabled:
                 StateViews.Disabled()

@@ -63,7 +63,8 @@ struct StateViews {
                     description: "It looks like Bluetooth is turnd off. You can turn it on in Settings"
                 )
                 Button("Open Settings") {
-                    // TODO: Open Settings
+                    guard let settingsURL = URL(string: "App-Prefs:root=General") else { return }
+                    UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
                 }
                 .buttonStyle(.bordered)
             }
