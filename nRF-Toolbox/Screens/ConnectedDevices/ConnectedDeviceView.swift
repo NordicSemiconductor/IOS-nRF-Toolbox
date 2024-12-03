@@ -15,11 +15,13 @@ struct ConnectedDeviceView: View {
     // MARK: Properties
     
     private let device: ConnectedDevicesViewModel.Device
+    private let isSelected: Bool
     
     // MARK: Init
     
-    init(_ device: ConnectedDevicesViewModel.Device) {
+    init(_ device: ConnectedDevicesViewModel.Device, isSelected: Bool) {
         self.device = device
+        self.isSelected = isSelected
     }
     
     // MARK: view
@@ -28,16 +30,23 @@ struct ConnectedDeviceView: View {
         HStack(alignment: .firstTextBaseline) {
             VStack(alignment: .leading) {
                 Text(device.name ?? "Unnamed")
+                    .font(.title3)
                     .padding(.bottom, 4)
                 
                 switch device.status {
                 case .connected:
-                    Label("Connected", systemImage: "checkmark.circle.fill")
-                        .accentColor(.green)
+                    Label("Connected", systemImage: "powerplug.fill")
+                        .accentColor(.nordicBlue)
                         .font(.caption)
                 case .error(let error):
                     Label("Error: \(error.localizedDescription)", systemImage: "exclamationmark.circle")
                         .accentColor(.nordicRed)
+                        .font(.caption)
+                }
+                
+                if isSelected {
+                    Label("Selected", systemImage: "checkmark.circle.fill")
+                        .accentColor(.green)
                         .font(.caption)
                 }
             }
@@ -47,7 +56,7 @@ struct ConnectedDeviceView: View {
             Button("Disconnect") {
                 print("Disconnect")
             }
-            .accentColor(.nordicMiddleGrey)
+            .accentColor(.nordicDarkGrey)
             .buttonStyle(.borderedProminent)
         }
         .listRowSeparator(.hidden)

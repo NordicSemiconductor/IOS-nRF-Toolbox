@@ -98,7 +98,9 @@ extension ConnectedDevicesViewModel {
                 } else {
                     self.environment.connectedDevices.append(device)
                 }
-//                self.environment.connectedDevices.replacedOrAppended(device)
+                
+                guard !hasSelectedDevice else { return }
+                self.environment.selectedDevice = device
             }
             .store(in: &cancelable)
     }
