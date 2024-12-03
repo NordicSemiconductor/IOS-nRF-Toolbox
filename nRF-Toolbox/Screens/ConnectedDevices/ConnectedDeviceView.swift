@@ -12,6 +12,10 @@ import SwiftUI
 
 struct ConnectedDeviceView: View {
     
+    // MARK: Environment
+    
+    @EnvironmentObject var connectedDevicesViewModel: ConnectedDevicesViewModel
+    
     // MARK: Properties
     
     private let device: ConnectedDevicesViewModel.Device
@@ -34,6 +38,9 @@ struct ConnectedDeviceView: View {
                     .padding(.bottom, 4)
                 
                 switch device.status {
+                case .busy:
+                    ProgressView()
+                        .progressViewStyle(.circular)
                 case .connected:
                     Label("Connected", systemImage: "powerplug.fill")
                         .accentColor(.nordicBlue)
@@ -54,7 +61,11 @@ struct ConnectedDeviceView: View {
             Spacer()
             
             Button("Disconnect") {
-                print("Disconnect")
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                    Task {
+                        try await connectedDevicesViewModel.disconnectAndRemoveViewModel(device.id)
+                    }
+                }
             }
             .accentColor(.nordicDarkGrey)
             .buttonStyle(.borderedProminent)

@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import iOS_Common_Libraries
 import iOS_BLE_Library_Mock
 import Combine
 import iOS_Bluetooth_Numbers_Database
@@ -29,11 +30,15 @@ final class ConnectedDevicesViewModel: ObservableObject {
         environment.selectedDevice != .Unselected
     }
     
+    private let log = NordicLog(category: "HeartRateScreen", subsystem: "com.nordicsemi.nrf-toolbox")
+    
+    // MARK: init
+    
     init(centralManager: CentralManager) {
         self.centralManager = centralManager
-        
         observeConnections()
         observeDisconnections()
+        log.debug(#function)
     }
 }
 
@@ -62,8 +67,13 @@ extension ConnectedDevicesViewModel {
     // MARK: disconnectAndRemoveViewModel()
     
     func disconnectAndRemoveViewModel(_ deviceID: Device.ID) async throws {
+        log.debug(#function)
         guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [deviceID]).first else { return }
         guard let vm = deviceViewModels[deviceID] else { return }
+        
+        if let i = environment.connectedDevices.firstIndex(where: \.id, equals: deviceID) {
+            environment.connectedDevices[i].status = .busy
+        }
         
         if case .disconnectedWithError = vm.environment.criticalError {
             environment.connectedDevices.removeAll(where: { $0.id == deviceID })
@@ -71,7 +81,8 @@ extension ConnectedDevicesViewModel {
             _ = try await centralManager.cancelPeripheralConnection(peripheral).firstValue
         }
         
-        self.deviceViewModels.removeValue(forKey: deviceID)
+        environment.connectedDevices.removeAll(where: { $0.id == deviceID })
+        deviceViewModels.removeValue(forKey: deviceID)
         vm.onDisconnect()
     }
 }
@@ -136,6 +147,7 @@ extension ConnectedDevicesViewModel {
         // MARK: Status
         
         enum Status {
+            case busy
             case connected
             case error(_: Error)
         }
