@@ -9,17 +9,22 @@
 import SwiftUI
 import Charts
 
-private typealias Env = HeartRateScreen.HeartRateViewModel.Environment
+// MARK: - HeartRateChart
 
 struct HeartRateChart: View {
-    @EnvironmentObject private var env: Env
+    
+    // MARK: Environment
+    
+    @EnvironmentObject private var viewModel: HeartRateScreen.HeartRateViewModel
+    
+    // MARK: view
     
     var body: some View {
         VStack(alignment: .leading) {
             Text("Heart Rate Monitor")
                 .foregroundStyle(.secondary)
             Label {
-                Text("\(env.data.last!.heartRate) bpm")
+                Text("\(viewModel.data.last!.heartRate) bpm")
             } icon: {
                 Image(systemName: "waveform.path.ecg")
             }
@@ -34,20 +39,24 @@ struct HeartRateChart: View {
         .padding()
     }
     
+    // MARK: scalableChart
+    
     @available(macOS 14.0, *)
     @available(iOS 17.0, *)
     @ViewBuilder
     private func scalableChart() -> some View {
         chart
             .chartScrollableAxes(.horizontal)
-            .chartXVisibleDomain(length: env.visibleDomain)
-            .chartScrollPosition(x: $env.scrolPosition)
+            .chartXVisibleDomain(length: viewModel.visibleDomain)
+            .chartScrollPosition(x: $viewModel.scrolPosition)
     }
+    
+    // MARK: chart
     
     @ViewBuilder
     private var chart: some View {
         Chart {
-            ForEach(env.data, id: \.date) {
+            ForEach(viewModel.data, id: \.date) {
                 LineMark(
                     x: .value("Date", $0.date),
                     y: .value("HR", $0.heartRate)
@@ -57,12 +66,6 @@ struct HeartRateChart: View {
             .interpolationMethod(.catmullRom)
         }
         .chartXAxis(.hidden)
-        .chartYScale(domain: [env.lowest, env.highest], range: .plotDimension(padding: 8))
-        
+        .chartYScale(domain: [viewModel.lowest, viewModel.highest], range: .plotDimension(padding: 8))
     }
-}
-
-#Preview {
-    HeartRateChart()
-        .environmentObject(Env(data: HeartRateMeasurementCharacteristic.mock))
 }

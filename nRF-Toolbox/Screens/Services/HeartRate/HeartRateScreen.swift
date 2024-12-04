@@ -8,8 +8,6 @@
 
 import SwiftUI
 
-private typealias Env = HeartRateScreen.HeartRateViewModel.Environment
-
 // MARK: - HeartRateScreen
 
 struct HeartRateScreen: View {
@@ -30,10 +28,7 @@ struct HeartRateScreen: View {
             if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: connectedDevicesViewModel.selectedDevice.id),
                let heartRateServiceViewModel = deviceVM.heartRateServiceViewModel {
                 HeartRateView()
-                    .task {
-                        await heartRateServiceViewModel.prepare()
-                    }
-                    .environmentObject(heartRateServiceViewModel.env)
+                    .environmentObject(heartRateServiceViewModel)
             } else {
                 NoContentView(
                     title: "No Services",
@@ -51,13 +46,22 @@ struct HeartRateScreen: View {
 
 struct HeartRateView: View {
     
-    @EnvironmentObject private var environment: Env
+    // MARK: EnvironmentObject
+    
+    @EnvironmentObject private var viewModel: HeartRateScreen.HeartRateViewModel
+    
+    // MARK: view
     
     var body: some View {
-        if environment.data.isEmpty {
-            NoContentView(title: "No Heart Rate Data", systemImage: "waveform.path.ecg.rectangle")
-        } else {
-            HeartRateChart()
+        ZStack {
+            if viewModel.data.isEmpty {
+                NoContentView(title: "No Heart Rate Data", systemImage: "waveform.path.ecg.rectangle")
+            } else {
+                HeartRateChart()
+            }
+        }
+        .task {
+            await viewModel.prepare()
         }
     }
 }

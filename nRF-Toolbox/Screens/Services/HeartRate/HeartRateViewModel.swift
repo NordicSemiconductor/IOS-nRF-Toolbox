@@ -12,7 +12,7 @@ import iOS_BLE_Library_Mock
 import iOS_Bluetooth_Numbers_Database
 import iOS_Common_Libraries
 
-// MARK: Model
+// MARK: HeartRateMeasurementCharacteristic
 
 struct HeartRateMeasurementCharacteristic {
     let heartRate: Int
@@ -35,119 +35,22 @@ struct HeartRateMeasurementCharacteristic {
     }
 }
 
-
 private typealias ViewModel = HeartRateScreen.HeartRateViewModel
 
+// MARK: - HeartRateViewModel
+
 extension HeartRateScreen {
-    @MainActor 
-    class HeartRateViewModel {
-        let env = Environment()
+    
+    @MainActor
+    class HeartRateViewModel: ObservableObject {
         
         private let peripheral: Peripheral
         private let hrService: CBService
-        
         private var hrMeasurement: CBCharacteristic!
-        
         private var cancelable = Set<AnyCancellable>()
         
-        private let log = NordicLog(category: "HeartRateScreen", subsystem: "com.nordicsemi.nrf-toolbox")
+        private let log = NordicLog(category: "HeartRateViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
         
-        init(peripheral: Peripheral, hrService: CBService) {
-            self.peripheral = peripheral
-            
-            assert(hrService.uuid == Service.heartRate.uuid)
-            
-            self.hrService = hrService
-            log.debug(#function)
-        }
-        
-        deinit {
-            log.debug(#function)
-        }
-        
-        func prepare() async {
-            do {
-                try await discoverCharacteristics()
-            } catch {
-                env.criticalError = .noMandatoryCharacteristic
-            }
-        }
-    }
-}
-
-extension HeartRateScreen.HeartRateViewModel: SupportedServiceViewModel {
-    func onConnect() {
-        Task {
-            await prepare()
-        }
-    }
-    
-    func onDisconnect() {
-        cancelable.removeAll()
-    }
-}
-
-// MARK: Private Methods
-private extension ViewModel {
-    func discoverCharacteristics() async throws {
-        let hrCharacteristics: [Characteristic] = [.heartRateMeasurement]
-        
-        let hrCbCh = try await peripheral.discoverCharacteristics(hrCharacteristics.map(\.uuid), for: hrService)
-            .timeout(1, scheduler: DispatchQueue.main)
-            .firstValue
-        
-        for ch in hrCbCh {
-            if ch.uuid == Characteristic.heartRateMeasurement.uuid {
-                try await enableHRMeasurement(ch)
-            }
-        }
-    }
-    
-    func enableHRMeasurement(_ characteristic: CBCharacteristic) async throws {
-        peripheral.listenValues(for: characteristic)
-            .compactMap { data in
-                return try? HeartRateMeasurementCharacteristic(with: data, date: Date())
-            }
-            .sink { completion in
-                if case .failure = completion {
-                    self.env.internalAlertError = .measurement
-                }
-            } receiveValue: { [unowned self] v in
-                if v.date.timeIntervalSince1970 - env.scrolPosition.timeIntervalSince1970 < CGFloat(env.visibleDomain + 5) || env.data.isEmpty {
-                    env.scrolPosition = Date()
-                }
-
-                env.data.append(v)
-                
-                if env.data.count > env.capacity {
-                    env.data.removeFirst()
-                }
-                
-                let min = (env.data.min { $0.heartRate < $1.heartRate }?.heartRate ?? 40)
-                let max  = (env.data.max { $0.heartRate < $1.heartRate }?.heartRate ?? 140)
-                
-                env.lowest = min - 5
-                env.highest = max + 5
-
-            }
-            .store(in: &cancelable)
-        
-        _ = try await peripheral.setNotifyValue(true, for: characteristic).firstValue
-    }
-}
-
-
-
-private extension ViewModel {
-    enum Err: Error {
-        
-    }
-}
-
-// MARK: - Environment
-extension HeartRateScreen.HeartRateViewModel {
-    @MainActor
-    class Environment: ObservableObject {
         @Published fileprivate(set) var data: [HeartRateMeasurementCharacteristic] = []
         @Published var scrolPosition: Date = Date()
         
@@ -166,26 +69,109 @@ extension HeartRateScreen.HeartRateViewModel {
             }
         }
         
-        private let l = NordicLog(category: "HeartRateViewModel.Environment", subsystem: "com.nordicsemi.nrf-toolbox")
-        
-        init(data: [HeartRateMeasurementCharacteristic] = [], criticalError: CriticalError? = nil, alertError: Error? = nil) {
-            self.data = data
-            self.criticalError = criticalError
-            self.alertError = alertError
+        init(peripheral: Peripheral, hrService: CBService) {
+            self.peripheral = peripheral
+            self.data = []
+            self.criticalError = nil
+            self.alertError = nil
             
-            assert(capacity >= visibleDomain)
+            assert(hrService.uuid == Service.heartRate.uuid)
             
-            l.debug(#function)
+            self.hrService = hrService
+            log.debug(#function)
         }
         
         deinit {
-            l.debug(#function)
+            log.debug(#function)
+        }
+        
+        func prepare() async {
+            do {
+                try await discoverCharacteristics()
+            } catch {
+                criticalError = .noMandatoryCharacteristic
+            }
         }
     }
 }
 
+extension HeartRateScreen.HeartRateViewModel: SupportedServiceViewModel {
+    func onConnect() {
+        Task {
+            await prepare()
+        }
+    }
+    
+    func onDisconnect() {
+        cancelable.removeAll()
+    }
+}
+
+// MARK: - Private
+
+private extension ViewModel {
+    
+    // MARK: discoverCharacteristics()
+    
+    func discoverCharacteristics() async throws {
+        let hrCharacteristics: [Characteristic] = [.heartRateMeasurement]
+        
+        let hrCbCh = try await peripheral.discoverCharacteristics(hrCharacteristics.map(\.uuid), for: hrService)
+            .timeout(1, scheduler: DispatchQueue.main)
+            .firstValue
+        
+        for ch in hrCbCh {
+            if ch.uuid == Characteristic.heartRateMeasurement.uuid {
+                try await enableHRMeasurement(ch)
+            }
+        }
+    }
+    
+    // MARK: enableHRMeasurement()
+    
+    func enableHRMeasurement(_ characteristic: CBCharacteristic) async throws {
+        peripheral.listenValues(for: characteristic)
+            .compactMap { data in
+                return try? HeartRateMeasurementCharacteristic(with: data, date: Date())
+            }
+            .sink { completion in
+                if case .failure = completion {
+                    self.internalAlertError = .measurement
+                }
+            } receiveValue: { [unowned self] v in
+                if v.date.timeIntervalSince1970 - scrolPosition.timeIntervalSince1970 < CGFloat(visibleDomain + 5) || data.isEmpty {
+                    scrolPosition = Date()
+                }
+
+                data.append(v)
+                
+                if data.count > capacity {
+                    data.removeFirst()
+                }
+                
+                let min = (data.min { $0.heartRate < $1.heartRate }?.heartRate ?? 40)
+                let max  = (data.max { $0.heartRate < $1.heartRate }?.heartRate ?? 140)
+                
+                lowest = min - 5
+                highest = max + 5
+
+            }
+            .store(in: &cancelable)
+        
+        _ = try await peripheral.setNotifyValue(true, for: characteristic).firstValue
+    }
+}
+
+private extension ViewModel {
+    enum Err: Error {
+        
+    }
+}
+
 // MARK: - Errors
-extension HeartRateScreen.HeartRateViewModel.Environment {
+
+extension HeartRateScreen.HeartRateViewModel {
+    
     enum CriticalError: LocalizedError {
         case unknown
         case noMandatoryCharacteristic
@@ -197,7 +183,7 @@ extension HeartRateScreen.HeartRateViewModel.Environment {
     }
 }
 
-extension HeartRateScreen.HeartRateViewModel.Environment.CriticalError {
+extension HeartRateScreen.HeartRateViewModel.CriticalError {
     var errorDescription: String? {
         switch self {
         case .unknown:
@@ -208,7 +194,7 @@ extension HeartRateScreen.HeartRateViewModel.Environment.CriticalError {
     }
 }
 
-extension HeartRateScreen.HeartRateViewModel.Environment.AlertError {
+extension HeartRateScreen.HeartRateViewModel.AlertError {
     var errorDescription: String? {
         switch self {
         case .unknown:
