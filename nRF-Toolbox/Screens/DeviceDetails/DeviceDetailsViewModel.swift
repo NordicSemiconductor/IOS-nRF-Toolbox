@@ -46,8 +46,12 @@ extension DeviceDetailsScreen {
         var heartRateServiceViewModel: HeartRateScreen.HeartRateViewModel? {
             supportedServiceViewModels.firstOfType(type: HeartRateScreen.HeartRateViewModel.self)
         }
+        
+        var batteryServiceViewModel: BatteryViewModel? {
+            supportedServiceViewModels.firstOfType(type: BatteryViewModel.self)
+        }
     
-        init (cbPeripheral: CBPeripheral, centralManager: CentralManager) {
+        init(cbPeripheral: CBPeripheral, centralManager: CentralManager) {
             self.peripheral = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
             self.centralManager = centralManager
             self.environment = Environment(
@@ -56,7 +60,6 @@ extension DeviceDetailsScreen {
             )
             
             self.environment.peripheralName = peripheral.name
-            
             self.subscribeOnConnection()
             
             Task {
@@ -119,7 +122,7 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
                 case .heartRate:
                     supportedServiceViewModels.append(HeartRateScreen.HeartRateViewModel(peripheral: peripheral, heartRateService: service))
                 case .battery:
-                    supportedServiceViewModels.append(BatteryViewModel(peripheral: peripheral))
+                    supportedServiceViewModels.append(BatteryViewModel(peripheral: peripheral, batteryService: service))
                 default:
                     break
                 }

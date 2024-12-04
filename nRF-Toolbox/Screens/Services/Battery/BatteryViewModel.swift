@@ -25,6 +25,7 @@ final class BatteryViewModel: ObservableObject {
     @Published fileprivate(set) var currentBatteryLevel: UInt?
     @Published fileprivate(set) var batteryLevelAvailable: Bool
     
+    private let service: CBService
     private let peripheral: Peripheral
     private var cancellables: Set<AnyCancellable>
     
@@ -32,20 +33,21 @@ final class BatteryViewModel: ObservableObject {
     
     // MARK: init
     
-    init(peripheral: Peripheral) {
+    init(peripheral: Peripheral, batteryService: CBService) {
         self.peripheral = peripheral
+        self.service = batteryService
         self.cancellables = Set<AnyCancellable>()
         self.batteryLevelData = []
         self.currentBatteryLevel = nil
         self.batteryLevelAvailable = false
     }
     
-    // handleBatteryService(:peripheral:)
+    // startListening()
     
-    func handleBatteryService(_ cbBatteryLevel: CBService, peripheral: Peripheral) async throws {
+    func startListening() async throws {
         let characteristics: [Characteristic] = [.batteryLevel]
         let cbCharacteristics = try await peripheral
-            .discoverCharacteristics(characteristics.map(\.uuid), for: cbBatteryLevel)
+            .discoverCharacteristics(characteristics.map(\.uuid), for: service)
             .timeout(1, scheduler: DispatchQueue.main)
             .firstValue
         

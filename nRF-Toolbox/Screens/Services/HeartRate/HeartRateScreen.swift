@@ -25,16 +25,38 @@ struct HeartRateScreen: View {
             }
             .listRowSeparator(.hidden)
             
-            if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: connectedDevicesViewModel.selectedDevice.id),
-               let heartRateServiceViewModel = deviceVM.heartRateServiceViewModel {
-                HeartRateView()
-                    .environmentObject(heartRateServiceViewModel)
-            } else {
-                NoContentView(
-                    title: "No Services",
-                    systemImage: "list.bullet.rectangle.portrait",
-                    description: "No Supported Services"
-                )
+            Section("Heart Rate") {
+                if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: connectedDevicesViewModel.selectedDevice.id),
+                   let heartRateServiceViewModel = deviceVM.heartRateServiceViewModel {
+                    HeartRateView()
+                        .environmentObject(heartRateServiceViewModel)
+                } else {
+                    NoContentView(
+                        title: "No Services",
+                        systemImage: "list.bullet.rectangle.portrait",
+                        description: "No Supported Services"
+                    )
+                }
+            }
+            
+            Section("Battery") {
+                if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: connectedDevicesViewModel.selectedDevice.id),
+                   let batteryViewModel = deviceVM.batteryServiceViewModel {
+                    Text("Battery Detected")
+                        .task {
+                            do {
+                                try await batteryViewModel.startListening()
+                            } catch {
+                                
+                            }
+                        }
+                } else {
+                    NoContentView(
+                        title: "No Services",
+                        systemImage: "list.bullet.rectangle.portrait",
+                        description: "No Supported Services"
+                    )
+                }
             }
         }
         .listStyle(.insetGrouped)
@@ -53,20 +75,13 @@ struct HeartRateView: View {
     // MARK: view
     
     var body: some View {
-        Section("Data") {
-            if viewModel.data.isEmpty {
-                NoContentView(title: "No Heart Rate Data", systemImage: "waveform.path.ecg.rectangle")
-                    .task {
-                        await viewModel.prepare()
-                    }
-                
-            } else {
-                HeartRateChart()
-            }
-        }
-        
-        Section("Battery") {
-            Text("In Progress")
+        if viewModel.data.isEmpty {
+            NoContentView(title: "No Heart Rate Data", systemImage: "waveform.path.ecg.rectangle")
+                .task {
+                    await viewModel.prepare()
+                }
+        } else {
+            HeartRateChart()
         }
     }
 }
