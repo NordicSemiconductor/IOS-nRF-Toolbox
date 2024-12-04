@@ -117,14 +117,12 @@ private extension ViewModel {
     func discoverCharacteristics() async throws {
         let hrCharacteristics: [Characteristic] = [.heartRateMeasurement]
         
-        let hrCbCh = try await peripheral.discoverCharacteristics(hrCharacteristics.map(\.uuid), for: heartRateService)
+        let heartRateCharacteristic = try await peripheral.discoverCharacteristics(hrCharacteristics.map(\.uuid), for: heartRateService)
             .timeout(1, scheduler: DispatchQueue.main)
             .firstValue
         
-        for ch in hrCbCh {
-            if ch.uuid == Characteristic.heartRateMeasurement.uuid {
-                try await enableHRMeasurement(ch)
-            }
+        for characteristic in heartRateCharacteristic where characteristic.uuid == Characteristic.heartRateMeasurement.uuid {
+            try await enableHRMeasurement(characteristic)
         }
     }
     
@@ -139,12 +137,12 @@ private extension ViewModel {
                 if case .failure = completion {
                     self.internalAlertError = .measurement
                 }
-            } receiveValue: { [unowned self] v in
-                if v.date.timeIntervalSince1970 - scrolPosition.timeIntervalSince1970 < CGFloat(visibleDomain + 5) || data.isEmpty {
+            } receiveValue: { [unowned self] newValue in
+                if newValue.date.timeIntervalSince1970 - scrolPosition.timeIntervalSince1970 < CGFloat(visibleDomain + 5) || data.isEmpty {
                     scrolPosition = Date()
                 }
 
-                data.append(v)
+                data.append(newValue)
                 
                 if data.count > capacity {
                     data.removeFirst()
@@ -155,7 +153,6 @@ private extension ViewModel {
                 
                 lowest = min - 5
                 highest = max + 5
-
             }
             .store(in: &cancelable)
         
