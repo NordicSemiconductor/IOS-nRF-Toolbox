@@ -27,7 +27,7 @@ struct HeartRateScreen: View {
             }
             .listRowSeparator(.hidden)
             
-            if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: connectedDevicesViewModel.environment.selectedDevice.id),
+            if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: connectedDevicesViewModel.selectedDevice.id),
                let heartRateServiceViewModel = deviceVM.heartRateServiceViewModel {
                 HeartRateView()
                     .environmentObject(heartRateServiceViewModel.env)

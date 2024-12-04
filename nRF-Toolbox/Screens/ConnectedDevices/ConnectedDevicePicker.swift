@@ -15,13 +15,12 @@ struct ConnectedDevicePicker: View {
     
     // MARK: Environment
     
-    @EnvironmentObject var rootViewModel: RootNavigationViewModel
     @EnvironmentObject var connectedDevicesViewModel: ConnectedDevicesViewModel
     
     // MARK: view
     
     var body: some View {
-        InlinePicker(title: "Device", selectedValue: $connectedDevicesViewModel.environment.selectedDevice, possibleValues: connectedDevicesViewModel.environment.connectedDevices)
+        InlinePicker(title: "Device", selectedValue: $connectedDevicesViewModel.selectedDevice, possibleValues: connectedDevicesViewModel.connectedDevices)
             .labeledContentStyle(.accentedContent)
     }
 }
