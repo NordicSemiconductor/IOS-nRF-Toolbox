@@ -50,7 +50,7 @@ extension HeartRateScreen {
         
         private var cancelable = Set<AnyCancellable>()
         
-        private let l = NordicLog(category: "HeartRateScreen", subsystem: "com.nordicsemi.nrf-toolbox")
+        private let log = NordicLog(category: "HeartRateScreen", subsystem: "com.nordicsemi.nrf-toolbox")
         
         init(peripheral: Peripheral, hrService: CBService) {
             self.peripheral = peripheral
@@ -58,11 +58,11 @@ extension HeartRateScreen {
             assert(hrService.uuid == Service.heartRate.uuid)
             
             self.hrService = hrService
-            l.debug(#function)
+            log.debug(#function)
         }
         
         deinit {
-            l.debug(#function)
+            log.debug(#function)
         }
         
         func prepare() async {

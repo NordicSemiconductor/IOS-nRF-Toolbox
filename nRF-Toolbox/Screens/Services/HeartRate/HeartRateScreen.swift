@@ -30,6 +30,9 @@ struct HeartRateScreen: View {
             if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: connectedDevicesViewModel.selectedDevice.id),
                let heartRateServiceViewModel = deviceVM.heartRateServiceViewModel {
                 HeartRateView()
+                    .task {
+                        await heartRateServiceViewModel.prepare()
+                    }
                     .environmentObject(heartRateServiceViewModel.env)
             } else {
                 NoContentView(
