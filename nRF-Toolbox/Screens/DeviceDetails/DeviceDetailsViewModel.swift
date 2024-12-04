@@ -37,7 +37,7 @@ extension DeviceDetailsScreen {
         let environment: Environment
         private var supportedServiceViewModels: [SupportedServiceViewModel] = []
         
-        private let l = NordicLog(category: "DeviceDetails.VM", subsystem: "com.nordicsemi.nrf-toolbox")
+        private let log = NordicLog(category: "DeviceDetails.VM", subsystem: "com.nordicsemi.nrf-toolbox")
         
         var runningServiceViewModel: RunningServiceScreen.RunningServiceViewModel? {
             supportedServiceViewModels.firstOfType(type: RunningServiceScreen.RunningServiceViewModel.self)
@@ -47,10 +47,7 @@ extension DeviceDetailsScreen {
             supportedServiceViewModels.firstOfType(type: HeartRateScreen.HeartRateViewModel.self)
         }
     
-        init (
-            cbPeripheral: CBPeripheral,
-            centralManager: CentralManager
-        ) {
+        init (cbPeripheral: CBPeripheral, centralManager: CentralManager) {
             self.peripheral = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
             self.centralManager = centralManager
             self.environment = Environment(
@@ -70,11 +67,11 @@ extension DeviceDetailsScreen {
                 await self?.reconnect()
             }
             
-            l.debug(#function)
+            log.debug(#function)
         }
         
         deinit {
-            l.debug(#function)
+            log.debug(#function)
         }
     }
 }
@@ -113,7 +110,7 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
         let supportedServices = Service.supportedServices.map { CBUUID(service: $0) }
         do {
             discoveredServices = try await peripheral.discoverServices(serviceUUIDs: supportedServices).firstValue
-            self.environment.services = discoveredServices.map { Service(cbService: $0) }
+            environment.services = discoveredServices.map { Service(cbService: $0) }
            
             for service in discoveredServices {
                 switch service.uuid {
@@ -121,6 +118,8 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
                     supportedServiceViewModels.append(RunningServiceScreen.RunningServiceViewModel(peripheral: peripheral, runningService: service))
                 case .heartRate:
                     supportedServiceViewModels.append(HeartRateScreen.HeartRateViewModel(peripheral: peripheral, heartRateService: service))
+                case .battery:
+                    supportedServiceViewModels.append(BatteryViewModel(peripheral: peripheral))
                 default:
                     break
                 }
@@ -145,6 +144,7 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
 }
 
 extension DeviceDetailsScreen.DeviceDetailsViewModel {
+    
     @MainActor
     class Environment: ObservableObject {
         @Published fileprivate(set) var services: [Service]
