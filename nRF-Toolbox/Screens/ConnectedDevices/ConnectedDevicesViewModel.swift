@@ -208,7 +208,6 @@ extension ConnectedDevicesViewModel {
     
     final class Environment: ObservableObject {
         
-        @Published var showScanner: Bool = false
         @Published fileprivate(set) var connectedDevices: [Device]
         @Published var selectedDevice: Device {
             didSet {
