@@ -14,23 +14,25 @@ import iOS_BLE_Library_Mock
 extension Service: @retroactive Hashable {
     
     private static let serviceIcons: [Service : String] = [
-        .runningSpeedAndCadence : "figure.run",
-        .cyclingSpeedAndCadence : "figure.outdoor.cycle",
-        .heartRate : "heart",
+        .runningSpeedAndCadence: "figure.run",
+        .cyclingSpeedAndCadence: "figure.outdoor.cycle",
+        .heartRate: "heart",
+        .batteryService: "battery.75percent",
 //        .bloodPressure,
 //        .glucose,
 //        .continuousGlucoseMonitoring,
-        .healthThermometer : "medical.thermometer"
+        .healthThermometer: "medical.thermometer"
     ]
     
     private static let colors: [Service : Color] = [
-        .runningSpeedAndCadence : .cyan,
-        .cyclingSpeedAndCadence : .green,
-        .heartRate : .red,
-        .bloodPressure : .purple,
-        .glucose : .orange,
-        .continuousGlucoseMonitoring : .yellow,
-        .healthThermometer : .indigo
+        .runningSpeedAndCadence: .cyan,
+        .cyclingSpeedAndCadence: .green,
+        .batteryService: .green,
+        .heartRate: .red,
+        .bloodPressure: .purple,
+        .glucose: .orange,
+        .continuousGlucoseMonitoring: .yellow,
+        .healthThermometer: .indigo
     ]
     
     static var supportedServices: [Service] = [
@@ -40,7 +42,8 @@ extension Service: @retroactive Hashable {
         .bloodPressure,
         .glucose,
         .continuousGlucoseMonitoring,
-        .healthThermometer
+        .healthThermometer,
+        .batteryService
     ]
     
     public func hash(into hasher: inout Hasher) {
