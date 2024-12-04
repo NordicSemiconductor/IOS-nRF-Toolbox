@@ -84,7 +84,6 @@ extension HeartRateScreen.HeartRateViewModel: SupportedServiceViewModel {
     
     func onDisconnect() {
         cancelable.removeAll()
-        env.clear()
     }
 }
 
@@ -181,12 +180,6 @@ extension HeartRateScreen.HeartRateViewModel {
         
         deinit {
             l.debug(#function)
-        }
-        
-        fileprivate func clear() {
-//            data.removeAll()
-//            lowest = 40
-//            highest = 200
         }
     }
 }
