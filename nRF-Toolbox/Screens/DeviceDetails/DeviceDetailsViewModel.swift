@@ -108,6 +108,7 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
 
 // MARK: - Service View Models
 extension DeviceDetailsScreen.DeviceDetailsViewModel {
+    
     private func discoverSupportedServices() async {
         let supportedServices = Service.supportedServices.map { CBUUID(service: $0) }
         do {
@@ -119,7 +120,7 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
                 case .runningSpeedCadence:
                     supportedServiceViewModels.append(RunningServiceScreen.RunningServiceViewModel(peripheral: peripheral, runningService: service))
                 case .heartRate:
-                    supportedServiceViewModels.append(HeartRateScreen.HeartRateViewModel(peripheral: peripheral, hrService: service))
+                    supportedServiceViewModels.append(HeartRateScreen.HeartRateViewModel(peripheral: peripheral, heartRateService: service))
                 default:
                     break
                 }

@@ -45,7 +45,7 @@ extension HeartRateScreen {
     class HeartRateViewModel: ObservableObject {
         
         private let peripheral: Peripheral
-        private let hrService: CBService
+        private let heartRateService: CBService
         private var hrMeasurement: CBCharacteristic!
         private var cancelable = Set<AnyCancellable>()
         
@@ -69,15 +69,15 @@ extension HeartRateScreen {
             }
         }
         
-        init(peripheral: Peripheral, hrService: CBService) {
+        init(peripheral: Peripheral, heartRateService: CBService) {
             self.peripheral = peripheral
             self.data = []
             self.criticalError = nil
             self.alertError = nil
             
-            assert(hrService.uuid == Service.heartRate.uuid)
+            assert(heartRateService.uuid == Service.heartRate.uuid)
             
-            self.hrService = hrService
+            self.heartRateService = heartRateService
             log.debug(#function)
         }
         
@@ -117,7 +117,7 @@ private extension ViewModel {
     func discoverCharacteristics() async throws {
         let hrCharacteristics: [Characteristic] = [.heartRateMeasurement]
         
-        let hrCbCh = try await peripheral.discoverCharacteristics(hrCharacteristics.map(\.uuid), for: hrService)
+        let hrCbCh = try await peripheral.discoverCharacteristics(hrCharacteristics.map(\.uuid), for: heartRateService)
             .timeout(1, scheduler: DispatchQueue.main)
             .firstValue
         

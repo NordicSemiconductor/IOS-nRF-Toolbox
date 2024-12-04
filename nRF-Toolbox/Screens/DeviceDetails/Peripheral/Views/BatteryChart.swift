@@ -10,9 +10,16 @@ import SwiftUI
 import CoreBluetoothMock_Collection
 import Charts
 
+// MARK: - BatteryChart
+
 struct BatteryChart: View {
+    
+    // MARK: Properties
+    
     let data: [ChartTimeData<Battery.Level>]
     let currentLevel: UInt?
+    
+    // MARK: view
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -30,6 +37,8 @@ struct BatteryChart: View {
             chartView
         }
     }
+    
+    // MARK: chartView
     
     @ViewBuilder
     var chartView: some View {
@@ -54,6 +63,8 @@ struct BatteryChart: View {
         }
     }
     
+    // MARK: batteryStyle(level:)
+    
     private func batteryStyle(level: UInt) -> Color {
         switch level {
         case 0..<10: .red
@@ -61,12 +72,4 @@ struct BatteryChart: View {
         default: .green
         }
     }
-}
-
-
-#Preview {
-    BatteryChart(
-        data: Battery.preview,
-        currentLevel: 20
-    )
 }
