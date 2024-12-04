@@ -28,6 +28,7 @@ final class BatteryViewModel: ObservableObject {
     private let service: CBService
     private let peripheral: Peripheral
     private var cancellables: Set<AnyCancellable>
+    private let log = NordicLog(category: "BatteryViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
     
     private static let batteryLevelDataLength = 120
     
@@ -40,11 +41,13 @@ final class BatteryViewModel: ObservableObject {
         self.batteryLevelData = []
         self.currentBatteryLevel = nil
         self.batteryLevelAvailable = false
+        log.debug(#function)
     }
     
     // startListening()
     
     func startListening() async throws {
+        log.debug(#function)
         let characteristics: [Characteristic] = [.batteryLevel]
         let cbCharacteristics = try await peripheral
             .discoverCharacteristics(characteristics.map(\.uuid), for: service)

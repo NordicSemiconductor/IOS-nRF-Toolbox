@@ -42,7 +42,7 @@ struct HeartRateScreen: View {
             Section("Battery") {
                 if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: connectedDevicesViewModel.selectedDevice.id),
                    let batteryViewModel = deviceVM.batteryServiceViewModel {
-                    Text("Battery Detected")
+                    BatteryView()
                         .task {
                             do {
                                 try await batteryViewModel.startListening()
@@ -50,6 +50,7 @@ struct HeartRateScreen: View {
                                 
                             }
                         }
+                        .environmentObject(batteryViewModel)
                 } else {
                     NoContentView(
                         title: "No Services",
@@ -83,5 +84,20 @@ struct HeartRateView: View {
         } else {
             HeartRateChart()
         }
+    }
+}
+
+// MARK: - BatteryView
+
+struct BatteryView: View {
+    
+    // MARK: EnvironmentObject
+    
+    @EnvironmentObject private var viewModel: BatteryViewModel
+    
+    // MARK: view
+    
+    var body: some View {
+        BatteryChart(data: viewModel.batteryLevelData, currentLevel: viewModel.currentBatteryLevel)
     }
 }

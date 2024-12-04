@@ -23,11 +23,9 @@ struct BatteryChart: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Battery level for the last 2 minutes")
-                .foregroundStyle(.secondary)
             HStack {
-                if let lvl = currentLevel {
-                    Text("Battery Level \(lvl)%")
+                if let currentLevel {
+                    Text("Battery Level \(currentLevel)%")
                 } else {
                     Text("Battery Level")
                 }
