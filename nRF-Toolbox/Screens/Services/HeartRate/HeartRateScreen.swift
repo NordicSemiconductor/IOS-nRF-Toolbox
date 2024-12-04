@@ -53,13 +53,20 @@ struct HeartRateView: View {
     // MARK: view
     
     var body: some View {
-        if viewModel.data.isEmpty {
-            NoContentView(title: "No Heart Rate Data", systemImage: "waveform.path.ecg.rectangle")
-                .task {
-                    await viewModel.prepare()
-                }
-        } else {
-            HeartRateChart()
+        Section("Data") {
+            if viewModel.data.isEmpty {
+                NoContentView(title: "No Heart Rate Data", systemImage: "waveform.path.ecg.rectangle")
+                    .task {
+                        await viewModel.prepare()
+                    }
+                
+            } else {
+                HeartRateChart()
+            }
+        }
+        
+        Section("Battery") {
+            Text("In Progress")
         }
     }
 }

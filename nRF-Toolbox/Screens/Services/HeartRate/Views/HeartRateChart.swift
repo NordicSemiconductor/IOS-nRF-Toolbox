@@ -21,51 +21,25 @@ struct HeartRateChart: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Heart Rate Monitor")
-                .foregroundStyle(.secondary)
-            Label {
-                Text("\(viewModel.data.last!.heartRate) bpm")
-            } icon: {
-                Image(systemName: "waveform.path.ecg")
+            Chart {
+                ForEach(viewModel.data, id: \.date) {
+                    LineMark(
+                        x: .value("Date", $0.date),
+                        y: .value("Heart Rate", $0.heartRate)
+                    )
+                    .foregroundStyle(.red)
+                }
+                .interpolationMethod(.catmullRom)
             }
-            .font(.title2.bold())
-            
-            if #available(iOS 17, macOS 14, *) {
-                scalableChart()
-            } else {
-                chart
-            }
-        }
-        .padding()
-    }
-    
-    // MARK: scalableChart
-    
-    @available(macOS 14.0, *)
-    @available(iOS 17.0, *)
-    @ViewBuilder
-    private func scalableChart() -> some View {
-        chart
+            .chartXAxis(.hidden)
+            .chartYScale(domain: [viewModel.lowest, viewModel.highest],
+                         range: .plotDimension(padding: 8))
             .chartScrollableAxes(.horizontal)
             .chartXVisibleDomain(length: viewModel.visibleDomain)
             .chartScrollPosition(x: $viewModel.scrolPosition)
-    }
-    
-    // MARK: chart
-    
-    @ViewBuilder
-    private var chart: some View {
-        Chart {
-            ForEach(viewModel.data, id: \.date) {
-                LineMark(
-                    x: .value("Date", $0.date),
-                    y: .value("HR", $0.heartRate)
-                )
-                .foregroundStyle(.red)
-            }
-            .interpolationMethod(.catmullRom)
+            
+            Label("\(viewModel.data.last!.heartRate) bpm", systemImage: "waveform.path.ecg")
+                .font(.title2.bold())
         }
-        .chartXAxis(.hidden)
-        .chartYScale(domain: [viewModel.lowest, viewModel.highest], range: .plotDimension(padding: 8))
     }
 }
