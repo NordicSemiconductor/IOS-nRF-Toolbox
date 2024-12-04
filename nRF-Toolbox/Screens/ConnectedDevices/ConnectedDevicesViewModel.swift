@@ -131,15 +131,18 @@ extension ConnectedDevicesViewModel {
     private func observeDisconnections() {
         centralManager.disconnectedPeripheralsChannel
             .sink { [unowned self] device in
-                guard let deviceIndex = self.connectedDevices.firstIndex(where: {
-                    $0.id == device.0.identifier }) else {
+                guard let deviceIndex = self.connectedDevices.firstIndex(where: \.id, equals: device.0.identifier) else {
                     return
                 }
                 
+                let disconnectedDevice = self.connectedDevices[deviceIndex]
                 if let err = device.1 {
                     self.connectedDevices[deviceIndex].status = .error(err)
                 } else {
                     self.connectedDevices.remove(at: deviceIndex)
+                }
+                if selectedDevice.id == disconnectedDevice.id {
+                    self.selectedDevice = .Unselected
                 }
             }
             .store(in: &cancelable)
