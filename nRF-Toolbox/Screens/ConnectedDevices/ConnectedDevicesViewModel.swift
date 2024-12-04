@@ -21,9 +21,7 @@ final class ConnectedDevicesViewModel: ObservableObject {
     private var deviceViewModels: [UUID: DeviceDetailsScreen.DeviceDetailsViewModel] = [:]
     private var cancelable = Set<AnyCancellable>()
     
-    lazy var environment: Environment = Environment(deviceViewModel: {
-        [unowned self] in self.deviceViewModel(for: $0.id)!
-    })
+    lazy var environment: Environment = Environment()
     let centralManager: CentralManager
     
     var hasSelectedDevice: Bool {
@@ -219,10 +217,7 @@ extension ConnectedDevicesViewModel {
             }
         }
         
-        let deviceViewModel: ((Device) -> (DeviceDetailsScreen.DeviceDetailsViewModel))?
-        
-        init(deviceViewModel: ((Device) -> (DeviceDetailsScreen.DeviceDetailsViewModel))? = nil) {
-            self.deviceViewModel = deviceViewModel
+        init() {
             self.connectedDevices = [.Unselected]
             self.selectedDevice = .Unselected
         }
