@@ -96,6 +96,7 @@ extension HeartRateScreen {
 }
 
 extension HeartRateScreen.HeartRateViewModel: SupportedServiceViewModel {
+    
     func onConnect() {
         Task {
             await prepare()
