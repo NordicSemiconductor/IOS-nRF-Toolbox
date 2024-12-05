@@ -844,7 +844,6 @@
 		0108E87C2AF1654000C8B096 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				0108E87D2AF1654D00C8B096 /* BatteryChart.swift */,
 				01C62AE62B72480C00CDEE31 /* DeviceInformationView.swift */,
 			);
 			path = Views;
@@ -2431,6 +2430,7 @@
 			children = (
 				AA55391F2D00AAD200F589F5 /* BatteryViewModel.swift */,
 				AA94C5502D01B49200562F7A /* BatteryView.swift */,
+				0108E87D2AF1654D00C8B096 /* BatteryChart.swift */,
 			);
 			path = Battery;
 			sourceTree = "<group>";
