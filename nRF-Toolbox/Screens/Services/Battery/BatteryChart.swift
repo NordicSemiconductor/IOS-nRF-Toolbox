@@ -23,16 +23,12 @@ struct BatteryChart: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            HStack {
-                if let currentLevel {
-                    Text("Battery Level \(currentLevel)%")
-                } else {
-                    Text("Battery Level")
-                }
-            }
-            .font(.title2.bold())
-            
             chartView
+            
+            if let currentLevel {
+                Text("Battery Level \(currentLevel)%")
+                    .font(.title2.bold())
+            }
         }
     }
     

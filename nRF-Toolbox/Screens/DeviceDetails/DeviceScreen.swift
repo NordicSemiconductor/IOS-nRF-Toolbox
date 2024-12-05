@@ -32,31 +32,19 @@ struct DeviceScreen: View {
 
     var body: some View {
         List {
-            Section("Heart Rate") {
-                if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id),
-                   let heartRateServiceViewModel = deviceVM.heartRateServiceViewModel {
-                    HeartRateView()
-                        .environmentObject(heartRateServiceViewModel)
-                } else {
-                    NoContentView(
-                        title: "No Services",
-                        systemImage: "list.bullet.rectangle.portrait",
-                        description: "No Supported Services"
-                    )
+            if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id) {
+                if let heartRateServiceViewModel = deviceVM.heartRateServiceViewModel {
+                    Section("Heart Rate") {
+                        HeartRateView()
+                            .environmentObject(heartRateServiceViewModel)
+                    }
                 }
-            }
-            
-            Section("Battery") {
-                if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id),
-                   let batteryViewModel = deviceVM.batteryServiceViewModel {
-                    BatteryView()
-                        .environmentObject(batteryViewModel)
-                } else {
-                    NoContentView(
-                        title: "No Services",
-                        systemImage: "list.bullet.rectangle.portrait",
-                        description: "No Supported Services"
-                    )
+                
+                if let batteryViewModel = deviceVM.batteryServiceViewModel {
+                    Section("Battery Level") {
+                        BatteryView()
+                            .environmentObject(batteryViewModel)
+                    }
                 }
             }
             

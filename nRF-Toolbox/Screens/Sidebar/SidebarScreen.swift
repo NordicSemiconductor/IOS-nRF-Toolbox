@@ -48,9 +48,6 @@ struct SidebarView: View {
                     .disabled(true)
             }
         }
-        .onAppear {
-            viewModel.selectedDevice = nil
-        }
         .navigationTitle("nRF Toolbox")
         .setupNavBarBackground(with: Assets.navBar.color)
     }
