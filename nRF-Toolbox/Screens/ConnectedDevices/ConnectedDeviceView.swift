@@ -29,20 +29,18 @@ struct ConnectedDeviceView: View {
     // MARK: view
     
     var body: some View {
-        HStack(alignment: .firstTextBaseline) {
-            VStack(alignment: .leading) {
-                Text(device.name ?? "Unnamed")
-                    .font(.title3)
-                    .padding(.bottom, 4)
-                
-                switch device.status {
-                case .busy, .connected:
-                    EmptyView()
-                case .error(let error):
-                    Label("Error: \(error.localizedDescription)", systemImage: "exclamationmark.circle")
-                        .accentColor(.nordicRed)
-                        .font(.caption)
-                }
+        VStack(alignment: .leading) {
+            Text(device.name ?? "Unnamed")
+                .font(.title3)
+                .padding(.bottom, 4)
+            
+            switch device.status {
+            case .busy, .connected:
+                EmptyView()
+            case .error(let error):
+                Label("Error: \(error.localizedDescription)", systemImage: "exclamationmark.circle")
+                    .accentColor(.nordicRed)
+                    .font(.caption)
             }
         }
         .listRowSeparator(.hidden)
