@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import iOS_Common_Libraries
 
 // MARK: - DeviceScreen
 
@@ -14,6 +15,7 @@ struct DeviceScreen: View {
 
     // MARK: Environment
     
+    @EnvironmentObject var navigationViewModel: RootNavigationViewModel
     @EnvironmentObject var connectedDevicesViewModel: ConnectedDevicesViewModel
     
     // MARK: Properties
@@ -56,6 +58,19 @@ struct DeviceScreen: View {
                         description: "No Supported Services"
                     )
                 }
+            }
+            
+            Section("Connection") {
+                Button("Disconnect") {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                        Task { @MainActor in
+                            try await connectedDevicesViewModel.disconnectAndRemoveViewModel(device.id)
+                            navigationViewModel.selectedCategory = nil
+                        }
+                    }
+                }
+                .foregroundStyle(Color.red)
+                .centered()
             }
         }
         .listStyle(.insetGrouped)

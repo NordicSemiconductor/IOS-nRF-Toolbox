@@ -44,26 +44,6 @@ struct ConnectedDeviceView: View {
                         .font(.caption)
                 }
             }
-            
-            Spacer()
-            
-            switch device.status {
-            case .busy:
-                ProgressView()
-                    .progressViewStyle(.circular)
-            case .connected:
-                Button("Disconnect") {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-                        Task {
-                            try await connectedDevicesViewModel.disconnectAndRemoveViewModel(device.id)
-                        }
-                    }
-                }
-                .accentColor(.nordicDarkGrey)
-                .buttonStyle(.borderedProminent)
-            case .error:
-                EmptyView()
-            }
         }
         .listRowSeparator(.hidden)
     }
