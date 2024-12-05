@@ -20,11 +20,6 @@ struct HeartRateScreen: View {
 
     var body: some View {
         List {
-            Section {
-                ConnectedDevicePicker()
-            }
-            .listRowSeparator(.hidden)
-            
             Section("Heart Rate") {
                 if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: connectedDevicesViewModel.selectedDevice.id),
                    let heartRateServiceViewModel = deviceVM.heartRateServiceViewModel {
