@@ -21,7 +21,8 @@ struct DeviceScreen: View {
     var body: some View {
         List {
             Section("Heart Rate") {
-                if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: connectedDevicesViewModel.selectedDevice.id),
+                if let selectedDevice = connectedDevicesViewModel.selectedDevice,
+                   let deviceVM = connectedDevicesViewModel.deviceViewModel(for: selectedDevice.id),
                    let heartRateServiceViewModel = deviceVM.heartRateServiceViewModel {
                     HeartRateView()
                         .environmentObject(heartRateServiceViewModel)
@@ -35,7 +36,8 @@ struct DeviceScreen: View {
             }
             
             Section("Battery") {
-                if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: connectedDevicesViewModel.selectedDevice.id),
+                if let selectedDevice = connectedDevicesViewModel.selectedDevice,
+                   let deviceVM = connectedDevicesViewModel.deviceViewModel(for: selectedDevice.id),
                    let batteryViewModel = deviceVM.batteryServiceViewModel {
                     BatteryView()
                         .task {
@@ -56,6 +58,6 @@ struct DeviceScreen: View {
             }
         }
         .listStyle(.insetGrouped)
-        .navigationTitle(connectedDevicesViewModel.selectedDevice.name ?? "Unnamed")
+        .navigationTitle(connectedDevicesViewModel.selectedDevice?.name ?? "Unnamed")
     }
 }

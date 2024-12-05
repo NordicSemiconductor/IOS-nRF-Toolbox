@@ -22,7 +22,7 @@ final class ConnectedDevicesViewModel: ObservableObject {
     private var cancelable = Set<AnyCancellable>()
     
     @Published fileprivate(set) var connectedDevices: [Device]
-    @Published var selectedDevice: Device {
+    @Published var selectedDevice: Device? {
         didSet {
             if let d = connectedDevices.first(where: { $0 == selectedDevice }) {
                 print(d.name!)
@@ -35,7 +35,7 @@ final class ConnectedDevicesViewModel: ObservableObject {
     let centralManager: CentralManager
     
     var hasSelectedDevice: Bool {
-        selectedDevice != .Unselected
+        selectedDevice != nil
     }
     
     private let log = NordicLog(category: "HeartRateScreen", subsystem: "com.nordicsemi.nrf-toolbox")
@@ -44,8 +44,8 @@ final class ConnectedDevicesViewModel: ObservableObject {
     
     init(centralManager: CentralManager) {
         self.centralManager = centralManager
-        self.connectedDevices = [.Unselected]
-        self.selectedDevice = .Unselected
+        self.connectedDevices = []
+        self.selectedDevice = nil
         observeConnections()
         observeDisconnections()
         log.debug(#function)
@@ -55,7 +55,7 @@ final class ConnectedDevicesViewModel: ObservableObject {
 extension ConnectedDevicesViewModel {
     
     func selectedDeviceModel() -> DeviceDetailsScreen.DeviceDetailsViewModel? {
-        guard selectedDevice != .Unselected else { return nil }
+        guard let selectedDevice else { return nil }
         return deviceViewModel(for: selectedDevice.id)
     }
     
@@ -141,8 +141,8 @@ extension ConnectedDevicesViewModel {
                 } else {
                     self.connectedDevices.remove(at: deviceIndex)
                 }
-                if selectedDevice.id == disconnectedDevice.id {
-                    self.selectedDevice = .Unselected
+                if selectedDevice?.id == disconnectedDevice.id {
+                    self.selectedDevice = nil
                 }
             }
             .store(in: &cancelable)
@@ -154,10 +154,6 @@ extension ConnectedDevicesViewModel {
 extension ConnectedDevicesViewModel {
     
     struct Device: Identifiable, CustomStringConvertible, CustomDebugStringConvertible, Hashable, Equatable {
-        
-        // MARK: Unselected
-        
-        static let Unselected = Device(name: "Unselected", id: UUID(), services: [], status: .connected)
         
         // MARK: Status
         

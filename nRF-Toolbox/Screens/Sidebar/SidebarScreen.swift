@@ -22,15 +22,12 @@ struct SidebarView: View {
     var body: some View {
         List(selection: $rootViewModel.selectedCategory) {
             Section("Connected Devices") {
-                // +1 for "Unselected".
-                if viewModel.connectedDevices.count < 2 {
+                if viewModel.connectedDevices.isEmpty {
                     Text("No Connected Devices")
                 } else {
                     ForEach(viewModel.connectedDevices) { device in
-                        if device != .Unselected {
-                            ConnectedDeviceView(device)
-                                .tag(RootNavigationView.MenuCategory.device)
-                        }
+                        ConnectedDeviceView(device)
+                            .tag(RootNavigationView.MenuCategory.device)
                     }
                 }
             }
