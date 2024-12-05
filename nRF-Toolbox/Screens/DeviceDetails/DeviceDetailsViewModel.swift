@@ -43,8 +43,8 @@ extension DeviceDetailsScreen {
             supportedServiceViewModels.firstOfType(type: RunningServiceScreen.RunningServiceViewModel.self)
         }
         
-        var heartRateServiceViewModel: HeartRateScreen.HeartRateViewModel? {
-            supportedServiceViewModels.firstOfType(type: HeartRateScreen.HeartRateViewModel.self)
+        var heartRateServiceViewModel: DeviceScreen.HeartRateViewModel? {
+            supportedServiceViewModels.firstOfType(type: DeviceScreen.HeartRateViewModel.self)
         }
         
         var batteryServiceViewModel: BatteryViewModel? {
@@ -120,7 +120,7 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
                 case .runningSpeedCadence:
                     supportedServiceViewModels.append(RunningServiceScreen.RunningServiceViewModel(peripheral: peripheral, runningService: service))
                 case .heartRate:
-                    supportedServiceViewModels.append(HeartRateScreen.HeartRateViewModel(peripheral: peripheral, heartRateService: service))
+                    supportedServiceViewModels.append(DeviceScreen.HeartRateViewModel(peripheral: peripheral, heartRateService: service))
                 case .battery:
                     supportedServiceViewModels.append(BatteryViewModel(peripheral: peripheral, batteryService: service))
                 default:

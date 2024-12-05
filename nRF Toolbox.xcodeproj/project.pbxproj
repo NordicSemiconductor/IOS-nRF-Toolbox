@@ -157,7 +157,7 @@
 		01C81AD52A5CB6420011B41E /* ServiceBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C81AD42A5CB6420011B41E /* ServiceBadge.swift */; };
 		01C81AD72A5D8FEA0011B41E /* ReadableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C81AD62A5D8FEA0011B41E /* ReadableError.swift */; };
 		01C81ADA2A5DFA8E0011B41E /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 01C81ADC2A5DFA8E0011B41E /* Localizable.stringsdict */; };
-		01CEB4262AE9100300945105 /* HeartRateScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CEB4242AE9100300945105 /* HeartRateScreen.swift */; };
+		01CEB4262AE9100300945105 /* DeviceScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CEB4242AE9100300945105 /* DeviceScreen.swift */; };
 		01CEB4272AE9100300945105 /* HeartRateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CEB4252AE9100300945105 /* HeartRateViewModel.swift */; };
 		01CEB42A2AE982C600945105 /* HeartRateChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CEB4292AE982C600945105 /* HeartRateChart.swift */; };
 		01CEB42D2AE9956600945105 /* HeartRateMeasurementCharacteristic+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CEB42C2AE9956600945105 /* HeartRateMeasurementCharacteristic+Preview.swift */; };
@@ -561,7 +561,7 @@
 		01C81AD42A5CB6420011B41E /* ServiceBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBadge.swift; sourceTree = "<group>"; };
 		01C81AD62A5D8FEA0011B41E /* ReadableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadableError.swift; sourceTree = "<group>"; };
 		01C81ADB2A5DFA8E0011B41E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
-		01CEB4242AE9100300945105 /* HeartRateScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateScreen.swift; sourceTree = "<group>"; };
+		01CEB4242AE9100300945105 /* DeviceScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceScreen.swift; sourceTree = "<group>"; };
 		01CEB4252AE9100300945105 /* HeartRateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateViewModel.swift; sourceTree = "<group>"; };
 		01CEB4292AE982C600945105 /* HeartRateChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateChart.swift; sourceTree = "<group>"; };
 		01CEB42C2AE9956600945105 /* HeartRateMeasurementCharacteristic+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HeartRateMeasurementCharacteristic+Preview.swift"; sourceTree = "<group>"; };
@@ -1383,7 +1383,7 @@
 			children = (
 				01CEB4292AE982C600945105 /* HeartRateChart.swift */,
 				AA94C5522D01B5DC00562F7A /* HeartRateView.swift */,
-				01CEB4242AE9100300945105 /* HeartRateScreen.swift */,
+				01CEB4242AE9100300945105 /* DeviceScreen.swift */,
 				01CEB4252AE9100300945105 /* HeartRateViewModel.swift */,
 			);
 			path = HeartRate;
@@ -2766,7 +2766,7 @@
 				013E5D912ADFDF1300B9C475 /* Array+Ext.swift in Sources */,
 				0164A4812AD8330E0093E501 /* ServiceBadgeGroup.swift in Sources */,
 				AA0AEA022CF7438200F93A0B /* Assets.swift in Sources */,
-				01CEB4262AE9100300945105 /* HeartRateScreen.swift in Sources */,
+				01CEB4262AE9100300945105 /* DeviceScreen.swift in Sources */,
 				018873C72A583A9900253273 /* PeripheralScannerScreen.swift in Sources */,
 				01F6A9662A829EE300540B45 /* SensorSettingsViewModel.swift in Sources */,
 				013E5D962AE02A1700B9C475 /* RunningValuesGrid.swift in Sources */,

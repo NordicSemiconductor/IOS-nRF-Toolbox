@@ -36,7 +36,7 @@ struct RootNavigationView: View {
                     .environmentObject(scannerViewModel)
                     .environmentObject(scannerViewModel.environment)
             case .hrm:
-                HeartRateScreen()
+                DeviceScreen()
                     .environmentObject(connectedDevicesViewModel)
             default:
                 EmptyView()

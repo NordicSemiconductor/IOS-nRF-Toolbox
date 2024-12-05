@@ -35,11 +35,11 @@ struct HeartRateMeasurementCharacteristic {
     }
 }
 
-private typealias ViewModel = HeartRateScreen.HeartRateViewModel
+private typealias ViewModel = DeviceScreen.HeartRateViewModel
 
 // MARK: - HeartRateViewModel
 
-extension HeartRateScreen {
+extension DeviceScreen {
     
     @MainActor
     class HeartRateViewModel: ObservableObject {
@@ -95,7 +95,9 @@ extension HeartRateScreen {
     }
 }
 
-extension HeartRateScreen.HeartRateViewModel: SupportedServiceViewModel {
+// MARK: - SupportedServiceViewModel
+
+extension DeviceScreen.HeartRateViewModel: SupportedServiceViewModel {
     
     func onConnect() {
         Task {
@@ -168,7 +170,7 @@ private extension ViewModel {
 
 // MARK: - Errors
 
-extension HeartRateScreen.HeartRateViewModel {
+extension DeviceScreen.HeartRateViewModel {
     
     enum CriticalError: LocalizedError {
         case unknown
@@ -181,7 +183,7 @@ extension HeartRateScreen.HeartRateViewModel {
     }
 }
 
-extension HeartRateScreen.HeartRateViewModel.CriticalError {
+extension DeviceScreen.HeartRateViewModel.CriticalError {
     var errorDescription: String? {
         switch self {
         case .unknown:
@@ -192,7 +194,7 @@ extension HeartRateScreen.HeartRateViewModel.CriticalError {
     }
 }
 
-extension HeartRateScreen.HeartRateViewModel.AlertError {
+extension DeviceScreen.HeartRateViewModel.AlertError {
     var errorDescription: String? {
         switch self {
         case .unknown:

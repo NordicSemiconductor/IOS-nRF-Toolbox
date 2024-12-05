@@ -1,5 +1,5 @@
 //
-//  HeartRateScreen.swift
+//  DeviceScreen.swift
 //  nRF-Toolbox
 //
 //  Created by Nick Kibysh on 25/10/2023.
@@ -8,9 +8,9 @@
 
 import SwiftUI
 
-// MARK: - HeartRateScreen
+// MARK: - DeviceScreen
 
-struct HeartRateScreen: View {
+struct DeviceScreen: View {
 
     // MARK: Environment
     
