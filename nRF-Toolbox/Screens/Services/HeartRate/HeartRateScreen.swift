@@ -59,25 +59,3 @@ struct HeartRateScreen: View {
         .navigationTitle("Heart Rate Monitor")
     }
 }
-
-// MARK: - HeartRateView
-
-struct HeartRateView: View {
-    
-    // MARK: EnvironmentObject
-    
-    @EnvironmentObject private var viewModel: HeartRateScreen.HeartRateViewModel
-    
-    // MARK: view
-    
-    var body: some View {
-        if viewModel.data.isEmpty {
-            NoContentView(title: "No Heart Rate Data", systemImage: "waveform.path.ecg.rectangle")
-                .task {
-                    await viewModel.prepare()
-                }
-        } else {
-            HeartRateChart()
-        }
-    }
-}

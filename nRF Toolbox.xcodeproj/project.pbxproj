@@ -356,6 +356,7 @@
 		AA2CB316286C75AA0083DB9A /* NordicDFU in Frameworks */ = {isa = PBXBuildFile; productRef = AA2CB315286C75AA0083DB9A /* NordicDFU */; };
 		AA5539202D00AAD200F589F5 /* BatteryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA55391F2D00AAD200F589F5 /* BatteryViewModel.swift */; };
 		AA94C5512D01B49200562F7A /* BatteryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA94C5502D01B49200562F7A /* BatteryView.swift */; };
+		AA94C5532D01B5DC00562F7A /* HeartRateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA94C5522D01B5DC00562F7A /* HeartRateView.swift */; };
 		AAF7DE622CFDD4BC000A347A /* ConnectedDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF7DE612CFDD4BC000A347A /* ConnectedDeviceView.swift */; };
 		C39941BC27341AAE00E7AA33 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = C39941BB27341AAE00E7AA33 /* ZIPFoundation */; };
 		C39941C027352BDF00E7AA33 /* McuMgrFirmware.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39941BF27352BDF00E7AA33 /* McuMgrFirmware.swift */; };
@@ -763,6 +764,7 @@
 		AA0AEA012CF7438200F93A0B /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		AA55391F2D00AAD200F589F5 /* BatteryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryViewModel.swift; sourceTree = "<group>"; };
 		AA94C5502D01B49200562F7A /* BatteryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryView.swift; sourceTree = "<group>"; };
+		AA94C5522D01B5DC00562F7A /* HeartRateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateView.swift; sourceTree = "<group>"; };
 		AAF7DE612CFDD4BC000A347A /* ConnectedDeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedDeviceView.swift; sourceTree = "<group>"; };
 		C39941BF27352BDF00E7AA33 /* McuMgrFirmware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = McuMgrFirmware.swift; sourceTree = "<group>"; };
 		C39941C127352FC600E7AA33 /* ZephyrPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrPacket.swift; sourceTree = "<group>"; };
@@ -1379,7 +1381,8 @@
 		01ABB0752AE6FDCF00615A21 /* HeartRate */ = {
 			isa = PBXGroup;
 			children = (
-				01CEB4282AE982B900945105 /* Views */,
+				01CEB4292AE982C600945105 /* HeartRateChart.swift */,
+				AA94C5522D01B5DC00562F7A /* HeartRateView.swift */,
 				01CEB4242AE9100300945105 /* HeartRateScreen.swift */,
 				01CEB4252AE9100300945105 /* HeartRateViewModel.swift */,
 			);
@@ -1527,14 +1530,6 @@
 				01C81AD42A5CB6420011B41E /* ServiceBadge.swift */,
 			);
 			path = ScanResult;
-			sourceTree = "<group>";
-		};
-		01CEB4282AE982B900945105 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				01CEB4292AE982C600945105 /* HeartRateChart.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		01CEB42B2AE9859A00945105 /* HeartRate */ = {
@@ -2810,6 +2805,7 @@
 				01ABB07E2AE700E100615A21 /* AttributeTableViewModel.swift in Sources */,
 				013E5D982AE02A2400B9C475 /* RunningValuesGridItem.swift in Sources */,
 				01DEB4AA2A65E9D900D4C1E8 /* CharacteristicReader.swift in Sources */,
+				AA94C5532D01B5DC00562F7A /* HeartRateView.swift in Sources */,
 				01407CB92A65417900A5B279 /* CBMPeripheralPreview.swift in Sources */,
 				01CEB4272AE9100300945105 /* HeartRateViewModel.swift in Sources */,
 				0130DABA2A8B87E100C332BA /* HUD.swift in Sources */,
