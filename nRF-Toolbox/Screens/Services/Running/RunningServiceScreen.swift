@@ -16,8 +16,8 @@ struct RunningServiceScreen: View {
     var body: some View {
         RunningServiceView()
             .environmentObject(viewModel.environment)
-            .onFirstAppear {
-                viewModel.onConnect()
+            .task {
+                await viewModel.onConnect()
             }
     }
 }

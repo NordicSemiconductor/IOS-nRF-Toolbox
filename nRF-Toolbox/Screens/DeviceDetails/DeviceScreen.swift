@@ -40,13 +40,6 @@ struct DeviceScreen: View {
                    let deviceVM = connectedDevicesViewModel.deviceViewModel(for: selectedDevice.id),
                    let batteryViewModel = deviceVM.batteryServiceViewModel {
                     BatteryView()
-                        .task {
-                            do {
-                                try await batteryViewModel.startListening()
-                            } catch {
-                                
-                            }
-                        }
                         .environmentObject(batteryViewModel)
                 } else {
                     NoContentView(

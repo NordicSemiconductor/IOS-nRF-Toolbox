@@ -99,10 +99,8 @@ extension DeviceScreen {
 
 extension DeviceScreen.HeartRateViewModel: SupportedServiceViewModel {
     
-    func onConnect() {
-        Task {
-            await prepare()
-        }
+    func onConnect() async {
+        await prepare()
     }
     
     func onDisconnect() {

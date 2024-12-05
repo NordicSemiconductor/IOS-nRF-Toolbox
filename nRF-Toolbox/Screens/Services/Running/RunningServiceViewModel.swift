@@ -42,27 +42,26 @@ extension RunningServiceScreen {
         
         private var sensorCalibrationViewModel: SensorCalibrationScreen.SensorCalibrationViewModel?
         
-        private let l = NordicLog(category: "RunningService.ViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
+        private let log = NordicLog(category: "RunningService.ViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
         
         init(peripheral: Peripheral, runningService: CBService) {
             assert(runningService.uuid.uuidString == Service.runningSpeedAndCadence.uuidString, "bad service")
             self.peripheral = peripheral
             self.runningService = runningService
             
-            l.debug(#function)
+            log.debug(#function)
         }
         
         deinit {
-            l.debug(#function)
+            log.debug(#function)
         }
     }
 }
 
 extension RunningServiceScreen.RunningServiceViewModel: SupportedServiceViewModel {
-    func onConnect() {
-        Task {
-            await enableDeviceCommunication()
-        }
+    
+    func onConnect() async {
+        await enableDeviceCommunication()
     }
     
     func onDisconnect() {

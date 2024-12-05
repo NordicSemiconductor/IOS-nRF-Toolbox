@@ -130,8 +130,13 @@ final class BatteryViewModel: ObservableObject {
 
 extension BatteryViewModel: SupportedServiceViewModel {
     
-    func onConnect() {
-        
+    func onConnect() async {
+        do {
+            try await startListening()
+        }
+        catch {
+            // TODO: Later, I guess.
+        }
     }
     
     func onDisconnect() {

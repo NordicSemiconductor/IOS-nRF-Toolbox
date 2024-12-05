@@ -19,7 +19,8 @@ private extension Array {
 }
 
 protocol SupportedServiceViewModel {
-    func onConnect()
+    
+    func onConnect() async
     func onDisconnect()
 }
 
@@ -126,6 +127,10 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
                 default:
                     break
                 }
+            }
+            
+            for supportedServiceViewModel in self.supportedServiceViewModels {
+                await supportedServiceViewModel.onConnect()
             }
         } catch {
             environment.alertError = .servicesNotFound
