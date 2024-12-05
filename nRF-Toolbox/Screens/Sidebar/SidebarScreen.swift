@@ -41,7 +41,7 @@ struct SidebarView: View {
             Section("Services") {
                 Label("Heart Rate Monitor (HRM)", systemImage: "heart.fill")
                     .accentColor(.nordicRed)
-                    .tag(RootNavigationView.MenuCategory.hrm)
+                    .tag(RootNavigationView.MenuCategory.device)
             }
             
             Section("Other") {

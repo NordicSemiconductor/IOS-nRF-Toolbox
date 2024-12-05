@@ -12,7 +12,7 @@ import SwiftUI
 extension RootNavigationView {
     enum MenuCategory: String, CaseIterable, Identifiable {
         case scanner = "Scanner"
-        case hrm = "HRM"
+        case device = "DeviceDetails"
         case about = "About"
         
         var id: String {

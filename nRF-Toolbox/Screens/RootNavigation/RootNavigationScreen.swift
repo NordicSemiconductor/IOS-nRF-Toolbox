@@ -35,7 +35,7 @@ struct RootNavigationView: View {
                 PeripheralScannerScreen()
                     .environmentObject(scannerViewModel)
                     .environmentObject(scannerViewModel.environment)
-            case .hrm:
+            case .device:
                 DeviceScreen()
                     .environmentObject(connectedDevicesViewModel)
             default:
