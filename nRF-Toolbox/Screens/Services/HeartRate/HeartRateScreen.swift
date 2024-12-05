@@ -81,18 +81,3 @@ struct HeartRateView: View {
         }
     }
 }
-
-// MARK: - BatteryView
-
-struct BatteryView: View {
-    
-    // MARK: EnvironmentObject
-    
-    @EnvironmentObject private var viewModel: BatteryViewModel
-    
-    // MARK: view
-    
-    var body: some View {
-        BatteryChart(data: viewModel.batteryLevelData, currentLevel: viewModel.currentBatteryLevel)
-    }
-}

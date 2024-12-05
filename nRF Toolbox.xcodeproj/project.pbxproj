@@ -355,6 +355,7 @@
 		AA2CB314286C75450083DB9A /* iOSMcuManagerLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = AA2CB313286C75450083DB9A /* iOSMcuManagerLibrary */; };
 		AA2CB316286C75AA0083DB9A /* NordicDFU in Frameworks */ = {isa = PBXBuildFile; productRef = AA2CB315286C75AA0083DB9A /* NordicDFU */; };
 		AA5539202D00AAD200F589F5 /* BatteryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA55391F2D00AAD200F589F5 /* BatteryViewModel.swift */; };
+		AA94C5512D01B49200562F7A /* BatteryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA94C5502D01B49200562F7A /* BatteryView.swift */; };
 		AAF7DE622CFDD4BC000A347A /* ConnectedDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF7DE612CFDD4BC000A347A /* ConnectedDeviceView.swift */; };
 		C39941BC27341AAE00E7AA33 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = C39941BB27341AAE00E7AA33 /* ZIPFoundation */; };
 		C39941C027352BDF00E7AA33 /* McuMgrFirmware.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39941BF27352BDF00E7AA33 /* McuMgrFirmware.swift */; };
@@ -761,6 +762,7 @@
 		89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA0AEA012CF7438200F93A0B /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		AA55391F2D00AAD200F589F5 /* BatteryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryViewModel.swift; sourceTree = "<group>"; };
+		AA94C5502D01B49200562F7A /* BatteryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryView.swift; sourceTree = "<group>"; };
 		AAF7DE612CFDD4BC000A347A /* ConnectedDeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedDeviceView.swift; sourceTree = "<group>"; };
 		C39941BF27352BDF00E7AA33 /* McuMgrFirmware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = McuMgrFirmware.swift; sourceTree = "<group>"; };
 		C39941C127352FC600E7AA33 /* ZephyrPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrPacket.swift; sourceTree = "<group>"; };
@@ -2428,6 +2430,7 @@
 			isa = PBXGroup;
 			children = (
 				AA55391F2D00AAD200F589F5 /* BatteryViewModel.swift */,
+				AA94C5502D01B49200562F7A /* BatteryView.swift */,
 			);
 			path = Battery;
 			sourceTree = "<group>";
@@ -2825,6 +2828,7 @@
 				01CEB42D2AE9956600945105 /* HeartRateMeasurementCharacteristic+Preview.swift in Sources */,
 				01C575BE2A7D00EF007FE4F0 /* Alias.swift in Sources */,
 				012E22942A6AD5BE00B14064 /* NamedItem.swift in Sources */,
+				AA94C5512D01B49200562F7A /* BatteryView.swift in Sources */,
 				014BBD812A700D1600BCFCA8 /* SensorLocationView1.swift in Sources */,
 				0164A4742AD5A4630093E501 /* StateViews.swift in Sources */,
 				0129F2252A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift in Sources */,
