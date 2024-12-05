@@ -27,7 +27,7 @@ struct SidebarView: View {
                 } else {
                     ForEach(viewModel.connectedDevices) { device in
                         if device != .Unselected {
-                            ConnectedDeviceView(device, isSelected: viewModel.selectedDevice == device)
+                            ConnectedDeviceView(device)
                         }
                     }
                 }

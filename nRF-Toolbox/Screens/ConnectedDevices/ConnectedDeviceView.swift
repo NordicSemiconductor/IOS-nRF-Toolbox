@@ -19,13 +19,11 @@ struct ConnectedDeviceView: View {
     // MARK: Properties
     
     private let device: ConnectedDevicesViewModel.Device
-    private let isSelected: Bool
     
     // MARK: Init
     
-    init(_ device: ConnectedDevicesViewModel.Device, isSelected: Bool) {
+    init(_ device: ConnectedDevicesViewModel.Device) {
         self.device = device
-        self.isSelected = isSelected
     }
     
     // MARK: view
@@ -38,21 +36,11 @@ struct ConnectedDeviceView: View {
                     .padding(.bottom, 4)
                 
                 switch device.status {
-                case .busy:
+                case .busy, .connected:
                     EmptyView()
-                case .connected:
-                    Label("Connected", systemImage: "powerplug.fill")
-                        .accentColor(.nordicBlue)
-                        .font(.caption)
                 case .error(let error):
                     Label("Error: \(error.localizedDescription)", systemImage: "exclamationmark.circle")
                         .accentColor(.nordicRed)
-                        .font(.caption)
-                }
-                
-                if isSelected {
-                    Label("Selected", systemImage: "checkmark.circle.fill")
-                        .accentColor(.green)
                         .font(.caption)
                 }
             }

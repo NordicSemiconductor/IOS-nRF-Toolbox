@@ -56,6 +56,6 @@ struct DeviceScreen: View {
             }
         }
         .listStyle(.insetGrouped)
-        .navigationTitle("Heart Rate Monitor")
+        .navigationTitle(connectedDevicesViewModel.selectedDevice.name ?? "Unnamed")
     }
 }
