@@ -165,17 +165,13 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
         
         fileprivate(set) var reconnect: (() async -> ())?
         
-        private let l = NordicLog(category: "DeviceDetails.Env", subsystem: "com.nordicsemi.nrf-toolbox")
+        private let log = NordicLog(category: "DeviceDetails.Env", subsystem: "com.nordicsemi.nrf-toolbox")
         
-        init(
-            deviceID: UUID,
-            services: [Service] = [],
-            reconnecting: Bool = false,
-            criticalError: CriticalError? = nil,
-            alertError: AlertError? = nil,
-            peripheralViewModel: PeripheralInspectorScreen.PeripheralInspectorViewModel? = nil, // PeripheralInspectorScreen.MockViewModel.shared,
-            reconnect: (() async -> ())? = nil
-        ) {
+        init(deviceID: UUID, services: [Service] = [], reconnecting: Bool = false,
+             criticalError: CriticalError? = nil,
+             alertError: AlertError? = nil,
+             peripheralViewModel: PeripheralInspectorScreen.PeripheralInspectorViewModel? = nil, // PeripheralInspectorScreen.MockViewModel.shared,
+             reconnect: (() async -> ())? = nil) {
             self.deviceID = deviceID
             self.services = services
             self.reconnecting = reconnecting
@@ -184,11 +180,11 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
             self.peripheralViewModel = peripheralViewModel
             self.reconnect = reconnect
             
-            l.debug(#function)
+            log.debug(#function)
         }
         
         deinit {
-            l.debug(#function)
+            log.debug(#function)
         }
     }
     
