@@ -1135,6 +1135,7 @@
 				018C05372AE083F5007CE0FE /* SignalChart */,
 				0164A4832AD840B60093E501 /* DeviceDetailsScreen.swift */,
 				0164A4852AD84A170093E501 /* DeviceDetailsViewModel.swift */,
+				01CEB4242AE9100300945105 /* DeviceScreen.swift */,
 			);
 			path = DeviceDetails;
 			sourceTree = "<group>";
@@ -1383,7 +1384,6 @@
 			children = (
 				01CEB4292AE982C600945105 /* HeartRateChart.swift */,
 				AA94C5522D01B5DC00562F7A /* HeartRateView.swift */,
-				01CEB4242AE9100300945105 /* DeviceScreen.swift */,
 				01CEB4252AE9100300945105 /* HeartRateViewModel.swift */,
 			);
 			path = HeartRate;
