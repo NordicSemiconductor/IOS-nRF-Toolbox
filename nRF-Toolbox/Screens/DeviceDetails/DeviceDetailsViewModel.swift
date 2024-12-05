@@ -128,7 +128,7 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
                 }
             }
         } catch {
-            environment.alertError = .servicesNotFount
+            environment.alertError = .servicesNotFound
         }
     }
     
@@ -214,18 +214,18 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
     }
 
     enum AlertError: Error {
-        case servicesNotFount
+        case servicesNotFound
 
         var title: String {
             switch self {
-            case .servicesNotFount:
+            case .servicesNotFound:
                 return "Services not found"
             }
         }
 
         var message: String {
             switch self {
-            case .servicesNotFount:
+            case .servicesNotFound:
                 return "Error occured while discovering services."
             }
         }
