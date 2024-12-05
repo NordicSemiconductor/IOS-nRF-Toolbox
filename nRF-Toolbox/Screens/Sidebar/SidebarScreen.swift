@@ -22,26 +22,24 @@ struct SidebarView: View {
     var body: some View {
         List(selection: $rootViewModel.selectedCategory) {
             Section("Connected Devices") {
-                if viewModel.connectedDevices.isEmpty {
+                // +1 for "Unselected".
+                if viewModel.connectedDevices.count < 2 {
                     Text("No Connected Devices")
                 } else {
                     ForEach(viewModel.connectedDevices) { device in
                         if device != .Unselected {
                             ConnectedDeviceView(device)
+                                .tag(RootNavigationView.MenuCategory.device)
                         }
                     }
                 }
-                
+            }
+            
+            Section {
                 Text("Open Scanner")
                     .foregroundStyle(Color.universalAccentColor)
                     .centered()
                     .tag(RootNavigationView.MenuCategory.scanner)
-            }
-            
-            Section("Services") {
-                Label("Heart Rate Monitor (HRM)", systemImage: "heart.fill")
-                    .accentColor(.nordicRed)
-                    .tag(RootNavigationView.MenuCategory.device)
             }
             
             Section("Other") {
