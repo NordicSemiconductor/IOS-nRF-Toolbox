@@ -36,8 +36,12 @@ struct RootNavigationView: View {
                     .environmentObject(scannerViewModel)
                     .environmentObject(scannerViewModel.environment)
             case .device:
-                DeviceScreen()
-                    .environmentObject(connectedDevicesViewModel)
+                if let selectedDevice = connectedDevicesViewModel.selectedDevice {
+                    DeviceScreen(selectedDevice)
+                        .environmentObject(connectedDevicesViewModel)
+                } else {
+                    EmptyView()
+                }
             default:
                 EmptyView()
             }

@@ -27,6 +27,9 @@ struct SidebarView: View {
                 } else {
                     ForEach(viewModel.connectedDevices) { device in
                         ConnectedDeviceView(device)
+                            .onAppear {
+                                viewModel.selectedDevice = device
+                            }
                             .tag(RootNavigationView.MenuCategory.device)
                     }
                 }
@@ -44,6 +47,9 @@ struct SidebarView: View {
                     .tag(RootNavigationView.MenuCategory.about)
                     .disabled(true)
             }
+        }
+        .onAppear {
+            viewModel.selectedDevice = nil
         }
         .navigationTitle("nRF Toolbox")
         .setupNavBarBackground(with: Assets.navBar.color)

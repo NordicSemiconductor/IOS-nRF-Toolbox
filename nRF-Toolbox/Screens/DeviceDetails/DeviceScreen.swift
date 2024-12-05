@@ -16,13 +16,22 @@ struct DeviceScreen: View {
     
     @EnvironmentObject var connectedDevicesViewModel: ConnectedDevicesViewModel
     
+    // MARK: Properties
+    
+    private let device: ConnectedDevicesViewModel.Device
+    
+    // MARK: init
+    
+    init(_ device: ConnectedDevicesViewModel.Device) {
+        self.device = device
+    }
+    
     // MARK: view
 
     var body: some View {
         List {
             Section("Heart Rate") {
-                if let selectedDevice = connectedDevicesViewModel.selectedDevice,
-                   let deviceVM = connectedDevicesViewModel.deviceViewModel(for: selectedDevice.id),
+                if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id),
                    let heartRateServiceViewModel = deviceVM.heartRateServiceViewModel {
                     HeartRateView()
                         .environmentObject(heartRateServiceViewModel)
@@ -36,8 +45,7 @@ struct DeviceScreen: View {
             }
             
             Section("Battery") {
-                if let selectedDevice = connectedDevicesViewModel.selectedDevice,
-                   let deviceVM = connectedDevicesViewModel.deviceViewModel(for: selectedDevice.id),
+                if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id),
                    let batteryViewModel = deviceVM.batteryServiceViewModel {
                     BatteryView()
                         .environmentObject(batteryViewModel)
