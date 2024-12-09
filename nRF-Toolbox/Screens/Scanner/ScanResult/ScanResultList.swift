@@ -47,6 +47,7 @@ struct ScanResultList: View {
                         .progressViewStyle(.circular)
                     
                     Text("Scanning...")
+                        .padding(.horizontal)
                 }
                 .centered()
                 
