@@ -20,45 +20,45 @@ private extension CBUUID {
     static let scControlPoint = CBUUID(characteristic: .scControlPoint)
 }
 
-extension RunningServiceScreen {
-    @MainActor
-    class RunningServiceViewModel: ObservableObject {
-        private enum Err: Error {
-            case unknown, noData, timeout, noMandatoryCharacteristic
-        }
+// MARK: - RunningServiceViewModel
+
+@MainActor
+final class RunningServiceViewModel: ObservableObject {
+    private enum Err: Error {
+        case unknown, noData, timeout, noMandatoryCharacteristic
+    }
+    
+    let peripheral: Peripheral
+    let runningService: CBService
+    
+    lazy private(set) var environment = Environment(
+        sensorCalibrationViewModel: { [unowned self] in self.sensorCalibrationViewModel }
+    )
+    
+    // MARK: Mandatory Characteristics
+    var rscMeasurement: CBCharacteristic!
+    var rscFeature: CBCharacteristic!
+    
+    private var cancelable = Set<AnyCancellable>()
+    
+    private var sensorCalibrationViewModel: SensorCalibrationScreen.SensorCalibrationViewModel?
+    
+    private let log = NordicLog(category: "RunningService.ViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
+    
+    init(peripheral: Peripheral, runningService: CBService) {
+        assert(runningService.uuid.uuidString == Service.runningSpeedAndCadence.uuidString, "bad service")
+        self.peripheral = peripheral
+        self.runningService = runningService
         
-        let peripheral: Peripheral
-        let runningService: CBService
-        
-        lazy private(set) var environment = Environment(
-            sensorCalibrationViewModel: { [unowned self] in self.sensorCalibrationViewModel }
-        )
-        
-        // MARK: Mandatory Characteristics
-        var rscMeasurement: CBCharacteristic!
-        var rscFeature: CBCharacteristic!
-        
-        private var cancelable = Set<AnyCancellable>()
-        
-        private var sensorCalibrationViewModel: SensorCalibrationScreen.SensorCalibrationViewModel?
-        
-        private let log = NordicLog(category: "RunningService.ViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
-        
-        init(peripheral: Peripheral, runningService: CBService) {
-            assert(runningService.uuid.uuidString == Service.runningSpeedAndCadence.uuidString, "bad service")
-            self.peripheral = peripheral
-            self.runningService = runningService
-            
-            log.debug(#function)
-        }
-        
-        deinit {
-            log.debug(#function)
-        }
+        log.debug(#function)
+    }
+    
+    deinit {
+        log.debug(#function)
     }
 }
 
-extension RunningServiceScreen.RunningServiceViewModel: SupportedServiceViewModel {
+extension RunningServiceViewModel: SupportedServiceViewModel {
     
     func onConnect() async {
         log.debug(#function)
@@ -71,7 +71,7 @@ extension RunningServiceScreen.RunningServiceViewModel: SupportedServiceViewMode
     }
 }
 
-extension RunningServiceScreen.RunningServiceViewModel {
+extension RunningServiceViewModel {
     
     public func enableDeviceCommunication() async {
         do {
@@ -100,7 +100,7 @@ extension RunningServiceScreen.RunningServiceViewModel {
     }
 }
 
-extension RunningServiceScreen.RunningServiceViewModel {
+extension RunningServiceViewModel {
     
     private func discoverCharacteristics() async throws {
         let serviceCharacteristics: [Characteristic] = [.rscMeasurement, .rscFeature]
@@ -169,7 +169,8 @@ extension RunningServiceScreen.RunningServiceViewModel {
 }
 
 // MARK: - Environment
-extension RunningServiceScreen.RunningServiceViewModel {
+
+extension RunningServiceViewModel {
     
     class Environment: ObservableObject {
         @Published fileprivate(set) var criticalError: CriticalError?
@@ -213,7 +214,10 @@ extension RunningServiceScreen.RunningServiceViewModel {
     }
 }
 
-extension RunningServiceScreen.RunningServiceViewModel.Environment {
+// MARK: - Error
+
+extension RunningServiceViewModel.Environment {
+    
     enum CriticalError: Error {
         case noMandatoryCharacteristics
         case noData
@@ -223,7 +227,10 @@ extension RunningServiceScreen.RunningServiceViewModel.Environment {
     enum AlertError: Error { }
 }
 
-extension RunningServiceScreen.RunningServiceViewModel.Environment.CriticalError {
+// MARK: - CriticalError
+
+extension RunningServiceViewModel.Environment.CriticalError {
+    
     var readableError: ReadableError {
         switch self {
         case .noMandatoryCharacteristics:
@@ -234,8 +241,4 @@ extension RunningServiceScreen.RunningServiceViewModel.Environment.CriticalError
             ReadableError(title: "Error", message: "Unknown error has occurred")
         }
     }
-}
-
-extension RunningServiceScreen.RunningServiceViewModel.Environment.AlertError {
-    
 }

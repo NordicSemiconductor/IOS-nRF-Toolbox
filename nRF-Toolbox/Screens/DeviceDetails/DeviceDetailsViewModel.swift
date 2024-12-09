@@ -40,8 +40,8 @@ extension DeviceDetailsScreen {
         
         private let log = NordicLog(category: "DeviceDetails.VM", subsystem: "com.nordicsemi.nrf-toolbox")
         
-        var runningServiceViewModel: RunningServiceScreen.RunningServiceViewModel? {
-            supportedServiceViewModels.firstOfType(type: RunningServiceScreen.RunningServiceViewModel.self)
+        var runningServiceViewModel: RunningServiceViewModel? {
+            supportedServiceViewModels.firstOfType(type: RunningServiceViewModel.self)
         }
         
         var heartRateServiceViewModel: DeviceScreen.HeartRateViewModel? {
@@ -119,7 +119,7 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
             for service in discoveredServices {
                 switch service.uuid {
                 case .runningSpeedCadence:
-                    supportedServiceViewModels.append(RunningServiceScreen.RunningServiceViewModel(peripheral: peripheral, runningService: service))
+                    supportedServiceViewModels.append(RunningServiceViewModel(peripheral: peripheral, runningService: service))
                 case .heartRate:
                     supportedServiceViewModels.append(DeviceScreen.HeartRateViewModel(peripheral: peripheral, heartRateService: service))
                 case .battery:

@@ -40,17 +40,17 @@ struct DeviceScreen: View {
                     }
                 }
                 
-                if let batteryViewModel = deviceVM.batteryServiceViewModel {
-                    Section("Battery Level") {
-                        BatteryView()
-                            .environmentObject(batteryViewModel)
-                    }
-                }
-                
                 if let runningViewModel = deviceVM.runningServiceViewModel {
                     Section("Running") {
                         RunningServiceView()
                             .environmentObject(runningViewModel.environment)
+                    }
+                }
+                
+                if let batteryViewModel = deviceVM.batteryServiceViewModel {
+                    Section("Battery Level") {
+                        BatteryView()
+                            .environmentObject(batteryViewModel)
                     }
                 }
             }

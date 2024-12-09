@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-fileprivate typealias VM = RunningServiceScreen.RunningServiceViewModel.Environment
+fileprivate typealias VM = RunningServiceViewModel.Environment
 
 // MARK: - RunningServiceScreen
 

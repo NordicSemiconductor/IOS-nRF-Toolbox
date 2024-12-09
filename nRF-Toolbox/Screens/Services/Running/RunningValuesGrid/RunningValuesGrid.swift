@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-private typealias Env = RunningServiceScreen.RunningServiceViewModel.Environment
+private typealias Env = RunningServiceViewModel.Environment
 
 private struct RunningAttribute: Identifiable {
     let title: String
