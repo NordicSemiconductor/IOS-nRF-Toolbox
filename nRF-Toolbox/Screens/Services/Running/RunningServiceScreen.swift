@@ -8,25 +8,19 @@
 
 import SwiftUI
 
-fileprivate typealias VM = RunningServiceViewModel.Environment
-
-// MARK: - RunningServiceScreen
-
-struct RunningServiceScreen: View {
-    @ObservedObject var viewModel: RunningServiceViewModel
-    
-    var body: some View {
-        RunningServiceView()
-            .environmentObject(viewModel.environment)
-    }
-}
-
 // MARK: - RunningServiceView
 
 struct RunningServiceView: View {
-    @EnvironmentObject private var environment: VM
+    
+    // MARK: Environment
+    
+    @EnvironmentObject private var environment: RunningServiceViewModel.Environment
+    
+    // MARK: Properties
     
     @State private var showSensorCalibration = false
+    
+    // MARK: view
     
     var body: some View {
         Section {
@@ -34,7 +28,7 @@ struct RunningServiceView: View {
         }
         
         Section {
-            Button("Sensor Calibration") {
+            Button("Sensor Calibration", systemImage: "lines.measurement.horizontal") {
                 showSensorCalibration = true
             }
             .sheet(isPresented: $showSensorCalibration, content: {
@@ -44,6 +38,8 @@ struct RunningServiceView: View {
                     }
                 }
             })
+            .accentColor(.nordicBlue)
+            .centered()
         }
     }
 }

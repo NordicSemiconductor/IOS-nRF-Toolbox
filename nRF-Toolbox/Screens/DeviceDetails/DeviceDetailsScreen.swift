@@ -13,19 +13,12 @@ struct DeviceDetailsScreen: View {
     let viewModel: DeviceDetailsViewModel
     
     var body: some View {
-        DeviceDetailsView { service in
-            switch service {
-            case .runningSpeedAndCadence:
-                if let vm = viewModel.runningServiceViewModel {
-                    RunningServiceScreen(viewModel: vm)
-                }
-            default:
-                NoContentView(
-                    title: "No Services",
-                    systemImage: "list.bullet.rectangle.portrait",
-                    description: "No Supported Services"
-                )
-            }
+        DeviceDetailsView { _ in
+            NoContentView(
+                title: "No Services",
+                systemImage: "list.bullet.rectangle.portrait",
+                description: "No Supported Services"
+            )
         }
         .environmentObject(viewModel.environment)
     }
