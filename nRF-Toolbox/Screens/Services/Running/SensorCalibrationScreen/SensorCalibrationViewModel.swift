@@ -186,6 +186,7 @@ extension SensorCalibrationViewModel {
 }
 
 // MARK: - Internal Error
+
 private extension SensorCalibrationViewModel {
     enum Err: Error {
         case controlPointError(RunningSpeedAndCadence.ResponseCode)
@@ -195,11 +196,14 @@ private extension SensorCalibrationViewModel {
 }
 
 // MARK: - Environment
+
 extension SensorCalibrationViewModel {
     
     @MainActor
     class Environment: ObservableObject {
+        
         // MARK: Features
+        
         @Published fileprivate(set) var setCumulativeValueEnabled = false
         @Published fileprivate(set) var startSensorCalibrationEnabled = false
         @Published fileprivate(set) var sensorLocationEnabled = false
@@ -222,24 +226,22 @@ extension SensorCalibrationViewModel {
         let startSensorCalibration: () async -> ()
         let updateSensorLocation: () async -> ()
         
-        private let l = NordicLog(category: "SensorCalibrationViewModel.Environment")
+        private let log = NordicLog(category: "SensorCalibrationViewModel.Environment")
         
-        init(
-            setCumulativeValueEnabled: Bool = false,
-            startSensorCalibrationEnabled: Bool = false,
-            sensorLocationEnabled: Bool = false,
-            updateSensorLocationDisabled: Bool = false,
-            currentSensorLocation: SensorLocation.RawValue = 0,
-            pickerSensorLocation: SensorLocation.RawValue = 0,
-            availableSensorLocations: [SensorLocation] = [],
-            
-            alertError: AlertError? = nil,
-            criticalError: CriticalError? = nil,
-            
-            resetCumulativeValue: @escaping () async -> () = { },
-            startSensorCalibration: @escaping () async -> () = { },
-            updateSensorLocation: @escaping () async -> () = { }
-        ) {
+        init(setCumulativeValueEnabled: Bool = false,
+             startSensorCalibrationEnabled: Bool = false,
+             sensorLocationEnabled: Bool = false,
+             updateSensorLocationDisabled: Bool = false,
+             currentSensorLocation: SensorLocation.RawValue = 0,
+             pickerSensorLocation: SensorLocation.RawValue = 0,
+             availableSensorLocations: [SensorLocation] = [],
+             
+             alertError: AlertError? = nil,
+             criticalError: CriticalError? = nil,
+             
+             resetCumulativeValue: @escaping () async -> () = { },
+             startSensorCalibration: @escaping () async -> () = { },
+             updateSensorLocation: @escaping () async -> () = { }) {
             self.setCumulativeValueEnabled = setCumulativeValueEnabled
             self.startSensorCalibrationEnabled = startSensorCalibrationEnabled
             self.sensorLocationEnabled = sensorLocationEnabled
@@ -257,18 +259,18 @@ extension SensorCalibrationViewModel {
                 .map { $0 == $1 }
                 .assign(to: &$updateSensorLocationDisabled)
             
-            l.debug(#function)
+            log.debug(#function)
         }
         
         deinit {
-            l.debug(#function)
+            log.debug(#function)
         }
-        
     }
 }
 
 // MARK: - Error Types
 extension SensorCalibrationViewModel.Environment {
+    
     enum CriticalError: LocalizedError {
         case noMandatoryCharacteristic
         case cantEnableNotifyCharacteristic

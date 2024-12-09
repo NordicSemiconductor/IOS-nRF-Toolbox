@@ -29,10 +29,17 @@ struct SensorCalibrationScreen: View {
 private typealias Env = SensorCalibrationViewModel.Environment
 
 struct SensorCalibrationView: View {
+    
+    // MARK: Environment
+    
     @EnvironmentObject private var environment: Env
+    
+    // MARK: Properties
     
     @State private var resetCumulativeValueDisabled = false
     @State private var startSensorCalibrationDisabled = false
+    
+    // MARK: view
     
     var body: some View {
         List {
@@ -75,6 +82,7 @@ struct SensorCalibrationView: View {
                     }
             }
         }
+        .listStyle(.insetGrouped)
         .errorAlert(error: $environment.alertError)
     }
     
