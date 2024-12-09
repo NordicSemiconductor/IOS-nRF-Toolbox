@@ -41,7 +41,7 @@ final class RunningServiceViewModel: ObservableObject {
     
     private var cancelable = Set<AnyCancellable>()
     
-    private var sensorCalibrationViewModel: SensorCalibrationScreen.SensorCalibrationViewModel?
+    private var sensorCalibrationViewModel: SensorCalibrationViewModel?
     
     private let log = NordicLog(category: "RunningService.ViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
     
@@ -133,7 +133,7 @@ extension RunningServiceViewModel {
         .timeout(.seconds(1), scheduler: DispatchQueue.main, customError: { Err.timeout })
         .firstValue
         
-        sensorCalibrationViewModel = SensorCalibrationScreen.SensorCalibrationViewModel(peripheral: peripheral, rscService: runningService, rscFeature: rscFeature )
+        sensorCalibrationViewModel = SensorCalibrationViewModel(peripheral: peripheral, rscService: runningService, rscFeature: rscFeature )
         environment.rscFeature = rscFeature
     }
     
@@ -184,7 +184,7 @@ extension RunningServiceViewModel {
         @Published var totalDistance: Measurement<UnitLength>?
         @Published var isRunning: Bool?
         
-        let sensorCalibrationViewModel: (() -> (SensorCalibrationScreen.SensorCalibrationViewModel?))
+        let sensorCalibrationViewModel: (() -> (SensorCalibrationViewModel?))
         
         private let log = NordicLog(category: "RunningService.ViewModel.Environment")
         
@@ -194,7 +194,7 @@ extension RunningServiceViewModel {
              instantaneousStrideLength: Measurement<UnitLength>? = nil,
              totalDistance: Measurement<UnitLength>? = nil,
              isRunning: Bool? = nil,
-             sensorCalibrationViewModel: @escaping (() -> (SensorCalibrationScreen.SensorCalibrationViewModel?)) = { nil }) {
+             sensorCalibrationViewModel: @escaping (() -> (SensorCalibrationViewModel?)) = { nil }) {
             self.criticalError = criticalError
             self.alertError = alertError
             self.rscFeature = rscFeature

@@ -25,7 +25,7 @@ struct SensorCalibrationScreen: View {
     }
 }
 
-private typealias Env = SensorCalibrationScreen.SensorCalibrationViewModel.Environment
+private typealias Env = SensorCalibrationViewModel.Environment
 
 struct SensorCalibrationView: View {
     @EnvironmentObject private var environment: Env

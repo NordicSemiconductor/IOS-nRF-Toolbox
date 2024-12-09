@@ -13,43 +13,44 @@ import CoreBluetoothMock_Collection
 import iOS_Bluetooth_Numbers_Database
 import iOS_Common_Libraries
 
-extension SensorCalibrationScreen {
-    @MainActor
-    class SensorCalibrationViewModel: ObservableObject {
-        private(set) lazy var environment = Environment(
-            resetCumulativeValue: { [unowned self] in await self.resetCumulativeValue() },
-            startSensorCalibration: { [unowned self] in await self.startSensorCalibration() },
-            updateSensorLocation: { [unowned self] in await self.updateSensorLocation() }
-        )
+// MARK: - SensorCalibrationViewModel
+
+@MainActor
+final class SensorCalibrationViewModel: ObservableObject {
+    private(set) lazy var environment = Environment(
+        resetCumulativeValue: { [unowned self] in await self.resetCumulativeValue() },
+        startSensorCalibration: { [unowned self] in await self.startSensorCalibration() },
+        updateSensorLocation: { [unowned self] in await self.updateSensorLocation() }
+    )
+    
+    let peripheral: Peripheral
+    let rscFeature: RSCFeature
+    
+    private let rscService: CBService
+    private var scControlPoint: CBCharacteristic!
+    private var sensorLocationCharacteristic: CBCharacteristic?
+    
+    private let logger = NordicLog(category: "SensorCalibration.VM")
+    private var cancelable = Set<AnyCancellable>()
+    
+    init(peripheral: Peripheral, rscService: CBService, rscFeature: RSCFeature) {
+        self.peripheral = peripheral
+        self.rscService = rscService
+        self.rscFeature = rscFeature
         
-        let peripheral: Peripheral
-        let rscFeature: RSCFeature
+        environment.setCumulativeValueEnabled = rscFeature.contains(.totalDistanceMeasurement)
+        environment.startSensorCalibrationEnabled = rscFeature.contains(.sensorCalibrationProcedure)
         
-        private let rscService: CBService
-        private var scControlPoint: CBCharacteristic!
-        private var sensorLocationCharacteristic: CBCharacteristic?
-        
-        private let logger = NordicLog(category: "SensorCalibration.VM")
-        private var cancelable = Set<AnyCancellable>()
-        
-        init(peripheral: Peripheral, rscService: CBService, rscFeature: RSCFeature) {
-            self.peripheral = peripheral
-            self.rscService = rscService
-            self.rscFeature = rscFeature
-            
-            environment.setCumulativeValueEnabled = rscFeature.contains(.totalDistanceMeasurement)
-            environment.startSensorCalibrationEnabled = rscFeature.contains(.sensorCalibrationProcedure)
-            
-            logger.debug(#function)
-        }
-        
-        deinit {
-            logger.debug(#function)
-        }
+        logger.debug(#function)
+    }
+    
+    deinit {
+        logger.debug(#function)
     }
 }
 
-extension SensorCalibrationScreen.SensorCalibrationViewModel {
+extension SensorCalibrationViewModel {
+    
     func discoverCharacteristic() async {
         do {
             let characteristics: [Characteristic] = [.scControlPoint, .sensorLocation]
@@ -97,7 +98,7 @@ extension SensorCalibrationScreen.SensorCalibrationViewModel {
 
 }
 
-extension SensorCalibrationScreen.SensorCalibrationViewModel {
+extension SensorCalibrationViewModel {
     private func resetCumulativeValue() async {
         var meters: UInt32 = 0
         let data = Data(bytes: &meters, count: MemoryLayout.size(ofValue: meters))
@@ -183,7 +184,7 @@ extension SensorCalibrationScreen.SensorCalibrationViewModel {
 }
 
 // MARK: - Internal Error
-private extension SensorCalibrationScreen.SensorCalibrationViewModel {
+private extension SensorCalibrationViewModel {
     enum Err: Error {
         case controlPointError(RunningSpeedAndCadence.ResponseCode)
         case noMandatoryCharacteristic
@@ -192,7 +193,7 @@ private extension SensorCalibrationScreen.SensorCalibrationViewModel {
 }
 
 // MARK: - Environment
-extension SensorCalibrationScreen.SensorCalibrationViewModel {
+extension SensorCalibrationViewModel {
     @MainActor
     class Environment: ObservableObject {
         // MARK: Features
@@ -264,7 +265,7 @@ extension SensorCalibrationScreen.SensorCalibrationViewModel {
 }
 
 // MARK: - Error Types
-extension SensorCalibrationScreen.SensorCalibrationViewModel.Environment {
+extension SensorCalibrationViewModel.Environment {
     enum CriticalError: LocalizedError {
         case noMandatoryCharacteristic
         case cantEnableNotifyCharacteristic
