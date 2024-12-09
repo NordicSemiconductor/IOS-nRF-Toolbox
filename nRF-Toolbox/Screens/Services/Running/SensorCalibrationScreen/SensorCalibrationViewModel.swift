@@ -228,29 +228,9 @@ extension SensorCalibrationViewModel {
         
         private let log = NordicLog(category: "SensorCalibrationViewModel.Environment")
         
-        init(setCumulativeValueEnabled: Bool = false,
-             startSensorCalibrationEnabled: Bool = false,
-             sensorLocationEnabled: Bool = false,
-             updateSensorLocationDisabled: Bool = false,
-             currentSensorLocation: SensorLocation.RawValue = 0,
-             pickerSensorLocation: SensorLocation.RawValue = 0,
-             availableSensorLocations: [SensorLocation] = [],
-             
-             alertError: AlertError? = nil,
-             criticalError: CriticalError? = nil,
-             
-             resetCumulativeValue: @escaping () async -> () = { },
+        init(resetCumulativeValue: @escaping () async -> () = { },
              startSensorCalibration: @escaping () async -> () = { },
              updateSensorLocation: @escaping () async -> () = { }) {
-            self.setCumulativeValueEnabled = setCumulativeValueEnabled
-            self.startSensorCalibrationEnabled = startSensorCalibrationEnabled
-            self.sensorLocationEnabled = sensorLocationEnabled
-            self.updateSensorLocationDisabled = updateSensorLocationDisabled
-            self.currentSensorLocation = currentSensorLocation
-            self.pickerSensorLocation = pickerSensorLocation
-            self.availableSensorLocations = availableSensorLocations
-            self.alertError = alertError
-            self.criticalError = criticalError
             self.resetCumulativeValue = resetCumulativeValue
             self.startSensorCalibration = startSensorCalibration
             self.updateSensorLocation = updateSensorLocation
