@@ -8,6 +8,8 @@
 
 import SwiftUI
 
+// MARK: - SensorCalibrationScreen
+
 struct SensorCalibrationScreen: View {
     @ObservedObject private var viewModel: SensorCalibrationViewModel
     
@@ -17,13 +19,12 @@ struct SensorCalibrationScreen: View {
     
     var body: some View {
         SensorCalibrationView()
+            .navigationTitle("Sensor Calibration")
             .environmentObject(viewModel.environment)
-            .task {
-                await viewModel.discoverCharacteristic()
-                await viewModel.readLocations()
-            }
     }
 }
+
+// MARK: - SensorCalibrationView
 
 private typealias Env = SensorCalibrationViewModel.Environment
 
@@ -32,8 +33,6 @@ struct SensorCalibrationView: View {
     
     @State private var resetCumulativeValueDisabled = false
     @State private var startSensorCalibrationDisabled = false
-    
-    
     
     var body: some View {
         List {
@@ -45,6 +44,7 @@ struct SensorCalibrationView: View {
                     action: environment.resetCumulativeValue,
                     buttonDisabled: $resetCumulativeValueDisabled)
             }
+            
             if environment.startSensorCalibrationEnabled {
                 onlyButtonSection(
                     header: "Calibrate Sensor",
@@ -53,6 +53,7 @@ struct SensorCalibrationView: View {
                     action: environment.startSensorCalibration,
                     buttonDisabled: $startSensorCalibrationDisabled)
             }
+            
             if environment.sensorLocationEnabled {
                 section(
                     header: "Sensor Location",
@@ -74,24 +75,16 @@ struct SensorCalibrationView: View {
                     }
             }
         }
-        .navigationTitle("Sensor Calibration")
         .errorAlert(error: $environment.alertError)
     }
     
     @ViewBuilder
-    private func onlyButtonSection(
-        header: String,
-        footer: String,
-        buttonTitle: String,
-        action: @escaping () async -> (),
-        buttonDisabled: Binding<Bool>) -> some View
-    {
-        section(
-            header: header,
-            footer: footer,
-            buttonTitle: buttonTitle,
-            buttonDisabled: buttonDisabled) {
-                buttonDisabled.wrappedValue = true
+    private func onlyButtonSection(header: String, footer: String, buttonTitle: String,
+                                   action: @escaping () async -> (),
+                                   buttonDisabled: Binding<Bool>) -> some View {
+        section(header: header, footer: footer, buttonTitle: buttonTitle,
+                buttonDisabled: buttonDisabled) {
+            buttonDisabled.wrappedValue = true
                 Task {
                     await action()
                 }
@@ -102,16 +95,12 @@ struct SensorCalibrationView: View {
     }
     
     @ViewBuilder
-    private func section<C: View>(
-        header: String,
-        footer: String,
-        buttonTitle: String,
-        buttonDisabled: Binding<Bool>,
-        buttonAction: @escaping () -> (),
-        content: () -> C) -> some View
-    {
+    private func section<C: View>(header: String, footer: String, buttonTitle: String,
+                                  buttonDisabled: Binding<Bool>, buttonAction: @escaping () -> (),
+                                  content: () -> C) -> some View {
         Section {
             content()
+            
             Button(buttonTitle, action: buttonAction)
                 .disabled(buttonDisabled.wrappedValue)
         } header: {
@@ -119,18 +108,5 @@ struct SensorCalibrationView: View {
         } footer: {
             Text(footer)
         }
-
-    }
-    
-}
-
-#Preview {
-    NavigationStack {
-        SensorCalibrationView()
-            .environmentObject(Env(
-                setCumulativeValueEnabled: true,
-                startSensorCalibrationEnabled: true,
-                sensorLocationEnabled: true
-            ))
     }
 }

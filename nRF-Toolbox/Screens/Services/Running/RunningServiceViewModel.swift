@@ -31,17 +31,13 @@ final class RunningServiceViewModel: ObservableObject {
     let peripheral: Peripheral
     let runningService: CBService
     
-    lazy private(set) var environment = Environment(
-        sensorCalibrationViewModel: { [unowned self] in self.sensorCalibrationViewModel }
-    )
+    lazy private(set) var environment = Environment()
     
     // MARK: Mandatory Characteristics
     var rscMeasurement: CBCharacteristic!
     var rscFeature: CBCharacteristic!
     
     private var cancelable = Set<AnyCancellable>()
-    
-    private var sensorCalibrationViewModel: SensorCalibrationViewModel?
     
     private let log = NordicLog(category: "RunningService.ViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
     
@@ -133,7 +129,10 @@ extension RunningServiceViewModel {
         .timeout(.seconds(1), scheduler: DispatchQueue.main, customError: { Err.timeout })
         .firstValue
         
-        sensorCalibrationViewModel = SensorCalibrationViewModel(peripheral: peripheral, rscService: runningService, rscFeature: rscFeature )
+        let calibrationViewModel = SensorCalibrationViewModel(peripheral: peripheral, rscService: runningService, rscFeature: rscFeature)
+        environment.sensorCalibrationViewModel = calibrationViewModel
+        await calibrationViewModel.discoverCharacteristic()
+        await calibrationViewModel.readLocations()
         environment.rscFeature = rscFeature
     }
     
@@ -184,7 +183,7 @@ extension RunningServiceViewModel {
         @Published var totalDistance: Measurement<UnitLength>?
         @Published var isRunning: Bool?
         
-        let sensorCalibrationViewModel: (() -> (SensorCalibrationViewModel?))
+        @Published var sensorCalibrationViewModel: SensorCalibrationViewModel?
         
         private let log = NordicLog(category: "RunningService.ViewModel.Environment")
         
@@ -193,8 +192,7 @@ extension RunningServiceViewModel {
              instantaneousCadence: Int? = nil,
              instantaneousStrideLength: Measurement<UnitLength>? = nil,
              totalDistance: Measurement<UnitLength>? = nil,
-             isRunning: Bool? = nil,
-             sensorCalibrationViewModel: @escaping (() -> (SensorCalibrationViewModel?)) = { nil }) {
+             isRunning: Bool? = nil) {
             self.criticalError = criticalError
             self.alertError = alertError
             self.rscFeature = rscFeature
@@ -203,7 +201,6 @@ extension RunningServiceViewModel {
             self.instantaneousStrideLength = instantaneousStrideLength
             self.totalDistance = totalDistance
             self.isRunning = isRunning
-            self.sensorCalibrationViewModel = sensorCalibrationViewModel
             
             log.debug(#function)
         }

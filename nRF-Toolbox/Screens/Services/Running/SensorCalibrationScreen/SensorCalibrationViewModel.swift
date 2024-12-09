@@ -30,7 +30,7 @@ final class SensorCalibrationViewModel: ObservableObject {
     private var scControlPoint: CBCharacteristic!
     private var sensorLocationCharacteristic: CBCharacteristic?
     
-    private let logger = NordicLog(category: "SensorCalibration.VM")
+    private let log = NordicLog(category: "SensorCalibration.VM")
     private var cancelable = Set<AnyCancellable>()
     
     init(peripheral: Peripheral, rscService: CBService, rscFeature: RSCFeature) {
@@ -41,17 +41,18 @@ final class SensorCalibrationViewModel: ObservableObject {
         environment.setCumulativeValueEnabled = rscFeature.contains(.totalDistanceMeasurement)
         environment.startSensorCalibrationEnabled = rscFeature.contains(.sensorCalibrationProcedure)
         
-        logger.debug(#function)
+        log.debug(#function)
     }
     
     deinit {
-        logger.debug(#function)
+        log.debug(#function)
     }
 }
 
 extension SensorCalibrationViewModel {
     
     func discoverCharacteristic() async {
+        log.debug(#function)
         do {
             let characteristics: [Characteristic] = [.scControlPoint, .sensorLocation]
             let discovered = try await peripheral.discoverCharacteristics(characteristics.map(\.uuid), for: rscService).firstValue
@@ -67,16 +68,16 @@ extension SensorCalibrationViewModel {
             }
             
             self.sensorLocationCharacteristic = discovered.first(where: { $0.uuid == Characteristic.sensorLocation.uuid })
-        } catch {
+        } catch let error {
+            log.error("Error: \(error.localizedDescription)")
             environment.criticalError = .noMandatoryCharacteristic
             return
         }
     }
     
     func readLocations() async {
-        guard rscFeature.contains(.multipleSensorLocation) else {
-            return
-        }
+        log.debug(#function)
+        guard rscFeature.contains(.multipleSensorLocation) else { return }
         
         do {
             environment.availableSensorLocations = try await readAvailableLocations()
@@ -88,25 +89,26 @@ extension SensorCalibrationViewModel {
                 environment.internalError = .unableReadSensorLocation
                 return
             }
-        } catch {
+        } catch let error {
+            log.error("Error: \(error.localizedDescription)")
             environment.internalError = .unableReadSensorLocation
             return
         }
         
         environment.sensorLocationEnabled = true 
     }
-
 }
 
 extension SensorCalibrationViewModel {
+    
     private func resetCumulativeValue() async {
         var meters: UInt32 = 0
         let data = Data(bytes: &meters, count: MemoryLayout.size(ofValue: meters))
         
         do {
             try await writeCommand(opCode: .setCumulativeValue, parameter: data)
-        } catch let e {
-            logger.error(e.localizedDescription)
+        } catch let error {
+            log.error(error.localizedDescription)
             environment.internalError = .unableResetCumulativeValue
         }
     }
@@ -194,6 +196,7 @@ private extension SensorCalibrationViewModel {
 
 // MARK: - Environment
 extension SensorCalibrationViewModel {
+    
     @MainActor
     class Environment: ObservableObject {
         // MARK: Features
