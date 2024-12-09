@@ -17,11 +17,6 @@ import iOS_Common_Libraries
 
 @MainActor
 final class SensorCalibrationViewModel: ObservableObject {
-    private(set) lazy var environment = Environment(
-        resetCumulativeValue: { [unowned self] in await self.resetCumulativeValue() },
-        startSensorCalibration: { [unowned self] in await self.startSensorCalibration() },
-        updateSensorLocation: { [unowned self] in await self.updateSensorLocation() }
-    )
     
     let peripheral: Peripheral
     let rscFeature: RSCFeature
@@ -82,6 +77,7 @@ extension SensorCalibrationViewModel {
             
             guard let scControlPoint = discovered.first(where: { $0.uuid == Characteristic.scControlPoint.uuid }) else {
                 criticalError = .noMandatoryCharacteristic
+                log.debug("Error: \(criticalError.nilDescription)")
                 return
             }
             self.scControlPoint = scControlPoint
@@ -91,7 +87,7 @@ extension SensorCalibrationViewModel {
                 return
             }
             
-            self.sensorLocationCharacteristic = discovered.first(where: { $0.uuid == Characteristic.sensorLocation.uuid })
+            sensorLocationCharacteristic = discovered.first(where: { $0.uuid == Characteristic.sensorLocation.uuid })
         } catch let error {
             log.error("Error: \(error.localizedDescription)")
             criticalError = .noMandatoryCharacteristic
@@ -126,7 +122,7 @@ extension SensorCalibrationViewModel {
 
 extension SensorCalibrationViewModel {
     
-    private func resetCumulativeValue() async {
+    func resetCumulativeValue() async {
         var meters: UInt32 = 0
         let data = Data(bytes: &meters, count: MemoryLayout.size(ofValue: meters))
         
@@ -138,7 +134,7 @@ extension SensorCalibrationViewModel {
         }
     }
     
-    private func startSensorCalibration() async {
+    func startSensorCalibration() async {
         do {
             try await writeCommand(opCode: .startSensorCalibration, parameter: nil)
         } catch {
@@ -147,7 +143,7 @@ extension SensorCalibrationViewModel {
         }
     }
     
-    private func updateSensorLocation() async {
+    func updateSensorLocation() async {
         do {
             let data = Data([pickerSensorLocation])
             try await writeCommand(opCode: .updateSensorLocation, parameter: data)
@@ -220,37 +216,6 @@ private extension SensorCalibrationViewModel {
         case controlPointError(RunningSpeedAndCadence.ResponseCode)
         case noMandatoryCharacteristic
         case badData
-    }
-}
-
-// MARK: - Environment
-
-extension SensorCalibrationViewModel {
-    
-    @MainActor
-    class Environment: ObservableObject {
-        
-        // MARK: Features
-        
-        let resetCumulativeValue: () async -> ()
-        let startSensorCalibration: () async -> ()
-        let updateSensorLocation: () async -> ()
-        
-        private let log = NordicLog(category: "SensorCalibrationViewModel.Environment")
-        
-        init(resetCumulativeValue: @escaping () async -> () = { },
-             startSensorCalibration: @escaping () async -> () = { },
-             updateSensorLocation: @escaping () async -> () = { }) {
-            self.resetCumulativeValue = resetCumulativeValue
-            self.startSensorCalibration = startSensorCalibration
-            self.updateSensorLocation = updateSensorLocation
-            
-            log.debug(#function)
-        }
-        
-        deinit {
-            log.debug(#function)
-        }
     }
 }
 

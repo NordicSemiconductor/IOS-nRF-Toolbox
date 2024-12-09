@@ -30,7 +30,11 @@ struct SensorCalibrationScreen: View {
                     header: "Reset Distance",
                     footer: "Reset total distance to 0",
                     buttonTitle: "Reset Cumulative Value",
-                    action: viewModel.environment.resetCumulativeValue,
+                    action: {
+                        Task {
+                            await viewModel.resetCumulativeValue()
+                        }
+                    },
                     buttonDisabled: $resetCumulativeValueDisabled)
             }
             
@@ -39,7 +43,11 @@ struct SensorCalibrationScreen: View {
                     header: "Calibrate Sensor",
                     footer: "Initiate the sensor calibration procedure",
                     buttonTitle: "Start Sensor Calibration",
-                    action: viewModel.environment.startSensorCalibration,
+                    action: {
+                        Task {
+                            await viewModel.startSensorCalibration()
+                        }
+                    },
                     buttonDisabled: $startSensorCalibrationDisabled)
             }
             
@@ -51,7 +59,7 @@ struct SensorCalibrationScreen: View {
                     buttonDisabled: $viewModel.updateSensorLocationDisabled) {
                         viewModel.updateSensorLocationDisabled = true
                         Task {
-                            await viewModel.environment.updateSensorLocation()
+                            await viewModel.updateSensorLocation()
                         }
                     } content: {
                         // TECHNICAL DEBT: Blinking Picker. Not critical but annoying.
