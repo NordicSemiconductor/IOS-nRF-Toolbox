@@ -61,21 +61,24 @@ extension RunningServiceScreen {
 extension RunningServiceScreen.RunningServiceViewModel: SupportedServiceViewModel {
     
     func onConnect() async {
+        log.debug(#function)
         await enableDeviceCommunication()
     }
     
     func onDisconnect() {
+        log.debug(#function)
         cancelable.removeAll()
     }
 }
 
 extension RunningServiceScreen.RunningServiceViewModel {
+    
     public func enableDeviceCommunication() async {
         do {
             try await discoverCharacteristics()
             try await readFeature()
-        } catch let e as Err {
-            switch e {
+        } catch let error as Err {
+            switch error {
             case .timeout, .noMandatoryCharacteristic:
                 environment.criticalError = Environment.CriticalError.noMandatoryCharacteristics
             case .noData:
@@ -98,18 +101,19 @@ extension RunningServiceScreen.RunningServiceViewModel {
 }
 
 extension RunningServiceScreen.RunningServiceViewModel {
+    
     private func discoverCharacteristics() async throws {
         let serviceCharacteristics: [Characteristic] = [.rscMeasurement, .rscFeature]
         let discoveredCharacteristics: [CBCharacteristic]
         
         discoveredCharacteristics = try await peripheral.discoverCharacteristics(serviceCharacteristics.map(\.uuid), for: runningService).firstValue
         
-        for ch in discoveredCharacteristics {
-            switch ch.uuid {
+        for characteristic in discoveredCharacteristics {
+            switch characteristic.uuid {
             case .rscMeasurement:
-                self.rscMeasurement = ch
+                self.rscMeasurement = characteristic
             case .rscFeature:
-                self.rscFeature = ch
+                self.rscFeature = characteristic
             default:
                 break
             }
@@ -122,7 +126,7 @@ extension RunningServiceScreen.RunningServiceViewModel {
     
     private func readFeature() async throws {
         let rscFeature = try await peripheral.readValue(for: rscFeature).tryMap { data in
-            guard let data = data else { throw Err.noData }
+            guard let data else { throw Err.noData }
             return RSCFeature(rawValue: data[0])
         }
         // Set reasonable Timeout
@@ -136,12 +140,12 @@ extension RunningServiceScreen.RunningServiceViewModel {
     private func enableMeasurementNotifications() async throws {
         peripheral.listenValues(for: rscMeasurement)                    // Listen for values
             .map { RunningSpeedAndCadence.RSCSMeasurement(from: $0) }   // Map Data into readable struct
-            .sink { completion in
+            .sink { [unowned self] completion in
                 switch completion {
                 case .finished:
-                    print("finished")
-                case .failure(let e):
-                    print("error: \(e.localizedDescription)")
+                    self.log.debug("Finished!")
+                case .failure(let error):
+                    self.log.error("error: \(error.localizedDescription)")
                 }
                 
             } receiveValue: { [unowned self] measurement in
@@ -166,6 +170,7 @@ extension RunningServiceScreen.RunningServiceViewModel {
 
 // MARK: - Environment
 extension RunningServiceScreen.RunningServiceViewModel {
+    
     class Environment: ObservableObject {
         @Published fileprivate(set) var criticalError: CriticalError?
         @Published fileprivate(set) var alertError: AlertError?
@@ -180,19 +185,15 @@ extension RunningServiceScreen.RunningServiceViewModel {
         
         let sensorCalibrationViewModel: (() -> (SensorCalibrationScreen.SensorCalibrationViewModel?))
         
-        private let l = NordicLog(category: "RunningService.ViewModel.Environment")
+        private let log = NordicLog(category: "RunningService.ViewModel.Environment")
         
-        init(
-            criticalError: CriticalError? = nil,
-            alertError: AlertError? = nil,
-            rscFeature: RSCFeature = .none,
-            instantaneousSpeed: Measurement<UnitSpeed>? = nil,
-            instantaneousCadence: Int? = nil,
-            instantaneousStrideLength: Measurement<UnitLength>? = nil,
-            totalDistance: Measurement<UnitLength>? = nil,
-            isRunning: Bool? = nil,
-            sensorCalibrationViewModel: @escaping (() -> (SensorCalibrationScreen.SensorCalibrationViewModel?)) = { nil }
-        ) {
+        init(criticalError: CriticalError? = nil, alertError: AlertError? = nil,
+             rscFeature: RSCFeature = .none, instantaneousSpeed: Measurement<UnitSpeed>? = nil,
+             instantaneousCadence: Int? = nil,
+             instantaneousStrideLength: Measurement<UnitLength>? = nil,
+             totalDistance: Measurement<UnitLength>? = nil,
+             isRunning: Bool? = nil,
+             sensorCalibrationViewModel: @escaping (() -> (SensorCalibrationScreen.SensorCalibrationViewModel?)) = { nil }) {
             self.criticalError = criticalError
             self.alertError = alertError
             self.rscFeature = rscFeature
@@ -203,11 +204,11 @@ extension RunningServiceScreen.RunningServiceViewModel {
             self.isRunning = isRunning
             self.sensorCalibrationViewModel = sensorCalibrationViewModel
             
-            l.debug(#function)
+            log.debug(#function)
         }
         
         deinit {
-            l.debug(#function)
+            log.debug(#function)
         }
     }
 }
