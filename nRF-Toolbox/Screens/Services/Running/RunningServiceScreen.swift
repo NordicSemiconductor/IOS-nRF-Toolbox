@@ -10,17 +10,18 @@ import SwiftUI
 
 fileprivate typealias VM = RunningServiceScreen.RunningServiceViewModel.Environment
 
+// MARK: - RunningServiceScreen
+
 struct RunningServiceScreen: View {
     @ObservedObject var viewModel: RunningServiceViewModel
     
     var body: some View {
         RunningServiceView()
             .environmentObject(viewModel.environment)
-            .task {
-                await viewModel.onConnect()
-            }
     }
 }
+
+// MARK: - RunningServiceView
 
 struct RunningServiceView: View {
     @EnvironmentObject private var environment: VM
@@ -28,38 +29,21 @@ struct RunningServiceView: View {
     @State private var showSensorCalibration = false
     
     var body: some View {
-        List {
-            Section {
-                RunningValuesGrid()
-            }
-            Section {
-                Button("Sensor Calibration") {
-                    showSensorCalibration = true 
-                }
-                .sheet(isPresented: $showSensorCalibration, content: {
-                    if let vm = environment.sensorCalibrationViewModel() {
-                        NavigationStack {
-                            SensorCalibrationScreen(viewModel: vm)
-                        }
-                    }
-                })
-            }
+        Section {
+            RunningValuesGrid()
         }
-       
-    }
-}
-
-#Preview {
-    NavigationStack {
-        RunningServiceView()
-            .environmentObject(
-                VM(
-                    rscFeature: .all,
-                    instantaneousSpeed: Measurement<UnitSpeed>(value: 1, unit: .metersPerSecond),
-                    instantaneousCadence: 2,
-                    instantaneousStrideLength: Measurement<UnitLength>(value: 2, unit: .meters)
-                )
-            )
-            .navigationTitle("Running")
+        
+        Section {
+            Button("Sensor Calibration") {
+                showSensorCalibration = true
+            }
+            .sheet(isPresented: $showSensorCalibration, content: {
+                if let vm = environment.sensorCalibrationViewModel() {
+                    NavigationStack {
+                        SensorCalibrationScreen(viewModel: vm)
+                    }
+                }
+            })
+        }
     }
 }

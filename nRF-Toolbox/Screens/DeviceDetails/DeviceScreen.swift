@@ -46,6 +46,13 @@ struct DeviceScreen: View {
                             .environmentObject(batteryViewModel)
                     }
                 }
+                
+                if let runningViewModel = deviceVM.runningServiceViewModel {
+                    Section("Running") {
+                        RunningServiceView()
+                            .environmentObject(runningViewModel.environment)
+                    }
+                }
             }
             
             Section("Connection") {
