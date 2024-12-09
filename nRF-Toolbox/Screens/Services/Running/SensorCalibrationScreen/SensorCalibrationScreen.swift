@@ -11,28 +11,10 @@ import SwiftUI
 // MARK: - SensorCalibrationScreen
 
 struct SensorCalibrationScreen: View {
-    @ObservedObject private var viewModel: SensorCalibrationViewModel
-    
-    init(viewModel: SensorCalibrationViewModel) {
-        self.viewModel = viewModel
-    }
-    
-    var body: some View {
-        SensorCalibrationView()
-            .navigationTitle("Sensor Calibration")
-            .environmentObject(viewModel.environment)
-    }
-}
-
-// MARK: - SensorCalibrationView
-
-private typealias Env = SensorCalibrationViewModel.Environment
-
-struct SensorCalibrationView: View {
     
     // MARK: Environment
     
-    @EnvironmentObject private var environment: Env
+    @EnvironmentObject private var viewModel: SensorCalibrationViewModel
     
     // MARK: Properties
     
@@ -43,38 +25,38 @@ struct SensorCalibrationView: View {
     
     var body: some View {
         List {
-            if environment.setCumulativeValueEnabled {
+            if viewModel.setCumulativeValueEnabled {
                 onlyButtonSection(
                     header: "Reset Distance",
                     footer: "Reset total distance to 0",
                     buttonTitle: "Reset Cumulative Value",
-                    action: environment.resetCumulativeValue,
+                    action: viewModel.environment.resetCumulativeValue,
                     buttonDisabled: $resetCumulativeValueDisabled)
             }
             
-            if environment.startSensorCalibrationEnabled {
+            if viewModel.startSensorCalibrationEnabled {
                 onlyButtonSection(
                     header: "Calibrate Sensor",
                     footer: "Initiate the sensor calibration procedure",
                     buttonTitle: "Start Sensor Calibration",
-                    action: environment.startSensorCalibration,
+                    action: viewModel.environment.startSensorCalibration,
                     buttonDisabled: $startSensorCalibrationDisabled)
             }
             
-            if environment.sensorLocationEnabled {
+            if viewModel.sensorLocationEnabled {
                 section(
                     header: "Sensor Location",
                     footer: "Update the value of the Sensor Location",
                     buttonTitle: "Update Location",
-                    buttonDisabled: $environment.updateSensorLocationDisabled) {
-                        environment.updateSensorLocationDisabled = true
+                    buttonDisabled: $viewModel.updateSensorLocationDisabled) {
+                        viewModel.updateSensorLocationDisabled = true
                         Task {
-                            await environment.updateSensorLocation()
+                            await viewModel.environment.updateSensorLocation()
                         }
                     } content: {
                         // TECHNICAL DEBT: Blinking Picker. Not critical but annoying.
-                        Picker("Location", selection: $environment.pickerSensorLocation) {
-                            ForEach(environment.availableSensorLocations, id: \.rawValue) {
+                        Picker("Location", selection: $viewModel.pickerSensorLocation) {
+                            ForEach(viewModel.availableSensorLocations, id: \.rawValue) {
                                 Text($0.description)
                                     .tag($0.rawValue)
                             }

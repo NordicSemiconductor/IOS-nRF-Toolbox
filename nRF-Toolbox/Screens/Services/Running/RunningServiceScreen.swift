@@ -32,9 +32,11 @@ struct RunningServiceView: View {
                 showSensorCalibration = true
             }
             .sheet(isPresented: $showSensorCalibration, content: {
-                if let vm = environment.sensorCalibrationViewModel {
+                if let viewModel = environment.sensorCalibrationViewModel {
                     NavigationStack {
-                        SensorCalibrationScreen(viewModel: vm)
+                        SensorCalibrationScreen()
+                            .navigationTitle("Sensor Calibration")
+                            .environmentObject(viewModel)
                     }
                 }
             })

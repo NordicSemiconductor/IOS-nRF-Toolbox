@@ -26,6 +26,16 @@ final class SensorCalibrationViewModel: ObservableObject {
     let peripheral: Peripheral
     let rscFeature: RSCFeature
     
+    @Published fileprivate(set) var setCumulativeValueEnabled = false
+    @Published fileprivate(set) var startSensorCalibrationEnabled = false
+    @Published fileprivate(set) var sensorLocationEnabled = false
+            
+    @Published var updateSensorLocationDisabled = false
+    @Published fileprivate(set) var currentSensorLocation: SensorLocation.RawValue = 0
+    @Published var pickerSensorLocation: SensorLocation.RawValue = 0
+    
+    @Published fileprivate(set) var availableSensorLocations: [SensorLocation] = []
+    
     fileprivate var internalError: AlertError? = nil {
         didSet {
             self.alertError = internalError
@@ -47,8 +57,12 @@ final class SensorCalibrationViewModel: ObservableObject {
         self.rscService = rscService
         self.rscFeature = rscFeature
         
-        environment.setCumulativeValueEnabled = rscFeature.contains(.totalDistanceMeasurement)
-        environment.startSensorCalibrationEnabled = rscFeature.contains(.sensorCalibrationProcedure)
+        setCumulativeValueEnabled = rscFeature.contains(.totalDistanceMeasurement)
+        startSensorCalibrationEnabled = rscFeature.contains(.sensorCalibrationProcedure)
+        
+        Publishers.CombineLatest($pickerSensorLocation, $currentSensorLocation)
+            .map { $0 == $1 }
+            .assign(to: &$updateSensorLocationDisabled)
         
         log.debug(#function)
     }
@@ -73,7 +87,8 @@ extension SensorCalibrationViewModel {
             self.scControlPoint = scControlPoint
             guard try await peripheral.setNotifyValue(true, for: self.scControlPoint).firstValue else {
                 criticalError = .cantEnableNotifyCharacteristic
-                return 
+                log.debug("Error: \(criticalError.nilDescription)")
+                return
             }
             
             self.sensorLocationCharacteristic = discovered.first(where: { $0.uuid == Characteristic.sensorLocation.uuid })
@@ -89,13 +104,14 @@ extension SensorCalibrationViewModel {
         guard rscFeature.contains(.multipleSensorLocation) else { return }
         
         do {
-            environment.availableSensorLocations = try await readAvailableLocations()
+            availableSensorLocations = try await readAvailableLocations()
             let sensorLocation = try await readSensorLocation()
-            environment.currentSensorLocation = sensorLocation.rawValue
-            environment.pickerSensorLocation = sensorLocation.rawValue
+            currentSensorLocation = sensorLocation.rawValue
+            pickerSensorLocation = sensorLocation.rawValue
             
-            guard !environment.availableSensorLocations.isEmpty else {
+            guard !availableSensorLocations.isEmpty else {
                 internalError = .unableReadSensorLocation
+                log.debug("Error: \(internalError.nilDescription)")
                 return
             }
         } catch let error {
@@ -104,7 +120,7 @@ extension SensorCalibrationViewModel {
             return
         }
         
-        environment.sensorLocationEnabled = true 
+        sensorLocationEnabled = true
     }
 }
 
@@ -126,18 +142,20 @@ extension SensorCalibrationViewModel {
         do {
             try await writeCommand(opCode: .startSensorCalibration, parameter: nil)
         } catch {
+            log.debug("Error: \(internalError.nilDescription)")
             internalError = .unableStartCalibration
         }
     }
     
     private func updateSensorLocation() async {
         do {
-            let data = Data([environment.pickerSensorLocation])
+            let data = Data([pickerSensorLocation])
             try await writeCommand(opCode: .updateSensorLocation, parameter: data)
-            environment.currentSensorLocation = environment.pickerSensorLocation
+            currentSensorLocation = pickerSensorLocation
         } catch {
+            log.debug("Error: \(internalError.nilDescription)")
             internalError = .unableWriteSensorLocation
-            environment.updateSensorLocationDisabled = false 
+            updateSensorLocationDisabled = false
         }
     }
     
@@ -197,6 +215,7 @@ extension SensorCalibrationViewModel {
 // MARK: - Internal Error
 
 private extension SensorCalibrationViewModel {
+    
     enum Err: Error {
         case controlPointError(RunningSpeedAndCadence.ResponseCode)
         case noMandatoryCharacteristic
@@ -213,16 +232,6 @@ extension SensorCalibrationViewModel {
         
         // MARK: Features
         
-        @Published fileprivate(set) var setCumulativeValueEnabled = false
-        @Published fileprivate(set) var startSensorCalibrationEnabled = false
-        @Published fileprivate(set) var sensorLocationEnabled = false
-                
-        @Published var updateSensorLocationDisabled = false
-        @Published fileprivate(set) var currentSensorLocation: SensorLocation.RawValue = 0
-        @Published var pickerSensorLocation: SensorLocation.RawValue = 0
-        
-        @Published fileprivate(set) var availableSensorLocations: [SensorLocation] = []
-        
         let resetCumulativeValue: () async -> ()
         let startSensorCalibration: () async -> ()
         let updateSensorLocation: () async -> ()
@@ -235,10 +244,6 @@ extension SensorCalibrationViewModel {
             self.resetCumulativeValue = resetCumulativeValue
             self.startSensorCalibration = startSensorCalibration
             self.updateSensorLocation = updateSensorLocation
-            
-            Publishers.CombineLatest($pickerSensorLocation, $currentSensorLocation)
-                .map { $0 == $1 }
-                .assign(to: &$updateSensorLocationDisabled)
             
             log.debug(#function)
         }
