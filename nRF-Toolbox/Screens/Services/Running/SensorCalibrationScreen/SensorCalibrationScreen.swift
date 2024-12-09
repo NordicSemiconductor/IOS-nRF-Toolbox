@@ -83,7 +83,7 @@ struct SensorCalibrationView: View {
             }
         }
         .listStyle(.insetGrouped)
-        .errorAlert(error: $environment.alertError)
+//        .errorAlert(error: $environment.alertError)
     }
     
     @ViewBuilder

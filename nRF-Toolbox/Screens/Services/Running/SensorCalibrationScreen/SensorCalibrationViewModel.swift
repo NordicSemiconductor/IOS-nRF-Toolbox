@@ -26,12 +26,21 @@ final class SensorCalibrationViewModel: ObservableObject {
     let peripheral: Peripheral
     let rscFeature: RSCFeature
     
+    fileprivate var internalError: AlertError? = nil {
+        didSet {
+            self.alertError = internalError
+        }
+    }
+    @Published var alertError: Error? = nil
+    @Published fileprivate(set) var criticalError: CriticalError? = nil
+    
     private let rscService: CBService
     private var scControlPoint: CBCharacteristic!
     private var sensorLocationCharacteristic: CBCharacteristic?
     
     private let log = NordicLog(category: "SensorCalibration.VM")
-    private var cancelable = Set<AnyCancellable>()
+    
+    // MARK: init
     
     init(peripheral: Peripheral, rscService: CBService, rscFeature: RSCFeature) {
         self.peripheral = peripheral
@@ -58,19 +67,19 @@ extension SensorCalibrationViewModel {
             let discovered = try await peripheral.discoverCharacteristics(characteristics.map(\.uuid), for: rscService).firstValue
             
             guard let scControlPoint = discovered.first(where: { $0.uuid == Characteristic.scControlPoint.uuid }) else {
-                environment.criticalError = .noMandatoryCharacteristic
+                criticalError = .noMandatoryCharacteristic
                 return
             }
             self.scControlPoint = scControlPoint
             guard try await peripheral.setNotifyValue(true, for: self.scControlPoint).firstValue else {
-                environment.criticalError = .cantEnableNotifyCharacteristic
+                criticalError = .cantEnableNotifyCharacteristic
                 return 
             }
             
             self.sensorLocationCharacteristic = discovered.first(where: { $0.uuid == Characteristic.sensorLocation.uuid })
         } catch let error {
             log.error("Error: \(error.localizedDescription)")
-            environment.criticalError = .noMandatoryCharacteristic
+            criticalError = .noMandatoryCharacteristic
             return
         }
     }
@@ -86,12 +95,12 @@ extension SensorCalibrationViewModel {
             environment.pickerSensorLocation = sensorLocation.rawValue
             
             guard !environment.availableSensorLocations.isEmpty else {
-                environment.internalError = .unableReadSensorLocation
+                internalError = .unableReadSensorLocation
                 return
             }
         } catch let error {
             log.error("Error: \(error.localizedDescription)")
-            environment.internalError = .unableReadSensorLocation
+            internalError = .unableReadSensorLocation
             return
         }
         
@@ -109,7 +118,7 @@ extension SensorCalibrationViewModel {
             try await writeCommand(opCode: .setCumulativeValue, parameter: data)
         } catch let error {
             log.error(error.localizedDescription)
-            environment.internalError = .unableResetCumulativeValue
+            internalError = .unableResetCumulativeValue
         }
     }
     
@@ -117,7 +126,7 @@ extension SensorCalibrationViewModel {
         do {
             try await writeCommand(opCode: .startSensorCalibration, parameter: nil)
         } catch {
-            environment.internalError = .unableStartCalibration
+            internalError = .unableStartCalibration
         }
     }
     
@@ -127,7 +136,7 @@ extension SensorCalibrationViewModel {
             try await writeCommand(opCode: .updateSensorLocation, parameter: data)
             environment.currentSensorLocation = environment.pickerSensorLocation
         } catch {
-            environment.internalError = .unableWriteSensorLocation
+            internalError = .unableWriteSensorLocation
             environment.updateSensorLocationDisabled = false 
         }
     }
@@ -214,14 +223,6 @@ extension SensorCalibrationViewModel {
         
         @Published fileprivate(set) var availableSensorLocations: [SensorLocation] = []
         
-        fileprivate var internalError: AlertError? = nil {
-            didSet {
-                self.alertError = internalError
-            }
-        }
-        @Published var alertError: Error? = nil
-        @Published fileprivate(set) var criticalError: CriticalError? = nil
-        
         let resetCumulativeValue: () async -> ()
         let startSensorCalibration: () async -> ()
         let updateSensorLocation: () async -> ()
@@ -249,7 +250,7 @@ extension SensorCalibrationViewModel {
 }
 
 // MARK: - Error Types
-extension SensorCalibrationViewModel.Environment {
+extension SensorCalibrationViewModel {
     
     enum CriticalError: LocalizedError {
         case noMandatoryCharacteristic
