@@ -355,6 +355,8 @@
 		AA2CB314286C75450083DB9A /* iOSMcuManagerLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = AA2CB313286C75450083DB9A /* iOSMcuManagerLibrary */; };
 		AA2CB316286C75AA0083DB9A /* NordicDFU in Frameworks */ = {isa = PBXBuildFile; productRef = AA2CB315286C75AA0083DB9A /* NordicDFU */; };
 		AA5539202D00AAD200F589F5 /* BatteryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA55391F2D00AAD200F589F5 /* BatteryViewModel.swift */; };
+		AA5AB3DB2D08649C005213D5 /* CyclingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5AB3DA2D08649C005213D5 /* CyclingData.swift */; };
+		AA5AB3DC2D08649C005213D5 /* CyclingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5AB3DA2D08649C005213D5 /* CyclingData.swift */; };
 		AA94C5512D01B49200562F7A /* BatteryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA94C5502D01B49200562F7A /* BatteryView.swift */; };
 		AA94C5532D01B5DC00562F7A /* HeartRateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA94C5522D01B5DC00562F7A /* HeartRateView.swift */; };
 		AA95CBCF2D0846E800D1FBC6 /* CyclingServiceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA95CBCE2D0846E800D1FBC6 /* CyclingServiceViewModel.swift */; };
@@ -767,6 +769,7 @@
 		89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA0AEA012CF7438200F93A0B /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		AA55391F2D00AAD200F589F5 /* BatteryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryViewModel.swift; sourceTree = "<group>"; };
+		AA5AB3DA2D08649C005213D5 /* CyclingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingData.swift; sourceTree = "<group>"; };
 		AA94C5502D01B49200562F7A /* BatteryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryView.swift; sourceTree = "<group>"; };
 		AA94C5522D01B5DC00562F7A /* HeartRateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateView.swift; sourceTree = "<group>"; };
 		AA95CBCE2D0846E800D1FBC6 /* CyclingServiceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingServiceViewModel.swift; sourceTree = "<group>"; };
@@ -2443,6 +2446,7 @@
 			isa = PBXGroup;
 			children = (
 				AA95CBD22D085AFA00D1FBC6 /* CyclingFeature.swift */,
+				AA5AB3DA2D08649C005213D5 /* CyclingData.swift */,
 				AA95CBCE2D0846E800D1FBC6 /* CyclingServiceViewModel.swift */,
 			);
 			path = Cycling;
@@ -2838,6 +2842,7 @@
 				0108E87E2AF1654D00C8B096 /* BatteryChart.swift in Sources */,
 				015AAE712B063D6200D79833 /* RootNavigationViewModel.swift in Sources */,
 				0126B53F2A5EA8B70033BCC3 /* AttributeTable.swift in Sources */,
+				AA5AB3DB2D08649C005213D5 /* CyclingData.swift in Sources */,
 				017D102E2A5809E300E38E5F /* nRF_ToolboxApp.swift in Sources */,
 				01DEB4A62A65E35F00D4C1E8 /* Flag.swift in Sources */,
 				014BBD7D2A70004B00BCFCA8 /* RSCMeasurement.swift in Sources */,
@@ -3060,6 +3065,7 @@
 				33976F79FE2EA20D94F68B69 /* ContinuousGlucoseChartData.swift in Sources */,
 				339764F85119305F6958B516 /* LastDataSection.swift in Sources */,
 				015F1098240FA06D00FDAC49 /* DFUActionSection.swift in Sources */,
+				AA5AB3DC2D08649C005213D5 /* CyclingData.swift in Sources */,
 				339763D0A0642AF6C7E7AA85 /* StartStopSection.swift in Sources */,
 				01D98C85242E2855000A3B35 /* FileTableViewCell.swift in Sources */,
 				3397653E200A1711DC0AA009 /* ContinuousGlucoseMonitorMeasurement.swift in Sources */,
