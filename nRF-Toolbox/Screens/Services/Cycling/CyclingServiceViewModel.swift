@@ -78,35 +78,23 @@ final class CyclingServiceViewModel: ObservableObject {
         .timeout(.seconds(1), scheduler: DispatchQueue.main, customError: { CriticalError.timeout })
         .firstValue
         
-        log.debug("\(cyclingFeatures)")
+        log.debug("Detected \(cyclingFeatures)")
+        peripheral.listenValues(for: cscMeasurement)
+            .compactMap { try? CyclingCharacteristic($0) }
+            .sink { [unowned self] completion in
+                switch completion {
+                case .finished:
+                    self.log.debug("Finished!")
+                case .failure(let error):
+                    self.log.error("Error: \(error.localizedDescription)")
+                }
+            } receiveValue: { [unowned self] update in
+                self.log.debug("\(update)")
+            }
+            .store(in: &cancellables)
         
-//        peripheral.listenValues(for: rscMeasurement)                    // Listen for values
-//            .map { RunningSpeedAndCadence.RSCSMeasurement(from: $0) }   // Map Data into readable struct
-//            .sink { [unowned self] completion in
-//                switch completion {
-//                case .finished:
-//                    self.log.debug("Finished!")
-//                case .failure(let error):
-//                    self.log.error("error: \(error.localizedDescription)")
-//                }
-//                
-//            } receiveValue: { [unowned self] measurement in
-//                self.environment.instantaneousSpeed = Measurement(value: Double(measurement.instantaneousSpeed) / 256.0, unit: UnitSpeed.metersPerSecond)
-//                self.environment.instantaneousCadence = Int(measurement.instantaneousCadence)
-//                
-//                if measurement.flags.contains(.instantaneousStrideLengthPresent) {
-//                    self.environment.instantaneousStrideLength = Measurement(value: Double(measurement.instantaneousStrideLength!), unit: .centimeters)
-//                }
-//                
-//                if measurement.flags.contains(.totalDistancePresent) {
-//                    self.environment.totalDistance = Measurement(value: Double(measurement.totalDistance!), unit: .meters)
-//                }
-//                
-//                self.environment.isRunning = measurement.flags.contains(.walkingOrRunningStatus)
-//            }
-//            .store(in: &cancelable)
-//        
-//        _ = try await peripheral.setNotifyValue(true, for: rscMeasurement).firstValue
+        // Enable Notifications
+        _ = try await peripheral.setNotifyValue(true, for: cscMeasurement).firstValue
     }
 }
 
@@ -140,6 +128,8 @@ private extension Flag {
     static let crankData: Flag = 0x02
 }
 
+// MARK: - CyclingCharacteristic
+
 struct CyclingCharacteristic {
     
     typealias WheelRevolutionAndTime = (revolution: Int, time: Double)
@@ -154,7 +144,7 @@ struct CyclingCharacteristic {
         self.crankRevolutionsAndTime = crankRevolutionsAndTime
     }
     
-    init(data: Data) throws {
+    init(_ data: Data) throws {
         let flags: UInt8 = try data.read()
         
         wheelRevolutionsAndTime = try Flag.isAvailable(bits: flags, flag: .wheelData) ? {
