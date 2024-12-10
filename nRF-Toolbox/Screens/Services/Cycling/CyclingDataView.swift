@@ -18,17 +18,24 @@ struct CyclingDataView: View {
     
     // MARK: view
     
+    // Speed
+    // Cadence
+    // Distance
+    // Total Distance
+    // Gear Ratio
+    
+    private static let speedFormatter = MeasurementFormatter.numeric(maximumFractionDigits: 1)
+    private static let distanceFormatter = MeasurementFormatter.numeric(maximumFractionDigits: 2)
+
     var body: some View {
-        if let wheel = viewModel.data.crankRevolutionsAndTime {
-            Text("Wheel \(wheel.revolution)")
-            
-            Text("Time \(wheel.time)")
-        }
+        Text("Speed \(Self.speedFormatter.string(from: viewModel.speed))")
         
-        if let crank = viewModel.data.crankRevolutionsAndTime {
-            Text("Crank \(crank.revolution)")
-            
-            Text("Time \(crank.time)")
-        }
+        Text("Cadence \(viewModel.cadence) RPM")
+        
+        Text("Distance \(Self.distanceFormatter.string(from: viewModel.travelDistance))")
+        
+        Text("Total Distance \(Self.distanceFormatter.string(from: viewModel.totalTravelDistance))")
+        
+        Text("Gear Ratio \(String(format: "%.2f", viewModel.gearRatio))")
     }
 }

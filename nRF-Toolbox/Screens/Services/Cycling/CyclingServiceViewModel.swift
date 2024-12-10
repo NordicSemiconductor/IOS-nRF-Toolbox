@@ -22,6 +22,16 @@ final class CyclingServiceViewModel: ObservableObject {
     // MARK: Properties
     
     @Published private(set) var data: CyclingData = .zero
+    @Published private(set) var travelDistance = Measurement<UnitLength>(value: 0, unit: .kilometers)
+    @Published private(set) var totalTravelDistance = Measurement<UnitLength>(value: 0, unit: .kilometers)
+    @Published private(set) var speed = Measurement<UnitSpeed>(value: 0, unit: .kilometersPerHour)
+    @Published private(set) var gearRatio: Double = 1
+    @Published private(set) var cadence: Int = 0
+    
+    var wheelSize: Double = 0.6
+    private var wheelCircumference: Double {
+        self.wheelSize * .pi
+    }
     
     private let service: CBService
     private let peripheral: Peripheral
@@ -70,11 +80,10 @@ final class CyclingServiceViewModel: ObservableObject {
     
     func startListening() async throws {
         log.debug(#function)
-        let cyclingFeatures = try await peripheral.readValue(for: cscFeature).tryMap { [unowned self] data in
+        let cyclingFeatures = try await peripheral.readValue(for: cscFeature).tryMap { data in
             guard let data else {
                 throw CriticalError.noData
             }
-            self.log.debug("Received Feature Data \(data)")
             return CyclingFeatures(flags: RegisterValue(data[0]))
         }
         .timeout(.seconds(1), scheduler: DispatchQueue.main, customError: { CriticalError.timeout })
@@ -92,7 +101,22 @@ final class CyclingServiceViewModel: ObservableObject {
                     self.log.error("Error: \(error.localizedDescription)")
                 }
             } receiveValue: { [unowned self] update in
-                self.log.debug("\(update)")
+                if let speedUpdate = update.speed(data, wheelCircumference: wheelCircumference) {
+                    self.speed = speedUpdate
+                }
+                if let travelUpdate = update.distance(data, wheelCircumference: wheelCircumference) {
+                    self.travelDistance = travelUpdate
+                }
+                if let totalDistanceUpdate = update.travelDistance(with: wheelCircumference) {
+                    self.totalTravelDistance = totalDistanceUpdate
+                }
+                if let cadenceUpdate = update.cadence(data) {
+                    self.cadence = cadenceUpdate
+                }
+                if let ratioUpdate = update.gearRatio(data) {
+                    self.gearRatio = ratioUpdate
+                }
+                
                 self.data = update
             }
             .store(in: &cancellables)
