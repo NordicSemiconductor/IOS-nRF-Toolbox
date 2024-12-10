@@ -37,5 +37,7 @@ struct CyclingDataView: View {
         Text("Total Distance \(Self.distanceFormatter.string(from: viewModel.totalTravelDistance))")
         
         Text("Gear Ratio \(String(format: "%.2f", viewModel.gearRatio))")
+        
+        Text("Wheel Size \(viewModel.wheelSize)")
     }
 }
