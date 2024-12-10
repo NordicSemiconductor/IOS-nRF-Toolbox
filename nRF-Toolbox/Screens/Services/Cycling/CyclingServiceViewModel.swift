@@ -21,7 +21,7 @@ final class CyclingServiceViewModel: ObservableObject {
     
     // MARK: Properties
     
-    @Published private(set) var data: CyclingData?
+    @Published private(set) var data: CyclingData = .zero
     
     private let service: CBService
     private let peripheral: Peripheral

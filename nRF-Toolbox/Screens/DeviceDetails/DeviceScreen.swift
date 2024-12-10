@@ -49,7 +49,8 @@ struct DeviceScreen: View {
                 
                 if let cyclingViewModel = deviceVM.cyclingServiceViewModel {
                     Section("Cycling") {
-                        
+                        CyclingDataView()
+                            .environmentObject(cyclingViewModel)
                     }
                 }
                 
