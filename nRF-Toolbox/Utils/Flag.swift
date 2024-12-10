@@ -8,12 +8,16 @@
 
 import Foundation
 
-protocol Flag {
-    var value: Int { get }
-}
-
-extension Flag {
-    func enabled(at bit: Int) -> Bool {
-        Int(pow(2, Double(bit))) & value != 0
+struct Flag: ExpressibleByIntegerLiteral {
+    typealias IntegerLiteralType = UInt8
+    
+    let flag: IntegerLiteralType
+    
+    init(integerLiteral value: UInt8) {
+        flag = value
+    }
+    
+    static func isAvailable(bits: UInt8, flag: Flag) -> Bool {
+        bits & flag.flag != 0
     }
 }

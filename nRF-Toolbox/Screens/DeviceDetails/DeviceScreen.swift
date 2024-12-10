@@ -47,6 +47,12 @@ struct DeviceScreen: View {
                     }
                 }
                 
+                if let cyclingViewModel = deviceVM.cyclingServiceViewModel {
+                    Section("Cycling") {
+                        
+                    }
+                }
+                
                 if let batteryViewModel = deviceVM.batteryServiceViewModel {
                     Section("Battery Level") {
                         BatteryView()

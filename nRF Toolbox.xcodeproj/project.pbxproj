@@ -357,6 +357,10 @@
 		AA5539202D00AAD200F589F5 /* BatteryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA55391F2D00AAD200F589F5 /* BatteryViewModel.swift */; };
 		AA94C5512D01B49200562F7A /* BatteryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA94C5502D01B49200562F7A /* BatteryView.swift */; };
 		AA94C5532D01B5DC00562F7A /* HeartRateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA94C5522D01B5DC00562F7A /* HeartRateView.swift */; };
+		AA95CBCF2D0846E800D1FBC6 /* CyclingServiceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA95CBCE2D0846E800D1FBC6 /* CyclingServiceViewModel.swift */; };
+		AA95CBD12D084C8B00D1FBC6 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA95CBD02D084C8B00D1FBC6 /* Error.swift */; };
+		AA95CBD32D085AFA00D1FBC6 /* CyclingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA95CBD22D085AFA00D1FBC6 /* CyclingFeature.swift */; };
+		AA95CBD42D085AFA00D1FBC6 /* CyclingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA95CBD22D085AFA00D1FBC6 /* CyclingFeature.swift */; };
 		AAF7DE622CFDD4BC000A347A /* ConnectedDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF7DE612CFDD4BC000A347A /* ConnectedDeviceView.swift */; };
 		C39941BC27341AAE00E7AA33 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = C39941BB27341AAE00E7AA33 /* ZIPFoundation */; };
 		C39941C027352BDF00E7AA33 /* McuMgrFirmware.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39941BF27352BDF00E7AA33 /* McuMgrFirmware.swift */; };
@@ -765,6 +769,9 @@
 		AA55391F2D00AAD200F589F5 /* BatteryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryViewModel.swift; sourceTree = "<group>"; };
 		AA94C5502D01B49200562F7A /* BatteryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryView.swift; sourceTree = "<group>"; };
 		AA94C5522D01B5DC00562F7A /* HeartRateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateView.swift; sourceTree = "<group>"; };
+		AA95CBCE2D0846E800D1FBC6 /* CyclingServiceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingServiceViewModel.swift; sourceTree = "<group>"; };
+		AA95CBD02D084C8B00D1FBC6 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		AA95CBD22D085AFA00D1FBC6 /* CyclingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingFeature.swift; sourceTree = "<group>"; };
 		AAF7DE612CFDD4BC000A347A /* ConnectedDeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedDeviceView.swift; sourceTree = "<group>"; };
 		C39941BF27352BDF00E7AA33 /* McuMgrFirmware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = McuMgrFirmware.swift; sourceTree = "<group>"; };
 		C39941C127352FC600E7AA33 /* ZephyrPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrPacket.swift; sourceTree = "<group>"; };
@@ -996,6 +1003,7 @@
 		013E5D872ADD337300B9C475 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				AA95CBCD2D0846C900D1FBC6 /* Cycling */,
 				AA55391E2D00AABB00F589F5 /* Battery */,
 				01ABB0752AE6FDCF00615A21 /* HeartRate */,
 				013E5D882ADD33BF00B9C475 /* Running */,
@@ -1266,6 +1274,7 @@
 				01EBE6182AE4845100960672 /* View+ErrorAlert.swift */,
 				012C8EB42B0D31C400FFE4EC /* Logger+Ext.swift */,
 				AA0AEA012CF7438200F93A0B /* Assets.swift */,
+				AA95CBD02D084C8B00D1FBC6 /* Error.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2430,6 +2439,15 @@
 			path = Battery;
 			sourceTree = "<group>";
 		};
+		AA95CBCD2D0846C900D1FBC6 /* Cycling */ = {
+			isa = PBXGroup;
+			children = (
+				AA95CBD22D085AFA00D1FBC6 /* CyclingFeature.swift */,
+				AA95CBCE2D0846E800D1FBC6 /* CyclingServiceViewModel.swift */,
+			);
+			path = Cycling;
+			sourceTree = "<group>";
+		};
 		C39941BE27352BC400E7AA33 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -2765,6 +2783,7 @@
 				01C81AD72A5D8FEA0011B41E /* ReadableError.swift in Sources */,
 				013E5D912ADFDF1300B9C475 /* Array+Ext.swift in Sources */,
 				0164A4812AD8330E0093E501 /* ServiceBadgeGroup.swift in Sources */,
+				AA95CBD42D085AFA00D1FBC6 /* CyclingFeature.swift in Sources */,
 				AA0AEA022CF7438200F93A0B /* Assets.swift in Sources */,
 				01CEB4262AE9100300945105 /* DeviceScreen.swift in Sources */,
 				018873C72A583A9900253273 /* PeripheralScannerScreen.swift in Sources */,
@@ -2791,6 +2810,7 @@
 				0164A4792AD741200093E501 /* ConnectedDevicesViewModel.swift in Sources */,
 				012E22922A6ACD8400B14064 /* AttributeTableItemView.swift in Sources */,
 				012E22902A69AFC200B14064 /* String+Name.swift in Sources */,
+				AA95CBCF2D0846E800D1FBC6 /* CyclingServiceViewModel.swift in Sources */,
 				013E5D9B2AE0545F00B9C475 /* OnFirstAppear.swift in Sources */,
 				01C81AD52A5CB6420011B41E /* ServiceBadge.swift in Sources */,
 				01FB19D22AE3DB70006DAB9F /* SensorCalibrationViewModel.swift in Sources */,
@@ -2799,6 +2819,7 @@
 				013E5D8F2ADFDDC600B9C475 /* NumberedColumnGrid.swift in Sources */,
 				01AB7B752A77BFB400AEDDCD /* CBUUID+Ext.swift in Sources */,
 				01FD68D02AE82C330021101C /* Attribute+Preview.swift in Sources */,
+				AA95CBD12D084C8B00D1FBC6 /* Error.swift in Sources */,
 				AAF7DE622CFDD4BC000A347A /* ConnectedDeviceView.swift in Sources */,
 				0180A29C2AEFBBC200090F6D /* PeripheralInspectorScreen.swift in Sources */,
 				0164A46E2AD58EB00093E501 /* RSSIItem_Preview.swift in Sources */,
@@ -2947,6 +2968,7 @@
 				01FBC5152408158F00B1056B /* CBPeripheralState+Ext.swift in Sources */,
 				200973DA234344780091951B /* BloodPressureTableViewController.swift in Sources */,
 				201364FB2344A94F00C5AF1F /* TimeBloodPressureSection.swift in Sources */,
+				AA95CBD32D085AFA00D1FBC6 /* CyclingFeature.swift in Sources */,
 				01BE094F2349F71B006ACF06 /* HealthTermometerTableViewController.swift in Sources */,
 				01BE0958234A76D4006ACF06 /* Peripheral+Temperature.swift in Sources */,
 				20C7FE0E230A9F9300B06FD8 /* LinkTableViewCell.swift in Sources */,

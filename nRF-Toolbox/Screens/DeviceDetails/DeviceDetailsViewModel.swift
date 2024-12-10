@@ -18,11 +18,15 @@ private extension Array {
     }
 }
 
+// MARK: - SupportedServiceViewModel
+
 protocol SupportedServiceViewModel {
     
     func onConnect() async
     func onDisconnect()
 }
+
+// MARK: - DeviceDetailsViewModel
 
 extension DeviceDetailsScreen {
     @MainActor
@@ -42,6 +46,10 @@ extension DeviceDetailsScreen {
         
         var runningServiceViewModel: RunningServiceViewModel? {
             supportedServiceViewModels.firstOfType(type: RunningServiceViewModel.self)
+        }
+        
+        var cyclingServiceViewModel: CyclingServiceViewModel? {
+            supportedServiceViewModels.firstOfType(type: CyclingServiceViewModel.self)
         }
         
         var heartRateServiceViewModel: DeviceScreen.HeartRateViewModel? {
@@ -120,6 +128,8 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
                 switch service.uuid {
                 case .runningSpeedCadence:
                     supportedServiceViewModels.append(RunningServiceViewModel(peripheral: peripheral, runningService: service))
+                case .cyclingSpeedCadence:
+                    supportedServiceViewModels.append(CyclingServiceViewModel(peripheral: peripheral, cyclingService: service))
                 case .heartRate:
                     supportedServiceViewModels.append(DeviceScreen.HeartRateViewModel(peripheral: peripheral, heartRateService: service))
                 case .battery:
