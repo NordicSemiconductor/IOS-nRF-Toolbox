@@ -10,7 +10,7 @@ import SwiftUI
 
 private typealias Env = RunningServiceViewModel.Environment
 
-private struct RunningAttribute: Identifiable {
+struct RunningAttribute: Identifiable {
     let title: String
     let value: String
     let unit: String?
