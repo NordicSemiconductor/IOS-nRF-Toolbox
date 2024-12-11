@@ -28,9 +28,9 @@ final class CyclingServiceViewModel: ObservableObject {
     @Published private(set) var gearRatio: Double = 1
     @Published private(set) var cadence: Int = 0
     
-    @Published private(set) var wheelSize = Measurement<UnitLength>(value: 0.6, unit: .meters)
+    @Published private(set) var wheelSize = Measurement<UnitLength>(value: 29.0, unit: .inches)
     private var wheelCircumference: Double {
-        self.wheelSize.value * .pi
+        2 * .pi * self.wheelSize.converted(to: .meters).value
     }
     
     private let service: CBService
