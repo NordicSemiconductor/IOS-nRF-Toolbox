@@ -28,8 +28,8 @@ final class CyclingServiceViewModel: ObservableObject {
     @Published private(set) var gearRatio: Double = 1
     @Published private(set) var cadence: Int = 0
     
-    @Published internal(set) var wheelSize = Measurement<UnitLength>(value: 29.0, unit: .inches)
-    private func wheelLegnth() -> Measurement<UnitLength> {
+    @Published var wheelSize = Measurement<UnitLength>(value: 29.0, unit: .inches).converted(to: .centimeters)
+    private func wheelLength() -> Measurement<UnitLength> {
         Measurement<UnitLength>(value: 2 * .pi * self.wheelSize.converted(to: .meters).value, unit: .meters)
     }
     
@@ -101,13 +101,13 @@ final class CyclingServiceViewModel: ObservableObject {
                     self.log.error("Error: \(error.localizedDescription)")
                 }
             } receiveValue: { [unowned self] update in
-                if let speedUpdate = update.speed(data, wheelLength: wheelLegnth()) {
+                if let speedUpdate = update.speed(data, wheelLength: wheelLength()) {
                     self.speed = speedUpdate
                 }
-                if let travelUpdate = update.distance(data, wheelLength: wheelLegnth()) {
+                if let travelUpdate = update.distance(data, wheelLength: wheelLength()) {
                     self.travelDistance = travelUpdate
                 }
-                if let totalDistanceUpdate = update.travelDistance(with: wheelLegnth()) {
+                if let totalDistanceUpdate = update.travelDistance(with: wheelLength()) {
                     self.totalTravelDistance = totalDistanceUpdate
                 }
                 if let cadenceUpdate = update.cadence(data) {

@@ -43,6 +43,7 @@ struct CyclingDataView: View {
         }
         .onChange(of: wheelSizeInches) {
             viewModel.wheelSize = Measurement<UnitLength>(value: wheelSizeInches, unit: .inches)
+                .converted(to: .centimeters)
         }
         .listRowSeparator(.hidden)
         .accentColor(.nordicBlue)
