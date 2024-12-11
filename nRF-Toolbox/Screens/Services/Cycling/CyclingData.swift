@@ -51,17 +51,17 @@ struct CyclingData {
             }() : nil
     }
     
-    func travelDistance(with wheelCircumference: Double) -> Measurement<UnitLength>? {
+    func travelDistance(with wheelLength: Measurement<UnitLength>) -> Measurement<UnitLength>? {
         wheelRevolutionsAndTime.map {
-            Measurement<UnitLength>(value: Double($0.revolution) * wheelCircumference, unit: .meters)
+            Measurement<UnitLength>(value: Double($0.revolution) * wheelLength.value, unit: wheelLength.unit)
                 .converted(to: .kilometers)
         }
     }
     
-    func distance(_ oldCharacteristic: CyclingData, wheelCircumference: Double) -> Measurement<UnitLength>? {
+    func distance(_ oldCharacteristic: CyclingData, wheelLength: Measurement<UnitLength>) -> Measurement<UnitLength>? {
         wheelRevolutionDiff(oldCharacteristic)
             .flatMap {
-                Measurement<UnitLength>(value: Double($0) * wheelCircumference, unit: .meters)
+                Measurement<UnitLength>(value: Double($0) * wheelLength.value, unit: wheelLength.unit)
             }
     }
     
@@ -74,7 +74,7 @@ struct CyclingData {
         return Double(wheelRevolutionDiff) / Double(crankRevolutionDiff)
     }
     
-    func speed(_ oldCharacteristic: CyclingData, wheelCircumference: Double) -> Measurement<UnitSpeed>? {
+    func speed(_ oldCharacteristic: CyclingData, wheelLength: Measurement<UnitLength>) -> Measurement<UnitSpeed>? {
         guard let wheelRevolutionDiff = wheelRevolutionDiff(oldCharacteristic),
               let wheelEventTime = wheelRevolutionsAndTime?.time,
               let oldWheelEventTime = oldCharacteristic.wheelRevolutionsAndTime?.time else {
@@ -87,8 +87,9 @@ struct CyclingData {
         }
         
         wheelEventTimeDiff /= 1024
-        let speed = (Double(wheelRevolutionDiff) * wheelCircumference) / wheelEventTimeDiff
-        return Measurement<UnitSpeed>(value: speed, unit: .milesPerHour)
+//        let speed = (Double(wheelRevolutionDiff) * wheelLength) / wheelEventTimeDiff
+//        return Measurement<UnitSpeed>(value: speed.value, unit: .milesPerHour)
+        return Measurement<UnitSpeed>(value: (Double(wheelRevolutionDiff) * wheelLength.value) / wheelEventTimeDiff, unit: .kilometersPerHour)
     }
     
     func cadence(_ oldCharacteristic: CyclingData) -> Int? {
