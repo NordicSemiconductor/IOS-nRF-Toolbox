@@ -31,8 +31,6 @@ struct CyclingDataView: View {
         Text("Speed \(Self.speedFormatter.string(from: viewModel.speed))")
         
         Text("Distance \(Self.distanceFormatter.string(from: viewModel.travelDistance))")
-        
-        Text("Wheel Size \(viewModel.wheelSize)")
     }
     
     // MARK: attributes
@@ -51,6 +49,9 @@ struct CyclingDataView: View {
         
         let totalDistanceKey = "Total Distance"
         items.append(RunningAttribute(title: totalDistanceKey, value: Self.distanceFormatter.string(from: viewModel.totalTravelDistance), unit: nil))
+        
+        let wheelKey = "Wheel Size"
+        items.append(RunningAttribute(title: wheelKey, value: String(format: "%.1f", viewModel.wheelSize.value), unit: viewModel.wheelSize.unit.symbol))
         
         let gearKey = "Gear Ratio"
         items.append(RunningAttribute(title: gearKey, value: String(format: "%.2f", viewModel.gearRatio), unit: "⚙️"))
