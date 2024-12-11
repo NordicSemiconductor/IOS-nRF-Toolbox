@@ -21,12 +21,29 @@ struct CyclingDataView: View {
     private static let speedFormatter = MeasurementFormatter.numeric(maximumFractionDigits: 1)
     private static let distanceFormatter = MeasurementFormatter.numeric(maximumFractionDigits: 2)
     
+    @State private var wheelSizeInches = 29.0
+    
     // MARK: view
     
     var body: some View {
         NumberedColumnGrid(columns: 2, data: attributes) { item in
             RunningValuesGridItem(title: item.title, value: item.value, unit: item.unit)
         }
+        
+        Text("Wheel Size")
+        
+        Slider(value: $wheelSizeInches, in: 20...29, step: 1) {
+            EmptyView()
+        } minimumValueLabel: {
+            Text("\(Measurement<UnitLength>(value: 20.0, unit: .inches).formatted())")
+        } maximumValueLabel: {
+            Text("\(Measurement<UnitLength>(value: 29.0, unit: .inches).formatted())")
+        }
+        .onChange(of: wheelSizeInches) {
+            viewModel.wheelSize = Measurement<UnitLength>(value: wheelSizeInches, unit: .inches)
+        }
+        .listRowSeparator(.hidden)
+        .accentColor(.nordicBlue)
         
         Text("Speed \(Self.speedFormatter.string(from: viewModel.speed))")
         
@@ -55,35 +72,6 @@ struct CyclingDataView: View {
         
         let gearKey = "Gear Ratio"
         items.append(RunningAttribute(title: gearKey, value: String(format: "%.2f", viewModel.gearRatio), unit: "⚙️"))
-        
-//
-//        if environment.rscFeature.contains(.instantaneousStrideLengthMeasurement) {
-//            let strideLengthKey = "Stride Length"
-//            if let instantaneousStrideLength = environment.instantaneousStrideLength {
-//                items.append(RunningAttribute(
-//                    title: strideLengthKey,
-//                    value: numberFormatter.string(from: NSNumber(floatLiteral: instantaneousStrideLength.value)) ?? "-.-",
-//                    unit: instantaneousStrideLength.unit.symbol))
-//            } else {
-//                items.append(itemPlaceholder(strideLengthKey))
-//            }
-//        }
-//        
-//        if environment.rscFeature.contains(.walkingOrRunningStatus) {
-//            let walkingRunningStatusKey = "Walking / Running"
-//         
-//            if let walkingRunning = environment.isRunning {
-//                let status: String = walkingRunning ? "Running" : "Walking"
-//                let emoji = walkingRunning ? "🏃" : "🚶"
-//                items.append(
-//                    RunningAttribute(title: walkingRunningStatusKey, value: emoji, unit: status)
-//                )
-//            } else {
-//                items.append(
-//                    RunningAttribute(title: walkingRunningStatusKey, value: "-", unit: nil)
-//                )
-//            }
-//        }
         
         return items
     }

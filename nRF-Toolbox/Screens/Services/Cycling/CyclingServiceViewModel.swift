@@ -28,7 +28,7 @@ final class CyclingServiceViewModel: ObservableObject {
     @Published private(set) var gearRatio: Double = 1
     @Published private(set) var cadence: Int = 0
     
-    @Published private(set) var wheelSize = Measurement<UnitLength>(value: 29.0, unit: .inches)
+    @Published internal(set) var wheelSize = Measurement<UnitLength>(value: 29.0, unit: .inches)
     private func wheelLegnth() -> Measurement<UnitLength> {
         Measurement<UnitLength>(value: 2 * .pi * self.wheelSize.converted(to: .meters).value, unit: .meters)
     }
