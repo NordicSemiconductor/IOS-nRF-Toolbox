@@ -84,9 +84,11 @@ struct CyclingData {
         }
         
         wheelEventTimeDiff /= 1024
-//        let speed = (Double(wheelRevolutionDiff) * wheelLength) / wheelEventTimeDiff
-//        return Measurement<UnitSpeed>(value: speed.value, unit: .milesPerHour)
-        return Measurement<UnitSpeed>(value: (Double(wheelRevolutionDiff) * wheelLength.value) / wheelEventTimeDiff, unit: .milesPerHour).converted(to: .kilometersPerHour)
+        
+        let distanceTravelled = Measurement<UnitLength>(value: Double(wheelRevolutionDiff) * wheelLength.value, unit: wheelLength.unit)
+        let speed = distanceTravelled.value / wheelEventTimeDiff
+        return Measurement<UnitSpeed>(value: speed, unit: .milesPerHour)
+            .converted(to: .kilometersPerHour)
     }
     
     func cadence(_ oldCharacteristic: CyclingData) -> Int? {
