@@ -32,8 +32,6 @@ struct CyclingDataView: View {
         
         Text("Distance \(Self.distanceFormatter.string(from: viewModel.travelDistance))")
         
-        Text("Total Distance \(Self.distanceFormatter.string(from: viewModel.totalTravelDistance))")
-        
         Text("Wheel Size \(viewModel.wheelSize)")
     }
     
@@ -51,6 +49,9 @@ struct CyclingDataView: View {
         let cadenceKey = "Cadence"
         items.append(RunningAttribute(title: cadenceKey, value: "\(viewModel.cadence)", unit: "RPM"))
         
+        let totalDistanceKey = "Total Distance"
+        items.append(RunningAttribute(title: totalDistanceKey, value: Self.distanceFormatter.string(from: viewModel.totalTravelDistance), unit: nil))
+        
         let gearKey = "Gear Ratio"
         items.append(RunningAttribute(title: gearKey, value: String(format: "%.2f", viewModel.gearRatio), unit: "⚙️"))
         
@@ -64,19 +65,6 @@ struct CyclingDataView: View {
 //                    unit: instantaneousStrideLength.unit.symbol))
 //            } else {
 //                items.append(itemPlaceholder(strideLengthKey))
-//            }
-//        }
-//        
-//        if environment.rscFeature.contains(.totalDistanceMeasurement) {
-//            let totalDistanceKey = "Total Distance"
-//            
-//            if let totalDistance = environment.totalDistance {
-//                items.append(RunningAttribute(
-//                    title: totalDistanceKey,
-//                    value: numberFormatter.string(from: NSNumber(floatLiteral: totalDistance.value)) ?? "-.-",
-//                    unit: totalDistance.unit.symbol))
-//            } else {
-//                items.append(itemPlaceholder(totalDistanceKey))
 //            }
 //        }
 //        
