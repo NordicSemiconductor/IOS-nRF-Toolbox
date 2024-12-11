@@ -31,6 +31,8 @@ struct CyclingDataView: View {
         }
         
         Text("Wheel Size")
+            .font(.title3)
+            .bold()
         
         Slider(value: $wheelSizeInches, in: 20...29, step: 1) {
             EmptyView()
@@ -44,25 +46,21 @@ struct CyclingDataView: View {
         }
         .listRowSeparator(.hidden)
         .accentColor(.nordicBlue)
-        
-        Text("Speed \(Self.speedFormatter.string(from: viewModel.speed))")
-        
-        Text("Distance \(Self.distanceFormatter.string(from: viewModel.travelDistance))")
     }
     
     // MARK: attributes
     
     private var attributes: [RunningAttribute] {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.maximumFractionDigits = 2
-        
         var items = [RunningAttribute]()
         
         let speedKey = "Speed"
-        items.append(RunningAttribute(title: speedKey, value: Self.speedFormatter.string(from: viewModel.speed), unit: viewModel.speed.unit.symbol))
+        items.append(RunningAttribute(title: speedKey, value: String(format: "%.2f", viewModel.speed.value), unit: viewModel.speed.unit.symbol))
 
         let cadenceKey = "Cadence"
         items.append(RunningAttribute(title: cadenceKey, value: "\(viewModel.cadence)", unit: "RPM"))
+        
+        let distanceKey = "Distance"
+        items.append(RunningAttribute(title: distanceKey, value: String(format: "%.2f", viewModel.travelDistance.value), unit: viewModel.travelDistance.unit.symbol))
         
         let totalDistanceKey = "Total Distance"
         items.append(RunningAttribute(title: totalDistanceKey, value: String(format: "%.2f", viewModel.totalTravelDistance.value), unit: viewModel.totalTravelDistance.unit.symbol))
