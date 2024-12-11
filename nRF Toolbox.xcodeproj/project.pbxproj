@@ -175,7 +175,6 @@
 		01DDD79D23EC5CDA003786ED /* TimeIntervalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01DDD79B23EC5CDA003786ED /* TimeIntervalTableViewCell.xib */; };
 		01DDD7A023EC6351003786ED /* UARTMarcoElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DDD79F23EC6351003786ED /* UARTMarcoElement.swift */; };
 		01DEB4A42A6588CA00D4C1E8 /* RunningServiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DEB4A32A6588CA00D4C1E8 /* RunningServiceHandler.swift */; };
-		01DEB4A62A65E35F00D4C1E8 /* Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DEB4A52A65E35F00D4C1E8 /* Flag.swift */; };
 		01DEB4A82A65E90C00D4C1E8 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DEB4A72A65E90C00D4C1E8 /* Data+Ext.swift */; };
 		01DEB4AA2A65E9D900D4C1E8 /* CharacteristicReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DEB4A92A65E9D900D4C1E8 /* CharacteristicReader.swift */; };
 		01DFC55C2420F0AB00AF2EF0 /* ZephyrDFURouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DFC55B2420F0AB00AF2EF0 /* ZephyrDFURouter.swift */; };
@@ -588,7 +587,6 @@
 		01DDD79B23EC5CDA003786ED /* TimeIntervalTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeIntervalTableViewCell.xib; sourceTree = "<group>"; };
 		01DDD79F23EC6351003786ED /* UARTMarcoElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMarcoElement.swift; sourceTree = "<group>"; };
 		01DEB4A32A6588CA00D4C1E8 /* RunningServiceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningServiceHandler.swift; sourceTree = "<group>"; };
-		01DEB4A52A65E35F00D4C1E8 /* Flag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flag.swift; sourceTree = "<group>"; };
 		01DEB4A72A65E90C00D4C1E8 /* Data+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Ext.swift"; sourceTree = "<group>"; };
 		01DEB4A92A65E9D900D4C1E8 /* CharacteristicReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacteristicReader.swift; sourceTree = "<group>"; };
 		01DFC55B2420F0AB00AF2EF0 /* ZephyrDFURouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFURouter.swift; sourceTree = "<group>"; };
@@ -1276,7 +1274,6 @@
 				0164A4752AD698650093E501 /* NumberDatabase+Ext.swift */,
 				01C575BD2A7D00EF007FE4F0 /* Alias.swift */,
 				01C81AD62A5D8FEA0011B41E /* ReadableError.swift */,
-				01DEB4A52A65E35F00D4C1E8 /* Flag.swift */,
 				012E228F2A69AFC200B14064 /* String+Name.swift */,
 				012E22932A6AD5BE00B14064 /* NamedItem.swift */,
 				01EBE6182AE4845100960672 /* View+ErrorAlert.swift */,
@@ -2852,7 +2849,6 @@
 				0126B53F2A5EA8B70033BCC3 /* AttributeTable.swift in Sources */,
 				AA5AB3DB2D08649C005213D5 /* CyclingData.swift in Sources */,
 				017D102E2A5809E300E38E5F /* nRF_ToolboxApp.swift in Sources */,
-				01DEB4A62A65E35F00D4C1E8 /* Flag.swift in Sources */,
 				014BBD7D2A70004B00BCFCA8 /* RSCMeasurement.swift in Sources */,
 				0108E87B2AF140D800C8B096 /* ChartTimeData.swift in Sources */,
 				AA5AB3E12D0877F6005213D5 /* MeasurementFormatter+Ext.swift in Sources */,

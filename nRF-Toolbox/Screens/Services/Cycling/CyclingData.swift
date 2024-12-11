@@ -7,10 +7,13 @@
 //
 
 import Foundation
+import iOS_Common_Libraries
 
-private extension Flag {
-    static let wheelData: Flag = 0x01
-    static let crankData: Flag = 0x02
+// MARK: - CyclingDataFlag
+
+fileprivate enum CyclingDataFlag: RegisterValue, Option {
+    case wheelData = 0
+    case crankData = 1
 }
 
 // MARK: - CyclingData
@@ -32,22 +35,16 @@ struct CyclingData {
     }
     
     init(_ data: Data) throws {
-        let flags: UInt8 = try data.read()
-        
-        wheelRevolutionsAndTime = try Flag.isAvailable(bits: flags, flag: .wheelData) ? {
-                (
-                    Int(try data.read(fromOffset: 1) as UInt32),
-                    Double(try data.read(fromOffset: 5) as UInt16)
-                )
+        let flags = BitField<CyclingDataFlag>(try data.read())
+        wheelRevolutionsAndTime = try flags.contains(.wheelData) ? {
+                (Int(try data.read(fromOffset: 1) as UInt32),
+                 Double(try data.read(fromOffset: 5) as UInt16))
             }() : nil
         
-        let crankOffset: (Int, Int) = Flag.isAvailable(bits: flags, flag: .wheelData) ? (7, 9) : (1, 3)
-        
-        crankRevolutionsAndTime = try Flag.isAvailable(bits: flags, flag: .crankData) ? {
-                (
-                    Int(try data.read(fromOffset: crankOffset.0) as UInt16),
-                    Double(try data.read(fromOffset: crankOffset.1) as UInt16)
-                )
+        let crankOffset: (Int, Int) = flags.contains(.wheelData) ? (7, 9) : (1, 3)
+        crankRevolutionsAndTime = try flags.contains(.crankData) ? {
+                (Int(try data.read(fromOffset: crankOffset.0) as UInt16),
+                 Double(try data.read(fromOffset: crankOffset.1) as UInt16))
             }() : nil
     }
     
@@ -89,7 +86,7 @@ struct CyclingData {
         wheelEventTimeDiff /= 1024
 //        let speed = (Double(wheelRevolutionDiff) * wheelLength) / wheelEventTimeDiff
 //        return Measurement<UnitSpeed>(value: speed.value, unit: .milesPerHour)
-        return Measurement<UnitSpeed>(value: (Double(wheelRevolutionDiff) * wheelLength.value) / wheelEventTimeDiff, unit: .kilometersPerHour)
+        return Measurement<UnitSpeed>(value: (Double(wheelRevolutionDiff) * wheelLength.value) / wheelEventTimeDiff, unit: .milesPerHour).converted(to: .kilometersPerHour)
     }
     
     func cadence(_ oldCharacteristic: CyclingData) -> Int? {
