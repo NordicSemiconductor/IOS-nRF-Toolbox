@@ -42,13 +42,13 @@ struct CyclingDataView: View {
         var items = [RunningAttribute]()
         
         let speedKey = "Speed"
-        items.append(RunningAttribute(title: speedKey, value: Self.speedFormatter.string(from: viewModel.speed), unit: nil))
+        items.append(RunningAttribute(title: speedKey, value: Self.speedFormatter.string(from: viewModel.speed), unit: viewModel.speed.unit.symbol))
 
         let cadenceKey = "Cadence"
         items.append(RunningAttribute(title: cadenceKey, value: "\(viewModel.cadence)", unit: "RPM"))
         
         let totalDistanceKey = "Total Distance"
-        items.append(RunningAttribute(title: totalDistanceKey, value: Self.distanceFormatter.string(from: viewModel.totalTravelDistance), unit: nil))
+        items.append(RunningAttribute(title: totalDistanceKey, value: String(format: "%.2f", viewModel.totalTravelDistance.value), unit: viewModel.totalTravelDistance.unit.symbol))
         
         let wheelKey = "Wheel Size"
         items.append(RunningAttribute(title: wheelKey, value: String(format: "%.1f", viewModel.wheelSize.value), unit: viewModel.wheelSize.unit.symbol))

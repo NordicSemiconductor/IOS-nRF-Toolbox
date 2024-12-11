@@ -52,23 +52,32 @@ struct CyclingData {
     }
     
     func travelDistance(with wheelCircumference: Double) -> Measurement<UnitLength>? {
-        wheelRevolutionsAndTime.map { Measurement<UnitLength>(value: Double($0.revolution) * wheelCircumference, unit: .meters) }
+        wheelRevolutionsAndTime.map {
+            Measurement<UnitLength>(value: Double($0.revolution) * wheelCircumference, unit: .meters)
+                .converted(to: .kilometers)
+        }
     }
     
     func distance(_ oldCharacteristic: CyclingData, wheelCircumference: Double) -> Measurement<UnitLength>? {
         wheelRevolutionDiff(oldCharacteristic)
-            .flatMap { Measurement<UnitLength>(value: Double($0) * wheelCircumference, unit: .meters) }
+            .flatMap {
+                Measurement<UnitLength>(value: Double($0) * wheelCircumference, unit: .meters)
+            }
     }
     
     func gearRatio(_ oldCharacteristic: CyclingData) -> Double? {
-        guard let wheelRevolutionDiff = wheelRevolutionDiff(oldCharacteristic), let crankRevolutionDiff = crankRevolutionDiff(oldCharacteristic), crankRevolutionDiff != 0 else {
+        guard let wheelRevolutionDiff = wheelRevolutionDiff(oldCharacteristic),
+              let crankRevolutionDiff = crankRevolutionDiff(oldCharacteristic),
+              crankRevolutionDiff != 0 else {
             return nil
         }
         return Double(wheelRevolutionDiff) / Double(crankRevolutionDiff)
     }
     
     func speed(_ oldCharacteristic: CyclingData, wheelCircumference: Double) -> Measurement<UnitSpeed>? {
-        guard let wheelRevolutionDiff = wheelRevolutionDiff(oldCharacteristic), let wheelEventTime = wheelRevolutionsAndTime?.time, let oldWheelEventTime = oldCharacteristic.wheelRevolutionsAndTime?.time else {
+        guard let wheelRevolutionDiff = wheelRevolutionDiff(oldCharacteristic),
+              let wheelEventTime = wheelRevolutionsAndTime?.time,
+              let oldWheelEventTime = oldCharacteristic.wheelRevolutionsAndTime?.time else {
             return nil
         }
         
@@ -83,7 +92,9 @@ struct CyclingData {
     }
     
     func cadence(_ oldCharacteristic: CyclingData) -> Int? {
-        guard let crankRevolutionDiff = crankRevolutionDiff(oldCharacteristic), let crankEventTimeDiff = crankEventTimeDiff(oldCharacteristic), crankEventTimeDiff > 0 else {
+        guard let crankRevolutionDiff = crankRevolutionDiff(oldCharacteristic),
+              let crankEventTimeDiff = crankEventTimeDiff(oldCharacteristic),
+              crankEventTimeDiff > 0 else {
             return nil
         }
         
@@ -93,7 +104,8 @@ struct CyclingData {
     // MARK: - Private
     
     private func wheelRevolutionDiff(_ oldCharacteristic: CyclingData) -> Int? {
-        guard let oldWheelRevolution = oldCharacteristic.wheelRevolutionsAndTime?.revolution, let wheelRevolution = wheelRevolutionsAndTime?.revolution else {
+        guard let oldWheelRevolution = oldCharacteristic.wheelRevolutionsAndTime?.revolution,
+              let wheelRevolution = wheelRevolutionsAndTime?.revolution else {
             return nil
         }
         guard oldWheelRevolution != 0 else { return 0 }
@@ -101,7 +113,8 @@ struct CyclingData {
     }
     
     private func crankRevolutionDiff(_ old: CyclingData) -> Int? {
-        guard let crankRevolution = crankRevolutionsAndTime?.revolution, let oldCrankRevolution = old.crankRevolutionsAndTime?.revolution else {
+        guard let crankRevolution = crankRevolutionsAndTime?.revolution,
+              let oldCrankRevolution = old.crankRevolutionsAndTime?.revolution else {
             return nil
         }
         
@@ -109,7 +122,8 @@ struct CyclingData {
     }
     
     private func crankEventTimeDiff(_ old: CyclingData) -> Double? {
-        guard let crankEventTime = crankRevolutionsAndTime?.time, let oldCrankEventTime = old.crankRevolutionsAndTime?.time else {
+        guard let crankEventTime = crankRevolutionsAndTime?.time,
+              let oldCrankEventTime = old.crankRevolutionsAndTime?.time else {
             return nil
         }
         return (crankEventTime - oldCrankEventTime) / 1024.0
