@@ -30,13 +30,9 @@ struct CyclingDataView: View {
         
         Text("Speed \(Self.speedFormatter.string(from: viewModel.speed))")
         
-        Text("Cadence \(viewModel.cadence) RPM")
-        
         Text("Distance \(Self.distanceFormatter.string(from: viewModel.travelDistance))")
         
         Text("Total Distance \(Self.distanceFormatter.string(from: viewModel.totalTravelDistance))")
-        
-        Text("Gear Ratio \(String(format: "%.2f", viewModel.gearRatio))")
         
         Text("Wheel Size \(viewModel.wheelSize)")
     }
@@ -51,17 +47,14 @@ struct CyclingDataView: View {
         
         let speedKey = "Speed"
         items.append(RunningAttribute(title: speedKey, value: Self.speedFormatter.string(from: viewModel.speed), unit: nil))
+
+        let cadenceKey = "Cadence"
+        items.append(RunningAttribute(title: cadenceKey, value: "\(viewModel.cadence)", unit: "RPM"))
+        
+        let gearKey = "Gear Ratio"
+        items.append(RunningAttribute(title: gearKey, value: String(format: "%.2f", viewModel.gearRatio), unit: "⚙️"))
+        
 //
-//        let cadenceKey = "Cadence"
-//        if let cadence = environment.instantaneousCadence {
-//            items.append(RunningAttribute(
-//                title: cadenceKey,
-//                value: "\(cadence)",
-//                unit: "steps/min"))
-//        } else {
-//            items.append(itemPlaceholder(cadenceKey))
-//        }
-//        
 //        if environment.rscFeature.contains(.instantaneousStrideLengthMeasurement) {
 //            let strideLengthKey = "Stride Length"
 //            if let instantaneousStrideLength = environment.instantaneousStrideLength {
