@@ -30,7 +30,8 @@ final class CyclingServiceViewModel: ObservableObject {
     
     @Published var wheelSize = Measurement<UnitLength>(value: 29.0, unit: .inches).converted(to: .centimeters)
     private func wheelLength() -> Measurement<UnitLength> {
-        Measurement<UnitLength>(value: 2 * .pi * self.wheelSize.converted(to: .meters).value, unit: .meters)
+        Measurement<UnitLength>(value: self.wheelSize.converted(to: .meters).value * .pi,
+                                unit: .meters)
     }
     
     private let service: CBService
