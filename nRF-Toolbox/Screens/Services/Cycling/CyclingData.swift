@@ -16,30 +16,67 @@ fileprivate enum CyclingDataFlag: RegisterValue, Option {
     case crankData = 1
 }
 
+// MARK: - WheelDataPoint
+
+struct WheelDataPoint {
+    
+    static let zero = WheelDataPoint()
+    
+    let revolutions: Int
+    let time: Measurement<UnitDuration>
+    
+    private init() {
+        self.revolutions = 0
+        self.time = Measurement<UnitDuration>(value: 0, unit: .seconds)
+    }
+    
+    init?(_ data: Data) {
+        // byte 0 is assumed to be Data Flags
+        let revolutionsOffset = MemoryLayout<UInt8>.size
+        guard data.canRead(UInt32.self, atOffset: revolutionsOffset) else {
+            return nil
+        }
+        self.revolutions = data.littleEndianBytes(atOffset: revolutionsOffset, as: UInt32.self)
+        let timeOffset = revolutionsOffset + MemoryLayout<UInt32>.size
+        guard data.canRead(UInt16.self, atOffset: timeOffset) else {
+            return nil
+        }
+        // Wheel event time is a free-running-count of 1/1024 second units
+        // as per CSC Service Documentation.
+        self.time = Measurement<UnitDuration>(value: Double(data.littleEndianBytes(atOffset: timeOffset, as: UInt16.self) / 1024), unit: .seconds)
+    }
+}
+
 // MARK: - CyclingData
 
 struct CyclingData {
     
     typealias WheelRevolutionAndTime = (revolution: Int, time: Double)
     
-    let wheelRevolutionsAndTime: WheelRevolutionAndTime?
+    let wheelData: WheelDataPoint?
     let crankRevolutionsAndTime: WheelRevolutionAndTime?
     
-    static let zero = CyclingData(wheelRevolutionsAndTime: (0, 0.0), crankRevolutionsAndTime: (0, 0.0))
+    static let zero = CyclingData(crankRevolutionsAndTime: (0, 0.0))
     
     // MARK: init
     
-    init(wheelRevolutionsAndTime: (Int, Double)?, crankRevolutionsAndTime: (Int, Double)?) {
-        self.wheelRevolutionsAndTime = wheelRevolutionsAndTime
+    init(crankRevolutionsAndTime: (Int, Double)?) {
+        self.wheelData = .zero
         self.crankRevolutionsAndTime = crankRevolutionsAndTime
     }
     
     init(_ data: Data) throws {
-        let flags = BitField<CyclingDataFlag>(try data.read())
-        wheelRevolutionsAndTime = try flags.contains(.wheelData) ? {
-                (Int(try data.read(fromOffset: 1) as UInt32),
-                 Double(try data.read(fromOffset: 5) as UInt16))
-            }() : nil
+        let flagsByte = data.littleEndianBytes(as: UInt8.self)
+        let flags = BitField<CyclingDataFlag>(RegisterValue(flagsByte))
+        
+        if flags.contains(.wheelData) {
+            guard let wheelData = WheelDataPoint(data) else {
+                throw CriticalError.noData
+            }
+            self.wheelData = wheelData
+        } else {
+            self.wheelData = nil
+        }
         
         let crankOffset: (Int, Int) = flags.contains(.wheelData) ? (7, 9) : (1, 3)
         crankRevolutionsAndTime = try flags.contains(.crankData) ? {
@@ -49,10 +86,10 @@ struct CyclingData {
     }
     
     func travelDistance(with wheelLength: Measurement<UnitLength>) -> Measurement<UnitLength>? {
-        wheelRevolutionsAndTime.map {
-            Measurement<UnitLength>(value: Double($0.revolution) * wheelLength.value, unit: wheelLength.unit)
-                .converted(to: .kilometers)
-        }
+        guard let wheelData else { return nil }
+        return Measurement<UnitLength>(value: Double(wheelData.revolutions) * wheelLength.value,
+                                       unit: wheelLength.unit)
+            .converted(to: .kilometers)
     }
     
     func distance(_ oldCharacteristic: CyclingData, wheelLength: Measurement<UnitLength>) -> Measurement<UnitLength>? {
@@ -73,21 +110,20 @@ struct CyclingData {
     
     func speed(_ oldCharacteristic: CyclingData, wheelLength: Measurement<UnitLength>) -> Measurement<UnitSpeed>? {
         guard let wheelRevolutionDiff = wheelRevolutionDiff(oldCharacteristic),
-              let wheelEventTime = wheelRevolutionsAndTime?.time,
-              let oldWheelEventTime = oldCharacteristic.wheelRevolutionsAndTime?.time else {
+              let wheelEventTime = wheelData?.time,
+              let oldWheelEventTime = oldCharacteristic.wheelData?.time else {
             return nil
         }
         
-        var wheelEventTimeDiff = wheelEventTime - oldWheelEventTime
-        guard wheelEventTimeDiff > 0 else {
+        let wheelEventTimeDiff = wheelEventTime - oldWheelEventTime
+        guard wheelEventTimeDiff.value > .zero else {
             return nil
         }
         
-        wheelEventTimeDiff /= 1024
-        
-        let distanceTravelled = Measurement<UnitLength>(value: Double(wheelRevolutionDiff) * wheelLength.value, unit: wheelLength.unit)
+        let wheelLengthMeters = wheelLength.converted(to: .meters)
+        let distanceTravelled = Measurement<UnitLength>(value: Double(wheelRevolutionDiff) * wheelLengthMeters.value, unit: .meters)
         let speed = distanceTravelled.value / wheelEventTimeDiff
-        return Measurement<UnitSpeed>(value: speed, unit: .milesPerHour)
+        return Measurement<UnitSpeed>(value: speed.value, unit: .metersPerSecond)
             .converted(to: .kilometersPerHour)
     }
     
@@ -104,12 +140,12 @@ struct CyclingData {
     // MARK: - Private
     
     private func wheelRevolutionDiff(_ oldCharacteristic: CyclingData) -> Int? {
-        guard let oldWheelRevolution = oldCharacteristic.wheelRevolutionsAndTime?.revolution,
-              let wheelRevolution = wheelRevolutionsAndTime?.revolution else {
+        guard let oldWheelRevolutions = oldCharacteristic.wheelData?.revolutions,
+              let wheelRevolutions = wheelData?.revolutions else {
             return nil
         }
-        guard oldWheelRevolution != 0 else { return 0 }
-        return wheelRevolution - oldWheelRevolution
+        guard oldWheelRevolutions != 0 else { return 0 }
+        return wheelRevolutions - oldWheelRevolutions
     }
     
     private func crankRevolutionDiff(_ old: CyclingData) -> Int? {
