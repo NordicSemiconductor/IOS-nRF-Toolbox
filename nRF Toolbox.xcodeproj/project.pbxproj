@@ -355,6 +355,8 @@
 		AA2CB316286C75AA0083DB9A /* NordicDFU in Frameworks */ = {isa = PBXBuildFile; productRef = AA2CB315286C75AA0083DB9A /* NordicDFU */; };
 		AA479EA42D0B0B5C0052E801 /* WheelDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA479EA32D0B0B5C0052E801 /* WheelDataPoint.swift */; };
 		AA479EA52D0B0B5C0052E801 /* WheelDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA479EA32D0B0B5C0052E801 /* WheelDataPoint.swift */; };
+		AA479EA72D0B0BFF0052E801 /* CrankDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA479EA62D0B0BFF0052E801 /* CrankDataPoint.swift */; };
+		AA479EA82D0B0BFF0052E801 /* CrankDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA479EA62D0B0BFF0052E801 /* CrankDataPoint.swift */; };
 		AA5539202D00AAD200F589F5 /* BatteryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA55391F2D00AAD200F589F5 /* BatteryViewModel.swift */; };
 		AA5AB3DB2D08649C005213D5 /* CyclingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5AB3DA2D08649C005213D5 /* CyclingData.swift */; };
 		AA5AB3DC2D08649C005213D5 /* CyclingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5AB3DA2D08649C005213D5 /* CyclingData.swift */; };
@@ -772,6 +774,7 @@
 		89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA0AEA012CF7438200F93A0B /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		AA479EA32D0B0B5C0052E801 /* WheelDataPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelDataPoint.swift; sourceTree = "<group>"; };
+		AA479EA62D0B0BFF0052E801 /* CrankDataPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrankDataPoint.swift; sourceTree = "<group>"; };
 		AA55391F2D00AAD200F589F5 /* BatteryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryViewModel.swift; sourceTree = "<group>"; };
 		AA5AB3DA2D08649C005213D5 /* CyclingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingData.swift; sourceTree = "<group>"; };
 		AA5AB3DD2D0868DD005213D5 /* CyclingDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingDataView.swift; sourceTree = "<group>"; };
@@ -2456,6 +2459,7 @@
 				AA5AB3DD2D0868DD005213D5 /* CyclingDataView.swift */,
 				AA95CBCE2D0846E800D1FBC6 /* CyclingServiceViewModel.swift */,
 				AA479EA32D0B0B5C0052E801 /* WheelDataPoint.swift */,
+				AA479EA62D0B0BFF0052E801 /* CrankDataPoint.swift */,
 			);
 			path = Cycling;
 			sourceTree = "<group>";
@@ -2869,6 +2873,7 @@
 				01F6A9602A812D6200540B45 /* Emulator.swift in Sources */,
 				015AAE652B0383BD00D79833 /* SidebarScreen.swift in Sources */,
 				0180A29D2AEFBBC200090F6D /* PeripheralInspectorViewModel.swift in Sources */,
+				AA479EA72D0B0BFF0052E801 /* CrankDataPoint.swift in Sources */,
 				0164A4762AD698650093E501 /* NumberDatabase+Ext.swift in Sources */,
 				01407CBC2A65819B00A5B279 /* ServiceHandler.swift in Sources */,
 				01FB19D02AE3DB0D006DAB9F /* SensorCalibrationScreen.swift in Sources */,
@@ -3049,6 +3054,7 @@
 				20B7979A2338B8C0001328E1 /* MeasurementFormatter+Ext.swift in Sources */,
 				20F0C80C2327DB74003111E7 /* BGMSection.swift in Sources */,
 				01BE0953234A1C48006ACF06 /* HealthTermometerCharacteristic.swift in Sources */,
+				AA479EA82D0B0BFF0052E801 /* CrankDataPoint.swift in Sources */,
 				300143271CEC4B9D008379DF /* AppUtilities.swift in Sources */,
 				01BEADD8241AE6BF00FC7183 /* UILabel+Ext.swift in Sources */,
 				0169B59E23FBD8BE00907C1B /* NordicTextFieldCell.swift in Sources */,

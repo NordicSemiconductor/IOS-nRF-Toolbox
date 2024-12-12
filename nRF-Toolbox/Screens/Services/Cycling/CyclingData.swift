@@ -11,7 +11,7 @@ import iOS_Common_Libraries
 
 // MARK: - CyclingDataFlag
 
-fileprivate enum CyclingDataFlag: RegisterValue, Option {
+enum CyclingDataFlag: RegisterValue, Option {
     case wheelData = 0
     case crankData = 1
 }
@@ -20,18 +20,18 @@ fileprivate enum CyclingDataFlag: RegisterValue, Option {
 
 struct CyclingData {
     
-    typealias WheelRevolutionAndTime = (revolution: Int, time: Double)
+    // MARK: Properties
     
     let wheelData: WheelDataPoint?
-    let crankRevolutionsAndTime: WheelRevolutionAndTime?
+    let crankData: CrankDataPoint?
     
-    static let zero = CyclingData(crankRevolutionsAndTime: (0, 0.0))
+    static let zero = CyclingData()
     
     // MARK: init
     
-    init(crankRevolutionsAndTime: (Int, Double)?) {
+    init() {
         self.wheelData = .zero
-        self.crankRevolutionsAndTime = crankRevolutionsAndTime
+        self.crankData = .zero
     }
     
     init(_ data: Data) throws {
@@ -47,11 +47,14 @@ struct CyclingData {
             self.wheelData = nil
         }
         
-        let crankOffset: (Int, Int) = flags.contains(.wheelData) ? (7, 9) : (1, 3)
-        crankRevolutionsAndTime = try flags.contains(.crankData) ? {
-                (Int(try data.read(fromOffset: crankOffset.0) as UInt16),
-                 Double(try data.read(fromOffset: crankOffset.1) as UInt16))
-            }() : nil
+        if flags.contains(.crankData) {
+            guard let crankData = CrankDataPoint(data) else {
+                throw CriticalError.noData
+            }
+            self.crankData = crankData
+        } else {
+            self.crankData = nil
+        }
     }
     
     func travelDistance(with wheelLength: Measurement<UnitLength>) -> Measurement<UnitLength>? {
@@ -118,8 +121,8 @@ struct CyclingData {
     }
     
     private func crankRevolutionDiff(_ old: CyclingData) -> Int? {
-        guard let crankRevolution = crankRevolutionsAndTime?.revolution,
-              let oldCrankRevolution = old.crankRevolutionsAndTime?.revolution else {
+        guard let crankRevolution = crankData?.revolutions,
+              let oldCrankRevolution = old.crankData?.revolutions else {
             return nil
         }
         
@@ -127,8 +130,8 @@ struct CyclingData {
     }
     
     private func crankEventTimeDiff(_ old: CyclingData) -> Double? {
-        guard let crankEventTime = crankRevolutionsAndTime?.time,
-              let oldCrankEventTime = old.crankRevolutionsAndTime?.time else {
+        guard let crankEventTime = crankData?.time,
+              let oldCrankEventTime = old.crankData?.time else {
             return nil
         }
         return (crankEventTime - oldCrankEventTime) / 1024.0
