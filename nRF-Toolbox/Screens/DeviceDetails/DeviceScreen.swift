@@ -40,6 +40,13 @@ struct DeviceScreen: View {
                     }
                 }
                 
+                if let temperatureServiceViewModel = deviceVM.temperatureServiceViewModel {
+                    Section("Temperature") {
+                        TemperatureView()
+                            .environmentObject(temperatureServiceViewModel)
+                    }
+                }
+                
                 if let runningViewModel = deviceVM.runningServiceViewModel {
                     Section("Running") {
                         RunningServiceView()
