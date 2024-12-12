@@ -353,6 +353,8 @@
 		AA0AEA022CF7438200F93A0B /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0AEA012CF7438200F93A0B /* Assets.swift */; };
 		AA2CB314286C75450083DB9A /* iOSMcuManagerLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = AA2CB313286C75450083DB9A /* iOSMcuManagerLibrary */; };
 		AA2CB316286C75AA0083DB9A /* NordicDFU in Frameworks */ = {isa = PBXBuildFile; productRef = AA2CB315286C75AA0083DB9A /* NordicDFU */; };
+		AA479EA42D0B0B5C0052E801 /* WheelDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA479EA32D0B0B5C0052E801 /* WheelDataPoint.swift */; };
+		AA479EA52D0B0B5C0052E801 /* WheelDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA479EA32D0B0B5C0052E801 /* WheelDataPoint.swift */; };
 		AA5539202D00AAD200F589F5 /* BatteryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA55391F2D00AAD200F589F5 /* BatteryViewModel.swift */; };
 		AA5AB3DB2D08649C005213D5 /* CyclingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5AB3DA2D08649C005213D5 /* CyclingData.swift */; };
 		AA5AB3DC2D08649C005213D5 /* CyclingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5AB3DA2D08649C005213D5 /* CyclingData.swift */; };
@@ -769,6 +771,7 @@
 		7E1B422818A8DF4D006BA1BC /* high.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = high.mp3; sourceTree = "<group>"; };
 		89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA0AEA012CF7438200F93A0B /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
+		AA479EA32D0B0B5C0052E801 /* WheelDataPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelDataPoint.swift; sourceTree = "<group>"; };
 		AA55391F2D00AAD200F589F5 /* BatteryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryViewModel.swift; sourceTree = "<group>"; };
 		AA5AB3DA2D08649C005213D5 /* CyclingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingData.swift; sourceTree = "<group>"; };
 		AA5AB3DD2D0868DD005213D5 /* CyclingDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingDataView.swift; sourceTree = "<group>"; };
@@ -2452,6 +2455,7 @@
 				AA5AB3DA2D08649C005213D5 /* CyclingData.swift */,
 				AA5AB3DD2D0868DD005213D5 /* CyclingDataView.swift */,
 				AA95CBCE2D0846E800D1FBC6 /* CyclingServiceViewModel.swift */,
+				AA479EA32D0B0B5C0052E801 /* WheelDataPoint.swift */,
 			);
 			path = Cycling;
 			sourceTree = "<group>";
@@ -2854,6 +2858,7 @@
 				AA5AB3E12D0877F6005213D5 /* MeasurementFormatter+Ext.swift in Sources */,
 				01CEB42D2AE9956600945105 /* HeartRateMeasurementCharacteristic+Preview.swift in Sources */,
 				01C575BE2A7D00EF007FE4F0 /* Alias.swift in Sources */,
+				AA479EA52D0B0B5C0052E801 /* WheelDataPoint.swift in Sources */,
 				012E22942A6AD5BE00B14064 /* NamedItem.swift in Sources */,
 				AA94C5512D01B49200562F7A /* BatteryView.swift in Sources */,
 				014BBD812A700D1600BCFCA8 /* SensorLocationView1.swift in Sources */,
@@ -2997,6 +3002,7 @@
 				20C7FE53230E811B00B06FD8 /* ServiceProvider.swift in Sources */,
 				20C7FE5E230EC37000B06FD8 /* ServiceTableViewCell.swift in Sources */,
 				C39941C227352FC600E7AA33 /* ZephyrPacket.swift in Sources */,
+				AA479EA42D0B0B5C0052E801 /* WheelDataPoint.swift in Sources */,
 				01268AF924218E5800E83156 /* ZephyrDFUDocumentPicker.swift in Sources */,
 				4389183824360D0100175A94 /* LogTableViewCell.swift in Sources */,
 				012C2BE72410F8AA005EC1A0 /* DFUUpdateViewController.swift in Sources */,
