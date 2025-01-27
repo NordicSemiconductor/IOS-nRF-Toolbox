@@ -20,5 +20,12 @@ struct ThroughputView: View {
     
     var body: some View {
         NoContentView(title: "No Throughput Data", systemImage: "waveform.path.ecg.rectangle")
+        
+        Button {
+            viewModel.toggle()
+        } label: {
+            Label(viewModel.inProgress ? "Stop" : "Start",
+                  systemImage: viewModel.inProgress ? "stop.fill" : "play.fill")
+        }
     }
 }

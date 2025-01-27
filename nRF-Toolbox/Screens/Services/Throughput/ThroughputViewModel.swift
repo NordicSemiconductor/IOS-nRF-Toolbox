@@ -15,6 +15,8 @@ import iOS_Bluetooth_Numbers_Database
 import iOS_Common_Libraries
 import CoreBluetoothMock_Collection
 
+// MARK: - ThroughputViewModel
+
 final class ThroughputViewModel: ObservableObject {
     
     internal static let throughputService = Service(name: "Throughput Service", identifier: "com.nordicsemi.service.throughput", uuidString: "0483DADD-6C9D-6CA9-5D41-03AD4FFF4ABB", source: "nordic")
@@ -22,6 +24,10 @@ final class ThroughputViewModel: ObservableObject {
     internal static let throughputCharacteristic = Characteristic(
         name: "Throughput", identifier: "com.nordicsemi.characteristic.throughput",
         uuidString: "1524", source: "nordic")
+    
+    // MARK: Published
+    
+    @Published fileprivate(set) var inProgress: Bool
     
     // MARK: Private Properties
     
@@ -36,8 +42,32 @@ final class ThroughputViewModel: ObservableObject {
     init(_ peripheral: Peripheral, service: CBService) {
         self.peripheral = peripheral
         self.service = service
+        self.inProgress = false
         self.cancellables = Set<AnyCancellable>()
         log.debug(#function)
+    }
+    
+    // MARK: startListening()
+    
+    func startListening() async throws {
+        log.debug(#function)
+        let characteristics: [Characteristic] = [Self.throughputCharacteristic]
+        let cbCharacteristics = try await peripheral
+            .discoverCharacteristics(characteristics.map(\.uuid), for: service)
+            .timeout(1, scheduler: DispatchQueue.main)
+            .firstValue
+        
+        // Check if `throughput` characteristic was discovered
+        guard let cbThroughput = cbCharacteristics.first,
+              cbThroughput.uuid == Self.throughputCharacteristic.uuid else {
+            return
+        }
+    }
+    
+    // MARK: toggle
+    
+    func toggle() {
+        self.inProgress.toggle()
     }
 }
 
@@ -47,7 +77,7 @@ extension ThroughputViewModel: SupportedServiceViewModel {
     
     func onConnect() async {
         do {
-            
+            try await startListening()
         }
         catch let error {
             log.error("Error \(error.localizedDescription)")
