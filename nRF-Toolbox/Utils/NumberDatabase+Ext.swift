@@ -43,7 +43,8 @@ extension Service: @retroactive Hashable {
         .glucose,
         .continuousGlucoseMonitoring,
         .healthThermometer,
-        .batteryService
+        .batteryService,
+        ThroughputViewModel.throughputService
     ]
     
     public func hash(into hasher: inout Hasher) {

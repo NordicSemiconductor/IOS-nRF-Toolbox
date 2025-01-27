@@ -63,6 +63,10 @@ extension DeviceDetailsScreen {
         var batteryServiceViewModel: BatteryViewModel? {
             supportedServiceViewModels.firstOfType(type: BatteryViewModel.self)
         }
+        
+        var throughputViewModel: ThroughputViewModel? {
+            supportedServiceViewModels.firstOfType(type: ThroughputViewModel.self)
+        }
     
         init(cbPeripheral: CBPeripheral, centralManager: CentralManager) {
             self.peripheral = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
@@ -140,6 +144,8 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
                     supportedServiceViewModels.append(DeviceScreen.HeartRateViewModel(peripheral: peripheral, heartRateService: service))
                 case .battery:
                     supportedServiceViewModels.append(BatteryViewModel(peripheral: peripheral, batteryService: service))
+                case .throughputService:
+                    supportedServiceViewModels.append(ThroughputViewModel(peripheral, service: service))
                 default:
                     break
                 }

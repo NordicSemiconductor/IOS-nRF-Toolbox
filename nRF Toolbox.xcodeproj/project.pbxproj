@@ -351,6 +351,8 @@
 		52D9BC9E1DD0CB760030E824 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9BC9D1DD0CB760030E824 /* Data+Ext.swift */; };
 		7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B422818A8DF4D006BA1BC /* high.mp3 */; };
 		AA0AEA022CF7438200F93A0B /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0AEA012CF7438200F93A0B /* Assets.swift */; };
+		AA2C37012D47D88800D41989 /* ThroughputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2C37002D47D88800D41989 /* ThroughputViewModel.swift */; };
+		AA2C37052D47DA1F00D41989 /* ThroughputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2C37042D47DA1F00D41989 /* ThroughputView.swift */; };
 		AA2CB314286C75450083DB9A /* iOSMcuManagerLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = AA2CB313286C75450083DB9A /* iOSMcuManagerLibrary */; };
 		AA2CB316286C75AA0083DB9A /* NordicDFU in Frameworks */ = {isa = PBXBuildFile; productRef = AA2CB315286C75AA0083DB9A /* NordicDFU */; };
 		AA479EA42D0B0B5C0052E801 /* WheelDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA479EA32D0B0B5C0052E801 /* WheelDataPoint.swift */; };
@@ -775,6 +777,8 @@
 		7E1B422818A8DF4D006BA1BC /* high.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = high.mp3; sourceTree = "<group>"; };
 		89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA0AEA012CF7438200F93A0B /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
+		AA2C37002D47D88800D41989 /* ThroughputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThroughputViewModel.swift; sourceTree = "<group>"; };
+		AA2C37042D47DA1F00D41989 /* ThroughputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThroughputView.swift; sourceTree = "<group>"; };
 		AA479EA32D0B0B5C0052E801 /* WheelDataPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelDataPoint.swift; sourceTree = "<group>"; };
 		AA479EA62D0B0BFF0052E801 /* CrankDataPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrankDataPoint.swift; sourceTree = "<group>"; };
 		AA479EAC2D0B24E50052E801 /* TemperatureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureViewModel.swift; sourceTree = "<group>"; };
@@ -1019,6 +1023,7 @@
 		013E5D872ADD337300B9C475 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				AA2C36FF2D47D78500D41989 /* Throughput */,
 				AA479EAB2D0B24C70052E801 /* Temperature */,
 				AA95CBCD2D0846C900D1FBC6 /* Cycling */,
 				AA55391E2D00AABB00F589F5 /* Battery */,
@@ -2446,6 +2451,15 @@
 			name = StoryBoard;
 			sourceTree = "<group>";
 		};
+		AA2C36FF2D47D78500D41989 /* Throughput */ = {
+			isa = PBXGroup;
+			children = (
+				AA2C37002D47D88800D41989 /* ThroughputViewModel.swift */,
+				AA2C37042D47DA1F00D41989 /* ThroughputView.swift */,
+			);
+			path = Throughput;
+			sourceTree = "<group>";
+		};
 		AA479EAB2D0B24C70052E801 /* Temperature */ = {
 			isa = PBXGroup;
 			children = (
@@ -2813,6 +2827,7 @@
 				01C81AD72A5D8FEA0011B41E /* ReadableError.swift in Sources */,
 				013E5D912ADFDF1300B9C475 /* Array+Ext.swift in Sources */,
 				0164A4812AD8330E0093E501 /* ServiceBadgeGroup.swift in Sources */,
+				AA2C37052D47DA1F00D41989 /* ThroughputView.swift in Sources */,
 				AA95CBD42D085AFA00D1FBC6 /* CyclingFeature.swift in Sources */,
 				AA0AEA022CF7438200F93A0B /* Assets.swift in Sources */,
 				01CEB4262AE9100300945105 /* DeviceScreen.swift in Sources */,
@@ -2820,6 +2835,7 @@
 				01F6A9662A829EE300540B45 /* SensorSettingsViewModel.swift in Sources */,
 				013E5D962AE02A1700B9C475 /* RunningValuesGrid.swift in Sources */,
 				015AAE702B063D6200D79833 /* RootNavigationScreen.swift in Sources */,
+				AA2C37012D47D88800D41989 /* ThroughputViewModel.swift in Sources */,
 				0164A46B2AD550000093E501 /* RSSIChartView.swift in Sources */,
 				012C8EB52B0D31C400FFE4EC /* Logger+Ext.swift in Sources */,
 				013E5D8C2ADD33EF00B9C475 /* RunningServiceViewModel.swift in Sources */,

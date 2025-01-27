@@ -67,6 +67,13 @@ struct DeviceScreen: View {
                             .environmentObject(batteryViewModel)
                     }
                 }
+                
+                if let throughputViewModel = deviceVM.throughputViewModel {
+                    Section("Throughput") {
+                        ThroughputView()
+                            .environmentObject(throughputViewModel)
+                    }
+                }
             }
             
             Section("Connection") {
