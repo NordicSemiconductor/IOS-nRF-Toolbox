@@ -45,14 +45,16 @@ struct ThroughputView: View {
         Divider()
             .listRowSpacing(0)
         
-        Label("Number of Writes: \(viewModel.numberOfWrites.nilDescription)", systemImage: "number")
-            .listRowSeparator(.hidden)
-        
-        Label("Bytes Received: \(viewModel.bytesReceived.nilDescription)", systemImage: "")
-            .listRowSeparator(.hidden)
-        
-        Label("Bits/second: \(viewModel.throughputBitsPerSecond.nilDescription)", systemImage: "")
-            .listRowSeparator(.hidden)
+        if let data = viewModel.readData {
+            Label("Number of Writes: \(data.numberOfWrites)", systemImage: "number")
+                .listRowSeparator(.hidden)
+            
+            Label("Received: \(Measurement<UnitInformationStorage>(value: Double(data.bytesReceived), unit: .bytes).formatted())", systemImage: "suitcase.cart")
+                .listRowSeparator(.hidden)
+            
+            Label("Bits/second: \(data.throughputBitsPerSecond)", systemImage: "metronome")
+                .listRowSeparator(.hidden)
+        }
         
         Button {
             viewModel.read()

@@ -28,9 +28,7 @@ final class ThroughputViewModel: ObservableObject {
     // MARK: Published
     
     @Published fileprivate(set) var inProgress: Bool
-    @Published fileprivate(set) var numberOfWrites: UInt32!
-    @Published fileprivate(set) var bytesReceived: UInt32!
-    @Published fileprivate(set) var throughputBitsPerSecond: UInt32!
+    @Published fileprivate(set) var readData: ThroughputData?
     
     // MARK: Private Properties
     
@@ -122,9 +120,7 @@ final class ThroughputViewModel: ObservableObject {
                 guard let result = try await peripheral.readValue(for: cbThroughput).firstValue else {
                     return
                 }
-                numberOfWrites = try result.read(fromOffset: 0)
-                bytesReceived = try result.read(fromOffset: MemoryLayout<UInt32>.size)
-                throughputBitsPerSecond = try result.read(fromOffset: 2 * MemoryLayout<UInt32>.size)
+                readData = ThroughputData(result)
             } catch {
                 log.error(error.localizedDescription)
             }

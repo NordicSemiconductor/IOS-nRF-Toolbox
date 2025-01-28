@@ -350,6 +350,7 @@
 		52BDCBC61C47C2C300E2680F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52BDCBC51C47C2C300E2680F /* Launch Screen.storyboard */; };
 		52D9BC9E1DD0CB760030E824 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9BC9D1DD0CB760030E824 /* Data+Ext.swift */; };
 		7E1B422918A8DF4D006BA1BC /* high.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B422818A8DF4D006BA1BC /* high.mp3 */; };
+		AA0A78502D4914BE000206F8 /* ThroughputData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0A784F2D4914BE000206F8 /* ThroughputData.swift */; };
 		AA0AEA022CF7438200F93A0B /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0AEA012CF7438200F93A0B /* Assets.swift */; };
 		AA2C37012D47D88800D41989 /* ThroughputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2C37002D47D88800D41989 /* ThroughputViewModel.swift */; };
 		AA2C37052D47DA1F00D41989 /* ThroughputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2C37042D47DA1F00D41989 /* ThroughputView.swift */; };
@@ -776,6 +777,7 @@
 		52D9BC9D1DD0CB760030E824 /* Data+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Ext.swift"; sourceTree = "<group>"; };
 		7E1B422818A8DF4D006BA1BC /* high.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = high.mp3; sourceTree = "<group>"; };
 		89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA0A784F2D4914BE000206F8 /* ThroughputData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThroughputData.swift; sourceTree = "<group>"; };
 		AA0AEA012CF7438200F93A0B /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		AA2C37002D47D88800D41989 /* ThroughputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThroughputViewModel.swift; sourceTree = "<group>"; };
 		AA2C37042D47DA1F00D41989 /* ThroughputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThroughputView.swift; sourceTree = "<group>"; };
@@ -2456,6 +2458,7 @@
 			children = (
 				AA2C37002D47D88800D41989 /* ThroughputViewModel.swift */,
 				AA2C37042D47DA1F00D41989 /* ThroughputView.swift */,
+				AA0A784F2D4914BE000206F8 /* ThroughputData.swift */,
 			);
 			path = Throughput;
 			sourceTree = "<group>";
@@ -2876,6 +2879,7 @@
 				01DEB4AA2A65E9D900D4C1E8 /* CharacteristicReader.swift in Sources */,
 				AA94C5532D01B5DC00562F7A /* HeartRateView.swift in Sources */,
 				01407CB92A65417900A5B279 /* CBMPeripheralPreview.swift in Sources */,
+				AA0A78502D4914BE000206F8 /* ThroughputData.swift in Sources */,
 				01CEB4272AE9100300945105 /* HeartRateViewModel.swift in Sources */,
 				0130DABA2A8B87E100C332BA /* HUD.swift in Sources */,
 				0108E8812AF169B800C8B096 /* Battery+Preview.swift in Sources */,
