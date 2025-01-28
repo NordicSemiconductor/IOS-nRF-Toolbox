@@ -28,12 +28,16 @@ final class ThroughputViewModel: ObservableObject {
     // MARK: Published
     
     @Published fileprivate(set) var inProgress: Bool
+    @Published fileprivate(set) var numberOfWrites: UInt32!
+    @Published fileprivate(set) var bytesReceived: UInt32!
+    @Published fileprivate(set) var throughputBitsPerSecond: UInt32!
     
     // MARK: Private Properties
     
     private let service: CBService
     private let peripheral: Peripheral
     
+    private var throughputTask: Task<(), Never>!
     private var cancellables: Set<AnyCancellable>
     private let log = NordicLog(category: "ThroughputViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
     
@@ -51,13 +55,18 @@ final class ThroughputViewModel: ObservableObject {
     
     func toggle() {
         inProgress.toggle()
-        guard inProgress else { return }
-        do {
-            try start()
-        }
-        catch let error {
-            log.error("Error \(error.localizedDescription)")
-            inProgress = false
+        switch inProgress {
+        case true:
+            do {
+                try start()
+            }
+            catch let error {
+                log.error("Error \(error.localizedDescription)")
+                inProgress = false
+            }
+        case false:
+            throughputTask?.cancel()
+            throughputTask = nil
         }
     }
     
@@ -65,7 +74,7 @@ final class ThroughputViewModel: ObservableObject {
     
     func start() throws {
         log.debug(#function)
-        Task {
+        Task { @MainActor [unowned self] in
             let characteristics: [Characteristic] = [Self.throughputCharacteristic]
             let cbCharacteristics = try await peripheral
                 .discoverCharacteristics(characteristics.map(\.uuid), for: service)
@@ -78,23 +87,47 @@ final class ThroughputViewModel: ObservableObject {
                 return
             }
             
-            var sendThroughputData = true
-            objectWillChange
-                .filter({ [weak self] in
-                    guard let self else { return true }
-                    return !self.inProgress
-                })
-                .sink {
-                    sendThroughputData = false
+            throughputTask = Task.detached(priority: .userInitiated) { [peripheral, log] in
+                while !Task.isCancelled {
+                    if !peripheral.peripheral.canSendWriteWithoutResponse {
+                        usleep(5000)
+                        continue
+                    }
+                    let equalsSign = Data(repeating: 61, count: 10)
+                    log.debug("Write")
+                    peripheral.writeValueWithoutResponse(equalsSign, for: cbThroughput)
                 }
-                .store(in: &cancellables)
-            
-            while sendThroughputData {
-                let equalsSign = Data(repeating: 61, count: 1)
-                peripheral.writeValueWithoutResponse(equalsSign, for: cbThroughput)
+                log.debug("Finished Throughput Task")
             }
-            
-            log.debug("Finished Throughput Task")
+        }
+    }
+    
+    // MARK: read()
+    
+    func read() {
+        Task { @MainActor [unowned self] in
+            do {
+                let characteristics: [Characteristic] = [Self.throughputCharacteristic]
+                let cbCharacteristics = try await peripheral
+                    .discoverCharacteristics(characteristics.map(\.uuid), for: service)
+                    .timeout(1, scheduler: DispatchQueue.main)
+                    .firstValue
+                
+                // Check if `throughput` characteristic was discovered
+                guard let cbThroughput = cbCharacteristics.first,
+                      cbThroughput.uuid == Self.throughputCharacteristic.uuid else {
+                    return
+                }
+                
+                guard let result = try await peripheral.readValue(for: cbThroughput).firstValue else {
+                    return
+                }
+                numberOfWrites = try result.read(fromOffset: 0)
+                bytesReceived = try result.read(fromOffset: MemoryLayout<UInt32>.size)
+                throughputBitsPerSecond = try result.read(fromOffset: 2 * MemoryLayout<UInt32>.size)
+            } catch {
+                log.error(error.localizedDescription)
+            }
         }
     }
 }

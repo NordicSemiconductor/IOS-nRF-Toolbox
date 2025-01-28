@@ -41,5 +41,24 @@ struct ThroughputView: View {
         }
         .centered()
         .listRowSeparator(.hidden)
+        
+        Divider()
+            .listRowSpacing(0)
+        
+        Label("Number of Writes: \(viewModel.numberOfWrites.nilDescription)", systemImage: "number")
+            .listRowSeparator(.hidden)
+        
+        Label("Bytes Received: \(viewModel.bytesReceived.nilDescription)", systemImage: "")
+            .listRowSeparator(.hidden)
+        
+        Label("Bits/second: \(viewModel.throughputBitsPerSecond.nilDescription)", systemImage: "")
+            .listRowSeparator(.hidden)
+        
+        Button {
+            viewModel.read()
+        } label: {
+            Label("Read", systemImage: "list.clipboard")
+        }
+        .centered()
     }
 }
