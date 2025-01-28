@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import iOS_Common_Libraries
 
 // MARK: - ThroughputView
 
@@ -19,7 +20,18 @@ struct ThroughputView: View {
     // MARK: view
     
     var body: some View {
-        NoContentView(title: "No Throughput Data", systemImage: "waveform.path.ecg.rectangle")
+        if viewModel.inProgress {
+            HStack {
+                ProgressView()
+             
+                Text("In Progress...")
+            }
+            .centered()
+            .listRowSeparator(.hidden)
+            
+            IndeterminateProgressView()
+                .listRowSeparator(.hidden)
+        }
         
         Button {
             viewModel.toggle()
@@ -27,5 +39,7 @@ struct ThroughputView: View {
             Label(viewModel.inProgress ? "Stop" : "Start",
                   systemImage: viewModel.inProgress ? "stop.fill" : "play.fill")
         }
+        .centered()
+        .listRowSeparator(.hidden)
     }
 }
