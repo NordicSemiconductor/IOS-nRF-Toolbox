@@ -49,7 +49,7 @@ struct ThroughputView: View {
             Label("Number of Writes: \(data.numberOfWrites)", systemImage: "number")
                 .listRowSeparator(.hidden)
             
-            Label("Received: \(Measurement<UnitInformationStorage>(value: Double(data.bytesReceived), unit: .bytes).formatted())", systemImage: "suitcase.cart")
+            Label("Received: \(data.bytesReceivedString())", systemImage: "suitcase.cart")
                 .listRowSeparator(.hidden)
             
             Label("Bits/second: \(data.throughputBitsPerSecond)", systemImage: "metronome")

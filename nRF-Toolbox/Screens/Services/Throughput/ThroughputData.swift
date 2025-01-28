@@ -29,4 +29,15 @@ struct ThroughputData {
         self.bytesReceived = bytesReceived
         self.throughputBitsPerSecond = throughputBitsPerSecond
     }
+    
+    // MARK: API
+    
+    func bytesReceivedString() -> String {
+        let measurement = Measurement<UnitInformationStorage>(value: Double(bytesReceived),
+                                                              unit: .bytes)
+        
+        let formatter = MeasurementFormatter()
+        formatter.unitOptions = .naturalScale
+        return formatter.string(from: measurement)
+    }
 }
