@@ -47,27 +47,55 @@ final class ThroughputViewModel: ObservableObject {
         log.debug(#function)
     }
     
-    // MARK: startListening()
-    
-    func startListening() async throws {
-        log.debug(#function)
-        let characteristics: [Characteristic] = [Self.throughputCharacteristic]
-        let cbCharacteristics = try await peripheral
-            .discoverCharacteristics(characteristics.map(\.uuid), for: service)
-            .timeout(1, scheduler: DispatchQueue.main)
-            .firstValue
-        
-        // Check if `throughput` characteristic was discovered
-        guard let cbThroughput = cbCharacteristics.first,
-              cbThroughput.uuid == Self.throughputCharacteristic.uuid else {
-            return
-        }
-    }
-    
     // MARK: toggle
     
     func toggle() {
-        self.inProgress.toggle()
+        inProgress.toggle()
+        guard inProgress else { return }
+        do {
+            try start()
+        }
+        catch let error {
+            log.error("Error \(error.localizedDescription)")
+            inProgress = false
+        }
+    }
+    
+    // MARK: start()
+    
+    func start() throws {
+        log.debug(#function)
+        Task {
+            let characteristics: [Characteristic] = [Self.throughputCharacteristic]
+            let cbCharacteristics = try await peripheral
+                .discoverCharacteristics(characteristics.map(\.uuid), for: service)
+                .timeout(1, scheduler: DispatchQueue.main)
+                .firstValue
+            
+            // Check if `throughput` characteristic was discovered
+            guard let cbThroughput = cbCharacteristics.first,
+                  cbThroughput.uuid == Self.throughputCharacteristic.uuid else {
+                return
+            }
+            
+            var sendThroughputData = true
+            objectWillChange
+                .filter({ [weak self] in
+                    guard let self else { return true }
+                    return !self.inProgress
+                })
+                .sink {
+                    sendThroughputData = false
+                }
+                .store(in: &cancellables)
+            
+            while sendThroughputData {
+                let equalsSign = Data(repeating: 61, count: 1)
+                peripheral.writeValueWithoutResponse(equalsSign, for: cbThroughput)
+            }
+            
+            log.debug("Finished Throughput Task")
+        }
     }
 }
 
@@ -76,12 +104,7 @@ final class ThroughputViewModel: ObservableObject {
 extension ThroughputViewModel: SupportedServiceViewModel {
     
     func onConnect() async {
-        do {
-            try await startListening()
-        }
-        catch let error {
-            log.error("Error \(error.localizedDescription)")
-        }
+        // No-op.
     }
     
     func onDisconnect() {
