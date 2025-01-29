@@ -20,6 +20,19 @@ struct ThroughputView: View {
     // MARK: view
     
     var body: some View {
+        if let data = viewModel.readData {
+            Label("Writes: \(data.numberOfWrites)", systemImage: "number")
+                .listRowSeparator(.hidden)
+            
+            Label("Received: \(data.bytesReceivedString())", systemImage: "suitcase.cart")
+                .listRowSeparator(.hidden)
+            
+            Label("Bits/second: \(data.throughputBitsPerSecond)", systemImage: "metronome")
+                .listRowSeparator(.hidden)
+        } else {
+            NoContentView(title: "No Data", systemImage: "metronome")
+        }
+        
         if viewModel.inProgress {
             HStack {
                 ProgressView()
@@ -33,34 +46,25 @@ struct ThroughputView: View {
                 .listRowSeparator(.hidden)
         }
         
-        Button {
-            viewModel.toggle()
-        } label: {
-            Label(viewModel.inProgress ? "Stop" : "Start",
-                  systemImage: viewModel.inProgress ? "stop.fill" : "play.fill")
-        }
-        .centered()
-        .listRowSeparator(.hidden)
-        
-        Divider()
-            .listRowSpacing(0)
-        
-        if let data = viewModel.readData {
-            Label("Number of Writes: \(data.numberOfWrites)", systemImage: "number")
-                .listRowSeparator(.hidden)
+        HStack {
+            Button {
+                viewModel.toggle()
+            } label: {
+                Label(viewModel.inProgress ? "Stop" : "Start",
+                      systemImage: viewModel.inProgress ? "stop.fill" : "play.fill")
+            }
+            .buttonStyle(.plain)
+            .centered()
             
-            Label("Received: \(data.bytesReceivedString())", systemImage: "suitcase.cart")
-                .listRowSeparator(.hidden)
+            Divider()
             
-            Label("Bits/second: \(data.throughputBitsPerSecond)", systemImage: "metronome")
-                .listRowSeparator(.hidden)
+            Button {
+                viewModel.read()
+            } label: {
+                Label("Read", systemImage: "list.clipboard")
+            }
+            .buttonStyle(.plain)
+            .centered()
         }
-        
-        Button {
-            viewModel.read()
-        } label: {
-            Label("Read", systemImage: "list.clipboard")
-        }
-        .centered()
     }
 }
