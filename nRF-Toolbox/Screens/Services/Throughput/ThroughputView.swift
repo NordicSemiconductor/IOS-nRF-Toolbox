@@ -31,6 +31,7 @@ struct ThroughputView: View {
                 .listRowSeparator(.hidden)
         } else {
             NoContentView(title: "No Data", systemImage: "metronome")
+                .fixedListRowSeparatorPadding()
         }
         
         if viewModel.inProgress {
@@ -43,6 +44,7 @@ struct ThroughputView: View {
             .listRowSeparator(.hidden)
             
             IndeterminateProgressView()
+                .accentColor(.universalAccentColor)
                 .listRowSeparator(.hidden)
         }
         
@@ -66,5 +68,17 @@ struct ThroughputView: View {
             .buttonStyle(.plain)
             .centered()
         }
+        .fixedListRowSeparatorPadding()
+        
+        Button {
+            Task { @MainActor in
+                await viewModel.reset()
+            }
+        } label: {
+            Label("Reset", systemImage: "arrow.uturn.left")
+        }
+        .fixedListRowSeparatorPadding()
+        .buttonStyle(.plain)
+        .centered()
     }
 }

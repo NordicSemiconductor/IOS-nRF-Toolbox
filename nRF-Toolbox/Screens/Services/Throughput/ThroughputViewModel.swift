@@ -77,10 +77,9 @@ final class ThroughputViewModel: ObservableObject {
                   cbThroughput.uuid == Characteristic.throughputCharacteristic.uuid else {
                 return
             }
+            
+            await reset()
             throughputTask = Task.detached(priority: .userInitiated) { [peripheral, log] in
-                let resetByte = Data(repeating: 0, count: 1)
-                peripheral.writeValueWithoutResponse(resetByte, for: cbThroughput)
-                
                 while !Task.isCancelled {
                     do {
                         _ = try await peripheral.isReadyToSendWriteWithoutResponse().firstValue
@@ -122,6 +121,30 @@ final class ThroughputViewModel: ObservableObject {
                 log.error(error.localizedDescription)
             }
         }
+    }
+    
+    // MARK: reset()
+    
+    func reset() async {
+        log.debug(#function)
+        
+        let characteristics: [Characteristic] = [.throughputCharacteristic]
+        let cbCharacteristics = try? await peripheral
+            .discoverCharacteristics(characteristics.map(\.uuid), for: service)
+            .timeout(1, scheduler: DispatchQueue.main)
+            .firstValue
+        
+        // Check if `throughput` characteristic was discovered
+        guard let cbThroughput = cbCharacteristics?.first,
+              cbThroughput.uuid == Characteristic.throughputCharacteristic.uuid else {
+            return
+        }
+        
+        let resetByte = Data(repeating: 0, count: 1)
+        peripheral.writeValueWithoutResponse(resetByte, for: cbThroughput)
+        
+        // Ensure reset byte is flushed.
+        _ = try? await peripheral.isReadyToSendWriteWithoutResponse().firstValue
     }
 }
 
