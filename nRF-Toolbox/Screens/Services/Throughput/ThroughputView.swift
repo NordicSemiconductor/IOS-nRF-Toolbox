@@ -27,7 +27,7 @@ struct ThroughputView: View {
             Label("Received: \(data.bytesReceivedString())", systemImage: "suitcase.cart")
                 .listRowSeparator(.hidden)
             
-            Label("Bits/second: \(data.throughputBitsPerSecond)", systemImage: "metronome")
+            Label("Speed: \(data.throughputString())", systemImage: "metronome")
                 .listRowSeparator(.hidden)
         } else {
             NoContentView(title: "No Data", systemImage: "metronome")

@@ -13,8 +13,8 @@ struct ThroughputData {
     // MARK: Properties
     
     let numberOfWrites: UInt32
-    let bytesReceived: UInt32
-    let throughputBitsPerSecond: UInt32
+    private let bytesReceived: UInt32
+    private let throughputBitsPerSecond: UInt32
     
     // MARK: Init
     
@@ -39,5 +39,14 @@ struct ThroughputData {
         let formatter = MeasurementFormatter()
         formatter.unitOptions = .naturalScale
         return formatter.string(from: measurement)
+    }
+    
+    func throughputString() -> String {
+        let measurement = Measurement<UnitInformationStorage>(value: Double(throughputBitsPerSecond),
+                                                              unit: .bytes)
+        
+        let formatter = MeasurementFormatter()
+        formatter.unitOptions = .naturalScale
+        return "\(formatter.string(from: measurement))/s"
     }
 }
