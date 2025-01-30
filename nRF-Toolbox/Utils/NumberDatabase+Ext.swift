@@ -10,8 +10,11 @@ import Foundation
 import iOS_Bluetooth_Numbers_Database
 import SwiftUI
 import iOS_BLE_Library_Mock
+import iOS_Common_Libraries
 
-extension Service: @retroactive Hashable {
+// MARK: - Service Extension
+
+extension Service {
     
     private static let serviceIcons: [Service : String] = [
         .runningSpeedAndCadence: "figure.run",
@@ -21,7 +24,8 @@ extension Service: @retroactive Hashable {
 //        .bloodPressure,
 //        .glucose,
 //        .continuousGlucoseMonitoring,
-        .healthThermometer: "medical.thermometer"
+        .healthThermometer: "medical.thermometer",
+        .throughputService: "metronome"
     ]
     
     private static let colors: [Service : Color] = [
@@ -32,7 +36,8 @@ extension Service: @retroactive Hashable {
         .bloodPressure: .purple,
         .glucose: .orange,
         .continuousGlucoseMonitoring: .yellow,
-        .healthThermometer: .indigo
+        .healthThermometer: .indigo,
+        .throughputService: .nordicBlue
     ]
     
     static var supportedServices: [Service] = [
@@ -44,16 +49,14 @@ extension Service: @retroactive Hashable {
         .continuousGlucoseMonitoring,
         .healthThermometer,
         .batteryService,
-        ThroughputViewModel.throughputService
+        .throughputService
     ]
-    
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(self.uuidString)
-    }
     
     var systemImage: Image? { Service.serviceIcons[self].flatMap { Image(systemName: $0) } }
     var color: Color? { Service.colors[self] }
     var isSupported: Bool { Service.supportedServices.contains(self) }
+    
+    // MARK: Init
     
     init(cbService: CBService, defaultName: String = "Unknown") {
         if let service = Service.find(by: cbService.uuid) {
@@ -64,7 +67,19 @@ extension Service: @retroactive Hashable {
     }
 }
 
+// MARK: - Hashable
+
+extension Service: @retroactive Hashable {
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.uuidString)
+    }
+}
+
+// MARK: - Identifiable
+
 extension Service: @retroactive Identifiable {
+    
     public var id: String {
         uuidString
     }

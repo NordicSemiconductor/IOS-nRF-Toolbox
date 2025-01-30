@@ -19,12 +19,6 @@ import CoreBluetoothMock_Collection
 
 final class ThroughputViewModel: ObservableObject {
     
-    internal static let throughputService = Service(name: "Throughput Service", identifier: "com.nordicsemi.service.throughput", uuidString: "0483DADD-6C9D-6CA9-5D41-03AD4FFF4ABB", source: "nordic")
-    
-    internal static let throughputCharacteristic = Characteristic(
-        name: "Throughput", identifier: "com.nordicsemi.characteristic.throughput",
-        uuidString: "1524", source: "nordic")
-    
     // MARK: Published
     
     @Published fileprivate(set) var inProgress: Bool
@@ -73,7 +67,7 @@ final class ThroughputViewModel: ObservableObject {
     func start() throws {
         log.debug(#function)
         Task { @MainActor [unowned self] in
-            let characteristics: [Characteristic] = [Self.throughputCharacteristic]
+            let characteristics: [Characteristic] = [.throughputCharacteristic]
             let cbCharacteristics = try await peripheral
                 .discoverCharacteristics(characteristics.map(\.uuid), for: service)
                 .timeout(1, scheduler: DispatchQueue.main)
@@ -81,7 +75,7 @@ final class ThroughputViewModel: ObservableObject {
             
             // Check if `throughput` characteristic was discovered
             guard let cbThroughput = cbCharacteristics.first,
-                  cbThroughput.uuid == Self.throughputCharacteristic.uuid else {
+                  cbThroughput.uuid == Characteristic.throughputCharacteristic.uuid else {
                 return
             }
             
@@ -105,7 +99,7 @@ final class ThroughputViewModel: ObservableObject {
     func read() {
         Task { @MainActor [unowned self] in
             do {
-                let characteristics: [Characteristic] = [Self.throughputCharacteristic]
+                let characteristics: [Characteristic] = [.throughputCharacteristic]
                 let cbCharacteristics = try await peripheral
                     .discoverCharacteristics(characteristics.map(\.uuid), for: service)
                     .timeout(1, scheduler: DispatchQueue.main)
@@ -113,7 +107,7 @@ final class ThroughputViewModel: ObservableObject {
                 
                 // Check if `throughput` characteristic was discovered
                 guard let cbThroughput = cbCharacteristics.first,
-                      cbThroughput.uuid == Self.throughputCharacteristic.uuid else {
+                      cbThroughput.uuid == Characteristic.throughputCharacteristic.uuid else {
                     return
                 }
                 
@@ -139,13 +133,4 @@ extension ThroughputViewModel: SupportedServiceViewModel {
     func onDisconnect() {
         cancellables.removeAll()
     }
-}
-
-// MARK: - CBUUID
-
-internal extension CBUUID {
-    
-    static let throughputService = CBUUID(service: ThroughputViewModel.throughputService)
-    
-    static let throughputCharacteristic = CBUUID(characteristic: ThroughputViewModel.throughputCharacteristic)
 }
