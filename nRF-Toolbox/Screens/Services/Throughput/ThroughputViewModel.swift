@@ -13,7 +13,6 @@ import CoreBluetoothMock_Collection
 import iOS_BLE_Library_Mock
 import iOS_Bluetooth_Numbers_Database
 import iOS_Common_Libraries
-import CoreBluetoothMock_Collection
 
 // MARK: - ThroughputViewModel
 
@@ -78,15 +77,19 @@ final class ThroughputViewModel: ObservableObject {
                   cbThroughput.uuid == Characteristic.throughputCharacteristic.uuid else {
                 return
             }
-            
             throughputTask = Task.detached(priority: .userInitiated) { [peripheral, log] in
+                let resetByte = Data(repeating: 0, count: 1)
+                peripheral.writeValueWithoutResponse(resetByte, for: cbThroughput)
+                
                 while !Task.isCancelled {
-                    if !peripheral.peripheral.canSendWriteWithoutResponse {
-                        usleep(5000)
-                        continue
+                    do {
+                        _ = try await peripheral.isReadyToSendWriteWithoutResponse().firstValue
+                    } catch {
+                        log.error(error.localizedDescription)
+                        return
                     }
-                    let equalsSign = Data(repeating: 61, count: 10)
-                    log.debug("Write")
+                    
+                    let equalsSign = Data(repeating: 61, count: peripheral.peripheral.maximumWriteValueLength(for: .withoutResponse))
                     peripheral.writeValueWithoutResponse(equalsSign, for: cbThroughput)
                 }
                 log.debug("Finished Throughput Task")
