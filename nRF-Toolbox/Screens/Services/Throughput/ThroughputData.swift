@@ -43,10 +43,11 @@ struct ThroughputData {
     
     func throughputString() -> String {
         let measurement = Measurement<UnitInformationStorage>(value: Double(throughputBitsPerSecond),
-                                                              unit: .bytes)
+                                                              unit: .bits)
+        let kiloByteMeasurement = measurement.converted(to: .bytes)
         
         let formatter = MeasurementFormatter()
         formatter.unitOptions = .naturalScale
-        return "\(formatter.string(from: measurement))/s"
+        return "\(formatter.string(from: kiloByteMeasurement))/s"
     }
 }
