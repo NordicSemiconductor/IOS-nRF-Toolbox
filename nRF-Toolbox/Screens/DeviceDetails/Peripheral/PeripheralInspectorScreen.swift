@@ -130,6 +130,9 @@ struct PeripheralInspectorView: View {
     }
 }
 
+// MARK: - Preview
+
+#if DEBUG
 #Preview {
     NavigationStack {
         TabView {
@@ -142,10 +145,13 @@ struct PeripheralInspectorView: View {
                     deviceInfo: DeviceInformation(
                         manufacturerName: "Nordic Semiconductor",
                         modelNumber: "nRF52840"
-                    )
+                    ),
+                    signalChartViewModel: SignalChartScreen.MockViewModel.shared,
+                    attributeTableViewModel: AttributeTableScreen.MockViewModel.shared
                 ))
                 .tabItem { Label("Device", systemImage: "apple.terminal") }
         }
         .navigationTitle("Device Info")
     }
 }
+#endif

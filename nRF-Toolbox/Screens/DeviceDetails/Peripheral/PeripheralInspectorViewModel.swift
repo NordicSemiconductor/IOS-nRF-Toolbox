@@ -266,8 +266,8 @@ extension PeripheralInspectorScreen.PeripheralInspectorViewModel {
             batteryLevelAvailable: Bool = false,
             deviceInfoAvailable: Bool = false,
             deviceInfo: DeviceInformation = DeviceInformation(),
-            signalChartViewModel: SignalChartScreen.SignalChartViewModel = SignalChartScreen.MockViewModel.shared,
-            attributeTableViewModel: AttributeTableScreen.AttributeTableViewModel = AttributeTableScreen.MockViewModel.shared,
+            signalChartViewModel: SignalChartScreen.SignalChartViewModel,
+            attributeTableViewModel: AttributeTableScreen.AttributeTableViewModel,
             disconnect: @escaping () -> () = { }
         ) {
             self.deviceId = deviceId
