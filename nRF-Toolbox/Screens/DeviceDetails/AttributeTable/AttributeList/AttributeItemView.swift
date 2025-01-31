@@ -9,6 +9,8 @@
 import SwiftUI
 import iOS_Bluetooth_Numbers_Database
 
+// MARK: - AttributeItemView
+
 struct AttributeItemView: View {
     let attribute: Attribute
     
@@ -39,6 +41,9 @@ struct AttributeItemView: View {
     }
 }
 
+// MARK: - Preview
+
+#if DEBUG
 #Preview {
     List {
         AttributeItemView(attribute: Service.runningSpeedAndCadence)
@@ -46,5 +51,5 @@ struct AttributeItemView: View {
         AttributeItemView(attribute: Descriptor.gattCharacteristicUserDescription)
         AttributeItemView(attribute: Characteristic.scControlPoint)
     }
-    
 }
+#endif

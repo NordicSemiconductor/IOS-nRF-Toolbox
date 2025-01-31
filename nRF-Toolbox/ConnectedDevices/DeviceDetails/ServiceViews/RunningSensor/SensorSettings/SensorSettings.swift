@@ -142,6 +142,7 @@ struct SensorSettings: View {
     }
 }
 
+#if DEBUG
 struct CalibrateSensor_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
@@ -149,3 +150,4 @@ struct CalibrateSensor_Previews: PreviewProvider {
         }
     }
 }
+#endif

@@ -25,6 +25,7 @@ struct AttributeList: View {
     }
 }
 
+#if DEBUG
 #Preview {
     AttributeList(attributes: [
         Service.runningSpeedAndCadence,
@@ -40,3 +41,4 @@ struct AttributeList: View {
     AttributeList(attributes: [
     ])
 }
+#endif
