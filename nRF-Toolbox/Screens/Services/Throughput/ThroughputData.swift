@@ -18,12 +18,15 @@ struct ThroughputData {
     
     // MARK: Init
     
-    init?(_ data: Data) {
+    init(_ data: Data) {
         guard data.count >= 3 * MemoryLayout<UInt32>.size,
               let numberOfWrites: UInt32 = try? data.read(fromOffset: 0),
               let bytesReceived: UInt32 = try? data.read(fromOffset: MemoryLayout<UInt32>.size),
               let throughputBitsPerSecond: UInt32 = try? data.read(fromOffset: 2 * MemoryLayout<UInt32>.size) else {
-            return nil
+            self.numberOfWrites = 0
+            self.bytesReceived = 0
+            self.throughputBitsPerSecond = 0
+            return
         }
         self.numberOfWrites = numberOfWrites
         self.bytesReceived = bytesReceived
@@ -41,13 +44,15 @@ struct ThroughputData {
         return formatter.string(from: measurement)
     }
     
-    func throughputString() -> String {
+    func bytesReceivedMeasurement() -> Measurement<UnitInformationStorage> {
+        let measurement = Measurement<UnitInformationStorage>(value: Double(bytesReceived),
+                                                              unit: .bytes)
+        return measurement.converted(to: .kilobytes)
+    }
+    
+    func throughputMeasurement() -> Measurement<UnitInformationStorage> {
         let measurement = Measurement<UnitInformationStorage>(value: Double(throughputBitsPerSecond),
                                                               unit: .bits)
-        let kiloByteMeasurement = measurement.converted(to: .bytes)
-        
-        let formatter = MeasurementFormatter()
-        formatter.unitOptions = .naturalScale
-        return "\(formatter.string(from: kiloByteMeasurement))/s"
+        return measurement.converted(to: .kilobytes)
     }
 }

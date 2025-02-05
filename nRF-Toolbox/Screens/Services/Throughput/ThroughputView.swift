@@ -20,18 +20,8 @@ struct ThroughputView: View {
     // MARK: view
     
     var body: some View {
-        if let data = viewModel.readData {
-            Label("Writes: \(data.numberOfWrites)", systemImage: "number")
-                .listRowSeparator(.hidden)
-            
-            Label("Received: \(data.bytesReceivedString())", systemImage: "suitcase.cart")
-                .listRowSeparator(.hidden)
-            
-            Label("Speed: \(data.throughputString())", systemImage: "metronome")
-                .listRowSeparator(.hidden)
-        } else {
-            NoContentView(title: "No Data", systemImage: "metronome")
-                .fixedListRowSeparatorPadding()
+        NumberedColumnGrid(columns: 2, data: attributes) { item in
+            RunningValuesGridItem(title: item.title, value: item.value, unit: item.unit)
         }
         
         if viewModel.inProgress {
@@ -80,5 +70,20 @@ struct ThroughputView: View {
         .fixedListRowSeparatorPadding()
         .buttonStyle(.plain)
         .centered()
+    }
+    
+    // MARK: attributes
+    
+    private var attributes: [RunningAttribute] {
+        var items = [RunningAttribute]()
+        let speedKey = "Speed"
+        items.append(RunningAttribute(title: speedKey, value: String(format: "%.2f", viewModel.readData.throughputMeasurement().value), unit: "\(viewModel.readData.throughputMeasurement().unit.symbol)/s"))
+        
+        let countKey = "Count"
+        items.append(RunningAttribute(title: countKey, value: "\(viewModel.readData.numberOfWrites)", unit: "writes"))
+        
+        let dataKey = "Data"
+        items.append(RunningAttribute(title: dataKey, value: String(format: "%.2f", viewModel.readData.bytesReceivedMeasurement().value), unit: viewModel.readData.bytesReceivedMeasurement().unit.symbol))
+        return items
     }
 }

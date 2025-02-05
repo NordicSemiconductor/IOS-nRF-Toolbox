@@ -21,7 +21,7 @@ final class ThroughputViewModel: ObservableObject {
     // MARK: Published
     
     @Published fileprivate(set) var inProgress: Bool
-    @Published fileprivate(set) var readData: ThroughputData?
+    @Published fileprivate(set) var readData: ThroughputData
     
     // MARK: Private Properties
     
@@ -38,6 +38,7 @@ final class ThroughputViewModel: ObservableObject {
         self.peripheral = peripheral
         self.service = service
         self.inProgress = false
+        self.readData = ThroughputData(Data())
         self.cancellables = Set<AnyCancellable>()
         log.debug(#function)
     }
