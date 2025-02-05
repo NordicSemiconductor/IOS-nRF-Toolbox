@@ -79,7 +79,8 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
         func extend(using scanResult: ScanResult) -> ScanResult {
             var extendedServices = services.map(\.uuidString)
             extendedServices.append(contentsOf: scanResult.services.map(\.uuidString))
-            return ScanResult(name: self.name ?? scanResult.name, rssi: scanResult.rssi, id: id, services: extendedServices)
+            return ScanResult(name: scanResult.name ?? self.name, rssi: scanResult.rssi,
+                              id: id, services: extendedServices)
         }
         
         static func ==(lhs: ScanResult, rhs: ScanResult) -> Bool {
@@ -146,11 +147,13 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
         log.debug(#function)
         guard centralManager.centralManager.state == .poweredOn else { return }
         centralManager.scanForPeripherals(withServices: nil)
-            // Filter unnamed and unconnectable devices
-            .filter { $0.name != nil && $0.advertisementData.isConnectable == true }
+            .filter {
+                // Filter unnamed and unconnectable devices
+                return $0.name != nil && $0.advertisementData.isConnectable == true
+            }
             .map { result -> ScanResult in
                 ScanResult(
-                    name: result.name,
+                    name: result.advertisementData.localName ?? result.name,
                     rssi: result.rssi.value,
                     id: result.peripheral.identifier,
                     services: result.advertisementData.serviceUUIDs?.compactMap { $0.uuidString } ?? []
