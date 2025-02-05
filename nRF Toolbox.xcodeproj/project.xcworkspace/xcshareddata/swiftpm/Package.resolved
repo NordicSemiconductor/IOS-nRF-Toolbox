@@ -33,7 +33,7 @@
       "location" : "https://github.com/NordicSemiconductor/IOS-DFU-Library.git",
       "state" : {
         "branch" : "main",
-        "revision" : "2db0d4f26a4812dfb7553e50e2a10f53f7b95114"
+        "revision" : "4773d7eed944684dfdd177a4a91af8a89ebbaac8"
       }
     },
     {
@@ -42,7 +42,7 @@
       "location" : "https://github.com/NordicSemiconductor/IOS-nRF-Connect-Device-Manager",
       "state" : {
         "branch" : "main",
-        "revision" : "8c09b7ee19c4503615975e3298be054ed93ddf71"
+        "revision" : "761efdbfd800be3fd30f7e34b585feb75fdaba03"
       }
     },
     {
@@ -66,7 +66,7 @@
     {
       "identity" : "swiftcbor",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/unrelentingtech/SwiftCBOR.git",
+      "location" : "https://github.com/valpackett/SwiftCBOR.git",
       "state" : {
         "revision" : "418dab41b09a5da0d45d7b788c59085979ff4dae",
         "version" : "0.4.7"

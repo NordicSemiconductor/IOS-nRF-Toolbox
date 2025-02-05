@@ -2535,6 +2535,7 @@
 				017D10272A5809E300E38E5F /* Sources */,
 				017D10282A5809E300E38E5F /* Frameworks */,
 				017D10292A5809E300E38E5F /* Resources */,
+				AAE5D0662D4CE1C4003798D7 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2821,6 +2822,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export PATH=/usr/local/bin:$PATH\n\n# Check if the directory exists\nif [ -d \"$WORKSPACE_PATH/../IOS-BLE-Library\" ]; then\n  cd \"$WORKSPACE_PATH/../IOS-BLE-Library\"\n  python3 code_gen/code_gen.py Sources\nelse\n  echo \"Directory does not exist, doing nothing.\"\nfi\n";
+		};
+		AAE5D0662D4CE1C4003798D7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#\n# Set the build number to the current git commit count.\n# If we're using the Dev scheme, then we'll suffix the build\n# number with the current branch name, to make collisions\n# far less likely across feature branches.\n# Based on: http://w3facility.info/question/how-do-i-force-xcode-to-rebuild-the-info-plist-file-in-my-project-every-time-i-build-the-project/\n#\n# Updated with dSYM handling from http://yellowfeather.co.uk/blog/auto-incrementing-build-number-in-xcode-revisited/\n#\n# Seen here: http://blog.jaredsinclair.com/post/97193356620/the-best-of-all-possible-xcode-automated-build\n\ngit=`sh /etc/profile; which git`\nreferenceGitTag=\"5.0.2\"\nappBuild=`\"$git\" rev-list \"$referenceGitTag\"..HEAD --count`\nbranchName=`\"$git\" rev-parse --abbrev-ref HEAD`\necho \"buildNo $appBuild-$branchName\"\n\ndsym_plist=\"$DWARF_DSYM_FOLDER_PATH/$DWARF_DSYM_FILE_NAME/Contents/Info.plist\"\ntarget_plist=\"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\n\nfor plist in \"$target_plist\" \"$dsym_plist\"; do\n    if [ -f \"$plist\" ]; then\n        /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $appBuild\" \"$plist\"\n        echo \"Build number set to $appBuild in ${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n    fi\n\ndone\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -3237,7 +3256,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 6.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nordicsemi.nRF-Toolbox-d";
@@ -3291,7 +3310,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 6.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nordicsemi.nRF-Toolbox";
@@ -3344,7 +3363,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 6.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nordicsemi.nRF-Toolbox";
