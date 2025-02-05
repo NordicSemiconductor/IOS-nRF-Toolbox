@@ -82,7 +82,7 @@ final class ThroughputViewModel: ObservableObject {
             throughputTask = Task.detached(priority: .userInitiated) { [peripheral, log] in
                 while !Task.isCancelled {
                     do {
-                        _ = try await peripheral.isReadyToSendWriteWithoutResponse().firstValue
+                        _ = try await peripheral.isReadyToSendWriteWithoutResponseChannel.firstValue
                     } catch {
                         log.error(error.localizedDescription)
                         return
@@ -144,7 +144,7 @@ final class ThroughputViewModel: ObservableObject {
         peripheral.writeValueWithoutResponse(resetByte, for: cbThroughput)
         
         // Ensure reset byte is flushed.
-        _ = try? await peripheral.isReadyToSendWriteWithoutResponse().firstValue
+        _ = try? await peripheral.isReadyToSendWriteWithoutResponseChannel.firstValue
     }
 }
 
