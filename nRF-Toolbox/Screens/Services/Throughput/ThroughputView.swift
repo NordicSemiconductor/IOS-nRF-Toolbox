@@ -28,6 +28,7 @@ struct ThroughputView: View {
     enum Field {
         case mtu
         case testSize
+        case timeLimit
     }
     
     @FocusState private var focusedField: Field?
@@ -56,14 +57,30 @@ struct ThroughputView: View {
                 .frame(maxWidth: 125)
                 .focused($focusedField, equals: .testSize)
                 .keyboardType(.decimalPad)
-                .toolbar {
-                    ToolbarItemGroup(placement: .keyboard) {
-                        Spacer()
-                        
-                        Button("Done") {
-                            focusedField = .none
+            }
+            
+            LabeledContent("Set Time Limit") {
+                Toggle("", isOn: $viewModel.isTimeLimited)
+                    .tint(Color.universalAccentColor)
+            }
+            
+            if viewModel.isTimeLimited {
+                LabeledContent("Time Limit (in seconds)") {
+                    TextField("Time Limit here", value: $viewModel.testTimeLimit.value, formatter: Self.formatter)
+                        .multilineTextAlignment(.trailing)
+                        .textFieldStyle(.roundedBorder)
+                        .frame(maxWidth: 125)
+                        .focused($focusedField, equals: .timeLimit)
+                        .keyboardType(.numberPad)
+                        .toolbar {
+                            ToolbarItemGroup(placement: .keyboard) {
+                                Spacer()
+                                
+                                Button("Done") {
+                                    focusedField = .none
+                                }
+                            }
                         }
-                    }
                 }
             }
         }

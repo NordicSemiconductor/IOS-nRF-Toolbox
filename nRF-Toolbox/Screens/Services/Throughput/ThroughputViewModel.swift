@@ -25,6 +25,8 @@ final class ThroughputViewModel: ObservableObject {
     @Published var mtu: Int
     @Published var testSize: Measurement<UnitInformationStorage>
     @Published var testDuration: Measurement<UnitDuration>
+    @Published var isTimeLimited: Bool
+    @Published var testTimeLimit: Measurement<UnitDuration>
     
     // MARK: Private Properties
     
@@ -45,6 +47,8 @@ final class ThroughputViewModel: ObservableObject {
         self.mtu = peripheral.MTU()
         self.testSize = Measurement(value: 100, unit: .kilobytes)
         self.testDuration = Measurement(value: .zero, unit: .seconds)
+        self.isTimeLimited = false
+        self.testTimeLimit = Measurement(value: 20.0, unit: .seconds)
         self.inProgress = false
         self.readData = ThroughputData(Data())
         self.cancellables = Set<AnyCancellable>()
