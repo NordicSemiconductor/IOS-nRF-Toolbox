@@ -22,6 +22,8 @@ final class ThroughputViewModel: ObservableObject {
     
     @Published fileprivate(set) var inProgress: Bool
     @Published fileprivate(set) var readData: ThroughputData
+    @Published var mtu: Int
+    @Published var testSize: Measurement<UnitInformationStorage>
     
     // MARK: Private Properties
     
@@ -37,6 +39,8 @@ final class ThroughputViewModel: ObservableObject {
     init(_ peripheral: Peripheral, service: CBService) {
         self.peripheral = peripheral
         self.service = service
+        self.mtu = peripheral.MTU()
+        self.testSize = Measurement(value: 100, unit: .kilobytes)
         self.inProgress = false
         self.readData = ThroughputData(Data())
         self.cancellables = Set<AnyCancellable>()
@@ -52,7 +56,8 @@ final class ThroughputViewModel: ObservableObject {
             case true:
                 do {
                     await reset()
-                    try await start()
+                    log.info("MTU set to \(mtu) bytes.")
+                    try await start(testSize, using: mtu)
                 }
                 catch let error {
                     log.error("Error \(error.localizedDescription)")
@@ -60,15 +65,14 @@ final class ThroughputViewModel: ObservableObject {
                 }
             case false:
                 throughputTask?.cancel()
-                throughputTask = nil
-                readData = await read()
+                await testFinished()
             }
         }
     }
     
     // MARK: start()
     
-    func start() async throws {
+    func start(_ size: Measurement<UnitInformationStorage>, using mtu: Int) async throws {
         log.debug(#function)
         let characteristics: [Characteristic] = [.throughputCharacteristic]
         let cbCharacteristics = try await peripheral
@@ -84,7 +88,9 @@ final class ThroughputViewModel: ObservableObject {
         
         throughputTask = Task.detached(priority: .userInitiated) { [peripheral, log] in
             log.debug("Throughput Task Started")
-            while !Task.isCancelled {
+            let testSizeInBytes = Int(size.converted(to: .bytes).value)
+            var bytesSent: Int = 0
+            while !Task.isCancelled, bytesSent < testSizeInBytes {
                 do {
                     _ = try await peripheral.isReadyToSendWriteWithoutResponse().firstValue
                 } catch {
@@ -92,11 +98,18 @@ final class ThroughputViewModel: ObservableObject {
                     return
                 }
                 
-                let equalsSign = Data(repeating: 61, count: peripheral.peripheral.maximumWriteValueLength(for: .withoutResponse))
+                let equalsSign = Data(repeating: 61, count: mtu)
                 peripheral.writeValueWithoutResponse(equalsSign, for: cbThroughput)
+                bytesSent += mtu
             }
             log.debug("Finished Throughput Task")
         }
+        
+        _ = await throughputTask.result
+        let cancelledByUser = throughputTask.isCancelled
+        throughputTask = nil
+        guard !cancelledByUser else { return }
+        await testFinished()
     }
     
     // MARK: read()
@@ -148,6 +161,12 @@ final class ThroughputViewModel: ObservableObject {
         
         // Wait for reset byte.
         _ = try? await peripheral.isReadyToSendWriteWithoutResponse().firstValue
+    }
+    
+    @MainActor
+    func testFinished() async {
+        readData = await read()
+        inProgress = false
     }
 }
 

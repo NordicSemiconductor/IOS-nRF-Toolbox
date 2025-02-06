@@ -17,12 +17,55 @@ struct ThroughputView: View {
     
     @EnvironmentObject private var viewModel: ThroughputViewModel
     
+    // MARK: Properties
+    
+    static let formatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        return formatter
+    }()
+    
     // MARK: view
     
     var body: some View {
         NumberedColumnGrid(columns: 2, data: attributes) { item in
             RunningValuesGridItem(title: item.title, value: item.value, unit: item.unit)
         }
+        
+        LabeledContent("MTU (in bytes)") {
+            TextField("MTU Size here", value: $viewModel.mtu, formatter: Self.formatter)
+                .multilineTextAlignment(.trailing)
+                .textFieldStyle(.roundedBorder)
+                .keyboardType(.decimalPad)
+                .frame(maxWidth: 125)
+        }
+        .labeledContentStyle(.accentedContent(
+            accentColor: viewModel.inProgress ? .nordicMiddleGrey: .universalAccentColor,
+            lineLimit: 1
+        ))
+        .disabled(viewModel.inProgress)
+        
+        LabeledContent("Test Size (in kB)") {
+            TextField("Test Size here", value: $viewModel.testSize.value, formatter: Self.formatter)
+                .multilineTextAlignment(.trailing)
+                .textFieldStyle(.roundedBorder)
+                .keyboardType(.numberPad)
+                .frame(maxWidth: 125)
+        }
+        .labeledContentStyle(.accentedContent(
+            accentColor: viewModel.inProgress ? .nordicMiddleGrey: .universalAccentColor,
+            lineLimit: 1
+        ))
+        .disabled(viewModel.inProgress)
+        
+        Button {
+            viewModel.runTest()
+        } label: {
+            Label(viewModel.inProgress ? "Stop" : "Run",
+                  systemImage: viewModel.inProgress ? "stop.fill" : "play.fill")
+        }
+        .buttonStyle(.plain)
+        .centered()
         
         if viewModel.inProgress {
             HStack {
@@ -37,15 +80,6 @@ struct ThroughputView: View {
                 .accentColor(.universalAccentColor)
                 .listRowSeparator(.hidden)
         }
-        
-        Button {
-            viewModel.runTest()
-        } label: {
-            Label(viewModel.inProgress ? "Stop" : "Run Test",
-                  systemImage: viewModel.inProgress ? "stop.fill" : "play.fill")
-        }
-        .buttonStyle(.plain)
-        .centered()
     }
     
     // MARK: attributes
