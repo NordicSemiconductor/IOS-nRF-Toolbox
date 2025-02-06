@@ -43,30 +43,66 @@ final class ThroughputViewModel: ObservableObject {
         log.debug(#function)
     }
     
-    // MARK: toggle
+    // MARK: runTest
     
-    func toggle() {
-        inProgress.toggle()
-        switch inProgress {
-        case true:
-            do {
-                try start()
+    func runTest() {
+        Task { @MainActor [unowned self] in
+            inProgress.toggle()
+            switch inProgress {
+            case true:
+                do {
+                    await reset()
+                    try await start()
+                }
+                catch let error {
+                    log.error("Error \(error.localizedDescription)")
+                    inProgress = false
+                }
+            case false:
+                throughputTask?.cancel()
+                throughputTask = nil
+                readData = await read()
             }
-            catch let error {
-                log.error("Error \(error.localizedDescription)")
-                inProgress = false
-            }
-        case false:
-            throughputTask?.cancel()
-            throughputTask = nil
         }
     }
     
     // MARK: start()
     
-    func start() throws {
+    func start() async throws {
         log.debug(#function)
-        Task { @MainActor [unowned self] in
+        let characteristics: [Characteristic] = [.throughputCharacteristic]
+        let cbCharacteristics = try await peripheral
+            .discoverCharacteristics(characteristics.map(\.uuid), for: service)
+            .timeout(1, scheduler: DispatchQueue.main)
+            .firstValue
+        
+        // Check if `throughput` characteristic was discovered
+        guard let cbThroughput = cbCharacteristics.first,
+              cbThroughput.uuid == Characteristic.throughputCharacteristic.uuid else {
+            return
+        }
+        
+        throughputTask = Task.detached(priority: .userInitiated) { [peripheral, log] in
+            log.debug("Throughput Task Started")
+            while !Task.isCancelled {
+                do {
+                    _ = try await peripheral.isReadyToSendWriteWithoutResponse().firstValue
+                } catch {
+                    log.error(error.localizedDescription)
+                    return
+                }
+                
+                let equalsSign = Data(repeating: 61, count: peripheral.peripheral.maximumWriteValueLength(for: .withoutResponse))
+                peripheral.writeValueWithoutResponse(equalsSign, for: cbThroughput)
+            }
+            log.debug("Finished Throughput Task")
+        }
+    }
+    
+    // MARK: read()
+    
+    func read() async -> ThroughputData {
+        do {
             let characteristics: [Characteristic] = [.throughputCharacteristic]
             let cbCharacteristics = try await peripheral
                 .discoverCharacteristics(characteristics.map(\.uuid), for: service)
@@ -76,52 +112,18 @@ final class ThroughputViewModel: ObservableObject {
             // Check if `throughput` characteristic was discovered
             guard let cbThroughput = cbCharacteristics.first,
                   cbThroughput.uuid == Characteristic.throughputCharacteristic.uuid else {
-                return
+                return ThroughputData(Data())
             }
             
-            await reset()
-            throughputTask = Task.detached(priority: .userInitiated) { [peripheral, log] in
-                while !Task.isCancelled {
-                    do {
-                        _ = try await peripheral.isReadyToSendWriteWithoutResponseChannel.firstValue
-                    } catch {
-                        log.error(error.localizedDescription)
-                        return
-                    }
-                    
-                    let equalsSign = Data(repeating: 61, count: peripheral.peripheral.maximumWriteValueLength(for: .withoutResponse))
-                    peripheral.writeValueWithoutResponse(equalsSign, for: cbThroughput)
-                }
-                log.debug("Finished Throughput Task")
+            guard let result = try await peripheral.readValue(for: cbThroughput).firstValue else {
+                return ThroughputData(Data())
             }
+            log.debug("Successfully Read Data")
+            return ThroughputData(result)
+        } catch {
+            log.error(error.localizedDescription)
         }
-    }
-    
-    // MARK: read()
-    
-    func read() {
-        Task { @MainActor [unowned self] in
-            do {
-                let characteristics: [Characteristic] = [.throughputCharacteristic]
-                let cbCharacteristics = try await peripheral
-                    .discoverCharacteristics(characteristics.map(\.uuid), for: service)
-                    .timeout(1, scheduler: DispatchQueue.main)
-                    .firstValue
-                
-                // Check if `throughput` characteristic was discovered
-                guard let cbThroughput = cbCharacteristics.first,
-                      cbThroughput.uuid == Characteristic.throughputCharacteristic.uuid else {
-                    return
-                }
-                
-                guard let result = try await peripheral.readValue(for: cbThroughput).firstValue else {
-                    return
-                }
-                readData = ThroughputData(result)
-            } catch {
-                log.error(error.localizedDescription)
-            }
-        }
+        return ThroughputData(Data())
     }
     
     // MARK: reset()
@@ -144,8 +146,8 @@ final class ThroughputViewModel: ObservableObject {
         let resetByte = Data(repeating: 0, count: 1)
         peripheral.writeValueWithoutResponse(resetByte, for: cbThroughput)
         
-        // Ensure reset byte is flushed.
-        _ = try? await peripheral.isReadyToSendWriteWithoutResponseChannel.firstValue
+        // Wait for reset byte.
+        _ = try? await peripheral.isReadyToSendWriteWithoutResponse().firstValue
     }
 }
 

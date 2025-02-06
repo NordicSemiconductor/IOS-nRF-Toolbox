@@ -38,36 +38,12 @@ struct ThroughputView: View {
                 .listRowSeparator(.hidden)
         }
         
-        HStack {
-            Button {
-                viewModel.toggle()
-            } label: {
-                Label(viewModel.inProgress ? "Stop" : "Start",
-                      systemImage: viewModel.inProgress ? "stop.fill" : "play.fill")
-            }
-            .buttonStyle(.plain)
-            .centered()
-            
-            Divider()
-            
-            Button {
-                viewModel.read()
-            } label: {
-                Label("Read", systemImage: "list.clipboard")
-            }
-            .buttonStyle(.plain)
-            .centered()
-        }
-        .fixedListRowSeparatorPadding()
-        
         Button {
-            Task { @MainActor in
-                await viewModel.reset()
-            }
+            viewModel.runTest()
         } label: {
-            Label("Reset", systemImage: "arrow.uturn.left")
+            Label(viewModel.inProgress ? "Stop" : "Run Test",
+                  systemImage: viewModel.inProgress ? "stop.fill" : "play.fill")
         }
-        .fixedListRowSeparatorPadding()
         .buttonStyle(.plain)
         .centered()
     }
