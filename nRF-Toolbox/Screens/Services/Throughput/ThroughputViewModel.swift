@@ -24,6 +24,7 @@ final class ThroughputViewModel: ObservableObject {
     @Published fileprivate(set) var readData: ThroughputData
     @Published var mtu: Int
     @Published var testSize: Measurement<UnitInformationStorage>
+    @Published var testDuration: Measurement<UnitDuration>
     
     // MARK: Private Properties
     
@@ -31,6 +32,8 @@ final class ThroughputViewModel: ObservableObject {
     private let peripheral: Peripheral
     
     private var throughputTask: Task<(), Never>!
+    private var startTime: DispatchTime!
+    private var endTime: DispatchTime!
     private var cancellables: Set<AnyCancellable>
     private let log = NordicLog(category: "ThroughputViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
     
@@ -41,6 +44,7 @@ final class ThroughputViewModel: ObservableObject {
         self.service = service
         self.mtu = peripheral.MTU()
         self.testSize = Measurement(value: 100, unit: .kilobytes)
+        self.testDuration = Measurement(value: .zero, unit: .seconds)
         self.inProgress = false
         self.readData = ThroughputData(Data())
         self.cancellables = Set<AnyCancellable>()
@@ -57,6 +61,7 @@ final class ThroughputViewModel: ObservableObject {
                 do {
                     await reset()
                     log.info("MTU set to \(mtu) bytes.")
+                    startTime = .now()
                     try await start(testSize, using: mtu)
                 }
                 catch let error {
@@ -165,7 +170,11 @@ final class ThroughputViewModel: ObservableObject {
     
     @MainActor
     func testFinished() async {
+        endTime = .now()
         readData = await read()
+        let elapsedNanoseconds = endTime.uptimeNanoseconds - startTime.uptimeNanoseconds
+        let measurement = Measurement<UnitDuration>(value: Double(elapsedNanoseconds), unit: .nanoseconds)
+        testDuration = measurement.converted(to: .seconds)
         inProgress = false
     }
 }

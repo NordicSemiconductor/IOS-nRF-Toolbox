@@ -104,6 +104,9 @@ struct ThroughputView: View {
         let speedKey = "Speed"
         items.append(RunningAttribute(title: speedKey, value: String(format: "%.2f", viewModel.readData.throughputMeasurement().value), unit: "\(viewModel.readData.throughputMeasurement().unit.symbol)/s"))
         
+        let durationKey = "Duration"
+        items.append(RunningAttribute(title: durationKey, value: String(format: "%.2f", viewModel.testDuration.value), unit: viewModel.testDuration.unit.symbol))
+        
         let countKey = "Count"
         items.append(RunningAttribute(title: countKey, value: "\(viewModel.readData.numberOfWrites)", unit: "writes"))
         
