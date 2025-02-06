@@ -90,7 +90,7 @@ final class ThroughputViewModel: ObservableObject {
             log.debug("Throughput Task Started")
             let testSizeInBytes = Int(size.converted(to: .bytes).value)
             var bytesSent: Int = 0
-            while !Task.isCancelled, bytesSent < testSizeInBytes {
+            while !Task.isCancelled, bytesSent <= testSizeInBytes {
                 do {
                     _ = try await peripheral.isReadyToSendWriteWithoutResponse().firstValue
                 } catch {
@@ -100,7 +100,7 @@ final class ThroughputViewModel: ObservableObject {
                 
                 let equalsSign = Data(repeating: 61, count: mtu)
                 peripheral.writeValueWithoutResponse(equalsSign, for: cbThroughput)
-                bytesSent += mtu
+                bytesSent += equalsSign.count
             }
             log.debug("Finished Throughput Task")
         }

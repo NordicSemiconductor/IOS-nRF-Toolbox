@@ -25,6 +25,13 @@ struct ThroughputView: View {
         return formatter
     }()
     
+    enum Field {
+        case mtu
+        case testSize
+    }
+    
+    @FocusState private var focusedField: Field?
+    
     // MARK: view
     
     var body: some View {
@@ -32,25 +39,33 @@ struct ThroughputView: View {
             RunningValuesGridItem(title: item.title, value: item.value, unit: item.unit)
         }
         
-        LabeledContent("MTU (in bytes)") {
-            TextField("MTU Size here", value: $viewModel.mtu, formatter: Self.formatter)
+        Group {
+            LabeledContent("MTU (in bytes)") {
+                TextField("MTU Size here", value: $viewModel.mtu, formatter: Self.formatter)
+                    .focused($focusedField, equals: .mtu)
+                    .multilineTextAlignment(.trailing)
+                    .textFieldStyle(.roundedBorder)
+                    .keyboardType(.numberPad)
+                    .frame(maxWidth: 125)
+            }
+            
+            LabeledContent("Test Size (in kB)") {
+                TextField("Test Size here", value: $viewModel.testSize.value, formatter: Self.formatter)
                 .multilineTextAlignment(.trailing)
                 .textFieldStyle(.roundedBorder)
+                .frame(maxWidth: 125)
+                .focused($focusedField, equals: .testSize)
                 .keyboardType(.decimalPad)
-                .frame(maxWidth: 125)
-        }
-        .labeledContentStyle(.accentedContent(
-            accentColor: viewModel.inProgress ? .nordicMiddleGrey: .universalAccentColor,
-            lineLimit: 1
-        ))
-        .disabled(viewModel.inProgress)
-        
-        LabeledContent("Test Size (in kB)") {
-            TextField("Test Size here", value: $viewModel.testSize.value, formatter: Self.formatter)
-                .multilineTextAlignment(.trailing)
-                .textFieldStyle(.roundedBorder)
-                .keyboardType(.numberPad)
-                .frame(maxWidth: 125)
+                .toolbar {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        Spacer()
+                        
+                        Button("Done") {
+                            focusedField = .none
+                        }
+                    }
+                }
+            }
         }
         .labeledContentStyle(.accentedContent(
             accentColor: viewModel.inProgress ? .nordicMiddleGrey: .universalAccentColor,
