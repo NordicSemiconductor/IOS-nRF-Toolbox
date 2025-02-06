@@ -57,6 +57,15 @@ struct ThroughputView: View {
                 .frame(maxWidth: 125)
                 .focused($focusedField, equals: .testSize)
                 .keyboardType(.decimalPad)
+                .toolbar {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        Spacer()
+                        
+                        Button("Done") {
+                            focusedField = .none
+                        }
+                    }
+                }
             }
             
             LabeledContent("Set Time Limit") {
@@ -65,22 +74,13 @@ struct ThroughputView: View {
             }
             
             if viewModel.isTimeLimited {
-                LabeledContent("Time Limit (in seconds)") {
+                LabeledContent("Time Limit (seconds)") {
                     TextField("Time Limit here", value: $viewModel.testTimeLimit.value, formatter: Self.formatter)
                         .multilineTextAlignment(.trailing)
                         .textFieldStyle(.roundedBorder)
                         .frame(maxWidth: 125)
                         .focused($focusedField, equals: .timeLimit)
                         .keyboardType(.numberPad)
-                        .toolbar {
-                            ToolbarItemGroup(placement: .keyboard) {
-                                Spacer()
-                                
-                                Button("Done") {
-                                    focusedField = .none
-                                }
-                            }
-                        }
                 }
             }
         }

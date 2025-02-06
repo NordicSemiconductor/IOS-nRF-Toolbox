@@ -65,6 +65,16 @@ final class ThroughputViewModel: ObservableObject {
                 do {
                     await reset()
                     log.info("MTU set to \(mtu) bytes.")
+                    if isTimeLimited {
+                        let timeLimit = Int(testTimeLimit.value)
+                        Task { [unowned self] in
+                            try await Task.sleep(for: .seconds(timeLimit))
+                            guard let throughputTask else { return }
+                            throughputTask.cancel()
+                            await testFinished()
+                        }
+                    }
+                    
                     startTime = .now()
                     try await start(testSize, using: mtu)
                 }
