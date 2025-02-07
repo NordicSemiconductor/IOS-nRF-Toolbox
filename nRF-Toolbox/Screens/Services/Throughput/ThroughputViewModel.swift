@@ -97,7 +97,11 @@ final class ThroughputViewModel: ObservableObject {
                 do {
                     await reset()
                     log.info("MTU set to \(mtu) bytes.")
-                    if isTimeLimited {
+                    var testSize = Measurement<UnitInformationStorage>(value: 19, unit: .megabytes)
+                    switch testMode {
+                    case .limitedSize:
+                        testSize = self.testSize
+                    case .limitedTime:
                         let timeLimit = Int(testTimeLimit.value)
                         Task { [unowned self] in
                             try await Task.sleep(for: .seconds(timeLimit))
