@@ -21,13 +21,8 @@ final class ThroughputViewModel: ObservableObject {
     // MARK: Mode
     
     enum Mode: Hashable, CustomStringConvertible, CaseIterable {
-        static var allCases: [ThroughputViewModel.Mode] = [
-            .limitedSize(Measurement(value: 100, unit: .kilobytes)),
-            .limitedTime(Measurement(value: 20.0, unit: .seconds))
-        ]
-        
-        case limitedSize(_ size: Measurement<UnitInformationStorage>)
-        case limitedTime(_ time: Measurement<UnitDuration>)
+        case limitedSize
+        case limitedTime
         
         var description: String {
             switch self {
