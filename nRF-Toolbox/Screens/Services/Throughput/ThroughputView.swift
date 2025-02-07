@@ -27,8 +27,7 @@ struct ThroughputView: View {
     
     enum Field {
         case mtu
-        case testSize
-        case timeLimit
+        case numberInput
     }
     
     @FocusState private var focusedField: Field?
@@ -41,6 +40,17 @@ struct ThroughputView: View {
         }
         
         Group {
+            InlinePicker(title: "Test Mode", selectedValue: $viewModel.testMode)
+            
+            LabeledContent(viewModel.isTimeLimited ? "Time Limit (seconds)" : "Test Size (in kB)") {
+                TextField(viewModel.isTimeLimited ? "Time Limit here" : "Test Size here", value: viewModel.isTimeLimited ? $viewModel.testTimeLimit.value : $viewModel.testSize.value, formatter: Self.formatter)
+                    .multilineTextAlignment(.trailing)
+                    .textFieldStyle(.roundedBorder)
+                    .frame(maxWidth: 125)
+                    .focused($focusedField, equals: .numberInput)
+                    .keyboardType(viewModel.isTimeLimited ? .numberPad : .decimalPad)
+            }
+            
             LabeledContent("MTU (in bytes)") {
                 TextField("MTU Size here", value: $viewModel.mtu, formatter: Self.formatter)
                     .focused($focusedField, equals: .mtu)
@@ -48,40 +58,15 @@ struct ThroughputView: View {
                     .textFieldStyle(.roundedBorder)
                     .keyboardType(.numberPad)
                     .frame(maxWidth: 125)
-            }
-            
-            LabeledContent("Test Size (in kB)") {
-                TextField("Test Size here", value: $viewModel.testSize.value, formatter: Self.formatter)
-                .multilineTextAlignment(.trailing)
-                .textFieldStyle(.roundedBorder)
-                .frame(maxWidth: 125)
-                .focused($focusedField, equals: .testSize)
-                .keyboardType(.decimalPad)
-                .toolbar {
-                    ToolbarItemGroup(placement: .keyboard) {
-                        Spacer()
-                        
-                        Button("Done") {
-                            focusedField = .none
+                    .toolbar {
+                        ToolbarItemGroup(placement: .keyboard) {
+                            Spacer()
+                            
+                            Button("Done") {
+                                focusedField = .none
+                            }
                         }
                     }
-                }
-            }
-            
-            LabeledContent("Set Time Limit") {
-                Toggle("", isOn: $viewModel.isTimeLimited)
-                    .tint(Color.universalAccentColor)
-            }
-            
-            if viewModel.isTimeLimited {
-                LabeledContent("Time Limit (seconds)") {
-                    TextField("Time Limit here", value: $viewModel.testTimeLimit.value, formatter: Self.formatter)
-                        .multilineTextAlignment(.trailing)
-                        .textFieldStyle(.roundedBorder)
-                        .frame(maxWidth: 125)
-                        .focused($focusedField, equals: .timeLimit)
-                        .keyboardType(.numberPad)
-                }
             }
         }
         .labeledContentStyle(.accentedContent(

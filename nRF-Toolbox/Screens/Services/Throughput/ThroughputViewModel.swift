@@ -18,6 +18,27 @@ import iOS_Common_Libraries
 
 final class ThroughputViewModel: ObservableObject {
     
+    // MARK: Mode
+    
+    enum Mode: Hashable, CustomStringConvertible, CaseIterable {
+        static var allCases: [ThroughputViewModel.Mode] = [
+            .limitedSize(Measurement(value: 100, unit: .kilobytes)),
+            .limitedTime(Measurement(value: 20.0, unit: .seconds))
+        ]
+        
+        case limitedSize(_ size: Measurement<UnitInformationStorage>)
+        case limitedTime(_ time: Measurement<UnitDuration>)
+        
+        var description: String {
+            switch self {
+            case .limitedSize:
+                return "Data Limit"
+            case .limitedTime:
+                return "Time Limit"
+            }
+        }
+    }
+    
     // MARK: Published
     
     @Published fileprivate(set) var inProgress: Bool
@@ -25,8 +46,8 @@ final class ThroughputViewModel: ObservableObject {
     @Published var mtu: Int
     @Published var testSize: Measurement<UnitInformationStorage>
     @Published var testDuration: Measurement<UnitDuration>
-    @Published var isTimeLimited: Bool
     @Published var testTimeLimit: Measurement<UnitDuration>
+    @Published var testMode: Mode
     
     // MARK: Private Properties
     
@@ -47,12 +68,23 @@ final class ThroughputViewModel: ObservableObject {
         self.mtu = peripheral.MTU()
         self.testSize = Measurement(value: 100, unit: .kilobytes)
         self.testDuration = Measurement(value: .zero, unit: .seconds)
-        self.isTimeLimited = false
         self.testTimeLimit = Measurement(value: 20.0, unit: .seconds)
+        self.testMode = .allCases[0]
         self.inProgress = false
         self.readData = ThroughputData(Data())
         self.cancellables = Set<AnyCancellable>()
         log.debug(#function)
+    }
+    
+    // MARK:
+    
+    var isTimeLimited: Bool {
+        switch testMode {
+        case .limitedSize:
+            return false
+        case .limitedTime:
+            return true
+        }
     }
     
     // MARK: runTest
