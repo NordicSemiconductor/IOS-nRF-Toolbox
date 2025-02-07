@@ -87,15 +87,15 @@ struct ThroughputView: View {
         if viewModel.inProgress {
             HStack {
                 ProgressView()
+                    .fixedCircularProgressView()
              
-                Text("In Progress...")
+                Text("\(String(format: "%.2f", viewModel.testProgress)) %")
             }
             .centered()
             .listRowSeparator(.hidden)
             
-            IndeterminateProgressView()
+            ProgressView(value: viewModel.testProgress, total: 100.0) // Progress Bar.
                 .accentColor(.universalAccentColor)
-                .listRowSeparator(.hidden)
         }
     }
     

@@ -43,6 +43,7 @@ final class ThroughputViewModel: ObservableObject {
     
     @Published fileprivate(set) var inProgress: Bool
     @Published fileprivate(set) var readData: ThroughputData
+    @Published fileprivate(set) var testProgress: Double
     @Published var mtu: Int
     @Published var testSize: Measurement<UnitInformationStorage>
     @Published var testDuration: Measurement<UnitDuration>
@@ -57,6 +58,7 @@ final class ThroughputViewModel: ObservableObject {
     private var throughputTask: Task<(), Never>!
     private var startTime: DispatchTime!
     private var endTime: DispatchTime!
+    private var progressSubject: PassthroughSubject<Double, Never>
     private var cancellables: Set<AnyCancellable>
     private let log = NordicLog(category: "ThroughputViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
     
@@ -71,9 +73,21 @@ final class ThroughputViewModel: ObservableObject {
         self.testTimeLimit = Measurement(value: 20.0, unit: .seconds)
         self.testMode = .allCases[0]
         self.inProgress = false
+        self.testProgress = .zero
         self.readData = ThroughputData(Data())
+        self.progressSubject = PassthroughSubject<Double, Never>()
         self.cancellables = Set<AnyCancellable>()
         log.debug(#function)
+        
+        progressSubject
+            .throttle(for: 0.5, scheduler: DispatchQueue.main, latest: true)
+            .sink { [unowned self] in
+                let newValue = $0
+                withAnimation {
+                    testProgress = newValue
+                }
+            }
+            .store(in: &cancellables)
     }
     
     // MARK:
@@ -95,6 +109,7 @@ final class ThroughputViewModel: ObservableObject {
             switch inProgress {
             case true:
                 do {
+                    testProgress = .zero
                     await reset()
                     mtu = min(max(mtu, 1), peripheral.MTU())
                     log.info("MTU set to \(mtu) bytes.")
@@ -142,7 +157,7 @@ final class ThroughputViewModel: ObservableObject {
             return
         }
         
-        throughputTask = Task.detached(priority: .userInitiated) { [peripheral, log] in
+        throughputTask = Task.detached(priority: .userInitiated) { [peripheral, log, progressSubject] in
             log.debug("Throughput Task Started")
             let testSizeInBytes = Int(size.converted(to: .bytes).value)
             var bytesSent: Int = 0
@@ -157,6 +172,7 @@ final class ThroughputViewModel: ObservableObject {
                 let equalsSign = Data(repeating: 61, count: mtu)
                 peripheral.writeValueWithoutResponse(equalsSign, for: cbThroughput)
                 bytesSent += equalsSign.count
+                progressSubject.send(min(Double(bytesSent) / Double(testSizeInBytes) * 100, 100.0))
             }
             log.debug("Finished Throughput Task")
         }
