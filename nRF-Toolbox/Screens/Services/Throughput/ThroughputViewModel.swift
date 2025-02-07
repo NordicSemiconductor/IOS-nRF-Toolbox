@@ -120,8 +120,14 @@ final class ThroughputViewModel: ObservableObject {
                     case .limitedTime:
                         let timeLimit = Int(testTimeLimit.value)
                         Task { [unowned self] in
-                            try await Task.sleep(for: .seconds(timeLimit))
-                            guard let throughputTask else { return }
+                            var currentTime = 0
+                            while currentTime < timeLimit {
+                                try await Task.sleep(for: .seconds(1))
+                                currentTime += 1
+                                progressSubject.send(Double(currentTime) / Double(timeLimit) * 100)
+                                guard let throughputTask, !throughputTask.isCancelled else { break }
+                            }
+                            
                             throughputTask.cancel()
                             await testFinished()
                         }
@@ -157,11 +163,12 @@ final class ThroughputViewModel: ObservableObject {
             return
         }
         
-        throughputTask = Task.detached(priority: .userInitiated) { [peripheral, log, progressSubject] in
+        throughputTask = Task.detached(priority: .userInitiated) { [peripheral, log, isTimeLimited, progressSubject] in
             log.debug("Throughput Task Started")
             let testSizeInBytes = Int(size.converted(to: .bytes).value)
             var bytesSent: Int = 0
-            while !Task.isCancelled, bytesSent <= testSizeInBytes {
+            while !Task.isCancelled {
+                guard isTimeLimited || bytesSent <= testSizeInBytes else { break }
                 do {
                     _ = try await peripheral.isReadyToSendWriteWithoutResponse().firstValue
                 } catch {
@@ -172,7 +179,9 @@ final class ThroughputViewModel: ObservableObject {
                 let equalsSign = Data(repeating: 61, count: mtu)
                 peripheral.writeValueWithoutResponse(equalsSign, for: cbThroughput)
                 bytesSent += equalsSign.count
-                progressSubject.send(min(Double(bytesSent) / Double(testSizeInBytes) * 100, 100.0))
+                if !isTimeLimited {
+                    progressSubject.send(min(Double(bytesSent) / Double(testSizeInBytes) * 100, 100.0))
+                }
             }
             log.debug("Finished Throughput Task")
         }
