@@ -96,6 +96,7 @@ final class ThroughputViewModel: ObservableObject {
             case true:
                 do {
                     await reset()
+                    mtu = min(max(mtu, 1), peripheral.MTU())
                     log.info("MTU set to \(mtu) bytes.")
                     var testSize = Measurement<UnitInformationStorage>(value: 19, unit: .megabytes)
                     switch testMode {
