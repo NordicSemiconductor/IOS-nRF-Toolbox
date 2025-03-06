@@ -17,6 +17,20 @@ import iOS_BLE_Library_Mock
 public extension Service {
     
     static let throughputService = Service(name: "Throughput Service", identifier: "com.nordicsemi.service.throughput", uuidString: "0483DADD-6C9D-6CA9-5D41-03AD4FFF4ABB", source: "nordic")
+    
+    static let extendedServices: [Service] = [
+        .throughputService
+    ]
+    
+    static func extendedFind(by uuidString: String) -> Self? {
+        if let standardFind = Service.find(by: CBUUID(string: uuidString)) {
+            return standardFind
+        }
+        
+        return extendedServices.first {
+            CBUUID(string: $0.uuidString) == CBUUID(string: uuidString)
+        }
+    }
 }
 
 // MARK: - Characteristic

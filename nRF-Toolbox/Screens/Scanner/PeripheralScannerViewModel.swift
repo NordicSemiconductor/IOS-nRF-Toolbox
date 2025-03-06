@@ -72,7 +72,7 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
             self.rssi = rssi
             self.id = id
             self.services = Set(services.map {
-                Service.find(by: CBUUID(string: $0)) ?? Service(name: "unknown", identifier: "service-\($0)", uuidString: $0, source: "unknown")
+                Service.extendedFind(by: $0) ?? Service(name: "unknown", identifier: "service-\($0)", uuidString: $0, source: "unknown")
             })
         }
         
