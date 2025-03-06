@@ -1,5 +1,5 @@
 //
-//  LabledValueView.swift
+//  LabeledValueView.swift
 //  nRF-Toolbox
 //
 //  Created by Nick Kibysh on 19/07/2023.
@@ -8,9 +8,9 @@
 
 import SwiftUI
 
-// MARK: - LabledValue
+// MARK: - LabeledValue
 
-struct LabledValue {
+struct LabeledValue {
     
     // MARK: Properties
     
@@ -46,10 +46,10 @@ struct LabledValue {
     }
 }
 
-// MARK: - LabledValueView
+// MARK: - LabeledValueView
 
-struct LabledValueView: View {
-    let someValue: LabledValue
+struct LabeledValueView: View {
+    let someValue: LabeledValue
     
     var body: some View {
         HStack {

@@ -61,10 +61,10 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
     @Published var error: ReadableError?
     @Published var showError: Bool = false
     
-    @Published var instantaneousSpeed: LabledValue = LabledValue(systemName: "hare.fill", text: "Instantaneous Speed", value: "--", isActive: false, color: .green)
-    @Published var instantaneousCadence: LabledValue = LabledValue(systemName: "shoeprints.fill", text: "Instantaneous Cadence", value: "--", isActive: false, color: .blue)
-    @Published var instantaneousStrideLength: LabledValue = LabledValue(systemName: "ruler.fill", text: "Instantaneous Stride Length", value: "--", isActive: false, color: .purple)
-    @Published var totalDistance: LabledValue = LabledValue(systemName: "map.fill", text: "Total Distance", value: "--", isActive: false, color: .cyan)
+    @Published var instantaneousSpeed = LabeledValue(systemName: "hare.fill", text: "Instantaneous Speed", value: "--", isActive: false, color: .green)
+    @Published var instantaneousCadence = LabeledValue(systemName: "shoeprints.fill", text: "Instantaneous Cadence", value: "--", isActive: false, color: .blue)
+    @Published var instantaneousStrideLength = LabeledValue(systemName: "ruler.fill", text: "Instantaneous Stride Length", value: "--", isActive: false, color: .purple)
+    @Published var totalDistance = LabeledValue(systemName: "map.fill", text: "Total Distance", value: "--", isActive: false, color: .cyan)
     
     // MARK: Sensor Location
     @Published var sensorLocationValue: SensorLocation?
