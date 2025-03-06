@@ -123,7 +123,7 @@ final class ThroughputViewModel: ObservableObject {
                                 guard let throughputTask, !throughputTask.isCancelled else { break }
                             }
                             
-                            throughputTask.cancel()
+                            throughputTask?.cancel()
                             await testFinished()
                         }
                     }
