@@ -43,7 +43,9 @@ struct RootNavigationView: View {
                 } else {
                     EmptyView()
                 }
-            default:
+            case .about:
+                AboutView()
+            case .none:
                 EmptyView()
             }
         } detail: {

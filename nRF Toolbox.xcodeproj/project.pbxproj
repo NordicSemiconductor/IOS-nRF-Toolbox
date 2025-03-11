@@ -375,6 +375,8 @@
 		AA95CBD12D084C8B00D1FBC6 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA95CBD02D084C8B00D1FBC6 /* Error.swift */; };
 		AA95CBD32D085AFA00D1FBC6 /* CyclingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA95CBD22D085AFA00D1FBC6 /* CyclingFeature.swift */; };
 		AA95CBD42D085AFA00D1FBC6 /* CyclingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA95CBD22D085AFA00D1FBC6 /* CyclingFeature.swift */; };
+		AAC0D99F2D80514900F25096 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC0D99E2D80514900F25096 /* AboutView.swift */; };
+		AAC0D9A12D80556D00F25096 /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC0D9A02D80556D00F25096 /* AppInfo.swift */; };
 		AAF7DE622CFDD4BC000A347A /* ConnectedDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF7DE612CFDD4BC000A347A /* ConnectedDeviceView.swift */; };
 		C39941BC27341AAE00E7AA33 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = C39941BB27341AAE00E7AA33 /* ZIPFoundation */; };
 		C39941C027352BDF00E7AA33 /* McuMgrFirmware.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39941BF27352BDF00E7AA33 /* McuMgrFirmware.swift */; };
@@ -796,6 +798,8 @@
 		AA95CBCE2D0846E800D1FBC6 /* CyclingServiceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingServiceViewModel.swift; sourceTree = "<group>"; };
 		AA95CBD02D084C8B00D1FBC6 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		AA95CBD22D085AFA00D1FBC6 /* CyclingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingFeature.swift; sourceTree = "<group>"; };
+		AAC0D99E2D80514900F25096 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		AAC0D9A02D80556D00F25096 /* AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
 		AAF7DE612CFDD4BC000A347A /* ConnectedDeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedDeviceView.swift; sourceTree = "<group>"; };
 		C39941BF27352BDF00E7AA33 /* McuMgrFirmware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = McuMgrFirmware.swift; sourceTree = "<group>"; };
 		C39941C127352FC600E7AA33 /* ZephyrPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrPacket.swift; sourceTree = "<group>"; };
@@ -1301,6 +1305,7 @@
 				AA0AEA012CF7438200F93A0B /* Assets.swift */,
 				AA95CBD02D084C8B00D1FBC6 /* Error.swift */,
 				AA5AB3E02D0877F6005213D5 /* MeasurementFormatter+Ext.swift */,
+				AAC0D9A02D80556D00F25096 /* AppInfo.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1375,6 +1380,7 @@
 		019E77792ACC289500760124 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				AAC0D99D2D80513C00F25096 /* About */,
 				015AAE6D2B063D4A00D79833 /* RootNavigation */,
 				015AAE622B03838C00D79833 /* Sidebar */,
 				013E5D872ADD337300B9C475 /* Services */,
@@ -2498,6 +2504,14 @@
 			path = Cycling;
 			sourceTree = "<group>";
 		};
+		AAC0D99D2D80513C00F25096 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				AAC0D99E2D80514900F25096 /* AboutView.swift */,
+			);
+			path = About;
+			sourceTree = "<group>";
+		};
 		C39941BE27352BC400E7AA33 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -2889,8 +2903,10 @@
 				01FB19D22AE3DB70006DAB9F /* SensorCalibrationViewModel.swift in Sources */,
 				01DEB4A82A65E90C00D4C1E8 /* Data+Ext.swift in Sources */,
 				0164A4712AD593B40093E501 /* ScanResultList.swift in Sources */,
+				AAC0D9A12D80556D00F25096 /* AppInfo.swift in Sources */,
 				013E5D8F2ADFDDC600B9C475 /* NumberedColumnGrid.swift in Sources */,
 				01AB7B752A77BFB400AEDDCD /* CBUUID+Ext.swift in Sources */,
+				AAC0D99F2D80514900F25096 /* AboutView.swift in Sources */,
 				01FD68D02AE82C330021101C /* Attribute+Preview.swift in Sources */,
 				AA95CBD12D084C8B00D1FBC6 /* Error.swift in Sources */,
 				AAF7DE622CFDD4BC000A347A /* ConnectedDeviceView.swift in Sources */,
