@@ -33,8 +33,14 @@ struct AttributeList: View {
         } else {
             List {
                 ForEach(attributeTable.services) { service in
-                    Section {
-                        DisclosureAttributeItemView(service)
+                    if service == attributeTable.services.first {
+                        Section("") {
+                            DisclosureAttributeItemView(service)
+                        }
+                    } else {
+                        Section {
+                            DisclosureAttributeItemView(service)
+                        }
                     }
                 }
             }
