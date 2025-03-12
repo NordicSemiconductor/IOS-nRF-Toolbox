@@ -43,9 +43,9 @@ struct SidebarView: View {
             }
             
             Section("Other") {
-                Text("About nRF Toolbox")
+                Label("About nRF Toolbox", systemImage: "info")
+                    .setAccent(.nordicMiddleGrey)
                     .tag(RootNavigationView.MenuCategory.about)
-                    .disabled(true)
             }
         }
         .navigationTitle("nRF Toolbox")
