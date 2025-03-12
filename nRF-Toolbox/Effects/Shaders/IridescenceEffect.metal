@@ -20,17 +20,14 @@ float2x2 rateOfTurn(float radians) {
 
 // Source: https://www.shadertoy.com/view/MlcGWr
 [[ stitchable ]] half4 iridescence(float2 position, half4 color, float2 size, float time) {
-    float4 c = float4(color);
-    
-    half t = time / 3. + 5.;
-    // scaling (slow zoom out)
-    position *= log(t) / size.y;
-    // translation
-    position.x += t;
-    position *= rateOfTurn(t / 22.);
+    half t = time / 3. + 5.; // slow down time
+    position *= log(t) / size.y; // scaling (slow zoom out)
+    position.x += t; // translation
+    position *= rateOfTurn(t / 22.); // slow rotation
 
+    half2 halfPosition = half2(position);
     // colour transform
-    c += sin(2. * sin(c * 22 + t + t) + position.yxyy - position.yyxy * .5) / 12.;
+    color += sin(2. * sin(color * 22 + t + t) + halfPosition.yxyy - halfPosition.yyxy * .5) / 12.;
 
-    return half4(c);
+    return color;
 }
