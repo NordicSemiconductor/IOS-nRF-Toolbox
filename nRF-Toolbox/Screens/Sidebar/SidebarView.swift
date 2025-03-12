@@ -26,11 +26,18 @@ struct SidebarView: View {
                     Text("No Connected Devices")
                 } else {
                     ForEach(viewModel.connectedDevices) { device in
-                        SidebarDeviceView(device)
-                            .tag(RootNavigationView.MenuCategory.device)
+                        NavigationLink {
+                            DeviceScreen(device)
+                                .environmentObject(rootViewModel)
+                                .environmentObject(viewModel)
+                        } label: {
+                            SidebarDeviceView(device)
+                                .tag(RootNavigationView.MenuCategory.device)
+                        }
                     }
                 }
             }
+            .foregroundColor(Color(uiColor: .label))
             
             Section {
                 Text("Open Scanner")
@@ -40,11 +47,16 @@ struct SidebarView: View {
             }
             
             Section("Other") {
-                Label("About nRF Toolbox", systemImage: "info")
-                    .setAccent(.nordicMiddleGrey)
-                    .tag(RootNavigationView.MenuCategory.about)
+                NavigationLink {
+                    AboutView()
+                } label: {
+                    Label("About nRF Toolbox", systemImage: "info")
+                        .setAccent(.nordicMiddleGrey)
+                        .tag(RootNavigationView.MenuCategory.about)
+                }
             }
         }
+        .listStyle(.insetGrouped)
         .navigationTitle("nRF Toolbox")
         .setupNavBarBackground(with: Assets.navBar.color)
     }
