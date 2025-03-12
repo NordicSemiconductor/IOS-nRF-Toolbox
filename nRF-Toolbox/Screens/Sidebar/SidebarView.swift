@@ -27,9 +27,6 @@ struct SidebarView: View {
                 } else {
                     ForEach(viewModel.connectedDevices) { device in
                         ConnectedDeviceView(device)
-                            .onAppear {
-                                viewModel.selectedDevice = device
-                            }
                             .tag(RootNavigationView.MenuCategory.device)
                     }
                 }
