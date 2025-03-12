@@ -21,7 +21,7 @@ struct DeviceScreen: View {
     // MARK: Properties
     
     private let device: ConnectedDevicesViewModel.Device
-    
+        
     // MARK: init
     
     init(_ device: ConnectedDevicesViewModel.Device) {
@@ -72,6 +72,15 @@ struct DeviceScreen: View {
                     Section("Throughput") {
                         ThroughputView()
                             .environmentObject(throughputViewModel)
+                    }
+                }
+                
+                Section("Device Info") {
+                    NavigationLink {
+                        AttributeTableScreen(viewModel: deviceVM.attributeTableViewModel)
+                    } label: {
+                        Label("Attribute Table", systemImage: "list.dash")
+                            .setAccent(.nordicBlue)
                     }
                 }
             }

@@ -29,6 +29,7 @@ protocol SupportedServiceViewModel {
 // MARK: - DeviceDetailsViewModel
 
 extension DeviceDetailsScreen {
+    
     @MainActor
     class DeviceDetailsViewModel {
         private var discoveredServices: [CBService] = []
@@ -43,6 +44,8 @@ extension DeviceDetailsScreen {
         private var supportedServiceViewModels: [SupportedServiceViewModel] = []
         
         private let log = NordicLog(category: "DeviceDetails.VM", subsystem: "com.nordicsemi.nrf-toolbox")
+        
+        let attributeTableViewModel: AttributeTableScreen.AttributeTableViewModel
         
         var runningServiceViewModel: RunningServiceViewModel? {
             supportedServiceViewModels.firstOfType(type: RunningServiceViewModel.self)
@@ -77,6 +80,7 @@ extension DeviceDetailsScreen {
             )
             
             self.environment.peripheralName = peripheral.name
+            self.attributeTableViewModel = AttributeTableScreen.AttributeTableViewModel(peripheral: peripheral)
             self.subscribeOnConnection()
             
             Task {
