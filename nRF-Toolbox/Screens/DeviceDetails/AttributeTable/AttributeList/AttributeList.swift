@@ -9,17 +9,36 @@
 import SwiftUI
 import iOS_Bluetooth_Numbers_Database
 
+// MARK: - AttributeList
+
 struct AttributeList: View {
-    let attributes: [Attribute]
+    
+    // MARK: Private
+    
+    private let attributeTable: AttributeTable
+    
+    // MARK: init
+    
+    init(_ attributeTable: AttributeTable) {
+        self.attributeTable = attributeTable
+    }
+    
+    // MARK: view
     
     var body: some View {
-        if attributes.isEmpty {
+        if attributeTable.isEmpty {
             NoContentView(
                 title: "Attributes not found",
                 systemImage: "table")
         } else {
-            List(attributes, id: \.id) {
-                AttributeItemView(attribute: $0)
+            List {
+                ForEach(attributeTable.services) { service in
+                    Section("") {
+                        AttributeItemView(attribute: service)
+                        
+                        // TODO: Service Attributes
+                    }
+                }
             }
         }
     }

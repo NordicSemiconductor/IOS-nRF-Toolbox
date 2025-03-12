@@ -36,7 +36,7 @@ extension AttributeTableScreen {
         
         func readAttributeTable() async {
             do {
-                env.attributeTable = try await readAttributes()
+                env.attributeTable = try await attributeTable()
             } catch {
                 env.criticalError = .unableBuildAttributeTable
             }
@@ -61,7 +61,7 @@ private typealias ViewModel = AttributeTableScreen.AttributeTableViewModel
 
 private extension ViewModel {
     
-    func readAttributes() async throws -> [Attribute] {
+    func attributeTable() async throws -> AttributeTable {
         var table = AttributeTable()
         
         let services = try await peripheral.discoverServices(serviceUUIDs: nil).timeout(10, scheduler: DispatchQueue.main).firstValue
@@ -79,6 +79,11 @@ private extension ViewModel {
             }
         }
         
+        return table
+    }
+    
+    func attributeList() async throws -> [Attribute] {
+        let table = try await attributeTable()
         return table.attributeList
     }
 }
@@ -98,12 +103,12 @@ extension AttributeTableScreen.AttributeTableViewModel {
     
     @MainActor
     class Environment: ObservableObject {
-        @Published fileprivate(set) var attributeTable: [Attribute]?
+        @Published fileprivate(set) var attributeTable: AttributeTable?
         @Published fileprivate(set) var criticalError: CriticalError?
         
         private let log = NordicLog(category: "AttributeTable.Env", subsystem: "com.nordicsemi.nrf-toolbox")
         
-        init(attributeTable: [Attribute]? = nil, criticalError: CriticalError? = nil) {
+        init(attributeTable: AttributeTable? = nil, criticalError: CriticalError? = nil) {
             self.attributeTable = attributeTable
             self.criticalError = criticalError
             

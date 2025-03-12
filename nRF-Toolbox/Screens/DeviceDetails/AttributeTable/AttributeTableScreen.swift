@@ -42,7 +42,7 @@ struct AttributeTableView: View {
         if let criticalError = environment.criticalError {
             NoContentView(title: "Error", systemImage: "exclamationmark.triangle", description: criticalError.localizedDescription, style: .error)
         } else if let attributeTable = environment.attributeTable {
-           AttributeList(attributes: attributeTable)
+           AttributeList(attributeTable)
         } else {
             placeholder
         }

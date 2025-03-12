@@ -17,6 +17,8 @@ protocol StringIdentifiable  {
 struct AttributeTable {
     private(set) var services: [Service] = []
     
+    var isEmpty: Bool { services.isEmpty }
+    
     mutating func addService(_ cbService: CBService) {
         let service = Service(cbService: cbService)
         if let i = services.firstIndex(where: {
