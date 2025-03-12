@@ -34,9 +34,29 @@ struct AttributeList: View {
             List {
                 ForEach(attributeTable.services) { service in
                     Section("") {
-                        AttributeItemView(attribute: service)
-                        
-                        // TODO: Service Attributes
+                        if service.characteristics.hasItems {
+                            DisclosureGroup {
+                                ForEach(service.characteristics) { characteristic in
+                                    if characteristic.descriptors.hasItems {
+                                        DisclosureGroup {
+                                            ForEach(characteristic.descriptors) { descriptor in
+                                                AttributeItemView(attribute: descriptor)
+                                            }
+                                        } label: {
+                                            AttributeItemView(attribute: characteristic)
+                                        }
+                                        .accentColor(.nordicMiddleGrey)
+                                    } else {
+                                        AttributeItemView(attribute: characteristic)
+                                    }
+                                }
+                            } label: {
+                                AttributeItemView(attribute: service)
+                            }
+                            .accentColor(.nordicMiddleGrey)
+                        } else {
+                            AttributeItemView(attribute: service)
+                        }
                     }
                 }
             }
