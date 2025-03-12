@@ -57,7 +57,7 @@
 		0151170B240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01511709240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift */; };
 		0151170C240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0151170A240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.xib */; };
 		015642472AA4E640005A0A44 /* iOS-BLE-Library-Mock in Frameworks */ = {isa = PBXBuildFile; productRef = 015642462AA4E640005A0A44 /* iOS-BLE-Library-Mock */; };
-		015AAE652B0383BD00D79833 /* SidebarScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015AAE632B0383BD00D79833 /* SidebarScreen.swift */; };
+		015AAE652B0383BD00D79833 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015AAE632B0383BD00D79833 /* SidebarView.swift */; };
 		015AAE702B063D6200D79833 /* RootNavigationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015AAE6E2B063D6200D79833 /* RootNavigationScreen.swift */; };
 		015AAE712B063D6200D79833 /* RootNavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015AAE6F2B063D6200D79833 /* RootNavigationViewModel.swift */; };
 		015F1098240FA06D00FDAC49 /* DFUActionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015F1097240FA06D00FDAC49 /* DFUActionSection.swift */; };
@@ -480,7 +480,7 @@
 		014C4E9D240403A00003E601 /* UARTMacroFileManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTMacroFileManagerTests.swift; sourceTree = "<group>"; };
 		01511709240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFirmwareSizeSchemeCell.swift; sourceTree = "<group>"; };
 		0151170A240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DFUFirmwareSizeSchemeCell.xib; sourceTree = "<group>"; };
-		015AAE632B0383BD00D79833 /* SidebarScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarScreen.swift; sourceTree = "<group>"; };
+		015AAE632B0383BD00D79833 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		015AAE6E2B063D6200D79833 /* RootNavigationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationScreen.swift; sourceTree = "<group>"; };
 		015AAE6F2B063D6200D79833 /* RootNavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationViewModel.swift; sourceTree = "<group>"; };
 		015F1097240FA06D00FDAC49 /* DFUActionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUActionSection.swift; sourceTree = "<group>"; };
@@ -1118,7 +1118,7 @@
 		015AAE622B03838C00D79833 /* Sidebar */ = {
 			isa = PBXGroup;
 			children = (
-				015AAE632B0383BD00D79833 /* SidebarScreen.swift */,
+				015AAE632B0383BD00D79833 /* SidebarView.swift */,
 			);
 			path = Sidebar;
 			sourceTree = "<group>";
@@ -2946,7 +2946,7 @@
 				01EBE6192AE4845100960672 /* View+ErrorAlert.swift in Sources */,
 				01DEB4A42A6588CA00D4C1E8 /* RunningServiceHandler.swift in Sources */,
 				01F6A9602A812D6200540B45 /* Emulator.swift in Sources */,
-				015AAE652B0383BD00D79833 /* SidebarScreen.swift in Sources */,
+				015AAE652B0383BD00D79833 /* SidebarView.swift in Sources */,
 				0180A29D2AEFBBC200090F6D /* PeripheralInspectorViewModel.swift in Sources */,
 				AA479EA72D0B0BFF0052E801 /* CrankDataPoint.swift in Sources */,
 				0164A4762AD698650093E501 /* NumberDatabase+Ext.swift in Sources */,

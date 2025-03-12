@@ -1,5 +1,5 @@
 //
-//  SidebarScreen.swift
+//  SidebarView.swift
 //  nRF-Toolbox
 //
 //  Created by Nick Kibysh on 14/11/2023.
