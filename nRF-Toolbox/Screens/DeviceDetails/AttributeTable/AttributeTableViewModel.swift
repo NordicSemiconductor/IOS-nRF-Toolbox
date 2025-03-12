@@ -83,6 +83,15 @@ private extension ViewModel {
     }
 }
 
+// MARK: - Attribute
+
+protocol Attribute  {
+    var level: UInt { get }
+    var name: String { get }
+    var uuidString: String { get }
+    var id: String { get }
+}
+
 // MARK: - Environment
 
 extension AttributeTableScreen.AttributeTableViewModel {

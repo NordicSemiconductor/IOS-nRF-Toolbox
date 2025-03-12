@@ -194,7 +194,6 @@
 		01FBC5132408132800B1056B /* DFUDeviceInfoSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5122408132800B1056B /* DFUDeviceInfoSection.swift */; };
 		01FBC5152408158F00B1056B /* CBPeripheralState+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5142408158F00B1056B /* CBPeripheralState+Ext.swift */; };
 		01FBC51724081A1C00B1056B /* DFUFirmwareSizeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC51624081A1C00B1056B /* DFUFirmwareSizeSection.swift */; };
-		01FD68CD2AE810E30021101C /* Attribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FD68CC2AE810E30021101C /* Attribute.swift */; };
 		01FD68D02AE82C330021101C /* Attribute+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FD68CF2AE82C330021101C /* Attribute+Preview.swift */; };
 		01FD68D32AE82EB90021101C /* AttributeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FD68D22AE82EB90021101C /* AttributeList.swift */; };
 		01FEB0FD23969BD1000767C1 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FEB0FC23969BD1000767C1 /* UIView+Ext.swift */; };
@@ -618,7 +617,6 @@
 		01FBC5122408132800B1056B /* DFUDeviceInfoSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUDeviceInfoSection.swift; sourceTree = "<group>"; };
 		01FBC5142408158F00B1056B /* CBPeripheralState+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CBPeripheralState+Ext.swift"; sourceTree = "<group>"; };
 		01FBC51624081A1C00B1056B /* DFUFirmwareSizeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFirmwareSizeSection.swift; sourceTree = "<group>"; };
-		01FD68CC2AE810E30021101C /* Attribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attribute.swift; sourceTree = "<group>"; };
 		01FD68CF2AE82C330021101C /* Attribute+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attribute+Preview.swift"; sourceTree = "<group>"; };
 		01FD68D22AE82EB90021101C /* AttributeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeList.swift; sourceTree = "<group>"; };
 		01FEB0FC23969BD1000767C1 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
@@ -1412,7 +1410,6 @@
 		01ABB05E2AE6B35200615A21 /* AttributeTable */ = {
 			isa = PBXGroup;
 			children = (
-				01FD68CB2AE810D50021101C /* Model */,
 				01FD68D12AE82E9D0021101C /* AttributeList */,
 				01ABB07B2AE700E100615A21 /* AttributeTableScreen.swift */,
 				01ABB07C2AE700E100615A21 /* AttributeTableViewModel.swift */,
@@ -1753,14 +1750,6 @@
 				015F1097240FA06D00FDAC49 /* DFUActionSection.swift */,
 			);
 			path = Sections;
-			sourceTree = "<group>";
-		};
-		01FD68CB2AE810D50021101C /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				01FD68CC2AE810E30021101C /* Attribute.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		01FD68CE2AE82C200021101C /* Extensions */ = {
@@ -2952,7 +2941,6 @@
 				0164A4762AD698650093E501 /* NumberDatabase+Ext.swift in Sources */,
 				01407CBC2A65819B00A5B279 /* ServiceHandler.swift in Sources */,
 				01FB19D02AE3DB0D006DAB9F /* SensorCalibrationScreen.swift in Sources */,
-				01FD68CD2AE810E30021101C /* Attribute.swift in Sources */,
 				0126B5412A5EC1120033BCC3 /* DeviceDetailsViewModel1.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
