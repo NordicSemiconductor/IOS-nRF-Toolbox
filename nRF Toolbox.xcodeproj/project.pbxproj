@@ -1119,6 +1119,7 @@
 			isa = PBXGroup;
 			children = (
 				015AAE632B0383BD00D79833 /* SidebarView.swift */,
+				AAF7DE612CFDD4BC000A347A /* SidebarDeviceView.swift */,
 			);
 			path = Sidebar;
 			sourceTree = "<group>";
@@ -1159,7 +1160,6 @@
 		0164A4772AD7409C0093E501 /* ConnectedDevices */ = {
 			isa = PBXGroup;
 			children = (
-				AAF7DE612CFDD4BC000A347A /* SidebarDeviceView.swift */,
 				0164A4782AD741200093E501 /* ConnectedDevicesViewModel.swift */,
 			);
 			path = ConnectedDevices;
