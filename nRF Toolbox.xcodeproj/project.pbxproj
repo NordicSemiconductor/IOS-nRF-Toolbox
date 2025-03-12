@@ -377,8 +377,6 @@
 		AA95CBD42D085AFA00D1FBC6 /* CyclingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA95CBD22D085AFA00D1FBC6 /* CyclingFeature.swift */; };
 		AAC0D99F2D80514900F25096 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC0D99E2D80514900F25096 /* AboutView.swift */; };
 		AAC0D9A12D80556D00F25096 /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC0D9A02D80556D00F25096 /* AppInfo.swift */; };
-		AAC0D9A52D805F2E00F25096 /* IridescenceEffect.metal in Sources */ = {isa = PBXBuildFile; fileRef = AAC0D9A42D805F2E00F25096 /* IridescenceEffect.metal */; };
-		AAC0D9A72D805F5D00F25096 /* IridescenceModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC0D9A62D805F5D00F25096 /* IridescenceModifier.swift */; };
 		AAF7DE622CFDD4BC000A347A /* ConnectedDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF7DE612CFDD4BC000A347A /* ConnectedDeviceView.swift */; };
 		C39941BC27341AAE00E7AA33 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = C39941BB27341AAE00E7AA33 /* ZIPFoundation */; };
 		C39941C027352BDF00E7AA33 /* McuMgrFirmware.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39941BF27352BDF00E7AA33 /* McuMgrFirmware.swift */; };
@@ -802,8 +800,6 @@
 		AA95CBD22D085AFA00D1FBC6 /* CyclingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingFeature.swift; sourceTree = "<group>"; };
 		AAC0D99E2D80514900F25096 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		AAC0D9A02D80556D00F25096 /* AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
-		AAC0D9A42D805F2E00F25096 /* IridescenceEffect.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = IridescenceEffect.metal; sourceTree = "<group>"; };
-		AAC0D9A62D805F5D00F25096 /* IridescenceModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IridescenceModifier.swift; sourceTree = "<group>"; };
 		AAF7DE612CFDD4BC000A347A /* ConnectedDeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedDeviceView.swift; sourceTree = "<group>"; };
 		C39941BF27352BDF00E7AA33 /* McuMgrFirmware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = McuMgrFirmware.swift; sourceTree = "<group>"; };
 		C39941C127352FC600E7AA33 /* ZephyrPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrPacket.swift; sourceTree = "<group>"; };
@@ -1201,7 +1197,6 @@
 		017D102C2A5809E300E38E5F /* nRF-Toolbox */ = {
 			isa = PBXGroup;
 			children = (
-				AAC0D9A22D805ED800F25096 /* Effects */,
 				019E77792ACC289500760124 /* Screens */,
 				0129F2262A68404C002FB3F5 /* Views */,
 				0126B53D2A5EA89F0033BCC3 /* Models */,
@@ -2517,31 +2512,6 @@
 			path = About;
 			sourceTree = "<group>";
 		};
-		AAC0D9A22D805ED800F25096 /* Effects */ = {
-			isa = PBXGroup;
-			children = (
-				AAD1E3EA2D819AD200E5121E /* Modifiers */,
-				AAD1E3E92D819AC900E5121E /* Shaders */,
-			);
-			path = Effects;
-			sourceTree = "<group>";
-		};
-		AAD1E3E92D819AC900E5121E /* Shaders */ = {
-			isa = PBXGroup;
-			children = (
-				AAC0D9A42D805F2E00F25096 /* IridescenceEffect.metal */,
-			);
-			path = Shaders;
-			sourceTree = "<group>";
-		};
-		AAD1E3EA2D819AD200E5121E /* Modifiers */ = {
-			isa = PBXGroup;
-			children = (
-				AAC0D9A62D805F5D00F25096 /* IridescenceModifier.swift */,
-			);
-			path = Modifiers;
-			sourceTree = "<group>";
-		};
 		C39941BE27352BC400E7AA33 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -2900,7 +2870,6 @@
 				AA95CBD42D085AFA00D1FBC6 /* CyclingFeature.swift in Sources */,
 				AA0AEA022CF7438200F93A0B /* Assets.swift in Sources */,
 				01CEB4262AE9100300945105 /* DeviceScreen.swift in Sources */,
-				AAC0D9A52D805F2E00F25096 /* IridescenceEffect.metal in Sources */,
 				018873C72A583A9900253273 /* PeripheralScannerScreen.swift in Sources */,
 				01F6A9662A829EE300540B45 /* SensorSettingsViewModel.swift in Sources */,
 				013E5D962AE02A1700B9C475 /* RunningValuesGrid.swift in Sources */,
@@ -2947,7 +2916,6 @@
 				013E5D982AE02A2400B9C475 /* RunningValuesGridItem.swift in Sources */,
 				01DEB4AA2A65E9D900D4C1E8 /* CharacteristicReader.swift in Sources */,
 				AA94C5532D01B5DC00562F7A /* HeartRateView.swift in Sources */,
-				AAC0D9A72D805F5D00F25096 /* IridescenceModifier.swift in Sources */,
 				01407CB92A65417900A5B279 /* CBMPeripheralPreview.swift in Sources */,
 				AA0A78502D4914BE000206F8 /* ThroughputData.swift in Sources */,
 				01CEB4272AE9100300945105 /* HeartRateViewModel.swift in Sources */,
