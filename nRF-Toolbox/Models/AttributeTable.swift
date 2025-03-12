@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import iOS_Common_Libraries
 import iOS_BLE_Library_Mock
 import iOS_Bluetooth_Numbers_Database
 
@@ -109,6 +110,7 @@ extension AttributeTable {
         let identifier: String
         let name: String
         var level: UInt { 1 }
+        var children: [Attribute] { characteristics }
         fileprivate(set) var characteristics: [Characteristic] = []
         
         init(cbService: CBService, id: String, identifier: String, name: String, characteristics: [Characteristic]) {
@@ -143,6 +145,7 @@ extension AttributeTable.Service {
         let identifier: String
         let name: String
         var level: UInt { 2 }
+        var children: [Attribute] { descriptors }
         fileprivate(set) var descriptors: [Descriptor] = []
         
         var prepertiesDescription: String {
@@ -183,6 +186,7 @@ extension AttributeTable.Service.Characteristic {
         let identifier: String
         let name: String
         var level: UInt { 3 }
+        var children: [Attribute] { [] }
         
         var uuidString: String { cbDescriptor.uuid.uuidString }
         

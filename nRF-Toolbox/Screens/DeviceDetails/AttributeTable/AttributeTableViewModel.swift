@@ -95,6 +95,7 @@ protocol Attribute  {
     var name: String { get }
     var uuidString: String { get }
     var id: String { get }
+    var children: [Attribute] { get }
 }
 
 // MARK: - Environment

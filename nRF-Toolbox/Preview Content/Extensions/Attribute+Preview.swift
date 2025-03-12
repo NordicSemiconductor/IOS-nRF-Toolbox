@@ -12,6 +12,7 @@ import iOS_Bluetooth_Numbers_Database
 #if DEBUG
 extension Service: Attribute {
     var level: UInt { 1 }
+    var children: [any Attribute] { [] }
 }
 
 extension Characteristic: Attribute {
@@ -20,6 +21,7 @@ extension Characteristic: Attribute {
     }
     
     var level: UInt { 2 }
+    var children: [any Attribute] { [] }
 }
 
 extension Descriptor: Attribute {
@@ -28,5 +30,6 @@ extension Descriptor: Attribute {
     }
     
     var level: UInt { 3 }
+    var children: [any Attribute] { [] }
 }
 #endif

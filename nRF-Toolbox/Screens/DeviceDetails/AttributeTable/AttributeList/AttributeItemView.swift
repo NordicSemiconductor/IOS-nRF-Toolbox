@@ -12,7 +12,18 @@ import iOS_Bluetooth_Numbers_Database
 // MARK: - AttributeItemView
 
 struct AttributeItemView: View {
-    let attribute: Attribute
+    
+    // MARK: Private Properties
+    
+    private let attribute: Attribute
+    
+    // MARK: init
+    
+    init(_ attribute: Attribute) {
+        self.attribute = attribute
+    }
+    
+    // MARK: view
     
     var body: some View {
         HStack {
