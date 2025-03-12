@@ -8,9 +8,9 @@
 
 import SwiftUI
 
-// MARK: - ConnectedDeviceView
+// MARK: - SidebarDeviceView
 
-struct ConnectedDeviceView: View {
+struct SidebarDeviceView: View {
     
     // MARK: Environment
     
