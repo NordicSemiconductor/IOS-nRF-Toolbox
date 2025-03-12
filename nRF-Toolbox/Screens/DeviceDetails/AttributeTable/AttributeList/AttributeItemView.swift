@@ -17,6 +17,7 @@ struct AttributeItemView: View {
     var body: some View {
         HStack {
             paddingIndicators(attribute.level)
+            
             VStack(alignment: .leading) {
                 Text(attribute.name)
                     .font(.headline)
@@ -40,16 +41,3 @@ struct AttributeItemView: View {
         .frame(width: 40)
     }
 }
-
-// MARK: - Preview
-
-#if DEBUG
-#Preview {
-    List {
-        AttributeItemView(attribute: Service.runningSpeedAndCadence)
-        AttributeItemView(attribute: Characteristic.rscMeasurement)
-        AttributeItemView(attribute: Descriptor.gattCharacteristicUserDescription)
-        AttributeItemView(attribute: Characteristic.scControlPoint)
-    }
-}
-#endif

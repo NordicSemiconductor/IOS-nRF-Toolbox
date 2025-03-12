@@ -24,21 +24,3 @@ struct AttributeList: View {
         }
     }
 }
-
-#if DEBUG
-#Preview {
-    AttributeList(attributes: [
-        Service.runningSpeedAndCadence,
-        Characteristic.scControlPoint,
-        Descriptor.gattCharacteristicUserDescription,
-        Characteristic.rscMeasurement,
-        Characteristic.rscFeature,
-        Descriptor.gattCharacteristicUserDescription,
-    ])
-}
-
-#Preview {
-    AttributeList(attributes: [
-    ])
-}
-#endif

@@ -10,10 +10,14 @@ import SwiftUI
 
 private typealias Env = AttributeTableScreen.AttributeTableViewModel.Environment
 
+// MARK: - AttributeTableScreen
+
 struct AttributeTableScreen: View {
 
     @ObservedObject var viewModel: AttributeTableViewModel
 
+    // MARK: view
+    
     var body: some View {
         AttributeTableView()
             .environmentObject(viewModel.env)
@@ -24,9 +28,16 @@ struct AttributeTableScreen: View {
     }
 }
 
+// MARK: - AttributeTableView
+
 struct AttributeTableView: View {
+    
+    // MARK: Environment
+    
     @EnvironmentObject private var environment: Env
 
+    // MARK: view
+    
     var body: some View {
         if let criticalError = environment.criticalError {
             NoContentView(title: "Error", systemImage: "exclamationmark.triangle", description: criticalError.localizedDescription, style: .error)
@@ -41,25 +52,4 @@ struct AttributeTableView: View {
     private var placeholder: some View {
         NoContentView(title: "Discovering . . .", systemImage: "table")
     }
-}
-
-#Preview {
-    AttributeTableView()
-        .environmentObject(Env(
-            attributeTable: []
-        ))
-}
-
-#Preview {
-    AttributeTableView()
-        .environmentObject(Env(
-            attributeTable: nil
-        ))
-}
-
-#Preview {
-    AttributeTableView()
-        .environmentObject(Env(
-            criticalError: .unableBuildAttributeTable
-        ))
 }
