@@ -18,21 +18,28 @@ struct PeripheralInspectorScreen: View {
     let viewModel: PeripheralInspectorViewModel
 
     var body: some View {
-        PeripheralInspectorView()
-            .task {
-                viewModel.onConnect()
-            }
-            .environmentObject(viewModel.env)
+        NavigationView {
+            PeripheralInspectorView()
+                .task {
+                    viewModel.onConnect()
+                }
+                .environmentObject(viewModel.env)
+        }
     }
 }
 
 // MARK: - PeripheralInspectorView
 
 struct PeripheralInspectorView: View {
+    
+    // MARK: Environment
+    
     @EnvironmentObject private var environment: Env
     @EnvironmentObject private var rootEnv: DeviceDetailsScreen.DeviceDetailsViewModel.Environment
     @EnvironmentObject private var rootNavigationMV: RootNavigationViewModel
     @EnvironmentObject private var connectedDeviceViewModel: ConnectedDevicesViewModel
+    
+    // MARK: Private Properties
     
     @State private var disconnectAlertShow = false
     @State private var showAttributeTable = false
@@ -41,6 +48,8 @@ struct PeripheralInspectorView: View {
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     #endif 
 
+    // MARK: view
+    
     var body: some View {
         List {
             Section {
@@ -107,7 +116,8 @@ struct PeripheralInspectorView: View {
         NavigationLink {
             AttributeTableScreen(viewModel: environment.attributeTableViewModel)
         } label: {
-            Text("Attribute Table")
+            Label("Attribute Table", systemImage: "list.dash")
+                .setAccent(.nordicBlue)
         }
     }
     
