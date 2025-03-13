@@ -63,26 +63,10 @@ struct DeviceScreen: View {
                     }
                 }
                 
-                if let batteryViewModel = deviceVM.batteryServiceViewModel {
-                    Section("Battery Level") {
-                        BatteryView()
-                            .environmentObject(batteryViewModel)
-                    }
-                }
-                
                 if let throughputViewModel = deviceVM.throughputViewModel {
                     Section("Throughput") {
                         ThroughputView()
                             .environmentObject(throughputViewModel)
-                    }
-                }
-                
-                Section("Device Info") {
-                    NavigationLink {
-                        AttributeTableScreen(viewModel: deviceVM.attributeTableViewModel)
-                    } label: {
-                        Label("Attribute Table", systemImage: "list.dash")
-                            .setAccent(.nordicBlue)
                     }
                 }
             }
