@@ -218,6 +218,7 @@ private extension ViewModel {
                 }
                 
                 self.env.batteryLevelData = lvlData
+                self.env.currentBatteryLevel = level.last?.value.level
             }
             .store(in: &cancellables)
     }

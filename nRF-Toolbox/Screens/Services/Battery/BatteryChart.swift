@@ -25,10 +25,9 @@ struct BatteryChart: View {
         VStack(alignment: .leading) {
             Text("Battery Level")
                 .font(.title2.bold())
-                .padding(.top)
             
             if let currentLevel {
-                Text("Battery Level \(currentLevel)%")
+                Text("Current Value: \(currentLevel)%")
                     .foregroundStyle(.secondary)
             } else {
                 Text("N/A")
@@ -37,6 +36,7 @@ struct BatteryChart: View {
             
             chartView
         }
+        .padding(.vertical)
     }
     
     // MARK: chartView

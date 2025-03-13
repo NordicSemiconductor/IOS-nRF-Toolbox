@@ -11,6 +11,8 @@ import Charts
 
 private typealias Env = SignalChartScreen.SignalChartViewModel.Environment
 
+// MARK: - ChartData
+
 private extension Env.ChartData {
     var pointMark: PointMark {
         PointMark(
@@ -37,11 +39,10 @@ struct SignalChart: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Signal Strength")
+            Text("RSSI (Signal) Strength")
                 .font(.title2.bold())
-                .padding(.top)
             
-            Text("RSSI is read every second")
+            Text("Read once per second")
                 .foregroundStyle(.secondary)
             
             if #available(iOS 17, macOS 14, *) {
@@ -50,6 +51,7 @@ struct SignalChart: View {
                 pureChart()
             }
         }
+        .padding(.vertical)
     }
     
     @available(macOS 14.0, *)
