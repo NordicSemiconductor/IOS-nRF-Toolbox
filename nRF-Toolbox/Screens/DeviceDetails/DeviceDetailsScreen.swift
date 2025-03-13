@@ -9,6 +9,8 @@
 import SwiftUI
 import iOS_Bluetooth_Numbers_Database
 
+// MARK: - DeviceDetailsScreen
+
 struct DeviceDetailsScreen: View {
     let viewModel: DeviceDetailsViewModel
     
@@ -25,6 +27,8 @@ struct DeviceDetailsScreen: View {
 }
 
 private typealias VM = DeviceDetailsScreen.DeviceDetailsViewModel
+
+// MARK: - DeviceDetailsView
 
 struct DeviceDetailsView<ServiceView: View>: View {
     @EnvironmentObject private var environment: VM.Environment
@@ -158,56 +162,3 @@ struct DeviceDetailsView<ServiceView: View>: View {
 
 private typealias Environment = VM.Environment
 
-#Preview {
-    NavigationStack {
-        DeviceDetailsView(serviceViewContent: { service in
-            Text(service.name)
-        })
-        .environmentObject(
-            Environment(
-                deviceID: UUID(),
-                services: [.runningSpeedAndCadence, .heartRate, .adafruitAccelerometer])
-        )
-    }
-}
-
-#Preview {
-    NavigationStack {
-        DeviceDetailsView(serviceViewContent: { service in
-            Text(service.name)
-        })
-        .environmentObject(
-            Environment(
-                deviceID: UUID(),
-                services: []))
-    }
-}
-
-#Preview {
-    NavigationStack {
-        DeviceDetailsView(serviceViewContent: { service in
-            Text(service.name)
-        })
-        .environmentObject(
-            Environment(
-                deviceID: UUID(),
-                reconnecting: true,
-                criticalError: .disconnectedWithError(nil)
-            )
-        )
-    }
-}
-
-#Preview {
-    NavigationStack {
-        DeviceDetailsView(serviceViewContent: { service in
-            Text(service.name)
-        })
-        .environmentObject(
-            Environment(
-                deviceID: UUID(),
-                criticalError: .disconnectedWithError(nil)
-            )
-        )
-    }
-}

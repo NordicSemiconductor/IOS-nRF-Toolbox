@@ -11,6 +11,8 @@ import CoreBluetoothMock_Collection
 
 private typealias Env = PeripheralInspectorScreen.PeripheralInspectorViewModel.Environment
 
+// MARK: - PeripheralInspectorScreen
+
 struct PeripheralInspectorScreen: View {
 
     let viewModel: PeripheralInspectorViewModel
@@ -23,6 +25,8 @@ struct PeripheralInspectorScreen: View {
             .environmentObject(viewModel.env)
     }
 }
+
+// MARK: - PeripheralInspectorView
 
 struct PeripheralInspectorView: View {
     @EnvironmentObject private var environment: Env
@@ -129,29 +133,3 @@ struct PeripheralInspectorView: View {
         }
     }
 }
-
-// MARK: - Preview
-
-#if DEBUG
-#Preview {
-    NavigationStack {
-        TabView {
-            PeripheralInspectorView()
-                .environmentObject(Env(
-                    deviceId: UUID(),
-                    batteryLevelData: Battery.preview,
-                    batteryLevelAvailable: true,
-                    deviceInfoAvailable: true,
-                    deviceInfo: DeviceInformation(
-                        manufacturerName: "Nordic Semiconductor",
-                        modelNumber: "nRF52840"
-                    ),
-                    signalChartViewModel: SignalChartScreen.MockViewModel.shared,
-                    attributeTableViewModel: AttributeTableScreen.MockViewModel.shared
-                ))
-                .tabItem { Label("Device", systemImage: "apple.terminal") }
-        }
-        .navigationTitle("Device Info")
-    }
-}
-#endif
