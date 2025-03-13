@@ -18,16 +18,19 @@ struct ServiceBadgeGroup: View {
     // MARK: init
     
     init(_ services: Set<Service>) {
-        self.services = services.map({ $0 }).sorted(by: { a, b in
-            a.name < b.name
-        })
+        self.services = services
+            .map({ $0 })
+            .filter(\.isSupported)
+            .sorted(by: { a, b in
+                a.name < b.name
+            })
     }
     
     // MARK: view
     
     var body: some View {
         HStack {
-            ForEach(services.filter(\.isSupported)) {
+            ForEach(services) {
                 ServiceBadge(image: $0.systemImage, name: $0.name, color: $0.color ?? .primary)
             }
 
