@@ -11,6 +11,8 @@ import Charts
 
 private typealias Env = SignalChartScreen.SignalChartViewModel.Environment
 
+// MARK: - SignalChartScreen
+
 struct SignalChartScreen: View {
     let viewModel: SignalChartViewModel
     
@@ -24,15 +26,12 @@ struct SignalChartScreen: View {
     }
 }
 
+// MARK: - SignalChartView
+
 struct SignalChartView: View {
     @EnvironmentObject private var environment: Env
     
     var body: some View {
         SignalChart()
     }
-}
-
-#Preview {
-    SignalChartView()
-        .environmentObject(Env(chartData: []))
 }

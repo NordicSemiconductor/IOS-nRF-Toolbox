@@ -30,15 +30,20 @@ private extension Env.ChartData {
     }
 }
 
+// MARK: - SignalChart
+
 struct SignalChart: View {
     @EnvironmentObject private var environment: Env 
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("RSSI is read every second")
-                .foregroundStyle(.secondary)
             Text("Signal Strength")
                 .font(.title2.bold())
+                .padding(.top)
+            
+            Text("RSSI is read every second")
+                .foregroundStyle(.secondary)
+            
             if #available(iOS 17, macOS 14, *) {
                 scalableChart()
             } else {
@@ -66,11 +71,4 @@ struct SignalChart: View {
         .chartXAxis(.hidden)
         .chartYScale(domain: [environment.lowest, environment.highest], range: .plotDimension(padding: 8))
     }
-    
-    
-}
-
-#Preview {
-    SignalChart()
-        .environmentObject(Env(chartData: Env.ChartData.preview))
 }
