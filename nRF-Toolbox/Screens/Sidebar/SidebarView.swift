@@ -16,6 +16,7 @@ struct SidebarView: View {
     
     @EnvironmentObject var rootViewModel: RootNavigationViewModel
     @EnvironmentObject var viewModel: ConnectedDevicesViewModel
+    @EnvironmentObject var scannerViewModel: PeripheralScannerScreen.PeripheralScannerViewModel
     
     // MARK: view
     
@@ -49,10 +50,16 @@ struct SidebarView: View {
             .foregroundColor(Color(uiColor: .label))
             
             Section {
-                Text("Open Scanner")
-                    .foregroundStyle(Color.universalAccentColor)
-                    .centered()
-                    .tag(RootNavigationView.MenuCategory.scanner)
+                NavigationLink {
+                    PeripheralScannerScreen()
+                        .environmentObject(scannerViewModel)
+                        .environmentObject(scannerViewModel.environment)
+                } label: {
+                    Text("Open Scanner")
+                        .foregroundStyle(Color.universalAccentColor)
+                        .centered()
+                        .tag(RootNavigationView.MenuCategory.scanner)
+                }
             }
             
             Section("Other") {

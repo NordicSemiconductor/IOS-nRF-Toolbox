@@ -9,6 +9,8 @@
 import SwiftUI
 import iOS_BLE_Library_Mock
 
+// MARK: - RootNavigationView
+
 struct RootNavigationView: View {
 
     // MARK: Properties
@@ -26,44 +28,14 @@ struct RootNavigationView: View {
     // MARK: view
     
     var body: some View {
-        NavigationSplitView(columnVisibility: $visibility, preferredCompactColumn: $compactPreferredColumn) {
+        NavigationView {
             SidebarView()
+                .environmentObject(scannerViewModel)
                 .environmentObject(connectedDevicesViewModel)
-        } content: {
-            switch viewModel.selectedCategory {
-            case .scanner:
-                PeripheralScannerScreen()
-                    .environmentObject(scannerViewModel)
-                    .environmentObject(scannerViewModel.environment)
-            case .device:
-                if let selectedDevice = connectedDevicesViewModel.selectedDevice {
-                    DeviceScreen(selectedDevice)
-                        .environmentObject(viewModel)
-                        .environmentObject(connectedDevicesViewModel)
-                } else {
-                    EmptyView()
-                }
-            case .about:
-                AboutView()
-            case .none:
-                EmptyView()
-            }
-        } detail: {
-            if connectedDevicesViewModel.hasSelectedDevice {
-                if let deviceVM = connectedDevicesViewModel.selectedDeviceModel() {
-                    DeviceDetailsScreen(viewModel: deviceVM)
-                        .environmentObject(connectedDevicesViewModel)
-                } else {
-                    NoContentView(title: "Device is not connected", systemImage: "laptopcomputer.slash")
-                }
-            } else {
-                NoContentView(title: "Device is not selected", systemImage: "laptopcomputer.slash")
-            }
         }
         .onAppear {
             scannerViewModel.setupManager()
         }
-        .navigationSplitViewStyle(.balanced)
         .accentColor(.white)
         .environmentObject(viewModel)
     }
