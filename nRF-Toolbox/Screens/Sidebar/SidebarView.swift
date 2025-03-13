@@ -55,9 +55,8 @@ struct SidebarView: View {
                         .environmentObject(scannerViewModel)
                         .environmentObject(scannerViewModel.environment)
                 } label: {
-                    Text("Open Scanner")
-                        .foregroundStyle(Color.universalAccentColor)
-                        .centered()
+                    Label("Open Scanner", systemImage: "dot.radiowaves.right")
+                        .setAccent(.universalAccentColor)
                         .tag(RootNavigationView.MenuCategory.scanner)
                 }
             }
