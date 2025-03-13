@@ -22,9 +22,9 @@ struct SidebarView: View {
     
     var body: some View {
         List(selection: $rootViewModel.selectedCategory) {
-            Section("Connected Devices") {
+            Section("Connected") {
                 if viewModel.connectedDevices.isEmpty {
-                    Text("No Connected Devices")
+                    NoContentView(title: "No Connected Devices", systemImage: "cable.connector.slash", description: "Open the Scanner from below to connect to one or multiple Devices.")
                 } else {
                     ForEach(viewModel.connectedDevices) { device in
                         NavigationLink {
