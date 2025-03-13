@@ -53,10 +53,6 @@ struct PeripheralInspectorView: View {
     var body: some View {
         List {
             Section {
-                attributeTableNavigator
-            }
-            
-            Section {
                 SignalChartView()
                     .environmentObject(environment.signalChartViewModel.environment)
             }
@@ -67,9 +63,13 @@ struct PeripheralInspectorView: View {
                 }
             }
             
+            Section("GATT") {
+                attributeTableNavLink
+            }
+            
             if environment.deviceInfoAvailable {
-                Section("Device Information") {
-                    DeviceInformationView(deviceInformation: environment.deviceInfo)
+                Section("Device Info") {
+                    DeviceInformationView(environment.deviceInfo)
                 }
             }
             
@@ -93,23 +93,11 @@ struct PeripheralInspectorView: View {
                 } message: {
                     Text("Are you sure you want to cancel peripheral connectior?")
                 }
-
             }
         }
     }
     
-    @ViewBuilder
-    private var attributeTableNavigator: some View {
-#if os(macOS)
-        attributeTableButton
-#else
-        if idiom == .phone {
-            attributeTableNavLink
-        } else {
-            attributeTableButton
-        }
-#endif
-    }
+    // MARK: attributeTableNavLink
     
     @ViewBuilder
     private var attributeTableNavLink: some View {
@@ -118,28 +106,6 @@ struct PeripheralInspectorView: View {
         } label: {
             Label("Attribute Table", systemImage: "list.dash")
                 .setAccent(.nordicBlue)
-        }
-    }
-    
-    @ViewBuilder
-    private var attributeTableButton: some View {
-        Button("Show Attribute Table") {
-            showAttributeTable = true
-        }
-        .sheet(isPresented: $showAttributeTable) {
-            NavigationStack {
-                AttributeTableScreen(viewModel: environment.attributeTableViewModel)
-                    .toolbar {
-                        ToolbarItem(placement: .cancellationAction) {
-                            Button("Cancel") {
-                                showAttributeTable = false
-                            }
-                        }
-                    }
-                #if os(macOS)
-                    .frame(width: 400, height: 500)
-                #endif
-            }
         }
     }
 }

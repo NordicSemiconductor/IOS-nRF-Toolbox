@@ -8,38 +8,54 @@
 
 import SwiftUI
 
-struct DeviceInformationView: View {
-    let deviceInformation: DeviceInformation
+// MARK: - DeviceInformationView
 
+struct DeviceInformationView: View {
+    
+    // MARK: Private Properties
+    
+    private let deviceInformation: DeviceInformation
+
+    // MARK: init
+    
+    init(_ deviceInformation: DeviceInformation) {
+        self.deviceInformation = deviceInformation
+    }
+    
+    // MARK: view
+    
     var body: some View {
         ForEach(deviceInformation.characteristics) { characteristic in
-            deviceInformationCharacteristicView(characteristic: characteristic)
+            DeviceInformationCharacteristicView(characteristic)
         }
-        .listStyle(GroupedListStyle())
+        .listStyle(.insetGrouped)
     }
+}
 
-    @ViewBuilder
-    private func deviceInformationCharacteristicView(characteristic: DeviceInformation.Characteristic) -> some View {
+// MARK: - DeviceInformationCharacteristicView
+
+struct DeviceInformationCharacteristicView: View {
+    
+    // MARK: Properties
+    
+    private let characteristic: DeviceInformation.Characteristic
+    
+    // MARK: init
+    
+    init(_ characteristic: DeviceInformation.Characteristic) {
+        self.characteristic = characteristic
+    }
+    
+    // MARK: view
+    
+    var body: some View {
         HStack {
             Text(characteristic.name)
+            
             Spacer()
+            
             Text(characteristic.value)
                 .foregroundColor(.secondary)
         }
     }
-}
-
-
-
-#Preview {
-    DeviceInformationView(deviceInformation: DeviceInformation(
-        manufacturerName: "Nordic Semiconductor",
-        modelNumber: "nRF52840",
-        serialNumber: "123456",
-        hardwareRevision: "1.0",
-        firmwareRevision: "1.0",
-        softwareRevision: "1.0",
-        systemID: "123456",
-        ieee11073: "123456"
-    ))
 }
