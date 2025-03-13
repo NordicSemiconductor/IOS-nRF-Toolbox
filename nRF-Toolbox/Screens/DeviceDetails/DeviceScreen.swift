@@ -20,6 +20,8 @@ struct DeviceScreen: View {
     
     // MARK: Properties
     
+    @State private var showInspector: Bool = false
+    
     private let device: ConnectedDevicesViewModel.Device
         
     // MARK: init
@@ -100,5 +102,31 @@ struct DeviceScreen: View {
         }
         .listStyle(.insetGrouped)
         .navigationTitle(connectedDevicesViewModel.selectedDevice?.name ?? "Unnamed")
+        .inspector(isPresented: $showInspector) {
+            peripheralInspectorScreen
+        }
+        .toolbar {
+            Button {
+                showInspector.toggle()
+            } label: {
+                Image(systemName: "info")
+                    .symbolVariant(.circle)
+            }
+        }
+    }
+    
+    // MARK: inspector
+    
+    @ViewBuilder
+    private var peripheralInspectorScreen: some View {
+        if let deviceViewModel = connectedDevicesViewModel.deviceViewModel(for: device.id),
+           let peripheralViewModel = deviceViewModel.environment.peripheralViewModel {
+            PeripheralInspectorScreen(viewModel: peripheralViewModel)
+                .tabItem {
+                    Label("Peripheral", systemImage: "terminal")
+                }
+        } else {
+            NoContentView(title: "No View Model", systemImage: "plus")
+        }
     }
 }
