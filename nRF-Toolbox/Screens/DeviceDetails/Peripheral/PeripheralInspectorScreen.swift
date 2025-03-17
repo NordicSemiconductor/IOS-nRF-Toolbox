@@ -42,7 +42,6 @@ struct PeripheralInspectorView: View {
     // MARK: Private Properties
     
     @State private var disconnectAlertShow = false
-    @State private var showAttributeTable = false
     
     #if os(iOS)
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
@@ -74,10 +73,19 @@ struct PeripheralInspectorView: View {
             }
             
             Section {
+                Button("Dismiss") {
+                    rootEnv.showInspector = false
+                }
+                .tint(.universalAccentColor)
+                .centered()
+            }
+            
+            Section {
                 Button("Disconnect") {
                     disconnectAlertShow = true
                 }
                 .foregroundStyle(.red)
+                .centered()
                 .alert("Disconnect", isPresented: $disconnectAlertShow) {
                     Button("Yes") {
                         // TODO: Unselect Device instead

@@ -15,12 +15,11 @@ struct DeviceScreen: View {
 
     // MARK: Environment
     
-    @EnvironmentObject var navigationViewModel: RootNavigationViewModel
-    @EnvironmentObject var connectedDevicesViewModel: ConnectedDevicesViewModel
+    @EnvironmentObject private var environment: DeviceDetailsScreen.DeviceDetailsViewModel.Environment
+    @EnvironmentObject private var navigationViewModel: RootNavigationViewModel
+    @EnvironmentObject private var connectedDevicesViewModel: ConnectedDevicesViewModel
     
     // MARK: Properties
-    
-    @State private var showInspector: Bool = false
     
     private let device: ConnectedDevicesViewModel.Device
         
@@ -86,12 +85,12 @@ struct DeviceScreen: View {
         }
         .listStyle(.insetGrouped)
         .navigationTitle(connectedDevicesViewModel.selectedDevice?.name ?? "Unnamed")
-        .inspector(isPresented: $showInspector) {
+        .inspector(isPresented: $environment.showInspector) {
             peripheralInspectorScreen
         }
         .toolbar {
             Button {
-                showInspector.toggle()
+                environment.showInspector.toggle()
             } label: {
                 Image(systemName: "info")
                     .symbolVariant(.circle)
@@ -103,9 +102,9 @@ struct DeviceScreen: View {
     
     @ViewBuilder
     private var peripheralInspectorScreen: some View {
-        if let deviceViewModel = connectedDevicesViewModel.deviceViewModel(for: device.id),
-           let peripheralViewModel = deviceViewModel.environment.peripheralViewModel {
+        if let peripheralViewModel = environment.peripheralViewModel {
             PeripheralInspectorScreen(viewModel: peripheralViewModel)
+                .environmentObject(environment)
                 .tabItem {
                     Label("Peripheral", systemImage: "terminal")
                 }

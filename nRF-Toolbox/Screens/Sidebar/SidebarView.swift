@@ -27,13 +27,16 @@ struct SidebarView: View {
                     NoContentView(title: "No Connected Devices", systemImage: "cable.connector.slash", description: "Open the Scanner from below to connect to one or multiple Devices.")
                 } else {
                     ForEach(viewModel.connectedDevices) { device in
-                        NavigationLink {
-                            DeviceScreen(device)
-                                .environmentObject(rootViewModel)
-                                .environmentObject(viewModel)
-                        } label: {
-                            SidebarDeviceView(device)
-                                .tag(RootNavigationView.MenuCategory.device)
+                        if let deviceViewModel = viewModel.deviceViewModel(for: device.id) {
+                            NavigationLink {
+                                DeviceScreen(device)
+                                    .environmentObject(rootViewModel)
+                                    .environmentObject(viewModel)
+                                    .environmentObject(deviceViewModel.environment)
+                            } label: {
+                                SidebarDeviceView(device)
+                                    .tag(RootNavigationView.MenuCategory.device)
+                            }
                         }
                         
                         #if DEBUG
