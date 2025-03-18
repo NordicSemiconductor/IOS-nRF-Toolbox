@@ -22,11 +22,10 @@ extension AttributeTableScreen {
         let env = Environment()
         
         private let peripheral: Peripheral
-        private let log = NordicLog(category: "AttributeTable.VM", subsystem: "com.nordicsemi.nrf-toolbox")
+        private let log = NordicLog(category: "AttributeTableViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
         
         init(peripheral: Peripheral) {
             self.peripheral = peripheral
-            
             log.debug(#function)
         }
         
@@ -35,6 +34,7 @@ extension AttributeTableScreen {
         }
         
         func readAttributeTable() async {
+            log.debug(#function)
             do {
                 env.attributeTable = try await attributeTable()
             } catch {
@@ -42,22 +42,11 @@ extension AttributeTableScreen {
             }
         }
     }
-    
-    #if DEBUG
-    @MainActor
-    class MockViewModel: AttributeTableViewModel {
-        static let shared = MockViewModel(peripheral: .preview)
-        
-        override func readAttributeTable() async {
-            
-        }
-    }
-    #endif
 }
 
 private typealias ViewModel = AttributeTableScreen.AttributeTableViewModel
 
-// MARK: - ViewModel Extension
+// MARK: - attributeTable()
 
 private extension ViewModel {
     
