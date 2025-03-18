@@ -62,16 +62,11 @@ extension ConnectedDevicesViewModel {
     // MARK: deviceViewModel(for:)
     
     func deviceViewModel(for deviceID: Device.ID) -> DeviceDetailsScreen.DeviceDetailsViewModel? {
-        if let vm = deviceViewModels[deviceID] {
-            return vm
-        } else {
-            guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [deviceID]).first else {
-                return nil
-            }
-            let newViewModel = DeviceDetailsScreen.DeviceDetailsViewModel(cbPeripheral: peripheral, centralManager: centralManager)
-            deviceViewModels[deviceID] = newViewModel
-            return newViewModel
+        guard let deviceViewModel = deviceViewModels[deviceID] else {
+            // Can return 'nil' after disconnect
+            return nil
         }
+        return deviceViewModel
     }
     
     // MARK: disconnectAndRemoveViewModel()
@@ -114,14 +109,19 @@ extension ConnectedDevicesViewModel {
                               services: services, status: .connected)
             }
             .sink { [unowned self] device in
-                if let i = self.connectedDevices.firstIndex(where: \.id, equals: device.id) {
-                    self.connectedDevices[i] = device
+                if let i = connectedDevices.firstIndex(where: \.id, equals: device.id) {
+                    connectedDevices[i] = device
                 } else {
-                    self.connectedDevices.append(device)
+                    connectedDevices.append(device)
+                }
+                
+                if deviceViewModels[device.id] == nil, let peripheral = centralManager.retrievePeripherals(withIdentifiers: [device.id]).first {
+                    let viewModel = DeviceDetailsScreen.DeviceDetailsViewModel(cbPeripheral: peripheral, centralManager: centralManager)
+                    deviceViewModels[device.id] = viewModel
                 }
                 
                 guard !hasSelectedDevice else { return }
-                self.selectedDevice = device
+                selectedDevice = device
             }
             .store(in: &cancelable)
     }
