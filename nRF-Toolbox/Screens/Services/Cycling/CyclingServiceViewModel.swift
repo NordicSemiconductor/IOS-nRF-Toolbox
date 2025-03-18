@@ -82,12 +82,14 @@ final class CyclingServiceViewModel: ObservableObject {
     func startListening() async throws {
         log.debug(#function)
         let cyclingFeatures = try await peripheral.readValue(for: cscFeature).tryMap { data in
-            guard let data else {
-                throw CriticalError.noData
+                guard let data else {
+                    throw CriticalError.noData
+                }
+                return CyclingFeatures(flags: RegisterValue(data[0]))
             }
-            return CyclingFeatures(flags: RegisterValue(data[0]))
-        }
-        .timeout(.seconds(1), scheduler: DispatchQueue.main, customError: { CriticalError.timeout })
+            .timeout(.seconds(1), scheduler: DispatchQueue.main, customError: {
+                CriticalError.timeout
+            })
         .firstValue
         
         log.debug("Detected \(cyclingFeatures)")
@@ -138,6 +140,7 @@ private extension CBUUID {
 extension CyclingServiceViewModel: SupportedServiceViewModel {
     
     func onConnect() async {
+        log.debug(#function)
         do {
             try await discoverCharacteristics()
             try await startListening()
@@ -149,6 +152,7 @@ extension CyclingServiceViewModel: SupportedServiceViewModel {
     }
     
     func onDisconnect() {
+        log.debug(#function)
         cancellables.removeAll()
     }
 }
