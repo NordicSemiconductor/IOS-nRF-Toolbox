@@ -66,11 +66,6 @@ private extension ViewModel {
             .timeout(1, scheduler: DispatchQueue.main)
             .firstValue
         
-        // Check if battery service was discovered
-        if let cbBatteryLevel = cbServices.first(where: { $0.uuid == Service.batteryService.uuid }) {
-            try await handleBatteryService(cbBatteryLevel, peripheral: peripheral)
-        }
-        
         if let cbDeviceInfo = cbServices.first(where: { $0.uuid == Service.deviceInformation.uuid }) {
             try await handleDeviceInformation(cbDeviceInfo, peripheral: peripheral)
         }
