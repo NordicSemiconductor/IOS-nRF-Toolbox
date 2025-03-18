@@ -91,22 +91,18 @@ struct DeviceDetailsView<ServiceView: View>: View {
     
     @ViewBuilder
     private var serviceView: some View {
-        if #available(iOS 17, macOS 14, *) {
-            newView
-                .inspector(isPresented: $environment.showInspector) {
-                    peripheralInspectorScreen
+        newView
+            .inspector(isPresented: $environment.showInspector) {
+                peripheralInspectorScreen
+            }
+            .toolbar {
+                Button {
+                    environment.showInspector.toggle()
+                } label: {
+                    Image(systemName: "info")
+                        .symbolVariant(.circle)
                 }
-                .toolbar {
-                    Button {
-                        environment.showInspector.toggle()
-                    } label: {
-                        Image(systemName: "info")
-                            .symbolVariant(.circle)
-                    }
-                }
-        } else {
-            oldView
-        }
+            }
     }
     
     @ViewBuilder
@@ -120,14 +116,6 @@ struct DeviceDetailsView<ServiceView: View>: View {
         }
     }
     
-    @ViewBuilder
-    private var oldView: some View {
-        TabView {
-            serviceViews
-            peripheralInspectorScreen
-        }
-    }
-
     @ViewBuilder
     private var serviceViews: some View {
         if environment.services.filter(\.isSupported).isEmpty {
