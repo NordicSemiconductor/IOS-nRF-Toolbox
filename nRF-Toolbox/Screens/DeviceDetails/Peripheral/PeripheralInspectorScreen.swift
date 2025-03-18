@@ -21,7 +21,7 @@ struct PeripheralInspectorScreen: View {
         NavigationView {
             PeripheralInspectorView()
                 .task {
-                    viewModel.onConnect()
+                    await viewModel.onConnect()
                 }
                 .environmentObject(viewModel.env)
         }

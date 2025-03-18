@@ -35,8 +35,6 @@ extension PeripheralInspectorScreen {
                 signalChartViewModel: SignalChartScreen.SignalChartViewModel(peripheral: peripheral),
                 attributeTableViewModel: AttributeTableScreen.AttributeTableViewModel(peripheral: peripheral)
             )
-            onConnect()
-            
             log.debug(#function)
         }
         
@@ -44,15 +42,16 @@ extension PeripheralInspectorScreen {
             log.debug(#function)
         }
         
-        func onConnect() {
-            env.signalChartViewModel.onConnect()
+        func onConnect() async {
+            log.debug(#function)
+            // TODO: Fix CoreBluetooth API MISUSE
+//            env.signalChartViewModel.onConnect()
             
-            Task {
-                try? await discoverServices()
-            }
+            try? await discoverServices()
         }
         
         func onDisconnect() {
+            log.debug(#function)
             cancellables.removeAll()
             env.signalChartViewModel.onDisconnect()
         }
