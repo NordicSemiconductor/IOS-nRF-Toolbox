@@ -69,7 +69,6 @@
 		0164A4762AD698650093E501 /* NumberDatabase+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A4752AD698650093E501 /* NumberDatabase+Ext.swift */; };
 		0164A4792AD741200093E501 /* ConnectedDevicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A4782AD741200093E501 /* ConnectedDevicesViewModel.swift */; };
 		0164A4812AD8330E0093E501 /* ServiceBadgeGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A4802AD8330E0093E501 /* ServiceBadgeGroup.swift */; };
-		0164A4842AD840B60093E501 /* DeviceDetailsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A4832AD840B60093E501 /* DeviceDetailsScreen.swift */; };
 		0164A4862AD84A170093E501 /* DeviceDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A4852AD84A170093E501 /* DeviceDetailsViewModel.swift */; };
 		01675E7123F6D1BE00FC0519 /* UARTPresetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01675E6F23F6D1BE00FC0519 /* UARTPresetTableViewCell.swift */; };
 		01675E7223F6D1BE00FC0519 /* UARTPresetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01675E7023F6D1BE00FC0519 /* UARTPresetTableViewCell.xib */; };
@@ -491,7 +490,6 @@
 		0164A4752AD698650093E501 /* NumberDatabase+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NumberDatabase+Ext.swift"; sourceTree = "<group>"; };
 		0164A4782AD741200093E501 /* ConnectedDevicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedDevicesViewModel.swift; sourceTree = "<group>"; };
 		0164A4802AD8330E0093E501 /* ServiceBadgeGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBadgeGroup.swift; sourceTree = "<group>"; };
-		0164A4832AD840B60093E501 /* DeviceDetailsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailsScreen.swift; sourceTree = "<group>"; };
 		0164A4852AD84A170093E501 /* DeviceDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailsViewModel.swift; sourceTree = "<group>"; };
 		01675E6F23F6D1BE00FC0519 /* UARTPresetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTPresetTableViewCell.swift; sourceTree = "<group>"; };
 		01675E7023F6D1BE00FC0519 /* UARTPresetTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTPresetTableViewCell.xib; sourceTree = "<group>"; };
@@ -1169,7 +1167,6 @@
 				0180A2992AEFBB9E00090F6D /* Peripheral */,
 				01ABB05E2AE6B35200615A21 /* AttributeTable */,
 				018C05372AE083F5007CE0FE /* SignalChart */,
-				0164A4832AD840B60093E501 /* DeviceDetailsScreen.swift */,
 				0164A4852AD84A170093E501 /* DeviceDetailsViewModel.swift */,
 				01CEB4242AE9100300945105 /* DeviceScreen.swift */,
 			);
@@ -2870,7 +2867,6 @@
 				01FD68D32AE82EB90021101C /* AttributeList.swift in Sources */,
 				018C05392AE08417007CE0FE /* SignalChartScreen.swift in Sources */,
 				0132082A2A5C142100DCEA11 /* ScanResultItem.swift in Sources */,
-				0164A4842AD840B60093E501 /* DeviceDetailsScreen.swift in Sources */,
 				018C053E2AE16682007CE0FE /* SignalChartView.swift in Sources */,
 				01C62AE52B72463F00CDEE31 /* DeviceInformation.swift in Sources */,
 				01C62AE72B72480C00CDEE31 /* DeviceInformationView.swift in Sources */,
