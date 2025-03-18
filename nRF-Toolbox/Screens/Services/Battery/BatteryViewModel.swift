@@ -121,6 +121,7 @@ final class BatteryViewModel: ObservableObject {
                     lvlData.append(.init(value: 0, date: date))
                 }
                 
+                currentBatteryLevel = level.last?.value.level
                 batteryLevelData = lvlData
             }
             .store(in: &cancellables)

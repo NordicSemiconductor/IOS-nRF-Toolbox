@@ -48,7 +48,8 @@ struct PeripheralInspectorView: View {
                 if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id) {
                     if let batteryServiceViewModel = deviceVM.batteryServiceViewModel {
                         Section {
-                            BatteryChart(data: batteryServiceViewModel.batteryLevelData, currentLevel: batteryServiceViewModel.currentBatteryLevel)
+                            BatteryView()
+                                .environmentObject(batteryServiceViewModel)
                         }
                     }
                 }

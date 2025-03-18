@@ -76,34 +76,6 @@ private extension ViewModel {
         }
     }
     
-    private func handleBatteryService(_ cbBatteryLevel: CBService, peripheral: Peripheral) async throws {
-        let characteristics: [Characteristic] = [.batteryLevel]
-        let cbCharacteristics = try await peripheral
-            .discoverCharacteristics(characteristics.map(\.uuid), for: cbBatteryLevel)
-            .timeout(1, scheduler: DispatchQueue.main)
-            .firstValue
-        
-        // Check if `batteryLevel` characteristic was discovered
-        guard let cbBatteryLevel = cbCharacteristics.first, cbBatteryLevel.uuid == Characteristic.batteryLevel.uuid else {
-            return
-        }
-        
-        env.batteryLevelAvailable = true
-        
-        do {
-            // try to enable notifications for
-            if try await peripheral.setNotifyValue(true, for: cbBatteryLevel).timeout(1, scheduler: DispatchQueue.main).firstValue {
-                // in case of success - listen
-                listen(for: cbBatteryLevel)
-            } else {
-                // otherwise - read
-                try? await readBatteryLevelOnTimer(cbBatteryLevel)
-            }
-        } catch {
-            try? await readBatteryLevelOnTimer(cbBatteryLevel)
-        }
-    }
-    
     private func handleDeviceInformation(_ cbDeviceInfo: CBService, peripheral: Peripheral) async throws {
         let deviceInfo = try await readDeviceInformation(from: cbDeviceInfo, peripheral: peripheral)
         
@@ -165,51 +137,6 @@ private extension ViewModel {
         }
         
         return di
-    }
-
-    
-    private func readBatteryLevelOnTimer(_ batteryLevelCh: CBCharacteristic, timeInterval: TimeInterval = 1) async throws {
-        let publisher = Timer.publish(every: 60, on: .main, in: .default)
-            .autoconnect()
-            .flatMap { [unowned self] _ in self.peripheral.readValue(for: batteryLevelCh) }
-            .compactMap { $0 }
-            .eraseToAnyPublisher()
-
-        handleBatteryPublisher(publisher)
-    }
-    
-    private func listen(for batteryLevelCh: CBCharacteristic) {
-        let publisher = peripheral.listenValues(for: batteryLevelCh)
-            .eraseToAnyPublisher()
-        
-        handleBatteryPublisher(publisher)
-    }
-    
-    private func handleBatteryPublisher(_ publisher: AnyPublisher<Data, Error>) {
-        publisher
-            .map { Battery.Level(data: $0) }
-            .map { ChartTimeData<Battery.Level>(value: $0) }
-            .scan(Array<ChartTimeData<Battery.Level>>(), { result, lvl in
-                var res = result
-                res.append(lvl)
-                if res.count > Self.batteryLevelDataLength {
-                    res.removeFirst()
-                }
-                return res
-            })
-            .sink { completion in
-                
-            } receiveValue: { [unowned self] level in
-                var lvlData = level
-                while lvlData.count < Self.batteryLevelDataLength {
-                    let date = (lvlData.last?.date).map { Date(timeInterval: 1, since: $0) } ?? Date()
-                    lvlData.append(.init(value: 0, date: date))
-                }
-                
-                self.env.batteryLevelData = lvlData
-                self.env.currentBatteryLevel = level.last?.value.level
-            }
-            .store(in: &cancellables)
     }
 }
 
