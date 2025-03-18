@@ -26,7 +26,7 @@ struct DeviceDetailsScreen: View {
     }
 }
 
-private typealias VM = DeviceDetailsScreen.DeviceDetailsViewModel
+private typealias VM = DeviceDetailsViewModel
 
 // MARK: - DeviceDetailsView
 

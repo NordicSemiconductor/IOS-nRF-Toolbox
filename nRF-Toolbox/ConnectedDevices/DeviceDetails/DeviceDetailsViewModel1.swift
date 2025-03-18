@@ -12,7 +12,7 @@ import Combine
 import CoreBluetoothMock
 import iOS_Bluetooth_Numbers_Database
 
-class DeviceDetailsViewModel: ObservableObject, Identifiable {
+class OldDeviceDetailsViewModel: ObservableObject, Identifiable {
     private var cancelables = Set<AnyCancellable>()
     
     let cbPeripheral: CBPeripheral
@@ -84,7 +84,7 @@ class DeviceDetailsViewModel: ObservableObject, Identifiable {
     }
 }
 
-private extension DeviceDetailsViewModel {
+private extension OldDeviceDetailsViewModel {
     
     func discoverAllServices() {
         Task {

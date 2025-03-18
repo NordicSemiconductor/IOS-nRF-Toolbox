@@ -28,78 +28,74 @@ protocol SupportedServiceViewModel {
 
 // MARK: - DeviceDetailsViewModel
 
-extension DeviceDetailsScreen {
+@MainActor final class DeviceDetailsViewModel {
+    private var discoveredServices: [CBService] = []
+    private var cancelable = Set<AnyCancellable>()
     
-    @MainActor
-    class DeviceDetailsViewModel {
-        private var discoveredServices: [CBService] = []
-        private var cancelable = Set<AnyCancellable>()
-        
-        let centralManager: CentralManager
-        let peripheral: Peripheral
-        
-        var id: UUID { peripheral.peripheral.identifier }
-        
-        let environment: Environment
-        private var supportedServiceViewModels: [SupportedServiceViewModel] = []
-        
-        private let log = NordicLog(category: "DeviceDetails.VM", subsystem: "com.nordicsemi.nrf-toolbox")
-        
-        let attributeTableViewModel: AttributeTableScreen.AttributeTableViewModel
-        
-        var runningServiceViewModel: RunningServiceViewModel? {
-            supportedServiceViewModels.firstOfType(type: RunningServiceViewModel.self)
-        }
-        
-        var cyclingServiceViewModel: CyclingServiceViewModel? {
-            supportedServiceViewModels.firstOfType(type: CyclingServiceViewModel.self)
-        }
-        
-        var heartRateServiceViewModel: DeviceScreen.HeartRateViewModel? {
-            supportedServiceViewModels.firstOfType(type: DeviceScreen.HeartRateViewModel.self)
-        }
-        
-        var temperatureServiceViewModel: TemperatureViewModel? {
-            supportedServiceViewModels.firstOfType(type: TemperatureViewModel.self)
-        }
-        
-        var batteryServiceViewModel: BatteryViewModel? {
-            supportedServiceViewModels.firstOfType(type: BatteryViewModel.self)
-        }
-        
-        var throughputViewModel: ThroughputViewModel? {
-            supportedServiceViewModels.firstOfType(type: ThroughputViewModel.self)
-        }
+    let centralManager: CentralManager
+    let peripheral: Peripheral
     
-        init(cbPeripheral: CBPeripheral, centralManager: CentralManager) {
-            self.peripheral = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
-            self.centralManager = centralManager
-            self.environment = Environment(
-                deviceID: peripheral.peripheral.identifier,
-                peripheralViewModel: PeripheralInspectorScreen.PeripheralInspectorViewModel(peripheral: peripheral)
-            )
-            
-            self.environment.peripheralName = peripheral.name
-            self.attributeTableViewModel = AttributeTableScreen.AttributeTableViewModel(peripheral: peripheral)
-            listenForDisconnection()
+    var id: UUID { peripheral.peripheral.identifier }
+    
+    let environment: Environment
+    private var supportedServiceViewModels: [SupportedServiceViewModel] = []
+    
+    private let log = NordicLog(category: "DeviceDetails.VM", subsystem: "com.nordicsemi.nrf-toolbox")
+    
+    let attributeTableViewModel: AttributeTableScreen.AttributeTableViewModel
+    
+    var runningServiceViewModel: RunningServiceViewModel? {
+        supportedServiceViewModels.firstOfType(type: RunningServiceViewModel.self)
+    }
+    
+    var cyclingServiceViewModel: CyclingServiceViewModel? {
+        supportedServiceViewModels.firstOfType(type: CyclingServiceViewModel.self)
+    }
+    
+    var heartRateServiceViewModel: DeviceScreen.HeartRateViewModel? {
+        supportedServiceViewModels.firstOfType(type: DeviceScreen.HeartRateViewModel.self)
+    }
+    
+    var temperatureServiceViewModel: TemperatureViewModel? {
+        supportedServiceViewModels.firstOfType(type: TemperatureViewModel.self)
+    }
+    
+    var batteryServiceViewModel: BatteryViewModel? {
+        supportedServiceViewModels.firstOfType(type: BatteryViewModel.self)
+    }
+    
+    var throughputViewModel: ThroughputViewModel? {
+        supportedServiceViewModels.firstOfType(type: ThroughputViewModel.self)
+    }
 
-            environment.reconnect = { [weak self] in
-                self?.log.debug("self.environment.reconnect")
-                await self?.reconnect()
-            }
-            
-            log.debug(#function)
+    init(cbPeripheral: CBPeripheral, centralManager: CentralManager) {
+        self.peripheral = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
+        self.centralManager = centralManager
+        self.environment = Environment(
+            deviceID: peripheral.peripheral.identifier,
+            peripheralViewModel: PeripheralInspectorScreen.PeripheralInspectorViewModel(peripheral: peripheral)
+        )
+        
+        self.environment.peripheralName = peripheral.name
+        self.attributeTableViewModel = AttributeTableScreen.AttributeTableViewModel(peripheral: peripheral)
+        listenForDisconnection()
+
+        environment.reconnect = { [weak self] in
+            self?.log.debug("self.environment.reconnect")
+            await self?.reconnect()
         }
         
-        deinit {
-            log.debug(#function)
-        }
+        log.debug(#function)
+    }
+    
+    deinit {
+        log.debug(#function)
     }
 }
 
 // MARK: disconnect / reconnect
 
-extension DeviceDetailsScreen.DeviceDetailsViewModel {
+extension DeviceDetailsViewModel {
     private struct TimeoutError: Error { }
     
     func onDisconnect() async {
@@ -131,7 +127,7 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
 
 // MARK: - Service View Models
 
-extension DeviceDetailsScreen.DeviceDetailsViewModel {
+extension DeviceDetailsViewModel {
     
     func discoverSupportedServices() async {
         log.debug(#function)
@@ -183,7 +179,7 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
     }
 }
 
-extension DeviceDetailsScreen.DeviceDetailsViewModel {
+extension DeviceDetailsViewModel {
     
     @MainActor
     class Environment: ObservableObject {
@@ -227,7 +223,8 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
     
 }
 
-extension DeviceDetailsScreen.DeviceDetailsViewModel {
+extension DeviceDetailsViewModel {
+    
     enum CriticalError: Error {
         case disconnectedWithError(Error?)
 

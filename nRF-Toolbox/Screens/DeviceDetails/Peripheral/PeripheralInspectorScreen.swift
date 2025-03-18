@@ -35,7 +35,7 @@ struct PeripheralInspectorView: View {
     // MARK: Environment
     
     @EnvironmentObject private var environment: Env
-    @EnvironmentObject private var rootEnv: DeviceDetailsScreen.DeviceDetailsViewModel.Environment
+    @EnvironmentObject private var rootEnv: DeviceDetailsViewModel.Environment
     @EnvironmentObject private var rootNavigationMV: RootNavigationViewModel
     @EnvironmentObject private var connectedDeviceViewModel: ConnectedDevicesViewModel
     

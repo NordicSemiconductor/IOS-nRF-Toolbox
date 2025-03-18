@@ -18,7 +18,7 @@ import iOS_Bluetooth_Numbers_Database
 final class ConnectedDevicesViewModel: ObservableObject {
     typealias ScannerVM = PeripheralScannerScreen.PeripheralScannerViewModel
     
-    private var deviceViewModels: [UUID: DeviceDetailsScreen.DeviceDetailsViewModel] = [:]
+    private var deviceViewModels: [UUID: DeviceDetailsViewModel] = [:]
     private var cancelable = Set<AnyCancellable>()
     
     @Published fileprivate(set) var connectedDevices: [Device]
@@ -54,14 +54,14 @@ final class ConnectedDevicesViewModel: ObservableObject {
 
 extension ConnectedDevicesViewModel {
     
-    func selectedDeviceModel() -> DeviceDetailsScreen.DeviceDetailsViewModel? {
+    func selectedDeviceModel() -> DeviceDetailsViewModel? {
         guard let selectedDevice else { return nil }
         return deviceViewModel(for: selectedDevice.id)
     }
     
     // MARK: deviceViewModel(for:)
     
-    func deviceViewModel(for deviceID: Device.ID) -> DeviceDetailsScreen.DeviceDetailsViewModel? {
+    func deviceViewModel(for deviceID: Device.ID) -> DeviceDetailsViewModel? {
         guard let deviceViewModel = deviceViewModels[deviceID] else {
             // Can return 'nil' after disconnect
             return nil
@@ -122,7 +122,7 @@ extension ConnectedDevicesViewModel {
                 }
                 
                 if deviceViewModels[device.id] == nil, let peripheral = centralManager.retrievePeripherals(withIdentifiers: [device.id]).first {
-                    let viewModel = DeviceDetailsScreen.DeviceDetailsViewModel(cbPeripheral: peripheral, centralManager: centralManager)
+                    let viewModel = DeviceDetailsViewModel(cbPeripheral: peripheral, centralManager: centralManager)
                     deviceViewModels[device.id] = viewModel
                 }
                 
