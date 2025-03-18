@@ -136,6 +136,7 @@ extension BatteryViewModel: SupportedServiceViewModel {
         }
         catch {
             // TODO: Later, I guess.
+            log.error(error.localizedDescription)
         }
     }
     
