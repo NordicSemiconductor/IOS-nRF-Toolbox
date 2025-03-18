@@ -15,15 +15,9 @@ private typealias Env = PeripheralInspectorScreen.PeripheralInspectorViewModel.E
 
 struct PeripheralInspectorScreen: View {
 
-    let viewModel: PeripheralInspectorViewModel
-
     var body: some View {
         NavigationView {
             PeripheralInspectorView()
-                .task {
-                    await viewModel.onConnect()
-                }
-                .environmentObject(viewModel.env)
         }
     }
 }
@@ -34,7 +28,6 @@ struct PeripheralInspectorView: View {
     
     // MARK: Environment
     
-    @EnvironmentObject private var environment: Env
     @EnvironmentObject private var rootEnv: DeviceDetailsViewModel.Environment
     @EnvironmentObject private var rootNavigationMV: RootNavigationViewModel
     @EnvironmentObject private var connectedDeviceViewModel: ConnectedDevicesViewModel
@@ -51,26 +44,26 @@ struct PeripheralInspectorView: View {
     
     var body: some View {
         List {
-            Section {
-                SignalChartView()
-                    .environmentObject(environment.signalChartViewModel.environment)
-            }
-            
-            if environment.batteryLevelAvailable {
-                Section {
-                    BatteryChart(data: environment.batteryLevelData, currentLevel: environment.currentBatteryLevel)
-                }
-            }
-            
-            Section("GATT") {
-                attributeTableNavLink
-            }
-            
-            if environment.deviceInfoAvailable {
-                Section("Device Info") {
-                    DeviceInformationView(environment.deviceInfo)
-                }
-            }
+//            Section {
+//                SignalChartView()
+//                    .environmentObject(environment.signalChartViewModel.environment)
+//            }
+//            
+//            if environment.batteryLevelAvailable {
+//                Section {
+//                    BatteryChart(data: environment.batteryLevelData, currentLevel: environment.currentBatteryLevel)
+//                }
+//            }
+//            
+//            Section("GATT") {
+//                attributeTableNavLink
+//            }
+//            
+//            if environment.deviceInfoAvailable {
+//                Section("Device Info") {
+//                    DeviceInformationView(environment.deviceInfo)
+//                }
+//            }
             
             Section {
                 Button("Dismiss") {
@@ -91,11 +84,11 @@ struct PeripheralInspectorView: View {
                         // TODO: Unselect Device instead
 //                        rootNavigationMV.selectedDevice = nil
                         rootEnv.showInspector = false
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-                            Task {
-                                try await connectedDeviceViewModel.disconnectAndRemoveViewModel(environment.deviceId)
-                            }
-                        }
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+//                            Task {
+//                                try await connectedDeviceViewModel.disconnectAndRemoveViewModel(environment.deviceId)
+//                            }
+//                        }
                     }
                     Button("No") { }
                 } message: {
@@ -107,13 +100,13 @@ struct PeripheralInspectorView: View {
     
     // MARK: attributeTableNavLink
     
-    @ViewBuilder
-    private var attributeTableNavLink: some View {
-        NavigationLink {
-            AttributeTableScreen(viewModel: environment.attributeTableViewModel)
-        } label: {
-            Label("Attribute Table", systemImage: "list.dash")
-                .setAccent(.nordicBlue)
-        }
-    }
+//    @ViewBuilder
+//    private var attributeTableNavLink: some View {
+//        NavigationLink {
+//            AttributeTableScreen(viewModel: environment.attributeTableViewModel)
+//        } label: {
+//            Label("Attribute Table", systemImage: "list.dash")
+//                .setAccent(.nordicBlue)
+//        }
+//    }
 }

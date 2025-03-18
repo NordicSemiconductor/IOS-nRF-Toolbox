@@ -56,13 +56,6 @@ extension PeripheralInspectorScreen {
             env.signalChartViewModel.onDisconnect()
         }
     }
-    
-    #if DEBUG
-    @MainActor
-    class MockViewModel: PeripheralInspectorViewModel {
-        static let shared = MockViewModel(peripheral: .preview)
-    }
-    #endif
 }
 
 // MARK: Private Methods
@@ -230,6 +223,7 @@ private extension ViewModel {
 }
 
 // MARK: - Environment
+
 extension PeripheralInspectorScreen.PeripheralInspectorViewModel {
     @MainActor
     class Environment: ObservableObject {

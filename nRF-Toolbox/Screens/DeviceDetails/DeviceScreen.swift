@@ -90,7 +90,10 @@ struct DeviceScreen: View {
         .listStyle(.insetGrouped)
         .navigationTitle(connectedDevicesViewModel.selectedDevice?.name ?? "Unnamed")
         .inspector(isPresented: $environment.showInspector) {
-            peripheralInspectorScreen
+            PeripheralInspectorScreen()
+                .tabItem {
+                    Label("Peripheral", systemImage: "terminal")
+                }
         }
         .toolbar {
             Button {
@@ -99,21 +102,6 @@ struct DeviceScreen: View {
                 Image(systemName: "info")
                     .symbolVariant(.circle)
             }
-        }
-    }
-    
-    // MARK: inspector
-    
-    @ViewBuilder
-    private var peripheralInspectorScreen: some View {
-        if let peripheralViewModel = environment.peripheralViewModel {
-            PeripheralInspectorScreen(viewModel: peripheralViewModel)
-                .environmentObject(environment)
-                .tabItem {
-                    Label("Peripheral", systemImage: "terminal")
-                }
-        } else {
-            NoContentView(title: "No View Model", systemImage: "plus")
         }
     }
 }
