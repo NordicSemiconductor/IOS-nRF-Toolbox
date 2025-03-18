@@ -57,7 +57,7 @@ struct DeviceDetailsView<ServiceView: View>: View {
         } else if let criticalError = environment.criticalError {
             errorView(criticalError)
         } else {
-            serviceView
+            NoContentView(title: "No View Model", systemImage: "plus")
         }
     }
     
@@ -86,64 +86,6 @@ struct DeviceDetailsView<ServiceView: View>: View {
             }
             .buttonStyle(.bordered)
             .foregroundStyle(Color.nordicRed)
-        }
-    }
-    
-    @ViewBuilder
-    private var serviceView: some View {
-        newView
-            .inspector(isPresented: $environment.showInspector) {
-                peripheralInspectorScreen
-            }
-            .toolbar {
-                Button {
-                    environment.showInspector.toggle()
-                } label: {
-                    Image(systemName: "info")
-                        .symbolVariant(.circle)
-                }
-            }
-    }
-    
-    @ViewBuilder
-    private var newView: some View {
-        if environment.services.filter(\.isSupported).count > 1 {
-            TabView {
-                serviceViews
-            }
-        } else {
-            serviceViews
-        }
-    }
-    
-    @ViewBuilder
-    private var serviceViews: some View {
-        if environment.services.filter(\.isSupported).isEmpty {
-            NoContentView(
-                title: "No Supported Services",
-                systemImage: "list.bullet.rectangle.portrait")
-        } else {
-            ForEach(environment.services.filter(\.isSupported)) { service in
-                serviceViewContent(service)
-                    .tabItem {
-                        Label(
-                            title: { Text(service.name) },
-                            icon: { service.systemImage }
-                        )
-                    }
-            }
-        }
-    }
-    
-    @ViewBuilder
-    private var peripheralInspectorScreen: some View {
-        if let vm = environment.peripheralViewModel {
-            PeripheralInspectorScreen(viewModel: vm)
-                .tabItem {
-                    Label("Peripheral", systemImage: "terminal")
-                }
-        } else {
-            NoContentView(title: "No View Model", systemImage: "plus")
         }
     }
 }
