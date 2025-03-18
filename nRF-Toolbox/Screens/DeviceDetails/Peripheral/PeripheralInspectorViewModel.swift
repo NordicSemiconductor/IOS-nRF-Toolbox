@@ -26,7 +26,7 @@ extension PeripheralInspectorScreen {
         
         private let peripheral: Peripheral
         
-        private let l = NordicLog(category: "PeripheralInspector.VM")
+        private let log = NordicLog(category: "PeripheralInspectorViewModel")
         
         init(peripheral: Peripheral) {
             self.peripheral = peripheral
@@ -37,11 +37,11 @@ extension PeripheralInspectorScreen {
             )
             onConnect()
             
-            l.debug(#function)
+            log.debug(#function)
         }
         
         deinit {
-            l.debug(#function)
+            log.debug(#function)
         }
         
         func onConnect() {
