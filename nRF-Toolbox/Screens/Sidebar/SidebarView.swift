@@ -38,15 +38,6 @@ struct SidebarView: View {
                                     .tag(RootNavigationView.MenuCategory.device)
                             }
                         }
-                        
-                        #if DEBUG
-                        if let deviceViewModel = viewModel.deviceViewModel(for: device.id) {
-                            NavigationLink("Old Device Details") {
-                                DeviceDetailsScreen(viewModel: deviceViewModel)
-                                    .environmentObject(viewModel)
-                            }
-                        }
-                        #endif
                     }
                 }
             }
