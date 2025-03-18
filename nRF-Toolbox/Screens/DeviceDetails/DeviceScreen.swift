@@ -83,6 +83,10 @@ struct DeviceScreen: View {
                 .centered()
             }
         }
+        .task {
+            guard let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id) else { return }
+            await deviceVM.discoverSupportedServices()
+        }
         .listStyle(.insetGrouped)
         .navigationTitle(connectedDevicesViewModel.selectedDevice?.name ?? "Unnamed")
         .inspector(isPresented: $environment.showInspector) {

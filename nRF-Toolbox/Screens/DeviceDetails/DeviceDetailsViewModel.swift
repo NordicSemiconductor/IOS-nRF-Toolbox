@@ -81,13 +81,10 @@ extension DeviceDetailsScreen {
             
             self.environment.peripheralName = peripheral.name
             self.attributeTableViewModel = AttributeTableScreen.AttributeTableViewModel(peripheral: peripheral)
-            self.subscribeOnConnection()
-            
-            Task {
-                await discoverSupportedServices()
-            }
-            
-            self.environment.reconnect = { [weak self] in
+            listenForDisconnection()
+
+            environment.reconnect = { [weak self] in
+                self?.log.debug("self.environment.reconnect")
                 await self?.reconnect()
             }
             
@@ -100,11 +97,16 @@ extension DeviceDetailsScreen {
     }
 }
 
+// MARK: disconnect / reconnect
+
 extension DeviceDetailsScreen.DeviceDetailsViewModel {
     private struct TimeoutError: Error { }
     
-    func onDisconnect() {
-        supportedServiceViewModels.forEach { $0.onDisconnect() }
+    func onDisconnect() async {
+        log.debug("Disconnect")
+        supportedServiceViewModels.forEach {
+            $0.onDisconnect()
+        }
         environment.peripheralViewModel?.onDisconnect()
     }
     
@@ -118,7 +120,7 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
                 })
                 .firstValue
             
-            self.onDisconnect()
+            await onDisconnect()
             environment.criticalError = nil
         } catch {
             
@@ -128,9 +130,11 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
 }
 
 // MARK: - Service View Models
+
 extension DeviceDetailsScreen.DeviceDetailsViewModel {
     
-    private func discoverSupportedServices() async {
+    func discoverSupportedServices() async {
+        log.debug(#function)
         let supportedServices = Service.supportedServices.map { CBUUID(service: $0) }
         do {
             discoveredServices = try await peripheral.discoverServices(serviceUUIDs: supportedServices).firstValue
@@ -163,12 +167,14 @@ extension DeviceDetailsScreen.DeviceDetailsViewModel {
         }
     }
     
-    private func subscribeOnConnection() {
+    private func listenForDisconnection() {
         centralManager.disconnectedPeripheralsChannel
             .filter { [unowned self] in $0.0.identifier == self.id }    // Filter other peripherals
             .compactMap { $0.1 }                                        // Handle only disconnections with error
             .sink { [unowned self] err in
-                supportedServiceViewModels.forEach { $0.onDisconnect() }
+                supportedServiceViewModels.forEach {
+                    $0.onDisconnect()
+                }
                 environment.peripheralViewModel?.env.signalChartViewModel.onDisconnect()
                 // Display error
                 environment.criticalError = .disconnectedWithError(err)
