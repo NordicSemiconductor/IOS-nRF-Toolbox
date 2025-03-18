@@ -127,7 +127,6 @@ extension DeviceDetailsViewModel {
         let supportedServices = Service.supportedServices.map { CBUUID(service: $0) }
         do {
             discoveredServices = try await peripheral.discoverServices(serviceUUIDs: supportedServices).firstValue
-            environment.services = discoveredServices.map { Service(cbService: $0) }
            
             for service in discoveredServices {
                 switch service.uuid {
@@ -176,9 +175,7 @@ extension DeviceDetailsViewModel {
 
 extension DeviceDetailsViewModel {
     
-    @MainActor
-    class Environment: ObservableObject {
-        @Published fileprivate(set) var services: [Service]
+    @MainActor final class Environment: ObservableObject {
         
         @Published var reconnecting: Bool
         @Published var criticalError: CriticalError?
@@ -190,15 +187,14 @@ extension DeviceDetailsViewModel {
         
         fileprivate(set) var peripheralViewModel: PeripheralInspectorScreen.PeripheralInspectorViewModel?
         
-        private let log = NordicLog(category: "DeviceDetails.Env", subsystem: "com.nordicsemi.nrf-toolbox")
+        private let log = NordicLog(category: "DeviceDetailsViewModel.Environment", subsystem: "com.nordicsemi.nrf-toolbox")
         
-        init(deviceID: UUID, services: [Service] = [], reconnecting: Bool = false,
+        init(deviceID: UUID, reconnecting: Bool = false,
              criticalError: CriticalError? = nil,
              alertError: AlertError? = nil,
-             peripheralViewModel: PeripheralInspectorScreen.PeripheralInspectorViewModel? = nil // PeripheralInspectorScreen.MockViewModel.shared,
+             peripheralViewModel: PeripheralInspectorScreen.PeripheralInspectorViewModel? = nil
         ) {
             self.deviceID = deviceID
-            self.services = services
             self.reconnecting = reconnecting
             self.criticalError = criticalError
             self.alertError = alertError
