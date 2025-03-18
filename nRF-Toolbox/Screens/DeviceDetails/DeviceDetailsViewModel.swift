@@ -75,16 +75,9 @@ protocol SupportedServiceViewModel {
             deviceID: peripheral.peripheral.identifier,
             peripheralViewModel: PeripheralInspectorScreen.PeripheralInspectorViewModel(peripheral: peripheral)
         )
-        
-        self.environment.peripheralName = peripheral.name
         self.attributeTableViewModel = AttributeTableScreen.AttributeTableViewModel(peripheral: peripheral)
-        listenForDisconnection()
-
-        environment.reconnect = { [weak self] in
-            self?.log.debug("self.environment.reconnect")
-            await self?.reconnect()
-        }
         
+        listenForDisconnection()
         log.debug(#function)
     }
     
@@ -179,6 +172,8 @@ extension DeviceDetailsViewModel {
     }
 }
 
+// MARK: - Environment
+
 extension DeviceDetailsViewModel {
     
     @MainActor
@@ -189,29 +184,25 @@ extension DeviceDetailsViewModel {
         @Published var criticalError: CriticalError?
         @Published var alertError: AlertError?
         
-        @Published var peripheralName: String?
-        @Published var showInspector: Bool = false 
+        @Published var showInspector: Bool = false
         
         let deviceID: UUID
         
         fileprivate(set) var peripheralViewModel: PeripheralInspectorScreen.PeripheralInspectorViewModel?
-        
-        fileprivate(set) var reconnect: (() async -> ())?
         
         private let log = NordicLog(category: "DeviceDetails.Env", subsystem: "com.nordicsemi.nrf-toolbox")
         
         init(deviceID: UUID, services: [Service] = [], reconnecting: Bool = false,
              criticalError: CriticalError? = nil,
              alertError: AlertError? = nil,
-             peripheralViewModel: PeripheralInspectorScreen.PeripheralInspectorViewModel? = nil, // PeripheralInspectorScreen.MockViewModel.shared,
-             reconnect: (() async -> ())? = nil) {
+             peripheralViewModel: PeripheralInspectorScreen.PeripheralInspectorViewModel? = nil // PeripheralInspectorScreen.MockViewModel.shared,
+        ) {
             self.deviceID = deviceID
             self.services = services
             self.reconnecting = reconnecting
             self.criticalError = criticalError
             self.alertError = alertError
             self.peripheralViewModel = peripheralViewModel
-            self.reconnect = reconnect
             
             log.debug(#function)
         }
@@ -220,10 +211,11 @@ extension DeviceDetailsViewModel {
             log.debug(#function)
         }
     }
-    
 }
 
 extension DeviceDetailsViewModel {
+    
+    // MARK: CriticalError
     
     enum CriticalError: Error {
         case disconnectedWithError(Error?)
@@ -243,6 +235,8 @@ extension DeviceDetailsViewModel {
         }
     }
 
+    // MARK: AlertError
+    
     enum AlertError: Error {
         case servicesNotFound
 
