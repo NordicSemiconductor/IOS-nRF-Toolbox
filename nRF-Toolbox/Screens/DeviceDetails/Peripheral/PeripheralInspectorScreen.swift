@@ -19,7 +19,7 @@ struct PeripheralInspectorView: View {
     
     @EnvironmentObject private var rootEnv: DeviceDetailsViewModel.Environment
     @EnvironmentObject private var rootNavigationMV: RootNavigationViewModel
-    @EnvironmentObject private var connectedDeviceViewModel: ConnectedDevicesViewModel
+    @EnvironmentObject private var connectedDevicesViewModel: ConnectedDevicesViewModel
     
     // MARK: Private Properties
     
@@ -44,12 +44,14 @@ struct PeripheralInspectorView: View {
                 //                SignalChartView()
                 //                    .environmentObject(environment.signalChartViewModel.environment)
                 //            }
-                //
-                //            if environment.batteryLevelAvailable {
-                //                Section {
-                //                    BatteryChart(data: environment.batteryLevelData, currentLevel: environment.currentBatteryLevel)
-                //                }
-                //            }
+                
+                if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id) {
+                    if let batteryServiceViewModel = deviceVM.batteryServiceViewModel {
+                        Section {
+                            BatteryChart(data: batteryServiceViewModel.batteryLevelData, currentLevel: batteryServiceViewModel.currentBatteryLevel)
+                        }
+                    }
+                }
                 //
                 //            Section("GATT") {
                 //                attributeTableNavLink

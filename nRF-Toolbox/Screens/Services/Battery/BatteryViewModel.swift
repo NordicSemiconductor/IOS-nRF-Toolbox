@@ -77,6 +77,7 @@ final class BatteryViewModel: ObservableObject {
     // MARK: listen(for:)
     
     private func listen(for batteryLevelCh: CBCharacteristic) {
+        log.debug(#function)
         let publisher = peripheral.listenValues(for: batteryLevelCh)
             .eraseToAnyPublisher()
         
