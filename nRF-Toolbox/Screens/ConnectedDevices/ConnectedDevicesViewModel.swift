@@ -74,21 +74,27 @@ extension ConnectedDevicesViewModel {
     func disconnectAndRemoveViewModel(_ deviceID: Device.ID) async throws {
         log.debug(#function)
         guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [deviceID]).first else { return }
-        guard let vm = deviceViewModels[deviceID] else { return }
+        guard let deviceViewModel = deviceViewModels[deviceID] else { return }
         
+        await deviceViewModel.onDisconnect()
         if let i = connectedDevices.firstIndex(where: \.id, equals: deviceID) {
             connectedDevices[i].status = .busy
         }
         
-        if case .disconnectedWithError = vm.environment.criticalError {
+        defer {
             connectedDevices.removeAll(where: { $0.id == deviceID })
-        } else {
-            _ = try await centralManager.cancelPeripheralConnection(peripheral).firstValue
+            deviceViewModels.removeValue(forKey: deviceID)
         }
         
-        connectedDevices.removeAll(where: { $0.id == deviceID })
-        deviceViewModels.removeValue(forKey: deviceID)
-        vm.onDisconnect()
+        if case .disconnectedWithError = deviceViewModel.environment.criticalError {
+            return
+        }
+        
+        do {
+            _ = try await centralManager.cancelPeripheralConnection(peripheral).firstValue
+        } catch {
+            log.error(error.localizedDescription)
+        }
     }
 }
 
