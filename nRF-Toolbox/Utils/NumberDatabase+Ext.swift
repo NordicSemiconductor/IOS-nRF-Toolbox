@@ -49,6 +49,7 @@ extension Service {
         .continuousGlucoseMonitoring,
         .healthThermometer,
         .batteryService,
+        .deviceInformation,
         .throughputService
     ]
     
