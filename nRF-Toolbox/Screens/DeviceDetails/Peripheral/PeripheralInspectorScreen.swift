@@ -9,18 +9,7 @@
 import SwiftUI
 import CoreBluetoothMock_Collection
 
-private typealias Env = PeripheralInspectorScreen.PeripheralInspectorViewModel.Environment
-
-// MARK: - PeripheralInspectorScreen
-
-struct PeripheralInspectorScreen: View {
-
-    var body: some View {
-        NavigationView {
-            PeripheralInspectorView()
-        }
-    }
-}
+private typealias Env = PeripheralInspectorViewModel.Environment
 
 // MARK: - PeripheralInspectorView
 
@@ -35,64 +24,72 @@ struct PeripheralInspectorView: View {
     // MARK: Private Properties
     
     @State private var disconnectAlertShow = false
-    
-    #if os(iOS)
-    private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
-    #endif 
 
+    // MARK: Properties
+    
+    private let device: ConnectedDevicesViewModel.Device
+        
+    // MARK: init
+    
+    init(_ device: ConnectedDevicesViewModel.Device) {
+        self.device = device
+    }
+    
     // MARK: view
     
     var body: some View {
-        List {
-//            Section {
-//                SignalChartView()
-//                    .environmentObject(environment.signalChartViewModel.environment)
-//            }
-//            
-//            if environment.batteryLevelAvailable {
-//                Section {
-//                    BatteryChart(data: environment.batteryLevelData, currentLevel: environment.currentBatteryLevel)
-//                }
-//            }
-//            
-//            Section("GATT") {
-//                attributeTableNavLink
-//            }
-//            
-//            if environment.deviceInfoAvailable {
-//                Section("Device Info") {
-//                    DeviceInformationView(environment.deviceInfo)
-//                }
-//            }
-            
-            Section {
-                Button("Dismiss") {
-                    rootEnv.showInspector = false
-                }
-                .tint(.universalAccentColor)
-                .centered()
-            }
-            
-            Section {
-                Button("Disconnect") {
-                    disconnectAlertShow = true
-                }
-                .foregroundStyle(.red)
-                .centered()
-                .alert("Disconnect", isPresented: $disconnectAlertShow) {
-                    Button("Yes") {
-                        // TODO: Unselect Device instead
-//                        rootNavigationMV.selectedDevice = nil
+        NavigationView {
+            List {
+                //            Section {
+                //                SignalChartView()
+                //                    .environmentObject(environment.signalChartViewModel.environment)
+                //            }
+                //
+                //            if environment.batteryLevelAvailable {
+                //                Section {
+                //                    BatteryChart(data: environment.batteryLevelData, currentLevel: environment.currentBatteryLevel)
+                //                }
+                //            }
+                //
+                //            Section("GATT") {
+                //                attributeTableNavLink
+                //            }
+                //
+                //            if environment.deviceInfoAvailable {
+                //                Section("Device Info") {
+                //                    DeviceInformationView(environment.deviceInfo)
+                //                }
+                //            }
+                
+                Section {
+                    Button("Dismiss") {
                         rootEnv.showInspector = false
-//                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-//                            Task {
-//                                try await connectedDeviceViewModel.disconnectAndRemoveViewModel(environment.deviceId)
-//                            }
-//                        }
                     }
-                    Button("No") { }
-                } message: {
-                    Text("Are you sure you want to cancel peripheral connectior?")
+                    .tint(.universalAccentColor)
+                    .centered()
+                }
+                
+                Section {
+                    Button("Disconnect") {
+                        disconnectAlertShow = true
+                    }
+                    .foregroundStyle(.red)
+                    .centered()
+                    .alert("Disconnect", isPresented: $disconnectAlertShow) {
+                        Button("Yes") {
+                            // TODO: Unselect Device instead
+                            //                        rootNavigationMV.selectedDevice = nil
+                            rootEnv.showInspector = false
+                            //                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                            //                            Task {
+                            //                                try await connectedDeviceViewModel.disconnectAndRemoveViewModel(environment.deviceId)
+                            //                            }
+                            //                        }
+                        }
+                        Button("No") { }
+                    } message: {
+                        Text("Are you sure you want to cancel peripheral connectior?")
+                    }
                 }
             }
         }

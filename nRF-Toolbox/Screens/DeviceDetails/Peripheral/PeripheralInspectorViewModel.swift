@@ -13,48 +13,45 @@ import iOS_Bluetooth_Numbers_Database
 import iOS_Common_Libraries
 import CoreBluetoothMock_Collection
 
-private typealias ViewModel = PeripheralInspectorScreen.PeripheralInspectorViewModel
+private typealias ViewModel = PeripheralInspectorViewModel
 
-extension PeripheralInspectorScreen {
+@MainActor final class PeripheralInspectorViewModel {
     
-    @MainActor
-    class PeripheralInspectorViewModel {
-        let env: Environment
-        private static let batteryLevelDataLength = 120
+    let env: Environment
+    private static let batteryLevelDataLength = 120
 
-        private var cancellables = Set<AnyCancellable>()
-        
-        private let peripheral: Peripheral
-        
-        private let log = NordicLog(category: "PeripheralInspectorViewModel")
-        
-        init(peripheral: Peripheral) {
-            self.peripheral = peripheral
-            self.env = Environment(
-                deviceId: peripheral.peripheral.identifier,
-                signalChartViewModel: SignalChartScreen.SignalChartViewModel(peripheral: peripheral),
-                attributeTableViewModel: AttributeTableScreen.AttributeTableViewModel(peripheral: peripheral)
-            )
-            log.debug(#function)
-        }
-        
-        deinit {
-            log.debug(#function)
-        }
-        
-        func onConnect() async {
-            log.debug(#function)
-            // TODO: Fix CoreBluetooth API MISUSE
+    private var cancellables = Set<AnyCancellable>()
+    
+    private let peripheral: Peripheral
+    
+    private let log = NordicLog(category: "PeripheralInspectorViewModel")
+    
+    init(peripheral: Peripheral) {
+        self.peripheral = peripheral
+        self.env = Environment(
+            deviceId: peripheral.peripheral.identifier,
+            signalChartViewModel: SignalChartScreen.SignalChartViewModel(peripheral: peripheral),
+            attributeTableViewModel: AttributeTableScreen.AttributeTableViewModel(peripheral: peripheral)
+        )
+        log.debug(#function)
+    }
+    
+    deinit {
+        log.debug(#function)
+    }
+    
+    func onConnect() async {
+        log.debug(#function)
+        // TODO: Fix CoreBluetooth API MISUSE
 //            env.signalChartViewModel.onConnect()
-            
-            try? await discoverServices()
-        }
         
-        func onDisconnect() {
-            log.debug(#function)
-            cancellables.removeAll()
-            env.signalChartViewModel.onDisconnect()
-        }
+        try? await discoverServices()
+    }
+    
+    func onDisconnect() {
+        log.debug(#function)
+        cancellables.removeAll()
+        env.signalChartViewModel.onDisconnect()
     }
 }
 
@@ -224,7 +221,7 @@ private extension ViewModel {
 
 // MARK: - Environment
 
-extension PeripheralInspectorScreen.PeripheralInspectorViewModel {
+extension PeripheralInspectorViewModel {
     @MainActor
     class Environment: ObservableObject {
         @Published fileprivate(set) var criticalError: CriticalError?
@@ -287,7 +284,7 @@ extension PeripheralInspectorScreen.PeripheralInspectorViewModel {
 }
 
 // MARK: - Errors
-extension PeripheralInspectorScreen.PeripheralInspectorViewModel.Environment {
+extension PeripheralInspectorViewModel.Environment {
     enum CriticalError: LocalizedError {
         case unknown
     }
@@ -297,7 +294,7 @@ extension PeripheralInspectorScreen.PeripheralInspectorViewModel.Environment {
     }
 }
 
-extension PeripheralInspectorScreen.PeripheralInspectorViewModel.Environment.CriticalError {
+extension PeripheralInspectorViewModel.Environment.CriticalError {
     var errorDescription: String? {
         switch self {
         case .unknown:
@@ -306,7 +303,7 @@ extension PeripheralInspectorScreen.PeripheralInspectorViewModel.Environment.Cri
     }
 }
 
-extension PeripheralInspectorScreen.PeripheralInspectorViewModel.Environment.AlertError {
+extension PeripheralInspectorViewModel.Environment.AlertError {
     var errorDescription: String? {
         switch self {
         case .unknown:

@@ -73,7 +73,7 @@ protocol SupportedServiceViewModel {
         self.centralManager = centralManager
         self.environment = Environment(
             deviceID: peripheral.peripheral.identifier,
-            peripheralViewModel: PeripheralInspectorScreen.PeripheralInspectorViewModel(peripheral: peripheral)
+            peripheralViewModel: PeripheralInspectorViewModel(peripheral: peripheral)
         )
         self.attributeTableViewModel = AttributeTableScreen.AttributeTableViewModel(peripheral: peripheral)
         
@@ -185,14 +185,14 @@ extension DeviceDetailsViewModel {
         
         let deviceID: UUID
         
-        fileprivate(set) var peripheralViewModel: PeripheralInspectorScreen.PeripheralInspectorViewModel?
+        fileprivate(set) var peripheralViewModel: PeripheralInspectorViewModel?
         
         private let log = NordicLog(category: "DeviceDetailsViewModel.Environment", subsystem: "com.nordicsemi.nrf-toolbox")
         
         init(deviceID: UUID, reconnecting: Bool = false,
              criticalError: CriticalError? = nil,
              alertError: AlertError? = nil,
-             peripheralViewModel: PeripheralInspectorScreen.PeripheralInspectorViewModel? = nil
+             peripheralViewModel: PeripheralInspectorViewModel? = nil
         ) {
             self.deviceID = deviceID
             self.reconnecting = reconnecting
