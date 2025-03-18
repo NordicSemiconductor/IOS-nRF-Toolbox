@@ -53,10 +53,15 @@ struct PeripheralInspectorView: View {
                         }
                     }
                 }
-                //
-                //            Section("GATT") {
-                //                attributeTableNavLink
-                //            }
+    
+                Section("GATT") {
+                    NavigationLink {
+                        AttributeTableScreen(rootEnv.attributeTable)
+                    } label: {
+                        Label("Attribute Table", systemImage: "list.dash")
+                            .setAccent(.nordicBlue)
+                    }
+                }
                 //
                 //            if environment.deviceInfoAvailable {
                 //                Section("Device Info") {
@@ -97,16 +102,4 @@ struct PeripheralInspectorView: View {
             }
         }
     }
-    
-    // MARK: attributeTableNavLink
-    
-//    @ViewBuilder
-//    private var attributeTableNavLink: some View {
-//        NavigationLink {
-//            AttributeTableScreen(viewModel: environment.attributeTableViewModel)
-//        } label: {
-//            Label("Attribute Table", systemImage: "list.dash")
-//                .setAccent(.nordicBlue)
-//        }
-//    }
 }

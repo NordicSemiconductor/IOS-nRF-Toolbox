@@ -8,22 +8,24 @@
 
 import SwiftUI
 
-private typealias Env = AttributeTableScreen.AttributeTableViewModel.Environment
-
 // MARK: - AttributeTableScreen
 
 struct AttributeTableScreen: View {
 
-    @ObservedObject var viewModel: AttributeTableViewModel
+    // MARK: Private Properties
+    
+    private let attributeTable: AttributeTable?
+    
+    // MARK: init
+    
+    init(_ attributeTable: AttributeTable?) {
+        self.attributeTable = attributeTable
+    }
 
     // MARK: view
     
     var body: some View {
-        AttributeTableView()
-            .environmentObject(viewModel.env)
-            .task {
-                await viewModel.readAttributeTable()
-            }
+        AttributeTableView(attributeTable)
             .navigationTitle("Attribute Table")
     }
 }
@@ -32,24 +34,23 @@ struct AttributeTableScreen: View {
 
 struct AttributeTableView: View {
     
-    // MARK: Environment
+    // MARK: Private Properties
     
-    @EnvironmentObject private var environment: Env
-
+    private let attributeTable: AttributeTable?
+    
+    // MARK: init
+    
+    init(_ attributeTable: AttributeTable?) {
+        self.attributeTable = attributeTable
+    }
+    
     // MARK: view
     
     var body: some View {
-        if let criticalError = environment.criticalError {
-            NoContentView(title: "Error", systemImage: "exclamationmark.triangle", description: criticalError.localizedDescription, style: .error)
-        } else if let attributeTable = environment.attributeTable {
-           AttributeList(attributeTable)
+        if let attributeTable {
+            AttributeList(attributeTable)
         } else {
-            placeholder
+            NoContentView(title: "Discovering . . .", systemImage: "table")
         }
-    }
-    
-    @ViewBuilder
-    private var placeholder: some View {
-        NoContentView(title: "Discovering . . .", systemImage: "table")
     }
 }

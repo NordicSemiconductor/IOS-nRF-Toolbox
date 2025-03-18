@@ -147,6 +147,8 @@ extension DeviceDetailsViewModel {
                 }
             }
             
+            environment.attributeTable = try? await attributeTable()
+            
             for supportedServiceViewModel in self.supportedServiceViewModels {
                 await supportedServiceViewModel.onConnect()
             }
@@ -182,6 +184,7 @@ extension DeviceDetailsViewModel {
         @Published var alertError: AlertError?
         
         @Published var showInspector: Bool = false
+        @Published var attributeTable: AttributeTable?
         
         let deviceID: UUID
         
@@ -206,6 +209,31 @@ extension DeviceDetailsViewModel {
         deinit {
             log.debug(#function)
         }
+    }
+}
+
+// MARK: attributeTable()
+
+extension DeviceDetailsViewModel {
+    
+    func attributeTable() async throws -> AttributeTable {
+        var table = AttributeTable()
+        
+        for service in discoveredServices {
+            table.addService(service)
+            
+            let characteristics = try await peripheral.discoverCharacteristics(nil, for: service).timeout(10, scheduler: DispatchQueue.main).firstValue
+            for characteristic in characteristics {
+                table.addCharacteristic(characteristic, to: service)
+                
+                let descriptors = try await peripheral.discoverDescriptors(for: characteristic).timeout(10, scheduler: DispatchQueue.main).firstValue
+                for descriptor in descriptors {
+                    table.addDescriptor(descriptor, to: characteristic, in: service)
+                }
+            }
+        }
+        
+        return table
     }
 }
 
