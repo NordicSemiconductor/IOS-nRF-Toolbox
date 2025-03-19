@@ -50,7 +50,7 @@ struct PeripheralInspectorView: View {
                 if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id) {
                     if let signalViewModel = deviceVM.environment.signalViewModel {
                         Section {
-                            SignalChartView()
+                            SignalChart()
                                 .environmentObject(signalViewModel.environment)
                         }
                     }

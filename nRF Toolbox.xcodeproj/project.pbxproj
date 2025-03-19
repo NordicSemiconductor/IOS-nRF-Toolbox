@@ -90,7 +90,6 @@
 		018873C72A583A9900253273 /* PeripheralScannerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873C62A583A9900253273 /* PeripheralScannerScreen.swift */; };
 		018873C92A583B0000253273 /* PeripheralScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873C82A583B0000253273 /* PeripheralScannerViewModel.swift */; };
 		018873CC2A583C3300253273 /* iOS-BLE-Library in Frameworks */ = {isa = PBXBuildFile; productRef = 018873CB2A583C3300253273 /* iOS-BLE-Library */; };
-		018C05392AE08417007CE0FE /* SignalChartScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018C05382AE08417007CE0FE /* SignalChartScreen.swift */; };
 		018C053B2AE0844E007CE0FE /* SignalChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018C053A2AE0844E007CE0FE /* SignalChartViewModel.swift */; };
 		018C053E2AE16682007CE0FE /* SignalChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018C053D2AE16682007CE0FE /* SignalChartView.swift */; };
 		018C05412AE1670C007CE0FE /* ChartData+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018C05402AE1670C007CE0FE /* ChartData+Preview.swift */; };
@@ -511,7 +510,6 @@
 		018873C62A583A9900253273 /* PeripheralScannerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralScannerScreen.swift; sourceTree = "<group>"; };
 		018873C82A583B0000253273 /* PeripheralScannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralScannerViewModel.swift; sourceTree = "<group>"; };
 		018873CD2A583C4E00253273 /* IOS-BLE-Library */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "IOS-BLE-Library"; path = "../IOS-BLE-Library"; sourceTree = "<group>"; };
-		018C05382AE08417007CE0FE /* SignalChartScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalChartScreen.swift; sourceTree = "<group>"; };
 		018C053A2AE0844E007CE0FE /* SignalChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalChartViewModel.swift; sourceTree = "<group>"; };
 		018C053D2AE16682007CE0FE /* SignalChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalChartView.swift; sourceTree = "<group>"; };
 		018C05402AE1670C007CE0FE /* ChartData+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChartData+Preview.swift"; sourceTree = "<group>"; };
@@ -1300,19 +1298,10 @@
 		018C05372AE083F5007CE0FE /* SignalChart */ = {
 			isa = PBXGroup;
 			children = (
-				018C053C2AE16673007CE0FE /* ChartView */,
-				018C05382AE08417007CE0FE /* SignalChartScreen.swift */,
+				018C053D2AE16682007CE0FE /* SignalChartView.swift */,
 				018C053A2AE0844E007CE0FE /* SignalChartViewModel.swift */,
 			);
 			path = SignalChart;
-			sourceTree = "<group>";
-		};
-		018C053C2AE16673007CE0FE /* ChartView */ = {
-			isa = PBXGroup;
-			children = (
-				018C053D2AE16682007CE0FE /* SignalChartView.swift */,
-			);
-			path = ChartView;
 			sourceTree = "<group>";
 		};
 		018C053F2AE166FE007CE0FE /* RSSI */ = {
@@ -2848,7 +2837,6 @@
 				012C8EB52B0D31C400FFE4EC /* Logger+Ext.swift in Sources */,
 				013E5D8C2ADD33EF00B9C475 /* RunningServiceViewModel.swift in Sources */,
 				01FD68D32AE82EB90021101C /* AttributeList.swift in Sources */,
-				018C05392AE08417007CE0FE /* SignalChartScreen.swift in Sources */,
 				0132082A2A5C142100DCEA11 /* ScanResultItem.swift in Sources */,
 				018C053E2AE16682007CE0FE /* SignalChartView.swift in Sources */,
 				01C62AE52B72463F00CDEE31 /* DeviceInformation.swift in Sources */,
