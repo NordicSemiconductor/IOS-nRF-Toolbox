@@ -9,7 +9,7 @@
 import SwiftUI
 import Charts
 
-private typealias Env = SignalChartScreen.SignalChartViewModel.Environment
+private typealias Env = SignalChartViewModel.Environment
 
 // MARK: - SignalChartScreen
 
