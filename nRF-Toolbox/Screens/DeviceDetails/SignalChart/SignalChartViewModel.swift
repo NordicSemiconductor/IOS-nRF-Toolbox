@@ -36,9 +36,9 @@ import Charts
         log.debug(#function)
     }
     
-    // MARK: onConnect
+    // MARK: startTimer
     
-    func onConnect() {
+    func startTimer() {
         log.debug(#function)
         
         // Run Timer every 1 second
@@ -79,9 +79,9 @@ import Charts
             .store(in: &cancellable)
     }
     
-    // MARK: onDisconnect
+    // MARK: stopTimer
     
-    func onDisconnect() {
+    func stopTimer() {
         log.debug(#function)
         cancellable.removeAll()
     }

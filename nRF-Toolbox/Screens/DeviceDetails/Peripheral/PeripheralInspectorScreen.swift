@@ -52,7 +52,10 @@ struct PeripheralInspectorView: View {
                         Section {
                             SignalChart()
                                 .onAppear {
-                                    signalViewModel.onConnect()
+                                    signalViewModel.startTimer()
+                                }
+                                .onDisappear {
+                                    signalViewModel.stopTimer()
                                 }
                                 .environmentObject(signalViewModel.environment)
                         }
