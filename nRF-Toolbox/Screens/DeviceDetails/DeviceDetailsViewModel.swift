@@ -64,6 +64,10 @@ protocol SupportedServiceViewModel {
         supportedServiceViewModels.firstOfType(type: BatteryViewModel.self)
     }
     
+    var deviceInfoViewModel: DeviceInformationViewModel? {
+        supportedServiceViewModels.firstOfType(type: DeviceInformationViewModel.self)
+    }
+    
     var throughputViewModel: ThroughputViewModel? {
         supportedServiceViewModels.firstOfType(type: ThroughputViewModel.self)
     }
@@ -140,6 +144,8 @@ extension DeviceDetailsViewModel {
                     supportedServiceViewModels.append(DeviceScreen.HeartRateViewModel(peripheral: peripheral, heartRateService: service))
                 case .battery:
                     supportedServiceViewModels.append(BatteryViewModel(peripheral: peripheral, batteryService: service))
+                case .deviceInformation:
+                    supportedServiceViewModels.append(DeviceInformationViewModel())
                 case .throughputService:
                     supportedServiceViewModels.append(ThroughputViewModel(peripheral, service: service))
                 default:

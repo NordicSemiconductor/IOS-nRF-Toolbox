@@ -22,6 +22,7 @@ extension CBMUUID {
     static let runningSpeedCadence  = CBMUUID(string: "1814")
     static let weightScale          = CBMUUID(string: "181D")
     static let cyclingSpeedCadence  = CBMUUID(string: "1816")
+    static let deviceInformation    = CBMUUID(string: "180A")
     static let battery              = CBMUUID(string: "180F")
 }
 

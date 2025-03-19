@@ -360,6 +360,7 @@
 		AA479EA82D0B0BFF0052E801 /* CrankDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA479EA62D0B0BFF0052E801 /* CrankDataPoint.swift */; };
 		AA479EAD2D0B24E50052E801 /* TemperatureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA479EAC2D0B24E50052E801 /* TemperatureViewModel.swift */; };
 		AA479EAF2D0B25BE0052E801 /* TemperatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA479EAE2D0B25BE0052E801 /* TemperatureView.swift */; };
+		AA48AC4D2D89B46300AE4594 /* DeviceInformationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA48AC4C2D89B46300AE4594 /* DeviceInformationViewModel.swift */; };
 		AA5539202D00AAD200F589F5 /* BatteryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA55391F2D00AAD200F589F5 /* BatteryViewModel.swift */; };
 		AA5AB3DB2D08649C005213D5 /* CyclingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5AB3DA2D08649C005213D5 /* CyclingData.swift */; };
 		AA5AB3DC2D08649C005213D5 /* CyclingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5AB3DA2D08649C005213D5 /* CyclingData.swift */; };
@@ -784,6 +785,7 @@
 		AA479EA62D0B0BFF0052E801 /* CrankDataPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrankDataPoint.swift; sourceTree = "<group>"; };
 		AA479EAC2D0B24E50052E801 /* TemperatureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureViewModel.swift; sourceTree = "<group>"; };
 		AA479EAE2D0B25BE0052E801 /* TemperatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureView.swift; sourceTree = "<group>"; };
+		AA48AC4C2D89B46300AE4594 /* DeviceInformationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInformationViewModel.swift; sourceTree = "<group>"; };
 		AA55391F2D00AAD200F589F5 /* BatteryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryViewModel.swift; sourceTree = "<group>"; };
 		AA5AB3DA2D08649C005213D5 /* CyclingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingData.swift; sourceTree = "<group>"; };
 		AA5AB3DD2D0868DD005213D5 /* CyclingDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingDataView.swift; sourceTree = "<group>"; };
@@ -1027,6 +1029,7 @@
 		013E5D872ADD337300B9C475 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				AA48AC4B2D89B44200AE4594 /* DeviceInfo */,
 				AA2C36FF2D47D78500D41989 /* Throughput */,
 				AA479EAB2D0B24C70052E801 /* Temperature */,
 				AA95CBCD2D0846C900D1FBC6 /* Cycling */,
@@ -2467,6 +2470,14 @@
 			path = Temperature;
 			sourceTree = "<group>";
 		};
+		AA48AC4B2D89B44200AE4594 /* DeviceInfo */ = {
+			isa = PBXGroup;
+			children = (
+				AA48AC4C2D89B46300AE4594 /* DeviceInformationViewModel.swift */,
+			);
+			path = DeviceInfo;
+			sourceTree = "<group>";
+		};
 		AA55391E2D00AABB00F589F5 /* Battery */ = {
 			isa = PBXGroup;
 			children = (
@@ -2924,6 +2935,7 @@
 				01C575BE2A7D00EF007FE4F0 /* Alias.swift in Sources */,
 				AA479EA52D0B0B5C0052E801 /* WheelDataPoint.swift in Sources */,
 				012E22942A6AD5BE00B14064 /* NamedItem.swift in Sources */,
+				AA48AC4D2D89B46300AE4594 /* DeviceInformationViewModel.swift in Sources */,
 				AA94C5512D01B49200562F7A /* BatteryView.swift in Sources */,
 				014BBD812A700D1600BCFCA8 /* SensorLocationView1.swift in Sources */,
 				AA01D4922D4A3D38008523CE /* Throughput+Attributes.swift in Sources */,

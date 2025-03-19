@@ -40,6 +40,15 @@ struct PeripheralInspectorView: View {
     var body: some View {
         NavigationView {
             List {
+                Section("GATT") {
+                    NavigationLink {
+                        AttributeTableScreen(rootEnv.attributeTable)
+                    } label: {
+                        Label("Attribute Table", systemImage: "list.dash")
+                            .setAccent(.nordicBlue)
+                    }
+                }
+                
                 //            Section {
                 //                SignalChartView()
                 //                    .environmentObject(environment.signalChartViewModel.environment)
@@ -52,23 +61,14 @@ struct PeripheralInspectorView: View {
                                 .environmentObject(batteryServiceViewModel)
                         }
                     }
-                }
-    
-                Section("GATT") {
-                    NavigationLink {
-                        AttributeTableScreen(rootEnv.attributeTable)
-                    } label: {
-                        Label("Attribute Table", systemImage: "list.dash")
-                            .setAccent(.nordicBlue)
+                    
+                    if let deviceInfo = deviceVM.deviceInfoViewModel {
+                        Section("Device Info") {
+//                    DeviceInformationView(environment.deviceInfo)
+                        }
                     }
                 }
-                //
-                //            if environment.deviceInfoAvailable {
-                //                Section("Device Info") {
-                //                    DeviceInformationView(environment.deviceInfo)
-                //                }
-                //            }
-                
+    
                 Section {
                     Button("Dismiss") {
                         rootEnv.showInspector = false
