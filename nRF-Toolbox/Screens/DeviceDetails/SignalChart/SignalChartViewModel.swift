@@ -18,21 +18,29 @@ import Charts
     let environment = Environment()
     let peripheral: Peripheral
     
-    private var cancelable = Set<AnyCancellable>()
+    private var cancellable = Set<AnyCancellable>()
     
-    private let l = NordicLog(category: "SignalChart.ViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
+    private let log = NordicLog(category: "SignalChartViewModel",
+                                subsystem: "com.nordicsemi.nrf-toolbox")
+    
+    // MARK: init
     
     init(peripheral: Peripheral) {
         self.peripheral = peripheral
-        
-        l.debug(#function)
+        log.debug(#function)
     }
+    
+    // MARK: deinit
     
     deinit {
-        l.debug(#function)
+        log.debug(#function)
     }
     
-    private func readSignal() {
+    // MARK: onConnect
+    
+    func onConnect() {
+        log.debug(#function)
+        
         // Run Timer every 1 second
         Timer.publish(every: 1, on: .main, in: .common)
             .autoconnect()
@@ -46,12 +54,14 @@ import Charts
             .sink { completion in
                 // TODO: Update handling
                 switch completion {
-                case .finished: print("finished")
-                case .failure: print("failure")
+                case .finished:
+                    print("finished")
+                case .failure:
+                    print("failure")
                 }
             } receiveValue: { [unowned self] newSignalItem in
-                if newSignalItem.date.timeIntervalSince1970 - environment.scrolPosition.timeIntervalSince1970 < CGFloat(environment.visibleDomain + 5) || environment.chartData.isEmpty {
-                    environment.scrolPosition = Date()
+                if newSignalItem.date.timeIntervalSince1970 - environment.scrollPosition.timeIntervalSince1970 < CGFloat(environment.visibleDomain + 5) || environment.chartData.isEmpty {
+                    environment.scrollPosition = Date()
                 }
                 environment.chartData.append(newSignalItem)
                 
@@ -66,15 +76,14 @@ import Charts
                 environment.lowest = min - 5
                 environment.highest = max + 5
             }
-            .store(in: &cancelable)
+            .store(in: &cancellable)
     }
     
-    func onConnect() {
-        readSignal()
-    }
+    // MARK: onDisconnect
     
     func onDisconnect() {
-        self.cancelable.removeAll()
+        log.debug(#function)
+        cancellable.removeAll()
     }
 }
 
@@ -82,17 +91,16 @@ import Charts
 
 extension SignalChartViewModel {
     
-    @MainActor
-    class Environment: ObservableObject {
+    @MainActor final class Environment: ObservableObject {
+        
         struct ChartData: Identifiable {
             let date: Date
             let signal: Int
             var id: TimeInterval { date.timeIntervalSince1970 }
         }
         
-        
         @Published fileprivate(set) var chartData: [ChartData] = []
-        @Published var scrolPosition: Date = Date()
+        @Published var scrollPosition = Date()
         
         let visibleDomain = 60
         let capacity = 180
@@ -100,17 +108,17 @@ extension SignalChartViewModel {
         @Published fileprivate(set) var lowest: Int = -100
         @Published fileprivate(set) var highest: Int = -40
         
-        private let l = NordicLog(category: "SignalChart.Environment", subsystem: "com.nordicsemi.nrf-toolbox")
+        private let log = NordicLog(category: "SignalChartViewModel.Environment",
+                                    subsystem: "com.nordicsemi.nrf-toolbox")
         
         init(chartData: [ChartData] = []) {
             self.chartData = chartData
             assert(capacity >= visibleDomain)
-            
-            l.debug(#function)
+            log.debug(#function)
         }
         
         deinit {
-            l.debug(#function)
+            log.debug(#function)
         }
     }
 }

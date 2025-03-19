@@ -61,7 +61,7 @@ struct SignalChart: View {
         pureChart()
             .chartScrollableAxes(.horizontal)
             .chartXVisibleDomain(length: environment.visibleDomain)
-            .chartScrollPosition(x: $environment.scrolPosition)
+            .chartScrollPosition(x: $environment.scrollPosition)
     }
     
     @ViewBuilder

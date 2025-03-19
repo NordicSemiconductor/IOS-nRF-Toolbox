@@ -51,6 +51,9 @@ struct PeripheralInspectorView: View {
                     if let signalViewModel = deviceVM.environment.signalViewModel {
                         Section {
                             SignalChart()
+                                .onAppear {
+                                    signalViewModel.onConnect()
+                                }
                                 .environmentObject(signalViewModel.environment)
                         }
                     }
@@ -96,7 +99,7 @@ struct PeripheralInspectorView: View {
                         }
                         Button("No") { }
                     } message: {
-                        Text("Are you sure you want to cancel peripheral connectior?")
+                        Text("Are you sure you want to cancel peripheral connection?")
                     }
                 }
             }
