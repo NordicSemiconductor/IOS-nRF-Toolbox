@@ -62,9 +62,9 @@ struct PeripheralInspectorView: View {
                         }
                     }
                     
-                    if let deviceInfo = deviceVM.deviceInfoViewModel {
+                    if let deviceInfo = deviceVM.environment.deviceInfo {
                         Section("Device Info") {
-//                    DeviceInformationView(environment.deviceInfo)
+                            DeviceInformationView(deviceInfo)
                         }
                     }
                 }

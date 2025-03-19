@@ -38,11 +38,11 @@ struct DeviceInformationCharacteristicView: View {
     
     // MARK: Properties
     
-    private let characteristic: DeviceInformation.Characteristic
+    private let characteristic: DeviceInformation.CharacteristicInfo
     
     // MARK: init
     
-    init(_ characteristic: DeviceInformation.Characteristic) {
+    init(_ characteristic: DeviceInformation.CharacteristicInfo) {
         self.characteristic = characteristic
     }
     
