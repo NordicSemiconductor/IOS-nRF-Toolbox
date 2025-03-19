@@ -30,8 +30,7 @@ private typealias ViewModel = PeripheralInspectorViewModel
         self.peripheral = peripheral
         self.env = Environment(
             deviceId: peripheral.peripheral.identifier,
-            signalChartViewModel: SignalChartScreen.SignalChartViewModel(peripheral: peripheral),
-            attributeTableViewModel: AttributeTableScreen.AttributeTableViewModel(peripheral: peripheral)
+            signalChartViewModel: SignalChartScreen.SignalChartViewModel(peripheral: peripheral)
         )
         log.debug(#function)
     }
@@ -92,7 +91,6 @@ extension PeripheralInspectorViewModel {
         let deviceId: UUID
         
         let signalChartViewModel: SignalChartScreen.SignalChartViewModel
-        let attributeTableViewModel: AttributeTableScreen.AttributeTableViewModel
         
         fileprivate(set) var disconnect: () -> ()
         
@@ -104,7 +102,6 @@ extension PeripheralInspectorViewModel {
             alertError: Error? = nil,
             internalAlertError: AlertError? = nil,
             signalChartViewModel: SignalChartScreen.SignalChartViewModel,
-            attributeTableViewModel: AttributeTableScreen.AttributeTableViewModel,
             disconnect: @escaping () -> () = { }
         ) {
             self.deviceId = deviceId
@@ -112,7 +109,6 @@ extension PeripheralInspectorViewModel {
             self.alertError = alertError
             self.internalAlertError = internalAlertError
             self.signalChartViewModel = signalChartViewModel
-            self.attributeTableViewModel = attributeTableViewModel
             self.disconnect = disconnect
             
             l.debug(#function)

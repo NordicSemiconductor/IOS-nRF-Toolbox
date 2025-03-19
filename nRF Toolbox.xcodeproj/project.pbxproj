@@ -117,7 +117,6 @@
 		01AA707F241291C00018DB29 /* LogObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AA707E241291C00018DB29 /* LogObserver.swift */; };
 		01AB7B752A77BFB400AEDDCD /* CBUUID+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AB7B742A77BFB400AEDDCD /* CBUUID+Ext.swift */; };
 		01ABB07D2AE700E100615A21 /* AttributeTableScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01ABB07B2AE700E100615A21 /* AttributeTableScreen.swift */; };
-		01ABB07E2AE700E100615A21 /* AttributeTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01ABB07C2AE700E100615A21 /* AttributeTableViewModel.swift */; };
 		01ABB0802AE703D400615A21 /* AttributeItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01ABB07F2AE703D400615A21 /* AttributeItemView.swift */; };
 		01AD26E82395084000F56210 /* ConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD26E62395084000F56210 /* ConnectionViewController.swift */; };
 		01AF928323D0AC3200C1BFD6 /* StringProtocol+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AF928223D0AC3200C1BFD6 /* StringProtocol+Ext.swift */; };
@@ -192,7 +191,6 @@
 		01FBC5132408132800B1056B /* DFUDeviceInfoSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5122408132800B1056B /* DFUDeviceInfoSection.swift */; };
 		01FBC5152408158F00B1056B /* CBPeripheralState+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5142408158F00B1056B /* CBPeripheralState+Ext.swift */; };
 		01FBC51724081A1C00B1056B /* DFUFirmwareSizeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC51624081A1C00B1056B /* DFUFirmwareSizeSection.swift */; };
-		01FD68D02AE82C330021101C /* Attribute+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FD68CF2AE82C330021101C /* Attribute+Preview.swift */; };
 		01FD68D32AE82EB90021101C /* AttributeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FD68D22AE82EB90021101C /* AttributeList.swift */; };
 		01FEB0FD23969BD1000767C1 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FEB0FC23969BD1000767C1 /* UIView+Ext.swift */; };
 		20027B08233E116600A0B5ED /* StrideSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20027B07233E116600A0B5ED /* StrideSection.swift */; };
@@ -541,7 +539,6 @@
 		01AA707E241291C00018DB29 /* LogObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogObserver.swift; sourceTree = "<group>"; };
 		01AB7B742A77BFB400AEDDCD /* CBUUID+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CBUUID+Ext.swift"; sourceTree = "<group>"; };
 		01ABB07B2AE700E100615A21 /* AttributeTableScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeTableScreen.swift; sourceTree = "<group>"; };
-		01ABB07C2AE700E100615A21 /* AttributeTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeTableViewModel.swift; sourceTree = "<group>"; };
 		01ABB07F2AE703D400615A21 /* AttributeItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeItemView.swift; sourceTree = "<group>"; };
 		01AD26E62395084000F56210 /* ConnectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionViewController.swift; sourceTree = "<group>"; };
 		01AF928223D0AC3200C1BFD6 /* StringProtocol+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StringProtocol+Ext.swift"; sourceTree = "<group>"; };
@@ -614,7 +611,6 @@
 		01FBC5122408132800B1056B /* DFUDeviceInfoSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUDeviceInfoSection.swift; sourceTree = "<group>"; };
 		01FBC5142408158F00B1056B /* CBPeripheralState+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CBPeripheralState+Ext.swift"; sourceTree = "<group>"; };
 		01FBC51624081A1C00B1056B /* DFUFirmwareSizeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFirmwareSizeSection.swift; sourceTree = "<group>"; };
-		01FD68CF2AE82C330021101C /* Attribute+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attribute+Preview.swift"; sourceTree = "<group>"; };
 		01FD68D22AE82EB90021101C /* AttributeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeList.swift; sourceTree = "<group>"; };
 		01FEB0FC23969BD1000767C1 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		20027B07233E116600A0B5ED /* StrideSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrideSection.swift; sourceTree = "<group>"; };
@@ -1211,7 +1207,6 @@
 			children = (
 				0108E87F2AF169AE00C8B096 /* Battery */,
 				01CEB42B2AE9859A00945105 /* HeartRate */,
-				01FD68CE2AE82C200021101C /* Extensions */,
 				018C053F2AE166FE007CE0FE /* RSSI */,
 				0129F2232A6802BF002FB3F5 /* ServiceHandlers */,
 				01407CB72A65415500A5B279 /* Peripheral */,
@@ -1408,7 +1403,6 @@
 			children = (
 				01FD68D12AE82E9D0021101C /* AttributeList */,
 				01ABB07B2AE700E100615A21 /* AttributeTableScreen.swift */,
-				01ABB07C2AE700E100615A21 /* AttributeTableViewModel.swift */,
 			);
 			path = AttributeTable;
 			sourceTree = "<group>";
@@ -1746,14 +1740,6 @@
 				015F1097240FA06D00FDAC49 /* DFUActionSection.swift */,
 			);
 			path = Sections;
-			sourceTree = "<group>";
-		};
-		01FD68CE2AE82C200021101C /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				01FD68CF2AE82C330021101C /* Attribute+Preview.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		01FD68D12AE82E9D0021101C /* AttributeList */ = {
@@ -2893,12 +2879,10 @@
 				013E5D8F2ADFDDC600B9C475 /* NumberedColumnGrid.swift in Sources */,
 				01AB7B752A77BFB400AEDDCD /* CBUUID+Ext.swift in Sources */,
 				AAC0D99F2D80514900F25096 /* AboutView.swift in Sources */,
-				01FD68D02AE82C330021101C /* Attribute+Preview.swift in Sources */,
 				AA95CBD12D084C8B00D1FBC6 /* Error.swift in Sources */,
 				AAF7DE622CFDD4BC000A347A /* SidebarDeviceView.swift in Sources */,
 				0180A29C2AEFBBC200090F6D /* PeripheralInspectorScreen.swift in Sources */,
 				0164A46E2AD58EB00093E501 /* RSSIItem_Preview.swift in Sources */,
-				01ABB07E2AE700E100615A21 /* AttributeTableViewModel.swift in Sources */,
 				013E5D982AE02A2400B9C475 /* RunningValuesGridItem.swift in Sources */,
 				01DEB4AA2A65E9D900D4C1E8 /* CharacteristicReader.swift in Sources */,
 				AA94C5532D01B5DC00562F7A /* HeartRateView.swift in Sources */,

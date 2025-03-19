@@ -42,8 +42,6 @@ protocol SupportedServiceViewModel {
     
     private let log = NordicLog(category: "DeviceDetails.VM", subsystem: "com.nordicsemi.nrf-toolbox")
     
-    let attributeTableViewModel: AttributeTableScreen.AttributeTableViewModel
-    
     var runningServiceViewModel: RunningServiceViewModel? {
         supportedServiceViewModels.firstOfType(type: RunningServiceViewModel.self)
     }
@@ -75,7 +73,6 @@ protocol SupportedServiceViewModel {
             deviceID: peripheral.peripheral.identifier,
             peripheralViewModel: PeripheralInspectorViewModel(peripheral: peripheral)
         )
-        self.attributeTableViewModel = AttributeTableScreen.AttributeTableViewModel(peripheral: peripheral)
         
         listenForDisconnection()
         log.debug(#function)

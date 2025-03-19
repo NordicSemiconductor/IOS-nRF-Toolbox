@@ -54,3 +54,13 @@ struct AttributeTableView: View {
         }
     }
 }
+
+// MARK: - Attribute
+
+protocol Attribute  {
+    var level: UInt { get }
+    var name: String { get }
+    var uuidString: String { get }
+    var id: String { get }
+    var children: [Attribute] { get }
+}
