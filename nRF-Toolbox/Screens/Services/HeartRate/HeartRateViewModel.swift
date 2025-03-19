@@ -84,14 +84,6 @@ extension DeviceScreen {
         deinit {
             log.debug(#function)
         }
-        
-        func prepare() async {
-            do {
-                try await discoverCharacteristics()
-            } catch {
-                criticalError = .noMandatoryCharacteristic
-            }
-        }
     }
 }
 
@@ -100,7 +92,11 @@ extension DeviceScreen {
 extension DeviceScreen.HeartRateViewModel: SupportedServiceViewModel {
     
     func onConnect() async {
-        await prepare()
+        do {
+            try await discoverCharacteristics()
+        } catch {
+            criticalError = .noMandatoryCharacteristic
+        }
     }
     
     func onDisconnect() {
