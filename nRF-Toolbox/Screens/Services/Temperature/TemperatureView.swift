@@ -8,13 +8,32 @@
 
 import SwiftUI
 
-// MARK: - TemperatureView
+// MARK: - TemperatureChart
 
-struct TemperatureView: View {
+struct TemperatureChart: View {
     
     // MARK: view
     
     var body: some View {
-        Text("Something should be here")
+        Text("Chart")
+    }
+}
+
+// MARK: - TemperatureView
+
+struct TemperatureView: View {
+    
+    // MARK: Environment
+    
+    @EnvironmentObject private var viewModel: TemperatureViewModel
+    
+    // MARK: view
+    
+    var body: some View {
+        if viewModel.data.isEmpty {
+            NoContentView(title: "No Temperature Data", systemImage: "waveform.path.ecg.rectangle")
+        } else {
+            TemperatureChart()
+        }
     }
 }

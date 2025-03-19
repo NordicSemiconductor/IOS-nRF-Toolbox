@@ -19,12 +19,16 @@ import CoreBluetoothMock_Collection
 
 final class TemperatureViewModel: ObservableObject {
     
-    // MARK: Properties
+    // MARK: Private Properties
     
     private let service: CBService
     private let peripheral: Peripheral
     private var cancellables: Set<AnyCancellable>
     private let log = NordicLog(category: "TemperatureViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
+    
+    // MARK: Properties
+    
+    @Published private(set) var data: [Int]
     
     // MARK: init
     
@@ -32,6 +36,7 @@ final class TemperatureViewModel: ObservableObject {
         self.peripheral = peripheral
         self.service = temperatureService
         self.cancellables = Set<AnyCancellable>()
+        self.data = []
         log.debug(#function)
     }
 }
