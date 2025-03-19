@@ -143,6 +143,7 @@ extension DeviceDetailsViewModel {
             }
             
             environment.attributeTable = try? await attributeTable()
+            environment.signalViewModel = SignalChartViewModel(peripheral: peripheral)
             
             for supportedServiceViewModel in self.supportedServiceViewModels {
                 await supportedServiceViewModel.onConnect()
@@ -180,6 +181,7 @@ extension DeviceDetailsViewModel {
         @Published var showInspector: Bool = false
         @Published var attributeTable: AttributeTable?
         @Published var deviceInfo: DeviceInformation?
+        @Published var signalViewModel: SignalChartViewModel?
         
         let deviceID: UUID
         

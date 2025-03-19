@@ -47,12 +47,14 @@ struct PeripheralInspectorView: View {
                     }
                 }
                 
-                //            Section {
-                //                SignalChartView()
-                //                    .environmentObject(environment.signalChartViewModel.environment)
-                //            }
-                
                 if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id) {
+                    if let signalViewModel = deviceVM.environment.signalViewModel {
+                        Section {
+                            SignalChartView()
+                                .environmentObject(signalViewModel.environment)
+                        }
+                    }
+                    
                     if let batteryServiceViewModel = deviceVM.batteryServiceViewModel {
                         Section {
                             BatteryView()
