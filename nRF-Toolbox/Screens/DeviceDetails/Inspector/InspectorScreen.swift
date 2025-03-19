@@ -1,5 +1,5 @@
 //
-//  PeripheralScreen.swift
+//  InspectorScreen.swift
 //  nRF-Toolbox
 //
 //  Created by Nick Kibysh on 30/10/2023.
@@ -9,9 +9,9 @@
 import SwiftUI
 import CoreBluetoothMock_Collection
 
-// MARK: - PeripheralInspectorView
+// MARK: - InspectorScreen
 
-struct PeripheralInspectorView: View {
+struct InspectorScreen: View {
     
     // MARK: Environment
     

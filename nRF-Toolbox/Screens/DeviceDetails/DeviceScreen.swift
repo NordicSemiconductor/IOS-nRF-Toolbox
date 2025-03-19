@@ -90,7 +90,7 @@ struct DeviceScreen: View {
         .listStyle(.insetGrouped)
         .navigationTitle(connectedDevicesViewModel.selectedDevice?.name ?? "Unnamed")
         .inspector(isPresented: $environment.showInspector) {
-            PeripheralInspectorView(device)
+            InspectorScreen(device)
                 .tabItem {
                     Label("Peripheral", systemImage: "terminal")
                 }

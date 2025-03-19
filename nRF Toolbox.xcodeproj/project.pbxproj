@@ -85,7 +85,7 @@
 		017D104A2A5809E500E38E5F /* nRF_ToolboxUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017D10492A5809E500E38E5F /* nRF_ToolboxUITests.swift */; };
 		017D104C2A5809E500E38E5F /* nRF_ToolboxUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017D104B2A5809E500E38E5F /* nRF_ToolboxUITestsLaunchTests.swift */; };
 		017D105B2A580D3800E38E5F /* iOSCommonLibraries in Frameworks */ = {isa = PBXBuildFile; productRef = 017D105A2A580D3800E38E5F /* iOSCommonLibraries */; };
-		0180A29C2AEFBBC200090F6D /* PeripheralInspectorScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0180A29A2AEFBBC200090F6D /* PeripheralInspectorScreen.swift */; };
+		0180A29C2AEFBBC200090F6D /* InspectorScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0180A29A2AEFBBC200090F6D /* InspectorScreen.swift */; };
 		018873C42A58332400253273 /* iOSCommonLibraries in Frameworks */ = {isa = PBXBuildFile; productRef = 018873C32A58332400253273 /* iOSCommonLibraries */; };
 		018873C72A583A9900253273 /* PeripheralScannerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873C62A583A9900253273 /* PeripheralScannerScreen.swift */; };
 		018873C92A583B0000253273 /* PeripheralScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873C82A583B0000253273 /* PeripheralScannerViewModel.swift */; };
@@ -506,7 +506,7 @@
 		017D10492A5809E500E38E5F /* nRF_ToolboxUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nRF_ToolboxUITests.swift; sourceTree = "<group>"; };
 		017D104B2A5809E500E38E5F /* nRF_ToolboxUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nRF_ToolboxUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		017D105C2A580DCD00E38E5F /* IOS-Common-Libraries */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "IOS-Common-Libraries"; path = "../IOS-Common-Libraries"; sourceTree = "<group>"; };
-		0180A29A2AEFBBC200090F6D /* PeripheralInspectorScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralInspectorScreen.swift; sourceTree = "<group>"; };
+		0180A29A2AEFBBC200090F6D /* InspectorScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorScreen.swift; sourceTree = "<group>"; };
 		018873C62A583A9900253273 /* PeripheralScannerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralScannerScreen.swift; sourceTree = "<group>"; };
 		018873C82A583B0000253273 /* PeripheralScannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralScannerViewModel.swift; sourceTree = "<group>"; };
 		018873CD2A583C4E00253273 /* IOS-BLE-Library */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "IOS-BLE-Library"; path = "../IOS-BLE-Library"; sourceTree = "<group>"; };
@@ -866,14 +866,6 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		0108E87C2AF1654000C8B096 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				01C62AE62B72480C00CDEE31 /* DeviceInformationView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		0108E87F2AF169AE00C8B096 /* Battery */ = {
 			isa = PBXGroup;
 			children = (
@@ -1156,9 +1148,7 @@
 		0164A4822AD840A10093E501 /* DeviceDetails */ = {
 			isa = PBXGroup;
 			children = (
-				0180A2992AEFBB9E00090F6D /* Peripheral */,
-				01ABB05E2AE6B35200615A21 /* AttributeTable */,
-				018C05372AE083F5007CE0FE /* SignalChart */,
+				0180A2992AEFBB9E00090F6D /* Inspector */,
 				0164A4852AD84A170093E501 /* DeviceDetailsViewModel.swift */,
 				01CEB4242AE9100300945105 /* DeviceScreen.swift */,
 			);
@@ -1229,14 +1219,15 @@
 			path = "nRF-ToolboxUITests";
 			sourceTree = "<group>";
 		};
-		0180A2992AEFBB9E00090F6D /* Peripheral */ = {
+		0180A2992AEFBB9E00090F6D /* Inspector */ = {
 			isa = PBXGroup;
 			children = (
-				01C62AE32B72462D00CDEE31 /* Model */,
-				0108E87C2AF1654000C8B096 /* Views */,
-				0180A29A2AEFBBC200090F6D /* PeripheralInspectorScreen.swift */,
+				018C05372AE083F5007CE0FE /* SignalChart */,
+				01C62AE32B72462D00CDEE31 /* DeviceInfo */,
+				01ABB05E2AE6B35200615A21 /* AttributeTable */,
+				0180A29A2AEFBBC200090F6D /* InspectorScreen.swift */,
 			);
-			path = Peripheral;
+			path = Inspector;
 			sourceTree = "<group>";
 		};
 		01816D49235DD7180040F574 /* ContinuousGlucoseMonitor */ = {
@@ -1528,12 +1519,13 @@
 			path = HomeKit;
 			sourceTree = "<group>";
 		};
-		01C62AE32B72462D00CDEE31 /* Model */ = {
+		01C62AE32B72462D00CDEE31 /* DeviceInfo */ = {
 			isa = PBXGroup;
 			children = (
 				01C62AE42B72463F00CDEE31 /* DeviceInformation.swift */,
+				01C62AE62B72480C00CDEE31 /* DeviceInformationView.swift */,
 			);
-			path = Model;
+			path = DeviceInfo;
 			sourceTree = "<group>";
 		};
 		01C81AD32A5CB62D0011B41E /* ScanResult */ = {
@@ -2866,7 +2858,7 @@
 				AAC0D99F2D80514900F25096 /* AboutView.swift in Sources */,
 				AA95CBD12D084C8B00D1FBC6 /* Error.swift in Sources */,
 				AAF7DE622CFDD4BC000A347A /* SidebarDeviceView.swift in Sources */,
-				0180A29C2AEFBBC200090F6D /* PeripheralInspectorScreen.swift in Sources */,
+				0180A29C2AEFBBC200090F6D /* InspectorScreen.swift in Sources */,
 				0164A46E2AD58EB00093E501 /* RSSIItem_Preview.swift in Sources */,
 				013E5D982AE02A2400B9C475 /* RunningValuesGridItem.swift in Sources */,
 				01DEB4AA2A65E9D900D4C1E8 /* CharacteristicReader.swift in Sources */,
