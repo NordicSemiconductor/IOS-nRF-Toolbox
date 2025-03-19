@@ -66,20 +66,7 @@ private extension ViewModel {
             .timeout(1, scheduler: DispatchQueue.main)
             .firstValue
         
-        if let cbDeviceInfo = cbServices.first(where: { $0.uuid == Service.deviceInformation.uuid }) {
-            try await handleDeviceInformation(cbDeviceInfo, peripheral: peripheral)
-        }
-    }
-    
-    private func handleDeviceInformation(_ cbDeviceInfo: CBService, peripheral: Peripheral) async throws {
-        let deviceInfo = try await readDeviceInformation(from: cbDeviceInfo, peripheral: peripheral)
         
-//        env.deviceInfoAvailable = true
-//        env.deviceInfo = deviceInfo
-    }
-    
-    private func readDeviceInformation(from service: CBService, peripheral: Peripheral) async throws -> DeviceInformation {
-        return try await DeviceInformation(service, peripheral: peripheral)
     }
 }
 
@@ -102,12 +89,6 @@ extension PeripheralInspectorViewModel {
             }
         }
         
-        @Published fileprivate(set) var batteryLevelData: [ChartTimeData<Battery.Level>]
-        @Published fileprivate(set) var currentBatteryLevel: UInt? = nil
-        @Published fileprivate(set) var batteryLevelAvailable: Bool = false
-        @Published fileprivate(set) var deviceInfoAvailable: Bool = false
-//        @Published fileprivate(set) var deviceInfo: DeviceInformation = DeviceInformation()
-        
         let deviceId: UUID
         
         let signalChartViewModel: SignalChartScreen.SignalChartViewModel
@@ -122,10 +103,6 @@ extension PeripheralInspectorViewModel {
             criticalError: CriticalError? = nil,
             alertError: Error? = nil,
             internalAlertError: AlertError? = nil,
-            batteryLevelData: [ChartTimeData<Battery.Level>] = [],
-            currentBatteryLevel: UInt? = nil,
-            batteryLevelAvailable: Bool = false,
-            deviceInfoAvailable: Bool = false,
             signalChartViewModel: SignalChartScreen.SignalChartViewModel,
             attributeTableViewModel: AttributeTableScreen.AttributeTableViewModel,
             disconnect: @escaping () -> () = { }
@@ -134,11 +111,6 @@ extension PeripheralInspectorViewModel {
             self.criticalError = criticalError
             self.alertError = alertError
             self.internalAlertError = internalAlertError
-            self.batteryLevelData = batteryLevelData
-            self.currentBatteryLevel = currentBatteryLevel
-            self.batteryLevelAvailable = batteryLevelAvailable
-            self.deviceInfoAvailable = deviceInfoAvailable
-//            self.deviceInfo = deviceInfo
             self.signalChartViewModel = signalChartViewModel
             self.attributeTableViewModel = attributeTableViewModel
             self.disconnect = disconnect
