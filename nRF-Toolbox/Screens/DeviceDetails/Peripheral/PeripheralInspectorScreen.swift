@@ -9,8 +9,6 @@
 import SwiftUI
 import CoreBluetoothMock_Collection
 
-private typealias Env = PeripheralInspectorViewModel.Environment
-
 // MARK: - PeripheralInspectorView
 
 struct PeripheralInspectorView: View {

@@ -69,10 +69,7 @@ protocol SupportedServiceViewModel {
     init(cbPeripheral: CBPeripheral, centralManager: CentralManager) {
         self.peripheral = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
         self.centralManager = centralManager
-        self.environment = Environment(
-            deviceID: peripheral.peripheral.identifier,
-            peripheralViewModel: PeripheralInspectorViewModel(peripheral: peripheral)
-        )
+        self.environment = Environment(deviceID: peripheral.peripheral.identifier)
         
         listenForDisconnection()
         log.debug(#function)
@@ -93,7 +90,6 @@ extension DeviceDetailsViewModel {
         supportedServiceViewModels.forEach {
             $0.onDisconnect()
         }
-        environment.peripheralViewModel?.onDisconnect()
     }
     
     func reconnect() async {
@@ -164,7 +160,6 @@ extension DeviceDetailsViewModel {
                 supportedServiceViewModels.forEach {
                     $0.onDisconnect()
                 }
-                environment.peripheralViewModel?.env.signalChartViewModel.onDisconnect()
                 // Display error
                 environment.criticalError = .disconnectedWithError(err)
             }
@@ -188,20 +183,14 @@ extension DeviceDetailsViewModel {
         
         let deviceID: UUID
         
-        fileprivate(set) var peripheralViewModel: PeripheralInspectorViewModel?
-        
         private let log = NordicLog(category: "DeviceDetailsViewModel.Environment", subsystem: "com.nordicsemi.nrf-toolbox")
         
         init(deviceID: UUID, reconnecting: Bool = false,
-             criticalError: CriticalError? = nil,
-             alertError: AlertError? = nil,
-             peripheralViewModel: PeripheralInspectorViewModel? = nil
-        ) {
+             criticalError: CriticalError? = nil, alertError: AlertError? = nil) {
             self.deviceID = deviceID
             self.reconnecting = reconnecting
             self.criticalError = criticalError
             self.alertError = alertError
-            self.peripheralViewModel = peripheralViewModel
             
             log.debug(#function)
         }

@@ -86,7 +86,6 @@
 		017D104C2A5809E500E38E5F /* nRF_ToolboxUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017D104B2A5809E500E38E5F /* nRF_ToolboxUITestsLaunchTests.swift */; };
 		017D105B2A580D3800E38E5F /* iOSCommonLibraries in Frameworks */ = {isa = PBXBuildFile; productRef = 017D105A2A580D3800E38E5F /* iOSCommonLibraries */; };
 		0180A29C2AEFBBC200090F6D /* PeripheralInspectorScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0180A29A2AEFBBC200090F6D /* PeripheralInspectorScreen.swift */; };
-		0180A29D2AEFBBC200090F6D /* PeripheralInspectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0180A29B2AEFBBC200090F6D /* PeripheralInspectorViewModel.swift */; };
 		018873C42A58332400253273 /* iOSCommonLibraries in Frameworks */ = {isa = PBXBuildFile; productRef = 018873C32A58332400253273 /* iOSCommonLibraries */; };
 		018873C72A583A9900253273 /* PeripheralScannerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873C62A583A9900253273 /* PeripheralScannerScreen.swift */; };
 		018873C92A583B0000253273 /* PeripheralScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873C82A583B0000253273 /* PeripheralScannerViewModel.swift */; };
@@ -509,7 +508,6 @@
 		017D104B2A5809E500E38E5F /* nRF_ToolboxUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nRF_ToolboxUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		017D105C2A580DCD00E38E5F /* IOS-Common-Libraries */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "IOS-Common-Libraries"; path = "../IOS-Common-Libraries"; sourceTree = "<group>"; };
 		0180A29A2AEFBBC200090F6D /* PeripheralInspectorScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralInspectorScreen.swift; sourceTree = "<group>"; };
-		0180A29B2AEFBBC200090F6D /* PeripheralInspectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralInspectorViewModel.swift; sourceTree = "<group>"; };
 		018873C62A583A9900253273 /* PeripheralScannerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralScannerScreen.swift; sourceTree = "<group>"; };
 		018873C82A583B0000253273 /* PeripheralScannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralScannerViewModel.swift; sourceTree = "<group>"; };
 		018873CD2A583C4E00253273 /* IOS-BLE-Library */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "IOS-BLE-Library"; path = "../IOS-BLE-Library"; sourceTree = "<group>"; };
@@ -1239,7 +1237,6 @@
 				01C62AE32B72462D00CDEE31 /* Model */,
 				0108E87C2AF1654000C8B096 /* Views */,
 				0180A29A2AEFBBC200090F6D /* PeripheralInspectorScreen.swift */,
-				0180A29B2AEFBBC200090F6D /* PeripheralInspectorViewModel.swift */,
 			);
 			path = Peripheral;
 			sourceTree = "<group>";
@@ -2917,7 +2914,6 @@
 				01DEB4A42A6588CA00D4C1E8 /* RunningServiceHandler.swift in Sources */,
 				01F6A9602A812D6200540B45 /* Emulator.swift in Sources */,
 				015AAE652B0383BD00D79833 /* SidebarView.swift in Sources */,
-				0180A29D2AEFBBC200090F6D /* PeripheralInspectorViewModel.swift in Sources */,
 				AA479EA72D0B0BFF0052E801 /* CrankDataPoint.swift in Sources */,
 				0164A4762AD698650093E501 /* NumberDatabase+Ext.swift in Sources */,
 				01407CBC2A65819B00A5B279 /* ServiceHandler.swift in Sources */,
