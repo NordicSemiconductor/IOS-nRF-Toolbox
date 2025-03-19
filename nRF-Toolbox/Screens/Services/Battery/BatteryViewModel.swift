@@ -46,6 +46,7 @@ final class BatteryViewModel: ObservableObject {
     
     // startListening()
     
+    @MainActor
     func startListening() async throws {
         log.debug(#function)
         let characteristics: [Characteristic] = [.batteryLevel]
