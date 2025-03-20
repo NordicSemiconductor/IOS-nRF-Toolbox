@@ -8,17 +8,6 @@
 
 import SwiftUI
 
-// MARK: - TemperatureChart
-
-struct TemperatureChart: View {
-    
-    // MARK: view
-    
-    var body: some View {
-        Text("Chart")
-    }
-}
-
 // MARK: - TemperatureView
 
 struct TemperatureView: View {
@@ -27,13 +16,41 @@ struct TemperatureView: View {
     
     @EnvironmentObject private var viewModel: TemperatureViewModel
     
+    // MARK: Constants
+    
+    static let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US")
+        dateFormatter.setLocalizedDateFormatFromTemplate("E d MMM yyyy HH:mm:ss")
+        return dateFormatter
+    }()
+    
     // MARK: view
     
     var body: some View {
-        if viewModel.data.isEmpty {
-            NoContentView(title: "No Temperature Data", systemImage: "waveform.path.ecg.rectangle")
-        } else {
-            TemperatureChart()
+        LabeledContent {
+            Text(viewModel.measurement.temperatureFormattedString())
+        } label: {
+            Label("Measurement", systemImage: "thermometer.variable")
+                .setAccent(Color.universalAccentColor)
+        }
+        
+        LabeledContent {
+            Text(viewModel.measurement.location.nilDescription)
+        } label: {
+            Label("Location", systemImage: "figure.dance")
+                .setAccent(Color.universalAccentColor)
+        }
+        
+        LabeledContent {
+            if let timestamp = viewModel.measurement.timestamp {
+                Text(Self.dateFormatter.string(from: timestamp))
+            } else {
+                Text("nil")
+            }
+        } label: {
+            Label("Timestamp", systemImage: "stopwatch")
+                .setAccent(Color.universalAccentColor)
         }
     }
 }
