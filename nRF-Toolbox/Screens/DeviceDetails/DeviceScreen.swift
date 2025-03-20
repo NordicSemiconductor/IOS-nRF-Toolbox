@@ -70,6 +70,20 @@ struct DeviceScreen: View {
                 }
             }
             
+            Section("Troubleshooting") {
+                DisclosureGroup {
+                    Text("""
+                    If you've recently flashed this Connected Device, the current Services might not match due to caching issues. To solve this, please go back to Settings, Bluetooth, and Turn Off and then On Bluetooth to clear the Cache.
+                    
+                    Using Control Panel for this will not produce the desired output.
+                    """)
+                    .foregroundStyle(Color.secondary)
+                } label: {
+                    Label("Can't find the Services you were looking for?", systemImage: "info.circle")
+                }
+                .accentColor(.universalAccentColor)
+            }
+            
             Section("Connection") {
                 Button("Disconnect") {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
