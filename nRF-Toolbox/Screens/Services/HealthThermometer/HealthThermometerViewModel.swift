@@ -1,5 +1,5 @@
 //
-//  TemperatureViewModel.swift
+//  HealthThermometerViewModel.swift
 //  nRF-Toolbox
 //
 //  Created by Dinesh Harjani on 12/12/24.
@@ -15,9 +15,9 @@ import iOS_Bluetooth_Numbers_Database
 import iOS_Common_Libraries
 import CoreBluetoothMock_Collection
 
-// MARK: - TemperatureViewModel
+// MARK: - HealthThermometerViewModel
 
-final class TemperatureViewModel: ObservableObject {
+final class HealthThermometerViewModel: ObservableObject {
     
     // MARK: Private Properties
     
@@ -43,7 +43,7 @@ final class TemperatureViewModel: ObservableObject {
 
 // MARK: - SupportedServiceViewModel
 
-extension TemperatureViewModel: SupportedServiceViewModel {
+extension HealthThermometerViewModel: SupportedServiceViewModel {
     
     func onConnect() async {
         log.debug(#function)

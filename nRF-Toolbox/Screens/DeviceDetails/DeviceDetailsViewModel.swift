@@ -54,8 +54,8 @@ protocol SupportedServiceViewModel {
         supportedServiceViewModels.firstOfType(type: DeviceScreen.HeartRateViewModel.self)
     }
     
-    var temperatureServiceViewModel: TemperatureViewModel? {
-        supportedServiceViewModels.firstOfType(type: TemperatureViewModel.self)
+    var healthThermometerViewModel: HealthThermometerViewModel? {
+        supportedServiceViewModels.firstOfType(type: HealthThermometerViewModel.self)
     }
     
     var batteryServiceViewModel: BatteryViewModel? {
@@ -127,8 +127,8 @@ extension DeviceDetailsViewModel {
                     supportedServiceViewModels.append(RunningServiceViewModel(peripheral: peripheral, runningService: service))
                 case .cyclingSpeedCadence:
                     supportedServiceViewModels.append(CyclingServiceViewModel(peripheral: peripheral, cyclingService: service))
-                case .temperature:
-                    supportedServiceViewModels.append(TemperatureViewModel(peripheral: peripheral, temperatureService: service))
+                case .healthThermometer:
+                    supportedServiceViewModels.append(HealthThermometerViewModel(peripheral: peripheral, temperatureService: service))
                 case .heartRate:
                     supportedServiceViewModels.append(DeviceScreen.HeartRateViewModel(peripheral: peripheral, heartRateService: service))
                 case .battery:

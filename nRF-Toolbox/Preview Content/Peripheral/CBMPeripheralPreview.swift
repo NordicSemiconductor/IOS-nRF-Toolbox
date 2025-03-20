@@ -18,7 +18,7 @@ extension CBMUUID {
     static let ledCharacteristic    = CBMUUID(string: "00001525-1212-EFDE-1523-785FEABCD123")
     
     static let heartRate            = CBMUUID(string: "180D")
-    static let temperature          = CBMUUID(string: "1809")
+    static let healthThermometer    = CBMUUID(string: "1809")
     static let runningSpeedCadence  = CBMUUID(string: "1814")
     static let weightScale          = CBMUUID(string: "181D")
     static let cyclingSpeedCadence  = CBMUUID(string: "1816")

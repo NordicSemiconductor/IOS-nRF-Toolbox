@@ -41,10 +41,10 @@ struct DeviceScreen: View {
                     }
                 }
                 
-                if let temperatureServiceViewModel = deviceVM.temperatureServiceViewModel {
+                if let healthThermometerViewModel = deviceVM.healthThermometerViewModel {
                     Section("Health Thermometer") {
-                        TemperatureView()
-                            .environmentObject(temperatureServiceViewModel)
+                        HealthThermometerView()
+                            .environmentObject(healthThermometerViewModel)
                     }
                 }
                 

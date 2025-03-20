@@ -1,5 +1,5 @@
 //
-//  TemperatureView.swift
+//  HealthThermometerView.swift
 //  nRF-Toolbox
 //
 //  Created by Dinesh Harjani on 12/12/24.
@@ -8,13 +8,13 @@
 
 import SwiftUI
 
-// MARK: - TemperatureView
+// MARK: - HealthThermometerView
 
-struct TemperatureView: View {
+struct HealthThermometerView: View {
     
     // MARK: Environment
     
-    @EnvironmentObject private var viewModel: TemperatureViewModel
+    @EnvironmentObject private var viewModel: HealthThermometerViewModel
     
     // MARK: Constants
     
