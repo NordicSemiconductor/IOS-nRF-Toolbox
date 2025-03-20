@@ -12,26 +12,15 @@ import iOS_BLE_Library_Mock
 import iOS_Bluetooth_Numbers_Database
 import iOS_Common_Libraries
 
-// MARK: HeartRateMeasurementCharacteristic
+// MARK: HeartRateValue
 
-struct HeartRateMeasurementCharacteristic {
-    let heartRate: Int
+struct HeartRateValue {
+    let measurement: HeartRateMeasurement
     let date: Date
     
-    init(heartRate: Int, date: Date) {
-        self.heartRate = heartRate
-        self.date = date
-    }
-    
-    init(with data: Data, date: Date) throws {
-        self.date = date
-
-        let flags: UInt8 = try data.read()
-        if flags & 0x01 == 0 {
-            heartRate = Int(try data.read(fromOffset: 1) as UInt8)
-        } else {
-            heartRate = Int(try data.read(fromOffset: 1) as UInt16)
-        }
+    init(with data: Data) throws {
+        self.measurement = HeartRateMeasurement(data)
+        self.date = .now
     }
 }
 
@@ -51,8 +40,8 @@ extension DeviceScreen {
         
         private let log = NordicLog(category: "HeartRateViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
         
-        @Published fileprivate(set) var data: [HeartRateMeasurementCharacteristic] = []
-        @Published var scrolPosition: Date = Date()
+        @Published fileprivate(set) var data: [HeartRateValue] = []
+        @Published var scrollPosition = Date()
         
         @Published fileprivate(set) var criticalError: CriticalError?
         @Published var alertError: Error?
@@ -74,10 +63,10 @@ extension DeviceScreen {
             self.data = []
             self.criticalError = nil
             self.alertError = nil
-            
             assert(heartRateService.uuid == Service.heartRate.uuid)
             
             self.heartRateService = heartRateService
+            self.data.reserveCapacity(capacity)
             log.debug(#function)
         }
         
@@ -127,25 +116,30 @@ private extension ViewModel {
     func enableHRMeasurement(_ characteristic: CBCharacteristic) async throws {
         peripheral.listenValues(for: characteristic)
             .compactMap { data in
-                return try? HeartRateMeasurementCharacteristic(with: data, date: Date())
+                try? HeartRateValue(with: data)
             }
             .sink { completion in
                 if case .failure = completion {
                     self.internalAlertError = .measurement
                 }
             } receiveValue: { [unowned self] newValue in
-                if newValue.date.timeIntervalSince1970 - scrolPosition.timeIntervalSince1970 < CGFloat(visibleDomain + 5) || data.isEmpty {
-                    scrolPosition = Date()
+                let diff = newValue.date.timeIntervalSince1970 - scrollPosition.timeIntervalSince1970
+                if diff < CGFloat(visibleDomain + 5) || data.isEmpty {
+                    scrollPosition = .now
                 }
 
                 data.append(newValue)
-                
                 if data.count > capacity {
                     data.removeFirst()
                 }
                 
-                let min = (data.min { $0.heartRate < $1.heartRate }?.heartRate ?? 40)
-                let max  = (data.max { $0.heartRate < $1.heartRate }?.heartRate ?? 140)
+                let min = (data.min {
+                    $0.measurement.heartRateValue < $1.measurement.heartRateValue
+                }?.measurement.heartRateValue ?? 40)
+                
+                let max  = (data.max {
+                    $0.measurement.heartRateValue < $1.measurement.heartRateValue
+                }?.measurement.heartRateValue ?? 140)
                 
                 lowest = min - 5
                 highest = max + 5
