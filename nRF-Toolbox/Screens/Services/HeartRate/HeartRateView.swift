@@ -22,6 +22,12 @@ struct HeartRateChart: View {
     
     var body: some View {
         VStack(alignment: .leading) {
+            Text("Heart Rate")
+                .font(.title2.bold())
+            
+            Text("\(viewModel.data.last?.measurement.heartRateValue ?? 0) bpm")
+                .foregroundStyle(.secondary)
+            
             Chart {
                 ForEach(viewModel.data, id: \.date) { value in
                     LineMark(
@@ -38,12 +44,8 @@ struct HeartRateChart: View {
             .chartScrollableAxes(.horizontal)
             .chartXVisibleDomain(length: viewModel.visibleDomain)
             .chartScrollPosition(x: $viewModel.scrollPosition)
-            
-            if let heartRate = viewModel.data.last?.measurement {
-                Label("\(heartRate.heartRateValue) bpm", systemImage: "waveform.path.ecg")
-                    .font(.title2.bold())
-            }
         }
+        .padding(.vertical, 4)
     }
 }
 

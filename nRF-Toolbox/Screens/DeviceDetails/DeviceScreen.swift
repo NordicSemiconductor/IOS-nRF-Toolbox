@@ -35,7 +35,7 @@ struct DeviceScreen: View {
         List {
             if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id) {
                 if let heartRateServiceViewModel = deviceVM.heartRateServiceViewModel {
-                    Section("Heart Rate") {
+                    Section("Heart Monitor") {
                         HeartRateView()
                             .environmentObject(heartRateServiceViewModel)
                     }
