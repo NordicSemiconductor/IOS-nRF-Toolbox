@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import iOS_Common_Libraries
 
 // MARK: - SidebarView
 
@@ -55,7 +56,7 @@ struct SidebarView: View {
                 }
             }
             
-            Section("Other") {
+            Section {
                 NavigationLink {
                     AboutView()
                 } label: {
@@ -63,6 +64,11 @@ struct SidebarView: View {
                         .setAccent(.nordicMiddleGrey)
                         .tag(RootNavigationView.MenuCategory.about)
                 }
+            } header: {
+                Text("Other")
+            } footer: {
+                Text(Constant.copyright)
+                    .foregroundStyle(Color.nordicMiddleGrey)
             }
         }
         .listStyle(.insetGrouped)

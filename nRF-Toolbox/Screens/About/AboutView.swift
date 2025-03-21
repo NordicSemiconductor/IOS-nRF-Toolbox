@@ -32,8 +32,7 @@ struct AboutView: View {
                     .font(.title)
                     .centered()
                 
-                Text("Version: \(AppInfo.readVersion())")
-                    .font(.caption)
+                Text("Version \(Constant.appVersion(forBundleWithClass: DeviceDetailsViewModel.self))")
                     .centered()
             }
             .listRowSeparator(.hidden)

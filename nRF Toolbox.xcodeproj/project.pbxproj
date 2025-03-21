@@ -367,7 +367,6 @@
 		AA95CBD32D085AFA00D1FBC6 /* CyclingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA95CBD22D085AFA00D1FBC6 /* CyclingFeature.swift */; };
 		AA95CBD42D085AFA00D1FBC6 /* CyclingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA95CBD22D085AFA00D1FBC6 /* CyclingFeature.swift */; };
 		AAC0D99F2D80514900F25096 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC0D99E2D80514900F25096 /* AboutView.swift */; };
-		AAC0D9A12D80556D00F25096 /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC0D9A02D80556D00F25096 /* AppInfo.swift */; };
 		AAD1E3EC2D81E5AD00E5121E /* DisclosureAttributeItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD1E3EB2D81E5AD00E5121E /* DisclosureAttributeItemView.swift */; };
 		AAF7DE622CFDD4BC000A347A /* SidebarDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF7DE612CFDD4BC000A347A /* SidebarDeviceView.swift */; };
 		C39941BC27341AAE00E7AA33 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = C39941BB27341AAE00E7AA33 /* ZIPFoundation */; };
@@ -782,7 +781,6 @@
 		AA95CBD02D084C8B00D1FBC6 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		AA95CBD22D085AFA00D1FBC6 /* CyclingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingFeature.swift; sourceTree = "<group>"; };
 		AAC0D99E2D80514900F25096 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
-		AAC0D9A02D80556D00F25096 /* AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
 		AAD1E3EB2D81E5AD00E5121E /* DisclosureAttributeItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureAttributeItemView.swift; sourceTree = "<group>"; };
 		AAF7DE612CFDD4BC000A347A /* SidebarDeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarDeviceView.swift; sourceTree = "<group>"; };
 		C39941BF27352BDF00E7AA33 /* McuMgrFirmware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = McuMgrFirmware.swift; sourceTree = "<group>"; };
@@ -1276,7 +1274,6 @@
 				AA0AEA012CF7438200F93A0B /* Assets.swift */,
 				AA95CBD02D084C8B00D1FBC6 /* Error.swift */,
 				AA5AB3E02D0877F6005213D5 /* MeasurementFormatter+Ext.swift */,
-				AAC0D9A02D80556D00F25096 /* AppInfo.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2837,7 +2834,6 @@
 				01FB19D22AE3DB70006DAB9F /* SensorCalibrationViewModel.swift in Sources */,
 				01DEB4A82A65E90C00D4C1E8 /* Data+Ext.swift in Sources */,
 				0164A4712AD593B40093E501 /* ScanResultList.swift in Sources */,
-				AAC0D9A12D80556D00F25096 /* AppInfo.swift in Sources */,
 				013E5D8F2ADFDDC600B9C475 /* NumberedColumnGrid.swift in Sources */,
 				01AB7B752A77BFB400AEDDCD /* CBUUID+Ext.swift in Sources */,
 				AAC0D99F2D80514900F25096 /* AboutView.swift in Sources */,
