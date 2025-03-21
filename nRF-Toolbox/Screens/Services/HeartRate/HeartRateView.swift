@@ -18,6 +18,10 @@ struct HeartRateChart: View {
     
     @EnvironmentObject private var viewModel: DeviceScreen.HeartRateViewModel
     
+    // MARK: Private Properties
+    
+    @State private var animationAmount: CGFloat = 1
+    
     // MARK: view
     
     var body: some View {
@@ -31,6 +35,15 @@ struct HeartRateChart: View {
             } icon: {
                 Image(systemName: "heart.fill")
                     .foregroundColor(.nordicRed)
+                    .scaleEffect(animationAmount)
+                    .animation(
+                        .easeInOut(duration: 0.6)
+                            .delay(0.2)
+                            .repeatForever(autoreverses: true),
+                        value: animationAmount)
+                    .onAppear {
+                        animationAmount = 1.2
+                    }
             }
             
             Chart {
