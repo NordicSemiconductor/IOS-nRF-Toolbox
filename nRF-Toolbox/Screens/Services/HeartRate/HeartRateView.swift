@@ -25,8 +25,13 @@ struct HeartRateChart: View {
             Text("Heart Rate")
                 .font(.title2.bold())
             
-            Text("\(viewModel.data.last?.measurement.heartRateValue ?? 0) bpm")
-                .foregroundStyle(.secondary)
+            Label {
+                Text("Current Value: \(viewModel.data.last?.measurement.heartRateValue ?? 0) BPM")
+                    .foregroundStyle(.secondary)
+            } icon: {
+                Image(systemName: "heart.fill")
+                    .foregroundColor(.nordicRed)
+            }
             
             Chart {
                 ForEach(viewModel.data, id: \.date) { value in
@@ -34,7 +39,7 @@ struct HeartRateChart: View {
                         x: .value("Date", value.date),
                         y: .value("Heart Rate", value.measurement.heartRateValue)
                     )
-                    .foregroundStyle(.red)
+                    .foregroundStyle(Color.nordicRed)
                 }
                 .interpolationMethod(.catmullRom)
             }
@@ -44,6 +49,14 @@ struct HeartRateChart: View {
             .chartScrollableAxes(.horizontal)
             .chartXVisibleDomain(length: viewModel.visibleDomain)
             .chartScrollPosition(x: $viewModel.scrollPosition)
+            
+            Label {
+                Text("RR Intervals Received: \(viewModel.data.last?.measurement.intervals?.count ?? 0)")
+                    .foregroundStyle(.secondary)
+            } icon: {
+                Image(systemName: "chart.line.uptrend.xyaxis")
+                    .foregroundStyle(Color.nordicMiddleGrey)
+            }
         }
         .padding(.vertical, 4)
     }
