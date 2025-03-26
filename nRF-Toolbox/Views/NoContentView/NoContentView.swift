@@ -51,40 +51,20 @@ public struct NoContentView: View {
     public var body: some View {
         VStack {
             ContentUnavailableView {
-                Label("No messages", systemImage: "exclamationmark.icloud")
-                    .labelStyle(.coloredNoContentView(style.tintColor))
+                Image(systemName: "exclamationmark.icloud")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(size: CGSize(width: 60.0, height: 60.0))
+                    .foregroundStyle(style.tintColor)
+                
+                Text(title)
+                    .font(.title)
+                    .bold()
             } description: {
-                Text("Unable to receive new messages")
+                Text(description ?? "")
                     .font(.callout)
             }
         }
         .padding()
-    }
-}
-
-// MARK: - LabelStyle
-
-fileprivate struct ColoredNoContentViewLabelStyle: LabelStyle {
-    
-    let color: Color
-    
-    public func makeBody(configuration: Configuration) -> some View {
-        VStack(alignment: .center) {
-            configuration.icon
-                .scaleEffect(2.0, anchor: .center)
-                .frame(size: CGSize(width: 60.0, height: 60.0))
-                .foregroundColor(color)
-            
-            configuration.title
-                .bold()
-        }
-        .font(.title)
-    }
-}
-
-fileprivate extension LabelStyle where Self == ColoredNoContentViewLabelStyle {
-    
-    static func coloredNoContentView(_ color: Color) -> ColoredNoContentViewLabelStyle {
-        ColoredNoContentViewLabelStyle(color: color)
     }
 }
