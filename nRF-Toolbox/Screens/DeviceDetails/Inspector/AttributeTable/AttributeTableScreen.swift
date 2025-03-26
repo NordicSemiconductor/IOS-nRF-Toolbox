@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import iOS_Common_Libraries
 
 // MARK: - AttributeTableScreen
 

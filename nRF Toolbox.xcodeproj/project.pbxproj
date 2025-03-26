@@ -74,7 +74,6 @@
 		01675E7223F6D1BE00FC0519 /* UARTPresetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01675E7023F6D1BE00FC0519 /* UARTPresetTableViewCell.xib */; };
 		0169B59E23FBD8BE00907C1B /* NordicTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0169B59D23FBD8BE00907C1B /* NordicTextFieldCell.swift */; };
 		0169B5A023FBD90E00907C1B /* NordicTextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0169B59F23FBD90E00907C1B /* NordicTextFieldCell.xib */; };
-		016C0FA02AF925FA00F6CFDF /* NoContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016C0F9F2AF925FA00F6CFDF /* NoContentView.swift */; };
 		016EF388241632AF005FFA30 /* LoggerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016EF386241632AF005FFA30 /* LoggerTableViewController.swift */; };
 		016EF389241632AF005FFA30 /* LoggerTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 016EF387241632AF005FFA30 /* LoggerTableViewController.xib */; };
 		01797E8323F4242500B26BF2 /* ModernIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01797E8223F4242500B26BF2 /* ModernIcon.swift */; };
@@ -488,7 +487,6 @@
 		01675E7023F6D1BE00FC0519 /* UARTPresetTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTPresetTableViewCell.xib; sourceTree = "<group>"; };
 		0169B59D23FBD8BE00907C1B /* NordicTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicTextFieldCell.swift; sourceTree = "<group>"; };
 		0169B59F23FBD90E00907C1B /* NordicTextFieldCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NordicTextFieldCell.xib; sourceTree = "<group>"; };
-		016C0F9F2AF925FA00F6CFDF /* NoContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoContentView.swift; sourceTree = "<group>"; };
 		016EF386241632AF005FFA30 /* LoggerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerTableViewController.swift; sourceTree = "<group>"; };
 		016EF387241632AF005FFA30 /* LoggerTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoggerTableViewController.xib; sourceTree = "<group>"; };
 		01797E8223F4242500B26BF2 /* ModernIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernIcon.swift; sourceTree = "<group>"; };
@@ -943,7 +941,6 @@
 		0129F2262A68404C002FB3F5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				016C0F9E2AF925ED00F6CFDF /* NoContentView */,
 				013E5D992AE0545100B9C475 /* Modifiers */,
 				0129F2272A684059002FB3F5 /* LabeledValueView.swift */,
 				0130DAB92A8B87E100C332BA /* HUD.swift */,
@@ -1155,14 +1152,6 @@
 				014C4E8A2403F9BD0003E601 /* UARTMacroSaver.swift */,
 			);
 			path = Utils;
-			sourceTree = "<group>";
-		};
-		016C0F9E2AF925ED00F6CFDF /* NoContentView */ = {
-			isa = PBXGroup;
-			children = (
-				016C0F9F2AF925FA00F6CFDF /* NoContentView.swift */,
-			);
-			path = NoContentView;
 			sourceTree = "<group>";
 		};
 		017D102C2A5809E300E38E5F /* nRF-Toolbox */ = {
@@ -2795,7 +2784,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				016C0FA02AF925FA00F6CFDF /* NoContentView.swift in Sources */,
 				01C81AD72A5D8FEA0011B41E /* ReadableError.swift in Sources */,
 				013E5D912ADFDF1300B9C475 /* Array+Ext.swift in Sources */,
 				0164A4812AD8330E0093E501 /* ServiceBadgeGroup.swift in Sources */,

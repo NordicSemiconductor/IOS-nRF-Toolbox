@@ -9,6 +9,7 @@
 
 import SwiftUI
 import Charts
+import iOS_Common_Libraries
 
 // MARK: - HeartRateChart
 
