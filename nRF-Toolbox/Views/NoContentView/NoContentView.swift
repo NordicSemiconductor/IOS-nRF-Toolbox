@@ -9,17 +9,24 @@
 import SwiftUI
 import iOS_Common_Libraries
 
-//fileprivate typealias OldNoContent = iOS_Common_Libraries.ContentUnavailableView
+// MARK: - NoContentView
 
-struct NoContentView: View {
-    enum Style {
+public struct NoContentView: View {
+    
+    // MARK: Style
+    
+    public enum Style {
         case normal, error
     }
     
-    let title: String
-    let systemImage: String
-    let description: String?
-    let style: Style
+    // MARK: Private Properties
+    
+    private let title: String
+    private let systemImage: String
+    private let description: String?
+    private let style: Style
+    
+    // MARK: init
     
     init(title: String, systemImage: String, description: String? = nil, style: Style = .normal) {
         self.title = title
@@ -28,40 +35,26 @@ struct NoContentView: View {
         self.style = style
     }
     
-    var body: some View {
+    // MARK: view
+    
+    public var body: some View {
         VStack {
-            if #available(iOS 17, macOS 14, *) {
-                switch style {
-                case .normal:
-                    new
+            switch style {
+            case .normal:
+                customView
 //                        .foregroundStyle(Color.nordicBlue)
-                case .error:
-                    new
-                        .foregroundStyle(Color.nordicRed)
-                }
-            } else {
-                old
+            case .error:
+                customView
+                    .foregroundStyle(Color.nordicRed)
             }
         }
         .padding()
     }
     
-    @ViewBuilder
-    private var old: some View {
-        Text("Content Not Available")
-//        OldNoContent(configuration:
-//                        ContentUnavailableConfiguration(
-//                            text: title,
-//                            secondaryText: description,
-//                            systemName: systemImage
-//                        )
-//        )
-    }
-    
     @available(macOS 14.0, *)
     @available(iOS 17.0, *)
     @ViewBuilder
-    private var new: some View {
+    private var customView: some View {
         VStack {
             if let description {
                 ContentUnavailableView(title, systemImage: systemImage, description: Text(description))
@@ -70,16 +63,4 @@ struct NoContentView: View {
             }
         }
     }
-}
-
-#Preview {
-    NoContentView(
-        title: "Item is not selected", systemImage: "binoculars.fill", description: "Select an item"
-    )
-}
-
-#Preview {
-    NoContentView(
-        title: "Error", systemImage: "exclamationmark.triangle", style: .error
-    )
 }
