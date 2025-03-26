@@ -16,7 +16,18 @@ public struct NoContentView: View {
     // MARK: Style
     
     public enum Style {
-        case normal, error
+        case normal, tinted, error
+        
+        var tintColor: Color {
+            switch self {
+            case .normal:
+                return .secondary
+            case .tinted:
+                return .nordicBlue
+            case .error:
+                return .nordicRed
+            }
+        }
     }
     
     // MARK: Private Properties
@@ -39,28 +50,41 @@ public struct NoContentView: View {
     
     public var body: some View {
         VStack {
-            switch style {
-            case .normal:
-                customView
-//                        .foregroundStyle(Color.nordicBlue)
-            case .error:
-                customView
-                    .foregroundStyle(Color.nordicRed)
+            ContentUnavailableView {
+                Label("No messages", systemImage: "exclamationmark.icloud")
+                    .labelStyle(.coloredNoContentView(style.tintColor))
+            } description: {
+                Text("Unable to receive new messages")
+                    .font(.callout)
             }
         }
         .padding()
     }
+}
+
+// MARK: - LabelStyle
+
+fileprivate struct ColoredNoContentViewLabelStyle: LabelStyle {
     
-    @available(macOS 14.0, *)
-    @available(iOS 17.0, *)
-    @ViewBuilder
-    private var customView: some View {
-        VStack {
-            if let description {
-                ContentUnavailableView(title, systemImage: systemImage, description: Text(description))
-            } else {
-                ContentUnavailableView(title, systemImage: systemImage)
-            }
+    let color: Color
+    
+    public func makeBody(configuration: Configuration) -> some View {
+        VStack(alignment: .center) {
+            configuration.icon
+                .scaleEffect(2.0, anchor: .center)
+                .frame(size: CGSize(width: 60.0, height: 60.0))
+                .foregroundColor(color)
+            
+            configuration.title
+                .bold()
         }
+        .font(.title)
+    }
+}
+
+fileprivate extension LabelStyle where Self == ColoredNoContentViewLabelStyle {
+    
+    static func coloredNoContentView(_ color: Color) -> ColoredNoContentViewLabelStyle {
+        ColoredNoContentViewLabelStyle(color: color)
     }
 }
