@@ -135,6 +135,8 @@ extension DeviceDetailsViewModel {
                     supportedServiceViewModels.append(BatteryViewModel(peripheral: peripheral, batteryService: service))
                 case .throughputService:
                     supportedServiceViewModels.append(ThroughputViewModel(peripheral, service: service))
+                case .continuousGlucoseMonitoringtService:
+                    supportedServiceViewModels.append(CGMSViewModel(peripheral: peripheral, cgmsService: service))
                 case .deviceInformation:
                     environment.deviceInfo = try await DeviceInformation(service, peripheral: peripheral)
                 default:
