@@ -65,6 +65,10 @@ protocol SupportedServiceViewModel {
     var throughputViewModel: ThroughputViewModel? {
         supportedServiceViewModels.firstOfType(type: ThroughputViewModel.self)
     }
+    
+    var cgmsViewModel: CGMSViewModel? {
+        supportedServiceViewModels.firstOfType(type: CGMSViewModel.self)
+    }
 
     init(cbPeripheral: CBPeripheral, centralManager: CentralManager) {
         self.peripheral = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())

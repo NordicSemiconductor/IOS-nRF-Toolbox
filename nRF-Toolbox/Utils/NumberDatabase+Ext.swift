@@ -23,7 +23,7 @@ extension Service {
         .batteryService: "battery.75percent",
 //        .bloodPressure,
 //        .glucose,
-//        .continuousGlucoseMonitoring,
+        .continuousGlucoseMonitoring: "syringe",
         .healthThermometer: "medical.thermometer",
         .throughputService: "metronome"
     ]

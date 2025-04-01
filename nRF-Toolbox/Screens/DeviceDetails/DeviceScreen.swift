@@ -68,6 +68,13 @@ struct DeviceScreen: View {
                             .environmentObject(throughputViewModel)
                     }
                 }
+                
+                if let cgmsViewModel = deviceVM.cgmsViewModel {
+                    Section("Continuous Glucose Monitoring Service") {
+                        CGMSView()
+                            .environmentObject(cgmsViewModel)
+                    }
+                }
             }
             
             Section("Troubleshooting") {
