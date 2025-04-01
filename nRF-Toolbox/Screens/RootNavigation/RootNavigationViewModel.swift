@@ -23,7 +23,9 @@ extension RootNavigationView {
 
 @MainActor
 class RootNavigationViewModel: ObservableObject {
+    
     @Published var selectedCategory: RootNavigationView.MenuCategory?
+    @Published var showStartInfo: Bool = false
     
     static let shared = RootNavigationViewModel()
 }

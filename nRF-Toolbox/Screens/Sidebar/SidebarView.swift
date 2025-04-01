@@ -42,9 +42,8 @@ struct SidebarView: View {
                     }
                 }
             }
-            .foregroundColor(Color(uiColor: .label))
             
-            Section {
+            Section("Device Search") {
                 NavigationLink {
                     PeripheralScannerScreen()
                         .environmentObject(scannerViewModel)
@@ -57,22 +56,12 @@ struct SidebarView: View {
             }
             
             Section {
-                NavigationLink {
-                    AboutView()
-                } label: {
-                    Label("About nRF Toolbox", systemImage: "info")
-                        .setAccent(.nordicMiddleGrey)
-                        .tag(RootNavigationView.MenuCategory.about)
-                }
-            } header: {
-                Text("Other")
+                EmptyView()
             } footer: {
                 Text(Constant.copyright)
                     .foregroundStyle(Color.nordicMiddleGrey)
             }
         }
         .listStyle(.insetGrouped)
-        .navigationTitle("nRF Toolbox")
-        .setupNavBarBackground(with: Assets.navBar.color)
     }
 }

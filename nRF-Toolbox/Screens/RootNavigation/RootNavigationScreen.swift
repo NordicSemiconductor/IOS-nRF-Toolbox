@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import iOS_Common_Libraries
 import iOS_BLE_Library_Mock
 
 // MARK: - RootNavigationView
@@ -30,8 +31,18 @@ struct RootNavigationView: View {
     var body: some View {
         NavigationView {
             SidebarView()
+                .navigationTitle("nRF Toolbox")
+                .setupNavBarBackground(with: Assets.navBar.color)
+                .toolbar {
+                    Button("", systemImage: "info.circle") {
+                        viewModel.showStartInfo = true
+                    }
+                }
                 .environmentObject(scannerViewModel)
                 .environmentObject(connectedDevicesViewModel)
+        }
+        .sheet(isPresented: $viewModel.showStartInfo) {
+            AboutView()
         }
         .onAppear {
             scannerViewModel.setupManager()
