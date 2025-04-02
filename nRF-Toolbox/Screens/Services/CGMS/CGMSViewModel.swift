@@ -110,8 +110,11 @@ extension CGMSViewModel: SupportedServiceViewModel {
     private func listenTo(_ characteristic: CBCharacteristic) {
         log.debug(#function)
         peripheral.listenValues(for: characteristic)
-            .map { data in
+            .map { [log] data in
                 print("Received \(data.hexEncodedString(options: [.upperCase, .twoByteSpacing])) \(data.count) bytes")
+                if let parse = try? CGMSMeasurement(data: data, sessionStartTime: .now) {
+                    log.debug("Parsed measurement \(parse.glucoseConcentration)")
+                }
             }
             .sink(receiveCompletion: { _ in
                 print("Completion")
