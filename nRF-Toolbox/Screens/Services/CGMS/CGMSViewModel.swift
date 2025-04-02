@@ -23,8 +23,14 @@ final class CGMSViewModel: ObservableObject {
     
     private let service: CBService
     private let peripheral: Peripheral
+    private var cbSOCPMeasurement: CBCharacteristic!
+    
     private var cancellables: Set<AnyCancellable>
     private let log = NordicLog(category: "CGMSViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
+    
+    // MARK: Published
+    
+    @Published private(set) var sessionStarted = false
     
     // MARK: init
     
@@ -33,6 +39,29 @@ final class CGMSViewModel: ObservableObject {
         self.service = cgmsService
         self.cancellables = Set<AnyCancellable>()
         log.debug(#function)
+    }
+}
+
+extension CGMSViewModel {
+    
+    func toggleSession() {
+        Task { @MainActor in
+            sessionStarted.toggle()
+            do {
+                let writeData: Data
+                switch sessionStarted {
+                case true:
+                    writeData = Data([CGMOpCode.startSession.rawValue])
+                case false:
+                    writeData = Data([CGMOpCode.stopStopSession.rawValue])
+                }
+                log.debug("peripheral.writeValueWithResponse(\(writeData.hexEncodedString(options: [.prepend0x, .upperCase])))")
+                try await peripheral.writeValueWithResponse(writeData, for: cbSOCPMeasurement).firstValue
+            } catch {
+                sessionStarted = false
+                log.debug(error.localizedDescription)
+            }
+        }
     }
 }
 
@@ -51,9 +80,11 @@ extension CGMSViewModel: SupportedServiceViewModel {
             .timeout(1, scheduler: DispatchQueue.main)
             .firstValue
         
+        cbSOCPMeasurement = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.cgmSpecificOpsControlPoint.uuid)
+        
         guard let cbCgmMeasurement = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.cgmMeasurement.uuid),
               let cbRacpMeasurement = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.recordAccessControlPoint.uuid),
-              let cbSOCPMeasurement = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.cgmSpecificOpsControlPoint.uuid) else {
+              let cbSOCPMeasurement else {
             return
         }
         
@@ -74,19 +105,13 @@ extension CGMSViewModel: SupportedServiceViewModel {
             log.error(error.localizedDescription)
             onDisconnect()
         }
-        
-//        [00:00:28.884,521] <inf> cgms: CGMS Measurement: notification enabled
-//        [00:00:29.044,525] <inf> cgms: CGMS SOCP: indication enabled
-//        [00:00:29.204,528] <inf> cgms: CGMS RACP: indication enabled
-//        [00:00:39.964,294] <inf> cgms: RACP: work submission done
-//        [00:00:40.044,799] <inf> cgms: RACP: work submission done
     }
     
-    func listenTo(_ characteristic: CBCharacteristic) {
+    private func listenTo(_ characteristic: CBCharacteristic) {
         log.debug(#function)
         peripheral.listenValues(for: characteristic)
             .map { data in
-                print("Received \(data.count) bytes")
+                print("Received \(data.hexEncodedString(options: [.upperCase, .twoByteSpacing])) \(data.count) bytes")
             }
             .sink(receiveCompletion: { _ in
                 print("Completion")
@@ -98,6 +123,7 @@ extension CGMSViewModel: SupportedServiceViewModel {
     
     func onDisconnect() {
         log.debug(#function)
+        cbSOCPMeasurement = nil
         cancellables.removeAll()
     }
 }

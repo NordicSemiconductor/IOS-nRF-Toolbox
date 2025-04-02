@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import iOS_Common_Libraries
 
 struct CGMSView: View {
     
@@ -18,5 +19,10 @@ struct CGMSView: View {
     
     var body: some View {
         Text("CGMSView")
+        
+        Button(viewModel.sessionStarted ? "Stop Session" : "Start Session") {
+            viewModel.toggleSession()
+        }
+        .foregroundStyle(Color.universalAccentColor)
     }
 }

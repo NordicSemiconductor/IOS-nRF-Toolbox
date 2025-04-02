@@ -28,6 +28,15 @@
       }
     },
     {
+      "identity" : "ios-common-libraries",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/NordicPlayground/IOS-Common-Libraries.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "e46418a65a55e2584b77ca79ade29f0210bf4b8b"
+      }
+    },
+    {
       "identity" : "ios-dfu-library",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/NordicSemiconductor/IOS-DFU-Library.git",

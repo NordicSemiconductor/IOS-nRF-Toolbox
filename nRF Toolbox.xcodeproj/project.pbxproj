@@ -367,6 +367,7 @@
 		AA95CBD42D085AFA00D1FBC6 /* CyclingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA95CBD22D085AFA00D1FBC6 /* CyclingFeature.swift */; };
 		AAC0D99F2D80514900F25096 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC0D99E2D80514900F25096 /* AboutView.swift */; };
 		AAD1E3EC2D81E5AD00E5121E /* DisclosureAttributeItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD1E3EB2D81E5AD00E5121E /* DisclosureAttributeItemView.swift */; };
+		AAE2C9332D9D378300B398E3 /* CGMOpcodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE2C9322D9D378300B398E3 /* CGMOpcodes.swift */; };
 		AAF272F42D9BF5F6007B63D3 /* CGMSViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF272F32D9BF5F6007B63D3 /* CGMSViewModel.swift */; };
 		AAF272F82D9C10F3007B63D3 /* CGMSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF272F72D9C10F3007B63D3 /* CGMSView.swift */; };
 		AAF7DE622CFDD4BC000A347A /* SidebarDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF7DE612CFDD4BC000A347A /* SidebarDeviceView.swift */; };
@@ -782,6 +783,7 @@
 		AA95CBD22D085AFA00D1FBC6 /* CyclingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingFeature.swift; sourceTree = "<group>"; };
 		AAC0D99E2D80514900F25096 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		AAD1E3EB2D81E5AD00E5121E /* DisclosureAttributeItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureAttributeItemView.swift; sourceTree = "<group>"; };
+		AAE2C9322D9D378300B398E3 /* CGMOpcodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMOpcodes.swift; sourceTree = "<group>"; };
 		AAF272F32D9BF5F6007B63D3 /* CGMSViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSViewModel.swift; sourceTree = "<group>"; };
 		AAF272F72D9C10F3007B63D3 /* CGMSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSView.swift; sourceTree = "<group>"; };
 		AAF7DE612CFDD4BC000A347A /* SidebarDeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarDeviceView.swift; sourceTree = "<group>"; };
@@ -2444,6 +2446,7 @@
 			children = (
 				AAF272F32D9BF5F6007B63D3 /* CGMSViewModel.swift */,
 				AAF272F72D9C10F3007B63D3 /* CGMSView.swift */,
+				AAE2C9322D9D378300B398E3 /* CGMOpcodes.swift */,
 			);
 			path = CGMS;
 			sourceTree = "<group>";
@@ -2874,6 +2877,7 @@
 				AA01D4922D4A3D38008523CE /* Throughput+Attributes.swift in Sources */,
 				0164A4742AD5A4630093E501 /* StateViews.swift in Sources */,
 				0129F2252A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift in Sources */,
+				AAE2C9332D9D378300B398E3 /* CGMOpcodes.swift in Sources */,
 				01EBE6192AE4845100960672 /* View+ErrorAlert.swift in Sources */,
 				01DEB4A42A6588CA00D4C1E8 /* RunningServiceHandler.swift in Sources */,
 				01F6A9602A812D6200540B45 /* Emulator.swift in Sources */,
