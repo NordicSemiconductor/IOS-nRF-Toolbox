@@ -18,7 +18,11 @@ struct CGMSView: View {
     // MARK: view
     
     var body: some View {
-        Text("CGMSView")
+        if let lastRecord = viewModel.records.last {
+            Text("Latest Record: \(lastRecord)")
+        }
+        
+        Text("Received Records: \(viewModel.records.count)")
         
         Button(viewModel.sessionStarted ? "Stop Session" : "Start Session") {
             viewModel.toggleSession()

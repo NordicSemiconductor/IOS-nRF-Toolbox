@@ -31,6 +31,7 @@ final class CGMSViewModel: ObservableObject {
     // MARK: Published
     
     @Published private(set) var sessionStarted = false
+    @Published private(set) var records = [CGMSMeasurement]()
     
     // MARK: init
     
@@ -107,19 +108,22 @@ extension CGMSViewModel: SupportedServiceViewModel {
         }
     }
     
-    private func listenTo(_ characteristic: CBCharacteristic) {
+    private func listenTo(_ measurementCharacteristic: CBCharacteristic) {
         log.debug(#function)
-        peripheral.listenValues(for: characteristic)
-            .map { [log] data in
-                print("Received \(data.hexEncodedString(options: [.upperCase, .twoByteSpacing])) \(data.count) bytes")
-                if let parse = try? CGMSMeasurement(data: data, sessionStartTime: .now) {
-                    log.debug("Parsed measurement \(parse.glucoseConcentration)")
+        peripheral.listenValues(for: measurementCharacteristic)
+            .receive(on: RunLoop.main)
+            .compactMap { [log] data in
+                guard let parse = try? CGMSMeasurement(data: data, sessionStartTime: .now) else {
+                    log.error("Unable to parse Measurement Data \(data.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
+                    return nil
                 }
+                log.debug("Parsed measurement \(parse)")
+                return parse
             }
             .sink(receiveCompletion: { _ in
                 print("Completion")
-            }, receiveValue: { _ in
-                print("Received Value")
+            }, receiveValue: { newValue in
+                self.records.append(newValue)
             })
             .store(in: &cancellables)
     }
