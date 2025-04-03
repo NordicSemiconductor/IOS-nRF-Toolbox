@@ -47,16 +47,6 @@ enum ReservedSFloatValues : Int16 {
     static let firstReservedValue = ReservedSFloatValues.positiveInfinity
 }
 
-enum ReservedFloatValues : UInt32 {
-    case positiveInfinity = 0x007FFFFE
-    case nan = 0x007FFFFF
-    case nres = 0x00800000
-    case reserved = 0x00800001
-    case negativeInfinity = 0x00800002
-    
-    static let firstReservedValue = ReservedFloatValues.positiveInfinity
-}
-
 extension Double {
     static var reservedValues: [Double] {
         [.infinity, .nan, .nan, .nan, -.infinity]
@@ -147,27 +137,6 @@ struct CharacteristicReader {
         }
         aPointer = aPointer.advanced(by: 2)
         
-        return output
-    }
-    
-    static func readFloatValue(ptr aPointer : inout UnsafeMutablePointer<UInt8>) -> Float32 {
-        let tempData = CFSwapInt32LittleToHost(UnsafeMutablePointer<UInt32>(OpaquePointer(aPointer)).pointee)
-        var mantissa = Int32(tempData & 0x00FFFFFF)
-        let exponent = Int8(bitPattern: UInt8(tempData >> 24))
-        
-        var output : Float32 = 0
-        
-        if mantissa >= Int32(ReservedFloatValues.firstReservedValue.rawValue) && mantissa <= Int32(ReservedFloatValues.negativeInfinity.rawValue) {
-            output = Float32(Double.reservedValues[Int(mantissa - Int32(ReservedSFloatValues.firstReservedValue.rawValue))])
-        } else {
-            if mantissa >= 0x800000 {
-                mantissa = -((0xFFFFFF + 1) - mantissa)
-            }
-            let magnitude = pow(10.0, Double(exponent))
-            output = Float32(mantissa) * Float32(magnitude)
-        }
-        
-        aPointer = aPointer.advanced(by: 4)
         return output
     }
     

@@ -51,8 +51,13 @@ struct CGMSMeasurement {
     // MARK: init
     
     init(data: Data, sessionStartTime: Date) throws {
-        glucoseConcentration = try data.readSFloat(from: 2)
-        let timeOffset: UInt16 = try data.read(fromOffset: 4)
+//        guard offset + length <= count else {
+//            throw DataError.outOfRange
+//        }
+        let offset = MemoryLayout<UInt16>.size
+        let sFloatBytes = data.subdata(in: offset..<offset+SFloatReserved.byteSize)
+        glucoseConcentration = Float(asSFloat: sFloatBytes)
+        let timeOffset: UInt16 = try data.read(fromOffset: MemoryLayout<UInt16>.size * 2)
         date = sessionStartTime.addingTimeInterval(Double(timeOffset * 60))
     }
 }
