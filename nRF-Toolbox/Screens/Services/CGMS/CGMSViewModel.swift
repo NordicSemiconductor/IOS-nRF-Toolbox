@@ -139,5 +139,5 @@ extension CGMSViewModel: SupportedServiceViewModel {
 
 extension CBUUID {
     
-    static let continuousGlucoseMonitoringtService = CBUUID(service: .continuousGlucoseMonitoring)
+    static let continuousGlucoseMonitoringService = CBUUID(service: .continuousGlucoseMonitoring)
 }
