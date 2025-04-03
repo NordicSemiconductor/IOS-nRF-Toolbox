@@ -46,7 +46,7 @@ struct CGMSMeasurement {
     // MARK: Properties
     
     let measurement: Measurement<UnitConcentrationMass>
-    let date: Date?
+    let sequenceNumber: Int
 
     // MARK: init
     
@@ -58,9 +58,8 @@ struct CGMSMeasurement {
         let sFloatBytes = data.subdata(in: offset..<offset + SFloatReserved.byteSize)
         let value = Float(asSFloat: sFloatBytes)
         measurement = Measurement<UnitConcentrationMass>(value: Double(value), unit: .milligramsPerDeciliter)
-        let timeOffset: UInt16 = try data.read(fromOffset: MemoryLayout<UInt16>.size * 2)
-        print("timeOffset: \(timeOffset)")
-        date = sessionStartTime.addingTimeInterval(Double(timeOffset * 60))
+        let unsignedNumber: UInt16 = try data.read(fromOffset: MemoryLayout<UInt16>.size * 2)
+        sequenceNumber = Int(unsignedNumber)
     }
 }
 
@@ -69,6 +68,6 @@ struct CGMSMeasurement {
 extension CGMSMeasurement: CustomStringConvertible {
     
     var description: String {
-        return String(format: "%.2f \(measurement.unit.symbol)", measurement.value)
+        return String(format: "%.2f \(measurement.unit.symbol))", measurement.value)
     }
 }

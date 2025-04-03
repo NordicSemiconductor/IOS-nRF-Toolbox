@@ -117,7 +117,7 @@ extension CGMSViewModel: SupportedServiceViewModel {
                     log.error("Unable to parse Measurement Data \(data.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
                     return nil
                 }
-                log.debug("Parsed measurement \(parse)")
+                log.debug("Parsed measurement \(parse). Seq. No.: \(parse.sequenceNumber)")
                 return parse
             }
             .sink(receiveCompletion: { _ in
