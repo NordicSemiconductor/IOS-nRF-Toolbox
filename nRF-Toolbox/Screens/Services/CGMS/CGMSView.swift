@@ -19,28 +19,31 @@ struct CGMSView: View {
     // MARK: view
     
     var body: some View {
-        Text("\(viewModel.records.count) Records")
-            .font(.title2.bold())
-        
-        Text("Current Value: \(viewModel.records.last?.description ?? "N/A")")
-            .foregroundStyle(.secondary)
-        
-        Chart {
-            ForEach(viewModel.records, id: \.sequenceNumber) { value in
-                LineMark(
-                    x: .value("Sequence Number", value.sequenceNumber),
-                    y: .value("Glucose Measurement", value.measurement.value)
-                )
-                .foregroundStyle(Color.nordicRed)
+        VStack(alignment: .leading) {
+            Text("\(viewModel.records.count) Records")
+                .font(.title2.bold())
+            
+            Text("Current Value: \(viewModel.records.last?.description ?? "N/A")")
+                .foregroundStyle(.secondary)
+            
+            Chart {
+                ForEach(viewModel.records, id: \.sequenceNumber) { value in
+                    LineMark(
+                        x: .value("Sequence Number", value.sequenceNumber),
+                        y: .value("Glucose Measurement", value.measurement.value)
+                    )
+                    .foregroundStyle(Color.nordicRed)
+                }
+                .interpolationMethod(.catmullRom)
             }
-            .interpolationMethod(.catmullRom)
+            .chartXAxis(.hidden)
+            .chartYScale(domain: [80.0, 100.0],
+                         range: .plotDimension(padding: 8))
+            .chartScrollableAxes(.horizontal)
+            .chartXVisibleDomain(length: 20)
+            .chartScrollPosition(x: $viewModel.scrollPosition)
         }
-        .chartXAxis(.hidden)
-        .chartYScale(domain: [80.0, 100.0],
-                     range: .plotDimension(padding: 8))
-        .chartScrollableAxes(.horizontal)
-        .chartXVisibleDomain(length: 20)
-        .chartScrollPosition(x: $viewModel.scrollPosition)
+        .padding(.vertical, 4)
         
         Button(viewModel.sessionStarted ? "Stop Session" : "Start Session") {
             viewModel.toggleSession()
