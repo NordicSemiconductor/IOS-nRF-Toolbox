@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Charts
 import iOS_Common_Libraries
 
 struct CGMSView: View {
@@ -18,16 +19,28 @@ struct CGMSView: View {
     // MARK: view
     
     var body: some View {
-        if let lastRecord = viewModel.records.last {
-            Text("Latest Record: \(lastRecord)")
-        }
+        Text("\(viewModel.records.count) Records")
+            .font(.title2.bold())
         
-        Text("Record Count: \(viewModel.records.count)")
+        Text("Current Value: \(viewModel.records.last?.description ?? "N/A")")
+            .foregroundStyle(.secondary)
         
-        Button("Request All Records") {
-            viewModel.requestAllRecords()
+        Chart {
+            ForEach(viewModel.records, id: \.sequenceNumber) { value in
+                LineMark(
+                    x: .value("Sequence Number", value.sequenceNumber),
+                    y: .value("Glucose Measurement", value.measurement.value)
+                )
+                .foregroundStyle(Color.nordicRed)
+            }
+            .interpolationMethod(.catmullRom)
         }
-        .foregroundStyle(Color.universalAccentColor)
+        .chartXAxis(.hidden)
+        .chartYScale(domain: [80.0, 100.0],
+                     range: .plotDimension(padding: 8))
+        .chartScrollableAxes(.horizontal)
+        .chartXVisibleDomain(length: 20)
+        .chartScrollPosition(x: $viewModel.scrollPosition)
         
         Button(viewModel.sessionStarted ? "Stop Session" : "Start Session") {
             viewModel.toggleSession()

@@ -34,6 +34,7 @@ final class CGMSViewModel: ObservableObject {
     
     @Published private(set) var sessionStarted = false
     @Published private(set) var records = [CGMSMeasurement]()
+    @Published var scrollPosition = 0
     
     // MARK: init
     
@@ -69,17 +70,17 @@ extension CGMSViewModel {
         }
     }
     
-    func requestAllRecords() {
-        Task { @MainActor in
-            do {
-                let writeData = Data([RACPOpCode.reportStoredRecords.rawValue, 1])
-                log.debug("peripheral.writeValueWithResponse(\(writeData.hexEncodedString(options: [.prepend0x, .upperCase])))")
-                try await peripheral.writeValueWithResponse(writeData, for: cbRACPMeasurement).firstValue
-                records = []
-                records.reserveCapacity(100) // Looks like 100 is the limit.
-            } catch {
-                log.debug(error.localizedDescription)
-            }
+    @MainActor
+    func requestAllRecords() async {
+        do {
+            records = []
+            records.reserveCapacity(100) // Looks like 100 is the limit.
+            
+            let writeData = Data([RACPOpCode.reportStoredRecords.rawValue, 1])
+            log.debug("peripheral.writeValueWithResponse(\(writeData.hexEncodedString(options: [.prepend0x, .upperCase])))")
+            try await peripheral.writeValueWithResponse(writeData, for: cbRACPMeasurement).firstValue
+        } catch {
+            log.debug(error.localizedDescription)
         }
     }
 }
@@ -135,6 +136,8 @@ extension CGMSViewModel: SupportedServiceViewModel {
             listenToRecords(cbRACPMeasurement)
             let racpEnable = try await peripheral.setNotifyValue(true, for: cbRACPMeasurement).firstValue
             log.debug("CGMS RACP.setNotifyValue(true): \(racpEnable)")
+            
+            await requestAllRecords()
         } catch {
             log.error(error.localizedDescription)
             onDisconnect()
@@ -144,7 +147,7 @@ extension CGMSViewModel: SupportedServiceViewModel {
     private func listenToMeasurements(_ measurementCharacteristic: CBCharacteristic) {
         log.debug(#function)
         peripheral.listenValues(for: measurementCharacteristic)
-            .compactMap { [log] data in
+            .compactMap { [log] data -> CGMSMeasurement? in
                 log.debug("Received Measurement Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing]))")
                 guard let parse = try? CGMSMeasurement(data: data, sessionStartTime: .now) else {
                     log.error("Unable to parse Measurement Data \(data.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
@@ -158,6 +161,7 @@ extension CGMSViewModel: SupportedServiceViewModel {
                 print("Completion")
             }, receiveValue: { newValue in
                 self.records.append(newValue)
+                self.scrollPosition = newValue.sequenceNumber
             })
             .store(in: &cancellables)
     }
