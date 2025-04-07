@@ -10,6 +10,8 @@ import SwiftUI
 import Charts
 import iOS_Common_Libraries
 
+// MARK: - CGMSView
+
 struct CGMSView: View {
     
     // MARK: EnvironmentObject
@@ -36,9 +38,19 @@ struct CGMSView: View {
                 }
                 .interpolationMethod(.catmullRom)
             }
-            .chartXAxis(.hidden)
             .chartYScale(domain: [80.0, 100.0],
                          range: .plotDimension(padding: 8))
+            .chartYAxis {
+                AxisMarks { value in
+                    AxisGridLine()
+                    
+                    if let value = value.as(Double.self) {
+                        AxisValueLabel {
+                            Text("\(Measurement<UnitConcentrationMass>(value: value, unit: .milligramsPerDeciliter).description)")
+                        }
+                    }
+                }
+            }
             .chartScrollableAxes(.horizontal)
             .chartXVisibleDomain(length: 20)
             .chartScrollPosition(x: $viewModel.scrollPosition)
