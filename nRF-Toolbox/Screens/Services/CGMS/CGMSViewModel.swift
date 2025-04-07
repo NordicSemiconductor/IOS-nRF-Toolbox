@@ -23,7 +23,9 @@ final class CGMSViewModel: ObservableObject {
     
     private let service: CBService
     private let peripheral: Peripheral
+    private var cbCGMMeasurement: CBCharacteristic!
     private var cbSOCPMeasurement: CBCharacteristic!
+    private var cbRACPMeasurement: CBCharacteristic!
     
     private var cancellables: Set<AnyCancellable>
     private let log = NordicLog(category: "CGMSViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
@@ -45,6 +47,8 @@ final class CGMSViewModel: ObservableObject {
 
 extension CGMSViewModel {
     
+    // MARK: toggleSession
+    
     func toggleSession() {
         Task { @MainActor in
             sessionStarted.toggle()
@@ -64,6 +68,32 @@ extension CGMSViewModel {
             }
         }
     }
+    
+    func requestAllRecords() {
+        Task { @MainActor in
+            do {
+                let writeData = Data([RACPOpCode.reportStoredRecords.rawValue, 1])
+                log.debug("peripheral.writeValueWithResponse(\(writeData.hexEncodedString(options: [.prepend0x, .upperCase])))")
+                try await peripheral.writeValueWithResponse(writeData, for: cbRACPMeasurement).firstValue
+                records = []
+                records.reserveCapacity(100) // Looks like 100 is the limit.
+            } catch {
+                log.debug(error.localizedDescription)
+            }
+        }
+    }
+}
+
+// MARK: - RACPOpCode
+
+enum RACPOpCode: UInt8 {
+    case reserved = 0
+    case reportStoredRecords = 1
+    case deleteStoredRecords = 2
+    case abort = 3
+    case reportStoredRecordsCount = 4
+    case numberOfStoredRecords = 5
+    case response = 6
 }
 
 // MARK: - SupportedServiceViewModel
@@ -81,26 +111,29 @@ extension CGMSViewModel: SupportedServiceViewModel {
             .timeout(1, scheduler: DispatchQueue.main)
             .firstValue
         
+        cbCGMMeasurement = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.cgmMeasurement.uuid)
+        cbRACPMeasurement = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.recordAccessControlPoint.uuid)
         cbSOCPMeasurement = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.cgmSpecificOpsControlPoint.uuid)
         
-        guard let cbCgmMeasurement = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.cgmMeasurement.uuid),
-              let cbRacpMeasurement = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.recordAccessControlPoint.uuid),
-              let cbSOCPMeasurement else {
+        guard let cbCGMMeasurement, let cbRACPMeasurement, let cbSOCPMeasurement else {
             return
         }
         
         do {
-            listenTo(cbCgmMeasurement)
-            let cgmEnable = try await peripheral.setNotifyValue(true, for: cbCgmMeasurement).firstValue
+            listenToMeasurements(cbCGMMeasurement)
+            let cgmEnable = try await peripheral.setNotifyValue(true, for: cbCGMMeasurement).firstValue
             log.debug("CGMS Measurement.setNotifyValue(true): \(cgmEnable)")
             
 //            guard result else {
 //                // TODO: throw Error
 //            }
+            
+            listenToOperations(cbSOCPMeasurement)
             let socpEnable = try await peripheral.setNotifyValue(true, for: cbSOCPMeasurement).firstValue
             log.debug("CGMS SOCP.setNotifyValue(true): \(socpEnable)")
             
-            let racpEnable = try await peripheral.setNotifyValue(true, for: cbRacpMeasurement).firstValue
+            listenToRecords(cbRACPMeasurement)
+            let racpEnable = try await peripheral.setNotifyValue(true, for: cbRACPMeasurement).firstValue
             log.debug("CGMS RACP.setNotifyValue(true): \(racpEnable)")
         } catch {
             log.error(error.localizedDescription)
@@ -108,11 +141,11 @@ extension CGMSViewModel: SupportedServiceViewModel {
         }
     }
     
-    private func listenTo(_ measurementCharacteristic: CBCharacteristic) {
+    private func listenToMeasurements(_ measurementCharacteristic: CBCharacteristic) {
         log.debug(#function)
         peripheral.listenValues(for: measurementCharacteristic)
-            .receive(on: RunLoop.main)
             .compactMap { [log] data in
+                log.debug("Received Measurement Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing]))")
                 guard let parse = try? CGMSMeasurement(data: data, sessionStartTime: .now) else {
                     log.error("Unable to parse Measurement Data \(data.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
                     return nil
@@ -120,6 +153,7 @@ extension CGMSViewModel: SupportedServiceViewModel {
                 log.debug("Parsed measurement \(parse). Seq. No.: \(parse.sequenceNumber)")
                 return parse
             }
+            .receive(on: RunLoop.main)
             .sink(receiveCompletion: { _ in
                 print("Completion")
             }, receiveValue: { newValue in
@@ -128,9 +162,44 @@ extension CGMSViewModel: SupportedServiceViewModel {
             .store(in: &cancellables)
     }
     
+    private func listenToOperations(_ opsControlPointCharacteristic: CBCharacteristic) {
+        log.debug(#function)
+        peripheral.listenValues(for: opsControlPointCharacteristic)
+            .map { [log] data in
+                log.debug("Received Ops Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing]))")
+                return data
+            }
+            .sink(receiveCompletion: { _ in
+                print("Completion")
+            }, receiveValue: { [log] newValue in
+                log.debug("Received new Ops Control Point Values")
+            })
+            .store(in: &cancellables)
+    }
+    
+    private func listenToRecords(_ recordCharacteristic: CBCharacteristic) {
+        log.debug(#function)
+        peripheral.listenValues(for: recordCharacteristic)
+            .map { [log] data in
+                log.debug("Received Records Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing]))")
+                let offset = MemoryLayout<UInt16>.size
+                let recordOpcode: UInt8! = try? data.read(fromOffset: offset) as UInt8
+                log.debug("Response Code \(recordOpcode)")
+                return data
+            }
+            .sink(receiveCompletion: { _ in
+                print("Completion")
+            }, receiveValue: { [log] newValue in
+                log.debug("Received new Record Values")
+            })
+            .store(in: &cancellables)
+    }
+    
     func onDisconnect() {
         log.debug(#function)
+        cbCGMMeasurement = nil
         cbSOCPMeasurement = nil
+        cbRACPMeasurement = nil
         cancellables.removeAll()
     }
 }

@@ -22,7 +22,12 @@ struct CGMSView: View {
             Text("Latest Record: \(lastRecord)")
         }
         
-        Text("Received Records: \(viewModel.records.count)")
+        Text("Record Count: \(viewModel.records.count)")
+        
+        Button("Request All Records") {
+            viewModel.requestAllRecords()
+        }
+        .foregroundStyle(Color.universalAccentColor)
         
         Button(viewModel.sessionStarted ? "Stop Session" : "Start Session") {
             viewModel.toggleSession()
