@@ -46,7 +46,7 @@ struct CGMSView: View {
                     
                     if let value = value.as(Double.self) {
                         AxisValueLabel {
-                            Text("\(Measurement<UnitConcentrationMass>(value: value, unit: .milligramsPerDeciliter).description)")
+                            Text("\(String(format: "%.1f", value))")
                         }
                     }
                 }
