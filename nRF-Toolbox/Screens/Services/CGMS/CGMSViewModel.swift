@@ -187,8 +187,10 @@ extension CGMSViewModel: SupportedServiceViewModel {
             .map { [log] data in
                 log.debug("Received Records Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing]))")
                 let offset = MemoryLayout<UInt16>.size
-                let recordOpcode: UInt8! = try? data.read(fromOffset: offset) as UInt8
-                log.debug("Response Code \(recordOpcode)")
+                if let response = try? data.read(fromOffset: offset) as UInt8,
+                   let responseCode = CGMOpcodeResponseCodes(rawValue: response) {
+                    log.debug("Response Code: \(responseCode)")
+                }
                 return data
             }
             .sink(receiveCompletion: { _ in

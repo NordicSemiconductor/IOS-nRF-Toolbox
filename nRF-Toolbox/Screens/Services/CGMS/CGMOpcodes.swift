@@ -92,11 +92,28 @@ enum CGMEnumerations: UInt8, Option {
 
 // MARK: - CGMOpcodeResponseCodes
 
-enum CGMOpcodeResponseCodes: UInt8, Option {
+enum CGMOpcodeResponseCodes: UInt8, Option, CustomStringConvertible {
     case reserved              = 0
     case success               = 1
     case opCodeNotSupported    = 2
     case invalidOperand        = 3
     case procedureNotCompleted = 4
     case parameterOutOfRange   = 5
+    
+    var description: String {
+        switch self {
+        case .reserved:
+            return "Reserved (\(rawValue))"
+        case .success:
+            return "Success! (\(rawValue))"
+        case .opCodeNotSupported:
+            return "Opcode Not Supported (\(rawValue))"
+        case .invalidOperand:
+            return "Invalid Operand (\(rawValue))"
+        case .procedureNotCompleted:
+            return "Not Completed (\(rawValue))"
+        case .parameterOutOfRange:
+            return "Parameter Out of Range (\(rawValue))"
+        }
+    }
 }
