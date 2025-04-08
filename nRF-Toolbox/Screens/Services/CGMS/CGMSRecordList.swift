@@ -39,5 +39,12 @@ struct CGMSRecordList: View {
             }
         }
         .navigationTitle("Glucose Records")
+        .toolbar {
+            Button("", systemImage: "arrow.counterclockwise") {
+                Task {
+                    await viewModel.requestAllRecords()
+                }
+            }
+        }
     }
 }
