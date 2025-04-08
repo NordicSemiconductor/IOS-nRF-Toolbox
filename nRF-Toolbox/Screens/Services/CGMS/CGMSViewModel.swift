@@ -24,8 +24,8 @@ final class CGMSViewModel: ObservableObject {
     private let service: CBService
     private let peripheral: Peripheral
     private var cbCGMMeasurement: CBCharacteristic!
-    private var cbSOCPMeasurement: CBCharacteristic!
-    private var cbRACPMeasurement: CBCharacteristic!
+    private var cbSOCP: CBCharacteristic!
+    private var cbRACP: CBCharacteristic!
     
     private var cancellables: Set<AnyCancellable>
     private let log = NordicLog(category: "CGMSViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
@@ -62,7 +62,7 @@ extension CGMSViewModel {
                     writeData = Data([CGMOpCode.stopStopSession.rawValue])
                 }
                 log.debug("peripheral.writeValueWithResponse(\(writeData.hexEncodedString(options: [.prepend0x, .upperCase])))")
-                try await peripheral.writeValueWithResponse(writeData, for: cbSOCPMeasurement).firstValue
+                try await peripheral.writeValueWithResponse(writeData, for: cbSOCP).firstValue
             } catch {
                 sessionStarted = false
                 log.debug(error.localizedDescription)
@@ -78,7 +78,7 @@ extension CGMSViewModel {
             
             let writeData = Data([RACPOpCode.reportStoredRecords.rawValue, 1])
             log.debug("peripheral.writeValueWithResponse(\(writeData.hexEncodedString(options: [.prepend0x, .upperCase])))")
-            try await peripheral.writeValueWithResponse(writeData, for: cbRACPMeasurement).firstValue
+            try await peripheral.writeValueWithResponse(writeData, for: cbRACP).firstValue
         } catch {
             log.debug(error.localizedDescription)
         }
@@ -105,7 +105,7 @@ extension CGMSViewModel: SupportedServiceViewModel {
         log.debug(#function)
         let characteristics: [Characteristic] = [
             .cgmMeasurement, .recordAccessControlPoint,
-            .cgmSpecificOpsControlPoint, .cgmStatus, .cgmFeature
+            .cgmSpecificOpsControlPoint, .cgmSessionStartTime
         ]
         let cbCharacteristics = try? await peripheral
             .discoverCharacteristics(characteristics.map(\.uuid), for: service)
@@ -113,10 +113,11 @@ extension CGMSViewModel: SupportedServiceViewModel {
             .firstValue
         
         cbCGMMeasurement = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.cgmMeasurement.uuid)
-        cbRACPMeasurement = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.recordAccessControlPoint.uuid)
-        cbSOCPMeasurement = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.cgmSpecificOpsControlPoint.uuid)
+        cbRACP = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.recordAccessControlPoint.uuid)
+        cbSOCP = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.cgmSpecificOpsControlPoint.uuid)
+        let cbSST = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.cgmSessionStartTime.uuid)
         
-        guard let cbCGMMeasurement, let cbRACPMeasurement, let cbSOCPMeasurement else {
+        guard let cbCGMMeasurement, let cbRACP, let cbSOCP, let cbSST else {
             return
         }
         
@@ -129,12 +130,16 @@ extension CGMSViewModel: SupportedServiceViewModel {
 //                // TODO: throw Error
 //            }
             
-            listenToOperations(cbSOCPMeasurement)
-            let socpEnable = try await peripheral.setNotifyValue(true, for: cbSOCPMeasurement).firstValue
+            listenToOperations(cbSOCP)
+            let socpEnable = try await peripheral.setNotifyValue(true, for: cbSOCP).firstValue
             log.debug("CGMS SOCP.setNotifyValue(true): \(socpEnable)")
             
-            listenToRecords(cbRACPMeasurement)
-            let racpEnable = try await peripheral.setNotifyValue(true, for: cbRACPMeasurement).firstValue
+            if let sessionStartTime = try await peripheral.readValue(for: cbSST).firstValue {
+                log.debug("Session Start Time: \(sessionStartTime.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
+            }
+            
+            listenToRecords(cbRACP)
+            let racpEnable = try await peripheral.setNotifyValue(true, for: cbRACP).firstValue
             log.debug("CGMS RACP.setNotifyValue(true): \(racpEnable)")
             
             await requestAllRecords()
@@ -148,7 +153,7 @@ extension CGMSViewModel: SupportedServiceViewModel {
         log.debug(#function)
         peripheral.listenValues(for: measurementCharacteristic)
             .compactMap { [log] data -> CGMSMeasurement? in
-                log.debug("Received Measurement Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing]))")
+                log.debug("Received Measurement Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing])) (\(data.count) bytes)")
                 guard let parse = try? CGMSMeasurement(data: data, sessionStartTime: .now) else {
                     log.error("Unable to parse Measurement Data \(data.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
                     return nil
@@ -204,8 +209,8 @@ extension CGMSViewModel: SupportedServiceViewModel {
     func onDisconnect() {
         log.debug(#function)
         cbCGMMeasurement = nil
-        cbSOCPMeasurement = nil
-        cbRACPMeasurement = nil
+        cbSOCP = nil
+        cbRACP = nil
         cancellables.removeAll()
     }
 }
