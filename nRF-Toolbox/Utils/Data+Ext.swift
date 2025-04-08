@@ -34,23 +34,25 @@ import Foundation
 
 extension Data {
 
-    enum DataError: Swift.Error {
-        case outOfRange
+    enum DataError: Swift.Error, LocalizedError {
+        case outOfBounds
+        case insufficientData
         
-        var readableMessage: String {
-            "Cannot parse data"
+        var errorDescription: String? {
+            switch self {
+            case .outOfBounds:
+                return "Out of Bounds Data"
+            case .insufficientData:
+                return "Insufficient Data (Length)"
+            }
         }
     }
 
-    internal var hexString: String {
-        map { String(format: "%02X", $0) }.joined()
-    }
-    
     func read<R: FixedWidthInteger>(fromOffset offset: Int = 0) throws -> R {
         let length = MemoryLayout<R>.size
 
         guard offset + length <= count else {
-            throw DataError.outOfRange
+            throw DataError.outOfBounds
         }
 
         return subdata(in: offset ..< offset + length).withUnsafeBytes { $0.load(as: R.self) }

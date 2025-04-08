@@ -51,9 +51,10 @@ struct CGMSMeasurement {
     // MARK: init
     
     init(data: Data, sessionStartTime: Date) throws {
-//        guard offset + length <= count else {
-//            throw DataError.outOfRange
-//        }
+        guard data.count >= MemoryLayout<UInt16>.size * 2 else {
+            throw Data.DataError.insufficientData
+        }
+        
         let offset = MemoryLayout<UInt16>.size
         let sFloatBytes = data.subdata(in: offset..<offset + SFloatReserved.byteSize)
         let value = Float(asSFloat: sFloatBytes)
