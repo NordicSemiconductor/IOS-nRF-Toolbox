@@ -57,9 +57,16 @@ struct CGMSView: View {
         }
         .padding(.vertical, 4)
         
+        NavigationLink("View All Records") {
+            CGMSRecordList()
+                .environmentObject(viewModel)
+        }
+        .foregroundStyle(Color.universalAccentColor)
+        
         Button(viewModel.sessionStarted ? "Stop Session" : "Start Session") {
             viewModel.toggleSession()
         }
         .foregroundStyle(Color.universalAccentColor)
+        .centered()
     }
 }

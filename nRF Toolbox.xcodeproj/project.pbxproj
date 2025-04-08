@@ -343,6 +343,7 @@
 		AA01D4922D4A3D38008523CE /* Throughput+Attributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01D4912D4A3D38008523CE /* Throughput+Attributes.swift */; };
 		AA0A78502D4914BE000206F8 /* ThroughputData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0A784F2D4914BE000206F8 /* ThroughputData.swift */; };
 		AA0AEA022CF7438200F93A0B /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0AEA012CF7438200F93A0B /* Assets.swift */; };
+		AA124CD52DA52B8200EBA004 /* CGMSRecordList.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA124CD42DA52B8200EBA004 /* CGMSRecordList.swift */; };
 		AA1BB0582D9D60E000734D20 /* CGMSMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1BB0572D9D60E000734D20 /* CGMSMeasurement.swift */; };
 		AA2C37012D47D88800D41989 /* ThroughputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2C37002D47D88800D41989 /* ThroughputViewModel.swift */; };
 		AA2C37052D47DA1F00D41989 /* ThroughputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2C37042D47DA1F00D41989 /* ThroughputView.swift */; };
@@ -767,6 +768,7 @@
 		AA01D4912D4A3D38008523CE /* Throughput+Attributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Throughput+Attributes.swift"; sourceTree = "<group>"; };
 		AA0A784F2D4914BE000206F8 /* ThroughputData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThroughputData.swift; sourceTree = "<group>"; };
 		AA0AEA012CF7438200F93A0B /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
+		AA124CD42DA52B8200EBA004 /* CGMSRecordList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSRecordList.swift; sourceTree = "<group>"; };
 		AA1BB0572D9D60E000734D20 /* CGMSMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSMeasurement.swift; sourceTree = "<group>"; };
 		AA2C37002D47D88800D41989 /* ThroughputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThroughputViewModel.swift; sourceTree = "<group>"; };
 		AA2C37042D47DA1F00D41989 /* ThroughputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThroughputView.swift; sourceTree = "<group>"; };
@@ -2450,6 +2452,7 @@
 				AAF272F72D9C10F3007B63D3 /* CGMSView.swift */,
 				AAE2C9322D9D378300B398E3 /* CGMOpcodes.swift */,
 				AA1BB0572D9D60E000734D20 /* CGMSMeasurement.swift */,
+				AA124CD42DA52B8200EBA004 /* CGMSRecordList.swift */,
 			);
 			path = CGMS;
 			sourceTree = "<group>";
@@ -2822,6 +2825,7 @@
 				013E5D8C2ADD33EF00B9C475 /* RunningServiceViewModel.swift in Sources */,
 				01FD68D32AE82EB90021101C /* AttributeList.swift in Sources */,
 				0132082A2A5C142100DCEA11 /* ScanResultItem.swift in Sources */,
+				AA124CD52DA52B8200EBA004 /* CGMSRecordList.swift in Sources */,
 				018C053E2AE16682007CE0FE /* SignalChartView.swift in Sources */,
 				01C62AE52B72463F00CDEE31 /* DeviceInformation.swift in Sources */,
 				01C62AE72B72480C00CDEE31 /* DeviceInformationView.swift in Sources */,
