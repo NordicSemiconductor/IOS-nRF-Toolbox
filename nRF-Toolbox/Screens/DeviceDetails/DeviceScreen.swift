@@ -104,7 +104,7 @@ struct DeviceScreen: View {
                 .centered()
             }
         }
-        .task {
+        .taskOnce {
             guard let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id) else { return }
             await deviceVM.discoverSupportedServices()
         }
