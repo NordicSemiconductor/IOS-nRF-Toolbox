@@ -122,6 +122,12 @@ extension CGMSViewModel: SupportedServiceViewModel {
         }
         
         do {
+            let now = Date.now
+            if let dateData = now.toData(options: [.appendTimeZone, .appendDSTOffset]) {
+                log.debug("Sending SST (Session Start Time): \(dateData.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
+                try await peripheral.writeValueWithResponse(dateData, for: cbSST).firstValue
+            }
+            
             listenToMeasurements(cbCGMMeasurement)
             let cgmEnable = try await peripheral.setNotifyValue(true, for: cbCGMMeasurement).firstValue
             log.debug("CGMS Measurement.setNotifyValue(true): \(cgmEnable)")
@@ -133,10 +139,6 @@ extension CGMSViewModel: SupportedServiceViewModel {
             listenToOperations(cbSOCP)
             let socpEnable = try await peripheral.setNotifyValue(true, for: cbSOCP).firstValue
             log.debug("CGMS SOCP.setNotifyValue(true): \(socpEnable)")
-            
-            if let sessionStartTime = try await peripheral.readValue(for: cbSST).firstValue {
-                log.debug("Session Start Time: \(sessionStartTime.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
-            }
             
             listenToRecords(cbRACP)
             let racpEnable = try await peripheral.setNotifyValue(true, for: cbRACP).firstValue
