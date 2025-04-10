@@ -66,11 +66,5 @@ struct CGMSView: View {
                 .environmentObject(viewModel)
         }
         .foregroundStyle(Color.universalAccentColor)
-        
-        Button(viewModel.sessionStarted ? "Stop Session" : "Start Session") {
-            viewModel.toggleSession()
-        }
-        .foregroundStyle(Color.universalAccentColor)
-        .centered()
     }
 }

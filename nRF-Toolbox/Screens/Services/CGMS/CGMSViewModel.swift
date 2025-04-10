@@ -49,28 +49,6 @@ final class CGMSViewModel: ObservableObject {
 
 extension CGMSViewModel {
     
-    // MARK: toggleSession
-    
-    func toggleSession() {
-        Task { @MainActor in
-            sessionStarted.toggle()
-            do {
-                let writeData: Data
-                switch sessionStarted {
-                case true:
-                    writeData = Data([CGMOpCode.startSession.rawValue])
-                case false:
-                    writeData = Data([CGMOpCode.stopStopSession.rawValue])
-                }
-                log.debug("peripheral.writeValueWithResponse(\(writeData.hexEncodedString(options: [.prepend0x, .upperCase])))")
-                try await peripheral.writeValueWithResponse(writeData, for: cbSOCP).firstValue
-            } catch {
-                sessionStarted = false
-                log.debug(error.localizedDescription)
-            }
-        }
-    }
-    
     @MainActor
     func requestAllRecords() async {
         do {
