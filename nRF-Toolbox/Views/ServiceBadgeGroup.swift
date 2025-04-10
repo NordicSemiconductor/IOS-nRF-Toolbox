@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import iOS_Common_Libraries
 import iOS_Bluetooth_Numbers_Database
 
 // MARK: - ServiceBadgeGroup
@@ -31,7 +32,7 @@ struct ServiceBadgeGroup: View {
     var body: some View {
         HStack {
             ForEach(services) {
-                ServiceBadge(image: $0.systemImage, name: $0.name, color: $0.color ?? .primary)
+                BadgeView(image: $0.systemImage, name: $0.name, color: $0.color ?? .primary)
             }
 
             otherServicesBadge(count: services.reduce(0, { $0 + ($1.isSupported ? 0 : 1)  }))
@@ -43,7 +44,7 @@ struct ServiceBadgeGroup: View {
     @ViewBuilder
     func otherServicesBadge(count: Int) -> some View {
         if count > 0 {
-            ServiceBadge(name: otherServiceString(count: count))
+            BadgeView(name: otherServiceString(count: count))
         } else {
             EmptyView()
         }

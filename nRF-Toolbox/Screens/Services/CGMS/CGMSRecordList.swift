@@ -25,7 +25,7 @@ struct CGMSRecordList: View {
                 ForEach(viewModel.records, id: \.sequenceNumber) { value in
                     VStack(alignment: .leading) {
                         HStack {
-                            ServiceBadge(name: "# \(value.sequenceNumber)")
+                            BadgeView(name: "# \(value.sequenceNumber)")
                             
                             Text(value.description)
                                 .frame(maxWidth: .infinity, alignment: .leading)
