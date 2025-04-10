@@ -31,8 +31,15 @@ struct CGMSRecordList: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
                         
-                        Text(value.toStringDate())
-                            .foregroundStyle(.secondary)
+                        HStack {
+                            Circle()
+                                .fill(Color.nordicRed)
+                                .frame(width: 8.0, height: 8.0)
+                            
+                            Text(value.toStringDate())
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .foregroundStyle(.secondary)
+                        }
                     }
                 }
             } header: {
