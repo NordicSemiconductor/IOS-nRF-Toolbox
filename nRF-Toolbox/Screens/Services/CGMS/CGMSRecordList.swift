@@ -23,11 +23,16 @@ struct CGMSRecordList: View {
         List {
             Section {
                 ForEach(viewModel.records, id: \.sequenceNumber) { value in
-                    HStack {
-                        Text("\(value.sequenceNumber):")
+                    VStack(alignment: .leading) {
+                        HStack {
+                            ServiceBadge(name: "# \(value.sequenceNumber)")
+                            
+                            Text(value.description)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
                         
-                        Text(value.description)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                        Text(value.toStringDate())
+                            .foregroundStyle(.secondary)
                     }
                 }
             } header: {

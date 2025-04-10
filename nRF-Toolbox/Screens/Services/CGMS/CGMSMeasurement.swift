@@ -47,6 +47,7 @@ struct CGMSMeasurement {
     
     let measurement: Measurement<UnitConcentrationMass>
     let sequenceNumber: Int
+    private let date: Date
 
     // MARK: init
     
@@ -61,6 +62,16 @@ struct CGMSMeasurement {
         measurement = Measurement<UnitConcentrationMass>(value: Double(value), unit: .milligramsPerDeciliter)
         let unsignedNumber: UInt16 = try data.read(fromOffset: MemoryLayout<UInt16>.size * 2)
         sequenceNumber = Int(unsignedNumber)
+        date = sessionStartTime.addingTimeInterval(TimeInterval(sequenceNumber * 60))
+    }
+    
+    // MARK: API
+    
+    func toStringDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US")
+        dateFormatter.setLocalizedDateFormatFromTemplate("E d MMM yyyy HH:mm:ss")
+        return dateFormatter.string(from: date)
     }
 }
 

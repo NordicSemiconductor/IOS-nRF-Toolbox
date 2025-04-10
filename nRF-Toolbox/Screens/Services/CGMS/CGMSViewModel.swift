@@ -23,6 +23,7 @@ final class CGMSViewModel: ObservableObject {
     
     private let service: CBService
     private let peripheral: Peripheral
+    private var peripheralSessionTime: Date!
     private var cbCGMMeasurement: CBCharacteristic!
     private var cbSOCP: CBCharacteristic!
     private var cbRACP: CBCharacteristic!
@@ -128,6 +129,22 @@ extension CGMSViewModel: SupportedServiceViewModel {
                 try await peripheral.writeValueWithResponse(dateData, for: cbSST).firstValue
             }
             
+            if let sstData = try await peripheral.readValue(for: cbSST).firstValue {
+                log.debug("SST: \(sstData.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
+                peripheralSessionTime = Date(sstData)
+                
+                
+//
+//                let timeZoneBytes = sstData.littleEndianBytes(atOffset: Date.DataSize, as: UInt8.self)
+//                log.debug("Time Zone Byte: \(timeZoneBytes)")
+//                
+//                let dstBytes = sstData.littleEndianBytes(atOffset: Date.DataSize + MemoryLayout<UInt8>.size, as: UInt8.self)
+//                log.debug("DST Byte: \(dstBytes)")
+            } else {
+                log.debug("Unable to read SST. Defaulting to now.")
+                peripheralSessionTime = .now
+            }
+            
             listenToMeasurements(cbCGMMeasurement)
             let cgmEnable = try await peripheral.setNotifyValue(true, for: cbCGMMeasurement).firstValue
             log.debug("CGMS Measurement.setNotifyValue(true): \(cgmEnable)")
@@ -154,9 +171,10 @@ extension CGMSViewModel: SupportedServiceViewModel {
     private func listenToMeasurements(_ measurementCharacteristic: CBCharacteristic) {
         log.debug(#function)
         peripheral.listenValues(for: measurementCharacteristic)
-            .compactMap { [log] data -> CGMSMeasurement? in
+            .compactMap { [log, peripheralSessionTime] data -> CGMSMeasurement? in
                 log.debug("Received Measurement Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing])) (\(data.count) bytes)")
-                guard let parse = try? CGMSMeasurement(data: data, sessionStartTime: .now) else {
+                guard let peripheralSessionTime,
+                      let parse = try? CGMSMeasurement(data: data, sessionStartTime: peripheralSessionTime) else {
                     log.error("Unable to parse Measurement Data \(data.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
                     return nil
                 }
@@ -210,6 +228,7 @@ extension CGMSViewModel: SupportedServiceViewModel {
     
     func onDisconnect() {
         log.debug(#function)
+        peripheralSessionTime = nil
         cbCGMMeasurement = nil
         cbSOCP = nil
         cbRACP = nil
