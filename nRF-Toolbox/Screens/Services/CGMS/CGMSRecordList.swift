@@ -32,9 +32,7 @@ struct CGMSRecordList: View {
                         }
                         
                         HStack {
-                            Circle()
-                                .fill(Color.nordicRed)
-                                .frame(width: 8.0, height: 8.0)
+                            DotView(.nordicRed)
                             
                             Text(value.toStringDate())
                                 .frame(maxWidth: .infinity, alignment: .leading)

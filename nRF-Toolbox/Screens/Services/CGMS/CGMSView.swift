@@ -25,8 +25,12 @@ struct CGMSView: View {
             Text("\(viewModel.records.count) Records")
                 .font(.title2.bold())
             
-            Text("Current Value: \(viewModel.records.last?.description ?? "N/A")")
-                .foregroundStyle(.secondary)
+            HStack {
+                DotView(.nordicRed)
+                
+                Text("Current Value: \(viewModel.records.last?.description ?? "N/A")")
+                    .foregroundStyle(.secondary)
+            }
             
             Chart {
                 ForEach(viewModel.records, id: \.sequenceNumber) { value in
