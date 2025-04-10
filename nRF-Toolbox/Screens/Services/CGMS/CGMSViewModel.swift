@@ -50,11 +50,40 @@ final class CGMSViewModel: ObservableObject {
 extension CGMSViewModel {
     
     @MainActor
-    func requestAllRecords() async {
+    func requestNumberOfRecords() async throws -> Int {
+        log.debug(#function)
         do {
-            records = []
-            records.reserveCapacity(100) // Looks like 100 is the limit.
+            let racpEnable = try await peripheral.setNotifyValue(true, for: cbRACP).firstValue
+            log.debug("CGMS RACP.setNotifyValue(true): \(racpEnable)")
             
+            let writeStoreCountData = Data([RACPOpCode.reportStoredRecordsCount.rawValue, 1])
+            log.debug("peripheral.writeValueWithResponse(\(writeStoreCountData.hexEncodedString(options: [.prepend0x, .upperCase])))")
+            try await peripheral.writeValueWithResponse(writeStoreCountData, for: cbRACP).firstValue
+            
+            let racpData = try await peripheral.listenValues(for: cbRACP).firstValue
+            let offset = MemoryLayout<UInt16>.size
+            let numberOfRecords: UInt8? = try? racpData.read(fromOffset: offset)
+            log.debug("Response \(racpData.hexEncodedString(options: [.prepend0x, .upperCase]))")
+            
+            let racpDisable = try await peripheral.setNotifyValue(false, for: cbRACP).firstValue
+            log.debug("CGMS RACP.setNotifyValue(false): \(racpDisable)")
+            
+            if let numberOfRecords {
+                log.debug("Number of Records: \(numberOfRecords)")
+                return Int(numberOfRecords)
+            }
+        } catch {
+            log.debug(error.localizedDescription)
+            throw error
+        }
+        
+        throw ReadableError(title: #function, message: "Unable to Read Number of Records")
+    }
+    
+    @MainActor
+    func requestAllRecords() async {
+        log.debug(#function)
+        do {
             let writeData = Data([RACPOpCode.reportStoredRecords.rawValue, 1])
             log.debug("peripheral.writeValueWithResponse(\(writeData.hexEncodedString(options: [.prepend0x, .upperCase])))")
             try await peripheral.writeValueWithResponse(writeData, for: cbRACP).firstValue
@@ -80,6 +109,7 @@ enum RACPOpCode: UInt8 {
 
 extension CGMSViewModel: SupportedServiceViewModel {
     
+    @MainActor
     func onConnect() async {
         log.debug(#function)
         let characteristics: [Characteristic] = [
@@ -96,7 +126,7 @@ extension CGMSViewModel: SupportedServiceViewModel {
         cbSOCP = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.cgmSpecificOpsControlPoint.uuid)
         let cbSST = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.cgmSessionStartTime.uuid)
         
-        guard let cbCGMMeasurement, let cbRACP, let cbSOCP, let cbSST else {
+        guard let cbCGMMeasurement, let cbSOCP, let cbSST else {
             return
         }
         
@@ -110,14 +140,6 @@ extension CGMSViewModel: SupportedServiceViewModel {
             if let sstData = try await peripheral.readValue(for: cbSST).firstValue {
                 log.debug("SST: \(sstData.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
                 peripheralSessionTime = Date(sstData)
-                
-                
-//
-//                let timeZoneBytes = sstData.littleEndianBytes(atOffset: Date.DataSize, as: UInt8.self)
-//                log.debug("Time Zone Byte: \(timeZoneBytes)")
-//                
-//                let dstBytes = sstData.littleEndianBytes(atOffset: Date.DataSize + MemoryLayout<UInt8>.size, as: UInt8.self)
-//                log.debug("DST Byte: \(dstBytes)")
             } else {
                 log.debug("Unable to read SST. Defaulting to now.")
                 peripheralSessionTime = .now
@@ -135,9 +157,10 @@ extension CGMSViewModel: SupportedServiceViewModel {
             let socpEnable = try await peripheral.setNotifyValue(true, for: cbSOCP).firstValue
             log.debug("CGMS SOCP.setNotifyValue(true): \(socpEnable)")
             
-            listenToRecords(cbRACP)
-            let racpEnable = try await peripheral.setNotifyValue(true, for: cbRACP).firstValue
-            log.debug("CGMS RACP.setNotifyValue(true): \(racpEnable)")
+            records = []
+            if let numberOfRecords = try? await requestNumberOfRecords() {
+                records.reserveCapacity(numberOfRecords)
+            }
             
             await requestAllRecords()
         } catch {
@@ -180,26 +203,6 @@ extension CGMSViewModel: SupportedServiceViewModel {
                 print("Completion")
             }, receiveValue: { [log] newValue in
                 log.debug("Received new Ops Control Point Values")
-            })
-            .store(in: &cancellables)
-    }
-    
-    private func listenToRecords(_ recordCharacteristic: CBCharacteristic) {
-        log.debug(#function)
-        peripheral.listenValues(for: recordCharacteristic)
-            .map { [log] data in
-                log.debug("Received Records Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing]))")
-                let offset = MemoryLayout<UInt16>.size
-                if let response = try? data.read(fromOffset: offset) as UInt8,
-                   let responseCode = CGMOpcodeResponseCodes(rawValue: response) {
-                    log.debug("Response Code: \(responseCode)")
-                }
-                return data
-            }
-            .sink(receiveCompletion: { _ in
-                print("Completion")
-            }, receiveValue: { [log] newValue in
-                log.debug("Received new Record Values")
             })
             .store(in: &cancellables)
     }
