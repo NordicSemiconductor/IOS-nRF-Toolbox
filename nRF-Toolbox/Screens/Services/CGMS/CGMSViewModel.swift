@@ -54,7 +54,7 @@ extension CGMSViewModel {
         log.debug(#function)
         do {
             let racpEnable = try await peripheral.setNotifyValue(true, for: cbRACP).firstValue
-            log.debug("CGMS RACP.setNotifyValue(true): \(racpEnable)")
+            log.debug("\(#function) RACP.setNotifyValue(true): \(racpEnable)")
             
             let writeStoreCountData = Data([RACPOpCode.reportStoredRecordsCount.rawValue, 1])
             log.debug("peripheral.writeValueWithResponse(\(writeStoreCountData.hexEncodedString(options: [.prepend0x, .upperCase])))")
@@ -66,7 +66,7 @@ extension CGMSViewModel {
             log.debug("Response \(racpData.hexEncodedString(options: [.prepend0x, .upperCase]))")
             
             let racpDisable = try await peripheral.setNotifyValue(false, for: cbRACP).firstValue
-            log.debug("CGMS RACP.setNotifyValue(false): \(racpDisable)")
+            log.debug("\(#function) RACP.setNotifyValue(false): \(racpDisable)")
             
             if let numberOfRecords {
                 log.debug("Number of Records: \(numberOfRecords)")
@@ -74,6 +74,7 @@ extension CGMSViewModel {
             }
         } catch {
             log.debug(error.localizedDescription)
+            let _ = try await peripheral.setNotifyValue(false, for: cbRACP).firstValue
             throw error
         }
         
@@ -84,6 +85,11 @@ extension CGMSViewModel {
     func requestAllRecords() async {
         log.debug(#function)
         do {
+            records = []
+            if let numberOfRecords = try? await requestNumberOfRecords() {
+                records.reserveCapacity(numberOfRecords)
+            }
+            
             let writeData = Data([RACPOpCode.reportStoredRecords.rawValue, 1])
             log.debug("peripheral.writeValueWithResponse(\(writeData.hexEncodedString(options: [.prepend0x, .upperCase])))")
             try await peripheral.writeValueWithResponse(writeData, for: cbRACP).firstValue
@@ -156,11 +162,6 @@ extension CGMSViewModel: SupportedServiceViewModel {
             listenToOperations(cbSOCP)
             let socpEnable = try await peripheral.setNotifyValue(true, for: cbSOCP).firstValue
             log.debug("CGMS SOCP.setNotifyValue(true): \(socpEnable)")
-            
-            records = []
-            if let numberOfRecords = try? await requestNumberOfRecords() {
-                records.reserveCapacity(numberOfRecords)
-            }
             
             await requestAllRecords()
         } catch {
