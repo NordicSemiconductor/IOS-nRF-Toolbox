@@ -32,6 +32,7 @@ final class UARTViewModel: ObservableObject {
     // MARK: Published
     
     @Published private(set) var messages: [UARTMessage] = []
+    @Published var newMessage: String = ""
     
     // MARK: init
     
@@ -75,12 +76,46 @@ extension UARTViewModel: SupportedServiceViewModel {
         }
     }
     
-    private func listenToIncomingMessages(_ rxCharacteristic: CBCharacteristic) {
+    func onDisconnect() {
+        log.debug(#function)
+        uartRX = nil
+        uartTX = nil
+        cancellables.removeAll()
+    }
+}
+
+// MARK: API
+
+extension UARTViewModel {
+    
+    @MainActor
+    func sendMessage() async {
+        guard let uartRX else { return }
+        log.debug(#function)
+        
+        do {
+            guard let data = newMessage.data(using: .utf8) else {
+                throw Err.unableToEncodeString(newMessage)
+            }
+            let uartMessage = UARTMessage(text: newMessage, source: .user)
+            messages.append(uartMessage)
+            newMessage = ""
+            
+            try await peripheral.writeValueWithResponse(data, for: uartRX).firstValue
+        } catch {
+            log.debug("\(#function) Error: \(error.localizedDescription)")
+        }
+    }
+    
+    func listenToIncomingMessages(_ rxCharacteristic: CBCharacteristic) {
         log.debug(#function)
         peripheral.listenValues(for: rxCharacteristic)
             .compactMap { [log] data -> UARTMessage? in
                 log.debug("Received Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing])) (\(data.count) bytes)")
-                return nil
+                guard let string = String(data: data, encoding: .utf8) else {
+                    return nil
+                }
+                return UARTMessage(text: string, source: .other)
             }
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { _ in
@@ -90,13 +125,6 @@ extension UARTViewModel: SupportedServiceViewModel {
             })
             .store(in: &cancellables)
     }
-    
-    func onDisconnect() {
-        log.debug(#function)
-        uartRX = nil
-        uartTX = nil
-        cancellables.removeAll()
-    }
 }
 
 // MARK: - Error
@@ -105,6 +133,7 @@ extension UARTViewModel {
     
     enum Err: Error {
         case unableToTurnOnNotifications
+        case unableToEncodeString(_ string: String)
     }
 }
 
