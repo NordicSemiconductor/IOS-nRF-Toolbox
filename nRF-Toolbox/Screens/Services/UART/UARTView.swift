@@ -36,8 +36,7 @@ struct UARTView: View {
         
         ForEach(viewModel.messages.prefix(10), id: \.timestamp) { message in
             UARTMessageView(message)
-            
-            .listRowSeparator(.hidden)
+                .listRowSeparator(.hidden)
         }
         
         Text("Message Count: \(viewModel.messages.count)")

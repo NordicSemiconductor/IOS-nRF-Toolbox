@@ -34,7 +34,7 @@ struct UARTMessage {
         case .user:
             return .nordicBlue
         case .other:
-            return .nordicGrass
+            return .green
         }
     }
 }

@@ -33,14 +33,32 @@ struct UARTMessageView: View {
     
     var body: some View {
         HStack {
-            VStack(alignment: message.source == .user ? .leading : .trailing) {
-                Text(Self.dateFormatter.string(from: message.timestamp))
-                    .font(.caption)
+            if message.source == .user {
+                Spacer()
                 
-                Text(message.text)
-                    .foregroundStyle(message.associatedColor)
+                VStack(alignment: .trailing) {
+                    Text(Self.dateFormatter.string(from: message.timestamp))
+                        .font(.caption)
+                    
+                    Text(message.text)
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 10)
+                        .background(message.associatedColor.opacity(0.75), in: RoundedRectangle(cornerRadius: 8.0, style: .continuous))
+                }
+            } else {
+                VStack(alignment: .leading) {
+                    Text(Self.dateFormatter.string(from: message.timestamp))
+                        .font(.caption)
+                    
+                    Text(message.text)
+                        .padding(.top, 14)
+                        .padding(.horizontal, 10)
+                        .background(message.associatedColor.opacity(0.75), in: RoundedRectangle(cornerRadius: 8.0, style: .continuous))
+                }
+                
+                Spacer()
             }
-            .frame(maxWidth: .infinity)
         }
+//        .frame(maxWidth: .infinity)
     }
 }
