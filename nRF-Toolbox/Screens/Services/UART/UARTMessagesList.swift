@@ -1,0 +1,40 @@
+//
+//  UARTMessagesList.swift
+//  nRF-Toolbox
+//
+//  Created by Dinesh Harjani on 14/4/25.
+//  Copyright © 2025 Nordic Semiconductor. All rights reserved.
+//
+
+import SwiftUI
+
+// MARK: - UARTMessagesList
+
+struct UARTMessagesList: View {
+    
+    // MARK: EnvironmentObject
+    
+    @EnvironmentObject private var viewModel: UARTViewModel
+    
+    // MARK: view
+    
+    var body: some View {
+        List {
+            Section("Oldest First") {
+                ForEach(viewModel.messages, id: \.timestamp) { message in
+                    UARTMessageView(message)
+                        .listRowSeparator(.hidden)
+                }
+            }
+        }
+        .navigationTitle("UART Messages")
+        .toolbar {
+            Button("", systemImage: "list.bullet.rectangle.portrait") {
+                Task { @MainActor in
+                    viewModel.clearReceivedMessages()
+                }
+            }
+        }
+    }
+}
+

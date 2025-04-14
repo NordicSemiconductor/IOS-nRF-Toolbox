@@ -34,11 +34,15 @@ struct UARTView: View {
             .foregroundStyle(Color.universalAccentColor)
         }
         
-        ForEach(viewModel.messages.prefix(10), id: \.timestamp) { message in
+        ForEach(viewModel.messages.prefix(6), id: \.timestamp) { message in
             UARTMessageView(message)
                 .listRowSeparator(.hidden)
         }
         
-        Text("Message Count: \(viewModel.messages.count)")
+        NavigationLink("All Messages (\(viewModel.messages.count))") {
+            UARTMessagesList()
+                .environmentObject(viewModel)
+        }
+        .foregroundStyle(Color.universalAccentColor)
     }
 }

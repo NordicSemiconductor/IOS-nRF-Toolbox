@@ -125,6 +125,11 @@ extension UARTViewModel {
             })
             .store(in: &cancellables)
     }
+    
+    @MainActor
+    func clearReceivedMessages() {
+        messages = []
+    }
 }
 
 // MARK: - Error
