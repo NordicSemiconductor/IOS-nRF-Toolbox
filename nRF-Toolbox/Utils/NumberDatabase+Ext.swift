@@ -47,6 +47,7 @@ extension Service {
         .bloodPressure,
         .glucose,
         .continuousGlucoseMonitoring,
+        .nordicsemiUART,
         .healthThermometer,
         .batteryService,
         .deviceInformation,

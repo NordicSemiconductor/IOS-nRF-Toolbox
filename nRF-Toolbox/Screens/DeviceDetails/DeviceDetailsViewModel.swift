@@ -69,6 +69,10 @@ protocol SupportedServiceViewModel {
     var cgmsViewModel: CGMSViewModel? {
         supportedServiceViewModels.firstOfType(type: CGMSViewModel.self)
     }
+    
+    var uartViewModel: UARTViewModel? {
+        supportedServiceViewModels.firstOfType(type: UARTViewModel.self)
+    }
 
     init(cbPeripheral: CBPeripheral, centralManager: CentralManager) {
         self.peripheral = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
@@ -141,6 +145,8 @@ extension DeviceDetailsViewModel {
                     supportedServiceViewModels.append(ThroughputViewModel(peripheral, service: service))
                 case .continuousGlucoseMonitoringService:
                     supportedServiceViewModels.append(CGMSViewModel(peripheral: peripheral, cgmsService: service))
+                case .nordicsemiUART:
+                    supportedServiceViewModels.append(UARTViewModel(peripheral: peripheral, uartService: service))
                 case .deviceInformation:
                     environment.deviceInfo = try await DeviceInformation(service, peripheral: peripheral)
                 default:

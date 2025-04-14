@@ -75,6 +75,13 @@ struct DeviceScreen: View {
                             .environmentObject(cgmsViewModel)
                     }
                 }
+                
+                if let uartViewModel = deviceVM.uartViewModel {
+                    Section("UART") {
+                        UARTView()
+                            .environmentObject(uartViewModel)
+                    }
+                }
             }
             
             Section("Troubleshooting") {

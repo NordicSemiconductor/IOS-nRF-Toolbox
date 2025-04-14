@@ -367,6 +367,8 @@
 		AA95CBD12D084C8B00D1FBC6 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA95CBD02D084C8B00D1FBC6 /* Error.swift */; };
 		AA95CBD32D085AFA00D1FBC6 /* CyclingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA95CBD22D085AFA00D1FBC6 /* CyclingFeature.swift */; };
 		AA95CBD42D085AFA00D1FBC6 /* CyclingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA95CBD22D085AFA00D1FBC6 /* CyclingFeature.swift */; };
+		AAA04F1B2DAD1B4F002DAB42 /* UARTViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA04F192DAD1B4F002DAB42 /* UARTViewModel.swift */; };
+		AAA04F1D2DAD1B5C002DAB42 /* UARTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA04F1C2DAD1B5C002DAB42 /* UARTView.swift */; };
 		AAC0D99F2D80514900F25096 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC0D99E2D80514900F25096 /* AboutView.swift */; };
 		AAD1E3EC2D81E5AD00E5121E /* DisclosureAttributeItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD1E3EB2D81E5AD00E5121E /* DisclosureAttributeItemView.swift */; };
 		AAE2C9332D9D378300B398E3 /* CGMOpcodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE2C9322D9D378300B398E3 /* CGMOpcodes.swift */; };
@@ -785,6 +787,8 @@
 		AA95CBCE2D0846E800D1FBC6 /* CyclingServiceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingServiceViewModel.swift; sourceTree = "<group>"; };
 		AA95CBD02D084C8B00D1FBC6 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		AA95CBD22D085AFA00D1FBC6 /* CyclingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingFeature.swift; sourceTree = "<group>"; };
+		AAA04F192DAD1B4F002DAB42 /* UARTViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTViewModel.swift; sourceTree = "<group>"; };
+		AAA04F1C2DAD1B5C002DAB42 /* UARTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTView.swift; sourceTree = "<group>"; };
 		AAC0D99E2D80514900F25096 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		AAD1E3EB2D81E5AD00E5121E /* DisclosureAttributeItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureAttributeItemView.swift; sourceTree = "<group>"; };
 		AAE2C9322D9D378300B398E3 /* CGMOpcodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMOpcodes.swift; sourceTree = "<group>"; };
@@ -1012,6 +1016,7 @@
 		013E5D872ADD337300B9C475 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				AAA04F1A2DAD1B4F002DAB42 /* UART */,
 				AAF272F22D9BF54D007B63D3 /* CGMS */,
 				AA2C36FF2D47D78500D41989 /* Throughput */,
 				AA479EAB2D0B24C70052E801 /* HealthThermometer */,
@@ -2437,6 +2442,15 @@
 			path = Cycling;
 			sourceTree = "<group>";
 		};
+		AAA04F1A2DAD1B4F002DAB42 /* UART */ = {
+			isa = PBXGroup;
+			children = (
+				AAA04F192DAD1B4F002DAB42 /* UARTViewModel.swift */,
+				AAA04F1C2DAD1B5C002DAB42 /* UARTView.swift */,
+			);
+			path = UART;
+			sourceTree = "<group>";
+		};
 		AAC0D99D2D80513C00F25096 /* About */ = {
 			isa = PBXGroup;
 			children = (
@@ -2848,6 +2862,7 @@
 				01DEB4A82A65E90C00D4C1E8 /* Data+Ext.swift in Sources */,
 				0164A4712AD593B40093E501 /* ScanResultList.swift in Sources */,
 				013E5D8F2ADFDDC600B9C475 /* NumberedColumnGrid.swift in Sources */,
+				AAA04F1D2DAD1B5C002DAB42 /* UARTView.swift in Sources */,
 				01AB7B752A77BFB400AEDDCD /* CBUUID+Ext.swift in Sources */,
 				AAC0D99F2D80514900F25096 /* AboutView.swift in Sources */,
 				AA95CBD12D084C8B00D1FBC6 /* Error.swift in Sources */,
@@ -2861,6 +2876,7 @@
 				01407CB92A65417900A5B279 /* CBMPeripheralPreview.swift in Sources */,
 				AA0A78502D4914BE000206F8 /* ThroughputData.swift in Sources */,
 				01CEB4272AE9100300945105 /* HeartRateViewModel.swift in Sources */,
+				AAA04F1B2DAD1B4F002DAB42 /* UARTViewModel.swift in Sources */,
 				0130DABA2A8B87E100C332BA /* HUD.swift in Sources */,
 				0108E8812AF169B800C8B096 /* Battery+Preview.swift in Sources */,
 				0164A4862AD84A170093E501 /* DeviceDetailsViewModel.swift in Sources */,
@@ -3206,8 +3222,8 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -3261,8 +3277,8 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -3315,8 +3331,8 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
