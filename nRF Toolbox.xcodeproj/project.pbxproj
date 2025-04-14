@@ -370,6 +370,7 @@
 		AAA04F1B2DAD1B4F002DAB42 /* UARTViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA04F192DAD1B4F002DAB42 /* UARTViewModel.swift */; };
 		AAA04F1D2DAD1B5C002DAB42 /* UARTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA04F1C2DAD1B5C002DAB42 /* UARTView.swift */; };
 		AAA04F1F2DAD1CA8002DAB42 /* UARTMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA04F1E2DAD1CA8002DAB42 /* UARTMessage.swift */; };
+		AAA04F212DAD3818002DAB42 /* UARTMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA04F202DAD3818002DAB42 /* UARTMessageView.swift */; };
 		AAC0D99F2D80514900F25096 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC0D99E2D80514900F25096 /* AboutView.swift */; };
 		AAD1E3EC2D81E5AD00E5121E /* DisclosureAttributeItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD1E3EB2D81E5AD00E5121E /* DisclosureAttributeItemView.swift */; };
 		AAE2C9332D9D378300B398E3 /* CGMOpcodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE2C9322D9D378300B398E3 /* CGMOpcodes.swift */; };
@@ -791,6 +792,7 @@
 		AAA04F192DAD1B4F002DAB42 /* UARTViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTViewModel.swift; sourceTree = "<group>"; };
 		AAA04F1C2DAD1B5C002DAB42 /* UARTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTView.swift; sourceTree = "<group>"; };
 		AAA04F1E2DAD1CA8002DAB42 /* UARTMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMessage.swift; sourceTree = "<group>"; };
+		AAA04F202DAD3818002DAB42 /* UARTMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMessageView.swift; sourceTree = "<group>"; };
 		AAC0D99E2D80514900F25096 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		AAD1E3EB2D81E5AD00E5121E /* DisclosureAttributeItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureAttributeItemView.swift; sourceTree = "<group>"; };
 		AAE2C9322D9D378300B398E3 /* CGMOpcodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMOpcodes.swift; sourceTree = "<group>"; };
@@ -2450,6 +2452,7 @@
 				AAA04F192DAD1B4F002DAB42 /* UARTViewModel.swift */,
 				AAA04F1C2DAD1B5C002DAB42 /* UARTView.swift */,
 				AAA04F1E2DAD1CA8002DAB42 /* UARTMessage.swift */,
+				AAA04F202DAD3818002DAB42 /* UARTMessageView.swift */,
 			);
 			path = UART;
 			sourceTree = "<group>";
@@ -2826,6 +2829,7 @@
 			files = (
 				01C81AD72A5D8FEA0011B41E /* ReadableError.swift in Sources */,
 				013E5D912ADFDF1300B9C475 /* Array+Ext.swift in Sources */,
+				AAA04F212DAD3818002DAB42 /* UARTMessageView.swift in Sources */,
 				AA1BB0582D9D60E000734D20 /* CGMSMeasurement.swift in Sources */,
 				AAA04F1F2DAD1CA8002DAB42 /* UARTMessage.swift in Sources */,
 				0164A4812AD8330E0093E501 /* ServiceBadgeGroup.swift in Sources */,
