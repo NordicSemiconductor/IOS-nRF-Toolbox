@@ -59,11 +59,13 @@ struct SidebarView: View {
                 Link(destination: URL(string:  "https://github.com/NordicSemiconductor/IOS-nRF-Toolbox")!) {
                     Label("Source Code (GitHub)", systemImage: "keyboard")
                         .labelStyle(.colorIconOnly(.universalAccentColor))
+                        .tint(.primarylabel)
                 }
                 
-                Link(destination: URL(string:  "https://devzone.nordicsemi.com/")!) {
+                Link(destination: URL(string: "https://devzone.nordicsemi.com/")!) {
                     Label("Help (Nordic DevZone)", systemImage: "lifepreserver")
                         .labelStyle(.colorIconOnly(.universalAccentColor))
+                        .tint(.primarylabel)
                 }
             } header: {
                 Text("Links")
