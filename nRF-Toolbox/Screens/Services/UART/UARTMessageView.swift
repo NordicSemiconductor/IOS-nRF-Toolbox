@@ -17,7 +17,9 @@ struct UARTMessageView: View {
     private static let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US")
-        dateFormatter.setLocalizedDateFormatFromTemplate("d MMM yyyy HH:mm:ss")
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .short
+        dateFormatter.doesRelativeDateFormatting = true
         return dateFormatter
     }()
     
@@ -40,25 +42,42 @@ struct UARTMessageView: View {
                     Text(Self.dateFormatter.string(from: message.timestamp))
                         .font(.caption)
                     
-                    Text(message.text)
-                        .padding(.vertical, 8)
-                        .padding(.horizontal, 10)
-                        .background(message.associatedColor.opacity(0.75), in: RoundedRectangle(cornerRadius: 8.0, style: .continuous))
+                    UARTMessageBubbleView(message)
                 }
             } else {
                 VStack(alignment: .leading) {
                     Text(Self.dateFormatter.string(from: message.timestamp))
                         .font(.caption)
                     
-                    Text(message.text)
-                        .padding(.top, 14)
-                        .padding(.horizontal, 10)
-                        .background(message.associatedColor.opacity(0.75), in: RoundedRectangle(cornerRadius: 8.0, style: .continuous))
+                    UARTMessageBubbleView(message)
                 }
                 
                 Spacer()
             }
         }
-//        .frame(maxWidth: .infinity)
+    }
+}
+
+// MARK: - UARTMessageBubbleView
+
+struct UARTMessageBubbleView: View {
+    
+    // MARK: Private Properties
+    
+    private let message: UARTMessage
+    
+    // MARK: init
+    
+    init(_ message: UARTMessage) {
+        self.message = message
+    }
+    
+    // MARK: view
+    
+    var body: some View {
+        Text(message.text)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 6)
+            .background(message.associatedColor.opacity(0.75), in: RoundedRectangle(cornerRadius: 20.0, style: .continuous))
     }
 }

@@ -27,6 +27,8 @@ struct UARTMessagesList: View {
                 }
             }
         }
+        .listRowInsets(EdgeInsets(top: 0.0, leading: 0.0, bottom: 0.0, trailing: 0.0))
+        .listRowSpacing(0.0)
         .navigationTitle("UART Messages")
         .toolbar {
             Button("", systemImage: "list.bullet.rectangle.portrait") {
