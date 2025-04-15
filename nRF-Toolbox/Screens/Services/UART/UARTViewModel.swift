@@ -115,11 +115,12 @@ extension UARTViewModel {
                 guard let string = String(data: data, encoding: .utf8) else {
                     return nil
                 }
-                return UARTMessage(text: string, source: .other)
+                let cleanString = string.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
+                return UARTMessage(text: cleanString, source: .other)
             }
             .receive(on: RunLoop.main)
-            .sink(receiveCompletion: { _ in
-                print("Completion")
+            .sink(receiveCompletion: { [log] _ in
+                log.debug("Completion")
             }, receiveValue: { newValue in
                 self.messages.append(newValue)
             })
