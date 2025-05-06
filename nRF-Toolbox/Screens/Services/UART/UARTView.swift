@@ -20,14 +20,7 @@ struct UARTView: View {
     // MARK: view
     
     var body: some View {
-        ForEach(viewModel.messages.prefix(4), id: \.timestamp) { message in
-            UARTMessageView(message)
-                .listRowSeparator(.hidden)
-        }
-        
-        if viewModel.messages.isEmpty {
-            Text("No messages so far")
-        }
+        UARTMessagesPreview()
         
         HStack {
             TextField("UART Message", text: $viewModel.newMessage, prompt: Text("Write new message here"))
