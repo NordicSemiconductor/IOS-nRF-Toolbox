@@ -44,7 +44,7 @@ struct UARTMessageView: View {
                             .font(.caption)
                     }
                     
-                    UARTMessageBubbleView(message)
+                    message
                 }
             } else {
                 VStack(alignment: .leading) {
@@ -53,35 +53,11 @@ struct UARTMessageView: View {
                             .font(.caption)
                     }
                     
-                    UARTMessageBubbleView(message)
+                    message
                 }
                 
                 Spacer()
             }
         }
-    }
-}
-
-// MARK: - UARTMessageBubbleView
-
-struct UARTMessageBubbleView: View {
-    
-    // MARK: Private Properties
-    
-    private let message: UARTMessage
-    
-    // MARK: init
-    
-    init(_ message: UARTMessage) {
-        self.message = message
-    }
-    
-    // MARK: view
-    
-    var body: some View {
-        Text(message.text)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 6)
-            .background(message.associatedColor.opacity(0.75), in: RoundedRectangle(cornerRadius: 20.0, style: .continuous))
     }
 }

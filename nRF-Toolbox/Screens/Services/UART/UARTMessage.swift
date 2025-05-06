@@ -28,23 +28,37 @@ struct UARTMessage {
         let now = Date.now
         self.timestamp = now
         if let previousMessage {
-            let previousDateComponents = Calendar.current.dateComponents([.minute],from: previousMessage.timestamp)
-            let nowComponents = Calendar.current.dateComponents([.minute], from: now)
-            self.showTimestamp = previousDateComponents.minute != nowComponents.minute
+            let previousDateComponents = Calendar.current.dateComponents([.hour, .minute],from: previousMessage.timestamp)
+            let nowComponents = Calendar.current.dateComponents([.hour, .minute], from: now)
+            self.showTimestamp = previousDateComponents.hour != nowComponents.hour
+                || previousDateComponents.minute != nowComponents.minute
         } else {
             self.showTimestamp = true
         }
     }
     
-    // MARK: API
+    // MARK: Private
     
-    var associatedColor: Color {
+    private var associatedColor: Color {
         switch source {
         case .user:
             return .nordicBlue
         case .other:
             return .green
         }
+    }
+}
+
+// MARK: - View
+
+extension UARTMessage: View {
+    
+    var body: some View {
+        Text(text)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 6)
+            .background(associatedColor.opacity(0.75),
+                        in: RoundedRectangle(cornerRadius: 18.0, style: .continuous))
     }
 }
 
