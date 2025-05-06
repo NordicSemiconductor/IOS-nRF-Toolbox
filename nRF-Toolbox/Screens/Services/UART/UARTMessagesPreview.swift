@@ -25,7 +25,8 @@ struct UARTMessagesPreview: View {
         }
         
         if viewModel.messages.isEmpty {
-            Text("No messages so far")
+            Label("No messages", systemImage: "info.circle")
+                .foregroundStyle(.secondary)
         }
     }
 }
