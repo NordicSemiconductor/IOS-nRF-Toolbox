@@ -97,7 +97,8 @@ extension UARTViewModel {
             guard let data = newMessage.data(using: .utf8) else {
                 throw Err.unableToEncodeString(newMessage)
             }
-            let uartMessage = UARTMessage(text: newMessage, source: .user)
+            let uartMessage = UARTMessage(text: newMessage, source: .user,
+                                          previousMessage: messages.last)
             messages.append(uartMessage)
             newMessage = ""
             
@@ -116,13 +117,14 @@ extension UARTViewModel {
                     return nil
                 }
                 let cleanString = string.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
-                return UARTMessage(text: cleanString, source: .other)
+                return UARTMessage(text: cleanString, source: .other, previousMessage: nil)
             }
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [log] _ in
                 log.debug("Completion")
-            }, receiveValue: { newValue in
-                self.messages.append(newValue)
+            }, receiveValue: { incoming in
+                let newMessage = UARTMessage(text: incoming.text, source: incoming.source, previousMessage: self.messages.last)
+                self.messages.append(newMessage)
             })
             .store(in: &cancellables)
     }

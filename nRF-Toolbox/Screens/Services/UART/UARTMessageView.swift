@@ -39,15 +39,19 @@ struct UARTMessageView: View {
                 Spacer()
                 
                 VStack(alignment: .trailing) {
-                    Text(Self.dateFormatter.string(from: message.timestamp))
-                        .font(.caption)
+                    if message.showTimestamp {
+                        Text(Self.dateFormatter.string(from: message.timestamp))
+                            .font(.caption)
+                    }
                     
                     UARTMessageBubbleView(message)
                 }
             } else {
                 VStack(alignment: .leading) {
-                    Text(Self.dateFormatter.string(from: message.timestamp))
-                        .font(.caption)
+                    if message.showTimestamp {
+                        Text(Self.dateFormatter.string(from: message.timestamp))
+                            .font(.caption)
+                    }
                     
                     UARTMessageBubbleView(message)
                 }

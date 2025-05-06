@@ -18,13 +18,22 @@ struct UARTMessage {
     let text: String
     let source: Source
     let timestamp: Date
+    let showTimestamp: Bool
     
     // MARK: init
     
-    init(text: String, source: Source) {
+    init(text: String, source: Source, previousMessage: Self?) {
         self.text = text
         self.source = source
-        self.timestamp = .now
+        let now = Date.now
+        self.timestamp = now
+        if let previousMessage {
+            let previousDateComponents = Calendar.current.dateComponents([.minute],from: previousMessage.timestamp)
+            let nowComponents = Calendar.current.dateComponents([.minute], from: now)
+            self.showTimestamp = previousDateComponents.minute != nowComponents.minute
+        } else {
+            self.showTimestamp = true
+        }
     }
     
     // MARK: API
