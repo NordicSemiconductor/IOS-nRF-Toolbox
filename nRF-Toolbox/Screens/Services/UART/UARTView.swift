@@ -20,7 +20,10 @@ struct UARTView: View {
     // MARK: view
     
     var body: some View {
-        UARTMessagesPreview()
+        Text("Latest Messages")
+            .font(.title2.bold())
+        
+        UARTMessagesPreview(viewModel.messages.suffix(4))
         
         HStack {
             TextField("UART Message", text: $viewModel.newMessage, prompt: Text("Write new message here"))

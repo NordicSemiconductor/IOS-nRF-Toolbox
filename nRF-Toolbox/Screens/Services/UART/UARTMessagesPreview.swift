@@ -16,10 +16,25 @@ struct UARTMessagesPreview: View {
     
     @EnvironmentObject private var viewModel: UARTViewModel
     
+    // MARK: Properties
+    
+    private let messages: [UARTMessage]
+    
+    // MARK: init
+    
+    init(_ messages: [UARTMessage]) {
+        var modified = messages
+        if let firstItem = messages.first {
+            modified[0] = UARTMessage(text: firstItem.text, source: firstItem.source,
+                                      previousMessage: nil)
+        }
+        self.messages = modified
+    }
+    
     // MARK: view
     
     var body: some View {
-        ForEach(viewModel.messages.prefix(4), id: \.timestamp) { message in
+        ForEach(messages, id: \.timestamp) { message in
             UARTMessageView(message)
                 .listRowSeparator(.hidden)
         }
@@ -27,6 +42,7 @@ struct UARTMessagesPreview: View {
         if viewModel.messages.isEmpty {
             Label("No messages", systemImage: "info.circle")
                 .foregroundStyle(.secondary)
+                .listRowSeparator(.hidden)
         }
     }
 }
