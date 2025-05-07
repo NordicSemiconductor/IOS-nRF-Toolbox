@@ -19,7 +19,7 @@ struct UARTMessagesList: View {
     // MARK: view
     
     var body: some View {
-        VStack {
+        ScrollViewReader { proxy in
             List {
                 Section("Oldest First") {
                     ForEach(viewModel.messages, id: \.timestamp) { message in
@@ -28,6 +28,12 @@ struct UARTMessagesList: View {
                     }
                     
                     Text("...")
+                        .id(Date.Pongo)
+                        .onChange(of: viewModel.messages, initial: false) { _, _  in
+                            withAnimation {
+                                proxy.scrollTo(Date.Pongo, anchor: .bottom)
+                            }
+                        }
                 }
             }
             .listRowInsets(EdgeInsets(top: 0.0, leading: 0.0, bottom: 0.0, trailing: 0.0))
@@ -45,5 +51,12 @@ struct UARTMessagesList: View {
             }
         }
     }
+}
+
+// MARK: - Private
+
+fileprivate extension Date {
+
+    static let Pongo = Date(timeIntervalSince1970: 1113988039)
 }
 

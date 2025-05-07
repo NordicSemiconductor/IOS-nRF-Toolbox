@@ -11,7 +11,7 @@ import iOS_Common_Libraries
 
 // MARK: - UARTMessage
 
-struct UARTMessage {
+struct UARTMessage: Equatable {
     
     // MARK: Properties
     
