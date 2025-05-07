@@ -75,6 +75,10 @@ struct UARTMessagesList: View {
                     .foregroundStyle(Color.universalAccentColor)
                 }
                 
+                if viewModel.selectedMacro != .none {
+                    viewModel.selectedMacro
+                }
+                
                 Divider()
                 
                 UARTSendMessageView()

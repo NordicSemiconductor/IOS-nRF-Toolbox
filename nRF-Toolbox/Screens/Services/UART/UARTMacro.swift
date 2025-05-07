@@ -6,7 +6,7 @@
 //  Copyright © 2025 Nordic Semiconductor. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 
 // MARK: - UARTMacro
 
@@ -14,12 +14,62 @@ struct UARTMacro: Identifiable, Hashable, Equatable, CustomStringConvertible {
     
     // MARK: Unselected
     
-    static let none = UARTMacro(name: "--")
+    static let none = UARTMacro("--")
+    
+    // MARK: Constants
+    
+    static let numberOfCommands = 9
+    static private let adaptiveColumn = [
+        GridItem(.adaptive(minimum: 50))
+    ]
     
     // MARK: Properties
     
     let name: String
+    let inEditMode: Bool
+    let commands: [UARTMacroCommand]
     
     var id: String { name }
     var description: String { name }
+    
+    // MARK: Init
+    
+    init(_ name: String, editMode: Bool = false) {
+        self.name = name
+        self.inEditMode = editMode
+        var emptyCommands = [UARTMacroCommand]()
+        emptyCommands.reserveCapacity(Self.numberOfCommands)
+        for i in 0..<Self.numberOfCommands {
+            emptyCommands.append(UARTMacroCommand(i))
+        }
+        self.commands = emptyCommands
+    }
+}
+
+// MARK: - UARTMacroCommand
+
+struct UARTMacroCommand: Identifiable, Hashable, Equatable {
+    
+    let id: Int
+    let command: String
+    let symbol: String
+    
+    init(_ id: Int, command: String = "", symbol: String = "e.circle") {
+        self.id = id
+        self.command = command
+        self.symbol = symbol
+    }
+}
+
+// MARK: - View
+
+extension UARTMacro: View {
+    
+    var body: some View {
+        LazyVGrid(columns: UARTMacro.adaptiveColumn, spacing: 20) {
+            ForEach(commands) { command in
+                Text(command.symbol)
+            }
+        }
+    }
 }

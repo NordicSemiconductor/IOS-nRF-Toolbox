@@ -139,7 +139,7 @@ extension UARTViewModel {
     
     @MainActor
     func newMacro(named: String) {
-        let newMacro = UARTMacro(name: named)
+        let newMacro = UARTMacro(named)
         macros.append(newMacro)
         selectedMacro = newMacro
     }
