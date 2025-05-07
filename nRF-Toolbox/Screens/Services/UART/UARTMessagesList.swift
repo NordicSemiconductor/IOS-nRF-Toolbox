@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import iOS_Common_Libraries
 
 // MARK: - UARTMessagesList
 
@@ -15,6 +16,11 @@ struct UARTMessagesList: View {
     // MARK: EnvironmentObject
     
     @EnvironmentObject private var viewModel: UARTViewModel
+    
+    // MARK: Properties
+    
+    @State private var showNewMacroAlert: Bool = false
+    @State private var newMacroName: String = ""
     
     // MARK: view
     
@@ -39,8 +45,54 @@ struct UARTMessagesList: View {
             .listRowInsets(EdgeInsets(top: 0.0, leading: 0.0, bottom: 0.0, trailing: 0.0))
             .listRowSpacing(0.0)
             
-            UARTSendMessageView()
-                .padding(.horizontal, 20)
+            VStack(alignment: .leading) {
+                Text("Macros")
+                    .font(.title2.bold())
+                
+                HStack {
+                    InlinePicker(title: "Selected", selectedValue: $viewModel.selectedMacro,
+                                 possibleValues: viewModel.macros, onChange: { newValue in
+                        viewModel.selectedMacro = newValue
+                    })
+                    .labeledContentStyle(.accentedContent)
+
+                    Button {
+                        viewModel.deleteSelectedMacro()
+                    } label: {
+                        Image(systemName: "trash")
+                    }
+                    .disabled(viewModel.selectedMacro == .none)
+                    .buttonStyle(.bordered)
+                    .foregroundStyle(Color.nordicRed)
+                    
+                    Button {
+                        newMacroName = ""
+                        showNewMacroAlert = true
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                    .buttonStyle(.bordered)
+                    .foregroundStyle(Color.universalAccentColor)
+                }
+                
+                Divider()
+                
+                UARTSendMessageView()
+            }
+            .padding(.horizontal, 20)
+        }
+        .alert("New Macro", isPresented: $showNewMacroAlert) {
+            TextField("Type Name Here", text: $newMacroName)
+            
+            Button("Cancel", role: .cancel) {
+                showNewMacroAlert = false
+            }
+            
+            Button("Add") {
+                viewModel.newMacro(named: newMacroName)
+                newMacroName = ""
+                showNewMacroAlert = false
+            }
         }
         .navigationTitle("UART Messages")
         .toolbar {

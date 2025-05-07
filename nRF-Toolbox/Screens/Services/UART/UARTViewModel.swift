@@ -138,6 +138,13 @@ extension UARTViewModel {
     }
     
     @MainActor
+    func newMacro(named: String) {
+        let newMacro = UARTMacro(name: named)
+        macros.append(newMacro)
+        selectedMacro = newMacro
+    }
+    
+    @MainActor
     func deleteSelectedMacro() {
         guard selectedMacro != .none else { return }
         if let i = macros.firstIndex(of: selectedMacro) {
