@@ -34,6 +34,9 @@ final class UARTViewModel: ObservableObject {
     @Published private(set) var messages: [UARTMessage] = []
     @Published var newMessage: String = ""
     
+    @Published private(set) var macros: [UARTMacro] = [.none]
+    @Published var selectedMacro = UARTMacro.none
+    
     // MARK: init
     
     init(peripheral: Peripheral, uartService: CBService) {
@@ -132,6 +135,15 @@ extension UARTViewModel {
     @MainActor
     func clearReceivedMessages() {
         messages = []
+    }
+    
+    @MainActor
+    func deleteSelectedMacro() {
+        guard selectedMacro != .none else { return }
+        if let i = macros.firstIndex(of: selectedMacro) {
+            macros.remove(at: i)
+            selectedMacro = macros.first ?? .none
+        }
     }
 }
 
