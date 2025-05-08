@@ -46,38 +46,14 @@ struct UARTMessagesList: View {
             .listRowSpacing(0.0)
             
             VStack(alignment: .leading) {
-                Text("Macros")
-                    .font(.title2.bold())
-                
-                HStack {
-                    InlinePicker(title: "Selected", selectedValue: $viewModel.selectedMacro,
-                                 possibleValues: viewModel.macros, onChange: { newValue in
-                        viewModel.selectedMacro = newValue
-                    })
-                    .labeledContentStyle(.accentedContent)
-
-                    Button {
-                        viewModel.deleteSelectedMacro()
-                    } label: {
-                        Image(systemName: "trash")
-                    }
-                    .disabled(viewModel.selectedMacro == .none)
-                    .buttonStyle(.bordered)
-                    .foregroundStyle(Color.nordicRed)
-                    
-                    Button {
-                        newMacroName = ""
-                        showNewMacroAlert = true
-                    } label: {
-                        Image(systemName: "plus")
-                    }
-                    .buttonStyle(.bordered)
-                    .foregroundStyle(Color.universalAccentColor)
+                DisclosureGroup {
+                    UARTMacroSelectionView(showNewMacroAlert: $showNewMacroAlert,
+                                           newMacroName: $newMacroName)
+                } label: {
+                    Text("Macros")
+                        .font(.title2.bold())
                 }
-                
-                if viewModel.selectedMacro != .none {
-                    viewModel.selectedMacro
-                }
+                .tint(.universalAccentColor)
                 
                 Divider()
                 

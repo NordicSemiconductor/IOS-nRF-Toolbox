@@ -78,7 +78,7 @@ extension UARTMacro: View {
                 }, label: {
                     Image(systemName: command.symbol)
                         .resizable()
-                        .frame(size: CGSize(width: 30.0, height: 30.0))
+                        .frame(size: CGSize(asSquare: 40.0))
                 })
                 .tint(inEditMode ? Color.red : Color.nordicBlue)
                 .buttonStyle(.borderedProminent)
