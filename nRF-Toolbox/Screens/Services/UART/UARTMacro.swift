@@ -72,8 +72,17 @@ extension UARTMacro: View {
     var body: some View {
         LazyVGrid(columns: UARTMacro.threeColumns, spacing: 20) {
             ForEach(commands) { command in
-                Text(command.symbol)
+                Button(action: {
+                    // TODO
+                }, label: {
+                    Image(systemName: command.symbol)
+                        .resizable()
+                        .frame(size: CGSize(width: 30.0, height: 30.0))
+                })
+                .tint(inEditMode ? Color.red : Color.nordicBlue)
+                .buttonStyle(.borderedProminent)
             }
         }
+        .padding(.vertical, 8)
     }
 }
