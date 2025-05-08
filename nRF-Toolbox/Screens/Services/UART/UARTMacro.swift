@@ -19,8 +19,12 @@ struct UARTMacro: Identifiable, Hashable, Equatable, CustomStringConvertible {
     // MARK: Constants
     
     static let numberOfCommands = 9
-    static private let adaptiveColumn = [
-        GridItem(.adaptive(minimum: 50))
+    static private let threeColumns = [
+        GridItem(.fixed(120), spacing: 0),
+        
+        GridItem(.fixed(120), spacing: 0),
+        
+        GridItem(.fixed(120), spacing: 0)
     ]
     
     // MARK: Properties
@@ -66,7 +70,7 @@ struct UARTMacroCommand: Identifiable, Hashable, Equatable {
 extension UARTMacro: View {
     
     var body: some View {
-        LazyVGrid(columns: UARTMacro.adaptiveColumn, spacing: 20) {
+        LazyVGrid(columns: UARTMacro.threeColumns, spacing: 20) {
             ForEach(commands) { command in
                 Text(command.symbol)
             }
