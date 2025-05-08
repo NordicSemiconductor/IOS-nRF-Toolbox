@@ -11,7 +11,7 @@ import iOS_Common_Libraries
 
 // MARK: - UARTMacro
 
-struct UARTMacro: Identifiable, Hashable, Equatable, CustomStringConvertible {
+struct UARTMacro: Identifiable, Codable, Hashable, Equatable, CustomStringConvertible {
     
     // MARK: Unselected
     
@@ -53,7 +53,7 @@ struct UARTMacro: Identifiable, Hashable, Equatable, CustomStringConvertible {
 
 // MARK: - UARTMacroCommand
 
-struct UARTMacroCommand: Identifiable, Hashable, Equatable {
+struct UARTMacroCommand: Identifiable, Codable, Hashable, Equatable {
     
     let id: Int
     let command: String
