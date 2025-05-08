@@ -161,40 +161,6 @@ extension UARTViewModel {
     }
 }
 
-// MARK: - Storage
-
-fileprivate extension UARTViewModel {
-    
-    static let fileManager = FileManager.default
-    
-    private static func read() -> [UARTMacro]? {
-        let fileUrl = try? self.fileUrl(for: "macros")
-        guard let fileUrl, let readData = try? Data(contentsOf: fileUrl) else { return nil }
-        let decodedData = try? JSONDecoder().decode([UARTMacro].self, from: readData)
-        return decodedData
-    }
-    
-    private static func writeBack(macros: [UARTMacro]) {
-        let fileUrl = try? self.fileUrl(for: "macros")
-        let jsonData = try? JSONEncoder().encode(macros)
-        
-        guard let fileUrl, let jsonData else { return }
-        try? jsonData.write(to: fileUrl)
-    }
-    
-    private static func macrosDir() throws -> URL {
-        return try Self.fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("macros")
-    }
-    
-    private static func fileUrl(for name: String) throws -> URL {
-        let documentDirectory = try macrosDir()
-        if !Self.fileManager.fileExists(atPath: documentDirectory.path) {
-            try Self.fileManager.createDirectory(at: documentDirectory, withIntermediateDirectories: true, attributes: nil)
-        }
-        return documentDirectory.appendingPathComponent(name).appendingPathExtension("json")
-    }
-}
-
 // MARK: - Error
 
 extension UARTViewModel {
