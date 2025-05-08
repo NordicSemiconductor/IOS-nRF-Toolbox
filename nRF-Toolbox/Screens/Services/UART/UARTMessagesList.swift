@@ -87,6 +87,12 @@ struct UARTMessagesList: View {
         }
         .alert("New Macro", isPresented: $showNewMacroAlert) {
             TextField("Type Name Here", text: $newMacroName)
+                .submitLabel(.done)
+                .onSubmit {
+                    viewModel.newMacro(named: newMacroName)
+                    newMacroName = ""
+                    showNewMacroAlert = false
+                }
             
             Button("Cancel", role: .cancel) {
                 showNewMacroAlert = false

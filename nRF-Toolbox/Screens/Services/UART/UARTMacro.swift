@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import iOS_Common_Libraries
 
 // MARK: - UARTMacro
 
@@ -39,7 +40,7 @@ struct UARTMacro: Identifiable, Hashable, Equatable, CustomStringConvertible {
     // MARK: Init
     
     init(_ name: String, editMode: Bool = false) {
-        self.name = name
+        self.name = name.isEmpty ? "Unnamed Macro" : name
         self.inEditMode = editMode
         var emptyCommands = [UARTMacroCommand]()
         emptyCommands.reserveCapacity(Self.numberOfCommands)
