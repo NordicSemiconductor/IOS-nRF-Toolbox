@@ -17,11 +17,6 @@ struct UARTMessagesList: View {
     
     @EnvironmentObject private var viewModel: UARTViewModel
     
-    // MARK: Properties
-    
-    @State private var showNewMacroAlert: Bool = false
-    @State private var newMacroName: String = ""
-    
     // MARK: view
     
     var body: some View {
@@ -46,39 +41,13 @@ struct UARTMessagesList: View {
             .listRowSpacing(0.0)
             
             VStack(alignment: .leading) {
-                DisclosureGroup {
-                    UARTMacroSelectionView(showNewMacroAlert: $showNewMacroAlert,
-                                           newMacroName: $newMacroName)
-                } label: {
-                    Text("Macros")
-                        .font(.title2.bold())
-                }
-                .tint(.universalAccentColor)
+                UARTMacroSelectionView()
                 
                 Divider()
                 
                 UARTSendMessageView()
             }
             .padding(.horizontal, 20)
-        }
-        .alert("New Macro", isPresented: $showNewMacroAlert) {
-            TextField("Type Name Here", text: $newMacroName)
-                .submitLabel(.done)
-                .onSubmit {
-                    viewModel.newMacro(named: newMacroName)
-                    newMacroName = ""
-                    showNewMacroAlert = false
-                }
-            
-            Button("Cancel", role: .cancel) {
-                showNewMacroAlert = false
-            }
-            
-            Button("Add") {
-                viewModel.newMacro(named: newMacroName)
-                newMacroName = ""
-                showNewMacroAlert = false
-            }
         }
         .navigationTitle("UART Messages")
         .toolbar {

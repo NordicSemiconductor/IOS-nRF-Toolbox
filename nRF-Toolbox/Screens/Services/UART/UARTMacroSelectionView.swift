@@ -19,40 +19,65 @@ struct UARTMacroSelectionView: View {
     
     // MARK: Properties
     
-    @Binding var showNewMacroAlert: Bool
-    @Binding var newMacroName: String
+    @State private var showNewMacroAlert: Bool = false
+    @State private var newMacroName: String = ""
     
     // MARK: view
     
     var body: some View {
-        HStack {
-            InlinePicker(title: "Selected", selectedValue: $viewModel.selectedMacro,
-                         possibleValues: viewModel.macros, onChange: { newValue in
-                viewModel.selectedMacro = newValue
-            })
-            .labeledContentStyle(.accentedContent)
-
-            Button {
-                viewModel.deleteSelectedMacro()
-            } label: {
-                Image(systemName: "trash")
+        DisclosureGroup {
+            HStack {
+                InlinePicker(title: "Selected", selectedValue: $viewModel.selectedMacro,
+                             possibleValues: viewModel.macros, onChange: { newValue in
+                    viewModel.selectedMacro = newValue
+                })
+                .labeledContentStyle(.accentedContent)
+                
+                Button {
+                    viewModel.deleteSelectedMacro()
+                } label: {
+                    Image(systemName: "trash")
+                }
+                .disabled(viewModel.selectedMacro == .none)
+                .buttonStyle(.bordered)
+                .foregroundStyle(Color.nordicRed)
+                
+                Button {
+                    newMacroName = ""
+                    showNewMacroAlert = true
+                } label: {
+                    Image(systemName: "plus")
+                }
+                .buttonStyle(.bordered)
+                .foregroundStyle(Color.universalAccentColor)
             }
-            .disabled(viewModel.selectedMacro == .none)
-            .buttonStyle(.bordered)
-            .foregroundStyle(Color.nordicRed)
             
-            Button {
-                newMacroName = ""
-                showNewMacroAlert = true
-            } label: {
-                Image(systemName: "plus")
+            if viewModel.selectedMacro != .none {
+                viewModel.selectedMacro
             }
-            .buttonStyle(.bordered)
-            .foregroundStyle(Color.universalAccentColor)
+        } label: {
+            Text("Macros")
+                .font(.title2.bold())
         }
-        
-        if viewModel.selectedMacro != .none {
-            viewModel.selectedMacro
+        .tint(.universalAccentColor)
+        .alert("New Macro", isPresented: $showNewMacroAlert) {
+            TextField("Type Name Here", text: $newMacroName)
+                .submitLabel(.done)
+                .onSubmit {
+                    viewModel.newMacro(named: newMacroName)
+                    newMacroName = ""
+                    showNewMacroAlert = false
+                }
+            
+            Button("Cancel", role: .cancel) {
+                showNewMacroAlert = false
+            }
+            
+            Button("Add") {
+                viewModel.newMacro(named: newMacroName)
+                newMacroName = ""
+                showNewMacroAlert = false
+            }
         }
     }
 }
