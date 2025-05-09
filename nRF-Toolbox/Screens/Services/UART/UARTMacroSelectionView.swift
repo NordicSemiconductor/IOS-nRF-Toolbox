@@ -54,9 +54,8 @@ struct UARTMacroSelectionView: View {
                 .foregroundStyle(Color.universalAccentColor)
             }
             
-            if viewModel.selectedMacro != .none {
-                viewModel.selectedMacro
-            }
+            viewModel.selectedMacro
+                .disabled(viewModel.selectedMacro == .none)
         } label: {
             Text("Macros")
                 .font(.title2.bold())
