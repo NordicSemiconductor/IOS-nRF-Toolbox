@@ -20,13 +20,6 @@ struct UARTMacro: Identifiable, Codable, Hashable, Equatable, CustomStringConver
     // MARK: Constants
     
     static let numberOfCommands = 9
-    static private let threeColumns = [
-        GridItem(.fixed(120), spacing: 0),
-        
-        GridItem(.fixed(120), spacing: 0),
-        
-        GridItem(.fixed(120), spacing: 0)
-    ]
     
     // MARK: Properties
     
@@ -71,19 +64,24 @@ struct UARTMacroCommand: Identifiable, Codable, Hashable, Equatable {
 extension UARTMacro: View {
     
     var body: some View {
-        LazyVGrid(columns: UARTMacro.threeColumns, spacing: 20) {
-            ForEach(commands) { command in
-                Button(action: {
-                    // TODO
-                }, label: {
-                    Image(systemName: command.symbol)
-                        .resizable()
-                        .frame(size: CGSize(asSquare: 40.0))
-                })
-                .tint(inEditMode ? Color.red : Color.nordicBlue)
-                .buttonStyle(.borderedProminent)
+        Grid(alignment: .center, horizontalSpacing: 12, verticalSpacing: 12) {
+            ForEach(0..<3) { row in
+                GridRow {
+                    ForEach(0..<3) { col in
+                        Button(action: {
+                            // TODO
+                        }, label: {
+                            Image(systemName: commands[row * 3 + col].symbol)
+                                .resizable()
+                                .frame(size: CGSize(asSquare: 40.0))
+                        })
+                        .tint(inEditMode ? Color.red : Color.nordicBlue)
+                        .buttonStyle(.borderedProminent)
+                    }
+                }
             }
         }
+        .aspectRatio(1, contentMode: .fit)
         .padding(.vertical, 8)
     }
 }

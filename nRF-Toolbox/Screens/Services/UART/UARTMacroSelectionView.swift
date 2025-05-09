@@ -29,7 +29,9 @@ struct UARTMacroSelectionView: View {
             HStack {
                 InlinePicker(title: "Selected", selectedValue: $viewModel.selectedMacro,
                              possibleValues: viewModel.macros, onChange: { newValue in
-                    viewModel.selectedMacro = newValue
+                    withAnimation {
+                        viewModel.selectedMacro = newValue
+                    }
                 })
                 .labeledContentStyle(.accentedContent)
                 
