@@ -28,12 +28,8 @@ struct UARTMacroSelectionView: View {
         DisclosureGroup {
             HStack {
                 InlinePicker(title: "Selected", selectedValue: $viewModel.selectedMacro,
-                             possibleValues: viewModel.macros, onChange: { newValue in
-                    withAnimation {
-                        viewModel.selectedMacro = newValue
-                    }
-                })
-                .labeledContentStyle(.accentedContent)
+                             possibleValues: viewModel.macros)
+                    .labeledContentStyle(.accentedContent)
                 
                 Button {
                     viewModel.deleteSelectedMacro()
