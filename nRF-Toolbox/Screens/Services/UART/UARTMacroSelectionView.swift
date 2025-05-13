@@ -27,7 +27,7 @@ struct UARTMacroSelectionView: View {
     var body: some View {
         DisclosureGroup {
             HStack {
-                InlinePicker(title: "Selected", selectedValue: $viewModel.selectedMacro,
+                InlinePicker(title: "", systemImage: "command.square", selectedValue: $viewModel.selectedMacro,
                              possibleValues: viewModel.macros)
                     .labeledContentStyle(.accentedContent)
                 
@@ -50,6 +50,16 @@ struct UARTMacroSelectionView: View {
                 }
                 .buttonStyle(.bordered)
                 .foregroundStyle(Color.universalAccentColor)
+                
+                Button {
+                    // TODO: Import
+                    print("TODO: Import")
+                } label: {
+                    Image(systemName: "square.and.arrow.down")
+                        .frame(size: Constant.ButtonSize)
+                }
+                .buttonStyle(.bordered)
+                .foregroundStyle(Color.primary)
             }
             
             viewModel.selectedMacro

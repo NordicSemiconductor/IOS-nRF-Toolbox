@@ -15,7 +15,7 @@ struct UARTMacro: Identifiable, Codable, Hashable, Equatable, CustomStringConver
     
     // MARK: Unselected
     
-    static let none = UARTMacro("--")
+    static let none = UARTMacro("No Selection")
     
     // MARK: Constants
     
