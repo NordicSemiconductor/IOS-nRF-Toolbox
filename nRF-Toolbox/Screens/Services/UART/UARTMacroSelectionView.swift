@@ -35,6 +35,7 @@ struct UARTMacroSelectionView: View {
                     viewModel.deleteSelectedMacro()
                 } label: {
                     Image(systemName: "trash")
+                        .frame(size: Constant.ButtonSize)
                 }
                 .disabled(viewModel.selectedMacro == .none)
                 .buttonStyle(.bordered)
@@ -45,6 +46,7 @@ struct UARTMacroSelectionView: View {
                     showNewMacroAlert = true
                 } label: {
                     Image(systemName: "plus")
+                        .frame(size: Constant.ButtonSize)
                 }
                 .buttonStyle(.bordered)
                 .foregroundStyle(Color.universalAccentColor)
@@ -77,4 +79,13 @@ struct UARTMacroSelectionView: View {
             }
         }
     }
+}
+
+// MARK: Constant
+
+extension Constant {
+    
+    // MARK: Size
+    
+    static let ButtonSize = CGSize(asSquare: 22.0)
 }
