@@ -7,14 +7,13 @@
 //
 
 import SwiftUI
+import iOS_Common_Libraries
 
 // MARK: - UARTMacroView
 
 struct UARTMacroView: View {
     
     // MARK: Constant
-    
-    // End of line: LF | CR | CR+LF
     
     private static let availableSymbols: [String] = [
         // left arrow, up arrow, right arrow, down arrow, gear
@@ -33,6 +32,7 @@ struct UARTMacroView: View {
     
     @State private var editCommandID: Int = 0
     @State private var editCommand: String = ""
+    @State private var editEOL: UARTMacroCommand.EndOfLine = .CRLF
     
     private let macro: UARTMacro
     
@@ -43,6 +43,8 @@ struct UARTMacroView: View {
     }
     
     // MARK: view
+    
+    let rows = [GridItem(.fixed(30))]
     
     var body: some View {
         Grid(alignment: .center, horizontalSpacing: 12, verticalSpacing: 12) {
@@ -75,37 +77,40 @@ struct UARTMacroView: View {
             
 //            Divider()
 //            
-//            Text("End-of-Line")
+            Text("End-of-Line")
 //            
 //            Divider()
 //            
 //            Text("Associated Symbol")
             
-            Grid {
-                ForEach(0..<4) { row in
-                    GridRow {
-                        ForEach(0..<5) { col in
-                            Button(action: {
-                                //
-                            }, label: {
-                                Image(systemName: Self.availableSymbols[row * 3 + col])
-                                    .resizable()
-                                    .frame(size: CGSize(asSquare: 22.0))
-                            })
-                            .tint(Color.nordicBlue)
-                            .buttonStyle(.bordered)
-                        }
-                    }
-                }
+            InlinePicker(title: "EOL", selectedValue: $editEOL)
+                .labeledContentStyle(.accentedContent)
+            
+//            Grid {
+//                ForEach(0..<4) { row in
+//                    GridRow {
+//                        ForEach(0..<5) { col in
+//                            Button(action: {
+//                                //
+//                            }, label: {
+//                                Image(systemName: Self.availableSymbols[row * 3 + col])
+//                                    .resizable()
+//                                    .frame(size: CGSize(asSquare: 22.0))
+//                            })
+//                            .tint(Color.nordicBlue)
+//                            .buttonStyle(.bordered)
+//                        }
+//                    }
+//                }
+//            }
+            
+            Button("Cancel", role: .cancel) {
+                showEditCommandAlert = false
             }
             
-//            Button("Cancel", role: .cancel) {
-//                showEditCommandAlert = false
-//            }
-//            
-//            Button("Save") {
-//                showEditCommandAlert = false
-//            }
+            Button("Save") {
+                showEditCommandAlert = false
+            }
         }
     }
 }

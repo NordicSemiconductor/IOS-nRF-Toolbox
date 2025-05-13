@@ -55,13 +55,41 @@ struct UARTMacro: Identifiable, Codable, Hashable, Equatable, CustomStringConver
 
 struct UARTMacroCommand: Identifiable, Codable, Hashable, Equatable {
     
+    // MARK: Properties
+    
     let id: Int
     let command: String
     let symbol: String
+    let eol: EndOfLine
     
-    init(_ id: Int, command: String = "", symbol: String = "e.circle") {
+    // MARK: init
+    
+    init(_ id: Int, command: String = "", symbol: String = "e.circle", eol: EndOfLine = .CRLF) {
         self.id = id
         self.command = command
         self.symbol = symbol
+        self.eol = eol
+    }
+}
+
+// MARK: - EOL
+
+extension UARTMacroCommand {
+    
+    enum EndOfLine: String, Codable, Hashable, Equatable, CustomStringConvertible, CaseIterable {
+        case LF = "\n"
+        case CR = "\r"
+        case CRLF = "\r\n"
+        
+        var description: String {
+            switch self {
+            case .LF:
+                return "LF"
+            case .CR:
+                return "CR"
+            case .CRLF:
+                return "CR+LF"
+            }
+        }
     }
 }
