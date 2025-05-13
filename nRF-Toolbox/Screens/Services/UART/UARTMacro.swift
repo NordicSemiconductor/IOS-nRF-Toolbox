@@ -42,6 +42,13 @@ struct UARTMacro: Identifiable, Codable, Hashable, Equatable, CustomStringConver
         }
         self.commands = emptyCommands
     }
+    
+    // MARK: API
+    
+    func editCommand(at index: Int, command: String, symbol: String) {
+        let newCommand = UARTMacroCommand(index, command: command, symbol: symbol)
+        
+    }
 }
 
 // MARK: - UARTMacroCommand
@@ -56,32 +63,5 @@ struct UARTMacroCommand: Identifiable, Codable, Hashable, Equatable {
         self.id = id
         self.command = command
         self.symbol = symbol
-    }
-}
-
-// MARK: - View
-
-extension UARTMacro: View {
-    
-    var body: some View {
-        Grid(alignment: .center, horizontalSpacing: 12, verticalSpacing: 12) {
-            ForEach(0..<3) { row in
-                GridRow {
-                    ForEach(0..<3) { col in
-                        Button(action: {
-                            // TODO
-                        }, label: {
-                            Image(systemName: commands[row * 3 + col].symbol)
-                                .resizable()
-                                .frame(size: CGSize(asSquare: 40.0))
-                        })
-                        .tint(inEditMode ? Color.red : Color.nordicBlue)
-                        .buttonStyle(.borderedProminent)
-                    }
-                }
-            }
-        }
-        .aspectRatio(1, contentMode: .fit)
-        .padding(.vertical, 8)
     }
 }

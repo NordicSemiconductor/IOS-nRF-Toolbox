@@ -62,7 +62,7 @@ struct UARTMacroSelectionView: View {
                 .foregroundStyle(Color.primary)
             }
             
-            viewModel.selectedMacro
+            UARTMacroView(viewModel.selectedMacro)
                 .disabled(viewModel.selectedMacro == .none)
         } label: {
             Text("Macros")
