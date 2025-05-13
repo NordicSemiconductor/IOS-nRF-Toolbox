@@ -74,7 +74,6 @@ struct UARTEditCommandView: View {
                         }
                     }
                 }
-
             }
         }
         .navigationTitle("Edit Command #\(command.id + 1)")
