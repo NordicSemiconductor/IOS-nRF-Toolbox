@@ -13,13 +13,14 @@ import TipKit
 
 struct UARTMacroView: View {
     
-    // MARK: State
-    
-    @State private var editTip = EditCommandsTip()
-    
     // MARK: Properties
     
     private let macro: UARTMacro
+    
+    @State private var forceTipUUID = UUID()
+    private var editTip: EditCommandsTip {
+        EditCommandsTip(id: forceTipUUID.uuidString)
+    }
     
     // MARK: Init
     
@@ -57,12 +58,17 @@ struct UARTMacroView: View {
                     }
                 }
             }
-            .popoverTip(editTip)
+            .background {
+                Color.clear
+                    .popoverTip(editTip)
+                    .id(forceTipUUID)
+            }
             .aspectRatio(1, contentMode: .fit)
             .padding(.vertical, 8)
             
             Button("", systemImage: "info.circle") {
-                EditCommandsTip.isVisible = true
+                forceTipUUID = UUID()
+                EditCommandsTip.isVisible[editTip.id] = true
             }
             .tint(.primary)
         }
@@ -73,10 +79,14 @@ struct UARTMacroView: View {
 
 struct EditCommandsTip: Tip {
     
+    // MARK: Properties
+    
+    let id: String
+    
     // MARK: UI
     
     var title: Text {
-        Text("Edit Macro Command")
+        Text("Edit Macro Command(s)")
             .foregroundStyle(Color.nordicBlue)
     }
     
@@ -91,11 +101,11 @@ struct EditCommandsTip: Tip {
     // MARK: Logic
     
     @Parameter
-    static var isVisible: Bool = false
+    static var isVisible: [String: Bool] = [:]
     
     var rules: [Rule] {
-        #Rule(Self.$isVisible) {
-            $0 == true
+        #Rule(Self.$isVisible) { tip in
+            tip[id] == true
         }
     }
 }
