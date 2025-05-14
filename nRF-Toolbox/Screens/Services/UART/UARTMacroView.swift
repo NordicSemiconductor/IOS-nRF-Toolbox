@@ -13,6 +13,10 @@ import TipKit
 
 struct UARTMacroView: View {
     
+    // MARK: State
+    
+    @State private var editTip = EditCommandsTip()
+    
     // MARK: Properties
     
     private let macro: UARTMacro
@@ -53,29 +57,45 @@ struct UARTMacroView: View {
                     }
                 }
             }
-            .popoverTip(ListOfFavoritesTip())
+            .popoverTip(editTip)
             .aspectRatio(1, contentMode: .fit)
             .padding(.vertical, 8)
             
-//            Button("", systemImage: "info.circle") {
-////                Menu("Tip") {
-////                    Text("Hello")
-////                }
-//                print("TODO")
-//            }
-//            .tint(.primary)
+            Button("", systemImage: "info.circle") {
+                EditCommandsTip.isVisible = true
+            }
+            .tint(.primary)
         }
     }
 }
 
-struct ListOfFavoritesTip: Tip {
+// MARK: Edit Command Tip
+
+struct EditCommandsTip: Tip {
+    
+    // MARK: UI
+    
     var title: Text {
-        Text("Favorite List")
+        Text("Edit Macro Command")
+            .foregroundStyle(Color.nordicBlue)
     }
+    
     var message: Text? {
-        Text("Check your favorite list")
+        Text("Long-press to Edit")
     }
+    
     var image: Image? {
-        Image(systemName: "star")
+        Image(systemName: "e.circle")
+    }
+    
+    // MARK: Logic
+    
+    @Parameter
+    static var isVisible: Bool = false
+    
+    var rules: [Rule] {
+        #Rule(Self.$isVisible) {
+            $0 == true
+        }
     }
 }
