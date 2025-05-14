@@ -24,7 +24,6 @@ struct UARTMacro: Identifiable, Codable, Hashable, Equatable, CustomStringConver
     // MARK: Properties
     
     let name: String
-    let inEditMode: Bool
     let commands: [UARTMacroCommand]
     
     var id: String { name }
@@ -32,22 +31,18 @@ struct UARTMacro: Identifiable, Codable, Hashable, Equatable, CustomStringConver
     
     // MARK: Init
     
-    init(_ name: String, editMode: Bool = false) {
+    init(_ name: String, commands: [UARTMacroCommand]? = nil) {
         self.name = name.isEmpty ? "Unnamed Macro" : name
-        self.inEditMode = editMode
-        var emptyCommands = [UARTMacroCommand]()
-        emptyCommands.reserveCapacity(Self.numberOfCommands)
-        for i in 0..<Self.numberOfCommands {
-            emptyCommands.append(UARTMacroCommand(i))
+        if let commands {
+            self.commands = commands
+        } else {
+            var emptyCommands = [UARTMacroCommand]()
+            emptyCommands.reserveCapacity(Self.numberOfCommands)
+            for i in 0..<Self.numberOfCommands {
+                emptyCommands.append(UARTMacroCommand(i))
+            }
+            self.commands = emptyCommands
         }
-        self.commands = emptyCommands
-    }
-    
-    // MARK: API
-    
-    func editCommand(at index: Int, command: String, symbol: String) {
-        let newCommand = UARTMacroCommand(index, command: command, symbol: symbol)
-        
     }
 }
 

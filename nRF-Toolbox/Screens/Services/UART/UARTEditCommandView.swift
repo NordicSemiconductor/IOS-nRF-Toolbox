@@ -20,11 +20,15 @@ struct UARTEditCommandView: View {
         "chevron.left", "chevron.up", "chevron.right", "chevron.down", "gear",
         // rewind, play, pause, stop, fast forward
         "backward.fill", "play.fill", "pause.fill", "stop.fill", "forward.fill",
-        // info.circle, 1, 2, 3, 4
+        // e.circle, 1, 2, 3, 4
         "e.circle", "1.circle", "2.circle", "3.circle", "4.circle",
         // 5, 6, 7, 8, 9
         "5.circle", "6.circle", "7.circle", "8.circle", "9.circle"
     ]
+    
+    // MARK: EnvironmentObject
+    
+    @EnvironmentObject private var viewModel: UARTViewModel
     
     // MARK: State
     
@@ -79,11 +83,22 @@ struct UARTEditCommandView: View {
                 }
             }
         }
+        .onDisappear {
+            save()
+        }
         .navigationTitle("Edit Command #\(command.id + 1)")
         .toolbar {
             Button("Export", systemImage: "square.and.arrow.up") {
                 // TODO: Hopefully soon.
             }
         }
+    }
+    
+    // MARK: API
+    
+    func save() {
+        let saveCommand = UARTMacroCommand(command.id, command: editCommand,
+                                           symbol: editSymbol, eol: editEOL)
+        viewModel.updateSelectedMacroCommand(saveCommand)
     }
 }

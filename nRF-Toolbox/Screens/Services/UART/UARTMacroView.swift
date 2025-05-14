@@ -13,6 +13,10 @@ import TipKit
 
 struct UARTMacroView: View {
     
+    // MARK: EnvironmentObject
+    
+    @EnvironmentObject private var viewModel: UARTViewModel
+    
     // MARK: Properties
     
     private let macro: UARTMacro
@@ -51,7 +55,7 @@ struct UARTMacroView: View {
             .aspectRatio(1, contentMode: .fit)
             .padding(.vertical, 8)
 
-            NavigationLink(destination: UARTEditCommandView(macro.commands[editCommandIndex]),
+            NavigationLink(destination: UARTEditCommandView(macro.commands[editCommandIndex]).environmentObject(viewModel),
                            isActive: $isShowingEditCommand) {
                 EmptyView()
             }
