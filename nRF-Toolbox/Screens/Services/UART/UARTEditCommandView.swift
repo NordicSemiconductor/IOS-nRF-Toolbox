@@ -77,5 +77,10 @@ struct UARTEditCommandView: View {
             }
         }
         .navigationTitle("Edit Command #\(command.id + 1)")
+        .toolbar {
+            Button("Export", systemImage: "square.and.arrow.up") {
+                // TODO: Hopefully soon.
+            }
+        }
     }
 }
