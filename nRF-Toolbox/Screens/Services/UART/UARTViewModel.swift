@@ -145,10 +145,7 @@ extension UARTViewModel {
         let newMacro = UARTMacro(named)
         macros.append(newMacro)
         selectedMacro = newMacro
-        let copy = macros
-        Task.detached {
-            Self.writeBack(macros: copy)
-        }
+        saveMacros()
     }
     
     @MainActor
@@ -159,6 +156,7 @@ extension UARTViewModel {
         let updatedMacro = UARTMacro(selectedMacro.name, commands: updatedCommands)
         macros[i] = updatedMacro
         selectedMacro = updatedMacro
+        saveMacros()
     }
     
     @MainActor
@@ -167,6 +165,16 @@ extension UARTViewModel {
         if let i = macros.firstIndex(of: selectedMacro) {
             macros.remove(at: i)
             selectedMacro = macros.first ?? .none
+        }
+        saveMacros()
+    }
+    
+    // MARK: Private
+    
+    func saveMacros() {
+        let copy = macros
+        Task.detached {
+            Self.writeBack(macros: copy)
         }
     }
 }
