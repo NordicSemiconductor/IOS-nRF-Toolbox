@@ -36,14 +36,20 @@ struct UARTMacroView: View {
     
     var body: some View {
         HStack(spacing: 16) {
-            UARTMacroButtonsView(macro: macro, editCommandIndex: $editCommandIndex, isShowingEditCommand: $isShowingEditCommand)
-                .background {
-                    Color.clear
-                        .popoverTip(editTip)
-                        .id(forceTipUUID)
-                }
-                .aspectRatio(1, contentMode: .fit)
-                .padding(.vertical, 8)
+            UARTMacroButtonsView(macro: macro, onTap: { i in
+                // TODO: Apply/Execute Current Command
+                print("TODO")
+            }, onLongPress: { i in
+                editCommandIndex = i
+                isShowingEditCommand = true
+            })
+            .background {
+                Color.clear
+                    .popoverTip(editTip)
+                    .id(forceTipUUID)
+            }
+            .aspectRatio(1, contentMode: .fit)
+            .padding(.vertical, 8)
 
             NavigationLink(destination: UARTEditCommandView(macro.commands[editCommandIndex]),
                            isActive: $isShowingEditCommand) {
@@ -66,9 +72,8 @@ struct UARTMacroButtonsView: View {
     // MARK: Properties
     
     let macro: UARTMacro
-    
-    @Binding var editCommandIndex: Int
-    @Binding var isShowingEditCommand: Bool
+    let onTap: (Int) -> Void
+    let onLongPress: (Int) -> Void
     
     // MARK: view
     
@@ -78,18 +83,20 @@ struct UARTMacroButtonsView: View {
                 GridRow {
                     ForEach(0..<3) { col in
                         Button {
-                            // TODO: Apply/Execute Current Command
+                            // No-op.
+                            // Keep as a no-op so both long press and tap work.
                         } label: {
                             Image(systemName: macro.commands[row * 3 + col].symbol)
                                 .resizable()
                                 .frame(size: CGSize(asSquare: 40.0))
                         }
+                        .simultaneousGesture(LongPressGesture().onEnded { _ in
+                            onLongPress(row * 3 + col)
+                        })
+                        .simultaneousGesture(TapGesture().onEnded {
+                            onTap(row * 3 + col)
+                        })
                         .buttonStyle(.borderedProminent)
-                        .onLongPressGesture(minimumDuration: 1.0) {
-                            print("onLongPress")
-                            editCommandIndex = row * 3 + col
-                            isShowingEditCommand = true
-                        }
                     }
                 }
             }
