@@ -54,7 +54,10 @@ struct UARTEditCommandView: View {
     var body: some View {
         List {
             Section("Command") {
-                TextField("", text: $editCommand)
+                TextField("UART Command", text: $editCommand, prompt: Text("Write command here"))
+                    .keyboardType(.alphabet)
+                    .disableAllAutocorrections()
+                    .submitLabel(.done)
             }
             
             Section {
