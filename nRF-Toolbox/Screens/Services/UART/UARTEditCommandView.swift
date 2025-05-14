@@ -21,7 +21,7 @@ struct UARTEditCommandView: View {
         // rewind, play, pause, stop, fast forward
         "backward.fill", "play.fill", "pause.fill", "stop.fill", "forward.fill",
         // info.circle, 1, 2, 3, 4
-        "info.circle", "1.circle", "2.circle", "3.circle", "4.circle",
+        "e.circle", "1.circle", "2.circle", "3.circle", "4.circle",
         // 5, 6, 7, 8, 9
         "5.circle", "6.circle", "7.circle", "8.circle", "9.circle"
     ]
@@ -30,6 +30,7 @@ struct UARTEditCommandView: View {
     
     @State private var editCommand: String
     @State private var editEOL: UARTMacroCommand.EndOfLine
+    @State private var editSymbol: String
     
     // MARK: Properties
     
@@ -41,6 +42,7 @@ struct UARTEditCommandView: View {
         self.command = command
         self.editCommand = command.command
         self.editEOL = command.eol
+        self.editSymbol = command.symbol
     }
     
     // MARK: view
@@ -62,13 +64,14 @@ struct UARTEditCommandView: View {
                         GridRow {
                             ForEach(0..<5) { col in
                                 Button(action: {
-                                    //
+                                    editSymbol = Self.availableSymbols[row * 5 + col]
                                 }, label: {
                                     Image(systemName: Self.availableSymbols[row * 5 + col])
                                         .resizable()
                                         .frame(size: CGSize(asSquare: 22.0))
                                 })
-                                .tint(Color.nordicBlue)
+                                .tint(editSymbol == Self.availableSymbols[row * 5 + col]
+                                      ? Color.nordicBlue : Color.secondary)
                                 .buttonStyle(.bordered)
                             }
                         }
