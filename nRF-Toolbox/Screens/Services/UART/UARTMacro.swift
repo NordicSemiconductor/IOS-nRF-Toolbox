@@ -59,7 +59,7 @@ struct UARTMacroCommand: Identifiable, Codable, Hashable, Equatable {
     
     // MARK: init
     
-    init(_ id: Int, command: String = "", symbol: String = "e.circle", eol: EndOfLine = .CRLF) {
+    init(_ id: Int, command: String = "", symbol: String = "e.circle", eol: EndOfLine = .crlf) {
         self.id = id
         self.command = command
         self.symbol = symbol
@@ -79,17 +79,20 @@ struct UARTMacroCommand: Identifiable, Codable, Hashable, Equatable {
 extension UARTMacroCommand {
     
     enum EndOfLine: String, Codable, Hashable, Equatable, CustomStringConvertible, CaseIterable {
-        case LF = "\n"
-        case CR = "\r"
-        case CRLF = "\r\n"
+        case none = ""
+        case lf = "\n"
+        case cr = "\r"
+        case crlf = "\r\n"
         
         var description: String {
             switch self {
-            case .LF:
+            case .none:
+                return "None"
+            case .lf:
                 return "LF"
-            case .CR:
+            case .cr:
                 return "CR"
-            case .CRLF:
+            case .crlf:
                 return "CR+LF"
             }
         }
