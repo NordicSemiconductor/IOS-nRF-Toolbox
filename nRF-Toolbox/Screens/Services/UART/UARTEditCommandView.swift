@@ -75,7 +75,7 @@ struct UARTEditCommandView: View {
                                 }, label: {
                                     Image(systemName: Self.availableSymbols[row * 5 + col])
                                         .resizable()
-                                        .frame(size: CGSize(asSquare: 22.0))
+                                        .frame(size: CGSize(asSquare: 32.0))
                                 })
                                 .tint(editSymbol == Self.availableSymbols[row * 5 + col]
                                       ? Color.nordicBlue : Color.secondary)
@@ -84,6 +84,7 @@ struct UARTEditCommandView: View {
                         }
                     }
                 }
+                .centered()
             }
         }
         .onDisappear {
