@@ -103,8 +103,8 @@ extension UARTViewModel {
             guard let data = newMessage.data(using: .utf8) else {
                 throw Err.unableToEncodeString(newMessage)
             }
-            let uartMessage = UARTMessage(text: newMessage, source: .user,
-                                          previousMessage: messages.last)
+            let cleanText = newMessage.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
+            let uartMessage = UARTMessage(text: cleanText, source: .user, previousMessage: messages.last)
             messages.append(uartMessage)
             newMessage = ""
             
@@ -146,6 +146,15 @@ extension UARTViewModel {
         macros.append(newMacro)
         selectedMacro = newMacro
         saveMacros()
+    }
+    
+    @MainActor
+    func runCommand(_ command: UARTMacroCommand) {
+        guard let commandMessage = command.message() else { return }
+        newMessage = commandMessage
+        Task {
+            await sendMessage()
+        }
     }
     
     @MainActor

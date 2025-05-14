@@ -41,8 +41,7 @@ struct UARTMacroView: View {
     var body: some View {
         HStack(spacing: 16) {
             UARTMacroButtonsView(macro: macro, onTap: { i in
-                // TODO: Apply/Execute Current Command
-                print("TODO")
+                viewModel.runCommand(macro.commands[i])
             }, onLongPress: { i in
                 editCommandIndex = i
                 isShowingEditCommand = true

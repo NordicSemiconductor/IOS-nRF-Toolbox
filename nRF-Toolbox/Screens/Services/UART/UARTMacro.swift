@@ -65,6 +65,13 @@ struct UARTMacroCommand: Identifiable, Codable, Hashable, Equatable {
         self.symbol = symbol
         self.eol = eol
     }
+    
+    // MARK: API
+    
+    func message() -> String? {
+        guard !command.isEmpty else { return nil }
+        return command.appending(eol.rawValue)
+    }
 }
 
 // MARK: - EOL
