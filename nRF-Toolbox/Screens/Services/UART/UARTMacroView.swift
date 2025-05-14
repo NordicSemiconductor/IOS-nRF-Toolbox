@@ -17,6 +17,9 @@ struct UARTMacroView: View {
     
     private let macro: UARTMacro
     
+    @State private var editCommandIndex = 0
+    @State private var isShowingEditCommand = false
+    
     @State private var forceTipUUID = UUID()
     private var editTip: EditCommandsTip {
         EditCommandsTip(id: forceTipUUID.uuidString)
@@ -32,45 +35,64 @@ struct UARTMacroView: View {
     // MARK: view
     
     var body: some View {
-        HStack {
-            Grid(alignment: .center, horizontalSpacing: 12, verticalSpacing: 12) {
-                ForEach(0..<3) { row in
-                    GridRow {
-                        ForEach(0..<3) { col in
-                            Button {
-                                
-                            } label: {
-                                Image(systemName: macro.commands[row * 3 + col].symbol)
-                                    .resizable()
-                                    .frame(size: CGSize(asSquare: 40.0))
-                            }
-                            .buttonStyle(.borderedProminent)
-                            
-//                            NavigationLink {
-//                                UARTEditCommandView(macro.commands[row * 3 + col])
-//                            } label: {
-//                                Image(systemName: macro.commands[row * 3 + col].symbol)
-//                                    .resizable()
-//                                    .frame(size: CGSize(asSquare: 40.0))
-//                            }
-//                            .buttonStyle(.borderedProminent)
-                        }
-                    }
+        HStack(spacing: 16) {
+            UARTMacroButtonsView(macro: macro, editCommandIndex: $editCommandIndex, isShowingEditCommand: $isShowingEditCommand)
+                .background {
+                    Color.clear
+                        .popoverTip(editTip)
+                        .id(forceTipUUID)
                 }
+                .aspectRatio(1, contentMode: .fit)
+                .padding(.vertical, 8)
+
+            NavigationLink(destination: UARTEditCommandView(macro.commands[editCommandIndex]),
+                           isActive: $isShowingEditCommand) {
+                EmptyView()
             }
-            .background {
-                Color.clear
-                    .popoverTip(editTip)
-                    .id(forceTipUUID)
-            }
-            .aspectRatio(1, contentMode: .fit)
-            .padding(.vertical, 8)
             
             Button("", systemImage: "info.circle") {
                 forceTipUUID = UUID()
                 EditCommandsTip.isVisible[editTip.id] = true
             }
             .tint(.primary)
+        }
+    }
+}
+
+// MARK: - UARTMacroButtonsView
+
+struct UARTMacroButtonsView: View {
+    
+    // MARK: Properties
+    
+    let macro: UARTMacro
+    
+    @Binding var editCommandIndex: Int
+    @Binding var isShowingEditCommand: Bool
+    
+    // MARK: view
+    
+    var body: some View {
+        Grid(alignment: .center, horizontalSpacing: 12, verticalSpacing: 12) {
+            ForEach(0..<3) { row in
+                GridRow {
+                    ForEach(0..<3) { col in
+                        Button {
+                            // TODO: Apply/Execute Current Command
+                        } label: {
+                            Image(systemName: macro.commands[row * 3 + col].symbol)
+                                .resizable()
+                                .frame(size: CGSize(asSquare: 40.0))
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .onLongPressGesture(minimumDuration: 1.0) {
+                            print("onLongPress")
+                            editCommandIndex = row * 3 + col
+                            isShowingEditCommand = true
+                        }
+                    }
+                }
+            }
         }
     }
 }
