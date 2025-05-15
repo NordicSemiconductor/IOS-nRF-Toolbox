@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import iOS_Common_Libraries
 import TipKit
 
 // MARK: - UARTMacroView
@@ -43,33 +44,41 @@ struct UARTMacroView: View {
             UARTMacroButtonsView(macro: macro, onTap: { i in
                 viewModel.runCommand(macro.commands[i])
             }, onLongPress: { i in
-                editCommandIndex = i
-                isShowingEditCommand = true
+                // No-op.
             })
-            .background {
-                Color.clear
-                    .popoverTip(editTip)
-                    .id(forceTipUUID)
-            }
             .aspectRatio(1, contentMode: .fit)
             .padding(.vertical, 8)
 
-            NavigationLink(destination: UARTEditCommandView(macro.commands[editCommandIndex]).environmentObject(viewModel),
-                           isActive: $isShowingEditCommand) {
-                EmptyView()
-            }
-            
             VStack(spacing: 16) {
-                Button("", systemImage: "info.circle") {
-                    forceTipUUID = UUID()
-                    EditCommandsTip.isVisible[editTip.id] = true
-                }
-                .tint(.primary)
-                
                 Button("", systemImage: "gear") {
-                    print("EDIT")
+                    isShowingEditCommand = true
                 }
                 .tint(.primary)
+                .sheet(isPresented: $isShowingEditCommand) {
+                    NavigationView {
+                        UARTEditMacroView(macro)
+                            .navigationBarItems(trailing: HStack {
+                                Button("Hello") {
+                                    
+                                }
+                            })
+                    }
+                    .setupNavBarBackground(with: Assets.navBar.color)
+                    
+                    
+//                    .navigationBarItems(trailing: HStack {
+//                        Button(action: { ... }) {
+//                            Text("Done")
+//                        })
+//                    })
+//                    .toolbar {
+//                        Button("Export", systemImage: "square.and.arrow.up") {
+//                            // TODO: Hopefully soon.
+//                        }
+//                        .foregroundStyle(Color.white)
+//                    }
+                    .environmentObject(viewModel)
+                }
                 
                 Button("", systemImage: "play.fill") {
                     print("PLAY")

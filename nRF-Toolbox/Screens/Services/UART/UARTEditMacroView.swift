@@ -27,20 +27,28 @@ struct UARTEditMacroView: View {
     var body: some View {
         List {
             Section("Name") {
-//                TextField("UART Command", text: $editCommand, prompt: Text("Write command here"))
-//                    .keyboardType(.alphabet)
-//                    .disableAllAutocorrections()
-//                    .submitLabel(.done)
+                //                TextField("UART Command", text: $editCommand, prompt: Text("Write command here"))
+                //                    .keyboardType(.alphabet)
+                //                    .disableAllAutocorrections()
+                //                    .submitLabel(.done)
+            }
+            
+            Section("Commands") {
+                
+            }
+            
+            Section("Command Sequence") {
+                
+                Button("Add Delay") {
+                    
+                }
             }
         }
+        .listStyle(.insetGrouped)
+        .navigationTitle("Edit \(macro.name)")
+        
         .onDisappear {
             save()
-        }
-        .navigationTitle("Edit \(macro.name)")
-        .toolbar {
-            Button("Export", systemImage: "square.and.arrow.up") {
-                // TODO: Hopefully soon.
-            }
         }
     }
     
