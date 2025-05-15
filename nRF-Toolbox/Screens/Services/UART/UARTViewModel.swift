@@ -152,9 +152,9 @@ extension UARTViewModel {
     
     @MainActor
     func runCommand(_ command: UARTMacroCommand) {
-        guard let commandData = command.data() else { return }
+        guard let data = command.data else { return }
         Task {
-            await send(commandData)
+            await send(data)
         }
     }
     

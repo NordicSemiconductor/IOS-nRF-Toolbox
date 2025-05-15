@@ -53,24 +53,33 @@ struct UARTMacroCommand: Identifiable, Codable, Hashable, Equatable {
     // MARK: Properties
     
     let id: Int
-    let command: String
+    let data: Data?
     let symbol: String
     let eol: EndOfLine
     
     // MARK: init
     
-    init(_ id: Int, command: String = "", symbol: String = "e.circle", eol: EndOfLine = .crlf) {
+    init(_ id: Int, command: String = "", symbol: String = "e.circle", eol: EndOfLine = .CRLF) {
+        self.init(id, data: command.isEmpty ? nil : Data(command.appending(eol.rawValue).utf8),
+                  symbol: symbol, eol: eol)
+    }
+    
+    init(_ id: Int, data: Data?, symbol: String, eol: EndOfLine) {
         self.id = id
-        self.command = command
+        self.data = data
         self.symbol = symbol
         self.eol = eol
     }
     
     // MARK: API
     
-    func data() -> Data? {
-        guard !command.isEmpty else { return nil }
-        return Data(command.appending(eol.rawValue).utf8)
+    func toString() -> String? {
+        guard let data else { return nil }
+        if let dataAsString = String(data: data, encoding: .utf8) {
+            return dataAsString.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
+        } else {
+            return data.hexEncodedString(options: [.upperCase])
+        }
     }
 }
 
@@ -92,19 +101,19 @@ extension UARTMacroCommand {
     
     enum EndOfLine: String, Codable, Hashable, Equatable, CustomStringConvertible, CaseIterable {
         case none = ""
-        case lf = "\n"
-        case cr = "\r"
-        case crlf = "\r\n"
+        case LF = "\n"
+        case CR = "\r"
+        case CRLF = "\r\n"
         
         var description: String {
             switch self {
             case .none:
                 return "None"
-            case .lf:
+            case .LF:
                 return "LF"
-            case .cr:
+            case .CR:
                 return "CR"
-            case .crlf:
+            case .CRLF:
                 return "CR+LF"
             }
         }

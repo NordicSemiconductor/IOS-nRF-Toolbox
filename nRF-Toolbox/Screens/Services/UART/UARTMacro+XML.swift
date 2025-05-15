@@ -41,15 +41,18 @@ extension UARTMacro {
                 continue
             }
             
-            // TODO: Pending.
-//            let image = CommandImage(name: (node.attributes["icon"] ?? ""), modernIcon: node.attributes["system_icon"].map({ ModernIcon(name: $0) }))
             let image = node.attributes["system_icon"] ?? "e.circle"
-//
-//            if let type = node.attributes["type"], type == "data" {
-//                commands.append(DataCommand(data: Data(text.hexa), image: image))
-//            } else {
-//                commands.append(TextCommand(text: text, image: image))
-//            }
+            let eol: UARTMacroCommand.EndOfLine
+            if let eolValue = node.attributes["eol"] {
+                eol = UARTMacroCommand.EndOfLine(rawValue: eolValue) ?? .CRLF
+            } else {
+                eol = .CRLF
+            }
+            if let type = node.attributes["type"], type == "data" {
+                commands.append(UARTMacroCommand(i, data: Data(text.utf8), symbol: image, eol: eol))
+            } else {
+                commands.append(UARTMacroCommand(i, command: text, symbol: image, eol: eol))
+            }
         }
         
         for i in commands.count..<UARTMacro.numberOfCommands {
@@ -69,7 +72,7 @@ extension UARTMacro {
         let commands = AEXMLElement(name: "commands", attributes: [
             "length": "\(UARTMacro.numberOfCommands)"
         ])
-        commands.addChildren(self.commands.map {
+        commands.addChildren(self.commands.compactMap {
             $0.xml
         })
         root.addChild(commands)
@@ -83,12 +86,13 @@ extension UARTMacro {
 
 extension UARTMacroCommand {
     
-    var xml: AEXMLElement {
-        AEXMLElement(name: "command", value: command, attributes: [
+    var xml: AEXMLElement? {
+        guard let data else { return nil }
+        return AEXMLElement(name: "command", value: data.hexEncodedString(options: [.upperCase]), attributes: [
             "icon": symbol,
             "active": "true",
             "eol": eol.description,
-            "type": "text",
+            "type": "data",
             "system_icon": symbol
         ])
     }
