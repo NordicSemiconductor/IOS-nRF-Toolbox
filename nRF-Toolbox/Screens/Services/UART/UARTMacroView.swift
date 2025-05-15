@@ -59,11 +59,23 @@ struct UARTMacroView: View {
                 EmptyView()
             }
             
-            Button("", systemImage: "info.circle") {
-                forceTipUUID = UUID()
-                EditCommandsTip.isVisible[editTip.id] = true
+            VStack(spacing: 16) {
+                Button("", systemImage: "info.circle") {
+                    forceTipUUID = UUID()
+                    EditCommandsTip.isVisible[editTip.id] = true
+                }
+                .tint(.primary)
+                
+                Button("", systemImage: "gear") {
+                    print("EDIT")
+                }
+                .tint(.primary)
+                
+                Button("", systemImage: "play.fill") {
+                    print("PLAY")
+                }
+                .tint(.nordicBlue)
             }
-            .tint(.primary)
         }
     }
 }

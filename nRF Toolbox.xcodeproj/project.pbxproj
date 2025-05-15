@@ -346,6 +346,7 @@
 		AA124CD52DA52B8200EBA004 /* CGMSRecordList.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA124CD42DA52B8200EBA004 /* CGMSRecordList.swift */; };
 		AA1AD37D2DD5DF6300799308 /* UARTMacro+XML.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1AD37C2DD5DF6300799308 /* UARTMacro+XML.swift */; };
 		AA1AD37F2DD5DFC400799308 /* AEXML in Frameworks */ = {isa = PBXBuildFile; productRef = AA1AD37E2DD5DFC400799308 /* AEXML */; };
+		AA1AD3812DD6063A00799308 /* UARTEditMacroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1AD3802DD6063A00799308 /* UARTEditMacroView.swift */; };
 		AA1BB0582D9D60E000734D20 /* CGMSMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1BB0572D9D60E000734D20 /* CGMSMeasurement.swift */; };
 		AA2C37012D47D88800D41989 /* ThroughputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2C37002D47D88800D41989 /* ThroughputViewModel.swift */; };
 		AA2C37052D47DA1F00D41989 /* ThroughputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2C37042D47DA1F00D41989 /* ThroughputView.swift */; };
@@ -785,6 +786,7 @@
 		AA0AEA012CF7438200F93A0B /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		AA124CD42DA52B8200EBA004 /* CGMSRecordList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSRecordList.swift; sourceTree = "<group>"; };
 		AA1AD37C2DD5DF6300799308 /* UARTMacro+XML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UARTMacro+XML.swift"; sourceTree = "<group>"; };
+		AA1AD3802DD6063A00799308 /* UARTEditMacroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTEditMacroView.swift; sourceTree = "<group>"; };
 		AA1BB0572D9D60E000734D20 /* CGMSMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSMeasurement.swift; sourceTree = "<group>"; };
 		AA2C37002D47D88800D41989 /* ThroughputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThroughputViewModel.swift; sourceTree = "<group>"; };
 		AA2C37042D47DA1F00D41989 /* ThroughputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThroughputView.swift; sourceTree = "<group>"; };
@@ -2484,6 +2486,7 @@
 				AA1AD37C2DD5DF6300799308 /* UARTMacro+XML.swift */,
 				AAA898B62DD4C0B6000C7012 /* UARTMacroButtonsView.swift */,
 				AAAD7F522DD2CEAE004952F3 /* UARTMacroView.swift */,
+				AA1AD3802DD6063A00799308 /* UARTEditMacroView.swift */,
 				AAD693322DD348E700D8C436 /* UARTEditCommandView.swift */,
 			);
 			path = UART;
@@ -2863,6 +2866,7 @@
 				AAB2398C2DCA310800101F9D /* UARTSendMessageView.swift in Sources */,
 				01C81AD72A5D8FEA0011B41E /* ReadableError.swift in Sources */,
 				013E5D912ADFDF1300B9C475 /* Array+Ext.swift in Sources */,
+				AA1AD3812DD6063A00799308 /* UARTEditMacroView.swift in Sources */,
 				AAA04F212DAD3818002DAB42 /* UARTMessageView.swift in Sources */,
 				AA1BB0582D9D60E000734D20 /* CGMSMeasurement.swift in Sources */,
 				AAA04F1F2DAD1CA8002DAB42 /* UARTMessage.swift in Sources */,
