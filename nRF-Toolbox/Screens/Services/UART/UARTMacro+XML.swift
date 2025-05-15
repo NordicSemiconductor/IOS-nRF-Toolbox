@@ -43,6 +43,7 @@ extension UARTMacro {
             
             // TODO: Pending.
 //            let image = CommandImage(name: (node.attributes["icon"] ?? ""), modernIcon: node.attributes["system_icon"].map({ ModernIcon(name: $0) }))
+            let image = node.attributes["system_icon"] ?? "e.circle"
 //
 //            if let type = node.attributes["type"], type == "data" {
 //                commands.append(DataCommand(data: Data(text.hexa), image: image))
@@ -66,7 +67,7 @@ extension UARTMacro {
             "name": name
         ])
         let commands = AEXMLElement(name: "commands", attributes: [
-            "length": "9"
+            "length": "\(UARTMacro.numberOfCommands)"
         ])
         commands.addChildren(self.commands.map {
             $0.xml
@@ -88,7 +89,7 @@ extension UARTMacroCommand {
             "active": "true",
             "eol": eol.description,
             "type": "text",
-            "system_icon": ""
+            "system_icon": symbol
         ])
     }
 }

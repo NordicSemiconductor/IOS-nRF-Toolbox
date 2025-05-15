@@ -74,6 +74,18 @@ struct UARTMacroCommand: Identifiable, Codable, Hashable, Equatable {
     }
 }
 
+// MARK: - CommandType
+
+extension UARTMacroCommand {
+    
+    enum CommandType: String, RawRepresentable, Codable, Hashable, Equatable, CustomStringConvertible, CaseIterable {
+        case data
+        case text
+        
+        var description: String { rawValue }
+    }
+}
+
 // MARK: - EOL
 
 extension UARTMacroCommand {
