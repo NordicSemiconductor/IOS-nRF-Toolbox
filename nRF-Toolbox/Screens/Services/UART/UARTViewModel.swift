@@ -95,18 +95,20 @@ extension UARTViewModel: SupportedServiceViewModel {
 extension UARTViewModel {
     
     @MainActor
-    func sendMessage() async {
+    func send(_ data: Data) async {
         guard let uartRX else { return }
         log.debug(#function)
         
         do {
-            guard let data = newMessage.data(using: .utf8) else {
-                throw Err.unableToEncodeString(newMessage)
+            if let dataAsString = String(data: data, encoding: .utf8) {
+                let cleanText = dataAsString.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
+                let uartMessage = UARTMessage(text: cleanText, source: .user, previousMessage: messages.last)
+                messages.append(uartMessage)
+            } else {
+                let rawBytes = "\(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing, .upperCase]))"
+                let uartMessage = UARTMessage(text: rawBytes, source: .user, previousMessage: messages.last)
+                messages.append(uartMessage)
             }
-            let cleanText = newMessage.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
-            let uartMessage = UARTMessage(text: cleanText, source: .user, previousMessage: messages.last)
-            messages.append(uartMessage)
-            newMessage = ""
             
             try await peripheral.writeValueWithResponse(data, for: uartRX).firstValue
         } catch {
@@ -150,10 +152,9 @@ extension UARTViewModel {
     
     @MainActor
     func runCommand(_ command: UARTMacroCommand) {
-        guard let commandMessage = command.message() else { return }
-        newMessage = commandMessage
+        guard let commandData = command.data() else { return }
         Task {
-            await sendMessage()
+            await send(commandData)
         }
     }
     

@@ -68,9 +68,9 @@ struct UARTMacroCommand: Identifiable, Codable, Hashable, Equatable {
     
     // MARK: API
     
-    func message() -> String? {
+    func data() -> Data? {
         guard !command.isEmpty else { return nil }
-        return command.appending(eol.rawValue)
+        return Data(command.appending(eol.rawValue).utf8)
     }
 }
 

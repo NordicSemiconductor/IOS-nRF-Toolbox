@@ -21,8 +21,10 @@ struct UARTSendMessageView: View {
             TextField("UART Message", text: $viewModel.newMessage, prompt: Text("Write new message here"))
                 
             Button {
-                Task { @MainActor in
-                    await viewModel.sendMessage()
+                let data = Data(viewModel.newMessage.utf8)
+                viewModel.newMessage = ""
+                Task {
+                    await viewModel.send(data)
                 }
             } label: {
                 Label("Send", systemImage: "paperplane.fill")
