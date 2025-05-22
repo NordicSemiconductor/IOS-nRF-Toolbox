@@ -160,6 +160,16 @@ extension UARTViewModel {
     }
     
     @MainActor
+    func updateSelectedMacroName(_ name: String) {
+        guard selectedMacro != .none, let i = macros.firstIndex(of: selectedMacro) else { return }
+        let commands = selectedMacro.commands
+        let updatedMacro = UARTMacro(name, commands: commands)
+        macros[i] = updatedMacro
+        selectedMacro = updatedMacro
+        saveMacros()
+    }
+    
+    @MainActor
     func updateSelectedMacroCommand(_ command: UARTMacroCommand) {
         guard selectedMacro != .none, let i = macros.firstIndex(of: selectedMacro) else { return }
         var updatedCommands = selectedMacro.commands

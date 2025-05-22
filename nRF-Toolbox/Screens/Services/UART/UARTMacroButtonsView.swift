@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import iOS_Common_Libraries
 
 // MARK: - UARTMacroButtonsView
 
@@ -39,6 +40,7 @@ struct UARTMacroButtonsView: View {
                         .simultaneousGesture(TapGesture().onEnded {
                             onTap(row * 3 + col)
                         })
+                        .tint(macro.commands[row * 3 + col].data != nil ? .universalAccentColor : .secondary)
                         .buttonStyle(.borderedProminent)
                     }
                 }

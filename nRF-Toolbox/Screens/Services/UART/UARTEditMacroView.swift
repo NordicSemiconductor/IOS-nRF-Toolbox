@@ -20,6 +20,9 @@ struct UARTEditMacroView: View {
     // MARK: Private Properties
     
     @State private var name: String = ""
+    @State private var sequence: [UARTMacroCommand] = [UARTMacroCommand]()
+    
+    private let appLog = NordicLog(category: #file)
     
     // MARK: view
     
@@ -30,17 +33,41 @@ struct UARTEditMacroView: View {
                     .keyboardType(.alphabet)
                     .disableAllAutocorrections()
                     .submitLabel(.done)
+                    .onSubmit {
+                        save()
+                    }
             }
             
             Section("Commands") {
-                
+                UARTMacroButtonsView(macro: viewModel.selectedMacro, onTap: { i in
+                    guard viewModel.selectedMacro.commands[i].data != nil else { return }
+                    sequence.append(viewModel.selectedMacro.commands[i])
+                }, onLongPress: { i in
+                    // No-op.
+                })
+                .aspectRatio(1, contentMode: .fit)
+                .padding(.vertical, 8)
             }
             
             Section("Command Sequence") {
+                ForEach(sequence, id: \.self) { command in
+                    Text(command.toString() ?? "N/A")
+                }
+                
                 Button("Add Delay") {
                     
                 }
                 .tint(.universalAccentColor)
+                .centered()
+            }
+            
+            Section {
+                Button("Save") {
+                    viewModel.showEditMacroSheet = false
+                    // onDisappear will trigger a save.
+                }
+                .tint(.universalAccentColor)
+                .centered()
             }
         }
         .listStyle(.insetGrouped)
@@ -72,7 +99,8 @@ struct UARTEditMacroView: View {
     // MARK: API
     
     func save() {
-        // TODO
+        appLog.debug(#function)
+        viewModel.saveMacros()
     }
 }
 
