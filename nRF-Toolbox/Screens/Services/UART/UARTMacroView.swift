@@ -22,18 +22,10 @@ struct UARTMacroView: View {
     
     private let macro: UARTMacro
     
-    @State private var editCommandIndex = 0
-    
-    @State private var forceTipUUID = UUID()
-    private var editTip: EditCommandsTip {
-        EditCommandsTip(id: forceTipUUID.uuidString)
-    }
-    
     // MARK: Init
     
     init(_ macro: UARTMacro) {
         self.macro = macro
-        try? Tips.configure()
     }
     
     // MARK: view
@@ -59,41 +51,6 @@ struct UARTMacroView: View {
                 }
                 .tint(.nordicBlue)
             }
-        }
-    }
-}
-
-// MARK: Edit Command Tip
-
-struct EditCommandsTip: Tip {
-    
-    // MARK: Properties
-    
-    let id: String
-    
-    // MARK: UI
-    
-    var title: Text {
-        Text("Edit Macro Command(s)")
-            .foregroundStyle(Color.nordicBlue)
-    }
-    
-    var message: Text? {
-        Text("Long-press to Edit")
-    }
-    
-    var image: Image? {
-        Image(systemName: "e.circle")
-    }
-    
-    // MARK: Logic
-    
-    @Parameter
-    static var isVisible: [String: Bool] = [:]
-    
-    var rules: [Rule] {
-        #Rule(Self.$isVisible) { tip in
-            tip[id] == true
         }
     }
 }
