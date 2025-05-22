@@ -43,7 +43,8 @@ struct UARTEditMacroView: View {
                     guard viewModel.selectedMacro.commands[i].data != nil else { return }
                     sequence.append(viewModel.selectedMacro.commands[i])
                 }, onLongPress: { i in
-                    // No-op.
+                    viewModel.editCommandIndex = i
+                    viewModel.showEditCommandSheet = true
                 })
                 .aspectRatio(1, contentMode: .fit)
                 .padding(.vertical, 8)

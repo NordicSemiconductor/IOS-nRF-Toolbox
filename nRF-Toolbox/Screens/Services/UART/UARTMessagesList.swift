@@ -58,8 +58,12 @@ struct UARTMessagesList: View {
             }
         }
         .sheet(isPresented: $viewModel.showEditMacroSheet) {
-            NavigationView {
+            NavigationStack {
                 UARTEditMacroView()
+                    .navigationDestination(isPresented: $viewModel.showEditCommandSheet) {
+                        UARTEditCommandView(viewModel.selectedMacro.commands[viewModel.editCommandIndex])
+                            .environmentObject(viewModel)
+                    }
                     .environmentObject(viewModel)
             }
             .environmentObject(viewModel)
