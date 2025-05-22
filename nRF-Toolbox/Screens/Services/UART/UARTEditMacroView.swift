@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import iOS_Common_Libraries
 
 // MARK: - UARTEditMacroView
 
@@ -16,15 +17,19 @@ struct UARTEditMacroView: View {
     
     @EnvironmentObject private var viewModel: UARTViewModel
     
+    // MARK: Private Properties
+    
+    @State private var name: String = ""
+    
     // MARK: view
     
     var body: some View {
         List {
             Section("Name") {
-                //                TextField("UART Command", text: $editCommand, prompt: Text("Write command here"))
-                //                    .keyboardType(.alphabet)
-                //                    .disableAllAutocorrections()
-                //                    .submitLabel(.done)
+                TextField("Name", text: $name, prompt: Text("Type macro name here"))
+                    .keyboardType(.alphabet)
+                    .disableAllAutocorrections()
+                    .submitLabel(.done)
             }
             
             Section("Commands") {
@@ -35,21 +40,29 @@ struct UARTEditMacroView: View {
                 Button("Add Delay") {
                     
                 }
+                .tint(.universalAccentColor)
             }
         }
         .listStyle(.insetGrouped)
         .navigationTitle("Edit \(viewModel.selectedMacro.name)")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            Button("Hi") {
-                print("Hi")
+            ToolbarItem(placement: .topBarLeading) {
+                Button("Dismiss", systemImage: "chevron.down") {
+                    viewModel.showEditMacroSheet = false
+                }
+                .tint(Color.white)
             }
-            .foregroundStyle(Color.primarylabel)
             
-            Button("Export", systemImage: "square.and.arrow.up") {
-                // TODO: Hopefully soon.
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("Export", systemImage: "square.and.arrow.up") {
+                    // TODO: Hopefully soon.
+                }
+                .tint(Color.white)
             }
-            .tint(Color.white)
+        }
+        .doOnce {
+            name = viewModel.selectedMacro.name
         }
         .onDisappear {
             save()
