@@ -32,6 +32,7 @@ struct UARTEditCommandView: View {
     
     // MARK: State
     
+    @State private var editFormat: Format
     @State private var editCommand: String
     @State private var editEOL: UARTMacroCommand.EndOfLine
     @State private var editSymbol: String
@@ -44,6 +45,7 @@ struct UARTEditCommandView: View {
     
     init(_ command: UARTMacroCommand) {
         self.command = command
+        self.editFormat = .data
         self.editCommand = command.toString() ?? ""
         self.editEOL = command.eol
         self.editSymbol = command.symbol
@@ -54,6 +56,10 @@ struct UARTEditCommandView: View {
     var body: some View {
         List {
             Section("Command") {
+                InlineSegmentedControlPicker(selectedValue: $editFormat,
+                                             possibleValues: Format.allCases)
+                    .frame(maxWidth: 220)
+                
                 TextField("UART Command", text: $editCommand, prompt: Text("Write command here"))
                     .keyboardType(.alphabet)
                     .disableAllAutocorrections()
@@ -99,5 +105,23 @@ struct UARTEditCommandView: View {
         let saveCommand = UARTMacroCommand(command.id, command: editCommand,
                                            symbol: editSymbol, eol: editEOL)
         viewModel.updateSelectedMacroCommand(saveCommand)
+    }
+}
+
+// MARK: - Format
+
+fileprivate extension UARTEditCommandView {
+    
+    enum Format: Int, RawRepresentable, CustomStringConvertible, CaseIterable {
+        case text, data
+        
+        var description: String {
+            switch self {
+            case .text:
+                return "Text"
+            case .data:
+                return "Data (Hex)"
+            }
+        }
     }
 }
