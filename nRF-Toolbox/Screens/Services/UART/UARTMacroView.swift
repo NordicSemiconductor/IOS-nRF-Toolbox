@@ -23,7 +23,6 @@ struct UARTMacroView: View {
     private let macro: UARTMacro
     
     @State private var editCommandIndex = 0
-    @State private var isShowingEditCommand = false
     
     @State private var forceTipUUID = UUID()
     private var editTip: EditCommandsTip {
@@ -51,34 +50,9 @@ struct UARTMacroView: View {
 
             VStack(spacing: 16) {
                 Button("", systemImage: "gear") {
-                    isShowingEditCommand = true
+                    viewModel.showEditMacroSheet = true
                 }
                 .tint(.primary)
-                .sheet(isPresented: $isShowingEditCommand) {
-                    NavigationView {
-                        UARTEditMacroView(macro)
-                            .navigationBarItems(trailing: HStack {
-                                Button("Hello") {
-                                    
-                                }
-                            })
-                    }
-                    .setupNavBarBackground(with: Assets.navBar.color)
-                    
-                    
-//                    .navigationBarItems(trailing: HStack {
-//                        Button(action: { ... }) {
-//                            Text("Done")
-//                        })
-//                    })
-//                    .toolbar {
-//                        Button("Export", systemImage: "square.and.arrow.up") {
-//                            // TODO: Hopefully soon.
-//                        }
-//                        .foregroundStyle(Color.white)
-//                    }
-                    .environmentObject(viewModel)
-                }
                 
                 Button("", systemImage: "play.fill") {
                     print("PLAY")

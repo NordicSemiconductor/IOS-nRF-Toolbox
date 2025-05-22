@@ -12,15 +12,9 @@ import SwiftUI
 
 struct UARTEditMacroView: View {
     
-    // MARK: Properties
+    // MARK: EnvironmentObject
     
-    private let macro: UARTMacro
-    
-    // MARK: init
-    
-    init(_ macro: UARTMacro) {
-        self.macro = macro
-    }
+    @EnvironmentObject private var viewModel: UARTViewModel
     
     // MARK: view
     
@@ -38,15 +32,25 @@ struct UARTEditMacroView: View {
             }
             
             Section("Command Sequence") {
-                
                 Button("Add Delay") {
                     
                 }
             }
         }
         .listStyle(.insetGrouped)
-        .navigationTitle("Edit \(macro.name)")
-        
+        .navigationTitle("Edit \(viewModel.selectedMacro.name)")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            Button("Hi") {
+                print("Hi")
+            }
+            .foregroundStyle(Color.primarylabel)
+            
+            Button("Export", systemImage: "square.and.arrow.up") {
+                // TODO: Hopefully soon.
+            }
+            .tint(Color.white)
+        }
         .onDisappear {
             save()
         }
@@ -55,7 +59,7 @@ struct UARTEditMacroView: View {
     // MARK: API
     
     func save() {
-        
+        // TODO
     }
 }
 

@@ -57,6 +57,13 @@ struct UARTMessagesList: View {
                 }
             }
         }
+        .sheet(isPresented: $viewModel.showEditMacroSheet) {
+            NavigationView {
+                UARTEditMacroView()
+                    .environmentObject(viewModel)
+            }
+            .environmentObject(viewModel)
+        }
     }
 }
 

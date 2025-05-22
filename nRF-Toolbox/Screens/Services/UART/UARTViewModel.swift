@@ -36,6 +36,7 @@ final class UARTViewModel: ObservableObject {
     
     @Published private(set) var macros: [UARTMacro] = [.none]
     @Published var selectedMacro = UARTMacro.none
+    @Published var showEditMacroSheet = false
     
     // MARK: init
     
