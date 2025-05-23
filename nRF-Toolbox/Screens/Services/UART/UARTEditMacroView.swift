@@ -29,9 +29,8 @@ struct UARTEditMacroView: View {
     var body: some View {
         List {
             Section("Name") {
-                TextField("Name", text: $name, prompt: Text("Type macro name here"))
+                CancellableTextField("Type macro name here", cancelText: name, icon: .text, text: $name)
                     .keyboardType(.alphabet)
-                    .disableAllAutocorrections()
                     .submitLabel(.done)
                     .onSubmit {
                         save()
