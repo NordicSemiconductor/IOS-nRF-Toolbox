@@ -19,12 +19,30 @@
       }
     },
     {
+      "identity" : "ios-ble-library",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/NordicSemiconductor/IOS-BLE-Library.git",
+      "state" : {
+        "branch" : "develop",
+        "revision" : "8efb50e33d3c30267d2df61fbd397c3739934c55"
+      }
+    },
+    {
       "identity" : "ios-bluetooth-numbers-database",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/NickKibish/iOS-Bluetooth-Numbers-Database.git",
       "state" : {
         "revision" : "40ae8d7050d16fc2603c314dd560a7992c35f56f",
         "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "ios-common-libraries",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/NordicPlayground/IOS-Common-Libraries.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "7dc5c9785e5bfc9ae4d4de1424ca2497f743a05d"
       }
     },
     {

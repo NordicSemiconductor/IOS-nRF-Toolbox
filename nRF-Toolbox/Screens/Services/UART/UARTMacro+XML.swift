@@ -88,7 +88,7 @@ extension UARTMacroCommand {
     
     var xml: AEXMLElement? {
         guard let data else { return nil }
-        return AEXMLElement(name: "command", value: data.hexEncodedString(options: [.upperCase]), attributes: [
+        return AEXMLElement(name: "command", value: "data.hexEncodedString(options: [.upperCase])", attributes: [
             "icon": symbol,
             "active": "true",
             "eol": eol.description,
