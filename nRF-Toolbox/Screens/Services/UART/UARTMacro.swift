@@ -78,7 +78,7 @@ struct UARTMacroCommand: Identifiable, Codable, Hashable, Equatable {
         if let dataAsString = String(data: data, encoding: .utf8) {
             return dataAsString.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
         } else {
-            return nil
+            return data.hexEncodedString(options: [Data.HexEncodingOptions.upperCase, Data.HexEncodingOptions.prepend0x])
         }
     }
 }

@@ -88,7 +88,10 @@ extension UARTMacroCommand {
     
     var xml: AEXMLElement? {
         guard let data else { return nil }
-        return AEXMLElement(name: "command", value: "data.hexEncodedString(options: [.upperCase])", attributes: [
+        // Add 'prepend0x' to escape Xcode Build Issues and then remove it.
+        // I know. Definitely not the best. Hopefully Xcode gets better at disambiguation soon (WWDC).
+        let dataString = data.hexEncodedString(options: [Data.HexEncodingOptions.upperCase, Data.HexEncodingOptions.prepend0x]).replacingOccurrences(of: "0x", with: "")
+        return AEXMLElement(name: "command", value: dataString, attributes: [
             "icon": symbol,
             "active": "true",
             "eol": eol.description,
