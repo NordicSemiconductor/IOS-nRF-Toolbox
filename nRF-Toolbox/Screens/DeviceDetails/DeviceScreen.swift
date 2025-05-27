@@ -84,6 +84,14 @@ struct DeviceScreen: View {
                 }
             }
             
+            Section {
+                Button("Open Inspector", systemImage: "info.circle") {
+                    environment.showInspector.toggle()
+                }
+                .foregroundStyle(Color.universalAccentColor)
+                .centered()
+            }
+            
             Section("Troubleshooting") {
                 DisclosureGroup {
                     Text("""
@@ -93,7 +101,7 @@ struct DeviceScreen: View {
                     """)
                     .foregroundStyle(Color.secondary)
                 } label: {
-                    Label("Can't find the Services you were looking for?", systemImage: "info.circle")
+                    Label("Can't find the Services you were looking for?", systemImage: "exclamationmark.magnifyingglass")
                 }
                 .accentColor(.universalAccentColor)
             }
