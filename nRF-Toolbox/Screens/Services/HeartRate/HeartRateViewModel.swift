@@ -15,8 +15,13 @@ import iOS_Common_Libraries
 // MARK: HeartRateValue
 
 struct HeartRateValue {
+    
+    // MARK: Properties
+    
     let measurement: HeartRateMeasurement
     let date: Date
+    
+    // MARK: init
     
     init(with data: Data) throws {
         self.measurement = HeartRateMeasurement(data)
@@ -36,7 +41,7 @@ extension DeviceScreen {
         private let peripheral: Peripheral
         private let heartRateService: CBService
         private var hrMeasurement: CBCharacteristic!
-        private var cancelable = Set<AnyCancellable>()
+        private var cancellables = Set<AnyCancellable>()
         
         private let log = NordicLog(category: "HeartRateViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
         
@@ -81,6 +86,7 @@ extension DeviceScreen {
 extension DeviceScreen.HeartRateViewModel: SupportedServiceViewModel {
     
     func onConnect() async {
+        log.debug(#function)
         do {
             try await discoverCharacteristics()
         } catch {
@@ -89,7 +95,9 @@ extension DeviceScreen.HeartRateViewModel: SupportedServiceViewModel {
     }
     
     func onDisconnect() {
-        cancelable.removeAll()
+        log.debug(#function)
+//        await notifyHRMeasurement(false)
+        cancellables.removeAll()
     }
 }
 
@@ -100,20 +108,28 @@ private extension ViewModel {
     // MARK: discoverCharacteristics()
     
     func discoverCharacteristics() async throws {
+        log.debug(#function)
         let hrCharacteristics: [Characteristic] = [.heartRateMeasurement]
-        
         let heartRateCharacteristic = try await peripheral.discoverCharacteristics(hrCharacteristics.map(\.uuid), for: heartRateService)
             .timeout(1, scheduler: DispatchQueue.main)
             .firstValue
         
         for characteristic in heartRateCharacteristic where characteristic.uuid == Characteristic.heartRateMeasurement.uuid {
-            try await enableHRMeasurement(characteristic)
+            hrMeasurement = characteristic
+            do {
+                try await notifyHRMeasurement(true)
+                // in case of success - listen
+                listenTo(hrMeasurement)
+            } catch {
+                log.error("Unable to Enable Notifications: \(error.localizedDescription)")
+            }
         }
     }
     
-    // MARK: enableHRMeasurement()
+    // MARK: listenTo()
     
-    func enableHRMeasurement(_ characteristic: CBCharacteristic) async throws {
+    func listenTo(_ characteristic: CBCharacteristic) {
+        log.debug(#function)
         peripheral.listenValues(for: characteristic)
             .compactMap { data in
                 try? HeartRateValue(with: data)
@@ -144,15 +160,20 @@ private extension ViewModel {
                 lowest = min - 5
                 highest = max + 5
             }
-            .store(in: &cancelable)
-        
-        _ = try await peripheral.setNotifyValue(true, for: characteristic).firstValue
+            .store(in: &cancellables)
     }
-}
-
-private extension ViewModel {
-    enum Err: Error {
-        
+    
+    // MARK: notifyHRMeasurement()
+    
+    func notifyHRMeasurement(_ enable: Bool) async throws {
+        guard let hrMeasurement else { return }
+        log.debug(#function)
+        do {
+            let result = try await peripheral.setNotifyValue(enable, for: hrMeasurement).firstValue
+            log.debug("Enabled HR Measurement Characteristic: \(result)")
+        } catch {
+            log.error(error.localizedDescription)
+        }
     }
 }
 
