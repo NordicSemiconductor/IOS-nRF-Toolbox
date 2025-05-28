@@ -84,7 +84,7 @@ struct DeviceScreen: View {
                 }
             }
             
-            Section {
+            Section("Device Information") {
                 Button("Open Inspector", systemImage: "info.circle") {
                     environment.showInspector.toggle()
                 }
