@@ -43,13 +43,13 @@ struct SidebarView: View {
                 }
             }
             
-            Section("Device Search") {
+            Section("Scanner") {
                 NavigationLink {
                     PeripheralScannerScreen()
                         .environmentObject(scannerViewModel)
                         .environmentObject(scannerViewModel.environment)
                 } label: {
-                    Label("Open Scanner", systemImage: "dot.radiowaves.right")
+                    Label("Connect to Device", systemImage: "dot.radiowaves.right")
                         .setAccent(.universalAccentColor)
                         .tag(RootNavigationView.MenuCategory.scanner)
                 }
