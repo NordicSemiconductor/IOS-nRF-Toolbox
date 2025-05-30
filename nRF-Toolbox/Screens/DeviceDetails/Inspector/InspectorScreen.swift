@@ -36,74 +36,64 @@ struct InspectorScreen: View {
     // MARK: view
     
     var body: some View {
-        NavigationView {
-            List {
-                Section("GATT") {
-                    NavigationLink {
-                        AttributeTableScreen(rootEnv.attributeTable)
-                    } label: {
-                        Label("Attribute Table", systemImage: "list.dash")
-                            .setAccent(.nordicBlue)
+        List {
+            Section("GATT") {
+                NavigationLink {
+                    AttributeTableScreen(rootEnv.attributeTable)
+                } label: {
+                    Label("Attribute Table", systemImage: "list.dash")
+                        .setAccent(.nordicBlue)
+                }
+            }
+            
+            if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id) {
+                if let signalViewModel = deviceVM.environment.signalViewModel {
+                    Section {
+                        SignalChart()
+                            .onAppear {
+                                signalViewModel.startTimer()
+                            }
+                            .onDisappear {
+                                signalViewModel.stopTimer()
+                            }
+                            .environmentObject(signalViewModel.environment)
                     }
                 }
                 
-                if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id) {
-                    if let signalViewModel = deviceVM.environment.signalViewModel {
-                        Section {
-                            SignalChart()
-                                .onAppear {
-                                    signalViewModel.startTimer()
-                                }
-                                .onDisappear {
-                                    signalViewModel.stopTimer()
-                                }
-                                .environmentObject(signalViewModel.environment)
-                        }
-                    }
-                    
-                    if let batteryServiceViewModel = deviceVM.batteryServiceViewModel {
-                        Section {
-                            BatteryView()
-                                .environmentObject(batteryServiceViewModel)
-                        }
-                    }
-                    
-                    if let deviceInfo = deviceVM.environment.deviceInfo {
-                        Section("Device Info") {
-                            DeviceInformationView(deviceInfo)
-                        }
+                if let batteryServiceViewModel = deviceVM.batteryServiceViewModel {
+                    Section {
+                        BatteryView()
+                            .environmentObject(batteryServiceViewModel)
                     }
                 }
-    
-                Section {
-                    Button("Dismiss") {
+                
+                if let deviceInfo = deviceVM.environment.deviceInfo {
+                    Section("Device Info") {
+                        DeviceInformationView(deviceInfo)
+                    }
+                }
+            }
+            
+            Section {
+                Button("Disconnect") {
+                    disconnectAlertShow = true
+                }
+                .foregroundStyle(.red)
+                .centered()
+                .alert("Disconnect", isPresented: $disconnectAlertShow) {
+                    Button("Yes") {
+                        // TODO: Unselect Device instead
+                        //                        rootNavigationMV.selectedDevice = nil
                         rootEnv.showInspector = false
+                        //                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                        //                            Task {
+                        //                                try await connectedDeviceViewModel.disconnectAndRemoveViewModel(environment.deviceId)
+                        //                            }
+                        //                        }
                     }
-                    .tint(.universalAccentColor)
-                    .centered()
-                }
-                
-                Section {
-                    Button("Disconnect") {
-                        disconnectAlertShow = true
-                    }
-                    .foregroundStyle(.red)
-                    .centered()
-                    .alert("Disconnect", isPresented: $disconnectAlertShow) {
-                        Button("Yes") {
-                            // TODO: Unselect Device instead
-                            //                        rootNavigationMV.selectedDevice = nil
-                            rootEnv.showInspector = false
-                            //                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-                            //                            Task {
-                            //                                try await connectedDeviceViewModel.disconnectAndRemoveViewModel(environment.deviceId)
-                            //                            }
-                            //                        }
-                        }
-                        Button("No") { }
-                    } message: {
-                        Text("Are you sure you want to cancel peripheral connection?")
-                    }
+                    Button("No") { }
+                } message: {
+                    Text("Are you sure you want to cancel peripheral connection?")
                 }
             }
         }

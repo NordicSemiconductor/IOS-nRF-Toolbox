@@ -122,10 +122,23 @@ struct DeviceScreen: View {
         .listStyle(.insetGrouped)
         .navigationTitle(connectedDevicesViewModel.selectedDevice?.name ?? "Unnamed")
         .inspector(isPresented: $environment.showInspector) {
-            InspectorScreen(device)
-                .tabItem {
-                    Label("Peripheral", systemImage: "terminal")
+            NavigationStack {
+                InspectorScreen(device)
+                    .tabItem {
+                        Label("Peripheral", systemImage: "terminal")
+                    }
+            }
+            .navigationTitle("Inspector")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbarRole(.navigationStack)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button("Dismiss", systemImage: "chevron.down") {
+                        environment.showInspector = false
+                    }
+                    .tint(Color.white)
                 }
+            }
         }
         .toolbar {
             Button {
