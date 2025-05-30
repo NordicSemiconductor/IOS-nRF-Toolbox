@@ -39,11 +39,12 @@ struct SignalChart: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("RSSI (Signal) Strength")
+            Text("RSSI")
                 .font(.title2.bold())
             
-            Text("Read once per second")
+            Text("Updated once per second")
                 .foregroundStyle(.secondary)
+                .font(.caption)
             
             if #available(iOS 17, macOS 14, *) {
                 scalableChart()
