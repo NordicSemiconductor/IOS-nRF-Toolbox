@@ -26,6 +26,13 @@ struct RootNavigationView: View {
     @State private var visibility: NavigationSplitViewVisibility = .all
     @State private var compactPreferredColumn: NavigationSplitViewColumn = .sidebar
     
+    // MARK: init
+    
+    init() {
+        // Might be deprecated but it works.
+        UIApplication.shared.statusBarStyle = .lightContent
+    }
+    
     // MARK: view
     
     var body: some View {
