@@ -85,6 +85,8 @@ struct ScanDeviceView: View {
     var body: some View {
         HStack {
             ScanResultItem(name: device.name, rssi: device.rssi, services: device.services)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.trailing, 8)
             
             if environment.connectingDevice == device {
                 ProgressView()
