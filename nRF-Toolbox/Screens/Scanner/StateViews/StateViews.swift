@@ -77,10 +77,6 @@ struct StateViews {
     
     struct EmptyResults: View {
         
-        // MARK: Environment
-        
-        @EnvironmentObject private var viewModel: PeripheralScannerScreen.PeripheralScannerViewModel
-        
         // MARK: view
         
         var body: some View {
@@ -103,12 +99,6 @@ struct StateViews {
                     )
                 }
                 .redacted(reason: .placeholder)
-                
-                Button("Start", systemImage: "play.fill") {
-                    viewModel.startScanning()
-                }
-                .accentColor(.nordicBlue)
-                .centered()
             }
             .listStyle(.insetGrouped)
         }

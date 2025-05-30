@@ -174,13 +174,19 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
             .store(in: &cancellables)
     }
     
+    // MARK: stopScanning()
+    
+    func stopScanning() {
+        log.debug(#function)
+        centralManager.stopScan()
+        cancellables.removeAll()
+    }
+    
     // MARK: refresh()
     
     func refresh() {
-        log.debug(#function)
-        centralManager.stopScan()
+        stopScanning()
         environment.devices.removeAll()
-        cancellables.removeAll()
         setupManager()
         startScanning()
     }

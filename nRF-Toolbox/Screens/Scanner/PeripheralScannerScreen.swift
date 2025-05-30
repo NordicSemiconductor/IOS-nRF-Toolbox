@@ -49,5 +49,11 @@ struct PeripheralScannerScreen: View {
                 }
             }
         }
+        .onFirstAppear {
+            viewModel.refresh()
+        }
+        .onDisappear {
+            viewModel.stopScanning()
+        }
     }
 }
