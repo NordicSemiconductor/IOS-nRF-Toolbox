@@ -39,7 +39,6 @@ struct ScanResultList: View {
                     } label: {
                         ScanDeviceView(device)
                     }
-                    .buttonStyle(.plain)
                 }
                 
                 VStack {
