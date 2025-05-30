@@ -41,7 +41,7 @@ struct RootNavigationView: View {
                 .navigationTitle("nRF Toolbox")
                 .setupNavBarBackground(with: Assets.navBar.color)
                 .toolbar {
-                    Button("", systemImage: "info.circle") {
+                    Button("", systemImage: "info") {
                         viewModel.showStartInfo = true
                     }
                 }
