@@ -8,6 +8,7 @@
 
 import SwiftUI
 import iOS_Common_Libraries
+import iOS_Bluetooth_Numbers_Database
 
 // MARK: - SidebarDeviceView
 
@@ -20,11 +21,13 @@ struct SidebarDeviceView: View {
     // MARK: Properties
     
     private let device: ConnectedDevicesViewModel.Device
+    private let advertisedServices: Set<Service>
     
     // MARK: Init
     
-    init(_ device: ConnectedDevicesViewModel.Device) {
+    init(_ device: ConnectedDevicesViewModel.Device, advertising: Set<Service>) {
         self.device = device
+        self.advertisedServices = advertising
     }
     
     // MARK: view
@@ -35,6 +38,9 @@ struct SidebarDeviceView: View {
                 .accentColor(.universalAccentColor)
                 .padding(.bottom, 4)
             
+            ServiceBadgeGroup(advertisedServices)
+                .padding(.leading, 42)
+            
             switch device.status {
             case .busy, .connected:
                 EmptyView()
@@ -44,7 +50,6 @@ struct SidebarDeviceView: View {
                     .font(.caption)
             }
         }
-        .listRowSeparator(.hidden)
     }
 }
 

@@ -196,7 +196,7 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
 
 extension PeripheralScannerScreen.PeripheralScannerViewModel {
     
-    class Environment: ObservableObject {
+    final class Environment: ObservableObject {
         
         // MARK: Properties
         
@@ -221,8 +221,18 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
             log.debug(#function)
         }
         
+        // MARK: deinit
+        
         deinit {
             log.debug(#function)
+        }
+        
+        // MARK: API
+        
+        func advertisedServices(_ deviceID: UUID) -> Set<Service> {
+            return devices
+                .first(where: \.id, isEqualsTo: deviceID)?
+                .services ?? Set<Service>()
         }
     }
 }
