@@ -55,12 +55,8 @@ struct ScanResultList: View {
                     .accentColor(.universalAccentColor)
                     .padding(.leading, 6)
                     .listRowSeparator(.hidden)
-            }
-            
-            Section {
+            } footer: {
                 Label("Tap a device to connect", systemImage: "hand.tap.fill")
-                    .listRowBackground(Color.clear)
-                    .centered()
             }
         }
         .listStyle(.insetGrouped)
