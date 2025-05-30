@@ -63,18 +63,19 @@ struct AboutView: View {
                 Label("Device in advertising range", systemImage: "wave.3.up")
             }
             .listRowSeparator(.hidden)
-            
-            Button("Back to Toolbox") {
-                presentationMode.wrappedValue.dismiss()
-            }
-            .buttonStyle(.borderedProminent)
-            .frame(maxWidth: .infinity)
-            .padding(.bottom)
-            .listRowBackground(Color.clear)
-            .listRowSeparator(.hidden)
         }
         .listStyle(.insetGrouped)
-        .navigationTitle("About")
+        .navigationTitle("About App")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbarRole(.navigationStack)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button("Dismiss", systemImage: "chevron.down") {
+                    presentationMode.wrappedValue.dismiss()
+                }
+                .tint(Color.white)
+            }
+        }
         .setAccent(.nordicBlue)
     }
 }

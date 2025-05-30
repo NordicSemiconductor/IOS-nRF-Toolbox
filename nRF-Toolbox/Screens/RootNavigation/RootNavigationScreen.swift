@@ -49,7 +49,9 @@ struct RootNavigationView: View {
                 .environmentObject(connectedDevicesViewModel)
         }
         .sheet(isPresented: $viewModel.showStartInfo) {
-            AboutView()
+            NavigationStack {
+                AboutView()
+            }
         }
         .onAppear {
             scannerViewModel.setupManager()
