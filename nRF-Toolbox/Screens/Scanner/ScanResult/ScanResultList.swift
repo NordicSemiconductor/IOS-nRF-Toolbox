@@ -85,11 +85,11 @@ struct ScanDeviceView: View {
     
     var body: some View {
         HStack {
+            ScanResultItem(name: device.name, rssi: device.rssi, services: device.services)
+            
             if environment.connectingDevice == device {
                 ProgressView()
             }
-            
-            ScanResultItem(name: device.name, rssi: device.rssi, services: device.services)
         }
     }
 }
