@@ -42,19 +42,19 @@ struct ScanResultList: View {
                     .buttonStyle(.plain)
                 }
                 
-                HStack {
-                    ProgressView()
-                        .progressViewStyle(.circular)
+                VStack {
+                    HStack {
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                        
+                        Text("Scanning...")
+                            .padding(.horizontal)
+                    }
+                    .padding(.top, 12)
                     
-                    Text("Scanning...")
-                        .padding(.horizontal)
+                    IndeterminateProgressView()
+                        .accentColor(.universalAccentColor)
                 }
-                .centered()
-                
-                IndeterminateProgressView()
-                    .accentColor(.universalAccentColor)
-                    .padding(.leading, 6)
-                    .listRowSeparator(.hidden)
             } footer: {
                 Label("Tap a device to connect", systemImage: "hand.tap.fill")
             }
