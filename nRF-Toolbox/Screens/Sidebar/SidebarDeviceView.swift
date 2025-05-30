@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import iOS_Common_Libraries
 
 // MARK: - SidebarDeviceView
 
@@ -30,8 +31,8 @@ struct SidebarDeviceView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(device.name ?? "Unnamed")
-                .font(.title3)
+            Label(device.name ?? "Unnamed", systemImage: "cpu")
+                .accentColor(.universalAccentColor)
                 .padding(.bottom, 4)
             
             switch device.status {
