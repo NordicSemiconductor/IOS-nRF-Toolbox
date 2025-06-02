@@ -68,7 +68,7 @@ struct HeartRateChart: View {
                 Text("RR Intervals Received: \(viewModel.data.last?.measurement.intervals?.count ?? 0)")
                     .foregroundStyle(.secondary)
             } icon: {
-                Image(systemName: "chart.line.uptrend.xyaxis")
+                Image(systemName: "arrow.left.and.right.circle")
                     .foregroundStyle(Color.nordicMiddleGrey)
             }
         }
