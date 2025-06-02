@@ -127,13 +127,5 @@ struct DeviceScreen: View {
             }
             .navigationBarTitleDisplayMode(.inline)
         }
-        .toolbar {
-            Button {
-                environment.showInspector.toggle()
-            } label: {
-                Image(systemName: "info")
-                    .symbolVariant(.circle)
-            }
-        }
     }
 }
