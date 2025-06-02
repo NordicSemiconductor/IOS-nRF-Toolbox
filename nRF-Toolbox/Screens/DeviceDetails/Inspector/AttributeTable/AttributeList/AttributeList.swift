@@ -27,22 +27,14 @@ struct AttributeList: View {
     // MARK: view
     
     var body: some View {
-        if attributeTable.isEmpty {
-            NoContentView(
-                title: "Attributes not found",
-                systemImage: "table")
-        } else {
-            List {
-                ForEach(attributeTable.services) { service in
-                    if service == attributeTable.services.first {
-                        Section("") {
-                            DisclosureAttributeItemView(service)
-                        }
-                    } else {
-                        Section {
-                            DisclosureAttributeItemView(service)
-                        }
-                    }
+        ForEach(attributeTable.services) { service in
+            if service == attributeTable.services.first {
+                Section("") {
+                    DisclosureAttributeItemView(service)
+                }
+            } else {
+                Section {
+                    DisclosureAttributeItemView(service)
                 }
             }
         }

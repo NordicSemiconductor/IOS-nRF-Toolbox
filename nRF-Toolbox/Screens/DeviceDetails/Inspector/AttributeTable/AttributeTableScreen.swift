@@ -49,10 +49,12 @@ struct AttributeTableView: View {
     // MARK: view
     
     var body: some View {
-        if let attributeTable {
-            AttributeList(attributeTable)
-        } else {
-            NoContentView(title: "Discovering . . .", systemImage: "table")
+        List {
+            if let attributeTable, attributeTable.services.hasItems {
+                AttributeList(attributeTable)
+            } else {
+                NoContentView(title: "Attributes not found", systemImage: "table")
+            }
         }
     }
 }
