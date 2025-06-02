@@ -27,24 +27,26 @@ struct HeartRateChart: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Heart Rate")
-                .font(.title2.bold())
-            
-            Label {
-                Text("Current Value: \(viewModel.data.last?.measurement.heartRateValue ?? 0) BPM")
-                    .foregroundStyle(.secondary)
-            } icon: {
+            HStack {
+                Text("Heart Rate")
+                    .font(.title2.bold())
+                
+                Spacer()
+                
                 Image(systemName: "heart.fill")
                     .foregroundColor(.nordicRed)
                     .scaleEffect(animationAmount)
                     .animation(
                         .easeInOut(duration: 0.6)
-                            .delay(0.2)
-                            .repeatForever(autoreverses: true),
+                        .delay(0.2)
+                        .repeatForever(autoreverses: true),
                         value: animationAmount)
                     .onAppear {
                         animationAmount = 1.2
                     }
+                
+                Text("\(viewModel.data.last?.measurement.heartRateValue ?? 0) BPM")
+                    .foregroundStyle(.secondary)
             }
             
             Chart {
