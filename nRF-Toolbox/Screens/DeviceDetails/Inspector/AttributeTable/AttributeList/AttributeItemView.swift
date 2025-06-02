@@ -32,10 +32,12 @@ struct AttributeItemView: View {
             VStack(alignment: .leading) {
                 Text(attribute.name)
                     .font(.headline)
+                
                 Text(attribute.uuidString)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
             }
+            .padding(.leading, 4)
         }
     }
     
@@ -47,8 +49,6 @@ struct AttributeItemView: View {
                     .fill(.cyan.opacity(0.8 - Double(i) * 0.2))
                     .frame(width: 6)
             }
-            Spacer()
         }
-        .frame(width: 40)
     }
 }

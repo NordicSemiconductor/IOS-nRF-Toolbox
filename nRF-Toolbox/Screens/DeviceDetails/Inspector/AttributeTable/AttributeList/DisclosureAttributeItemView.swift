@@ -29,6 +29,7 @@ struct DisclosureAttributeItemView: View {
             DisclosureGroup {
                 ForEach(attribute.children, id: \.id) { child in
                     DisclosureAttributeItemView(child)
+                        .padding(.leading, -20.0)
                 }
             } label: {
                 AttributeItemView(attribute)
