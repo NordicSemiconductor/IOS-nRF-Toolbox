@@ -19,10 +19,10 @@ extension Service {
     private static let serviceIcons: [Service : String] = [
         .runningSpeedAndCadence: "figure.run",
         .cyclingSpeedAndCadence: "figure.outdoor.cycle",
-        .heartRate: "heart",
+        .heartRate: "heart.fill",
         .batteryService: "battery.75percent",
-//        .bloodPressure,
-//        .glucose,
+        .bloodPressure: "drop.fill",
+        .glucose: "syringe",
         .continuousGlucoseMonitoring: "syringe",
         .healthThermometer: "medical.thermometer",
         .throughputService: "metronome"
