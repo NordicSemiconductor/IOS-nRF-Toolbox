@@ -27,6 +27,7 @@ struct AttributeTableScreen: View {
     
     var body: some View {
         AttributeTableView(attributeTable)
+            .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("Attribute Table")
     }
 }

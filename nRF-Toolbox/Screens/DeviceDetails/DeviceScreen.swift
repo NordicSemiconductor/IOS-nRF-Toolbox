@@ -124,21 +124,8 @@ struct DeviceScreen: View {
         .inspector(isPresented: $environment.showInspector) {
             NavigationStack {
                 InspectorScreen(device)
-                    .tabItem {
-                        Label("Peripheral", systemImage: "terminal")
-                    }
             }
-            .navigationTitle("Inspector")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbarRole(.navigationStack)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button("Dismiss", systemImage: "chevron.down") {
-                        environment.showInspector = false
-                    }
-                    .tint(Color.white)
-                }
-            }
         }
         .toolbar {
             Button {

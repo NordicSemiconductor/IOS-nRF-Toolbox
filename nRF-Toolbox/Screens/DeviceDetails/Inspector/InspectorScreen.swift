@@ -22,6 +22,16 @@ struct InspectorScreen: View {
     // MARK: Private Properties
     
     @State private var disconnectAlertShow = false
+    
+    @Environment(\.colorScheme) var colorScheme
+    private var navBarColor: Color {
+        switch colorScheme {
+        case .dark:
+            return .secondarySystemBackground
+        default:
+            return .nordicDarkGrey
+        }
+    }
 
     // MARK: Properties
     
@@ -97,5 +107,6 @@ struct InspectorScreen: View {
                 }
             }
         }
+        .setupNavBarBackground(with: navBarColor)
     }
 }
