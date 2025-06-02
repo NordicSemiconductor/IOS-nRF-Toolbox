@@ -125,11 +125,11 @@ extension DeviceDetailsViewModel {
     
     func discoverSupportedServices() async {
         log.debug(#function)
-        let supportedServices = Service.supportedServices.map { CBUUID(service: $0) }
         do {
-            discoveredServices = try await peripheral.discoverServices(serviceUUIDs: supportedServices).firstValue
-           
-            for service in discoveredServices {
+            discoveredServices = try await peripheral.discoverServices(serviceUUIDs: nil).firstValue
+            let supportedServices = Service.supportedServices.compactMap { CBUUID(service: $0) }
+            
+            for service in discoveredServices where supportedServices.contains(service.uuid) {
                 switch service.uuid {
                 case .runningSpeedCadence:
                     supportedServiceViewModels.append(RunningServiceViewModel(peripheral: peripheral, runningService: service))
@@ -221,7 +221,6 @@ extension DeviceDetailsViewModel {
     
     func attributeTable() async throws -> AttributeTable {
         var table = AttributeTable()
-        
         for service in discoveredServices {
             table.addService(service)
             
@@ -235,7 +234,6 @@ extension DeviceDetailsViewModel {
                 }
             }
         }
-        
         return table
     }
 }
