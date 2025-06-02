@@ -148,8 +148,8 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
         guard centralManager.centralManager.state == .poweredOn else { return }
         centralManager.scanForPeripherals(withServices: nil)
             .filter {
-                // Filter unnamed and unconnectable devices
-                return $0.name != nil && $0.advertisementData.isConnectable == true
+                // Filter unconnectable devices
+                return $0.advertisementData.isConnectable == true
             }
             .map { result -> ScanResult in
                 ScanResult(

@@ -14,6 +14,8 @@ import iOS_Bluetooth_Numbers_Database
 
 struct ScanResultItem: View {
     
+    // MARK: Properties
+    
     let name: String?
     let rssi: Int
     let services: Set<Service>
@@ -22,7 +24,7 @@ struct ScanResultItem: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(name ?? "n/a")
+            Text(name ?? "Unnamed Device")
                 .foregroundColor(name == nil ? .secondary : .primary)
             
             ServiceBadgeGroup(services)
