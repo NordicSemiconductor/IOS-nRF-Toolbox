@@ -43,11 +43,11 @@ struct BloodPressureCharacteristic {
             defer {
                 offset += Date.DataSize
             }
-            return Date(data.suffix(from: offset))
+            return Date(data.subdata(in: offset..<offset + Date.DataSize))
         }() : nil
         
         pulseRate = flagsRegister.contains(.pulseRate) ? {
-            let pulseValue = Float(asSFloat: data.suffix(from: offset))
+            let pulseValue = Float(asSFloat: data.subdata(in: offset..<offset + SFloatReserved.byteSize))
             return Int(pulseValue)
         }() : nil
     }

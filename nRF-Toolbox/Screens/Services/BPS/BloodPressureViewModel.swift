@@ -20,7 +20,7 @@ import CoreBluetoothMock_Collection
 @MainActor
 final class BloodPressureViewModel: ObservableObject {
     
-    // MARK: Properties
+    // MARK: Private Properties
     
     private let service: CBService
     private let peripheral: Peripheral
@@ -30,6 +30,10 @@ final class BloodPressureViewModel: ObservableObject {
     
     private let log = NordicLog(category: "BloodPressureViewModel",
                                 subsystem: "com.nordicsemi.nrf-toolbox")
+    
+    // MARK: Properties
+    
+    @Published private(set) var currentValue: BloodPressureCharacteristic?
     
     // MARK: init
     
@@ -66,25 +70,16 @@ extension BloodPressureViewModel: SupportedServiceViewModel {
         do {
             if let initialValue = bpsMeasurement.value {
                 log.debug("Obtained initial Blood Pressure Measurement.")
-                let measurement = try BloodPressureCharacteristic(data: initialValue)
+                currentValue = try? BloodPressureCharacteristic(data: initialValue)
             }
+            let bpsEnable = try await peripheral.setNotifyValue(true, for: bpsMeasurement).firstValue
+            log.debug("BPS Measurement.setNotifyValue(true): \(bpsEnable)")
+            
+            listenTo(bpsMeasurement)
         } catch {
             log.debug(error.localizedDescription)
             onDisconnect()
         }
-        
-//        switch characteristic.uuid {
-//        case CBUUID.Characteristics.BloodPressure.measurement:
-//            do {
-//                let bloodPressureCharacteristic = try BloodPressureCharacteristic(data: value)
-//                bloodPressureSection.update(with: bloodPressureCharacteristic)
-//                heartRateSection.update(with: bloodPressureCharacteristic)
-//                dateTimeSection.update(with: bloodPressureCharacteristic)
-//                
-//                tableView.reloadData()
-//            } catch let error {
-//                displayErrorAlert(error: error)
-//            }
 //
 //        case CBUUID.Characteristics.BloodPressure.intermediateCuff:
 //            do {
@@ -98,6 +93,22 @@ extension BloodPressureViewModel: SupportedServiceViewModel {
 //        default:
 //            super.didUpdateValue(for: characteristic)
 //        }
+    }
+    
+    func listenTo(_ bpsCharacteristic: CBCharacteristic) {
+        log.debug(#function)
+        peripheral.listenValues(for: bpsCharacteristic)
+            .map { [log] data -> BloodPressureCharacteristic? in
+                log.debug("Received Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing])) (\(data.count) bytes)")
+                return try? BloodPressureCharacteristic(data: data)
+            }
+            .receive(on: RunLoop.main)
+            .sink(receiveCompletion: { [log] _ in
+                log.debug("Completion")
+            }, receiveValue: { [weak self] newValue in
+                self?.currentValue = newValue
+            })
+            .store(in: &cancellables)
     }
     
     func onDisconnect() {
