@@ -21,9 +21,75 @@ struct BloodPressureView: View {
     
     var body: some View {
         if let currentValue = viewModel.currentValue {
-            Text("BPS")
+            BloodPressureGrid(currentValue)
         } else {
             NoContentView(title: "No Data", systemImage: "drop.fill", description: "No Blood Pressure Data Available. You may press Button 1 on your DevKit to generate some Data.")
         }
+    }
+}
+ 
+// MARK: - BloodPressureGrid
+
+struct BloodPressureGrid: View {
+    
+    // MARK: Static
+    
+    private static let timestampFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "hh:mm a, dd/MM/yyyy"
+        return formatter
+    }()
+    
+    // MARK: Private Properties
+    
+    private let measurement: BloodPressureMeasurement
+    
+    // MARK: init
+    
+    init(_ measurement: BloodPressureMeasurement) {
+        self.measurement = measurement
+    }
+    
+    // MARK: view
+    
+    var body: some View {
+        NumberedColumnGrid(columns: 2, data: attributes) { item in
+            RunningValuesGridItem(title: item.title, value: item.value, unit: item.unit)
+        }
+        
+        if let date = measurement.date {
+            LabeledContent {
+                Text(Self.timestampFormatter.string(from: date))
+            } label: {
+                Label("Timestamp", systemImage: "stopwatch")
+            }
+            .labeledContentStyle(.accentedContent(
+                accentColor: .universalAccentColor, lineLimit: 1
+            ))
+        }
+    }
+    
+    // MARK: attributes
+    
+    private var attributes: [RunningAttribute] {
+        var items = [RunningAttribute]()
+        
+        let systolicKey = "Systolic"
+        items.append(RunningAttribute(title: systolicKey, value: String(format: "%.2f", measurement.systolicPressure.value), unit: measurement.systolicPressure.unit.symbol))
+
+        let diastolicKey = "Diastolic"
+        items.append(RunningAttribute(title: diastolicKey, value: String(format: "%.2f", measurement.diastolicPressure.value), unit: measurement.diastolicPressure.unit.symbol))
+        
+        let meanArterialPressureKey = "Mean Arterial Pressure"
+        items.append(RunningAttribute(title: meanArterialPressureKey, value: String(format: "%.2f", measurement.meanArterialPressure.value), unit: measurement.meanArterialPressure.unit.symbol))
+
+        let heartRateKey = "Heart Rate"
+        if let heartRate = measurement.pulseRate {
+            items.append(RunningAttribute(title: heartRateKey, value: "\(heartRate)", unit: "BPM"))
+        } else {
+            items.append(RunningAttribute(title: heartRateKey, value: "N/A", unit: "BPM"))
+        }
+        
+        return items
     }
 }
