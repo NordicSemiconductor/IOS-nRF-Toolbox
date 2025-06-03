@@ -57,7 +57,7 @@ extension BloodPressureViewModel: SupportedServiceViewModel {
     func onConnect() async {
         log.debug(#function)
         let characteristics: [Characteristic] = [
-            .bloodPressureMeasurement, .bloodPressureFeature
+            .bloodPressureMeasurement, .intermediateCuffPressure
         ]
         let cbCharacteristics = try? await peripheral
             .discoverCharacteristics(characteristics.map(\.uuid), for: service)
