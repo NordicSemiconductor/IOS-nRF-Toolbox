@@ -1,5 +1,5 @@
 //
-//  BloodPressureCharacteristic.swift
+//  BloodPressureMeasurement.swift
 //  nRF Toolbox
 //
 //  Created by Dinesh Harjani on 3/6/25.
@@ -9,9 +9,9 @@
 import Foundation
 import iOS_Common_Libraries
 
-// MARK: - BloodPressureCharacteristic
+// MARK: - BloodPressureMeasurement
 
-struct BloodPressureValue {
+struct BloodPressureMeasurement {
     
     // MARK: Properties
     
@@ -25,7 +25,7 @@ struct BloodPressureValue {
     
     init(data: Data) throws {
         let featureFlags = UInt(data.littleEndianBytes(as: UInt8.self))
-        let flagsRegister = BitField<BloodPressureMeasurementFlags>(featureFlags)
+        let flagsRegister = BitField<Flag>(featureFlags)
         let unit: UnitPressure = flagsRegister.contains(.unit) ? .millimetersOfMercury : .kilopascals
         
         var offset = 1
@@ -53,9 +53,11 @@ struct BloodPressureValue {
     }
 }
 
-// MARK: - BloodPressureMeasurementFlags
+// MARK: - Flags
 
-private enum BloodPressureMeasurementFlags: RegisterValue, Option, CaseIterable {
+fileprivate extension BloodPressureMeasurement {
     
-    case unit, timestamp, pulseRate
+    private enum Flag: RegisterValue, Option, CaseIterable {
+        case unit, timestamp, pulseRate
+    }
 }

@@ -33,7 +33,7 @@ final class BloodPressureViewModel: ObservableObject {
     
     // MARK: Properties
     
-    @Published private(set) var currentValue: BloodPressureCharacteristic?
+    @Published private(set) var currentValue: BloodPressureMeasurement?
     
     // MARK: init
     
@@ -70,7 +70,7 @@ extension BloodPressureViewModel: SupportedServiceViewModel {
         do {
             if let initialValue = bpsMeasurement.value {
                 log.debug("Obtained initial Blood Pressure Measurement.")
-                currentValue = try? BloodPressureCharacteristic(data: initialValue)
+                currentValue = try? BloodPressureMeasurement(data: initialValue)
             }
             let bpsEnable = try await peripheral.setNotifyValue(true, for: bpsMeasurement).firstValue
             log.debug("BPS Measurement.setNotifyValue(true): \(bpsEnable)")
@@ -98,9 +98,9 @@ extension BloodPressureViewModel: SupportedServiceViewModel {
     func listenTo(_ bpsCharacteristic: CBCharacteristic) {
         log.debug(#function)
         peripheral.listenValues(for: bpsCharacteristic)
-            .map { [log] data -> BloodPressureCharacteristic? in
+            .map { [log] data -> BloodPressureMeasurement? in
                 log.debug("Received Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing])) (\(data.count) bytes)")
-                return try? BloodPressureCharacteristic(data: data)
+                return try? BloodPressureMeasurement(data: data)
             }
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [log] _ in
