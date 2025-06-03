@@ -19,6 +19,7 @@ extension CBMUUID {
     
     static let heartRate            = CBMUUID(string: "180D")
     static let healthThermometer    = CBMUUID(string: "1809")
+    static let bloodPressure        = CBMUUID(string: "1810")
     static let runningSpeedCadence  = CBMUUID(string: "1814")
     static let weightScale          = CBMUUID(string: "181D")
     static let cyclingSpeedCadence  = CBMUUID(string: "1816")

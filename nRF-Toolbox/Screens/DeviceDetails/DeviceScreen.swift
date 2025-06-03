@@ -48,6 +48,13 @@ struct DeviceScreen: View {
                     }
                 }
                 
+                if let bpsViewModel = deviceVM.bloodPressureViewModel {
+                    Section("Blood Pressure") {
+                        BPSView()
+                            .environmentObject(bpsViewModel)
+                    }
+                }
+                
                 if let runningViewModel = deviceVM.runningServiceViewModel {
                     Section("Running") {
                         RunningServiceView()

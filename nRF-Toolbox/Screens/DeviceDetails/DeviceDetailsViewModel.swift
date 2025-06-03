@@ -58,6 +58,10 @@ protocol SupportedServiceViewModel {
         supportedServiceViewModels.firstOfType(type: HealthThermometerViewModel.self)
     }
     
+    var bloodPressureViewModel: BloodPressureViewModel? {
+        supportedServiceViewModels.firstOfType(type: BloodPressureViewModel.self)
+    }
+    
     var batteryServiceViewModel: BatteryViewModel? {
         supportedServiceViewModels.firstOfType(type: BatteryViewModel.self)
     }
@@ -139,6 +143,8 @@ extension DeviceDetailsViewModel {
                     supportedServiceViewModels.append(HealthThermometerViewModel(peripheral: peripheral, temperatureService: service))
                 case .heartRate:
                     supportedServiceViewModels.append(DeviceScreen.HeartRateViewModel(peripheral: peripheral, heartRateService: service))
+                case .bloodPressure:
+                    supportedServiceViewModels.append(BloodPressureViewModel(peripheral: peripheral, bpsService: service))
                 case .battery:
                     supportedServiceViewModels.append(BatteryViewModel(peripheral: peripheral, batteryService: service))
                 case .throughputService:

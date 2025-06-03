@@ -13,14 +13,15 @@ import iOS_Common_Libraries
 
 // MARK: - BloodPressureViewModel
 
-@MainActor final class BloodPressureViewModel {
+@MainActor
+final class BloodPressureViewModel: ObservableObject {
     
     // MARK: Properties
     
     private let service: CBService
     private let peripheral: Peripheral
     
-    private var cancellable = Set<AnyCancellable>()
+    private lazy var cancellables = Set<AnyCancellable>()
     
     private let log = NordicLog(category: "BloodPressureViewModel",
                                 subsystem: "com.nordicsemi.nrf-toolbox")
@@ -37,5 +38,18 @@ import iOS_Common_Libraries
     
     deinit {
         log.debug(#function)
+    }
+}
+
+// MARK: - SupportedServiceViewModel
+
+extension BloodPressureViewModel: SupportedServiceViewModel {
+    
+    func onConnect() async {
+        // MARK: TODO
+    }
+    
+    func onDisconnect() {
+        cancellables.removeAll()
     }
 }
