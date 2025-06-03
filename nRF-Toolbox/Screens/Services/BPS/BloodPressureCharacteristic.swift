@@ -15,43 +15,47 @@ struct BloodPressureCharacteristic {
     
     // MARK: Properties
     
-//    let systolicPressure: Measurement<UnitPressure>
-//    let diastolicPressure: Measurement<UnitPressure>
-//    let meanArterialPressure: Measurement<UnitPressure>
+    let systolicPressure: Measurement<UnitPressure>
+    let diastolicPressure: Measurement<UnitPressure>
+    let meanArterialPressure: Measurement<UnitPressure>
     let date: Date?
     let pulseRate: Int?
     
     // MARK: init
     
     init(data: Data) throws {
-        let flags = try data.littleEndianBytes(as: UInt8.self)
-//        let unit: UnitPressure = Flag.isAvailable(bits: flags, flag: .unitFlag) ? .millimetersOfMercury : .kilopascals
+        let featureFlags = UInt(data.littleEndianBytes(as: UInt8.self))
+        let flagsRegister = BitField<BloodPressureMeasurementFlags>(featureFlags)
+        let unit: UnitPressure = flagsRegister.contains(.unit) ? .millimetersOfMercury : .kilopascals
         
         var offset = 1
         let systolicValue = Float(asSFloat: data.subdata(in: offset..<offset + SFloatReserved.byteSize))
+        systolicPressure = Measurement<UnitPressure>(value: Double(systolicValue), unit: unit)
         offset += SFloatReserved.byteSize
         let diastolicValue = Float(asSFloat: data.subdata(in: offset..<offset + SFloatReserved.byteSize))
+        diastolicPressure = Measurement<UnitPressure>(value: Double(diastolicValue), unit: unit)
         offset += SFloatReserved.byteSize
         let meanArterialValue = Float(asSFloat: data.subdata(in: offset..<offset + SFloatReserved.byteSize))
+        meanArterialPressure = Measurement<UnitPressure>(value: Double(meanArterialValue), unit: unit)
         offset += SFloatReserved.byteSize
         
-        date = nil
-        pulseRate = nil
-//        var offset = 7
-//        date = try Flag.isAvailable(bits: flags, flag: .timeStamp) ? {
-//                defer { offset += 7 }
-//                return try data.readDate(from: offset)
-//            }() : nil
-//        
-//        pulseRate = try Flag.isAvailable(bits: flags, flag: .pulseRate) ? {
-//                let pulseValue = try data.readSFloat(from: offset)
-//                return Int(pulseValue)
-//            }() : nil
+        date = flagsRegister.contains(.timestamp) ? {
+            defer {
+                offset += Date.DataSize
+            }
+            return Date(data.suffix(from: offset))
+        }() : nil
+        
+        pulseRate = flagsRegister.contains(.pulseRate) ? {
+            let pulseValue = Float(asSFloat: data.suffix(from: offset))
+            return Int(pulseValue)
+        }() : nil
     }
 }
 
-//private extension Flag {
-//    static let unitFlag: Flag = 0x01
-//    static let timeStamp: Flag = 0x02
-//    static let pulseRate: Flag = 0x04
-//}
+// MARK: - BloodPressureMeasurementFlags
+
+private enum BloodPressureMeasurementFlags: RegisterValue, Option, CaseIterable {
+    
+    case unit, timestamp, pulseRate
+}
