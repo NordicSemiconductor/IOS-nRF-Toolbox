@@ -1,5 +1,5 @@
 //
-//  BPSView.swift
+//  BloodPressureView.swift
 //  nRF-Toolbox
 //
 //  Created by Dinesh Harjani on 3/6/25.
@@ -11,7 +11,7 @@ import iOS_Common_Libraries
 
 // MARK: - BPSView
 
-struct BPSView: View {
+struct BloodPressureView: View {
     
     // MARK: EnvironmentObject
     
@@ -20,6 +20,10 @@ struct BPSView: View {
     // MARK: view
     
     var body: some View {
-        Text("BPS")
+        if let currentValue = viewModel.currentValue {
+            Text("BPS")
+        } else {
+            NoContentView(title: "No Data", systemImage: "drop.fill", description: "No Blood Pressure Data Available. You may press Button 1 on your DevKit to generate some Data.")
+        }
     }
 }

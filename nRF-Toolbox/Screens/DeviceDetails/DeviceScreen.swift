@@ -50,7 +50,7 @@ struct DeviceScreen: View {
                 
                 if let bpsViewModel = deviceVM.bloodPressureViewModel {
                     Section("Blood Pressure") {
-                        BPSView()
+                        BloodPressureView()
                             .environmentObject(bpsViewModel)
                     }
                 }
