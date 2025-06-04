@@ -45,6 +45,14 @@ final class HealthThermometerViewModel: ObservableObject {
 
 extension HealthThermometerViewModel: SupportedServiceViewModel {
     
+    // MARK: view
+    
+    var body: some View {
+        HealthThermometerView()
+    }
+    
+    // MARK: onConnect()
+    
     func onConnect() async {
         log.debug(#function)
         do {
@@ -64,6 +72,13 @@ extension HealthThermometerViewModel: SupportedServiceViewModel {
         }
     }
     
+    // MARK: onDisconnect()
+    
+    func onDisconnect() {
+        log.debug(#function)
+        cancellables.removeAll()
+    }
+    
     func listenTo(_ characteristic: CBCharacteristic) {
         peripheral.listenValues(for: characteristic)
             .map { data in
@@ -71,10 +86,5 @@ extension HealthThermometerViewModel: SupportedServiceViewModel {
             }
             .sink(to: \.measurement, in: self, assigningInCaseOfError: TemperatureMeasurement(Data()))
             .store(in: &cancellables)
-    }
-    
-    func onDisconnect() {
-        log.debug(#function)
-        cancellables.removeAll()
     }
 }

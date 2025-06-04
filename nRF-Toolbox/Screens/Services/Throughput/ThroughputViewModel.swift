@@ -254,9 +254,19 @@ final class ThroughputViewModel: ObservableObject {
 
 extension ThroughputViewModel: SupportedServiceViewModel {
     
+    // MARK: view
+    
+    var body: some View {
+        ThroughputView()
+    }
+    
+    // MARK: onConnect()
+    
     func onConnect() async {
         // No-op.
     }
+    
+    // MARK: onDisconnect()
     
     func onDisconnect() {
         cancellables.removeAll()

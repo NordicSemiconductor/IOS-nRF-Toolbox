@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import SwiftUI
 
 // MARK: - SupportedServiceViewModel
 
-protocol SupportedServiceViewModel {
+protocol SupportedServiceViewModel: View {
     
     func onConnect() async
     func onDisconnect()

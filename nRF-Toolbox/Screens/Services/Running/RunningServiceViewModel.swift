@@ -56,10 +56,20 @@ final class RunningServiceViewModel: ObservableObject {
 
 extension RunningServiceViewModel: SupportedServiceViewModel {
     
+    // MARK: view
+    
+    var body: some View {
+        RunningServiceView()
+    }
+    
+    // MARK: onConnect()
+    
     func onConnect() async {
         log.debug(#function)
         await enableDeviceCommunication()
     }
+    
+    // MARK: onDisconnect()
     
     func onDisconnect() {
         log.debug(#function)

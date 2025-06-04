@@ -57,6 +57,14 @@ final class UARTViewModel: ObservableObject {
 
 extension UARTViewModel: SupportedServiceViewModel {
     
+    // MARK: view
+    
+    var body: some View {
+        UARTView()
+    }
+    
+    // MARK: onConnect()
+    
     @MainActor
     func onConnect() async {
         log.debug(#function)
@@ -84,6 +92,8 @@ extension UARTViewModel: SupportedServiceViewModel {
             onDisconnect()
         }
     }
+    
+    // MARK: onDisconnect()
     
     func onDisconnect() {
         log.debug(#function)

@@ -115,6 +115,14 @@ enum RACPOpCode: UInt8 {
 
 extension CGMSViewModel: SupportedServiceViewModel {
     
+    // MARK: View
+    
+    var body: some View {
+        CGMSView()
+    }
+    
+    // MARK: onConnect()
+    
     @MainActor
     func onConnect() async {
         log.debug(#function)
@@ -155,9 +163,9 @@ extension CGMSViewModel: SupportedServiceViewModel {
             let cgmEnable = try await peripheral.setNotifyValue(true, for: cbCGMMeasurement).firstValue
             log.debug("CGMS Measurement.setNotifyValue(true): \(cgmEnable)")
             
-//            guard result else {
-//                // TODO: throw Error
-//            }
+            //            guard result else {
+            //                // TODO: throw Error
+            //            }
             
             listenToOperations(cbSOCP)
             let socpEnable = try await peripheral.setNotifyValue(true, for: cbSOCP).firstValue
@@ -170,7 +178,23 @@ extension CGMSViewModel: SupportedServiceViewModel {
         }
     }
     
-    private func listenToMeasurements(_ measurementCharacteristic: CBCharacteristic) {
+    // MARK: onDisconnect()
+    
+    func onDisconnect() {
+        log.debug(#function)
+        peripheralSessionTime = nil
+        cbCGMMeasurement = nil
+        cbSOCP = nil
+        cbRACP = nil
+        cancellables.removeAll()
+    }
+}
+
+// MARK: - Private
+
+private extension CGMSViewModel {
+    
+    func listenToMeasurements(_ measurementCharacteristic: CBCharacteristic) {
         log.debug(#function)
         peripheral.listenValues(for: measurementCharacteristic)
             .compactMap { [log, peripheralSessionTime] data -> CGMSMeasurement? in
@@ -193,7 +217,7 @@ extension CGMSViewModel: SupportedServiceViewModel {
             .store(in: &cancellables)
     }
     
-    private func listenToOperations(_ opsControlPointCharacteristic: CBCharacteristic) {
+    func listenToOperations(_ opsControlPointCharacteristic: CBCharacteristic) {
         log.debug(#function)
         peripheral.listenValues(for: opsControlPointCharacteristic)
             .map { [log] data in
@@ -206,15 +230,6 @@ extension CGMSViewModel: SupportedServiceViewModel {
                 log.debug("Received new Ops Control Point Values")
             })
             .store(in: &cancellables)
-    }
-    
-    func onDisconnect() {
-        log.debug(#function)
-        peripheralSessionTime = nil
-        cbCGMMeasurement = nil
-        cbSOCP = nil
-        cbRACP = nil
-        cancellables.removeAll()
     }
 }
 

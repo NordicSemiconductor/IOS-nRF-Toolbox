@@ -133,6 +133,14 @@ final class BatteryViewModel: ObservableObject {
 
 extension BatteryViewModel: SupportedServiceViewModel {
     
+    // MARK: view
+    
+    var body: some View {
+        BatteryView()
+    }
+    
+    // MARK: onConnect()
+    
     func onConnect() async {
         do {
             try await startListening()
@@ -142,6 +150,8 @@ extension BatteryViewModel: SupportedServiceViewModel {
             log.error(error.localizedDescription)
         }
     }
+    
+    // MARK: onDisconnect()
     
     func onDisconnect() {
         cancellables.removeAll()

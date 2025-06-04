@@ -139,6 +139,14 @@ private extension CBUUID {
 
 extension CyclingServiceViewModel: SupportedServiceViewModel {
     
+    // MARK: view
+    
+    var body: some View {
+        CyclingDataView()
+    }
+    
+    // MARK: onConnect()
+    
     func onConnect() async {
         log.debug(#function)
         do {
@@ -150,6 +158,8 @@ extension CyclingServiceViewModel: SupportedServiceViewModel {
             // TODO: Later, I guess.
         }
     }
+    
+    // MARK: onDisconnect()
     
     func onDisconnect() {
         log.debug(#function)

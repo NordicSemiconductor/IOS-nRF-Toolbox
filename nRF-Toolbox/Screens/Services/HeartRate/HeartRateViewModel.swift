@@ -36,7 +36,7 @@ private typealias ViewModel = DeviceScreen.HeartRateViewModel
 extension DeviceScreen {
     
     @MainActor
-    class HeartRateViewModel: ObservableObject {
+    final class HeartRateViewModel: ObservableObject {
         
         private let peripheral: Peripheral
         private let heartRateService: CBService
@@ -85,6 +85,14 @@ extension DeviceScreen {
 
 extension DeviceScreen.HeartRateViewModel: SupportedServiceViewModel {
     
+    // MARK: view
+    
+    var body: some View {
+        HeartRateChart()
+    }
+    
+    // MARK: onConnect()
+    
     func onConnect() async {
         log.debug(#function)
         do {
@@ -93,6 +101,8 @@ extension DeviceScreen.HeartRateViewModel: SupportedServiceViewModel {
             criticalError = .noMandatoryCharacteristic
         }
     }
+    
+    // MARK: onDisconnect()
     
     func onDisconnect() {
         log.debug(#function)

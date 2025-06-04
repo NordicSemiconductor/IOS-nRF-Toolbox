@@ -54,6 +54,14 @@ final class BloodPressureViewModel: ObservableObject {
 
 extension BloodPressureViewModel: SupportedServiceViewModel {
     
+    // MARK: view
+    
+    var body: some View {
+        BloodPressureView()
+    }
+    
+    // MARK: onConnect()
+    
     func onConnect() async {
         log.debug(#function)
         let characteristics: [Characteristic] = [
@@ -95,6 +103,19 @@ extension BloodPressureViewModel: SupportedServiceViewModel {
 //        }
     }
     
+    // MARK: onDisconnect()
+    
+    func onDisconnect() {
+        log.debug(#function)
+        bpsMeasurement = nil
+        cancellables.removeAll()
+    }
+}
+
+extension BloodPressureViewModel {
+    
+    // MARK: listen(to:)
+    
     func listenTo(_ bpsCharacteristic: CBCharacteristic) {
         log.debug(#function)
         peripheral.listenValues(for: bpsCharacteristic)
@@ -114,11 +135,5 @@ extension BloodPressureViewModel: SupportedServiceViewModel {
                 self?.currentValue = newValue
             })
             .store(in: &cancellables)
-    }
-    
-    func onDisconnect() {
-        log.debug(#function)
-        bpsMeasurement = nil
-        cancellables.removeAll()
     }
 }
