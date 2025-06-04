@@ -92,14 +92,12 @@ struct InspectorScreen: View {
                 .centered()
                 .alert("Disconnect", isPresented: $disconnectAlertShow) {
                     Button("Yes") {
-                        // TODO: Unselect Device instead
-                        //                        rootNavigationMV.selectedDevice = nil
-                        rootEnv.showInspector = false
-                        //                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-                        //                            Task {
-                        //                                try await connectedDeviceViewModel.disconnectAndRemoveViewModel(environment.deviceId)
-                        //                            }
-                        //                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                            Task { @MainActor in
+                                rootEnv.showInspector = false
+                                try await connectedDevicesViewModel.disconnectAndRemoveViewModel(device.id)
+                            }
+                        }
                     }
                     Button("No") { }
                 } message: {
