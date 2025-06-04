@@ -18,14 +18,6 @@ private extension Array {
     }
 }
 
-// MARK: - SupportedServiceViewModel
-
-protocol SupportedServiceViewModel {
-    
-    func onConnect() async
-    func onDisconnect()
-}
-
 // MARK: - DeviceDetailsViewModel
 
 @MainActor final class DeviceDetailsViewModel {
@@ -38,7 +30,7 @@ protocol SupportedServiceViewModel {
     var id: UUID { peripheral.peripheral.identifier }
     
     let environment: Environment
-    private var supportedServiceViewModels: [SupportedServiceViewModel] = []
+    @Published private(set) var supportedServiceViewModels: [SupportedServiceViewModel] = []
     
     private let log = NordicLog(category: "DeviceDetails.VM", subsystem: "com.nordicsemi.nrf-toolbox")
     
@@ -78,6 +70,8 @@ protocol SupportedServiceViewModel {
         supportedServiceViewModels.firstOfType(type: UARTViewModel.self)
     }
 
+    // MARK: init
+    
     init(cbPeripheral: CBPeripheral, centralManager: CentralManager) {
         self.peripheral = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
         self.centralManager = centralManager
@@ -86,6 +80,8 @@ protocol SupportedServiceViewModel {
         listenForDisconnection()
         log.debug(#function)
     }
+    
+    // MARK: deinit
     
     deinit {
         log.debug(#function)
