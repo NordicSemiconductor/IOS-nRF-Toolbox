@@ -98,9 +98,14 @@ extension BloodPressureViewModel: SupportedServiceViewModel {
     func listenTo(_ bpsCharacteristic: CBCharacteristic) {
         log.debug(#function)
         peripheral.listenValues(for: bpsCharacteristic)
-            .map { [log] data -> BloodPressureMeasurement? in
+            .compactMap { [log] data -> BloodPressureMeasurement? in
                 log.debug("Received Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing])) (\(data.count) bytes)")
-                return try? BloodPressureMeasurement(data: data)
+                do {
+                    return try BloodPressureMeasurement(data: data)
+                } catch {
+                    log.error("Error parsing data: \(error.localizedDescription)")
+                    return nil
+                }
             }
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [log] _ in

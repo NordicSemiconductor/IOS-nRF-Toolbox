@@ -13,6 +13,10 @@ import iOS_Common_Libraries
 
 struct BloodPressureMeasurement {
     
+    // MARK: Constant
+    
+    private static let MinSize = MemoryLayout<UInt8>.size + 3 * SFloatReserved.byteSize
+    
     // MARK: Properties
     
     let systolicPressure: Measurement<UnitPressure>
@@ -24,6 +28,10 @@ struct BloodPressureMeasurement {
     // MARK: init
     
     init(data: Data) throws {
+        guard data.count >= Self.MinSize else {
+            throw DataError.invalidSize(data.count)
+        }
+        
         let featureFlags = UInt(data.littleEndianBytes(as: UInt8.self))
         let flagsRegister = BitField<Flag>(featureFlags)
         let unit: UnitPressure = flagsRegister.contains(.unit) ? .millimetersOfMercury : .kilopascals
@@ -59,5 +67,25 @@ fileprivate extension BloodPressureMeasurement {
     
     private enum Flag: RegisterValue, Option, CaseIterable {
         case unit, timestamp, pulseRate
+    }
+}
+
+// MARK: - DataError
+
+extension BloodPressureMeasurement {
+    
+    enum DataError: LocalizedError, CustomStringConvertible {
+        case invalidSize(_ count: Int)
+        
+        var description: String {
+            switch self {
+            case .invalidSize(let byteCount):
+                return "Data Size of \(byteCount) bytes does not match minimum requirement of \(BloodPressureMeasurement.MinSize) bytes for Blood Pressure Measurement."
+            }
+        }
+        
+        var errorDescription: String? {
+            description
+        }
     }
 }
