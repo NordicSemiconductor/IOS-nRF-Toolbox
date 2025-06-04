@@ -177,7 +177,6 @@ extension ConnectedDevicesViewModel {
         enum Status: CustomStringConvertible {
             case connected
             case userInitiatedDisconnection
-            case busy
             case error(_: Error)
             
             var description: String {
@@ -186,8 +185,6 @@ extension ConnectedDevicesViewModel {
                     return "Connected"
                 case .userInitiatedDisconnection:
                     return "User initiated disconnection"
-                case .busy:
-                    return "Busy"
                 case .error(let error):
                     return "Error: \(error.localizedDescription)"
                 }
@@ -197,10 +194,8 @@ extension ConnectedDevicesViewModel {
                 switch self {
                 case .connected:
                     return 0
-                case .busy:
-                    return 1
                 case .userInitiatedDisconnection:
-                    return 2
+                    return 1
                 case .error:
                     return 99
                 }

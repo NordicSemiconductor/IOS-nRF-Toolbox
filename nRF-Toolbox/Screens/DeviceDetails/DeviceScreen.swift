@@ -111,7 +111,7 @@ struct DeviceScreen: View {
             
             Section("Connection") {
                 switch device.status {
-                case .busy, .userInitiatedDisconnection:
+                case .userInitiatedDisconnection:
                     ProgressView()
                 case .error(let error):
                     Label(error.localizedDescription, systemImage: "exclamationmark.circle")

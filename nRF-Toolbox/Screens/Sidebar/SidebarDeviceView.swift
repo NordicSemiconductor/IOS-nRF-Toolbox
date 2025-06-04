@@ -42,7 +42,7 @@ struct SidebarDeviceView: View {
                 .padding(.leading, 42)
             
             switch device.status {
-            case .busy, .connected, .userInitiatedDisconnection:
+            case .connected, .userInitiatedDisconnection:
                 EmptyView()
             case .error(let error):
                 Label("Error: \(error.localizedDescription)", systemImage: "exclamationmark.circle")
