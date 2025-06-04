@@ -34,7 +34,7 @@ struct BloodPressureMeasurement {
         
         let featureFlags = UInt(data.littleEndianBytes(as: UInt8.self))
         let flagsRegister = BitField<Flag>(featureFlags)
-        let unit: UnitPressure = flagsRegister.contains(.unit) ? .millimetersOfMercury : .kilopascals
+        let unit: UnitPressure = flagsRegister.contains(.unit) ? .kilopascals : .millimetersOfMercury
         
         var offset = 1
         let systolicValue = Float(asSFloat: data.subdata(in: offset..<offset + SFloatReserved.byteSize))

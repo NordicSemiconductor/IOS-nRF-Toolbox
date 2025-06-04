@@ -75,13 +75,13 @@ struct BloodPressureGrid: View {
         var items = [RunningAttribute]()
         
         let systolicKey = "Systolic"
-        items.append(RunningAttribute(title: systolicKey, value: String(format: "%.2f", measurement.systolicPressure.value), unit: measurement.systolicPressure.unit.symbol))
+        items.append(RunningAttribute(title: systolicKey, value: String(format: "%.1f", measurement.systolicPressure.value), unit: measurement.systolicPressure.unit.symbol))
 
         let diastolicKey = "Diastolic"
-        items.append(RunningAttribute(title: diastolicKey, value: String(format: "%.2f", measurement.diastolicPressure.value), unit: measurement.diastolicPressure.unit.symbol))
+        items.append(RunningAttribute(title: diastolicKey, value: String(format: "%.1f", measurement.diastolicPressure.value), unit: measurement.diastolicPressure.unit.symbol))
         
         let meanArterialPressureKey = "Mean Arterial Pressure"
-        items.append(RunningAttribute(title: meanArterialPressureKey, value: String(format: "%.2f", measurement.meanArterialPressure.value), unit: measurement.meanArterialPressure.unit.symbol))
+        items.append(RunningAttribute(title: meanArterialPressureKey, value: String(format: "%.1f", measurement.meanArterialPressure.value), unit: measurement.meanArterialPressure.unit.symbol))
 
         let heartRateKey = "Heart Rate"
         if let heartRate = measurement.pulseRate {
