@@ -55,6 +55,15 @@ struct AttributeTableView: View {
             } else {
                 NoContentView(title: "Attributes not found", systemImage: "table")
             }
+            
+            // "Fix" for DisclosureGroup not expanding for all Service(s). Which is, the last item will
+            // fade in/out instead of expanding. So we need to add a static element at the bottom.
+            Section("Troubleshooting") {
+                Label("If you can't find your service, turn off and on Bluetooth from Settings (not Control Center).",
+                      systemImage: "exclamationmark.magnifyingglass")
+                    .foregroundStyle(Color.secondary)
+                    .font(.caption)
+            }
         }
     }
 }
@@ -62,6 +71,7 @@ struct AttributeTableView: View {
 // MARK: - Attribute
 
 protocol Attribute  {
+    
     var level: UInt { get }
     var name: String { get }
     var uuidString: String { get }
