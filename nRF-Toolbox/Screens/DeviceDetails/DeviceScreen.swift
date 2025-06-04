@@ -110,21 +110,23 @@ struct DeviceScreen: View {
             }
             
             Section("Connection") {
-                Button("Disconnect") {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-                        Task { @MainActor in
-                            try await connectedDevicesViewModel.disconnectAndRemoveViewModel(device.id)
-                            navigationViewModel.selectedCategory = nil
-                        }
+                switch device.status {
+                case .busy, .userInitiatedDisconnection:
+                    ProgressView()
+                case .error(let error):
+                    Label(error.localizedDescription, systemImage: "exclamationmark.circle")
+                        .foregroundStyle(Color.nordicRed)
+                case .connected:
+                    Button("Disconnect") {
+                        disconnect()
                     }
+                    .foregroundStyle(Color.red)
+                    .centered()
                 }
-                .foregroundStyle(Color.red)
-                .centered()
             }
         }
         .taskOnce {
-            guard let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id) else { return }
-            await deviceVM.discoverSupportedServices()
+            await serviceDiscovery()
         }
         .listStyle(.insetGrouped)
         .navigationTitle(connectedDevicesViewModel.selectedDevice?.name ?? "Unnamed")
@@ -133,6 +135,24 @@ struct DeviceScreen: View {
                 InspectorScreen(device)
             }
             .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+    
+    // MARK: serviceDiscovery()
+    
+    func serviceDiscovery() async {
+        guard let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id) else { return }
+        await deviceVM.discoverSupportedServices()
+    }
+    
+    // MARK: disconnect()
+    
+    func disconnect() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+            Task { @MainActor in
+                try await connectedDevicesViewModel.disconnectAndRemoveViewModel(device.id)
+                navigationViewModel.selectedCategory = nil
+            }
         }
     }
 }
