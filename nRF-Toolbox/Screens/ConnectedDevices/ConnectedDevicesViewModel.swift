@@ -154,7 +154,7 @@ extension ConnectedDevicesViewModel {
                     self.selectedDevice = nil
                 }
             }
-            .store(in: &cancelable)
+            .store(in: &cancellables)
     }
 }
 
