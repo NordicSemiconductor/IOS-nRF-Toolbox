@@ -18,8 +18,15 @@ import iOS_Bluetooth_Numbers_Database
 final class ConnectedDevicesViewModel: ObservableObject {
     typealias ScannerVM = PeripheralScannerScreen.PeripheralScannerViewModel
     
+    // MARK: Private Properties
+    
+    private let centralManager: CentralManager
     private var deviceViewModels: [UUID: DeviceDetailsViewModel] = [:]
-    private var cancelable = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
+    
+    private let log = NordicLog(category: "HeartRateScreen", subsystem: "com.nordicsemi.nrf-toolbox")
+    
+    // MARK: Properties
     
     @Published fileprivate(set) var connectedDevices: [Device]
     @Published var selectedDevice: Device? {
@@ -32,13 +39,9 @@ final class ConnectedDevicesViewModel: ObservableObject {
         }
     }
     
-    let centralManager: CentralManager
-    
     var hasSelectedDevice: Bool {
         selectedDevice != nil
     }
-    
-    private let log = NordicLog(category: "HeartRateScreen", subsystem: "com.nordicsemi.nrf-toolbox")
     
     // MARK: init
     
@@ -129,7 +132,7 @@ extension ConnectedDevicesViewModel {
                 guard !hasSelectedDevice else { return }
                 selectedDevice = device
             }
-            .store(in: &cancelable)
+            .store(in: &cancellables)
     }
     
     // MARK: observeDisconnections()
