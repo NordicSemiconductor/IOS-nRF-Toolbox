@@ -47,6 +47,14 @@ struct RootNavigationView: View {
                 .environmentObject(scannerViewModel)
                 .environmentObject(connectedDevicesViewModel)
         }
+        .alert("Error", isPresented: $connectedDevicesViewModel.showUnexpectedDisconnectionAlert,
+               actions: {
+            Button("OK") {
+                connectedDevicesViewModel.showUnexpectedDisconnectionAlert = false
+            }
+        }, message: {
+            Text(connectedDevicesViewModel.unexpectedDisconnectionMessage)
+        })
         .sheet(isPresented: $viewModel.showStartInfo) {
             NavigationStack {
                 AboutView()

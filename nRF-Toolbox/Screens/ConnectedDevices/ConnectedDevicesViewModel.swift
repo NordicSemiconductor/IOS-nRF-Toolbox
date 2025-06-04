@@ -39,6 +39,9 @@ final class ConnectedDevicesViewModel: ObservableObject {
         }
     }
     
+    @Published var showUnexpectedDisconnectionAlert: Bool = false
+    @Published fileprivate(set) var unexpectedDisconnectionMessage: String = ""
+    
     var hasSelectedDevice: Bool {
         selectedDevice != nil
     }
@@ -56,6 +59,8 @@ final class ConnectedDevicesViewModel: ObservableObject {
 }
 
 extension ConnectedDevicesViewModel {
+    
+    // MARK: selectedDeviceModel()
     
     func selectedDeviceModel() -> DeviceDetailsViewModel? {
         guard let selectedDevice else { return nil }
@@ -81,7 +86,7 @@ extension ConnectedDevicesViewModel {
         
         await deviceViewModel.onDisconnect()
         if let i = connectedDevices.firstIndex(where: \.id, equals: deviceID) {
-            connectedDevices[i].status = .busy
+            connectedDevices[i].status = .userInitiatedDisconnection
         }
         
         defer {
@@ -139,19 +144,22 @@ extension ConnectedDevicesViewModel {
     
     private func observeDisconnections() {
         centralManager.disconnectedPeripheralsChannel
-            .sink { [unowned self] device in
-                guard let i = self.connectedDevices.firstIndex(where: \.id, equals: device.0.identifier) else {
+            .sink { [unowned self] (peripheral, error) in
+                guard let i = self.connectedDevices.firstIndex(where: \.id, equals: peripheral.identifier) else {
                     return
                 }
                 
                 let disconnectedDevice = self.connectedDevices[i]
-                if let err = device.1 {
-                    self.connectedDevices[i].status = .error(err)
+                self.log.debug("Disconnected Device Status: \(disconnectedDevice.status)")
+                if let error {
+                    self.connectedDevices[i].status = .error(error)
                 } else {
                     self.connectedDevices.remove(at: i)
                 }
-                if selectedDevice?.id == disconnectedDevice.id {
-                    self.selectedDevice = nil
+                
+                if disconnectedDevice.status.hashValue != ConnectedDevicesViewModel.Device.Status.userInitiatedDisconnection.hashValue {
+                    self.showUnexpectedDisconnectionAlert = true
+                    self.unexpectedDisconnectionMessage = "\(disconnectedDevice.name ?? "Unnamed Device") disconnected unexpectedly."
                 }
             }
             .store(in: &cancellables)
@@ -166,10 +174,24 @@ extension ConnectedDevicesViewModel {
         
         // MARK: Status
         
-        enum Status {
+        enum Status: CustomStringConvertible {
             case connected
+            case userInitiatedDisconnection
             case busy
             case error(_: Error)
+            
+            var description: String {
+                switch self {
+                case .connected:
+                    return "Connected"
+                case .userInitiatedDisconnection:
+                    return "User initiated disconnection"
+                case .busy:
+                    return "Busy"
+                case .error(let error):
+                    return "Error: \(error.localizedDescription)"
+                }
+            }
             
             var hashValue: Int {
                 switch self {
@@ -177,6 +199,8 @@ extension ConnectedDevicesViewModel {
                     return 0
                 case .busy:
                     return 1
+                case .userInitiatedDisconnection:
+                    return 2
                 case .error:
                     return 99
                 }
