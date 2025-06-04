@@ -39,7 +39,6 @@ struct RootNavigationView: View {
         NavigationView {
             SidebarView()
                 .navigationTitle("nRF Toolbox")
-                .setupNavBarBackground(with: Assets.navBar.color)
                 .toolbar {
                     Button("", systemImage: "info") {
                         viewModel.showStartInfo = true
@@ -52,6 +51,7 @@ struct RootNavigationView: View {
             NavigationStack {
                 AboutView()
             }
+            .setupNavBarBackground(with: Assets.navBar.color)
         }
         .onAppear {
             scannerViewModel.setupManager()

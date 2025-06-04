@@ -75,5 +75,6 @@ struct SidebarView: View {
             }
         }
         .listStyle(.insetGrouped)
+        .setupNavBarBackground(with: Assets.navBar.color)
     }
 }
