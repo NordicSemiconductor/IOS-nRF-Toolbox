@@ -40,6 +40,7 @@ struct SidebarDeviceView: View {
             
             ServiceBadgeGroup(advertisedServices)
                 .padding(.leading, 42)
+                .padding(.bottom, 8)
             
             switch device.status {
             case .connected, .userInitiatedDisconnection:
