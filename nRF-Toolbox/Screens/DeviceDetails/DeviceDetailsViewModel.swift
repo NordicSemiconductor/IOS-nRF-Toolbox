@@ -35,49 +35,6 @@ private extension Array {
     
     private let log = NordicLog(category: "DeviceDetails.VM", subsystem: "com.nordicsemi.nrf-toolbox")
     
-    @ViewBuilder
-    func supportedServiceViews() -> some View {
-        ForEach(supportedServiceViewModels.map(\.attachedView)) { attachedView in
-            attachedView
-        }
-    }
-    
-    var runningServiceViewModel: RunningServiceViewModel? {
-        supportedServiceViewModels.firstOfType(type: RunningServiceViewModel.self)
-    }
-    
-    var cyclingServiceViewModel: CyclingServiceViewModel? {
-        supportedServiceViewModels.firstOfType(type: CyclingServiceViewModel.self)
-    }
-    
-    var heartRateServiceViewModel: DeviceScreen.HeartRateViewModel? {
-        supportedServiceViewModels.firstOfType(type: DeviceScreen.HeartRateViewModel.self)
-    }
-    
-    var healthThermometerViewModel: HealthThermometerViewModel? {
-        supportedServiceViewModels.firstOfType(type: HealthThermometerViewModel.self)
-    }
-    
-    var bloodPressureViewModel: BloodPressureViewModel? {
-        supportedServiceViewModels.firstOfType(type: BloodPressureViewModel.self)
-    }
-    
-    var batteryServiceViewModel: BatteryViewModel? {
-        supportedServiceViewModels.firstOfType(type: BatteryViewModel.self)
-    }
-    
-    var throughputViewModel: ThroughputViewModel? {
-        supportedServiceViewModels.firstOfType(type: ThroughputViewModel.self)
-    }
-    
-    var cgmsViewModel: CGMSViewModel? {
-        supportedServiceViewModels.firstOfType(type: CGMSViewModel.self)
-    }
-    
-    var uartViewModel: UARTViewModel? {
-        supportedServiceViewModels.firstOfType(type: UARTViewModel.self)
-    }
-
     // MARK: init
     
     init(cbPeripheral: CBPeripheral, centralManager: CentralManager) {
@@ -130,6 +87,26 @@ extension DeviceDetailsViewModel {
 // MARK: - Service View Models
 
 extension DeviceDetailsViewModel {
+    
+    // MARK: supportedServiceViews
+    
+    @ViewBuilder
+    func supportedServiceViews() -> some View {
+        let includedServices = supportedServiceViewModels
+            .filter { !($0 is BatteryViewModel) }
+            .map(\.attachedView)
+        ForEach(includedServices) { attachedView in
+            attachedView
+        }
+    }
+    
+    // MARK: batteryServiceViewModel
+    
+    var batteryServiceViewModel: BatteryViewModel? {
+        supportedServiceViewModels.firstOfType(type: BatteryViewModel.self)
+    }
+    
+    // MARK: discoverSupportedServices()
     
     func discoverSupportedServices() async {
         log.debug(#function)

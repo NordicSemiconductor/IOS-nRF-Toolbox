@@ -34,64 +34,8 @@ struct DeviceScreen: View {
     var body: some View {
         List {
             if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id) {
-                
                 deviceVM.supportedServiceViews()
-                
-                if let heartRateServiceViewModel = deviceVM.heartRateServiceViewModel {
-                    Section("Heart Monitor") {
-                        HeartRateView()
-                            .environmentObject(heartRateServiceViewModel)
-                    }
-                }
-                
-                if let healthThermometerViewModel = deviceVM.healthThermometerViewModel {
-                    Section("Health Thermometer") {
-                        HealthThermometerView()
-                            .environmentObject(healthThermometerViewModel)
-                    }
-                }
-                
-                if let bpsViewModel = deviceVM.bloodPressureViewModel {
-                    Section("Blood Pressure") {
-                        BloodPressureView()
-                            .environmentObject(bpsViewModel)
-                    }
-                }
-                
-                if let runningViewModel = deviceVM.runningServiceViewModel {
-                    Section("Running") {
-                        RunningServiceView()
-                            .environmentObject(runningViewModel.environment)
-                    }
-                }
-                
-                if let cyclingViewModel = deviceVM.cyclingServiceViewModel {
-                    Section("Cycling") {
-                        CyclingDataView()
-                            .environmentObject(cyclingViewModel)
-                    }
-                }
-                
-                if let throughputViewModel = deviceVM.throughputViewModel {
-                    Section("Throughput") {
-                        ThroughputView()
-                            .environmentObject(throughputViewModel)
-                    }
-                }
-                
-                if let cgmsViewModel = deviceVM.cgmsViewModel {
-                    Section("Continuous Glucose Monitoring Service") {
-                        CGMSView()
-                            .environmentObject(cgmsViewModel)
-                    }
-                }
-                
-                if let uartViewModel = deviceVM.uartViewModel {
-                    Section("UART") {
-                        UARTView()
-                            .environmentObject(uartViewModel)
-                    }
-                }
+                    .disabled(device.status.hashValue != ConnectedDevicesViewModel.Device.Status.connected.hashValue)
             }
             
             Section("Device Information") {
@@ -129,7 +73,8 @@ struct DeviceScreen: View {
             }
         }
         .taskOnce {
-            await serviceDiscovery()
+            guard let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id) else { return }
+            await deviceVM.discoverSupportedServices()
         }
         .listStyle(.insetGrouped)
         .navigationTitle(connectedDevicesViewModel.selectedDevice?.name ?? "Unnamed")
@@ -139,13 +84,6 @@ struct DeviceScreen: View {
             }
             .navigationBarTitleDisplayMode(.inline)
         }
-    }
-    
-    // MARK: serviceDiscovery()
-    
-    func serviceDiscovery() async {
-        guard let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id) else { return }
-        await deviceVM.discoverSupportedServices()
     }
     
     // MARK: disconnect()
