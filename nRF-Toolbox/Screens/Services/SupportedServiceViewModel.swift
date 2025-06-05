@@ -22,6 +22,7 @@ protocol SupportedServiceViewModel {
 // MARK: - SupportedServiceAttachedView
 
 enum SupportedServiceAttachedView: View, CustomStringConvertible, Identifiable {
+    case blinky(_ viewModel: BlinkyViewModel)
     case heartRate(_ viewModel: DeviceScreen.HeartRateViewModel)
     case healthThermometer(_ viewModel: HealthThermometerViewModel)
     case bloodPressure(_ viewModel: BloodPressureViewModel)
@@ -36,6 +37,8 @@ enum SupportedServiceAttachedView: View, CustomStringConvertible, Identifiable {
     
     var description: String {
         switch self {
+        case .blinky:
+            return "LED Button Service"
         case .heartRate:
             return "Heart Monitor"
         case .healthThermometer:
@@ -60,6 +63,9 @@ enum SupportedServiceAttachedView: View, CustomStringConvertible, Identifiable {
     var body: some View {
         Section(description) {
             switch self {
+            case .blinky(let blinkyViewModel):
+                BlinkyView()
+                    .environmentObject(blinkyViewModel)
             case .heartRate(let heartRateServiceViewModel):
                 HeartRateView()
                     .environmentObject(heartRateServiceViewModel)

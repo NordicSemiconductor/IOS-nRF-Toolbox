@@ -116,6 +116,8 @@ extension DeviceDetailsViewModel {
             
             for service in discoveredServices where supportedServices.contains(service.uuid) {
                 switch service.uuid {
+                case .nordicBlinkyService:
+                    supportedServiceViewModels.append(BlinkyViewModel(peripheral: peripheral, blinkyService: service))
                 case .runningSpeedCadence:
                     supportedServiceViewModels.append(RunningServiceViewModel(peripheral: peripheral, runningService: service))
                 case .cyclingSpeedCadence:

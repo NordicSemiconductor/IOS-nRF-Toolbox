@@ -25,6 +25,7 @@ extension Service {
         .glucose: "syringe",
         .continuousGlucoseMonitoring: "syringe",
         .healthThermometer: "medical.thermometer",
+        .nordicsemiLedAndButton: "lightbulb.max.fill",
         .throughputService: "metronome"
     ]
     
@@ -37,12 +38,14 @@ extension Service {
         .glucose: .orange,
         .continuousGlucoseMonitoring: .yellow,
         .healthThermometer: .indigo,
+        .nordicsemiLedAndButton: .nordicBlue,
         .throughputService: .nordicBlue
     ]
     
     static var supportedServices: [Service] = [
         .runningSpeedAndCadence,
         .cyclingSpeedAndCadence,
+        .nordicsemiLedAndButton,
         .heartRate,
         .bloodPressure,
         .glucose,
