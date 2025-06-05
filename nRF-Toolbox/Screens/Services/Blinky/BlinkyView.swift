@@ -20,19 +20,19 @@ struct BlinkyView: View {
     // MARK: view
     
     var body: some View {
-        Text("My name is Blinky")
-//        LabeledContent {
-//            Text(viewModel.measurement.temperatureFormattedString())
-//        } label: {
-//            Label("Measurement", systemImage: "thermometer.variable")
-//                .setAccent(Color.universalAccentColor)
-//        }
-//        
-//        LabeledContent {
-//            Text(viewModel.measurement.location.nilDescription)
-//        } label: {
-//            Label("Location", systemImage: "figure.dance")
-//                .setAccent(Color.universalAccentColor)
-//        }
+        LabeledContent {
+            Toggle(viewModel.isLedOn ? "ON" : "OFF", isOn: $viewModel.isLedOn)
+                .tint(.universalAccentColor)
+        } label: {
+            Label("LED State", systemImage: viewModel.isLedOn ? "lightbulb.max.fill" : "lightbulb")
+                .setAccent(Color.universalAccentColor)
+        }
+        
+        LabeledContent {
+            Text(viewModel.isButtonPressed ? "Pressed" : "Released")
+        } label: {
+            Label("Button State", systemImage: viewModel.isButtonPressed ? "button.horizontal.fill" : "button.horizontal")
+                .setAccent(Color.universalAccentColor)
+        }
     }
 }

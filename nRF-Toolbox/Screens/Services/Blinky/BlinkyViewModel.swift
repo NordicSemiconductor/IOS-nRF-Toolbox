@@ -26,6 +26,11 @@ final class BlinkyViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable>
     private let log = NordicLog(category: "BlinkyViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
     
+    // MARK: Properties
+    
+    @Published var isLedOn: Bool = false
+    @Published private(set) var isButtonPressed: Bool = false
+    
     // MARK: init
     
     init(peripheral: Peripheral, blinkyService: CBService) {
@@ -48,10 +53,35 @@ extension BlinkyViewModel: SupportedServiceViewModel {
     
     // MARK: onConnect()
     
+    @MainActor
     func onConnect() async {
         log.debug(#function)
         do {
+            let characteristics: [Characteristic] = [.nordicsemiBlinkyLedState, .nordicsemiBlinkyButtonState]
+            let blinkyCharacteristics = try await peripheral.discoverCharacteristics(characteristics.map(\.uuid), for: service)
+                    .timeout(1, scheduler: DispatchQueue.main)
+                    .firstValue
             
+            for characteristic in blinkyCharacteristics where characteristic.uuid == Characteristic.nordicsemiBlinkyButtonState.uuid {
+                if let initialValue = try await peripheral.readValue(for: characteristic).firstValue {
+                    log.debug("peripheral.readValue(characteristic): \(initialValue.hexEncodedString(options: [.prepend0x, .twoByteSpacing]))")
+                    isButtonPressed = initialValue.littleEndianBytes(as: UInt8.self) > 0
+                }
+                
+                let result = try await peripheral.setNotifyValue(true, for: characteristic).firstValue
+                log.debug("peripheral.setNotifyValue(true, for: .nordicsemiBlinkyButtonState): \(result)")
+                listenToButtonPress(characteristic)
+            }
+            
+            for characteristic in blinkyCharacteristics where characteristic.uuid == Characteristic.nordicsemiBlinkyLedState.uuid {
+                $isLedOn
+                    .sink { [weak self] newValue in
+                        self?.log.debug("Changed to \(newValue)")
+                        let result = self?.peripheral.writeValueWithResponse(Data(repeating: newValue ? 1 : 0, count: 1), for: characteristic)
+                    }
+                    .store(in: &cancellables)
+                break
+            }
         }
         catch {
             log.error(error.localizedDescription)
@@ -63,5 +93,17 @@ extension BlinkyViewModel: SupportedServiceViewModel {
     func onDisconnect() {
         log.debug(#function)
         cancellables.removeAll()
+    }
+    
+    // MARK: listenToButtonPress()
+    
+    func listenToButtonPress(_ characteristic: CBCharacteristic) {
+        peripheral.listenValues(for: characteristic)
+            .map { [weak self] data in
+                self?.log.debug("Received \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing]))")
+                return data.littleEndianBytes(as: UInt8.self) > 0
+            }
+            .sink(to: \.isButtonPressed, in: self, assigningInCaseOfError: false)
+            .store(in: &cancellables)
     }
 }
