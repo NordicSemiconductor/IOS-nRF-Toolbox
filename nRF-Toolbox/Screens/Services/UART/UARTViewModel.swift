@@ -57,10 +57,10 @@ final class UARTViewModel: ObservableObject {
 
 extension UARTViewModel: SupportedServiceViewModel {
     
-    // MARK: view
+    // MARK: attachedView
     
-    var body: some View {
-        UARTView()
+    var attachedView: SupportedServiceAttachedView {
+        return .uart(self)
     }
     
     // MARK: onConnect()

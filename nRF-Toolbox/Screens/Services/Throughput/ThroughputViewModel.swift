@@ -254,10 +254,10 @@ final class ThroughputViewModel: ObservableObject {
 
 extension ThroughputViewModel: SupportedServiceViewModel {
     
-    // MARK: view
+    // MARK: attachedView
     
-    var body: some View {
-        ThroughputView()
+    var attachedView: SupportedServiceAttachedView {
+        return .throughput(self)
     }
     
     // MARK: onConnect()

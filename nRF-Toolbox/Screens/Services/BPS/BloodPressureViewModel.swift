@@ -54,10 +54,10 @@ final class BloodPressureViewModel: ObservableObject {
 
 extension BloodPressureViewModel: SupportedServiceViewModel {
     
-    // MARK: view
+    // MARK: attachedView
     
-    var body: some View {
-        BloodPressureView()
+    var attachedView: SupportedServiceAttachedView {
+        return .bloodPressure(self)
     }
     
     // MARK: onConnect()

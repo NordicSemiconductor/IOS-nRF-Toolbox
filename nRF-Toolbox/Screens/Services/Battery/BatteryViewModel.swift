@@ -133,10 +133,10 @@ final class BatteryViewModel: ObservableObject {
 
 extension BatteryViewModel: SupportedServiceViewModel {
     
-    // MARK: view
+    // MARK: attachedView
     
-    var body: some View {
-        BatteryView()
+    var attachedView: SupportedServiceAttachedView {
+        return .battery(self)
     }
     
     // MARK: onConnect()

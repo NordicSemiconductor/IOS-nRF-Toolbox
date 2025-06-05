@@ -45,10 +45,10 @@ final class HealthThermometerViewModel: ObservableObject {
 
 extension HealthThermometerViewModel: SupportedServiceViewModel {
     
-    // MARK: view
+    // MARK: attachedView
     
-    var body: some View {
-        HealthThermometerView()
+    var attachedView: SupportedServiceAttachedView {
+        return .healthThermometer(self)
     }
     
     // MARK: onConnect()

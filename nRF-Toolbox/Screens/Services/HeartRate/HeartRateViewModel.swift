@@ -85,10 +85,10 @@ extension DeviceScreen {
 
 extension DeviceScreen.HeartRateViewModel: SupportedServiceViewModel {
     
-    // MARK: view
+    // MARK: attachedView
     
-    var body: some View {
-        HeartRateChart()
+    var attachedView: SupportedServiceAttachedView {
+        return .heartRate(self)
     }
     
     // MARK: onConnect()

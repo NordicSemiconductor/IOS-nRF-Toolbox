@@ -56,10 +56,10 @@ final class RunningServiceViewModel: ObservableObject {
 
 extension RunningServiceViewModel: SupportedServiceViewModel {
     
-    // MARK: view
+    // MARK: attachedView
     
-    var body: some View {
-        RunningServiceView()
+    var attachedView: SupportedServiceAttachedView {
+        return .running(self)
     }
     
     // MARK: onConnect()

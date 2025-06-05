@@ -115,10 +115,10 @@ enum RACPOpCode: UInt8 {
 
 extension CGMSViewModel: SupportedServiceViewModel {
     
-    // MARK: View
+    // MARK: attachedView
     
-    var body: some View {
-        CGMSView()
+    var attachedView: SupportedServiceAttachedView {
+        return .continuousGlucoseMonitoring(self)
     }
     
     // MARK: onConnect()

@@ -8,6 +8,7 @@
 
 import Combine
 import Foundation
+import SwiftUI
 import iOS_BLE_Library_Mock
 import iOS_Bluetooth_Numbers_Database
 import iOS_Common_Libraries
@@ -30,9 +31,16 @@ private extension Array {
     var id: UUID { peripheral.peripheral.identifier }
     
     let environment: Environment
-    @Published private(set) var supportedServiceViewModels: [SupportedServiceViewModel] = []
+    private(set) var supportedServiceViewModels: [any SupportedServiceViewModel] = []
     
     private let log = NordicLog(category: "DeviceDetails.VM", subsystem: "com.nordicsemi.nrf-toolbox")
+    
+    @ViewBuilder
+    func supportedServiceViews() -> some View {
+        ForEach(supportedServiceViewModels.map(\.attachedView)) { attachedView in
+            attachedView
+        }
+    }
     
     var runningServiceViewModel: RunningServiceViewModel? {
         supportedServiceViewModels.firstOfType(type: RunningServiceViewModel.self)
