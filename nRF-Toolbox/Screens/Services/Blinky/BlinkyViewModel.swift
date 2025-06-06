@@ -75,9 +75,15 @@ extension BlinkyViewModel: SupportedServiceViewModel {
             
             for characteristic in blinkyCharacteristics where characteristic.uuid == Characteristic.nordicsemiBlinkyLedState.uuid {
                 $isLedOn
-                    .sink { [weak self] newValue in
-                        self?.log.debug("Changed to \(newValue)")
-                        let result = self?.peripheral.writeValueWithResponse(Data(repeating: newValue ? 1 : 0, count: 1), for: characteristic)
+                    .map { [log] newValue in
+                        log.debug("Changed to \(newValue)")
+                        return Data(repeating: newValue ? 1 : 0, count: 1)
+                    }
+                    .sink { [log, peripheral] data in
+                        Task {
+                            log.debug("Writing \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing]))")
+                            _ = try? await peripheral.writeValueWithResponse(data, for: characteristic).firstValue
+                        }
                     }
                     .store(in: &cancellables)
                 break
