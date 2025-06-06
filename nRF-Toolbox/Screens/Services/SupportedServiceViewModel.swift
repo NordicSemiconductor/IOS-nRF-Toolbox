@@ -29,6 +29,7 @@ enum SupportedServiceAttachedView: View, CustomStringConvertible, Identifiable {
     case running(_ viewModel: RunningServiceViewModel)
     case cycling(_ viewModel: CyclingServiceViewModel)
     case throughput(_ viewModel: ThroughputViewModel)
+    case glucose(_ viewModel: GlucoseViewModel)
     case continuousGlucoseMonitoring(_ viewModel: CGMSViewModel)
     case uart(_ viewModel: UARTViewModel)
     case battery(_ viewModel: BatteryViewModel)
@@ -51,6 +52,8 @@ enum SupportedServiceAttachedView: View, CustomStringConvertible, Identifiable {
             return "Cycling"
         case .throughput:
             return "Throughput"
+        case .glucose:
+            return "Glucose Service"
         case .continuousGlucoseMonitoring:
             return "Continuous Glucose Monitoring Service"
         case .uart:
@@ -84,6 +87,9 @@ enum SupportedServiceAttachedView: View, CustomStringConvertible, Identifiable {
             case .throughput(let throughputViewModel):
                 ThroughputView()
                     .environmentObject(throughputViewModel)
+            case .glucose(let glucoseViewModel):
+                GlucoseView()
+                    .environmentObject(glucoseViewModel)
             case .continuousGlucoseMonitoring(let cgmsViewModel):
                 CGMSView()
                     .environmentObject(cgmsViewModel)

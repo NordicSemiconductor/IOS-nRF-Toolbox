@@ -132,6 +132,8 @@ extension DeviceDetailsViewModel {
                     supportedServiceViewModels.append(BatteryViewModel(peripheral: peripheral, batteryService: service))
                 case .throughputService:
                     supportedServiceViewModels.append(ThroughputViewModel(peripheral, service: service))
+                case .glucoseService:
+                    supportedServiceViewModels.append(GlucoseViewModel(peripheral: peripheral, glucoseService: service))
                 case .continuousGlucoseMonitoringService:
                     supportedServiceViewModels.append(CGMSViewModel(peripheral: peripheral, cgmsService: service))
                 case .nordicsemiUART:

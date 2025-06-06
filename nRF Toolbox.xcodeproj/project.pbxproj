@@ -357,6 +357,8 @@
 		AA2C37052D47DA1F00D41989 /* ThroughputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2C37042D47DA1F00D41989 /* ThroughputView.swift */; };
 		AA2CB314286C75450083DB9A /* iOSMcuManagerLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = AA2CB313286C75450083DB9A /* iOSMcuManagerLibrary */; };
 		AA2CB316286C75AA0083DB9A /* NordicDFU in Frameworks */ = {isa = PBXBuildFile; productRef = AA2CB315286C75AA0083DB9A /* NordicDFU */; };
+		AA306A092DF30D54005B4E04 /* GlucoseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA306A082DF30D54005B4E04 /* GlucoseViewModel.swift */; };
+		AA306A0B2DF30DBF005B4E04 /* GlucoseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA306A0A2DF30DBF005B4E04 /* GlucoseView.swift */; };
 		AA479EA42D0B0B5C0052E801 /* WheelDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA479EA32D0B0B5C0052E801 /* WheelDataPoint.swift */; };
 		AA479EA52D0B0B5C0052E801 /* WheelDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA479EA32D0B0B5C0052E801 /* WheelDataPoint.swift */; };
 		AA479EA72D0B0BFF0052E801 /* CrankDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA479EA62D0B0BFF0052E801 /* CrankDataPoint.swift */; };
@@ -802,6 +804,8 @@
 		AA29315A2DEF1B4F002C82B6 /* CuffPressureMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuffPressureMeasurement.swift; sourceTree = "<group>"; };
 		AA2C37002D47D88800D41989 /* ThroughputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThroughputViewModel.swift; sourceTree = "<group>"; };
 		AA2C37042D47DA1F00D41989 /* ThroughputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThroughputView.swift; sourceTree = "<group>"; };
+		AA306A082DF30D54005B4E04 /* GlucoseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseViewModel.swift; sourceTree = "<group>"; };
+		AA306A0A2DF30DBF005B4E04 /* GlucoseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseView.swift; sourceTree = "<group>"; };
 		AA479EA32D0B0B5C0052E801 /* WheelDataPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelDataPoint.swift; sourceTree = "<group>"; };
 		AA479EA62D0B0BFF0052E801 /* CrankDataPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrankDataPoint.swift; sourceTree = "<group>"; };
 		AA479EAC2D0B24E50052E801 /* HealthThermometerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthThermometerViewModel.swift; sourceTree = "<group>"; };
@@ -1059,6 +1063,7 @@
 		013E5D872ADD337300B9C475 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				AA306A072DF30D3B005B4E04 /* Glucose */,
 				AA047E0F2DF1B38B00DA401E /* Blinky */,
 				AA7769FB2DEDED770005A82B /* BPS */,
 				AAA04F1A2DAD1B4F002DAB42 /* UART */,
@@ -2466,6 +2471,15 @@
 			path = Throughput;
 			sourceTree = "<group>";
 		};
+		AA306A072DF30D3B005B4E04 /* Glucose */ = {
+			isa = PBXGroup;
+			children = (
+				AA306A0A2DF30DBF005B4E04 /* GlucoseView.swift */,
+				AA306A082DF30D54005B4E04 /* GlucoseViewModel.swift */,
+			);
+			path = Glucose;
+			sourceTree = "<group>";
+		};
 		AA479EAB2D0B24C70052E801 /* HealthThermometer */ = {
 			isa = PBXGroup;
 			children = (
@@ -2914,6 +2928,7 @@
 				AA2C37052D47DA1F00D41989 /* ThroughputView.swift in Sources */,
 				AA95CBD42D085AFA00D1FBC6 /* CyclingFeature.swift in Sources */,
 				AA0AEA022CF7438200F93A0B /* Assets.swift in Sources */,
+				AA306A092DF30D54005B4E04 /* GlucoseViewModel.swift in Sources */,
 				01CEB4262AE9100300945105 /* DeviceScreen.swift in Sources */,
 				AAAD7F532DD2CEAE004952F3 /* UARTMacroView.swift in Sources */,
 				018873C72A583A9900253273 /* PeripheralScannerScreen.swift in Sources */,
@@ -2998,6 +3013,7 @@
 				AA94C5512D01B49200562F7A /* BatteryView.swift in Sources */,
 				014BBD812A700D1600BCFCA8 /* SensorLocationView1.swift in Sources */,
 				AA01D4922D4A3D38008523CE /* Throughput+Attributes.swift in Sources */,
+				AA306A0B2DF30DBF005B4E04 /* GlucoseView.swift in Sources */,
 				0164A4742AD5A4630093E501 /* StateViews.swift in Sources */,
 				0129F2252A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift in Sources */,
 				AAE2C9332D9D378300B398E3 /* CGMOpcodes.swift in Sources */,
