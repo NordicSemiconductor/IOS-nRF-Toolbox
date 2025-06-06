@@ -40,6 +40,7 @@ extension Service {
         .continuousGlucoseMonitoring: .yellow,
         .healthThermometer: .indigo,
         .nordicsemiLedAndButton: .nordicBlue,
+        .deviceInformation: .black,
         .throughputService: .nordicBlue
     ]
     
