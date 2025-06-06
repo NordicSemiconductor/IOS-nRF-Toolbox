@@ -26,7 +26,8 @@ extension Service {
         .continuousGlucoseMonitoring: "syringe",
         .healthThermometer: "medical.thermometer",
         .nordicsemiLedAndButton: "lightbulb.max.fill",
-        .throughputService: "metronome"
+        .throughputService: "metronome",
+        .deviceInformation: "cpu"
     ]
     
     private static let colors: [Service : Color] = [
