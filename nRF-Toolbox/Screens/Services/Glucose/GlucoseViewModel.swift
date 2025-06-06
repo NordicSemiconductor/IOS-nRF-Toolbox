@@ -23,7 +23,6 @@ final class GlucoseViewModel: ObservableObject {
     
     private let service: CBService
     private let peripheral: Peripheral
-    private var peripheralSessionTime: Date!
     private var cbGlucoseMeasurement: CBCharacteristic!
     private var cbRACP: CBCharacteristic!
     
@@ -77,10 +76,9 @@ extension GlucoseViewModel: SupportedServiceViewModel {
         }
         
         do {
-            let now = Date.now
-            
-            
-            
+            listenToMeasurements(cbGlucoseMeasurement)
+            let glucoseEnable = try await peripheral.setNotifyValue(true, for: cbGlucoseMeasurement).firstValue
+            log.debug("GlucoseMeasurement.setNotifyValue(true): \(glucoseEnable)")
         } catch {
             log.error(error.localizedDescription)
             onDisconnect()
@@ -91,10 +89,35 @@ extension GlucoseViewModel: SupportedServiceViewModel {
     
     func onDisconnect() {
         log.debug(#function)
-        peripheralSessionTime = nil
         cbGlucoseMeasurement = nil
         cbRACP = nil
         cancellables.removeAll()
+    }
+}
+
+// MARK: - Private
+
+private extension GlucoseViewModel {
+    
+    func listenToMeasurements(_ measurementCharacteristic: CBCharacteristic) {
+        log.debug(#function)
+        peripheral.listenValues(for: measurementCharacteristic)
+            .compactMap { [log] data -> CGMSMeasurement? in
+                log.debug("Received Measurement Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing])) (\(data.count) bytes)")
+                guard let parse = try? CGMSMeasurement(data: data, sessionStartTime: .now) else {
+                    log.error("Unable to parse Measurement Data \(data.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
+                    return nil
+                }
+                log.debug("Parsed measurement \(parse). Seq. No.: \(parse.sequenceNumber)")
+                return parse
+            }
+            .receive(on: RunLoop.main)
+            .sink(receiveCompletion: { _ in
+                print("Completion")
+            }, receiveValue: { newValue in
+                self.records.append(newValue)
+            })
+            .store(in: &cancellables)
     }
 }
 
