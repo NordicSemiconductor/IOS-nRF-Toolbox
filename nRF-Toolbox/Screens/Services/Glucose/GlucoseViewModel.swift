@@ -126,6 +126,13 @@ private extension GlucoseViewModel {
         peripheral.listenValues(for: measurementCharacteristic)
             .compactMap { [log] data -> CGMSMeasurement? in
                 log.debug("Received Measurement Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing])) (\(data.count) bytes)")
+                
+                guard let measurement = GlucoseMeasurement(data) else {
+                    log.error("Unable to parse Measurement Data \(data.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
+                    return nil
+                }
+                log.debug("Parsed: \(measurement.measurement.nilDescription)")
+                
                 guard let parse = try? CGMSMeasurement(data: data, sessionStartTime: .now) else {
                     log.error("Unable to parse Measurement Data \(data.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
                     return nil
