@@ -21,8 +21,22 @@ struct GlucoseView: View {
     // MARK: view
     
     var body: some View {
-        VStack(alignment: .leading) {
-            
+        Button("All") {
+            Task {
+                await viewModel.requestRecords(.allRecords)
+            }
+        }
+        
+        Button("First") {
+            Task {
+                await viewModel.requestRecords(.first)
+            }
+        }
+        
+        Button("Last") {
+            Task {
+                await viewModel.requestRecords(.last)
+            }
         }
     }
 }

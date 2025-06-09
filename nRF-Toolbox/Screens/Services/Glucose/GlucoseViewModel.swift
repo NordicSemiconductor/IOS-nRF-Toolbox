@@ -79,6 +79,8 @@ extension GlucoseViewModel: SupportedServiceViewModel {
             listenToMeasurements(cbGlucoseMeasurement)
             let glucoseEnable = try await peripheral.setNotifyValue(true, for: cbGlucoseMeasurement).firstValue
             log.debug("GlucoseMeasurement.setNotifyValue(true): \(glucoseEnable)")
+            
+            await requestRecords(.allRecords)
         } catch {
             log.error(error.localizedDescription)
             onDisconnect()
@@ -95,9 +97,29 @@ extension GlucoseViewModel: SupportedServiceViewModel {
     }
 }
 
+// MARK: API
+
+extension GlucoseViewModel {
+    
+    // MARK: requestRecords()
+    
+    func requestRecords(_ op: CGMOperator) async {
+        log.debug(#function)
+        do {
+            let writeData = Data([RACPOpCode.reportStoredRecords.rawValue, op.rawValue])
+            log.debug("peripheral.writeValueWithResponse(\(writeData.hexEncodedString(options: [.prepend0x, .upperCase])))")
+            try await peripheral.writeValueWithResponse(writeData, for: cbRACP).firstValue
+        } catch {
+            log.error("\(#function) Error: \(error.localizedDescription)")
+        }
+    }
+}
+
 // MARK: - Private
 
 private extension GlucoseViewModel {
+    
+    // MARK: listenToMeasurements()
     
     func listenToMeasurements(_ measurementCharacteristic: CBCharacteristic) {
         log.debug(#function)

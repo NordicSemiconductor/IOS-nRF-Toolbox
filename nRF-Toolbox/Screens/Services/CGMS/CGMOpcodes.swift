@@ -90,6 +90,20 @@ enum CGMEnumerations: UInt8, Option {
     case responseCode                   = 28
 }
 
+// MARK: - CGMOperator
+
+enum CGMOperator: UInt8 {
+    case null                 = 0
+    case allRecords           = 1
+    case lessThanOrEqual      = 2
+    case greaterThanOrEqual   = 3
+    case withinRangeInclusive = 4
+    case first                = 5
+    case last                 = 6
+    
+    // Values outside this range are reserved
+}
+
 // MARK: - CGMOpcodeResponseCodes
 
 enum CGMOpcodeResponseCodes: UInt8, Option, CustomStringConvertible {

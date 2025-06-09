@@ -90,7 +90,7 @@ extension CGMSViewModel {
                 records.reserveCapacity(numberOfRecords)
             }
             
-            let writeData = Data([RACPOpCode.reportStoredRecords.rawValue, 1])
+            let writeData = Data([RACPOpCode.reportStoredRecords.rawValue, CGMOperator.allRecords.rawValue])
             log.debug("peripheral.writeValueWithResponse(\(writeData.hexEncodedString(options: [.prepend0x, .upperCase])))")
             try await peripheral.writeValueWithResponse(writeData, for: cbRACP).firstValue
         } catch {
