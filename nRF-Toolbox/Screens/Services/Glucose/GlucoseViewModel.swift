@@ -31,7 +31,10 @@ final class GlucoseViewModel: ObservableObject {
     
     // MARK: Published
     
-    @Published private(set) var records = [ToolboxGlucoseMeasurement]()
+    @Published private(set) var allRecords = [ToolboxGlucoseMeasurement]()
+    @Published private(set) var firstRecord: ToolboxGlucoseMeasurement?
+    @Published private(set) var lastRecord: ToolboxGlucoseMeasurement?
+    private var request: CGMOperator?
     
     // MARK: init
     
@@ -102,9 +105,15 @@ extension GlucoseViewModel {
     
     // MARK: requestRecords()
     
+    @MainActor
     func requestRecords(_ op: CGMOperator) async {
         log.debug(#function)
         do {
+            request = op
+            if request == .allRecords {
+                allRecords.removeAll()
+            }
+            
             let writeData = Data([RACPOpCode.reportStoredRecords.rawValue, op.rawValue])
             log.debug("peripheral.writeValueWithResponse(\(writeData.hexEncodedString(options: [.prepend0x, .upperCase])))")
             try await peripheral.writeValueWithResponse(writeData, for: cbRACP).firstValue
@@ -131,14 +140,21 @@ private extension GlucoseViewModel {
                     return nil
                 }
                 
-                log.debug("Parsed measurement \(parsed.measurement.nilDescription). Seq. No.: \(parsed.sequenceNumber)")
+                log.debug("Parsed measurement \(parsed.description).")
                 return parsed
             }
             .receive(on: RunLoop.main)
-            .sink(receiveCompletion: { _ in
-                print("Completion")
-            }, receiveValue: { newValue in
-                self.records.append(newValue)
+            .sink(receiveCompletion: { [log] _ in
+                log.debug("Completion")
+            }, receiveValue: { [weak self] newValue in
+                switch self?.request {
+                case .first:
+                    self?.firstRecord = newValue
+                case .last:
+                    self?.lastRecord = newValue
+                default:
+                    self?.allRecords.append(newValue)
+                }
             })
             .store(in: &cancellables)
     }

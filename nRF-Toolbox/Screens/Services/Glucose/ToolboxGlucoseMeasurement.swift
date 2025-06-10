@@ -18,7 +18,7 @@ struct ToolboxGlucoseMeasurement {
     let sequenceNumber: Int
     let timestamp: Date
     let timeOffset: Measurement<UnitDuration>?
-    let measurement: Measurement<UnitConcentrationMass>?
+    let measurement: Measurement<UnitConcentrationMass>
     
     // MARK: init
     
@@ -49,7 +49,23 @@ struct ToolboxGlucoseMeasurement {
         if flags.contains(.concentrationUnit) {
             measurement = Measurement<UnitConcentrationMass>(value: Double(value * 1000), unit: .gramsPerLiter)
         } else {
-            measurement = Measurement<UnitConcentrationMass>(value: Double(value), unit: .millimolesPerLiter(withGramsPerMole: 64.458))
+            measurement = Measurement<UnitConcentrationMass>(value: Double(value), unit: .millimolesPerLiter(withGramsPerMole: .bloodGramsPerMole))
         }
+    }
+}
+
+// MARK: - bloodGramsPerMole
+
+public extension Double {
+    
+    static let bloodGramsPerMole = 64.458
+}
+
+// MARK: - CustomStringConvertible
+
+extension ToolboxGlucoseMeasurement: CustomStringConvertible {
+    
+    var description: String {
+        return String(format: "%.2f \(measurement.unit.symbol), Seq.: \(sequenceNumber)", measurement.value)
     }
 }

@@ -46,11 +46,64 @@ struct GlucoseView: View {
         }
     }
     
+    @State private var scrollPosition = 0
     @State private var viewMode: ViewMode = .all
     
     // MARK: view
     
     var body: some View {
+        switch viewMode {
+        case .all:
+            Chart {
+                ForEach(viewModel.allRecords, id: \.sequenceNumber) { value in
+                    LineMark(
+                        x: .value("Sequence Number", value.sequenceNumber),
+                        y: .value("Glucose Measurement", value.measurement.value)
+                    )
+                    .foregroundStyle(Color.nordicRed)
+                }
+                .interpolationMethod(.catmullRom)
+            }
+            .chartYAxis {
+                AxisMarks { value in
+                    AxisGridLine()
+                    
+                    if let value = value.as(Double.self) {
+                        AxisValueLabel {
+                            Text("\(String(format: "%.1f", value))")
+                        }
+                    }
+                }
+            }
+            .chartScrollableAxes(.horizontal)
+            .chartXVisibleDomain(length: 20)
+            .chartScrollPosition(x: $scrollPosition)
+            .padding(.top, 24)
+            .listRowSeparator(.hidden)
+        case .first:
+            if let firstRecord = viewModel.firstRecord {
+                LabeledContent {
+                    Text(firstRecord.description)
+                } label: {
+                    Label("First Record", systemImage: "car.side.front.open")
+                }
+                .labeledContentStyle(.accentedContent)
+            } else {
+                EmptyView()
+            }
+        case .last:
+            if let lastRecord = viewModel.lastRecord {
+                LabeledContent {
+                    Text(lastRecord.description)
+                } label: {
+                    Label("Last Record", systemImage: "car.side.rear.open")
+                }
+                .labeledContentStyle(.accentedContent)
+            } else {
+                EmptyView()
+            }
+        }
+        
         InlinePicker(title: "Mode", systemImage: "square.on.square", selectedValue: $viewMode) { newMode in
             Task {
                 await viewModel.requestRecords(newMode.cgmOperator)
