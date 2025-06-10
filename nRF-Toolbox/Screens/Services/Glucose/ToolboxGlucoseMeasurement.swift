@@ -52,6 +52,15 @@ struct ToolboxGlucoseMeasurement {
             measurement = Measurement<UnitConcentrationMass>(value: Double(value), unit: .millimolesPerLiter(withGramsPerMole: .bloodGramsPerMole))
         }
     }
+    
+    // MARK: API
+    
+    func toStringDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US")
+        dateFormatter.setLocalizedDateFormatFromTemplate("E d MMM yyyy HH:mm:ss")
+        return dateFormatter.string(from: timestamp)
+    }
 }
 
 // MARK: - bloodGramsPerMole
@@ -66,6 +75,6 @@ public extension Double {
 extension ToolboxGlucoseMeasurement: CustomStringConvertible {
     
     var description: String {
-        return String(format: "%.2f \(measurement.unit.symbol), Seq.: \(sequenceNumber)", measurement.value)
+        return String(format: "%.2f \(measurement.unit.symbol), Seq.: \(sequenceNumber), Date: \(toStringDate())", measurement.value)
     }
 }
