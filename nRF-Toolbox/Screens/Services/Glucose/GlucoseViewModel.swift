@@ -31,8 +31,7 @@ final class GlucoseViewModel: ObservableObject {
     
     // MARK: Published
     
-    @Published private(set) var records = [CGMSMeasurement]()
-    @Published var scrollPosition = 0
+    @Published private(set) var records = [ToolboxGlucoseMeasurement]()
     
     // MARK: init
     
@@ -124,21 +123,16 @@ private extension GlucoseViewModel {
     func listenToMeasurements(_ measurementCharacteristic: CBCharacteristic) {
         log.debug(#function)
         peripheral.listenValues(for: measurementCharacteristic)
-            .compactMap { [log] data -> CGMSMeasurement? in
+            .compactMap { [log] data -> ToolboxGlucoseMeasurement? in
                 log.debug("Received Measurement Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing])) (\(data.count) bytes)")
                 
-                guard let measurement = GlucoseMeasurement(data) else {
+                guard let parsed = ToolboxGlucoseMeasurement(data) else {
                     log.error("Unable to parse Measurement Data \(data.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
                     return nil
                 }
-                log.debug("Parsed: \(measurement.measurement.nilDescription)")
                 
-                guard let parse = try? CGMSMeasurement(data: data, sessionStartTime: .now) else {
-                    log.error("Unable to parse Measurement Data \(data.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
-                    return nil
-                }
-                log.debug("Parsed measurement \(parse). Seq. No.: \(parse.sequenceNumber)")
-                return parse
+                log.debug("Parsed measurement \(parsed.measurement.nilDescription). Seq. No.: \(parsed.sequenceNumber)")
+                return parsed
             }
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { _ in

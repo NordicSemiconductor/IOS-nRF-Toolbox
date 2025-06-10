@@ -9,15 +9,15 @@
 import Foundation
 import iOS_Common_Libraries
 
-// MARK: - GlucoseMeasurement
+// MARK: - ToolboxGlucoseMeasurement
 
-struct GlucoseMeasurement {
+struct ToolboxGlucoseMeasurement {
     
-    //MARK: Properties
+    // MARK: Properties
     
     let sequenceNumber: Int
     let timestamp: Date
-    let timeOffset: Int?
+    let timeOffset: Measurement<UnitDuration>?
     let measurement: Measurement<UnitConcentrationMass>?
     
     // MARK: init
@@ -30,18 +30,18 @@ struct GlucoseMeasurement {
         var offset = MemoryLayout<UInt8>.size + MemoryLayout<UInt16>.size
         
         let dateData = data.subdata(in: offset ..< offset + Date.DataSize)
-        if let date = Date(dateData) {
-            print(date)
-        }
+        guard let date = Date(dateData) else { return nil }
         offset += Date.DataSize
         
         if flags.contains(.timeOffset) {
-            self.timeOffset = data.littleEndianBytes(atOffset: offset, as: Int16.self)
+            let timeOffset = data.littleEndianBytes(atOffset: offset, as: Int16.self)
             offset += MemoryLayout<UInt16>.size
+            self.timestamp = date
+            self.timeOffset = Measurement<UnitDuration>(value: Double(timeOffset), unit: .minutes)
         } else {
+            self.timestamp = date
             self.timeOffset = nil
         }
-        self.timestamp = .now
         
         guard flags.contains(.typeAndLocation) else { return nil }
         let value = Float(asSFloat: data.subdata(in: offset..<offset+SFloatReserved.byteSize))
@@ -51,16 +51,5 @@ struct GlucoseMeasurement {
         } else {
             measurement = Measurement<UnitConcentrationMass>(value: Double(value), unit: .millimolesPerLiter(withGramsPerMole: 64.458))
         }
-    }
-}
-
-// MARK: - Flags
-
-extension GlucoseMeasurement {
-    
-    enum Flags: RegisterValue, Option, CaseIterable {
-        
-        case timeOffset, typeAndLocation, concentrationUnit, statusAnnunciationPresent
-        case contextInfoFollows
     }
 }
