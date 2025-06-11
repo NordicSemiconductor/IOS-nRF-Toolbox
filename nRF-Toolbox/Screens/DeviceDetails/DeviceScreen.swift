@@ -60,14 +60,30 @@ struct DeviceScreen: View {
                 switch device.status {
                 case .userInitiatedDisconnection:
                     ProgressView()
-                case .error(let error):
-                    Label(error.localizedDescription, systemImage: "exclamationmark.circle")
-                        .foregroundStyle(Color.nordicRed)
                 case .connected:
                     Button("Disconnect") {
                         disconnect()
                     }
                     .foregroundStyle(Color.red)
+                    .centered()
+                case .error(let error):
+                    Label(error.localizedDescription, systemImage: "exclamationmark.circle")
+                        .foregroundStyle(Color.nordicRed)
+                    
+                    Button("Reconnect") {
+                        reconnect()
+                    }
+                    .foregroundStyle(Color.universalAccentColor)
+                    .centered()
+                }
+            }
+            
+            if case .error = device.status {
+                Section {
+                    Button("Clear Device") {
+                        disconnect()
+                    }
+                    .foregroundStyle(Color.universalAccentColor)
                     .centered()
                 }
             }
@@ -83,6 +99,16 @@ struct DeviceScreen: View {
                 InspectorScreen(device)
             }
             .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+    
+    // MARK: reconnect()
+    
+    func reconnect() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+            Task { @MainActor in
+                await connectedDevicesViewModel.deviceViewModel(for: device.id)?.reconnect()
+            }
         }
     }
     

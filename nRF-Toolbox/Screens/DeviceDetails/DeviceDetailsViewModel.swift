@@ -21,7 +21,8 @@ private extension Array {
 
 // MARK: - DeviceDetailsViewModel
 
-@MainActor final class DeviceDetailsViewModel {
+@MainActor
+final class DeviceDetailsViewModel {
     private var discoveredServices: [CBService] = []
     private var cancelable = Set<AnyCancellable>()
     
@@ -58,30 +59,28 @@ private extension Array {
 extension DeviceDetailsViewModel {
     private struct TimeoutError: Error { }
     
-    func onDisconnect() async {
-        log.debug(#function)
-        supportedServiceViewModels.forEach {
-            $0.onDisconnect()
-        }
-    }
-    
     func reconnect() async {
         log.debug(#function)
         do {
-            environment.reconnecting = true
+            environment.criticalError = nil
             _ = try await centralManager.connect(peripheral.peripheral)
                 // Set timeout for 5 seconds
                 .timeout(5, scheduler: DispatchQueue.main, customError: {
                     TimeoutError()
                 })
                 .firstValue
-            
-            await onDisconnect()
-            environment.criticalError = nil
         } catch {
-            
+            log.error("\(#function) Error: \(error.localizedDescription)")
+            environment.criticalError = .disconnectedWithError(error)
+            await onDisconnect()
         }
-        environment.reconnecting = false 
+    }
+    
+    func onDisconnect() async {
+        log.debug(#function)
+        supportedServiceViewModels.forEach {
+            $0.onDisconnect()
+        }
     }
 }
 
@@ -179,7 +178,6 @@ extension DeviceDetailsViewModel {
     
     @MainActor final class Environment: ObservableObject {
         
-        @Published var reconnecting: Bool
         @Published var criticalError: CriticalError?
         @Published var alertError: AlertError?
         
@@ -192,10 +190,8 @@ extension DeviceDetailsViewModel {
         
         private let log = NordicLog(category: "DeviceDetailsViewModel.Environment", subsystem: "com.nordicsemi.nrf-toolbox")
         
-        init(deviceID: UUID, reconnecting: Bool = false,
-             criticalError: CriticalError? = nil, alertError: AlertError? = nil) {
+        init(deviceID: UUID, criticalError: CriticalError? = nil, alertError: AlertError? = nil) {
             self.deviceID = deviceID
-            self.reconnecting = reconnecting
             self.criticalError = criticalError
             self.alertError = alertError
             
