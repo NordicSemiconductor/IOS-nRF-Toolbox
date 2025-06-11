@@ -70,11 +70,13 @@ struct DeviceScreen: View {
                     Label(error.localizedDescription, systemImage: "exclamationmark.circle")
                         .foregroundStyle(Color.nordicRed)
                     
-                    Button("Reconnect") {
-                        reconnect()
-                    }
-                    .foregroundStyle(Color.universalAccentColor)
-                    .centered()
+                    // TODO: Restore.
+//
+//                    Button("Reconnect") {
+//                        reconnect()
+//                    }
+//                    .foregroundStyle(Color.universalAccentColor)
+//                    .centered()
                 }
             }
             
