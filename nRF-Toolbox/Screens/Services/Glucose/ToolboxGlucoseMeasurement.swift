@@ -20,6 +20,10 @@ struct ToolboxGlucoseMeasurement {
     let timeOffset: Measurement<UnitDuration>?
     let measurement: Measurement<UnitConcentrationMass>
     
+    private let sensorCode: RegisterValue
+    private let locationCode: RegisterValue
+    private let statusCode: RegisterValue?
+    
     // MARK: init
     
     init?(_ data: Data) {
@@ -31,15 +35,14 @@ struct ToolboxGlucoseMeasurement {
         
         let dateData = data.subdata(in: offset ..< offset + Date.DataSize)
         guard let date = Date(dateData) else { return nil }
+        self.timestamp = date
         offset += Date.DataSize
         
         if flags.contains(.timeOffset) {
             let timeOffset = data.littleEndianBytes(atOffset: offset, as: Int16.self)
             offset += MemoryLayout<UInt16>.size
-            self.timestamp = date
             self.timeOffset = Measurement<UnitDuration>(value: Double(timeOffset), unit: .minutes)
         } else {
-            self.timestamp = date
             self.timeOffset = nil
         }
         
@@ -51,9 +54,46 @@ struct ToolboxGlucoseMeasurement {
         } else {
             measurement = Measurement<UnitConcentrationMass>(value: Double(value), unit: .millimolesPerLiter(withGramsPerMole: .bloodGramsPerMole))
         }
+        
+        guard data.canRead(UInt8.self, atOffset: offset) else { return nil }
+        let typeAndLocation = data.littleEndianBytes(atOffset: offset, as: UInt8.self)
+        offset += MemoryLayout<UInt8>.size
+        self.sensorCode = RegisterValue((typeAndLocation & 0xF0) >> 4)
+        self.locationCode = RegisterValue(typeAndLocation & 0xF0)
+        
+        if flags.contains(.statusAnnunciationPresent) {
+            guard data.canRead(UInt8.self, atOffset: offset) else { return nil }
+            self.statusCode = RegisterValue(data.littleEndianBytes(atOffset: offset, as: UInt8.self))
+            offset += MemoryLayout<UInt8>.size
+        } else {
+            self.statusCode = nil
+        }
     }
     
     // MARK: API
+    
+    func sensorString() -> String {
+        if let sensor = GlucoseMeasurement.SensorType(rawValue: sensorCode) {
+            return sensor.description
+        } else {
+            return GlucoseMeasurement.SensorType.reservedDescription(Int(sensorCode))
+        }
+    }
+    
+    func locationString() -> String {
+        if let location = GlucoseMeasurement.SensorLocation(rawValue: locationCode) {
+            return location.description
+        } else {
+            return GlucoseMeasurement.SensorType.reservedDescription(Int(locationCode))
+        }
+    }
+    
+    func statusString() -> String {
+        guard let statusCode, let status = GlucoseMeasurement.Status(rawValue: statusCode) else {
+            return "Status: \(statusCode.nilDescription)"
+        }
+        return status.description
+    }
     
     func toStringDate() -> String {
         let dateFormatter = DateFormatter()
@@ -75,6 +115,6 @@ public extension Double {
 extension ToolboxGlucoseMeasurement: CustomStringConvertible {
     
     var description: String {
-        return String(format: "%.2f \(measurement.unit.symbol), Seq.: \(sequenceNumber), Date: \(toStringDate())", measurement.value)
+        return String(format: "%.2f \(measurement.unit.symbol), Seq.: \(sequenceNumber), Date: \(toStringDate()), Sensor: \(sensorString()), Location: \(locationString()), Status: \(statusString())", measurement.value)
     }
 }
