@@ -59,13 +59,14 @@ extension DeviceDetailsViewModel {
     private struct TimeoutError: Error { }
     
     func onDisconnect() async {
-        log.debug("Disconnect")
+        log.debug(#function)
         supportedServiceViewModels.forEach {
             $0.onDisconnect()
         }
     }
     
     func reconnect() async {
+        log.debug(#function)
         do {
             environment.reconnecting = true
             _ = try await centralManager.connect(peripheral.peripheral)
@@ -111,6 +112,7 @@ extension DeviceDetailsViewModel {
     func discoverSupportedServices() async {
         log.debug(#function)
         do {
+            supportedServiceViewModels.removeAll()
             discoveredServices = try await peripheral.discoverServices(serviceUUIDs: nil).firstValue
             let supportedServices = Service.supportedServices.compactMap { CBUUID(service: $0) }
             
