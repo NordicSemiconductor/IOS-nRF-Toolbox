@@ -23,22 +23,8 @@ struct CGMSRecordList: View {
         List {
             Section {
                 ForEach(viewModel.records, id: \.sequenceNumber) { value in
-                    VStack(alignment: .leading) {
-                        HStack {
-                            BadgeView(name: "# \(value.sequenceNumber)")
-                            
-                            Text(value.description)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                        
-                        HStack {
-                            DotView(.nordicRed)
-                            
-                            Text(value.toStringDate())
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .foregroundStyle(.secondary)
-                        }
-                    }
+                    GlucoseMeasurementView(sequenceNumber: value.sequenceNumber, item: value.description,
+                                           dateString: value.toStringDate())
                 }
             } header: {
                 Text("")

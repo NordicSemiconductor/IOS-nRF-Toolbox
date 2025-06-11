@@ -83,7 +83,9 @@ struct GlucoseView: View {
         case .first:
             if let firstRecord = viewModel.firstRecord {
                 LabeledContent {
-                    Text(firstRecord.description)
+                    GlucoseMeasurementView(sequenceNumber: firstRecord.sequenceNumber,
+                                           item: firstRecord.description,
+                                           dateString: firstRecord.toStringDate())
                 } label: {
                     Label("First Record", systemImage: "car.side.front.open")
                 }
@@ -94,7 +96,9 @@ struct GlucoseView: View {
         case .last:
             if let lastRecord = viewModel.lastRecord {
                 LabeledContent {
-                    Text(lastRecord.description)
+                    GlucoseMeasurementView(sequenceNumber: lastRecord.sequenceNumber,
+                                           item: lastRecord.description,
+                                           dateString: lastRecord.toStringDate())
                 } label: {
                     Label("Last Record", systemImage: "car.side.rear.open")
                 }
