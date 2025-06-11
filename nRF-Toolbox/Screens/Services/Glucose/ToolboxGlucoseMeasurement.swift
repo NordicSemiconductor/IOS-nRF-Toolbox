@@ -69,27 +69,43 @@ struct ToolboxGlucoseMeasurement {
             self.statusCode = nil
         }
     }
+}
+
+// MARK: - API
+
+extension ToolboxGlucoseMeasurement {
     
-    // MARK: API
+    var sensorType: GlucoseMeasurement.SensorType? {
+        GlucoseMeasurement.SensorType(rawValue: sensorCode)
+    }
     
     func sensorString() -> String {
-        if let sensor = GlucoseMeasurement.SensorType(rawValue: sensorCode) {
-            return sensor.description
+        if let sensorType {
+            return sensorType.description
         } else {
             return GlucoseMeasurement.SensorType.reservedDescription(Int(sensorCode))
         }
     }
     
+    var sensorLocation: GlucoseMeasurement.SensorLocation? {
+        GlucoseMeasurement.SensorLocation(rawValue: locationCode)
+    }
+    
     func locationString() -> String {
-        if let location = GlucoseMeasurement.SensorLocation(rawValue: locationCode) {
-            return location.description
+        if let sensorLocation {
+            return sensorLocation.description
         } else {
             return GlucoseMeasurement.SensorType.reservedDescription(Int(locationCode))
         }
     }
     
+    var status: GlucoseMeasurement.Status? {
+        guard let statusCode else { return nil }
+        return GlucoseMeasurement.Status(rawValue: statusCode)
+    }
+    
     func statusString() -> String {
-        guard let statusCode, let status = GlucoseMeasurement.Status(rawValue: statusCode) else {
+        guard let status else {
             return "Status: \(statusCode.nilDescription)"
         }
         return status.description

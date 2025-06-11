@@ -80,6 +80,12 @@ struct GlucoseView: View {
             .chartScrollPosition(x: $scrollPosition)
             .padding(.top, 24)
             .listRowSeparator(.hidden)
+            
+//            NavigationLink("View All Records") {
+//                CGMSRecordList()
+//                    .environmentObject(viewModel)
+//            }
+//            .foregroundStyle(Color.universalAccentColor)
         case .first:
             if let firstRecord = viewModel.firstRecord {
                 GlucoseMeasurementView(sequenceNumber: firstRecord.sequenceNumber,
