@@ -82,27 +82,17 @@ struct GlucoseView: View {
             .listRowSeparator(.hidden)
         case .first:
             if let firstRecord = viewModel.firstRecord {
-                LabeledContent {
-                    GlucoseMeasurementView(sequenceNumber: firstRecord.sequenceNumber,
-                                           item: firstRecord.description,
-                                           dateString: firstRecord.toStringDate())
-                } label: {
-                    Label("First Record", systemImage: "car.side.front.open")
-                }
-                .labeledContentStyle(.accentedContent)
+                GlucoseMeasurementView(sequenceNumber: firstRecord.sequenceNumber,
+                                       item: String(format: "%.2f \(firstRecord.measurement.unit.symbol)", firstRecord.measurement.value),
+                                       dateString: firstRecord.toStringDate())
             } else {
                 EmptyView()
             }
         case .last:
             if let lastRecord = viewModel.lastRecord {
-                LabeledContent {
-                    GlucoseMeasurementView(sequenceNumber: lastRecord.sequenceNumber,
-                                           item: lastRecord.description,
-                                           dateString: lastRecord.toStringDate())
-                } label: {
-                    Label("Last Record", systemImage: "car.side.rear.open")
-                }
-                .labeledContentStyle(.accentedContent)
+                GlucoseMeasurementView(sequenceNumber: lastRecord.sequenceNumber,
+                                       item: String(format: "%.2f \(lastRecord.measurement.unit.symbol)", lastRecord.measurement.value),
+                                       dateString: lastRecord.toStringDate())
             } else {
                 EmptyView()
             }
