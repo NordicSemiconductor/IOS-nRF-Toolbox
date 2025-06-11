@@ -130,8 +130,9 @@ extension ConnectedDevicesViewModel {
                 }
                 
                 if deviceViewModels[device.id] == nil,
-                    let peripheral = centralManager.retrievePeripherals(withIdentifiers: [device.id]).first {
-                    let viewModel = DeviceDetanilsViewModel(cbPeripheral: peripheral, centralManager: centralManager)
+                   let peripheral = centralManager.retrievePeripherals(withIdentifiers: [device.id]).first {
+                    
+                    let viewModel = DeviceDetailsViewModel(cbPeripheral: peripheral, centralManager: centralManager)
                     deviceViewModels[device.id] = viewModel
                 }
                 
