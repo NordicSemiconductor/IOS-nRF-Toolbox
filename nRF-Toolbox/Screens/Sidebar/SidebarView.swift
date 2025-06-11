@@ -33,7 +33,7 @@ struct SidebarView: View {
                                 DeviceScreen(device)
                                     .environmentObject(rootViewModel)
                                     .environmentObject(viewModel)
-                                    .environmentObject(deviceViewModel.environment)
+                                    .environmentObject(deviceViewModel)
                             } label: {
                                 SidebarDeviceView(device, advertising: scannerViewModel.environment.advertisedServices(device.id))
                                     .tag(RootNavigationView.MenuCategory.device)

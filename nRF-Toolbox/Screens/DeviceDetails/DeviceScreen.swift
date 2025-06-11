@@ -15,7 +15,7 @@ struct DeviceScreen: View {
 
     // MARK: Environment
     
-    @EnvironmentObject private var environment: DeviceDetailsViewModel.Environment
+    @EnvironmentObject private var environment: DeviceDetailsViewModel
     @EnvironmentObject private var navigationViewModel: RootNavigationViewModel
     @EnvironmentObject private var connectedDevicesViewModel: ConnectedDevicesViewModel
     

@@ -22,7 +22,10 @@ private extension Array {
 // MARK: - DeviceDetailsViewModel
 
 @MainActor
-final class DeviceDetailsViewModel {
+final class DeviceDetailsViewModel: ObservableObject {
+    
+    // MARK: Private Properties
+    
     private var discoveredServices: [CBService] = []
     private var cancelable = Set<AnyCancellable>()
     
@@ -31,17 +34,22 @@ final class DeviceDetailsViewModel {
     
     var id: UUID { peripheral.peripheral.identifier }
     
-    let environment: Environment
     private(set) var supportedServiceViewModels: [any SupportedServiceViewModel] = []
     
     private let log = NordicLog(category: "DeviceDetails.VM", subsystem: "com.nordicsemi.nrf-toolbox")
+    
+    // MARK: Properties
+    
+    @Published var showInspector: Bool = false
+    @Published var attributeTable: AttributeTable?
+    @Published var deviceInfo: DeviceInformation?
+    @Published var signalViewModel: SignalChartViewModel?
     
     // MARK: init
     
     init(cbPeripheral: CBPeripheral, centralManager: CentralManager) {
         self.peripheral = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
         self.centralManager = centralManager
-        self.environment = Environment()
         
         listenForDisconnection()
         log.debug(#function)
@@ -138,14 +146,14 @@ extension DeviceDetailsViewModel {
                 case .nordicsemiUART:
                     supportedServiceViewModels.append(UARTViewModel(peripheral: peripheral, uartService: service))
                 case .deviceInformation:
-                    environment.deviceInfo = try await DeviceInformation(service, peripheral: peripheral)
+                    deviceInfo = try await DeviceInformation(service, peripheral: peripheral)
                 default:
                     break
                 }
             }
             
-            environment.attributeTable = try? await attributeTable()
-            environment.signalViewModel = SignalChartViewModel(peripheral: peripheral)
+            attributeTable = try? await attributeTable()
+            signalViewModel = SignalChartViewModel(peripheral: peripheral)
             
             for supportedServiceViewModel in self.supportedServiceViewModels {
                 await supportedServiceViewModel.onConnect()
@@ -165,20 +173,6 @@ extension DeviceDetailsViewModel {
                 }
             }
             .store(in: &cancelable)
-    }
-}
-
-// MARK: - Environment
-
-extension DeviceDetailsViewModel {
-    
-    @MainActor
-    final class Environment: ObservableObject {
-        
-        @Published var showInspector: Bool = false
-        @Published var attributeTable: AttributeTable?
-        @Published var deviceInfo: DeviceInformation?
-        @Published var signalViewModel: SignalChartViewModel?
     }
 }
 

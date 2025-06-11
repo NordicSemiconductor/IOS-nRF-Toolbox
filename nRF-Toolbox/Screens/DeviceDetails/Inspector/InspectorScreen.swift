@@ -15,7 +15,7 @@ struct InspectorScreen: View {
     
     // MARK: Environment
     
-    @EnvironmentObject private var rootEnv: DeviceDetailsViewModel.Environment
+    @EnvironmentObject private var rootEnv: DeviceDetailsViewModel
     @EnvironmentObject private var rootNavigationMV: RootNavigationViewModel
     @EnvironmentObject private var connectedDevicesViewModel: ConnectedDevicesViewModel
     
@@ -57,7 +57,7 @@ struct InspectorScreen: View {
             }
             
             if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id) {
-                if let signalViewModel = deviceVM.environment.signalViewModel {
+                if let signalViewModel = deviceVM.signalViewModel {
                     Section {
                         SignalChart()
                             .onAppear {
@@ -77,7 +77,7 @@ struct InspectorScreen: View {
                     }
                 }
                 
-                if let deviceInfo = deviceVM.environment.deviceInfo {
+                if let deviceInfo = deviceVM.deviceInfo {
                     Section("Device Info") {
                         DeviceInformationView(deviceInfo)
                     }
