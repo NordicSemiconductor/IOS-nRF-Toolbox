@@ -15,7 +15,7 @@ struct InspectorScreen: View {
     
     // MARK: Environment
     
-    @EnvironmentObject private var rootEnv: DeviceDetailsViewModel
+    @EnvironmentObject private var deviceViewModel: DeviceDetailsViewModel
     @EnvironmentObject private var rootNavigationMV: RootNavigationViewModel
     @EnvironmentObject private var connectedDevicesViewModel: ConnectedDevicesViewModel
     
@@ -49,7 +49,7 @@ struct InspectorScreen: View {
         List {
             Section("GATT") {
                 NavigationLink {
-                    AttributeTableScreen(rootEnv.attributeTable)
+                    AttributeTableScreen(deviceViewModel.attributeTable)
                 } label: {
                     Label("Attribute Table", systemImage: "list.dash")
                         .setAccent(.nordicBlue)
@@ -94,7 +94,7 @@ struct InspectorScreen: View {
                     Button("Yes") {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
                             Task { @MainActor in
-                                rootEnv.showInspector = false
+                                deviceViewModel.showInspector = false
                                 try await connectedDevicesViewModel.disconnectAndRemoveViewModel(device.id)
                             }
                         }

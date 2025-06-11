@@ -15,7 +15,7 @@ struct DeviceScreen: View {
 
     // MARK: Environment
     
-    @EnvironmentObject private var environment: DeviceDetailsViewModel
+    @EnvironmentObject private var deviceViewModel: DeviceDetailsViewModel
     @EnvironmentObject private var navigationViewModel: RootNavigationViewModel
     @EnvironmentObject private var connectedDevicesViewModel: ConnectedDevicesViewModel
     
@@ -40,7 +40,7 @@ struct DeviceScreen: View {
             
             Section("Device Information") {
                 Button("Open Inspector", systemImage: "info.circle") {
-                    environment.showInspector.toggle()
+                    deviceViewModel.showInspector.toggle()
                 }
                 .foregroundStyle(Color.universalAccentColor)
                 .centered()
@@ -95,7 +95,7 @@ struct DeviceScreen: View {
         }
         .listStyle(.insetGrouped)
         .navigationTitle(connectedDevicesViewModel.selectedDevice?.name ?? "Unnamed")
-        .inspector(isPresented: $environment.showInspector) {
+        .inspector(isPresented: $deviceViewModel.showInspector) {
             NavigationStack {
                 InspectorScreen(device)
             }
