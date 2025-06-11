@@ -37,6 +37,15 @@ struct InspectorScreen: View {
     
     private let device: ConnectedDevicesViewModel.Device
         
+    private var deviceIsConncted: Bool {
+        switch device.status {
+        case .connected:
+            return true
+        default:
+            return false
+        }
+    }
+    
     // MARK: init
     
     init(_ device: ConnectedDevicesViewModel.Device) {
@@ -68,6 +77,7 @@ struct InspectorScreen: View {
                             }
                             .environmentObject(signalViewModel.environment)
                     }
+                    .disabled(!deviceIsConncted)
                 }
                 
                 if let batteryServiceViewModel = deviceVM.batteryServiceViewModel {
@@ -75,6 +85,7 @@ struct InspectorScreen: View {
                         BatteryView()
                             .environmentObject(batteryServiceViewModel)
                     }
+                    .disabled(!deviceIsConncted)
                 }
                 
                 if let deviceInfo = deviceVM.deviceInfo {
@@ -84,24 +95,27 @@ struct InspectorScreen: View {
                 }
             }
             
-            Section {
-                Button("Disconnect") {
-                    disconnectAlertShow = true
-                }
-                .foregroundStyle(.red)
-                .centered()
-                .alert("Disconnect", isPresented: $disconnectAlertShow) {
-                    Button("Yes") {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-                            Task { @MainActor in
-                                deviceViewModel.showInspector = false
-                                try await connectedDevicesViewModel.disconnectAndRemoveViewModel(device.id)
+            if deviceIsConncted {
+                Section {
+                    Button("Disconnect") {
+                        disconnectAlertShow = true
+                    }
+                    .foregroundStyle(.red)
+                    .centered()
+                    .alert("Disconnect", isPresented: $disconnectAlertShow) {
+                        Button("Yes") {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                                Task { @MainActor in
+                                    deviceViewModel.showInspector = false
+                                    try await connectedDevicesViewModel.disconnectAndRemoveViewModel(device.id)
+                                }
                             }
                         }
+                        
+                        Button("No") { }
+                    } message: {
+                        Text("Are you sure you want to cancel peripheral connection?")
                     }
-                    Button("No") { }
-                } message: {
-                    Text("Are you sure you want to cancel peripheral connection?")
                 }
             }
         }
