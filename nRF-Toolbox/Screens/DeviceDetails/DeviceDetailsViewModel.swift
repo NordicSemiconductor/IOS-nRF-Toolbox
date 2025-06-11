@@ -41,7 +41,7 @@ final class DeviceDetailsViewModel {
     init(cbPeripheral: CBPeripheral, centralManager: CentralManager) {
         self.peripheral = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
         self.centralManager = centralManager
-        self.environment = Environment(deviceID: peripheral.peripheral.identifier)
+        self.environment = Environment()
         
         listenForDisconnection()
         log.debug(#function)
@@ -62,7 +62,6 @@ extension DeviceDetailsViewModel {
     func reconnect() async {
         log.debug(#function)
         do {
-            environment.criticalError = nil
             _ = try await centralManager.connect(peripheral.peripheral)
                 // Set timeout for 5 seconds
                 .timeout(5, scheduler: DispatchQueue.main, customError: {
@@ -71,7 +70,6 @@ extension DeviceDetailsViewModel {
                 .firstValue
         } catch {
             log.error("\(#function) Error: \(error.localizedDescription)")
-            environment.criticalError = .disconnectedWithError(error)
             await onDisconnect()
         }
     }
@@ -153,7 +151,7 @@ extension DeviceDetailsViewModel {
                 await supportedServiceViewModel.onConnect()
             }
         } catch {
-            environment.alertError = .servicesNotFound
+            log.error("\(#function) Error: \(error.localizedDescription)")
         }
     }
     
@@ -165,8 +163,6 @@ extension DeviceDetailsViewModel {
                 supportedServiceViewModels.forEach {
                     $0.onDisconnect()
                 }
-                // Display error
-                environment.criticalError = .disconnectedWithError(err)
             }
             .store(in: &cancelable)
     }
@@ -176,31 +172,13 @@ extension DeviceDetailsViewModel {
 
 extension DeviceDetailsViewModel {
     
-    @MainActor final class Environment: ObservableObject {
-        
-        @Published var criticalError: CriticalError?
-        @Published var alertError: AlertError?
+    @MainActor
+    final class Environment: ObservableObject {
         
         @Published var showInspector: Bool = false
         @Published var attributeTable: AttributeTable?
         @Published var deviceInfo: DeviceInformation?
         @Published var signalViewModel: SignalChartViewModel?
-        
-        let deviceID: UUID
-        
-        private let log = NordicLog(category: "DeviceDetailsViewModel.Environment", subsystem: "com.nordicsemi.nrf-toolbox")
-        
-        init(deviceID: UUID, criticalError: CriticalError? = nil, alertError: AlertError? = nil) {
-            self.deviceID = deviceID
-            self.criticalError = criticalError
-            self.alertError = alertError
-            
-            log.debug(#function)
-        }
-        
-        deinit {
-            log.debug(#function)
-        }
     }
 }
 

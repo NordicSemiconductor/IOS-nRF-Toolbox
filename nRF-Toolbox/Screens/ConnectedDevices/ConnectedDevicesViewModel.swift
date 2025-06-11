@@ -90,19 +90,24 @@ extension ConnectedDevicesViewModel {
         }
         
         defer {
-            connectedDevices.removeAll(where: { $0.id == deviceID })
-            deviceViewModels.removeValue(forKey: deviceID)
+            clearViewModel(deviceID)
         }
         
-        if case .disconnectedWithError = deviceViewModel.environment.criticalError {
-            return
-        }
+//        if case .disconnectedWithError = deviceViewModel.environment.criticalError {
+//            return
+//        }
         
         do {
             _ = try await centralManager.cancelPeripheralConnection(peripheral).firstValue
         } catch {
             log.error(error.localizedDescription)
         }
+    }
+    
+    func clearViewModel(_ deviceID: Device.ID) {
+        log.debug(#function)
+        connectedDevices.removeAll(where: { $0.id == deviceID })
+        deviceViewModels.removeValue(forKey: deviceID)
     }
 }
 

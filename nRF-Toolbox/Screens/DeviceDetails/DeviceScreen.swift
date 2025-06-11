@@ -81,7 +81,8 @@ struct DeviceScreen: View {
             if case .error = device.status {
                 Section {
                     Button("Clear Device") {
-                        disconnect()
+                        connectedDevicesViewModel.clearViewModel(device.id)
+                        navigationViewModel.selectedCategory = nil
                     }
                     .foregroundStyle(Color.universalAccentColor)
                     .centered()
