@@ -81,15 +81,15 @@ struct GlucoseView: View {
             .padding(.top, 24)
             .listRowSeparator(.hidden)
             
-//            NavigationLink("View All Records") {
-//                CGMSRecordList()
-//                    .environmentObject(viewModel)
-//            }
-//            .foregroundStyle(Color.universalAccentColor)
+            NavigationLink("View All Records") {
+                GlucoseListView(viewModel.allRecords)
+                    .environmentObject(viewModel)
+            }
+            .foregroundStyle(Color.universalAccentColor)
         case .first:
             if let firstRecord = viewModel.firstRecord {
                 GlucoseMeasurementView(sequenceNumber: firstRecord.sequenceNumber,
-                                       item: String(format: "%.2f \(firstRecord.measurement.unit.symbol)", firstRecord.measurement.value),
+                                       itemValue: firstRecord.measurement.description,
                                        dateString: firstRecord.toStringDate())
             } else {
                 EmptyView()
@@ -97,7 +97,7 @@ struct GlucoseView: View {
         case .last:
             if let lastRecord = viewModel.lastRecord {
                 GlucoseMeasurementView(sequenceNumber: lastRecord.sequenceNumber,
-                                       item: String(format: "%.2f \(lastRecord.measurement.unit.symbol)", lastRecord.measurement.value),
+                                       itemValue: lastRecord.measurement.description,
                                        dateString: lastRecord.toStringDate())
             } else {
                 EmptyView()

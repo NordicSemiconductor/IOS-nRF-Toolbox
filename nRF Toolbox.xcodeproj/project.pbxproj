@@ -371,6 +371,7 @@
 		AA5AB3DE2D0868DD005213D5 /* CyclingDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5AB3DD2D0868DD005213D5 /* CyclingDataView.swift */; };
 		AA5AB3DF2D0868DD005213D5 /* CyclingDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5AB3DD2D0868DD005213D5 /* CyclingDataView.swift */; };
 		AA5AB3E12D0877F6005213D5 /* MeasurementFormatter+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5AB3E02D0877F6005213D5 /* MeasurementFormatter+Ext.swift */; };
+		AA6208782DFADE0400EA0267 /* GlucoseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6208772DFADE0400EA0267 /* GlucoseListView.swift */; };
 		AA7769FD2DEDED9A0005A82B /* BloodPressureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7769FC2DEDED9A0005A82B /* BloodPressureViewModel.swift */; };
 		AA7E77E52DF0915F0091447F /* SupportedServiceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7E77E42DF0915F0091447F /* SupportedServiceViewModel.swift */; };
 		AA94C5512D01B49200562F7A /* BatteryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA94C5502D01B49200562F7A /* BatteryView.swift */; };
@@ -815,6 +816,7 @@
 		AA5AB3DA2D08649C005213D5 /* CyclingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingData.swift; sourceTree = "<group>"; };
 		AA5AB3DD2D0868DD005213D5 /* CyclingDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingDataView.swift; sourceTree = "<group>"; };
 		AA5AB3E02D0877F6005213D5 /* MeasurementFormatter+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeasurementFormatter+Ext.swift"; sourceTree = "<group>"; };
+		AA6208772DFADE0400EA0267 /* GlucoseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseListView.swift; sourceTree = "<group>"; };
 		AA7769FC2DEDED9A0005A82B /* BloodPressureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodPressureViewModel.swift; sourceTree = "<group>"; };
 		AA7E77E42DF0915F0091447F /* SupportedServiceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedServiceViewModel.swift; sourceTree = "<group>"; };
 		AA8DF2152DE9B08E00D49141 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -2477,6 +2479,7 @@
 			isa = PBXGroup;
 			children = (
 				AA306A0A2DF30DBF005B4E04 /* GlucoseView.swift */,
+				AA6208772DFADE0400EA0267 /* GlucoseListView.swift */,
 				AA306A082DF30D54005B4E04 /* GlucoseViewModel.swift */,
 				AACD695E2DF99C2C0053A810 /* GlucoseMeasurementView.swift */,
 			);
@@ -2931,6 +2934,7 @@
 				AA2C37052D47DA1F00D41989 /* ThroughputView.swift in Sources */,
 				AA95CBD42D085AFA00D1FBC6 /* CyclingFeature.swift in Sources */,
 				AA0AEA022CF7438200F93A0B /* Assets.swift in Sources */,
+				AA6208782DFADE0400EA0267 /* GlucoseListView.swift in Sources */,
 				AA306A092DF30D54005B4E04 /* GlucoseViewModel.swift in Sources */,
 				01CEB4262AE9100300945105 /* DeviceScreen.swift in Sources */,
 				AAAD7F532DD2CEAE004952F3 /* UARTMacroView.swift in Sources */,

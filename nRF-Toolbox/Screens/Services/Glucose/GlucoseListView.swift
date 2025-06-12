@@ -1,0 +1,60 @@
+//
+//  GlucoseListView.swift
+//  nRF-Toolbox
+//
+//  Created by Dinesh Harjani on 12/6/25.
+//  Copyright © 2025 Nordic Semiconductor. All rights reserved.
+//
+
+import SwiftUI
+import iOS_Common_Libraries
+
+// MARK: - GlucoseListView
+
+struct GlucoseListView: View {
+    
+    // MARK: EnvironmentObject
+    
+    @EnvironmentObject private var viewModel: GlucoseViewModel
+    
+    // MARK: Private Properties
+    
+    private let measurements: [GlucoseMeasurement]
+    
+    // MARK: init
+    
+    init(_ measurements: [GlucoseMeasurement]) {
+        self.measurements = measurements
+    }
+    
+    // MARK: view
+    
+    var body: some View {
+        List {
+            Section {
+                ForEach(measurements, id: \.sequenceNumber) { value in
+                    GlucoseMeasurementView(sequenceNumber: value.sequenceNumber,
+                                           itemValue: value.measurement.description,
+                                           sensor: value.sensorString(),
+                                           location: value.locationString(),
+                                           status: value.statusString(),
+                                           dateString: value.toStringDate())
+                }
+            } header: {
+                Text("")
+            } footer: {
+                Text("\(measurements.count) Records")
+                    .foregroundStyle(Color.nordicMiddleGrey)
+                    .font(.caption)
+            }
+        }
+        .navigationTitle("Glucose Records")
+        .toolbar {
+            Button("", systemImage: "arrow.counterclockwise") {
+                Task {
+                    await viewModel.requestRecords(.allRecords)
+                }
+            }
+        }
+    }
+}
