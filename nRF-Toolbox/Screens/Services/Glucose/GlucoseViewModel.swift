@@ -31,9 +31,9 @@ final class GlucoseViewModel: ObservableObject {
     
     // MARK: Published
     
-    @Published private(set) var allRecords = [ToolboxGlucoseMeasurement]()
-    @Published private(set) var firstRecord: ToolboxGlucoseMeasurement?
-    @Published private(set) var lastRecord: ToolboxGlucoseMeasurement?
+    @Published private(set) var allRecords = [GlucoseMeasurement]()
+    @Published private(set) var firstRecord: GlucoseMeasurement?
+    @Published private(set) var lastRecord: GlucoseMeasurement?
     private var request: CGMOperator?
     
     // MARK: init
@@ -132,10 +132,10 @@ private extension GlucoseViewModel {
     func listenToMeasurements(_ measurementCharacteristic: CBCharacteristic) {
         log.debug(#function)
         peripheral.listenValues(for: measurementCharacteristic)
-            .compactMap { [log] data -> ToolboxGlucoseMeasurement? in
+            .compactMap { [log] data -> GlucoseMeasurement? in
                 log.debug("Received Measurement Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing])) (\(data.count) bytes)")
                 
-                guard let parsed = ToolboxGlucoseMeasurement(data) else {
+                guard let parsed = GlucoseMeasurement(data) else {
                     log.error("Unable to parse Measurement Data \(data.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
                     return nil
                 }
@@ -157,6 +157,15 @@ private extension GlucoseViewModel {
                 }
             })
             .store(in: &cancellables)
+    }
+}
+
+// MARK: - CustomStringConvertible
+
+extension GlucoseMeasurement: @retroactive CustomStringConvertible {
+    
+    public var description: String {
+        return String(format: "%.2f \(measurement.unit.symbol), Seq.: \(sequenceNumber), Date: \(toStringDate()), Sensor: \(sensorString()), Location: \(locationString()), Status: \(statusString())", measurement.value)
     }
 }
 
