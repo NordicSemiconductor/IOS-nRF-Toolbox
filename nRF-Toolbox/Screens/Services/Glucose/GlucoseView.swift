@@ -79,7 +79,6 @@ struct GlucoseView: View {
             .chartXVisibleDomain(length: 20)
             .chartScrollPosition(x: $scrollPosition)
             .padding(.top, 24)
-            .listRowSeparator(.hidden)
             
             NavigationLink("View All Records") {
                 GlucoseListView(viewModel.allRecords)
