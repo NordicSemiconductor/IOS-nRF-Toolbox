@@ -27,12 +27,15 @@ struct ToolboxGlucoseMeasurement {
     // MARK: init
     
     init?(_ data: Data) {
+        guard data.canRead(UInt8.self, atOffset: 0) else { return nil }
         let featureFlags = UInt(data.littleEndianBytes(atOffset: 0, as: UInt8.self))
         let flags = BitField<GlucoseMeasurement.Flags>(featureFlags)
         
+        guard data.canRead(UInt16.self, atOffset: 1) else { return nil }
         self.sequenceNumber = data.littleEndianBytes(atOffset: 1, as: UInt16.self)
         var offset = MemoryLayout<UInt8>.size + MemoryLayout<UInt16>.size
         
+        guard data.count >= offset + Date.DataSize else { return nil }
         let dateData = data.subdata(in: offset ..< offset + Date.DataSize)
         guard let date = Date(dateData) else { return nil }
         self.timestamp = date
