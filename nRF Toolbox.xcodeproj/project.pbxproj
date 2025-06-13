@@ -365,6 +365,7 @@
 		AA479EA82D0B0BFF0052E801 /* CrankDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA479EA62D0B0BFF0052E801 /* CrankDataPoint.swift */; };
 		AA479EAD2D0B24E50052E801 /* HealthThermometerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA479EAC2D0B24E50052E801 /* HealthThermometerViewModel.swift */; };
 		AA479EAF2D0B25BE0052E801 /* HealthThermometerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA479EAE2D0B25BE0052E801 /* HealthThermometerView.swift */; };
+		AA4C50C02DFC230B00B7B22F /* NordicEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4C50BF2DFC230B00B7B22F /* NordicEmptyView.swift */; };
 		AA5539202D00AAD200F589F5 /* BatteryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA55391F2D00AAD200F589F5 /* BatteryViewModel.swift */; };
 		AA5AB3DB2D08649C005213D5 /* CyclingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5AB3DA2D08649C005213D5 /* CyclingData.swift */; };
 		AA5AB3DC2D08649C005213D5 /* CyclingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5AB3DA2D08649C005213D5 /* CyclingData.swift */; };
@@ -812,6 +813,7 @@
 		AA479EA62D0B0BFF0052E801 /* CrankDataPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrankDataPoint.swift; sourceTree = "<group>"; };
 		AA479EAC2D0B24E50052E801 /* HealthThermometerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthThermometerViewModel.swift; sourceTree = "<group>"; };
 		AA479EAE2D0B25BE0052E801 /* HealthThermometerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthThermometerView.swift; sourceTree = "<group>"; };
+		AA4C50BF2DFC230B00B7B22F /* NordicEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicEmptyView.swift; sourceTree = "<group>"; };
 		AA55391F2D00AAD200F589F5 /* BatteryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryViewModel.swift; sourceTree = "<group>"; };
 		AA5AB3DA2D08649C005213D5 /* CyclingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingData.swift; sourceTree = "<group>"; };
 		AA5AB3DD2D0868DD005213D5 /* CyclingDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingDataView.swift; sourceTree = "<group>"; };
@@ -1210,7 +1212,6 @@
 		0164A4822AD840A10093E501 /* DeviceDetails */ = {
 			isa = PBXGroup;
 			children = (
-				0180A2992AEFBB9E00090F6D /* Inspector */,
 				0164A4852AD84A170093E501 /* DeviceDetailsViewModel.swift */,
 				01CEB4242AE9100300945105 /* DeviceScreen.swift */,
 			);
@@ -1404,8 +1405,10 @@
 				015AAE622B03838C00D79833 /* Sidebar */,
 				013E5D872ADD337300B9C475 /* Services */,
 				0164A4822AD840A10093E501 /* DeviceDetails */,
+				0180A2992AEFBB9E00090F6D /* Inspector */,
 				0164A4772AD7409C0093E501 /* ConnectedDevices */,
 				018873C52A5839C700253273 /* Scanner */,
+				AA4C50BF2DFC230B00B7B22F /* NordicEmptyView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -3023,6 +3026,7 @@
 				AA01D4922D4A3D38008523CE /* Throughput+Attributes.swift in Sources */,
 				AA306A0B2DF30DBF005B4E04 /* GlucoseView.swift in Sources */,
 				0164A4742AD5A4630093E501 /* StateViews.swift in Sources */,
+				AA4C50C02DFC230B00B7B22F /* NordicEmptyView.swift in Sources */,
 				0129F2252A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift in Sources */,
 				AAE2C9332D9D378300B398E3 /* CGMOpcodes.swift in Sources */,
 				01EBE6192AE4845100960672 /* View+ErrorAlert.swift in Sources */,

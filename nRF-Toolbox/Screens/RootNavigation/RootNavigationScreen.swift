@@ -36,9 +36,10 @@ struct RootNavigationView: View {
     // MARK: view
     
     var body: some View {
-        NavigationView {
+        NavigationSplitView(columnVisibility: $visibility) {
             SidebarView()
                 .navigationTitle("nRF Toolbox")
+                .navigationSplitViewColumnWidth(ideal: 300.0)
                 .toolbar {
                     Button("", systemImage: "info") {
                         viewModel.showStartInfo = true
@@ -46,7 +47,12 @@ struct RootNavigationView: View {
                 }
                 .environmentObject(scannerViewModel)
                 .environmentObject(connectedDevicesViewModel)
+        } content: {
+            NordicEmptyView()
+        } detail: {
+            NordicEmptyView()
         }
+        .navigationSplitViewStyle(.balanced)
         .alert("Error", isPresented: $connectedDevicesViewModel.showUnexpectedDisconnectionAlert,
                actions: {
             Button("OK") {
