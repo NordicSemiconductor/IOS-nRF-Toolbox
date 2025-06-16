@@ -54,6 +54,7 @@ struct SidebarView: View {
                         .setAccent(.universalAccentColor)
                         .tag(RootNavigationView.MenuCategory.scanner)
                 }
+                .isDetailLink(true)
             }
             
             Section {

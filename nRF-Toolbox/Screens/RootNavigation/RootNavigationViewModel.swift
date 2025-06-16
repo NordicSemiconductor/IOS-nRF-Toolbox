@@ -9,20 +9,10 @@
 import Combine 
 import SwiftUI
 
-extension RootNavigationView {
-    enum MenuCategory: String, CaseIterable, Identifiable {
-        case scanner = "Scanner"
-        case device = "DeviceDetails"
-        case about = "About"
-        
-        var id: String {
-            self.rawValue
-        }
-    }
-}
+// MARK: - RootNavigationViewModel
 
 @MainActor
-class RootNavigationViewModel: ObservableObject {
+final class RootNavigationViewModel: ObservableObject {
     
     @Published var selectedCategory: RootNavigationView.MenuCategory?
     @Published var showAboutView: Bool = false
@@ -30,3 +20,16 @@ class RootNavigationViewModel: ObservableObject {
     static let shared = RootNavigationViewModel()
 }
 
+// MARK: - MenuCategory
+
+extension RootNavigationView {
+    
+    enum MenuCategory: String, CaseIterable, Identifiable {
+        case scanner = "Scanner"
+        case device = "DeviceDetails"
+        
+        var id: String {
+            self.rawValue
+        }
+    }
+}

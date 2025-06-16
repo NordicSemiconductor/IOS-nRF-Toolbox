@@ -14,17 +14,25 @@ import iOS_BLE_Library_Mock
 
 struct RootNavigationView: View {
 
+    // MARK: Environment
+    
+    #if os(iOS)
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    #endif
+    
     // MARK: Properties
     
     private static let centralManager = CentralManager()
     
-    @StateObject var viewModel = RootNavigationViewModel.shared
+    @StateObject var rootViewModel = RootNavigationViewModel.shared
     @StateObject var connectedDevicesViewModel = ConnectedDevicesViewModel(centralManager: centralManager)
     
     @StateObject var scannerViewModel = PeripheralScannerScreen.PeripheralScannerViewModel(centralManager: centralManager)
 
-    @State private var visibility: NavigationSplitViewVisibility = .all
-    @State private var compactPreferredColumn: NavigationSplitViewColumn = .sidebar
+    @State private var visibility: NavigationSplitViewVisibility = .doubleColumn
+    @State private var preferredCompactColumn: NavigationSplitViewColumn = .sidebar
+    
+    private let log = NordicLog(category: "RootNavigationView", subsystem: "com.nordicsemi.nrf-toolbox")
     
     // MARK: init
     
@@ -36,23 +44,37 @@ struct RootNavigationView: View {
     // MARK: view
     
     var body: some View {
-        NavigationSplitView(columnVisibility: $visibility) {
+        NavigationSplitView(columnVisibility: $visibility, preferredCompactColumn: $preferredCompactColumn) {
             SidebarView()
                 .navigationTitle("nRF Toolbox")
                 .navigationSplitViewColumnWidth(ideal: 300.0)
                 .toolbar {
                     Button("", systemImage: "info") {
-                        viewModel.showAboutView = true
+                        rootViewModel.showAboutView = true
                     }
                 }
                 .environmentObject(scannerViewModel)
                 .environmentObject(connectedDevicesViewModel)
-        } content: {
-            NordicEmptyView()
         } detail: {
             NordicEmptyView()
         }
         .navigationSplitViewStyle(.balanced)
+        .onChange(of: horizontalSizeClass) { oldValue, newValue in
+            switch (oldValue, newValue) {
+            case (.regular, .compact):
+                log.debug("Transition from REGULAR size class to COMPACT")
+                if rootViewModel.selectedCategory == .device, connectedDevicesViewModel.selectedDevice != nil {
+                    preferredCompactColumn = .detail
+                } else {
+                    preferredCompactColumn = .sidebar
+                }
+            case (.compact, .regular):
+                log.debug("Transition from COMPACT size class to REGULAR")
+                visibility = .all
+            default:
+                return
+            }
+        }
         .alert("Error", isPresented: $connectedDevicesViewModel.showUnexpectedDisconnectionAlert,
                actions: {
             Button("OK") {
@@ -61,7 +83,7 @@ struct RootNavigationView: View {
         }, message: {
             Text(connectedDevicesViewModel.unexpectedDisconnectionMessage)
         })
-        .sheet(isPresented: $viewModel.showAboutView) {
+        .sheet(isPresented: $rootViewModel.showAboutView) {
             NavigationStack {
                 AboutView()
             }
@@ -71,6 +93,6 @@ struct RootNavigationView: View {
             scannerViewModel.setupManager()
         }
         .accentColor(.white)
-        .environmentObject(viewModel)
+        .environmentObject(rootViewModel)
     }
 }

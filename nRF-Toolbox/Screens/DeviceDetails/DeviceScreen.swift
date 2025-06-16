@@ -22,6 +22,7 @@ struct DeviceScreen: View {
     // MARK: Properties
     
     private let device: ConnectedDevicesViewModel.Device
+    private let log = NordicLog(category: "DeviceScreen", subsystem: "com.nordicsemi.nrf-toolbox")
         
     // MARK: init
     
@@ -94,6 +95,13 @@ struct DeviceScreen: View {
         .taskOnce {
             guard let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id) else { return }
             await deviceVM.discoverSupportedServices()
+        }
+        .onDisappear {
+            log.debug("DeviceScreen DISAPPEARED !!!")
+            Task { @MainActor in
+                guard let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id) else { return }
+                await deviceVM.onDisconnect()
+            }
         }
         .listStyle(.insetGrouped)
         .navigationTitle(connectedDevicesViewModel.selectedDevice?.name ?? "Unnamed")
