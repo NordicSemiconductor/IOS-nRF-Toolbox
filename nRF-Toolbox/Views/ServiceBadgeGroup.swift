@@ -33,6 +33,7 @@ struct ServiceBadgeGroup: View {
         HStack {
             ForEach(services) {
                 BadgeView(image: $0.systemImage, name: $0.name, color: $0.color ?? .primary)
+                    .lineLimit(2, reservesSpace: true)
             }
 
             otherServicesBadge(count: services.reduce(0, { $0 + ($1.isSupported ? 0 : 1)  }))
@@ -45,6 +46,7 @@ struct ServiceBadgeGroup: View {
     func otherServicesBadge(count: Int) -> some View {
         if count > 0 {
             BadgeView(name: otherServiceString(count: count))
+                .lineLimit(2, reservesSpace: true)
         } else {
             EmptyView()
         }
