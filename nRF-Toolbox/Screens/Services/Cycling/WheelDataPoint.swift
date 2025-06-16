@@ -12,6 +12,7 @@ import Foundation
 
 struct WheelDataPoint {
     
+    static let DataSize = MemoryLayout<UInt32>.size + MemoryLayout<UInt16>.size
     static let zero = WheelDataPoint()
     
     // MARK: Properties
@@ -27,8 +28,7 @@ struct WheelDataPoint {
     }
     
     init?(_ data: Data) {
-        // byte 0 is assumed to be Data Flags
-        let revolutionsOffset = MemoryLayout<UInt8>.size
+        let revolutionsOffset = 0
         guard data.canRead(UInt32.self, atOffset: revolutionsOffset) else {
             return nil
         }

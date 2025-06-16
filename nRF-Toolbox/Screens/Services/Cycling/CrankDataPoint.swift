@@ -13,6 +13,7 @@ import iOS_Common_Libraries
 
 struct CrankDataPoint {
     
+    static let DataSize = MemoryLayout<UInt16>.size + MemoryLayout<UInt16>.size
     static let zero = CrankDataPoint()
     
     // MARK: Properties
@@ -28,16 +29,7 @@ struct CrankDataPoint {
     }
     
     init?(_ data: Data) {
-        let flagsByte = data.littleEndianBytes(as: UInt8.self)
-        let flags = BitField<CyclingDataFlag>(RegisterValue(flagsByte))
-        
-        let revolutionsOffset: Int
-        if flags.contains(.wheelData) {
-            revolutionsOffset = MemoryLayout<UInt8>.size + MemoryLayout<UInt32>.size + MemoryLayout<UInt16>.size
-        } else {
-            revolutionsOffset = MemoryLayout<UInt8>.size
-        }
-        
+        let revolutionsOffset = 0
         guard data.canRead(UInt16.self, atOffset: revolutionsOffset) else {
             return nil
         }

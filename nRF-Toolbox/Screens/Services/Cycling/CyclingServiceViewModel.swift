@@ -94,39 +94,53 @@ final class CyclingServiceViewModel: ObservableObject {
         
         log.debug("Detected \(cyclingFeatures)")
         peripheral.listenValues(for: cscMeasurement)
-            .compactMap { try? CyclingData($0) }
-            .receive(on: DispatchQueue.main)
-            .sink { [unowned self] completion in
+            .compactMap { [log] in
+                log.debug("Received \($0.hexEncodedString(options: [.prepend0x, .twoByteSpacing])) bytes.")
+                return try? CyclingData($0)
+            }
+            .sink { [log] completion in
                 switch completion {
                 case .finished:
-                    self.log.debug("Finished!")
+                    log.debug("Finished!")
                 case .failure(let error):
-                    self.log.error("Error: \(error.localizedDescription)")
+                    log.error("Error: \(error.localizedDescription)")
                 }
-            } receiveValue: { [unowned self] update in
-                if let speedUpdate = update.speed(data, wheelLength: wheelLength()) {
-                    self.speed = speedUpdate
-                }
-                if let travelUpdate = update.distance(data, wheelLength: wheelLength()) {
-                    self.travelDistance = travelUpdate
-                }
-                if let totalDistanceUpdate = update.travelDistance(with: wheelLength()) {
-                    self.totalTravelDistance = totalDistanceUpdate
-                }
-                if let cadenceUpdate = update.cadence(data) {
-                    self.cadence = cadenceUpdate
-                }
-                if let ratioUpdate = update.gearRatio(data) {
-                    self.gearRatio = ratioUpdate
+            } receiveValue: { update in
+                Task { @MainActor [unowned self] in
+                    self.update(from: update)
                 }
                 
-                self.data = update
             }
             .store(in: &cancellables)
         
         // Enable Notifications
         log.debug("Enabling Cycling Speed & Cadence Notifications...")
         _ = try await peripheral.setNotifyValue(true, for: cscMeasurement).firstValue
+    }
+    
+    // MARK: update(from:)
+    
+    @MainActor
+    private func update(from newData: CyclingData) {
+        if let speedUpdate = newData.speed(data, wheelLength: wheelLength()) {
+            self.speed = speedUpdate
+        }
+        if let travelUpdate = newData.distance(data, wheelLength: wheelLength()) {
+            self.travelDistance = travelUpdate
+        }
+        if let totalDistanceUpdate = newData.travelDistance(with: wheelLength()) {
+            self.totalTravelDistance = totalDistanceUpdate
+        }
+        if let cadenceUpdate = newData.cadence(data) {
+            self.cadence = cadenceUpdate
+        }
+        if let ratioUpdate = newData.gearRatio(data) {
+            self.gearRatio = ratioUpdate
+        }
+        
+        let wheelData = newData.wheelData ?? data.wheelData
+        let crankData = newData.crankData ?? data.crankData
+        self.data = CyclingData(wheelData: wheelData ?? .zero, crankData: crankData ?? .zero)
     }
 }
 
