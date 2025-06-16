@@ -42,7 +42,7 @@ struct RootNavigationView: View {
                 .navigationSplitViewColumnWidth(ideal: 300.0)
                 .toolbar {
                     Button("", systemImage: "info") {
-                        viewModel.showStartInfo = true
+                        viewModel.showAboutView = true
                     }
                 }
                 .environmentObject(scannerViewModel)
@@ -61,7 +61,7 @@ struct RootNavigationView: View {
         }, message: {
             Text(connectedDevicesViewModel.unexpectedDisconnectionMessage)
         })
-        .sheet(isPresented: $viewModel.showStartInfo) {
+        .sheet(isPresented: $viewModel.showAboutView) {
             NavigationStack {
                 AboutView()
             }
