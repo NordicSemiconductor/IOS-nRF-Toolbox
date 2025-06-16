@@ -38,6 +38,7 @@ struct SidebarView: View {
                                 SidebarDeviceView(device, advertising: scannerViewModel.environment.advertisedServices(device.id))
                                     .tag(RootNavigationView.MenuCategory.device)
                             }
+                            .isDetailLink(true)
                         }
                     }
                 }
