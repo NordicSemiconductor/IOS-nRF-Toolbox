@@ -56,7 +56,10 @@ struct RootNavigationView: View {
                 .environmentObject(scannerViewModel)
                 .environmentObject(connectedDevicesViewModel)
         } detail: {
-            NordicEmptyView()
+            NavigationStack {
+                NordicEmptyView()
+            }
+            .navigationBarTitleDisplayMode(.inline)
         }
         .navigationSplitViewStyle(.balanced)
         .onChange(of: horizontalSizeClass) { oldValue, newValue in
