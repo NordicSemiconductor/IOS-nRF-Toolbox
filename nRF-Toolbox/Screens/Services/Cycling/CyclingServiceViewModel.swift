@@ -106,10 +106,9 @@ final class CyclingServiceViewModel: ObservableObject {
                     log.error("Error: \(error.localizedDescription)")
                 }
             } receiveValue: { update in
-                Task { @MainActor [unowned self] in
-                    self.update(from: update)
+                Task { @MainActor [weak self] in
+                    self?.update(from: update)
                 }
-                
             }
             .store(in: &cancellables)
         
@@ -122,6 +121,7 @@ final class CyclingServiceViewModel: ObservableObject {
     
     @MainActor
     private func update(from newData: CyclingData) {
+        log.debug("Parsed valid update Data.")
         if let speedUpdate = newData.speed(data, wheelLength: wheelLength()) {
             self.speed = speedUpdate
         }

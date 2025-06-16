@@ -12,8 +12,7 @@ import iOS_Common_Libraries
 // MARK: - CyclingDataFlag
 
 enum CyclingDataFlag: RegisterValue, Option {
-    case wheelData = 0
-    case crankData = 1
+    case wheelData, crankData
 }
 
 // MARK: - CyclingData

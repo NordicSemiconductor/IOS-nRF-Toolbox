@@ -9,15 +9,21 @@
 import Foundation
 import iOS_Common_Libraries
 
+// MARK: - CyclingFlag
+
 enum CyclingFlag: RegisterValue, Option {
-    case wheelRevolution = 0
-    case crankRevolution = 1
-    case multipleSensorLocations = 2
+    case wheelRevolution, crankRevolution, multipleSensorLocations
 }
+
+// MARL: - CyclingFeatures
 
 struct CyclingFeatures {
     
+    // MARK: Private
+    
     private var flags: BitField<CyclingFlag>
+    
+    // MARK: init
     
     init(flags: RegisterValue) {
         self.flags = BitField(flags)
