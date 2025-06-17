@@ -20,8 +20,6 @@ struct InspectorScreen: View {
     
     // MARK: Private Properties
     
-    @State private var disconnectAlertShow = false
-    
     @Environment(\.colorScheme) var colorScheme
     private var navBarColor: Color {
         switch colorScheme {
@@ -97,24 +95,15 @@ struct InspectorScreen: View {
             if deviceIsConncted {
                 Section {
                     Button("Disconnect") {
-                        disconnectAlertShow = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                            Task { @MainActor in
+                                deviceViewModel.showInspector = false
+                                try await connectedDevicesViewModel.disconnectAndRemoveViewModel(device.id)
+                            }
+                        }
                     }
                     .foregroundStyle(.red)
                     .centered()
-                    .alert("Disconnect", isPresented: $disconnectAlertShow) {
-                        Button("Yes") {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-                                Task { @MainActor in
-                                    deviceViewModel.showInspector = false
-                                    try await connectedDevicesViewModel.disconnectAndRemoveViewModel(device.id)
-                                }
-                            }
-                        }
-                        
-                        Button("No") { }
-                    } message: {
-                        Text("Are you sure you want to cancel peripheral connection?")
-                    }
                 }
             }
         }
