@@ -15,6 +15,8 @@ struct DeviceScreen: View {
 
     // MARK: Environment
     
+    @Environment(\.dismiss) var dismiss
+    
     @EnvironmentObject private var deviceViewModel: DeviceDetailsViewModel
     @EnvironmentObject private var navigationViewModel: RootNavigationViewModel
     @EnvironmentObject private var connectedDevicesViewModel: ConnectedDevicesViewModel
@@ -85,7 +87,7 @@ struct DeviceScreen: View {
                 Section {
                     Button("Clear Device") {
                         connectedDevicesViewModel.clearViewModel(device.id)
-                        navigationViewModel.selectedCategory = nil
+                        dismiss()
                     }
                     .foregroundStyle(Color.universalAccentColor)
                     .centered()
@@ -129,7 +131,8 @@ struct DeviceScreen: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
             Task { @MainActor in
                 try await connectedDevicesViewModel.disconnectAndRemoveViewModel(device.id)
-                navigationViewModel.selectedCategory = nil
+                log.debug("Finished disconnectAndRemoveViewModel(\(device.id))")
+                dismiss()
             }
         }
     }
