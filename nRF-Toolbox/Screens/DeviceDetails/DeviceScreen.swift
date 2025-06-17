@@ -109,6 +109,7 @@ struct DeviceScreen: View {
         }
         .listStyle(.insetGrouped)
         .navigationTitle(connectedDevicesViewModel.selectedDevice?.name ?? "Unnamed")
+        .navigationBarTitleDisplayMode(.inline)
         .inspector(isPresented: $deviceViewModel.showInspector) {
             NavigationStack {
                 InspectorScreen(device)
