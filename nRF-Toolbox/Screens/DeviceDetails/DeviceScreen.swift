@@ -63,6 +63,7 @@ struct DeviceScreen: View {
                 switch device.status {
                 case .userInitiatedDisconnection:
                     ProgressView()
+                        .centered()
                 case .connected:
                     Button("Disconnect") {
                         disconnect()

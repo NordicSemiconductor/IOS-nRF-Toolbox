@@ -47,7 +47,7 @@ struct RootNavigationView: View {
         NavigationSplitView(columnVisibility: $visibility, preferredCompactColumn: $preferredCompactColumn) {
             SidebarView()
                 .navigationTitle("nRF Toolbox")
-                .navigationSplitViewColumnWidth(ideal: 300.0)
+                .navigationSplitViewColumnWidth(ideal: 420.0)
                 .toolbar {
                     Button("", systemImage: "info") {
                         rootViewModel.showAboutView = true
