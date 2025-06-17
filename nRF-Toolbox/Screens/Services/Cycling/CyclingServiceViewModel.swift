@@ -82,14 +82,14 @@ final class CyclingServiceViewModel: ObservableObject {
     func startListening() async throws {
         log.debug(#function)
         let cyclingFeatures = try await peripheral.readValue(for: cscFeature).tryMap { data in
-                guard let data else {
-                    throw CriticalError.noData
-                }
-                return CyclingFeatures(flags: RegisterValue(data[0]))
+            guard let data, data.canRead(UInt8.self, atOffset: 0) else {
+                throw CriticalError.noData
             }
-            .timeout(.seconds(1), scheduler: DispatchQueue.main, customError: {
-                CriticalError.timeout
-            })
+            return CyclingFeatures(flags: RegisterValue(data[0]))
+        }
+        .timeout(.seconds(1), scheduler: DispatchQueue.main, customError: {
+            CriticalError.timeout
+        })
         .firstValue
         
         log.debug("Detected \(cyclingFeatures)")
