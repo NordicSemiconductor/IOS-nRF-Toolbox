@@ -84,7 +84,7 @@ struct ScanDeviceView: View {
     
     var body: some View {
         HStack {
-            ScanResultItem(name: device.name, rssi: device.rssi, services: device.services)
+            ScanResultItem(name: device.name, services: device.services)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.trailing, 8)
             

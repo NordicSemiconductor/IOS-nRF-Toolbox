@@ -16,9 +16,15 @@ struct ScanResultItem: View {
     
     // MARK: Properties
     
-    let name: String?
-    let rssi: Int
-    let services: Set<Service>
+    private let name: String?
+    private let services: Set<Service>
+    
+    // MARK: init
+    
+    init(name: String?, services: Set<Service>) {
+        self.name = name
+        self.services = services
+    }
     
     // MARK: view
     

@@ -84,17 +84,14 @@ struct StateViews {
                 Section {
                     ScanResultItem(
                         name: "Two Words",
-                        rssi: -90,
                         services: [.heartRate, .runningSpeedAndCadence]
                     )
                     ScanResultItem(
                         name: "Three Words Name",
-                        rssi: -50,
                         services: []
                     )
                     ScanResultItem(
                         name: "Two Words",
-                        rssi: -60,
                         services: [.runningSpeedAndCadence]
                     )
                 }

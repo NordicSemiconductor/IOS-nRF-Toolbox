@@ -34,13 +34,7 @@ struct SidebarDeviceView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Label(device.name ?? "Unnamed", systemImage: "cpu")
-                .accentColor(.universalAccentColor)
-                .padding(.bottom, 4)
-            
-            ServiceBadgeGroup(advertisedServices)
-                .padding(.leading, 42)
-                .padding(.bottom, 8)
+            ScanResultItem(name: device.name ?? "Unnamed", services: advertisedServices)
             
             switch device.status {
             case .connected, .userInitiatedDisconnection:
