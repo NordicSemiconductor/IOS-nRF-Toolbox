@@ -95,6 +95,7 @@ struct DeviceScreen: View {
             }
         }
         .taskOnce {
+            log.debug("DeviceScreen \(#function)")
             guard let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id) else { return }
             await deviceVM.discoverSupportedServices()
         }
@@ -112,6 +113,11 @@ struct DeviceScreen: View {
                 InspectorScreen(device)
             }
             .navigationBarTitleDisplayMode(.inline)
+        }
+        .onReceive(connectedDevicesViewModel.objectWillChange) {
+            guard connectedDevicesViewModel.connectedDevices.firstIndex(where: \.id, equals: device.id) == nil else { return }
+            log.debug("Device \(device) not found in Connected Devices anymore. Dismissing.")
+            dismiss()
         }
     }
     

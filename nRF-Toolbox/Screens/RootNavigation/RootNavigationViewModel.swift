@@ -24,7 +24,7 @@ final class RootNavigationViewModel: ObservableObject {
 
 extension RootNavigationView {
     
-    enum MenuCategory: String, CaseIterable, Identifiable {
+    enum MenuCategory: String, Equatable, Hashable, Identifiable, CaseIterable {
         case scanner = "Scanner"
         case device = "DeviceDetails"
         
