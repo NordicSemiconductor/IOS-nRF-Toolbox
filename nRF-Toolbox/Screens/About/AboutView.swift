@@ -48,7 +48,7 @@ struct AboutView: View {
                 • Health Thermometer Monitor
                 • Glucose Monitor
                 • Continuous Glucose Monitor
-                • Proximity Monitor
+                • LED and Button Service
                 • Battery Level
                 • Throughput
                 """)
