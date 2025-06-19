@@ -51,9 +51,7 @@ struct GlucoseListView: View {
         .navigationTitle("Glucose Records")
         .toolbar {
             Button("", systemImage: "arrow.counterclockwise") {
-                Task {
-                    await viewModel.requestRecords(.allRecords)
-                }
+                viewModel.requestRecords(.allRecords)
             }
         }
     }

@@ -103,17 +103,11 @@ struct GlucoseView: View {
             }
         }
         
-        InlinePicker(title: "Mode", systemImage: "square.on.square", selectedValue: $viewMode) { newMode in
-            Task {
-                await viewModel.requestRecords(newMode.cgmOperator)
-            }
-        }
-        .labeledContentStyle(.accentedContent)
+        InlinePicker(title: "Mode", systemImage: "square.on.square", selectedValue: $viewMode)
+            .labeledContentStyle(.accentedContent)
         
         Button("Request") {
-            Task {
-                await viewModel.requestRecords(viewMode.cgmOperator)
-            }
+            viewModel.requestRecords(viewMode.cgmOperator)
         }
         .tint(.universalAccentColor)
         .centered()

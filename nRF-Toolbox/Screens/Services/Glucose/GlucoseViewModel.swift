@@ -17,6 +17,7 @@ import CoreBluetoothMock_Collection
 
 // MARK: - GlucoseViewModel
 
+@MainActor
 final class GlucoseViewModel: ObservableObject {
     
     // MARK: Private Properties
@@ -67,22 +68,41 @@ extension GlucoseViewModel: SupportedServiceViewModel {
         ]
         let cbCharacteristics = try? await peripheral
             .discoverCharacteristics(characteristics.map(\.uuid), for: service)
-            .timeout(1, scheduler: DispatchQueue.main)
+//            .timeout(1, scheduler: DispatchQueue.main)
             .firstValue
         
         cbGlucoseMeasurement = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.glucoseMeasurement.uuid)
         cbRACP = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.recordAccessControlPoint.uuid)
-        
-        guard let cbGlucoseMeasurement else {
-            return
-        }
+        guard let cbGlucoseMeasurement else { return }
         
         do {
-            listenToMeasurements(cbGlucoseMeasurement)
-            let glucoseEnable = try await peripheral.setNotifyValue(true, for: cbGlucoseMeasurement).firstValue
+            let measurementDescriptors = try await peripheral
+                .discoverDescriptors(for: cbGlucoseMeasurement)
+//                .receive(on: RunLoop.main)
+                .firstValue
+            
+            guard let measurementCCD = measurementDescriptors.first(where: \.uuid, isEqualsTo: Descriptor.gattClientCharacteristicConfiguration.uuid) else {
+                throw CriticalError.cannotFindGlucoseMeasurementCCD
+            }
+                
+            let glucoseNotificationsEnabled: Bool = try await peripheral.readValue(for: measurementCCD)
+                .compactMap {
+                    $0 as? Int
+                }
+                .firstValue > 0
+            log.debug("GlucoseMeasurement.CCD.isNotifying: \(glucoseNotificationsEnabled)")
+            
+            if glucoseNotificationsEnabled {
+                log.info("Glucose Measurement Notifications already enabled.")
+            }
+            
+            let glucoseEnable = try await peripheral.setNotifyValue(true, for: cbGlucoseMeasurement)
+                .timeout(1, scheduler: RunLoop.main)
+                .receive(on: RunLoop.main)
+                .firstValue
             log.debug("GlucoseMeasurement.setNotifyValue(true): \(glucoseEnable)")
             
-            await requestRecords(.allRecords)
+            listenToMeasurements(cbGlucoseMeasurement)
         } catch {
             log.error(error.localizedDescription)
             onDisconnect()
@@ -105,20 +125,39 @@ extension GlucoseViewModel {
     
     // MARK: requestRecords()
     
-    @MainActor
-    func requestRecords(_ op: CGMOperator) async {
-        log.debug(#function)
-        do {
-            request = op
-            if request == .allRecords {
-                allRecords.removeAll()
+    nonisolated
+    func requestRecords(_ op: CGMOperator) {
+        Task { @MainActor in
+            guard let cbRACP else { return }
+            log.debug(#function)
+            do {
+                request = op
+                if request == .allRecords {
+                    allRecords.removeAll()
+                }
+                
+                // If we don't listen to RACP Response via Notification / Indication,
+                // it'll restart, fail, or complain. Don't ask.
+                let turnOnIndications = try await peripheral.setNotifyValue(true, for: cbRACP).firstValue
+                log.debug("peripheral.setIndicate(true): \(turnOnIndications)")
+                
+                let writeData = Data([RACPOpCode.reportStoredRecords.rawValue, op.rawValue])
+                
+                log.debug("peripheral.listenToRACPRequest()")
+                async let racpResult = try peripheral.listenValues(for: cbRACP).firstValue
+                
+                log.debug("peripheral.writeValueWithResponse(\(writeData.hexEncodedString(options: [.prepend0x, .upperCase])))")
+                try await peripheral.writeValueWithResponse(writeData, for: cbRACP).firstValue
+                
+                let requestResult = try await racpResult
+                log.debug("RACP Request Result: \(requestResult)")
+                
+                // Keep our nose clean by turning notifications back off.
+                let turnOffIndications = try await peripheral.setNotifyValue(false, for: cbRACP).firstValue
+                log.debug("peripheral.setIndicate(false): \(turnOffIndications)")
+            } catch {
+                log.error("\(#function) Error: \(error.localizedDescription)")
             }
-            
-            let writeData = Data([RACPOpCode.reportStoredRecords.rawValue, op.rawValue])
-            log.debug("peripheral.writeValueWithResponse(\(writeData.hexEncodedString(options: [.prepend0x, .upperCase])))")
-            try await peripheral.writeValueWithResponse(writeData, for: cbRACP).firstValue
-        } catch {
-            log.error("\(#function) Error: \(error.localizedDescription)")
         }
     }
 }
@@ -166,6 +205,15 @@ extension GlucoseMeasurement: @retroactive CustomStringConvertible {
     
     public var description: String {
         return String(format: "%.2f \(measurement.unit.symbol), Seq.: \(sequenceNumber), Date: \(toStringDate()), Sensor: \(sensorString()), Location: \(locationString()), Status: \(statusString())", measurement.value)
+    }
+}
+
+// MARK: - Error
+
+extension GlucoseViewModel {
+    
+    enum CriticalError: LocalizedError {
+        case cannotFindGlucoseMeasurementCCD
     }
 }
 
