@@ -19,10 +19,6 @@ struct HeartRateChart: View {
     
     @EnvironmentObject private var viewModel: DeviceScreen.HeartRateViewModel
     
-    // MARK: Private Properties
-    
-    @State private var animationAmount: CGFloat = 1
-    
     // MARK: view
     
     var body: some View {
@@ -33,17 +29,14 @@ struct HeartRateChart: View {
                 
                 Spacer()
                 
-                Image(systemName: "heart.fill")
-                    .foregroundColor(.nordicRed)
-                    .scaleEffect(animationAmount)
-                    .animation(
-                        .easeInOut(duration: 0.6)
-                        .delay(0.2)
-                        .repeatForever(autoreverses: true),
-                        value: animationAmount)
-                    .onAppear {
-                        animationAmount = 1.2
-                    }
+                if #available(iOS 18.0, *) {
+                    Image(systemName: "heart.fill")
+                        .foregroundColor(.nordicRed)
+                        .symbolEffect(.bounce.up, options: .repeat(.periodic(delay: 0.1)))
+                } else {
+                    Image(systemName: "heart.fill")
+                        .foregroundColor(.nordicRed)
+                }
                 
                 Text("\(viewModel.data.last?.measurement.heartRateValue ?? 0) BPM")
                     .foregroundStyle(.secondary)
