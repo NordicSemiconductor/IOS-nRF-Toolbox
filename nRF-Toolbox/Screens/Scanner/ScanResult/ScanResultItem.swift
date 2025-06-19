@@ -18,22 +18,32 @@ struct ScanResultItem: View {
     
     private let name: String?
     private let services: Set<Service>
+    private let inProgress: Bool
     
     // MARK: init
     
-    init(name: String?, services: Set<Service>) {
+    init(name: String?, services: Set<Service>, showProgress: Bool = false) {
         self.name = name
         self.services = services
+        self.inProgress = showProgress
     }
     
     // MARK: view
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(name ?? "Unnamed Device")
-                .foregroundColor(name == nil ? .secondary : .primary)
+        HStack {
+            VStack(alignment: .leading) {
+                Text(name ?? "Unnamed Device")
+                    .foregroundColor(name == nil ? .secondary : .primary)
+                
+                ServiceBadgeGroup(services)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.trailing, 8)
+            .padding(.bottom, 6)
             
-            ServiceBadgeGroup(services)
+            ProgressView()
+                .opacity(inProgress ? 1.0 : 0.0)
         }
     }
 }

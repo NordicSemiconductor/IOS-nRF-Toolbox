@@ -37,7 +37,8 @@ struct ScanResultList: View {
                             dismiss()
                         }
                     } label: {
-                        ScanDeviceView(device)
+                        ScanResultItem(name: device.name, services: device.services,
+                                       showProgress: environment.connectingDevice == device)
                     }
                 }
                 
@@ -59,38 +60,5 @@ struct ScanResultList: View {
             }
         }
         .listStyle(.insetGrouped)
-    }
-}
-
-// MARK: - ScanDeviceView
-
-struct ScanDeviceView: View {
-    
-    // MARK: Environment
-    
-    @EnvironmentObject private var environment: Env
-    
-    // MARK: Properties
-    
-    private let device: ScanResult
-    
-    // MARK: Init
-    
-    fileprivate init(_ device: ScanResult) {
-        self.device = device
-    }
-    
-    // MARK: view
-    
-    var body: some View {
-        HStack {
-            ScanResultItem(name: device.name, services: device.services)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.trailing, 8)
-            
-            if environment.connectingDevice == device {
-                ProgressView()
-            }
-        }
     }
 }
