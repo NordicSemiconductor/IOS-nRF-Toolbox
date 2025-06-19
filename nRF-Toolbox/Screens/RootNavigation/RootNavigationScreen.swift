@@ -47,12 +47,8 @@ struct RootNavigationView: View {
         NavigationSplitView(columnVisibility: $visibility, preferredCompactColumn: $preferredCompactColumn) {
             SidebarView()
                 .navigationTitle("nRF Toolbox")
+                .navigationBarTitleDisplayMode(.inline)
                 .navigationSplitViewColumnWidth(ideal: 420.0)
-                .toolbar {
-                    Button("", systemImage: "info") {
-                        rootViewModel.showAboutView = true
-                    }
-                }
                 .environmentObject(scannerViewModel)
                 .environmentObject(connectedDevicesViewModel)
         } detail: {

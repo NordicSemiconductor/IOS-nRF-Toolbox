@@ -58,6 +58,14 @@ struct SidebarView: View {
             }
             
             Section {
+                Button {
+                    rootViewModel.showAboutView = true
+                } label: {
+                    Label("About nRF Toolbox", systemImage: "app.gift")
+                        .labelStyle(.colorIconOnly(.universalAccentColor))
+                        .tint(.primarylabel)
+                }
+                
                 Link(destination: URL(string:  "https://github.com/NordicSemiconductor/IOS-nRF-Toolbox")!) {
                     Label("Source Code (GitHub)", systemImage: "keyboard")
                         .labelStyle(.colorIconOnly(.universalAccentColor))
