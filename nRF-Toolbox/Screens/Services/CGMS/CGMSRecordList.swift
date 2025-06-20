@@ -27,6 +27,10 @@ struct CGMSRecordList: View {
                                            itemValue: value.description,
                                            dateString: value.toStringDate())
                 }
+                
+                if viewModel.records.isEmpty {
+                    NoContentView(title: "No Records", systemImage: "drop.fill", description: "No Glucose Measurements have been received yet.")
+                }
             } header: {
                 Text("")
             } footer: {
