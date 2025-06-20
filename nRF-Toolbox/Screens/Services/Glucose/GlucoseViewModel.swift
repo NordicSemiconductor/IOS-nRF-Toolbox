@@ -35,7 +35,7 @@ final class GlucoseViewModel: ObservableObject {
     @Published private(set) var allRecords = [GlucoseMeasurement]()
     @Published private(set) var firstRecord: GlucoseMeasurement?
     @Published private(set) var lastRecord: GlucoseMeasurement?
-    private var request: CGMOperator?
+    private var request: RecordOperator?
     
     // MARK: init
     
@@ -126,7 +126,7 @@ extension GlucoseViewModel {
     // MARK: requestRecords()
     
     nonisolated
-    func requestRecords(_ op: CGMOperator) {
+    func requestRecords(_ op: RecordOperator) {
         Task { @MainActor in
             guard let cbRACP else { return }
             log.debug(#function)
@@ -136,21 +136,24 @@ extension GlucoseViewModel {
                     allRecords.removeAll()
                 }
                 
-                // If we don't listen to RACP Response via Notification / Indication,
-                // it'll restart, fail, or complain. Don't ask.
+                // If we don't listen to RACP and GLS Measurements, our firmware
+                // will restart, fail, crash, or complain. Don't ask.
                 let turnOnIndications = try await peripheral.setNotifyValue(true, for: cbRACP).firstValue
                 log.debug("peripheral.setIndicate(true): \(turnOnIndications)")
-                
-                let writeData = Data([RACPOpCode.reportStoredRecords.rawValue, op.rawValue])
                 
                 log.debug("peripheral.listenToRACPRequest()")
                 async let racpResult = try peripheral.listenValues(for: cbRACP).firstValue
                 
+                let writeData = Data([RecordOpcode.reportStoredRecords.rawValue, op.rawValue])
                 log.debug("peripheral.writeValueWithResponse(\(writeData.hexEncodedString(options: [.prepend0x, .upperCase])))")
                 try await peripheral.writeValueWithResponse(writeData, for: cbRACP).firstValue
                 
-                let requestResult = try await racpResult
-                log.debug("RACP Request Result: \(requestResult)")
+                let resultData = try await racpResult
+                guard resultData.canRead(UInt8.self, atOffset: 0) else {
+                    throw CriticalError.cannotFindGlucoseMeasurementCCD
+                }
+                log.debug("RACP Request Result: \(resultData)")
+                try processRACPResponse(resultData)
                 
                 // Keep our nose clean by turning notifications back off.
                 let turnOffIndications = try await peripheral.setNotifyValue(false, for: cbRACP).firstValue
@@ -187,15 +190,38 @@ private extension GlucoseViewModel {
                 log.debug("Completion")
             }, receiveValue: { [weak self] newValue in
                 switch self?.request {
-                case .first:
+                case .firstRecord:
                     self?.firstRecord = newValue
-                case .last:
+                case .lastRecord:
                     self?.lastRecord = newValue
                 default:
                     self?.allRecords.append(newValue)
                 }
             })
             .store(in: &cancellables)
+    }
+    
+    // MARK: processRACPResponse(:)
+    
+    @MainActor
+    private func processRACPResponse(_ responseData: Data) throws {
+        log.debug(#function)
+        let opcodeValue = responseData.littleEndianBytes(atOffset: 0, as: UInt8.self)
+        let recordOpcode = RecordOpcode(rawValue: UInt8(opcodeValue))
+        switch recordOpcode {
+        case .responseCode:
+            guard responseData.count >= 4 * MemoryLayout<UInt8>.size else {
+                throw CriticalError.invalidRACPResponseCode
+            }
+            
+            let targetOpcodeValue = responseData.littleEndianBytes(atOffset: 2, as: UInt8.self)
+            let statusCode = responseData.littleEndianBytes(atOffset: 3, as: UInt8.self)
+            guard let targetOpcode = RecordOpcode(rawValue: UInt8(targetOpcodeValue)) else { break }
+            let status = RecordResponseStatus(rawValue: UInt8(statusCode))
+            log.debug("Response Code for \(targetOpcode.description): \(status?.description ?? "Reserved for Future Use")")
+        default:
+            break
+        }
     }
 }
 
@@ -214,6 +240,7 @@ extension GlucoseViewModel {
     
     enum CriticalError: LocalizedError {
         case cannotFindGlucoseMeasurementCCD
+        case invalidRACPResponseCode
     }
 }
 

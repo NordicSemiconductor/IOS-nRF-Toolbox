@@ -24,24 +24,17 @@ struct GlucoseView: View {
         case all, first, last
         
         var description: String {
-            switch self {
-            case .all:
-                return "All Records"
-            case .first:
-                return "First Record"
-            case .last:
-                return "Last Record"
-            }
+            recordOperator.description
         }
         
-        var cgmOperator: CGMOperator {
+        var recordOperator: RecordOperator {
             switch self {
             case .all:
                 return .allRecords
             case .first:
-                return .first
+                return .firstRecord
             case .last:
-                return .last
+                return .lastRecord
             }
         }
     }
@@ -107,7 +100,7 @@ struct GlucoseView: View {
             .labeledContentStyle(.accentedContent)
         
         Button("Request") {
-            viewModel.requestRecords(viewMode.cgmOperator)
+            viewModel.requestRecords(viewMode.recordOperator)
         }
         .tint(.universalAccentColor)
         .centered()
