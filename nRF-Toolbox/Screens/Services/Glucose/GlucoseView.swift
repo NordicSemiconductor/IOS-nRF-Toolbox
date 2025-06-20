@@ -103,8 +103,11 @@ struct GlucoseView: View {
             }
         }
         
-        InlinePicker(title: "Mode", systemImage: "square.on.square", selectedValue: $viewMode)
-            .labeledContentStyle(.accentedContent)
+        InlinePicker(title: "Mode", systemImage: "square.on.square", selectedValue: $viewMode) { newMode in
+            viewModel.requestRecords(newMode.recordOperator)
+        }
+        .labeledContentStyle(.accentedContent)
+
         
         Button("Request") {
             viewModel.requestRecords(viewMode.recordOperator)

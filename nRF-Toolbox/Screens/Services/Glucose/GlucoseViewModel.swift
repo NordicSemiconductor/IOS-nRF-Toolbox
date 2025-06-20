@@ -103,6 +103,8 @@ extension GlucoseViewModel: SupportedServiceViewModel {
             log.debug("GlucoseMeasurement.setNotifyValue(true): \(glucoseEnable)")
             
             listenToMeasurements(cbGlucoseMeasurement)
+            
+            requestRecords(.allRecords)
         } catch {
             log.error(error.localizedDescription)
             onDisconnect()
