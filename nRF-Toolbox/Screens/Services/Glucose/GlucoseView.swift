@@ -46,7 +46,6 @@ struct GlucoseView: View {
         }
     }
     
-    @State private var scrollPosition = 0
     @State private var viewMode: ViewMode = .all
     
     // MARK: view
@@ -54,44 +53,19 @@ struct GlucoseView: View {
     var body: some View {
         switch viewMode {
         case .all:
-            Chart {
-                ForEach(viewModel.allRecords, id: \.sequenceNumber) { value in
-                    LineMark(
-                        x: .value("Sequence Number", value.sequenceNumber),
-                        y: .value("Glucose Measurement", value.measurement.value)
-                    )
-                    .foregroundStyle(Color.nordicRed)
-                }
-                .interpolationMethod(.catmullRom)
-            }
-            .chartYAxis {
-                AxisMarks { value in
-                    AxisGridLine()
-                    
-                    if let value = value.as(Double.self) {
-                        AxisValueLabel {
-                            Text("\(String(format: "%.1f", value))")
-                        }
-                    }
-                }
-            }
-            .chartScrollableAxes(.horizontal)
-            .chartXVisibleDomain(length: 20)
-            .chartScrollPosition(x: $scrollPosition)
-            .padding(.top, 24)
-            
-            NavigationLink("View All Records") {
-                GlucoseListView(viewModel.allRecords)
+            if viewModel.allRecords.hasItems {
+                GlucoseAllRecordsChartView()
                     .environmentObject(viewModel)
+            } else {
+                noDataView()
             }
-            .foregroundStyle(Color.universalAccentColor)
         case .first:
             if let firstRecord = viewModel.firstRecord {
                 GlucoseMeasurementView(sequenceNumber: firstRecord.sequenceNumber,
                                        itemValue: firstRecord.measurement.description,
                                        dateString: firstRecord.toStringDate())
             } else {
-                EmptyView()
+                noDataView()
             }
         case .last:
             if let lastRecord = viewModel.lastRecord {
@@ -99,7 +73,7 @@ struct GlucoseView: View {
                                        itemValue: lastRecord.measurement.description,
                                        dateString: lastRecord.toStringDate())
             } else {
-                EmptyView()
+                noDataView()
             }
         }
         
@@ -108,11 +82,15 @@ struct GlucoseView: View {
         }
         .labeledContentStyle(.accentedContent)
 
-        
         Button("Request") {
             viewModel.requestRecords(viewMode.recordOperator)
         }
         .tint(.universalAccentColor)
         .centered()
+    }
+    
+    @ViewBuilder
+    func noDataView() -> some View {
+        NoContentView(title: "No Data", systemImage: "drop.fill", description: "No Glucose Level Data Available. You may press Button 3 on your DevKit to generate some Data.")
     }
 }
