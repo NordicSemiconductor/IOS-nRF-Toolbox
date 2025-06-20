@@ -96,14 +96,16 @@ struct DeviceScreen: View {
             }
         }
         .taskOnce {
-            log.debug("DeviceScreen \(#function)")
+            log.debug("DeviceScreen.onAppear()")
             guard let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id) else { return }
             await deviceVM.discoverSupportedServices()
         }
         .onDisappear {
-            log.debug("DeviceScreen DISAPPEARED !!!")
+            log.debug("DeviceScreen.onDisappear()")
+            guard connectedDevicesViewModel.selectedDevice?.id != device.id else { return }
             Task { @MainActor in
                 guard let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id) else { return }
+                log.debug("Triggering \(device.id) disconnect")
                 await deviceVM.onDisconnect()
             }
         }
