@@ -24,7 +24,14 @@ struct GlucoseView: View {
         case all, first, last
         
         var description: String {
-            recordOperator.description
+            switch self {
+            case .all:
+                return "All Records"
+            case .first:
+                return "First Record"
+            case .last:
+                return "Last Record"
+            }
         }
         
         var recordOperator: RecordOperator {
