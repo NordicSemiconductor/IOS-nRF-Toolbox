@@ -20,16 +20,6 @@ struct InspectorScreen: View {
     
     // MARK: Private Properties
     
-    @Environment(\.colorScheme) var colorScheme
-    private var navBarColor: Color {
-        switch colorScheme {
-        case .dark:
-            return .secondarySystemBackground
-        default:
-            return .nordicDarkGrey
-        }
-    }
-
     // MARK: Properties
     
     private let device: ConnectedDevicesViewModel.Device
@@ -107,6 +97,5 @@ struct InspectorScreen: View {
                 }
             }
         }
-        .setupNavBarBackground(with: navBarColor)
     }
 }
