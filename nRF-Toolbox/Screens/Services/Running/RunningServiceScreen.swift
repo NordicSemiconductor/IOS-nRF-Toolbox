@@ -38,6 +38,7 @@ struct RunningServiceView: View {
                             .navigationTitle("Sensor Calibration")
                             .environmentObject(viewModel)
                     }
+                    .setAccent(.white)
                 }
             })
             .accentColor(.nordicBlue)

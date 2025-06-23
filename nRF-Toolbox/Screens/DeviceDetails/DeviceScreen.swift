@@ -115,8 +115,9 @@ struct DeviceScreen: View {
         .sheet(isPresented: $deviceViewModel.showDeviceSheet) {
             NavigationStack {
                 InspectorScreen(device)
+                    .navigationBarTitleDisplayMode(.inline)
             }
-            .navigationBarTitleDisplayMode(.inline)
+            .setAccent(.white)
         }
         .onReceive(connectedDevicesViewModel.objectWillChange) {
             guard connectedDevicesViewModel.connectedDevices.firstIndex(where: \.id, equals: device.id) == nil else { return }

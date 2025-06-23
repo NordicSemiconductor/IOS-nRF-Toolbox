@@ -106,7 +106,6 @@ struct InspectorScreen: View {
                 Button("Dismiss", systemImage: "chevron.down") {
                     dismiss()
                 }
-                .tint(Color.white)
             }
         }
     }

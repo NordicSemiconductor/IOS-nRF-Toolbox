@@ -66,6 +66,7 @@ struct UARTMessagesList: View {
                     }
                     .environmentObject(viewModel)
             }
+            .setAccent(.white)
             .environmentObject(viewModel)
         }
     }

@@ -55,6 +55,7 @@ struct RootNavigationView: View {
             NavigationStack {
                 NordicEmptyView()
             }
+            .setAccent(.white)
             .navigationBarTitleDisplayMode(.inline)
         }
         .navigationSplitViewStyle(.balanced)
@@ -86,6 +87,7 @@ struct RootNavigationView: View {
             NavigationStack {
                 AboutView()
             }
+            .setAccent(.white)
             .setupNavBarBackground(with: Assets.navBar.color)
         }
         .onAppear {
