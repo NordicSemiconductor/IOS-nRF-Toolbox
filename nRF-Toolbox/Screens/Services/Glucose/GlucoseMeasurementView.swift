@@ -60,9 +60,10 @@ struct GlucoseMeasurementView: View {
                 }
             }
             .font(.caption)
-            .labelStyle(.customSpacing(8.0))
+            .labelStyle(.fixedIconSize(CGSize(asSquare: 12.0)))
             .foregroundStyle(.secondary)
-            .padding(.leading, 36)
+            .padding(.leading, 8.0)
+            .padding(.top, 4.0)
             
             HStack {
                 DotView(.nordicRed)
@@ -71,37 +72,39 @@ struct GlucoseMeasurementView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .foregroundStyle(.secondary)
             }
+            .padding(.leading, 10.0)
         }
     }
 }
 
 
-// MARK: - CustomLabelSpacing
+// MARK: - FixedIconSize
 
-fileprivate extension LabelStyle where Self == CustomLabelSpacing {
+fileprivate extension LabelStyle where Self == FixedIconSize {
     
-    static func customSpacing(_ spacing: Double) -> CustomLabelSpacing {
-        return CustomLabelSpacing(spacing)
+    static func fixedIconSize(_ iconSize: CGSize) -> FixedIconSize {
+        return FixedIconSize(iconSize)
     }
 }
 
-fileprivate struct CustomLabelSpacing: LabelStyle {
+fileprivate struct FixedIconSize: LabelStyle {
     
     // MARK: Private Properties
     
-    private let spacing: Double
+    private let iconSize: CGSize
     
     // MARK: init
     
-    init(_ spacing: Double) {
-        self.spacing = spacing
+    init(_ iconSize: CGSize) {
+        self.iconSize = iconSize
     }
     
     // MARK: body
     
     func makeBody(configuration: Configuration) -> some View {
-        HStack(spacing: spacing) {
+        HStack(alignment: .firstTextBaseline) {
             configuration.icon
+                .frame(size: iconSize)
             
             configuration.title
         }
