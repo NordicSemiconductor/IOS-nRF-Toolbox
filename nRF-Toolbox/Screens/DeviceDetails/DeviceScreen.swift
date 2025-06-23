@@ -43,7 +43,7 @@ struct DeviceScreen: View {
             
             Section("Device Information") {
                 Button("Open Inspector", systemImage: "info.circle") {
-                    deviceViewModel.showInspector.toggle()
+                    deviceViewModel.showDeviceSheet = true
                 }
                 .foregroundStyle(Color.universalAccentColor)
                 .centered()
@@ -112,7 +112,7 @@ struct DeviceScreen: View {
         .listStyle(.insetGrouped)
         .navigationTitle(connectedDevicesViewModel.selectedDevice?.name ?? "Unnamed")
         .navigationBarTitleDisplayMode(.inline)
-        .inspector(isPresented: $deviceViewModel.showInspector) {
+        .sheet(isPresented: $deviceViewModel.showDeviceSheet) {
             NavigationStack {
                 InspectorScreen(device)
             }

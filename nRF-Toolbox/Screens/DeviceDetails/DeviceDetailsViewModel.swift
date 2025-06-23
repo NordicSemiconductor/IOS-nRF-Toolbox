@@ -40,7 +40,7 @@ final class DeviceDetailsViewModel: ObservableObject {
     
     // MARK: Properties
     
-    @Published var showInspector: Bool = false
+    @Published var showDeviceSheet: Bool = false
     @Published var attributeTable: AttributeTable?
     @Published var deviceInfo: DeviceInformation?
     @Published var signalViewModel: SignalChartViewModel?

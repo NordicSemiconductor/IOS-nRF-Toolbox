@@ -20,6 +20,8 @@ struct InspectorScreen: View {
     
     // MARK: Private Properties
     
+    @Environment(\.dismiss) var dismiss
+    
     // MARK: Properties
     
     private let device: ConnectedDevicesViewModel.Device
@@ -87,7 +89,7 @@ struct InspectorScreen: View {
                     Button("Disconnect") {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
                             Task { @MainActor in
-                                deviceViewModel.showInspector = false
+                                deviceViewModel.showDeviceSheet = false
                                 try await connectedDevicesViewModel.disconnectAndRemoveViewModel(device.id)
                             }
                         }
@@ -95,6 +97,16 @@ struct InspectorScreen: View {
                     .foregroundStyle(.red)
                     .centered()
                 }
+            }
+        }
+        .navigationTitle("Device Inspector")
+        .toolbarRole(.navigationStack)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button("Dismiss", systemImage: "chevron.down") {
+                    dismiss()
+                }
+                .tint(Color.white)
             }
         }
     }
