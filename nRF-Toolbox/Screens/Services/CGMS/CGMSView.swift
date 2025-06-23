@@ -28,7 +28,7 @@ struct CGMSView: View {
             HStack {
                 DotView(.nordicRed)
                 
-                Text("Current Value: \(viewModel.records.last?.description ?? "N/A")")
+                Text("Current Value: \(viewModel.records.last?.measurement.formatted() ?? "N/A")")
                     .foregroundStyle(.secondary)
             }
             

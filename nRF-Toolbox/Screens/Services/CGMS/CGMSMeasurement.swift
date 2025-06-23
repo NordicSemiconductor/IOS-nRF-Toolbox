@@ -80,6 +80,6 @@ struct CGMSMeasurement {
 extension CGMSMeasurement: CustomStringConvertible {
     
     var description: String {
-        return String(format: "%.2f \(measurement.unit.symbol)", measurement.value)
+        return measurement.formatted()
     }
 }
