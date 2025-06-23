@@ -56,7 +56,7 @@ extension CGMSViewModel {
             let racpEnable = try await peripheral.setNotifyValue(true, for: cbRACP).firstValue
             log.debug("\(#function) RACP.setNotifyValue(true): \(racpEnable)")
             
-            let writeStoreCountData = Data([RACPOpCode.reportStoredRecordsCount.rawValue, 1])
+            let writeStoreCountData = Data([RecordOpcode.reportNumberOfRecords.rawValue, 1])
             log.debug("peripheral.writeValueWithResponse(\(writeStoreCountData.hexEncodedString(options: [.prepend0x, .upperCase])))")
             try await peripheral.writeValueWithResponse(writeStoreCountData, for: cbRACP).firstValue
             
@@ -90,25 +90,13 @@ extension CGMSViewModel {
                 records.reserveCapacity(numberOfRecords)
             }
             
-            let writeData = Data([RACPOpCode.reportStoredRecords.rawValue, CGMOperator.allRecords.rawValue])
+            let writeData = Data([RecordOpcode.reportStoredRecords.rawValue, CGMOperator.allRecords.rawValue])
             log.debug("peripheral.writeValueWithResponse(\(writeData.hexEncodedString(options: [.prepend0x, .upperCase])))")
             try await peripheral.writeValueWithResponse(writeData, for: cbRACP).firstValue
         } catch {
             log.debug(error.localizedDescription)
         }
     }
-}
-
-// MARK: - RACPOpCode
-
-enum RACPOpCode: UInt8 {
-    case reserved = 0
-    case reportStoredRecords = 1
-    case deleteStoredRecords = 2
-    case abort = 3
-    case reportStoredRecordsCount = 4
-    case numberOfStoredRecords = 5
-    case response = 6
 }
 
 // MARK: - SupportedServiceViewModel
