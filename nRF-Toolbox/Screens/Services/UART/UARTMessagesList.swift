@@ -51,7 +51,7 @@ struct UARTMessagesList: View {
         }
         .navigationTitle("UART Messages")
         .toolbar {
-            Button("Clear", systemImage: "list.bullet.rectangle.portrait") {
+            Button("Clear", systemImage: "eraser.line.dashed") {
                 Task { @MainActor in
                     viewModel.clearReceivedMessages()
                 }
