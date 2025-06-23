@@ -27,7 +27,8 @@ extension Service {
         .healthThermometer: "medical.thermometer",
         .nordicsemiLedAndButton: "lightbulb.max.fill",
         .throughputService: "metronome",
-        .deviceInformation: "cpu"
+        .deviceInformation: "cpu",
+        .nordicsemiUART: "character.cursor.ibeam"
     ]
     
     private static let colors: [Service : Color] = [
@@ -41,7 +42,8 @@ extension Service {
         .healthThermometer: .indigo,
         .nordicsemiLedAndButton: .nordicBlue,
         .deviceInformation: .black,
-        .throughputService: .nordicBlue
+        .throughputService: .nordicBlue,
+        .nordicsemiUART: .nordicBlue
     ]
     
     static var supportedServices: [Service] = [
