@@ -24,7 +24,7 @@ struct CGMSRecordList: View {
             Section {
                 ForEach(viewModel.records, id: \.sequenceNumber) { value in
                     GlucoseMeasurementView(sequenceNumber: value.sequenceNumber,
-                                           itemValue: value.description,
+                                           measurement: value.measurement,
                                            dateString: value.toStringDate())
                 }
                 

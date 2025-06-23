@@ -16,7 +16,7 @@ struct GlucoseMeasurementView: View {
     // MARK: Private Properties
     
     private let sequenceNumber: Int
-    private let itemValue: String
+    private let measurement: Measurement<UnitConcentrationMass>
     private let sensor: String?
     private let location: String?
     private let status: String?
@@ -24,10 +24,11 @@ struct GlucoseMeasurementView: View {
     
     // MARK: init
     
-    init(sequenceNumber: Int, itemValue: String, sensor: String? = nil,
-         location: String? = nil, status: String? = nil, dateString: String) {
+    init(sequenceNumber: Int, measurement: Measurement<UnitConcentrationMass>,
+         sensor: String? = nil, location: String? = nil, status: String? = nil,
+         dateString: String) {
         self.sequenceNumber = sequenceNumber
-        self.itemValue = itemValue
+        self.measurement = measurement
         self.sensor = sensor
         self.location = location
         self.status = status
@@ -41,7 +42,7 @@ struct GlucoseMeasurementView: View {
             HStack {
                 BadgeView(name: "# \(sequenceNumber)")
                 
-                Text(itemValue)
+                Text(measurement.formatted())
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             

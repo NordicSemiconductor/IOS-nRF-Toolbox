@@ -34,7 +34,7 @@ struct GlucoseListView: View {
             Section {
                 ForEach(measurements, id: \.sequenceNumber) { value in
                     GlucoseMeasurementView(sequenceNumber: value.sequenceNumber,
-                                           itemValue: value.measurement.description,
+                                           measurement: value.measurement,
                                            sensor: value.sensorString(),
                                            location: value.locationString(),
                                            status: value.statusString(),

@@ -62,7 +62,7 @@ struct GlucoseView: View {
         case .first:
             if let firstRecord = viewModel.firstRecord {
                 GlucoseMeasurementView(sequenceNumber: firstRecord.sequenceNumber,
-                                       itemValue: firstRecord.measurement.description,
+                                       measurement: firstRecord.measurement,
                                        dateString: firstRecord.toStringDate())
             } else {
                 noDataView()
@@ -70,7 +70,7 @@ struct GlucoseView: View {
         case .last:
             if let lastRecord = viewModel.lastRecord {
                 GlucoseMeasurementView(sequenceNumber: lastRecord.sequenceNumber,
-                                       itemValue: lastRecord.measurement.description,
+                                       measurement: lastRecord.measurement,
                                        dateString: lastRecord.toStringDate())
             } else {
                 noDataView()
