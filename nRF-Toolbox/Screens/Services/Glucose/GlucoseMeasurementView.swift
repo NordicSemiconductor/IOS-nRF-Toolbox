@@ -80,14 +80,14 @@ struct GlucoseMeasurementView: View {
 
 // MARK: - FixedIconSize
 
-fileprivate extension LabelStyle where Self == FixedIconSize {
+extension LabelStyle where Self == FixedIconSize {
     
     static func fixedIconSize(_ iconSize: CGSize) -> FixedIconSize {
         return FixedIconSize(iconSize)
     }
 }
 
-fileprivate struct FixedIconSize: LabelStyle {
+struct FixedIconSize: LabelStyle {
     
     // MARK: Private Properties
     

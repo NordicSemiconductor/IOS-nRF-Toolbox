@@ -62,20 +62,14 @@ struct SidebarView: View {
                     rootViewModel.showAboutView = true
                 } label: {
                     Label("About nRF Toolbox", systemImage: "app.gift")
-                        .labelStyle(.colorIconOnly(.universalAccentColor))
-                        .tint(.primarylabel)
                 }
                 
                 Link(destination: URL(string:  "https://github.com/NordicSemiconductor/IOS-nRF-Toolbox")!) {
                     Label("Source Code (GitHub)", systemImage: "keyboard")
-                        .labelStyle(.colorIconOnly(.universalAccentColor))
-                        .tint(.primarylabel)
                 }
                 
                 Link(destination: URL(string: "https://devzone.nordicsemi.com/")!) {
                     Label("Help (Nordic DevZone)", systemImage: "lifepreserver")
-                        .labelStyle(.colorIconOnly(.universalAccentColor))
-                        .tint(.primarylabel)
                 }
             } header: {
                 Text("Links")
@@ -83,6 +77,8 @@ struct SidebarView: View {
                 Text(Constant.copyright)
                     .foregroundStyle(Color.nordicMiddleGrey)
             }
+            .setAccent(.universalAccentColor)
+            .tint(.primarylabel)
         }
         .listStyle(.insetGrouped)
         .setupNavBarBackground(with: Assets.navBar.color)
