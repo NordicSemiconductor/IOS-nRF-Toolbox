@@ -18,8 +18,10 @@ struct CyclingDataView: View {
     
     // MARK: Static
     
-    private static let speedFormatter = MeasurementFormatter.numeric(maximumFractionDigits: 1)
-    private static let distanceFormatter = MeasurementFormatter.numeric(maximumFractionDigits: 2)
+    private static let minWheelSize = Measurement<UnitLength>(value: 20.0, unit: .inches)
+    private static let maxWheelSize = Measurement<UnitLength>(value: 29.0, unit: .inches)
+    
+    // MARK: Properties
     
     @State private var wheelSizeInches = 29.0
     
@@ -34,16 +36,16 @@ struct CyclingDataView: View {
             .font(.title3)
             .bold()
         
-        Slider(value: $wheelSizeInches, in: 20...29, step: 1) {
+        Slider(value: $wheelSizeInches, in: Self.minWheelSize.value...Self.maxWheelSize.value,
+               step: 1) {
             EmptyView()
         } minimumValueLabel: {
-            Text("\(Measurement<UnitLength>(value: 20.0, unit: .inches).formatted())")
+            Text(Self.minWheelSize, format: .measurement(width: .abbreviated, usage: .asProvided))
         } maximumValueLabel: {
-            Text("\(Measurement<UnitLength>(value: 29.0, unit: .inches).formatted())")
+            Text(Self.maxWheelSize, format: .measurement(width: .abbreviated, usage: .asProvided))
         }
         .onChange(of: wheelSizeInches) {
             viewModel.wheelSize = Measurement<UnitLength>(value: wheelSizeInches, unit: .inches)
-                .converted(to: .centimeters)
         }
         .listRowSeparator(.hidden)
         .accentColor(.nordicBlue)
