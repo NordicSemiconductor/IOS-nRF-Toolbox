@@ -40,14 +40,20 @@ struct UARTMessagesList: View {
             .listRowInsets(EdgeInsets(top: 0.0, leading: 0.0, bottom: 0.0, trailing: 0.0))
             .listRowSpacing(0.0)
             
-            VStack(alignment: .leading) {
-                UARTMacroSelectionView()
-                
-                Divider()
-                
-                UARTSendMessageView()
-            }
-            .padding(.horizontal, 20)
+            // TODO: Restore Macro, but it's WIP and better to remove than risk having unfinished work in a released app.
+//            VStack(alignment: .leading) {
+//                UARTMacroSelectionView()
+//                
+//                Divider()
+//                
+//                UARTSendMessageView()
+//            }
+//            .padding(.horizontal, 20)
+            
+            UARTSendMessageView()
+                .padding(.horizontal, 20)
+                .padding(.top, 8)
+                .padding(.bottom, 12)
         }
         .navigationTitle("UART Messages")
         .toolbar {
