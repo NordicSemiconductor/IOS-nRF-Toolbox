@@ -33,6 +33,7 @@ struct AboutView: View {
                     .centered()
                 
                 Text("Version \(Constant.appVersion(forBundleWithClass: DeviceDetailsViewModel.self))")
+                    .foregroundStyle(.secondary)
                     .centered()
             }
             .listRowSeparator(.hidden)
