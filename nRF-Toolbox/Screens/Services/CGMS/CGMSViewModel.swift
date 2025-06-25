@@ -35,6 +35,7 @@ final class CGMSViewModel: ObservableObject {
     
     @Published private(set) var sessionStarted = false
     @Published private(set) var records = [CGMSMeasurement]()
+    @Published private(set) var requestAllRecordsEnabled = false
     @Published var scrollPosition = 0
     
     // MARK: init
@@ -49,24 +50,23 @@ final class CGMSViewModel: ObservableObject {
 
 extension CGMSViewModel {
     
+    // MARK: requestNumberOfRecords()
+    
     @MainActor
     func requestNumberOfRecords() async throws -> Int {
         log.debug(#function)
         do {
-            let racpEnable = try await peripheral.setNotifyValue(true, for: cbRACP).firstValue
-            log.debug("\(#function) RACP.setNotifyValue(true): \(racpEnable)")
+            try await enableRACPResponse()
+            async let racpDataResponse = listenRACPResponse()
             
             let writeStoreCountData = Data([RecordOpcode.reportNumberOfRecords.rawValue, 1])
             log.debug("peripheral.writeValueWithResponse(\(writeStoreCountData.hexEncodedString(options: [.prepend0x, .upperCase])))")
             try await peripheral.writeValueWithResponse(writeStoreCountData, for: cbRACP).firstValue
             
-            let racpData = try await peripheral.listenValues(for: cbRACP).firstValue
+            let racpData = try await racpDataResponse
             let offset = MemoryLayout<UInt16>.size
             let numberOfRecords: UInt8? = try? racpData.read(fromOffset: offset)
             log.debug("Response \(racpData.hexEncodedString(options: [.prepend0x, .upperCase]))")
-            
-            let racpDisable = try await peripheral.setNotifyValue(false, for: cbRACP).firstValue
-            log.debug("\(#function) RACP.setNotifyValue(false): \(racpDisable)")
             
             if let numberOfRecords {
                 log.debug("Number of Records: \(numberOfRecords)")
@@ -81,18 +81,62 @@ extension CGMSViewModel {
         throw ReadableError(title: #function, message: "Unable to Read Number of Records")
     }
     
+    // MARK: enableRACPResponse()
+    
+    func enableRACPResponse() async throws {
+        log.debug(#function)
+        do {
+            let racpEnable = try await peripheral.setNotifyValue(true, for: cbRACP).firstValue
+            log.debug("\(#function) RACP.setNotifyValue(true): \(racpEnable)")
+        } catch {
+            log.debug(error.localizedDescription)
+            let _ = try await peripheral.setNotifyValue(false, for: cbRACP).firstValue
+            throw error
+        }
+    }
+    
+    // MARK: listenRACPResponse()
+    
+    func listenRACPResponse() async throws -> Data {
+        log.debug(#function)
+        do {
+            let racpData = try await peripheral.listenValues(for: cbRACP).firstValue
+            log.debug("\(#function) Response \(racpData.hexEncodedString(options: [.prepend0x, .upperCase]))")
+            
+            let racpDisable = try await peripheral.setNotifyValue(false, for: cbRACP).firstValue
+            log.debug("\(#function) RACP.setNotifyValue(false): \(racpDisable)")
+            
+            return racpData
+        } catch {
+            log.debug(error.localizedDescription)
+            throw error
+        }
+    }
+    
+    // MARK: requestAllRecords()
+    
     @MainActor
     func requestAllRecords() async {
         log.debug(#function)
+        requestAllRecordsEnabled = false
+        defer {
+            requestAllRecordsEnabled = true
+        }
+        
         do {
             records = []
             if let numberOfRecords = try? await requestNumberOfRecords() {
                 records.reserveCapacity(numberOfRecords)
             }
             
+            try await enableRACPResponse()
+            async let racpData = listenRACPResponse()
+            
             let writeData = Data([RecordOpcode.reportStoredRecords.rawValue, CGMOperator.allRecords.rawValue])
             log.debug("peripheral.writeValueWithResponse(\(writeData.hexEncodedString(options: [.prepend0x, .upperCase])))")
             try await peripheral.writeValueWithResponse(writeData, for: cbRACP).firstValue
+            
+            log.debug("Received \(try await racpData)")
         } catch {
             log.debug(error.localizedDescription)
         }

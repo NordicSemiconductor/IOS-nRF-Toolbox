@@ -46,6 +46,7 @@ struct CGMSRecordList: View {
                     await viewModel.requestAllRecords()
                 }
             }
+            .disabled(!viewModel.requestAllRecordsEnabled)
         }
     }
 }
