@@ -28,7 +28,11 @@ struct CGMSRecordList: View {
                                            dateString: value.toStringDate())
                 }
                 
-                if viewModel.records.isEmpty {
+                if viewModel.requestInProgress {
+                    ProgressView()
+                        .fixedCircularProgressView()
+                        .centered()
+                } else if viewModel.records.isEmpty {
                     NoContentView(title: "No Records", systemImage: "drop.fill", description: "No Glucose Measurements have been received yet.")
                 }
             } header: {
@@ -46,7 +50,7 @@ struct CGMSRecordList: View {
                     await viewModel.requestAllRecords()
                 }
             }
-            .disabled(!viewModel.requestAllRecordsEnabled)
+            .disabled(viewModel.requestInProgress)
         }
     }
 }

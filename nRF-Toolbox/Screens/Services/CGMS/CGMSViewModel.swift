@@ -35,7 +35,7 @@ final class CGMSViewModel: ObservableObject {
     
     @Published private(set) var sessionStarted = false
     @Published private(set) var records = [CGMSMeasurement]()
-    @Published private(set) var requestAllRecordsEnabled = false
+    @Published private(set) var requestInProgress = false
     @Published var scrollPosition = 0
     
     // MARK: init
@@ -118,9 +118,9 @@ extension CGMSViewModel {
     @MainActor
     func requestAllRecords() async {
         log.debug(#function)
-        requestAllRecordsEnabled = false
+        requestInProgress = true
         defer {
-            requestAllRecordsEnabled = true
+            requestInProgress = false
         }
         
         do {
