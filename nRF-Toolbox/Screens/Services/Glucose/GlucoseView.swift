@@ -89,6 +89,8 @@ struct GlucoseView: View {
         .centered()
     }
     
+    // MARK: noDataView()
+    
     @ViewBuilder
     func noDataView() -> some View {
         NoContentView(title: "No Data", systemImage: "drop.fill", description: "No Glucose Level Data Available. You may press Button 3 on your DevKit to generate some Data.")

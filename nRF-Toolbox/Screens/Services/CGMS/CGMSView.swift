@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import Charts
 import iOS_Common_Libraries
 
 // MARK: - CGMSView
@@ -18,53 +17,49 @@ struct CGMSView: View {
     
     @EnvironmentObject private var viewModel: CGMSViewModel
     
+    // MARK: Properties
+    
+    @State private var viewMode: GlucoseView.ViewMode = .all
+    
     // MARK: view
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("\(viewModel.records.count) Records")
-                .font(.title2.bold())
-            
-            HStack {
-                DotView(.nordicRed)
-                
-                Text("Current Value: \(viewModel.records.last?.measurement.formatted() ?? "N/A")")
-                    .foregroundStyle(.secondary)
+        switch viewMode {
+        case .all:
+            if viewModel.records.hasItems {
+                CGMSAllRecordsChartView()
+            } else {
+                noDataView()
             }
-            
-            Chart {
-                ForEach(viewModel.records, id: \.sequenceNumber) { value in
-                    LineMark(
-                        x: .value("Sequence Number", value.sequenceNumber),
-                        y: .value("Glucose Measurement", value.measurement.value)
-                    )
-                    .foregroundStyle(Color.nordicRed)
-                }
-                .interpolationMethod(.catmullRom)
-            }
-            .chartYScale(domain: [80.0, 100.0],
-                         range: .plotDimension(padding: 8))
-            .chartYAxis {
-                AxisMarks { value in
-                    AxisGridLine()
-                    
-                    if let value = value.as(Double.self) {
-                        AxisValueLabel {
-                            Text("\(String(format: "%.1f", value))")
-                        }
-                    }
-                }
-            }
-            .chartScrollableAxes(.horizontal)
-            .chartXVisibleDomain(length: 20)
-            .chartScrollPosition(x: $viewModel.scrollPosition)
+        case .first:
+//            if let firstRecord = viewModel.firstRecord {
+//                GlucoseMeasurementView(sequenceNumber: firstRecord.sequenceNumber,
+//                                       measurement: firstRecord.measurement,
+//                                       dateString: firstRecord.toStringDate())
+//            } else {
+//                noDataView()
+//            }
+            noDataView()
+        case .last:
+//            if let lastRecord = viewModel.lastRecord {
+//                GlucoseMeasurementView(sequenceNumber: lastRecord.sequenceNumber,
+//                                       measurement: lastRecord.measurement,
+//                                       dateString: lastRecord.toStringDate())
+//            } else {
+//                noDataView()
+//            }
+            noDataView()
         }
-        .padding(.vertical, 4)
         
-        NavigationLink("View All Records") {
-            CGMSRecordList()
-                .environmentObject(viewModel)
+        InlinePicker(title: "Mode", systemImage: "square.on.square", selectedValue: $viewMode) { newMode in
+            
         }
-        .foregroundStyle(Color.universalAccentColor)
+        .labeledContentStyle(.accentedContent)
+    }
+    
+    @ViewBuilder
+    func noDataView() -> some View {
+        NoContentView(title: "No Data", systemImage: "drop.fill", description: "No Continuous Glucose Measurement Data Available.")
+            .listRowSeparator(.hidden)
     }
 }

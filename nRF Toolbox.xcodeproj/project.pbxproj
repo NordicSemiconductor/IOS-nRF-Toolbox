@@ -396,6 +396,7 @@
 		AACD695F2DF99C2C0053A810 /* GlucoseMeasurementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACD695E2DF99C2C0053A810 /* GlucoseMeasurementView.swift */; };
 		AAD1E3EC2D81E5AD00E5121E /* DisclosureAttributeItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD1E3EB2D81E5AD00E5121E /* DisclosureAttributeItemView.swift */; };
 		AAD693332DD348E700D8C436 /* UARTEditCommandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD693322DD348E700D8C436 /* UARTEditCommandView.swift */; };
+		AADCFF222E0C3F5F00CD6DB6 /* CGMSAllRecordsChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADCFF212E0C3F5F00CD6DB6 /* CGMSAllRecordsChartView.swift */; };
 		AAE2C9332D9D378300B398E3 /* CGMOpcodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE2C9322D9D378300B398E3 /* CGMOpcodes.swift */; };
 		AAE42EEC2DCCC915006212B4 /* UARTMacroSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE42EEB2DCCC915006212B4 /* UARTMacroSelectionView.swift */; };
 		AAE42EEE2DCCE144006212B4 /* UARTViewModel+Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE42EED2DCCE144006212B4 /* UARTViewModel+Storage.swift */; };
@@ -843,6 +844,7 @@
 		AACD695E2DF99C2C0053A810 /* GlucoseMeasurementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseMeasurementView.swift; sourceTree = "<group>"; };
 		AAD1E3EB2D81E5AD00E5121E /* DisclosureAttributeItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureAttributeItemView.swift; sourceTree = "<group>"; };
 		AAD693322DD348E700D8C436 /* UARTEditCommandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTEditCommandView.swift; sourceTree = "<group>"; };
+		AADCFF212E0C3F5F00CD6DB6 /* CGMSAllRecordsChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSAllRecordsChartView.swift; sourceTree = "<group>"; };
 		AAE2C9322D9D378300B398E3 /* CGMOpcodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMOpcodes.swift; sourceTree = "<group>"; };
 		AAE42EEB2DCCC915006212B4 /* UARTMacroSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacroSelectionView.swift; sourceTree = "<group>"; };
 		AAE42EED2DCCE144006212B4 /* UARTViewModel+Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UARTViewModel+Storage.swift"; sourceTree = "<group>"; };
@@ -2569,6 +2571,7 @@
 			isa = PBXGroup;
 			children = (
 				AAF272F32D9BF5F6007B63D3 /* CGMSViewModel.swift */,
+				AADCFF212E0C3F5F00CD6DB6 /* CGMSAllRecordsChartView.swift */,
 				AAF272F72D9C10F3007B63D3 /* CGMSView.swift */,
 				AAE2C9322D9D378300B398E3 /* CGMOpcodes.swift */,
 				AA1BB0572D9D60E000734D20 /* CGMSMeasurement.swift */,
@@ -3014,6 +3017,7 @@
 				0108E87E2AF1654D00C8B096 /* BatteryChart.swift in Sources */,
 				015AAE712B063D6200D79833 /* RootNavigationViewModel.swift in Sources */,
 				0126B53F2A5EA8B70033BCC3 /* AttributeTable.swift in Sources */,
+				AADCFF222E0C3F5F00CD6DB6 /* CGMSAllRecordsChartView.swift in Sources */,
 				AA5AB3DB2D08649C005213D5 /* CyclingData.swift in Sources */,
 				017D102E2A5809E300E38E5F /* nRF_ToolboxApp.swift in Sources */,
 				014BBD7D2A70004B00BCFCA8 /* RSCMeasurement.swift in Sources */,
