@@ -47,7 +47,7 @@ struct CGMSRecordList: View {
         .toolbar {
             Button("", systemImage: "arrow.counterclockwise") {
                 Task {
-                    await viewModel.requestAllRecords()
+                    await viewModel.requestRecords(.allRecords)
                 }
             }
             .disabled(viewModel.requestInProgress)

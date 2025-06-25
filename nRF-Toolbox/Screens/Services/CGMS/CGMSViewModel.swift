@@ -113,10 +113,10 @@ extension CGMSViewModel {
         }
     }
     
-    // MARK: requestAllRecords()
+    // MARK: requestRecords()
     
     @MainActor
-    func requestAllRecords() async {
+    func requestRecords(_ op: RecordOperator) async {
         log.debug(#function)
         requestInProgress = true
         defer {
@@ -132,7 +132,7 @@ extension CGMSViewModel {
             try await enableRACPResponse()
             async let racpData = listenRACPResponse()
             
-            let writeData = Data([RecordOpcode.reportStoredRecords.rawValue, CGMOperator.allRecords.rawValue])
+            let writeData = Data([RecordOpcode.reportStoredRecords.rawValue, op.rawValue])
             log.debug("peripheral.writeValueWithResponse(\(writeData.hexEncodedString(options: [.prepend0x, .upperCase])))")
             try await peripheral.writeValueWithResponse(writeData, for: cbRACP).firstValue
             
@@ -203,7 +203,7 @@ extension CGMSViewModel: SupportedServiceViewModel {
             let socpEnable = try await peripheral.setNotifyValue(true, for: cbSOCP).firstValue
             log.debug("CGMS SOCP.setNotifyValue(true): \(socpEnable)")
             
-            await requestAllRecords()
+            await requestRecords(.allRecords)
         } catch {
             log.error(error.localizedDescription)
             onDisconnect()
