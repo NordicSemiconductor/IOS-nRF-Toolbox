@@ -36,7 +36,9 @@ struct ScanResultItem: View {
                 Text(name ?? "Unnamed Device")
                     .foregroundColor(name == nil ? .secondary : .primary)
                 
-                ServiceBadgeGroup(services)
+                if services.hasItems {
+                    ServiceBadgeGroup(services)
+                }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.trailing, 8)

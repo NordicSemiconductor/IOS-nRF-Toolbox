@@ -30,12 +30,16 @@ struct ServiceBadgeGroup: View {
     // MARK: view
     
     var body: some View {
-        HStack {
-            ForEach(services) {
-                BadgeView(image: $0.systemImage, name: $0.name, color: $0.color ?? .primary)
+        ScrollView(.horizontal) {
+            HStack {
+                ForEach(services) {
+                    BadgeView(image: $0.systemImage, name: $0.name, color: $0.color ?? .primary)
+                        .lineLimit(1)
+                }
+                
+                otherServicesBadge(count: services.reduce(0, { $0 + ($1.isSupported ? 0 : 1)  }))
             }
-
-            otherServicesBadge(count: services.reduce(0, { $0 + ($1.isSupported ? 0 : 1)  }))
+            .padding(.bottom, 6)
         }
     }
     
