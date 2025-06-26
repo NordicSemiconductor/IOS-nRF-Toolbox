@@ -52,6 +52,7 @@ final class ConnectedDevicesViewModel: ObservableObject {
         self.centralManager = centralManager
         self.connectedDevices = []
         self.selectedDevice = nil
+        observeStateChange()
         observeConnections()
         observeDisconnections()
         log.debug(#function)
@@ -104,6 +105,8 @@ extension ConnectedDevicesViewModel {
         }
     }
     
+    // MARK: clearViewModel(:)
+    
     func clearViewModel(_ deviceID: Device.ID) {
         log.debug(#function)
         connectedDevices.removeAll(where: { $0.id == deviceID })
@@ -113,9 +116,30 @@ extension ConnectedDevicesViewModel {
 
 extension ConnectedDevicesViewModel {
     
+    // MARK: observeStateChange()
+    
+    private func observeStateChange() {
+        log.debug(#function)
+        centralManager.stateChannel
+            .sink { [log, weak self] state in
+                log.debug("BLE State changed to \(state).")
+                switch state {
+                case .poweredOff, .unauthorized, .unsupported:
+                    guard let self else { return }
+                    for i in connectedDevices.indices {
+                        connectedDevices[i].status = .error(ConnectionError.bluetoothUnavailable)
+                    }
+                default:
+                    break
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
     // MARK: observeConnections()
     
     private func observeConnections() {
+        log.debug(#function)
         centralManager.connectedPeripheralChannel
             .map { $0 } // Remove <Never> as $1
             .filter { $0.1 == nil } // No connection error
@@ -150,6 +174,7 @@ extension ConnectedDevicesViewModel {
     // MARK: observeDisconnections()
     
     private func observeDisconnections() {
+        log.debug(#function)
         centralManager.disconnectedPeripheralsChannel
             .sink { [unowned self] (peripheral, error) in
                 guard let i = self.connectedDevices.firstIndex(where: \.id, equals: peripheral.identifier) else {
@@ -170,6 +195,19 @@ extension ConnectedDevicesViewModel {
                 }
             }
             .store(in: &cancellables)
+    }
+}
+
+// MARK: - ConnectionError
+
+extension ConnectedDevicesViewModel {
+    
+    enum ConnectionError: LocalizedError {
+        case bluetoothUnavailable
+        
+        var errorDescription: String? {
+            return "Bluetooth is powered off or is unavailable."
+        }
     }
 }
 

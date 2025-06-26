@@ -26,7 +26,7 @@ struct InspectorScreen: View {
     
     private let device: ConnectedDevicesViewModel.Device
         
-    private var deviceIsConncted: Bool {
+    private var deviceIsConnected: Bool {
         switch device.status {
         case .connected:
             return true
@@ -59,14 +59,16 @@ struct InspectorScreen: View {
                     Section {
                         SignalChart()
                             .onAppear {
+                                guard deviceIsConnected else { return }
                                 signalViewModel.startTimer()
                             }
                             .onDisappear {
+                                guard deviceIsConnected else { return }
                                 signalViewModel.stopTimer()
                             }
                             .environmentObject(signalViewModel.environment)
                     }
-                    .disabled(!deviceIsConncted)
+                    .disabled(!deviceIsConnected)
                 }
                 
                 if let batteryServiceViewModel = deviceVM.batteryServiceViewModel {
@@ -74,7 +76,7 @@ struct InspectorScreen: View {
                         BatteryView()
                             .environmentObject(batteryServiceViewModel)
                     }
-                    .disabled(!deviceIsConncted)
+                    .disabled(!deviceIsConnected)
                 }
                 
                 if let deviceInfo = deviceVM.deviceInfo {
@@ -84,7 +86,7 @@ struct InspectorScreen: View {
                 }
             }
             
-            if deviceIsConncted {
+            if deviceIsConnected {
                 Section {
                     Button("Disconnect") {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {

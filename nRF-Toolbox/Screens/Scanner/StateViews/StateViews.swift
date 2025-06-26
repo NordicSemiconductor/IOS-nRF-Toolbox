@@ -61,7 +61,7 @@ struct StateViews {
                 NoContentView(
                     title: "Bluetooth is Turned Off",
                     systemImage: "gear",
-                    description: "It looks like Bluetooth is turnd off. You can turn it on in Settings"
+                    description: "It looks like Bluetooth is turnd off. You can turn it on in Settings."
                 )
                 Button("Open Settings") {
                     guard let settingsURL = URL(string: "App-Prefs:root=General") else { return }
