@@ -28,7 +28,7 @@ struct CGMSRecordList: View {
                                            dateString: value.toStringDate())
                 }
                 
-                if viewModel.requestInProgress {
+                if viewModel.inFlightRequest != nil {
                     ProgressView()
                         .fixedCircularProgressView()
                         .centered()
@@ -50,7 +50,7 @@ struct CGMSRecordList: View {
                     await viewModel.requestRecords(.allRecords)
                 }
             }
-            .disabled(viewModel.requestInProgress)
+            .disabled(viewModel.inFlightRequest != nil)
         }
     }
 }

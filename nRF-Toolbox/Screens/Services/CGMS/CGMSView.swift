@@ -32,23 +32,21 @@ struct CGMSView: View {
                 noDataView()
             }
         case .first:
-//            if let firstRecord = viewModel.firstRecord {
-//                GlucoseMeasurementView(sequenceNumber: firstRecord.sequenceNumber,
-//                                       measurement: firstRecord.measurement,
-//                                       dateString: firstRecord.toStringDate())
-//            } else {
-//                noDataView()
-//            }
-            noDataView()
+            if let firstRecord = viewModel.firstRecord {
+                GlucoseMeasurementView(sequenceNumber: firstRecord.sequenceNumber,
+                                       measurement: firstRecord.measurement,
+                                       dateString: firstRecord.toStringDate())
+            } else {
+                noDataView()
+            }
         case .last:
-//            if let lastRecord = viewModel.lastRecord {
-//                GlucoseMeasurementView(sequenceNumber: lastRecord.sequenceNumber,
-//                                       measurement: lastRecord.measurement,
-//                                       dateString: lastRecord.toStringDate())
-//            } else {
-//                noDataView()
-//            }
-            noDataView()
+            if let lastRecord = viewModel.lastRecord {
+                GlucoseMeasurementView(sequenceNumber: lastRecord.sequenceNumber,
+                                       measurement: lastRecord.measurement,
+                                       dateString: lastRecord.toStringDate())
+            } else {
+                noDataView()
+            }
         }
         
         InlinePicker(title: "Mode", systemImage: "square.on.square", selectedValue: $viewMode) { newMode in
@@ -61,7 +59,14 @@ struct CGMSView: View {
     
     @ViewBuilder
     func noDataView() -> some View {
-        NoContentView(title: "No Data", systemImage: "drop.fill", description: "No Continuous Glucose Measurement Data Available.")
-            .listRowSeparator(.hidden)
+        if viewModel.inFlightRequest != nil {
+            ProgressView()
+                .fixedCircularProgressView()
+                .centered()
+                .listRowSeparator(.hidden)
+        } else {
+            NoContentView(title: "No Data", systemImage: "drop.fill", description: "No Continuous Glucose Measurement Data Available.")
+                .listRowSeparator(.hidden)
+        }
     }
 }

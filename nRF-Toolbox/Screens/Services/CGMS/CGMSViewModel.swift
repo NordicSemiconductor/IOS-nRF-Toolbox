@@ -34,8 +34,10 @@ final class CGMSViewModel: ObservableObject {
     // MARK: Published
     
     @Published private(set) var sessionStarted = false
+    @Published private(set) var firstRecord: CGMSMeasurement?
     @Published private(set) var records = [CGMSMeasurement]()
-    @Published private(set) var requestInProgress = false
+    @Published private(set) var lastRecord: CGMSMeasurement?
+    @Published private(set) var inFlightRequest: RecordOperator?
     @Published var scrollPosition = 0
     
     // MARK: init
@@ -118,9 +120,9 @@ extension CGMSViewModel {
     @MainActor
     func requestRecords(_ op: RecordOperator) async {
         log.debug(#function)
-        requestInProgress = true
+        inFlightRequest = op
         defer {
-            requestInProgress = false
+            inFlightRequest = nil
         }
         
         do {
@@ -226,6 +228,8 @@ extension CGMSViewModel: SupportedServiceViewModel {
 
 private extension CGMSViewModel {
     
+    // MARK: listenToMeasurements()
+    
     func listenToMeasurements(_ measurementCharacteristic: CBCharacteristic) {
         log.debug(#function)
         peripheral.listenValues(for: measurementCharacteristic)
@@ -242,9 +246,18 @@ private extension CGMSViewModel {
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { _ in
                 print("Completion")
-            }, receiveValue: { newValue in
-                self.records.append(newValue)
-                self.scrollPosition = newValue.sequenceNumber
+            }, receiveValue: { [weak self] newValue in
+                guard let self else { return }
+                switch self.inFlightRequest {
+                case .firstRecord:
+                    self.firstRecord = newValue
+                case .lastRecord:
+                    self.lastRecord = newValue
+                default: // also .allRecords
+                    self.records.append(newValue)
+                    self.scrollPosition = newValue.sequenceNumber
+                }
+                
             })
             .store(in: &cancellables)
     }
