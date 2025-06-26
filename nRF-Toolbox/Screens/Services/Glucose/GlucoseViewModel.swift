@@ -35,7 +35,7 @@ final class GlucoseViewModel: ObservableObject {
     @Published private(set) var allRecords = [GlucoseMeasurement]()
     @Published private(set) var firstRecord: GlucoseMeasurement?
     @Published private(set) var lastRecord: GlucoseMeasurement?
-    private var request: RecordOperator?
+    @Published private(set) var inFlightRequest: RecordOperator?
     
     // MARK: init
     
@@ -132,9 +132,12 @@ extension GlucoseViewModel {
         Task { @MainActor in
             guard let cbRACP else { return }
             log.debug(#function)
+            inFlightRequest = op
+            defer {
+                inFlightRequest = nil
+            }
             do {
-                request = op
-                if request == .allRecords {
+                if op == .allRecords {
                     allRecords.removeAll()
                 }
                 
@@ -191,13 +194,14 @@ private extension GlucoseViewModel {
             .sink(receiveCompletion: { [log] _ in
                 log.debug("Completion")
             }, receiveValue: { [weak self] newValue in
-                switch self?.request {
+                guard let self else { return }
+                switch self.inFlightRequest {
                 case .firstRecord:
-                    self?.firstRecord = newValue
+                    self.firstRecord = newValue
                 case .lastRecord:
-                    self?.lastRecord = newValue
+                    self.lastRecord = newValue
                 default:
-                    self?.allRecords.append(newValue)
+                    self.allRecords.append(newValue)
                 }
             })
             .store(in: &cancellables)

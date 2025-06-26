@@ -81,19 +81,20 @@ struct GlucoseView: View {
             viewModel.requestRecords(newMode.recordOperator)
         }
         .labeledContentStyle(.accentedContent)
-
-        Button("Request") {
-            viewModel.requestRecords(viewMode.recordOperator)
-        }
-        .tint(.universalAccentColor)
-        .centered()
     }
     
     // MARK: noDataView()
     
     @ViewBuilder
     func noDataView() -> some View {
-        NoContentView(title: "No Data", systemImage: "drop.fill", description: "No Glucose Level Data Available. You may press Button 3 on your DevKit to generate some Data.")
-            .listRowSeparator(.hidden)
+        if viewModel.inFlightRequest != nil {
+            ProgressView()
+                .fixedCircularProgressView()
+                .centered()
+                .listRowSeparator(.hidden)
+        } else {
+            NoContentView(title: "No Data", systemImage: "drop.fill", description: "No Glucose Level Data Available. You may press Button 3 on your DevKit to generate some Data.")
+                .listRowSeparator(.hidden)
+        }
     }
 }

@@ -40,6 +40,14 @@ struct GlucoseListView: View {
                                            status: value.statusString(),
                                            dateString: value.toStringDate())
                 }
+                
+                if viewModel.inFlightRequest != nil {
+                    ProgressView()
+                        .fixedCircularProgressView()
+                        .centered()
+                } else if measurements.isEmpty {
+                    NoContentView(title: "No Records", systemImage: "drop.fill", description: "No Glucose Data has been received yet.")
+                }
             } header: {
                 Text("")
             } footer: {
