@@ -88,7 +88,7 @@ struct RootNavigationView: View {
             .setupNavBarBackground(with: Assets.navBar.color)
         }
         .onAppear {
-            connectedDevicesViewModel.setupScanner()
+            connectedDevicesViewModel.setupManager()
         }
         .accentColor(.white)
         .environmentObject(rootViewModel)

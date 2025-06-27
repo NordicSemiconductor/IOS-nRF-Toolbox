@@ -21,11 +21,11 @@ struct PeripheralScannerScreen: View {
     
     var body: some View {
         ZStack {
-            switch viewModel.scanner.scannerState {
+            switch viewModel.scannerState {
             case .disabled:
                 StateViews.Disabled()
             case .scanning:
-                if viewModel.scanner.devices.isEmpty {
+                if viewModel.devices.isEmpty {
                     StateViews.EmptyResults()
                 } else {
                     ScanResultList()

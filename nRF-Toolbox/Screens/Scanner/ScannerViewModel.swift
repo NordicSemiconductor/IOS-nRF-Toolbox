@@ -6,7 +6,7 @@
 //  Copyright © 2023 Nordic Semiconductor. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 import iOS_BLE_Library_Mock
 import iOS_Bluetooth_Numbers_Database
 import iOS_Common_Libraries
@@ -29,32 +29,28 @@ final class ScannerViewModel: ObservableObject {
     private let centralManager: CentralManager
     
     @Published fileprivate(set) var error: ReadableError?
-    @Published fileprivate(set) var devices: [ConnectedDevicesViewModel.ScanResult]
-    @Published fileprivate(set) var connectingDevice: ConnectedDevicesViewModel.ScanResult?
-    @Published fileprivate(set) var scannerState: ScannerState
+    @Binding var devices: [ConnectedDevicesViewModel.ScanResult]
+    @Binding var connectingDevice: ConnectedDevicesViewModel.ScanResult?
+    @Binding var scannerState: ScannerState
     
     private var cancellables = Set<AnyCancellable>()
     private let log = NordicLog(category: "PeripheralScanner.VM")
     
     // MARK: init
     
-    init(centralManager: CentralManager) {
+    init(centralManager: CentralManager, devices: Binding<[ConnectedDevicesViewModel.ScanResult]>,
+         connectingDevice: Binding<ConnectedDevicesViewModel.ScanResult?>, scannerState: Binding<ScannerState>) {
         self.centralManager = centralManager
         
         self.error = nil
-        self.devices = []
-        self.connectingDevice = nil
-        self.scannerState = .disabled
+        self._devices = devices
+        self._connectingDevice = connectingDevice
+        self._scannerState = scannerState
+//        self.devices = []
+//        self.connectingDevice = nil
+//        self.scannerState = .disabled
         
         log.debug(#function)
-    }
-    
-    // MARK: adv
-    
-    func advertisedServices(_ deviceID: UUID) -> Set<Service> {
-        return devices
-            .first(where: \.id, isEqualsTo: deviceID)?
-            .services ?? Set<Service>()
     }
     
     // MARK: deinit
@@ -66,52 +62,26 @@ final class ScannerViewModel: ObservableObject {
 
 extension ScannerViewModel {
     
-    // MARK: tryToConnect(device:)
-    
-    @MainActor
-    func tryToConnect(device: ConnectedDevicesViewModel.ScanResult) async {
-        log.debug(#function)
-        if connectingDevice != nil {
-            return
-        }
-        
-        connectingDevice = device
-        // Get CBPeripheral's instance
-        let peripheral = centralManager.retrievePeripherals(withIdentifiers: [device.id]).first!
-        
-        do {
-            // `connect` method returns Publisher that sends connected CBPeripheral
-            _ = try await centralManager.connect(peripheral).first().firstValue
-        } catch let error {
-            self.error = ReadableError(error)
-        }
-        
-        connectingDevice = nil
-    }
-}
-
-extension ScannerViewModel {
-    
     // MARK: setupManager()
     
     func setupManager() {
         log.debug(#function)
         guard cancellables.isEmpty else { return }
         // Track state CBCentralManager's state changes
-        centralManager.stateChannel
-            .map { state -> ScannerState in
-                switch state {
-                case .poweredOff:
-                    return .disabled
-                case .unauthorized:
-                    return .unauthorized
-                case .unsupported:
-                    return .unsupported
-                default:
-                    return .scanning
-                }
-            }
-            .assign(to: &$scannerState)
+//        centralManager.stateChannel
+//            .map { state -> ScannerState in
+//                switch state {
+//                case .poweredOff:
+//                    return .disabled
+//                case .unauthorized:
+//                    return .unauthorized
+//                case .unsupported:
+//                    return .unsupported
+//                default:
+//                    return .scanning
+//                }
+//            }
+//            .assign(to: &$scannerState.wrappedValue)
         
         guard centralManager.centralManager.state == .poweredOn else { return }
     }
@@ -147,22 +117,5 @@ extension ScannerViewModel {
                 }
             }
             .store(in: &cancellables)
-    }
-    
-    // MARK: stopScanning()
-    
-    func stopScanning() {
-        log.debug(#function)
-        centralManager.stopScan()
-        cancellables.removeAll()
-    }
-    
-    // MARK: refresh()
-    
-    func refresh() {
-        stopScanning()
-        devices.removeAll()
-        setupManager()
-        startScanning()
     }
 }

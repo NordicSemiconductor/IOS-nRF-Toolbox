@@ -20,13 +20,17 @@ final class ConnectedDevicesViewModel: ObservableObject {
     // MARK: Private Properties
     
     private let centralManager: CentralManager
-    let scanner: ScannerViewModel
     private var deviceViewModels: [UUID: DeviceDetailsViewModel] = [:]
     private var cancellables = Set<AnyCancellable>()
+    private var scannerCancellables = Set<AnyCancellable>()
     
     private let log = NordicLog(category: "HeartRateScreen", subsystem: "com.nordicsemi.nrf-toolbox")
     
     // MARK: Properties
+    
+    @Published fileprivate(set) var devices: [ConnectedDevicesViewModel.ScanResult]
+    @Published fileprivate(set) var connectingDevice: ConnectedDevicesViewModel.ScanResult?
+    @Published fileprivate(set) var scannerState: ScannerViewModel.ScannerState
     
     @Published fileprivate(set) var connectedDevices: [Device]
     @Published var selectedDevice: Device? {
@@ -50,9 +54,11 @@ final class ConnectedDevicesViewModel: ObservableObject {
     
     init(centralManager: CentralManager) {
         self.centralManager = centralManager
-        self.scanner = ScannerViewModel(centralManager: centralManager)
         self.connectedDevices = []
         self.selectedDevice = nil
+        self.devices = []
+        self.connectingDevice = nil
+        self.scannerState = .disabled
         observeStateChange()
         observeConnections()
         observeDisconnections()
@@ -218,28 +224,110 @@ extension ConnectedDevicesViewModel {
 
 extension ConnectedDevicesViewModel {
     
-    func setupScanner() {
-        scanner.setupManager()
-        objectWillChange.send()
+    func advertisedServices(_ deviceID: UUID) -> Set<Service> {
+        return Set<Service>()
+//        return devices
+//            .first(where: \.id, isEqualsTo: deviceID)?
+//            .services ?? Set<Service>()
     }
     
+    // MARK: tryToConnect(device:)
+    
+    @MainActor
+    func tryToConnect(device: ConnectedDevicesViewModel.ScanResult) async {
+        log.debug(#function)
+        if connectingDevice != nil {
+            return
+        }
+        
+        connectingDevice = device
+        defer {
+            connectingDevice = nil
+        }
+        
+        // Get CBPeripheral's instance
+        let peripheral = centralManager.retrievePeripherals(withIdentifiers: [device.id]).first!
+        
+        do {
+            // `connect` method returns Publisher that sends connected CBPeripheral
+            _ = try await centralManager.connect(peripheral).first().firstValue
+        } catch let error {
+//            self.error = ReadableError(error)
+        }
+    }
+    
+    // MARK: setupManager()
+    
+    func setupManager() {
+        log.debug(#function)
+        guard scannerCancellables.isEmpty else { return }
+        // Track state CBCentralManager's state changes
+        centralManager.stateChannel
+            .map { state -> ScannerViewModel.ScannerState in
+                switch state {
+                case .poweredOff:
+                    return .disabled
+                case .unauthorized:
+                    return .unauthorized
+                case .unsupported:
+                    return .unsupported
+                default:
+                    return .scanning
+                }
+            }
+            .assign(to: &$scannerState)
+        
+        guard centralManager.centralManager.state == .poweredOn else { return }
+    }
+    
+    // MARK: startScanning()
+    
     func startScanning() {
-        scanner.startScanning()
-        objectWillChange.send()
+        log.debug(#function)
+        guard centralManager.centralManager.state == .poweredOn else { return }
+        centralManager.scanForPeripherals(withServices: nil)
+            .filter {
+                // Filter unconnectable devices
+                return $0.advertisementData.isConnectable == true
+            }
+            .map { result -> ConnectedDevicesViewModel.ScanResult in
+                ConnectedDevicesViewModel.ScanResult(
+                    name: result.advertisementData.localName ?? result.name,
+                    rssi: result.rssi.value,
+                    id: result.peripheral.identifier,
+                    services: result.advertisementData.serviceUUIDs?.compactMap { $0.uuidString } ?? []
+                )
+            }
+            .sink { completion in
+                if case .failure(let error) = completion {
+//                    self.error = ReadableError(error)
+                }
+            } receiveValue: { result in
+                if let i = self.devices.firstIndex(where: \.id, equals: result.id) {
+                    let existingDevice = self.devices[i]
+                    self.devices[i] = existingDevice.extend(using: result)
+                } else {
+                    self.devices.append(result)
+                }
+            }
+            .store(in: &scannerCancellables)
     }
     
     // MARK: stopScanning()
     
     func stopScanning() {
-        scanner.stopScanning()
-        objectWillChange.send()
+        log.debug(#function)
+        centralManager.stopScan()
+        scannerCancellables.removeAll()
     }
     
     // MARK: refresh()
     
     func refresh() {
-        scanner.refresh()
-        objectWillChange.send()
+        stopScanning()
+        devices.removeAll()
+        setupManager()
+        startScanning()
     }
 }
 
