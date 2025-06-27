@@ -20,6 +20,12 @@ extension PeripheralScannerScreen {
     @MainActor
     final class PeripheralScannerViewModel: ObservableObject {
         
+        // MARK: State
+        
+        enum State {
+            case scanning, unsupported, disabled, unauthorized
+        }
+        
         // MARK: Properties
         
         private let centralManager: CentralManager
@@ -44,7 +50,7 @@ extension PeripheralScannerScreen {
     }
 }
 
-extension PeripheralScannerScreen.PeripheralScannerViewModel.Environment {
+extension PeripheralScannerScreen.PeripheralScannerViewModel {
     
     // MARK: ScanResult
     
@@ -81,7 +87,7 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
     // MARK: tryToConnect(device:)
     
     @MainActor
-    func tryToConnect(device: Environment.ScanResult) async {
+    func tryToConnect(device: ScanResult) async {
         log.debug(#function)
         if environment.connectingDevice != nil {
             return
@@ -111,7 +117,7 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
         guard cancellables.isEmpty else { return }
         // Track state CBCentralManager's state changes
         centralManager.stateChannel
-            .map { state -> Environment.State in
+            .map { state -> State in
                 switch state {
                 case .poweredOff:
                     return .disabled
@@ -138,8 +144,8 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
                 // Filter unconnectable devices
                 return $0.advertisementData.isConnectable == true
             }
-            .map { result -> Environment.ScanResult in
-                Environment.ScanResult(
+            .map { result -> ScanResult in
+                ScanResult(
                     name: result.advertisementData.localName ?? result.name,
                     rssi: result.rssi.value,
                     id: result.peripheral.identifier,
@@ -185,20 +191,12 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
     
     final class Environment: ObservableObject {
         
-        // MARK: State
-        
-        enum State {
-            case scanning, unsupported, disabled, unauthorized
-        }
-        
         // MARK: Properties
         
         @Published fileprivate(set) var error: ReadableError?
         @Published fileprivate(set) var devices: [ScanResult]
         @Published fileprivate(set) var connectingDevice: ScanResult?
         @Published fileprivate(set) var state: State
-        
-        private let log = NordicLog(category: "PeripheralScanner.Env")
         
         // MARK: init
         
@@ -207,14 +205,6 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
             self.devices = devices
             self.connectingDevice = connectingDevice
             self.state = state
-            
-            log.debug(#function)
-        }
-        
-        // MARK: deinit
-        
-        deinit {
-            log.debug(#function)
         }
         
         // MARK: API
