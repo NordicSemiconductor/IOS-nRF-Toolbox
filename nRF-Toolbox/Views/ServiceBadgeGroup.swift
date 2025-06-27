@@ -30,17 +30,16 @@ struct ServiceBadgeGroup: View {
     // MARK: view
     
     var body: some View {
-        ScrollView(.horizontal) {
-            HStack {
-                ForEach(services) {
-                    BadgeView(image: $0.systemImage, name: $0.name, color: $0.color ?? .primary)
-                        .lineLimit(1)
-                }
-                
-                otherServicesBadge(count: services.reduce(0, { $0 + ($1.isSupported ? 0 : 1)  }))
+        LazyVGrid(columns: [
+            GridItem(.adaptive(minimum: 150), alignment: .leading)
+        ], content: {
+            ForEach(services) {
+                BadgeView(image: $0.systemImage, name: $0.name, color: $0.color ?? .primary)
+                    .lineLimit(1)
             }
-            .padding(.bottom, 6)
-        }
+
+            otherServicesBadge(count: services.reduce(0, { $0 + ($1.isSupported ? 0 : 1)  }))
+        })
     }
     
     // MARK: otherServicesBadge(count:)
