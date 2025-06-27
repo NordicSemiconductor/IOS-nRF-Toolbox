@@ -374,6 +374,7 @@
 		AA5AB3E12D0877F6005213D5 /* MeasurementFormatter+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5AB3E02D0877F6005213D5 /* MeasurementFormatter+Ext.swift */; };
 		AA6208782DFADE0400EA0267 /* GlucoseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6208772DFADE0400EA0267 /* GlucoseListView.swift */; };
 		AA69FF382E056F9F0065A39C /* GlucoseAllRecordsChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69FF372E056F9F0065A39C /* GlucoseAllRecordsChartView.swift */; };
+		AA71C78E2E0EBA89008F018C /* ScanResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA71C78D2E0EBA89008F018C /* ScanResult.swift */; };
 		AA7769FD2DEDED9A0005A82B /* BloodPressureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7769FC2DEDED9A0005A82B /* BloodPressureViewModel.swift */; };
 		AA7E77E52DF0915F0091447F /* SupportedServiceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7E77E42DF0915F0091447F /* SupportedServiceViewModel.swift */; };
 		AA94C5512D01B49200562F7A /* BatteryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA94C5502D01B49200562F7A /* BatteryView.swift */; };
@@ -822,6 +823,7 @@
 		AA5AB3E02D0877F6005213D5 /* MeasurementFormatter+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeasurementFormatter+Ext.swift"; sourceTree = "<group>"; };
 		AA6208772DFADE0400EA0267 /* GlucoseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseListView.swift; sourceTree = "<group>"; };
 		AA69FF372E056F9F0065A39C /* GlucoseAllRecordsChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseAllRecordsChartView.swift; sourceTree = "<group>"; };
+		AA71C78D2E0EBA89008F018C /* ScanResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanResult.swift; sourceTree = "<group>"; };
 		AA7769FC2DEDED9A0005A82B /* BloodPressureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodPressureViewModel.swift; sourceTree = "<group>"; };
 		AA7E77E42DF0915F0091447F /* SupportedServiceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedServiceViewModel.swift; sourceTree = "<group>"; };
 		AA8DF2152DE9B08E00D49141 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -1590,6 +1592,7 @@
 		01C81AD32A5CB62D0011B41E /* ScanResult */ = {
 			isa = PBXGroup;
 			children = (
+				AA71C78D2E0EBA89008F018C /* ScanResult.swift */,
 				013208292A5C142100DCEA11 /* ScanResultItem.swift */,
 				0164A4702AD593B40093E501 /* ScanResultList.swift */,
 				01C81AD42A5CB6420011B41E /* ServiceBadge.swift */,
@@ -3041,6 +3044,7 @@
 				01DEB4A42A6588CA00D4C1E8 /* RunningServiceHandler.swift in Sources */,
 				01F6A9602A812D6200540B45 /* Emulator.swift in Sources */,
 				015AAE652B0383BD00D79833 /* SidebarView.swift in Sources */,
+				AA71C78E2E0EBA89008F018C /* ScanResult.swift in Sources */,
 				AA479EA72D0B0BFF0052E801 /* CrankDataPoint.swift in Sources */,
 				AA047E112DF1B3A300DA401E /* BlinkyView.swift in Sources */,
 				0164A4762AD698650093E501 /* NumberDatabase+Ext.swift in Sources */,

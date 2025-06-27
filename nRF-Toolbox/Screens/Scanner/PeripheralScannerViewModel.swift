@@ -22,7 +22,7 @@ extension PeripheralScannerScreen {
         
         // MARK: State
         
-        enum State {
+        enum ScannerState {
             case scanning, unsupported, disabled, unauthorized
         }
         
@@ -31,9 +31,9 @@ extension PeripheralScannerScreen {
         private let centralManager: CentralManager
         
         @Published fileprivate(set) var error: ReadableError?
-        @Published fileprivate(set) var devices: [ScanResult]
-        @Published fileprivate(set) var connectingDevice: ScanResult?
-        @Published fileprivate(set) var state: State
+        @Published fileprivate(set) var devices: [ConnectedDevicesViewModel.ScanResult]
+        @Published fileprivate(set) var connectingDevice: ConnectedDevicesViewModel.ScanResult?
+        @Published fileprivate(set) var scannerState: ScannerState
         
         private var cancellables = Set<AnyCancellable>()
         private let log = NordicLog(category: "PeripheralScanner.VM")
@@ -46,9 +46,17 @@ extension PeripheralScannerScreen {
             self.error = nil
             self.devices = []
             self.connectingDevice = nil
-            self.state = .disabled
+            self.scannerState = .disabled
             
             log.debug(#function)
+        }
+        
+        // MARK: adv
+        
+        func advertisedServices(_ deviceID: UUID) -> Set<Service> {
+            return devices
+                .first(where: \.id, isEqualsTo: deviceID)?
+                .services ?? Set<Service>()
         }
         
         // MARK: deinit
@@ -61,48 +69,10 @@ extension PeripheralScannerScreen {
 
 extension PeripheralScannerScreen.PeripheralScannerViewModel {
     
-    // MARK: ScanResult
-    
-    struct ScanResult: Identifiable, Equatable {
-        let name: String?
-        let rssi: Int
-        let id: UUID
-        let services: Set<Service>
-        
-        init(name: String?, rssi: Int, id: UUID, services: [String]) {
-            self.name = name
-            self.rssi = rssi
-            self.id = id
-            self.services = Set(services.map {
-                Service.extendedFind(by: $0) ?? Service(name: "unknown", identifier: "service-\($0)", uuidString: $0, source: "unknown")
-            })
-        }
-        
-        func extend(using scanResult: ScanResult) -> ScanResult {
-            var extendedServices = services.map(\.uuidString)
-            extendedServices.append(contentsOf: scanResult.services.map(\.uuidString))
-            return ScanResult(name: scanResult.name ?? self.name, rssi: scanResult.rssi,
-                              id: id, services: extendedServices)
-        }
-        
-        static func ==(lhs: ScanResult, rhs: ScanResult) -> Bool {
-            return lhs.id == rhs.id
-        }
-    }
-    
-    func advertisedServices(_ deviceID: UUID) -> Set<Service> {
-        return devices
-            .first(where: \.id, isEqualsTo: deviceID)?
-            .services ?? Set<Service>()
-    }
-}
-
-extension PeripheralScannerScreen.PeripheralScannerViewModel {
-    
     // MARK: tryToConnect(device:)
     
     @MainActor
-    func tryToConnect(device: ScanResult) async {
+    func tryToConnect(device: ConnectedDevicesViewModel.ScanResult) async {
         log.debug(#function)
         if connectingDevice != nil {
             return
@@ -132,7 +102,7 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
         guard cancellables.isEmpty else { return }
         // Track state CBCentralManager's state changes
         centralManager.stateChannel
-            .map { state -> State in
+            .map { state -> ScannerState in
                 switch state {
                 case .poweredOff:
                     return .disabled
@@ -144,7 +114,7 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
                     return .scanning
                 }
             }
-            .assign(to: &$state)
+            .assign(to: &$scannerState)
         
         guard centralManager.centralManager.state == .poweredOn else { return }
     }
@@ -159,8 +129,8 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
                 // Filter unconnectable devices
                 return $0.advertisementData.isConnectable == true
             }
-            .map { result -> ScanResult in
-                ScanResult(
+            .map { result -> ConnectedDevicesViewModel.ScanResult in
+                ConnectedDevicesViewModel.ScanResult(
                     name: result.advertisementData.localName ?? result.name,
                     rssi: result.rssi.value,
                     id: result.peripheral.identifier,

@@ -48,7 +48,6 @@ struct SidebarView: View {
                 NavigationLink {
                     PeripheralScannerScreen()
                         .environmentObject(scannerViewModel)
-                        .environmentObject(scannerViewModel.environment)
                 } label: {
                     Label("Connect to Device", systemImage: "dot.radiowaves.right")
                         .setAccent(.universalAccentColor)
