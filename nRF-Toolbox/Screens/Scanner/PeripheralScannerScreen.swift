@@ -16,17 +16,16 @@ struct PeripheralScannerScreen: View {
     // MARK: Properties
     
     @EnvironmentObject private var viewModel: PeripheralScannerViewModel
-    @EnvironmentObject private var environment: PeripheralScannerViewModel.Environment
     
     // MARK: view
     
     var body: some View {
         ZStack {
-            switch environment.state {
+            switch viewModel.state {
             case .disabled:
                 StateViews.Disabled()
             case .scanning:
-                if environment.devices.isEmpty {
+                if viewModel.devices.isEmpty {
                     StateViews.EmptyResults()
                 } else {
                     ScanResultList()

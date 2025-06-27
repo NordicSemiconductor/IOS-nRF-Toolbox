@@ -29,7 +29,11 @@ extension PeripheralScannerScreen {
         // MARK: Properties
         
         private let centralManager: CentralManager
-        let environment: Environment
+        
+        @Published fileprivate(set) var error: ReadableError?
+        @Published fileprivate(set) var devices: [ScanResult]
+        @Published fileprivate(set) var connectingDevice: ScanResult?
+        @Published fileprivate(set) var state: State
         
         private var cancellables = Set<AnyCancellable>()
         private let log = NordicLog(category: "PeripheralScanner.VM")
@@ -37,8 +41,13 @@ extension PeripheralScannerScreen {
         // MARK: init
         
         init(centralManager: CentralManager) {
-            self.environment = Environment()
             self.centralManager = centralManager
+            
+            self.error = nil
+            self.devices = []
+            self.connectingDevice = nil
+            self.state = .disabled
+            
             log.debug(#function)
         }
         
@@ -80,6 +89,12 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
             return lhs.id == rhs.id
         }
     }
+    
+    func advertisedServices(_ deviceID: UUID) -> Set<Service> {
+        return devices
+            .first(where: \.id, isEqualsTo: deviceID)?
+            .services ?? Set<Service>()
+    }
 }
 
 extension PeripheralScannerScreen.PeripheralScannerViewModel {
@@ -89,11 +104,11 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
     @MainActor
     func tryToConnect(device: ScanResult) async {
         log.debug(#function)
-        if environment.connectingDevice != nil {
+        if connectingDevice != nil {
             return
         }
         
-        environment.connectingDevice = device
+        connectingDevice = device
         // Get CBPeripheral's instance
         let peripheral = centralManager.retrievePeripherals(withIdentifiers: [device.id]).first!
         
@@ -101,10 +116,10 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
             // `connect` method returns Publisher that sends connected CBPeripheral
             _ = try await centralManager.connect(peripheral).first().firstValue
         } catch let error {
-            environment.error = ReadableError(error)
+            self.error = ReadableError(error)
         }
         
-        environment.connectingDevice = nil
+        connectingDevice = nil
     }
 }
 
@@ -129,7 +144,7 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
                     return .scanning
                 }
             }
-            .assign(to: &environment.$state)
+            .assign(to: &$state)
         
         guard centralManager.centralManager.state == .poweredOn else { return }
     }
@@ -154,14 +169,14 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
             }
             .sink { completion in
                 if case .failure(let error) = completion {
-                    self.environment.error = ReadableError(error)
+                    self.error = ReadableError(error)
                 }
             } receiveValue: { result in
-                if let i = self.environment.devices.firstIndex(where: \.id, equals: result.id) {
-                    let existingDevice = self.environment.devices[i]
-                    self.environment.devices[i] = existingDevice.extend(using: result)
+                if let i = self.devices.firstIndex(where: \.id, equals: result.id) {
+                    let existingDevice = self.devices[i]
+                    self.devices[i] = existingDevice.extend(using: result)
                 } else {
-                    self.environment.devices.append(result)
+                    self.devices.append(result)
                 }
             }
             .store(in: &cancellables)
@@ -179,40 +194,8 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
     
     func refresh() {
         stopScanning()
-        environment.devices.removeAll()
+        devices.removeAll()
         setupManager()
         startScanning()
-    }
-}
-
-// MARK: - Environment
-
-extension PeripheralScannerScreen.PeripheralScannerViewModel {
-    
-    final class Environment: ObservableObject {
-        
-        // MARK: Properties
-        
-        @Published fileprivate(set) var error: ReadableError?
-        @Published fileprivate(set) var devices: [ScanResult]
-        @Published fileprivate(set) var connectingDevice: ScanResult?
-        @Published fileprivate(set) var state: State
-        
-        // MARK: init
-        
-        init(error: ReadableError? = nil, devices: [ScanResult] = [], connectingDevice: ScanResult? = nil, state: State = .disabled, connect: @escaping (ScanResult) -> Void = { _ in}) {
-            self.error = error
-            self.devices = devices
-            self.connectingDevice = connectingDevice
-            self.state = state
-        }
-        
-        // MARK: API
-        
-        func advertisedServices(_ deviceID: UUID) -> Set<Service> {
-            return devices
-                .first(where: \.id, isEqualsTo: deviceID)?
-                .services ?? Set<Service>()
-        }
     }
 }

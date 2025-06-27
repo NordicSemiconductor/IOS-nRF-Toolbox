@@ -9,7 +9,6 @@
 import SwiftUI
 import iOS_Common_Libraries
 
-fileprivate typealias Env = PeripheralScannerScreen.PeripheralScannerViewModel.Environment
 fileprivate typealias ScanResult = PeripheralScannerScreen.PeripheralScannerViewModel.ScanResult
 
 // MARK: - ScanResultList
@@ -18,7 +17,6 @@ struct ScanResultList: View {
     
     // MARK: Environment
     
-    @EnvironmentObject private var environment: Env
     @EnvironmentObject private var viewModel: PeripheralScannerScreen.PeripheralScannerViewModel
     @Environment(\.dismiss) var dismiss
     
@@ -31,7 +29,7 @@ struct ScanResultList: View {
     var body: some View {
         List {
             Section {
-                ForEach(environment.devices) { device in
+                ForEach(viewModel.devices) { device in
                     Button {
                         Task {
                             await viewModel.tryToConnect(device: device)
@@ -39,7 +37,7 @@ struct ScanResultList: View {
                         }
                     } label: {
                         ScanResultItem(name: device.name, services: device.services,
-                                       showProgress: environment.connectingDevice == device)
+                                       showProgress: viewModel.connectingDevice == device)
                     }
                 }
                 
