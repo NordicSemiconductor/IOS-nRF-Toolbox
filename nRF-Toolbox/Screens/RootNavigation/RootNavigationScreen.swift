@@ -27,8 +27,6 @@ struct RootNavigationView: View {
     @StateObject var rootViewModel = RootNavigationViewModel.shared
     @StateObject var connectedDevicesViewModel = ConnectedDevicesViewModel(centralManager: centralManager)
     
-    @StateObject var scannerViewModel = ScannerViewModel(centralManager: centralManager)
-
     @State private var visibility: NavigationSplitViewVisibility = .doubleColumn
     @State private var preferredCompactColumn: NavigationSplitViewColumn = .sidebar
     
@@ -49,7 +47,6 @@ struct RootNavigationView: View {
                 .navigationTitle("nRF Toolbox")
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationSplitViewColumnWidth(ideal: 420.0)
-                .environmentObject(scannerViewModel)
                 .environmentObject(connectedDevicesViewModel)
         } detail: {
             NavigationStack {
@@ -91,7 +88,7 @@ struct RootNavigationView: View {
             .setupNavBarBackground(with: Assets.navBar.color)
         }
         .onAppear {
-            scannerViewModel.setupManager()
+            connectedDevicesViewModel.setupScanner()
         }
         .accentColor(.white)
         .environmentObject(rootViewModel)

@@ -20,6 +20,7 @@ final class ConnectedDevicesViewModel: ObservableObject {
     // MARK: Private Properties
     
     private let centralManager: CentralManager
+    let scanner: ScannerViewModel
     private var deviceViewModels: [UUID: DeviceDetailsViewModel] = [:]
     private var cancellables = Set<AnyCancellable>()
     
@@ -49,6 +50,7 @@ final class ConnectedDevicesViewModel: ObservableObject {
     
     init(centralManager: CentralManager) {
         self.centralManager = centralManager
+        self.scanner = ScannerViewModel(centralManager: centralManager)
         self.connectedDevices = []
         self.selectedDevice = nil
         observeStateChange()
@@ -142,7 +144,9 @@ extension ConnectedDevicesViewModel {
         centralManager.connectedPeripheralChannel
             .map { $0 } // Remove <Never> as $1
             .filter { $0.1 == nil } // No connection error
+            .receive(on: RunLoop.main)
             .map { (peripheral: CBPeripheral, error: Error?) -> Device in
+//                scanner.advertisedServices(peripheral.identifier.uuid)
                 let services = Set<Service>(peripheral.services?.compactMap {
                     Service.find(by: $0.uuid) ?? Service(name: "unknown", identifier: "service-\($0.uuid.uuidString)", uuidString: $0.uuid.uuidString, source: "unknown")
                 } ?? [])
@@ -207,6 +211,35 @@ extension ConnectedDevicesViewModel {
         var errorDescription: String? {
             return "Bluetooth is powered off or is unavailable."
         }
+    }
+}
+
+// MARK: - Scanner
+
+extension ConnectedDevicesViewModel {
+    
+    func setupScanner() {
+        scanner.setupManager()
+        objectWillChange.send()
+    }
+    
+    func startScanning() {
+        scanner.startScanning()
+        objectWillChange.send()
+    }
+    
+    // MARK: stopScanning()
+    
+    func stopScanning() {
+        scanner.stopScanning()
+        objectWillChange.send()
+    }
+    
+    // MARK: refresh()
+    
+    func refresh() {
+        scanner.refresh()
+        objectWillChange.send()
     }
 }
 

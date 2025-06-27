@@ -17,7 +17,6 @@ struct SidebarView: View {
     
     @EnvironmentObject var rootViewModel: RootNavigationViewModel
     @EnvironmentObject var viewModel: ConnectedDevicesViewModel
-    @EnvironmentObject var scannerViewModel: ScannerViewModel
     
     // MARK: view
     
@@ -33,9 +32,8 @@ struct SidebarView: View {
                                 DeviceScreen(device)
                                     .environmentObject(rootViewModel)
                                     .environmentObject(viewModel)
-                                    .environmentObject(deviceViewModel)
                             } label: {
-                                SidebarDeviceView(device, advertising: scannerViewModel.environment.advertisedServices(device.id))
+                                SidebarDeviceView(device, advertising: viewModel.scanner.advertisedServices(device.id))
                                     .tag(RootNavigationView.MenuCategory.device)
                             }
                             .isDetailLink(true)
@@ -47,7 +45,7 @@ struct SidebarView: View {
             Section("Scanner") {
                 NavigationLink {
                     PeripheralScannerScreen()
-                        .environmentObject(scannerViewModel)
+                        .environmentObject(viewModel)
                 } label: {
                     Label("Connect to Device", systemImage: "dot.radiowaves.right")
                         .setAccent(.universalAccentColor)
