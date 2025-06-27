@@ -17,6 +17,12 @@ import iOS_Bluetooth_Numbers_Database
 @MainActor
 final class ConnectedDevicesViewModel: ObservableObject {
     
+    // MARK: ScannerState
+    
+    enum ScannerState {
+        case scanning, unsupported, disabled, unauthorized
+    }
+    
     // MARK: Private Properties
     
     private let centralManager: CentralManager
@@ -30,7 +36,7 @@ final class ConnectedDevicesViewModel: ObservableObject {
     
     @Published fileprivate(set) var devices: [ConnectedDevicesViewModel.ScanResult]
     @Published fileprivate(set) var connectingDevice: ConnectedDevicesViewModel.ScanResult?
-    @Published fileprivate(set) var scannerState: ScannerViewModel.ScannerState
+    @Published fileprivate(set) var scannerState: ScannerState
     
     @Published fileprivate(set) var connectedDevices: [Device]
     @Published var selectedDevice: Device? {
@@ -252,6 +258,7 @@ extension ConnectedDevicesViewModel {
             // `connect` method returns Publisher that sends connected CBPeripheral
             _ = try await centralManager.connect(peripheral).first().firstValue
         } catch let error {
+            self.unexpectedDisconnectionMessage = error.localizedDescription
 //            self.error = ReadableError(error)
         }
     }
@@ -263,7 +270,7 @@ extension ConnectedDevicesViewModel {
         guard scannerCancellables.isEmpty else { return }
         // Track state CBCentralManager's state changes
         centralManager.stateChannel
-            .map { state -> ScannerViewModel.ScannerState in
+            .map { state -> ScannerState in
                 switch state {
                 case .poweredOff:
                     return .disabled
@@ -300,6 +307,7 @@ extension ConnectedDevicesViewModel {
             }
             .sink { completion in
                 if case .failure(let error) = completion {
+                    self.unexpectedDisconnectionMessage = error.localizedDescription
 //                    self.error = ReadableError(error)
                 }
             } receiveValue: { result in

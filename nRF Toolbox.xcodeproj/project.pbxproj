@@ -87,7 +87,6 @@
 		0180A29C2AEFBBC200090F6D /* InspectorScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0180A29A2AEFBBC200090F6D /* InspectorScreen.swift */; };
 		018873C42A58332400253273 /* iOSCommonLibraries in Frameworks */ = {isa = PBXBuildFile; productRef = 018873C32A58332400253273 /* iOSCommonLibraries */; };
 		018873C72A583A9900253273 /* PeripheralScannerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873C62A583A9900253273 /* PeripheralScannerScreen.swift */; };
-		018873C92A583B0000253273 /* ScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018873C82A583B0000253273 /* ScannerViewModel.swift */; };
 		018873CC2A583C3300253273 /* iOS-BLE-Library in Frameworks */ = {isa = PBXBuildFile; productRef = 018873CB2A583C3300253273 /* iOS-BLE-Library */; };
 		018C053B2AE0844E007CE0FE /* SignalChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018C053A2AE0844E007CE0FE /* SignalChartViewModel.swift */; };
 		018C053E2AE16682007CE0FE /* SignalChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018C053D2AE16682007CE0FE /* SignalChartView.swift */; };
@@ -539,7 +538,6 @@
 		017D105C2A580DCD00E38E5F /* IOS-Common-Libraries */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "IOS-Common-Libraries"; path = "../IOS-Common-Libraries"; sourceTree = "<group>"; };
 		0180A29A2AEFBBC200090F6D /* InspectorScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorScreen.swift; sourceTree = "<group>"; };
 		018873C62A583A9900253273 /* PeripheralScannerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralScannerScreen.swift; sourceTree = "<group>"; };
-		018873C82A583B0000253273 /* ScannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewModel.swift; sourceTree = "<group>"; };
 		018873CD2A583C4E00253273 /* IOS-BLE-Library */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "IOS-BLE-Library"; path = "../IOS-BLE-Library"; sourceTree = "<group>"; };
 		018C053A2AE0844E007CE0FE /* SignalChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalChartViewModel.swift; sourceTree = "<group>"; };
 		018C053D2AE16682007CE0FE /* SignalChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalChartView.swift; sourceTree = "<group>"; };
@@ -1320,7 +1318,6 @@
 				0164A4722AD5A44B0093E501 /* StateViews */,
 				01C81AD32A5CB62D0011B41E /* ScanResult */,
 				018873C62A583A9900253273 /* PeripheralScannerScreen.swift */,
-				018873C82A583B0000253273 /* ScannerViewModel.swift */,
 			);
 			path = Scanner;
 			sourceTree = "<group>";
@@ -2968,7 +2965,6 @@
 				AA5AB3DF2D0868DD005213D5 /* CyclingDataView.swift in Sources */,
 				018C053B2AE0844E007CE0FE /* SignalChartViewModel.swift in Sources */,
 				AAA898B72DD4C0B6000C7012 /* UARTMacroButtonsView.swift in Sources */,
-				018873C92A583B0000253273 /* ScannerViewModel.swift in Sources */,
 				01C575B92A798D65007FE4F0 /* SensorSettings.swift in Sources */,
 				AA5539202D00AAD200F589F5 /* BatteryViewModel.swift in Sources */,
 				0129F2282A684059002FB3F5 /* LabeledValueView.swift in Sources */,
