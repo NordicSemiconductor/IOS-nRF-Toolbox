@@ -33,7 +33,6 @@ extension PeripheralScannerScreen {
         init(centralManager: CentralManager) {
             self.environment = Environment()
             self.centralManager = centralManager
-            setupEnvironment()
             log.debug(#function)
         }
         
@@ -41,13 +40,6 @@ extension PeripheralScannerScreen {
         
         deinit {
             log.debug(#function)
-        }
-        
-        private func setupEnvironment() {
-            log.debug(#function)
-            environment.connect = { [weak self] device in
-                await self?.tryToConnect(device: device)
-            }
         }
     }
 }
@@ -206,8 +198,6 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
         @Published fileprivate(set) var connectingDevice: ScanResult?
         @Published fileprivate(set) var state: State
         
-        fileprivate(set) var connect: (ScanResult) async -> ()
-        
         private let log = NordicLog(category: "PeripheralScanner.Env")
         
         // MARK: init
@@ -217,7 +207,6 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
             self.devices = devices
             self.connectingDevice = connectingDevice
             self.state = state
-            self.connect = connect
             
             log.debug(#function)
         }

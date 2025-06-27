@@ -19,6 +19,7 @@ struct ScanResultList: View {
     // MARK: Environment
     
     @EnvironmentObject private var environment: Env
+    @EnvironmentObject private var viewModel: PeripheralScannerScreen.PeripheralScannerViewModel
     @Environment(\.dismiss) var dismiss
     
     // MARK: Properties
@@ -33,7 +34,7 @@ struct ScanResultList: View {
                 ForEach(environment.devices) { device in
                     Button {
                         Task {
-                            await environment.connect(device)
+                            await viewModel.tryToConnect(device: device)
                             dismiss()
                         }
                     } label: {
