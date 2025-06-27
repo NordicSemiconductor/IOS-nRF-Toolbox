@@ -10,7 +10,7 @@ import SwiftUI
 import iOS_Common_Libraries
 
 fileprivate typealias Env = PeripheralScannerScreen.PeripheralScannerViewModel.Environment
-fileprivate typealias ScanResult = PeripheralScannerScreen.PeripheralScannerViewModel.ScanResult
+fileprivate typealias ScanResult = Env.ScanResult
 
 // MARK: - ScanResultList
 

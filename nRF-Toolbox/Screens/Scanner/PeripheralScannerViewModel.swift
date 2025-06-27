@@ -11,6 +11,7 @@ import iOS_BLE_Library_Mock
 import iOS_Bluetooth_Numbers_Database
 import iOS_Common_Libraries
 import Combine
+import CoreBluetoothMock
 
 // MARK: - PeripheralScannerViewModel
 
@@ -51,13 +52,7 @@ extension PeripheralScannerScreen {
     }
 }
 
-extension PeripheralScannerScreen.PeripheralScannerViewModel {
-    
-    // MARK: State
-    
-    enum State {
-        case scanning, unsupported, disabled, unauthorized
-    }
+extension PeripheralScannerScreen.PeripheralScannerViewModel.Environment {
     
     // MARK: ScanResult
     
@@ -93,14 +88,14 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
     
     // MARK: tryToConnect(device:)
     
-    func tryToConnect(device: ScanResult) async {
+    @MainActor
+    func tryToConnect(device: Environment.ScanResult) async {
         log.debug(#function)
         if environment.connectingDevice != nil {
             return
         }
         
         environment.connectingDevice = device
-        
         // Get CBPeripheral's instance
         let peripheral = centralManager.retrievePeripherals(withIdentifiers: [device.id]).first!
         
@@ -124,7 +119,7 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
         guard cancellables.isEmpty else { return }
         // Track state CBCentralManager's state changes
         centralManager.stateChannel
-            .map { state -> State in
+            .map { state -> Environment.State in
                 switch state {
                 case .poweredOff:
                     return .disabled
@@ -151,8 +146,8 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
                 // Filter unconnectable devices
                 return $0.advertisementData.isConnectable == true
             }
-            .map { result -> ScanResult in
-                ScanResult(
+            .map { result -> Environment.ScanResult in
+                Environment.ScanResult(
                     name: result.advertisementData.localName ?? result.name,
                     rssi: result.rssi.value,
                     id: result.peripheral.identifier,
@@ -197,6 +192,12 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
 extension PeripheralScannerScreen.PeripheralScannerViewModel {
     
     final class Environment: ObservableObject {
+        
+        // MARK: State
+        
+        enum State {
+            case scanning, unsupported, disabled, unauthorized
+        }
         
         // MARK: Properties
         

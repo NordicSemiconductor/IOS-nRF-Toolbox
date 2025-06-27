@@ -16,7 +16,6 @@ import iOS_Bluetooth_Numbers_Database
 
 @MainActor
 final class ConnectedDevicesViewModel: ObservableObject {
-    typealias ScannerVM = PeripheralScannerScreen.PeripheralScannerViewModel
     
     // MARK: Private Properties
     
