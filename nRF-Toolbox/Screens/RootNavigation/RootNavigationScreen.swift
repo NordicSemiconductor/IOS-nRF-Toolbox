@@ -27,7 +27,7 @@ struct RootNavigationView: View {
     @StateObject var rootViewModel = RootNavigationViewModel.shared
     @StateObject var connectedDevicesViewModel = ConnectedDevicesViewModel(centralManager: centralManager)
     
-    @StateObject var scannerViewModel = PeripheralScannerScreen.PeripheralScannerViewModel(centralManager: centralManager)
+    @StateObject var scannerViewModel = ScannerViewModel(centralManager: centralManager)
 
     @State private var visibility: NavigationSplitViewVisibility = .doubleColumn
     @State private var preferredCompactColumn: NavigationSplitViewColumn = .sidebar

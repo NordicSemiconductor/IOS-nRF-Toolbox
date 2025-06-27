@@ -13,61 +13,58 @@ import iOS_Common_Libraries
 import Combine
 import CoreBluetoothMock
 
-// MARK: - PeripheralScannerViewModel
+// MARK: - ScannerViewModel
 
-extension PeripheralScannerScreen {
+@MainActor
+final class ScannerViewModel: ObservableObject {
     
-    @MainActor
-    final class PeripheralScannerViewModel: ObservableObject {
+    // MARK: State
+    
+    enum ScannerState {
+        case scanning, unsupported, disabled, unauthorized
+    }
+    
+    // MARK: Properties
+    
+    private let centralManager: CentralManager
+    
+    @Published fileprivate(set) var error: ReadableError?
+    @Published fileprivate(set) var devices: [ConnectedDevicesViewModel.ScanResult]
+    @Published fileprivate(set) var connectingDevice: ConnectedDevicesViewModel.ScanResult?
+    @Published fileprivate(set) var scannerState: ScannerState
+    
+    private var cancellables = Set<AnyCancellable>()
+    private let log = NordicLog(category: "PeripheralScanner.VM")
+    
+    // MARK: init
+    
+    init(centralManager: CentralManager) {
+        self.centralManager = centralManager
         
-        // MARK: State
+        self.error = nil
+        self.devices = []
+        self.connectingDevice = nil
+        self.scannerState = .disabled
         
-        enum ScannerState {
-            case scanning, unsupported, disabled, unauthorized
-        }
-        
-        // MARK: Properties
-        
-        private let centralManager: CentralManager
-        
-        @Published fileprivate(set) var error: ReadableError?
-        @Published fileprivate(set) var devices: [ConnectedDevicesViewModel.ScanResult]
-        @Published fileprivate(set) var connectingDevice: ConnectedDevicesViewModel.ScanResult?
-        @Published fileprivate(set) var scannerState: ScannerState
-        
-        private var cancellables = Set<AnyCancellable>()
-        private let log = NordicLog(category: "PeripheralScanner.VM")
-        
-        // MARK: init
-        
-        init(centralManager: CentralManager) {
-            self.centralManager = centralManager
-            
-            self.error = nil
-            self.devices = []
-            self.connectingDevice = nil
-            self.scannerState = .disabled
-            
-            log.debug(#function)
-        }
-        
-        // MARK: adv
-        
-        func advertisedServices(_ deviceID: UUID) -> Set<Service> {
-            return devices
-                .first(where: \.id, isEqualsTo: deviceID)?
-                .services ?? Set<Service>()
-        }
-        
-        // MARK: deinit
-        
-        deinit {
-            log.debug(#function)
-        }
+        log.debug(#function)
+    }
+    
+    // MARK: adv
+    
+    func advertisedServices(_ deviceID: UUID) -> Set<Service> {
+        return devices
+            .first(where: \.id, isEqualsTo: deviceID)?
+            .services ?? Set<Service>()
+    }
+    
+    // MARK: deinit
+    
+    deinit {
+        log.debug(#function)
     }
 }
 
-extension PeripheralScannerScreen.PeripheralScannerViewModel {
+extension ScannerViewModel {
     
     // MARK: tryToConnect(device:)
     
@@ -93,7 +90,7 @@ extension PeripheralScannerScreen.PeripheralScannerViewModel {
     }
 }
 
-extension PeripheralScannerScreen.PeripheralScannerViewModel {
+extension ScannerViewModel {
     
     // MARK: setupManager()
     

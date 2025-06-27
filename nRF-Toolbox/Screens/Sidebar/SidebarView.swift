@@ -17,7 +17,7 @@ struct SidebarView: View {
     
     @EnvironmentObject var rootViewModel: RootNavigationViewModel
     @EnvironmentObject var viewModel: ConnectedDevicesViewModel
-    @EnvironmentObject var scannerViewModel: PeripheralScannerScreen.PeripheralScannerViewModel
+    @EnvironmentObject var scannerViewModel: ScannerViewModel
     
     // MARK: view
     

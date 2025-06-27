@@ -15,7 +15,7 @@ struct ScanResultList: View {
     
     // MARK: Environment
     
-    @EnvironmentObject private var viewModel: PeripheralScannerScreen.PeripheralScannerViewModel
+    @EnvironmentObject private var viewModel: ScannerViewModel
     @Environment(\.dismiss) var dismiss
     
     // MARK: view
