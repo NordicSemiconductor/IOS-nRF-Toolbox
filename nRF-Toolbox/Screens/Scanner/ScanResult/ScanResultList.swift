@@ -9,8 +9,6 @@
 import SwiftUI
 import iOS_Common_Libraries
 
-fileprivate typealias ScanResult = PeripheralScannerScreen.PeripheralScannerViewModel.ScanResult
-
 // MARK: - ScanResultList
 
 struct ScanResultList: View {
@@ -19,10 +17,6 @@ struct ScanResultList: View {
     
     @EnvironmentObject private var viewModel: PeripheralScannerScreen.PeripheralScannerViewModel
     @Environment(\.dismiss) var dismiss
-    
-    // MARK: Properties
-    
-    @State private var selectedDevice: ScanResult.ID?
     
     // MARK: view
     
