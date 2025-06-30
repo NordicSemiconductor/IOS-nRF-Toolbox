@@ -18,6 +18,8 @@ struct HealthThermometerView: View {
     
     // MARK: Constants
     
+    static let measurementFormatter = MeasurementFormatter()
+    
     static let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US")
@@ -29,14 +31,14 @@ struct HealthThermometerView: View {
     
     var body: some View {
         LabeledContent {
-            Text(viewModel.measurement.temperatureFormattedString())
+            Text(Self.measurementFormatter.string(from: viewModel.measurement.temperature))
         } label: {
             Label("Measurement", systemImage: "thermometer.variable")
                 .setAccent(Color.universalAccentColor)
         }
         
         LabeledContent {
-            Text(viewModel.measurement.location.nilDescription)
+            Text(viewModel.measurement.location?.description ?? "N/A")
         } label: {
             Label("Location", systemImage: "figure.dance")
                 .setAccent(Color.universalAccentColor)
@@ -46,7 +48,7 @@ struct HealthThermometerView: View {
             if let timestamp = viewModel.measurement.timestamp {
                 Text(Self.dateFormatter.string(from: timestamp))
             } else {
-                Text("nil")
+                Text("N/A")
             }
         } label: {
             Label("Timestamp", systemImage: "stopwatch")
