@@ -218,9 +218,15 @@ extension ConnectedDevicesViewModel {
     
     enum ConnectionError: LocalizedError {
         case bluetoothUnavailable
+        case connectionTimeout
         
         var errorDescription: String? {
-            return "Bluetooth is powered off or is unavailable."
+            switch self {
+            case .bluetoothUnavailable:
+                return "Bluetooth is powered off or is unavailable."
+            case .connectionTimeout:
+                return "Timeout when attempting to connect."
+            }
         }
     }
 }
@@ -245,11 +251,17 @@ extension ConnectedDevicesViewModel {
         
         // Get CBPeripheral's instance
         let peripheral = centralManager.retrievePeripherals(withIdentifiers: [device.id]).first!
-        
         do {
             // `connect` method returns Publisher that sends connected CBPeripheral
-            _ = try await centralManager.connect(peripheral).first().firstValue
+            let connectedDevice = try await centralManager.connect(peripheral)
+                .timeout(.seconds(2), scheduler: DispatchQueue.main, customError: {
+                    return ConnectionError.connectionTimeout
+                })
+                .first()
+                .firstValue
+            log.debug("Connected to \(connectedDevice)")
         } catch let error {
+            log.error("Error: \(error.localizedDescription)")
             self.unexpectedDisconnectionMessage = error.localizedDescription
 //            self.error = ReadableError(error)
         }
