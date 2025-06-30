@@ -52,7 +52,7 @@ struct GlucoseMeasurementView: View {
                 }
                 
                 if let location {
-                    Label(location, systemImage: "mappin")
+                    Label(location, systemImage: "figure.dance")
                 }
                 
                 if let status {
