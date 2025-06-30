@@ -26,7 +26,7 @@ struct ScanResultList: View {
                 ForEach(viewModel.devices) { device in
                     Button {
                         Task {
-                            await viewModel.tryToConnect(device: device)
+                            guard await viewModel.connect(to: device) else { return }
                             dismiss()
                         }
                     } label: {

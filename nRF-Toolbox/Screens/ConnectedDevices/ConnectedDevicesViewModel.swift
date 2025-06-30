@@ -235,13 +235,13 @@ extension ConnectedDevicesViewModel {
 
 extension ConnectedDevicesViewModel {
     
-    // MARK: tryToConnect(device:)
+    // MARK: connect(to:)
     
     @MainActor
-    func tryToConnect(device: ConnectedDevicesViewModel.ScanResult) async {
+    func connect(to device: ConnectedDevicesViewModel.ScanResult) async -> Bool {
         log.debug(#function)
         if connectingDevice != nil {
-            return
+            return false
         }
         
         connectingDevice = device
@@ -263,8 +263,10 @@ extension ConnectedDevicesViewModel {
         } catch let error {
             log.error("Error: \(error.localizedDescription)")
             self.unexpectedDisconnectionMessage = error.localizedDescription
-//            self.error = ReadableError(error)
+            self.showUnexpectedDisconnectionAlert = true
+            return false
         }
+        return true
     }
     
     // MARK: setupManager()
