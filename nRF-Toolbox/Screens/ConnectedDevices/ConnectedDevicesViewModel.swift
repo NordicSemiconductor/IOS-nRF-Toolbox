@@ -157,14 +157,13 @@ extension ConnectedDevicesViewModel {
             .map { $0 } // Remove <Never> as $1
             .filter { $0.1 == nil } // No connection error
             .receive(on: RunLoop.main)
-            .map { (peripheral: CBPeripheral, error: Error?) -> Device in
-//                scanner.advertisedServices(peripheral.identifier.uuid)
-                let services = Set<Service>(peripheral.services?.compactMap {
-                    Service.find(by: $0.uuid) ?? Service(name: "unknown", identifier: "service-\($0.uuid.uuidString)", uuidString: $0.uuid.uuidString, source: "unknown")
-                } ?? [])
+            .map { [weak self] (peripheral: CBPeripheral, error: Error?) -> Device in
+                let advertisedServices = self?.devices
+                    .first(where: \.id, isEqualsTo: peripheral.identifier)?
+                    .services ?? Set<Service>()
                 
                 return Device(name: peripheral.name, id: peripheral.identifier,
-                              services: services, status: .connected)
+                                    services: advertisedServices, status: .connected)
             }
             .sink { [unowned self] device in
                 if let i = connectedDevices.firstIndex(where: \.id, equals: device.id) {
@@ -229,13 +228,6 @@ extension ConnectedDevicesViewModel {
 // MARK: - Scanner
 
 extension ConnectedDevicesViewModel {
-    
-    func advertisedServices(_ deviceID: UUID) -> Set<Service> {
-        return Set<Service>()
-//        return devices
-//            .first(where: \.id, isEqualsTo: deviceID)?
-//            .services ?? Set<Service>()
-    }
     
     // MARK: tryToConnect(device:)
     

@@ -21,20 +21,18 @@ struct SidebarDeviceView: View {
     // MARK: Properties
     
     private let device: ConnectedDevicesViewModel.Device
-    private let advertisedServices: Set<Service>
     
     // MARK: Init
     
-    init(_ device: ConnectedDevicesViewModel.Device, advertising: Set<Service>) {
+    init(_ device: ConnectedDevicesViewModel.Device) {
         self.device = device
-        self.advertisedServices = advertising
     }
     
     // MARK: view
     
     var body: some View {
         VStack(alignment: .leading) {
-            ScanResultItem(name: device.name ?? "Unnamed", services: advertisedServices)
+            ScanResultItem(name: device.name ?? "Unnamed", services: device.services)
             
             switch device.status {
             case .connected, .userInitiatedDisconnection:
