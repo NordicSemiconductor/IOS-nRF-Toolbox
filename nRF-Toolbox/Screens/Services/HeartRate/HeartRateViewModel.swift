@@ -12,25 +12,6 @@ import iOS_BLE_Library_Mock
 import iOS_Bluetooth_Numbers_Database
 import iOS_Common_Libraries
 
-// MARK: HeartRateValue
-
-struct HeartRateValue {
-    
-    // MARK: Properties
-    
-    let measurement: HeartRateMeasurement
-    let date: Date
-    
-    // MARK: init
-    
-    init(with data: Data) throws {
-        self.measurement = HeartRateMeasurement(data)
-        self.date = .now
-    }
-}
-
-private typealias ViewModel = DeviceScreen.HeartRateViewModel
-
 // MARK: - HeartRateViewModel
 
 extension DeviceScreen {
@@ -113,7 +94,7 @@ extension DeviceScreen.HeartRateViewModel: SupportedServiceViewModel {
 
 // MARK: - Private
 
-private extension ViewModel {
+private extension DeviceScreen.HeartRateViewModel {
     
     // MARK: discoverCharacteristics()
     
