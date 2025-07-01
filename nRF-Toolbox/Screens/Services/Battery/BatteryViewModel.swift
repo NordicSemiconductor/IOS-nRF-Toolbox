@@ -63,14 +63,17 @@ final class BatteryViewModel: ObservableObject {
         batteryLevelAvailable = true
         do {
             // try to enable notifications for
-            if try await peripheral.setNotifyValue(true, for: cbBatteryLevel).timeout(1, scheduler: DispatchQueue.main).firstValue {
+            log.debug("peripheral.setNotifyValue(true, for: cbBatteryLevel)")
+            async let turnOnNotifications = try peripheral.setNotifyValue(true, for: cbBatteryLevel)
+                .timeout(1, scheduler: DispatchQueue.main)
+                .firstValue
+            
+            if try await turnOnNotifications {
                 // in case of success - listen
                 listen(for: cbBatteryLevel)
-            } else {
-                // otherwise - read
-                try? await readBatteryLevelOnTimer(cbBatteryLevel)
             }
         } catch {
+            // Read in case of error.
             try? await readBatteryLevelOnTimer(cbBatteryLevel)
         }
     }
@@ -88,10 +91,12 @@ final class BatteryViewModel: ObservableObject {
     // MARK: readBatteryLevelOnTimer()
     
     private func readBatteryLevelOnTimer(_ batteryLevelCh: CBCharacteristic, timeInterval: TimeInterval = 1) async throws {
-        let publisher = Timer.publish(every: 60, on: .main, in: .default)
+        log.debug(#function)
+        let publisher = Timer.publish(every: 1.0, on: .main, in: .common)
             .autoconnect()
             .flatMap { [unowned self] _ in
-                self.peripheral.readValue(for: batteryLevelCh)
+                self.log.debug("Timer { peripheral.readValue(for: batteryLevelCh) }")
+                return self.peripheral.readValue(for: batteryLevelCh)
             }
             .compactMap { $0 }
             .eraseToAnyPublisher()
@@ -142,18 +147,14 @@ extension BatteryViewModel: SupportedServiceViewModel {
     // MARK: onConnect()
     
     func onConnect() async {
-        do {
-            try await startListening()
-        }
-        catch {
-            // TODO: Later, I guess.
-            log.error(error.localizedDescription)
-        }
+        log.debug(#function)
+        // Don't start listening to Battery on connect.
     }
     
     // MARK: onDisconnect()
     
     func onDisconnect() {
+        log.debug(#function)
         cancellables.removeAll()
     }
 }

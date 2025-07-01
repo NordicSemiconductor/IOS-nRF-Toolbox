@@ -74,6 +74,16 @@ struct InspectorScreen: View {
                 if let batteryServiceViewModel = deviceVM.batteryServiceViewModel {
                     Section {
                         BatteryView()
+                            .onAppear() {
+                                guard deviceIsConnected else { return }
+                                Task { @MainActor in
+                                    try? await batteryServiceViewModel.startListening()
+                                }
+                            }
+                            .onDisappear {
+                                guard deviceIsConnected else { return }
+                                batteryServiceViewModel.onDisconnect()
+                            }
                             .environmentObject(batteryServiceViewModel)
                     }
                     .disabled(!deviceIsConnected)
