@@ -14,57 +14,54 @@ import iOS_Common_Libraries
 
 // MARK: - HeartRateViewModel
 
-extension DeviceScreen {
+@MainActor
+final class HeartRateViewModel: ObservableObject {
     
-    @MainActor
-    final class HeartRateViewModel: ObservableObject {
-        
-        private let peripheral: Peripheral
-        private let heartRateService: CBService
-        private var hrMeasurement: CBCharacteristic!
-        private var cancellables = Set<AnyCancellable>()
-        
-        private let log = NordicLog(category: "HeartRateViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
-        
-        @Published fileprivate(set) var data: [HeartRateValue] = []
-        @Published var scrollPosition = Date()
-        
-        @Published fileprivate(set) var criticalError: CriticalError?
-        @Published var alertError: Error?
-        
-        let visibleDomain = 60
-        let capacity = 360
-        
-        @Published fileprivate(set) var lowest: Int = 40
-        @Published fileprivate(set) var highest: Int = 200
-        
-        fileprivate var internalAlertError: AlertError? {
-            didSet {
-                alertError = internalAlertError
-            }
+    private let peripheral: Peripheral
+    private let heartRateService: CBService
+    private var hrMeasurement: CBCharacteristic!
+    private var cancellables = Set<AnyCancellable>()
+    
+    private let log = NordicLog(category: "HeartRateViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
+    
+    @Published fileprivate(set) var data: [HeartRateValue] = []
+    @Published var scrollPosition = Date()
+    
+    @Published fileprivate(set) var criticalError: CriticalError?
+    @Published var alertError: Error?
+    
+    let visibleDomain = 60
+    let capacity = 360
+    
+    @Published fileprivate(set) var lowest: Int = 40
+    @Published fileprivate(set) var highest: Int = 200
+    
+    fileprivate var internalAlertError: AlertError? {
+        didSet {
+            alertError = internalAlertError
         }
+    }
+    
+    init(peripheral: Peripheral, heartRateService: CBService) {
+        self.peripheral = peripheral
+        self.data = []
+        self.criticalError = nil
+        self.alertError = nil
+        assert(heartRateService.uuid == Service.heartRate.uuid)
         
-        init(peripheral: Peripheral, heartRateService: CBService) {
-            self.peripheral = peripheral
-            self.data = []
-            self.criticalError = nil
-            self.alertError = nil
-            assert(heartRateService.uuid == Service.heartRate.uuid)
-            
-            self.heartRateService = heartRateService
-            self.data.reserveCapacity(capacity)
-            log.debug(#function)
-        }
-        
-        deinit {
-            log.debug(#function)
-        }
+        self.heartRateService = heartRateService
+        self.data.reserveCapacity(capacity)
+        log.debug(#function)
+    }
+    
+    deinit {
+        log.debug(#function)
     }
 }
 
 // MARK: - SupportedServiceViewModel
 
-extension DeviceScreen.HeartRateViewModel: SupportedServiceViewModel {
+extension HeartRateViewModel: SupportedServiceViewModel {
     
     // MARK: attachedView
     
@@ -94,7 +91,7 @@ extension DeviceScreen.HeartRateViewModel: SupportedServiceViewModel {
 
 // MARK: - Private
 
-private extension DeviceScreen.HeartRateViewModel {
+private extension HeartRateViewModel {
     
     // MARK: discoverCharacteristics()
     
@@ -170,37 +167,33 @@ private extension DeviceScreen.HeartRateViewModel {
 
 // MARK: - Errors
 
-extension DeviceScreen.HeartRateViewModel {
+extension HeartRateViewModel {
     
     enum CriticalError: LocalizedError {
         case unknown
         case noMandatoryCharacteristic
+        
+        var errorDescription: String? {
+            switch self {
+            case .unknown:
+                return "Unknown error"
+            case .noMandatoryCharacteristic:
+                return "No mandatory characteristic"
+            }
+        }
     }
 
     enum AlertError: LocalizedError {
         case unknown
         case measurement
-    }
-}
-
-extension DeviceScreen.HeartRateViewModel.CriticalError {
-    var errorDescription: String? {
-        switch self {
-        case .unknown:
-            return "Unknown error"
-        case .noMandatoryCharacteristic:
-            return "No mandatory characteristic"
-        }
-    }
-}
-
-extension DeviceScreen.HeartRateViewModel.AlertError {
-    var errorDescription: String? {
-        switch self {
-        case .unknown:
-            return "Unknown error"
-        case .measurement:
-            return "Error occured while reading measurement"
+        
+        var errorDescription: String? {
+            switch self {
+            case .unknown:
+                return "Unknown error"
+            case .measurement:
+                return "Error occured while reading measurement"
+            }
         }
     }
 }

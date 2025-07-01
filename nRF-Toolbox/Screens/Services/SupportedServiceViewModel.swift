@@ -23,7 +23,7 @@ protocol SupportedServiceViewModel {
 
 enum SupportedServiceAttachedView: View, CustomStringConvertible, Identifiable {
     case blinky(_ viewModel: BlinkyViewModel)
-    case heartRate(_ viewModel: DeviceScreen.HeartRateViewModel)
+    case heartRate(_ viewModel: HeartRateViewModel)
     case healthThermometer(_ viewModel: HealthThermometerViewModel)
     case bloodPressure(_ viewModel: BloodPressureViewModel)
     case running(_ viewModel: RunningServiceViewModel)

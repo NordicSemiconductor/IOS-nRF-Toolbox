@@ -132,7 +132,7 @@ extension DeviceDetailsViewModel {
                 case .healthThermometer:
                     supportedServiceViewModels.append(HealthThermometerViewModel(peripheral: peripheral, temperatureService: service))
                 case .heartRate:
-                    supportedServiceViewModels.append(DeviceScreen.HeartRateViewModel(peripheral: peripheral, heartRateService: service))
+                    supportedServiceViewModels.append(HeartRateViewModel(peripheral: peripheral, heartRateService: service))
                 case .bloodPressure:
                     supportedServiceViewModels.append(BloodPressureViewModel(peripheral: peripheral, bpsService: service))
                 case .battery:

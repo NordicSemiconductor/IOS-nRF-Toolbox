@@ -17,7 +17,7 @@ struct HeartRateChart: View {
     
     // MARK: Environment
     
-    @EnvironmentObject private var viewModel: DeviceScreen.HeartRateViewModel
+    @EnvironmentObject private var viewModel: HeartRateViewModel
     
     // MARK: view
     
@@ -87,7 +87,7 @@ struct HeartRateView: View {
     
     // MARK: EnvironmentObject
     
-    @EnvironmentObject private var viewModel: DeviceScreen.HeartRateViewModel
+    @EnvironmentObject private var viewModel: HeartRateViewModel
     
     // MARK: view
     
