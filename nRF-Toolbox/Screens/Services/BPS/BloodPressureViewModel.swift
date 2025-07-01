@@ -26,6 +26,7 @@ final class BloodPressureViewModel: ObservableObject {
     private let peripheral: Peripheral
     
     private var bpsMeasurement: CBCharacteristic!
+    private var cuffMeasurement: CBCharacteristic!
     private lazy var cancellables = Set<AnyCancellable>()
     
     private let log = NordicLog(category: "BloodPressureViewModel",
@@ -34,6 +35,7 @@ final class BloodPressureViewModel: ObservableObject {
     // MARK: Properties
     
     @Published private(set) var currentValue: BloodPressureMeasurement?
+    @Published private(set) var currentCuffValue: CuffPressureMeasurement?
     
     // MARK: init
     
@@ -73,34 +75,32 @@ extension BloodPressureViewModel: SupportedServiceViewModel {
             .firstValue
         
         bpsMeasurement = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.bloodPressureMeasurement.uuid)
-        guard let bpsMeasurement else { return }
-        log.debug("Found Blood Pressure Measurement.")
+        cuffMeasurement = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.intermediateCuffPressure.uuid)
+        
         do {
-            if let initialValue = bpsMeasurement.value {
-                log.debug("Obtained initial Blood Pressure Measurement.")
-                currentValue = try? BloodPressureMeasurement(data: initialValue)
+            if let bpsMeasurement {
+                log.debug("Found Blood Pressure Measurement.")
+                if let initialValue = bpsMeasurement.value {
+                    currentValue = try? BloodPressureMeasurement(data: initialValue)
+                    log.debug("Obtained initial Blood Pressure Measurement.")
+                }
+                let bpsEnable = try await peripheral.setNotifyValue(true, for: bpsMeasurement).firstValue
+                log.debug("BPS Measurement.setNotifyValue(true): \(bpsEnable)")
+                
+                listenTo(bpsMeasurement)
             }
-            let bpsEnable = try await peripheral.setNotifyValue(true, for: bpsMeasurement).firstValue
-            log.debug("BPS Measurement.setNotifyValue(true): \(bpsEnable)")
             
-            listenTo(bpsMeasurement)
+            if let cuffMeasurement {
+                log.debug("Found Intermediate Cuff Pressure Measurement.")
+                if let initialValue = cuffMeasurement.value {
+                    currentCuffValue = try? CuffPressureMeasurement(data: initialValue)
+                    log.debug("Obtained initial Intermediate Cuff Pressure Measurement.")
+                }
+            }
         } catch {
             log.debug(error.localizedDescription)
             onDisconnect()
         }
-//
-//        case CBUUID.Characteristics.BloodPressure.intermediateCuff:
-//            do {
-//                let cuffCharacteristic = try CuffPressureCharacteristic(data: value)
-//                cuffPressureSection.update(with: cuffCharacteristic)
-//            } catch let error {
-//                displayErrorAlert(error: error)
-//            }
-//
-//            tableView.reloadData()
-//        default:
-//            super.didUpdateValue(for: characteristic)
-//        }
     }
     
     // MARK: onDisconnect()
