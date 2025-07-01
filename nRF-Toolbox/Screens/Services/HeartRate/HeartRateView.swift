@@ -59,32 +59,20 @@ struct HeartRateChart: View {
             .chartXVisibleDomain(length: viewModel.visibleDomain)
             .chartScrollPosition(x: $viewModel.scrollPosition)
             
-            if let sensorLocation = viewModel.location {
-                Label {
-                    Text("Location: \(sensorLocation.description)")
-                        .foregroundStyle(.secondary)
-                } icon: {
-                    Image(systemName: "figure.dance")
-                        .foregroundStyle(Color.nordicMiddleGrey)
-                }
+            if let lastMeasurement = viewModel.data.last {
+                Label(lastMeasurement.measurement.sensorContact.description, systemImage: "hand.rays.fill")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                
+                Label("RR Intervals Received: \(lastMeasurement.measurement.intervals?.count ?? 0)", systemImage: "arrow.left.and.right.circle")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
             
-            if let lastMeasurement = viewModel.data.last {
-                Label {
-                    Text(lastMeasurement.measurement.sensorContact.description)
-                        .foregroundStyle(.secondary)
-                } icon: {
-                    Image(systemName: "hand.rays.fill")
-                        .foregroundStyle(Color.nordicMiddleGrey)
-                }
-                
-                Label {
-                    Text("RR Intervals Received: \(lastMeasurement.measurement.intervals?.count ?? 0)")
-                        .foregroundStyle(.secondary)
-                } icon: {
-                    Image(systemName: "arrow.left.and.right.circle")
-                        .foregroundStyle(Color.nordicMiddleGrey)
-                }
+            if let sensorLocation = viewModel.location {
+                Label("Location: \(sensorLocation.description)", systemImage: "figure.dance")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
         }
         .padding(.vertical, 4)
