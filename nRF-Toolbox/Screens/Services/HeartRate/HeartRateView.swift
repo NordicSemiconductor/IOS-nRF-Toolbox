@@ -59,12 +59,22 @@ struct HeartRateChart: View {
             .chartXVisibleDomain(length: viewModel.visibleDomain)
             .chartScrollPosition(x: $viewModel.scrollPosition)
             
-            Label {
-                Text("RR Intervals Received: \(viewModel.data.last?.measurement.intervals?.count ?? 0)")
-                    .foregroundStyle(.secondary)
-            } icon: {
-                Image(systemName: "arrow.left.and.right.circle")
-                    .foregroundStyle(Color.nordicMiddleGrey)
+            if let lastMeasurement = viewModel.data.last {
+                Label {
+                    Text(lastMeasurement.measurement.sensorContact.description)
+                        .foregroundStyle(.secondary)
+                } icon: {
+                    Image(systemName: "hand.rays.fill")
+                        .foregroundStyle(Color.nordicMiddleGrey)
+                }
+                
+                Label {
+                    Text("RR Intervals Received: \(lastMeasurement.measurement.intervals?.count ?? 0)")
+                        .foregroundStyle(.secondary)
+                } icon: {
+                    Image(systemName: "arrow.left.and.right.circle")
+                        .foregroundStyle(Color.nordicMiddleGrey)
+                }
             }
         }
         .padding(.vertical, 4)
