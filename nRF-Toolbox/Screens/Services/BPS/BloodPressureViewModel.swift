@@ -26,6 +26,7 @@ final class BloodPressureViewModel: ObservableObject {
     private let peripheral: Peripheral
     
     private var bpsMeasurement: CBCharacteristic!
+    private var bpsFlags: CBCharacteristic!
     private var cuffMeasurement: CBCharacteristic!
     private lazy var cancellables = Set<AnyCancellable>()
     
@@ -35,6 +36,7 @@ final class BloodPressureViewModel: ObservableObject {
     // MARK: Properties
     
     @Published private(set) var currentValue: BloodPressureMeasurement?
+    @Published private(set) var features: BitField<BloodPressureMeasurement.Feature>?
     @Published private(set) var currentCuffValue: CuffPressureMeasurement?
     
     // MARK: init
@@ -67,7 +69,7 @@ extension BloodPressureViewModel: SupportedServiceViewModel {
     func onConnect() async {
         log.debug(#function)
         let characteristics: [Characteristic] = [
-            .bloodPressureMeasurement, .intermediateCuffPressure
+            .bloodPressureMeasurement, .bloodPressureFeature, .intermediateCuffPressure
         ]
         let cbCharacteristics = try? await peripheral
             .discoverCharacteristics(characteristics.map(\.uuid), for: service)
@@ -75,6 +77,7 @@ extension BloodPressureViewModel: SupportedServiceViewModel {
             .firstValue
         
         bpsMeasurement = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.bloodPressureMeasurement.uuid)
+        bpsFlags = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.bloodPressureFeature.uuid)
         cuffMeasurement = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.intermediateCuffPressure.uuid)
         
         do {
@@ -88,6 +91,16 @@ extension BloodPressureViewModel: SupportedServiceViewModel {
                 log.debug("BPS Measurement.setNotifyValue(true): \(bpsEnable)")
                 
                 listenTo(bpsMeasurement)
+            }
+            
+            if let bpsFlags {
+                log.debug("Found Blood Pressure Feature.")
+                let featureData = try await peripheral.readValue(for: bpsFlags).firstValue
+                if let featureData, featureData.canRead(UInt16.self, atOffset: 0) {
+                    let featureFlags = UInt(featureData.littleEndianBytes(atOffset: 0, as: UInt16.self))
+                    self.features = BitField<BloodPressureMeasurement.Feature>(featureFlags)
+                    print(features.nilDescription)
+                }
             }
             
             if let cuffMeasurement {

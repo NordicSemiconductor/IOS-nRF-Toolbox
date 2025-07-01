@@ -70,6 +70,46 @@ fileprivate extension BloodPressureMeasurement {
     }
 }
 
+// MARK: - Feature
+
+extension BloodPressureMeasurement {
+    
+    enum Feature: RegisterValue, Option, Codable, CustomStringConvertible {
+        case movementDetection = 0
+        case cuffFitDetection = 1
+        case irregularPulseDetection = 2
+        case pulseRateRangeDetection = 3
+        case measurementPositionDetection = 4
+        case multipleBond = 5
+        case e2e_crc = 6
+        case userDataService = 7
+        case userFacingTime = 8
+        
+        public var description: String {
+            switch self {
+            case .movementDetection:
+                return "Movement detection"
+            case .cuffFitDetection:
+                return "Cuff fit detection"
+            case .irregularPulseDetection:
+                return "Irregular pulse detection"
+            case .pulseRateRangeDetection:
+                return "Pulse rate range detection"
+            case .measurementPositionDetection:
+                return "Measurement position detection"
+            case .multipleBond:
+                return "Multiple bond"
+            case .e2e_crc:
+                return "E2E-CRC"
+            case .userDataService:
+                return "User data service"
+            case .userFacingTime:
+                return "User facing time"
+            }
+        }
+    }
+}
+
 // MARK: - DataError
 
 extension BloodPressureMeasurement {
