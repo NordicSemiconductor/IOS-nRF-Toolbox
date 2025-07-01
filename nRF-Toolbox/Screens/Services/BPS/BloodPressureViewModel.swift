@@ -36,7 +36,7 @@ final class BloodPressureViewModel: ObservableObject {
     // MARK: Properties
     
     @Published private(set) var currentValue: BloodPressureMeasurement?
-    @Published private(set) var features: BitField<BloodPressureMeasurement.Feature>?
+    @Published private(set) var features = BitField<BloodPressureMeasurement.Feature>()
     @Published private(set) var currentCuffValue: CuffPressureMeasurement?
     
     // MARK: init
@@ -99,7 +99,6 @@ extension BloodPressureViewModel: SupportedServiceViewModel {
                 if let featureData, featureData.canRead(UInt16.self, atOffset: 0) {
                     let featureFlags = UInt(featureData.littleEndianBytes(atOffset: 0, as: UInt16.self))
                     self.features = BitField<BloodPressureMeasurement.Feature>(featureFlags)
-                    print(features.nilDescription)
                 }
             }
             

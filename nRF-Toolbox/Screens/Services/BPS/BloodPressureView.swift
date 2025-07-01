@@ -25,6 +25,12 @@ struct BloodPressureView: View {
         } else {
             NoContentView(title: "No Data", systemImage: "drop.fill", description: "No Blood Pressure Data Available. You may press Button 1 on your DevKit to generate some Data.")
         }
+        
+        ForEach(viewModel.features.toArray(), id: \.bitwiseValue) { feature in
+            Label(feature.description, systemImage: "checkmark.circle.fill")
+                .font(.caption)
+                .foregroundStyle(Color.secondary)
+        }
     }
 }
  
