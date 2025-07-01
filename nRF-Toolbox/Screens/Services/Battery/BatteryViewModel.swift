@@ -92,7 +92,7 @@ final class BatteryViewModel: ObservableObject {
     
     private func readBatteryLevelOnTimer(_ batteryLevelCh: CBCharacteristic, timeInterval: TimeInterval = 1) async throws {
         log.debug(#function)
-        let publisher = Timer.publish(every: 1.0, on: .main, in: .common)
+        let publisher = Timer.publish(every: 3.0, on: .main, in: .common)
             .autoconnect()
             .flatMap { [unowned self] _ in
                 self.log.debug("Timer { peripheral.readValue(for: batteryLevelCh) }")
