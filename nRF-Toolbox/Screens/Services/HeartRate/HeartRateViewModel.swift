@@ -25,6 +25,7 @@ final class HeartRateViewModel: ObservableObject {
     private let log = NordicLog(category: "HeartRateViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
     
     @Published fileprivate(set) var data: [HeartRateValue] = []
+    @Published fileprivate(set) var location: HeartRateMeasurement.SensorLocation?
     @Published var scrollPosition = Date()
     
     @Published fileprivate(set) var criticalError: CriticalError?
@@ -42,6 +43,8 @@ final class HeartRateViewModel: ObservableObject {
         }
     }
     
+    // MARK: init
+    
     init(peripheral: Peripheral, heartRateService: CBService) {
         self.peripheral = peripheral
         self.data = []
@@ -53,6 +56,8 @@ final class HeartRateViewModel: ObservableObject {
         self.data.reserveCapacity(capacity)
         log.debug(#function)
     }
+    
+    // MARK: deinit
     
     deinit {
         log.debug(#function)
@@ -97,9 +102,11 @@ private extension HeartRateViewModel {
     
     func discoverCharacteristics() async throws {
         log.debug(#function)
-        let hrCharacteristics: [Characteristic] = [.heartRateMeasurement]
+        let hrCharacteristics: [Characteristic] = [.heartRateMeasurement, .bodySensorLocation]
         let heartRateCharacteristic = try await peripheral.discoverCharacteristics(hrCharacteristics.map(\.uuid), for: heartRateService)
-            .timeout(1, scheduler: DispatchQueue.main)
+            .timeout(1, scheduler: DispatchQueue.main, customError: {
+                return CriticalError.noMandatoryCharacteristic
+            })
             .firstValue
         
         for characteristic in heartRateCharacteristic where characteristic.uuid == Characteristic.heartRateMeasurement.uuid {
@@ -112,6 +119,28 @@ private extension HeartRateViewModel {
                 log.error("Unable to Enable Notifications: \(error.localizedDescription)")
             }
         }
+        
+        let heartRateCharacteristics = try? await peripheral.discoverCharacteristics(hrCharacteristics.map(\.uuid), for: heartRateService)
+            .timeout(1, scheduler: DispatchQueue.main, customError: {
+                return CriticalError.noMandatoryCharacteristic
+            })
+            .firstValue
+        
+        guard let bodySensorCharacteristic = heartRateCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.bodySensorLocation.uuid) else { return }
+        
+        log.debug("Found Body Sensor Characteristic")
+        location = try? await peripheral.readValue(for: bodySensorCharacteristic).tryMap { data in
+            guard let data, data.canRead(UInt8.self, atOffset: 0) else {
+                throw CriticalError.unknown
+            }
+            return HeartRateMeasurement.SensorLocation(rawValue: RegisterValue(data[0]))
+        }
+        .timeout(.seconds(1), scheduler: DispatchQueue.main, customError: {
+            CriticalError.unknown
+        })
+        .firstValue
+
+        log.debug("Body Sensor Location: \(location.nilDescription)")
     }
     
     // MARK: listenTo()

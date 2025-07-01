@@ -59,6 +59,16 @@ struct HeartRateChart: View {
             .chartXVisibleDomain(length: viewModel.visibleDomain)
             .chartScrollPosition(x: $viewModel.scrollPosition)
             
+            if let sensorLocation = viewModel.location {
+                Label {
+                    Text("Location: \(sensorLocation.description)")
+                        .foregroundStyle(.secondary)
+                } icon: {
+                    Image(systemName: "figure.dance")
+                        .foregroundStyle(Color.nordicMiddleGrey)
+                }
+            }
+            
             if let lastMeasurement = viewModel.data.last {
                 Label {
                     Text(lastMeasurement.measurement.sensorContact.description)
