@@ -31,7 +31,7 @@ struct ServiceBadgeGroup: View {
     
     var body: some View {
         LazyVGrid(columns: [
-            GridItem(.adaptive(minimum: 90))
+            GridItem(.adaptive(minimum: 90), alignment: .topLeading)
         ], content: {
             ForEach(services) {
                 BadgeView(image: $0.systemImage, name: $0.name, color: $0.color ?? .primary)
