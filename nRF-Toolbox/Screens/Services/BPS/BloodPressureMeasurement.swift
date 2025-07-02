@@ -24,6 +24,8 @@ struct BloodPressureMeasurement {
     let meanArterialPressure: Measurement<UnitPressure>
     let date: Date?
     let pulseRate: Int?
+    let userID: UInt8?
+    let status: BitField<MeasurementStatus>?
     
     // MARK: init
     
@@ -57,6 +59,17 @@ struct BloodPressureMeasurement {
         pulseRate = flagsRegister.contains(.pulseRate) ? {
             let pulseValue = Float(asSFloat: data.subdata(in: offset..<offset + SFloatReserved.byteSize))
             return Int(pulseValue)
+        }() : nil
+        
+        userID = flagsRegister.contains(.userID) ? {
+            defer {
+                offset += MemoryLayout<UInt8>.size
+            }
+            return try? data.read(fromOffset: offset)
+        }() : nil
+        
+        status = flagsRegister.contains(.measurementStatus) ? {
+            BitField<MeasurementStatus>(RegisterValue(data.littleEndianBytes(atOffset: offset, as: UInt16.self)))
         }() : nil
     }
 }
