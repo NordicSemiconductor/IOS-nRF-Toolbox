@@ -135,6 +135,13 @@ extension DeviceDetailsViewModel {
                     supportedServiceViewModels.append(HeartRateViewModel(peripheral: peripheral, heartRateService: service))
                 case .bloodPressure:
                     supportedServiceViewModels.append(BloodPressureViewModel(peripheral: peripheral, bpsService: service))
+                    let characteristics = try? await peripheral
+                        .discoverCharacteristics([Characteristic.intermediateCuffPressure.uuid], for: service)
+                        .timeout(1, scheduler: DispatchQueue.main)
+                        .firstValue
+                    if let characteristics, characteristics.hasItems {
+                        supportedServiceViewModels.append(CuffPressureViewModel(peripheral: peripheral, bpsService: service))
+                    }
                 case .battery:
                     supportedServiceViewModels.append(BatteryViewModel(peripheral: peripheral, batteryService: service))
                 case .throughputService:

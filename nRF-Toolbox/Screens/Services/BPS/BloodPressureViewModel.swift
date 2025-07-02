@@ -27,7 +27,6 @@ final class BloodPressureViewModel: ObservableObject {
     
     private var bpsMeasurement: CBCharacteristic!
     private var bpsFlags: CBCharacteristic!
-    private var cuffMeasurement: CBCharacteristic!
     private lazy var cancellables = Set<AnyCancellable>()
     
     private let log = NordicLog(category: "BloodPressureViewModel",
@@ -37,7 +36,6 @@ final class BloodPressureViewModel: ObservableObject {
     
     @Published private(set) var currentValue: BloodPressureMeasurement?
     @Published private(set) var features = BitField<BloodPressureMeasurement.Feature>()
-    @Published private(set) var currentCuffValue: CuffPressureMeasurement?
     
     // MARK: init
     
@@ -69,7 +67,7 @@ extension BloodPressureViewModel: SupportedServiceViewModel {
     func onConnect() async {
         log.debug(#function)
         let characteristics: [Characteristic] = [
-            .bloodPressureMeasurement, .bloodPressureFeature, .intermediateCuffPressure
+            .bloodPressureMeasurement, .bloodPressureFeature
         ]
         let cbCharacteristics = try? await peripheral
             .discoverCharacteristics(characteristics.map(\.uuid), for: service)
@@ -78,7 +76,6 @@ extension BloodPressureViewModel: SupportedServiceViewModel {
         
         bpsMeasurement = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.bloodPressureMeasurement.uuid)
         bpsFlags = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.bloodPressureFeature.uuid)
-        cuffMeasurement = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.intermediateCuffPressure.uuid)
         
         do {
             if let bpsMeasurement {
@@ -90,7 +87,7 @@ extension BloodPressureViewModel: SupportedServiceViewModel {
                 let bpsEnable = try await peripheral.setNotifyValue(true, for: bpsMeasurement).firstValue
                 log.debug("BPS Measurement.setNotifyValue(true): \(bpsEnable)")
                 
-                listenToBPS(bpsMeasurement)
+                listenTo(bpsMeasurement)
             }
             
             if let bpsFlags {
@@ -100,20 +97,6 @@ extension BloodPressureViewModel: SupportedServiceViewModel {
                     let featureFlags = UInt(featureData.littleEndianBytes(atOffset: 0, as: UInt16.self))
                     self.features = BitField<BloodPressureMeasurement.Feature>(featureFlags)
                 }
-            }
-            
-            if let cuffMeasurement {
-                log.debug("Found Intermediate Cuff Pressure Measurement \(cuffMeasurement.uuid)")
-                let cuffData = try? await peripheral.readValue(for: cuffMeasurement).firstValue
-                if let cuffData {
-                    currentCuffValue = try? CuffPressureMeasurement(data: cuffData)
-                    log.debug("Obtained initial Intermediate Cuff Pressure Measurement.")
-                }
-                
-                let cuffEnable = try await peripheral.setNotifyValue(true, for: cuffMeasurement).firstValue
-                log.debug("Cuff Measurement.setNotifyValue(true): \(cuffEnable)")
-                
-                listenToCuffPressure(cuffMeasurement)
             }
         } catch {
             log.debug(error.localizedDescription)
@@ -132,9 +115,9 @@ extension BloodPressureViewModel: SupportedServiceViewModel {
 
 extension BloodPressureViewModel {
     
-    // MARK: listenToBPS(:)
+    // MARK: listenTo(:)
     
-    func listenToBPS(_ bpsCharacteristic: CBCharacteristic) {
+    func listenTo(_ bpsCharacteristic: CBCharacteristic) {
         log.debug(#function)
         peripheral.listenValues(for: bpsCharacteristic)
             .compactMap { [log] data -> BloodPressureMeasurement? in
@@ -151,29 +134,6 @@ extension BloodPressureViewModel {
                 log.debug("Completion")
             }, receiveValue: { [weak self] newValue in
                 self?.currentValue = newValue
-            })
-            .store(in: &cancellables)
-    }
-    
-    // MARK: listenToCuffPressure(:)
-    
-    func listenToCuffPressure(_ cuffCharacteristic: CBCharacteristic) {
-        log.debug(#function)
-        peripheral.listenValues(for: cuffCharacteristic)
-            .compactMap { [log] data -> CuffPressureMeasurement? in
-                log.debug("Received Cuff Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing])) (\(data.count) bytes)")
-                do {
-                    return try CuffPressureMeasurement(data: data)
-                } catch {
-                    log.error("Error parsing data: \(error.localizedDescription)")
-                    return nil
-                }
-            }
-            .receive(on: RunLoop.main)
-            .sink(receiveCompletion: { [log] _ in
-                log.debug("Completion")
-            }, receiveValue: { [weak self] newValue in
-                self?.currentCuffValue = newValue
             })
             .store(in: &cancellables)
     }

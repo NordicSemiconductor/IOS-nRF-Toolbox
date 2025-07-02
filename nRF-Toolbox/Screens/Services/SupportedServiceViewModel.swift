@@ -26,6 +26,7 @@ enum SupportedServiceAttachedView: View, CustomStringConvertible, Identifiable {
     case heartRate(_ viewModel: HeartRateViewModel)
     case healthThermometer(_ viewModel: HealthThermometerViewModel)
     case bloodPressure(_ viewModel: BloodPressureViewModel)
+    case cuffPressure(_ viewModel: CuffPressureViewModel)
     case running(_ viewModel: RunningServiceViewModel)
     case cycling(_ viewModel: CyclingServiceViewModel)
     case throughput(_ viewModel: ThroughputViewModel)
@@ -46,6 +47,8 @@ enum SupportedServiceAttachedView: View, CustomStringConvertible, Identifiable {
             return "Health Thermometer"
         case .bloodPressure:
             return "Blood Pressure"
+        case .cuffPressure:
+            return "Cuff Pressure"
         case .running:
             return "Running"
         case .cycling:
@@ -78,6 +81,9 @@ enum SupportedServiceAttachedView: View, CustomStringConvertible, Identifiable {
             case .bloodPressure(let bpsViewModel):
                 BloodPressureView()
                     .environmentObject(bpsViewModel)
+            case .cuffPressure(let cuffViewModel):
+                CuffPressureView()
+                    .environmentObject(cuffViewModel)
             case .running(let runningViewModel):
                 RunningServiceView()
                     .environmentObject(runningViewModel.environment)

@@ -346,6 +346,8 @@
 		AA0AEA022CF7438200F93A0B /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0AEA012CF7438200F93A0B /* Assets.swift */; };
 		AA102C472E1574DE0001BDC5 /* MeasurementStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA102C462E1574DE0001BDC5 /* MeasurementStatus.swift */; };
 		AA102C492E1576B00001BDC5 /* MeasurementFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA102C482E1576B00001BDC5 /* MeasurementFlag.swift */; };
+		AA102C4B2E1578FD0001BDC5 /* CuffPressureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA102C4A2E1578FD0001BDC5 /* CuffPressureViewModel.swift */; };
+		AA102C4D2E1579A30001BDC5 /* CuffPressureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA102C4C2E1579A30001BDC5 /* CuffPressureView.swift */; };
 		AA124CD52DA52B8200EBA004 /* CGMSRecordList.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA124CD42DA52B8200EBA004 /* CGMSRecordList.swift */; };
 		AA1AD37D2DD5DF6300799308 /* UARTMacro+XML.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1AD37C2DD5DF6300799308 /* UARTMacro+XML.swift */; };
 		AA1AD37F2DD5DFC400799308 /* AEXML in Frameworks */ = {isa = PBXBuildFile; productRef = AA1AD37E2DD5DFC400799308 /* AEXML */; };
@@ -804,6 +806,8 @@
 		AA0AEA012CF7438200F93A0B /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		AA102C462E1574DE0001BDC5 /* MeasurementStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementStatus.swift; sourceTree = "<group>"; };
 		AA102C482E1576B00001BDC5 /* MeasurementFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementFlag.swift; sourceTree = "<group>"; };
+		AA102C4A2E1578FD0001BDC5 /* CuffPressureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuffPressureViewModel.swift; sourceTree = "<group>"; };
+		AA102C4C2E1579A30001BDC5 /* CuffPressureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuffPressureView.swift; sourceTree = "<group>"; };
 		AA124CD42DA52B8200EBA004 /* CGMSRecordList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSRecordList.swift; sourceTree = "<group>"; };
 		AA1AD37C2DD5DF6300799308 /* UARTMacro+XML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UARTMacro+XML.swift"; sourceTree = "<group>"; };
 		AA1AD3802DD6063A00799308 /* UARTEditMacroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTEditMacroView.swift; sourceTree = "<group>"; };
@@ -2526,6 +2530,8 @@
 				AA102C482E1576B00001BDC5 /* MeasurementFlag.swift */,
 				AA102C462E1574DE0001BDC5 /* MeasurementStatus.swift */,
 				AA29315A2DEF1B4F002C82B6 /* CuffPressureMeasurement.swift */,
+				AA102C4A2E1578FD0001BDC5 /* CuffPressureViewModel.swift */,
+				AA102C4C2E1579A30001BDC5 /* CuffPressureView.swift */,
 				AA2931582DEEEFCD002C82B6 /* BloodPressureMeasurement.swift */,
 				AA7769FC2DEDED9A0005A82B /* BloodPressureViewModel.swift */,
 				AA2931562DEEED92002C82B6 /* BloodPressureView.swift */,
@@ -2966,6 +2972,7 @@
 				013E5D8C2ADD33EF00B9C475 /* RunningServiceViewModel.swift in Sources */,
 				01FD68D32AE82EB90021101C /* AttributeList.swift in Sources */,
 				0132082A2A5C142100DCEA11 /* ScanResultItem.swift in Sources */,
+				AA102C4D2E1579A30001BDC5 /* CuffPressureView.swift in Sources */,
 				AA124CD52DA52B8200EBA004 /* CGMSRecordList.swift in Sources */,
 				018C053E2AE16682007CE0FE /* SignalChartView.swift in Sources */,
 				01C62AE52B72463F00CDEE31 /* DeviceInformation.swift in Sources */,
@@ -3035,6 +3042,7 @@
 				01C575BE2A7D00EF007FE4F0 /* Alias.swift in Sources */,
 				AA479EA52D0B0B5C0052E801 /* WheelDataPoint.swift in Sources */,
 				AA047E132DF1B3CE00DA401E /* BlinkyViewModel.swift in Sources */,
+				AA102C4B2E1578FD0001BDC5 /* CuffPressureViewModel.swift in Sources */,
 				012E22942A6AD5BE00B14064 /* NamedItem.swift in Sources */,
 				AA69FF382E056F9F0065A39C /* GlucoseAllRecordsChartView.swift in Sources */,
 				AAA04F232DAD513A002DAB42 /* UARTMessagesList.swift in Sources */,
