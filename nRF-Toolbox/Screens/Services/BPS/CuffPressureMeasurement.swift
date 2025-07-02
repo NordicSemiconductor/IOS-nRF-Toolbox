@@ -36,7 +36,7 @@ struct CuffPressureMeasurement {
         }
         
         let featureFlags = UInt(data.littleEndianBytes(as: UInt8.self))
-        let flagsRegister = BitField<Flag>(featureFlags)
+        let flagsRegister = BitField<MeasurementFlag>(featureFlags)
         let unit: UnitPressure = flagsRegister.contains(.unit) ? .millimetersOfMercury : .kilopascals
         var offset = MemoryLayout<UInt8>.size
         
@@ -77,18 +77,5 @@ struct CuffPressureMeasurement {
         status = flagsRegister.contains(.measurementStatus) ? {
             BitField<MeasurementStatus>(RegisterValue(data.littleEndianBytes(atOffset: offset, as: UInt16.self)))
         }() : nil
-    }
-}
-
-// MARK: - Flags
-
-extension CuffPressureMeasurement {
-    
-    private enum Flag: RegisterValue, Option, CaseIterable {
-        case unit
-        case timestamp
-        case pulseRate
-        case userID
-        case measurementStatus
     }
 }

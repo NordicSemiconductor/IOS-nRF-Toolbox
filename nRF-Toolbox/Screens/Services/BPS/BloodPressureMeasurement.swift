@@ -33,7 +33,7 @@ struct BloodPressureMeasurement {
         }
         
         let featureFlags = UInt(data.littleEndianBytes(as: UInt8.self))
-        let flagsRegister = BitField<Flag>(featureFlags)
+        let flagsRegister = BitField<MeasurementFlag>(featureFlags)
         let unit: UnitPressure = flagsRegister.contains(.unit) ? .kilopascals : .millimetersOfMercury
         
         var offset = 1
@@ -58,15 +58,6 @@ struct BloodPressureMeasurement {
             let pulseValue = Float(asSFloat: data.subdata(in: offset..<offset + SFloatReserved.byteSize))
             return Int(pulseValue)
         }() : nil
-    }
-}
-
-// MARK: - Flags
-
-fileprivate extension BloodPressureMeasurement {
-    
-    private enum Flag: RegisterValue, Option, CaseIterable {
-        case unit, timestamp, pulseRate
     }
 }
 
