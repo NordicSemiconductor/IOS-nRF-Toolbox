@@ -26,7 +26,7 @@ struct CuffPressureMeasurement {
     let timestamp: Date?
     let pulseRate: Int?
     let userID: UInt8?
-    let status: BitField<Status>?
+    let status: BitField<MeasurementStatus>?
     
     // MARK: init
     
@@ -75,7 +75,7 @@ struct CuffPressureMeasurement {
         }() : nil
         
         status = flagsRegister.contains(.measurementStatus) ? {
-            BitField<Status>(RegisterValue(data.littleEndianBytes(atOffset: offset, as: UInt16.self)))
+            BitField<MeasurementStatus>(RegisterValue(data.littleEndianBytes(atOffset: offset, as: UInt16.self)))
         }() : nil
     }
 }
@@ -90,36 +90,5 @@ extension CuffPressureMeasurement {
         case pulseRate
         case userID
         case measurementStatus
-    }
-}
-
-// MARK: - Status
-
-extension CuffPressureMeasurement {
-    
-    enum Status: RegisterValue, Option, CustomStringConvertible {
-        case bodyMovement
-        case cuffFitLoose
-        case irregularPulse
-        case pulseRateAboveUpperLimit
-        case pulseRateLessThanLimitOrReserved // If bit is zero, it means "Pulse rate is less than lower limit"
-        case improperPosition
-        
-        var description: String {
-            switch self {
-            case .bodyMovement:
-                return "Body movement"
-            case .cuffFitLoose:
-                return "Cuff fit too loose"
-            case .irregularPulse:
-                return "Irregular pulse"
-            case .pulseRateAboveUpperLimit:
-                return "Pulse rate exceeds upper limit"
-            case .pulseRateLessThanLimitOrReserved:
-                return "Reserved for future use"
-            case .improperPosition:
-                return "Improper measurement position"
-            }
-        }
     }
 }

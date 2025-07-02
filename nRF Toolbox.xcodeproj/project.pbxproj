@@ -344,6 +344,7 @@
 		AA047E132DF1B3CE00DA401E /* BlinkyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA047E122DF1B3CE00DA401E /* BlinkyViewModel.swift */; };
 		AA0A78502D4914BE000206F8 /* ThroughputData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0A784F2D4914BE000206F8 /* ThroughputData.swift */; };
 		AA0AEA022CF7438200F93A0B /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0AEA012CF7438200F93A0B /* Assets.swift */; };
+		AA102C472E1574DE0001BDC5 /* MeasurementStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA102C462E1574DE0001BDC5 /* MeasurementStatus.swift */; };
 		AA124CD52DA52B8200EBA004 /* CGMSRecordList.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA124CD42DA52B8200EBA004 /* CGMSRecordList.swift */; };
 		AA1AD37D2DD5DF6300799308 /* UARTMacro+XML.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1AD37C2DD5DF6300799308 /* UARTMacro+XML.swift */; };
 		AA1AD37F2DD5DFC400799308 /* AEXML in Frameworks */ = {isa = PBXBuildFile; productRef = AA1AD37E2DD5DFC400799308 /* AEXML */; };
@@ -800,6 +801,7 @@
 		AA047E122DF1B3CE00DA401E /* BlinkyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkyViewModel.swift; sourceTree = "<group>"; };
 		AA0A784F2D4914BE000206F8 /* ThroughputData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThroughputData.swift; sourceTree = "<group>"; };
 		AA0AEA012CF7438200F93A0B /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
+		AA102C462E1574DE0001BDC5 /* MeasurementStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementStatus.swift; sourceTree = "<group>"; };
 		AA124CD42DA52B8200EBA004 /* CGMSRecordList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSRecordList.swift; sourceTree = "<group>"; };
 		AA1AD37C2DD5DF6300799308 /* UARTMacro+XML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UARTMacro+XML.swift"; sourceTree = "<group>"; };
 		AA1AD3802DD6063A00799308 /* UARTEditMacroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTEditMacroView.swift; sourceTree = "<group>"; };
@@ -2519,6 +2521,7 @@
 		AA7769FB2DEDED770005A82B /* BPS */ = {
 			isa = PBXGroup;
 			children = (
+				AA102C462E1574DE0001BDC5 /* MeasurementStatus.swift */,
 				AA29315A2DEF1B4F002C82B6 /* CuffPressureMeasurement.swift */,
 				AA2931582DEEEFCD002C82B6 /* BloodPressureMeasurement.swift */,
 				AA7769FC2DEDED9A0005A82B /* BloodPressureViewModel.swift */,
@@ -3022,6 +3025,7 @@
 				AADCFF222E0C3F5F00CD6DB6 /* CGMSAllRecordsChartView.swift in Sources */,
 				AA5AB3DB2D08649C005213D5 /* CyclingData.swift in Sources */,
 				017D102E2A5809E300E38E5F /* nRF_ToolboxApp.swift in Sources */,
+				AA102C472E1574DE0001BDC5 /* MeasurementStatus.swift in Sources */,
 				014BBD7D2A70004B00BCFCA8 /* RSCMeasurement.swift in Sources */,
 				0108E87B2AF140D800C8B096 /* ChartTimeData.swift in Sources */,
 				AA5AB3E12D0877F6005213D5 /* MeasurementFormatter+Ext.swift in Sources */,
