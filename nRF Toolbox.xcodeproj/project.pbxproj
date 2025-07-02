@@ -2482,6 +2482,16 @@
 			path = Blinky;
 			sourceTree = "<group>";
 		};
+		AA102C4F2E157E650001BDC5 /* CuffPressure */ = {
+			isa = PBXGroup;
+			children = (
+				AA29315A2DEF1B4F002C82B6 /* CuffPressureMeasurement.swift */,
+				AA102C4A2E1578FD0001BDC5 /* CuffPressureViewModel.swift */,
+				AA102C4C2E1579A30001BDC5 /* CuffPressureView.swift */,
+			);
+			path = CuffPressure;
+			sourceTree = "<group>";
+		};
 		AA2C36FF2D47D78500D41989 /* Throughput */ = {
 			isa = PBXGroup;
 			children = (
@@ -2527,11 +2537,9 @@
 		AA7769FB2DEDED770005A82B /* BPS */ = {
 			isa = PBXGroup;
 			children = (
+				AA102C4F2E157E650001BDC5 /* CuffPressure */,
 				AA102C482E1576B00001BDC5 /* MeasurementFlag.swift */,
 				AA102C462E1574DE0001BDC5 /* MeasurementStatus.swift */,
-				AA29315A2DEF1B4F002C82B6 /* CuffPressureMeasurement.swift */,
-				AA102C4A2E1578FD0001BDC5 /* CuffPressureViewModel.swift */,
-				AA102C4C2E1579A30001BDC5 /* CuffPressureView.swift */,
 				AA2931582DEEEFCD002C82B6 /* BloodPressureMeasurement.swift */,
 				AA7769FC2DEDED9A0005A82B /* BloodPressureViewModel.swift */,
 				AA2931562DEEED92002C82B6 /* BloodPressureView.swift */,

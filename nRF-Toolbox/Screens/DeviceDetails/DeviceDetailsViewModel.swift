@@ -118,7 +118,9 @@ extension DeviceDetailsViewModel {
         log.debug(#function)
         do {
             supportedServiceViewModels.removeAll()
-            discoveredServices = try await peripheral.discoverServices(serviceUUIDs: nil).firstValue
+            discoveredServices = try await peripheral.discoverServices(serviceUUIDs: nil)
+                .timeout(5, scheduler: DispatchQueue.main)
+                .firstValue
             let supportedServices = Service.supportedServices.compactMap { CBUUID(service: $0) }
             
             for service in discoveredServices where supportedServices.contains(service.uuid) {
