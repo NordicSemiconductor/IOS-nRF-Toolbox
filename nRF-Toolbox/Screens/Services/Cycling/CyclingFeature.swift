@@ -11,31 +11,17 @@ import iOS_Common_Libraries
 
 // MARK: - CyclingFlag
 
-enum CyclingFlag: RegisterValue, Option {
+enum CyclingFlag: RegisterValue, Option, CustomStringConvertible {
     case wheelRevolution, crankRevolution, multipleSensorLocations
-}
-
-// MARL: - CyclingFeatures
-
-struct CyclingFeatures {
     
-    // MARK: Private
-    
-    private var flags: BitField<CyclingFlag>
-    
-    // MARK: init
-    
-    init(flags: RegisterValue) {
-        self.flags = BitField(flags)
-    }
-    
-    subscript(flag: CyclingFlag) -> Bool {
-        get {
-            flags.contains(flag)
-        }
-        set {
-            guard flags.contains(flag) != newValue else { return }
-            flags.flip(flag)
+    var description: String {
+        switch self {
+        case .wheelRevolution:
+            return "Wheel Revolution"
+        case .crankRevolution:
+            return "Crank Revolution"
+        case .multipleSensorLocations:
+            return "Multiple Sensor Locations"
         }
     }
 }

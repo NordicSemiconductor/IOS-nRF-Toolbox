@@ -34,6 +34,8 @@ final class CyclingServiceViewModel: ObservableObject {
                                 unit: .meters)
     }
     
+    @Published private(set) var features: BitField<CyclingFlag>?
+    
     private let service: CBService
     private let peripheral: Peripheral
     private var cscMeasurement: CBCharacteristic!
@@ -77,22 +79,29 @@ final class CyclingServiceViewModel: ObservableObject {
         }
     }
     
-    // MARK: startListening()
+    // MARK: readFeatures()
     
-    func startListening() async throws {
+    @MainActor
+    func readFeatures() async throws {
         log.debug(#function)
-        let cyclingFeatures = try await peripheral.readValue(for: cscFeature).tryMap { data in
+        features = try await peripheral.readValue(for: cscFeature).tryMap { data in
             guard let data, data.canRead(UInt8.self, atOffset: 0) else {
                 throw CriticalError.noData
             }
-            return CyclingFeatures(flags: RegisterValue(data[0]))
+            return BitField<CyclingFlag>(RegisterValue(data[0]))
         }
-        .timeout(.seconds(1), scheduler: DispatchQueue.main, customError: {
+        .timeout(.seconds(5), scheduler: DispatchQueue.main, customError: {
             CriticalError.timeout
         })
         .firstValue
         
-        log.debug("Detected \(cyclingFeatures)")
+        guard let features else { return }
+        log.debug("Detected \(ListFormatter().string(from: features.map(\.description)).nilDescription) features.")
+    }
+    
+    // MARK: startListening()
+    
+    func startListening() async throws {
         peripheral.listenValues(for: cscMeasurement)
             .compactMap { [log] in
                 log.debug("Received \($0.hexEncodedString(options: [.prepend0x, .twoByteSpacing])) bytes.")
@@ -165,6 +174,7 @@ extension CyclingServiceViewModel: SupportedServiceViewModel {
         log.debug(#function)
         do {
             try await discoverCharacteristics()
+            try await readFeatures()
             try await startListening()
         }
         catch let error {
