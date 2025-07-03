@@ -32,15 +32,20 @@ struct ScanResultItem: View {
     
     var body: some View {
         HStack {
-            VStack(alignment: .leading) {
-                Text(name ?? "Unnamed Device")
-                    .foregroundColor(name == nil ? .secondary : .primary)
-                
-                if services.hasItems {
-                    ServiceBadgeGroup(services)
+            Label {
+                VStack(alignment: .leading) {
+                    Text(name ?? "Unnamed Device")
+                        .foregroundColor(name == nil ? .secondary : .primary)
+                    
+                    if services.hasItems {
+                        ServiceBadgeGroup(services)
+                    }
                 }
+            } icon: {
+                Image(systemName: "cpu")
+                    .foregroundStyle(Color.universalAccentColor)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(maxWidth: .infinity, alignment: .topLeading)
             .padding(.trailing, 8)
             .padding(.bottom, 6)
             
