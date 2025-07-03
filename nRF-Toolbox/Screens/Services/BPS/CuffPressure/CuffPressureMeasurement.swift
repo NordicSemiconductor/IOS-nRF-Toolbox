@@ -37,7 +37,7 @@ struct CuffPressureMeasurement {
         
         let featureFlags = UInt(data.littleEndianBytes(as: UInt8.self))
         let flagsRegister = BitField<MeasurementFlag>(featureFlags)
-        let unit: UnitPressure = flagsRegister.contains(.unit) ? .millimetersOfMercury : .kilopascals
+        let unit: UnitPressure = flagsRegister.contains(.unit) ? .kilopascals : .millimetersOfMercury
         var offset = MemoryLayout<UInt8>.size
         
         let cuffPressureValue = Float(asSFloat: data.subdata(in: offset..<offset + SFloatReserved.byteSize))
