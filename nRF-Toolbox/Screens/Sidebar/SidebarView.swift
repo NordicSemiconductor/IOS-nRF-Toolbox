@@ -30,12 +30,12 @@ struct SidebarView: View {
                         if let deviceViewModel = viewModel.deviceViewModel(for: device.id) {
                             NavigationLink {
                                 DeviceScreen(device)
+                                    .tag(RootNavigationView.MenuCategory.device)
                                     .environmentObject(rootViewModel)
                                     .environmentObject(viewModel)
                                     .environmentObject(deviceViewModel)
                             } label: {
                                 SidebarDeviceView(device)
-                                    .tag(RootNavigationView.MenuCategory.device)
                             }
                             .isDetailLink(true)
                         }
@@ -46,11 +46,11 @@ struct SidebarView: View {
             Section("Scanner") {
                 NavigationLink {
                     PeripheralScannerScreen()
+                        .tag(RootNavigationView.MenuCategory.scanner)
                         .environmentObject(viewModel)
                 } label: {
                     Label("Connect to Device", systemImage: "dot.radiowaves.right")
                         .setAccent(.universalAccentColor)
-                        .tag(RootNavigationView.MenuCategory.scanner)
                 }
                 .isDetailLink(true)
             }
@@ -78,6 +78,7 @@ struct SidebarView: View {
             .setAccent(.universalAccentColor)
             .tint(.primarylabel)
         }
+        .tint(Color.universalAccentColor)
         .listStyle(.insetGrouped)
         .setupNavBarBackground(with: Assets.navBar.color)
     }
