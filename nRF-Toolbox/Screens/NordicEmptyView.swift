@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import iOS_Common_Libraries
 
 // MARK: - NordicEmptyView
 
@@ -15,7 +16,11 @@ struct NordicEmptyView: View {
     // MARK: view
     
     var body: some View {
-        Text("EmptyView")
-            .frame(alignment: .center)
+        AppIconView()
+            .grayscale(1.0)
+            .frame(width: 100, height: 100)
+            .cornerRadius(8.0)
+            .centered()
+            .background(Color.secondarySystemBackground)
     }
 }

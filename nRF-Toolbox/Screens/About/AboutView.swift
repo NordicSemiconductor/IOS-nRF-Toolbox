@@ -24,6 +24,7 @@ struct AboutView: View {
             Section("") {
                 AppIconView()
                     .frame(width: 100, height: 100)
+                    .cornerRadius(8.0)
                     .centered()
                     .padding(.top)
                     .iridescence()
