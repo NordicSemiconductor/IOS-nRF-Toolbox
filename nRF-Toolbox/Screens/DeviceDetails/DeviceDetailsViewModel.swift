@@ -117,7 +117,10 @@ extension DeviceDetailsViewModel {
     func discoverSupportedServices() async {
         log.debug(#function)
         do {
-            supportedServiceViewModels.removeAll()
+            if supportedServiceViewModels.hasItems {
+                await onDisconnect()
+                supportedServiceViewModels.removeAll()
+            }
             discoveredServices = try await peripheral.discoverServices(serviceUUIDs: nil)
                 .timeout(5, scheduler: DispatchQueue.main)
                 .firstValue

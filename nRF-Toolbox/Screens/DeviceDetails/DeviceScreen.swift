@@ -95,9 +95,10 @@ struct DeviceScreen: View {
                 }
             }
         }
-        .taskOnce {
-            log.debug("DeviceScreen.onAppear()")
+        .task {
+            log.debug("DeviceScreen.task()")
             guard let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id) else { return }
+            guard deviceVM.supportedServiceViewModels.isEmpty else { return }
             await deviceVM.discoverSupportedServices()
         }
         .onDisappear {
