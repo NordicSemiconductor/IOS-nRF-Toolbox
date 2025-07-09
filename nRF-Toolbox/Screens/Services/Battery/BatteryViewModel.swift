@@ -31,6 +31,7 @@ final class BatteryViewModel: ObservableObject {
     private let log = NordicLog(category: "BatteryViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
     
     private static let batteryLevelDataLength = 120
+    private static let batteryLevelRange: ClosedRange<UInt> = 0...100
     
     // MARK: init
     
@@ -108,7 +109,10 @@ final class BatteryViewModel: ObservableObject {
     
     private func handleBatteryPublisher(_ publisher: AnyPublisher<Data, Error>) {
         publisher
-            .map { Battery.Level(data: $0) }
+            .map {
+                let batteryLevel = $0.littleEndianBytes(as: UInt8.self)
+                return Battery.Level(level: min(UInt(batteryLevel), Self.batteryLevelRange.upperBound))
+            }
             .map { ChartTimeData<Battery.Level>(value: $0) }
             .scan(Array<ChartTimeData<Battery.Level>>(), { result, lvl in
                 var res = result
