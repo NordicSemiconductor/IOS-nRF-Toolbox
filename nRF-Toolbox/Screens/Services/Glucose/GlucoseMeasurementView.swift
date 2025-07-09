@@ -42,7 +42,7 @@ struct GlucoseMeasurementView: View {
             HStack {
                 BadgeView(name: "# \(sequenceNumber)")
                 
-                Text(measurement.formatted())
+                Text(String(format: "%.2f \(measurement.unit.symbol)", measurement.value))
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             
