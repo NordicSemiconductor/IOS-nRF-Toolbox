@@ -111,7 +111,7 @@ struct DeviceScreen: View {
             }
         }
         .listStyle(.insetGrouped)
-        .navigationTitle(connectedDevicesViewModel.selectedDevice?.name ?? "Unnamed")
+        .navigationTitle(device.name ?? "Unnamed")
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $deviceViewModel.showDeviceSheet) {
             NavigationStack {
