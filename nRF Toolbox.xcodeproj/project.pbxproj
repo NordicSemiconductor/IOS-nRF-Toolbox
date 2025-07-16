@@ -138,7 +138,6 @@
 		01BEADD6241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BEADD5241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift */; };
 		01BEADD8241AE6BF00FC7183 /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BEADD7241AE6BF00FC7183 /* UILabel+Ext.swift */; };
 		01C575B92A798D65007FE4F0 /* SensorSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C575B82A798D65007FE4F0 /* SensorSettings.swift */; };
-		01C575BC2A7BF2E4007FE4F0 /* CoreBluetoothMock-Collection in Frameworks */ = {isa = PBXBuildFile; productRef = 01C575BB2A7BF2E4007FE4F0 /* CoreBluetoothMock-Collection */; };
 		01C62AE52B72463F00CDEE31 /* DeviceInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C62AE42B72463F00CDEE31 /* DeviceInformation.swift */; };
 		01C62AE72B72480C00CDEE31 /* DeviceInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C62AE62B72480C00CDEE31 /* DeviceInformationView.swift */; };
 		01C81ACE2A5CAC350011B41E /* iOS-Bluetooth-Numbers-Database in Frameworks */ = {isa = PBXBuildFile; productRef = 01C81ACD2A5CAC350011B41E /* iOS-Bluetooth-Numbers-Database */; };
@@ -616,7 +615,6 @@
 		01E5910823DB3BC4008F15A4 /* QuickError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickError.swift; sourceTree = "<group>"; };
 		01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosList.swift; sourceTree = "<group>"; };
 		01EBE6182AE4845100960672 /* View+ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ErrorAlert.swift"; sourceTree = "<group>"; };
-		01F6A95D2A81055F00540B45 /* IOS-CoreBluetooth-Mock */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "IOS-CoreBluetooth-Mock"; path = "../IOS-CoreBluetooth-Mock"; sourceTree = "<group>"; };
 		01F6A95F2A812D6200540B45 /* Emulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emulator.swift; sourceTree = "<group>"; };
 		01F6A9652A829EE300540B45 /* SensorSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorSettingsViewModel.swift; sourceTree = "<group>"; };
 		01FB19CF2AE3DB0D006DAB9F /* SensorCalibrationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorCalibrationScreen.swift; sourceTree = "<group>"; };
@@ -869,7 +867,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				015642472AA4E640005A0A44 /* iOS-BLE-Library-Mock in Frameworks */,
-				01C575BC2A7BF2E4007FE4F0 /* CoreBluetoothMock-Collection in Frameworks */,
 				AA1AD37F2DD5DFC400799308 /* AEXML in Frameworks */,
 				018873C42A58332400253273 /* iOSCommonLibraries in Frameworks */,
 				01B861872AB34DBF0001118F /* iOS-Bluetooth-Numbers-Database in Frameworks */,
@@ -2314,7 +2311,6 @@
 		5217F3D91859EE0000F2D5BB = {
 			isa = PBXGroup;
 			children = (
-				01F6A95D2A81055F00540B45 /* IOS-CoreBluetooth-Mock */,
 				018873CD2A583C4E00253273 /* IOS-BLE-Library */,
 				017D105C2A580DCD00E38E5F /* IOS-Common-Libraries */,
 				5217F3EB1859EE0000F2D5BB /* nRF Toolbox Legacy */,
@@ -2596,7 +2592,6 @@
 			name = "nRF-Toolbox";
 			packageProductDependencies = (
 				018873C32A58332400253273 /* iOSCommonLibraries */,
-				01C575BB2A7BF2E4007FE4F0 /* CoreBluetoothMock-Collection */,
 				015642462AA4E640005A0A44 /* iOS-BLE-Library-Mock */,
 				01B861862AB34DBF0001118F /* iOS-Bluetooth-Numbers-Database */,
 				AA1AD37E2DD5DFC400799308 /* AEXML */,
@@ -4261,10 +4256,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 01C81ACC2A5CAC350011B41E /* XCRemoteSwiftPackageReference "iOS-Bluetooth-Numbers-Database" */;
 			productName = "iOS-Bluetooth-Numbers-Database";
-		};
-		01C575BB2A7BF2E4007FE4F0 /* CoreBluetoothMock-Collection */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "CoreBluetoothMock-Collection";
 		};
 		01C81ACD2A5CAC350011B41E /* iOS-Bluetooth-Numbers-Database */ = {
 			isa = XCSwiftPackageProductDependency;
