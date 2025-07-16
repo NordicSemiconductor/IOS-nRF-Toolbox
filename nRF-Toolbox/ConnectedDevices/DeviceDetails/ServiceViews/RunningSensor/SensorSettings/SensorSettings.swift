@@ -140,13 +140,3 @@ struct SensorSettings: View {
         }
     }
 }
-
-#if DEBUG
-struct CalibrateSensor_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            SensorSettings(viewModel: SensorSettings.MockViewModel(), displaySettings: .constant(false))
-        }
-    }
-}
-#endif
