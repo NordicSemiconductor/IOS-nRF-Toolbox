@@ -1,6 +1,5 @@
 
 import Foundation
-import CoreBluetoothMock_Collection
 
 extension Battery {
     static let preview: [ChartTimeData<Battery.Level>] = [

@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import CoreBluetoothMock_Collection
 import Charts
 
 // MARK: - BatteryChart

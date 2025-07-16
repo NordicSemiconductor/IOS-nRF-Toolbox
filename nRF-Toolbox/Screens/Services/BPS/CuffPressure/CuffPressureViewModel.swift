@@ -9,11 +9,9 @@
 import SwiftUI
 import Combine
 import CoreBluetoothMock
-import CoreBluetoothMock_Collection
 import iOS_BLE_Library_Mock
 import iOS_Bluetooth_Numbers_Database
 import iOS_Common_Libraries
-import CoreBluetoothMock_Collection
 
 // MARK: - CuffPressureViewModel
 

@@ -9,7 +9,6 @@
 import Foundation
 import iOS_Bluetooth_Numbers_Database
 import CoreBluetoothMock
-import CoreBluetoothMock_Collection
 import iOS_BLE_Library_Mock
 
 // MARK: - Service
