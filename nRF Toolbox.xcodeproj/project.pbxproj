@@ -139,7 +139,6 @@
 		01BEADD8241AE6BF00FC7183 /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BEADD7241AE6BF00FC7183 /* UILabel+Ext.swift */; };
 		01C575B92A798D65007FE4F0 /* SensorSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C575B82A798D65007FE4F0 /* SensorSettings.swift */; };
 		01C575BC2A7BF2E4007FE4F0 /* CoreBluetoothMock-Collection in Frameworks */ = {isa = PBXBuildFile; productRef = 01C575BB2A7BF2E4007FE4F0 /* CoreBluetoothMock-Collection */; };
-		01C575BE2A7D00EF007FE4F0 /* Alias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C575BD2A7D00EF007FE4F0 /* Alias.swift */; };
 		01C62AE52B72463F00CDEE31 /* DeviceInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C62AE42B72463F00CDEE31 /* DeviceInformation.swift */; };
 		01C62AE72B72480C00CDEE31 /* DeviceInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C62AE62B72480C00CDEE31 /* DeviceInformationView.swift */; };
 		01C81ACE2A5CAC350011B41E /* iOS-Bluetooth-Numbers-Database in Frameworks */ = {isa = PBXBuildFile; productRef = 01C81ACD2A5CAC350011B41E /* iOS-Bluetooth-Numbers-Database */; };
@@ -591,7 +590,6 @@
 		01BEADD5241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicBottomDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		01BEADD7241AE6BF00FC7183 /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
 		01C575B82A798D65007FE4F0 /* SensorSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorSettings.swift; sourceTree = "<group>"; };
-		01C575BD2A7D00EF007FE4F0 /* Alias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alias.swift; sourceTree = "<group>"; };
 		01C62AE42B72463F00CDEE31 /* DeviceInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInformation.swift; sourceTree = "<group>"; };
 		01C62AE62B72480C00CDEE31 /* DeviceInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInformationView.swift; sourceTree = "<group>"; };
 		01C81AD42A5CB6420011B41E /* ServiceBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBadge.swift; sourceTree = "<group>"; };
@@ -1308,7 +1306,6 @@
 				01DEB4A72A65E90C00D4C1E8 /* Data+Ext.swift */,
 				01DEB4A92A65E9D900D4C1E8 /* CharacteristicReader.swift */,
 				0164A4752AD698650093E501 /* NumberDatabase+Ext.swift */,
-				01C575BD2A7D00EF007FE4F0 /* Alias.swift */,
 				01C81AD62A5D8FEA0011B41E /* ReadableError.swift */,
 				012E228F2A69AFC200B14064 /* String+Name.swift */,
 				012E22932A6AD5BE00B14064 /* NamedItem.swift */,
@@ -2997,7 +2994,6 @@
 				014BBD7D2A70004B00BCFCA8 /* RSCMeasurement.swift in Sources */,
 				0108E87B2AF140D800C8B096 /* ChartTimeData.swift in Sources */,
 				AA5AB3E12D0877F6005213D5 /* MeasurementFormatter+Ext.swift in Sources */,
-				01C575BE2A7D00EF007FE4F0 /* Alias.swift in Sources */,
 				AA479EA52D0B0B5C0052E801 /* WheelDataPoint.swift in Sources */,
 				AA047E132DF1B3CE00DA401E /* BlinkyViewModel.swift in Sources */,
 				AA102C4B2E1578FD0001BDC5 /* CuffPressureViewModel.swift in Sources */,

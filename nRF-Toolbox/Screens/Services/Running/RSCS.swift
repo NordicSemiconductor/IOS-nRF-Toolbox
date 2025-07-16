@@ -12,6 +12,10 @@ import iOS_BLE_Library_Mock
 import CoreBluetoothMock
 import iOS_Bluetooth_Numbers_Database
 
+typealias SensorLocation = RunningSpeedAndCadence.SensorLocation
+typealias RSCFeature = RunningSpeedAndCadence.RSCFeature
+typealias SupportedSensorLocationsResponse = RunningSpeedAndCadence.SupportedSensorLocations
+
 extension CBMUUID {
     
     static let rscMeasurement = CBMUUID(characteristic: .rscMeasurement)
