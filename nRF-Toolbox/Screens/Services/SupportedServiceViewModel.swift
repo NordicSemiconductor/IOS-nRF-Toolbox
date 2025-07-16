@@ -15,6 +15,7 @@ protocol SupportedServiceViewModel {
     
     var attachedView: SupportedServiceAttachedView { get }
     
+    // TODO: async throws for onConnect()
     func onConnect() async
     func onDisconnect()
 }

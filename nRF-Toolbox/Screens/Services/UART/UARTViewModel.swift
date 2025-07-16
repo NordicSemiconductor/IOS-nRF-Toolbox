@@ -83,12 +83,9 @@ extension UARTViewModel: SupportedServiceViewModel {
         do {
             let txEnable = try await peripheral.setNotifyValue(true, for: uartTX).firstValue
             log.debug("\(#function) tx.setNotifyValue(true): \(txEnable)")
-            guard txEnable else {
-                throw Err.unableToTurnOnNotifications
-            }
             listenToIncomingMessages(uartTX)
         } catch {
-            log.debug(error.localizedDescription)
+            log.debug("Error when enabling UART listening: \(error.localizedDescription)")
             onDisconnect()
         }
     }
