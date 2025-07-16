@@ -353,6 +353,7 @@
 		AA1AD3812DD6063A00799308 /* UARTEditMacroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1AD3802DD6063A00799308 /* UARTEditMacroView.swift */; };
 		AA1BB0582D9D60E000734D20 /* CGMSMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1BB0572D9D60E000734D20 /* CGMSMeasurement.swift */; };
 		AA21A3402E13D8AD00316CAD /* HeartRateValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA21A33F2E13D8AD00316CAD /* HeartRateValue.swift */; };
+		AA2806052E27C73A00C42EA8 /* Battery.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2806042E27C73600C42EA8 /* Battery.swift */; };
 		AA2931572DEEED92002C82B6 /* BloodPressureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2931562DEEED92002C82B6 /* BloodPressureView.swift */; };
 		AA2931592DEEEFCD002C82B6 /* BloodPressureMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2931582DEEEFCD002C82B6 /* BloodPressureMeasurement.swift */; };
 		AA29315B2DEF1B4F002C82B6 /* CuffPressureMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA29315A2DEF1B4F002C82B6 /* CuffPressureMeasurement.swift */; };
@@ -811,6 +812,7 @@
 		AA1AD3802DD6063A00799308 /* UARTEditMacroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTEditMacroView.swift; sourceTree = "<group>"; };
 		AA1BB0572D9D60E000734D20 /* CGMSMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSMeasurement.swift; sourceTree = "<group>"; };
 		AA21A33F2E13D8AD00316CAD /* HeartRateValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateValue.swift; sourceTree = "<group>"; };
+		AA2806042E27C73600C42EA8 /* Battery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Battery.swift; sourceTree = "<group>"; };
 		AA2931562DEEED92002C82B6 /* BloodPressureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodPressureView.swift; sourceTree = "<group>"; };
 		AA2931582DEEEFCD002C82B6 /* BloodPressureMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodPressureMeasurement.swift; sourceTree = "<group>"; };
 		AA29315A2DEF1B4F002C82B6 /* CuffPressureMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuffPressureMeasurement.swift; sourceTree = "<group>"; };
@@ -2524,6 +2526,7 @@
 		AA55391E2D00AABB00F589F5 /* Battery */ = {
 			isa = PBXGroup;
 			children = (
+				AA2806042E27C73600C42EA8 /* Battery.swift */,
 				AA55391F2D00AAD200F589F5 /* BatteryViewModel.swift */,
 				AA94C5502D01B49200562F7A /* BatteryView.swift */,
 				0108E87D2AF1654D00C8B096 /* BatteryChart.swift */,
@@ -3012,6 +3015,7 @@
 				AA95CBD12D084C8B00D1FBC6 /* Error.swift in Sources */,
 				AAB2398A2DCA174600101F9D /* UARTMessagesPreview.swift in Sources */,
 				AAF7DE622CFDD4BC000A347A /* SidebarDeviceView.swift in Sources */,
+				AA2806052E27C73A00C42EA8 /* Battery.swift in Sources */,
 				0180A29C2AEFBBC200090F6D /* InspectorScreen.swift in Sources */,
 				AA1AD37D2DD5DF6300799308 /* UARTMacro+XML.swift in Sources */,
 				0164A46E2AD58EB00093E501 /* RSSIItem_Preview.swift in Sources */,
