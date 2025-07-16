@@ -32,7 +32,6 @@
 		012E22902A69AFC200B14064 /* String+Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012E228F2A69AFC200B14064 /* String+Name.swift */; };
 		012E22922A6ACD8400B14064 /* AttributeTableItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012E22912A6ACD8400B14064 /* AttributeTableItemView.swift */; };
 		012E22942A6AD5BE00B14064 /* NamedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012E22932A6AD5BE00B14064 /* NamedItem.swift */; };
-		0130DABA2A8B87E100C332BA /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0130DAB92A8B87E100C332BA /* HUD.swift */; };
 		0132082A2A5C142100DCEA11 /* ScanResultItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013208292A5C142100DCEA11 /* ScanResultItem.swift */; };
 		0133C73B23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0133C73A23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift */; };
 		01363A872417E4FA0030821E /* ControlSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01363A862417E4FA0030821E /* ControlSection.swift */; };
@@ -482,7 +481,6 @@
 		012E228F2A69AFC200B14064 /* String+Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Name.swift"; sourceTree = "<group>"; };
 		012E22912A6ACD8400B14064 /* AttributeTableItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeTableItemView.swift; sourceTree = "<group>"; };
 		012E22932A6AD5BE00B14064 /* NamedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamedItem.swift; sourceTree = "<group>"; };
-		0130DAB92A8B87E100C332BA /* HUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
 		013208292A5C142100DCEA11 /* ScanResultItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanResultItem.swift; sourceTree = "<group>"; };
 		0133C73A23FAC6160067C86A /* UARTPresetCollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTPresetCollectionViewDelegate.swift; sourceTree = "<group>"; };
 		01363A862417E4FA0030821E /* ControlSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSection.swift; sourceTree = "<group>"; };
@@ -1024,7 +1022,6 @@
 			children = (
 				013E5D992AE0545100B9C475 /* Modifiers */,
 				0129F2272A684059002FB3F5 /* LabeledValueView.swift */,
-				0130DAB92A8B87E100C332BA /* HUD.swift */,
 				0164A4802AD8330E0093E501 /* ServiceBadgeGroup.swift */,
 				013E5D8E2ADFDDC600B9C475 /* NumberedColumnGrid.swift */,
 			);
@@ -3028,7 +3025,6 @@
 				01CEB4272AE9100300945105 /* HeartRateViewModel.swift in Sources */,
 				AAD693332DD348E700D8C436 /* UARTEditCommandView.swift in Sources */,
 				AAA04F1B2DAD1B4F002DAB42 /* UARTViewModel.swift in Sources */,
-				0130DABA2A8B87E100C332BA /* HUD.swift in Sources */,
 				0108E8812AF169B800C8B096 /* Battery+Preview.swift in Sources */,
 				0164A4862AD84A170093E501 /* DeviceDetailsViewModel.swift in Sources */,
 				AA29315B2DEF1B4F002C82B6 /* CuffPressureMeasurement.swift in Sources */,

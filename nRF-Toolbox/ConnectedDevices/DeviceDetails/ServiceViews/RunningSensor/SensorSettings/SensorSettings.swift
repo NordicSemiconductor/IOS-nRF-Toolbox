@@ -15,7 +15,6 @@ import iOS_Common_Libraries
 
 struct SensorSettings: View {
     @StateObject var viewModel: SensorSettingsViewModel
-    @EnvironmentObject var hudState: HUDState
     
     @State var showConfirmationAlert = false
     
@@ -58,7 +57,6 @@ struct SensorSettings: View {
                 if viewModel.supportedFeatures.contains(.multipleSensorLocation) {
                     await viewModel.updateLocationSection()
                 }
-                viewModel.hudState = hudState
             }
         }
         .alert(isPresented: $viewModel.showError, error: viewModel.error, actions: {

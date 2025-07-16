@@ -32,8 +32,6 @@ extension SensorSettings {
         
         @Published var updateLocationDisabled = true
         
-        var hudState: HUDState?
-        
         let handler: RunningServiceHandler
         
         private let l = NordicLog(category: "SensorSettingsViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
@@ -82,23 +80,18 @@ extension SensorSettings.SensorSettingsViewModel {
     func writeNewSensorLocation() async {
         await wrappError {
             try await handler.writeSensorLocation(newLocation: SensorLocation(rawValue: selectedSensorLocation)!)
-            
-            hudState?.show(title: "New Sensor Location: \(SensorLocation(rawValue: selectedSensorLocation)!.description)", systemImage: "sensor")
         }
     }
     
     func resetDistance() async {
         await wrappError {
             try await handler.writeCumulativeValue(newDistance: Measurement(value: 0, unit: .meters))
-            
-            hudState?.show(title: "Distance was reset", systemImage: "ruler")
         }
     }
     
     func startCalibration() async {
         await wrappError {
             try await handler.startCalibration()
-            hudState?.show(title: "Calibration procedure was started", systemImage: "slider.horizontal.2.gobackward")
         }
     }
     

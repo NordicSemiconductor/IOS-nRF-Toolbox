@@ -9,9 +9,12 @@
 import SwiftUI
 import iOS_BLE_Library_Mock
 
+// MARK: - App
+
 @main
 struct nRF_ToolboxApp: App {
-    @StateObject var hudState = HUDState()
+    
+    // MARK: view
     
     var body: some Scene {
         WindowGroup {
@@ -19,10 +22,6 @@ struct nRF_ToolboxApp: App {
                 .onAppear {
                     BluetoothEmulation.shared.simulateState()
                     BluetoothEmulation.shared.simulatePeripherals()
-                }
-                .environmentObject(hudState)
-                .hud(isPresented: $hudState.isPresented) {
-                    Label(hudState.title, systemImage: hudState.systemImage)
                 }
         }
     }
