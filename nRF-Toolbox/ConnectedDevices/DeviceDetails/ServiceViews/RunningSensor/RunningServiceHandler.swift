@@ -14,13 +14,6 @@ import Foundation
 import Combine
 import SwiftUI
 
-private extension CBMUUID {
-    static let rscMeasurement = CBMUUID(characteristic: .rscMeasurement)
-    static let rscFeature = CBMUUID(characteristic: .rscFeature)
-    static let sensorLocation = CBMUUID(characteristic: .sensorLocation)
-    static let scControlPoint = CBMUUID(characteristic: .scControlPoint)
-}
-
 @MainActor
 class RunningServiceHandler: ServiceHandler, ObservableObject {
     

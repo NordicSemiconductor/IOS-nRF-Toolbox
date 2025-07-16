@@ -10,15 +10,7 @@ import SwiftUI
 import iOS_BLE_Library_Mock
 import iOS_Bluetooth_Numbers_Database
 import iOS_Common_Libraries
-import CoreBluetoothMock_Collection
 import Combine
-
-private extension CBUUID {
-    static let rscMeasurement = CBUUID(characteristic: .rscMeasurement)
-    static let rscFeature = CBUUID(characteristic: .rscFeature)
-    static let sensorLocation = CBUUID(characteristic: .sensorLocation)
-    static let scControlPoint = CBUUID(characteristic: .scControlPoint)
-}
 
 // MARK: - RunningServiceViewModel
 

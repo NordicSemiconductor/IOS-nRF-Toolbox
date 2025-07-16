@@ -12,7 +12,7 @@ import iOS_BLE_Library_Mock
 import CoreBluetoothMock
 import iOS_Bluetooth_Numbers_Database
 
-private extension CBMUUID {
+extension CBMUUID {
     
     static let rscMeasurement = CBMUUID(characteristic: .rscMeasurement)
     
