@@ -11,6 +11,7 @@ import CoreBluetoothMock
 import CoreBluetoothMock_Collection
 
 public struct BluetoothEmulation {
+    
     static let shared = BluetoothEmulation()
     
     private let rscs = RunningSpeedAndCadence()

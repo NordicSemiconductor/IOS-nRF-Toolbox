@@ -59,11 +59,6 @@ extension CBMServiceMock {
         primary: true
     )
     
-    static let runningSpeedCadence = CBMServiceMock(
-        type: .runningSpeedCadence,
-        primary: true
-    )
-    
     static let weightScale = CBMServiceMock(
         type: .weightScale,
         primary: true

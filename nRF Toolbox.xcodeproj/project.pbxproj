@@ -351,6 +351,7 @@
 		AA1BB0582D9D60E000734D20 /* CGMSMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1BB0572D9D60E000734D20 /* CGMSMeasurement.swift */; };
 		AA21A3402E13D8AD00316CAD /* HeartRateValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA21A33F2E13D8AD00316CAD /* HeartRateValue.swift */; };
 		AA2806052E27C73A00C42EA8 /* Battery.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2806042E27C73600C42EA8 /* Battery.swift */; };
+		AA2806072E27CCDA00C42EA8 /* RSCS.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2806062E27CCDA00C42EA8 /* RSCS.swift */; };
 		AA2931572DEEED92002C82B6 /* BloodPressureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2931562DEEED92002C82B6 /* BloodPressureView.swift */; };
 		AA2931592DEEEFCD002C82B6 /* BloodPressureMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2931582DEEEFCD002C82B6 /* BloodPressureMeasurement.swift */; };
 		AA29315B2DEF1B4F002C82B6 /* CuffPressureMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA29315A2DEF1B4F002C82B6 /* CuffPressureMeasurement.swift */; };
@@ -806,6 +807,7 @@
 		AA1BB0572D9D60E000734D20 /* CGMSMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSMeasurement.swift; sourceTree = "<group>"; };
 		AA21A33F2E13D8AD00316CAD /* HeartRateValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateValue.swift; sourceTree = "<group>"; };
 		AA2806042E27C73600C42EA8 /* Battery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Battery.swift; sourceTree = "<group>"; };
+		AA2806062E27CCDA00C42EA8 /* RSCS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSCS.swift; sourceTree = "<group>"; };
 		AA2931562DEEED92002C82B6 /* BloodPressureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodPressureView.swift; sourceTree = "<group>"; };
 		AA2931582DEEEFCD002C82B6 /* BloodPressureMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodPressureMeasurement.swift; sourceTree = "<group>"; };
 		AA29315A2DEF1B4F002C82B6 /* CuffPressureMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuffPressureMeasurement.swift; sourceTree = "<group>"; };
@@ -1090,6 +1092,7 @@
 				013E5D942AE02A0700B9C475 /* RunningValuesGrid */,
 				013E5D892ADD33E000B9C475 /* RunningServiceScreen.swift */,
 				013E5D8B2ADD33EF00B9C475 /* RunningServiceViewModel.swift */,
+				AA2806062E27CCDA00C42EA8 /* RSCS.swift */,
 			);
 			path = Running;
 			sourceTree = "<group>";
@@ -2955,6 +2958,7 @@
 				01DEB4A82A65E90C00D4C1E8 /* Data+Ext.swift in Sources */,
 				0164A4712AD593B40093E501 /* ScanResultList.swift in Sources */,
 				013E5D8F2ADFDDC600B9C475 /* NumberedColumnGrid.swift in Sources */,
+				AA2806072E27CCDA00C42EA8 /* RSCS.swift in Sources */,
 				AAA04F1D2DAD1B5C002DAB42 /* UARTView.swift in Sources */,
 				AAC4177F2DCB725F0059FE97 /* UARTMacro.swift in Sources */,
 				AA7769FD2DEDED9A0005A82B /* BloodPressureViewModel.swift in Sources */,
