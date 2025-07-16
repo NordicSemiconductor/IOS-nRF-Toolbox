@@ -61,7 +61,6 @@
 		015F109B240FA82400FDAC49 /* DFUDocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015F109A240FA82400FDAC49 /* DFUDocumentPicker.swift */; };
 		0162BA91234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0162BA90234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift */; };
 		0164A46B2AD550000093E501 /* RSSIChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A46A2AD550000093E501 /* RSSIChartView.swift */; };
-		0164A46E2AD58EB00093E501 /* RSSIItem_Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A46D2AD58EB00093E501 /* RSSIItem_Preview.swift */; };
 		0164A4712AD593B40093E501 /* ScanResultList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A4702AD593B40093E501 /* ScanResultList.swift */; };
 		0164A4742AD5A4630093E501 /* StateViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A4732AD5A4630093E501 /* StateViews.swift */; };
 		0164A4762AD698650093E501 /* NumberDatabase+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0164A4752AD698650093E501 /* NumberDatabase+Ext.swift */; };
@@ -88,7 +87,6 @@
 		018873CC2A583C3300253273 /* iOS-BLE-Library in Frameworks */ = {isa = PBXBuildFile; productRef = 018873CB2A583C3300253273 /* iOS-BLE-Library */; };
 		018C053B2AE0844E007CE0FE /* SignalChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018C053A2AE0844E007CE0FE /* SignalChartViewModel.swift */; };
 		018C053E2AE16682007CE0FE /* SignalChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018C053D2AE16682007CE0FE /* SignalChartView.swift */; };
-		018C05412AE1670C007CE0FE /* ChartData+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018C05402AE1670C007CE0FE /* ChartData+Preview.swift */; };
 		0192BB352428E63C003F7F6B /* DFUFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0192BB342428E63C003F7F6B /* DFUFileManager.swift */; };
 		0197AFCF2420DAAC00ADF105 /* NotConnectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0197AFCD2420DAAC00ADF105 /* NotConnectedViewController.swift */; };
 		0197AFD02420DAAC00ADF105 /* NotConnectedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0197AFCE2420DAAC00ADF105 /* NotConnectedViewController.xib */; };
@@ -513,7 +511,6 @@
 		015F109A240FA82400FDAC49 /* DFUDocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUDocumentPicker.swift; sourceTree = "<group>"; };
 		0162BA90234B6DAC008405F5 /* HealthTemperatureAditionalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTemperatureAditionalSection.swift; sourceTree = "<group>"; };
 		0164A46A2AD550000093E501 /* RSSIChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSIChartView.swift; sourceTree = "<group>"; };
-		0164A46D2AD58EB00093E501 /* RSSIItem_Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSIItem_Preview.swift; sourceTree = "<group>"; };
 		0164A4702AD593B40093E501 /* ScanResultList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanResultList.swift; sourceTree = "<group>"; };
 		0164A4732AD5A4630093E501 /* StateViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateViews.swift; sourceTree = "<group>"; };
 		0164A4752AD698650093E501 /* NumberDatabase+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NumberDatabase+Ext.swift"; sourceTree = "<group>"; };
@@ -543,7 +540,6 @@
 		018873CD2A583C4E00253273 /* IOS-BLE-Library */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "IOS-BLE-Library"; path = "../IOS-BLE-Library"; sourceTree = "<group>"; };
 		018C053A2AE0844E007CE0FE /* SignalChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalChartViewModel.swift; sourceTree = "<group>"; };
 		018C053D2AE16682007CE0FE /* SignalChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalChartView.swift; sourceTree = "<group>"; };
-		018C05402AE1670C007CE0FE /* ChartData+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChartData+Preview.swift"; sourceTree = "<group>"; };
 		0192BB342428E63C003F7F6B /* DFUFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUFileManager.swift; sourceTree = "<group>"; };
 		0197AFCD2420DAAC00ADF105 /* NotConnectedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotConnectedViewController.swift; sourceTree = "<group>"; };
 		0197AFCE2420DAAC00ADF105 /* NotConnectedViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotConnectedViewController.xib; sourceTree = "<group>"; };
@@ -594,7 +590,6 @@
 		01BEADD5241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicBottomDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		01BEADD7241AE6BF00FC7183 /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
 		01C575B82A798D65007FE4F0 /* SensorSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorSettings.swift; sourceTree = "<group>"; };
-		01C575BA2A7A8E1F007FE4F0 /* CoreBluetoothMock-Collection */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "CoreBluetoothMock-Collection"; path = "../CoreBluetoothMock-Collection"; sourceTree = "<group>"; };
 		01C575BD2A7D00EF007FE4F0 /* Alias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alias.swift; sourceTree = "<group>"; };
 		01C62AE42B72463F00CDEE31 /* DeviceInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInformation.swift; sourceTree = "<group>"; };
 		01C62AE62B72480C00CDEE31 /* DeviceInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInformationView.swift; sourceTree = "<group>"; };
@@ -1116,16 +1111,6 @@
 			path = Modifiers;
 			sourceTree = "<group>";
 		};
-		01407CB72A65415500A5B279 /* Peripheral */ = {
-			isa = PBXGroup;
-			children = (
-				0164A46C2AD58EA20093E501 /* RSSI */,
-				01F6A95E2A812D5500540B45 /* Mock */,
-				01407CB82A65417900A5B279 /* CBMPeripheralPreview.swift */,
-			);
-			path = Peripheral;
-			sourceTree = "<group>";
-		};
 		01468B022361A23300C29E4C /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -1188,14 +1173,6 @@
 			path = RSSIChartView;
 			sourceTree = "<group>";
 		};
-		0164A46C2AD58EA20093E501 /* RSSI */ = {
-			isa = PBXGroup;
-			children = (
-				0164A46D2AD58EB00093E501 /* RSSIItem_Preview.swift */,
-			);
-			path = RSSI;
-			sourceTree = "<group>";
-		};
 		0164A4722AD5A44B0093E501 /* StateViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -1250,9 +1227,9 @@
 		017D10342A5809E400E38E5F /* Mocking */ = {
 			isa = PBXGroup;
 			children = (
-				018C053F2AE166FE007CE0FE /* RSSI */,
+				01F6A95F2A812D6200540B45 /* Emulator.swift */,
+				01407CB82A65417900A5B279 /* CBMPeripheralPreview.swift */,
 				0129F2232A6802BF002FB3F5 /* ServiceHandlers */,
-				01407CB72A65415500A5B279 /* Peripheral */,
 				017D10352A5809E400E38E5F /* Preview Assets.xcassets */,
 			);
 			path = Mocking;
@@ -1348,14 +1325,6 @@
 				018C053A2AE0844E007CE0FE /* SignalChartViewModel.swift */,
 			);
 			path = SignalChart;
-			sourceTree = "<group>";
-		};
-		018C053F2AE166FE007CE0FE /* RSSI */ = {
-			isa = PBXGroup;
-			children = (
-				018C05402AE1670C007CE0FE /* ChartData+Preview.swift */,
-			);
-			path = RSSI;
 			sourceTree = "<group>";
 		};
 		0197AFCC2420DA3500ADF105 /* ZephyrDFU */ = {
@@ -1671,14 +1640,6 @@
 				01268AF12421595200E83156 /* NotConnectedViewController */,
 			);
 			path = NotConnectedViewController;
-			sourceTree = "<group>";
-		};
-		01F6A95E2A812D5500540B45 /* Mock */ = {
-			isa = PBXGroup;
-			children = (
-				01F6A95F2A812D6200540B45 /* Emulator.swift */,
-			);
-			path = Mock;
 			sourceTree = "<group>";
 		};
 		01F6A9642A829D4B00540B45 /* SensorSettings */ = {
@@ -2356,7 +2317,6 @@
 			isa = PBXGroup;
 			children = (
 				01F6A95D2A81055F00540B45 /* IOS-CoreBluetooth-Mock */,
-				01C575BA2A7A8E1F007FE4F0 /* CoreBluetoothMock-Collection */,
 				018873CD2A583C4E00253273 /* IOS-BLE-Library */,
 				017D105C2A580DCD00E38E5F /* IOS-Common-Libraries */,
 				5217F3EB1859EE0000F2D5BB /* nRF Toolbox Legacy */,
@@ -2974,7 +2934,6 @@
 				018C053E2AE16682007CE0FE /* SignalChartView.swift in Sources */,
 				01C62AE52B72463F00CDEE31 /* DeviceInformation.swift in Sources */,
 				01C62AE72B72480C00CDEE31 /* DeviceInformationView.swift in Sources */,
-				018C05412AE1670C007CE0FE /* ChartData+Preview.swift in Sources */,
 				AA5AB3DF2D0868DD005213D5 /* CyclingDataView.swift in Sources */,
 				018C053B2AE0844E007CE0FE /* SignalChartViewModel.swift in Sources */,
 				AAA898B72DD4C0B6000C7012 /* UARTMacroButtonsView.swift in Sources */,
@@ -3007,7 +2966,6 @@
 				AA2806052E27C73A00C42EA8 /* Battery.swift in Sources */,
 				0180A29C2AEFBBC200090F6D /* InspectorScreen.swift in Sources */,
 				AA1AD37D2DD5DF6300799308 /* UARTMacro+XML.swift in Sources */,
-				0164A46E2AD58EB00093E501 /* RSSIItem_Preview.swift in Sources */,
 				013E5D982AE02A2400B9C475 /* RunningValuesGridItem.swift in Sources */,
 				AAF272F82D9C10F3007B63D3 /* CGMSView.swift in Sources */,
 				01DEB4AA2A65E9D900D4C1E8 /* CharacteristicReader.swift in Sources */,
@@ -3358,7 +3316,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_ASSET_PATHS = "\"nRF-Toolbox/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = P3R8YQEV4L;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -3418,7 +3376,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_ASSET_PATHS = "\"nRF-Toolbox/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = P3R8YQEV4L;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -3477,7 +3435,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_ASSET_PATHS = "\"nRF-Toolbox/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = P3R8YQEV4L;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;

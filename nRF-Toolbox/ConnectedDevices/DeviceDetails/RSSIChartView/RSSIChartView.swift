@@ -37,13 +37,3 @@ struct RSSIChartView: View {
         .padding()
     }
 }
-
-#Preview {
-    if #available(iOS 17.0, *) {
-        RSSIChartView(
-            rssiValues: RSSIItem.preview
-        )
-    } else {
-        Text("Not Available")
-    }
-}
