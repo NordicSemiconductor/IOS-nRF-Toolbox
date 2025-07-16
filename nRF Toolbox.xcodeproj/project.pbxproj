@@ -10,7 +10,6 @@
 		01006201234D08700078CEFA /* LinearChartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01006200234D08700078CEFA /* LinearChartTableViewCell.swift */; };
 		0108E87B2AF140D800C8B096 /* ChartTimeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0108E87A2AF140D800C8B096 /* ChartTimeData.swift */; };
 		0108E87E2AF1654D00C8B096 /* BatteryChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0108E87D2AF1654D00C8B096 /* BatteryChart.swift */; };
-		0108E8812AF169B800C8B096 /* Battery+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0108E8802AF169B800C8B096 /* Battery+Preview.swift */; };
 		0119609E23FA063700A7EF29 /* UARTMacrosHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0119609D23FA063700A7EF29 /* UARTMacrosHeaderView.swift */; };
 		011960A023FA064100A7EF29 /* UARTMacrosHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0119609F23FA064100A7EF29 /* UARTMacrosHeaderView.xib */; };
 		0125D5B623F44FE6003A1812 /* UIBarButtonItem+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0125D5B523F44FE6003A1812 /* UIBarButtonItem+Ext.swift */; };
@@ -460,7 +459,6 @@
 		01006200234D08700078CEFA /* LinearChartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearChartTableViewCell.swift; sourceTree = "<group>"; };
 		0108E87A2AF140D800C8B096 /* ChartTimeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartTimeData.swift; sourceTree = "<group>"; };
 		0108E87D2AF1654D00C8B096 /* BatteryChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryChart.swift; sourceTree = "<group>"; };
-		0108E8802AF169B800C8B096 /* Battery+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Battery+Preview.swift"; sourceTree = "<group>"; };
 		0119609D23FA063700A7EF29 /* UARTMacrosHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosHeaderView.swift; sourceTree = "<group>"; };
 		0119609F23FA064100A7EF29 /* UARTMacrosHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTMacrosHeaderView.xib; sourceTree = "<group>"; };
 		0125D5B523F44FE6003A1812 /* UIBarButtonItem+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Ext.swift"; sourceTree = "<group>"; };
@@ -939,14 +937,6 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		0108E87F2AF169AE00C8B096 /* Battery */ = {
-			isa = PBXGroup;
-			children = (
-				0108E8802AF169B800C8B096 /* Battery+Preview.swift */,
-			);
-			path = Battery;
-			sourceTree = "<group>";
-		};
 		0119609C23F9FDC700A7EF29 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1260,7 +1250,6 @@
 		017D10342A5809E400E38E5F /* Mocking */ = {
 			isa = PBXGroup;
 			children = (
-				0108E87F2AF169AE00C8B096 /* Battery */,
 				018C053F2AE166FE007CE0FE /* RSSI */,
 				0129F2232A6802BF002FB3F5 /* ServiceHandlers */,
 				01407CB72A65415500A5B279 /* Peripheral */,
@@ -3029,7 +3018,6 @@
 				01CEB4272AE9100300945105 /* HeartRateViewModel.swift in Sources */,
 				AAD693332DD348E700D8C436 /* UARTEditCommandView.swift in Sources */,
 				AAA04F1B2DAD1B4F002DAB42 /* UARTViewModel.swift in Sources */,
-				0108E8812AF169B800C8B096 /* Battery+Preview.swift in Sources */,
 				0164A4862AD84A170093E501 /* DeviceDetailsViewModel.swift in Sources */,
 				AA29315B2DEF1B4F002C82B6 /* CuffPressureMeasurement.swift in Sources */,
 				01ABB07D2AE700E100615A21 /* AttributeTableScreen.swift in Sources */,
