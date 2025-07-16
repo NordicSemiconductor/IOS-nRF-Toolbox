@@ -1248,16 +1248,16 @@
 				0126B53D2A5EA89F0033BCC3 /* Models */,
 				018873D02A58706C00253273 /* Utils */,
 				018873BE2A5831ED00253273 /* ConnectedDevices */,
+				017D10342A5809E400E38E5F /* Mocking */,
 				017D102D2A5809E300E38E5F /* nRF_ToolboxApp.swift */,
 				017D10312A5809E400E38E5F /* Assets.xcassets */,
 				017D10332A5809E400E38E5F /* nRF_Toolbox.entitlements */,
 				01C81ADC2A5DFA8E0011B41E /* Localizable.stringsdict */,
-				017D10342A5809E400E38E5F /* Preview Content */,
 			);
 			path = "nRF-Toolbox";
 			sourceTree = "<group>";
 		};
-		017D10342A5809E400E38E5F /* Preview Content */ = {
+		017D10342A5809E400E38E5F /* Mocking */ = {
 			isa = PBXGroup;
 			children = (
 				0108E87F2AF169AE00C8B096 /* Battery */,
@@ -1266,7 +1266,7 @@
 				01407CB72A65415500A5B279 /* Peripheral */,
 				017D10352A5809E400E38E5F /* Preview Assets.xcassets */,
 			);
-			path = "Preview Content";
+			path = Mocking;
 			sourceTree = "<group>";
 		};
 		017D103E2A5809E500E38E5F /* nRF-ToolboxTests */ = {
