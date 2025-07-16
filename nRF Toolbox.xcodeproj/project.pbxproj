@@ -168,7 +168,6 @@
 		01E5910B23DECF61008F15A4 /* UARTMacrosList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */; };
 		01EBE6192AE4845100960672 /* View+ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EBE6182AE4845100960672 /* View+ErrorAlert.swift */; };
 		01F6A9602A812D6200540B45 /* Emulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F6A95F2A812D6200540B45 /* Emulator.swift */; };
-		01F6A9632A812DD300540B45 /* CoreBluetoothMock-Collection in Frameworks */ = {isa = PBXBuildFile; productRef = 01F6A9622A812DD300540B45 /* CoreBluetoothMock-Collection */; };
 		01F6A9662A829EE300540B45 /* SensorSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F6A9652A829EE300540B45 /* SensorSettingsViewModel.swift */; };
 		01FB19D02AE3DB0D006DAB9F /* SensorCalibrationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FB19CF2AE3DB0D006DAB9F /* SensorCalibrationScreen.swift */; };
 		01FB19D22AE3DB70006DAB9F /* SensorCalibrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FB19D12AE3DB70006DAB9F /* SensorCalibrationViewModel.swift */; };
@@ -904,7 +903,6 @@
 				5217F41B1859EEF400F2D5BB /* CoreBluetooth.framework in Frameworks */,
 				01C81ACE2A5CAC350011B41E /* iOS-Bluetooth-Numbers-Database in Frameworks */,
 				017D105B2A580D3800E38E5F /* iOSCommonLibraries in Frameworks */,
-				01F6A9632A812DD300540B45 /* CoreBluetoothMock-Collection in Frameworks */,
 				5217F3E81859EE0000F2D5BB /* CoreGraphics.framework in Frameworks */,
 				5217F3EA1859EE0000F2D5BB /* UIKit.framework in Frameworks */,
 				5217F3E61859EE0000F2D5BB /* Foundation.framework in Frameworks */,
@@ -2665,7 +2663,6 @@
 				017D105A2A580D3800E38E5F /* iOSCommonLibraries */,
 				018873CB2A583C3300253273 /* iOS-BLE-Library */,
 				01C81ACD2A5CAC350011B41E /* iOS-Bluetooth-Numbers-Database */,
-				01F6A9622A812DD300540B45 /* CoreBluetoothMock-Collection */,
 			);
 			productName = "nRF Toolbox";
 			productReference = 5217F3E21859EE0000F2D5BB /* nRF Toolbox Debug.app */;
@@ -2747,7 +2744,6 @@
 				017D10592A580D3800E38E5F /* XCRemoteSwiftPackageReference "IOS-Common-Libraries" */,
 				018873CA2A583C3300253273 /* XCRemoteSwiftPackageReference "IOS-BLE-Library" */,
 				01C81ACC2A5CAC350011B41E /* XCRemoteSwiftPackageReference "iOS-Bluetooth-Numbers-Database" */,
-				01F6A9612A812DD300540B45 /* XCRemoteSwiftPackageReference "CoreBluetoothMock-Collection" */,
 			);
 			productRefGroup = 5217F3E31859EE0000F2D5BB /* Products */;
 			projectDirPath = "";
@@ -4208,14 +4204,6 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		01F6A9612A812DD300540B45 /* XCRemoteSwiftPackageReference "CoreBluetoothMock-Collection" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/NickKibish/CoreBluetoothMock-Collection.git";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		AAFC9CD027BA85EA00860638 /* XCRemoteSwiftPackageReference "IOS-nRF-Connect-Device-Manager" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/NordicSemiconductor/IOS-nRF-Connect-Device-Manager";
@@ -4282,11 +4270,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 01C81ACC2A5CAC350011B41E /* XCRemoteSwiftPackageReference "iOS-Bluetooth-Numbers-Database" */;
 			productName = "iOS-Bluetooth-Numbers-Database";
-		};
-		01F6A9622A812DD300540B45 /* CoreBluetoothMock-Collection */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 01F6A9612A812DD300540B45 /* XCRemoteSwiftPackageReference "CoreBluetoothMock-Collection" */;
-			productName = "CoreBluetoothMock-Collection";
 		};
 		AA1AD37E2DD5DFC400799308 /* AEXML */ = {
 			isa = XCSwiftPackageProductDependency;
