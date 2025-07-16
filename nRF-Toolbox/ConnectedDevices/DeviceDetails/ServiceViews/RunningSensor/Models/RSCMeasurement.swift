@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import CoreBluetoothMock_Collection
 
 struct RSCMeasurement: CustomDebugStringConvertible {
     var debugDescription: String {

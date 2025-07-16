@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import CoreBluetoothMock_Collection
 import iOS_BLE_Library_Mock
 import iOS_Bluetooth_Numbers_Database
 import iOS_Common_Libraries
@@ -15,6 +14,7 @@ import CoreBluetoothMock
 import Combine
 
 extension SensorSettings {
+    
     @MainActor
     class SensorSettingsViewModel: ObservableObject {
         private var cancelables = Set<AnyCancellable>()

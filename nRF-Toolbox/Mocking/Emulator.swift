@@ -8,7 +8,6 @@
 
 import Foundation
 import CoreBluetoothMock
-import CoreBluetoothMock_Collection
 
 public struct BluetoothEmulation {
     

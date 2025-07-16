@@ -9,7 +9,6 @@
 import Combine
 import SwiftUI
 import iOS_BLE_Library_Mock
-import CoreBluetoothMock_Collection
 import iOS_Bluetooth_Numbers_Database
 import iOS_Common_Libraries
 
