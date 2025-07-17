@@ -29,31 +29,8 @@ extension CBMUUID {
 
 // MARK: - Services
 
-extension CBMCharacteristicMock {
-    
-    static let buttonCharacteristic = CBMCharacteristicMock(
-        type: .buttonCharacteristic,
-        properties: [.notify, .read],
-        descriptors: CBMClientCharacteristicConfigurationDescriptorMock()
-    )
-
-    static let ledCharacteristic = CBMCharacteristicMock(
-        type: .ledCharacteristic,
-        properties: [.write, .read]
-    )
-    
-}
-
 extension CBMServiceMock {
 
-    static let blinkyService = CBMServiceMock(
-        type: .nordicBlinkyService,
-        primary: true,
-        characteristics:
-            .buttonCharacteristic,
-            .ledCharacteristic
-    )
-    
     static let heartRate = CBMServiceMock(
         type: .heartRate,
         primary: true
@@ -71,61 +48,6 @@ struct MockError: Swift.Error {
     let message: String
 }
 
-/// The delegate implements the behavior of the mocked device.
-private class BlinkyCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
-    
-    // MARK: States
-    
-    /// State of the LED.
-    private var ledEnabled: Bool = false
-    /// State of the Button.
-    private var buttonPressed: Bool = false
-    
-    // MARK: Encoders
-    
-    /// LED state encoded as Data.
-    ///
-    /// - 0x01 - LED is ON.
-    /// - 0x00 - LED is OFF.
-    private var ledData: Data {
-        return ledEnabled ? Data([0x01]) : Data([0x00])
-    }
-    
-    /// Button state encoded as Data.
-    ///
-    /// - 0x01 - Button is pressed.
-    /// - 0x00 - Button is released.
-    private var buttonData: Data {
-        return buttonPressed ? Data([0x01]) : Data([0x00])
-    }
-    
-    // MARK: Event handlers
-    
-    func reset() {
-        ledEnabled = false
-        buttonPressed = false
-    }
-    
-    func peripheral(_ peripheral: CBMPeripheralSpec,
-                    didReceiveReadRequestFor characteristic: CBMCharacteristicMock)
-    -> Result<Data, Error> {
-        if characteristic.uuid == .ledCharacteristic {
-            return .success(ledData)
-        } else {
-            return .success(buttonData)
-        }
-    }
-    
-    func peripheral(_ peripheral: CBMPeripheralSpec,
-                    didReceiveWriteRequestFor characteristic: CBMCharacteristicMock,
-                    data: Data) -> Result<Void, Error> {
-        if data.count > 0 {
-            ledEnabled = data[0] != 0x00
-        }
-        return .success(())
-    }
-}
-
 private class WeightCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
     func peripheralDidReceiveConnectionRequest(_ peripheral: CBMPeripheralSpec) -> Result<Void, Swift.Error> {
         .failure(MockError(title: "Connection Error", message: "Failed to connect the peripheral"))
@@ -133,27 +55,6 @@ private class WeightCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
 }
 
 // MARK: - Blinky Definition
-
-/// This device will advertise with 2 different types of packets, as nRF Blinky and an iBeacon (with a name).
-/// As iOS prunes the iBeacon manufacturer data, only the name is available.
-let blinky = CBMPeripheralSpec
-    .simulatePeripheral(proximity: .immediate)
-    .advertising(
-        advertisementData: [
-            CBAdvertisementDataIsConnectable : false as NSNumber,
-            CBAdvertisementDataLocalNameKey : "Blinky",
-            CBAdvertisementDataServiceUUIDsKey : [CBMUUID.nordicBlinkyService]
-        ],
-        withInterval: 2.0,
-        delay: 5.0,
-        alsoWhenConnected: false
-    )
-    .connectable(
-        name: "nRF Blinky",
-        services: [.blinkyService],
-        delegate: BlinkyCBMPeripheralSpecDelegate()
-    )
-    .build()
 
 let hrm = CBMPeripheralSpec
     .simulatePeripheral(proximity: .near)
@@ -212,6 +113,6 @@ let weightScale = CBMPeripheralSpec
     )
     .build()
 
-extension Peripheral {
-    static let preview: Peripheral = Peripheral(peripheral: CBMPeripheralPreview(hrm), delegate: ReactivePeripheralDelegate())
-}
+//extension Peripheral {
+//    static let preview: Peripheral = Peripheral(peripheral: CBMPeripheralPreview(hrm), delegate: ReactivePeripheralDelegate())
+//}

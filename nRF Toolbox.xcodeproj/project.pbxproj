@@ -376,6 +376,7 @@
 		AA71C78E2E0EBA89008F018C /* ScanResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA71C78D2E0EBA89008F018C /* ScanResult.swift */; };
 		AA7769FD2DEDED9A0005A82B /* BloodPressureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7769FC2DEDED9A0005A82B /* BloodPressureViewModel.swift */; };
 		AA7E77E52DF0915F0091447F /* SupportedServiceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7E77E42DF0915F0091447F /* SupportedServiceViewModel.swift */; };
+		AA8B89282E28F18C0017F219 /* BlinkyCBMPeripheralSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8B89272E28F18C0017F219 /* BlinkyCBMPeripheralSpecDelegate.swift */; };
 		AA94C5512D01B49200562F7A /* BatteryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA94C5502D01B49200562F7A /* BatteryView.swift */; };
 		AA94C5532D01B5DC00562F7A /* HeartRateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA94C5522D01B5DC00562F7A /* HeartRateView.swift */; };
 		AA95CBCF2D0846E800D1FBC6 /* CyclingServiceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA95CBCE2D0846E800D1FBC6 /* CyclingServiceViewModel.swift */; };
@@ -824,6 +825,7 @@
 		AA71C78D2E0EBA89008F018C /* ScanResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanResult.swift; sourceTree = "<group>"; };
 		AA7769FC2DEDED9A0005A82B /* BloodPressureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodPressureViewModel.swift; sourceTree = "<group>"; };
 		AA7E77E42DF0915F0091447F /* SupportedServiceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedServiceViewModel.swift; sourceTree = "<group>"; };
+		AA8B89272E28F18C0017F219 /* BlinkyCBMPeripheralSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkyCBMPeripheralSpecDelegate.swift; sourceTree = "<group>"; };
 		AA8DF2152DE9B08E00D49141 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		AA94C5502D01B49200562F7A /* BatteryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryView.swift; sourceTree = "<group>"; };
 		AA94C5522D01B5DC00562F7A /* HeartRateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateView.swift; sourceTree = "<group>"; };
@@ -1223,6 +1225,7 @@
 		017D10342A5809E400E38E5F /* Mocking */ = {
 			isa = PBXGroup;
 			children = (
+				AA8B89272E28F18C0017F219 /* BlinkyCBMPeripheralSpecDelegate.swift */,
 				01F6A95F2A812D6200540B45 /* Emulator.swift */,
 				01407CB82A65417900A5B279 /* CBMPeripheralPreview.swift */,
 				0129F2232A6802BF002FB3F5 /* ServiceHandlers */,
@@ -3000,6 +3003,7 @@
 				AA4C50C02DFC230B00B7B22F /* NordicEmptyView.swift in Sources */,
 				0129F2252A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift in Sources */,
 				AAE2C9332D9D378300B398E3 /* CGMOpcodes.swift in Sources */,
+				AA8B89282E28F18C0017F219 /* BlinkyCBMPeripheralSpecDelegate.swift in Sources */,
 				01EBE6192AE4845100960672 /* View+ErrorAlert.swift in Sources */,
 				01DEB4A42A6588CA00D4C1E8 /* RunningServiceHandler.swift in Sources */,
 				01F6A9602A812D6200540B45 /* Emulator.swift in Sources */,
