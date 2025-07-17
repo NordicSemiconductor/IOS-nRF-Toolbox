@@ -8,6 +8,7 @@
 //
 
 import Foundation
+import Combine
 import iOS_BLE_Library_Mock
 import CoreBluetoothMock
 import iOS_Bluetooth_Numbers_Database
@@ -393,7 +394,7 @@ public class RunningSpeedAndCadence {
     public var sensorLocation: RunningSpeedAndCadence.SensorLocation = .inShoe
     
     var notifySCControlPoint: Bool = false
-    var measurementTimer: Timer?
+    private lazy var cancellables = Set<AnyCancellable>()
     
     public init(enabledFeatures: RunningSpeedAndCadence.RSCFeature, sensorLocation: RunningSpeedAndCadence.SensorLocation) {
         self.enabledFeatures = enabledFeatures
@@ -437,17 +438,18 @@ public class RunningSpeedAndCadence {
     private var notifyMeasurement: Bool = false {
         didSet {
             guard notifyMeasurement else {
-                measurementTimer?.invalidate()
-                measurementTimer = nil
+                cancellables.removeAll()
                 return
             }
             
-            // Simulate RSCS Measurement
-            measurementTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] _ in
-                guard let `self` else { return }
-                self.randomizeMeasurement(flags: .all)
-                self.peripheral.simulateValueUpdate(self.measurement.data , for: .rscMeasurement)
-            })
+            Timer.publish(every: 2.0, on: .main, in: .default)
+                .autoconnect()
+                .sink { [weak self] _ in
+                    guard let self else { return }
+                    randomizeMeasurement(flags: .all)
+                    peripheral.simulateValueUpdate(self.measurement.data , for: .rscMeasurement)
+                }
+                .store(in: &cancellables)
         }
     }
     
@@ -477,24 +479,30 @@ public class RunningSpeedAndCadence {
     }
 }
 
+// MARK: - RSCSDelegate
+
 extension RunningSpeedAndCadence: RSCSDelegate {
+    
     func didReceiveSetCumulativeValue(value: UInt32) {
-        self.measurement.totalDistance = value
-        self.peripheral.simulateValueUpdate(SetCumulativeValueResponse(responseCode: .success).data, for: .scControlPoint)
+        measurement.totalDistance = value
+        peripheral.simulateValueUpdate(SetCumulativeValueResponse(responseCode: .success).data,
+                                       for: .scControlPoint)
     }
     
     func didReceiveStartSensorCalibration() {
-        self.peripheral.simulateValueUpdate(StartSensorCalibrationResponse(responseCode: .success).data, for: .scControlPoint)
+        peripheral.simulateValueUpdate(StartSensorCalibrationResponse(responseCode: .success).data,
+                                       for: .scControlPoint)
     }
     
     func didReceiveUpdateSensorLocation(_ location: RunningSpeedAndCadence.SensorLocation) {
-        self.sensorLocation = location
-        self.peripheral.simulateValueUpdate(UpdateSensorLocationResponse(responseCode: .success).data, for: .scControlPoint)
+        sensorLocation = location
+        peripheral.simulateValueUpdate(UpdateSensorLocationResponse(responseCode: .success).data,
+                                       for: .scControlPoint)
     }
     
     func didReceiveRequestSupportedSensorLocations() {
         let locations: [RunningSpeedAndCadence.SensorLocation] = [.chest, .hip, .inShoe, .other, .topOfShoe]
-        self.peripheral.simulateValueUpdate(SupportedSensorLocations(locations: locations).data, for: .scControlPoint)
+        peripheral.simulateValueUpdate(SupportedSensorLocations(locations: locations).data, for: .scControlPoint)
     }
     
     func measurementNotificationStatusChanged(_ enabled: Bool) {
@@ -507,6 +515,7 @@ extension RunningSpeedAndCadence: RSCSDelegate {
 }
 
 public class RSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
+    
     var enabledFeatures: RunningSpeedAndCadence.RSCFeature = .all
     var sensorLocation: RunningSpeedAndCadence.SensorLocation = .inShoe
     
