@@ -29,7 +29,8 @@ public extension RunningSpeedAndCadence {
         }
     }
     
-    /// RSC Feature. Response to Read RSC Feature Characteristic
+    // MARK: RSCSFeatureFlags
+    
     struct RSCFeature: OptionSet {
         public let rawValue: UInt8
         
@@ -47,7 +48,8 @@ public extension RunningSpeedAndCadence {
         public static let none: RSCFeature = []
     }
 
-    /// RSC Measurement Flags
+    // MARK: RSCSMeasurementFlags
+    
     struct RSCMeasurementFlags: OptionSet {
         public let rawValue: UInt8
         
@@ -63,7 +65,8 @@ public extension RunningSpeedAndCadence {
         public static let none: RSCMeasurementFlags = []
     }
     
-    /// SC Control Point Op Code
+    // MARK: SCControlPointOpCode
+    
     enum OpCode: UInt8, CustomStringConvertible {
         case setCumulativeValue                 = 0x01
         case startSensorCalibration             = 0x02
@@ -91,7 +94,8 @@ public extension RunningSpeedAndCadence {
         }
     }
     
-    /// SC Control Point Response Value
+    // MARK: SCControlPointResponseCode
+    
     enum ResponseCode: UInt8, CustomStringConvertible {
         case success = 0x01
         case opCodeNotSupported = 0x02
@@ -111,6 +115,8 @@ public extension RunningSpeedAndCadence {
             }
         }
     }
+    
+    // MARK: SensorLocation
     
     enum SensorLocation: UInt8, CustomStringConvertible, CaseIterable {
         case other, topOfShoe, inShoe, hip, frontWheel, leftCrank, rightCrank, leftPedal, rightPedal, frontHub, rearDropout, chainstay, rearWheel, rearHub, chest, spider, chainRing
@@ -138,7 +144,8 @@ public extension RunningSpeedAndCadence {
         }
     }
     
-    /// RSC Measurement characteristic value
+    // MARK: RSCSMeasurement
+    
     struct RSCSMeasurement {
         public var flags: RSCMeasurementFlags
 
@@ -207,8 +214,9 @@ public extension RunningSpeedAndCadence {
             return data
         }
     }
+    
+    // MARK: SCControlPointResponse
 
-    /// SC Control Point response value
     struct SCControlPointResponse {
         public var opCode: OpCode
         public var responseValue: ResponseCode
@@ -247,12 +255,13 @@ public extension RunningSpeedAndCadence {
         }
     }
     
+    // MARK: SetCumulativeValueResponse
+    
     struct SetCumulativeValueResponse {
         private let response: SCControlPointResponse
 
         public init(responseCode: ResponseCode) {
             response = SCControlPointResponse(opCode: .setCumulativeValue, responseValue: responseCode, parameter: nil)
-            
         }
 
         public init?(from data: Data) {
@@ -265,6 +274,8 @@ public extension RunningSpeedAndCadence {
         }
     }
 
+    // MARK: StartSensorCalibrationResponse
+    
     struct StartSensorCalibrationResponse {
         private let response: SCControlPointResponse
 
@@ -282,6 +293,8 @@ public extension RunningSpeedAndCadence {
         }
     }
 
+    // MARK: UpdateSensorLocationResponse
+    
     struct UpdateSensorLocationResponse {
         private let response: SCControlPointResponse
 
@@ -299,6 +312,8 @@ public extension RunningSpeedAndCadence {
         }
     }
 
+    // MARK: SupportedSensorLocations
+    
     struct SupportedSensorLocations {
         private let response: SCControlPointResponse
         public let locations: [SensorLocation]
@@ -328,6 +343,8 @@ public extension RunningSpeedAndCadence {
         }
     }
 }
+
+// MARK: RSCS
 
 public class RunningSpeedAndCadence {
     public var enabledFeatures: RunningSpeedAndCadence.RSCFeature = .all
