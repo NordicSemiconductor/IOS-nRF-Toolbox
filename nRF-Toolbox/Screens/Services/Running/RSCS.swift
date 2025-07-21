@@ -13,57 +13,6 @@ import iOS_BLE_Library_Mock
 import CoreBluetoothMock
 import iOS_Bluetooth_Numbers_Database
 
-typealias SensorLocation = RunningSpeedAndCadence.SensorLocation
-typealias RSCFeature = RunningSpeedAndCadence.RSCFeature
-typealias SupportedSensorLocationsResponse = RunningSpeedAndCadence.SupportedSensorLocations
-
-extension CBMUUID {
-    static let rscMeasurement = CBMUUID(characteristic: .rscMeasurement)
-    
-    static let rscFeature = CBMUUID(characteristic: .rscFeature)
-    static let sensorLocation = CBMUUID(characteristic: .sensorLocation)
-    
-    static let scControlPoint = CBMUUID(characteristic: .scControlPoint)
-    static let clientCharacteristicConfiguration = CBMUUID(descriptor: .gattClientCharacteristicConfiguration)
-}
-
-private extension CBMDescriptorMock {
-    static let clientCharacteristicConfiguration = CBMDescriptorMock(type: .clientCharacteristicConfiguration)
-}
-
-private extension CBMCharacteristicMock {
-    static let rscMeasurement = CBMCharacteristicMock(
-        type: .rscMeasurement,
-        properties: .notify,
-        descriptors: .clientCharacteristicConfiguration
-    )
-    
-    static let rscFeature = CBMCharacteristicMock(
-        type: .rscFeature,
-        properties: .read
-    )
-    
-    static let sensorLocation = CBMCharacteristicMock(
-        type: .sensorLocation,
-        properties: .read
-    )
-    
-    static let scControlPoint = CBMCharacteristicMock(
-        type: .scControlPoint,
-        properties: [.write, .indicate],
-        descriptors: .clientCharacteristicConfiguration
-    )
-}
-
-internal extension CBMServiceMock {
-    
-    static let runningSpeedCadence = CBMServiceMock(
-        type: .runningSpeedCadence,
-        primary: true,
-        characteristics: .rscMeasurement, .rscFeature, .sensorLocation, .scControlPoint
-    )
-}
-
 public extension RunningSpeedAndCadence {
     
     enum ErrorCode: UInt8, LocalizedError {
@@ -380,16 +329,6 @@ public extension RunningSpeedAndCadence {
     }
 }
 
-protocol RSCSDelegate: AnyObject {
-    func didReceiveSetCumulativeValue( value: UInt32)
-    func didReceiveStartSensorCalibration()
-    func didReceiveUpdateSensorLocation(_ location: RunningSpeedAndCadence.SensorLocation)
-    func didReceiveRequestSupportedSensorLocations()
-
-    func measurementNotificationStatusChanged(_ enabled: Bool)
-    func controlPointNotificationStatusChanged(_ enabled: Bool)
-}
-
 public class RunningSpeedAndCadence {
     public var enabledFeatures: RunningSpeedAndCadence.RSCFeature = .all
     public var sensorLocation: RunningSpeedAndCadence.SensorLocation = .inShoe
@@ -455,6 +394,7 @@ public class RunningSpeedAndCadence {
     }
     
     // MARK: Public methods
+    
     public func postMeasurement(_ measurement: RunningSpeedAndCadence.RSCSMeasurement) {
         
     }
@@ -481,6 +421,16 @@ public class RunningSpeedAndCadence {
 }
 
 // MARK: - RSCSDelegate
+
+protocol RSCSDelegate: AnyObject {
+    func didReceiveSetCumulativeValue( value: UInt32)
+    func didReceiveStartSensorCalibration()
+    func didReceiveUpdateSensorLocation(_ location: RunningSpeedAndCadence.SensorLocation)
+    func didReceiveRequestSupportedSensorLocations()
+
+    func measurementNotificationStatusChanged(_ enabled: Bool)
+    func controlPointNotificationStatusChanged(_ enabled: Bool)
+}
 
 extension RunningSpeedAndCadence: RSCSDelegate {
     

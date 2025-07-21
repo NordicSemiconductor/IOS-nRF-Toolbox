@@ -77,3 +77,56 @@ public class RSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
         return .success(())
     }
 }
+
+// MARK: - CoreBluetoothMock
+
+typealias SensorLocation = RunningSpeedAndCadence.SensorLocation
+typealias RSCFeature = RunningSpeedAndCadence.RSCFeature
+typealias SupportedSensorLocationsResponse = RunningSpeedAndCadence.SupportedSensorLocations
+
+internal extension CBMUUID {
+    static let rscMeasurement = CBMUUID(characteristic: .rscMeasurement)
+    
+    static let rscFeature = CBMUUID(characteristic: .rscFeature)
+    static let sensorLocation = CBMUUID(characteristic: .sensorLocation)
+    
+    static let scControlPoint = CBMUUID(characteristic: .scControlPoint)
+    static let clientCharacteristicConfiguration = CBMUUID(descriptor: .gattClientCharacteristicConfiguration)
+}
+
+internal extension CBMDescriptorMock {
+    static let clientCharacteristicConfiguration = CBMDescriptorMock(type: .clientCharacteristicConfiguration)
+}
+
+internal extension CBMCharacteristicMock {
+    static let rscMeasurement = CBMCharacteristicMock(
+        type: .rscMeasurement,
+        properties: .notify,
+        descriptors: .clientCharacteristicConfiguration
+    )
+    
+    static let rscFeature = CBMCharacteristicMock(
+        type: .rscFeature,
+        properties: .read
+    )
+    
+    static let sensorLocation = CBMCharacteristicMock(
+        type: .sensorLocation,
+        properties: .read
+    )
+    
+    static let scControlPoint = CBMCharacteristicMock(
+        type: .scControlPoint,
+        properties: [.write, .indicate],
+        descriptors: .clientCharacteristicConfiguration
+    )
+}
+
+internal extension CBMServiceMock {
+    
+    static let runningSpeedCadence = CBMServiceMock(
+        type: .runningSpeedCadence,
+        primary: true,
+        characteristics: .rscMeasurement, .rscFeature, .sensorLocation, .scControlPoint
+    )
+}
