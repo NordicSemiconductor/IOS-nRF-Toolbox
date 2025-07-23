@@ -81,7 +81,6 @@ public class RSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
 // MARK: - CoreBluetoothMock
 
 typealias SensorLocation = RunningSpeedAndCadence.SensorLocation
-typealias RSCFeature = RunningSpeedAndCadence.RSCFeature
 typealias SupportedSensorLocationsResponse = RunningSpeedAndCadence.SupportedSensorLocations
 
 internal extension CBMUUID {

@@ -123,13 +123,13 @@ extension RunningServiceViewModel {
     }
     
     private func readFeature() async throws {
-        let rscFeature = try await peripheral.readValue(for: rscFeature).tryMap { data in
-            guard let data else { throw Err.noData }
-            return RSCFeature(rawValue: data[0])
-        }
-        // Set reasonable Timeout
-        .timeout(.seconds(1), scheduler: DispatchQueue.main, customError: { Err.timeout })
-        .firstValue
+        let rscFeature = try await peripheral.readValue(for: rscFeature)
+            .tryMap { data in
+                guard let data else { throw Err.noData }
+                return RunningSpeedAndCadence.RSCFeature(rawValue: data[0])
+            }
+            .timeout(.seconds(1), scheduler: DispatchQueue.main, customError: { Err.timeout })
+            .firstValue
         
         let calibrationViewModel = SensorCalibrationViewModel(peripheral: peripheral, rscService: runningService, rscFeature: rscFeature)
         environment.sensorCalibrationViewModel = calibrationViewModel
@@ -177,7 +177,7 @@ extension RunningServiceViewModel {
         @Published fileprivate(set) var criticalError: CriticalError?
         @Published fileprivate(set) var alertError: AlertError?
         
-        @Published fileprivate(set) var rscFeature: RSCFeature = .none
+        @Published fileprivate(set) var rscFeature: RunningSpeedAndCadence.RSCFeature = .none
         
         @Published var instantaneousSpeed: Measurement<UnitSpeed>?
         @Published var instantaneousCadence: Int?
@@ -190,7 +190,8 @@ extension RunningServiceViewModel {
         private let log = NordicLog(category: "RunningService.ViewModel.Environment")
         
         init(criticalError: CriticalError? = nil, alertError: AlertError? = nil,
-             rscFeature: RSCFeature = .none, instantaneousSpeed: Measurement<UnitSpeed>? = nil,
+             rscFeature: RunningSpeedAndCadence.RSCFeature = .none,
+             instantaneousSpeed: Measurement<UnitSpeed>? = nil,
              instantaneousCadence: Int? = nil,
              instantaneousStrideLength: Measurement<UnitLength>? = nil,
              totalDistance: Measurement<UnitLength>? = nil,

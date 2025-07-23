@@ -199,7 +199,7 @@ extension RunningServiceHandler {
         return location
     }
     
-    func readSupportedFeatures() async throws -> RSCFeature {
+    func readSupportedFeatures() async throws -> RunningSpeedAndCadence.RSCFeature {
         guard let feauturesData = try await peripheral.readValue(for: rscFeature).value else {
             throw Err.noData
         }
