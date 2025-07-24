@@ -131,7 +131,7 @@ private extension RunningServiceViewModel {
     
     func readFeature() async throws {
         log.debug(#function)
-        let rscFeature = try await peripheral.readValue(for: rscFeature)
+        let features = try await peripheral.readValue(for: rscFeature)
             .tryMap { data in
                 guard let data else { throw Err.noData }
                 return BitField<RunningSpeedAndCadence.RSCFeature>(RegisterValue(data[0]))
@@ -139,11 +139,11 @@ private extension RunningServiceViewModel {
             .timeout(.seconds(1), scheduler: DispatchQueue.main, customError: { Err.timeout })
             .firstValue
         
-        let calibrationViewModel = SensorCalibrationViewModel(peripheral: peripheral, rscService: runningService, rscFeature: rscFeature)
+        let calibrationViewModel = SensorCalibrationViewModel(peripheral: peripheral, rscService: runningService, features: features)
         environment.sensorCalibrationViewModel = calibrationViewModel
         await calibrationViewModel.discoverCharacteristic()
         await calibrationViewModel.readLocations()
-        environment.rscFeature = rscFeature
+        environment.features = features
     }
     
     // MARK: enableMeasurementNotifications()
@@ -187,7 +187,7 @@ extension RunningServiceViewModel {
         @Published fileprivate(set) var criticalError: CriticalError?
         @Published fileprivate(set) var alertError: AlertError?
         
-        @Published fileprivate(set) var rscFeature = BitField<RunningSpeedAndCadence.RSCFeature>()
+        @Published fileprivate(set) var features = BitField<RunningSpeedAndCadence.RSCFeature>()
         
         @Published var instantaneousSpeed: Measurement<UnitSpeed>?
         @Published var instantaneousCadence: Int?
@@ -200,7 +200,7 @@ extension RunningServiceViewModel {
         private let log = NordicLog(category: "RunningService.ViewModel.Environment")
         
         init(criticalError: CriticalError? = nil, alertError: AlertError? = nil,
-             rscFeature: BitField<RunningSpeedAndCadence.RSCFeature> = [],
+             features: BitField<RunningSpeedAndCadence.RSCFeature> = [],
              instantaneousSpeed: Measurement<UnitSpeed>? = nil,
              instantaneousCadence: Int? = nil,
              instantaneousStrideLength: Measurement<UnitLength>? = nil,
@@ -208,7 +208,7 @@ extension RunningServiceViewModel {
              isRunning: Bool? = nil) {
             self.criticalError = criticalError
             self.alertError = alertError
-            self.rscFeature = rscFeature
+            self.features = features
             self.instantaneousSpeed = instantaneousSpeed
             self.instantaneousCadence = instantaneousCadence
             self.instantaneousStrideLength = instantaneousStrideLength

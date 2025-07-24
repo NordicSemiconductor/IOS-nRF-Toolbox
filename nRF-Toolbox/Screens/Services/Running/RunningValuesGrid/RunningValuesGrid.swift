@@ -55,7 +55,7 @@ struct RunningValuesGrid: View {
             items.append(itemPlaceholder(cadenceKey))
         }
         
-        if environment.rscFeature.contains(.instantaneousStrideLengthMeasurement) {
+        if environment.features.contains(.instantaneousStrideLengthMeasurement) {
             let strideLengthKey = "Stride Length"
             if let instantaneousStrideLength = environment.instantaneousStrideLength {
                 items.append(RunningAttribute(
@@ -67,7 +67,7 @@ struct RunningValuesGrid: View {
             }
         }
         
-        if environment.rscFeature.contains(.totalDistanceMeasurement) {
+        if environment.features.contains(.totalDistanceMeasurement) {
             let totalDistanceKey = "Total Distance"
             
             if let totalDistance = environment.totalDistance {
@@ -80,7 +80,7 @@ struct RunningValuesGrid: View {
             }
         }
         
-        if environment.rscFeature.contains(.walkingOrRunningStatus) {
+        if environment.features.contains(.walkingOrRunningStatus) {
             let walkingRunningStatusKey = "Walking / Running"
          
             if let walkingRunning = environment.isRunning {

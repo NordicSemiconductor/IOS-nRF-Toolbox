@@ -17,9 +17,6 @@ import iOS_Common_Libraries
 @MainActor
 final class SensorCalibrationViewModel: ObservableObject {
     
-    let peripheral: Peripheral
-    let rscFeature: BitField<RunningSpeedAndCadence.RSCFeature>
-    
     @Published fileprivate(set) var setCumulativeValueEnabled = false
     @Published fileprivate(set) var startSensorCalibrationEnabled = false
     @Published fileprivate(set) var sensorLocationEnabled = false
@@ -38,7 +35,9 @@ final class SensorCalibrationViewModel: ObservableObject {
     @Published var alertError: Error? = nil
     @Published fileprivate(set) var criticalError: CriticalError? = nil
     
+    private let peripheral: Peripheral
     private let rscService: CBService
+    private let features: BitField<RunningSpeedAndCadence.RSCFeature>
     private var scControlPoint: CBCharacteristic!
     private var sensorLocationCharacteristic: CBCharacteristic?
     
@@ -46,13 +45,13 @@ final class SensorCalibrationViewModel: ObservableObject {
     
     // MARK: init
     
-    init(peripheral: Peripheral, rscService: CBService, rscFeature: BitField<RunningSpeedAndCadence.RSCFeature>) {
+    init(peripheral: Peripheral, rscService: CBService, features: BitField<RunningSpeedAndCadence.RSCFeature>) {
         self.peripheral = peripheral
         self.rscService = rscService
-        self.rscFeature = rscFeature
+        self.features = features
         
-        setCumulativeValueEnabled = rscFeature.contains(.totalDistanceMeasurement)
-        startSensorCalibrationEnabled = rscFeature.contains(.sensorCalibrationProcedure)
+        setCumulativeValueEnabled = features.contains(.totalDistanceMeasurement)
+        startSensorCalibrationEnabled = features.contains(.sensorCalibrationProcedure)
         
         Publishers.CombineLatest($pickerSensorLocation, $currentSensorLocation)
             .map { $0 == $1 }
@@ -96,7 +95,7 @@ extension SensorCalibrationViewModel {
     
     func readLocations() async {
         log.debug(#function)
-        guard rscFeature.contains(.multipleSensorLocation) else { return }
+        guard features.contains(.multipleSensorLocation) else { return }
         
         do {
             availableSensorLocations = try await readAvailableLocations()
