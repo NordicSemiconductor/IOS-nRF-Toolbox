@@ -12,6 +12,7 @@ import CoreBluetoothMock
 import Foundation
 import Combine
 import SwiftUI
+import iOS_Common_Libraries
 
 @MainActor
 class RunningServiceHandler: ServiceHandler, ObservableObject {
@@ -44,7 +45,7 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
     // MARK: Characteristics
     var rscMeasurement: CBCharacteristic!
     var rscFeature: CBCharacteristic!
-    var features: RunningSpeedAndCadence.RSCFeature!
+    var features: BitField<RunningSpeedAndCadence.RSCFeature>!
     
     @Published var sensorLocationCh: CBCharacteristic?
     @Published var scControlPointCh: CBCharacteristic?
@@ -199,12 +200,12 @@ extension RunningServiceHandler {
         return location
     }
     
-    func readSupportedFeatures() async throws -> RunningSpeedAndCadence.RSCFeature {
-        guard let feauturesData = try await peripheral.readValue(for: rscFeature).value else {
+    func readSupportedFeatures() async throws -> BitField<RunningSpeedAndCadence.RSCFeature> {
+        guard let featuresData = try await peripheral.readValue(for: rscFeature).value else {
             throw Err.noData
         }
         
-        return RunningSpeedAndCadence.RSCFeature(rawValue: feauturesData[0])
+        return BitField<RunningSpeedAndCadence.RSCFeature>(RegisterValue(featuresData[0]))
     }
     
     func readAvailableLocations() async throws -> [SensorLocation] {

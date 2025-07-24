@@ -9,6 +9,7 @@
 
 import Foundation
 import Combine
+import iOS_Common_Libraries
 import iOS_BLE_Library_Mock
 import CoreBluetoothMock
 import iOS_Bluetooth_Numbers_Database
@@ -31,21 +32,27 @@ public extension RunningSpeedAndCadence {
     
     // MARK: RSCSFeatureFlags
     
-    struct RSCFeature: OptionSet {
-        public let rawValue: UInt8
+    enum RSCFeature: RegisterValue, Option, CustomStringConvertible, CaseIterable {
+        case instantaneousStrideLengthMeasurement
+        case totalDistanceMeasurement
+        case walkingOrRunningStatus
+        case sensorCalibrationProcedure
+        case multipleSensorLocation
         
-        public init(rawValue: UInt8) {
-            self.rawValue = rawValue
+        public var description: String {
+            switch self {
+            case .instantaneousStrideLengthMeasurement:
+                return "Instantaneous Stride Length Measurement"
+            case .totalDistanceMeasurement:
+                return "Total Distance Measurement"
+            case .walkingOrRunningStatus:
+                return "Walking or Running Status"
+            case .sensorCalibrationProcedure:
+                return "Sensor Calibration Procedure"
+            case .multipleSensorLocation:
+                return "Multiple Sensor Location"
+            }
         }
-        
-        public static let instantaneousStrideLengthMeasurement = RSCFeature(rawValue: 1 << 0)
-        public static let totalDistanceMeasurement             = RSCFeature(rawValue: 1 << 1)
-        public static let walkingOrRunningStatus               = RSCFeature(rawValue: 1 << 2)
-        public static let sensorCalibrationProcedure           = RSCFeature(rawValue: 1 << 3)
-        public static let multipleSensorLocation               = RSCFeature(rawValue: 1 << 4)
-        
-        public static let all: RSCFeature = [.instantaneousStrideLengthMeasurement, .totalDistanceMeasurement, .walkingOrRunningStatus, .sensorCalibrationProcedure, .multipleSensorLocation]
-        public static let none: RSCFeature = []
     }
 
     // MARK: RSCSMeasurementFlags
@@ -347,19 +354,19 @@ public extension RunningSpeedAndCadence {
 // MARK: RSCS
 
 public class RunningSpeedAndCadence {
-    public var enabledFeatures: RunningSpeedAndCadence.RSCFeature = .all
+    public var enabledFeatures: BitField<RunningSpeedAndCadence.RSCFeature> = .all()
     public var sensorLocation: RunningSpeedAndCadence.SensorLocation = .inShoe
     
     var notifySCControlPoint: Bool = false
     private lazy var cancellables = Set<AnyCancellable>()
     
-    public init(enabledFeatures: RunningSpeedAndCadence.RSCFeature, sensorLocation: RunningSpeedAndCadence.SensorLocation) {
+    public init(enabledFeatures: BitField<RunningSpeedAndCadence.RSCFeature>, sensorLocation: RunningSpeedAndCadence.SensorLocation) {
         self.enabledFeatures = enabledFeatures
         self.sensorLocation = sensorLocation
     }
     
     public init() {
-        self.enabledFeatures = .all
+        self.enabledFeatures = .all()
         self.sensorLocation = .inShoe
         self.peripheralDelegate.delegate = self
     }

@@ -9,12 +9,13 @@
 import Foundation
 import iOS_BLE_Library_Mock
 import CoreBluetoothMock
+import iOS_Common_Libraries
 
 // MARK: - RSCSCBMPeripheralSpecDelegate
 
 public class RSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
     
-    var enabledFeatures: RunningSpeedAndCadence.RSCFeature = .all
+    var enabledFeatures: BitField<RunningSpeedAndCadence.RSCFeature> = .all()
     var sensorLocation: RunningSpeedAndCadence.SensorLocation = .inShoe
     
     var notifySCControlPoint: Bool = false
@@ -30,7 +31,10 @@ public class RSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
                     didReceiveReadRequestFor characteristic: CBMCharacteristicMock)
     -> Result<Data, Error> {
         if characteristic.uuid == CBMUUID.rscFeature {
-            return .success(Data([0xff, enabledFeatures.rawValue])) // Support all features
+            let allFeatures = UInt8(BitField<RunningSpeedAndCadence.RSCFeature>.all().reduce(0) {
+                $0 + $1.bitwiseValue
+            })
+            return .success(Data([0xff, allFeatures])) // Support all features
         } else if characteristic.uuid == CBMUUID.sensorLocation {
             return .success(Data([sensorLocation.rawValue]))
         } else {

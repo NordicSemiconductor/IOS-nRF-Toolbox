@@ -103,17 +103,3 @@ struct RunningValuesGrid: View {
         return RunningAttribute(title: key, value: "-.-", unit: "-")
     }
 }
-
-#Preview {
-    List {
-        RunningValuesGrid()
-    }
-    .environmentObject(Env(
-        rscFeature: .all,
-        instantaneousSpeed: Measurement<UnitSpeed>(value: 12, unit: .kilometersPerHour),
-        instantaneousCadence: 3,
-        instantaneousStrideLength: Measurement<UnitLength>(value: 1.1, unit: .meters),
-        totalDistance: Measurement<UnitLength>(value: 1109.3, unit: .meters),
-        isRunning: true
-    ))
-}

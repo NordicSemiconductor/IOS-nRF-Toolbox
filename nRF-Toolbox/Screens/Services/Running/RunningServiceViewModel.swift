@@ -134,7 +134,7 @@ private extension RunningServiceViewModel {
         let rscFeature = try await peripheral.readValue(for: rscFeature)
             .tryMap { data in
                 guard let data else { throw Err.noData }
-                return RunningSpeedAndCadence.RSCFeature(rawValue: data[0])
+                return BitField<RunningSpeedAndCadence.RSCFeature>(RegisterValue(data[0]))
             }
             .timeout(.seconds(1), scheduler: DispatchQueue.main, customError: { Err.timeout })
             .firstValue
@@ -187,7 +187,7 @@ extension RunningServiceViewModel {
         @Published fileprivate(set) var criticalError: CriticalError?
         @Published fileprivate(set) var alertError: AlertError?
         
-        @Published fileprivate(set) var rscFeature: RunningSpeedAndCadence.RSCFeature = .none
+        @Published fileprivate(set) var rscFeature = BitField<RunningSpeedAndCadence.RSCFeature>()
         
         @Published var instantaneousSpeed: Measurement<UnitSpeed>?
         @Published var instantaneousCadence: Int?
@@ -200,7 +200,7 @@ extension RunningServiceViewModel {
         private let log = NordicLog(category: "RunningService.ViewModel.Environment")
         
         init(criticalError: CriticalError? = nil, alertError: AlertError? = nil,
-             rscFeature: RunningSpeedAndCadence.RSCFeature = .none,
+             rscFeature: BitField<RunningSpeedAndCadence.RSCFeature> = [],
              instantaneousSpeed: Measurement<UnitSpeed>? = nil,
              instantaneousCadence: Int? = nil,
              instantaneousStrideLength: Measurement<UnitLength>? = nil,

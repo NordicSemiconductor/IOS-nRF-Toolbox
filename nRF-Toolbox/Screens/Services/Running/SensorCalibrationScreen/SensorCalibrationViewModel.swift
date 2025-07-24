@@ -18,7 +18,7 @@ import iOS_Common_Libraries
 final class SensorCalibrationViewModel: ObservableObject {
     
     let peripheral: Peripheral
-    let rscFeature: RunningSpeedAndCadence.RSCFeature
+    let rscFeature: BitField<RunningSpeedAndCadence.RSCFeature>
     
     @Published fileprivate(set) var setCumulativeValueEnabled = false
     @Published fileprivate(set) var startSensorCalibrationEnabled = false
@@ -46,7 +46,7 @@ final class SensorCalibrationViewModel: ObservableObject {
     
     // MARK: init
     
-    init(peripheral: Peripheral, rscService: CBService, rscFeature: RunningSpeedAndCadence.RSCFeature) {
+    init(peripheral: Peripheral, rscService: CBService, rscFeature: BitField<RunningSpeedAndCadence.RSCFeature>) {
         self.peripheral = peripheral
         self.rscService = rscService
         self.rscFeature = rscFeature

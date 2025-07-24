@@ -26,7 +26,7 @@ extension SensorSettings {
         }
         @Published var showError: Bool = false
         @Published var availableLocation: [RunningSpeedAndCadence.SensorLocation] = []
-        @Published var supportedFeatures: RunningSpeedAndCadence.RSCFeature = .none
+        @Published var supportedFeatures = BitField<RunningSpeedAndCadence.RSCFeature>()
         @Published var currentSensorLocation: UInt8 = SensorLocation.other.rawValue
         @Published var selectedSensorLocation: UInt8 = SensorLocation.other.rawValue
         
