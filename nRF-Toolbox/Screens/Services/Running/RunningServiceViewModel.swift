@@ -71,7 +71,10 @@ extension RunningServiceViewModel: SupportedServiceViewModel {
 
 extension RunningServiceViewModel {
     
+    // MARK: enableDeviceCommunication()
+    
     public func enableDeviceCommunication() async {
+        log.debug(#function)
         do {
             try await discoverCharacteristics()
             try await readFeature()
@@ -98,13 +101,15 @@ extension RunningServiceViewModel {
     }
 }
 
-extension RunningServiceViewModel {
+private extension RunningServiceViewModel {
     
-    private func discoverCharacteristics() async throws {
+    // MARK: discoverCharacteristics()
+    
+    func discoverCharacteristics() async throws {
+        log.debug(#function)
         let serviceCharacteristics: [Characteristic] = [.rscMeasurement, .rscFeature]
-        let discoveredCharacteristics: [CBCharacteristic]
-        
-        discoveredCharacteristics = try await peripheral.discoverCharacteristics(serviceCharacteristics.map(\.uuid), for: runningService).firstValue
+        let discoveredCharacteristics: [CBCharacteristic] = try await peripheral.discoverCharacteristics(serviceCharacteristics.map(\.uuid), for: runningService)
+            .firstValue
         
         for characteristic in discoveredCharacteristics {
             switch characteristic.uuid {
@@ -122,7 +127,10 @@ extension RunningServiceViewModel {
         }
     }
     
-    private func readFeature() async throws {
+    // MARK: readFeature()
+    
+    func readFeature() async throws {
+        log.debug(#function)
         let rscFeature = try await peripheral.readValue(for: rscFeature)
             .tryMap { data in
                 guard let data else { throw Err.noData }
@@ -138,7 +146,9 @@ extension RunningServiceViewModel {
         environment.rscFeature = rscFeature
     }
     
-    private func enableMeasurementNotifications() async throws {
+    // MARK: enableMeasurementNotifications()
+    
+    func enableMeasurementNotifications() async throws {
         peripheral.listenValues(for: rscMeasurement)                    // Listen for values
             .map { RunningSpeedAndCadence.RSCSMeasurement(from: $0) }   // Map Data into readable struct
             .sink { [unowned self] completion in
