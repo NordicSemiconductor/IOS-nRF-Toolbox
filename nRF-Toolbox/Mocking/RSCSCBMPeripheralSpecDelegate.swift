@@ -47,15 +47,15 @@ public class RSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
                     didReceiveWriteRequestFor characteristic: CBMCharacteristicMock,
                     data: Data) -> Result<Void, Error> {
         if characteristic.uuid == CBMUUID.scControlPoint {
-            let opCode = RunningSpeedAndCadence.OpCode(rawValue: data.read(offset: 0))!
+            let opCode = RunningSpeedAndCadence.OpCode(rawValue: UInt8(data.littleEndianBytes(as: UInt8.self)))!
             switch opCode {
             case .setCumulativeValue:
-                let value: UInt32 = data.read(offset: 1)
+                let value: UInt32 = UInt32(data.littleEndianBytes(as: UInt32.self))
                 delegate?.didReceiveSetCumulativeValue(value: value)
             case .startSensorCalibration:
                 delegate?.didReceiveStartSensorCalibration()
             case .updateSensorLocation:
-                let location = RunningSpeedAndCadence.SensorLocation(rawValue: data.read(offset: 1))!
+                let location = RunningSpeedAndCadence.SensorLocation(rawValue: UInt8(data.littleEndianBytes(as: UInt32.self)))!
                 delegate?.didReceiveUpdateSensorLocation(location)
             case .requestSupportedSensorLocations:
                 delegate?.didReceiveRequestSupportedSensorLocations()

@@ -140,18 +140,18 @@ public extension RunningSpeedAndCadence {
         public var flags: BitField<RSCFeature>
 
         /// Instantaneous Speed. 256 units = 1 meter/second
-        public var instantaneousSpeed: UInt16
+        public var instantaneousSpeed: Int
 
         /// Instantaneous Cadence. 1 unit = 1 stride/minute
-        public var instantaneousCadence: UInt8
+        public var instantaneousCadence: Int
 
         /// Instantaneous Stride Length. 100 units = 1 meter
-        public var instantaneousStrideLength: UInt16?
+        public var instantaneousStrideLength: Int?
 
         /// Total Distance. 1 unit = 1 meter
-        public var totalDistance: UInt32?
+        public var totalDistance: Int?
         
-        public init(flags: BitField<RSCFeature>, instantaneousSpeed: UInt16, instantaneousCadence: UInt8, instantaneousStrideLength: UInt16?, totalDistance: UInt32?) {
+        public init(flags: BitField<RSCFeature>, instantaneousSpeed: Int, instantaneousCadence: Int, instantaneousStrideLength: Int?, totalDistance: Int?) {
             self.flags = flags
             self.instantaneousSpeed = instantaneousSpeed
             self.instantaneousCadence = instantaneousCadence
@@ -164,21 +164,21 @@ public extension RunningSpeedAndCadence {
             flags = BitField<RSCFeature>(RegisterValue(flagsValue))
 
             var offset = MemoryLayout<UInt8>.size
-            instantaneousSpeed = data.read(offset: offset)
+            instantaneousSpeed = data.littleEndianBytes(atOffset: offset, as: UInt16.self)
             offset += MemoryLayout<UInt16>.size
             
-            instantaneousCadence = data.read(offset: offset)
+            instantaneousCadence = data.littleEndianBytes(atOffset: offset, as: UInt8.self)
             offset += MemoryLayout<UInt8>.size
 
             if flags.contains(.instantaneousStrideLengthMeasurement) {
-                instantaneousStrideLength = data.read(offset: offset)
+                instantaneousStrideLength = data.littleEndianBytes(atOffset: offset, as: UInt16.self)
                 offset += MemoryLayout<UInt16>.size
             } else {
                 instantaneousStrideLength = nil
             }
 
             if flags.contains(.totalDistanceMeasurement) {
-                totalDistance = data.read(offset: offset)
+                totalDistance = data.littleEndianBytes(atOffset: offset, as: UInt32.self)
                 offset += MemoryLayout<UInt32>.size
             } else {
                 totalDistance = nil
@@ -375,7 +375,7 @@ public class RunningSpeedAndCadence {
     
     private var measurement: RSCSMeasurement = RSCSMeasurement(
         flags: .all(),
-        instantaneousSpeed: UInt16(250 * 2.5), // 2.5 m/s
+        instantaneousSpeed: Int(250 * 2.5), // 2.5 m/s
         instantaneousCadence: 170,
         instantaneousStrideLength: 80,
         totalDistance: 0
@@ -407,19 +407,19 @@ public class RunningSpeedAndCadence {
 
     public func randomizeMeasurement(flags: BitField<RSCFeature> = []) {
         self.measurement.flags = flags
-        let newIS = UInt16(Int(self.measurement.instantaneousSpeed) + Int.random(in: 0...100) - 50)
+        let newIS = Int(self.measurement.instantaneousSpeed) + Int.random(in: 0...100) - 50
         if newIS < 750 && newIS > 250 {
             self.measurement.instantaneousSpeed = newIS
         }
         
-        self.measurement.instantaneousCadence = UInt8.random(in: 166 ... 174)
+        self.measurement.instantaneousCadence = Int.random(in: 166 ... 174)
         
         if flags.contains(.instantaneousStrideLengthMeasurement) == true {
-            self.measurement.instantaneousStrideLength = UInt16.random(in: 75 ... 85)
+            self.measurement.instantaneousStrideLength = Int.random(in: 75 ... 85)
         }
         
         if flags.contains(.totalDistanceMeasurement) == true {
-            self.measurement.totalDistance = (self.measurement.totalDistance ?? 0) + UInt32.random(in: 1 ... 2)
+            self.measurement.totalDistance = (self.measurement.totalDistance ?? 0) + Int.random(in: 1 ... 2)
         }
     }
 }
@@ -439,7 +439,7 @@ protocol RSCSDelegate: AnyObject {
 extension RunningSpeedAndCadence: RSCSDelegate {
     
     func didReceiveSetCumulativeValue(value: UInt32) {
-        measurement.totalDistance = value
+        measurement.totalDistance = Int(value)
         peripheral.simulateValueUpdate(SetCumulativeValueResponse(responseCode: .success).data,
                                        for: .scControlPoint)
     }
@@ -471,12 +471,6 @@ extension RunningSpeedAndCadence: RSCSDelegate {
 
 internal extension Data {
     
-    func read<R: FixedWidthInteger>(offset: Int = 0) -> R {
-        let length = MemoryLayout<R>.size
-        assert(offset + length <= count, "Out of range")
-        return subdata(in: offset ..< offset + length).withUnsafeBytes { $0.load(as: R.self) }
-    }
-
     func appendedValue<R: FixedWidthInteger>(_ value: R) -> Data {
         var value = value
         let d = Data(bytes: &value, count: MemoryLayout<R>.size)
