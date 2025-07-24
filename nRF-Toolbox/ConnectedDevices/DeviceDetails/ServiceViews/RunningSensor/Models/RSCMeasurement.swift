@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import iOS_Common_Libraries
 
 struct RSCMeasurement: CustomDebugStringConvertible {
     var debugDescription: String {
@@ -21,7 +22,7 @@ struct RSCMeasurement: CustomDebugStringConvertible {
     
     let data: Data
 
-    let flags: RunningSpeedAndCadence.RSCMeasurementFlags
+    let flags: BitField<RunningSpeedAndCadence.RSCFeature>
     let instantaneousSpeed: Measurement<UnitSpeed>
     let instantaneousCadence: Int
     let instantaneousStrideLength: Measurement<UnitLength>?
@@ -31,7 +32,7 @@ struct RSCMeasurement: CustomDebugStringConvertible {
         flags.contains(.walkingOrRunningStatus)
     }
 
-    init(data: Data, flags: RunningSpeedAndCadence.RSCMeasurementFlags, instantaneousSpeed: Measurement<UnitSpeed>, instantaneousCadence: Int, instantaneousStrideLength: Measurement<UnitLength>?, totalDistance: Measurement<UnitLength>?) {
+    init(data: Data, flags: BitField<RunningSpeedAndCadence.RSCFeature>, instantaneousSpeed: Measurement<UnitSpeed>, instantaneousCadence: Int, instantaneousStrideLength: Measurement<UnitLength>?, totalDistance: Measurement<UnitLength>?) {
         self.data = data
         self.flags = flags
         self.instantaneousSpeed = instantaneousSpeed
@@ -46,12 +47,12 @@ struct RSCMeasurement: CustomDebugStringConvertible {
         self.instantaneousSpeed = Measurement(value: Double(rawData.instantaneousSpeed) / 256.0, unit: .metersPerSecond)
         self.instantaneousCadence = Int(rawData.instantaneousCadence)
         
-        self.instantaneousStrideLength = flags.contains(.instantaneousStrideLengthPresent)
-        ? Measurement(value: Double(rawData.instantaneousStrideLength!), unit: .centimeters)
-        : nil
+        self.instantaneousStrideLength = flags.contains(.instantaneousStrideLengthMeasurement)
+            ? Measurement(value: Double(rawData.instantaneousStrideLength!), unit: .centimeters)
+            : nil
         
-        self.totalDistance = flags.contains(.totalDistancePresent)
-        ? Measurement(value: Double(rawData.totalDistance!), unit: .meters)
-        : nil
+        self.totalDistance = flags.contains(.totalDistanceMeasurement)
+            ? Measurement(value: Double(rawData.totalDistance!), unit: .meters)
+            : nil
     }
 }

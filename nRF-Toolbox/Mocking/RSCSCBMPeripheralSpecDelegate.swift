@@ -31,10 +31,11 @@ public class RSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
                     didReceiveReadRequestFor characteristic: CBMCharacteristicMock)
     -> Result<Data, Error> {
         if characteristic.uuid == CBMUUID.rscFeature {
-            let allFeatures = UInt8(BitField<RunningSpeedAndCadence.RSCFeature>.all().reduce(0) {
-                $0 + $1.bitwiseValue
-            })
-            return .success(Data([0xff, allFeatures])) // Support all features
+            let allFeatures = BitField<RunningSpeedAndCadence.RSCFeature>.all()
+                .data(clippedTo: UInt8.self)
+            var allFeaturesData = Data([0xff])
+            allFeaturesData.append(allFeatures)
+            return .success(allFeaturesData) // Support all features
         } else if characteristic.uuid == CBMUUID.sensorLocation {
             return .success(Data([sensorLocation.rawValue]))
         } else {

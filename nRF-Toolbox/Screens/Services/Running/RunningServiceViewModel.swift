@@ -163,11 +163,11 @@ private extension RunningServiceViewModel {
                 self.environment.instantaneousSpeed = Measurement(value: Double(measurement.instantaneousSpeed) / 256.0, unit: UnitSpeed.metersPerSecond)
                 self.environment.instantaneousCadence = Int(measurement.instantaneousCadence)
                 
-                if measurement.flags.contains(.instantaneousStrideLengthPresent) {
+                if measurement.flags.contains(.instantaneousStrideLengthMeasurement) {
                     self.environment.instantaneousStrideLength = Measurement(value: Double(measurement.instantaneousStrideLength!), unit: .centimeters)
                 }
                 
-                if measurement.flags.contains(.totalDistancePresent) {
+                if measurement.flags.contains(.totalDistanceMeasurement) {
                     self.environment.totalDistance = Measurement(value: Double(measurement.totalDistance!), unit: .meters)
                 }
                 

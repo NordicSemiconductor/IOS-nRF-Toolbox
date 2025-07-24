@@ -12,11 +12,12 @@ import iOS_BLE_Library_Mock
 import iOS_Bluetooth_Numbers_Database
 
 class RunningServiceHandlerPreview: RunningServiceHandler {
+    
     override var measurement: RSCMeasurement? {
         get {
             RSCMeasurement(
                 data: Data(),
-                flags: .all,
+                flags: .all(),
                 instantaneousSpeed: Measurement<UnitSpeed>.init(value: 10.0, unit: .kilometersPerHour),
                 instantaneousCadence: 2,
                 instantaneousStrideLength: Measurement<UnitLength>.init(value: 1.1, unit: .meters),

@@ -55,23 +55,6 @@ public extension RunningSpeedAndCadence {
         }
     }
 
-    // MARK: RSCSMeasurementFlags
-    
-    struct RSCMeasurementFlags: OptionSet {
-        public let rawValue: UInt8
-        
-        public init(rawValue: UInt8) {
-            self.rawValue = rawValue
-        }
-
-        public static let instantaneousStrideLengthPresent = RSCMeasurementFlags(rawValue: 1 << 0)
-        public static let totalDistancePresent             = RSCMeasurementFlags(rawValue: 1 << 1)
-        public static let walkingOrRunningStatus           = RSCMeasurementFlags(rawValue: 1 << 2)
-        
-        public static let all: RSCMeasurementFlags = [.instantaneousStrideLengthPresent, .totalDistancePresent, .walkingOrRunningStatus]
-        public static let none: RSCMeasurementFlags = []
-    }
-    
     // MARK: SCControlPointOpCode
     
     enum OpCode: UInt8, CustomStringConvertible {
@@ -154,7 +137,7 @@ public extension RunningSpeedAndCadence {
     // MARK: RSCSMeasurement
     
     struct RSCSMeasurement {
-        public var flags: RSCMeasurementFlags
+        public var flags: BitField<RSCFeature>
 
         /// Instantaneous Speed. 256 units = 1 meter/second
         public var instantaneousSpeed: UInt16
@@ -168,7 +151,7 @@ public extension RunningSpeedAndCadence {
         /// Total Distance. 1 unit = 1 meter
         public var totalDistance: UInt32?
         
-        public init(flags: RSCMeasurementFlags, instantaneousSpeed: UInt16, instantaneousCadence: UInt8, instantaneousStrideLength: UInt16?, totalDistance: UInt32?) {
+        public init(flags: BitField<RSCFeature>, instantaneousSpeed: UInt16, instantaneousCadence: UInt8, instantaneousStrideLength: UInt16?, totalDistance: UInt32?) {
             self.flags = flags
             self.instantaneousSpeed = instantaneousSpeed
             self.instantaneousCadence = instantaneousCadence
@@ -177,27 +160,26 @@ public extension RunningSpeedAndCadence {
         }
 
         public init(from data: Data) {
-            var flagsRawValue: UInt8 = 0
-            data.copyBytes(to: &flagsRawValue, count: 1)
-            flags = RSCMeasurementFlags(rawValue: flagsRawValue)
+            let flagsValue = data.littleEndianBytes(as: UInt8.self)
+            flags = BitField<RSCFeature>(RegisterValue(flagsValue))
 
-            var offset = 1
+            var offset = MemoryLayout<UInt8>.size
             instantaneousSpeed = data.read(offset: offset)
-            offset += 2
+            offset += MemoryLayout<UInt16>.size
             
             instantaneousCadence = data.read(offset: offset)
-            offset += 1
+            offset += MemoryLayout<UInt8>.size
 
-            if flags.contains(.instantaneousStrideLengthPresent) {
+            if flags.contains(.instantaneousStrideLengthMeasurement) {
                 instantaneousStrideLength = data.read(offset: offset)
-                offset += 2
+                offset += MemoryLayout<UInt16>.size
             } else {
                 instantaneousStrideLength = nil
             }
 
-            if flags.contains(.totalDistancePresent) {
+            if flags.contains(.totalDistanceMeasurement) {
                 totalDistance = data.read(offset: offset)
-                offset += 4
+                offset += MemoryLayout<UInt32>.size
             } else {
                 totalDistance = nil
             }
@@ -206,15 +188,15 @@ public extension RunningSpeedAndCadence {
         public var data: Data {
             var data = Data()
 
-            data.append(flags.rawValue)
+            data.append(flags.data(clippedTo: UInt8.self))
             data = data.appendedValue(instantaneousSpeed)
             data = data.appendedValue(instantaneousCadence)
             
-            if flags.contains(.instantaneousStrideLengthPresent) {
+            if flags.contains(.instantaneousStrideLengthMeasurement) {
                 data = data.appendedValue(instantaneousStrideLength!)
             }
 
-            if flags.contains(.totalDistancePresent) {
+            if flags.contains(.totalDistanceMeasurement) {
                 data = data.appendedValue(totalDistance!)
             }
 
@@ -392,7 +374,7 @@ public class RunningSpeedAndCadence {
         .build()
     
     private var measurement: RSCSMeasurement = RSCSMeasurement(
-        flags: .all,
+        flags: .all(),
         instantaneousSpeed: UInt16(250 * 2.5), // 2.5 m/s
         instantaneousCadence: 170,
         instantaneousStrideLength: 80,
@@ -410,7 +392,7 @@ public class RunningSpeedAndCadence {
                 .autoconnect()
                 .sink { [weak self] _ in
                     guard let self else { return }
-                    randomizeMeasurement(flags: .all)
+                    randomizeMeasurement(flags: .all())
                     peripheral.simulateValueUpdate(self.measurement.data , for: .rscMeasurement)
                 }
                 .store(in: &cancellables)
@@ -423,10 +405,8 @@ public class RunningSpeedAndCadence {
         
     }
 
-    public func randomizeMeasurement(flags: RSCMeasurementFlags? = nil) {
-        if let flags {
-            self.measurement.flags = flags
-        }
+    public func randomizeMeasurement(flags: BitField<RSCFeature> = []) {
+        self.measurement.flags = flags
         let newIS = UInt16(Int(self.measurement.instantaneousSpeed) + Int.random(in: 0...100) - 50)
         if newIS < 750 && newIS > 250 {
             self.measurement.instantaneousSpeed = newIS
@@ -434,11 +414,11 @@ public class RunningSpeedAndCadence {
         
         self.measurement.instantaneousCadence = UInt8.random(in: 166 ... 174)
         
-        if flags?.contains(.instantaneousStrideLengthPresent) == true {
+        if flags.contains(.instantaneousStrideLengthMeasurement) == true {
             self.measurement.instantaneousStrideLength = UInt16.random(in: 75 ... 85)
         }
         
-        if flags?.contains(.totalDistancePresent) == true {
+        if flags.contains(.totalDistanceMeasurement) == true {
             self.measurement.totalDistance = (self.measurement.totalDistance ?? 0) + UInt32.random(in: 1 ... 2)
         }
     }
