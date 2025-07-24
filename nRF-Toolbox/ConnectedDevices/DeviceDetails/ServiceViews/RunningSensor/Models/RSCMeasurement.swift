@@ -9,7 +9,10 @@
 import Foundation
 import iOS_Common_Libraries
 
+// MARK: - RCSMeasurement
+
 struct RSCMeasurement: CustomDebugStringConvertible {
+    
     var debugDescription: String {
         let mirror = Mirror(reflecting: self)
         var str: String = ""
@@ -32,6 +35,8 @@ struct RSCMeasurement: CustomDebugStringConvertible {
         flags.contains(.walkingOrRunningStatus)
     }
 
+    // MARK: init
+    
     init(data: Data, flags: BitField<RunningSpeedAndCadence.RSCFeature>, instantaneousSpeed: Measurement<UnitSpeed>, instantaneousCadence: Int, instantaneousStrideLength: Measurement<UnitLength>?, totalDistance: Measurement<UnitLength>?) {
         self.data = data
         self.flags = flags
@@ -52,7 +57,7 @@ struct RSCMeasurement: CustomDebugStringConvertible {
             : nil
         
         self.totalDistance = flags.contains(.totalDistanceMeasurement)
-            ? Measurement(value: Double(rawData.totalDistance!), unit: .meters)
+            ? rawData.totalDistance
             : nil
     }
 }

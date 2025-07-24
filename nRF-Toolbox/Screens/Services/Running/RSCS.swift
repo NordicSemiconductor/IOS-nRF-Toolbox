@@ -149,14 +149,18 @@ public extension RunningSpeedAndCadence {
         public var instantaneousStrideLength: Int?
 
         /// Total Distance. 1 unit = 1 meter
-        public var totalDistance: Int?
+        public var totalDistance: Measurement<UnitLength>?
         
-        public init(flags: BitField<RSCFeature>, instantaneousSpeed: Double, instantaneousCadence: Int, instantaneousStrideLength: Int?, totalDistance: Int?) {
+        public init(flags: BitField<RSCFeature>, instantaneousSpeed: Double, instantaneousCadence: Int, instantaneousStrideLength: Int?, totalDistance: Double?) {
             self.flags = flags
             self.instantaneousSpeed = Measurement<UnitSpeed>(value: instantaneousSpeed, unit: .metersPerSecond)
             self.instantaneousCadence = instantaneousCadence
             self.instantaneousStrideLength = instantaneousStrideLength
-            self.totalDistance = totalDistance
+            if let totalDistance {
+                self.totalDistance = Measurement<UnitLength>(value: totalDistance, unit: .meters)
+            } else {
+                self.totalDistance = nil
+            }
         }
 
         public init(from data: Data) {
@@ -181,7 +185,9 @@ public extension RunningSpeedAndCadence {
             }
 
             if flags.contains(.totalDistanceMeasurement) {
-                totalDistance = data.littleEndianBytes(atOffset: offset, as: UInt32.self)
+                let distanceUnits = data.littleEndianBytes(atOffset: offset, as: UInt32.self)
+                // 1 distance unit == 1 meter.
+                totalDistance = Measurement<UnitLength>(value: Double(distanceUnits), unit: .meters)
                 offset += MemoryLayout<UInt32>.size
             } else {
                 totalDistance = nil
@@ -201,8 +207,9 @@ public extension RunningSpeedAndCadence {
                 data = data.appendedValue(UInt16(instantaneousStrideLength!))
             }
 
-            if flags.contains(.totalDistanceMeasurement) {
-                data = data.appendedValue(UInt32(totalDistance!))
+            if flags.contains(.totalDistanceMeasurement), let totalDistance {
+                // 1 meter == 1 distance unit.
+                data = data.appendedValue(UInt32(totalDistance.value))
             }
 
             return data
@@ -416,12 +423,13 @@ public class RunningSpeedAndCadence {
         self.measurement.instantaneousSpeed = Measurement<UnitSpeed>(value: newIS, unit: .metersPerSecond)
         self.measurement.instantaneousCadence = Int.random(in: 166 ... 174)
         
-        if flags.contains(.instantaneousStrideLengthMeasurement) == true {
+        if flags.contains(.instantaneousStrideLengthMeasurement) {
             self.measurement.instantaneousStrideLength = Int.random(in: 75 ... 85)
         }
         
-        if flags.contains(.totalDistanceMeasurement) == true {
-            self.measurement.totalDistance = (self.measurement.totalDistance ?? 0) + Int.random(in: 1 ... 2)
+        if flags.contains(.totalDistanceMeasurement), let distanceValue = measurement.totalDistance?.value {
+            self.measurement.totalDistance =
+                Measurement<UnitLength>(value: distanceValue + Double.random(in: 1...2), unit: .meters)
         }
     }
 }
@@ -441,7 +449,7 @@ protocol RSCSDelegate: AnyObject {
 extension RunningSpeedAndCadence: RSCSDelegate {
     
     func didReceiveSetCumulativeValue(value: UInt32) {
-        measurement.totalDistance = Int(value)
+        measurement.totalDistance = Measurement<UnitLength>(value: Double(value), unit: .meters)
         peripheral.simulateValueUpdate(SetCumulativeValueResponse(responseCode: .success).data,
                                        for: .scControlPoint)
     }

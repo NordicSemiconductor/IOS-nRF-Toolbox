@@ -168,7 +168,7 @@ private extension RunningServiceViewModel {
                 }
                 
                 if measurement.flags.contains(.totalDistanceMeasurement) {
-                    self.environment.totalDistance = Measurement(value: Double(measurement.totalDistance!), unit: .meters)
+                    self.environment.totalDistance = measurement.totalDistance
                 }
                 
                 self.environment.isRunning = measurement.flags.contains(.walkingOrRunningStatus)
