@@ -160,7 +160,7 @@ private extension RunningServiceViewModel {
                 }
                 
             } receiveValue: { [unowned self] measurement in
-                self.environment.instantaneousSpeed = Measurement(value: Double(measurement.instantaneousSpeed) / 256.0, unit: UnitSpeed.metersPerSecond)
+                self.environment.instantaneousSpeed = measurement.instantaneousSpeed
                 self.environment.instantaneousCadence = Int(measurement.instantaneousCadence)
                 
                 if measurement.flags.contains(.instantaneousStrideLengthMeasurement) {

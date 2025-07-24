@@ -140,7 +140,7 @@ public extension RunningSpeedAndCadence {
         public var flags: BitField<RSCFeature>
 
         /// Instantaneous Speed. 256 units = 1 meter/second
-        public var instantaneousSpeed: Int
+        public var instantaneousSpeed: Measurement<UnitSpeed>
 
         /// Instantaneous Cadence. 1 unit = 1 stride/minute
         public var instantaneousCadence: Int
@@ -151,9 +151,9 @@ public extension RunningSpeedAndCadence {
         /// Total Distance. 1 unit = 1 meter
         public var totalDistance: Int?
         
-        public init(flags: BitField<RSCFeature>, instantaneousSpeed: Int, instantaneousCadence: Int, instantaneousStrideLength: Int?, totalDistance: Int?) {
+        public init(flags: BitField<RSCFeature>, instantaneousSpeed: Double, instantaneousCadence: Int, instantaneousStrideLength: Int?, totalDistance: Int?) {
             self.flags = flags
-            self.instantaneousSpeed = instantaneousSpeed
+            self.instantaneousSpeed = Measurement<UnitSpeed>(value: instantaneousSpeed, unit: .metersPerSecond)
             self.instantaneousCadence = instantaneousCadence
             self.instantaneousStrideLength = instantaneousStrideLength
             self.totalDistance = totalDistance
@@ -164,7 +164,10 @@ public extension RunningSpeedAndCadence {
             flags = BitField<RSCFeature>(RegisterValue(flagsValue))
 
             var offset = MemoryLayout<UInt8>.size
-            instantaneousSpeed = data.littleEndianBytes(atOffset: offset, as: UInt16.self)
+            // 256 units == 1 meter/second
+            let speedUnits = data.littleEndianBytes(atOffset: offset, as: UInt16.self)
+            let speedInMetersPerSecond = Double(speedUnits) / 256.0
+            instantaneousSpeed = Measurement<UnitSpeed>(value: speedInMetersPerSecond, unit: .metersPerSecond)
             offset += MemoryLayout<UInt16>.size
             
             instantaneousCadence = data.littleEndianBytes(atOffset: offset, as: UInt8.self)
@@ -189,15 +192,17 @@ public extension RunningSpeedAndCadence {
             var data = Data()
 
             data.append(flags.data(clippedTo: UInt8.self))
-            data = data.appendedValue(instantaneousSpeed)
-            data = data.appendedValue(instantaneousCadence)
+            // 256 units == 1 meter/second
+            let instantSpeedUnits = instantaneousSpeed.value * 256.0
+            data = data.appendedValue(UInt16(instantSpeedUnits))
+            data = data.appendedValue(UInt8(instantaneousCadence))
             
             if flags.contains(.instantaneousStrideLengthMeasurement) {
-                data = data.appendedValue(instantaneousStrideLength!)
+                data = data.appendedValue(UInt16(instantaneousStrideLength!))
             }
 
             if flags.contains(.totalDistanceMeasurement) {
-                data = data.appendedValue(totalDistance!)
+                data = data.appendedValue(UInt32(totalDistance!))
             }
 
             return data
@@ -375,7 +380,7 @@ public class RunningSpeedAndCadence {
     
     private var measurement: RSCSMeasurement = RSCSMeasurement(
         flags: .all(),
-        instantaneousSpeed: Int(250 * 2.5), // 2.5 m/s
+        instantaneousSpeed: 2.5,
         instantaneousCadence: 170,
         instantaneousStrideLength: 80,
         totalDistance: 0
@@ -407,11 +412,8 @@ public class RunningSpeedAndCadence {
 
     public func randomizeMeasurement(flags: BitField<RSCFeature> = []) {
         self.measurement.flags = flags
-        let newIS = Int(self.measurement.instantaneousSpeed) + Int.random(in: 0...100) - 50
-        if newIS < 750 && newIS > 250 {
-            self.measurement.instantaneousSpeed = newIS
-        }
-        
+        let newIS = Double.random(in: 0...3)
+        self.measurement.instantaneousSpeed = Measurement<UnitSpeed>(value: newIS, unit: .metersPerSecond)
         self.measurement.instantaneousCadence = Int.random(in: 166 ... 174)
         
         if flags.contains(.instantaneousStrideLengthMeasurement) == true {

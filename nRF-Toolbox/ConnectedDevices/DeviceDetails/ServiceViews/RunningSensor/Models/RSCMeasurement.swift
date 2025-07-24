@@ -44,7 +44,7 @@ struct RSCMeasurement: CustomDebugStringConvertible {
     init(rawData: RunningSpeedAndCadence.RSCSMeasurement) {
         self.data = rawData.data
         self.flags = rawData.flags
-        self.instantaneousSpeed = Measurement(value: Double(rawData.instantaneousSpeed) / 256.0, unit: .metersPerSecond)
+        self.instantaneousSpeed = rawData.instantaneousSpeed
         self.instantaneousCadence = Int(rawData.instantaneousCadence)
         
         self.instantaneousStrideLength = flags.contains(.instantaneousStrideLengthMeasurement)
