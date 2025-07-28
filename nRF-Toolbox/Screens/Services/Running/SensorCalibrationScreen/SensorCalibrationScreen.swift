@@ -16,7 +16,9 @@ struct SensorCalibrationScreen: View {
     
     @EnvironmentObject private var viewModel: SensorCalibrationViewModel
     
-    // MARK: Properties
+    // MARK: Private Properties
+    
+    @Environment(\.dismiss) var dismiss
     
     @State private var resetCumulativeValueDisabled = false
     @State private var startSensorCalibrationDisabled = false
@@ -73,6 +75,17 @@ struct SensorCalibrationScreen: View {
             }
         }
         .listStyle(.insetGrouped)
+        .navigationTitle("Sensor Calibration")
+        .navigationBarTitleDisplayMode(.inline)
+        
+        .toolbarRole(.navigationStack)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button("Dismiss", systemImage: "chevron.down") {
+                    dismiss()
+                }
+            }
+        }
 //        .errorAlert(error: $environment.alertError)
     }
     
