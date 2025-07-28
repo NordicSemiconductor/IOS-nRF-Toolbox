@@ -262,17 +262,3 @@ extension RunningServiceHandler {
         try await writeCommand(opCode: .updateSensorLocation, parameter: data)
     }
 }
-
-#if DEBUG
-
-class MockRunningServiceHandler: RunningServiceHandler {
-    init() {
-        super.init(
-            peripheral: Peripheral(
-                peripheral: CBMPeripheralPreview(RunningSpeedAndCadence().peripheral),
-                delegate: ReactivePeripheralDelegate()),
-            service: CBMServiceMock.runningSpeedCadence)!
-    }
-}
-
-#endif

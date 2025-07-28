@@ -53,6 +53,7 @@ extension SensorSettings {
 }
 
 extension SensorSettings.SensorSettingsViewModel {
+    
     func updateFeature() async {
         await wrappError {
             self.supportedFeatures = try await handler.readSupportedFeatures()
@@ -103,19 +104,3 @@ extension SensorSettings.SensorSettingsViewModel {
         }
     }
 }
-
-extension SensorSettings.SensorSettingsViewModel {
-    
-}
-
-#if DEBUG
-
-extension SensorSettings {
-    class MockViewModel: SensorSettingsViewModel {
-        init() {
-            super.init(handler: MockRunningServiceHandler())
-        }
-    }
-}
-
-#endif
