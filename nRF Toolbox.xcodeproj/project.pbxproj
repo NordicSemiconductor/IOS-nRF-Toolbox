@@ -20,7 +20,6 @@
 		01268AFB2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01268AFA2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift */; };
 		0126B53F2A5EA8B70033BCC3 /* AttributeTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0126B53E2A5EA8B70033BCC3 /* AttributeTable.swift */; };
 		0129126B23E4487000EB3CCD /* UARTTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129126A23E4486F00EB3CCD /* UARTTabBarController.swift */; };
-		0129F2252A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129F2242A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift */; };
 		0129F2282A684059002FB3F5 /* LabeledValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129F2272A684059002FB3F5 /* LabeledValueView.swift */; };
 		012C2BDC240FCD0C005EC1A0 /* DFUUpdateSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDB240FCD0C005EC1A0 /* DFUUpdateSection.swift */; };
 		012C2BE12410682D005EC1A0 /* LegendLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012C2BDE2410682D005EC1A0 /* LegendLabel.swift */; };
@@ -467,7 +466,6 @@
 		01268AFA2421B3C700E83156 /* ZephyrDFUTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFUTabBarViewController.swift; sourceTree = "<group>"; };
 		0126B53E2A5EA8B70033BCC3 /* AttributeTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeTable.swift; sourceTree = "<group>"; };
 		0129126A23E4486F00EB3CCD /* UARTTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTTabBarController.swift; sourceTree = "<group>"; };
-		0129F2242A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningServiceHandlerPreview.swift; sourceTree = "<group>"; };
 		0129F2272A684059002FB3F5 /* LabeledValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledValueView.swift; sourceTree = "<group>"; };
 		012C2BDB240FCD0C005EC1A0 /* DFUUpdateSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUUpdateSection.swift; sourceTree = "<group>"; };
 		012C2BDE2410682D005EC1A0 /* LegendLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegendLabel.swift; sourceTree = "<group>"; };
@@ -995,14 +993,6 @@
 			path = ServiceViews;
 			sourceTree = "<group>";
 		};
-		0129F2232A6802BF002FB3F5 /* ServiceHandlers */ = {
-			isa = PBXGroup;
-			children = (
-				0129F2242A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift */,
-			);
-			path = ServiceHandlers;
-			sourceTree = "<group>";
-		};
 		0129F2262A68404C002FB3F5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1231,7 +1221,6 @@
 				AAC542B52E2E63BA004FB4D2 /* RSCSCBMPeripheralSpecDelegate.swift */,
 				01F6A95F2A812D6200540B45 /* Emulator.swift */,
 				01407CB82A65417900A5B279 /* CBMPeripheralPreview.swift */,
-				0129F2232A6802BF002FB3F5 /* ServiceHandlers */,
 				017D10352A5809E400E38E5F /* Preview Assets.xcassets */,
 			);
 			path = Mocking;
@@ -3005,7 +2994,6 @@
 				AA21A3402E13D8AD00316CAD /* HeartRateValue.swift in Sources */,
 				0164A4742AD5A4630093E501 /* StateViews.swift in Sources */,
 				AA4C50C02DFC230B00B7B22F /* NordicEmptyView.swift in Sources */,
-				0129F2252A6803E0002FB3F5 /* RunningServiceHandlerPreview.swift in Sources */,
 				AAE2C9332D9D378300B398E3 /* CGMOpcodes.swift in Sources */,
 				AA8B89282E28F18C0017F219 /* BlinkyCBMPeripheralSpecDelegate.swift in Sources */,
 				01EBE6192AE4845100960672 /* View+ErrorAlert.swift in Sources */,

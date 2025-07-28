@@ -183,6 +183,7 @@ class RunningServiceHandler: ServiceHandler, ObservableObject {
 
 // MARK: - Sensor Settings
 extension RunningServiceHandler {
+    
     // MARK: Read Values
     func readSensorLocation() async throws -> SensorLocation {
         guard let sensorLocationCh else {
