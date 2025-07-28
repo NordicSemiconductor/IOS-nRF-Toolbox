@@ -10,6 +10,8 @@ import SwiftUI
 
 private typealias Env = RunningServiceViewModel.Environment
 
+// MARK: - RunningAttribute
+
 struct RunningAttribute: Identifiable {
     let title: String
     let value: String
@@ -20,16 +22,28 @@ struct RunningAttribute: Identifiable {
     }
 }
 
+// MARK: - RunningValuesGrid
+
 struct RunningValuesGrid: View {
+    
+    // MARK: Environment
+    
     @EnvironmentObject private var environment: Env
+    
+    // MARK: view
     
     var body: some View {
         NumberedColumnGrid(columns: 2, data: items) { item in
             RunningValuesGridItem(title: item.title, value: item.value, unit: item.unit)
         }
     }
+}
+
+// MARK: - Private
+
+private extension RunningValuesGrid {
     
-    private var items: [RunningAttribute] {
+    var items: [RunningAttribute] {
         let numberFormatter = NumberFormatter()
         numberFormatter.maximumFractionDigits = 2
         
@@ -99,7 +113,7 @@ struct RunningValuesGrid: View {
         return items
     }
     
-    private func itemPlaceholder(_ key: String) -> RunningAttribute {
+    func itemPlaceholder(_ key: String) -> RunningAttribute {
         return RunningAttribute(title: key, value: "-.-", unit: "-")
     }
 }
