@@ -13,46 +13,45 @@ import iOS_Common_Libraries
 import CoreBluetoothMock
 import Combine
 
-extension SensorSettings {
+// MARK: - SensorSettingsViewModel
+
+@MainActor
+final class SensorSettingsViewModel: ObservableObject {
+    private var cancelables = Set<AnyCancellable>()
     
-    @MainActor
-    class SensorSettingsViewModel: ObservableObject {
-        private var cancelables = Set<AnyCancellable>()
-        
-        @Published var error: ReadableError? = nil {
-            didSet {
-                showError = true
-            }
+    @Published var error: ReadableError? = nil {
+        didSet {
+            showError = true
         }
-        @Published var showError: Bool = false
-        @Published var availableLocation: [RunningSpeedAndCadence.SensorLocation] = []
-        @Published var supportedFeatures = BitField<RunningSpeedAndCadence.RSCFeature>()
-        @Published var currentSensorLocation: UInt8 = SensorLocation.other.rawValue
-        @Published var selectedSensorLocation: UInt8 = SensorLocation.other.rawValue
-        
-        @Published var updateLocationDisabled = true
-        
-        let handler: RunningServiceHandler
-        
-        private let l = NordicLog(category: "SensorSettingsViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
-        
-        init(handler: RunningServiceHandler) {
-            self.handler = handler
-            Task {
-                await updateFeature()
-            }
-            
-            l.debug(#function)
-        }
-        
-        deinit {
-            l.debug(#function)
-        }
-        
     }
+    @Published var showError: Bool = false
+    @Published var availableLocation: [RunningSpeedAndCadence.SensorLocation] = []
+    @Published var supportedFeatures = BitField<RunningSpeedAndCadence.RSCFeature>()
+    @Published var currentSensorLocation: UInt8 = SensorLocation.other.rawValue
+    @Published var selectedSensorLocation: UInt8 = SensorLocation.other.rawValue
+    
+    @Published var updateLocationDisabled = true
+    
+    let handler: RunningServiceHandler
+    
+    private let log = NordicLog(category: "SensorSettingsViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
+    
+    init(handler: RunningServiceHandler) {
+        self.handler = handler
+        Task {
+            await updateFeature()
+        }
+        
+        log.debug(#function)
+    }
+    
+    deinit {
+        log.debug(#function)
+    }
+    
 }
 
-extension SensorSettings.SensorSettingsViewModel {
+extension SensorSettingsViewModel {
     
     func updateFeature() async {
         await wrappError {

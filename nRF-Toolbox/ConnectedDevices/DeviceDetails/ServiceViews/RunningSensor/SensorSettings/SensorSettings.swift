@@ -12,6 +12,8 @@ import CoreBluetoothMock
 import iOS_BLE_Library_Mock
 import iOS_Common_Libraries
 
+// MARK: - SensorSettingsView
+
 struct SensorSettings: View {
     @StateObject var viewModel: SensorSettingsViewModel
     
