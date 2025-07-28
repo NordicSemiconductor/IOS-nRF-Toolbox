@@ -30,15 +30,16 @@ public class RSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
     public func peripheral(_ peripheral: CBMPeripheralSpec,
                     didReceiveReadRequestFor characteristic: CBMCharacteristicMock)
     -> Result<Data, Error> {
-        if characteristic.uuid == CBMUUID.rscFeature {
+        switch characteristic.uuid {
+        case CBMUUID.rscFeature:
             let allFeatures = BitField<RunningSpeedAndCadence.RSCFeature>.all()
                 .data(clippedTo: UInt8.self)
             var allFeaturesData = Data([0xff])
             allFeaturesData.append(allFeatures)
             return .success(allFeaturesData) // Support all features
-        } else if characteristic.uuid == CBMUUID.sensorLocation {
+        case CBMUUID.sensorLocation:
             return .success(Data([sensorLocation.rawValue]))
-        } else {
+        default:
             return .failure(MockError.readingIsNotSupported)
         }
     }
@@ -46,7 +47,8 @@ public class RSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
     public func peripheral(_ peripheral: CBMPeripheralSpec,
                     didReceiveWriteRequestFor characteristic: CBMCharacteristicMock,
                     data: Data) -> Result<Void, Error> {
-        if characteristic.uuid == CBMUUID.scControlPoint {
+        switch characteristic.uuid {
+        case CBMUUID.scControlPoint:
             let opCode = RunningSpeedAndCadence.OpCode(rawValue: UInt8(data.littleEndianBytes(as: UInt8.self)))!
             switch opCode {
             case .setCumulativeValue:
@@ -62,17 +64,16 @@ public class RSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
             default:
                 return .failure(MockError.writingIsNotSupported)
             }
-        } else {
+        default:
             return .failure(MockError.writingIsNotSupported)
         }
-
         return .success(())
     }
     
     public func peripheral(_ peripheral: CBMPeripheralSpec, didReceiveSetNotifyRequest enabled: Bool, for characteristic: CBMCharacteristicMock) -> Result<Void, Error> {
         switch characteristic.uuid {
         case .rscMeasurement:
-            delegate?.measurementNotificationStatusChanged(enabled)
+            delegate?.measurementNotificationStatusChanged(peripheral, characteristic: characteristic, enabled: enabled)
         case .scControlPoint:
             delegate?.controlPointNotificationStatusChanged(enabled)
         default:

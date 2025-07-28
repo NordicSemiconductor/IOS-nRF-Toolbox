@@ -352,6 +352,8 @@ public class RunningSpeedAndCadence {
     public var sensorLocation: RunningSpeedAndCadence.SensorLocation = .inShoe
     
     var notifySCControlPoint: Bool = false
+    
+    private let log = NordicLog(category: "RunningSpeedAndCadence")
     private lazy var cancellables = Set<AnyCancellable>()
     
     public init(enabledFeatures: BitField<RunningSpeedAndCadence.RSCFeature>, sensorLocation: RunningSpeedAndCadence.SensorLocation) {
@@ -393,23 +395,7 @@ public class RunningSpeedAndCadence {
         totalDistance: 0
     )
     
-    private var notifyMeasurement: Bool = false {
-        didSet {
-            guard notifyMeasurement else {
-                cancellables.removeAll()
-                return
-            }
-            
-            Timer.publish(every: 2.0, on: .main, in: .default)
-                .autoconnect()
-                .sink { [weak self] _ in
-                    guard let self else { return }
-                    randomizeMeasurement(flags: .all())
-                    peripheral.simulateValueUpdate(self.measurement.data , for: .rscMeasurement)
-                }
-                .store(in: &cancellables)
-        }
-    }
+    private var notifyMeasurement: Bool = false
     
     // MARK: Public methods
     
@@ -442,7 +428,7 @@ protocol RSCSDelegate: AnyObject {
     func didReceiveUpdateSensorLocation(_ location: RunningSpeedAndCadence.SensorLocation)
     func didReceiveRequestSupportedSensorLocations()
 
-    func measurementNotificationStatusChanged(_ enabled: Bool)
+    func measurementNotificationStatusChanged(_ peripheral: CBMPeripheralSpec, characteristic: CBMCharacteristicMock, enabled: Bool)
     func controlPointNotificationStatusChanged(_ enabled: Bool)
 }
 
@@ -470,8 +456,22 @@ extension RunningSpeedAndCadence: RSCSDelegate {
         peripheral.simulateValueUpdate(SupportedSensorLocations(locations: locations).data, for: .scControlPoint)
     }
     
-    func measurementNotificationStatusChanged(_ enabled: Bool) {
+    func measurementNotificationStatusChanged(_ peripheral: CBMPeripheralSpec, characteristic: CBMCharacteristicMock, enabled: Bool) {
         notifyMeasurement = enabled
+        guard notifyMeasurement else {
+            cancellables.removeAll()
+            return
+        }
+        
+        Timer.publish(every: 2.0, on: .main, in: .default)
+            .autoconnect()
+            .sink { [weak self] _ in
+                guard let self else { return }
+                randomizeMeasurement(flags: .all())
+                self.log.debug("Sending \(self.measurement).")
+                peripheral.simulateValueUpdate(self.measurement.data, for: characteristic)
+            }
+            .store(in: &cancellables)
     }
     
     func controlPointNotificationStatusChanged(_ enabled: Bool) {

@@ -155,6 +155,7 @@ extension SensorCalibrationViewModel {
     
     @discardableResult
     private func writeCommand(opCode: RunningSpeedAndCadence.OpCode, parameter: Data?) async throws -> Data? {
+        log.debug(#function)
         guard let scControlPoint else {
             throw Err.noMandatoryCharacteristic
         }
@@ -166,8 +167,12 @@ extension SensorCalibrationViewModel {
         }
         
         let valuePublisher = self.peripheral.listenValues(for: scControlPoint)
-            .compactMap { RunningSpeedAndCadence.SCControlPointResponse(from: $0) }
-            .first(where: { $0.opCode == opCode }) // Listen to response with the same OpCode
+            .compactMap {
+                RunningSpeedAndCadence.SCControlPointResponse(from: $0)
+            }
+            .first(where: {
+                $0.opCode == opCode // Listen to response with the same OpCode
+            })
             .tryMap { response -> Data? in
                 guard response.responseValue == .success else {
                     throw Err.controlPointError(response.responseValue)
@@ -182,6 +187,7 @@ extension SensorCalibrationViewModel {
     }
     
     func readSensorLocation() async throws -> SensorLocation {
+        log.debug(#function)
         guard let sensorLocationCharacteristic else {
             throw Err.noMandatoryCharacteristic
         }
@@ -198,6 +204,7 @@ extension SensorCalibrationViewModel {
     }
     
     func readAvailableLocations() async throws -> [SensorLocation] {
+        log.debug(#function)
         guard let data = try await writeCommand(opCode: .requestSupportedSensorLocations, parameter: nil) else {
             throw Err.badData
         }

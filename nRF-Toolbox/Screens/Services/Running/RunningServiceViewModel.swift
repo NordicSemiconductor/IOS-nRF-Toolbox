@@ -37,7 +37,6 @@ final class RunningServiceViewModel: ObservableObject {
         assert(runningService.uuid.uuidString == Service.runningSpeedAndCadence.uuidString, "bad service")
         self.peripheral = peripheral
         self.runningService = runningService
-        
         log.debug(#function)
     }
     
@@ -150,7 +149,9 @@ private extension RunningServiceViewModel {
     
     func enableMeasurementNotifications() async throws {
         peripheral.listenValues(for: rscMeasurement)                    // Listen for values
-            .map { RunningSpeedAndCadence.RSCSMeasurement(from: $0) }   // Map Data into readable struct
+            .map {
+                RunningSpeedAndCadence.RSCSMeasurement(from: $0) // Map Data into readable struct
+            }
             .sink { [unowned self] completion in
                 switch completion {
                 case .finished:
