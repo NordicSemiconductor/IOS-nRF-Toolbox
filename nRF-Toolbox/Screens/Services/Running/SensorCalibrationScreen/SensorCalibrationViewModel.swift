@@ -22,10 +22,10 @@ final class SensorCalibrationViewModel: ObservableObject {
     @Published fileprivate(set) var sensorLocationEnabled = false
             
     @Published var updateSensorLocationDisabled = false
-    @Published fileprivate(set) var currentSensorLocation: SensorLocation.RawValue = 0
-    @Published var pickerSensorLocation: SensorLocation.RawValue = 0
+    @Published fileprivate(set) var currentSensorLocation: RSCSSensorLocation.RawValue = 0
+    @Published var pickerSensorLocation: RSCSSensorLocation.RawValue = 0
     
-    @Published fileprivate(set) var availableSensorLocations: [SensorLocation] = []
+    @Published fileprivate(set) var availableSensorLocations: [RSCSSensorLocation] = []
     
     fileprivate var internalError: AlertError? = nil {
         didSet {
@@ -186,7 +186,7 @@ extension SensorCalibrationViewModel {
             .firstValue
     }
     
-    func readSensorLocation() async throws -> SensorLocation {
+    func readSensorLocation() async throws -> RSCSSensorLocation {
         log.debug(#function)
         guard let sensorLocationCharacteristic else {
             throw Err.noMandatoryCharacteristic
@@ -196,20 +196,20 @@ extension SensorCalibrationViewModel {
             throw Err.badData
         }
         
-        guard let location = SensorLocation(rawValue: value[0]) else {
+        guard let location = RSCSSensorLocation(rawValue: value[0]) else {
             throw Err.badData
         }
         
         return location
     }
     
-    func readAvailableLocations() async throws -> [SensorLocation] {
+    func readAvailableLocations() async throws -> [RSCSSensorLocation] {
         log.debug(#function)
         guard let data = try await writeCommand(opCode: .requestSupportedSensorLocations, parameter: nil) else {
             throw Err.badData
         }
         
-        return data.compactMap { SensorLocation(rawValue: $0) }
+        return data.compactMap { RSCSSensorLocation(rawValue: $0) }
     }
 }
 

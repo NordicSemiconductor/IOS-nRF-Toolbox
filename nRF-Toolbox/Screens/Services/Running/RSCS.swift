@@ -30,34 +30,6 @@ public extension RunningSpeedAndCadence {
         }
     }
     
-    // MARK: SensorLocation
-    
-    enum SensorLocation: UInt8, CustomStringConvertible, CaseIterable {
-        case other, topOfShoe, inShoe, hip, frontWheel, leftCrank, rightCrank, leftPedal, rightPedal, frontHub, rearDropout, chainstay, rearWheel, rearHub, chest, spider, chainRing
-
-        public var description: String {
-            switch self {
-            case .other: return "Other"
-            case .topOfShoe: return "Top of shoe"
-            case .inShoe: return "In shoe"
-            case .hip: return "Hip"
-            case .frontWheel: return "Front wheel"
-            case .leftCrank: return "Left crank"
-            case .rightCrank: return "Right crank"
-            case .leftPedal: return "Left pedal"
-            case .rightPedal: return "Right pedal"
-            case .frontHub: return "Front hub"
-            case .rearDropout: return "Rear dropout"
-            case .chainstay: return "Chainstay"
-            case .rearWheel: return "Rear wheel"
-            case .rearHub: return "Rear hub"
-            case .chest: return "Chest"
-            case .spider: return "Spider"
-            case .chainRing: return "Chain ring"
-            }
-        }
-    }
-    
     // MARK: SetCumulativeValueResponse
     
     struct SetCumulativeValueResponse {
@@ -119,9 +91,9 @@ public extension RunningSpeedAndCadence {
     
     struct SupportedSensorLocations {
         private let response: SCControlPointResponse
-        public let locations: [SensorLocation]
+        public let locations: [RSCSSensorLocation]
 
-        public init(locations: [SensorLocation], responseCode: SCControlPointResponseCode = .success) {
+        public init(locations: [RSCSSensorLocation], responseCode: SCControlPointResponseCode = .success) {
             self.locations = locations
             var data = Data()
             for location in locations {
@@ -135,7 +107,7 @@ public extension RunningSpeedAndCadence {
             guard response.opCode == .requestSupportedSensorLocations else { return nil }
             self.response = response
             if let locationData = response.parameter {
-                self.locations = locationData.compactMap { SensorLocation(rawValue: $0) }
+                self.locations = locationData.compactMap { RSCSSensorLocation(rawValue: $0) }
             } else {
                 self.locations = []
             }
@@ -151,14 +123,14 @@ public extension RunningSpeedAndCadence {
 
 public class RunningSpeedAndCadence {
     public var enabledFeatures: BitField<RSCSFeature> = .all()
-    public var sensorLocation: RunningSpeedAndCadence.SensorLocation = .inShoe
+    public var sensorLocation: RSCSSensorLocation = .inShoe
     
     var notifySCControlPoint: Bool = false
     
     private let log = NordicLog(category: "RunningSpeedAndCadence")
     private lazy var cancellables = Set<AnyCancellable>()
     
-    public init(enabledFeatures: BitField<RSCSFeature>, sensorLocation: RunningSpeedAndCadence.SensorLocation) {
+    public init(enabledFeatures: BitField<RSCSFeature>, sensorLocation: RSCSSensorLocation) {
         self.enabledFeatures = enabledFeatures
         self.sensorLocation = sensorLocation
     }
@@ -227,7 +199,7 @@ public class RunningSpeedAndCadence {
 protocol RSCSDelegate: AnyObject {
     func didReceiveSetCumulativeValue( value: UInt32)
     func didReceiveStartSensorCalibration()
-    func didReceiveUpdateSensorLocation(_ location: RunningSpeedAndCadence.SensorLocation)
+    func didReceiveUpdateSensorLocation(_ location: RSCSSensorLocation)
     func didReceiveRequestSupportedSensorLocations()
 
     func measurementNotificationStatusChanged(_ peripheral: CBMPeripheralSpec, characteristic: CBMCharacteristicMock, enabled: Bool)
@@ -247,14 +219,14 @@ extension RunningSpeedAndCadence: RSCSDelegate {
                                        for: .scControlPoint)
     }
     
-    func didReceiveUpdateSensorLocation(_ location: RunningSpeedAndCadence.SensorLocation) {
+    func didReceiveUpdateSensorLocation(_ location: RSCSSensorLocation) {
         sensorLocation = location
         peripheral.simulateValueUpdate(UpdateSensorLocationResponse(responseCode: .success).data,
                                        for: .scControlPoint)
     }
     
     func didReceiveRequestSupportedSensorLocations() {
-        let locations: [RunningSpeedAndCadence.SensorLocation] = [.chest, .hip, .inShoe, .other, .topOfShoe]
+        let locations: [RSCSSensorLocation] = [.chest, .hip, .inShoe, .other, .topOfShoe]
         peripheral.simulateValueUpdate(SupportedSensorLocations(locations: locations).data, for: .scControlPoint)
     }
     

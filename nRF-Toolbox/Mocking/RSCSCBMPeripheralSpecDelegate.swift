@@ -16,7 +16,7 @@ import iOS_Common_Libraries
 public class RSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
     
     var enabledFeatures: BitField<RSCSFeature> = .all()
-    var sensorLocation: RunningSpeedAndCadence.SensorLocation = .inShoe
+    var sensorLocation: RSCSSensorLocation = .inShoe
     
     var notifySCControlPoint: Bool = false
     var measurementTimer: Timer?
@@ -57,7 +57,7 @@ public class RSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
             case .startSensorCalibration:
                 delegate?.didReceiveStartSensorCalibration()
             case .updateSensorLocation:
-                let location = RunningSpeedAndCadence.SensorLocation(rawValue: UInt8(data.littleEndianBytes(as: UInt32.self)))!
+                let location = RSCSSensorLocation(rawValue: UInt8(data.littleEndianBytes(as: UInt32.self)))!
                 delegate?.didReceiveUpdateSensorLocation(location)
             case .requestSupportedSensorLocations:
                 delegate?.didReceiveRequestSupportedSensorLocations()
@@ -86,7 +86,6 @@ public class RSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
 
 // MARK: - CoreBluetoothMock
 
-typealias SensorLocation = RunningSpeedAndCadence.SensorLocation
 typealias SupportedSensorLocationsResponse = RunningSpeedAndCadence.SupportedSensorLocations
 
 internal extension CBMUUID {
