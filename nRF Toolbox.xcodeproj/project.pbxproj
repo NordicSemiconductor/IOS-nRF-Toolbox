@@ -47,7 +47,6 @@
 		01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01468B042361A30A00C29E4C /* StepperTableViewCell.xib */; };
 		01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */; };
 		014BBD7D2A70004B00BCFCA8 /* RSCMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014BBD7C2A70004B00BCFCA8 /* RSCMeasurement.swift */; };
-		014BBD812A700D1600BCFCA8 /* SensorLocationView1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014BBD802A700D1600BCFCA8 /* SensorLocationView1.swift */; };
 		014C4E892403F8AE0003E601 /* UARTMacrosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E882403F8AE0003E601 /* UARTMacrosTableViewController.swift */; };
 		014C4E8B2403F9BD0003E601 /* UARTMacroSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E8A2403F9BD0003E601 /* UARTMacroSaver.swift */; };
 		0151170B240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01511709240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift */; };
@@ -493,7 +492,6 @@
 		01468B042361A30A00C29E4C /* StepperTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StepperTableViewCell.xib; sourceTree = "<group>"; };
 		01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalSection.swift; sourceTree = "<group>"; };
 		014BBD7C2A70004B00BCFCA8 /* RSCMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSCMeasurement.swift; sourceTree = "<group>"; };
-		014BBD802A700D1600BCFCA8 /* SensorLocationView1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorLocationView1.swift; sourceTree = "<group>"; };
 		014C4E882403F8AE0003E601 /* UARTMacrosTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTMacrosTableViewController.swift; sourceTree = "<group>"; };
 		014C4E8A2403F9BD0003E601 /* UARTMacroSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTMacroSaver.swift; sourceTree = "<group>"; };
 		014C4E922404038A0003E601 /* nRF_Toolbox_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nRF_Toolbox_Tests.swift; sourceTree = "<group>"; };
@@ -979,7 +977,6 @@
 				014BBD7B2A70003D00BCFCA8 /* Models */,
 				01DEB4A32A6588CA00D4C1E8 /* RunningServiceHandler.swift */,
 				01F6A9642A829D4B00540B45 /* SensorSettings */,
-				014BBD802A700D1600BCFCA8 /* SensorLocationView1.swift */,
 			);
 			path = RunningSensor;
 			sourceTree = "<group>";
@@ -2988,7 +2985,6 @@
 				AA69FF382E056F9F0065A39C /* GlucoseAllRecordsChartView.swift in Sources */,
 				AAA04F232DAD513A002DAB42 /* UARTMessagesList.swift in Sources */,
 				AA94C5512D01B49200562F7A /* BatteryView.swift in Sources */,
-				014BBD812A700D1600BCFCA8 /* SensorLocationView1.swift in Sources */,
 				AA01D4922D4A3D38008523CE /* Throughput+Attributes.swift in Sources */,
 				AA306A0B2DF30DBF005B4E04 /* GlucoseView.swift in Sources */,
 				AA21A3402E13D8AD00316CAD /* HeartRateValue.swift in Sources */,
