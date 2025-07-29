@@ -154,7 +154,7 @@ extension SensorCalibrationViewModel {
     }
     
     @discardableResult
-    private func writeCommand(opCode: RunningSpeedAndCadence.OpCode, parameter: Data?) async throws -> Data? {
+    private func writeCommand(opCode: SCControlPointOpCode, parameter: Data?) async throws -> Data? {
         log.debug(#function)
         guard let scControlPoint else {
             throw Err.noMandatoryCharacteristic
@@ -168,7 +168,7 @@ extension SensorCalibrationViewModel {
         
         let valuePublisher = self.peripheral.listenValues(for: scControlPoint)
             .compactMap {
-                RunningSpeedAndCadence.SCControlPointResponse(from: $0)
+                SCControlPointResponse(from: $0)
             }
             .first(where: {
                 $0.opCode == opCode // Listen to response with the same OpCode
@@ -218,7 +218,7 @@ extension SensorCalibrationViewModel {
 private extension SensorCalibrationViewModel {
     
     enum Err: Error {
-        case controlPointError(RunningSpeedAndCadence.ResponseCode)
+        case controlPointError(SCControlPointResponseCode)
         case noMandatoryCharacteristic
         case badData
     }

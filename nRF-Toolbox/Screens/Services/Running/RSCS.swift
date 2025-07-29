@@ -30,57 +30,6 @@ public extension RunningSpeedAndCadence {
         }
     }
     
-    // MARK: SCControlPointOpCode
-    
-    enum OpCode: UInt8, CustomStringConvertible {
-        case setCumulativeValue                 = 0x01
-        case startSensorCalibration             = 0x02
-        case updateSensorLocation               = 0x03
-        case requestSupportedSensorLocations    = 0x04
-        case responseCode                       = 0x10
-        
-        public var data: Data {
-            Data([self.rawValue])
-        }
-
-        public var description: String {
-            switch self {
-            case .setCumulativeValue:
-                return "Set Cumulative Value"
-            case .startSensorCalibration:
-                return "Start Sensor Calibration"
-            case .updateSensorLocation:
-                return "Update Sensor Location"
-            case .requestSupportedSensorLocations:
-                return "Request Supported Sensor Locations"
-            case .responseCode:
-                return "Response Code"
-            }
-        }
-    }
-    
-    // MARK: SCControlPointResponseCode
-    
-    enum ResponseCode: UInt8, CustomStringConvertible {
-        case success = 0x01
-        case opCodeNotSupported = 0x02
-        case invalidParameter = 0x03
-        case operationFailed = 0x04
-
-        public var description: String {
-            switch self {
-            case .success:
-                return "Success"
-            case .opCodeNotSupported:
-                return "Op Code Not Supported"
-            case .invalidParameter:
-                return "Invalid Parameter"
-            case .operationFailed:
-                return "Operation Failed"
-            }
-        }
-    }
-    
     // MARK: SensorLocation
     
     enum SensorLocation: UInt8, CustomStringConvertible, CaseIterable {
@@ -109,52 +58,12 @@ public extension RunningSpeedAndCadence {
         }
     }
     
-    // MARK: SCControlPointResponse
-
-    struct SCControlPointResponse {
-        public var opCode: OpCode
-        public var responseValue: ResponseCode
-        public var parameter: Data?
-
-        public init(opCode: OpCode, responseValue: ResponseCode, parameter: Data?) {
-            self.opCode = opCode
-            self.responseValue = responseValue
-            self.parameter = parameter
-        }
-
-        public init?(from data: Data) {
-            guard data.count >= 2 else { return nil }
-            guard let opCode = OpCode(rawValue: Data(data)[1]) else {
-                return nil
-            }
-            self.opCode = opCode
-            guard let responseValue = ResponseCode(rawValue: Data(data)[2]) else {
-                return nil
-            }
-            self.responseValue = responseValue
-            if data.count > 3 {
-                parameter = Data(data).subdata(in: 3 ..< data.count)
-            }
-        }
-
-        public var data: Data {
-            var data = Data()
-            data.append(OpCode.responseCode.data)
-            data.append(opCode.data)
-            data.append(responseValue.rawValue)
-            if let parameter {
-                data.append(parameter)
-            }
-            return data
-        }
-    }
-    
     // MARK: SetCumulativeValueResponse
     
     struct SetCumulativeValueResponse {
         private let response: SCControlPointResponse
 
-        public init(responseCode: ResponseCode) {
+        public init(responseCode: SCControlPointResponseCode) {
             response = SCControlPointResponse(opCode: .setCumulativeValue, responseValue: responseCode, parameter: nil)
         }
 
@@ -173,7 +82,7 @@ public extension RunningSpeedAndCadence {
     struct StartSensorCalibrationResponse {
         private let response: SCControlPointResponse
 
-        public init(responseCode: ResponseCode = .success) {
+        public init(responseCode: SCControlPointResponseCode = .success) {
             response = SCControlPointResponse(opCode: .startSensorCalibration, responseValue: responseCode, parameter: nil)
         }
 
@@ -192,7 +101,7 @@ public extension RunningSpeedAndCadence {
     struct UpdateSensorLocationResponse {
         private let response: SCControlPointResponse
 
-        public init(responseCode: ResponseCode = .success) {
+        public init(responseCode: SCControlPointResponseCode = .success) {
             response = SCControlPointResponse(opCode: .updateSensorLocation, responseValue: responseCode, parameter: nil)
         }
 
@@ -212,7 +121,7 @@ public extension RunningSpeedAndCadence {
         private let response: SCControlPointResponse
         public let locations: [SensorLocation]
 
-        public init(locations: [SensorLocation], responseCode: ResponseCode = .success) {
+        public init(locations: [SensorLocation], responseCode: SCControlPointResponseCode = .success) {
             self.locations = locations
             var data = Data()
             for location in locations {

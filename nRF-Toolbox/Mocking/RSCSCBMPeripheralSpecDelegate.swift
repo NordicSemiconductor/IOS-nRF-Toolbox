@@ -49,7 +49,7 @@ public class RSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
                     data: Data) -> Result<Void, Error> {
         switch characteristic.uuid {
         case CBMUUID.scControlPoint:
-            let opCode = RunningSpeedAndCadence.OpCode(rawValue: UInt8(data.littleEndianBytes(as: UInt8.self)))!
+            let opCode = SCControlPointOpCode(rawValue: UInt8(data.littleEndianBytes(as: UInt8.self)))!
             switch opCode {
             case .setCumulativeValue:
                 let value: UInt32 = UInt32(data.littleEndianBytes(as: UInt32.self))
