@@ -150,7 +150,7 @@ private extension RunningServiceViewModel {
     func enableMeasurementNotifications() async throws {
         peripheral.listenValues(for: rscMeasurement)                    // Listen for values
             .map {
-                RunningSpeedAndCadence.RSCSMeasurement(from: $0) // Map Data into readable struct
+                RSCSMeasurement(from: $0) // Map Data into readable struct
             }
             .sink { [unowned self] completion in
                 switch completion {
