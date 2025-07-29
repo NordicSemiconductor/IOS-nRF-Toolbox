@@ -98,3 +98,12 @@ public struct RSCSMeasurement {
         return data
     }
 }
+
+fileprivate extension Data {
+    
+    func appendedValue<R: FixedWidthInteger>(_ value: R) -> Data {
+        var value = value
+        let d = Data(bytes: &value, count: MemoryLayout<R>.size)
+        return self + d
+    }
+}

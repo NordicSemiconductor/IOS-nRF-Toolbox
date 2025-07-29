@@ -341,7 +341,6 @@
 		AA1BB0582D9D60E000734D20 /* CGMSMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1BB0572D9D60E000734D20 /* CGMSMeasurement.swift */; };
 		AA21A3402E13D8AD00316CAD /* HeartRateValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA21A33F2E13D8AD00316CAD /* HeartRateValue.swift */; };
 		AA2806052E27C73A00C42EA8 /* Battery.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2806042E27C73600C42EA8 /* Battery.swift */; };
-		AA2806072E27CCDA00C42EA8 /* RSCS.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2806062E27CCDA00C42EA8 /* RSCS.swift */; };
 		AA2931572DEEED92002C82B6 /* BloodPressureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2931562DEEED92002C82B6 /* BloodPressureView.swift */; };
 		AA2931592DEEEFCD002C82B6 /* BloodPressureMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2931582DEEEFCD002C82B6 /* BloodPressureMeasurement.swift */; };
 		AA29315B2DEF1B4F002C82B6 /* CuffPressureMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA29315A2DEF1B4F002C82B6 /* CuffPressureMeasurement.swift */; };
@@ -399,6 +398,7 @@
 		AAE967342E38D09A00A7B93B /* RSCSFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE967332E38D09A00A7B93B /* RSCSFeature.swift */; };
 		AAE967362E38D16100A7B93B /* SCControlPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE967352E38D16100A7B93B /* SCControlPoint.swift */; };
 		AAE967382E38D4C800A7B93B /* RSCSSensorLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE967372E38D4C800A7B93B /* RSCSSensorLocation.swift */; };
+		AAE9673C2E38E58D00A7B93B /* SCResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE9673B2E38E58600A7B93B /* SCResponse.swift */; };
 		AAF272F42D9BF5F6007B63D3 /* CGMSViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF272F32D9BF5F6007B63D3 /* CGMSViewModel.swift */; };
 		AAF272F82D9C10F3007B63D3 /* CGMSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF272F72D9C10F3007B63D3 /* CGMSView.swift */; };
 		AAF7DE622CFDD4BC000A347A /* SidebarDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF7DE612CFDD4BC000A347A /* SidebarDeviceView.swift */; };
@@ -794,7 +794,6 @@
 		AA1BB0572D9D60E000734D20 /* CGMSMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSMeasurement.swift; sourceTree = "<group>"; };
 		AA21A33F2E13D8AD00316CAD /* HeartRateValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateValue.swift; sourceTree = "<group>"; };
 		AA2806042E27C73600C42EA8 /* Battery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Battery.swift; sourceTree = "<group>"; };
-		AA2806062E27CCDA00C42EA8 /* RSCS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSCS.swift; sourceTree = "<group>"; };
 		AA2931562DEEED92002C82B6 /* BloodPressureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodPressureView.swift; sourceTree = "<group>"; };
 		AA2931582DEEEFCD002C82B6 /* BloodPressureMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodPressureMeasurement.swift; sourceTree = "<group>"; };
 		AA29315A2DEF1B4F002C82B6 /* CuffPressureMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuffPressureMeasurement.swift; sourceTree = "<group>"; };
@@ -846,6 +845,7 @@
 		AAE967332E38D09A00A7B93B /* RSCSFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSCSFeature.swift; sourceTree = "<group>"; };
 		AAE967352E38D16100A7B93B /* SCControlPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCControlPoint.swift; sourceTree = "<group>"; };
 		AAE967372E38D4C800A7B93B /* RSCSSensorLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSCSSensorLocation.swift; sourceTree = "<group>"; };
+		AAE9673B2E38E58600A7B93B /* SCResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCResponse.swift; sourceTree = "<group>"; };
 		AAF272F32D9BF5F6007B63D3 /* CGMSViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSViewModel.swift; sourceTree = "<group>"; };
 		AAF272F72D9C10F3007B63D3 /* CGMSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSView.swift; sourceTree = "<group>"; };
 		AAF7DE612CFDD4BC000A347A /* SidebarDeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarDeviceView.swift; sourceTree = "<group>"; };
@@ -1055,11 +1055,11 @@
 				013E5D942AE02A0700B9C475 /* RunningValuesGrid */,
 				013E5D892ADD33E000B9C475 /* RunningServiceScreen.swift */,
 				013E5D8B2ADD33EF00B9C475 /* RunningServiceViewModel.swift */,
-				AA2806062E27CCDA00C42EA8 /* RSCS.swift */,
 				AAE967332E38D09A00A7B93B /* RSCSFeature.swift */,
 				AAE967312E38C4D600A7B93B /* RSCSMeasurement.swift */,
 				AAE967372E38D4C800A7B93B /* RSCSSensorLocation.swift */,
 				AAE967352E38D16100A7B93B /* SCControlPoint.swift */,
+				AAE9673B2E38E58600A7B93B /* SCResponse.swift */,
 			);
 			path = Running;
 			sourceTree = "<group>";
@@ -2903,8 +2903,8 @@
 				01DEB4A82A65E90C00D4C1E8 /* Data+Ext.swift in Sources */,
 				0164A4712AD593B40093E501 /* ScanResultList.swift in Sources */,
 				013E5D8F2ADFDDC600B9C475 /* NumberedColumnGrid.swift in Sources */,
-				AA2806072E27CCDA00C42EA8 /* RSCS.swift in Sources */,
 				AAC542B62E2E63BA004FB4D2 /* RSCSCBMPeripheralSpecDelegate.swift in Sources */,
+				AAE9673C2E38E58D00A7B93B /* SCResponse.swift in Sources */,
 				AAA04F1D2DAD1B5C002DAB42 /* UARTView.swift in Sources */,
 				AAC4177F2DCB725F0059FE97 /* UARTMacro.swift in Sources */,
 				AA7769FD2DEDED9A0005A82B /* BloodPressureViewModel.swift in Sources */,
