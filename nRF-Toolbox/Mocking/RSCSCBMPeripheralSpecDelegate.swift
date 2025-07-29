@@ -53,14 +53,6 @@ class RSCSCBMPeripheralSpecDelegate {
         )
         .build()
     
-    var measurement: RSCSMeasurement = RSCSMeasurement(
-        flags: .all(),
-        instantaneousSpeed: 2.5,
-        instantaneousCadence: 170,
-        instantaneousStrideLength: 80,
-        totalDistance: 0
-    )
-    
     var notifyMeasurement: Bool = false
     
     // MARK: Public methods
@@ -68,27 +60,12 @@ class RSCSCBMPeripheralSpecDelegate {
     public func postMeasurement(_ measurement: RSCSMeasurement) {
         
     }
-
-    public func randomizeMeasurement(flags: BitField<RSCSFeature> = []) {
-        self.measurement.flags = flags
-        let newIS = Double.random(in: 0...3)
-        self.measurement.instantaneousSpeed = Measurement<UnitSpeed>(value: newIS, unit: .metersPerSecond)
-        self.measurement.instantaneousCadence = Int.random(in: 166 ... 174)
-        
-        if flags.contains(.instantaneousStrideLengthMeasurement) {
-            self.measurement.instantaneousStrideLength = Int.random(in: 75 ... 85)
-        }
-        
-        if flags.contains(.totalDistanceMeasurement), let distanceValue = measurement.totalDistance?.value {
-            self.measurement.totalDistance =
-                Measurement<UnitLength>(value: distanceValue + Double.random(in: 1...2), unit: .meters)
-        }
-    }
 }
 
 extension RSCSCBMPeripheralSpecDelegate {
     
     func didReceiveSetCumulativeValue(value: UInt32) {
+        var measurement: RSCSMeasurement = .random()
         measurement.totalDistance = Measurement<UnitLength>(value: Double(value), unit: .meters)
         peripheral.simulateValueUpdate(SetCumulativeValueResponse(responseCode: .success).data,
                                        for: .scControlPoint)
@@ -121,9 +98,9 @@ extension RSCSCBMPeripheralSpecDelegate {
             .autoconnect()
             .sink { [weak self] _ in
                 guard let self else { return }
-                randomizeMeasurement(flags: .all())
-                self.log.debug("Sending \(self.measurement).")
-                peripheral.simulateValueUpdate(self.measurement.toData(), for: characteristic)
+                let newMeasurement: RSCSMeasurement = .random()
+                self.log.debug("Sending \(newMeasurement).")
+                peripheral.simulateValueUpdate(newMeasurement.toData(), for: characteristic)
             }
             .store(in: &cancellables)
     }
@@ -195,6 +172,35 @@ extension RSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
         }
         
         return .success(())
+    }
+}
+
+// MARK: Random Measurement
+
+extension RSCSMeasurement {
+    
+    static func random(flags: BitField<RSCSFeature> = .all()) -> RSCSMeasurement {
+        var measurement = RSCSMeasurement(
+            flags: flags,
+            instantaneousSpeed: 2.5,
+            instantaneousCadence: 170,
+            instantaneousStrideLength: 80,
+            totalDistance: 0
+        )
+        
+        let newIS = Double.random(in: 0...3)
+        measurement.instantaneousSpeed = Measurement<UnitSpeed>(value: newIS, unit: .metersPerSecond)
+        measurement.instantaneousCadence = Int.random(in: 166 ... 174)
+        
+        if flags.contains(.instantaneousStrideLengthMeasurement) {
+            measurement.instantaneousStrideLength = Int.random(in: 75 ... 85)
+        }
+        
+        if flags.contains(.totalDistanceMeasurement), let distanceValue = measurement.totalDistance?.value {
+            measurement.totalDistance =
+                Measurement<UnitLength>(value: distanceValue + Double.random(in: 1...2), unit: .meters)
+        }
+        return measurement
     }
 }
 
