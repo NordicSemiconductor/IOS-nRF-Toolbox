@@ -26,8 +26,8 @@ final class SensorSettingsViewModel: ObservableObject {
     @Published var showError: Bool = false
     @Published var availableLocation: [RunningSpeedAndCadence.SensorLocation] = []
     @Published var supportedFeatures = BitField<RunningSpeedAndCadence.RSCFeature>()
-    @Published var currentSensorLocation: UInt8 = SensorLocation.other.rawValue
-    @Published var selectedSensorLocation: UInt8 = SensorLocation.other.rawValue
+    @Published var currentSensorLocation = SensorLocation.other
+    @Published var selectedSensorLocation = SensorLocation.other
     
     @Published var updateLocationDisabled = true
     
@@ -75,7 +75,7 @@ extension SensorSettingsViewModel {
     func updateCurrentSensorLocation() async {
         log.debug(#function)
         await wrapError { [unowned self] in
-            currentSensorLocation = try await handler.readSensorLocation().rawValue
+            currentSensorLocation = try await handler.readSensorLocation()
             selectedSensorLocation = currentSensorLocation
         }
     }
@@ -83,7 +83,7 @@ extension SensorSettingsViewModel {
     func writeNewSensorLocation() async {
         log.debug(#function)
         await wrapError { [unowned self] in
-            try await handler.writeSensorLocation(newLocation: SensorLocation(rawValue: selectedSensorLocation)!)
+            try await handler.writeSensorLocation(newLocation: selectedSensorLocation)
         }
     }
     
