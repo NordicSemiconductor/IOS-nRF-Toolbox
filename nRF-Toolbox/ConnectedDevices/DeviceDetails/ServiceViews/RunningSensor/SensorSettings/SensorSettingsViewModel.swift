@@ -17,7 +17,6 @@ import Combine
 
 @MainActor
 final class SensorSettingsViewModel: ObservableObject {
-    private var cancelables = Set<AnyCancellable>()
     
     @Published var error: ReadableError? = nil {
         didSet {
@@ -35,13 +34,13 @@ final class SensorSettingsViewModel: ObservableObject {
     let handler: RunningServiceHandler
     
     private let log = NordicLog(category: "SensorSettingsViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
+    private lazy var cancellables = Set<AnyCancellable>()
     
     init(handler: RunningServiceHandler) {
         self.handler = handler
         Task {
             await updateFeature()
         }
-        
         log.debug(#function)
     }
     
@@ -54,48 +53,55 @@ final class SensorSettingsViewModel: ObservableObject {
 extension SensorSettingsViewModel {
     
     func updateFeature() async {
-        await wrappError {
-            self.supportedFeatures = try await handler.readSupportedFeatures()
+        log.debug(#function)
+        await wrapError { [unowned self] in
+            supportedFeatures = try await handler.readSupportedFeatures()
         }
     }
     
     func updateLocationSection() async {
+        log.debug(#function)
         await updateAvailableLocations()
         await updateCurrentSensorLocation()
     }
     
     func updateAvailableLocations() async {
-        await wrappError {
-            self.availableLocation = try await self.handler.readAvailableLocations()
+        log.debug(#function)
+        await wrapError { [unowned self] in
+            availableLocation = try await handler.readAvailableLocations()
         }
     }
     
     func updateCurrentSensorLocation() async {
-        await wrappError {
-            self.currentSensorLocation = try await self.handler.readSensorLocation().rawValue
-            self.selectedSensorLocation = self.currentSensorLocation
+        log.debug(#function)
+        await wrapError { [unowned self] in
+            currentSensorLocation = try await handler.readSensorLocation().rawValue
+            selectedSensorLocation = currentSensorLocation
         }
     }
     
     func writeNewSensorLocation() async {
-        await wrappError {
+        log.debug(#function)
+        await wrapError { [unowned self] in
             try await handler.writeSensorLocation(newLocation: SensorLocation(rawValue: selectedSensorLocation)!)
         }
     }
     
     func resetDistance() async {
-        await wrappError {
+        log.debug(#function)
+        await wrapError { [unowned self] in
             try await handler.writeCumulativeValue(newDistance: Measurement(value: 0, unit: .meters))
         }
     }
     
     func startCalibration() async {
-        await wrappError {
+        log.debug(#function)
+        await wrapError { [unowned self] in
             try await handler.startCalibration()
         }
     }
     
-    private func wrappError(_ wrapper: () async throws -> ()) async {
+    private func wrapError(_ wrapper: () async throws -> ()) async {
         do {
             try await wrapper()
         } catch let error {
