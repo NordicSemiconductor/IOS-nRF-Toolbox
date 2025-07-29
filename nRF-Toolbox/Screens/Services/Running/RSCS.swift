@@ -14,21 +14,7 @@ import iOS_BLE_Library_Mock
 import CoreBluetoothMock
 import iOS_Bluetooth_Numbers_Database
 
-extension RunningSpeedAndCadence {
-    
-    enum ErrorCode: UInt8, LocalizedError {
-        case procedureAlreadyInProgress = 0x80
-        case descriptorImproperlyConfigured = 0x81
-        
-        public var errorDescription: String? {
-            switch self {
-            case .procedureAlreadyInProgress:
-                return "A SC Control Point request cannot be serviced because a previously triggered SC Control Point operation is still in progress."
-            case .descriptorImproperlyConfigured:
-                return "The Client Characteristic Configuration descriptor is not configured according to the requirements of the service."
-            }
-        }
-    }
+extension RSCSCBMPeripheralSpecDelegate {
     
     // MARK: SetCumulativeValueResponse
     
@@ -116,65 +102,6 @@ extension RunningSpeedAndCadence {
         public var data: Data {
             return response.data
         }
-    }
-}
-
-// MARK: - RSCSDelegate
-
-protocol RSCSDelegate: AnyObject {
-    func didReceiveSetCumulativeValue( value: UInt32)
-    func didReceiveStartSensorCalibration()
-    func didReceiveUpdateSensorLocation(_ location: RSCSSensorLocation)
-    func didReceiveRequestSupportedSensorLocations()
-
-    func measurementNotificationStatusChanged(_ peripheral: CBMPeripheralSpec, characteristic: CBMCharacteristicMock, enabled: Bool)
-    func controlPointNotificationStatusChanged(_ enabled: Bool)
-}
-
-extension RunningSpeedAndCadence: RSCSDelegate {
-    
-    func didReceiveSetCumulativeValue(value: UInt32) {
-        measurement.totalDistance = Measurement<UnitLength>(value: Double(value), unit: .meters)
-        peripheral.simulateValueUpdate(SetCumulativeValueResponse(responseCode: .success).data,
-                                       for: .scControlPoint)
-    }
-    
-    func didReceiveStartSensorCalibration() {
-        peripheral.simulateValueUpdate(StartSensorCalibrationResponse(responseCode: .success).data,
-                                       for: .scControlPoint)
-    }
-    
-    func didReceiveUpdateSensorLocation(_ location: RSCSSensorLocation) {
-        sensorLocation = location
-        peripheral.simulateValueUpdate(UpdateSensorLocationResponse(responseCode: .success).data,
-                                       for: .scControlPoint)
-    }
-    
-    func didReceiveRequestSupportedSensorLocations() {
-        let locations: [RSCSSensorLocation] = [.chest, .hip, .inShoe, .other, .topOfShoe]
-        peripheral.simulateValueUpdate(SupportedSensorLocations(locations: locations).data, for: .scControlPoint)
-    }
-    
-    func measurementNotificationStatusChanged(_ peripheral: CBMPeripheralSpec, characteristic: CBMCharacteristicMock, enabled: Bool) {
-        notifyMeasurement = enabled
-        guard notifyMeasurement else {
-            cancellables.removeAll()
-            return
-        }
-        
-        Timer.publish(every: 2.0, on: .main, in: .default)
-            .autoconnect()
-            .sink { [weak self] _ in
-                guard let self else { return }
-                randomizeMeasurement(flags: .all())
-                self.log.debug("Sending \(self.measurement).")
-                peripheral.simulateValueUpdate(self.measurement.toData(), for: characteristic)
-            }
-            .store(in: &cancellables)
-    }
-    
-    func controlPointNotificationStatusChanged(_ enabled: Bool) {
-        notifySCControlPoint = enabled
     }
 }
 

@@ -15,7 +15,7 @@ import iOS_Common_Libraries
 
 // MARK: RSCS
 
-class RunningSpeedAndCadence {
+class RSCSCBMPeripheralSpecDelegate {
     public var enabledFeatures: BitField<RSCSFeature> = .all()
     public var sensorLocation: RSCSSensorLocation = .inShoe
     
@@ -32,10 +32,8 @@ class RunningSpeedAndCadence {
     public init() {
         self.enabledFeatures = .all()
         self.sensorLocation = .inShoe
-        self.peripheralDelegate.delegate = self
     }
 
-    private var peripheralDelegate = RSCSCBMPeripheralSpecDelegate()
     public private(set) lazy var peripheral = CBMPeripheralSpec
         .simulatePeripheral(proximity: .far)
         .advertising(
@@ -51,7 +49,7 @@ class RunningSpeedAndCadence {
         .connectable(
             name: "Running Sensor",
             services: [.runningSpeedCadence],
-            delegate: self.peripheralDelegate
+            delegate: self
         )
         .build()
     
@@ -88,17 +86,56 @@ class RunningSpeedAndCadence {
     }
 }
 
+extension RSCSCBMPeripheralSpecDelegate {
+    
+    func didReceiveSetCumulativeValue(value: UInt32) {
+        measurement.totalDistance = Measurement<UnitLength>(value: Double(value), unit: .meters)
+        peripheral.simulateValueUpdate(SetCumulativeValueResponse(responseCode: .success).data,
+                                       for: .scControlPoint)
+    }
+    
+    func didReceiveStartSensorCalibration() {
+        peripheral.simulateValueUpdate(StartSensorCalibrationResponse(responseCode: .success).data,
+                                       for: .scControlPoint)
+    }
+    
+    func didReceiveUpdateSensorLocation(_ location: RSCSSensorLocation) {
+        sensorLocation = location
+        peripheral.simulateValueUpdate(UpdateSensorLocationResponse(responseCode: .success).data,
+                                       for: .scControlPoint)
+    }
+    
+    func didReceiveRequestSupportedSensorLocations() {
+        let locations: [RSCSSensorLocation] = [.chest, .hip, .inShoe, .other, .topOfShoe]
+        peripheral.simulateValueUpdate(SupportedSensorLocations(locations: locations).data, for: .scControlPoint)
+    }
+    
+    func measurementNotificationStatusChanged(_ peripheral: CBMPeripheralSpec, characteristic: CBMCharacteristicMock, enabled: Bool) {
+        notifyMeasurement = enabled
+        guard notifyMeasurement else {
+            cancellables.removeAll()
+            return
+        }
+        
+        Timer.publish(every: 2.0, on: .main, in: .default)
+            .autoconnect()
+            .sink { [weak self] _ in
+                guard let self else { return }
+                randomizeMeasurement(flags: .all())
+                self.log.debug("Sending \(self.measurement).")
+                peripheral.simulateValueUpdate(self.measurement.toData(), for: characteristic)
+            }
+            .store(in: &cancellables)
+    }
+    
+    func controlPointNotificationStatusChanged(_ enabled: Bool) {
+        notifySCControlPoint = enabled
+    }
+}
+
 // MARK: - RSCSCBMPeripheralSpecDelegate
 
-public class RSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
-    
-    var enabledFeatures: BitField<RSCSFeature> = .all()
-    var sensorLocation: RSCSSensorLocation = .inShoe
-    
-    var notifySCControlPoint: Bool = false
-    var measurementTimer: Timer?
-
-    weak var delegate: RSCSDelegate?
+extension RSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
     
     enum MockError: Error {
         case notifyIsNotSupported, readingIsNotSupported, writingIsNotSupported
@@ -130,14 +167,14 @@ public class RSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
             switch opCode {
             case .setCumulativeValue:
                 let value: UInt32 = UInt32(data.littleEndianBytes(as: UInt32.self))
-                delegate?.didReceiveSetCumulativeValue(value: value)
+                didReceiveSetCumulativeValue(value: value)
             case .startSensorCalibration:
-                delegate?.didReceiveStartSensorCalibration()
+                didReceiveStartSensorCalibration()
             case .updateSensorLocation:
                 let location = RSCSSensorLocation(rawValue: UInt8(data.littleEndianBytes(as: UInt32.self)))!
-                delegate?.didReceiveUpdateSensorLocation(location)
+                didReceiveUpdateSensorLocation(location)
             case .requestSupportedSensorLocations:
-                delegate?.didReceiveRequestSupportedSensorLocations()
+                didReceiveRequestSupportedSensorLocations()
             default:
                 return .failure(MockError.writingIsNotSupported)
             }
@@ -150,9 +187,9 @@ public class RSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
     public func peripheral(_ peripheral: CBMPeripheralSpec, didReceiveSetNotifyRequest enabled: Bool, for characteristic: CBMCharacteristicMock) -> Result<Void, Error> {
         switch characteristic.uuid {
         case .rscMeasurement:
-            delegate?.measurementNotificationStatusChanged(peripheral, characteristic: characteristic, enabled: enabled)
+            measurementNotificationStatusChanged(peripheral, characteristic: characteristic, enabled: enabled)
         case .scControlPoint:
-            delegate?.controlPointNotificationStatusChanged(enabled)
+            controlPointNotificationStatusChanged(enabled)
         default:
             return .failure(MockError.notifyIsNotSupported)
         }
@@ -162,8 +199,6 @@ public class RSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
 }
 
 // MARK: - CoreBluetoothMock
-
-typealias SupportedSensorLocationsResponse = RunningSpeedAndCadence.SupportedSensorLocations
 
 internal extension CBMUUID {
     static let rscMeasurement = CBMUUID(characteristic: .rscMeasurement)

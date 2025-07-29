@@ -13,7 +13,7 @@ public struct BluetoothEmulation {
     
     static let shared = BluetoothEmulation()
     
-    private let rscs = RunningSpeedAndCadence()
+    private let rscs = RSCSCBMPeripheralSpecDelegate()
     
     public func simulateState() {
         CBMCentralManagerMock.simulateInitialState(.poweredOn)
