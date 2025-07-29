@@ -135,7 +135,6 @@
 		01BEADD4241A992300FC7183 /* HMAccessoryListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BEADD3241A992300FC7183 /* HMAccessoryListTableViewController.swift */; };
 		01BEADD6241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BEADD5241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift */; };
 		01BEADD8241AE6BF00FC7183 /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BEADD7241AE6BF00FC7183 /* UILabel+Ext.swift */; };
-		01C575B92A798D65007FE4F0 /* SensorSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C575B82A798D65007FE4F0 /* SensorSettings.swift */; };
 		01C62AE52B72463F00CDEE31 /* DeviceInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C62AE42B72463F00CDEE31 /* DeviceInformation.swift */; };
 		01C62AE72B72480C00CDEE31 /* DeviceInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C62AE62B72480C00CDEE31 /* DeviceInformationView.swift */; };
 		01C81ACE2A5CAC350011B41E /* iOS-Bluetooth-Numbers-Database in Frameworks */ = {isa = PBXBuildFile; productRef = 01C81ACD2A5CAC350011B41E /* iOS-Bluetooth-Numbers-Database */; };
@@ -165,7 +164,6 @@
 		01E5910B23DECF61008F15A4 /* UARTMacrosList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */; };
 		01EBE6192AE4845100960672 /* View+ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EBE6182AE4845100960672 /* View+ErrorAlert.swift */; };
 		01F6A9602A812D6200540B45 /* Emulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F6A95F2A812D6200540B45 /* Emulator.swift */; };
-		01F6A9662A829EE300540B45 /* SensorSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F6A9652A829EE300540B45 /* SensorSettingsViewModel.swift */; };
 		01FB19D02AE3DB0D006DAB9F /* SensorCalibrationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FB19CF2AE3DB0D006DAB9F /* SensorCalibrationScreen.swift */; };
 		01FB19D22AE3DB70006DAB9F /* SensorCalibrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FB19D12AE3DB70006DAB9F /* SensorCalibrationViewModel.swift */; };
 		01FBC5012407BF8F00B1056B /* PeripheralHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */; };
@@ -585,7 +583,6 @@
 		01BEADD3241A992300FC7183 /* HMAccessoryListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HMAccessoryListTableViewController.swift; sourceTree = "<group>"; };
 		01BEADD5241AE65300FC7183 /* NordicBottomDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordicBottomDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		01BEADD7241AE6BF00FC7183 /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
-		01C575B82A798D65007FE4F0 /* SensorSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorSettings.swift; sourceTree = "<group>"; };
 		01C62AE42B72463F00CDEE31 /* DeviceInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInformation.swift; sourceTree = "<group>"; };
 		01C62AE62B72480C00CDEE31 /* DeviceInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInformationView.swift; sourceTree = "<group>"; };
 		01C81AD42A5CB6420011B41E /* ServiceBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBadge.swift; sourceTree = "<group>"; };
@@ -614,7 +611,6 @@
 		01E5910A23DECF61008F15A4 /* UARTMacrosList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacrosList.swift; sourceTree = "<group>"; };
 		01EBE6182AE4845100960672 /* View+ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ErrorAlert.swift"; sourceTree = "<group>"; };
 		01F6A95F2A812D6200540B45 /* Emulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emulator.swift; sourceTree = "<group>"; };
-		01F6A9652A829EE300540B45 /* SensorSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorSettingsViewModel.swift; sourceTree = "<group>"; };
 		01FB19CF2AE3DB0D006DAB9F /* SensorCalibrationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorCalibrationScreen.swift; sourceTree = "<group>"; };
 		01FB19D12AE3DB70006DAB9F /* SensorCalibrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorCalibrationViewModel.swift; sourceTree = "<group>"; };
 		01FBC5002407BF8F00B1056B /* PeripheralHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralHolder.swift; sourceTree = "<group>"; };
@@ -976,7 +972,6 @@
 			children = (
 				014BBD7B2A70003D00BCFCA8 /* Models */,
 				01DEB4A32A6588CA00D4C1E8 /* RunningServiceHandler.swift */,
-				01F6A9642A829D4B00540B45 /* SensorSettings */,
 			);
 			path = RunningSensor;
 			sourceTree = "<group>";
@@ -1627,15 +1622,6 @@
 				01268AF12421595200E83156 /* NotConnectedViewController */,
 			);
 			path = NotConnectedViewController;
-			sourceTree = "<group>";
-		};
-		01F6A9642A829D4B00540B45 /* SensorSettings */ = {
-			isa = PBXGroup;
-			children = (
-				01C575B82A798D65007FE4F0 /* SensorSettings.swift */,
-				01F6A9652A829EE300540B45 /* SensorSettingsViewModel.swift */,
-			);
-			path = SensorSettings;
 			sourceTree = "<group>";
 		};
 		01FB19CE2AE3DAFC006DAB9F /* SensorCalibrationScreen */ = {
@@ -2903,7 +2889,6 @@
 				01CEB4262AE9100300945105 /* DeviceScreen.swift in Sources */,
 				AAAD7F532DD2CEAE004952F3 /* UARTMacroView.swift in Sources */,
 				018873C72A583A9900253273 /* PeripheralScannerScreen.swift in Sources */,
-				01F6A9662A829EE300540B45 /* SensorSettingsViewModel.swift in Sources */,
 				013E5D962AE02A1700B9C475 /* RunningValuesGrid.swift in Sources */,
 				015AAE702B063D6200D79833 /* RootNavigationScreen.swift in Sources */,
 				AA2C37012D47D88800D41989 /* ThroughputViewModel.swift in Sources */,
@@ -2920,7 +2905,6 @@
 				AA5AB3DF2D0868DD005213D5 /* CyclingDataView.swift in Sources */,
 				018C053B2AE0844E007CE0FE /* SignalChartViewModel.swift in Sources */,
 				AAA898B72DD4C0B6000C7012 /* UARTMacroButtonsView.swift in Sources */,
-				01C575B92A798D65007FE4F0 /* SensorSettings.swift in Sources */,
 				AA5539202D00AAD200F589F5 /* BatteryViewModel.swift in Sources */,
 				0129F2282A684059002FB3F5 /* LabeledValueView.swift in Sources */,
 				0164A4792AD741200093E501 /* ConnectedDevicesViewModel.swift in Sources */,
