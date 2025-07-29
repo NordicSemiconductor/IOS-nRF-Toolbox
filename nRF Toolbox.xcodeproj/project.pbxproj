@@ -42,11 +42,9 @@
 		013E5D982AE02A2400B9C475 /* RunningValuesGridItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013E5D972AE02A2400B9C475 /* RunningValuesGridItem.swift */; };
 		013E5D9B2AE0545F00B9C475 /* OnFirstAppear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013E5D9A2AE0545F00B9C475 /* OnFirstAppear.swift */; };
 		01407CB92A65417900A5B279 /* CBMPeripheralPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01407CB82A65417900A5B279 /* CBMPeripheralPreview.swift */; };
-		01407CBC2A65819B00A5B279 /* ServiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01407CBB2A65819B00A5B279 /* ServiceHandler.swift */; };
 		01468B052361A30A00C29E4C /* StepperTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B032361A30A00C29E4C /* StepperTableViewCell.swift */; };
 		01468B062361A30A00C29E4C /* StepperTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01468B042361A30A00C29E4C /* StepperTableViewCell.xib */; };
 		01468B082361C5ED00C29E4C /* TimeIntervalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */; };
-		014BBD7D2A70004B00BCFCA8 /* RSCMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014BBD7C2A70004B00BCFCA8 /* RSCMeasurement.swift */; };
 		014C4E892403F8AE0003E601 /* UARTMacrosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E882403F8AE0003E601 /* UARTMacrosTableViewController.swift */; };
 		014C4E8B2403F9BD0003E601 /* UARTMacroSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C4E8A2403F9BD0003E601 /* UARTMacroSaver.swift */; };
 		0151170B240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01511709240D18C1001E22F9 /* DFUFirmwareSizeSchemeCell.swift */; };
@@ -156,7 +154,6 @@
 		01DDD79C23EC5CDA003786ED /* TimeIntervalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DDD79A23EC5CDA003786ED /* TimeIntervalTableViewCell.swift */; };
 		01DDD79D23EC5CDA003786ED /* TimeIntervalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01DDD79B23EC5CDA003786ED /* TimeIntervalTableViewCell.xib */; };
 		01DDD7A023EC6351003786ED /* UARTMarcoElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DDD79F23EC6351003786ED /* UARTMarcoElement.swift */; };
-		01DEB4A42A6588CA00D4C1E8 /* RunningServiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DEB4A32A6588CA00D4C1E8 /* RunningServiceHandler.swift */; };
 		01DEB4A82A65E90C00D4C1E8 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DEB4A72A65E90C00D4C1E8 /* Data+Ext.swift */; };
 		01DEB4AA2A65E9D900D4C1E8 /* CharacteristicReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DEB4A92A65E9D900D4C1E8 /* CharacteristicReader.swift */; };
 		01DFC55C2420F0AB00AF2EF0 /* ZephyrDFURouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DFC55B2420F0AB00AF2EF0 /* ZephyrDFURouter.swift */; };
@@ -485,11 +482,9 @@
 		013E5D972AE02A2400B9C475 /* RunningValuesGridItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningValuesGridItem.swift; sourceTree = "<group>"; };
 		013E5D9A2AE0545F00B9C475 /* OnFirstAppear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnFirstAppear.swift; sourceTree = "<group>"; };
 		01407CB82A65417900A5B279 /* CBMPeripheralPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBMPeripheralPreview.swift; sourceTree = "<group>"; };
-		01407CBB2A65819B00A5B279 /* ServiceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceHandler.swift; sourceTree = "<group>"; };
 		01468B032361A30A00C29E4C /* StepperTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperTableViewCell.swift; sourceTree = "<group>"; };
 		01468B042361A30A00C29E4C /* StepperTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StepperTableViewCell.xib; sourceTree = "<group>"; };
 		01468B072361C5ED00C29E4C /* TimeIntervalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalSection.swift; sourceTree = "<group>"; };
-		014BBD7C2A70004B00BCFCA8 /* RSCMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSCMeasurement.swift; sourceTree = "<group>"; };
 		014C4E882403F8AE0003E601 /* UARTMacrosTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTMacrosTableViewController.swift; sourceTree = "<group>"; };
 		014C4E8A2403F9BD0003E601 /* UARTMacroSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTMacroSaver.swift; sourceTree = "<group>"; };
 		014C4E922404038A0003E601 /* nRF_Toolbox_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nRF_Toolbox_Tests.swift; sourceTree = "<group>"; };
@@ -603,7 +598,6 @@
 		01DDD79A23EC5CDA003786ED /* TimeIntervalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalTableViewCell.swift; sourceTree = "<group>"; };
 		01DDD79B23EC5CDA003786ED /* TimeIntervalTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeIntervalTableViewCell.xib; sourceTree = "<group>"; };
 		01DDD79F23EC6351003786ED /* UARTMarcoElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMarcoElement.swift; sourceTree = "<group>"; };
-		01DEB4A32A6588CA00D4C1E8 /* RunningServiceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningServiceHandler.swift; sourceTree = "<group>"; };
 		01DEB4A72A65E90C00D4C1E8 /* Data+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Ext.swift"; sourceTree = "<group>"; };
 		01DEB4A92A65E9D900D4C1E8 /* CharacteristicReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacteristicReader.swift; sourceTree = "<group>"; };
 		01DFC55B2420F0AB00AF2EF0 /* ZephyrDFURouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZephyrDFURouter.swift; sourceTree = "<group>"; };
@@ -967,24 +961,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		0129F21B2A66F8DB002FB3F5 /* RunningSensor */ = {
-			isa = PBXGroup;
-			children = (
-				014BBD7B2A70003D00BCFCA8 /* Models */,
-				01DEB4A32A6588CA00D4C1E8 /* RunningServiceHandler.swift */,
-			);
-			path = RunningSensor;
-			sourceTree = "<group>";
-		};
-		0129F21E2A67F4B4002FB3F5 /* ServiceViews */ = {
-			isa = PBXGroup;
-			children = (
-				0129F21B2A66F8DB002FB3F5 /* RunningSensor */,
-				01407CBB2A65819B00A5B279 /* ServiceHandler.swift */,
-			);
-			path = ServiceViews;
-			sourceTree = "<group>";
-		};
 		0129F2262A68404C002FB3F5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1100,14 +1076,6 @@
 				01468B042361A30A00C29E4C /* StepperTableViewCell.xib */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		014BBD7B2A70003D00BCFCA8 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				014BBD7C2A70004B00BCFCA8 /* RSCMeasurement.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		014C4E912404038A0003E601 /* nRF Toolbox Tests */ = {
@@ -1344,7 +1312,6 @@
 			children = (
 				0164A4692AD54FED0093E501 /* RSSIChartView */,
 				012E228A2A69A48A00B14064 /* AttributeTable */,
-				0129F21E2A67F4B4002FB3F5 /* ServiceViews */,
 			);
 			path = DeviceDetails;
 			sourceTree = "<group>";
@@ -2959,7 +2926,6 @@
 				AA5AB3DB2D08649C005213D5 /* CyclingData.swift in Sources */,
 				017D102E2A5809E300E38E5F /* nRF_ToolboxApp.swift in Sources */,
 				AA102C472E1574DE0001BDC5 /* MeasurementStatus.swift in Sources */,
-				014BBD7D2A70004B00BCFCA8 /* RSCMeasurement.swift in Sources */,
 				0108E87B2AF140D800C8B096 /* ChartTimeData.swift in Sources */,
 				AA5AB3E12D0877F6005213D5 /* MeasurementFormatter+Ext.swift in Sources */,
 				AA479EA52D0B0B5C0052E801 /* WheelDataPoint.swift in Sources */,
@@ -2977,7 +2943,6 @@
 				AAE2C9332D9D378300B398E3 /* CGMOpcodes.swift in Sources */,
 				AA8B89282E28F18C0017F219 /* BlinkyCBMPeripheralSpecDelegate.swift in Sources */,
 				01EBE6192AE4845100960672 /* View+ErrorAlert.swift in Sources */,
-				01DEB4A42A6588CA00D4C1E8 /* RunningServiceHandler.swift in Sources */,
 				01F6A9602A812D6200540B45 /* Emulator.swift in Sources */,
 				015AAE652B0383BD00D79833 /* SidebarView.swift in Sources */,
 				AA71C78E2E0EBA89008F018C /* ScanResult.swift in Sources */,
@@ -2985,7 +2950,6 @@
 				AA102C492E1576B00001BDC5 /* MeasurementFlag.swift in Sources */,
 				AA047E112DF1B3A300DA401E /* BlinkyView.swift in Sources */,
 				0164A4762AD698650093E501 /* NumberDatabase+Ext.swift in Sources */,
-				01407CBC2A65819B00A5B279 /* ServiceHandler.swift in Sources */,
 				AA7E77E52DF0915F0091447F /* SupportedServiceViewModel.swift in Sources */,
 				01FB19D02AE3DB0D006DAB9F /* SensorCalibrationScreen.swift in Sources */,
 			);
