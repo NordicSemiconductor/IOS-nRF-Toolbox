@@ -396,6 +396,7 @@
 		AAE42EEC2DCCC915006212B4 /* UARTMacroSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE42EEB2DCCC915006212B4 /* UARTMacroSelectionView.swift */; };
 		AAE42EEE2DCCE144006212B4 /* UARTViewModel+Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE42EED2DCCE144006212B4 /* UARTViewModel+Storage.swift */; };
 		AAE967322E38C4D600A7B93B /* RSCSMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE967312E38C4D600A7B93B /* RSCSMeasurement.swift */; };
+		AAE967342E38D09A00A7B93B /* RSCSFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE967332E38D09A00A7B93B /* RSCSFeature.swift */; };
 		AAF272F42D9BF5F6007B63D3 /* CGMSViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF272F32D9BF5F6007B63D3 /* CGMSViewModel.swift */; };
 		AAF272F82D9C10F3007B63D3 /* CGMSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF272F72D9C10F3007B63D3 /* CGMSView.swift */; };
 		AAF7DE622CFDD4BC000A347A /* SidebarDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF7DE612CFDD4BC000A347A /* SidebarDeviceView.swift */; };
@@ -840,6 +841,7 @@
 		AAE42EEB2DCCC915006212B4 /* UARTMacroSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTMacroSelectionView.swift; sourceTree = "<group>"; };
 		AAE42EED2DCCE144006212B4 /* UARTViewModel+Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UARTViewModel+Storage.swift"; sourceTree = "<group>"; };
 		AAE967312E38C4D600A7B93B /* RSCSMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSCSMeasurement.swift; sourceTree = "<group>"; };
+		AAE967332E38D09A00A7B93B /* RSCSFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSCSFeature.swift; sourceTree = "<group>"; };
 		AAF272F32D9BF5F6007B63D3 /* CGMSViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSViewModel.swift; sourceTree = "<group>"; };
 		AAF272F72D9C10F3007B63D3 /* CGMSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSView.swift; sourceTree = "<group>"; };
 		AAF7DE612CFDD4BC000A347A /* SidebarDeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarDeviceView.swift; sourceTree = "<group>"; };
@@ -1050,6 +1052,7 @@
 				013E5D892ADD33E000B9C475 /* RunningServiceScreen.swift */,
 				013E5D8B2ADD33EF00B9C475 /* RunningServiceViewModel.swift */,
 				AA2806062E27CCDA00C42EA8 /* RSCS.swift */,
+				AAE967332E38D09A00A7B93B /* RSCSFeature.swift */,
 				AAE967312E38C4D600A7B93B /* RSCSMeasurement.swift */,
 			);
 			path = Running;
@@ -2876,6 +2879,7 @@
 				018C053B2AE0844E007CE0FE /* SignalChartViewModel.swift in Sources */,
 				AAA898B72DD4C0B6000C7012 /* UARTMacroButtonsView.swift in Sources */,
 				AA5539202D00AAD200F589F5 /* BatteryViewModel.swift in Sources */,
+				AAE967342E38D09A00A7B93B /* RSCSFeature.swift in Sources */,
 				0129F2282A684059002FB3F5 /* LabeledValueView.swift in Sources */,
 				0164A4792AD741200093E501 /* ConnectedDevicesViewModel.swift in Sources */,
 				AA479EAD2D0B24E50052E801 /* HealthThermometerViewModel.swift in Sources */,

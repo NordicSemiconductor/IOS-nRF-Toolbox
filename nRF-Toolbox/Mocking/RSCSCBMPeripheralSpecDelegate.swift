@@ -15,7 +15,7 @@ import iOS_Common_Libraries
 
 public class RSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
     
-    var enabledFeatures: BitField<RunningSpeedAndCadence.RSCFeature> = .all()
+    var enabledFeatures: BitField<RSCSFeature> = .all()
     var sensorLocation: RunningSpeedAndCadence.SensorLocation = .inShoe
     
     var notifySCControlPoint: Bool = false
@@ -32,7 +32,7 @@ public class RSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
     -> Result<Data, Error> {
         switch characteristic.uuid {
         case CBMUUID.rscFeature:
-            let allFeatures = BitField<RunningSpeedAndCadence.RSCFeature>.all()
+            let allFeatures = BitField<RSCSFeature>.all()
                 .data(clippedTo: UInt8.self)
             var allFeaturesData = Data([0xff])
             allFeaturesData.append(allFeatures)

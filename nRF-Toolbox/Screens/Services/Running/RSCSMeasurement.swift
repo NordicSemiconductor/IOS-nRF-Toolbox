@@ -16,7 +16,7 @@ public struct RSCSMeasurement {
     
     // MARK: Properties
     
-    public var flags: BitField<RunningSpeedAndCadence.RSCFeature>
+    public var flags: BitField<RSCSFeature>
 
     /// Instantaneous Speed. 256 units = 1 meter/second
     public var instantaneousSpeed: Measurement<UnitSpeed>
@@ -32,7 +32,7 @@ public struct RSCSMeasurement {
     
     // MARK: init
     
-    public init(flags: BitField<RunningSpeedAndCadence.RSCFeature>, instantaneousSpeed: Double, instantaneousCadence: Int, instantaneousStrideLength: Int?, totalDistance: Double?) {
+    public init(flags: BitField<RSCSFeature>, instantaneousSpeed: Double, instantaneousCadence: Int, instantaneousStrideLength: Int?, totalDistance: Double?) {
         self.flags = flags
         self.instantaneousSpeed = Measurement<UnitSpeed>(value: instantaneousSpeed, unit: .metersPerSecond)
         self.instantaneousCadence = instantaneousCadence
@@ -46,7 +46,7 @@ public struct RSCSMeasurement {
 
     public init(from data: Data) {
         let flagsValue = data.littleEndianBytes(as: UInt8.self)
-        flags = BitField<RunningSpeedAndCadence.RSCFeature>(RegisterValue(flagsValue))
+        flags = BitField<RSCSFeature>(RegisterValue(flagsValue))
 
         var offset = MemoryLayout<UInt8>.size
         // 256 units == 1 meter/second

@@ -37,7 +37,7 @@ final class SensorCalibrationViewModel: ObservableObject {
     
     private let peripheral: Peripheral
     private let rscService: CBService
-    private let features: BitField<RunningSpeedAndCadence.RSCFeature>
+    private let features: BitField<RSCSFeature>
     private var scControlPoint: CBCharacteristic!
     private var sensorLocationCharacteristic: CBCharacteristic?
     
@@ -45,7 +45,7 @@ final class SensorCalibrationViewModel: ObservableObject {
     
     // MARK: init
     
-    init(peripheral: Peripheral, rscService: CBService, features: BitField<RunningSpeedAndCadence.RSCFeature>) {
+    init(peripheral: Peripheral, rscService: CBService, features: BitField<RSCSFeature>) {
         self.peripheral = peripheral
         self.rscService = rscService
         self.features = features

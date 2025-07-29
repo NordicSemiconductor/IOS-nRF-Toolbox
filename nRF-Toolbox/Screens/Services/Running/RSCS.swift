@@ -30,31 +30,6 @@ public extension RunningSpeedAndCadence {
         }
     }
     
-    // MARK: RSCSFeatureFlags
-    
-    enum RSCFeature: RegisterValue, Option, CustomStringConvertible, CaseIterable {
-        case instantaneousStrideLengthMeasurement
-        case totalDistanceMeasurement
-        case walkingOrRunningStatus
-        case sensorCalibrationProcedure
-        case multipleSensorLocation
-        
-        public var description: String {
-            switch self {
-            case .instantaneousStrideLengthMeasurement:
-                return "Instantaneous Stride Length Measurement"
-            case .totalDistanceMeasurement:
-                return "Total Distance Measurement"
-            case .walkingOrRunningStatus:
-                return "Walking or Running Status"
-            case .sensorCalibrationProcedure:
-                return "Sensor Calibration Procedure"
-            case .multipleSensorLocation:
-                return "Multiple Sensor Location"
-            }
-        }
-    }
-
     // MARK: SCControlPointOpCode
     
     enum OpCode: UInt8, CustomStringConvertible {
@@ -266,7 +241,7 @@ public extension RunningSpeedAndCadence {
 // MARK: RSCS
 
 public class RunningSpeedAndCadence {
-    public var enabledFeatures: BitField<RunningSpeedAndCadence.RSCFeature> = .all()
+    public var enabledFeatures: BitField<RSCSFeature> = .all()
     public var sensorLocation: RunningSpeedAndCadence.SensorLocation = .inShoe
     
     var notifySCControlPoint: Bool = false
@@ -274,7 +249,7 @@ public class RunningSpeedAndCadence {
     private let log = NordicLog(category: "RunningSpeedAndCadence")
     private lazy var cancellables = Set<AnyCancellable>()
     
-    public init(enabledFeatures: BitField<RunningSpeedAndCadence.RSCFeature>, sensorLocation: RunningSpeedAndCadence.SensorLocation) {
+    public init(enabledFeatures: BitField<RSCSFeature>, sensorLocation: RunningSpeedAndCadence.SensorLocation) {
         self.enabledFeatures = enabledFeatures
         self.sensorLocation = sensorLocation
     }
@@ -321,7 +296,7 @@ public class RunningSpeedAndCadence {
         
     }
 
-    public func randomizeMeasurement(flags: BitField<RSCFeature> = []) {
+    public func randomizeMeasurement(flags: BitField<RSCSFeature> = []) {
         self.measurement.flags = flags
         let newIS = Double.random(in: 0...3)
         self.measurement.instantaneousSpeed = Measurement<UnitSpeed>(value: newIS, unit: .metersPerSecond)
