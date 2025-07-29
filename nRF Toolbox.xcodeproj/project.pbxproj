@@ -399,6 +399,7 @@
 		AAE967342E38D09A00A7B93B /* RSCSFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE967332E38D09A00A7B93B /* RSCSFeature.swift */; };
 		AAE967362E38D16100A7B93B /* SCControlPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE967352E38D16100A7B93B /* SCControlPoint.swift */; };
 		AAE967382E38D4C800A7B93B /* RSCSSensorLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE967372E38D4C800A7B93B /* RSCSSensorLocation.swift */; };
+		AAE9673A2E38D83500A7B93B /* RunningSpeedAndCadence.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE967392E38D83500A7B93B /* RunningSpeedAndCadence.swift */; };
 		AAF272F42D9BF5F6007B63D3 /* CGMSViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF272F32D9BF5F6007B63D3 /* CGMSViewModel.swift */; };
 		AAF272F82D9C10F3007B63D3 /* CGMSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF272F72D9C10F3007B63D3 /* CGMSView.swift */; };
 		AAF7DE622CFDD4BC000A347A /* SidebarDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF7DE612CFDD4BC000A347A /* SidebarDeviceView.swift */; };
@@ -846,6 +847,7 @@
 		AAE967332E38D09A00A7B93B /* RSCSFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSCSFeature.swift; sourceTree = "<group>"; };
 		AAE967352E38D16100A7B93B /* SCControlPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCControlPoint.swift; sourceTree = "<group>"; };
 		AAE967372E38D4C800A7B93B /* RSCSSensorLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSCSSensorLocation.swift; sourceTree = "<group>"; };
+		AAE967392E38D83500A7B93B /* RunningSpeedAndCadence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningSpeedAndCadence.swift; sourceTree = "<group>"; };
 		AAF272F32D9BF5F6007B63D3 /* CGMSViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSViewModel.swift; sourceTree = "<group>"; };
 		AAF272F72D9C10F3007B63D3 /* CGMSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSView.swift; sourceTree = "<group>"; };
 		AAF7DE612CFDD4BC000A347A /* SidebarDeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarDeviceView.swift; sourceTree = "<group>"; };
@@ -1189,6 +1191,7 @@
 		017D10342A5809E400E38E5F /* Mocking */ = {
 			isa = PBXGroup;
 			children = (
+				AAE967392E38D83500A7B93B /* RunningSpeedAndCadence.swift */,
 				AA8B89272E28F18C0017F219 /* BlinkyCBMPeripheralSpecDelegate.swift */,
 				AAC542B52E2E63BA004FB4D2 /* RSCSCBMPeripheralSpecDelegate.swift */,
 				01F6A95F2A812D6200540B45 /* Emulator.swift */,
@@ -2960,6 +2963,7 @@
 				AA8B89282E28F18C0017F219 /* BlinkyCBMPeripheralSpecDelegate.swift in Sources */,
 				01EBE6192AE4845100960672 /* View+ErrorAlert.swift in Sources */,
 				01F6A9602A812D6200540B45 /* Emulator.swift in Sources */,
+				AAE9673A2E38D83500A7B93B /* RunningSpeedAndCadence.swift in Sources */,
 				015AAE652B0383BD00D79833 /* SidebarView.swift in Sources */,
 				AA71C78E2E0EBA89008F018C /* ScanResult.swift in Sources */,
 				AA479EA72D0B0BFF0052E801 /* CrankDataPoint.swift in Sources */,
