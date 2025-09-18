@@ -36,6 +36,8 @@ final class CGMSViewModel: ObservableObject {
     @Published private(set) var records = [CGMSMeasurement]()
     @Published private(set) var lastRecord: CGMSMeasurement?
     @Published private(set) var inFlightRequest: RecordOperator?
+    @Published private(set) var minY = 80.0
+    @Published private(set) var maxY = 100.0
     @Published var scrollPosition = 0
     
     // MARK: init
@@ -45,6 +47,16 @@ final class CGMSViewModel: ObservableObject {
         self.service = cgmsService
         self.cancellables = Set<AnyCancellable>()
         log.debug(#function)
+        
+        $records.sink { records in
+            let values = records.map { $0.measurement.value }
+
+            let minY = (values.min() ?? 0) - 5.0
+            let maxY = (values.max() ?? 0) + 5.0
+
+            self.minY = minY
+            self.maxY = (minY == maxY) ? (minY + 15.0) : maxY
+        }.store(in: &cancellables)
     }
 }
 

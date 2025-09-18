@@ -42,7 +42,7 @@ struct CGMSAllRecordsChartView: View {
                 }
                 .interpolationMethod(.catmullRom)
             }
-            .chartYScale(domain: [80.0, 100.0],
+            .chartYScale(domain: [viewModel.minY, viewModel.maxY],
                          range: .plotDimension(padding: 8))
             .chartYAxis {
                 AxisMarks { value in

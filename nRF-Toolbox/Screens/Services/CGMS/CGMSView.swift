@@ -19,12 +19,12 @@ struct CGMSView: View {
     
     // MARK: Properties
     
-    @State private var viewMode: GlucoseView.ViewMode = .all
+    @State private var mode: GlucoseView.ViewMode = .all
     
     // MARK: view
     
     var body: some View {
-        switch viewMode {
+        switch mode {
         case .all:
             if viewModel.records.hasItems {
                 CGMSAllRecordsChartView()
@@ -49,7 +49,7 @@ struct CGMSView: View {
             }
         }
         
-        InlinePicker(title: "Mode", systemImage: "square.on.square", selectedValue: $viewMode) { newMode in
+        InlinePicker(title: "Mode", systemImage: "square.on.square", selectedValue: $mode) { newMode in
             Task {
                 await viewModel.requestRecords(newMode.recordOperator)
             }
