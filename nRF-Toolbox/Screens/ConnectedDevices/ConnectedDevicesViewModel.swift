@@ -174,7 +174,6 @@ extension ConnectedDevicesViewModel {
             deviceViewModels[device.id] = viewModel
             Task {
                 await viewModel.discoverSupportedServices()
-                await viewModel.onConnect()
             }
         }
     }
