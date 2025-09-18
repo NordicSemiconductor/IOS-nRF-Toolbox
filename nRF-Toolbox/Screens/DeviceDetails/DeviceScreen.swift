@@ -97,18 +97,10 @@ struct DeviceScreen: View {
         }
         .task {
             log.debug("DeviceScreen.task()")
-            guard let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id) else { return }
-            guard deviceVM.supportedServiceViewModels.isEmpty else { return }
-            await deviceVM.discoverSupportedServices()
+            connectedDevicesViewModel.selectedDevice = device
         }
         .onDisappear {
             log.debug("DeviceScreen.onDisappear()")
-            guard connectedDevicesViewModel.selectedDevice?.id != device.id else { return }
-            Task { @MainActor in
-                guard let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id) else { return }
-                log.debug("Triggering \(device.id) disconnect")
-                await deviceVM.onDisconnect()
-            }
         }
         .listStyle(.insetGrouped)
         .navigationTitle(device.name ?? "Unnamed")

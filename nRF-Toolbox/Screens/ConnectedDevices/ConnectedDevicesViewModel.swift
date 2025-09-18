@@ -52,10 +52,6 @@ final class ConnectedDevicesViewModel: ObservableObject {
     @Published var showUnexpectedDisconnectionAlert: Bool = false
     @Published fileprivate(set) var unexpectedDisconnectionMessage: String = ""
     
-    var hasSelectedDevice: Bool {
-        selectedDevice != nil
-    }
-    
     // MARK: init
     
     init(centralManager: CentralManager) {
@@ -73,13 +69,6 @@ final class ConnectedDevicesViewModel: ObservableObject {
 }
 
 extension ConnectedDevicesViewModel {
-    
-    // MARK: selectedDeviceModel()
-    
-    func selectedDeviceModel() -> DeviceDetailsViewModel? {
-        guard let selectedDevice else { return nil }
-        return deviceViewModel(for: selectedDevice.id)
-    }
     
     // MARK: deviceViewModel(for:)
     
@@ -166,23 +155,28 @@ extension ConnectedDevicesViewModel {
                                     services: advertisedServices, status: .connected)
             }
             .sink { [unowned self] device in
-                if let i = connectedDevices.firstIndex(where: \.id, equals: device.id) {
-                    connectedDevices[i] = device
-                } else {
-                    connectedDevices.append(device)
-                }
-                
-                if deviceViewModels[device.id] == nil,
-                   let peripheral = centralManager.retrievePeripherals(withIdentifiers: [device.id]).first {
-                    
-                    let viewModel = DeviceDetailsViewModel(cbPeripheral: peripheral, centralManager: centralManager)
-                    deviceViewModels[device.id] = viewModel
-                }
-                
-                guard !hasSelectedDevice else { return }
-                selectedDevice = device
+                handleConnection(device: device)
             }
             .store(in: &cancellables)
+    }
+    
+    private func handleConnection(device: Device) {
+        if let i = connectedDevices.firstIndex(where: \.id, equals: device.id) {
+            connectedDevices[i] = device
+        } else {
+            connectedDevices.append(device)
+        }
+        
+        if deviceViewModels[device.id] == nil,
+           let peripheral = centralManager.retrievePeripherals(withIdentifiers: [device.id]).first {
+            
+            let viewModel = DeviceDetailsViewModel(cbPeripheral: peripheral, centralManager: centralManager)
+            deviceViewModels[device.id] = viewModel
+            Task {
+                await viewModel.discoverSupportedServices()
+                await viewModel.onConnect()
+            }
+        }
     }
     
     // MARK: observeDisconnections()

@@ -82,6 +82,13 @@ extension DeviceDetailsViewModel {
         }
     }
     
+    func onConnect() async {
+        log.debug(#function)
+        for viewModel in supportedServiceViewModels {
+            await viewModel.onConnect()
+        }
+    }
+    
     func onDisconnect() async {
         log.debug(#function)
         supportedServiceViewModels.forEach {
