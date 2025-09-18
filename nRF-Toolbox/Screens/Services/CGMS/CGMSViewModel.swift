@@ -56,7 +56,6 @@ extension CGMSViewModel {
     func requestNumberOfRecords() async throws -> Int {
         log.debug(#function)
         do {
-            try await enableRACPResponse()
             async let racpDataResponse = listenRACPResponse()
             
             let writeStoreCountData = Data([RecordOpcode.reportNumberOfRecords.rawValue, 1])
@@ -81,20 +80,6 @@ extension CGMSViewModel {
         throw ReadableError(title: #function, message: "Unable to Read Number of Records")
     }
     
-    // MARK: enableRACPResponse()
-    
-    func enableRACPResponse() async throws {
-        log.debug(#function)
-        do {
-            let racpEnable = try await peripheral.setNotifyValue(true, for: cbRACP).firstValue
-            log.debug("\(#function) RACP.setNotifyValue(true): \(racpEnable)")
-        } catch {
-            log.debug(error.localizedDescription)
-            let _ = try await peripheral.setNotifyValue(false, for: cbRACP).firstValue
-            throw error
-        }
-    }
-    
     // MARK: listenRACPResponse()
     
     func listenRACPResponse() async throws -> Data {
@@ -102,9 +87,6 @@ extension CGMSViewModel {
         do {
             let racpData = try await peripheral.listenValues(for: cbRACP).firstValue
             log.debug("\(#function) Response \(racpData.hexEncodedString(options: [.prepend0x, .upperCase]))")
-            
-            let racpDisable = try await peripheral.setNotifyValue(false, for: cbRACP).firstValue
-            log.debug("\(#function) RACP.setNotifyValue(false): \(racpDisable)")
             
             return racpData
         } catch {
@@ -126,10 +108,10 @@ extension CGMSViewModel {
         do {
             records = []
             if let numberOfRecords = try? await requestNumberOfRecords() {
+                log.debug("Number of records \(numberOfRecords)")
                 records.reserveCapacity(numberOfRecords)
             }
             
-            try await enableRACPResponse()
             async let racpData = listenRACPResponse()
             
             let writeData = Data([RecordOpcode.reportStoredRecords.rawValue, op.rawValue])
@@ -202,6 +184,13 @@ extension CGMSViewModel: SupportedServiceViewModel {
             listenToOperations(cbSOCP)
             let socpEnable = try await peripheral.setNotifyValue(true, for: cbSOCP).firstValue
             log.debug("CGMS SOCP.setNotifyValue(true): \(socpEnable)")
+            
+            let racpEnable = try await peripheral.setNotifyValue(true, for: cbRACP).firstValue
+            log.debug("CGMS RACP.setNotifyValue(true): \(racpEnable)")
+            
+            // Starts session. Since now records are generated.
+            let startSessionData = Data([CGMOpCode.startSession.rawValue])
+            try await peripheral.writeValueWithResponse(startSessionData, for: cbSOCP).firstValue
             
             await requestRecords(.allRecords)
         } catch {

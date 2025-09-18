@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/NordicSemiconductor/IOS-BLE-Library.git",
       "state" : {
-        "branch" : "develop",
-        "revision" : "208415344c916c22be7b3c1681929069cb1c934b"
+        "branch" : "main",
+        "revision" : "dbb8a255185add411a643d76b111825c27b3217d"
       }
     },
     {
@@ -42,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/NordicSemiconductor/IOS-CoreBluetooth-Mock.git",
       "state" : {
-        "revision" : "500b23852e7d46b63ef8e2a826c2b6f3f6ed50ef",
-        "version" : "0.18.0"
+        "revision" : "d1e0321027728da6edf5b974cf113524bad2034a",
+        "version" : "1.0.1"
       }
     },
     {
