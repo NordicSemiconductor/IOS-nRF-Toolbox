@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "F70A9729-A472-47D5-BA19-DD44C65ECD96",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:nRF Toolbox.xcodeproj",
+        "identifier" : "017D103A2A5809E400E38E5F",
+        "name" : "nRF-ToolboxTests"
+      }
+    }
+  ],
+  "version" : 1
+}

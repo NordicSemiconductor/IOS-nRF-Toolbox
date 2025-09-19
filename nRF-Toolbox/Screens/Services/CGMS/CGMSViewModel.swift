@@ -25,6 +25,7 @@ final class CGMSViewModel: ObservableObject {
     private var cbCGMMeasurement: CBCharacteristic!
     private var cbSOCP: CBCharacteristic!
     private var cbRACP: CBCharacteristic!
+    private var cbFeature: CBCharacteristic!
     
     private var cancellables: Set<AnyCancellable>
     private let log = NordicLog(category: "CGMSViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
@@ -164,6 +165,7 @@ extension CGMSViewModel: SupportedServiceViewModel {
         cbCGMMeasurement = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.cgmMeasurement.uuid)
         cbRACP = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.recordAccessControlPoint.uuid)
         cbSOCP = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.cgmSpecificOpsControlPoint.uuid)
+        cbFeature = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.cgmFeature.uuid)
         let cbSST = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.cgmSessionStartTime.uuid)
         
         guard let cbCGMMeasurement, let cbSOCP, let cbSST else {
@@ -200,8 +202,15 @@ extension CGMSViewModel: SupportedServiceViewModel {
             let racpEnable = try await peripheral.setNotifyValue(true, for: cbRACP).firstValue
             log.debug("CGMS RACP.setNotifyValue(true): \(racpEnable)")
             
+            var secured = false
+            let featuresRaw = try? await peripheral.readValue(for: cbFeature).firstValue
+            if let featuresRaw {
+                let result = CGMSFeatureParser.parse(data: featuresRaw)
+                secured = result?.secured ?? false
+            }
+            
             // Starts session. Since now records are generated.
-            let startSessionData = Data([CGMOpCode.startSession.rawValue])
+            let startSessionData = createStartSession(opCode: CGMOpCode.startSession.rawValue, secure: secured)
             try await peripheral.writeValueWithResponse(startSessionData, for: cbSOCP).firstValue
             
             await requestRecords(.allRecords)
@@ -209,6 +218,18 @@ extension CGMSViewModel: SupportedServiceViewModel {
             log.error(error.localizedDescription)
             onDisconnect()
         }
+    }
+    
+    private func createStartSession(opCode: UInt8, secure: Bool) -> Data {
+        var data = Data(capacity: 1 + (secure ? 2 : 0))
+        data.append(opCode)
+        
+        if secure {
+            var crc = CRC16.mcrf4xx(data: data, offset: 0, length: data.count)
+            data.append(contentsOf: Data(bytes: &crc, count: MemoryLayout<UInt16>.size))
+        }
+        
+        return data
     }
     
     // MARK: onDisconnect()
