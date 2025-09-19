@@ -50,6 +50,12 @@ struct GlucoseAllRecordsChartView: View {
                         y: .value("Glucose Measurement", value.measurement.value)
                     )
                     .foregroundStyle(Color.nordicRed)
+                    
+                    PointMark(
+                        x: .value("Sequence Number", value.sequenceNumber),
+                        y: .value("Glucose Measurement", value.measurement.value)
+                    )
+                    .foregroundStyle(Color.nordicRed)
                 }
                 .interpolationMethod(.catmullRom)
             }
