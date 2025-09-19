@@ -16,7 +16,7 @@
       "location" : "https://github.com/NordicSemiconductor/IOS-BLE-Library.git",
       "state" : {
         "branch" : "main",
-        "revision" : "dbb8a255185add411a643d76b111825c27b3217d"
+        "revision" : "790ec02fc5735b57b3e7e9d5c8ba0053eb9049fa"
       }
     },
     {
@@ -52,7 +52,7 @@
       "location" : "https://github.com/NordicSemiconductor/IOS-DFU-Library.git",
       "state" : {
         "branch" : "main",
-        "revision" : "4773d7eed944684dfdd177a4a91af8a89ebbaac8"
+        "revision" : "43de982ac8bd792c8c72870ac541c2083f7fb7a3"
       }
     },
     {
@@ -61,7 +61,7 @@
       "location" : "https://github.com/NordicSemiconductor/IOS-nRF-Connect-Device-Manager",
       "state" : {
         "branch" : "main",
-        "revision" : "721df81f2d8fe2d0179fefaa37435a2fca1e8d0d"
+        "revision" : "537b02ef9ab9ddb35c1c2f9d0f5532e3cdbe36e5"
       }
     },
     {

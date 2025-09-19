@@ -93,7 +93,7 @@ struct GlucoseView: View {
                 .centered()
                 .listRowSeparator(.hidden)
         } else {
-            NoContentView(title: "No Data", systemImage: "drop.fill", description: "No Glucose Level Data Available. You may press Button 3 on your DevKit to generate some Data.")
+            NoContentView(title: "No Data", systemImage: "drop.fill", description: "No Glucose Level Data Available. You may press Button 2 on your DevKit to generate some Data.")
                 .listRowSeparator(.hidden)
         }
     }
