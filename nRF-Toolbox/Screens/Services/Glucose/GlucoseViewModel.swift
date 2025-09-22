@@ -84,20 +84,14 @@ extension GlucoseViewModel: @MainActor SupportedServiceViewModel {
         
         cbGlucoseMeasurement = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.glucoseMeasurement.uuid)
         cbRACP = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.recordAccessControlPoint.uuid)
-        guard let cbGlucoseMeasurement else { return }
+        guard cbGlucoseMeasurement != nil else { return }
         
-        do {
-            try await enableNotificationsIfNeeded()
-            
-            requestRecords(.allRecords)
-        } catch {
-            log.error(error.localizedDescription)
-            onDisconnect()
-        }
+        requestRecords(.allRecords)
     }
     
     fileprivate func enableNotificationsIfNeeded() async throws {
         do {
+            if glucoseNotifyEnabled { return }
             glucoseNotifyEnabled = try await peripheral.setNotifyValue(true, for: cbGlucoseMeasurement)
                 .timeout(1, scheduler: RunLoop.main)
                 .receive(on: RunLoop.main)
@@ -133,12 +127,14 @@ extension GlucoseViewModel {
             guard let cbRACP else { return }
             
             log.debug(#function)
-            inFlightRequest = op
-            defer {
-                inFlightRequest = nil
-            }
             do {
+                inFlightRequest = op
+                defer {
+                    inFlightRequest = nil
+                }
+                
                 try await enableNotificationsIfNeeded()
+                guard glucoseNotifyEnabled else { return }
                 
                 if op == .allRecords {
                     allRecords.removeAll()
