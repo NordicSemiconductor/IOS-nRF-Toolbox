@@ -35,6 +35,8 @@ final class GlucoseViewModel: ObservableObject {
     @Published private(set) var firstRecord: GlucoseMeasurement?
     @Published private(set) var lastRecord: GlucoseMeasurement?
     @Published private(set) var inFlightRequest: RecordOperator?
+    @Published private(set) var minY = 0.6
+    @Published private(set) var maxY = 0.0
     
     // MARK: init
     
@@ -43,6 +45,16 @@ final class GlucoseViewModel: ObservableObject {
         self.service = glucoseService
         self.cancellables = Set<AnyCancellable>()
         log.debug(#function)
+        
+        $allRecords.sink { records in
+            let values = records.map { $0.measurement.value }
+
+            let minY = (values.min() ?? 0.2) - 0.2
+            let maxY = (values.max() ?? 0.2) + 0.2
+
+            self.minY = minY
+            self.maxY = maxY
+        }.store(in: &cancellables)
     }
 }
 

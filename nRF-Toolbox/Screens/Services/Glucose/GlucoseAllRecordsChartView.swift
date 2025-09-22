@@ -54,6 +54,8 @@ struct GlucoseAllRecordsChartView: View {
                 }
                 .interpolationMethod(.catmullRom)
             }
+            .chartYScale(domain: [viewModel.minY, viewModel.maxY],
+                         range: .plotDimension(padding: 8))
             .chartYAxis {
                 AxisMarks { value in
                     AxisGridLine()

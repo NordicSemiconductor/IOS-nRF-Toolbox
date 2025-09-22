@@ -56,7 +56,7 @@ final class CGMSViewModel: ObservableObject {
             let maxY = (values.max() ?? 0) + 5.0
 
             self.minY = minY
-            self.maxY = (minY == maxY) ? (minY + 15.0) : maxY
+            self.maxY = maxY
         }.store(in: &cancellables)
     }
 }
