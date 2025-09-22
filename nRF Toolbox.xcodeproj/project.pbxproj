@@ -299,7 +299,6 @@
 		AAF272F32D9BF5F6007B63D3 /* CGMSViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSViewModel.swift; sourceTree = "<group>"; };
 		AAF272F72D9C10F3007B63D3 /* CGMSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSView.swift; sourceTree = "<group>"; };
 		AAF7DE612CFDD4BC000A347A /* SidebarDeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarDeviceView.swift; sourceTree = "<group>"; };
-		C39941E3273BCE0500E7AA33 /* nRF Toolbox DebugTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "nRF Toolbox DebugTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -326,13 +325,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		A76A45212E7D638E00E0E19C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C39941E0273BCE0500E7AA33 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -669,7 +661,6 @@
 		5217F3E31859EE0000F2D5BB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C39941E3273BCE0500E7AA33 /* nRF Toolbox DebugTests.xctest */,
 				017D102B2A5809E300E38E5F /* nRF-Toolbox.app */,
 				017D10452A5809E500E38E5F /* nRF-ToolboxUITests.xctest */,
 				A76A45242E7D638E00E0E19C /* nRF-ToolboxTests.xctest */,
@@ -897,25 +888,6 @@
 			productReference = A76A45242E7D638E00E0E19C /* nRF-ToolboxTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		C39941E2273BCE0500E7AA33 /* nRF Toolbox DebugTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C39941E9273BCE0500E7AA33 /* Build configuration list for PBXNativeTarget "nRF Toolbox DebugTests" */;
-			buildPhases = (
-				C39941DF273BCE0500E7AA33 /* Sources */,
-				C39941E0273BCE0500E7AA33 /* Frameworks */,
-				C39941E1273BCE0500E7AA33 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "nRF Toolbox DebugTests";
-			packageProductDependencies = (
-			);
-			productName = "nRF Toolbox DebugTests";
-			productReference = C39941E3273BCE0500E7AA33 /* nRF Toolbox DebugTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -937,10 +909,6 @@
 					A76A45232E7D638E00E0E19C = {
 						CreatedOnToolsVersion = 16.4;
 						TestTargetID = 017D102A2A5809E300E38E5F;
-					};
-					C39941E2273BCE0500E7AA33 = {
-						CreatedOnToolsVersion = 13.1;
-						TestTargetID = 5217F3E11859EE0000F2D5BB;
 					};
 				};
 			};
@@ -966,7 +934,6 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C39941E2273BCE0500E7AA33 /* nRF Toolbox DebugTests */,
 				017D102A2A5809E300E38E5F /* nRF-Toolbox */,
 				017D10442A5809E500E38E5F /* nRF-ToolboxUITests */,
 				A76A45232E7D638E00E0E19C /* nRF-ToolboxTests */,
@@ -993,13 +960,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		A76A45222E7D638E00E0E19C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C39941E1273BCE0500E7AA33 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1186,13 +1146,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		A76A45202E7D638E00E0E19C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C39941DF273BCE0500E7AA33 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1785,115 +1738,6 @@
 			};
 			name = Release;
 		};
-		C39941EA273BCE0500E7AA33 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = P3R8YQEV4L;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nordicsemi.nRF-Toolbox-DebugTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox Debug.app/nRF Toolbox Debug";
-			};
-			name = Debug;
-		};
-		C39941EB273BCE0500E7AA33 /* Beta */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = P3R8YQEV4L;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nordicsemi.nRF-Toolbox-DebugTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox Debug.app/nRF Toolbox Debug";
-			};
-			name = Beta;
-		};
-		C39941EC273BCE0500E7AA33 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = P3R8YQEV4L;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nordicsemi.nRF-Toolbox-DebugTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nRF Toolbox Debug.app/nRF Toolbox Debug";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1933,16 +1777,6 @@
 				A76A452B2E7D638E00E0E19C /* Debug */,
 				A76A452C2E7D638E00E0E19C /* Beta */,
 				A76A452D2E7D638E00E0E19C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		C39941E9273BCE0500E7AA33 /* Build configuration list for PBXNativeTarget "nRF Toolbox DebugTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C39941EA273BCE0500E7AA33 /* Debug */,
-				C39941EB273BCE0500E7AA33 /* Beta */,
-				C39941EC273BCE0500E7AA33 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

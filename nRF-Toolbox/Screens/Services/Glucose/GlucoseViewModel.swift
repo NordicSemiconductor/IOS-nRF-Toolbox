@@ -47,7 +47,7 @@ final class GlucoseViewModel: ObservableObject {
 
 // MARK: - SupportedServiceViewModel
 
-extension GlucoseViewModel: SupportedServiceViewModel {
+extension GlucoseViewModel: @MainActor SupportedServiceViewModel {
     
     // MARK: attachedView
     
