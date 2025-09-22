@@ -41,8 +41,8 @@ struct CGMSAllRecordsChartView: View {
                     .foregroundStyle(Color.nordicRed)
                     
                     PointMark(
-                         x: .value("X", value.sequenceNumber),
-                         y: .value("Y", value.measurement.value)
+                         x: .value("Sequence Number", value.sequenceNumber),
+                         y: .value("Glucose Measurement", value.measurement.value)
                     ).foregroundStyle(Color.nordicRed)
                 }
                 .interpolationMethod(.catmullRom)

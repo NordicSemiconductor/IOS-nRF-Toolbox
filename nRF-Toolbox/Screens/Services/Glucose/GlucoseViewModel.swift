@@ -24,6 +24,7 @@ final class GlucoseViewModel: ObservableObject {
     private let peripheral: Peripheral
     private var cbGlucoseMeasurement: CBCharacteristic!
     private var cbRACP: CBCharacteristic!
+    private var glucoseNotifyEnabled: Bool = false
     
     private var cancellables: Set<AnyCancellable>
     private let log = NordicLog(category: "GlucoseViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
@@ -74,35 +75,24 @@ extension GlucoseViewModel: @MainActor SupportedServiceViewModel {
         guard let cbGlucoseMeasurement else { return }
         
         do {
-            let measurementDescriptors = try await peripheral
-                .discoverDescriptors(for: cbGlucoseMeasurement)
-//                .receive(on: RunLoop.main)
-                .firstValue
+            try await enableNotificationsIfNeeded()
             
-            guard let measurementCCD = measurementDescriptors.first(where: \.uuid, isEqualsTo: Descriptor.gattClientCharacteristicConfiguration.uuid) else {
-                throw CriticalError.cannotFindGlucoseMeasurementCCD
-            }
-                
-            let glucoseNotificationsEnabled: Bool = try await peripheral.readValue(for: measurementCCD)
-                .compactMap {
-                    $0 as? Int
-                }
-                .firstValue > 0
-            log.debug("GlucoseMeasurement.CCD.isNotifying: \(glucoseNotificationsEnabled)")
-            
-            if glucoseNotificationsEnabled {
-                log.info("Glucose Measurement Notifications already enabled.")
-            }
-            
-            let glucoseEnable = try await peripheral.setNotifyValue(true, for: cbGlucoseMeasurement)
+            requestRecords(.allRecords)
+        } catch {
+            log.error(error.localizedDescription)
+            onDisconnect()
+        }
+    }
+    
+    fileprivate func enableNotificationsIfNeeded() async throws {
+        do {
+            glucoseNotifyEnabled = try await peripheral.setNotifyValue(true, for: cbGlucoseMeasurement)
                 .timeout(1, scheduler: RunLoop.main)
                 .receive(on: RunLoop.main)
                 .firstValue
-            log.debug("GlucoseMeasurement.setNotifyValue(true): \(glucoseEnable)")
+            log.debug("GlucoseMeasurement.setNotifyValue(true): \(glucoseNotifyEnabled)")
             
             listenToMeasurements(cbGlucoseMeasurement)
-            
-            requestRecords(.allRecords)
         } catch {
             log.error(error.localizedDescription)
             onDisconnect()
@@ -129,12 +119,15 @@ extension GlucoseViewModel {
     func requestRecords(_ op: RecordOperator) {
         Task { @MainActor in
             guard let cbRACP else { return }
+            
             log.debug(#function)
             inFlightRequest = op
             defer {
                 inFlightRequest = nil
             }
             do {
+                try await enableNotificationsIfNeeded()
+                
                 if op == .allRecords {
                     allRecords.removeAll()
                 }

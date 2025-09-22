@@ -33,13 +33,8 @@ struct GlucoseAllRecordsChartView: View {
             HStack {
                 DotView(.nordicRed)
                 
-                if let lastRecord = viewModel.allRecords.last {
-                    Text(String(format: "Latest Value: %.2f \(lastRecord.measurement.unit.symbol)", lastRecord.measurement.value))
-                        .foregroundStyle(.secondary)
-                } else {
-                    Text("N/A")
-                        .foregroundStyle(.secondary)
-                }
+                Text("Latest Value: \(viewModel.allRecords.last?.measurement.formatted() ?? "N/A")")
+                    .foregroundStyle(.secondary)
             }
             .padding(.top, -4)
             
