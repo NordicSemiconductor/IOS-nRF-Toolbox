@@ -85,21 +85,24 @@ extension GlucoseViewModel: @MainActor SupportedServiceViewModel {
         cbGlucoseMeasurement = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.glucoseMeasurement.uuid)
         cbRACP = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.recordAccessControlPoint.uuid)
         guard cbGlucoseMeasurement != nil else { return }
+        
+        requestRecords(.allRecords)
     }
     
     fileprivate func enableNotificationsIfNeeded() async throws {
         do {
             if glucoseNotifyEnabled { return }
+            
             glucoseNotifyEnabled = try await peripheral.setNotifyValue(true, for: cbGlucoseMeasurement)
-                .timeout(1, scheduler: RunLoop.main)
+                .timeout(.seconds(1), scheduler: RunLoop.main, customError: { NSError() })
                 .receive(on: RunLoop.main)
                 .firstValue
             log.debug("GlucoseMeasurement.setNotifyValue(true): \(glucoseNotifyEnabled)")
             
             listenToMeasurements(cbGlucoseMeasurement)
         } catch {
-            log.error(error.localizedDescription)
-            onDisconnect()
+            log.error("Error during enabling glucose measurement notifications.")
+            inFlightRequest = nil
         }
     }
     
@@ -126,24 +129,18 @@ extension GlucoseViewModel {
             
             log.debug(#function)
             do {
-                log.debug("AAATESTAAA - start")
                 inFlightRequest = op
                 defer {
-                    log.debug("AAATESTAAA - stop")
                     inFlightRequest = nil
                 }
-                
-                log.debug("AAATESTAAA - aaa")
+
                 try await enableNotificationsIfNeeded()
-                log.debug("AAATESTAAA - bbb")
                 guard glucoseNotifyEnabled else { return }
                 
-                log.debug("AAATESTAAA - ccc")
                 if op == .allRecords {
                     allRecords.removeAll()
                 }
                 
-                log.debug("AAATESTAAA - ddd")
                 // If we don't listen to RACP and GLS Measurements, our firmware
                 // will restart, fail, crash, or complain. Don't ask.
                 let turnOnIndications = try await peripheral.setNotifyValue(true, for: cbRACP).firstValue
@@ -156,8 +153,6 @@ extension GlucoseViewModel {
                 log.debug("peripheral.writeValueWithResponse(\(writeData.hexEncodedString(options: [.prepend0x, .upperCase])))")
                 try await peripheral.writeValueWithResponse(writeData, for: cbRACP).firstValue
                 
-                log.debug("AAATESTAAA - eee")
-                
                 let resultData = try await racpResult
                 guard resultData.canRead(UInt8.self, atOffset: 0) else {
                     throw CriticalError.cannotFindGlucoseMeasurementCCD
@@ -168,8 +163,6 @@ extension GlucoseViewModel {
                 // Keep our nose clean by turning notifications back off.
                 let turnOffIndications = try await peripheral.setNotifyValue(false, for: cbRACP).firstValue
                 log.debug("peripheral.setIndicate(false): \(turnOffIndications)")
-                
-                log.debug("AAATESTAAA - fff")
             } catch {
                 log.error("\(#function) Error: \(error.localizedDescription)")
             }
