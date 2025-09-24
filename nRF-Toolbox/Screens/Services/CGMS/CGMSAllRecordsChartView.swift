@@ -61,6 +61,7 @@ struct CGMSAllRecordsChartView: View {
                 }
             }
             .chartScrollableAxes(.horizontal)
+            .chartXScale(domain: [-1, 20])
             .chartXVisibleDomain(length: 20)
             .chartScrollPosition(x: $viewModel.scrollPosition)
         }

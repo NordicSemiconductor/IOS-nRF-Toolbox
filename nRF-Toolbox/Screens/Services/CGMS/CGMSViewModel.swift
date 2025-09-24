@@ -39,7 +39,7 @@ final class CGMSViewModel: ObservableObject {
     @Published private(set) var inFlightRequest: RecordOperator?
     @Published private(set) var minY = 80.0
     @Published private(set) var maxY = 100.0
-    @Published var scrollPosition = 0
+    @Published var scrollPosition = -1
     
     // MARK: init
     
@@ -275,7 +275,6 @@ private extension CGMSViewModel {
                     self.lastRecord = newValue
                 default: // also .allRecords
                     self.records.append(newValue)
-                    self.scrollPosition = newValue.sequenceNumber
                 }
                 
             })
