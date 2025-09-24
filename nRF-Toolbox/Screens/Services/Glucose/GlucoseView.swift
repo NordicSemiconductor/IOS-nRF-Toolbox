@@ -81,6 +81,11 @@ struct GlucoseView: View {
             viewModel.requestRecords(newMode.recordOperator)
         }
         .labeledContentStyle(.accentedContent)
+        .toolbar {
+            Button("", systemImage: "arrow.counterclockwise") {
+                viewModel.requestRecords(.allRecords)
+            }
+        }
     }
     
     // MARK: noDataView()
