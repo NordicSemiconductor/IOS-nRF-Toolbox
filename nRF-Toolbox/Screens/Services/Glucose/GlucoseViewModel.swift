@@ -94,11 +94,12 @@ extension GlucoseViewModel: @MainActor SupportedServiceViewModel {
             if glucoseNotifyEnabled { return }
             
             glucoseNotifyEnabled = try await peripheral.setNotifyValue(true, for: cbGlucoseMeasurement)
-                .timeout(.seconds(1), scheduler: RunLoop.main, customError: { NSError() })
                 .receive(on: RunLoop.main)
                 .firstValue
             log.debug("GlucoseMeasurement.setNotifyValue(true): \(glucoseNotifyEnabled)")
             
+            guard glucoseNotifyEnabled else { return }
+
             listenToMeasurements(cbGlucoseMeasurement)
         } catch {
             log.error("Error during enabling glucose measurement notifications.")
