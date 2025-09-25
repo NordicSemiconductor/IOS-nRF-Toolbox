@@ -64,9 +64,13 @@ struct HeartRateChart: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 
+                Spacer().frame(height: 4)
+                
                 Label("RR Intervals Received: \(lastMeasurement.measurement.intervals?.count ?? 0)", systemImage: "arrow.left.and.right.circle")
                     .font(.caption)
                     .foregroundStyle(.secondary)
+                
+                Spacer().frame(height: 4)
             }
             
             if let sensorLocation = viewModel.location {
