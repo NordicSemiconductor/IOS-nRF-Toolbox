@@ -31,6 +31,7 @@ final class GlucoseViewModel: ObservableObject {
     
     // MARK: Published
     
+    @Published var scrollPosition = -1
     @Published private(set) var allRecords = [GlucoseMeasurement]()
     @Published private(set) var firstRecord: GlucoseMeasurement?
     @Published private(set) var lastRecord: GlucoseMeasurement?
@@ -79,7 +80,6 @@ extension GlucoseViewModel: @MainActor SupportedServiceViewModel {
         ]
         let cbCharacteristics = try? await peripheral
             .discoverCharacteristics(characteristics.map(\.uuid), for: service)
-//            .timeout(1, scheduler: DispatchQueue.main)
             .firstValue
         
         cbGlucoseMeasurement = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.glucoseMeasurement.uuid)
@@ -203,6 +203,7 @@ private extension GlucoseViewModel {
                     self.lastRecord = newValue
                 default:
                     self.allRecords.append(newValue)
+                    scrollPosition = max(-1, self.allRecords.endIndex-5) // GLS sequence number is 0, -1 is for padding
                 }
             })
             .store(in: &cancellables)

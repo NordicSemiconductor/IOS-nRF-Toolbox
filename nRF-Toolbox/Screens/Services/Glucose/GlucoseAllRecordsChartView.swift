@@ -18,10 +18,6 @@ struct GlucoseAllRecordsChartView: View {
     
     @EnvironmentObject private var viewModel: GlucoseViewModel
     
-    // MARK: Properties
-    
-    @State private var scrollPosition = -1
-    
     // MARK: view
     
     var body: some View {
@@ -69,7 +65,7 @@ struct GlucoseAllRecordsChartView: View {
             }
             .chartScrollableAxes(.horizontal)
             .chartXScale(domain: [-1, 20])
-            .chartScrollPosition(x: $scrollPosition)
+            .chartScrollPosition(x: $viewModel.scrollPosition)
             .padding(.top, 8)
         }
         
