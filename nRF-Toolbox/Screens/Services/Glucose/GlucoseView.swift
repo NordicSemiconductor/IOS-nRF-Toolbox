@@ -83,7 +83,14 @@ struct GlucoseView: View {
         .labeledContentStyle(.accentedContent)
         .toolbar {
             Button("", systemImage: "arrow.counterclockwise") {
-                viewModel.requestRecords(.allRecords)
+                switch viewMode {
+                case .all:
+                    viewModel.requestRecords(.allRecords)
+                case .first:
+                    viewModel.requestRecords(.firstRecord)
+                case .last:
+                    viewModel.requestRecords(.lastRecord)
+                }
             }
         }
     }
