@@ -67,6 +67,7 @@
 		A770FE6C2E7D69FF00357127 /* CGMSFeatureParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A770FE6B2E7D69FE00357127 /* CGMSFeatureParser.swift */; };
 		A770FE6E2E7D6F2B00357127 /* CRC16.swift in Sources */ = {isa = PBXBuildFile; fileRef = A770FE6D2E7D6F2800357127 /* CRC16.swift */; };
 		A7D2C8E52E7D414700C93C28 /* CGMSFeatureEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D2C8E42E7D414300C93C28 /* CGMSFeatureEnvelope.swift */; };
+		A7FA7A482E852D6500DA192B /* CGMSMeasurementParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FA7A472E852D6500DA192B /* CGMSMeasurementParser.swift */; };
 		AA01D4922D4A3D38008523CE /* Throughput+Attributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01D4912D4A3D38008523CE /* Throughput+Attributes.swift */; };
 		AA047E112DF1B3A300DA401E /* BlinkyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA047E102DF1B3A300DA401E /* BlinkyView.swift */; };
 		AA047E132DF1B3CE00DA401E /* BlinkyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA047E122DF1B3CE00DA401E /* BlinkyViewModel.swift */; };
@@ -229,6 +230,7 @@
 		A770FE6B2E7D69FE00357127 /* CGMSFeatureParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSFeatureParser.swift; sourceTree = "<group>"; };
 		A770FE6D2E7D6F2800357127 /* CRC16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRC16.swift; sourceTree = "<group>"; };
 		A7D2C8E42E7D414300C93C28 /* CGMSFeatureEnvelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSFeatureEnvelope.swift; sourceTree = "<group>"; };
+		A7FA7A472E852D6500DA192B /* CGMSMeasurementParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSMeasurementParser.swift; sourceTree = "<group>"; };
 		AA01D4912D4A3D38008523CE /* Throughput+Attributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Throughput+Attributes.swift"; sourceTree = "<group>"; };
 		AA047E102DF1B3A300DA401E /* BlinkyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkyView.swift; sourceTree = "<group>"; };
 		AA047E122DF1B3CE00DA401E /* BlinkyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkyViewModel.swift; sourceTree = "<group>"; };
@@ -805,6 +807,7 @@
 		AAF272F22D9BF54D007B63D3 /* CGMS */ = {
 			isa = PBXGroup;
 			children = (
+				A7FA7A472E852D6500DA192B /* CGMSMeasurementParser.swift */,
 				A770FE6D2E7D6F2800357127 /* CRC16.swift */,
 				A770FE6B2E7D69FE00357127 /* CGMSFeatureParser.swift */,
 				A770FE692E7D69C900357127 /* CGMFeatures.swift */,
@@ -1073,6 +1076,7 @@
 				AAC4177F2DCB725F0059FE97 /* UARTMacro.swift in Sources */,
 				AA7769FD2DEDED9A0005A82B /* BloodPressureViewModel.swift in Sources */,
 				01AB7B752A77BFB400AEDDCD /* CBUUID+Ext.swift in Sources */,
+				A7FA7A482E852D6500DA192B /* CGMSMeasurementParser.swift in Sources */,
 				AAC0D99F2D80514900F25096 /* AboutView.swift in Sources */,
 				AA95CBD12D084C8B00D1FBC6 /* Error.swift in Sources */,
 				AAB2398A2DCA174600101F9D /* UARTMessagesPreview.swift in Sources */,

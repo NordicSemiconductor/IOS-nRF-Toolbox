@@ -253,28 +253,25 @@ private extension CGMSViewModel {
     func listenToMeasurements(_ measurementCharacteristic: CBCharacteristic) {
         log.debug(#function)
         peripheral.listenValues(for: measurementCharacteristic)
-            .compactMap { [log, peripheralSessionTime] data -> CGMSMeasurement? in
+            .compactMap { [log, peripheralSessionTime] data -> [CGMSMeasurement] in
                 log.debug("Received Measurement Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing])) (\(data.count) bytes)")
-                guard let peripheralSessionTime,
-                      let parse = try? CGMSMeasurement(data: data, sessionStartTime: peripheralSessionTime) else {
-                    log.error("Unable to parse Measurement Data \(data.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
-                    return nil
-                }
-                log.debug("Parsed measurement \(parse). Seq. No.: \(parse.sequenceNumber)")
-                return parse
+                
+                guard let peripheralSessionTime else { return [] }
+                
+                return CGMSMeasurementParser.parse(data: data, sessionStartTime: peripheralSessionTime)
             }
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { _ in
                 print("Completion")
-            }, receiveValue: { [weak self] newValue in
-                guard let self else { return }
+            }, receiveValue: { [weak self] newValues in
+                guard let self, !newValues.isEmpty else { return }
                 switch self.inFlightRequest {
                 case .firstRecord:
-                    self.firstRecord = newValue
+                    self.firstRecord = newValues.first!
                 case .lastRecord:
-                    self.lastRecord = newValue
+                    self.lastRecord = newValues.first!
                 default: // also .allRecords
-                    self.records.append(newValue)
+                    self.records += newValues
                 }
                 
             })
