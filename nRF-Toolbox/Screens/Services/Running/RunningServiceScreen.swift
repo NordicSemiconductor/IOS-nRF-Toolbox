@@ -33,19 +33,21 @@ struct RunningServiceView: View {
                 .foregroundStyle(.secondary)
         }
         
-        Button("Sensor Calibration", systemImage: "lines.measurement.horizontal") {
-            showSensorCalibration = true
-        }
-        .foregroundStyle(Color.universalAccentColor)
-        .sheet(isPresented: $showSensorCalibration, content: {
-            if let viewModel = environment.sensorCalibrationViewModel {
-                NavigationStack {
-                    SensorCalibrationScreen()
-                        .environmentObject(viewModel)
-                }
-                .setAccent(.white)
+        if (environment.isSensorCalibrationAvailable == true) {
+            Button("Sensor Calibration", systemImage: "lines.measurement.horizontal") {
+                showSensorCalibration = true
             }
-        })
-        .centered()
+            .foregroundStyle(Color.universalAccentColor)
+            .sheet(isPresented: $showSensorCalibration, content: {
+                if let viewModel = environment.sensorCalibrationViewModel {
+                    NavigationStack {
+                        SensorCalibrationScreen()
+                            .environmentObject(viewModel)
+                    }
+                    .setAccent(.white)
+                }
+            })
+            .centered()
+        }
     }
 }

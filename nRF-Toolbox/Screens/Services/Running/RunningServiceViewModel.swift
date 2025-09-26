@@ -28,6 +28,7 @@ final class RunningServiceViewModel: ObservableObject {
     // MARK: Mandatory Characteristics
     var rscMeasurement: CBCharacteristic!
     var rscFeature: CBCharacteristic!
+    var scControlPoint: CBCharacteristic?
     
     private var cancelable = Set<AnyCancellable>()
     
@@ -106,7 +107,7 @@ private extension RunningServiceViewModel {
     
     func discoverCharacteristics() async throws {
         log.debug(#function)
-        let serviceCharacteristics: [Characteristic] = [.rscMeasurement, .rscFeature]
+        let serviceCharacteristics: [Characteristic] = [.rscMeasurement, .rscFeature, .scControlPoint]
         let discoveredCharacteristics: [CBCharacteristic] = try await peripheral.discoverCharacteristics(serviceCharacteristics.map(\.uuid), for: runningService)
             .firstValue
         
@@ -116,10 +117,14 @@ private extension RunningServiceViewModel {
                 self.rscMeasurement = characteristic
             case .rscFeature:
                 self.rscFeature = characteristic
+            case .scControlPoint:
+                self.scControlPoint = characteristic
             default:
                 break
             }
         }
+        
+        self.environment.isSensorCalibrationAvailable = scControlPoint != nil
         
         guard rscMeasurement != nil && rscFeature != nil else {
             throw Err.noMandatoryCharacteristic
@@ -195,6 +200,7 @@ extension RunningServiceViewModel {
         @Published var instantaneousStrideLength: Measurement<UnitLength>?
         @Published var totalDistance: Measurement<UnitLength>?
         @Published var isRunning: Bool?
+        @Published var isSensorCalibrationAvailable: Bool?
         
         @Published var sensorCalibrationViewModel: SensorCalibrationViewModel?
         
