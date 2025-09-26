@@ -205,6 +205,7 @@ extension CGMSViewModel: SupportedServiceViewModel {
             var secured = false
             let featuresRaw = try? await peripheral.readValue(for: cbFeature).firstValue
             if let featuresRaw {
+                log.debug("Received features data: \(featuresRaw.hexEncodedString(options: [.upperCase, .twoByteSpacing])))")
                 let result = CGMSFeatureParser.parse(data: featuresRaw)
                 secured = result?.secured ?? false
             }
