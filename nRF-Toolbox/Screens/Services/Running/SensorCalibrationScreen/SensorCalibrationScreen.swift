@@ -113,6 +113,7 @@ struct SensorCalibrationScreen: View {
             content()
             
             Button(buttonTitle, action: buttonAction)
+                .tint(.nordicBlue)
                 .disabled(buttonDisabled.wrappedValue)
         } header: {
             Text(header)
