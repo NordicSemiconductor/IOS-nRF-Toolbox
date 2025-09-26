@@ -24,6 +24,7 @@ final class SensorCalibrationViewModel: ObservableObject {
     @Published var updateSensorLocationDisabled = false
     @Published fileprivate(set) var currentSensorLocation: RSCSSensorLocation.RawValue = 0
     @Published var pickerSensorLocation: RSCSSensorLocation.RawValue = 0
+    @Published var isOperationInProgress = false
     
     @Published fileprivate(set) var availableSensorLocations: [RSCSSensorLocation] = []
     
@@ -124,24 +125,29 @@ extension SensorCalibrationViewModel {
         var meters: UInt32 = 0
         let data = Data(bytes: &meters, count: MemoryLayout.size(ofValue: meters))
         
+        isOperationInProgress = true
         do {
             try await writeCommand(opCode: .setCumulativeValue, parameter: data)
         } catch let error {
             log.error(error.localizedDescription)
             internalError = .unableResetCumulativeValue
         }
+        isOperationInProgress = false
     }
     
     func startSensorCalibration() async {
+        isOperationInProgress = true
         do {
             try await writeCommand(opCode: .startSensorCalibration, parameter: nil)
         } catch {
             log.debug("Error: \(internalError.nilDescription)")
             internalError = .unableStartCalibration
         }
+        isOperationInProgress = false
     }
     
     func updateSensorLocation() async {
+        isOperationInProgress = true
         do {
             let data = Data([pickerSensorLocation])
             try await writeCommand(opCode: .updateSensorLocation, parameter: data)
@@ -151,6 +157,7 @@ extension SensorCalibrationViewModel {
             internalError = .unableWriteSensorLocation
             updateSensorLocationDisabled = false
         }
+        isOperationInProgress = false
     }
     
     @discardableResult
