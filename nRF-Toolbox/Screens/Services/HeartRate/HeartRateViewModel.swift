@@ -133,6 +133,9 @@ private extension HeartRateViewModel {
             guard let data, data.canRead(UInt8.self, atOffset: 0) else {
                 throw CriticalError.unknown
             }
+            
+            self.log.debug("Received location data: \(data.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
+            
             return HeartRateMeasurement.SensorLocation(rawValue: RegisterValue(data[0]))
         }
         .timeout(.seconds(1), scheduler: DispatchQueue.main, customError: {
@@ -149,7 +152,8 @@ private extension HeartRateViewModel {
         log.debug(#function)
         peripheral.listenValues(for: characteristic)
             .compactMap { data in
-                try? HeartRateValue(with: data)
+                self.log.debug("Received measurement data: \(data.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
+                return try? HeartRateValue(with: data)
             }
             .sink { completion in
                 if case .failure = completion {
