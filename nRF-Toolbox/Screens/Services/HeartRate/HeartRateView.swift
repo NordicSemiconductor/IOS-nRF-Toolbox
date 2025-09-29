@@ -78,6 +78,17 @@ struct HeartRateChart: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
+            
+            if viewModel.isEnergyResetPossible {
+                HStack {
+                    Spacer() // Pushes the button to the right
+                    Button("Reset calories") {
+                        viewModel.resetMeasurement()
+                    }
+                    .tint(.nordicBlue)
+                    .padding(8)
+                }
+            }
         }
         .padding(.vertical, 4)
     }

@@ -20,12 +20,14 @@ final class HeartRateViewModel: ObservableObject {
     private let peripheral: Peripheral
     private let heartRateService: CBService
     private var hrMeasurement: CBCharacteristic!
+    private var heartRateControlPoint: CBCharacteristic?
     private var cancellables = Set<AnyCancellable>()
     
     private let log = NordicLog(category: "HeartRateViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
     
     @Published fileprivate(set) var data: [HeartRateValue] = []
     @Published fileprivate(set) var location: HeartRateMeasurement.SensorLocation?
+    @Published fileprivate(set) var isEnergyResetPossible = false
     @Published var scrollPosition = Date()
     
     @Published fileprivate(set) var criticalError: CriticalError?
@@ -102,15 +104,17 @@ private extension HeartRateViewModel {
     
     func discoverCharacteristics() async throws {
         log.debug(#function)
-        let hrCharacteristics: [Characteristic] = [.heartRateMeasurement, .bodySensorLocation]
-        let heartRateCharacteristic = try await peripheral.discoverCharacteristics(hrCharacteristics.map(\.uuid), for: heartRateService)
+        let hrCharacteristics: [Characteristic] = [.heartRateMeasurement, .bodySensorLocation, .heartRateControlPoint]
+        
+        let heartRateCharacteristics = try await peripheral.discoverCharacteristics(hrCharacteristics.map(\.uuid), for: heartRateService)
             .timeout(1, scheduler: DispatchQueue.main, customError: {
                 return CriticalError.noMandatoryCharacteristic
             })
             .firstValue
         
-        for characteristic in heartRateCharacteristic where characteristic.uuid == Characteristic.heartRateMeasurement.uuid {
-            hrMeasurement = characteristic
+        hrMeasurement = heartRateCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.heartRateMeasurement.uuid)
+        
+        if let hrMeasurement {
             do {
                 try await notifyHRMeasurement(true)
                 // in case of success - listen
@@ -120,13 +124,7 @@ private extension HeartRateViewModel {
             }
         }
         
-        let heartRateCharacteristics = try? await peripheral.discoverCharacteristics(hrCharacteristics.map(\.uuid), for: heartRateService)
-            .timeout(1, scheduler: DispatchQueue.main, customError: {
-                return CriticalError.noMandatoryCharacteristic
-            })
-            .firstValue
-        
-        guard let bodySensorCharacteristic = heartRateCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.bodySensorLocation.uuid) else { return }
+        guard let bodySensorCharacteristic = heartRateCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.bodySensorLocation.uuid) else { return }
         
         log.debug("Found Body Sensor Characteristic")
         location = try? await peripheral.readValue(for: bodySensorCharacteristic).tryMap { data in
@@ -144,6 +142,11 @@ private extension HeartRateViewModel {
         .firstValue
 
         log.debug("Body Sensor Location: \(location.nilDescription)")
+        
+        heartRateControlPoint = heartRateCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.heartRateControlPoint.uuid)
+        isEnergyResetPossible = heartRateControlPoint != nil
+        
+        log.debug("Control point characteristic present: \(isEnergyResetPossible)")
     }
     
     // MARK: listenTo()
@@ -226,6 +229,30 @@ extension HeartRateViewModel {
                 return "Unknown error"
             case .measurement:
                 return "Error occured while reading measurement"
+            }
+        }
+    }
+}
+
+// MARK: - Actions
+
+extension HeartRateViewModel {
+    
+    func resetMeasurement() {
+        Task {
+            if let heartRateControlPoint {
+                log.debug("Reset energy counter - start")
+                do {
+                    let command: [UInt8] = [0x01]  // Reset calories counter
+                    let data = Data(command)
+                    try await peripheral.writeValueWithResponse(data, for: heartRateControlPoint)
+                        .firstValue
+                    log.debug("Reset energy counter - end")
+                } catch {
+                    log.debug("Reset energy counter - error: \(error)")
+                }
+            } else {
+                log.error("heartRateControlPoint is nil. Cannot reset measurement.")
             }
         }
     }
