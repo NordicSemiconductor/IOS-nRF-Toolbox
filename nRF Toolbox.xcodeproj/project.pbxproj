@@ -66,6 +66,7 @@
 		A770FE6A2E7D69CA00357127 /* CGMFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = A770FE692E7D69C900357127 /* CGMFeatures.swift */; };
 		A770FE6C2E7D69FF00357127 /* CGMSFeatureParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A770FE6B2E7D69FE00357127 /* CGMSFeatureParser.swift */; };
 		A770FE6E2E7D6F2B00357127 /* CRC16.swift in Sources */ = {isa = PBXBuildFile; fileRef = A770FE6D2E7D6F2800357127 /* CRC16.swift */; };
+		A7CF97B42E8BBE5500C1E1B3 /* CaloriesResetState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CF97B32E8BBE5400C1E1B3 /* CaloriesResetState.swift */; };
 		A7D2C8E52E7D414700C93C28 /* CGMSFeatureEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D2C8E42E7D414300C93C28 /* CGMSFeatureEnvelope.swift */; };
 		A7FA7A482E852D6500DA192B /* CGMSMeasurementParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FA7A472E852D6500DA192B /* CGMSMeasurementParser.swift */; };
 		AA01D4922D4A3D38008523CE /* Throughput+Attributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01D4912D4A3D38008523CE /* Throughput+Attributes.swift */; };
@@ -229,6 +230,7 @@
 		A770FE692E7D69C900357127 /* CGMFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMFeatures.swift; sourceTree = "<group>"; };
 		A770FE6B2E7D69FE00357127 /* CGMSFeatureParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSFeatureParser.swift; sourceTree = "<group>"; };
 		A770FE6D2E7D6F2800357127 /* CRC16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRC16.swift; sourceTree = "<group>"; };
+		A7CF97B32E8BBE5400C1E1B3 /* CaloriesResetState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaloriesResetState.swift; sourceTree = "<group>"; };
 		A7D2C8E42E7D414300C93C28 /* CGMSFeatureEnvelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSFeatureEnvelope.swift; sourceTree = "<group>"; };
 		A7FA7A472E852D6500DA192B /* CGMSMeasurementParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSMeasurementParser.swift; sourceTree = "<group>"; };
 		AA01D4912D4A3D38008523CE /* Throughput+Attributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Throughput+Attributes.swift"; sourceTree = "<group>"; };
@@ -601,6 +603,7 @@
 		01ABB0752AE6FDCF00615A21 /* HeartRate */ = {
 			isa = PBXGroup;
 			children = (
+				A7CF97B32E8BBE5400C1E1B3 /* CaloriesResetState.swift */,
 				AA21A33F2E13D8AD00316CAD /* HeartRateValue.swift */,
 				AA94C5522D01B5DC00562F7A /* HeartRateView.swift */,
 				01CEB4252AE9100300945105 /* HeartRateViewModel.swift */,
@@ -1124,6 +1127,7 @@
 				AA306A0B2DF30DBF005B4E04 /* GlucoseView.swift in Sources */,
 				AA21A3402E13D8AD00316CAD /* HeartRateValue.swift in Sources */,
 				0164A4742AD5A4630093E501 /* StateViews.swift in Sources */,
+				A7CF97B42E8BBE5500C1E1B3 /* CaloriesResetState.swift in Sources */,
 				AA4C50C02DFC230B00B7B22F /* NordicEmptyView.swift in Sources */,
 				AAE2C9332D9D378300B398E3 /* CGMOpcodes.swift in Sources */,
 				AA8B89282E28F18C0017F219 /* BlinkyCBMPeripheralSpecDelegate.swift in Sources */,

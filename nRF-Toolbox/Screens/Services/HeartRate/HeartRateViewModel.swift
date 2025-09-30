@@ -13,7 +13,6 @@ import iOS_Bluetooth_Numbers_Database
 import iOS_Common_Libraries
 
 // MARK: - HeartRateViewModel
-
 @MainActor
 final class HeartRateViewModel: ObservableObject {
     
@@ -27,7 +26,7 @@ final class HeartRateViewModel: ObservableObject {
     
     @Published fileprivate(set) var data: [HeartRateValue] = []
     @Published fileprivate(set) var location: HeartRateMeasurement.SensorLocation?
-    @Published fileprivate(set) var isEnergyResetPossible = false
+    @Published fileprivate(set) var caloriesResetState = CaloriesResetState.unavailable
     @Published var scrollPosition = Date()
     
     @Published fileprivate(set) var criticalError: CriticalError?
@@ -144,9 +143,10 @@ private extension HeartRateViewModel {
         log.debug("Body Sensor Location: \(location.nilDescription)")
         
         heartRateControlPoint = heartRateCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.heartRateControlPoint.uuid)
-        isEnergyResetPossible = heartRateControlPoint != nil
-        
-        log.debug("Control point characteristic present: \(isEnergyResetPossible)")
+        if heartRateControlPoint != nil {
+            log.debug("Found Heart Rate Control Point Characteristic")
+            caloriesResetState = .available
+        }
     }
     
     // MARK: listenTo()
@@ -243,17 +243,24 @@ extension HeartRateViewModel {
             if let heartRateControlPoint {
                 log.debug("Reset energy counter - start")
                 do {
+                    caloriesResetState = .inProgress
                     let command: [UInt8] = [0x01]  // Reset calories counter
                     let data = Data(command)
                     try await peripheral.writeValueWithResponse(data, for: heartRateControlPoint)
                         .firstValue
+                    caloriesResetState = .available
                     log.debug("Reset energy counter - end")
                 } catch {
+                    caloriesResetState = .available
                     log.debug("Reset energy counter - error: \(error)")
                 }
             } else {
                 log.error("heartRateControlPoint is nil. Cannot reset measurement.")
             }
         }
+    }
+    
+    func clearControlPointError() {
+        caloriesResetState = .available
     }
 }

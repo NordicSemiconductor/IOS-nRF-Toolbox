@@ -79,18 +79,56 @@ struct HeartRateChart: View {
                     .foregroundStyle(.secondary)
             }
             
-            if viewModel.isEnergyResetPossible {
-                HStack {
-                    Spacer() // Pushes the button to the right
+            RefreshCaloriesCounterView()
+        }
+        .padding(.vertical, 4)
+    }
+}
+
+struct RefreshCaloriesCounterView: View {
+    
+    @EnvironmentObject private var viewModel: HeartRateViewModel
+    
+    @State var showAlert = false
+    
+    var body: some View {
+        if (viewModel.caloriesResetState != .unavailable) {
+            HStack {
+                Spacer() // Pushes the button to the right
+                
+                ZStack {
+                    ProgressView()
+                        .fixedCircularProgressView()
+                        .centered()
+                        .listRowSeparator(.hidden)
+                        .hidden(viewModel.caloriesResetState != .inProgress)
+                    
                     Button("Reset calories") {
                         viewModel.resetMeasurement()
                     }
                     .tint(.nordicBlue)
                     .padding(8)
+                    .hidden(viewModel.caloriesResetState != .available)
+                }.fixedSize()
+            }.alert("Error occured",isPresented: $showAlert, actions: {
+                Button("OK") {
+                    viewModel.clearControlPointError()
                 }
-            }
+            })
+            
         }
-        .padding(.vertical, 4)
+    }
+}
+
+extension View {
+    
+    @ViewBuilder
+    func hidden(_ shouldHide: Bool) -> some View {
+        if shouldHide {
+            self.hidden()
+        } else {
+            self
+        }
     }
 }
 
