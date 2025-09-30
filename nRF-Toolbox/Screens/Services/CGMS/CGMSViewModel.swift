@@ -142,10 +142,17 @@ extension CGMSViewModel {
 
 extension CGMSViewModel: SupportedServiceViewModel {
     
+    // MARK: description
+    
+    var description: String {
+        "Continuous Glucose Monitoring Service"
+    }
+    
     // MARK: attachedView
     
-    var attachedView: SupportedServiceAttachedView {
-        return .continuousGlucoseMonitoring(self)
+    var attachedView: any View {
+        return CGMSView()
+            .environmentObject(self)
     }
     
     // MARK: onConnect()

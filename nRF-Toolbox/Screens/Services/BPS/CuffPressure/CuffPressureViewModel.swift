@@ -52,10 +52,17 @@ final class CuffPressureViewModel: ObservableObject {
 
 extension CuffPressureViewModel: SupportedServiceViewModel {
     
+    // MARK: description
+    
+    var description: String {
+        "Cuff Pressure"
+    }
+    
     // MARK: attachedView
     
-    var attachedView: SupportedServiceAttachedView {
-        return .cuffPressure(self)
+    var attachedView: any View {
+        return CuffPressureView()
+            .environmentObject(self)
     }
     
     // MARK: onConnect()

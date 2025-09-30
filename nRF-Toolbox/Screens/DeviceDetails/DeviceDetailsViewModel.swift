@@ -98,11 +98,16 @@ extension DeviceDetailsViewModel {
     
     @ViewBuilder
     func supportedServiceViews() -> some View {
-        let includedServices = supportedServiceViewModels
+        let includedViews = supportedServiceViewModels
             .filter { !($0 is BatteryViewModel) }
-            .map(\.attachedView)
-        ForEach(includedServices) { attachedView in
-            attachedView
+            .map { viewModel in
+                Section(viewModel.description) {
+                    AnyView(viewModel.attachedView)
+                }
+            }
+
+        ForEach(0..<includedViews.count, id: \.self) { index in
+            includedViews[index]
         }
     }
     

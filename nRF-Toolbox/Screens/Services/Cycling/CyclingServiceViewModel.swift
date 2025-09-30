@@ -160,10 +160,17 @@ private extension CBUUID {
 
 extension CyclingServiceViewModel: SupportedServiceViewModel {
     
+    // MARK: description
+    
+    var description: String {
+        "Cycling"
+    }
+    
     // MARK: attachedView
     
-    var attachedView: SupportedServiceAttachedView {
-        return .cycling(self)
+    var attachedView: any View {
+        return CyclingDataView()
+            .environmentObject(self)
     }
     
     // MARK: onConnect()

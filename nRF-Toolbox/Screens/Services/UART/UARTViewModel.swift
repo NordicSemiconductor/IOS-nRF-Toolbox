@@ -55,10 +55,17 @@ final class UARTViewModel: ObservableObject {
 
 extension UARTViewModel: SupportedServiceViewModel {
     
+    // MARK: description
+    
+    var description: String {
+        "UART"
+    }
+    
     // MARK: attachedView
     
-    var attachedView: SupportedServiceAttachedView {
-        return .uart(self)
+    var attachedView: any View {
+        return UARTView()
+            .environmentObject(self)
     }
     
     // MARK: onConnect()

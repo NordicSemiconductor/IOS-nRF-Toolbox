@@ -48,10 +48,17 @@ final class RunningServiceViewModel: ObservableObject {
 
 extension RunningServiceViewModel: SupportedServiceViewModel {
     
+    // MARK: description
+    
+    var description: String {
+        "Running"
+    }
+    
     // MARK: attachedView
     
-    var attachedView: SupportedServiceAttachedView {
-        return .running(self)
+    var attachedView: any View {
+        return RunningServiceView()
+            .environmentObject(self)
     }
     
     // MARK: onConnect()

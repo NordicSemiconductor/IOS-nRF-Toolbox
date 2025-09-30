@@ -43,10 +43,17 @@ final class BlinkyViewModel: ObservableObject {
 
 extension BlinkyViewModel: SupportedServiceViewModel {
     
+    // MARK: description
+    
+    var description: String {
+        "LED Button Service"
+    }
+    
     // MARK: attachedView
     
-    var attachedView: SupportedServiceAttachedView {
-        return .blinky(self)
+    var attachedView: any View {
+        return BlinkyView()
+            .environmentObject(self)
     }
     
     // MARK: onConnect()

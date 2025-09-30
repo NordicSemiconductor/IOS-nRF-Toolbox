@@ -69,10 +69,17 @@ final class HeartRateViewModel: ObservableObject {
 
 extension HeartRateViewModel: SupportedServiceViewModel {
     
+    // MARK: description
+    
+    var description: String {
+        "Heart Monitor"
+    }
+    
     // MARK: attachedView
     
-    var attachedView: SupportedServiceAttachedView {
-        return .heartRate(self)
+    var attachedView: any View {
+        return HeartRateView()
+            .environmentObject(self)
     }
     
     // MARK: onConnect()

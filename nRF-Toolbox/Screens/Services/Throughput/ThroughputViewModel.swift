@@ -253,10 +253,17 @@ final class ThroughputViewModel: ObservableObject {
 
 extension ThroughputViewModel: SupportedServiceViewModel {
     
+    // MARK: description
+    
+    var description: String {
+        "Throughput"
+    }
+    
     // MARK: attachedView
     
-    var attachedView: SupportedServiceAttachedView {
-        return .throughput(self)
+    var attachedView: any View {
+        return ThroughputView()
+            .environmentObject(self)
     }
     
     // MARK: onConnect()

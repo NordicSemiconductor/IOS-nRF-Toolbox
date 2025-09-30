@@ -63,10 +63,17 @@ final class GlucoseViewModel: ObservableObject {
 
 extension GlucoseViewModel: @MainActor SupportedServiceViewModel {
     
+    // MARK: description
+    
+    var description: String {
+        "Glucose Service"
+    }
+    
     // MARK: attachedView
     
-    var attachedView: SupportedServiceAttachedView {
-        return .glucose(self)
+    var attachedView: any View {
+        return GlucoseView()
+            .environmentObject(self)
     }
     
     // MARK: onConnect()
