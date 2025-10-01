@@ -104,6 +104,7 @@ private extension HeartRateViewModel {
     
     // MARK: discoverCharacteristics()
     
+    @MainActor
     func discoverCharacteristics() async throws {
         log.debug(#function)
         let hrCharacteristics: [Characteristic] = [.heartRateMeasurement, .bodySensorLocation, .heartRateControlPoint]
