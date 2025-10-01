@@ -16,7 +16,7 @@ import iOS_Common_Libraries
 // MARK: - CuffPressureViewModel
 
 @MainActor
-final class CuffPressureViewModel: ObservableObject {
+final class CuffPressureViewModel: SupportedServiceViewModel, ObservableObject {
     
     // MARK: Private Properties
     
@@ -33,6 +33,8 @@ final class CuffPressureViewModel: ObservableObject {
     
     @Published private(set) var currentValue: CuffPressureMeasurement?
     
+    var errors: CurrentValueSubject<String?, Never> = CurrentValueSubject<String?, Never>(nil)
+    
     // MARK: init
     
     init(peripheral: Peripheral, bpsService: CBService) {
@@ -46,11 +48,6 @@ final class CuffPressureViewModel: ObservableObject {
     deinit {
         log.debug(#function)
     }
-}
-
-// MARK: - SupportedServiceViewModel
-
-extension CuffPressureViewModel: SupportedServiceViewModel {
     
     // MARK: description
     

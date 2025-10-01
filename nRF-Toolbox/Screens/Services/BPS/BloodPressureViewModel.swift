@@ -15,8 +15,7 @@ import iOS_Common_Libraries
 
 // MARK: - BloodPressureViewModel
 
-@MainActor
-final class BloodPressureViewModel: ObservableObject {
+final class BloodPressureViewModel: @MainActor SupportedServiceViewModel, ObservableObject {
     
     // MARK: Private Properties
     
@@ -35,6 +34,8 @@ final class BloodPressureViewModel: ObservableObject {
     @Published private(set) var currentValue: BloodPressureMeasurement?
     @Published private(set) var features = BitField<BloodPressureMeasurement.Feature>()
     
+    var errors: CurrentValueSubject<String?, Never> = CurrentValueSubject<String?, Never>(nil)
+    
     // MARK: init
     
     init(peripheral: Peripheral, bpsService: CBService) {
@@ -48,11 +49,6 @@ final class BloodPressureViewModel: ObservableObject {
     deinit {
         log.debug(#function)
     }
-}
-
-// MARK: - SupportedServiceViewModel
-
-extension BloodPressureViewModel: SupportedServiceViewModel {
     
     // MARK: description
     

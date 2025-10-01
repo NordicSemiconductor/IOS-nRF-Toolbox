@@ -15,7 +15,7 @@ import iOS_Common_Libraries
 
 // MARK: - HealthThermometerViewModel
 
-final class HealthThermometerViewModel: ObservableObject {
+final class HealthThermometerViewModel: SupportedServiceViewModel, ObservableObject {
     
     // MARK: Private Properties
     
@@ -23,6 +23,8 @@ final class HealthThermometerViewModel: ObservableObject {
     private let peripheral: Peripheral
     private var cancellables: Set<AnyCancellable>
     private let log = NordicLog(category: "TemperatureViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
+    
+    var errors: CurrentValueSubject<String?, Never> = CurrentValueSubject<String?, Never>(nil)
     
     // MARK: Properties
     
@@ -37,12 +39,7 @@ final class HealthThermometerViewModel: ObservableObject {
         self.measurement = TemperatureMeasurement(Data())
         log.debug(#function)
     }
-}
-
-// MARK: - SupportedServiceViewModel
-
-extension HealthThermometerViewModel: SupportedServiceViewModel {
-    
+  
     // MARK: description
     
     var description: String {

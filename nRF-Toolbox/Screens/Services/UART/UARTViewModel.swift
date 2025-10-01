@@ -15,7 +15,7 @@ import iOS_Common_Libraries
 
 // MARK: - UARTViewModel
 
-final class UARTViewModel: ObservableObject {
+final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
     
     // MARK: Private Properties
     
@@ -38,6 +38,8 @@ final class UARTViewModel: ObservableObject {
     @Published var editCommandIndex: Int = 0
     @Published var showEditCommandSheet: Bool = false
     
+    var errors: CurrentValueSubject<String?, Never> = CurrentValueSubject<String?, Never>(nil)
+    
     // MARK: init
     
     init(peripheral: Peripheral, uartService: CBService) {
@@ -49,11 +51,6 @@ final class UARTViewModel: ObservableObject {
             self.macros = savedMacros
         }
     }
-}
-
-// MARK: - SupportedServiceViewModel
-
-extension UARTViewModel: SupportedServiceViewModel {
     
     // MARK: description
     

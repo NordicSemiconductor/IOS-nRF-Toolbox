@@ -15,7 +15,7 @@ import iOS_Common_Libraries
 
 // MARK: - BlinkyViewModel
 
-final class BlinkyViewModel: ObservableObject {
+final class BlinkyViewModel: SupportedServiceViewModel, ObservableObject {
     
     // MARK: Private Properties
     
@@ -29,6 +29,8 @@ final class BlinkyViewModel: ObservableObject {
     @Published var isLedOn: Bool = false
     @Published private(set) var isButtonPressed: Bool = false
     
+    var errors: CurrentValueSubject<String?, Never> = CurrentValueSubject<String?, Never>(nil)
+    
     // MARK: init
     
     init(peripheral: Peripheral, blinkyService: CBService) {
@@ -37,11 +39,6 @@ final class BlinkyViewModel: ObservableObject {
         self.cancellables = Set<AnyCancellable>()
         log.debug(#function)
     }
-}
-
-// MARK: - SupportedServiceViewModel
-
-extension BlinkyViewModel: SupportedServiceViewModel {
     
     // MARK: description
     

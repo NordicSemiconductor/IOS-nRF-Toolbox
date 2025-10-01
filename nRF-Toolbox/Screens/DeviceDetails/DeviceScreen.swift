@@ -41,6 +41,13 @@ struct DeviceScreen: View {
                     .disabled(device.status.hashValue != ConnectedDevicesViewModel.Device.Status.connected.hashValue)
             }
             
+            if let error = deviceViewModel.errors {
+                Section("Brand new error") {
+                    Text("Error")
+                        .foregroundStyle(Color.nordicRed)
+                }
+            }
+            
             Section("Device Information") {
                 Button("Open Inspector", systemImage: "info.circle") {
                     deviceViewModel.showDeviceSheet = true

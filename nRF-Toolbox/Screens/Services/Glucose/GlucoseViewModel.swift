@@ -15,8 +15,7 @@ import iOS_Common_Libraries
 
 // MARK: - GlucoseViewModel
 
-@MainActor
-final class GlucoseViewModel: ObservableObject {
+final class GlucoseViewModel: @MainActor SupportedServiceViewModel, ObservableObject {
     
     // MARK: Private Properties
     
@@ -39,6 +38,8 @@ final class GlucoseViewModel: ObservableObject {
     @Published private(set) var minY = 0.6
     @Published private(set) var maxY = 0.0
     
+    var errors: CurrentValueSubject<String?, Never> = CurrentValueSubject<String?, Never>(nil)
+    
     // MARK: init
     
     init(peripheral: Peripheral, glucoseService: CBService) {
@@ -57,11 +58,6 @@ final class GlucoseViewModel: ObservableObject {
             self.maxY = maxY
         }.store(in: &cancellables)
     }
-}
-
-// MARK: - SupportedServiceViewModel
-
-extension GlucoseViewModel: @MainActor SupportedServiceViewModel {
     
     // MARK: description
     

@@ -15,7 +15,7 @@ import iOS_Common_Libraries
 
 // MARK: - CGMSViewModel
 
-final class CGMSViewModel: ObservableObject {
+final class CGMSViewModel: SupportedServiceViewModel, ObservableObject {
     
     // MARK: Private Properties
     
@@ -41,6 +41,8 @@ final class CGMSViewModel: ObservableObject {
     @Published private(set) var maxY = 100.0
     @Published var scrollPosition = -1
     
+    var errors: CurrentValueSubject<String?, Never> = CurrentValueSubject<String?, Never>(nil)
+    
     // MARK: init
     
     init(peripheral: Peripheral, cgmsService: CBService) {
@@ -59,9 +61,6 @@ final class CGMSViewModel: ObservableObject {
             self.maxY = maxY
         }.store(in: &cancellables)
     }
-}
-
-extension CGMSViewModel {
     
     // MARK: requestNumberOfRecords()
     
@@ -136,11 +135,6 @@ extension CGMSViewModel {
             log.debug(error.localizedDescription)
         }
     }
-}
-
-// MARK: - SupportedServiceViewModel
-
-extension CGMSViewModel: SupportedServiceViewModel {
     
     // MARK: description
     

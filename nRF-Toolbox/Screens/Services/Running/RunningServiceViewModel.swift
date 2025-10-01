@@ -15,7 +15,7 @@ import Combine
 // MARK: - RunningServiceViewModel
 
 @MainActor
-final class RunningServiceViewModel: ObservableObject {
+final class RunningServiceViewModel: SupportedServiceViewModel, ObservableObject {
     private enum Err: Error {
         case unknown, noData, timeout, noMandatoryCharacteristic
     }
@@ -32,6 +32,8 @@ final class RunningServiceViewModel: ObservableObject {
     
     private var cancelable = Set<AnyCancellable>()
     
+    var errors: CurrentValueSubject<String?, Never> = CurrentValueSubject<String?, Never>(nil)
+    
     private let log = NordicLog(category: "RunningService.ViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
     
     init(peripheral: Peripheral, runningService: CBService) {
@@ -44,9 +46,6 @@ final class RunningServiceViewModel: ObservableObject {
     deinit {
         log.debug(#function)
     }
-}
-
-extension RunningServiceViewModel: SupportedServiceViewModel {
     
     // MARK: description
     

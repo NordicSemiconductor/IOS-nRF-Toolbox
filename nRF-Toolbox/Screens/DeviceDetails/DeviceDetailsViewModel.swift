@@ -27,12 +27,15 @@ final class DeviceDetailsViewModel: ObservableObject {
     // MARK: Private Properties
     
     private var discoveredServices: [CBService] = []
-    private var cancelable = Set<AnyCancellable>()
+    private var cancellable = Set<AnyCancellable>()
     
     let centralManager: CentralManager
     let peripheral: Peripheral
     
     var id: UUID { peripheral.peripheral.identifier }
+    
+    @Published
+    var errors: String?
     
     private(set) var supportedServiceViewModels: [any SupportedServiceViewModel] = []
     
@@ -174,6 +177,11 @@ extension DeviceDetailsViewModel {
             
             for supportedServiceViewModel in self.supportedServiceViewModels {
                 await supportedServiceViewModel.onConnect()
+                
+                supportedServiceViewModel.errors
+                    .sink { error in
+                        self.errors = error
+                    }.store(in: &cancellable)
             }
         } catch {
             log.error("\(#function) Error: \(error.localizedDescription)")
@@ -189,7 +197,7 @@ extension DeviceDetailsViewModel {
                     $0.onDisconnect()
                 }
             }
-            .store(in: &cancelable)
+            .store(in: &cancellable)
     }
 }
 

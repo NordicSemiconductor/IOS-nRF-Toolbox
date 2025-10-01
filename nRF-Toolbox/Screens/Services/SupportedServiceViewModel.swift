@@ -8,10 +8,18 @@
 
 import Foundation
 import SwiftUI
+import Combine
+
+struct ErrorsHolder {
+    var minorErrors: [LocalizedError] = []
+    var criticalErrors: [LocalizedError] = []
+}
 
 // MARK: - SupportedServiceViewModel
 
 protocol SupportedServiceViewModel {
+    
+    var errors: CurrentValueSubject<ErrorsHolder, Never> { get }
     
     var description: String { get }
     

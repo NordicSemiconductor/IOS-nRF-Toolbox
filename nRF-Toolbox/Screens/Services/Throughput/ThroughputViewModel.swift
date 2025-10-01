@@ -15,7 +15,7 @@ import iOS_Common_Libraries
 
 // MARK: - ThroughputViewModel
 
-final class ThroughputViewModel: ObservableObject {
+final class ThroughputViewModel: SupportedServiceViewModel, ObservableObject {
     
     // MARK: Mode
     
@@ -55,6 +55,8 @@ final class ThroughputViewModel: ObservableObject {
     private var progressSubject: PassthroughSubject<Double, Never>
     private var cancellables: Set<AnyCancellable>
     private let log = NordicLog(category: "ThroughputViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
+    
+    var errors: CurrentValueSubject<String?, Never> = CurrentValueSubject<String?, Never>(nil)
     
     // MARK: init
     
@@ -247,11 +249,6 @@ final class ThroughputViewModel: ObservableObject {
         testDuration = measurement.converted(to: .seconds)
         inProgress = false
     }
-}
-
-// MARK: - SupportedServiceViewModel
-
-extension ThroughputViewModel: SupportedServiceViewModel {
     
     // MARK: description
     

@@ -13,9 +13,14 @@ import iOS_BLE_Library_Mock
 import iOS_Bluetooth_Numbers_Database
 import iOS_Common_Libraries
 
+private extension CBUUID {
+    static let cscMeasurement = CBUUID(characteristic: .cscMeasurement)
+    static let cscFeature = CBUUID(characteristic: .cscFeature)
+}
+
 // MARK: - CyclingServiceViewModel
 
-final class CyclingServiceViewModel: ObservableObject {
+final class CyclingServiceViewModel: SupportedServiceViewModel, ObservableObject {
     
     // MARK: Properties
     
@@ -41,6 +46,8 @@ final class CyclingServiceViewModel: ObservableObject {
     
     private var cancellables: Set<AnyCancellable>
     private let log = NordicLog(category: "CyclingServiceViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
+    
+    var errors: CurrentValueSubject<String?, Never> = CurrentValueSubject<String?, Never>(nil)
     
     // MARK: init
     
@@ -149,16 +156,6 @@ final class CyclingServiceViewModel: ObservableObject {
         let crankData = newData.crankData ?? data.crankData
         self.data = CyclingData(wheelData: wheelData ?? .zero, crankData: crankData ?? .zero)
     }
-}
-
-private extension CBUUID {
-    static let cscMeasurement = CBUUID(characteristic: .cscMeasurement)
-    static let cscFeature = CBUUID(characteristic: .cscFeature)
-}
-
-// MARK: - SupportedServiceViewModel
-
-extension CyclingServiceViewModel: SupportedServiceViewModel {
     
     // MARK: description
     

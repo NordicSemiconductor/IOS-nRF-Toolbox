@@ -13,8 +13,7 @@ import iOS_Bluetooth_Numbers_Database
 import iOS_Common_Libraries
 
 // MARK: - HeartRateViewModel
-@MainActor
-final class HeartRateViewModel: ObservableObject {
+final class HeartRateViewModel: @MainActor SupportedServiceViewModel, ObservableObject {
     
     private let peripheral: Peripheral
     private let heartRateService: CBService
@@ -37,6 +36,8 @@ final class HeartRateViewModel: ObservableObject {
     
     @Published fileprivate(set) var lowest: Int = 40
     @Published fileprivate(set) var highest: Int = 200
+    
+    var errors: CurrentValueSubject<String?, Never> = CurrentValueSubject<String?, Never>(nil)
     
     fileprivate var internalAlertError: AlertError? {
         didSet {
@@ -63,11 +64,6 @@ final class HeartRateViewModel: ObservableObject {
     deinit {
         log.debug(#function)
     }
-}
-
-// MARK: - SupportedServiceViewModel
-
-extension HeartRateViewModel: SupportedServiceViewModel {
     
     // MARK: description
     
@@ -245,6 +241,7 @@ extension HeartRateViewModel {
 
 extension HeartRateViewModel {
     
+    @MainActor
     func resetMeasurement() {
         Task {
             if let heartRateControlPoint {
@@ -259,6 +256,7 @@ extension HeartRateViewModel {
                     log.debug("Reset energy counter - end")
                 } catch {
                     caloriesResetState = .available
+                    self.errors.value = "New error"
                     log.debug("Reset energy counter - error: \(error)")
                 }
             } else {
