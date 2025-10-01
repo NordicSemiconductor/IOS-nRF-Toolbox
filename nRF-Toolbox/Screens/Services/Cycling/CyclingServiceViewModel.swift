@@ -47,7 +47,7 @@ final class CyclingServiceViewModel: SupportedServiceViewModel, ObservableObject
     private var cancellables: Set<AnyCancellable>
     private let log = NordicLog(category: "CyclingServiceViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
     
-    var errors: CurrentValueSubject<String?, Never> = CurrentValueSubject<String?, Never>(nil)
+    var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
     // MARK: init
     

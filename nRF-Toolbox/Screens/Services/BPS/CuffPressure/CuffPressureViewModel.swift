@@ -33,7 +33,7 @@ final class CuffPressureViewModel: SupportedServiceViewModel, ObservableObject {
     
     @Published private(set) var currentValue: CuffPressureMeasurement?
     
-    var errors: CurrentValueSubject<String?, Never> = CurrentValueSubject<String?, Never>(nil)
+    var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
     // MARK: init
     

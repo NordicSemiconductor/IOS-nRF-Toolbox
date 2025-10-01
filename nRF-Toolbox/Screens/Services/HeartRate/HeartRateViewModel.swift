@@ -37,7 +37,7 @@ final class HeartRateViewModel: @MainActor SupportedServiceViewModel, Observable
     @Published fileprivate(set) var lowest: Int = 40
     @Published fileprivate(set) var highest: Int = 200
     
-    var errors: CurrentValueSubject<String?, Never> = CurrentValueSubject<String?, Never>(nil)
+    var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
     fileprivate var internalAlertError: AlertError? {
         didSet {
@@ -247,6 +247,7 @@ extension HeartRateViewModel {
             if let heartRateControlPoint {
                 log.debug("Reset energy counter - start")
                 do {
+                    self.errors.value.minorError = nil
                     caloriesResetState = .inProgress
                     let command: [UInt8] = [0x01]  // Reset calories counter
                     let data = Data(command)
@@ -256,7 +257,7 @@ extension HeartRateViewModel {
                     log.debug("Reset energy counter - end")
                 } catch {
                     caloriesResetState = .available
-                    self.errors.value = "New error"
+                    self.errors.value.minorError = AlertError.unknown
                     log.debug("Reset energy counter - error: \(error)")
                 }
             } else {

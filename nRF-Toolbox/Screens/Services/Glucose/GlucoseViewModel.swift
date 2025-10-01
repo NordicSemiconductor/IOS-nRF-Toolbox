@@ -38,7 +38,7 @@ final class GlucoseViewModel: @MainActor SupportedServiceViewModel, ObservableOb
     @Published private(set) var minY = 0.6
     @Published private(set) var maxY = 0.0
     
-    var errors: CurrentValueSubject<String?, Never> = CurrentValueSubject<String?, Never>(nil)
+    var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
     // MARK: init
     

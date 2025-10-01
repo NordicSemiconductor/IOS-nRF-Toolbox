@@ -11,8 +11,8 @@ import SwiftUI
 import Combine
 
 struct ErrorsHolder {
-    var minorErrors: [LocalizedError] = []
-    var criticalErrors: [LocalizedError] = []
+    var minorError: LocalizedError?
+    var criticalError: LocalizedError?
 }
 
 // MARK: - SupportedServiceViewModel

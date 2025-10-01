@@ -35,7 +35,7 @@ final class DeviceDetailsViewModel: ObservableObject {
     var id: UUID { peripheral.peripheral.identifier }
     
     @Published
-    var errors: String?
+    var errors: ErrorsHolder?
     
     private(set) var supportedServiceViewModels: [any SupportedServiceViewModel] = []
     

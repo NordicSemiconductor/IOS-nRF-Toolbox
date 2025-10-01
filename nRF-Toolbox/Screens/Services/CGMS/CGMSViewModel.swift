@@ -41,7 +41,7 @@ final class CGMSViewModel: SupportedServiceViewModel, ObservableObject {
     @Published private(set) var maxY = 100.0
     @Published var scrollPosition = -1
     
-    var errors: CurrentValueSubject<String?, Never> = CurrentValueSubject<String?, Never>(nil)
+    var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
     // MARK: init
     

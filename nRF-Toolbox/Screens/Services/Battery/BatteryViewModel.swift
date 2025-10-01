@@ -31,7 +31,7 @@ final class BatteryViewModel: SupportedServiceViewModel, ObservableObject {
     private static let batteryLevelDataLength = 120
     private static let batteryLevelRange: ClosedRange<UInt> = 0...100
     
-    var errors: CurrentValueSubject<String?, Never> = CurrentValueSubject<String?, Never>(nil)
+    var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
     // MARK: init
     

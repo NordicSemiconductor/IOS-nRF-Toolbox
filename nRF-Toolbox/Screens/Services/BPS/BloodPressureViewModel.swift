@@ -34,7 +34,7 @@ final class BloodPressureViewModel: @MainActor SupportedServiceViewModel, Observ
     @Published private(set) var currentValue: BloodPressureMeasurement?
     @Published private(set) var features = BitField<BloodPressureMeasurement.Feature>()
     
-    var errors: CurrentValueSubject<String?, Never> = CurrentValueSubject<String?, Never>(nil)
+    var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
     // MARK: init
     

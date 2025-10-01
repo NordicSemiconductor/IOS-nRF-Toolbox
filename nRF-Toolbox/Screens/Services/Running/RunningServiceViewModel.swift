@@ -32,7 +32,7 @@ final class RunningServiceViewModel: SupportedServiceViewModel, ObservableObject
     
     private var cancelable = Set<AnyCancellable>()
     
-    var errors: CurrentValueSubject<String?, Never> = CurrentValueSubject<String?, Never>(nil)
+    var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
     private let log = NordicLog(category: "RunningService.ViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
     

@@ -38,7 +38,7 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
     @Published var editCommandIndex: Int = 0
     @Published var showEditCommandSheet: Bool = false
     
-    var errors: CurrentValueSubject<String?, Never> = CurrentValueSubject<String?, Never>(nil)
+    var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
     // MARK: init
     
