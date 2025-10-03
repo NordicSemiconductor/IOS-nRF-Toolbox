@@ -14,6 +14,10 @@ import iOS_Common_Libraries
     
 public struct RSCSMeasurement {
     
+    // MARK: Constants
+    
+    public static let MinSize = MemoryLayout<UInt32>.size
+    
     // MARK: Properties
     
     public var flags: BitField<RSCSFeature>
@@ -45,6 +49,15 @@ public struct RSCSMeasurement {
     }
 
     public init(from data: Data) {
+        guard data.count >= Self.MinSize else {
+            self.instantaneousSpeed = Measurement<UnitSpeed>(value: Double.nan, unit: .metersPerSecond)
+            self.instantaneousCadence = 0
+            self.flags = BitField<RSCSFeature>(0)
+            self.instantaneousStrideLength = nil
+            self.totalDistance = nil
+            return
+        }
+        
         let flagsValue = data.littleEndianBytes(as: UInt8.self)
         flags = BitField<RSCSFeature>(RegisterValue(flagsValue))
 
