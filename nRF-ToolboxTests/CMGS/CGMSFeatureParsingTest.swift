@@ -10,7 +10,7 @@ import Testing
 import Foundation
 @testable import nRF_Toolbox
 
-struct CGMSFeatureParsingTest {
+class CGMSFeatureParsingTest {
     
     @Test("Valid input with E2E CRC supported and non-matching CRC")
     func testValidInputWithE2ECRCSupportedAndNonMatchingCRC() {

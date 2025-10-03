@@ -29,7 +29,7 @@ struct GlucoseAllRecordsChartView: View {
             HStack {
                 DotView(.nordicRed)
                 
-                Text("Latest Value: \(viewModel.allRecords.last?.measurement.formatted() ?? "N/A")")
+                Text("Latest Value: \(viewModel.allRecords.last?.measurement?.formatted() ?? "N/A")")
                     .foregroundStyle(.secondary)
             }
             .padding(.top, -4)
@@ -38,13 +38,13 @@ struct GlucoseAllRecordsChartView: View {
                 ForEach(viewModel.allRecords, id: \.sequenceNumber) { value in
                     LineMark(
                         x: .value("Sequence Number", value.sequenceNumber),
-                        y: .value("Glucose Measurement", value.measurement.value)
+                        y: .value("Glucose Measurement", value.measurement?.value ?? 0.0)
                     )
                     .foregroundStyle(Color.nordicRed)
                     
                     PointMark(
                         x: .value("Sequence Number", value.sequenceNumber),
-                        y: .value("Glucose Measurement", value.measurement.value)
+                        y: .value("Glucose Measurement", value.measurement?.value ?? 0.0)
                     )
                     .foregroundStyle(Color.nordicRed)
                 }

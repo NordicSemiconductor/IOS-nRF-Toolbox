@@ -49,7 +49,7 @@ final class GlucoseViewModel: @MainActor SupportedServiceViewModel, ObservableOb
         log.debug(#function)
         
         $allRecords.sink { records in
-            let values = records.map { $0.measurement.value }
+            let values = records.map { $0.measurement?.value ?? 0.0 }
 
             let minY = (values.min() ?? 0.2) - 0.2
             let maxY = (values.max() ?? 0.2) + 0.2
@@ -241,7 +241,7 @@ private extension GlucoseViewModel {
 extension GlucoseMeasurement: @retroactive CustomStringConvertible {
     
     public var description: String {
-        return String(format: "%.2f \(measurement.unit.symbol), Seq.: \(sequenceNumber), Date: \(toStringDate()), Sensor: \(sensorString()), Location: \(locationString()), Status: \(statusString())", measurement.value)
+        return String(format: "%.2f \(measurement?.unit.symbol ?? "NaN"), Seq.: \(sequenceNumber), Date: \(toStringDate()), Sensor: \(sensorString()), Location: \(locationString()), Status: \(statusString())", measurement?.value ?? "NaN")
     }
 }
 

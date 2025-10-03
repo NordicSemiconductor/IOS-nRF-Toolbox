@@ -57,6 +57,9 @@ struct BloodPressureMeasurement {
         }() : nil
         
         pulseRate = flagsRegister.contains(.pulseRate) ? {
+            defer {
+                offset += SFloatReserved.byteSize
+            }
             let pulseValue = Float(asSFloat: data.subdata(in: offset..<offset + SFloatReserved.byteSize))
             return Int(pulseValue)
         }() : nil
