@@ -38,7 +38,8 @@ public struct RSCSMeasurement {
     
     public init(flags: BitField<RSCSFeature>, instantaneousSpeed: Double, instantaneousCadence: Int, instantaneousStrideLength: Int?, totalDistance: Double?) {
         self.flags = flags
-        self.instantaneousSpeed = Measurement<UnitSpeed>(value: instantaneousSpeed, unit: .metersPerSecond)
+        let speedInMetersPerSecond = Double(instantaneousSpeed) / 256.0
+        self.instantaneousSpeed = Measurement<UnitSpeed>(value: speedInMetersPerSecond, unit: .metersPerSecond)
         self.instantaneousCadence = instantaneousCadence
         if let instantaneousStrideLength {
             self.instantaneousStrideLength = Measurement<UnitLength>(value: Double(instantaneousStrideLength), unit: .centimeters)
