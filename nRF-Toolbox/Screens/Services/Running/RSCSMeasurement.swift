@@ -28,10 +28,10 @@ public struct RSCSMeasurement {
     /// Instantaneous Cadence. 1 unit = 1 stride/minute
     public var instantaneousCadence: Int
 
-    /// Instantaneous Stride Length. 100 units = 1 meter
-    public var instantaneousStrideLength: Int?
+    /// Instantaneous Stride Length. 1 unit = 1 centimiter
+    public var instantaneousStrideLength: Measurement<UnitLength>?
 
-    /// Total Distance. 1 unit = 1 meter
+    /// Total Distance. 1 unit = 1 decimiter
     public var totalDistance: Measurement<UnitLength>?
     
     // MARK: init
@@ -40,9 +40,13 @@ public struct RSCSMeasurement {
         self.flags = flags
         self.instantaneousSpeed = Measurement<UnitSpeed>(value: instantaneousSpeed, unit: .metersPerSecond)
         self.instantaneousCadence = instantaneousCadence
-        self.instantaneousStrideLength = instantaneousStrideLength
+        if let instantaneousStrideLength {
+            self.instantaneousStrideLength = Measurement<UnitLength>(value: Double(instantaneousStrideLength), unit: .centimeters)
+        } else {
+            self.instantaneousStrideLength = nil
+        }
         if let totalDistance {
-            self.totalDistance = Measurement<UnitLength>(value: totalDistance, unit: .meters)
+            self.totalDistance = Measurement<UnitLength>(value: totalDistance, unit: .decimeters)
         } else {
             self.totalDistance = nil
         }
@@ -72,7 +76,8 @@ public struct RSCSMeasurement {
         offset += MemoryLayout<UInt8>.size
 
         if flags.contains(.instantaneousStrideLengthMeasurement) {
-            instantaneousStrideLength = data.littleEndianBytes(atOffset: offset, as: UInt16.self)
+            let strideLength = data.littleEndianBytes(atOffset: offset, as: UInt16.self)
+            instantaneousStrideLength = Measurement<UnitLength>(value: Double(strideLength), unit: .centimeters)
             offset += MemoryLayout<UInt16>.size
         } else {
             instantaneousStrideLength = nil
@@ -81,7 +86,7 @@ public struct RSCSMeasurement {
         if flags.contains(.totalDistanceMeasurement) {
             let distanceUnits = data.littleEndianBytes(atOffset: offset, as: UInt32.self)
             // 1 distance unit == 1 meter.
-            totalDistance = Measurement<UnitLength>(value: Double(distanceUnits), unit: .meters)
+            totalDistance = Measurement<UnitLength>(value: Double(distanceUnits), unit: .decimeters)
             offset += MemoryLayout<UInt32>.size
         } else {
             totalDistance = nil
@@ -100,7 +105,7 @@ public struct RSCSMeasurement {
         data = data.appendedValue(UInt8(instantaneousCadence))
         
         if flags.contains(.instantaneousStrideLengthMeasurement) {
-            data = data.appendedValue(UInt16(instantaneousStrideLength!))
+            data = data.appendedValue(UInt16(instantaneousStrideLength!.value))
         }
 
         if flags.contains(.totalDistanceMeasurement), let totalDistance {

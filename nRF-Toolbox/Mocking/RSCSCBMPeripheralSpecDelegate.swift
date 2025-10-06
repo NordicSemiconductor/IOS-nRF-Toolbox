@@ -193,7 +193,8 @@ extension RSCSMeasurement {
         measurement.instantaneousCadence = Int.random(in: 166 ... 174)
         
         if flags.contains(.instantaneousStrideLengthMeasurement) {
-            measurement.instantaneousStrideLength = Int.random(in: 75 ... 85)
+            let value = Int.random(in: 75 ... 85)
+            measurement.instantaneousStrideLength = Measurement<UnitLength>(value: Double(value), unit: .centimeters)
         }
         
         if flags.contains(.totalDistanceMeasurement), let distanceValue = measurement.totalDistance?.value {

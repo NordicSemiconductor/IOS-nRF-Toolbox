@@ -11,6 +11,43 @@ import Foundation
 import iOS_Common_Libraries
 @testable import nRF_Toolbox
 
+/**
+ ## 🎌 Flags Byte (bit-wise breakdown):
+
+ Each bit in the `Flags` (first byte) determines the format and presence of subsequent fields.
+
+ | Bit | Meaning |
+ |-----|---------|
+ | 0   | If stride length data is present.
+ | 1   | If total distance data is present.
+ | 1   | (Optional) Walking - 0 or running - 1.
+ | 2–7 | Reserved (unused)
+ 
+ ## 🏃‍♂️ Instantaneous Speed
+
+ - UInt16 for instantaneous speed in 1/256 of m/s.
+ 
+ ## ⏱️ Instantaneous Cadence
+
+ - UInt8 for instantaneous cadence in step/second.
+ 
+ ## 🦶 (Optional) Stride Length
+
+ - UInt16 for the stride length in centimiters.
+ 
+ ## 📏 (Optional) Total Distance
+
+ - UInt32 for the total distance since the start of measurement in decimiters.
+ 
+ ## 📌 Notes
+
+ - All multibyte values are **Little Endian**.
+ - Walking or running flag field is present only if feature is supported. This can be checked in another place (characteristics).
+ - Usual interval between measurement's notifications is 1s.
+ - Total distance is UInt32 and can store 429,496.7296 km. Assuming produc lifetime 5 years and top runners may reach 10,000km in that time then it should be more than enough.
+ - Pay attention to units as those are tricky.
+ 
+*/
 class RSCSParsingTest {
     
     @Test("Test parse with all fields present.")
@@ -31,8 +68,8 @@ class RSCSParsingTest {
         let data = Data(byteArray)
         let result = RSCSMeasurement(from: data)
         
-        #expect(result.totalDistance == Measurement(value: 4096, unit: .meters))
-        #expect(result.instantaneousStrideLength == 800)
+        #expect(result.totalDistance == Measurement(value: 4096, unit: .decimeters))
+        #expect(result.instantaneousStrideLength == Measurement(value: 800, unit: .centimeters))
         #expect(result.instantaneousCadence == 80)
         #expect(result.instantaneousSpeed == Measurement(value: 2.5, unit: .metersPerSecond))
     }

@@ -57,7 +57,7 @@ final class RunningServiceViewModel: SupportedServiceViewModel, ObservableObject
     
     var attachedView: any View {
         return RunningServiceView()
-            .environmentObject(self)
+            .environmentObject(self.environment)
     }
     
     // MARK: onConnect()
@@ -176,7 +176,7 @@ private extension RunningServiceViewModel {
                 self.environment.instantaneousCadence = Int(measurement.instantaneousCadence)
                 
                 if measurement.flags.contains(.instantaneousStrideLengthMeasurement) {
-                    self.environment.instantaneousStrideLength = Measurement(value: Double(measurement.instantaneousStrideLength!), unit: .centimeters)
+                    self.environment.instantaneousStrideLength = measurement.instantaneousStrideLength
                 }
                 
                 if measurement.flags.contains(.totalDistanceMeasurement) {
