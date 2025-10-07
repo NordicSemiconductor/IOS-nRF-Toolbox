@@ -10,6 +10,75 @@ import Testing
 import Foundation
 @testable import nRF_Toolbox
 
+/**
+ ## 🎌 Flags Byte (bit-wise breakdown):
+
+ Each bit in the `Flags` (first byte) determines the format and presence of subsequent fields.
+
+ | Bit | Meaning |
+ |-----|---------|
+ | 0   | Unit flag: 0 - mmHg, 1 - kPa
+ | 1   | If time stamp present.
+ | 2   | If pulse rating present.
+ | 3   | If user ID present.
+ | 4   | If measurement status present.
+ | 5–7 | Reserved (unused)
+ 
+ ## 🩺 Systolic Pressure
+
+ - SFLOAT (2 bytes).
+ - Unit depends on flag field and can be mmHg or kPa.
+ - Reserved value 0x07FF for errors.
+ 
+ ## 🩸 Diastolic Pressure
+
+ - SFLOAT (2 bytes).
+ - Unit depends on flag field and can be mmHg or kPa.
+ - Reserved value 0x07FF for errors.
+ 
+ ## 🫀 Mean Arterial Pressure
+
+ - SFLOAT (2 bytes).
+ - Unit depends on flag field and can be mmHg or kPa.
+ - Reserved value 0x07FF for errors.
+ 
+ ## 🕒 (Optional) Timestamp
+
+ - 7 bytes in format yyyy:mm:dd hh:mm:ss
+ - Mandatory if time stamp feature is supported.
+ - 0 should not be used for month and day, but can be used for year if a device doesn't support it.
+ 
+ ## 💓 (Optional) Pulse rate
+
+ - SFLOAT (2 bytes).
+ - In beats per minute.
+ - Reserved value 0x07FF for errors.
+ 
+ ## 👤 (Optional) User ID
+
+ - UInt8 to identify user for a case when a sensor can be shared between multiple users.
+ - Possible values: 0x00–0xFE for identified users and reserved value 0xFF for unknown user.
+ 
+ ## 🧾 (Optional) Measurement status
+
+ - 2 bytes for a status.
+ - 0 values in status means that things are ok.
+
+ | Bit | Meaning |
+ |-------|---------|
+ | 0     | 0 if body haven't moved during measurement.
+ | 1     | 0 if cuff fit properly.
+ | 2     | 0 if no irregular pulse detected.
+ | 3-4  | 00 - pulse rate withing range, 01 - above upper limit, 10 - below lower limit, 11 - reserved
+ | 5     | 0 if proper measurement position.
+ | 6–7 | Reserved (unused)
+ 
+ ## 📌 Notes
+
+ - All multibyte values are **Little Endian**.
+ - Some of pressure values may be not available in the record. Then special reserved value NaN will be sent.
+ 
+*/
 class BPSParsingTest {
     
     @Test("Test parsing all fields.")
@@ -33,7 +102,7 @@ class BPSParsingTest {
             0x00,   // Pulse Rate: 72.0 bpm
             0x01,   // User ID: 1
             0x06,
-            0x00    // Measurement Status: Irregular pulse detected
+            0x00    // Measurement Status: Irregular pulse detected and loose cuff
         ]
         
         let data = Data(byteArray)
@@ -59,6 +128,7 @@ class BPSParsingTest {
         #expect(result.pulseRate == 72)
         #expect(result.userID == 1)
         #expect(result.status?.contains(.irregularPulse) == true)
+        #expect(result.status?.contains(.cuffFitLoose) == true)
     }
     
     @Test("Test parsing mandatory fields.")

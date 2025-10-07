@@ -20,8 +20,8 @@ import iOS_Common_Libraries
  |-----|---------|
  | 0   | If stride length data is present.
  | 1   | If total distance data is present.
- | 1   | (Optional) Walking - 0 or running - 1.
- | 2–7 | Reserved (unused)
+ | 2   | (Optional) Walking - 0 or running - 1.
+ | 3–7 | Reserved (unused)
  
  ## 🏃‍♂️ Instantaneous Speed
 
