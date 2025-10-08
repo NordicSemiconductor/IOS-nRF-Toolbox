@@ -46,23 +46,102 @@ struct CGMSMeasurement {
     // MARK: Properties
     
     let measurement: Measurement<UnitConcentrationMass>
-    let sequenceNumber: Int
-    private let date: Date
+    let timeOffset: Int
+    let date: Date
+    
+    let sensorStatus: BitField<CGMSSensorStatusOctet>?
+    let calTempStatus: BitField<CGMSCalTempOctet>?
+    let warningStatus: BitField<CGMSWarningOctet>?
+    
+    let trend: Measurement<UnitGlucoseTrend>?
+    let quality: Float?
+    let crc: UInt16?
+    
+    let size: Int
+    let measuredSize: Int
+    
+    let calculatedCrc: UInt16?
 
     // MARK: init
     
     init(data: Data, sessionStartTime: Date) throws {
-        guard data.count >= MemoryLayout<UInt16>.size * 2 else {
+        guard data.count >= MemoryLayout<UInt16>.size * 3 else {
             throw Data.DataError.insufficientData
         }
         
-        let offset = MemoryLayout<UInt16>.size
+        var offset = 0
+        
+        self.size = data.littleEndianBytes(atOffset: offset, as: UInt8.self)
+        offset += MemoryLayout<UInt8>.size
+        
+        let flags = data.littleEndianBytes(atOffset: offset, as: UInt8.self)
+        let isTrendDataPresent = flags & 1 > 0
+        let isQualityDataPresent = flags & 2 > 0
+        let isWarningOctetPresent = flags & 32 > 0
+        let isCalTempOctetPresent = flags & 64 > 0
+        let isStatusOctetPresent = flags & 128 > 0
+        offset += MemoryLayout<UInt8>.size
+
         let sFloatBytes = data.subdata(in: offset..<offset + SFloatReserved.byteSize)
         let value = Float(asSFloat: sFloatBytes)
         measurement = Measurement<UnitConcentrationMass>(value: Double(value), unit: .milligramsPerDeciliter)
-        let unsignedNumber: UInt16 = try data.read(fromOffset: MemoryLayout<UInt16>.size * 2)
-        sequenceNumber = Int(unsignedNumber)
-        date = sessionStartTime.addingTimeInterval(TimeInterval(sequenceNumber * 60))
+        offset += SFloatReserved.byteSize
+        
+        timeOffset = data.littleEndianBytes(atOffset: offset, as: UInt16.self)
+        date = sessionStartTime.addingTimeInterval(TimeInterval(timeOffset * 60))
+        offset += MemoryLayout<UInt16>.size
+        
+        if isStatusOctetPresent {
+            let byte = data.littleEndianBytes(atOffset: offset, as: UInt8.self)
+            self.sensorStatus = BitField(RegisterValue(byte))
+            offset += MemoryLayout<UInt8>.size
+        } else {
+            self.sensorStatus = nil
+        }
+        
+        if isCalTempOctetPresent {
+            let byte = data.littleEndianBytes(atOffset: offset, as: UInt8.self)
+            self.calTempStatus = BitField(RegisterValue(byte))
+            offset += MemoryLayout<UInt8>.size
+        } else {
+            self.calTempStatus = nil
+        }
+        
+        if isWarningOctetPresent {
+            let byte = data.littleEndianBytes(atOffset: offset, as: UInt8.self)
+            self.warningStatus = BitField(RegisterValue(byte))
+            offset += MemoryLayout<UInt8>.size
+        } else {
+            self.warningStatus = nil
+        }
+        
+        if isTrendDataPresent {
+            let sFloatBytes = data.subdata(in: offset..<offset + SFloatReserved.byteSize)
+            let value = Float(asSFloat: sFloatBytes)
+            self.trend = Measurement<UnitGlucoseTrend>(value: Double(value), unit: .milligramsPerDecilitrePerMinute)
+            offset += SFloatReserved.byteSize
+        } else {
+            self.trend = nil
+        }
+        
+        if isQualityDataPresent {
+            let sFloatBytes = data.subdata(in: offset..<offset + SFloatReserved.byteSize)
+            self.quality = Float(asSFloat: sFloatBytes)
+            offset += SFloatReserved.byteSize
+        } else {
+            self.quality = nil
+        }
+
+        if offset + MemoryLayout<UInt16>.size <= size {
+            self.crc = data.littleEndianBytesUInt16(atOffset: offset)
+            self.calculatedCrc = CRC16.MCRF4XX(data: data, offset: 0, length: data.count-2)
+            offset += MemoryLayout<UInt16>.size
+        } else {
+            self.crc = nil
+            self.calculatedCrc = nil
+        }
+        
+        self.measuredSize = offset
     }
     
     // MARK: API

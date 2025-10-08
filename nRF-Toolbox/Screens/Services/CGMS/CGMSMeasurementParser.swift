@@ -19,14 +19,16 @@ class CGMSMeasurementParser {
         var offset = 0
         var subdata = data
         
+        let size = MemoryLayout<UInt16>.size
+        
         while (offset < data.count) {
             subdata = data.subdata(in: offset..<data.count)
             guard let parsedValue = try? CGMSMeasurement(data: subdata, sessionStartTime: sessionStartTime) else {
                 log.error("Unable to parse Measurement Data \(data.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
                 return result
             }
+            offset += parsedValue.measuredSize
             result.append(parsedValue)
-            offset += 3*MemoryLayout<UInt16>.size
         }
         
         return result

@@ -33,7 +33,7 @@ struct CGMSView: View {
             }
         case .first:
             if let firstRecord = viewModel.firstRecord {
-                GlucoseMeasurementView(sequenceNumber: firstRecord.sequenceNumber,
+                GlucoseMeasurementView(sequenceNumber: firstRecord.timeOffset,
                                        measurement: firstRecord.measurement,
                                        dateString: firstRecord.toStringDate())
             } else {
@@ -41,7 +41,7 @@ struct CGMSView: View {
             }
         case .last:
             if let lastRecord = viewModel.lastRecord {
-                GlucoseMeasurementView(sequenceNumber: lastRecord.sequenceNumber,
+                GlucoseMeasurementView(sequenceNumber: lastRecord.timeOffset,
                                        measurement: lastRecord.measurement,
                                        dateString: lastRecord.toStringDate())
             } else {

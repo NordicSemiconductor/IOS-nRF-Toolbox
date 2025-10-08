@@ -33,15 +33,15 @@ struct CGMSAllRecordsChartView: View {
             }
             
             Chart {
-                ForEach(viewModel.records, id: \.sequenceNumber) { value in
+                ForEach(viewModel.records, id: \.timeOffset) { value in
                     LineMark(
-                        x: .value("Sequence Number", value.sequenceNumber),
+                        x: .value("Sequence Number", value.timeOffset),
                         y: .value("Glucose Measurement", value.measurement.value)
                     )
                     .foregroundStyle(Color.nordicRed)
                     
                     PointMark(
-                         x: .value("Sequence Number", value.sequenceNumber),
+                         x: .value("Sequence Number", value.timeOffset),
                          y: .value("Glucose Measurement", value.measurement.value)
                     ).foregroundStyle(Color.nordicRed)
                 }

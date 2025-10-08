@@ -22,8 +22,8 @@ struct CGMSRecordList: View {
     var body: some View {
         List {
             Section {
-                ForEach(viewModel.records, id: \.sequenceNumber) { value in
-                    GlucoseMeasurementView(sequenceNumber: value.sequenceNumber,
+                ForEach(viewModel.records, id: \.timeOffset) { value in
+                    GlucoseMeasurementView(sequenceNumber: value.timeOffset,
                                            measurement: value.measurement,
                                            dateString: value.toStringDate())
                 }

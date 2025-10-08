@@ -66,6 +66,10 @@
 		A770FE6A2E7D69CA00357127 /* CGMFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = A770FE692E7D69C900357127 /* CGMFeatures.swift */; };
 		A770FE6C2E7D69FF00357127 /* CGMSFeatureParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A770FE6B2E7D69FE00357127 /* CGMSFeatureParser.swift */; };
 		A770FE6E2E7D6F2B00357127 /* CRC16.swift in Sources */ = {isa = PBXBuildFile; fileRef = A770FE6D2E7D6F2800357127 /* CRC16.swift */; };
+		A7CB671E2E967BFA007E1311 /* CGMSSensorStatusOctet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CB671D2E967BF5007E1311 /* CGMSSensorStatusOctet.swift */; };
+		A7CB67202E967C05007E1311 /* CGMSCalTempOctet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CB671F2E967C00007E1311 /* CGMSCalTempOctet.swift */; };
+		A7CB67222E967C0D007E1311 /* CGMSWarningOctet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CB67212E967C08007E1311 /* CGMSWarningOctet.swift */; };
+		A7CB67242E9680E3007E1311 /* UnitGlucoseTrend.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CB67232E9680E2007E1311 /* UnitGlucoseTrend.swift */; };
 		A7CF97B42E8BBE5500C1E1B3 /* CaloriesResetState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CF97B32E8BBE5400C1E1B3 /* CaloriesResetState.swift */; };
 		A7D2C8E52E7D414700C93C28 /* CGMSFeatureEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D2C8E42E7D414300C93C28 /* CGMSFeatureEnvelope.swift */; };
 		A7FA7A482E852D6500DA192B /* CGMSMeasurementParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FA7A472E852D6500DA192B /* CGMSMeasurementParser.swift */; };
@@ -230,6 +234,11 @@
 		A770FE692E7D69C900357127 /* CGMFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMFeatures.swift; sourceTree = "<group>"; };
 		A770FE6B2E7D69FE00357127 /* CGMSFeatureParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSFeatureParser.swift; sourceTree = "<group>"; };
 		A770FE6D2E7D6F2800357127 /* CRC16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRC16.swift; sourceTree = "<group>"; };
+		A7CB67182E964A7C007E1311 /* nRF-ToolboxTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "nRF-ToolboxTests.xctestplan"; sourceTree = "<group>"; };
+		A7CB671D2E967BF5007E1311 /* CGMSSensorStatusOctet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSSensorStatusOctet.swift; sourceTree = "<group>"; };
+		A7CB671F2E967C00007E1311 /* CGMSCalTempOctet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSCalTempOctet.swift; sourceTree = "<group>"; };
+		A7CB67212E967C08007E1311 /* CGMSWarningOctet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSWarningOctet.swift; sourceTree = "<group>"; };
+		A7CB67232E9680E2007E1311 /* UnitGlucoseTrend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitGlucoseTrend.swift; sourceTree = "<group>"; };
 		A7CF97B32E8BBE5400C1E1B3 /* CaloriesResetState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaloriesResetState.swift; sourceTree = "<group>"; };
 		A7D2C8E42E7D414300C93C28 /* CGMSFeatureEnvelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSFeatureEnvelope.swift; sourceTree = "<group>"; };
 		A7FA7A472E852D6500DA192B /* CGMSMeasurementParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSMeasurementParser.swift; sourceTree = "<group>"; };
@@ -653,6 +662,7 @@
 		5217F3D91859EE0000F2D5BB = {
 			isa = PBXGroup;
 			children = (
+				A7CB67182E964A7C007E1311 /* nRF-ToolboxTests.xctestplan */,
 				018873CD2A583C4E00253273 /* IOS-BLE-Library */,
 				017D105C2A580DCD00E38E5F /* IOS-Common-Libraries */,
 				017D102C2A5809E300E38E5F /* nRF-Toolbox */,
@@ -810,6 +820,10 @@
 		AAF272F22D9BF54D007B63D3 /* CGMS */ = {
 			isa = PBXGroup;
 			children = (
+				A7CB67232E9680E2007E1311 /* UnitGlucoseTrend.swift */,
+				A7CB67212E967C08007E1311 /* CGMSWarningOctet.swift */,
+				A7CB671F2E967C00007E1311 /* CGMSCalTempOctet.swift */,
+				A7CB671D2E967BF5007E1311 /* CGMSSensorStatusOctet.swift */,
 				A7FA7A472E852D6500DA192B /* CGMSMeasurementParser.swift */,
 				A770FE6D2E7D6F2800357127 /* CRC16.swift */,
 				A770FE6B2E7D69FE00357127 /* CGMSFeatureParser.swift */,
@@ -1040,6 +1054,7 @@
 				018873C72A583A9900253273 /* PeripheralScannerScreen.swift in Sources */,
 				013E5D962AE02A1700B9C475 /* RunningValuesGrid.swift in Sources */,
 				015AAE702B063D6200D79833 /* RootNavigationScreen.swift in Sources */,
+				A7CB67222E967C0D007E1311 /* CGMSWarningOctet.swift in Sources */,
 				AA2C37012D47D88800D41989 /* ThroughputViewModel.swift in Sources */,
 				0164A46B2AD550000093E501 /* RSSIChartView.swift in Sources */,
 				012C8EB52B0D31C400FFE4EC /* Logger+Ext.swift in Sources */,
@@ -1109,10 +1124,12 @@
 				AAE967382E38D4C800A7B93B /* RSCSSensorLocation.swift in Sources */,
 				015AAE712B063D6200D79833 /* RootNavigationViewModel.swift in Sources */,
 				0126B53F2A5EA8B70033BCC3 /* AttributeTable.swift in Sources */,
+				A7CB67202E967C05007E1311 /* CGMSCalTempOctet.swift in Sources */,
 				AADCFF222E0C3F5F00CD6DB6 /* CGMSAllRecordsChartView.swift in Sources */,
 				AA5AB3DB2D08649C005213D5 /* CyclingData.swift in Sources */,
 				017D102E2A5809E300E38E5F /* nRF_ToolboxApp.swift in Sources */,
 				AA102C472E1574DE0001BDC5 /* MeasurementStatus.swift in Sources */,
+				A7CB67242E9680E3007E1311 /* UnitGlucoseTrend.swift in Sources */,
 				0108E87B2AF140D800C8B096 /* ChartTimeData.swift in Sources */,
 				AA5AB3E12D0877F6005213D5 /* MeasurementFormatter+Ext.swift in Sources */,
 				A770FE6E2E7D6F2B00357127 /* CRC16.swift in Sources */,
@@ -1139,6 +1156,7 @@
 				AA102C492E1576B00001BDC5 /* MeasurementFlag.swift in Sources */,
 				AA047E112DF1B3A300DA401E /* BlinkyView.swift in Sources */,
 				0164A4762AD698650093E501 /* NumberDatabase+Ext.swift in Sources */,
+				A7CB671E2E967BFA007E1311 /* CGMSSensorStatusOctet.swift in Sources */,
 				AA7E77E52DF0915F0091447F /* SupportedServiceViewModel.swift in Sources */,
 				01FB19D02AE3DB0D006DAB9F /* SensorCalibrationScreen.swift in Sources */,
 			);

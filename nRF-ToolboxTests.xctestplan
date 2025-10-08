@@ -1,7 +1,7 @@
 {
   "configurations" : [
     {
-      "id" : "F70A9729-A472-47D5-BA19-DD44C65ECD96",
+      "id" : "17A6F3CE-2BAE-4841-8F02-6F72D0C1DBFC",
       "name" : "Test Scheme Action",
       "options" : {
 
@@ -9,14 +9,14 @@
     }
   ],
   "defaultOptions" : {
-
+    "performanceAntipatternCheckerEnabled" : true
   },
   "testTargets" : [
     {
       "parallelizable" : true,
       "target" : {
         "containerPath" : "container:nRF Toolbox.xcodeproj",
-        "identifier" : "017D103A2A5809E400E38E5F",
+        "identifier" : "A76A45232E7D638E00E0E19C",
         "name" : "nRF-ToolboxTests"
       }
     }
