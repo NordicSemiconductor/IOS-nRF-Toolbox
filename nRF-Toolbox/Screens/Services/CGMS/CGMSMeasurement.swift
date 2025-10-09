@@ -134,7 +134,7 @@ struct CGMSMeasurement {
 
         if offset + MemoryLayout<UInt16>.size <= size {
             self.crc = data.littleEndianBytesUInt16(atOffset: offset)
-            self.calculatedCrc = CRC16.MCRF4XX(data: data, offset: 0, length: data.count-2)
+            self.calculatedCrc = CRC16.mcrf4xx(data: data, offset: 0, length: offset)
             offset += MemoryLayout<UInt16>.size
         } else {
             self.crc = nil
@@ -151,6 +151,11 @@ struct CGMSMeasurement {
         dateFormatter.locale = Locale(identifier: "en_US")
         dateFormatter.setLocalizedDateFormatFromTemplate("E d MMM yyyy HH:mm:ss")
         return dateFormatter.string(from: date)
+    }
+    
+    func isCrcValid() -> Bool? {
+        guard let crc, let calculatedCrc else { return nil }
+        return crc == calculatedCrc
     }
 }
 

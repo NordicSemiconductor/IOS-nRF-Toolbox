@@ -110,6 +110,26 @@ class CGMSParsingTest {
     
     let sessionStart = Date(timeIntervalSince1970: 0)
     
+    @Test("Test crc.")
+    func testCRC() {
+        let byteArray: [UInt8] = [
+            0x3E,
+            0x01,
+            0x02,
+            0x03,
+            0x04,
+            0x05,
+            0x06,
+            0x07,
+            0x08,
+            0x09,
+        ]
+        let data = Data(byteArray)
+        
+        let crc = CRC16.mcrf4xx(data: byteArray, offset: 0, length: byteArray.count)
+        #expect(crc == 12033)
+    }
+    
     @Test("Test data with all valid fields.")
     func testDataWithAllValidFields() {
         let byteArray: [UInt8] = [
@@ -145,6 +165,8 @@ class CGMSParsingTest {
         #expect(result.warningStatus?.count == 2)
         #expect(result.trend == Measurement(value: 80, unit: .milligramsPerDecilitrePerMinute))
         #expect(result.quality == 96.0)
+        #expect(result.crc == 44268)
+        #expect(result.calculatedCrc == 44268)
     }
     
     @Test("Test data with only mandatory fields.")
@@ -187,25 +209,24 @@ class CGMSParsingTest {
         #expect(results.count == 0)
     }
     
-//    @Test("Test data with mismatched CRC.")
-//    func testDataWithMismatchedCrc() {
-//        let byteArray: [UInt8] = [
-//            0x08,  // Size: 8 bytes (6 base + 2 CRC)
-//            0x00,  // Flags: No optional fields present
-//            0x78,
-//            0x00,  // Glucose concentration: 120 mg/dL
-//            0x1E,
-//            0x00,  // Time offset: 30 minutes
-//            0x12,
-//            0x34   // CRC: Invalid placeholder
-//        ]
-//        let data = Data(byteArray)
-//        let results = CGMSMeasurementParser.parse(data: data, sessionStartTime: sessionStart)
-//        let result = results[0]
-//        
-//        #expect(results.count == 1)
-//        #expect(result.crc != nil)
-//        #expect(result.calculatedCrc != nil)
-//        #expect(result.crc == result.calculatedCrc)
-//    }
+    @Test("Test data with mismatched CRC.")
+    func testDataWithMismatchedCrc() {
+        let byteArray: [UInt8] = [
+            0x08,  // Size: 8 bytes (6 base + 2 CRC)
+            0x00,  // Flags: No optional fields present
+            0x78,
+            0x00,  // Glucose concentration: 120 mg/dL
+            0x1E,
+            0x00,  // Time offset: 30 minutes
+            0x12,
+            0x34   // CRC: Invalid placeholder
+        ]
+        let data = Data(byteArray)
+        let results = CGMSMeasurementParser.parse(data: data, sessionStartTime: sessionStart)
+        let result = results[0]
+        
+        #expect(results.count == 1)
+        #expect(result.calculatedCrc == 39220)
+        #expect(result.isCrcValid() == false)
+    }
 }
