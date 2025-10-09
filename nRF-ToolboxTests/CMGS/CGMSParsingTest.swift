@@ -194,6 +194,46 @@ class CGMSParsingTest {
         #expect(result.crc == nil)
     }
     
+    @Test("Test many records.")
+    func testManyRecords() {
+        let byteArray: [UInt8] = [
+            0x06,  // Size: 6 bytes (base packet size without any optional fields)
+            0x00,  // Flags: No optional fields present
+            0x78,
+            0x00,  // Glucose concentration: 120 mg/dL
+            0x1E,
+            0x00,  // Time offset: 30 minutes
+            0x06,  // Size: 6 bytes (base packet size without any optional fields)
+            0x00,  // Flags: No optional fields present
+            0x77,
+            0x00,  // Glucose concentration: 119 mg/dL
+            0x1D,
+            0x00,  // Time offset: 29 minutes
+        ]
+        let data = Data(byteArray)
+        let results = CGMSMeasurementParser.parse(data: data, sessionStartTime: sessionStart)
+        let result0 = results[0]
+        let result1 = results[1]
+        
+        #expect(results.count == 2)
+        #expect(result0.measurement == Measurement(value: Double(120.0), unit: .milligramsPerDeciliter))
+        #expect(result0.date == sessionStart.addingTimeInterval(30*60))
+        #expect(result0.sensorStatus == nil)
+        #expect(result0.calTempStatus == nil)
+        #expect(result0.warningStatus == nil)
+        #expect(result0.trend == nil)
+        #expect(result0.quality == nil)
+        #expect(result0.crc == nil)
+        #expect(result1.measurement == Measurement(value: Double(119.0), unit: .milligramsPerDeciliter))
+        #expect(result1.date == sessionStart.addingTimeInterval(29*60))
+        #expect(result1.sensorStatus == nil)
+        #expect(result1.calTempStatus == nil)
+        #expect(result1.warningStatus == nil)
+        #expect(result1.trend == nil)
+        #expect(result1.quality == nil)
+        #expect(result1.crc == nil)
+    }
+    
     @Test("Test data with incorrect size.")
     func testDataWithIncorrectSize() {
         let byteArray: [UInt8] = [
