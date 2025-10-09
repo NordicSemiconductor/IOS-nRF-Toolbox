@@ -11,6 +11,68 @@ import Foundation
 import iOS_Common_Libraries
 @testable import nRF_Toolbox
 
+/**
+ ## 🎌 Flags Byte (bit-wise breakdown):
+
+ UInt8, each bit in the `Flags` (first byte) determines the format and presence of subsequent fields.
+
+ | Bit  | Meaning |
+ |------|---------|
+ | 0    | If time offset present.
+ | 1    | If Glucose Concentration and Type-Sample Location present.
+ | 2    | Glucose unit: 0 - mg/dL, 1 - mmol/L.
+ | 3    | If sensor status annunciation present.
+ | 4    | If context information present.
+ | 5-7 | Reserved for future use.
+ 
+ ## 🔢 Sequence number
+
+ - UInt16 representing chronological order of items starting from 0.
+ 
+ ## 🕒 Base time
+
+ - 7 bytes in format yyyy:mm:dd hh:mm:ss
+ 
+ ## ⌛ (Optional) Time offset
+ 
+ - Int16 in minutes.
+ - Time difference to base time.
+ 
+ ## 🧪 (Optional) Glucose concentration
+ 
+ - SFLOAT 2 bytes. Depending
+ - Unit depends on a flag bit nr 2.
+ 
+ ## 🦶 (Optional) Type-Sample location
+ 
+ - UInt8 defining Type-Sample location.
+ - Most significant nibble - location, least significant nibble - type
+ 
+ ## ⚠️ (Optional) Sensor status
+ 
+ - 2 octets.
+ 
+ | Bit  | Meaning |
+ |------|---------|
+ | 0    | Device battery low.
+ | 1    | Sensor malfunction at the time of measurement.
+ | 2    | Sample size insufficient (not enough blood druing the measurement).
+ | 3    | Strip insertion error.
+ | 4    | Strip type incorrect.
+ | 5    | Sensor result too high.
+ | 6    | Sensor result too low.
+ | 7    | Sensor temperature too high.
+ | 8    | Sensor temperature too low.
+ | 9    | Sensor read interrupted, the strip was pulled too soon.
+ | 10  | General device fault.
+ | 11  | Time fault.
+ | 12-15 | Reserved for future use.
+ 
+ ## 📌 Notes
+
+ - All multibyte values are **Little Endian**.
+ 
+*/
 class GLSParsingTest {
     
     @Test("Test insufficient data")
@@ -96,11 +158,11 @@ class GLSParsingTest {
             0x2D,  // Second: 45
             0x00,
             0x00,  // Time Offset: 0 minutes
-            0x51,
-            0x00,
-            0x14,  // Glucose concentration (IEEE 11073 format) and type/sample location
-            0x06,
-            0x00,  // Sensor Status Annunciation
+            0x78,
+            0x00,  // Glucose concentration (IEEE 11073 format) and type/sample location
+            0x41,  // 4 - location, 1 - type
+            0x01,
+            0x00,  // Status - device battery low
         ]
         
         // TODO: Looks like the glucose value is missing.
@@ -123,9 +185,10 @@ class GLSParsingTest {
         #expect(hour == 10)
         #expect(minute == 30)
         #expect(second == 45)
-        #expect(result.measurement == Measurement(value: 81.0, unit: .millimolesPerLiter(withGramsPerMole: .bloodGramsPerMole)))
+        #expect(result.measurement == Measurement(value: 120.0, unit: .millimolesPerLiter(withGramsPerMole: .bloodGramsPerMole)))
         #expect(result.timeOffset == Measurement(value: 0, unit: .minutes))
-        #expect(result.sensorLocation == .finger)
-        #expect(result.sensorType == .venousPlasma)
+        #expect(result.sensorLocation == .controlSolution)
+        #expect(result.sensorType == .capillaryBlood)
+        #expect(result.status?.contains(.deviceBatteryLow) == true)
     }
 }

@@ -11,7 +11,7 @@ import Foundation
 @testable import nRF_Toolbox
 
 /**
- ## Size
+ ## 📏 Size
  
  - UInt8 the size of a packet.
  - The minimum size is 6 octects.
@@ -32,16 +32,16 @@ import Foundation
  | 6   | Sensor Status Annunciation field, Cal/Temp-Octet present
  | 7   | Sensor Status Annunciation field, Status-Octet present
  
- ## Glucose concentration
+ ## 🧪 Glucose concentration
 
  - SFLOAT (2 bytes).
  - Unit is milligram per decilite.
  
- ## Time offset
+ ## 🕒 Time offset
 
  - UInt16 number of minutes since start time.
  
- ## (Optional) Sensor Status Annunciation field, Status-Octet
+ ## ⚙️ (Optional) Sensor Status Annunciation field, Status-Octet
  
  - 1 octet, bit field.
  - This field tells about general status of the sensor.
@@ -56,7 +56,7 @@ import Foundation
  | 5    | General device fault has occurred in the sensor.
  | 6-7 | Reserved for Future Use.
  
- ## (Optional) Sensor Status Annunciation field, Cal/Temp-Octet
+ ## 🌡️ (Optional) Sensor Status Annunciation field, Cal/Temp-Octet
  
  - 1 octet, bit field.
  - This field tells about calibration status of the sensor and temperature which is important because it can influence glucose measurement.
@@ -71,7 +71,7 @@ import Foundation
  | 5    | Sensor temperature too low for valid test/result at time of measurement.
  | 6-7 | Reserved for Future Use.
  
- ## (Optional) Sensor Status Annunciation field, Warning-Octet
+ ## ⚠️ (Optional) Sensor Status Annunciation field, Warning-Octet
  
  - 1 octet, bit field.
  - This field informs about potential alerting situations.
@@ -87,15 +87,15 @@ import Foundation
  | 6   | Sensor result lower than the device can process.
  | 7   | Sensor result higher than the device can process.
  
- ## (Optional) CGM Trend information
+ ## 📉 (Optional) CGM Trend information
  
  - 2 bytes SFLOAT in mg per decilitre / minute.
  
- ## (Optional) CGM quality
+ ## 🔎 (Optional) CGM quality
  
  - 2 bytes SFLOAT in percentage.
  
- ## (Optional) E2E-CRC
+ ## 🔐 (Optional) E2E-CRC
  
  - Present if supported. The information can be obtained from Feature characteristic.
  - UInt16 w CRC code.
