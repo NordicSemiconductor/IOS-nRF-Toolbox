@@ -290,34 +290,37 @@ extension ConnectedDevicesViewModel {
     
     func startScanning() {
         log.debug(#function)
-        guard centralManager.centralManager.state == .poweredOn else { return }
-        centralManager.scanForPeripherals(withServices: nil)
-            .filter {
-                // Filter unconnectable devices
-                return $0.advertisementData.isConnectable == true
-            }
-            .map { result -> ConnectedDevicesViewModel.ScanResult in
-                ConnectedDevicesViewModel.ScanResult(
-                    name: result.advertisementData.localName ?? result.name,
-                    rssi: result.rssi.value,
-                    id: result.peripheral.identifier,
-                    services: result.advertisementData.serviceUUIDs?.compactMap { $0.uuidString } ?? []
-                )
-            }
-            .sink { completion in
-                if case .failure(let error) = completion {
-                    self.unexpectedDisconnectionMessage = error.localizedDescription
-//                    self.error = ReadableError(error)
+        Task {
+            guard (try? await centralManager.isPoweredOn()) != nil else { return }
+
+            centralManager.scanForPeripherals(withServices: nil)
+                .filter {
+                    // Filter unconnectable devices
+                    return $0.advertisementData.isConnectable == true
                 }
-            } receiveValue: { result in
-                if let i = self.devices.firstIndex(where: \.id, equals: result.id) {
-                    let existingDevice = self.devices[i]
-                    self.devices[i] = existingDevice.extend(using: result)
-                } else {
-                    self.devices.append(result)
+                .map { result -> ConnectedDevicesViewModel.ScanResult in
+                    ConnectedDevicesViewModel.ScanResult(
+                        name: result.advertisementData.localName ?? result.name,
+                        rssi: result.rssi.value,
+                        id: result.peripheral.identifier,
+                        services: result.advertisementData.serviceUUIDs?.compactMap { $0.uuidString } ?? []
+                    )
                 }
-            }
-            .store(in: &scannerCancellables)
+                .sink { completion in
+                    if case .failure(let error) = completion {
+                        self.unexpectedDisconnectionMessage = error.localizedDescription
+    //                    self.error = ReadableError(error)
+                    }
+                } receiveValue: { result in
+                    if let i = self.devices.firstIndex(where: \.id, equals: result.id) {
+                        let existingDevice = self.devices[i]
+                        self.devices[i] = existingDevice.extend(using: result)
+                    } else {
+                        self.devices.append(result)
+                    }
+                }
+                .store(in: &scannerCancellables)
+        }
     }
     
     // MARK: stopScanning()

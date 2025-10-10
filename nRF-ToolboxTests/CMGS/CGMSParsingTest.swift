@@ -124,7 +124,6 @@ class CGMSParsingTest {
             0x08,
             0x09,
         ]
-        let data = Data(byteArray)
         
         let crc = CRC16.mcrf4xx(data: byteArray, offset: 0, length: byteArray.count)
         #expect(crc == 12033)
