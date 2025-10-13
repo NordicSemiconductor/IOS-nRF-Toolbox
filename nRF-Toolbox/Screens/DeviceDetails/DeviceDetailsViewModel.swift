@@ -134,10 +134,28 @@ extension DeviceDetailsViewModel {
                 .firstValue
             let supportedServices = Service.supportedServices.compactMap { CBUUID(service: $0) }
             
+            var characteristics: [CBCharacteristic] = []
+            var table = AttributeTable()
+            for service in discoveredServices {
+                table.addService(service)
+
+                characteristics = try await peripheral.discoverCharacteristics(nil, for: service).timeout(10, scheduler: DispatchQueue.main).firstValue
+                for characteristic in characteristics {
+                    table.addCharacteristic(characteristic, to: service)
+                    
+                    let descriptors = try await peripheral.discoverDescriptors(for: characteristic).timeout(10, scheduler: DispatchQueue.main).firstValue
+                    for descriptor in descriptors {
+                        table.addDescriptor(descriptor, to: characteristic, in: service)
+                    }
+                }
+            }
+            
+            attributeTable = table
+            
             for service in discoveredServices where supportedServices.contains(service.uuid) {
                 switch service.uuid {
                 case .nordicBlinkyService:
-                    supportedServiceViewModels.append(BlinkyViewModel(peripheral: peripheral, blinkyService: service))
+                    supportedServiceViewModels.append(BlinkyViewModel(peripheral: peripheral, blinkyService: service, characteristics: characteristics))
                 case .runningSpeedCadence:
                     supportedServiceViewModels.append(RunningServiceViewModel(peripheral: peripheral, runningService: service))
                 case .cyclingSpeedCadence:
@@ -172,7 +190,6 @@ extension DeviceDetailsViewModel {
                 }
             }
             
-            attributeTable = try? await attributeTable()
             signalViewModel = SignalChartViewModel(peripheral: peripheral)
             
             for supportedServiceViewModel in self.supportedServiceViewModels {
@@ -198,29 +215,6 @@ extension DeviceDetailsViewModel {
                 }
             }
             .store(in: &cancellable)
-    }
-}
-
-// MARK: attributeTable()
-
-extension DeviceDetailsViewModel {
-    
-    func attributeTable() async throws -> AttributeTable {
-        var table = AttributeTable()
-        for service in discoveredServices {
-            table.addService(service)
-            
-            let characteristics = try await peripheral.discoverCharacteristics(nil, for: service).timeout(10, scheduler: DispatchQueue.main).firstValue
-            for characteristic in characteristics {
-                table.addCharacteristic(characteristic, to: service)
-                
-                let descriptors = try await peripheral.discoverDescriptors(for: characteristic).timeout(10, scheduler: DispatchQueue.main).firstValue
-                for descriptor in descriptors {
-                    table.addDescriptor(descriptor, to: characteristic, in: service)
-                }
-            }
-        }
-        return table
     }
 }
 

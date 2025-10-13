@@ -20,6 +20,7 @@ final class BlinkyViewModel: SupportedServiceViewModel, ObservableObject {
     // MARK: Private Properties
     
     private let service: CBService
+    private let characteristics: [CBCharacteristic]
     private let peripheral: Peripheral
     private var cancellables: Set<AnyCancellable>
     private let log = NordicLog(category: "BlinkyViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
@@ -33,10 +34,11 @@ final class BlinkyViewModel: SupportedServiceViewModel, ObservableObject {
     
     // MARK: init
     
-    init(peripheral: Peripheral, blinkyService: CBService) {
+    init(peripheral: Peripheral, blinkyService: CBService, characteristics: [CBCharacteristic]) {
         self.peripheral = peripheral
         self.service = blinkyService
         self.cancellables = Set<AnyCancellable>()
+        self.characteristics = characteristics
         log.debug(#function)
     }
     
@@ -60,15 +62,16 @@ final class BlinkyViewModel: SupportedServiceViewModel, ObservableObject {
         log.debug(#function)
         do {
             let characteristics: [Characteristic] = [.nordicsemiBlinkyLedState, .nordicsemiBlinkyButtonState]
-            let blinkyCharacteristics = try await peripheral.discoverCharacteristics(characteristics.map(\.uuid), for: service)
-                    .timeout(1, scheduler: DispatchQueue.main)
-                    .firstValue
+            let blinkyCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
+                characteristics.contains { $0.uuid == cbChar.uuid }
+            }
             
             for characteristic in blinkyCharacteristics where characteristic.uuid == Characteristic.nordicsemiBlinkyButtonState.uuid {
                 if let initialValue = try await peripheral.readValue(for: characteristic).firstValue {
                     log.debug("peripheral.readValue(characteristic): \(initialValue.hexEncodedString(options: [.prepend0x, .twoByteSpacing]))")
                     isButtonPressed = initialValue.littleEndianBytes(as: UInt8.self) > 0
                 }
+                
                 
                 let result = try await peripheral.setNotifyValue(true, for: characteristic).firstValue
                 log.debug("peripheral.setNotifyValue(true, for: .nordicsemiBlinkyButtonState): \(result)")

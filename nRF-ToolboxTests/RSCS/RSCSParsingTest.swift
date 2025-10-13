@@ -50,6 +50,30 @@ import iOS_Common_Libraries
 */
 class RSCSParsingTest {
     
+    @Test("Test mock generated values.")
+    func testMockGeneratedValues() {
+        let byteArray: [UInt8] = [
+            0x1f,
+            0xd8,
+            0x02,
+            0xa6,
+            0x4f,
+            0x00,
+            0x01,
+            0x00,
+            0x00,
+            0x00
+        ]
+        
+        let data = Data(byteArray)
+        let result = RSCSMeasurement(from: data)
+        
+        #expect(result.totalDistance == Measurement(value: 1.0, unit: .decimeters))
+        #expect(result.instantaneousStrideLength == Measurement(value: 79.0, unit: .centimeters))
+        #expect(result.instantaneousCadence == 166)
+        #expect(result.instantaneousSpeed == Measurement(value: 2.84375, unit: .metersPerSecond))
+    }
+    
     @Test("Test parse with all fields present.")
     func testParsingWithoutOptionalFields() {
         let byteArray: [UInt8] = [

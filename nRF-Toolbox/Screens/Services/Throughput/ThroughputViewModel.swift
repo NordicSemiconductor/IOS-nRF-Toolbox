@@ -63,7 +63,7 @@ final class ThroughputViewModel: SupportedServiceViewModel, ObservableObject {
     init(_ peripheral: Peripheral, service: CBService) {
         self.peripheral = peripheral
         self.service = service
-        self.mtu = peripheral.MTU()
+        self.mtu = (try? peripheral.maximumWriteValueLength()) ?? 20
         self.testSize = Measurement(value: 100, unit: .kilobytes)
         self.testDuration = Measurement(value: .zero, unit: .seconds)
         self.testTimeLimit = Measurement(value: 20.0, unit: .seconds)
@@ -107,7 +107,7 @@ final class ThroughputViewModel: SupportedServiceViewModel, ObservableObject {
                 do {
                     testProgress = .zero
                     await reset()
-                    mtu = min(max(mtu, 1), peripheral.MTU())
+                    mtu = (try? peripheral.maximumWriteValueLength()) ?? 20
                     log.info("MTU set to \(mtu) bytes.")
                     var testSize = Measurement<UnitInformationStorage>(value: 19, unit: .megabytes)
                     switch testMode {
