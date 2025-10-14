@@ -207,7 +207,7 @@ extension RSCSMeasurement {
 
 // MARK: - CoreBluetoothMock
 
-internal extension CBMUUID {
+private extension CBMUUID {
     static let rscMeasurement = CBMUUID(characteristic: .rscMeasurement)
     
     static let rscFeature = CBMUUID(characteristic: .rscFeature)
@@ -217,11 +217,11 @@ internal extension CBMUUID {
     static let clientCharacteristicConfiguration = CBMUUID(descriptor: .gattClientCharacteristicConfiguration)
 }
 
-internal extension CBMDescriptorMock {
+private extension CBMDescriptorMock {
     static let clientCharacteristicConfiguration = CBMDescriptorMock(type: .clientCharacteristicConfiguration)
 }
 
-internal extension CBMCharacteristicMock {
+private extension CBMCharacteristicMock {
     static let rscMeasurement = CBMCharacteristicMock(
         type: .rscMeasurement,
         properties: .notify,
@@ -245,7 +245,7 @@ internal extension CBMCharacteristicMock {
     )
 }
 
-internal extension CBMServiceMock {
+private extension CBMServiceMock {
     
     static let runningSpeedCadence = CBMServiceMock(
         type: .runningSpeedCadence,

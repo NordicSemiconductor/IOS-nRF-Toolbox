@@ -97,8 +97,8 @@ class HeartMeasurementParsingTest {
         #expect(heartRateMeasurement.intervals == nil)
     }
     
-    @Test("Test measurement data with sensor contact")
-    func testMeasurementDataWithSensorContact() {
+    @Test("Test measurement data with sensor contact and empty intervals")
+    func testMeasurementDataWithSensorContactAndEmptyIntervals() {
         let byteArray: [UInt8] = [0x06, 0xAA]
         let data = Data(byteArray)
         // FIX: Correct initializer usage

@@ -111,18 +111,18 @@ private extension RunningServiceViewModel {
     
     func initializeCharacteristics() async throws {
         log.debug(#function)
-        let serviceCharacteristics: [Characteristic] = [.rscMeasurement, .rscFeature, .scControlPoint]
+        let characteristics: [Characteristic] = [.rscMeasurement, .rscFeature, .scControlPoint]
         let discoveredCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
             characteristics.contains { $0.uuid == cbChar.uuid }
         }
         
         for characteristic in discoveredCharacteristics {
             switch characteristic.uuid {
-            case .rscMeasurement:
+            case Characteristic.rscMeasurement.uuid:
                 self.rscMeasurement = characteristic
-            case .rscFeature:
+            case Characteristic.rscFeature.uuid:
                 self.rscFeature = characteristic
-            case .scControlPoint:
+            case Characteristic.scControlPoint.uuid:
                 self.scControlPoint = characteristic
             default:
                 break

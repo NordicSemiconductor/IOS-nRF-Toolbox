@@ -31,11 +31,6 @@ extension CBMUUID {
 
 extension CBMServiceMock {
 
-    static let heartRate = CBMServiceMock(
-        type: .heartRate,
-        primary: true
-    )
-    
     static let weightScale = CBMServiceMock(
         type: .weightScale,
         primary: true
@@ -55,44 +50,6 @@ private class WeightCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
 }
 
 // MARK: - Blinky Definition
-
-let hrm = CBMPeripheralSpec
-    .simulatePeripheral(proximity: .near)
-    .advertising(
-        advertisementData: [
-            CBAdvertisementDataIsConnectable : true as NSNumber,
-            CBAdvertisementDataLocalNameKey : "Heart Rate Monitor",
-            CBAdvertisementDataServiceUUIDsKey : [CBMUUID.heartRate]
-        ],
-        withInterval: 2.0,
-        delay: 5.0,
-        alsoWhenConnected: false
-    )
-    .connectable(
-        name: "Heart Rate Monitor",
-        services: [.heartRate],
-        delegate: BlinkyCBMPeripheralSpecDelegate() // TODO: Change
-    )
-    .build()
-
-let runningSpeedCadenceSensor = CBMPeripheralSpec
-    .simulatePeripheral(proximity: .far)
-    .advertising(
-        advertisementData: [
-            CBAdvertisementDataIsConnectable : true as NSNumber,
-            CBAdvertisementDataLocalNameKey : "Running Speed and Cadence sensor",
-            CBAdvertisementDataServiceUUIDsKey : [CBMUUID.runningSpeedCadence, CBMUUID.heartRate, CBMUUID.cyclingSpeedCadence]
-        ],
-        withInterval: 2.0,
-        delay: 5.0,
-        alsoWhenConnected: false
-    )
-    .connectable(
-        name: "Running Sensor",
-        services: [.runningSpeedCadence],
-        delegate: BlinkyCBMPeripheralSpecDelegate() // TODO: Change
-    )
-    .build()
 
 let weightScale = CBMPeripheralSpec
     .simulatePeripheral(proximity: .immediate)

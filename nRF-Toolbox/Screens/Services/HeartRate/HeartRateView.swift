@@ -64,6 +64,13 @@ struct HeartRateChart: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 
+                Spacer().frame(height: 6)
+                
+                let caloriesUsage = lastMeasurement.measurement.energyExpended ?? 0
+                Label("Burnt calories: \(caloriesUsage)", systemImage: "bolt.fill")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                
                 Spacer().frame(height: 4)
                 
                 Label("RR Intervals Received: \(lastMeasurement.measurement.intervals?.count ?? 0)", systemImage: "arrow.left.and.right.circle")

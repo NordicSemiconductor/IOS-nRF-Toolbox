@@ -14,6 +14,7 @@ public struct BluetoothEmulation {
     static let shared = BluetoothEmulation()
     
     private let rscs = RSCSCBMPeripheralSpecDelegate()
+    private let heartRate = HeartRateCBMPeripheralSpecDelegate()
     
     public func simulateState() {
         CBMCentralManagerMock.simulateInitialState(.poweredOn)
@@ -22,11 +23,13 @@ public struct BluetoothEmulation {
     public func simulatePeripherals() {
         CBMCentralManagerMock.simulatePeripherals([
             rscs.peripheral,
+            heartRate.peripheral,
             blinky
         ])
     }
     
     public func simulateDisconnect() {
         rscs.peripheral.simulateDisconnection()
+        heartRate.peripheral.simulateDisconnection()
     }
 }
