@@ -148,7 +148,7 @@ extension RSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
             case .startSensorCalibration:
                 didReceiveStartSensorCalibration()
             case .updateSensorLocation:
-                let location = RSCSSensorLocation(rawValue: UInt8(data.littleEndianBytes(as: UInt32.self)))!
+                let location = RSCSSensorLocation(rawValue: UInt8(data.littleEndianBytes(as: UInt8.self)))!
                 didReceiveUpdateSensorLocation(location)
             case .requestSupportedSensorLocations:
                 didReceiveRequestSupportedSensorLocations()
