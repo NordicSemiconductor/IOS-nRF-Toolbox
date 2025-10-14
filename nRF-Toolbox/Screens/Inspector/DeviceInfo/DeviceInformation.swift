@@ -37,9 +37,7 @@ public struct DeviceInformation: CustomDebugStringConvertible {
     
     // MARK: init
     
-    public init(_ service: CBService, peripheral: Peripheral) async throws {
-        let characteristics = try await peripheral.discoverCharacteristics(nil, for: service).firstValue
-
+    public init(_ characteristics: [CBCharacteristic], peripheral: Peripheral) async throws {
         if let c = characteristics.first(where: { $0.uuid == CBUUID(string: Characteristic.manufacturerNameString.uuidString) }) {
             if let data = try await peripheral.readValue(for: c).firstValue {
                 manufacturerName = String(data: data, encoding: .utf8)

@@ -23,8 +23,8 @@ final class BatteryViewModel: SupportedServiceViewModel, ObservableObject {
     @Published fileprivate(set) var currentBatteryLevel: UInt?
     @Published fileprivate(set) var batteryLevelAvailable: Bool
     
-    private let service: CBService
     private let peripheral: Peripheral
+    private let characteristics: [CBCharacteristic]
     private var cancellables: Set<AnyCancellable>
     private let log = NordicLog(category: "BatteryViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
     
@@ -35,9 +35,9 @@ final class BatteryViewModel: SupportedServiceViewModel, ObservableObject {
     
     // MARK: init
     
-    init(peripheral: Peripheral, batteryService: CBService) {
+    init(peripheral: Peripheral, characteristics: [CBCharacteristic]) {
         self.peripheral = peripheral
-        self.service = batteryService
+        self.characteristics = characteristics
         self.cancellables = Set<AnyCancellable>()
         self.batteryLevelData = []
         self.currentBatteryLevel = nil
@@ -51,10 +51,9 @@ final class BatteryViewModel: SupportedServiceViewModel, ObservableObject {
     func startListening() async throws {
         log.debug(#function)
         let characteristics: [Characteristic] = [.batteryLevel]
-        let cbCharacteristics = try await peripheral
-            .discoverCharacteristics(characteristics.map(\.uuid), for: service)
-            .timeout(1, scheduler: DispatchQueue.main)
-            .firstValue
+        let cbCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
+            characteristics.contains { $0.uuid == cbChar.uuid }
+        }
         
         // Check if `batteryLevel` characteristic was discovered
         guard let cbBatteryLevel = cbCharacteristics.first, cbBatteryLevel.uuid == Characteristic.batteryLevel.uuid else {

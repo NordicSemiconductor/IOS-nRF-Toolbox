@@ -39,8 +39,8 @@ final class CyclingServiceViewModel: SupportedServiceViewModel, ObservableObject
     
     @Published private(set) var features: BitField<CyclingFlag>?
     
-    private let service: CBService
     private let peripheral: Peripheral
+    private let characteristics: [CBCharacteristic]
     private var cscMeasurement: CBCharacteristic!
     private var cscFeature: CBCharacteristic!
     
@@ -51,20 +51,21 @@ final class CyclingServiceViewModel: SupportedServiceViewModel, ObservableObject
     
     // MARK: init
     
-    init(peripheral: Peripheral, cyclingService: CBService) {
+    init(peripheral: Peripheral, characteristics: [CBCharacteristic]) {
         self.peripheral = peripheral
-        self.service = cyclingService
+        self.characteristics = characteristics
         self.cancellables = Set<AnyCancellable>()
         log.debug(#function)
     }
     
-    // MARK: discoverCharacteristics()
+    // MARK: initializeCharacteristics()
     
-    func discoverCharacteristics() async throws {
+    func initializeCharacteristics() async throws {
         log.debug(#function)
         let serviceCharacteristics: [Characteristic] = [.cscMeasurement, .cscFeature]
-        let discoveredCharacteristics: [CBCharacteristic]
-        discoveredCharacteristics = try await peripheral.discoverCharacteristics(serviceCharacteristics.map(\.uuid), for: service).firstValue
+        let discoveredCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
+            characteristics.contains { $0.uuid == cbChar.uuid }
+        }
         
         for characteristic in discoveredCharacteristics {
             switch characteristic.uuid {
@@ -175,7 +176,7 @@ final class CyclingServiceViewModel: SupportedServiceViewModel, ObservableObject
     func onConnect() async {
         log.debug(#function)
         do {
-            try await discoverCharacteristics()
+            try await initializeCharacteristics()
             try await readFeatures()
             try await startListening()
         }

@@ -37,7 +37,7 @@ final class SensorCalibrationViewModel: ObservableObject {
     @Published fileprivate(set) var criticalError: CriticalError? = nil
     
     private let peripheral: Peripheral
-    private let rscService: CBService
+    private let characteristics: [CBCharacteristic]
     private let features: BitField<RSCSFeature>
     private var scControlPoint: CBCharacteristic!
     private var sensorLocationCharacteristic: CBCharacteristic?
@@ -46,9 +46,9 @@ final class SensorCalibrationViewModel: ObservableObject {
     
     // MARK: init
     
-    init(peripheral: Peripheral, rscService: CBService, features: BitField<RSCSFeature>) {
+    init(peripheral: Peripheral, characteristics: [CBCharacteristic], features: BitField<RSCSFeature>) {
         self.peripheral = peripheral
-        self.rscService = rscService
+        self.characteristics = characteristics
         self.features = features
         
         setCumulativeValueEnabled = features.contains(.totalDistanceMeasurement)
@@ -68,11 +68,13 @@ final class SensorCalibrationViewModel: ObservableObject {
 
 extension SensorCalibrationViewModel {
     
-    func discoverCharacteristic() async {
+    func initializeCharacteristic() async {
         log.debug(#function)
         do {
             let characteristics: [Characteristic] = [.scControlPoint, .sensorLocation]
-            let discovered = try await peripheral.discoverCharacteristics(characteristics.map(\.uuid), for: rscService).firstValue
+            let discovered: [CBCharacteristic] = self.characteristics.filter { cbChar in
+                characteristics.contains { $0.uuid == cbChar.uuid }
+            }
             
             guard let scControlPoint = discovered.first(where: { $0.uuid == Characteristic.scControlPoint.uuid }) else {
                 criticalError = .noMandatoryCharacteristic

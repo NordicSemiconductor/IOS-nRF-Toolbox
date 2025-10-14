@@ -14,14 +14,13 @@ import Combine
 
 // MARK: - RunningServiceViewModel
 
-@MainActor
-final class RunningServiceViewModel: SupportedServiceViewModel, ObservableObject {
+final class RunningServiceViewModel: @MainActor SupportedServiceViewModel, ObservableObject {
     private enum Err: Error {
         case unknown, noData, timeout, noMandatoryCharacteristic
     }
     
     let peripheral: Peripheral
-    let runningService: CBService
+    private let characteristics: [CBCharacteristic]
     
     lazy private(set) var environment = Environment()
     
@@ -36,10 +35,9 @@ final class RunningServiceViewModel: SupportedServiceViewModel, ObservableObject
     
     private let log = NordicLog(category: "RunningService.ViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
     
-    init(peripheral: Peripheral, runningService: CBService) {
-        assert(runningService.uuid.uuidString == Service.runningSpeedAndCadence.uuidString, "bad service")
+    init(peripheral: Peripheral, characteristics: [CBCharacteristic]) {
         self.peripheral = peripheral
-        self.runningService = runningService
+        self.characteristics = characteristics
         log.debug(#function)
     }
     
@@ -82,7 +80,7 @@ extension RunningServiceViewModel {
     public func enableDeviceCommunication() async {
         log.debug(#function)
         do {
-            try await discoverCharacteristics()
+            try await initializeCharacteristics()
             try await readFeature()
         } catch let error as Err {
             switch error {
@@ -109,13 +107,14 @@ extension RunningServiceViewModel {
 
 private extension RunningServiceViewModel {
     
-    // MARK: discoverCharacteristics()
+    // MARK: initializeCharacteristics()
     
-    func discoverCharacteristics() async throws {
+    func initializeCharacteristics() async throws {
         log.debug(#function)
         let serviceCharacteristics: [Characteristic] = [.rscMeasurement, .rscFeature, .scControlPoint]
-        let discoveredCharacteristics: [CBCharacteristic] = try await peripheral.discoverCharacteristics(serviceCharacteristics.map(\.uuid), for: runningService)
-            .firstValue
+        let discoveredCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
+            characteristics.contains { $0.uuid == cbChar.uuid }
+        }
         
         for characteristic in discoveredCharacteristics {
             switch characteristic.uuid {
@@ -138,7 +137,7 @@ private extension RunningServiceViewModel {
     }
     
     // MARK: readFeature()
-    
+    @MainActor
     func readFeature() async throws {
         log.debug(#function)
         let features = try await peripheral.readValue(for: rscFeature)
@@ -149,9 +148,9 @@ private extension RunningServiceViewModel {
             .timeout(.seconds(1), scheduler: DispatchQueue.main, customError: { Err.timeout })
             .firstValue
         
-        let calibrationViewModel = SensorCalibrationViewModel(peripheral: peripheral, rscService: runningService, features: features)
+        let calibrationViewModel = SensorCalibrationViewModel(peripheral: peripheral, characteristics: characteristics, features: features)
         environment.sensorCalibrationViewModel = calibrationViewModel
-        await calibrationViewModel.discoverCharacteristic()
+        await calibrationViewModel.initializeCharacteristic()
         await calibrationViewModel.readLocations()
         environment.features = features
     }

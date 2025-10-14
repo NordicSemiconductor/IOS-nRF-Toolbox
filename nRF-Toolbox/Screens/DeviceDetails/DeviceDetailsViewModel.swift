@@ -7,6 +7,7 @@
 //
 
 import Combine
+import CoreBluetoothMock
 import Foundation
 import SwiftUI
 import iOS_BLE_Library_Mock
@@ -132,14 +133,12 @@ extension DeviceDetailsViewModel {
             discoveredServices = try await peripheral.discoverServices(serviceUUIDs: nil)
                 .timeout(5, scheduler: DispatchQueue.main)
                 .firstValue
-            let supportedServices = Service.supportedServices.compactMap { CBUUID(service: $0) }
-            
-            var characteristics: [CBCharacteristic] = []
+
             var table = AttributeTable()
             for service in discoveredServices {
                 table.addService(service)
 
-                characteristics = try await peripheral.discoverCharacteristics(nil, for: service).timeout(10, scheduler: DispatchQueue.main).firstValue
+                let characteristics: [CBCharacteristic] = try await peripheral.discoverCharacteristics(nil, for: service).timeout(10, scheduler: DispatchQueue.main).firstValue
                 for characteristic in characteristics {
                     table.addCharacteristic(characteristic, to: service)
                     
@@ -148,47 +147,44 @@ extension DeviceDetailsViewModel {
                         table.addDescriptor(descriptor, to: characteristic, in: service)
                     }
                 }
-            }
-            
-            attributeTable = table
-            
-            for service in discoveredServices where supportedServices.contains(service.uuid) {
+                
                 switch service.uuid {
                 case .nordicBlinkyService:
-                    supportedServiceViewModels.append(BlinkyViewModel(peripheral: peripheral, blinkyService: service, characteristics: characteristics))
+                    supportedServiceViewModels.append(BlinkyViewModel(peripheral: peripheral, characteristics: characteristics))
                 case .runningSpeedCadence:
-                    supportedServiceViewModels.append(RunningServiceViewModel(peripheral: peripheral, runningService: service))
+                    supportedServiceViewModels.append(RunningServiceViewModel(peripheral: peripheral, characteristics: characteristics))
                 case .cyclingSpeedCadence:
-                    supportedServiceViewModels.append(CyclingServiceViewModel(peripheral: peripheral, cyclingService: service))
+                    supportedServiceViewModels.append(CyclingServiceViewModel(peripheral: peripheral, characteristics: characteristics))
                 case .healthThermometer:
-                    supportedServiceViewModels.append(HealthThermometerViewModel(peripheral: peripheral, temperatureService: service))
+                    supportedServiceViewModels.append(HealthThermometerViewModel(peripheral: peripheral, characteristics: characteristics))
                 case .heartRate:
-                    supportedServiceViewModels.append(HeartRateViewModel(peripheral: peripheral, heartRateService: service))
+                    supportedServiceViewModels.append(HeartRateViewModel(peripheral: peripheral, characteristics: characteristics))
                 case .bloodPressure:
-                    supportedServiceViewModels.append(BloodPressureViewModel(peripheral: peripheral, bpsService: service))
-                    let characteristics = try? await peripheral
-                        .discoverCharacteristics([Characteristic.intermediateCuffPressure.uuid], for: service)
-                        .timeout(1, scheduler: DispatchQueue.main)
-                        .firstValue
-                    if let characteristics, characteristics.hasItems {
-                        supportedServiceViewModels.append(CuffPressureViewModel(peripheral: peripheral, bpsService: service))
+                    supportedServiceViewModels.append(BloodPressureViewModel(peripheral: peripheral, characteristics: characteristics))
+                    let cbCharacteristics: [CBCharacteristic] = characteristics.filter { cbChar in
+                        characteristics.contains { $0.uuid == cbChar.uuid }
+                    }
+                    if cbCharacteristics.hasItems {
+                        supportedServiceViewModels.append(CuffPressureViewModel(peripheral: peripheral, characteristics: characteristics))
                     }
                 case .battery:
-                    supportedServiceViewModels.append(BatteryViewModel(peripheral: peripheral, batteryService: service))
+                    supportedServiceViewModels.append(BatteryViewModel(peripheral: peripheral, characteristics: characteristics))
                 case .throughputService:
-                    supportedServiceViewModels.append(ThroughputViewModel(peripheral, service: service))
+                    supportedServiceViewModels.append(ThroughputViewModel(peripheral, characteristics: characteristics))
                 case .glucoseService:
-                    supportedServiceViewModels.append(GlucoseViewModel(peripheral: peripheral, glucoseService: service))
+                    supportedServiceViewModels.append(GlucoseViewModel(peripheral: peripheral, characteristics: characteristics))
                 case .continuousGlucoseMonitoringService:
-                    supportedServiceViewModels.append(CGMSViewModel(peripheral: peripheral, cgmsService: service))
+                    supportedServiceViewModels.append(CGMSViewModel(peripheral: peripheral, characteristics: characteristics))
                 case .nordicsemiUART:
-                    supportedServiceViewModels.append(UARTViewModel(peripheral: peripheral, uartService: service))
+                    supportedServiceViewModels.append(UARTViewModel(peripheral: peripheral, characteristics: characteristics))
                 case .deviceInformation:
-                    deviceInfo = try await DeviceInformation(service, peripheral: peripheral)
+                    deviceInfo = try await DeviceInformation(characteristics, peripheral: peripheral)
                 default:
                     break
                 }
             }
+            
+            attributeTable = table
             
             signalViewModel = SignalChartViewModel(peripheral: peripheral)
             

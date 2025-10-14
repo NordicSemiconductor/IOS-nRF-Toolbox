@@ -46,8 +46,8 @@ final class ThroughputViewModel: SupportedServiceViewModel, ObservableObject {
     
     // MARK: Private Properties
     
-    private let service: CBService
     private let peripheral: Peripheral
+    private let characteristics: [CBCharacteristic]
     
     private var throughputTask: Task<(), Never>!
     private var startTime: DispatchTime!
@@ -60,9 +60,9 @@ final class ThroughputViewModel: SupportedServiceViewModel, ObservableObject {
     
     // MARK: init
     
-    init(_ peripheral: Peripheral, service: CBService) {
+    init(_ peripheral: Peripheral, characteristics: [CBCharacteristic]) {
         self.peripheral = peripheral
-        self.service = service
+        self.characteristics = characteristics
         self.mtu = (try? peripheral.maximumWriteValueLength()) ?? 20
         self.testSize = Measurement(value: 100, unit: .kilobytes)
         self.testDuration = Measurement(value: .zero, unit: .seconds)
@@ -148,10 +148,10 @@ final class ThroughputViewModel: SupportedServiceViewModel, ObservableObject {
     func start(_ size: Measurement<UnitInformationStorage>, using mtu: Int) async throws {
         log.debug(#function)
         let characteristics: [Characteristic] = [.throughputCharacteristic]
-        let cbCharacteristics = try await peripheral
-            .discoverCharacteristics(characteristics.map(\.uuid), for: service)
-            .timeout(1, scheduler: DispatchQueue.main)
-            .firstValue
+        //TODO: assign once. This code is repeated multiple times in the file.
+        let cbCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
+            characteristics.contains { $0.uuid == cbChar.uuid }
+        }
         
         // Check if `throughput` characteristic was discovered
         guard let cbThroughput = cbCharacteristics.first,
@@ -194,10 +194,9 @@ final class ThroughputViewModel: SupportedServiceViewModel, ObservableObject {
     func read() async -> ThroughputData {
         do {
             let characteristics: [Characteristic] = [.throughputCharacteristic]
-            let cbCharacteristics = try await peripheral
-                .discoverCharacteristics(characteristics.map(\.uuid), for: service)
-                .timeout(1, scheduler: DispatchQueue.main)
-                .firstValue
+            let cbCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
+                characteristics.contains { $0.uuid == cbChar.uuid }
+            }
             
             // Check if `throughput` characteristic was discovered
             guard let cbThroughput = cbCharacteristics.first,
@@ -222,13 +221,12 @@ final class ThroughputViewModel: SupportedServiceViewModel, ObservableObject {
         log.debug(#function)
         
         let characteristics: [Characteristic] = [.throughputCharacteristic]
-        let cbCharacteristics = try? await peripheral
-            .discoverCharacteristics(characteristics.map(\.uuid), for: service)
-            .timeout(1, scheduler: DispatchQueue.main)
-            .firstValue
+        let cbCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
+            characteristics.contains { $0.uuid == cbChar.uuid }
+        }
         
         // Check if `throughput` characteristic was discovered
-        guard let cbThroughput = cbCharacteristics?.first,
+        guard let cbThroughput = cbCharacteristics.first,
               cbThroughput.uuid == Characteristic.throughputCharacteristic.uuid else {
             return
         }

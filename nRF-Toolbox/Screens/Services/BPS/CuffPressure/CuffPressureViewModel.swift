@@ -15,13 +15,12 @@ import iOS_Common_Libraries
 
 // MARK: - CuffPressureViewModel
 
-@MainActor
-final class CuffPressureViewModel: SupportedServiceViewModel, ObservableObject {
+final class CuffPressureViewModel: @MainActor SupportedServiceViewModel, ObservableObject {
     
     // MARK: Private Properties
     
-    private let service: CBService
     private let peripheral: Peripheral
+    private let characteristics: [CBCharacteristic]
     
     private var cuffMeasurement: CBCharacteristic!
     private lazy var cancellables = Set<AnyCancellable>()
@@ -37,9 +36,9 @@ final class CuffPressureViewModel: SupportedServiceViewModel, ObservableObject {
     
     // MARK: init
     
-    init(peripheral: Peripheral, bpsService: CBService) {
+    init(peripheral: Peripheral, characteristics: [CBCharacteristic]) {
         self.peripheral = peripheral
-        self.service = bpsService
+        self.characteristics = characteristics
         log.debug(#function)
     }
     
@@ -69,12 +68,11 @@ final class CuffPressureViewModel: SupportedServiceViewModel, ObservableObject {
         let characteristics: [Characteristic] = [
             .intermediateCuffPressure
         ]
-        let cbCharacteristics = try? await peripheral
-            .discoverCharacteristics(characteristics.map(\.uuid), for: service)
-            .timeout(1, scheduler: DispatchQueue.main)
-            .firstValue
+        let cbCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
+            characteristics.contains { $0.uuid == cbChar.uuid }
+        }
         
-        cuffMeasurement = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.intermediateCuffPressure.uuid)
+        cuffMeasurement = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.intermediateCuffPressure.uuid)
         
         do {
             if let cuffMeasurement {

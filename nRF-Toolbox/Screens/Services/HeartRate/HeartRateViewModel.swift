@@ -16,7 +16,7 @@ import iOS_Common_Libraries
 final class HeartRateViewModel: @MainActor SupportedServiceViewModel, ObservableObject {
     
     private let peripheral: Peripheral
-    private let heartRateService: CBService
+    private let characteristics: [CBCharacteristic]
     private var hrMeasurement: CBCharacteristic!
     private var heartRateControlPoint: CBCharacteristic?
     private var cancellables = Set<AnyCancellable>()
@@ -47,14 +47,12 @@ final class HeartRateViewModel: @MainActor SupportedServiceViewModel, Observable
     
     // MARK: init
     
-    init(peripheral: Peripheral, heartRateService: CBService) {
+    init(peripheral: Peripheral, characteristics: [CBCharacteristic]) {
         self.peripheral = peripheral
         self.data = []
         self.criticalError = nil
         self.alertError = nil
-        assert(heartRateService.uuid == Service.heartRate.uuid)
-        
-        self.heartRateService = heartRateService
+        self.characteristics = characteristics
         self.data.reserveCapacity(capacity)
         log.debug(#function)
     }
@@ -83,7 +81,7 @@ final class HeartRateViewModel: @MainActor SupportedServiceViewModel, Observable
     func onConnect() async {
         log.debug(#function)
         do {
-            try await discoverCharacteristics()
+            try await initializeCharacteristics()
         } catch {
             criticalError = .noMandatoryCharacteristic
         }
@@ -102,18 +100,16 @@ final class HeartRateViewModel: @MainActor SupportedServiceViewModel, Observable
 
 private extension HeartRateViewModel {
     
-    // MARK: discoverCharacteristics()
+    // MARK: initializeCharacteristics()
     
     @MainActor
-    func discoverCharacteristics() async throws {
+    func initializeCharacteristics() async throws {
         log.debug(#function)
         let hrCharacteristics: [Characteristic] = [.heartRateMeasurement, .bodySensorLocation, .heartRateControlPoint]
         
-        let heartRateCharacteristics = try await peripheral.discoverCharacteristics(hrCharacteristics.map(\.uuid), for: heartRateService)
-            .timeout(1, scheduler: DispatchQueue.main, customError: {
-                return CriticalError.noMandatoryCharacteristic
-            })
-            .firstValue
+        let heartRateCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
+            characteristics.contains { $0.uuid == cbChar.uuid }
+        }
         
         hrMeasurement = heartRateCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.heartRateMeasurement.uuid)
         

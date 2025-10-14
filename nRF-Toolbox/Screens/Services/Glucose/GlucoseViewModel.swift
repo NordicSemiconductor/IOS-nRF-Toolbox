@@ -19,8 +19,8 @@ final class GlucoseViewModel: @MainActor SupportedServiceViewModel, ObservableOb
     
     // MARK: Private Properties
     
-    private let service: CBService
     private let peripheral: Peripheral
+    private let characteristics: [CBCharacteristic]
     private var cbGlucoseMeasurement: CBCharacteristic!
     private var cbRACP: CBCharacteristic!
     private var glucoseNotifyEnabled: Bool = false
@@ -42,9 +42,9 @@ final class GlucoseViewModel: @MainActor SupportedServiceViewModel, ObservableOb
     
     // MARK: init
     
-    init(peripheral: Peripheral, glucoseService: CBService) {
+    init(peripheral: Peripheral, characteristics: [CBCharacteristic]) {
         self.peripheral = peripheral
-        self.service = glucoseService
+        self.characteristics = characteristics
         self.cancellables = Set<AnyCancellable>()
         log.debug(#function)
         
@@ -81,12 +81,12 @@ final class GlucoseViewModel: @MainActor SupportedServiceViewModel, ObservableOb
             .glucoseMeasurement, .glucoseFeature,
             .recordAccessControlPoint
         ]
-        let cbCharacteristics = try? await peripheral
-            .discoverCharacteristics(characteristics.map(\.uuid), for: service)
-            .firstValue
+        let cbCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
+            characteristics.contains { $0.uuid == cbChar.uuid }
+        }
         
-        cbGlucoseMeasurement = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.glucoseMeasurement.uuid)
-        cbRACP = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.recordAccessControlPoint.uuid)
+        cbGlucoseMeasurement = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.glucoseMeasurement.uuid)
+        cbRACP = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.recordAccessControlPoint.uuid)
         guard cbGlucoseMeasurement != nil else { return }
         
         requestRecords(.allRecords)

@@ -19,9 +19,8 @@ final class BlinkyViewModel: SupportedServiceViewModel, ObservableObject {
     
     // MARK: Private Properties
     
-    private let service: CBService
-    private let characteristics: [CBCharacteristic]
     private let peripheral: Peripheral
+    private let characteristics: [CBCharacteristic]
     private var cancellables: Set<AnyCancellable>
     private let log = NordicLog(category: "BlinkyViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
     
@@ -34,9 +33,8 @@ final class BlinkyViewModel: SupportedServiceViewModel, ObservableObject {
     
     // MARK: init
     
-    init(peripheral: Peripheral, blinkyService: CBService, characteristics: [CBCharacteristic]) {
+    init(peripheral: Peripheral, characteristics: [CBCharacteristic]) {
         self.peripheral = peripheral
-        self.service = blinkyService
         self.cancellables = Set<AnyCancellable>()
         self.characteristics = characteristics
         log.debug(#function)

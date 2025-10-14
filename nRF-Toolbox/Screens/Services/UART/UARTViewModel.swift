@@ -19,8 +19,8 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
     
     // MARK: Private Properties
     
-    private let service: CBService
     private let peripheral: Peripheral
+    private let characteristics: [CBCharacteristic]
     private var uartRX: CBCharacteristic!
     private var uartTX: CBCharacteristic!
     
@@ -42,9 +42,9 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
     
     // MARK: init
     
-    init(peripheral: Peripheral, uartService: CBService) {
+    init(peripheral: Peripheral, characteristics: [CBCharacteristic]) {
         self.peripheral = peripheral
-        self.service = uartService
+        self.characteristics = characteristics
         self.cancellables = Set<AnyCancellable>()
         log.debug(#function)
         if let savedMacros = Self.read() {
@@ -73,13 +73,12 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
         let characteristics: [Characteristic] = [
             .nordicsemiUartRx, .nordicsemiUartTx
         ]
-        let cbCharacteristics = try? await peripheral
-            .discoverCharacteristics(characteristics.map(\.uuid), for: service)
-            .timeout(1, scheduler: DispatchQueue.main)
-            .firstValue
+        let cbCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
+            characteristics.contains { $0.uuid == cbChar.uuid }
+        }
         
-        uartRX = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.nordicsemiUartRx.uuid)
-        uartTX = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.nordicsemiUartTx.uuid)
+        uartRX = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.nordicsemiUartRx.uuid)
+        uartTX = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.nordicsemiUartTx.uuid)
         
         guard let uartTX else { return }
         do {

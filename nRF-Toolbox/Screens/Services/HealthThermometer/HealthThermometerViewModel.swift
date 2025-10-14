@@ -19,8 +19,8 @@ final class HealthThermometerViewModel: SupportedServiceViewModel, ObservableObj
     
     // MARK: Private Properties
     
-    private let service: CBService
     private let peripheral: Peripheral
+    private let characteristics: [CBCharacteristic]
     private var cancellables: Set<AnyCancellable>
     private let log = NordicLog(category: "TemperatureViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
     
@@ -32,9 +32,9 @@ final class HealthThermometerViewModel: SupportedServiceViewModel, ObservableObj
     
     // MARK: init
     
-    init(peripheral: Peripheral, temperatureService: CBService) {
+    init(peripheral: Peripheral, characteristics: [CBCharacteristic]) {
         self.peripheral = peripheral
-        self.service = temperatureService
+        self.characteristics = characteristics
         self.cancellables = Set<AnyCancellable>()
         self.measurement = TemperatureMeasurement(Data())
         log.debug(#function)
@@ -60,9 +60,9 @@ final class HealthThermometerViewModel: SupportedServiceViewModel, ObservableObj
         do {
             let characteristics: [Characteristic] = [.temperatureMeasurement]
             
-            let measurementCharacteristics = try await peripheral.discoverCharacteristics(characteristics.map(\.uuid), for: service)
-                    .timeout(1, scheduler: DispatchQueue.main)
-                    .firstValue
+            let measurementCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
+                characteristics.contains { $0.uuid == cbChar.uuid }
+            }
             
             for characteristic in measurementCharacteristics where characteristic.uuid == Characteristic.temperatureMeasurement.uuid {
                 listenTo(characteristic)

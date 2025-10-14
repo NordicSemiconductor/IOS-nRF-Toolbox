@@ -19,8 +19,8 @@ final class BloodPressureViewModel: @MainActor SupportedServiceViewModel, Observ
     
     // MARK: Private Properties
     
-    private let service: CBService
     private let peripheral: Peripheral
+    private let characteristics: [CBCharacteristic]
     
     private var bpsMeasurement: CBCharacteristic!
     private var bpsFlags: CBCharacteristic!
@@ -38,9 +38,9 @@ final class BloodPressureViewModel: @MainActor SupportedServiceViewModel, Observ
     
     // MARK: init
     
-    init(peripheral: Peripheral, bpsService: CBService) {
+    init(peripheral: Peripheral, characteristics: [CBCharacteristic]) {
         self.peripheral = peripheral
-        self.service = bpsService
+        self.characteristics = characteristics
         log.debug(#function)
     }
     
@@ -70,13 +70,12 @@ final class BloodPressureViewModel: @MainActor SupportedServiceViewModel, Observ
         let characteristics: [Characteristic] = [
             .bloodPressureMeasurement, .bloodPressureFeature
         ]
-        let cbCharacteristics = try? await peripheral
-            .discoverCharacteristics(characteristics.map(\.uuid), for: service)
-            .timeout(1, scheduler: DispatchQueue.main)
-            .firstValue
+        let cbCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
+            characteristics.contains { $0.uuid == cbChar.uuid }
+        }
         
-        bpsMeasurement = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.bloodPressureMeasurement.uuid)
-        bpsFlags = cbCharacteristics?.first(where: \.uuid, isEqualsTo: Characteristic.bloodPressureFeature.uuid)
+        bpsMeasurement = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.bloodPressureMeasurement.uuid)
+        bpsFlags = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.bloodPressureFeature.uuid)
         
         do {
             if let bpsMeasurement {
