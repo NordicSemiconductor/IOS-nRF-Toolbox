@@ -136,6 +136,7 @@ private extension CBMCharacteristicMock {
     static let recordAccessControlPoint = CBMCharacteristicMock(
         type: .recordAccessControlPoint,
         properties: [.write, .indicate],
+        descriptors: .clientCharacteristicConfiguration
     )
 }
 

@@ -16,6 +16,7 @@ public struct BluetoothEmulation {
     private let rscs = RSCSCBMPeripheralSpecDelegate()
     private let heartRate = HeartRateCBMPeripheralSpecDelegate()
     private let glucose = GLSCBMPeripheralSpecDelegate()
+    private let bloodPressure = BPSCBMPeripheralSpecDelegate()
     
     public func simulateState() {
         CBMCentralManagerMock.simulateInitialState(.poweredOn)
@@ -26,6 +27,7 @@ public struct BluetoothEmulation {
             rscs.peripheral,
             heartRate.peripheral,
             glucose.peripheral,
+            bloodPressure.peripheral,
             blinky
         ])
     }

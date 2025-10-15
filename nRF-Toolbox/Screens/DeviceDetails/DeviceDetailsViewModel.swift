@@ -161,10 +161,10 @@ extension DeviceDetailsViewModel {
                     supportedServiceViewModels.append(HeartRateViewModel(peripheral: peripheral, characteristics: characteristics))
                 case .bloodPressure:
                     supportedServiceViewModels.append(BloodPressureViewModel(peripheral: peripheral, characteristics: characteristics))
-                    let cbCharacteristics: [CBCharacteristic] = characteristics.filter { cbChar in
-                        characteristics.contains { $0.uuid == cbChar.uuid }
+                    let cuffCharacteristics: [CBCharacteristic] = characteristics.filter { cbChar in
+                        cbChar.uuid == Characteristic.intermediateCuffPressure.uuid
                     }
-                    if cbCharacteristics.hasItems {
+                    if cuffCharacteristics.hasItems {
                         supportedServiceViewModels.append(CuffPressureViewModel(peripheral: peripheral, characteristics: characteristics))
                     }
                 case .battery:
