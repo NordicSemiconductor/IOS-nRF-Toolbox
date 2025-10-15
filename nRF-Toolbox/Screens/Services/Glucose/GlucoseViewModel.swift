@@ -217,6 +217,7 @@ private extension GlucoseViewModel {
     @MainActor
     private func processRACPResponse(_ responseData: Data) throws {
         log.debug(#function)
+        log.debug("RACP response: \(responseData.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
         let opcodeValue = responseData.littleEndianBytes(atOffset: 0, as: UInt8.self)
         let recordOpcode = RecordOpcode(rawValue: UInt8(opcodeValue))
         switch recordOpcode {
