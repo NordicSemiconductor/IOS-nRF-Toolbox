@@ -31,7 +31,7 @@ import iOS_Common_Libraries
  - The equation for calculating a number is: mantissa * 10^magnitude.
  - Value 0x007FFFFF is reserved and means NaN.
 
- ## ⏰ Timestamp
+ ## ⏰ (Optional) Timestamp
  
  Timestamp has the following format:
  - 2 bytes little endian - year
@@ -41,7 +41,7 @@ import iOS_Common_Libraries
  - 1 byte - minutes
  - 1 byte - seconds
 
- ## 📍 Temperature type
+ ## 📍 (Optional) Temperature type
 
  - Indicates a place of measurement.
  - Values are available in "GATT Specification Supplement 5".
