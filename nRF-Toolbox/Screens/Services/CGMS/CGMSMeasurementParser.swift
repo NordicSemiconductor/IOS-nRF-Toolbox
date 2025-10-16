@@ -19,8 +19,6 @@ class CGMSMeasurementParser {
         var offset = 0
         var subdata = data
         
-        let size = MemoryLayout<UInt16>.size
-        
         while (offset < data.count) {
             subdata = data.subdata(in: offset..<data.count)
             guard let parsedValue = try? CGMSMeasurement(data: subdata, sessionStartTime: sessionStartTime) else {

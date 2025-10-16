@@ -77,7 +77,7 @@ final class CGMSViewModel: SupportedServiceViewModel, ObservableObject {
             let racpData = try await racpDataResponse
             let offset = MemoryLayout<UInt16>.size
             let numberOfRecords: UInt8? = try? racpData.read(fromOffset: offset)
-            log.debug("Response \(racpData.hexEncodedString(options: [.prepend0x, .upperCase]))")
+            log.debug("RACP response \(racpData.hexEncodedString(options: [.prepend0x, .upperCase]))")
             
             if let numberOfRecords {
                 log.debug("Number of Records: \(numberOfRecords)")
@@ -156,16 +156,16 @@ final class CGMSViewModel: SupportedServiceViewModel, ObservableObject {
         log.debug(#function)
         let characteristics: [Characteristic] = [
             .cgmMeasurement, .recordAccessControlPoint,
-            .cgmSpecificOpsControlPoint, .cgmSessionStartTime
+            .cgmSpecificOpsControlPoint, .cgmSessionStartTime, .cgmFeature
         ]
         let cbCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
             characteristics.contains { $0.uuid == cbChar.uuid }
         }
         
-        cbCGMMeasurement = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.cgmMeasurement.uuid)
-        cbRACP = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.recordAccessControlPoint.uuid)
-        cbSOCP = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.cgmSpecificOpsControlPoint.uuid)
-        cbFeature = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.cgmFeature.uuid)
+        self.cbCGMMeasurement = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.cgmMeasurement.uuid)
+        self.cbRACP = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.recordAccessControlPoint.uuid)
+        self.cbSOCP = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.cgmSpecificOpsControlPoint.uuid)
+        self.cbFeature = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.cgmFeature.uuid)
         let cbSST = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.cgmSessionStartTime.uuid)
         
         guard let cbCGMMeasurement, let cbSOCP, let cbSST else {
