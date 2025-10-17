@@ -28,16 +28,10 @@ struct CrankDataPoint {
         self.time = .zero
     }
     
-    init?(_ data: Data) {
-        let revolutionsOffset = 0
-        guard data.canRead(UInt16.self, atOffset: revolutionsOffset) else {
-            return nil
-        }
-        self.revolutions = data.littleEndianBytes(atOffset: revolutionsOffset, as: UInt16.self)
-        let timeOffset = revolutionsOffset + MemoryLayout<UInt16>.size
-        guard data.canRead(UInt16.self, atOffset: timeOffset) else {
-            return nil
-        }
-        self.time = Double(data.littleEndianBytes(atOffset: timeOffset, as: UInt16.self))
+    init(_ data: Data) throws {
+        let reader = DataReader(data: data)
+        
+        revolutions = try reader.readInt(UInt16.self)
+        time = Double(try reader.readInt(UInt16.self))
     }
 }

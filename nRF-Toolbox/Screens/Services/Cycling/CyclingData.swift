@@ -114,33 +114,13 @@ extension CyclingData {
     }
     
     init(_ data: Data) throws {
-        guard data.canRead(UInt8.self, atOffset: 0) else {
-            throw CriticalError.noData
-        }
-        let flagsByte = data.littleEndianBytes(as: UInt8.self)
-        let flags = BitField<CyclingDataFlag>(RegisterValue(flagsByte))
-        var offset = MemoryLayout<UInt8>.size
-        if flags.contains(.wheelData) {
-            let wheelSubdata = data.subdata(in: offset..<min(offset + WheelDataPoint.DataSize, data.count))
-            guard let wheelData = WheelDataPoint(wheelSubdata) else {
-                throw CriticalError.noData
-            }
-            self.wheelData = wheelData
-            offset += WheelDataPoint.DataSize
-        } else {
-            self.wheelData = nil
-        }
+        let reader = DataReader(data: data)
         
-        if flags.contains(.crankData) {
-            let crankSubdata = data.subdata(in: offset..<min(offset + CrankDataPoint.DataSize, data.count))
-            guard let crankData = CrankDataPoint(crankSubdata) else {
-                throw CriticalError.noData
-            }
-            self.crankData = crankData
-            offset += CrankDataPoint.DataSize
-        } else {
-            self.crankData = nil
-        }
+        let flagsValue = UInt(try reader.read(UInt8.self))
+        let flags = BitField<CyclingDataFlag>(RegisterValue(flagsValue))
+        
+        wheelData = flags.contains(.wheelData) ? try WheelDataPoint(reader.subdata(WheelDataPoint.DataSize)) : nil
+        crankData = flags.contains(.crankData) ? try CrankDataPoint(reader.subdata(CrankDataPoint.DataSize)) : nil
         
         if crankData == nil && wheelData == nil {
             throw CriticalError.noData

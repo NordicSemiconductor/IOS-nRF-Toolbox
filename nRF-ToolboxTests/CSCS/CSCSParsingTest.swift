@@ -8,6 +8,7 @@
 
 import Testing
 import Foundation
+import iOS_Common_Libraries
 @testable import nRF_Toolbox
 
 /**
@@ -49,9 +50,10 @@ class CSCSParsingTest {
         ]
         
         let data = Data(byteArray)
-        let result = try? CyclingData(data)
         
-        #expect(result == nil)
+        #expect(throws: CriticalError.noData) {
+            try CyclingData(data)
+        }
     }
     
     @Test("Test parse with wheel revolutions only")
@@ -68,7 +70,7 @@ class CSCSParsingTest {
         
         let data = Data(byteArray)
         let oldData = CyclingData()
-        let result = (try? CyclingData(data))!
+        let result = try! CyclingData(data)
         let wheelLength = Measurement(value: 2.0, unit: UnitLength.meters)
         let expectedDistance = Measurement(value: 4.0, unit: UnitLength.meters)
         let expectedSpeed = Measurement(value: 4.0, unit: UnitSpeed.metersPerSecond)
@@ -92,7 +94,7 @@ class CSCSParsingTest {
         
         let data = Data(byteArray)
         let oldData = CyclingData()
-        let result = (try? CyclingData(data))!
+        let result = try! CyclingData(data)
         let wheelLength = Measurement(value: 2.0, unit: UnitLength.meters)
         
         let distance = result.distance(oldData, wheelLength: wheelLength)
@@ -121,7 +123,7 @@ class CSCSParsingTest {
         
         let data = Data(byteArray)
         let oldData = CyclingData()
-        let result = (try? CyclingData(data))!
+        let result = try! CyclingData(data)
         let wheelLength = Measurement(value: 2.0, unit: UnitLength.meters)
         let expectedDistance = Measurement(value: 4.0, unit: UnitLength.meters)
         let expectedSpeed = Measurement(value: 4.0, unit: UnitSpeed.metersPerSecond)

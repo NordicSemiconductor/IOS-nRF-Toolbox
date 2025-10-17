@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import iOS_Common_Libraries
 
 // MARK: - WheelDataPoint
 
@@ -27,18 +28,12 @@ struct WheelDataPoint {
         self.time = Measurement<UnitDuration>(value: 0, unit: .seconds)
     }
     
-    init?(_ data: Data) {
-        let revolutionsOffset = 0
-        guard data.canRead(UInt32.self, atOffset: revolutionsOffset) else {
-            return nil
-        }
-        self.revolutions = data.littleEndianBytes(atOffset: revolutionsOffset, as: UInt32.self)
-        let timeOffset = revolutionsOffset + MemoryLayout<UInt32>.size
-        guard data.canRead(UInt16.self, atOffset: timeOffset) else {
-            return nil
-        }
+    init(_ data: Data) throws {
+        let reader = DataReader(data: data)
+        
+        revolutions = try reader.readInt(UInt32.self)
         // Wheel event time is a free-running-count of 1/1024 second units
         // as per CSC Service Documentation.
-        self.time = Measurement<UnitDuration>(value: Double(data.littleEndianBytes(atOffset: timeOffset, as: UInt16.self) / 1024), unit: .seconds)
+        time = Measurement<UnitDuration>(value: Double(try reader.readInt(UInt16.self) / 1024), unit: .seconds)
     }
 }
