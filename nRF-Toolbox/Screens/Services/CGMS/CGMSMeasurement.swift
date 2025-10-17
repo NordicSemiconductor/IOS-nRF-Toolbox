@@ -65,10 +65,6 @@ struct CGMSMeasurement {
     // MARK: init
     
     init(data: Data, sessionStartTime: Date) throws {
-        guard data.count >= MemoryLayout<UInt16>.size * 3 else {
-            throw Data.DataError.insufficientData
-        }
-        
         var offset = 0
         
         self.size = data.littleEndianBytes(atOffset: offset, as: UInt8.self)

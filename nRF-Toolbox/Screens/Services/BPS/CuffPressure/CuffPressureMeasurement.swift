@@ -31,9 +31,6 @@ struct CuffPressureMeasurement {
     // MARK: init
     
     init(data: Data) throws {
-        guard data.count >= Self.MinSize else {
-            throw BloodPressureMeasurement.DataError.invalidSize(data.count)
-        }
         
         let featureFlags = UInt(data.littleEndianBytes(as: UInt8.self))
         let flagsRegister = BitField<MeasurementFlag>(featureFlags)

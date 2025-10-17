@@ -30,50 +30,20 @@ struct BloodPressureMeasurement {
     // MARK: init
     
     init(data: Data) throws {
-        guard data.count >= Self.MinSize else {
-            throw DataError.invalidSize(data.count)
-        }
+        let reader = DataReader(data: data)
         
-        let featureFlags = UInt(data.littleEndianBytes(as: UInt8.self))
+        let featureFlags = UInt(try reader.read(UInt8.self))
         let flagsRegister = BitField<MeasurementFlag>(featureFlags)
         let unit: UnitPressure = flagsRegister.contains(.unit) ? .kilopascals : .millimetersOfMercury
         
-        var offset = 1
-        let systolicValue = Float(asSFloat: data.subdata(in: offset..<offset + SFloatReserved.byteSize))
-        systolicPressure = Measurement<UnitPressure>(value: Double(systolicValue), unit: unit)
-        offset += SFloatReserved.byteSize
-        let diastolicValue = Float(asSFloat: data.subdata(in: offset..<offset + SFloatReserved.byteSize))
-        diastolicPressure = Measurement<UnitPressure>(value: Double(diastolicValue), unit: unit)
-        offset += SFloatReserved.byteSize
-        let meanArterialValue = Float(asSFloat: data.subdata(in: offset..<offset + SFloatReserved.byteSize))
-        meanArterialPressure = Measurement<UnitPressure>(value: Double(meanArterialValue), unit: unit)
-        offset += SFloatReserved.byteSize
+        systolicPressure = Measurement<UnitPressure>(value: Double(try reader.readSFloat()), unit: unit)
+        diastolicPressure = Measurement<UnitPressure>(value: Double(try reader.readSFloat()), unit: unit)
+        meanArterialPressure = Measurement<UnitPressure>(value: Double(try reader.readSFloat()), unit: unit)
         
-        date = flagsRegister.contains(.timestamp) ? {
-            defer {
-                offset += Date.DataSize
-            }
-            return Date(data.subdata(in: offset..<offset + Date.DataSize))
-        }() : nil
-        
-        pulseRate = flagsRegister.contains(.pulseRate) ? {
-            defer {
-                offset += SFloatReserved.byteSize
-            }
-            let pulseValue = Float(asSFloat: data.subdata(in: offset..<offset + SFloatReserved.byteSize))
-            return Int(pulseValue)
-        }() : nil
-        
-        userID = flagsRegister.contains(.userID) ? {
-            defer {
-                offset += MemoryLayout<UInt8>.size
-            }
-            return try? data.read(fromOffset: offset)
-        }() : nil
-        
-        status = flagsRegister.contains(.measurementStatus) ? {
-            BitField<MeasurementStatus>(RegisterValue(data.littleEndianBytes(atOffset: offset, as: UInt16.self)))
-        }() : nil
+        date = flagsRegister.contains(.timestamp) ? try reader.readDate() : nil
+        pulseRate = flagsRegister.contains(.pulseRate) ? Int(try reader.readSFloat()) : nil
+        userID = flagsRegister.contains(.userID) ? try reader.read(UInt8.self) : nil
+        status = flagsRegister.contains(.measurementStatus) ? BitField<MeasurementStatus>(RegisterValue(try reader.read(UInt16.self))) : nil
     }
 }
 
@@ -113,26 +83,6 @@ extension BloodPressureMeasurement {
             case .userFacingTime:
                 return "User facing time"
             }
-        }
-    }
-}
-
-// MARK: - DataError
-
-extension BloodPressureMeasurement {
-    
-    enum DataError: LocalizedError, CustomStringConvertible {
-        case invalidSize(_ count: Int)
-        
-        var description: String {
-            switch self {
-            case .invalidSize(let byteCount):
-                return "Data Size of \(byteCount) bytes does not match minimum requirement of \(BloodPressureMeasurement.MinSize) bytes for Blood Pressure Measurement."
-            }
-        }
-        
-        var errorDescription: String? {
-            description
         }
     }
 }

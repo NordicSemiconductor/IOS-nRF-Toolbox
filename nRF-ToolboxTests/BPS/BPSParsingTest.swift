@@ -8,6 +8,7 @@
 
 import Testing
 import Foundation
+import iOS_Common_Libraries
 @testable import nRF_Toolbox
 
 /**
@@ -165,8 +166,9 @@ class BPSParsingTest {
         ]
         
         let data = Data(byteArray)
-        let result = try? BloodPressureMeasurement(data: data)
         
-        #expect(result == nil)
+        #expect(throws: ParsingError.invalidSize(actualSize: 3, expectedSize: 5)) {
+            try BloodPressureMeasurement(data: data)
+        }
     }
 }

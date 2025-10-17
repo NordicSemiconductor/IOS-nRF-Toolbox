@@ -56,7 +56,6 @@
 		01C81ADA2A5DFA8E0011B41E /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 01C81ADC2A5DFA8E0011B41E /* Localizable.stringsdict */; };
 		01CEB4262AE9100300945105 /* DeviceScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CEB4242AE9100300945105 /* DeviceScreen.swift */; };
 		01CEB4272AE9100300945105 /* HeartRateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CEB4252AE9100300945105 /* HeartRateViewModel.swift */; };
-		01DEB4A82A65E90C00D4C1E8 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DEB4A72A65E90C00D4C1E8 /* Data+Ext.swift */; };
 		01DEB4AA2A65E9D900D4C1E8 /* CharacteristicReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DEB4A92A65E9D900D4C1E8 /* CharacteristicReader.swift */; };
 		01EBE6192AE4845100960672 /* View+ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EBE6182AE4845100960672 /* View+ErrorAlert.swift */; };
 		01F6A9602A812D6200540B45 /* Emulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F6A95F2A812D6200540B45 /* Emulator.swift */; };
@@ -220,7 +219,6 @@
 		01C81ADB2A5DFA8E0011B41E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		01CEB4242AE9100300945105 /* DeviceScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceScreen.swift; sourceTree = "<group>"; };
 		01CEB4252AE9100300945105 /* HeartRateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateViewModel.swift; sourceTree = "<group>"; };
-		01DEB4A72A65E90C00D4C1E8 /* Data+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Ext.swift"; sourceTree = "<group>"; };
 		01DEB4A92A65E9D900D4C1E8 /* CharacteristicReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacteristicReader.swift; sourceTree = "<group>"; };
 		01EBE6182AE4845100960672 /* View+ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ErrorAlert.swift"; sourceTree = "<group>"; };
 		01F6A95F2A812D6200540B45 /* Emulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emulator.swift; sourceTree = "<group>"; };
@@ -569,7 +567,6 @@
 			children = (
 				01AB7B742A77BFB400AEDDCD /* CBUUID+Ext.swift */,
 				013E5D902ADFDF1300B9C475 /* Array+Ext.swift */,
-				01DEB4A72A65E90C00D4C1E8 /* Data+Ext.swift */,
 				01DEB4A92A65E9D900D4C1E8 /* CharacteristicReader.swift */,
 				0164A4752AD698650093E501 /* NumberDatabase+Ext.swift */,
 				01C81AD62A5D8FEA0011B41E /* ReadableError.swift */,
@@ -1109,7 +1106,6 @@
 				01C81AD52A5CB6420011B41E /* ServiceBadge.swift in Sources */,
 				01FB19D22AE3DB70006DAB9F /* SensorCalibrationViewModel.swift in Sources */,
 				AAE42EEE2DCCE144006212B4 /* UARTViewModel+Storage.swift in Sources */,
-				01DEB4A82A65E90C00D4C1E8 /* Data+Ext.swift in Sources */,
 				0164A4712AD593B40093E501 /* ScanResultList.swift in Sources */,
 				013E5D8F2ADFDDC600B9C475 /* NumberedColumnGrid.swift in Sources */,
 				AAC542B62E2E63BA004FB4D2 /* RSCSCBMPeripheralSpecDelegate.swift in Sources */,
