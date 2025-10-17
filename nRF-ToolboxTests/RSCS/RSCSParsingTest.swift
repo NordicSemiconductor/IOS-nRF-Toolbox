@@ -66,7 +66,7 @@ class RSCSParsingTest {
         ]
         
         let data = Data(byteArray)
-        let result = RSCSMeasurement(from: data)
+        let result = try! RSCSMeasurement(from: data)
         
         #expect(result.totalDistance == Measurement(value: 1.0, unit: .decimeters))
         #expect(result.instantaneousStrideLength == Measurement(value: 79.0, unit: .centimeters))
@@ -90,7 +90,7 @@ class RSCSParsingTest {
         ]
         
         let data = Data(byteArray)
-        let result = RSCSMeasurement(from: data)
+        let result = try! RSCSMeasurement(from: data)
         
         #expect(result.totalDistance == Measurement(value: 4096, unit: .decimeters))
         #expect(result.instantaneousStrideLength == Measurement(value: 800, unit: .centimeters))
@@ -108,7 +108,7 @@ class RSCSParsingTest {
         ]
         
         let data = Data(byteArray)
-        let result = RSCSMeasurement(from: data)
+        let result = try! RSCSMeasurement(from: data)
         
         #expect(result.totalDistance == nil)
         #expect(result.instantaneousStrideLength == nil)
@@ -124,11 +124,9 @@ class RSCSParsingTest {
         ]
         
         let data = Data(byteArray)
-        let result = RSCSMeasurement(from: data)
         
-        #expect(result.totalDistance == nil)
-        #expect(result.instantaneousStrideLength == nil)
-        #expect(result.instantaneousCadence == 0)
-        #expect(result.instantaneousSpeed.value.isNaN)
+        #expect(throws: ParsingError.invalidSize(actualSize: 2, expectedSize: 3)) {
+            try RSCSMeasurement(from: data)
+        }
     }
 }

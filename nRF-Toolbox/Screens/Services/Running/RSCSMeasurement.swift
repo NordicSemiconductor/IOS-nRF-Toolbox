@@ -53,45 +53,20 @@ public struct RSCSMeasurement {
         }
     }
 
-    public init(from data: Data) {
-        guard data.count >= Self.MinSize else {
-            self.instantaneousSpeed = Measurement<UnitSpeed>(value: Double.nan, unit: .metersPerSecond)
-            self.instantaneousCadence = 0
-            self.flags = BitField<RSCSFeature>(0)
-            self.instantaneousStrideLength = nil
-            self.totalDistance = nil
-            return
-        }
+    public init(from data: Data) throws {
+        let reader = DataReader(data: data)
         
-        let flagsValue = data.littleEndianBytes(as: UInt8.self)
+        let flagsValue = UInt(try reader.read(UInt8.self))
         flags = BitField<RSCSFeature>(RegisterValue(flagsValue))
 
-        var offset = MemoryLayout<UInt8>.size
         // 256 units == 1 meter/second
-        let speedUnits = data.littleEndianBytes(atOffset: offset, as: UInt16.self)
-        let speedInMetersPerSecond = Double(speedUnits) / 256.0
+        let speedInMetersPerSecond = Double(try reader.readInt(UInt16.self)) / 256.0
         instantaneousSpeed = Measurement<UnitSpeed>(value: speedInMetersPerSecond, unit: .metersPerSecond)
-        offset += MemoryLayout<UInt16>.size
         
-        instantaneousCadence = data.littleEndianBytes(atOffset: offset, as: UInt8.self)
-        offset += MemoryLayout<UInt8>.size
+        instantaneousCadence = try reader.readInt(UInt8.self)
 
-        if flags.contains(.instantaneousStrideLengthMeasurement) {
-            let strideLength = data.littleEndianBytes(atOffset: offset, as: UInt16.self)
-            instantaneousStrideLength = Measurement<UnitLength>(value: Double(strideLength), unit: .centimeters)
-            offset += MemoryLayout<UInt16>.size
-        } else {
-            instantaneousStrideLength = nil
-        }
-
-        if flags.contains(.totalDistanceMeasurement) {
-            let distanceUnits = data.littleEndianBytes(atOffset: offset, as: UInt32.self)
-            // 1 distance unit == 1 meter.
-            totalDistance = Measurement<UnitLength>(value: Double(distanceUnits), unit: .decimeters)
-            offset += MemoryLayout<UInt32>.size
-        } else {
-            totalDistance = nil
-        }
+        instantaneousStrideLength = flags.contains(.instantaneousStrideLengthMeasurement) ? Measurement(value: Double(try reader.readInt(UInt16.self)), unit: .centimeters) : nil
+        totalDistance = flags.contains(.totalDistanceMeasurement) ? Measurement(value: Double(try reader.readInt(UInt32.self)), unit: .decimeters) : nil
     }
 
     // MARK: Data
