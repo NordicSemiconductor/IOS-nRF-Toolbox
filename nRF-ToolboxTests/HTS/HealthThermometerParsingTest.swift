@@ -71,7 +71,7 @@ class HealthThermometerParsingTest {
             0x01        // Type 1: Armpit
         ]
         let data = Data(byteArray)
-        let result = TemperatureMeasurement(data)
+        let result = try! TemperatureMeasurement(data)
         
         let calendar = Calendar(identifier: .gregorian)
         let day = calendar.component(.day, from: result.timestamp!)
@@ -102,7 +102,7 @@ class HealthThermometerParsingTest {
         ]
         
         let data = Data(byteArray)
-        let result = TemperatureMeasurement(data)
+        let result = try! TemperatureMeasurement(data)
         
         #expect(result.temperature == Measurement(value: 25.0, unit: UnitTemperature.celsius))
         #expect(result.location == nil)
@@ -120,9 +120,12 @@ class HealthThermometerParsingTest {
         ]
         
         let data = Data(byteArray)
-        let result = TemperatureMeasurement(data)
+        
+        let result = try! TemperatureMeasurement(data)
         
         #expect(result.temperature.value.isNaN)
+        #expect(result.location == nil)
+        #expect(result.timestamp == nil)
     }
     
     @Test("Test parsing with insufficient byte array.")
@@ -130,10 +133,9 @@ class HealthThermometerParsingTest {
         let byteArray: [UInt8] = [0x00]
         
         let data = Data(byteArray)
-        let result = TemperatureMeasurement(data)
         
-        #expect(result.temperature.value.isNaN)
-        #expect(result.location == nil)
-        #expect(result.timestamp == nil)
+        #expect(throws: ParsingError.invalidSize(actualSize: 1, expectedSize: 3)) {
+            try TemperatureMeasurement(data)
+        }
     }
 }

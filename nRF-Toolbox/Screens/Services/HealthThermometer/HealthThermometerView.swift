@@ -31,21 +31,29 @@ struct HealthThermometerView: View {
     
     var body: some View {
         LabeledContent {
-            Text(Self.measurementFormatter.string(from: viewModel.measurement.temperature))
+            if let temperature = viewModel.measurement?.temperature {
+                Text(Self.measurementFormatter.string(from: temperature))
+            } else {
+                Text("N/A")
+            }
         } label: {
             Label("Measurement", systemImage: "thermometer.variable")
                 .setAccent(Color.universalAccentColor)
         }
         
         LabeledContent {
-            Text(viewModel.measurement.location?.description ?? "N/A")
+            if let location = viewModel.measurement?.location?.description {
+                Text(location)
+            } else {
+                Text("N/A")
+            }
         } label: {
             Label("Location", systemImage: "figure.dance")
                 .setAccent(Color.universalAccentColor)
         }
         
         LabeledContent {
-            if let timestamp = viewModel.measurement.timestamp {
+            if let timestamp = viewModel.measurement?.timestamp {
                 Text(Self.dateFormatter.string(from: timestamp))
             } else {
                 Text("N/A")

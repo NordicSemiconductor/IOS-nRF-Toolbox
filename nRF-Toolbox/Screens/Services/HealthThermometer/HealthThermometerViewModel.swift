@@ -28,7 +28,7 @@ final class HealthThermometerViewModel: SupportedServiceViewModel, ObservableObj
     
     // MARK: Properties
     
-    @Published private(set) var measurement: TemperatureMeasurement
+    @Published private(set) var measurement: TemperatureMeasurement?
     
     // MARK: init
     
@@ -36,7 +36,6 @@ final class HealthThermometerViewModel: SupportedServiceViewModel, ObservableObj
         self.peripheral = peripheral
         self.characteristics = characteristics
         self.cancellables = Set<AnyCancellable>()
-        self.measurement = TemperatureMeasurement(Data())
         log.debug(#function)
     }
   
@@ -84,9 +83,9 @@ final class HealthThermometerViewModel: SupportedServiceViewModel, ObservableObj
     func listenTo(_ characteristic: CBCharacteristic) {
         peripheral.listenValues(for: characteristic)
             .map { data in
-                TemperatureMeasurement(data)
+                try? TemperatureMeasurement(data)
             }
-            .sink(to: \.measurement, in: self, assigningInCaseOfError: TemperatureMeasurement(Data()))
+            .sink(to: \.measurement, in: self, assigningInCaseOfError: nil)
             .store(in: &cancellables)
     }
 }
