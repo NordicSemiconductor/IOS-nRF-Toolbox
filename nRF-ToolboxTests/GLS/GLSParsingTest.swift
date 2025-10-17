@@ -80,9 +80,10 @@ class GLSParsingTest {
         let byteArray: [UInt8] = [0x00]
         
         let data = Data(byteArray)
-        let result = GlucoseMeasurement(data)
         
-        #expect(result == nil)
+        #expect(throws: ParsingError.invalidSize(actualSize: 1, expectedSize: 3)) {
+            try GlucoseMeasurement(data)
+        }
     }
     
     @Test("Test missing mandatory fields")
@@ -101,9 +102,10 @@ class GLSParsingTest {
         // TODO: Looks like the glucose value is missing.
         
         let data = Data(byteArray)
-        let result = GlucoseMeasurement(data)
 
-        #expect(result == nil)
+        #expect(throws: ParsingError.invalidSize(actualSize: 8, expectedSize: 10)) {
+            try GlucoseMeasurement(data)
+        }
     }
     
     @Test("Test only required fields")
@@ -124,7 +126,7 @@ class GLSParsingTest {
         // TODO: Looks like the glucose value is missing.
         
         let data = Data(byteArray)
-        let result = GlucoseMeasurement(data)!
+        let result = try! GlucoseMeasurement(data)
         let calendar = Calendar(identifier: .gregorian)
         
         let day = calendar.component(.day, from: result.timestamp)
@@ -168,7 +170,7 @@ class GLSParsingTest {
         // TODO: Looks like the glucose value is missing.
         
         let data = Data(byteArray)
-        let result = GlucoseMeasurement(data)!
+        let result = try! GlucoseMeasurement(data)
         let calendar = Calendar(identifier: .gregorian)
         
         let day = calendar.component(.day, from: result.timestamp)

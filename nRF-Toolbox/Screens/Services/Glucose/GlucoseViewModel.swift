@@ -186,7 +186,7 @@ private extension GlucoseViewModel {
             .compactMap { [log] data -> GlucoseMeasurement? in
                 log.debug("Received Measurement Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing])) (\(data.count) bytes)")
                 
-                guard let parsed = GlucoseMeasurement(data) else {
+                guard let parsed = try? GlucoseMeasurement(data) else {
                     log.error("Unable to parse Measurement Data \(data.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
                     return nil
                 }
