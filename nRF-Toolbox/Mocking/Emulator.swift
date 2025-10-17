@@ -19,6 +19,7 @@ public struct BluetoothEmulation {
     private let bloodPressure = BPSCBMPeripheralSpecDelegate()
     private let healthThermometer = HTSCBMPeripheralSpecDelegate()
     private let cgms = CGMSCBMPeripheralSpecDelegate()
+    private let uart = UARTCBMPeripheralSpecDelegate()
     
     public func simulateState() {
         CBMCentralManagerMock.simulateInitialState(.poweredOn)
@@ -32,6 +33,7 @@ public struct BluetoothEmulation {
             bloodPressure.peripheral,
             healthThermometer.peripheral,
             cgms.peripheral,
+            uart.peripheral,
             blinky
         ])
     }

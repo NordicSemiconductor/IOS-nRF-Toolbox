@@ -77,6 +77,7 @@
 		A7CB67242E9680E3007E1311 /* UnitGlucoseTrend.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CB67232E9680E2007E1311 /* UnitGlucoseTrend.swift */; };
 		A7CF97B42E8BBE5500C1E1B3 /* CaloriesResetState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CF97B32E8BBE5400C1E1B3 /* CaloriesResetState.swift */; };
 		A7D2C8E52E7D414700C93C28 /* CGMSFeatureEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D2C8E42E7D414300C93C28 /* CGMSFeatureEnvelope.swift */; };
+		A7D657C42EA2470E00CA7D63 /* UARTCBMPeripheralSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D657C32EA2470300CA7D63 /* UARTCBMPeripheralSpecDelegate.swift */; };
 		A7FA7A482E852D6500DA192B /* CGMSMeasurementParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FA7A472E852D6500DA192B /* CGMSMeasurementParser.swift */; };
 		AA01D4922D4A3D38008523CE /* Throughput+Attributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01D4912D4A3D38008523CE /* Throughput+Attributes.swift */; };
 		AA047E112DF1B3A300DA401E /* BlinkyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA047E102DF1B3A300DA401E /* BlinkyView.swift */; };
@@ -251,6 +252,7 @@
 		A7CB67232E9680E2007E1311 /* UnitGlucoseTrend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitGlucoseTrend.swift; sourceTree = "<group>"; };
 		A7CF97B32E8BBE5400C1E1B3 /* CaloriesResetState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaloriesResetState.swift; sourceTree = "<group>"; };
 		A7D2C8E42E7D414300C93C28 /* CGMSFeatureEnvelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSFeatureEnvelope.swift; sourceTree = "<group>"; };
+		A7D657C32EA2470300CA7D63 /* UARTCBMPeripheralSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTCBMPeripheralSpecDelegate.swift; sourceTree = "<group>"; };
 		A7FA7A472E852D6500DA192B /* CGMSMeasurementParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSMeasurementParser.swift; sourceTree = "<group>"; };
 		AA01D4912D4A3D38008523CE /* Throughput+Attributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Throughput+Attributes.swift"; sourceTree = "<group>"; };
 		AA047E102DF1B3A300DA401E /* BlinkyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkyView.swift; sourceTree = "<group>"; };
@@ -509,6 +511,7 @@
 		017D10342A5809E400E38E5F /* Mocking */ = {
 			isa = PBXGroup;
 			children = (
+				A7D657C32EA2470300CA7D63 /* UARTCBMPeripheralSpecDelegate.swift */,
 				A75F11712E9FA31F00B0D6CB /* BPSCBMPeripheralSpecDelegate.swift */,
 				A75F116F2E9FA31200B0D6CB /* GLSCBMPeripheralSpecDelegate.swift */,
 				A75F116D2E9FA30B00B0D6CB /* CGMSCBMPeripheralSpecDelegate.swift */,
@@ -1093,6 +1096,7 @@
 				AAE967342E38D09A00A7B93B /* RSCSFeature.swift in Sources */,
 				0129F2282A684059002FB3F5 /* LabeledValueView.swift in Sources */,
 				0164A4792AD741200093E501 /* ConnectedDevicesViewModel.swift in Sources */,
+				A7D657C42EA2470E00CA7D63 /* UARTCBMPeripheralSpecDelegate.swift in Sources */,
 				AA479EAD2D0B24E50052E801 /* HealthThermometerViewModel.swift in Sources */,
 				AAD1E3EC2D81E5AD00E5121E /* DisclosureAttributeItemView.swift in Sources */,
 				012E22922A6ACD8400B14064 /* AttributeTableItemView.swift in Sources */,
