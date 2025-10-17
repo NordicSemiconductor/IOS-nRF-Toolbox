@@ -21,7 +21,7 @@ struct HeartRateValue {
     // MARK: init
     
     init(with data: Data) throws {
-        self.measurement = HeartRateMeasurement(data)
+        self.measurement = try HeartRateMeasurement(data)
         self.date = .now
     }
 }

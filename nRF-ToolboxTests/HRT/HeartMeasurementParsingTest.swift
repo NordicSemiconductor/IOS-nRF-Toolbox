@@ -57,7 +57,7 @@ class HeartMeasurementParsingTest {
         let byteArray: [UInt8] = [0x14, 0xAA, 0x8D, 0x00]
         let data = Data(byteArray)
         // FIX: Correct initializer usage
-        let heartRateMeasurement = HeartRateMeasurement(data)
+        let heartRateMeasurement = try! HeartRateMeasurement(data)
         
         print(heartRateMeasurement)
         
@@ -72,7 +72,7 @@ class HeartMeasurementParsingTest {
         let byteArray: [UInt8] = [0x1C, 0xAA, 0x8D, 0x00, 0x8D, 0x00]
         let data = Data(byteArray)
         // FIX: Correct initializer usage
-        let heartRateMeasurement = HeartRateMeasurement(data)
+        let heartRateMeasurement = try! HeartRateMeasurement(data)
         
         print(heartRateMeasurement)
         
@@ -87,7 +87,7 @@ class HeartMeasurementParsingTest {
         let byteArray: [UInt8] = [0x00, 0xAA]
         let data = Data(byteArray)
         // FIX: Correct initializer usage
-        let heartRateMeasurement = HeartRateMeasurement(data)
+        let heartRateMeasurement = try! HeartRateMeasurement(data)
         
         print(heartRateMeasurement)
         
@@ -102,7 +102,7 @@ class HeartMeasurementParsingTest {
         let byteArray: [UInt8] = [0x06, 0xAA]
         let data = Data(byteArray)
         // FIX: Correct initializer usage
-        let heartRateMeasurement = HeartRateMeasurement(data)
+        let heartRateMeasurement = try! HeartRateMeasurement(data)
         
         print(heartRateMeasurement)
         
