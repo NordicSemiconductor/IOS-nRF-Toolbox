@@ -65,79 +65,30 @@ struct CGMSMeasurement {
     // MARK: init
     
     init(data: Data, sessionStartTime: Date) throws {
-        var offset = 0
+        let reader = DataReader(data: data)
         
-        self.size = data.littleEndianBytes(atOffset: offset, as: UInt8.self)
-        offset += MemoryLayout<UInt8>.size
+        size = try reader.readInt(UInt8.self)
         
-        let flags = data.littleEndianBytes(atOffset: offset, as: UInt8.self)
-        let isTrendDataPresent = flags & 1 > 0
-        let isQualityDataPresent = flags & 2 > 0
-        let isWarningOctetPresent = flags & 32 > 0
-        let isCalTempOctetPresent = flags & 64 > 0
-        let isStatusOctetPresent = flags & 128 > 0
-        offset += MemoryLayout<UInt8>.size
-
-        let sFloatBytes = data.subdata(in: offset..<offset + SFloatReserved.byteSize)
-        let value = Float(asSFloat: sFloatBytes)
-        measurement = Measurement<UnitConcentrationMass>(value: Double(value), unit: .milligramsPerDeciliter)
-        offset += SFloatReserved.byteSize
+        let featureFlags = UInt(try reader.read(UInt8.self))
+        let flags = BitField<Flags>(featureFlags)
         
-        timeOffset = data.littleEndianBytes(atOffset: offset, as: UInt16.self)
+        measurement = Measurement<UnitConcentrationMass>(value: Double(try reader.readSFloat()), unit: .milligramsPerDeciliter)
+        
+        timeOffset = try reader.readInt(UInt16.self)
         date = sessionStartTime.addingTimeInterval(TimeInterval(timeOffset * 60))
-        offset += MemoryLayout<UInt16>.size
         
-        if isStatusOctetPresent {
-            let byte = data.littleEndianBytes(atOffset: offset, as: UInt8.self)
-            self.sensorStatus = BitField(RegisterValue(byte))
-            offset += MemoryLayout<UInt8>.size
-        } else {
-            self.sensorStatus = nil
-        }
+        sensorStatus = flags.contains(.statusPresent) ? BitField(RegisterValue(try reader.readInt(UInt8.self))) : nil
+        calTempStatus = flags.contains(.calTempPresent) ? BitField(RegisterValue(try reader.readInt(UInt8.self))) : nil
+        warningStatus = flags.contains(.warningPresent) ? BitField(RegisterValue(try reader.readInt(UInt8.self))) : nil
         
-        if isCalTempOctetPresent {
-            let byte = data.littleEndianBytes(atOffset: offset, as: UInt8.self)
-            self.calTempStatus = BitField(RegisterValue(byte))
-            offset += MemoryLayout<UInt8>.size
-        } else {
-            self.calTempStatus = nil
-        }
+        trend = flags.contains(.trendPresent) ? Measurement<UnitGlucoseTrend>(value: Double(try reader.readSFloat()), unit: .milligramsPerDecilitrePerMinute) : nil
+        quality = flags.contains(.qualityPresent) ? try reader.readSFloat() : nil
         
-        if isWarningOctetPresent {
-            let byte = data.littleEndianBytes(atOffset: offset, as: UInt8.self)
-            self.warningStatus = BitField(RegisterValue(byte))
-            offset += MemoryLayout<UInt8>.size
-        } else {
-            self.warningStatus = nil
-        }
+        let offset = reader.size()
+        crc = offset + MemoryLayout<UInt16>.size <= size && reader.hasData(UInt16.self) ? try reader.read(UInt16.self) : nil
+        calculatedCrc = CRC16.mcrf4xx(data: data, offset: 0, length: offset)
         
-        if isTrendDataPresent {
-            let sFloatBytes = data.subdata(in: offset..<offset + SFloatReserved.byteSize)
-            let value = Float(asSFloat: sFloatBytes)
-            self.trend = Measurement<UnitGlucoseTrend>(value: Double(value), unit: .milligramsPerDecilitrePerMinute)
-            offset += SFloatReserved.byteSize
-        } else {
-            self.trend = nil
-        }
-        
-        if isQualityDataPresent {
-            let sFloatBytes = data.subdata(in: offset..<offset + SFloatReserved.byteSize)
-            self.quality = Float(asSFloat: sFloatBytes)
-            offset += SFloatReserved.byteSize
-        } else {
-            self.quality = nil
-        }
-
-        if offset + MemoryLayout<UInt16>.size <= size {
-            self.crc = data.littleEndianBytesUInt16(atOffset: offset)
-            self.calculatedCrc = CRC16.mcrf4xx(data: data, offset: 0, length: offset)
-            offset += MemoryLayout<UInt16>.size
-        } else {
-            self.crc = nil
-            self.calculatedCrc = nil
-        }
-        
-        self.measuredSize = offset
+        measuredSize = reader.size()
     }
     
     // MARK: API
@@ -161,5 +112,15 @@ extension CGMSMeasurement: CustomStringConvertible {
     
     var description: String {
         return measurement.formatted()
+    }
+}
+
+extension CGMSMeasurement {
+    
+    enum Flags: RegisterValue, Option, CaseIterable {
+        
+        case trendPresent, qualityPresent
+        case reserved2, reserved3, reserved4
+        case warningPresent, calTempPresent, statusPresent
     }
 }

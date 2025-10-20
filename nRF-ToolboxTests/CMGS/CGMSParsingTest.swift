@@ -166,6 +166,7 @@ class CGMSParsingTest {
         #expect(result.quality == 96.0)
         #expect(result.crc == 44268)
         #expect(result.calculatedCrc == 44268)
+        #expect(result.measuredSize == 15)
     }
     
     @Test("Test data with only mandatory fields.")
@@ -191,6 +192,7 @@ class CGMSParsingTest {
         #expect(result.trend == nil)
         #expect(result.quality == nil)
         #expect(result.crc == nil)
+        #expect(result.measuredSize == 6)
     }
     
     @Test("Test many records.")
@@ -223,6 +225,7 @@ class CGMSParsingTest {
         #expect(result0.trend == nil)
         #expect(result0.quality == nil)
         #expect(result0.crc == nil)
+        #expect(result0.measuredSize == 6)
         #expect(result1.measurement == Measurement(value: Double(119.0), unit: .milligramsPerDeciliter))
         #expect(result1.date == sessionStart.addingTimeInterval(29*60))
         #expect(result1.sensorStatus == nil)
@@ -231,6 +234,7 @@ class CGMSParsingTest {
         #expect(result1.trend == nil)
         #expect(result1.quality == nil)
         #expect(result1.crc == nil)
+        #expect(result1.measuredSize == 6)
     }
     
     @Test("Test data with incorrect size.")
