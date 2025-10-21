@@ -26,12 +26,12 @@ struct UARTSendMessageView: View {
 
                 HStack(spacing: 0) {
                     TextField("UART Message", text: $viewModel.newMessage, prompt: Text("Write new message here")).focused($isFocused).tint(.clear)
-                    BlinkingCursorView().hidden()
+                    BlinkingCursorView().padding(.leading, 6).hidden()
                 }
                 
                 HStack(spacing: 0) {
                     Text(viewModel.newMessage).lineLimit(1).hidden()
-                    BlinkingCursorView().hidden(viewModel.newMessage.isEmpty)
+                    BlinkingCursorView().padding(.leading, 2).hidden(viewModel.newMessage.isEmpty)
                 }
             }
 
@@ -46,6 +46,9 @@ struct UARTSendMessageView: View {
             }
             .buttonStyle(.bordered)
             .foregroundStyle(Color.universalAccentColor)
+        }
+        .onAppear {
+            self.isFocused = true
         }
     }
 }
