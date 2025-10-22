@@ -78,14 +78,12 @@ struct UARTEditMacroView: View {
                 Button("Dismiss", systemImage: "chevron.down") {
                     viewModel.showEditMacroSheet = false
                 }
-                .tint(Color.white)
             }
             
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Export", systemImage: "square.and.arrow.up") {
                     // TODO: Hopefully soon.
                 }
-                .tint(Color.white)
             }
         }
         .doOnce {

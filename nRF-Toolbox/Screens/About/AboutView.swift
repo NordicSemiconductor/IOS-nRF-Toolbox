@@ -75,7 +75,6 @@ struct AboutView: View {
                 Button("Dismiss", systemImage: "chevron.down") {
                     presentationMode.wrappedValue.dismiss()
                 }
-                .tint(Color.white)
             }
         }
         .setAccent(.nordicBlue)
