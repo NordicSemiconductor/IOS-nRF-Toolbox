@@ -31,9 +31,9 @@ struct WheelDataPoint {
     init(_ data: Data) throws {
         let reader = DataReader(data: data)
         
-        revolutions = try reader.readInt(UInt32.self)
+        revolutions = try reader.read(UInt32.self)
         // Wheel event time is a free-running-count of 1/1024 second units
         // as per CSC Service Documentation.
-        time = Measurement<UnitDuration>(value: Double(try reader.readInt(UInt16.self) / 1024), unit: .seconds)
+        time = Measurement<UnitDuration>(value: Double(try reader.read(UInt16.self) / 1024), unit: .seconds)
     }
 }

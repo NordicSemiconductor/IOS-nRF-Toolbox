@@ -67,25 +67,25 @@ struct CGMSMeasurement {
     init(data: Data, sessionStartTime: Date) throws {
         let reader = DataReader(data: data)
         
-        size = try reader.readInt(UInt8.self)
+        size = try reader.read(UInt8.self)
         
         let featureFlags = UInt(try reader.read(UInt8.self))
         let flags = BitField<Flags>(featureFlags)
         
-        measurement = Measurement<UnitConcentrationMass>(value: Double(try reader.readSFloat()), unit: .milligramsPerDeciliter)
+        measurement = Measurement<UnitConcentrationMass>(value: try reader.read(), unit: .milligramsPerDeciliter)
         
-        timeOffset = try reader.readInt(UInt16.self)
+        timeOffset = try reader.read(UInt16.self)
         date = sessionStartTime.addingTimeInterval(TimeInterval(timeOffset * 60))
         
-        sensorStatus = flags.contains(.statusPresent) ? BitField(RegisterValue(try reader.readInt(UInt8.self))) : nil
-        calTempStatus = flags.contains(.calTempPresent) ? BitField(RegisterValue(try reader.readInt(UInt8.self))) : nil
-        warningStatus = flags.contains(.warningPresent) ? BitField(RegisterValue(try reader.readInt(UInt8.self))) : nil
+        sensorStatus = flags.contains(.statusPresent) ? BitField(RegisterValue(try reader.read(UInt8.self))) : nil
+        calTempStatus = flags.contains(.calTempPresent) ? BitField(RegisterValue(try reader.read(UInt8.self))) : nil
+        warningStatus = flags.contains(.warningPresent) ? BitField(RegisterValue(try reader.read(UInt8.self))) : nil
         
-        trend = flags.contains(.trendPresent) ? Measurement<UnitGlucoseTrend>(value: Double(try reader.readSFloat()), unit: .milligramsPerDecilitrePerMinute) : nil
-        quality = flags.contains(.qualityPresent) ? try reader.readSFloat() : nil
+        trend = flags.contains(.trendPresent) ? Measurement<UnitGlucoseTrend>(value: try reader.read(), unit: .milligramsPerDecilitrePerMinute) : nil
+        quality = flags.contains(.qualityPresent) ? try reader.read() : nil
         
         let offset = reader.size()
-        crc = offset + MemoryLayout<UInt16>.size <= size && reader.hasData(UInt16.self) ? try reader.read(UInt16.self) : nil
+        crc = offset + MemoryLayout<UInt16>.size <= size && reader.hasData(UInt16.self) ? try reader.read() : nil
         calculatedCrc = CRC16.mcrf4xx(data: data, offset: 0, length: offset)
         
         measuredSize = reader.size()

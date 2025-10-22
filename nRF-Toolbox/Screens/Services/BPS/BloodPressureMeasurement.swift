@@ -36,14 +36,14 @@ struct BloodPressureMeasurement {
         let flagsRegister = BitField<MeasurementFlag>(featureFlags)
         let unit: UnitPressure = flagsRegister.contains(.unit) ? .kilopascals : .millimetersOfMercury
         
-        systolicPressure = Measurement<UnitPressure>(value: Double(try reader.readSFloat()), unit: unit)
-        diastolicPressure = Measurement<UnitPressure>(value: Double(try reader.readSFloat()), unit: unit)
-        meanArterialPressure = Measurement<UnitPressure>(value: Double(try reader.readSFloat()), unit: unit)
+        systolicPressure = Measurement<UnitPressure>(value: try reader.read(), unit: unit)
+        diastolicPressure = Measurement<UnitPressure>(value: try reader.read(), unit: unit)
+        meanArterialPressure = Measurement<UnitPressure>(value: try reader.read(), unit: unit)
         
-        date = flagsRegister.contains(.timestamp) ? try reader.readDate() : nil
-        pulseRate = flagsRegister.contains(.pulseRate) ? Int(try reader.readSFloat()) : nil
-        userID = flagsRegister.contains(.userID) ? try reader.read(UInt8.self) : nil
-        status = flagsRegister.contains(.measurementStatus) ? BitField<MeasurementStatus>(RegisterValue(try reader.read(UInt16.self))) : nil
+        date = flagsRegister.contains(.timestamp) ? try reader.read() : nil
+        pulseRate = flagsRegister.contains(.pulseRate) ? Int(try reader.read() as Float) : nil
+        userID = flagsRegister.contains(.userID) ? try reader.read() : nil
+        status = flagsRegister.contains(.measurementStatus) ? BitField<MeasurementStatus>(RegisterValue(try reader.read() as UInt16)) : nil
     }
 }
 

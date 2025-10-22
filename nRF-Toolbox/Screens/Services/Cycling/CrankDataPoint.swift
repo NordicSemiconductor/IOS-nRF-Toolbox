@@ -31,7 +31,7 @@ struct CrankDataPoint {
     init(_ data: Data) throws {
         let reader = DataReader(data: data)
         
-        revolutions = try reader.readInt(UInt16.self)
-        time = Double(try reader.readInt(UInt16.self))
+        revolutions = try reader.read(UInt16.self)
+        time = Double(try reader.read(UInt16.self))
     }
 }

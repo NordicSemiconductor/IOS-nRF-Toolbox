@@ -134,7 +134,7 @@ class HealthThermometerParsingTest {
         
         let data = Data(byteArray)
         
-        #expect(throws: ParsingError.invalidSize(actualSize: 1, expectedSize: 3)) {
+        #expect(throws: ParsingError.invalidSize(actualSize: 1, expectedSize: 5)) {
             try TemperatureMeasurement(data)
         }
     }

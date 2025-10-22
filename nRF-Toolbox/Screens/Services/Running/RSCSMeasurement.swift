@@ -60,13 +60,13 @@ public struct RSCSMeasurement {
         flags = BitField<RSCSFeature>(RegisterValue(flagsValue))
 
         // 256 units == 1 meter/second
-        let speedInMetersPerSecond = Double(try reader.readInt(UInt16.self)) / 256.0
+        let speedInMetersPerSecond = Double(try reader.read(UInt16.self)) / 256.0
         instantaneousSpeed = Measurement<UnitSpeed>(value: speedInMetersPerSecond, unit: .metersPerSecond)
         
-        instantaneousCadence = try reader.readInt(UInt8.self)
+        instantaneousCadence = try reader.read(UInt8.self)
 
-        instantaneousStrideLength = flags.contains(.instantaneousStrideLengthMeasurement) ? Measurement(value: Double(try reader.readInt(UInt16.self)), unit: .centimeters) : nil
-        totalDistance = flags.contains(.totalDistanceMeasurement) ? Measurement(value: Double(try reader.readInt(UInt32.self)), unit: .decimeters) : nil
+        instantaneousStrideLength = flags.contains(.instantaneousStrideLengthMeasurement) ? Measurement(value: Double(try reader.read(UInt16.self)), unit: .centimeters) : nil
+        totalDistance = flags.contains(.totalDistanceMeasurement) ? Measurement(value: Double(try reader.read(UInt32.self)), unit: .decimeters) : nil
     }
 
     // MARK: Data
