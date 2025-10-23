@@ -36,7 +36,9 @@ struct RootNavigationView: View {
     
     init() {
         // Might be deprecated but it works.
-        UIApplication.shared.statusBarStyle = .lightContent
+        if #unavailable(iOS 26.0) {
+            UIApplication.shared.statusBarStyle = .lightContent
+        }
     }
     
     // MARK: view
