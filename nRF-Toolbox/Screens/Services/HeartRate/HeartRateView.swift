@@ -49,6 +49,12 @@ struct HeartRateChart: View {
                         y: .value("Heart Rate", value.measurement.heartRateValue)
                     )
                     .foregroundStyle(Color.nordicRed)
+                    
+                    PointMark(
+                        x: .value("Date", value.date),
+                        y: .value("Heart Rate", value.measurement.heartRateValue)
+                    )
+                    .foregroundStyle(Color.nordicRed)
                 }
                 .interpolationMethod(.catmullRom)
             }
