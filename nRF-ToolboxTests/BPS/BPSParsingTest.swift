@@ -92,8 +92,8 @@ class BPSParsingTest {
             0x00,   // Diastolic: 81
             0x6a,
             0x00,   // Mean Arterial Pressure: 106
-            0xE4,   // Year LSB (2020)
-            0x07,   // Year MSB (2020)
+            0xE9,   // Year LSB (2025)
+            0x07,   // Year MSB (2025)
             0x05,   // Month: May
             0x15,   // Day: 21
             0x0A,   // Hour: 10
@@ -120,7 +120,7 @@ class BPSParsingTest {
         #expect(result.diastolicPressure == Measurement(value: 81, unit: .kilopascals))
         #expect(result.systolicPressure == Measurement(value: 121, unit: .kilopascals))
         #expect(result.meanArterialPressure == Measurement(value: 106, unit: .kilopascals))
-        #expect(year == 2020)
+        #expect(year == 2025)
         #expect(month == 5)
         #expect(day == 21)
         #expect(hour == 10)

@@ -61,8 +61,8 @@ class HealthThermometerParsingTest {
             0x0E,       // Temperature byte 2
             0x00,       // Temperature byte 3
             0xFE,       // Temperature byte 4 (MSB)
-            0xE4,       // Year LSB (2020)
-            0x07,       // Year MSB (2020)
+            0xE9,       // Year LSB (2025)
+            0x07,       // Year MSB (2025)
             0x05,       // Month: May
             0x15,       // Day: 21
             0x0A,       // Hour: 10
@@ -85,7 +85,7 @@ class HealthThermometerParsingTest {
         #expect(result.location == .armpit)
         #expect(day == 21)
         #expect(month == 5)
-        #expect(year == 2020)
+        #expect(year == 2025)
         #expect(hour == 10)
         #expect(minute == 30)
         #expect(second == 45)

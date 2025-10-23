@@ -90,8 +90,8 @@ class GLSParsingTest {
     func testMissingMandatoryFields() {
         let byteArray: [UInt8] = [
             0x00,   // Flags: No optional fields
-            0xE4,
-            0x07,   // Year: 2020 (little-endian)
+            0xE9,
+            0x07,   // Year: 2025 (little-endian)
             0x05,   // Month: May
             0x15,   // Day: 21
             0x0A,   // Hour: 10
@@ -114,8 +114,8 @@ class GLSParsingTest {
             0x00,   // Flags: No optional fields
             0x01,
             0x00,   // Sequence Number
-            0xE4,
-            0x07,   // Year: 2020 (little-endian)
+            0xE9,
+            0x07,   // Year: 2025 (little-endian)
             0x05,   // Month: May
             0x15,   // Day: 21
             0x0A,   // Hour: 10
@@ -137,7 +137,7 @@ class GLSParsingTest {
         let second = calendar.component(.second, from: result.timestamp)
         
         #expect(result.sequenceNumber == 1)
-        #expect(year == 2020)
+        #expect(year == 2025)
         #expect(month == 5)
         #expect(day == 21)
         #expect(hour == 10)
@@ -151,8 +151,8 @@ class GLSParsingTest {
             0x1F,  // Flags: All optional fields present
             0x02,
             0x00,  // Sequence Number
-            0xE4,
-            0x07,  // Year: 2020 (little-endian)
+            0xE9,
+            0x07,  // Year: 2025 (little-endian)
             0x05,  // Month: May
             0x15,  // Day: 21
             0x0A,  // Hour: 10
@@ -181,7 +181,7 @@ class GLSParsingTest {
         let second = calendar.component(.second, from: result.timestamp)
         
         #expect(result.sequenceNumber == 2)
-        #expect(year == 2020)
+        #expect(year == 2025)
         #expect(month == 5)
         #expect(day == 21)
         #expect(hour == 10)

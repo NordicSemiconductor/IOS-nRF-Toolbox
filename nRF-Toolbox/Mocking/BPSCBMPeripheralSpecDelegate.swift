@@ -50,8 +50,8 @@ class BPSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
                 0x00,   // Diastolic: 81
                 UInt8.random(in: 0...255),
                 0x00,   // Mean Arterial Pressure: 106
-                0xE9,   // Year LSB (2020)
-                0x07,   // Year MSB (2020)
+                0xE9,   // Year LSB (2025)
+                0x07,   // Year MSB (2025)
                 UInt8.random(in: 1...12),   // Month
                 UInt8.random(in: 1...28),   // Day
                 0x0A,   // Hour: 10
