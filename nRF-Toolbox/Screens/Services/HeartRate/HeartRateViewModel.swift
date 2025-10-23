@@ -117,7 +117,7 @@ private extension HeartRateViewModel {
         let hrCharacteristics: [Characteristic] = [.heartRateMeasurement, .bodySensorLocation, .heartRateControlPoint]
         
         let heartRateCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
-            characteristics.contains { $0.uuid == cbChar.uuid }
+            hrCharacteristics.contains { $0.uuid == cbChar.uuid }
         }
         
         hrMeasurement = heartRateCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.heartRateMeasurement.uuid)

@@ -64,7 +64,7 @@ final class CyclingServiceViewModel: SupportedServiceViewModel, ObservableObject
         log.debug(#function)
         let serviceCharacteristics: [Characteristic] = [.cscMeasurement, .cscFeature]
         let discoveredCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
-            characteristics.contains { $0.uuid == cbChar.uuid }
+            serviceCharacteristics.contains { $0.uuid == cbChar.uuid }
         }
         
         for characteristic in discoveredCharacteristics {
