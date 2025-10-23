@@ -13,6 +13,7 @@ public struct BluetoothEmulation {
     
     static let shared = BluetoothEmulation()
     
+    private let cscs = CSCSCBMPeripheralSpecDelegate()
     private let rscs = RSCSCBMPeripheralSpecDelegate()
     private let heartRate = HeartRateCBMPeripheralSpecDelegate()
     private let glucose = GLSCBMPeripheralSpecDelegate()
@@ -27,6 +28,7 @@ public struct BluetoothEmulation {
     
     public func simulatePeripherals() {
         CBMCentralManagerMock.simulatePeripherals([
+            cscs.peripheral,
             rscs.peripheral,
             heartRate.peripheral,
             glucose.peripheral,
