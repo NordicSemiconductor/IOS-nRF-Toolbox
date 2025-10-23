@@ -58,6 +58,7 @@ struct HeartRateChart: View {
                 }
                 .interpolationMethod(.catmullRom)
             }
+            .chartXScale(domain: [viewModel.minDate, viewModel.maxDate], range: .plotDimension(padding: 8))
             .chartXAxis(.hidden)
             .chartYScale(domain: [viewModel.lowest, viewModel.highest],
                          range: .plotDimension(padding: 8))

@@ -27,6 +27,8 @@ final class HeartRateViewModel: @MainActor SupportedServiceViewModel, Observable
     @Published fileprivate(set) var location: HeartRateMeasurement.SensorLocation?
     @Published fileprivate(set) var caloriesResetState = CaloriesResetState.unavailable
     @Published var scrollPosition = Date()
+    @Published private(set) var minDate: Date = .distantPast
+    @Published private(set) var maxDate: Date = .distantFuture
     
     @Published fileprivate(set) var criticalError: CriticalError?
     @Published var alertError: Error?
@@ -55,6 +57,13 @@ final class HeartRateViewModel: @MainActor SupportedServiceViewModel, Observable
         self.characteristics = characteristics
         self.data.reserveCapacity(capacity)
         log.debug(#function)
+        
+        $data.sink { records in
+            let values = records.map { $0.date }
+
+            self.minDate = (values.min() ?? .distantPast).addingTimeInterval(-5)
+            self.maxDate = (values.max() ?? .distantFuture).addingTimeInterval(5)
+        }.store(in: &cancellables)
     }
     
     // MARK: deinit
