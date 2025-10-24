@@ -111,24 +111,21 @@ class CSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
         moment = generateNextValue(moment)
         wheelData = generateNextValue(wheelData)
         crankData = generateNextValue(crankData)
-        let momentInSeconds = moment * 1024
+        let momentInSeconds = (moment % 63) * 1024
         
-        log.debug("AAATESTAAA - moment: \(moment)")
-        log.debug("AAATESTAAA - wheelData: \(wheelData)")
-        log.debug("AAATESTAAA - crankData: \(crankData)")
         return Data(
             [
                 0x03,                                   // Wheel & crank data is present
-                UInt8((wheelData >> 24) & 0xFF),
-                UInt8((wheelData >> 16) & 0xFF),
+                UInt8(wheelData & 0xFF),
                 UInt8((wheelData >> 8) & 0xFF),
-                UInt8(wheelData & 0xFF),                // wheel rotations
-                UInt8((momentInSeconds >> 8) & 0xFF),
-                UInt8(momentInSeconds & 0xFF),          // 1024 -> 1 second
-                UInt8((crankData >> 8) & 0xFF),
-                UInt8(crankData & 0xFF),                // crank rotations
-                UInt8((momentInSeconds >> 8) & 0xFF),
-                UInt8(momentInSeconds & 0xFF)           // 1024 -> 1 second
+                UInt8((wheelData >> 16) & 0xFF),
+                UInt8((wheelData >> 24) & 0xFF),        // wheel rotations
+                UInt8(momentInSeconds & 0xFF),
+                UInt8((momentInSeconds >> 8) & 0xFF),   // 1024 -> 1 second
+                UInt8(crankData & 0xFF),
+                UInt8((crankData >> 8) & 0xFF),         // crank rotations
+                UInt8(momentInSeconds & 0xFF),
+                UInt8((momentInSeconds >> 8) & 0xFF),   // 1024 -> 1 second
             ]
         )
     }
