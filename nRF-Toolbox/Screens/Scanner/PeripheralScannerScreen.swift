@@ -54,5 +54,6 @@ struct PeripheralScannerScreen: View {
         .onDisappear {
             viewModel.stopScanning()
         }
+        .setupTranslucentBackground()
     }
 }

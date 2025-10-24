@@ -44,7 +44,6 @@ struct RunningServiceView: View {
                         SensorCalibrationScreen()
                             .environmentObject(viewModel)
                     }
-                    .setAccent(.white)
                 }
             })
             .centered()

@@ -85,7 +85,6 @@ struct SensorCalibrationScreen: View {
         .listStyle(.insetGrouped)
         .navigationTitle("Sensor Calibration")
         .navigationBarTitleDisplayMode(.inline)
-        
         .toolbarRole(.navigationStack)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {

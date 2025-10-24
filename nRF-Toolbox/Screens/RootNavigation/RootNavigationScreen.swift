@@ -32,15 +32,6 @@ struct RootNavigationView: View {
     
     private let log = NordicLog(category: "RootNavigationView", subsystem: "com.nordicsemi.nrf-toolbox")
     
-    // MARK: init
-    
-    init() {
-        // Might be deprecated but it works.
-        if #unavailable(iOS 26.0) {
-            UIApplication.shared.statusBarStyle = .lightContent
-        }
-    }
-    
     // MARK: view
     
     var body: some View {
@@ -54,7 +45,6 @@ struct RootNavigationView: View {
             NavigationStack {
                 NordicEmptyView()
             }
-            .setAccent(.white)
             .navigationBarTitleDisplayMode(.inline)
         }
         .navigationSplitViewStyle(.balanced)
@@ -86,8 +76,7 @@ struct RootNavigationView: View {
             NavigationStack {
                 AboutView()
             }
-            .setAccent(.white)
-            .setupNavBarBackground()
+            .setupTranslucentBackground()
         }
         .onAppear {
             connectedDevicesViewModel.setupManager()

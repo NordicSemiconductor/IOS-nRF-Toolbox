@@ -23,6 +23,7 @@ struct nRF_ToolboxApp: App {
                     BluetoothEmulation.shared.simulateState()
                     BluetoothEmulation.shared.simulatePeripherals()
                 }
+                .setupTranslucentBackground()
         }
     }
 }

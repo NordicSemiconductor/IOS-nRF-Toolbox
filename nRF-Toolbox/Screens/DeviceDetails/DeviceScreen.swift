@@ -124,7 +124,7 @@ struct DeviceScreen: View {
                 InspectorScreen(device)
                     .navigationBarTitleDisplayMode(.inline)
             }
-            .setAccent(.white)
+            .setupTranslucentBackground()
         }
         .onReceive(connectedDevicesViewModel.objectWillChange) {
             guard connectedDevicesViewModel.connectedDevices.firstIndex(where: \.id, equals: device.id) == nil else { return }
