@@ -77,6 +77,5 @@ struct AboutView: View {
                 }
             }
         }
-        .setAccent(.nordicBlue)
     }
 }

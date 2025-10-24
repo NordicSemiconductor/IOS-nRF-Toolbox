@@ -76,6 +76,6 @@ struct SidebarView: View {
         }
         .tint(Color.universalAccentColor)
         .listStyle(.insetGrouped)
-        .setupNavBarBackground(with: Assets.navBar.color)
+        .setupNavBarBackground()
     }
 }
