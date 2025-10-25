@@ -12,7 +12,7 @@ import iOS_BLE_Library_Mock
 import CoreBluetoothMock
 import iOS_Common_Libraries
 
-class HeartRateCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
+class HeartRateCBMPeripheralSpecDelegate: MockSpecDelegate {
     
     let log = NordicLog(category: "HeartRateMock")
     lazy var cancellables = Set<AnyCancellable>()
@@ -37,6 +37,10 @@ class HeartRateCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
             delegate: self
         )
         .build()
+    
+    func getMainService() -> CoreBluetoothMock.CBMServiceMock {
+        .heartRate
+    }
     
     enum MockError: Error {
         case notifyIsNotSupported, readingIsNotSupported, writingIsNotSupported, incorrectCommand

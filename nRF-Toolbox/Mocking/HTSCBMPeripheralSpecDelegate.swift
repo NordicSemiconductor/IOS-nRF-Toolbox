@@ -12,7 +12,7 @@ import iOS_BLE_Library_Mock
 import CoreBluetoothMock
 import iOS_Common_Libraries
 
-class HTSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
+class HTSCBMPeripheralSpecDelegate: MockSpecDelegate {
     
     let log = NordicLog(category: "HealthThermometerMock")
     lazy var cancellables = Set<AnyCancellable>()
@@ -35,6 +35,10 @@ class HTSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
             delegate: self
         )
         .build()
+    
+    func getMainService() -> CoreBluetoothMock.CBMServiceMock {
+        .temperature
+    }
     
     enum MockError: Error {
         case notificationsNotEnabled, operationNotSupported, incorrectCommand, readingIsNotSupported

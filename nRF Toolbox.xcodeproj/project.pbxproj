@@ -71,6 +71,8 @@
 		A770FE6A2E7D69CA00357127 /* CGMFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = A770FE692E7D69C900357127 /* CGMFeatures.swift */; };
 		A770FE6C2E7D69FF00357127 /* CGMSFeatureParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A770FE6B2E7D69FE00357127 /* CGMSFeatureParser.swift */; };
 		A770FE6E2E7D6F2B00357127 /* CRC16.swift in Sources */ = {isa = PBXBuildFile; fileRef = A770FE6D2E7D6F2800357127 /* CRC16.swift */; };
+		A7A28FD32EAD3D4B004ECC8B /* AggregatedPeripheralSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A28FD22EAD3D46004ECC8B /* AggregatedPeripheralSpecDelegate.swift */; };
+		A7A28FD52EAD3E02004ECC8B /* MockSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A28FD42EAD3E01004ECC8B /* MockSpecDelegate.swift */; };
 		A7CB671E2E967BFA007E1311 /* CGMSSensorStatusOctet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CB671D2E967BF5007E1311 /* CGMSSensorStatusOctet.swift */; };
 		A7CB67202E967C05007E1311 /* CGMSCalTempOctet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CB671F2E967C00007E1311 /* CGMSCalTempOctet.swift */; };
 		A7CB67222E967C0D007E1311 /* CGMSWarningOctet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CB67212E967C08007E1311 /* CGMSWarningOctet.swift */; };
@@ -245,6 +247,8 @@
 		A770FE692E7D69C900357127 /* CGMFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMFeatures.swift; sourceTree = "<group>"; };
 		A770FE6B2E7D69FE00357127 /* CGMSFeatureParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSFeatureParser.swift; sourceTree = "<group>"; };
 		A770FE6D2E7D6F2800357127 /* CRC16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRC16.swift; sourceTree = "<group>"; };
+		A7A28FD22EAD3D46004ECC8B /* AggregatedPeripheralSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AggregatedPeripheralSpecDelegate.swift; sourceTree = "<group>"; };
+		A7A28FD42EAD3E01004ECC8B /* MockSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSpecDelegate.swift; sourceTree = "<group>"; };
 		A7CB67182E964A7C007E1311 /* nRF-ToolboxTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "nRF-ToolboxTests.xctestplan"; sourceTree = "<group>"; };
 		A7CB671D2E967BF5007E1311 /* CGMSSensorStatusOctet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSSensorStatusOctet.swift; sourceTree = "<group>"; };
 		A7CB671F2E967C00007E1311 /* CGMSCalTempOctet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSCalTempOctet.swift; sourceTree = "<group>"; };
@@ -511,6 +515,8 @@
 		017D10342A5809E400E38E5F /* Mocking */ = {
 			isa = PBXGroup;
 			children = (
+				A7A28FD42EAD3E01004ECC8B /* MockSpecDelegate.swift */,
+				A7A28FD22EAD3D46004ECC8B /* AggregatedPeripheralSpecDelegate.swift */,
 				A72A343B2EAA570F0011BA44 /* CSCSCBMPeripheralSpecDelegate.swift */,
 				A7D657C32EA2470300CA7D63 /* UARTCBMPeripheralSpecDelegate.swift */,
 				A75F11712E9FA31F00B0D6CB /* BPSCBMPeripheralSpecDelegate.swift */,
@@ -1105,6 +1111,7 @@
 				AAE42EEC2DCCC915006212B4 /* UARTMacroSelectionView.swift in Sources */,
 				013E5D9B2AE0545F00B9C475 /* OnFirstAppear.swift in Sources */,
 				AA2931592DEEEFCD002C82B6 /* BloodPressureMeasurement.swift in Sources */,
+				A7A28FD52EAD3E02004ECC8B /* MockSpecDelegate.swift in Sources */,
 				A7D2C8E52E7D414700C93C28 /* CGMSFeatureEnvelope.swift in Sources */,
 				01C81AD52A5CB6420011B41E /* ServiceBadge.swift in Sources */,
 				01FB19D22AE3DB70006DAB9F /* SensorCalibrationViewModel.swift in Sources */,
@@ -1114,6 +1121,7 @@
 				AAC542B62E2E63BA004FB4D2 /* RSCSCBMPeripheralSpecDelegate.swift in Sources */,
 				AAE9673C2E38E58D00A7B93B /* SCResponse.swift in Sources */,
 				AAA04F1D2DAD1B5C002DAB42 /* UARTView.swift in Sources */,
+				A7A28FD32EAD3D4B004ECC8B /* AggregatedPeripheralSpecDelegate.swift in Sources */,
 				AAC4177F2DCB725F0059FE97 /* UARTMacro.swift in Sources */,
 				AA7769FD2DEDED9A0005A82B /* BloodPressureViewModel.swift in Sources */,
 				01AB7B752A77BFB400AEDDCD /* CBUUID+Ext.swift in Sources */,

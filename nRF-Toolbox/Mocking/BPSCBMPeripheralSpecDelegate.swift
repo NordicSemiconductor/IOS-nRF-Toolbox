@@ -12,7 +12,7 @@ import iOS_BLE_Library_Mock
 import CoreBluetoothMock
 import iOS_Common_Libraries
 
-class BPSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
+class BPSCBMPeripheralSpecDelegate: MockSpecDelegate {
     
     let log = NordicLog(category: "BloodPressureMock")
     lazy var cancellables = Set<AnyCancellable>()
@@ -93,6 +93,10 @@ class BPSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
         }
         
         return .success(())
+    }
+    
+    func getMainService() -> CoreBluetoothMock.CBMServiceMock {
+        .bloodPressure
     }
 }
 

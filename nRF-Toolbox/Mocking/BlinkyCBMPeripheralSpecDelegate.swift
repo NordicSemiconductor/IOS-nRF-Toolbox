@@ -64,6 +64,10 @@ extension CBMServiceMock {
 
 internal class BlinkyCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
     
+    func getMainService() -> CoreBluetoothMock.CBMServiceMock {
+        .blinkyService
+    }
+    
     enum MockError: Error {
         case notifyIsNotSupported, readingIsNotSupported, writingIsNotSupported
     }

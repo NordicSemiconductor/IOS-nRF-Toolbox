@@ -14,7 +14,8 @@ import iOS_Common_Libraries
 
 // MARK: RSCS
 
-class CSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
+class CSCSCBMPeripheralSpecDelegate: MockSpecDelegate {
+    
     public var enabledFeatures: BitField<RSCSFeature> = .all()
     public var sensorLocation: RSCSSensorLocation = .inShoe
     
@@ -128,6 +129,10 @@ class CSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
                 UInt8((momentInSeconds >> 8) & 0xFF),   // 1024 -> 1 second
             ]
         )
+    }
+    
+    func getMainService() -> CoreBluetoothMock.CBMServiceMock {
+        .cyclingSpeedCadence
     }
 }
 

@@ -12,7 +12,7 @@ import iOS_BLE_Library_Mock
 import CoreBluetoothMock
 import iOS_Common_Libraries
 
-class GLSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
+class GLSCBMPeripheralSpecDelegate: MockSpecDelegate {
     
     let log = NordicLog(category: "GlucoseMock")
     
@@ -34,6 +34,10 @@ class GLSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
             delegate: self
         )
         .build()
+    
+    func getMainService() -> CoreBluetoothMock.CBMServiceMock {
+        .glucose
+    }
     
     enum MockError: Error {
         case notificationsNotEnabled, operationNotSupported, incorrectCommand

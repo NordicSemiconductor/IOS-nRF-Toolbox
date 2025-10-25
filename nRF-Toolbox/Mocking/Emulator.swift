@@ -21,6 +21,16 @@ public struct BluetoothEmulation {
     private let healthThermometer = HTSCBMPeripheralSpecDelegate()
     private let cgms = CGMSCBMPeripheralSpecDelegate()
     private let uart = UARTCBMPeripheralSpecDelegate()
+    private let aggregated = AggregatedPeripheralSpecDelegate(delegates: [
+        CSCSCBMPeripheralSpecDelegate(),
+        RSCSCBMPeripheralSpecDelegate(),
+        HeartRateCBMPeripheralSpecDelegate(),
+        GLSCBMPeripheralSpecDelegate(),
+        BPSCBMPeripheralSpecDelegate(),
+        HTSCBMPeripheralSpecDelegate(),
+        CGMSCBMPeripheralSpecDelegate(),
+        UARTCBMPeripheralSpecDelegate()
+    ])
     
     public func simulateState() {
         CBMCentralManagerMock.simulateInitialState(.poweredOn)
@@ -28,6 +38,7 @@ public struct BluetoothEmulation {
     
     public func simulatePeripherals() {
         CBMCentralManagerMock.simulatePeripherals([
+            aggregated.peripheral,
             cscs.peripheral,
             rscs.peripheral,
             heartRate.peripheral,

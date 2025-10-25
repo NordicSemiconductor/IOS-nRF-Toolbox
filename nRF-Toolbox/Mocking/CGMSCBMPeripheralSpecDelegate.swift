@@ -12,7 +12,7 @@ import iOS_BLE_Library_Mock
 import CoreBluetoothMock
 import iOS_Common_Libraries
 
-class CGMSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
+class CGMSCBMPeripheralSpecDelegate: MockSpecDelegate {
     
     let log = NordicLog(category: "CGMSMock")
     lazy var cancellables = Set<AnyCancellable>()
@@ -35,6 +35,10 @@ class CGMSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
             delegate: self
         )
         .build()
+    
+    func getMainService() -> CoreBluetoothMock.CBMServiceMock {
+        .cgms
+    }
     
     enum MockError: Error {
         case notificationsNotEnabled, operationNotSupported, incorrectCommand
