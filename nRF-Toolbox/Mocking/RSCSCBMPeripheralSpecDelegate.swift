@@ -68,25 +68,25 @@ class RSCSCBMPeripheralSpecDelegate: MockSpecDelegate {
 
 extension RSCSCBMPeripheralSpecDelegate {
     
-    func didReceiveSetCumulativeValue(value: UInt32) {
+    func didReceiveSetCumulativeValue(_ peripheral: CBMPeripheralSpec, value: UInt32) {
         var measurement: RSCSMeasurement = .random()
         measurement.totalDistance = Measurement<UnitLength>(value: Double(value), unit: .meters)
         peripheral.simulateValueUpdate(SetCumulativeValueResponse(responseCode: .success).data,
                                        for: .scControlPoint)
     }
     
-    func didReceiveStartSensorCalibration() {
+    func didReceiveStartSensorCalibration(_ peripheral: CBMPeripheralSpec) {
         peripheral.simulateValueUpdate(StartSensorCalibrationResponse(responseCode: .success).data,
                                        for: .scControlPoint)
     }
     
-    func didReceiveUpdateSensorLocation(_ location: RSCSSensorLocation) {
+    func didReceiveUpdateSensorLocation(_ peripheral: CBMPeripheralSpec, _ location: RSCSSensorLocation) {
         sensorLocation = location
         peripheral.simulateValueUpdate(UpdateSensorLocationResponse(responseCode: .success).data,
                                        for: .scControlPoint)
     }
     
-    func didReceiveRequestSupportedSensorLocations() {
+    func didReceiveRequestSupportedSensorLocations(_ peripheral: CBMPeripheralSpec) {
         let locations: [RSCSSensorLocation] = [.chest, .hip, .inShoe, .other, .topOfShoe]
         peripheral.simulateValueUpdate(SupportedSensorLocations(locations: locations).data, for: .scControlPoint)
     }
@@ -144,14 +144,14 @@ extension RSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
             switch opCode {
             case .setCumulativeValue:
                 let value: UInt32 = UInt32(data.littleEndianBytes(as: UInt32.self))
-                didReceiveSetCumulativeValue(value: value)
+                didReceiveSetCumulativeValue(peripheral, value: value)
             case .startSensorCalibration:
-                didReceiveStartSensorCalibration()
+                didReceiveStartSensorCalibration(peripheral)
             case .updateSensorLocation:
                 let location = RSCSSensorLocation(rawValue: UInt8(data.littleEndianBytes(as: UInt8.self)))!
-                didReceiveUpdateSensorLocation(location)
+                didReceiveUpdateSensorLocation(peripheral, location)
             case .requestSupportedSensorLocations:
-                didReceiveRequestSupportedSensorLocations()
+                didReceiveRequestSupportedSensorLocations(peripheral)
             default:
                 return .failure(MockError.writingIsNotSupported)
             }

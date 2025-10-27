@@ -114,16 +114,16 @@ class CGMSCBMPeripheralSpecDelegate: MockSpecDelegate {
                 switch opCode {
                 case .allRecords:
                     for (index, _) in records.enumerated() {
-                        sendResponse(index)
+                        sendResponse(peripheral, index)
                     }
                     peripheral.simulateValueUpdate(reportRecordsResponse, for: CBMCharacteristicMock.recordAccessControlPoint)
                     return .success(())
                 case .firstRecord:
-                    sendResponse(records.startIndex)
+                    sendResponse(peripheral, records.startIndex)
                     peripheral.simulateValueUpdate(reportRecordsResponse, for: CBMCharacteristicMock.recordAccessControlPoint)
                     return .success(())
                 case .lastRecord:
-                    sendResponse(records.endIndex - 1)
+                    sendResponse(peripheral, records.endIndex - 1)
                     peripheral.simulateValueUpdate(reportRecordsResponse, for: CBMCharacteristicMock.recordAccessControlPoint)
                     return .success(())
                 default:
@@ -148,7 +148,7 @@ class CGMSCBMPeripheralSpecDelegate: MockSpecDelegate {
                 .autoconnect()
                 .sink { [unowned self] _ in
                     self.records.append(generateNewRecord())
-                    sendResponse(records.endIndex - 1)
+                    sendResponse(peripheral, records.endIndex - 1)
                 }
                 .store(in: &cancellables)
         case .recordAccessControlPoint:
@@ -162,7 +162,7 @@ class CGMSCBMPeripheralSpecDelegate: MockSpecDelegate {
         return .success(())
     }
     
-    func sendResponse(_ index: Int) {
+    func sendResponse(_ peripheral: CBMPeripheralSpec, _ index: Int) {
         let data = Data(records[index])
         peripheral.simulateValueUpdate(data, for: CBMCharacteristicMock.cgmsMeasurement)
     }

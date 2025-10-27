@@ -22,20 +22,15 @@ public struct BluetoothEmulation {
     private let cgms = CGMSCBMPeripheralSpecDelegate()
     private let uart = UARTCBMPeripheralSpecDelegate()
     private let aggregated = AggregatedPeripheralSpecDelegate(delegates: [
-        GLSCBMPeripheralSpecDelegate(),
-//        CSCSCBMPeripheralSpecDelegate(),
-//        RSCSCBMPeripheralSpecDelegate(),
         BlinkyCBMPeripheralSpecDelegate(),
-   
-  
-
-//        HeartRateCBMPeripheralSpecDelegate(),
-//        GLSCBMPeripheralSpecDelegate(),
-//        BPSCBMPeripheralSpecDelegate(),
-//        HTSCBMPeripheralSpecDelegate(),
-//        CGMSCBMPeripheralSpecDelegate(),
-//        UARTCBMPeripheralSpecDelegate(),
-
+        CSCSCBMPeripheralSpecDelegate(),
+        RSCSCBMPeripheralSpecDelegate(),
+        HeartRateCBMPeripheralSpecDelegate(),
+        GLSCBMPeripheralSpecDelegate(),
+        BPSCBMPeripheralSpecDelegate(),
+        HTSCBMPeripheralSpecDelegate(),
+        CGMSCBMPeripheralSpecDelegate(),
+        UARTCBMPeripheralSpecDelegate(),
     ])
     
     public func simulateState() {
