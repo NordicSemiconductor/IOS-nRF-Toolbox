@@ -41,42 +41,35 @@ class AggregatedPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
         )
         .build()
     
-    
-    enum MockError: Error {
-        case noDelegateToHandleRequest
-    }
-    
-    public func peripheral(_ peripheral: CBMPeripheralSpec, didReceiveReadRequestFor characteristic: CBMCharacteristicMock)
-    -> Result<Data, Error> {
-        
-        let results = delegates.compactMap { $0.peripheral(peripheral, didReceiveReadRequestFor: characteristic) }
-        
-        if let firstSuccess = results.first(where: { if case .success = $0 { return true } else { return false } }) {
-            return firstSuccess
-        } else {
-            return .failure(MockError.noDelegateToHandleRequest)
+    public func peripheral(_ peripheral: CBMPeripheralSpec, didReceiveReadRequestFor characteristic: CBMCharacteristicMock) -> Result<Data, Error> {
+        for delegate in delegates {
+            let result = delegate.peripheral(peripheral, didReceiveReadRequestFor: characteristic)
+            if case .success = result {
+                return result
+            }
         }
+        return .failure(MockError.readingIsNotSupported)
     }
     
     public func peripheral(_ peripheral: CBMPeripheralSpec,
                     didReceiveWriteRequestFor characteristic: CBMCharacteristicMock,
                     data: Data) -> Result<Void, Error> {
-        let results = delegates.compactMap { $0.peripheral(peripheral, didReceiveWriteRequestFor: characteristic, data: data) }
-        
-        if let firstSuccess = results.first(where: { if case .success = $0 { return true } else { return false } }) {
-            return firstSuccess
-        } else {
-            return .failure(MockError.noDelegateToHandleRequest)
+        for delegate in delegates {
+            let result = delegate.peripheral(peripheral, didReceiveWriteRequestFor: characteristic, data: data)
+            if case .success = result {
+                return result
+            }
         }
+        return .failure(MockError.writingIsNotSupported)
     }
     
     public func peripheral(_ peripheral: CBMPeripheralSpec, didReceiveSetNotifyRequest enabled: Bool, for characteristic: CBMCharacteristicMock) -> Result<Void, Error> {
-        let results = delegates.compactMap { $0.peripheral(peripheral, didReceiveSetNotifyRequest: enabled, for: characteristic) }
-        
-        if let firstSuccess = results.first(where: { if case .success = $0 { return true } else { return false } }) {
-            return firstSuccess
-        } else {
-            return .failure(MockError.noDelegateToHandleRequest)
+        for delegate in delegates {
+            let result = delegate.peripheral(peripheral, didReceiveSetNotifyRequest: enabled, for: characteristic)
+            if case .success = result {
+                return result
+            }
         }
+        return .failure(MockError.notifyIsNotSupported)
     }
 }

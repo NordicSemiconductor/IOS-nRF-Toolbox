@@ -41,11 +41,7 @@ class HeartRateCBMPeripheralSpecDelegate: MockSpecDelegate {
     func getMainService() -> CoreBluetoothMock.CBMServiceMock {
         .heartRate
     }
-    
-    enum MockError: Error {
-        case notifyIsNotSupported, readingIsNotSupported, writingIsNotSupported, incorrectCommand
-    }
-    
+
     public func peripheral(_ peripheral: CBMPeripheralSpec,
                     didReceiveReadRequestFor characteristic: CBMCharacteristicMock)
     -> Result<Data, Error> {

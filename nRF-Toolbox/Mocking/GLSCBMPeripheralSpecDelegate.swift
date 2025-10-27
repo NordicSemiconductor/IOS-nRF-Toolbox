@@ -38,10 +38,6 @@ class GLSCBMPeripheralSpecDelegate: MockSpecDelegate {
     func getMainService() -> CoreBluetoothMock.CBMServiceMock {
         .glucose
     }
-    
-    enum MockError: Error {
-        case notificationsNotEnabled, operationNotSupported, incorrectCommand
-    }
 
     private var records: [[UInt8]] = [
         [0x07, 0x00, 0x00, 0xe9, 0x07, 0x01, 0x01, 0x0c, 0x1e, 0x05, 0x00, 0x00, 0x26, 0xd2, 0x11],
@@ -90,7 +86,7 @@ class GLSCBMPeripheralSpecDelegate: MockSpecDelegate {
                 return .failure(MockError.incorrectCommand)
             }
         default:
-            return .failure(MockError.operationNotSupported)
+            return .failure(MockError.writingIsNotSupported)
         }
     }
     
@@ -104,10 +100,14 @@ class GLSCBMPeripheralSpecDelegate: MockSpecDelegate {
         case .recordAccessControlPoint:
             isRacpNotificationEnabled = enabled
         default:
-            return .failure(MockError.operationNotSupported)
+            return .failure(MockError.notifyIsNotSupported)
         }
         
         return .success(())
+    }
+    
+    func peripheral(_ peripheral: CBMPeripheralSpec, didReceiveReadRequestFor characteristic: CBMCharacteristicMock) -> Result<Data, any Error> {
+        return .failure(MockError.readingIsNotSupported)
     }
     
     func sendResponse(_ index: Int) {

@@ -35,11 +35,7 @@ class BPSCBMPeripheralSpecDelegate: MockSpecDelegate {
             delegate: self
         )
         .build()
-    
-    enum MockError: Error {
-        case notificationsNotEnabled, operationNotSupported, incorrectCommand, readingIsNotSupported
-    }
-    
+
     func generateData() -> Data {
         return Data(
             [
@@ -89,10 +85,16 @@ class BPSCBMPeripheralSpecDelegate: MockSpecDelegate {
                 }
                 .store(in: &cancellables)
         default:
-            return .failure(MockError.operationNotSupported)
+            return .failure(MockError.notifyIsNotSupported)
         }
         
         return .success(())
+    }
+    
+    public func peripheral(_ peripheral: CBMPeripheralSpec,
+                    didReceiveWriteRequestFor characteristic: CBMCharacteristicMock,
+                    data: Data) -> Result<Void, Error> {
+        return .failure(MockError.writingIsNotSupported)
     }
     
     func getMainService() -> CoreBluetoothMock.CBMServiceMock {

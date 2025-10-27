@@ -40,10 +40,6 @@ class HTSCBMPeripheralSpecDelegate: MockSpecDelegate {
         .temperature
     }
     
-    enum MockError: Error {
-        case notificationsNotEnabled, operationNotSupported, incorrectCommand, readingIsNotSupported
-    }
-    
     func generateData() -> Data {
         return Data(
             [
@@ -76,10 +72,20 @@ class HTSCBMPeripheralSpecDelegate: MockSpecDelegate {
                 }
                 .store(in: &cancellables)
         default:
-            return .failure(MockError.operationNotSupported)
+            return .failure(MockError.notifyIsNotSupported)
         }
         
         return .success(())
+    }
+    
+    public func peripheral(_ peripheral: CBMPeripheralSpec,
+                    didReceiveWriteRequestFor characteristic: CBMCharacteristicMock,
+                           data: Data) -> Result<Void, Error> {
+        return .failure(MockError.writingIsNotSupported)
+    }
+    
+    func peripheral(_ peripheral: CBMPeripheralSpec, didReceiveReadRequestFor characteristic: CBMCharacteristicMock) -> Result<Data, any Error> {
+        return .failure(MockError.readingIsNotSupported)
     }
 }
 

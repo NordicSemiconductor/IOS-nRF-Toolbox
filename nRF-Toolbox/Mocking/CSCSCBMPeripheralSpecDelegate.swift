@@ -53,10 +53,6 @@ class CSCSCBMPeripheralSpecDelegate: MockSpecDelegate {
         )
         .build()
     
-    enum MockError: Error {
-        case notifyIsNotSupported, readingIsNotSupported, writingIsNotSupported
-    }
-    
     func peripheral(_ peripheral: CBMPeripheralSpec,
                     didReceiveReadRequestFor characteristic: CBMCharacteristicMock)
     -> Result<Data, Error> {

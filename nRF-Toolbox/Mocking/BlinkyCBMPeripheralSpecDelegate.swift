@@ -62,16 +62,12 @@ extension CBMServiceMock {
 
 // MARK: - BlinkyCBMPeripheralSpecDelegate
 
-internal class BlinkyCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
+internal class BlinkyCBMPeripheralSpecDelegate: MockSpecDelegate {
     
     func getMainService() -> CoreBluetoothMock.CBMServiceMock {
         .blinkyService
     }
-    
-    enum MockError: Error {
-        case notifyIsNotSupported, readingIsNotSupported, writingIsNotSupported
-    }
-    
+
     // MARK: States
     
     /// State of the LED.
@@ -115,12 +111,15 @@ internal class BlinkyCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
                     didReceiveReadRequestFor characteristic: CBMCharacteristicMock)
     -> Result<Data, Error> {
         log.debug(#function)
-        if characteristic.uuid == .ledCharacteristic {
+        switch characteristic.uuid {
+        case .buttonCharacteristic:
+            return .success(buttonData)
+        case .ledCharacteristic:
             ledEnabled = .random()
             log.debug("Randomised LED to \(ledEnabled)")
             return .success(ledData)
-        } else {
-            return .success(buttonData)
+        default:
+            return .failure(MockError.readingIsNotSupported)
         }
     }
     
@@ -128,10 +127,13 @@ internal class BlinkyCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
                     didReceiveWriteRequestFor characteristic: CBMCharacteristicMock,
                     data: Data) -> Result<Void, Error> {
         log.debug(#function)
-        if data.count > 0 {
+        switch characteristic.uuid {
+        case .ledCharacteristic:
             ledEnabled = data[0] != 0x00
+            return .success(())
+        default:
+            return .failure(MockError.writingIsNotSupported)
         }
-        return .success(())
     }
     
     public func peripheral(_ peripheral: CBMPeripheralSpec, didReceiveSetNotifyRequest enabled: Bool, for characteristic: CBMCharacteristicMock) -> Result<Void, Error> {

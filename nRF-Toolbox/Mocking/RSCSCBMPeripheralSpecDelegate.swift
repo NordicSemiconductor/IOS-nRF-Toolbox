@@ -118,10 +118,6 @@ extension RSCSCBMPeripheralSpecDelegate {
 
 extension RSCSCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
     
-    enum MockError: Error {
-        case notifyIsNotSupported, readingIsNotSupported, writingIsNotSupported
-    }
-    
     public func peripheral(_ peripheral: CBMPeripheralSpec,
                     didReceiveReadRequestFor characteristic: CBMCharacteristicMock)
     -> Result<Data, Error> {

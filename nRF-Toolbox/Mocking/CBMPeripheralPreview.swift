@@ -38,14 +38,14 @@ extension CBMServiceMock {
 }
 
 // MARK: - Blinky Implementation
-struct MockError: Swift.Error {
+struct MockConnectionError: Swift.Error {
     let title: String
     let message: String
 }
 
 private class WeightCBMPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
     func peripheralDidReceiveConnectionRequest(_ peripheral: CBMPeripheralSpec) -> Result<Void, Swift.Error> {
-        .failure(MockError(title: "Connection Error", message: "Failed to connect the peripheral"))
+        .failure(MockConnectionError(title: "Connection Error", message: "Failed to connect the peripheral"))
     }
 }
 

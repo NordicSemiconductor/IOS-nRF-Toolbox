@@ -39,10 +39,6 @@ class CGMSCBMPeripheralSpecDelegate: MockSpecDelegate {
     func getMainService() -> CoreBluetoothMock.CBMServiceMock {
         .cgms
     }
-    
-    enum MockError: Error {
-        case notificationsNotEnabled, operationNotSupported, incorrectCommand
-    }
 
     private var records: [[UInt8]] = []
     
@@ -90,7 +86,7 @@ class CGMSCBMPeripheralSpecDelegate: MockSpecDelegate {
         case CBMUUID.cgmSessionStartTime:
             return .success(Data([0xE9, 0x07, 0x0A, 0x10, 0x0E, 0x10, 0x13, 0x00, 0x00]))
         default:
-            return .failure(MockError.operationNotSupported)
+            return .failure(MockError.readingIsNotSupported)
         }
     }
     
@@ -136,7 +132,7 @@ class CGMSCBMPeripheralSpecDelegate: MockSpecDelegate {
             }
             return .failure(MockError.incorrectCommand)
         default:
-            return .failure(MockError.operationNotSupported)
+            return .failure(MockError.writingIsNotSupported)
         }
     }
     
@@ -160,7 +156,7 @@ class CGMSCBMPeripheralSpecDelegate: MockSpecDelegate {
         case .cgmSpecificOpsControlPoint:
             isSocpNotificationEnabled = enabled
         default:
-            return .failure(MockError.operationNotSupported)
+            return .failure(MockError.notifyIsNotSupported)
         }
         
         return .success(())

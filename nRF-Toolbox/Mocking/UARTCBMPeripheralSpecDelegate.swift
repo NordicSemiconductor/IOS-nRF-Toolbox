@@ -34,11 +34,7 @@ class UARTCBMPeripheralSpecDelegate: MockSpecDelegate {
             delegate: self
         )
         .build()
-    
-    enum MockError: Error {
-        case notificationsNotEnabled, operationNotSupported, incorrectCommand
-    }
-    
+
     private var isNotificationEnabled = false
     private var messageCounter = 0
     
@@ -57,7 +53,7 @@ class UARTCBMPeripheralSpecDelegate: MockSpecDelegate {
             }
             return .failure(MockError.notificationsNotEnabled)
         default:
-            return .failure(MockError.operationNotSupported)
+            return .failure(MockError.writingIsNotSupported)
         }
     }
     
@@ -66,10 +62,14 @@ class UARTCBMPeripheralSpecDelegate: MockSpecDelegate {
         case .tx:
             isNotificationEnabled = enabled
         default:
-            return .failure(MockError.operationNotSupported)
+            return .failure(MockError.notifyIsNotSupported)
         }
         
         return .success(())
+    }
+    
+    func peripheral(_ peripheral: CBMPeripheralSpec, didReceiveReadRequestFor characteristic: CBMCharacteristicMock) -> Result<Data, any Error> {
+        return .failure(MockError.readingIsNotSupported)
     }
     
     func getMainService() -> CoreBluetoothMock.CBMServiceMock {
