@@ -28,7 +28,7 @@ class AggregatedPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
             advertisementData: [
                 CBAdvertisementDataIsConnectable : true as NSNumber,
                 CBAdvertisementDataLocalNameKey : "All in One",
-                CBAdvertisementDataServiceUUIDsKey : [CBMUUID.nordicsemiUART]
+                CBAdvertisementDataServiceUUIDsKey : delegates.map { $0.getMainService().uuid }
             ],
             withInterval: 2.0,
             delay: 5.0,
@@ -46,8 +46,7 @@ class AggregatedPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
         case noDelegateToHandleRequest
     }
     
-    public func peripheral(_ peripheral: CBMPeripheralSpec,
-                    didReceiveReadRequestFor characteristic: CBMCharacteristicMock)
+    public func peripheral(_ peripheral: CBMPeripheralSpec, didReceiveReadRequestFor characteristic: CBMCharacteristicMock)
     -> Result<Data, Error> {
         
         let results = delegates.compactMap { $0.peripheral(peripheral, didReceiveReadRequestFor: characteristic) }
