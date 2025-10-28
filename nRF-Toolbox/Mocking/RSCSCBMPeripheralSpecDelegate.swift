@@ -49,7 +49,8 @@ class RSCSCBMPeripheralSpecDelegate: MockSpecDelegate {
         .connectable(
             name: "Running Sensor",
             services: [.runningSpeedCadence],
-            delegate: self
+            delegate: self,
+            connectionInterval: 0.0,
         )
         .build()
     

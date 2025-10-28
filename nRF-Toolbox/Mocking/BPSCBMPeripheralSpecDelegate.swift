@@ -32,7 +32,8 @@ class BPSCBMPeripheralSpecDelegate: MockSpecDelegate {
         .connectable(
             name: "Blood Pressure Sensor",
             services: [.bloodPressure],
-            delegate: self
+            delegate: self,
+            connectionInterval: 0.0,
         )
         .build()
 

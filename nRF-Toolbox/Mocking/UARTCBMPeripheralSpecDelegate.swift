@@ -31,7 +31,8 @@ class UARTCBMPeripheralSpecDelegate: MockSpecDelegate {
         .connectable(
             name: "UART",
             services: [.uart],
-            delegate: self
+            delegate: self,
+            connectionInterval: 0.0,
         )
         .build()
 

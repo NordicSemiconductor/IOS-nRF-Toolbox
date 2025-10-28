@@ -32,7 +32,8 @@ class HTSCBMPeripheralSpecDelegate: MockSpecDelegate {
         .connectable(
             name: "Health Thermometer Sensor",
             services: [.temperature],
-            delegate: self
+            delegate: self,
+            connectionInterval: 0.0,
         )
         .build()
     

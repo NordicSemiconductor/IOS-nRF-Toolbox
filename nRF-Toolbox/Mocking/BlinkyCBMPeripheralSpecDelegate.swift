@@ -33,7 +33,8 @@ let blinky = CBMPeripheralSpec
     .connectable(
         name: "nRF Blinky",
         services: [.blinkyService],
-        delegate: BlinkyCBMPeripheralSpecDelegate()
+        delegate: BlinkyCBMPeripheralSpecDelegate(),
+        connectionInterval: 0.0,
     )
     .build()
 
