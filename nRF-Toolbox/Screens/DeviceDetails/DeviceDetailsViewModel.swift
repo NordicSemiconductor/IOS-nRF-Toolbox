@@ -130,19 +130,21 @@ extension DeviceDetailsViewModel {
                 await onDisconnect()
                 supportedServiceViewModels.removeAll()
             }
-            discoveredServices = try await peripheral.discoverServices(serviceUUIDs: nil)
-                .timeout(5, scheduler: DispatchQueue.main)
-                .firstValue
+            discoveredServices = try await peripheral.discoverServices(serviceUUIDs: nil).firstValue
 
             var table = AttributeTable()
             for service in discoveredServices {
                 table.addService(service)
 
-                let characteristics: [CBCharacteristic] = try await peripheral.discoverCharacteristics(nil, for: service).timeout(10, scheduler: DispatchQueue.main).firstValue
+                let characteristics: [CBCharacteristic] = try await peripheral.discoverCharacteristics(nil, for: service).firstValue
                 for characteristic in characteristics {
                     table.addCharacteristic(characteristic, to: service)
+
+                    if !characteristic.hasNotyfyingProperties() {
+                        continue
+                    }
                     
-                    let descriptors = try await peripheral.discoverDescriptors(for: characteristic).timeout(10, scheduler: DispatchQueue.main).firstValue
+                    let descriptors = try await peripheral.discoverDescriptors(for: characteristic).firstValue
                     for descriptor in descriptors {
                         table.addDescriptor(descriptor, to: characteristic, in: service)
                     }
