@@ -100,7 +100,7 @@ struct CyclingData {
               let oldCrankEventTime = preveiousData.crankData?.time else {
             return nil
         }
-        return (crankEventTime - oldCrankEventTime) / 1024.0
+        return crankEventTime.value - oldCrankEventTime.value
     }
 }
 
