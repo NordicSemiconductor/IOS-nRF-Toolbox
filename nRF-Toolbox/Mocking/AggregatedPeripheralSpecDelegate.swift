@@ -43,6 +43,9 @@ class AggregatedPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
     
     public func peripheral(_ peripheral: CBMPeripheralSpec, didReceiveReadRequestFor characteristic: CBMCharacteristicMock) -> Result<Data, Error> {
         for delegate in delegates {
+            if characteristic.service?.uuid != delegate.getMainService().uuid {
+                continue
+            }
             let result = delegate.peripheral(peripheral, didReceiveReadRequestFor: characteristic)
             if case .success = result {
                 return result
@@ -55,6 +58,9 @@ class AggregatedPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
                     didReceiveWriteRequestFor characteristic: CBMCharacteristicMock,
                     data: Data) -> Result<Void, Error> {
         for delegate in delegates {
+            if characteristic.service?.uuid != delegate.getMainService().uuid {
+                continue
+            }
             let result = delegate.peripheral(peripheral, didReceiveWriteRequestFor: characteristic, data: data)
             if case .success = result {
                 return result
@@ -65,6 +71,9 @@ class AggregatedPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
     
     public func peripheral(_ peripheral: CBMPeripheralSpec, didReceiveSetNotifyRequest enabled: Bool, for characteristic: CBMCharacteristicMock) -> Result<Void, Error> {
         for delegate in delegates {
+            if characteristic.service?.uuid != delegate.getMainService().uuid {
+                continue
+            }
             let result = delegate.peripheral(peripheral, didReceiveSetNotifyRequest: enabled, for: characteristic)
             if case .success = result {
                 return result

@@ -1875,8 +1875,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/NordicSemiconductor/IOS-CoreBluetooth-Mock.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.2;
+				branch = bugfix/mock;
+				kind = branch;
 			};
 		};
 		AAFC9CD027BA85EA00860638 /* XCRemoteSwiftPackageReference "IOS-nRF-Connect-Device-Manager" */ = {

@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/NordicSemiconductor/IOS-CoreBluetooth-Mock.git",
       "state" : {
-        "revision" : "a6bc354a97948fddcf0fa8d1ad707b9e88b21fbd",
-        "version" : "1.0.2"
+        "branch" : "bugfix/mock",
+        "revision" : "6b26ce1831db5ccfaf36b6eeac46f8bca8034eb9"
       }
     },
     {
@@ -42,7 +42,7 @@
       "location" : "https://github.com/NordicSemiconductor/IOS-nRF-Connect-Device-Manager",
       "state" : {
         "branch" : "main",
-        "revision" : "6db4d6e3b0dd79acabb6ff98440994033e45b922"
+        "revision" : "115182ad255d77d6473d26790131e41aee0a1b60"
       }
     },
     {
@@ -68,8 +68,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/valpackett/SwiftCBOR.git",
       "state" : {
-        "revision" : "418dab41b09a5da0d45d7b788c59085979ff4dae",
-        "version" : "0.4.7"
+        "revision" : "04ccff117f6549121d5721ec84fdf0162122b90e",
+        "version" : "0.5.0"
       }
     },
     {

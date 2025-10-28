@@ -29,8 +29,8 @@ public struct BluetoothEmulation {
         GLSCBMPeripheralSpecDelegate(),
         BPSCBMPeripheralSpecDelegate(),
         HTSCBMPeripheralSpecDelegate(),
-        UARTCBMPeripheralSpecDelegate(),
         CGMSCBMPeripheralSpecDelegate(),
+        UARTCBMPeripheralSpecDelegate(),
     ])
     
     public func simulateState() {
