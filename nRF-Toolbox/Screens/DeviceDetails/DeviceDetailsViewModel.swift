@@ -91,6 +91,7 @@ extension DeviceDetailsViewModel {
         supportedServiceViewModels.forEach {
             $0.onDisconnect()
         }
+        peripheral.peripheral.delegate = nil
     }
 }
 
