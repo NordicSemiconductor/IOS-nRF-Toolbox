@@ -26,8 +26,7 @@ final class BloodPressureViewModel: @MainActor SupportedServiceViewModel, Observ
     private var bpsFlags: CBCharacteristic!
     private lazy var cancellables = Set<AnyCancellable>()
     
-    private let log = NordicLog(category: "BloodPressureViewModel",
-                                subsystem: "com.nordicsemi.nrf-toolbox")
+    private let log = NordicLog(category: "BloodPressureViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
     
     // MARK: Properties
     

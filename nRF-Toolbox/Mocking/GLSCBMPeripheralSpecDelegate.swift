@@ -12,9 +12,62 @@ import iOS_BLE_Library_Mock
 import CoreBluetoothMock
 import iOS_Common_Libraries
 
+// MARK: - CoreBluetoothMock
+
+private extension CBMUUID {
+    static let glucoseMeasurement = CBMUUID(characteristic: .glucoseMeasurement)
+    
+    static let recordAccessControlPoint = CBMUUID(characteristic: .recordAccessControlPoint)
+    
+    static let clientCharacteristicConfiguration = CBMUUID(descriptor: .gattClientCharacteristicConfiguration)
+}
+
+private extension CBMDescriptorMock {
+    static let clientCharacteristicConfiguration = CBMDescriptorMock(type: .clientCharacteristicConfiguration)
+}
+
+private extension CBMCharacteristicMock {
+    static let glucoseMeasurement = CBMCharacteristicMock(
+        type: .glucoseMeasurement,
+        properties: .notify,
+        descriptors: .clientCharacteristicConfiguration
+    )
+    
+    static let recordAccessControlPoint = CBMCharacteristicMock(
+        type: .recordAccessControlPoint,
+        properties: [.write, .indicate],
+        descriptors: .clientCharacteristicConfiguration
+    )
+}
+
+private extension CBMServiceMock {
+    
+    static let glucose = CBMServiceMock(
+        type: .glucoseService,
+        primary: true,
+        characteristics: .glucoseMeasurement, .recordAccessControlPoint,
+    )
+}
+
+// MARK: GLS
+
 class GLSCBMPeripheralSpecDelegate: MockSpecDelegate {
     
-    let log = NordicLog(category: "GlucoseMock")
+    private var records: [[UInt8]] = [
+        [0x07, 0x00, 0x00, 0xe9, 0x07, 0x01, 0x01, 0x0c, 0x1e, 0x05, 0x00, 0x00, 0x26, 0xd2, 0x11],
+        [0x07, 0x01, 0x00, 0xe9, 0x07, 0x01, 0x01, 0x0c, 0x1e, 0x08, 0x00, 0x00, 0x3d, 0xd2, 0x11],
+        [0x07, 0x02, 0x00, 0xe9, 0x07, 0x01, 0x01, 0x0c, 0x1e, 0x0b, 0x00, 0x00, 0x54, 0xd2, 0x11],
+        [0x07, 0x03, 0x00, 0xe9, 0x07, 0x01, 0x01, 0x0c, 0x1e, 0x0e, 0x00, 0x00, 0x6b, 0xd2, 0x11],
+        [0x07, 0x04, 0x00, 0xe9, 0x07, 0x01, 0x01, 0x0c, 0x1e, 0x11, 0x00, 0x00, 0x82, 0xd2, 0x11],
+        [0x07, 0x05, 0x00, 0xe9, 0x07, 0x01, 0x01, 0x0c, 0x1e, 0x14, 0x00, 0x00, 0x99, 0xd2, 0x11],
+    ]
+    
+    private var racpResponse = Data([0x06, 0x00, 0x01, 0x01])
+    
+    private var isMeasurementNotificationEnabled = false
+    private var isRacpNotificationEnabled = false
+    
+    private let log = NordicLog(category: "GlucoseMock")
     
     public private(set) lazy var peripheral = CBMPeripheralSpec
         .simulatePeripheral(proximity: .far)
@@ -39,19 +92,8 @@ class GLSCBMPeripheralSpecDelegate: MockSpecDelegate {
     func getMainService() -> CoreBluetoothMock.CBMServiceMock {
         .glucose
     }
-
-    private var records: [[UInt8]] = [
-        [0x07, 0x00, 0x00, 0xe9, 0x07, 0x01, 0x01, 0x0c, 0x1e, 0x05, 0x00, 0x00, 0x26, 0xd2, 0x11],
-        [0x07, 0x01, 0x00, 0xe9, 0x07, 0x01, 0x01, 0x0c, 0x1e, 0x08, 0x00, 0x00, 0x3d, 0xd2, 0x11],
-        [0x07, 0x02, 0x00, 0xe9, 0x07, 0x01, 0x01, 0x0c, 0x1e, 0x0b, 0x00, 0x00, 0x54, 0xd2, 0x11],
-        [0x07, 0x03, 0x00, 0xe9, 0x07, 0x01, 0x01, 0x0c, 0x1e, 0x0e, 0x00, 0x00, 0x6b, 0xd2, 0x11],
-        [0x07, 0x04, 0x00, 0xe9, 0x07, 0x01, 0x01, 0x0c, 0x1e, 0x11, 0x00, 0x00, 0x82, 0xd2, 0x11],
-        [0x07, 0x05, 0x00, 0xe9, 0x07, 0x01, 0x01, 0x0c, 0x1e, 0x14, 0x00, 0x00, 0x99, 0xd2, 0x11],
-    ]
     
-    private var racpResponse = Data([0x06, 0x00, 0x01, 0x01])
-    
-    public func peripheral(_ peripheral: CBMPeripheralSpec,
+    func peripheral(_ peripheral: CBMPeripheralSpec,
                     didReceiveWriteRequestFor characteristic: CBMCharacteristicMock,
                     data: Data) -> Result<Void, Error> {
         switch characteristic.uuid {
@@ -91,10 +133,7 @@ class GLSCBMPeripheralSpecDelegate: MockSpecDelegate {
         }
     }
     
-    private var isMeasurementNotificationEnabled = false
-    private var isRacpNotificationEnabled = false
-    
-    public func peripheral(_ peripheral: CBMPeripheralSpec, didReceiveSetNotifyRequest enabled: Bool, for characteristic: CBMCharacteristicMock) -> Result<Void, Error> {
+    func peripheral(_ peripheral: CBMPeripheralSpec, didReceiveSetNotifyRequest enabled: Bool, for characteristic: CBMCharacteristicMock) -> Result<Void, Error> {
         switch characteristic.uuid {
         case .glucoseMeasurement:
             isMeasurementNotificationEnabled = enabled
@@ -111,45 +150,8 @@ class GLSCBMPeripheralSpecDelegate: MockSpecDelegate {
         return .failure(MockError.readingIsNotSupported)
     }
     
-    func sendResponse(_ peripheral: CBMPeripheralSpec, _ index: Int) {
+    private func sendResponse(_ peripheral: CBMPeripheralSpec, _ index: Int) {
         let data = Data(records[index])
         peripheral.simulateValueUpdate(data, for: CBMCharacteristicMock.glucoseMeasurement)
     }
-}
-
-// MARK: - CoreBluetoothMock
-
-private extension CBMUUID {
-    static let glucoseMeasurement = CBMUUID(characteristic: .glucoseMeasurement)
-    
-    static let recordAccessControlPoint = CBMUUID(characteristic: .recordAccessControlPoint)
-    
-    static let clientCharacteristicConfiguration = CBMUUID(descriptor: .gattClientCharacteristicConfiguration)
-}
-
-private extension CBMDescriptorMock {
-    static let clientCharacteristicConfiguration = CBMDescriptorMock(type: .clientCharacteristicConfiguration)
-}
-
-private extension CBMCharacteristicMock {
-    static let glucoseMeasurement = CBMCharacteristicMock(
-        type: .glucoseMeasurement,
-        properties: .notify,
-        descriptors: .clientCharacteristicConfiguration
-    )
-    
-    static let recordAccessControlPoint = CBMCharacteristicMock(
-        type: .recordAccessControlPoint,
-        properties: [.write, .indicate],
-        descriptors: .clientCharacteristicConfiguration
-    )
-}
-
-private extension CBMServiceMock {
-    
-    static let glucose = CBMServiceMock(
-        type: .glucoseService,
-        primary: true,
-        characteristics: .glucoseMeasurement, .recordAccessControlPoint,
-    )
 }

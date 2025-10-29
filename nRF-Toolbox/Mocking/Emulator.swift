@@ -21,6 +21,7 @@ public struct BluetoothEmulation {
     private let healthThermometer = HTSCBMPeripheralSpecDelegate()
     private let cgms = CGMSCBMPeripheralSpecDelegate()
     private let uart = UARTCBMPeripheralSpecDelegate()
+    private let blinky = BlinkyCBMPeripheralSpecDelegate()
     private let aggregated = AggregatedPeripheralSpecDelegate(delegates: [
         BlinkyCBMPeripheralSpecDelegate(),
         CSCSCBMPeripheralSpecDelegate(),
@@ -48,12 +49,20 @@ public struct BluetoothEmulation {
             healthThermometer.peripheral,
             cgms.peripheral,
             uart.peripheral,
-            blinky
+            blinky.peripheral,
         ])
     }
     
     public func simulateDisconnect() {
+        aggregated.peripheral.simulateDisconnection()
+        cscs.peripheral.simulateDisconnection()
         rscs.peripheral.simulateDisconnection()
         heartRate.peripheral.simulateDisconnection()
+        glucose.peripheral.simulateDisconnection()
+        bloodPressure.peripheral.simulateDisconnection()
+        healthThermometer.peripheral.simulateDisconnection()
+        cgms.peripheral.simulateDisconnection()
+        uart.peripheral.simulateDisconnection()
+        blinky.peripheral.simulateDisconnection()
     }
 }

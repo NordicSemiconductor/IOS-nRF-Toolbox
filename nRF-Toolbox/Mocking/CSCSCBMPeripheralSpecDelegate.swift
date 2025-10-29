@@ -12,26 +12,57 @@ import iOS_BLE_Library_Mock
 import CoreBluetoothMock
 import iOS_Common_Libraries
 
-// MARK: RSCS
+// MARK: - CoreBluetoothMock
+
+private extension CBMUUID {
+    static let cscMeasurement = CBMUUID(characteristic: .cscMeasurement)
+    
+    static let cscFeature = CBMUUID(characteristic: .cscFeature)
+    
+    static let clientCharacteristicConfiguration = CBMUUID(descriptor: .gattClientCharacteristicConfiguration)
+}
+
+private extension CBMDescriptorMock {
+    static let clientCharacteristicConfiguration = CBMDescriptorMock(type: .clientCharacteristicConfiguration)
+}
+
+private extension CBMCharacteristicMock {
+    static let cscMeasurement = CBMCharacteristicMock(
+        type: .cscMeasurement,
+        properties: .notify,
+        descriptors: .clientCharacteristicConfiguration
+    )
+    
+    static let cscFeature = CBMCharacteristicMock(
+        type: .cscFeature,
+        properties: .read
+    )
+}
+
+private extension CBMServiceMock {
+    
+    static let cyclingSpeedCadence = CBMServiceMock(
+        type: .cyclingSpeedCadence,
+        primary: true,
+        characteristics: .cscMeasurement, .cscFeature
+    )
+}
+
+// MARK: CSCS
 
 class CSCSCBMPeripheralSpecDelegate: MockSpecDelegate {
     
-    public var enabledFeatures: BitField<RSCSFeature> = .all()
-    public var sensorLocation: RSCSSensorLocation = .inShoe
+    private var moment: UInt16 = 0
+    private var wheelData: UInt32 = 0
+    private var crankData: UInt16 = 0
     
-    var notifySCControlPoint: Bool = false
+    private var notifySCControlPoint: Bool = false
     
-    let log = NordicLog(category: "CyclingSpeedAndCadence")
-    lazy var cancellables = Set<AnyCancellable>()
+    private let log = NordicLog(category: "CyclingSpeedAndCadence")
+    private var timerCancellable: AnyCancellable?
     
-    public init(enabledFeatures: BitField<RSCSFeature>, sensorLocation: RSCSSensorLocation) {
-        self.enabledFeatures = enabledFeatures
-        self.sensorLocation = sensorLocation
-    }
-    
-    public init() {
-        self.enabledFeatures = .all()
-        self.sensorLocation = .inShoe
+    func getMainService() -> CoreBluetoothMock.CBMServiceMock {
+        .cyclingSpeedCadence
     }
 
     public private(set) lazy var peripheral = CBMPeripheralSpec
@@ -73,35 +104,37 @@ class CSCSCBMPeripheralSpecDelegate: MockSpecDelegate {
         return .failure(MockError.writingIsNotSupported)
     }
     
-    public func peripheral(_ peripheral: CBMPeripheralSpec, didReceiveSetNotifyRequest enabled: Bool, for characteristic: CBMCharacteristicMock) -> Result<Void, Error> {
+    func peripheral(_ peripheral: CBMPeripheralSpec, didReceiveSetNotifyRequest enabled: Bool, for characteristic: CBMCharacteristicMock) -> Result<Void, Error> {
         switch characteristic.uuid {
         case .cscMeasurement:
-            Timer.publish(every: 2.0, on: .main, in: .default)
-                .autoconnect()
-                .sink { [unowned self] _ in
-                    peripheral.simulateValueUpdate(self.generateData(), for: characteristic)
-                }
-                .store(in: &cancellables)
+            startEmulation(peripheral, characteristic)
             return .success(())
         default:
             return .failure(MockError.notifyIsNotSupported)
         }
     }
     
-    public func peripheral(_ peripheral: CBMPeripheralSpec, didDisconnect error: (any Error)?) {
+    func peripheral(_ peripheral: CBMPeripheralSpec, didDisconnect error: (any Error)?) {
         log.debug(#function)
-        cancellables.removeAll()
+        timerCancellable?.cancel()
+        timerCancellable = nil
     }
     
-    private var moment: UInt16 = 0
-    private var wheelData: UInt32 = 0
-    private var crankData: UInt16 = 0
-    
-    public func generateNextValue<T: FixedWidthInteger>(_ value: T) -> T {
+    private func generateNextValue<T: FixedWidthInteger>(_ value: T) -> T {
         return if value == T.max {
             0
         } else {
             value + 1
+        }
+    }
+    
+    private func startEmulation(_ peripheral: CBMPeripheralSpec, _ characteristic: CBMCharacteristicMock) {
+        if timerCancellable == nil {
+            timerCancellable = Timer.publish(every: 2.0, on: .main, in: .default)
+                .autoconnect()
+                .sink { [unowned self] _ in
+                    peripheral.simulateValueUpdate(self.generateData(), for: characteristic)
+                }
         }
     }
     
@@ -127,44 +160,4 @@ class CSCSCBMPeripheralSpecDelegate: MockSpecDelegate {
             ]
         )
     }
-    
-    func getMainService() -> CoreBluetoothMock.CBMServiceMock {
-        .cyclingSpeedCadence
-    }
-}
-
-// MARK: - CoreBluetoothMock
-
-private extension CBMUUID {
-    static let cscMeasurement = CBMUUID(characteristic: .cscMeasurement)
-    
-    static let cscFeature = CBMUUID(characteristic: .cscFeature)
-    
-    static let clientCharacteristicConfiguration = CBMUUID(descriptor: .gattClientCharacteristicConfiguration)
-}
-
-private extension CBMDescriptorMock {
-    static let clientCharacteristicConfiguration = CBMDescriptorMock(type: .clientCharacteristicConfiguration)
-}
-
-private extension CBMCharacteristicMock {
-    static let cscMeasurement = CBMCharacteristicMock(
-        type: .cscMeasurement,
-        properties: .notify,
-        descriptors: .clientCharacteristicConfiguration
-    )
-    
-    static let cscFeature = CBMCharacteristicMock(
-        type: .cscFeature,
-        properties: .read
-    )
-}
-
-private extension CBMServiceMock {
-    
-    static let cyclingSpeedCadence = CBMServiceMock(
-        type: .cyclingSpeedCadence,
-        primary: true,
-        characteristics: .cscMeasurement, .cscFeature
-    )
 }
