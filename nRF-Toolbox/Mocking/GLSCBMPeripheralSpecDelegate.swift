@@ -85,7 +85,7 @@ class GLSCBMPeripheralSpecDelegate: MockSpecDelegate {
             name: "Glucose Measurement Sensor",
             services: [.glucose],
             delegate: self,
-            connectionInterval: 0.0,
+            connectionInterval: 0.02,
         )
         .build()
     

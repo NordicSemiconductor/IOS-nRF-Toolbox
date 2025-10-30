@@ -83,7 +83,7 @@ class HeartRateCBMPeripheralSpecDelegate: MockSpecDelegate {
             name: "Heart Rate Sensor",
             services: [.heartRate],
             delegate: self,
-            connectionInterval: 0.0,
+            connectionInterval: 0.02,
         )
         .build()
     

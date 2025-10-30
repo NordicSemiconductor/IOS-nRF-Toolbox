@@ -81,7 +81,7 @@ class CSCSCBMPeripheralSpecDelegate: MockSpecDelegate {
             name: "Cycling Sensor",
             services: [.cyclingSpeedCadence],
             delegate: self,
-            connectionInterval: 0.0,
+            connectionInterval: 0.02,
         )
         .build()
     

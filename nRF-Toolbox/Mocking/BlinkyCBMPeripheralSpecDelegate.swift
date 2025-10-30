@@ -70,7 +70,7 @@ internal class BlinkyCBMPeripheralSpecDelegate: MockSpecDelegate {
             name: "nRF Blinky",
             services: [.blinkyService],
             delegate: BlinkyCBMPeripheralSpecDelegate(),
-            connectionInterval: 0.0,
+            connectionInterval: 0.02,
         )
         .build()
 

@@ -102,7 +102,7 @@ class CGMSCBMPeripheralSpecDelegate: MockSpecDelegate {
             name: "Continous Glucose Measurement",
             services: [.cgms],
             delegate: self,
-            connectionInterval: 0.0,
+            connectionInterval: 0.02,
         )
         .build()
     

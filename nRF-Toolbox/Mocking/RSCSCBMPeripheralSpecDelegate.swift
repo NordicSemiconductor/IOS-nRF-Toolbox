@@ -100,7 +100,7 @@ class RSCSCBMPeripheralSpecDelegate: MockSpecDelegate {
             name: "Running Sensor",
             services: [.runningSpeedCadence],
             delegate: self,
-            connectionInterval: 0.0,
+            connectionInterval: 0.02,
         )
         .build()
     
