@@ -24,6 +24,9 @@ struct BloodPressureView: View {
             BloodPressureGrid(currentValue)
         } else {
             NoContentView(title: "No Data", systemImage: "drop.fill", description: "No Blood Pressure Data Available. You may press Button 1 on your DevKit to generate some Data.")
+                .alignmentGuide(.listRowSeparatorLeading) { d in
+                    d[.leading]
+                }
         }
         
         if (!viewModel.features.isEmpty) {
@@ -69,12 +72,10 @@ struct BloodPressureGrid: View {
         }
         
         if measurement.status?.isEmpty == false {
-            VStack(alignment: .leading, spacing: 6) {
-                ForEach(measurement.status?.bitsetMembers() ?? [], id: \.bitwiseValue) { feature in
-                    Label(feature.description, systemImage: "exclamationmark.triangle.fill")
-                        .font(.caption)
-                        .foregroundStyle(Color.secondary)
-                }
+            ForEach(measurement.status?.bitsetMembers() ?? [], id: \.bitwiseValue) { feature in
+                Label(feature.description, systemImage: "exclamationmark.triangle.fill")
+                    .font(.caption)
+                    .foregroundStyle(Color.secondary)
             }
         }
         
@@ -86,7 +87,9 @@ struct BloodPressureGrid: View {
             }
             .labeledContentStyle(.accentedContent(
                 accentColor: .universalAccentColor, lineLimit: 1
-            ))
+            )).alignmentGuide(.listRowSeparatorLeading) { d in
+                d[.leading]
+            }
         }
     }
     
