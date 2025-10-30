@@ -26,10 +26,15 @@ struct BloodPressureView: View {
             NoContentView(title: "No Data", systemImage: "drop.fill", description: "No Blood Pressure Data Available. You may press Button 1 on your DevKit to generate some Data.")
         }
         
-        ForEach(viewModel.features.toArray(), id: \.bitwiseValue) { feature in
-            Label(feature.description, systemImage: "checkmark.circle.fill")
-                .font(.caption)
-                .foregroundStyle(Color.secondary)
+        if (!viewModel.features.isEmpty) {
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Supported features:").padding(.bottom, 4)
+                ForEach(viewModel.features.toArray(), id: \.bitwiseValue) { feature in
+                    Label(feature.description, systemImage: "checkmark.circle.fill")
+                        .font(.caption)
+                        .foregroundStyle(Color.secondary)
+                }
+            }
         }
     }
 }
@@ -61,6 +66,16 @@ struct BloodPressureGrid: View {
     var body: some View {
         NumberedColumnGrid(columns: 2, data: attributes) { item in
             RunningValuesGridItem(title: item.title, value: item.value, unit: item.unit)
+        }
+        
+        if measurement.status?.isEmpty == false {
+            VStack(alignment: .leading, spacing: 6) {
+                ForEach(measurement.status?.bitsetMembers() ?? [], id: \.bitwiseValue) { feature in
+                    Label(feature.description, systemImage: "exclamationmark.triangle.fill")
+                        .font(.caption)
+                        .foregroundStyle(Color.secondary)
+                }
+            }
         }
         
         if let date = measurement.date {

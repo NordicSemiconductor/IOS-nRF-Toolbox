@@ -52,7 +52,7 @@ private extension CBMServiceMock {
 
 class BPSCBMPeripheralSpecDelegate: MockSpecDelegate {
     
-    private let featureResponse = Data([0x00, 0x00])
+    private let featureResponse = Data([0x00, 0x01])
     
     private let log = NordicLog(category: "BloodPressureMock")
     private var timerCancellable: AnyCancellable?
