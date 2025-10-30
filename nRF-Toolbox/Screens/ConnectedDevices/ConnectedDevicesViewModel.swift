@@ -42,7 +42,7 @@ final class ConnectedDevicesViewModel: ObservableObject {
     @Published var selectedDevice: Device? {
         didSet {
             if let d = connectedDevices.first(where: { $0 == selectedDevice }) {
-                print(d.name!)
+                print(d.name ?? "")
             } else {
                 print("no selection")
             }
