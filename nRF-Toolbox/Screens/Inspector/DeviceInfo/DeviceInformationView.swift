@@ -56,6 +56,7 @@ struct DeviceInformationCharacteristicView: View {
             
             Text(characteristic.value)
                 .foregroundColor(.secondary)
+                .lineLimit(1)
         }
     }
 }

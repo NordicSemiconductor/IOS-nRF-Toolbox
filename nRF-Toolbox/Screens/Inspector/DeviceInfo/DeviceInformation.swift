@@ -92,7 +92,7 @@ public struct DeviceInformation: CustomDebugStringConvertible {
     public var debugDescription: String {
         var s = ""
         if let manufacturerName {
-            s += "Manufacturer Name: \(manufacturerName)\n"
+            s += "Manufacturer: \(manufacturerName)\n"
         }
         if let modelNumber {
             s += "Model Number: \(modelNumber)\n"
@@ -123,7 +123,7 @@ public struct DeviceInformation: CustomDebugStringConvertible {
     var characteristics: [CharacteristicInfo] {
         var c = [CharacteristicInfo]()
         if let manufacturerName {
-            c.append(CharacteristicInfo(name: "Manufacturer Name", value: manufacturerName))
+            c.append(CharacteristicInfo(name: "Manufacturer", value: manufacturerName))
         }
         if let modelNumber {
             c.append(CharacteristicInfo(name: "Model Number", value: modelNumber))
