@@ -82,6 +82,7 @@
 		A7CF97B42E8BBE5500C1E1B3 /* CaloriesResetState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CF97B32E8BBE5400C1E1B3 /* CaloriesResetState.swift */; };
 		A7D2C8E52E7D414700C93C28 /* CGMSFeatureEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D2C8E42E7D414300C93C28 /* CGMSFeatureEnvelope.swift */; };
 		A7D657C42EA2470E00CA7D63 /* UARTCBMPeripheralSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D657C32EA2470300CA7D63 /* UARTCBMPeripheralSpecDelegate.swift */; };
+		A7E289352EB35E70007199DB /* CoreBluetoothMock in Frameworks */ = {isa = PBXBuildFile; productRef = A7E289342EB35E70007199DB /* CoreBluetoothMock */; };
 		A7FA7A482E852D6500DA192B /* CGMSMeasurementParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FA7A472E852D6500DA192B /* CGMSMeasurementParser.swift */; };
 		AA01D4922D4A3D38008523CE /* Throughput+Attributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01D4912D4A3D38008523CE /* Throughput+Attributes.swift */; };
 		AA047E112DF1B3A300DA401E /* BlinkyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA047E102DF1B3A300DA401E /* BlinkyView.swift */; };
@@ -261,6 +262,7 @@
 		A7CF97B32E8BBE5400C1E1B3 /* CaloriesResetState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaloriesResetState.swift; sourceTree = "<group>"; };
 		A7D2C8E42E7D414300C93C28 /* CGMSFeatureEnvelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSFeatureEnvelope.swift; sourceTree = "<group>"; };
 		A7D657C32EA2470300CA7D63 /* UARTCBMPeripheralSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTCBMPeripheralSpecDelegate.swift; sourceTree = "<group>"; };
+		A7E289322EB35E5F007199DB /* IOS-CoreBluetooth-Mock */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "IOS-CoreBluetooth-Mock"; path = "../IOS-CoreBluetooth-Mock"; sourceTree = "<group>"; };
 		A7FA7A472E852D6500DA192B /* CGMSMeasurementParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSMeasurementParser.swift; sourceTree = "<group>"; };
 		AA01D4912D4A3D38008523CE /* Throughput+Attributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Throughput+Attributes.swift"; sourceTree = "<group>"; };
 		AA047E102DF1B3A300DA401E /* BlinkyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkyView.swift; sourceTree = "<group>"; };
@@ -346,6 +348,7 @@
 				015642472AA4E640005A0A44 /* iOS-BLE-Library-Mock in Frameworks */,
 				AA1AD37F2DD5DFC400799308 /* AEXML in Frameworks */,
 				018873C42A58332400253273 /* iOSCommonLibraries in Frameworks */,
+				A7E289352EB35E70007199DB /* CoreBluetoothMock in Frameworks */,
 				01B861872AB34DBF0001118F /* iOS-Bluetooth-Numbers-Database in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -716,6 +719,7 @@
 		5217F3E41859EE0000F2D5BB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A7E289322EB35E5F007199DB /* IOS-CoreBluetooth-Mock */,
 				309F08671E6D706B00B7546A /* HomeKit.framework */,
 				522636361C60FFB00054A550 /* libz.tbd */,
 				52BDCBBD1C3FD86900E2680F /* QuartzCore.framework */,
@@ -892,6 +896,7 @@
 				015642462AA4E640005A0A44 /* iOS-BLE-Library-Mock */,
 				01B861862AB34DBF0001118F /* iOS-Bluetooth-Numbers-Database */,
 				AA1AD37E2DD5DFC400799308 /* AEXML */,
+				A7E289342EB35E70007199DB /* CoreBluetoothMock */,
 			);
 			productName = "nRF-Toolbox";
 			productReference = 017D102B2A5809E300E38E5F /* nRF-Toolbox.app */;
@@ -1930,6 +1935,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 01C81ACC2A5CAC350011B41E /* XCRemoteSwiftPackageReference "iOS-Bluetooth-Numbers-Database" */;
 			productName = "iOS-Bluetooth-Numbers-Database";
+		};
+		A7E289342EB35E70007199DB /* CoreBluetoothMock */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CoreBluetoothMock;
 		};
 		AA1AD37E2DD5DFC400799308 /* AEXML */ = {
 			isa = XCSwiftPackageProductDependency;
