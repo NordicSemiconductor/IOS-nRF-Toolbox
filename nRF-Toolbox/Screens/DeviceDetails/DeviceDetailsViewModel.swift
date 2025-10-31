@@ -36,7 +36,7 @@ final class DeviceDetailsViewModel: ObservableObject {
     var id: UUID { peripheral.peripheral.identifier }
     
     @Published
-    var errors: ErrorsHolder?
+    var errors: ErrorsHolder = ErrorsHolder()
     
     private(set) var supportedServiceViewModels: [any SupportedServiceViewModel] = []
     
@@ -200,6 +200,7 @@ extension DeviceDetailsViewModel {
                     }.store(in: &cancellable)
             }
         } catch {
+            errors.error = AlertError.servicesNotFound
             log.error("\(#function) Error: \(error.localizedDescription)")
         }
     }
@@ -221,17 +222,17 @@ extension DeviceDetailsViewModel {
     
     // MARK: CriticalError
     
-    enum CriticalError: Error {
+    enum CriticalError: LocalizedError {
         case disconnectedWithError(Error?)
 
-        var title: String {
+        var description: String? {
             switch self {
             case .disconnectedWithError:
                 return "Disconnected"
             }
         }
 
-        var message: String {
+        var errorDescription: String? {
             switch self {
             case .disconnectedWithError(let error):
                 return error?.localizedDescription ?? "Disconnected with unknown error."
@@ -241,17 +242,17 @@ extension DeviceDetailsViewModel {
 
     // MARK: AlertError
     
-    enum AlertError: Error {
+    enum AlertError: LocalizedError {
         case servicesNotFound
 
-        var title: String {
+        var description: String? {
             switch self {
             case .servicesNotFound:
                 return "Services not found"
             }
         }
 
-        var message: String {
+        var errorDescription: String? {
             switch self {
             case .servicesNotFound:
                 return "Error occured while discovering services."

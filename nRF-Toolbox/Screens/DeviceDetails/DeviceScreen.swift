@@ -41,16 +41,16 @@ struct DeviceScreen: View {
                     .disabled(device.status.hashValue != ConnectedDevicesViewModel.Device.Status.connected.hashValue)
             }
             
-            if let error = deviceViewModel.errors?.minorError {
-                Section("Minor error") {
-                    Text(error.localizedDescription)
-                        .foregroundStyle(Color.nordicRed)
+            if let error = deviceViewModel.errors.warning {
+                Section("Warning") {
+                    Text(error.errorDescription ?? "Unknown issue.")
+                        .foregroundStyle(Color.nordicSun)
                 }
             }
             
-            if let error = deviceViewModel.errors?.criticalError {
-                Section("Critical error") {
-                    Text(error.localizedDescription)
+            if let error = deviceViewModel.errors.error {
+                Section("Error") {
+                    Text(error.errorDescription ?? "Unknown error.")
                         .foregroundStyle(Color.nordicRed)
                 }
             }

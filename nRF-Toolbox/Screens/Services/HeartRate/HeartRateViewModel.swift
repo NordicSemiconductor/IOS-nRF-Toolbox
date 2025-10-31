@@ -253,7 +253,7 @@ extension HeartRateViewModel {
             if let heartRateControlPoint {
                 log.debug("Reset energy counter - start")
                 do {
-                    self.errors.value.minorError = nil
+                    self.errors.value.warning = nil
                     caloriesResetState = .inProgress
                     let command: [UInt8] = [0x01]  // Reset calories counter
                     let data = Data(command)
@@ -263,7 +263,7 @@ extension HeartRateViewModel {
                     log.debug("Reset energy counter - end")
                 } catch {
                     caloriesResetState = .available
-                    self.errors.value.minorError = AlertError.unknown
+                    self.errors.value.warning = AlertError.unknown
                     log.debug("Reset energy counter - error: \(error)")
                 }
             } else {
