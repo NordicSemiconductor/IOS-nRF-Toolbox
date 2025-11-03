@@ -41,6 +41,8 @@ struct UARTEditCommandView: View {
     
     private let command: UARTMacroCommand
     
+    @Environment(\.dismiss) private var dismiss
+    
     // MARK: init
     
     init(_ command: UARTMacroCommand) {
@@ -93,10 +95,15 @@ struct UARTEditCommandView: View {
                 .centered()
             }
         }
-        .onDisappear {
-            save()
-        }
         .navigationTitle("Edit Command #\(command.id + 1)")
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button("Save", systemImage: "checkmark") {
+                    save()
+                    dismiss()
+                }
+            }
+        }
     }
     
     // MARK: API
