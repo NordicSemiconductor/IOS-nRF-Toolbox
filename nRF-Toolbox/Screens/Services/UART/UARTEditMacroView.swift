@@ -39,11 +39,11 @@ struct UARTEditMacroView: View {
             
             Section("Commands") {
                 UARTMacroButtonsView(macro: viewModel.selectedMacro, onTap: { i in
-                    guard viewModel.selectedMacro.commands[i].data != nil else { return }
-                    sequence.append(viewModel.selectedMacro.commands[i])
-                }, onLongPress: { i in
                     viewModel.editCommandIndex = i
                     viewModel.showEditCommandSheet = true
+                }, onLongPress: { i in
+                    guard viewModel.selectedMacro.commands[i].data != nil else { return }
+                    sequence.append(viewModel.selectedMacro.commands[i])
                 })
                 .aspectRatio(1, contentMode: .fit)
                 .padding(.vertical, 8)
@@ -51,6 +51,9 @@ struct UARTEditMacroView: View {
             }
             
             Section("Command Sequence") {
+                Text ("Tip: Long press command to add it to a sequence.")
+                    .foregroundColor(.secondary)
+                    .font(Font.caption.bold())
                 ForEach(sequence, id: \.self) { command in
                     Text(command.toString() ?? "N/A")
                 }
