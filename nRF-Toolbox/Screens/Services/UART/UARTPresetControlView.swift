@@ -1,5 +1,5 @@
 //
-//  UARTMacroView.swift
+//  UARTPresetControlView.swift
 //  nRF-Toolbox
 //
 //  Created by Dinesh Harjani on 13/5/25.
@@ -10,9 +10,9 @@ import SwiftUI
 import iOS_Common_Libraries
 import TipKit
 
-// MARK: - UARTMacroView
+// MARK: - UARTPresetControlView
 
-struct UARTMacroView: View {
+struct UARTPresetControlView: View {
     
     // MARK: EnvironmentObject
     
@@ -20,20 +20,20 @@ struct UARTMacroView: View {
     
     // MARK: Properties
     
-    private let macro: UARTMacro
+    private let presets: UARTPresets
     
     // MARK: Init
     
-    init(_ macro: UARTMacro) {
-        self.macro = macro
+    init(_ presets: UARTPresets) {
+        self.presets = presets
     }
     
     // MARK: view
     
     var body: some View {
         HStack(spacing: 16) {
-            UARTMacroButtonsView(macro: macro, onTap: { i in
-                viewModel.runCommand(macro.commands[i])
+            UARTPresetsGridView(presets: presets, onTap: { i in
+                viewModel.runCommand(presets.commands[i])
             }, onLongPress: { i in
                 // No-op.
             })
@@ -42,7 +42,7 @@ struct UARTMacroView: View {
 
             VStack(spacing: 16) {
                 Button("", systemImage: "gear") {
-                    viewModel.showEditMacroSheet = true
+                    viewModel.showEditPresetsSheet = true
                 }
                 .tint(.primary)
                 

@@ -1,5 +1,5 @@
 //
-//  UARTMacroButtonsView.swift
+//  UARTPresetsGridView.swift
 //  nRF-Toolbox
 //
 //  Created by Dinesh Harjani on 14/5/25.
@@ -9,13 +9,13 @@
 import SwiftUI
 import iOS_Common_Libraries
 
-// MARK: - UARTMacroButtonsView
+// MARK: - UARTPresetsGridView
 
 struct UARTPresetsGridView: View {
     
     // MARK: Properties
     
-    let macro: UARTPresets
+    let presets: UARTPresets
     let onTap: (Int) -> Void
     let onLongPress: (Int) -> Void
     
@@ -30,7 +30,7 @@ struct UARTPresetsGridView: View {
                             // No-op.
                             // Keep as a no-op so both long press and tap work.
                         } label: {
-                            Image(systemName: macro.commands[row * 3 + col].symbol)
+                            Image(systemName: presets.commands[row * 3 + col].symbol)
                                 .symbolRenderingMode(.hierarchical)
                                 .font(.system(size: 32))
                                 .frame(size: CGSize(asSquare: 40.0))
@@ -42,7 +42,7 @@ struct UARTPresetsGridView: View {
                         .simultaneousGesture(TapGesture().onEnded {
                             onTap(row * 3 + col)
                         })
-                        .tint(macro.commands[row * 3 + col].data != nil ? .universalAccentColor : .secondary)
+                        .tint(presets.commands[row * 3 + col].data != nil ? .universalAccentColor : .secondary)
                         .buttonStyle(.borderedProminent)
                     }
                 }

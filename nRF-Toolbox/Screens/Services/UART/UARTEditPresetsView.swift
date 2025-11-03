@@ -1,5 +1,5 @@
 //
-//  UARTEditMacroView.swift
+//  UARTEditPresetsView.swift
 //  nRF-Toolbox
 //
 //  Created by Dinesh Harjani on 15/5/25.
@@ -9,9 +9,9 @@
 import SwiftUI
 import iOS_Common_Libraries
 
-// MARK: - UARTEditMacroView
+// MARK: - UARTEditPresetsView
 
-struct UARTEditMacroView: View {
+struct UARTEditPresetsView: View {
     
     // MARK: EnvironmentObject
     
@@ -20,8 +20,8 @@ struct UARTEditMacroView: View {
     // MARK: Private Properties
     
     @State private var name: String = ""
-    @State private var sequence: [UARTMacroCommand] = [UARTMacroCommand]()
-    
+    @State private var sequence: [UARTPreset] = [UARTPreset]()
+
     private let appLog = NordicLog(category: #file)
     
     // MARK: view
@@ -29,7 +29,7 @@ struct UARTEditMacroView: View {
     var body: some View {
         List {
             Section("Name") {
-                CancellableTextField("Type macro name here", cancelText: name, icon: .text, text: $name)
+                CancellableTextField("Type preset's set name here", cancelText: name, icon: .text, text: $name)
                     .keyboardType(.alphabet)
                     .submitLabel(.done)
                     .onSubmit {
@@ -37,13 +37,13 @@ struct UARTEditMacroView: View {
                     }
             }
             
-            Section("Commands") {
-                UARTMacroButtonsView(macro: viewModel.selectedMacro, onTap: { i in
+            Section("Presets") {
+                UARTPresetsGridView(presets: viewModel.selectedPreset, onTap: { i in
                     viewModel.editCommandIndex = i
-                    viewModel.showEditCommandSheet = true
+                    viewModel.showEditPresetSheet = true
                 }, onLongPress: { i in
-                    guard viewModel.selectedMacro.commands[i].data != nil else { return }
-                    sequence.append(viewModel.selectedMacro.commands[i])
+                    guard viewModel.selectedPreset.commands[i].data != nil else { return }
+                    sequence.append(viewModel.selectedPreset.commands[i])
                 })
                 .aspectRatio(1, contentMode: .fit)
                 .padding(.vertical, 8)
@@ -67,7 +67,7 @@ struct UARTEditMacroView: View {
             
             Section {
                 Button("Save") {
-                    viewModel.showEditMacroSheet = false
+                    viewModel.showEditPresetsSheet = false
                     // onDisappear will trigger a save.
                 }
                 .tint(.universalAccentColor)
@@ -75,12 +75,12 @@ struct UARTEditMacroView: View {
             }
         }
         .listStyle(.insetGrouped)
-        .navigationTitle("Edit \(viewModel.selectedMacro.name)")
+        .navigationTitle("Edit \(viewModel.selectedPreset.name)")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button("Dismiss", systemImage: "chevron.down") {
-                    viewModel.showEditMacroSheet = false
+                    viewModel.showEditPresetsSheet = false
                 }
             }
             
@@ -91,7 +91,7 @@ struct UARTEditMacroView: View {
             }
         }
         .doOnce {
-            name = viewModel.selectedMacro.name
+            name = viewModel.selectedPreset.name
         }
         .onDisappear {
             save()
@@ -102,7 +102,7 @@ struct UARTEditMacroView: View {
     
     func save() {
         appLog.debug(#function)
-        viewModel.saveMacros()
+        viewModel.savePresets()
     }
 }
 

@@ -1,5 +1,5 @@
 //
-//  UARTMacroSelectionView.swift
+//  UARTPresetsMainView.swift
 //  nRF-Toolbox
 //
 //  Created by Dinesh Harjani on 8/5/25.
@@ -9,9 +9,9 @@
 import SwiftUI
 import iOS_Common_Libraries
 
-// MARK: - UARTMacroSelectionView
+// MARK: - UARTPresetsMainView
 
-struct UARTMacroSelectionView: View {
+struct UARTPresetsMainView: View {
     
     // MARK: EnvironmentObject
     
@@ -19,31 +19,31 @@ struct UARTMacroSelectionView: View {
     
     // MARK: Properties
     
-    @State private var showNewMacroAlert: Bool = false
-    @State private var newMacroName: String = ""
+    @State private var showNewPresetsAlert: Bool = false
+    @State private var newPresetsName: String = ""
     
     // MARK: view
     
     var body: some View {
         DisclosureGroup {
             HStack {
-                InlinePicker(title: "", systemImage: "command.square", selectedValue: $viewModel.selectedMacro,
-                             possibleValues: viewModel.macros)
+                InlinePicker(title: "", systemImage: "command.square", selectedValue: $viewModel.selectedPreset,
+                             possibleValues: viewModel.presets)
                     .labeledContentStyle(.accentedContent)
                 
                 Button {
-                    viewModel.deleteSelectedMacro()
+                    viewModel.deleteSelectedPresets()
                 } label: {
                     Image(systemName: "trash")
                         .frame(size: Constant.ButtonSize)
                 }
-                .disabled(viewModel.selectedMacro == .none)
+                .disabled(viewModel.selectedPreset == .none)
                 .buttonStyle(.bordered)
                 .foregroundStyle(Color.nordicRed)
                 
                 Button {
-                    newMacroName = ""
-                    showNewMacroAlert = true
+                    newPresetsName = ""
+                    showNewPresetsAlert = true
                 } label: {
                     Image(systemName: "plus")
                         .frame(size: Constant.ButtonSize)
@@ -62,30 +62,30 @@ struct UARTMacroSelectionView: View {
                 .foregroundStyle(Color.primary)
             }
             
-            UARTMacroView(viewModel.selectedMacro)
-                .disabled(viewModel.selectedMacro == .none)
+            UARTPresetControlView(viewModel.selectedPreset)
+                .disabled(viewModel.selectedPreset == .none)
         } label: {
-            Text("Macros")
+            Text("Presets")
                 .font(.title2.bold())
         }
         .tint(.universalAccentColor)
-        .alert("New Macro", isPresented: $showNewMacroAlert) {
-            TextField("Type Name Here", text: $newMacroName)
+        .alert("New Presets", isPresented: $showNewPresetsAlert) {
+            TextField("Type Name Here", text: $newPresetsName)
                 .submitLabel(.done)
                 .onSubmit {
-                    viewModel.newMacro(named: newMacroName)
-                    newMacroName = ""
-                    showNewMacroAlert = false
+                    viewModel.newPresets(named: newPresetsName)
+                    newPresetsName = ""
+                    showNewPresetsAlert = false
                 }
             
             Button("Cancel", role: .cancel) {
-                showNewMacroAlert = false
+                showNewPresetsAlert = false
             }
             
             Button("Add") {
-                viewModel.newMacro(named: newMacroName)
-                newMacroName = ""
-                showNewMacroAlert = false
+                viewModel.newPresets(named: newPresetsName)
+                newPresetsName = ""
+                showNewPresetsAlert = false
             }
         }
     }

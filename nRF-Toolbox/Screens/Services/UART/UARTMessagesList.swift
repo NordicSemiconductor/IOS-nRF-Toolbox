@@ -41,7 +41,7 @@ struct UARTMessagesList: View {
             .listRowSpacing(0.0)
             
             VStack(alignment: .leading) {
-                UARTMacroSelectionView()
+                UARTPresetsMainView()
             }
             .padding(.horizontal, 20)
             
@@ -58,11 +58,11 @@ struct UARTMessagesList: View {
                 }
             }
         }
-        .sheet(isPresented: $viewModel.showEditMacroSheet) {
+        .sheet(isPresented: $viewModel.showEditPresetsSheet) {
             NavigationStack {
-                UARTEditMacroView()
-                    .navigationDestination(isPresented: $viewModel.showEditCommandSheet) {
-                        UARTEditCommandView(viewModel.selectedMacro.commands[viewModel.editCommandIndex])
+                UARTEditPresetsView()
+                    .navigationDestination(isPresented: $viewModel.showEditPresetSheet) {
+                        UARTEditPresetView(viewModel.selectedPreset.commands[viewModel.editCommandIndex])
                             .environmentObject(viewModel)
                     }
                     .environmentObject(viewModel)

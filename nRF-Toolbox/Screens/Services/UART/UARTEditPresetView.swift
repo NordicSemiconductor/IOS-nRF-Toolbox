@@ -11,7 +11,7 @@ import iOS_Common_Libraries
 
 // MARK: - UARTEditCommandView
 
-struct UARTEditCommandView: View {
+struct UARTEditPresetView: View {
     
     // MARK: Constant
     
@@ -33,22 +33,22 @@ struct UARTEditCommandView: View {
     // MARK: State
     
     @State private var editFormat: Format
-    @State private var editCommand: String
-    @State private var editEOL: UARTMacroCommand.EndOfLine
+    @State private var editedPreset: String
+    @State private var editEOL: UARTPreset.EndOfLine
     @State private var editSymbol: String
     
     // MARK: Properties
     
-    private let command: UARTMacroCommand
+    private let command: UARTPreset
     
     @Environment(\.dismiss) private var dismiss
     
     // MARK: init
     
-    init(_ command: UARTMacroCommand) {
+    init(_ command: UARTPreset) {
         self.command = command
         self.editFormat = .text
-        self.editCommand = command.toString() ?? ""
+        self.editedPreset = command.toString() ?? ""
         self.editEOL = command.eol
         self.editSymbol = command.symbol
     }
@@ -62,7 +62,7 @@ struct UARTEditCommandView: View {
                                              possibleValues: Format.allCases)
                     .frame(maxWidth: 220)
                 
-                TextField("UART Command", text: $editCommand, prompt: Text("Write command here"))
+                TextField("UART Command", text: $editedPreset, prompt: Text("Write command here"))
                     .keyboardType(.alphabet)
                     .disableAllAutocorrections()
                     .submitLabel(.done)
@@ -111,14 +111,14 @@ struct UARTEditCommandView: View {
     // MARK: API
     
     func save() {
-        let saveCommand = UARTMacroCommand(command.id, command: editCommand, symbol: editSymbol, eol: editEOL)
-        viewModel.updateSelectedMacroCommand(saveCommand)
+        let presetToSave = UARTPreset(command.id, command: editedPreset, symbol: editSymbol, eol: editEOL)
+        viewModel.updateSelectedPresetCommand(presetToSave)
     }
 }
 
 // MARK: - Format
 
-fileprivate extension UARTEditCommandView {
+fileprivate extension UARTEditPresetView {
     
     enum Format: Int, RawRepresentable, CustomStringConvertible, CaseIterable {
         case text, data

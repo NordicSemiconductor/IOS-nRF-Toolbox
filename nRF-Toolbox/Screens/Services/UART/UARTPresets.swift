@@ -1,5 +1,5 @@
 //
-//  UARTMacro.swift
+//  UARTPresets.swift
 //  nRF-Toolbox
 //
 //  Created by Dinesh Harjani on 7/5/25.
@@ -9,13 +9,13 @@
 import SwiftUI
 import iOS_Common_Libraries
 
-// MARK: - UARTMacro
+// MARK: - UARTPresets
 
-struct UARTMacro: Identifiable, Codable, Hashable, Equatable, CustomStringConvertible {
+struct UARTPresets: Identifiable, Codable, Hashable, Equatable, CustomStringConvertible {
     
     // MARK: Unselected
     
-    static let none = UARTMacro("No Selection")
+    static let none = UARTPresets("No Selection")
     
     // MARK: Constants
     
@@ -24,31 +24,31 @@ struct UARTMacro: Identifiable, Codable, Hashable, Equatable, CustomStringConver
     // MARK: Properties
     
     let name: String
-    let commands: [UARTMacroCommand]
+    let commands: [UARTPreset]
     
     var id: String { name }
     var description: String { name }
     
     // MARK: Init
     
-    init(_ name: String, commands: [UARTMacroCommand]? = nil) {
-        self.name = name.isEmpty ? "Unnamed Macro" : name
+    init(_ name: String, commands: [UARTPreset]? = nil) {
+        self.name = name.isEmpty ? "Unnamed Presets" : name
         if let commands {
             self.commands = commands
         } else {
-            var emptyCommands = [UARTMacroCommand]()
+            var emptyCommands = [UARTPreset]()
             emptyCommands.reserveCapacity(Self.numberOfCommands)
             for i in 0..<Self.numberOfCommands {
-                emptyCommands.append(UARTMacroCommand(i))
+                emptyCommands.append(UARTPreset(i))
             }
             self.commands = emptyCommands
         }
     }
 }
 
-// MARK: - UARTMacroCommand
+// MARK: - UARTPreset
 
-struct UARTMacroCommand: Identifiable, Codable, Hashable, Equatable {
+struct UARTPreset: Identifiable, Codable, Hashable, Equatable {
     
     // MARK: Properties
     
@@ -85,7 +85,7 @@ struct UARTMacroCommand: Identifiable, Codable, Hashable, Equatable {
 
 // MARK: - CommandType
 
-extension UARTMacroCommand {
+extension UARTPreset {
     
     enum CommandType: String, RawRepresentable, Codable, Hashable, Equatable, CustomStringConvertible, CaseIterable {
         case data
@@ -97,7 +97,7 @@ extension UARTMacroCommand {
 
 // MARK: - EOL
 
-extension UARTMacroCommand {
+extension UARTPreset {
     
     enum EndOfLine: String, Codable, Hashable, Equatable, CustomStringConvertible, CaseIterable {
         case none = ""

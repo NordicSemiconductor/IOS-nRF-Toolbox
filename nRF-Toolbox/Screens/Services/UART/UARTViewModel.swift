@@ -32,11 +32,11 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
     @Published private(set) var messages: [UARTMessage] = []
     @Published var newMessage: String = ""
     
-    @Published private(set) var macros: [UARTMacro] = [.none]
-    @Published var selectedMacro = UARTMacro.none
-    @Published var showEditMacroSheet = false
+    @Published private(set) var presets: [UARTPresets] = [.none]
+    @Published var selectedPreset = UARTPresets.none
+    @Published var showEditPresetsSheet = false
     @Published var editCommandIndex: Int = 0
-    @Published var showEditCommandSheet: Bool = false
+    @Published var showEditPresetSheet: Bool = false
     
     var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
@@ -47,10 +47,10 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
         self.characteristics = characteristics
         self.cancellables = Set<AnyCancellable>()
         log.debug(#function)
-        if let savedMacros = Self.read() {
-            self.macros = savedMacros
-            if self.macros.count >= 2 {
-                self.selectedMacro = savedMacros[1]
+        if let savedPresets = Self.read() {
+            self.presets = savedPresets
+            if self.presets.count >= 2 {
+                self.selectedPreset = savedPresets[1]
             }
         }
     }
@@ -157,15 +157,15 @@ extension UARTViewModel {
     }
     
     @MainActor
-    func newMacro(named: String) {
-        let newMacro = UARTMacro(named)
-        macros.append(newMacro)
-        selectedMacro = newMacro
-        saveMacros()
+    func newPresets(named: String) {
+        let newPresets = UARTPresets(named)
+        presets.append(newPresets)
+        selectedPreset = newPresets
+        savePresets()
     }
     
     @MainActor
-    func runCommand(_ command: UARTMacroCommand) {
+    func runCommand(_ command: UARTPreset) {
         guard let data = command.data else { return }
         Task {
             await send(data)
@@ -173,42 +173,42 @@ extension UARTViewModel {
     }
     
     @MainActor
-    func updateSelectedMacroName(_ name: String) {
-        guard selectedMacro != .none, let i = macros.firstIndex(of: selectedMacro) else { return }
-        let commands = selectedMacro.commands
-        let updatedMacro = UARTMacro(name, commands: commands)
-        macros[i] = updatedMacro
-        selectedMacro = updatedMacro
-        saveMacros()
+    func updateSelectedPresetsName(_ name: String) {
+        guard selectedPreset != .none, let i = presets.firstIndex(of: selectedPreset) else { return }
+        let commands = selectedPreset.commands
+        let updatedPresets = UARTPresets(name, commands: commands)
+        presets[i] = updatedPresets
+        selectedPreset = updatedPresets
+        savePresets()
     }
     
     @MainActor
-    func updateSelectedMacroCommand(_ command: UARTMacroCommand) {
-        guard selectedMacro != .none, let i = macros.firstIndex(of: selectedMacro) else { return }
-        var updatedCommands = selectedMacro.commands
+    func updateSelectedPresetCommand(_ command: UARTPreset) {
+        guard selectedPreset != .none, let i = presets.firstIndex(of: selectedPreset) else { return }
+        var updatedCommands = selectedPreset.commands
         updatedCommands[command.id] = command
-        let updatedMacro = UARTMacro(selectedMacro.name, commands: updatedCommands)
-        macros[i] = updatedMacro
-        selectedMacro = updatedMacro
-        saveMacros()
+        let updatedPresets = UARTPresets(selectedPreset.name, commands: updatedCommands)
+        presets[i] = updatedPresets
+        selectedPreset = updatedPresets
+        savePresets()
     }
     
     @MainActor
-    func deleteSelectedMacro() {
-        guard selectedMacro != .none else { return }
-        if let i = macros.firstIndex(of: selectedMacro) {
-            macros.remove(at: i)
-            selectedMacro = macros.first ?? .none
+    func deleteSelectedPresets() {
+        guard selectedPreset != .none else { return }
+        if let i = presets.firstIndex(of: selectedPreset) {
+            presets.remove(at: i)
+            selectedPreset = presets.first ?? .none
         }
-        saveMacros()
+        savePresets()
     }
     
     // MARK: Private
     
-    func saveMacros() {
-        let copy = macros
+    func savePresets() {
+        let copy = presets
         Task.detached {
-            Self.writeBack(macros: copy)
+            Self.writeBack(presets: copy)
         }
     }
 }

@@ -16,29 +16,29 @@ extension UARTViewModel {
     
     // MARK: read
     
-    static func read() -> [UARTMacro]? {
-        let fileUrl = try? self.fileUrl(for: "macros")
+    static func read() -> [UARTPresets]? {
+        let fileUrl = try? self.fileUrl(for: "presets")
         guard let fileUrl, let readData = try? Data(contentsOf: fileUrl) else { return nil }
-        let decodedData = try? JSONDecoder().decode([UARTMacro].self, from: readData)
+        let decodedData = try? JSONDecoder().decode([UARTPresets].self, from: readData)
         return decodedData
     }
     
     // MARK: write
     
-    static func writeBack(macros: [UARTMacro]) {
-        let fileUrl = try? self.fileUrl(for: "macros")
-        let jsonData = try? JSONEncoder().encode(macros)
+    static func writeBack(presets: [UARTPresets]) {
+        let fileUrl = try? self.fileUrl(for: "presets")
+        let jsonData = try? JSONEncoder().encode(presets)
         
         guard let fileUrl, let jsonData else { return }
         try? jsonData.write(to: fileUrl)
     }
     
-    private static func macrosDir() throws -> URL {
-        return try Self.fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("macros")
+    private static func presetsDir() throws -> URL {
+        return try Self.fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("presets")
     }
     
     private static func fileUrl(for name: String) throws -> URL {
-        let documentDirectory = try macrosDir()
+        let documentDirectory = try presetsDir()
         if !Self.fileManager.fileExists(atPath: documentDirectory.path) {
             try Self.fileManager.createDirectory(at: documentDirectory, withIntermediateDirectories: true, attributes: nil)
         }

@@ -1,5 +1,5 @@
 //
-//  UARTMacro+XML.swift
+//  UARTPresets+XML.swift
 //  nRF-Toolbox
 //
 //  Created by Dinesh Harjani on 15/5/25.
@@ -9,9 +9,9 @@
 import SwiftUI
 import AEXML
 
-// MARK: - UARTMacro
+// MARK: - UARTPresets
 
-extension UARTMacro {
+extension UARTPresets {
     
     enum XMLError: Error {
         case wrongXMLFormat
@@ -33,30 +33,30 @@ extension UARTMacro {
             throw XMLError.wrongXMLFormat
         }
         
-        var commands: [UARTMacroCommand] = []
-        commands.reserveCapacity(UARTMacro.numberOfCommands)
-        for (i, node) in commandsNode.children.enumerated() where i < UARTMacro.numberOfCommands {
+        var commands: [UARTPreset] = []
+        commands.reserveCapacity(UARTPresets.numberOfCommands)
+        for (i, node) in commandsNode.children.enumerated() where i < UARTPresets.numberOfCommands {
             guard let text = node.value else {
-                commands.append(UARTMacroCommand(i))
+                commands.append(UARTPreset(i))
                 continue
             }
             
             let image = node.attributes["system_icon"] ?? "e.circle"
-            let eol: UARTMacroCommand.EndOfLine
+            let eol: UARTPreset.EndOfLine
             if let eolValue = node.attributes["eol"] {
-                eol = UARTMacroCommand.EndOfLine(rawValue: eolValue) ?? .CRLF
+                eol = UARTPreset.EndOfLine(rawValue: eolValue) ?? .CRLF
             } else {
                 eol = .CRLF
             }
             if let type = node.attributes["type"], type == "data" {
-                commands.append(UARTMacroCommand(i, data: Data(text.utf8), symbol: image, eol: eol))
+                commands.append(UARTPreset(i, data: Data(text.utf8), symbol: image, eol: eol))
             } else {
-                commands.append(UARTMacroCommand(i, command: text, symbol: image, eol: eol))
+                commands.append(UARTPreset(i, command: text, symbol: image, eol: eol))
             }
         }
         
-        for i in commands.count..<UARTMacro.numberOfCommands {
-            commands.append(UARTMacroCommand(i))
+        for i in commands.count..<UARTPresets.numberOfCommands {
+            commands.append(UARTPreset(i))
         }
         
         self.commands = commands
@@ -70,7 +70,7 @@ extension UARTMacro {
             "name": name
         ])
         let commands = AEXMLElement(name: "commands", attributes: [
-            "length": "\(UARTMacro.numberOfCommands)"
+            "length": "\(UARTPresets.numberOfCommands)"
         ])
         commands.addChildren(self.commands.compactMap {
             $0.xml
@@ -82,9 +82,9 @@ extension UARTMacro {
     }
 }
 
-// MARK: - UARTMacroCommand
+// MARK: - UARTPreset
 
-extension UARTMacroCommand {
+extension UARTPreset {
     
     var xml: AEXMLElement? {
         guard let data else { return nil }
