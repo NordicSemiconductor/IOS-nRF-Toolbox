@@ -82,8 +82,10 @@ struct UARTEditCommandView: View {
                                     editSymbol = Self.availableSymbols[row * 5 + col]
                                 }, label: {
                                     Image(systemName: Self.availableSymbols[row * 5 + col])
-                                        .resizable()
-                                        .frame(size: CGSize(asSquare: 32.0))
+                                        .symbolRenderingMode(.hierarchical)
+                                        .font(.system(size: 16))
+                                        .frame(size: CGSize(asSquare: 24.0))
+                                        .padding(4)
                                 })
                                 .tint(editSymbol == Self.availableSymbols[row * 5 + col]
                                       ? Color.nordicBlue : Color.secondary)

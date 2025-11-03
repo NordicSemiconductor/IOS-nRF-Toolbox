@@ -31,8 +31,10 @@ struct UARTMacroButtonsView: View {
                             // Keep as a no-op so both long press and tap work.
                         } label: {
                             Image(systemName: macro.commands[row * 3 + col].symbol)
-                                .resizable()
+                                .symbolRenderingMode(.hierarchical)
+                                .font(.system(size: 32))
                                 .frame(size: CGSize(asSquare: 40.0))
+                                .padding(8)
                         }
                         .simultaneousGesture(LongPressGesture().onEnded { _ in
                             onLongPress(row * 3 + col)
