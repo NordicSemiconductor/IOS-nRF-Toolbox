@@ -47,6 +47,7 @@ struct UARTEditMacroView: View {
                 })
                 .aspectRatio(1, contentMode: .fit)
                 .padding(.vertical, 8)
+                .frame(maxWidth: .infinity, alignment: .center)
             }
             
             Section("Command Sequence") {
