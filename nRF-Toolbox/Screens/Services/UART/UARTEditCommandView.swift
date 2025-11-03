@@ -111,8 +111,7 @@ struct UARTEditCommandView: View {
     // MARK: API
     
     func save() {
-        let saveCommand = UARTMacroCommand(command.id, command: editCommand,
-                                           symbol: editSymbol, eol: editEOL)
+        let saveCommand = UARTMacroCommand(command.id, command: editCommand, symbol: editSymbol, eol: editEOL)
         viewModel.updateSelectedMacroCommand(saveCommand)
     }
 }

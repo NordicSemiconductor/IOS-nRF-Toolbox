@@ -49,6 +49,9 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
         log.debug(#function)
         if let savedMacros = Self.read() {
             self.macros = savedMacros
+            if self.macros.count >= 2 {
+                self.selectedMacro = savedMacros[1]
+            }
         }
     }
     
