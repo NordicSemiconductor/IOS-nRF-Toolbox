@@ -47,7 +47,7 @@ struct UARTEditCommandView: View {
     
     init(_ command: UARTMacroCommand) {
         self.command = command
-        self.editFormat = .data
+        self.editFormat = .text
         self.editCommand = command.toString() ?? ""
         self.editEOL = command.eol
         self.editSymbol = command.symbol
