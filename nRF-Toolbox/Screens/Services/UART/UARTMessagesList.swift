@@ -62,7 +62,7 @@ struct UARTMessagesList: View {
             NavigationStack {
                 UARTEditPresetsView()
                     .navigationDestination(isPresented: $viewModel.showEditPresetSheet) {
-                        UARTEditPresetView(viewModel.selectedPreset.commands[viewModel.editCommandIndex])
+                        UARTEditPresetView(viewModel.selectedPresets.commands[viewModel.editCommandIndex])
                             .environmentObject(viewModel)
                     }
                     .environmentObject(viewModel)

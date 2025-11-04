@@ -27,7 +27,7 @@ struct UARTPresetsMainView: View {
     var body: some View {
         DisclosureGroup {
             HStack {
-                InlinePicker(title: "", systemImage: "command.square", selectedValue: $viewModel.selectedPreset,
+                InlinePicker(title: "", systemImage: "command.square", selectedValue: $viewModel.selectedPresets,
                              possibleValues: viewModel.presets)
                     .labeledContentStyle(.accentedContent)
                 
@@ -37,7 +37,7 @@ struct UARTPresetsMainView: View {
                     Image(systemName: "trash")
                         .frame(size: Constant.ButtonSize)
                 }
-                .disabled(viewModel.selectedPreset == .none)
+                .disabled(viewModel.selectedPresets == .none)
                 .buttonStyle(.bordered)
                 .foregroundStyle(Color.nordicRed)
                 
@@ -62,8 +62,8 @@ struct UARTPresetsMainView: View {
                 .foregroundStyle(Color.primary)
             }
             
-            UARTPresetControlView(viewModel.selectedPreset)
-                .disabled(viewModel.selectedPreset == .none)
+            UARTPresetControlView(viewModel.selectedPresets)
+                .disabled(viewModel.selectedPresets == .none)
         } label: {
             Text("Presets")
                 .font(.title2.bold())

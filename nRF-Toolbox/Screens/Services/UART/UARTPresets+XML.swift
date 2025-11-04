@@ -8,6 +8,7 @@
 
 import SwiftUI
 import AEXML
+import iOS_Common_Libraries
 
 // MARK: - UARTPresets
 
@@ -77,8 +78,20 @@ extension UARTPresets {
         })
         root.addChild(commands)
         doc.addChild(root)
-        
         return doc
+    }
+    
+    func saveToFile() {
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let fileURL = documentsDirectory.appendingPathComponent("yourFileName.txt")
+        if let data = xml.string.data(using: .utf8) {
+            do {
+                try data.write(to: fileURL, options: [.atomicWrite])
+                print("File saved successfully at: \(fileURL)")
+            } catch {
+                print("Error saving file: \(error.localizedDescription)")
+            }
+        }
     }
 }
 

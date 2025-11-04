@@ -8,6 +8,7 @@
 
 import SwiftUI
 import iOS_Common_Libraries
+import AEXML
 
 // MARK: - UARTEditPresetsView
 
@@ -21,6 +22,7 @@ struct UARTEditPresetsView: View {
     
     @State private var name: String = ""
     @State private var sequence: [UARTPreset] = [UARTPreset]()
+    @State private var showFileExporter = false
 
     private let appLog = NordicLog(category: #file)
     
@@ -38,12 +40,12 @@ struct UARTEditPresetsView: View {
             }
             
             Section("Presets") {
-                UARTPresetsGridView(presets: viewModel.selectedPreset, onTap: { i in
+                UARTPresetsGridView(presets: viewModel.selectedPresets, onTap: { i in
                     viewModel.editCommandIndex = i
                     viewModel.showEditPresetSheet = true
                 }, onLongPress: { i in
-                    guard viewModel.selectedPreset.commands[i].data != nil else { return }
-                    sequence.append(viewModel.selectedPreset.commands[i])
+                    guard viewModel.selectedPresets.commands[i].data != nil else { return }
+                    sequence.append(viewModel.selectedPresets.commands[i])
                 })
                 .aspectRatio(1, contentMode: .fit)
                 .padding(.vertical, 8)
@@ -75,7 +77,7 @@ struct UARTEditPresetsView: View {
             }
         }
         .listStyle(.insetGrouped)
-        .navigationTitle("Edit \(viewModel.selectedPreset.name)")
+        .navigationTitle("Edit \(viewModel.selectedPresets.name)")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -86,15 +88,28 @@ struct UARTEditPresetsView: View {
             
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Export", systemImage: "square.and.arrow.up") {
-                    // TODO: Hopefully soon.
+                    showFileExporter = true
                 }
             }
         }
         .doOnce {
-            name = viewModel.selectedPreset.name
+            name = viewModel.selectedPresets.name
         }
         .onDisappear {
             save()
+        }
+        .fileExporter(
+            isPresented: $showFileExporter,
+            document: XMLFileDocument(content: viewModel.selectedPresetsXml),
+            contentType: .xml,
+            defaultFilename: "\(viewModel.selectedPresets.name).xml"
+        ) { result in
+            switch result {
+            case .success(let url):
+                print("File saved to: \(url)")
+            case .failure(let error):
+                print("Error saving file: \(error.localizedDescription)")
+            }
         }
     }
     
@@ -105,4 +120,3 @@ struct UARTEditPresetsView: View {
         viewModel.savePresets()
     }
 }
-

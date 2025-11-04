@@ -24,6 +24,9 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
     private var uartRX: CBCharacteristic!
     private var uartTX: CBCharacteristic!
     
+    private let fileManager = UARTFileManager()
+    private let parser = UARTPresetsXmlParser()
+    
     private var cancellables: Set<AnyCancellable>
     private let log = NordicLog(category: "UARTViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
     
@@ -33,10 +36,14 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
     @Published var newMessage: String = ""
     
     @Published private(set) var presets: [UARTPresets] = [.none]
-    @Published var selectedPreset = UARTPresets.none
+    @Published var selectedPresets = UARTPresets.none
     @Published var showEditPresetsSheet = false
     @Published var editCommandIndex: Int = 0
     @Published var showEditPresetSheet: Bool = false
+    
+    var selectedPresetsXml: String {
+        (try? parser.toXml(selectedPresets)) ?? ""
+    }
     
     var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
@@ -50,7 +57,7 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
         if let savedPresets = Self.read() {
             self.presets = savedPresets
             if self.presets.count >= 2 {
-                self.selectedPreset = savedPresets[1]
+                self.selectedPresets = savedPresets[1]
             }
         }
     }
@@ -160,7 +167,7 @@ extension UARTViewModel {
     func newPresets(named: String) {
         let newPresets = UARTPresets(named)
         presets.append(newPresets)
-        selectedPreset = newPresets
+        selectedPresets = newPresets
         savePresets()
     }
     
@@ -174,31 +181,31 @@ extension UARTViewModel {
     
     @MainActor
     func updateSelectedPresetsName(_ name: String) {
-        guard selectedPreset != .none, let i = presets.firstIndex(of: selectedPreset) else { return }
-        let commands = selectedPreset.commands
+        guard selectedPresets != .none, let i = presets.firstIndex(of: selectedPresets) else { return }
+        let commands = selectedPresets.commands
         let updatedPresets = UARTPresets(name, commands: commands)
         presets[i] = updatedPresets
-        selectedPreset = updatedPresets
+        selectedPresets = updatedPresets
         savePresets()
     }
     
     @MainActor
     func updateSelectedPresetCommand(_ command: UARTPreset) {
-        guard selectedPreset != .none, let i = presets.firstIndex(of: selectedPreset) else { return }
-        var updatedCommands = selectedPreset.commands
+        guard selectedPresets != .none, let i = presets.firstIndex(of: selectedPresets) else { return }
+        var updatedCommands = selectedPresets.commands
         updatedCommands[command.id] = command
-        let updatedPresets = UARTPresets(selectedPreset.name, commands: updatedCommands)
+        let updatedPresets = UARTPresets(selectedPresets.name, commands: updatedCommands)
         presets[i] = updatedPresets
-        selectedPreset = updatedPresets
+        selectedPresets = updatedPresets
         savePresets()
     }
     
     @MainActor
     func deleteSelectedPresets() {
-        guard selectedPreset != .none else { return }
-        if let i = presets.firstIndex(of: selectedPreset) {
+        guard selectedPresets != .none else { return }
+        if let i = presets.firstIndex(of: selectedPresets) {
             presets.remove(at: i)
-            selectedPreset = presets.first ?? .none
+            selectedPresets = presets.first ?? .none
         }
         savePresets()
     }
