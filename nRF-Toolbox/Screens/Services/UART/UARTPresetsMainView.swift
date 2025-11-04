@@ -21,6 +21,7 @@ struct UARTPresetsMainView: View {
     
     @State private var showNewPresetsAlert: Bool = false
     @State private var newPresetsName: String = ""
+    @State private var showFileImporter = false
     
     // MARK: view
     
@@ -52,8 +53,7 @@ struct UARTPresetsMainView: View {
                 .foregroundStyle(Color.universalAccentColor)
                 
                 Button {
-                    // TODO: Import
-                    print("TODO: Import")
+                    showFileImporter = true
                 } label: {
                     Image(systemName: "square.and.arrow.down")
                         .frame(size: Constant.ButtonSize)
@@ -86,6 +86,24 @@ struct UARTPresetsMainView: View {
                 viewModel.newPresets(named: newPresetsName)
                 newPresetsName = ""
                 showNewPresetsAlert = false
+            }
+        }
+        .fileImporter(
+            isPresented: $showFileImporter,
+            allowedContentTypes: [.xml],
+            allowsMultipleSelection: false
+        ) { result in
+            switch result {
+            case .success(let urls):
+                guard let url = urls.first else { return }
+                do {
+                    let data = try Data(contentsOf: url)
+                    viewModel.loadPresets(data)
+                } catch {
+                    print("Error reading file: \(error.localizedDescription)")
+                }
+            case .failure(let error):
+                print("File importer exited with error: \(error.localizedDescription)")
             }
         }
     }

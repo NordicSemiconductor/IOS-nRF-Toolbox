@@ -218,6 +218,14 @@ extension UARTViewModel {
             Self.writeBack(presets: copy)
         }
     }
+    
+    func loadPresets(_ data: Data) {
+
+        if let presets = try? parser.fromXml(data) {
+            self.presets.append(presets)
+            selectedPresets = presets
+        }
+    }
 }
 
 // MARK: - Error
