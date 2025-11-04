@@ -22,7 +22,6 @@ struct UARTEditPresetsView: View {
     
     @State private var name: String = ""
     @State private var sequence: [UARTPreset] = [UARTPreset]()
-    @State private var showFileExporter = false
 
     private let appLog = NordicLog(category: #file)
     
@@ -88,7 +87,7 @@ struct UARTEditPresetsView: View {
             
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Export", systemImage: "square.and.arrow.up") {
-                    showFileExporter = true
+                    viewModel.openFileExporter()
                 }
             }
         }
@@ -99,8 +98,8 @@ struct UARTEditPresetsView: View {
             save()
         }
         .fileExporter(
-            isPresented: $showFileExporter,
-            document: XMLFileDocument(content: viewModel.selectedPresetsXml),
+            isPresented: $viewModel.showFileExporter,
+            document: viewModel.xmlFileDocument,
             contentType: .xml,
             defaultFilename: "\(viewModel.selectedPresets.name).xml"
         ) { result in

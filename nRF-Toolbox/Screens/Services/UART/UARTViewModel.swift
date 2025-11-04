@@ -41,11 +41,8 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
     @Published var editCommandIndex: Int = 0
     @Published var showEditPresetSheet: Bool = false
     
-    var selectedPresetsXml: String {
-        let result = (try? parser.toXml(selectedPresets)) ?? "" //TODO: Improve to calculate only once when needed.
-        log.debug("AAATESTAAA - \(result)")
-        return result
-    }
+    @Published var showFileExporter = false
+    @Published var xmlFileDocument: XMLFileDocument?
     
     var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
@@ -222,11 +219,17 @@ extension UARTViewModel {
     }
     
     func loadPresets(_ data: Data) {
-
         if let presets = try? parser.fromXml(data) {
             self.presets.append(presets)
             selectedPresets = presets
         }
+    }
+    
+    func openFileExporter() {
+        showFileExporter = true
+        let result = (try? parser.toXml(selectedPresets)) ?? ""
+        log.debug("Trying to save xml to a file: \(result)")
+        xmlFileDocument = XMLFileDocument(content: result)
     }
 }
 
