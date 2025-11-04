@@ -30,7 +30,7 @@ class UARTPresetsXmlParser {
         })
         root.addChild(commands)
         doc.addChild(root)
-        return doc.string
+        return doc.xml
     }
     
     private func toXml(_ preset: UARTPreset) throws -> AEXMLElement? {
