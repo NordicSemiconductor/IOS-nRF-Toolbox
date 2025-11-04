@@ -42,7 +42,7 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
     @Published var showEditPresetSheet: Bool = false
     
     var selectedPresetsXml: String {
-        (try? parser.toXml(selectedPresets)) ?? ""
+        (try? parser.toXml(selectedPresets)) ?? "" //TODO: Improve to calculate only once when needed.
     }
     
     var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
