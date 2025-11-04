@@ -56,19 +56,20 @@ struct UARTPreset: Identifiable, Codable, Hashable, Equatable {
     let data: Data?
     let symbol: String
     let eol: EndOfLine
+    let type: CommandType
     
     // MARK: init
     
     init(_ id: Int, command: String = "", symbol: String = "e.circle", eol: EndOfLine = .CRLF) {
-        self.init(id, data: command.isEmpty ? nil : Data(command.appending(eol.rawValue).utf8),
-                  symbol: symbol, eol: eol)
+        self.init(id, data: command.isEmpty ? nil : Data(command.appending(eol.rawValue).utf8), symbol: symbol, eol: eol, type: .text)
     }
     
-    init(_ id: Int, data: Data?, symbol: String, eol: EndOfLine) {
+    init(_ id: Int, data: Data?, symbol: String, eol: EndOfLine, type: CommandType) {
         self.id = id
         self.data = data
         self.symbol = symbol
         self.eol = eol
+        self.type = type
     }
     
     // MARK: API

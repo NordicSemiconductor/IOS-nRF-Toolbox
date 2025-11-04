@@ -25,24 +25,30 @@ class UARTPresetsXmlParser {
         let commands = AEXMLElement(name: "commands", attributes: [
             "length": "\(UARTPresets.numberOfCommands)"
         ])
-        commands.addChildren(try presets.commands.compactMap {
+        let children = try presets.commands.compactMap {
             try toXml($0)
-        })
+        }
+        commands.addChildren(children)
         root.addChild(commands)
         doc.addChild(root)
         return doc.xml
     }
     
     private func toXml(_ preset: UARTPreset) throws -> AEXMLElement? {
-        guard let data = preset.data else { return nil }
-        // Add 'prepend0x' to escape Xcode Build Issues and then remove it.
-        // I know. Definitely not the best. Hopefully Xcode gets better at disambiguation soon (WWDC).
-        let dataString = data.hexEncodedString(options: [Data.HexEncodingOptions.upperCase, Data.HexEncodingOptions.prepend0x]).replacingOccurrences(of: "0x", with: "")
+        let data = preset.data ?? Data()
+        
+        let dataString = if (preset.type == .data) {
+            // Add 'prepend0x' to escape Xcode Build Issues and then remove it.
+            // I know. Definitely not the best. Hopefully Xcode gets better at disambiguation soon (WWDC).
+            data.hexEncodedString(options: [Data.HexEncodingOptions.upperCase, Data.HexEncodingOptions.prepend0x]).replacingOccurrences(of: "0x", with: "")
+        } else {
+            String(data: data, encoding: .utf8)
+        }
         return AEXMLElement(name: "command", value: dataString, attributes: [
             "icon": preset.symbol,
             "active": "true",
             "eol": preset.eol.description,
-            "type": "data",
+            "type": preset.type.rawValue,
             "system_icon": preset.symbol
         ])
     }
@@ -77,7 +83,7 @@ class UARTPresetsXmlParser {
                 eol = .CRLF
             }
             if let type = node.attributes["type"], type == "data" {
-                commands.append(UARTPreset(i, data: Data(text.utf8), symbol: image, eol: eol))
+                commands.append(UARTPreset(i, data: Data(text.utf8), symbol: image, eol: eol, type: .data))
             } else {
                 commands.append(UARTPreset(i, command: text, symbol: image, eol: eol))
             }
