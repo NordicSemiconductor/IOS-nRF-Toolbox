@@ -27,8 +27,9 @@ struct UARTPresets: Identifiable, Codable, Hashable, Equatable, CustomStringConv
     let commands: [UARTPreset]
     
     var url: URL {
+        let filename = name.hasSuffix(".xml") ? name : "\(name).xml"
         let tempDir = FileManager.default.temporaryDirectory
-        return tempDir.appendingPathComponent(name)
+        return tempDir.appendingPathComponent(filename)
     }
     
     var id: String { name }

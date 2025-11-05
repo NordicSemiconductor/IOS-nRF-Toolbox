@@ -42,7 +42,6 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
     @Published var showEditPresetSheet: Bool = false
     
     @Published var showFileExporter = false
-    @Published var xmlFileDocument: XMLFileDocument?
     @Published var pendingChanges = false
     
     @Published var alertMessage: String = ""
@@ -228,9 +227,7 @@ extension UARTViewModel {
     
     func savePresetsToFile(notifyUser: Bool = true) {
         let text = (try? parser.toXml(selectedPresets)) ?? ""
-        let filename = selectedPresets.name
-        let tempDir = FileManager.default.temporaryDirectory
-        let url = tempDir.appendingPathComponent(filename)
+        let url = selectedPresets.url
 
         do {
             try text.write(to: url, atomically: true, encoding: .utf8)
@@ -262,13 +259,6 @@ extension UARTViewModel {
             self.presets.append(presets)
             selectedPresets = presets
         }
-    }
-    
-    func exportPresets() {
-        showFileExporter = true
-        let result = (try? parser.toXml(selectedPresets)) ?? ""
-        log.debug("Trying to save xml to a file: \(result)")
-        xmlFileDocument = XMLFileDocument(content: result)
     }
 }
 

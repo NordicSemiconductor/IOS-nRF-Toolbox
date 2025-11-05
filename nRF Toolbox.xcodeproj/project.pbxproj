@@ -86,7 +86,6 @@
 		A7D7B0D82EBA0452009B69CE /* UARTFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D7B0D72EBA044E009B69CE /* UARTFileManager.swift */; };
 		A7D7B0DA2EBA1E59009B69CE /* XMLFileDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D7B0D92EBA1E56009B69CE /* XMLFileDocument.swift */; };
 		A7E289352EB35E70007199DB /* CoreBluetoothMock in Frameworks */ = {isa = PBXBuildFile; productRef = A7E289342EB35E70007199DB /* CoreBluetoothMock */; };
-		A7EBBC2D2EBB78C5000001DF /* StringFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EBBC2C2EBB78C3000001DF /* StringFlag.swift */; };
 		A7FA7A482E852D6500DA192B /* CGMSMeasurementParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FA7A472E852D6500DA192B /* CGMSMeasurementParser.swift */; };
 		AA01D4922D4A3D38008523CE /* Throughput+Attributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01D4912D4A3D38008523CE /* Throughput+Attributes.swift */; };
 		AA047E112DF1B3A300DA401E /* BlinkyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA047E102DF1B3A300DA401E /* BlinkyView.swift */; };
@@ -269,7 +268,6 @@
 		A7D7B0D72EBA044E009B69CE /* UARTFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTFileManager.swift; sourceTree = "<group>"; };
 		A7D7B0D92EBA1E56009B69CE /* XMLFileDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLFileDocument.swift; sourceTree = "<group>"; };
 		A7E289322EB35E5F007199DB /* IOS-CoreBluetooth-Mock */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "IOS-CoreBluetooth-Mock"; path = "../IOS-CoreBluetooth-Mock"; sourceTree = "<group>"; };
-		A7EBBC2C2EBB78C3000001DF /* StringFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringFlag.swift; sourceTree = "<group>"; };
 		A7FA7A472E852D6500DA192B /* CGMSMeasurementParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSMeasurementParser.swift; sourceTree = "<group>"; };
 		AA01D4912D4A3D38008523CE /* Throughput+Attributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Throughput+Attributes.swift"; sourceTree = "<group>"; };
 		AA047E102DF1B3A300DA401E /* BlinkyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkyView.swift; sourceTree = "<group>"; };
@@ -830,7 +828,6 @@
 		AAA04F1A2DAD1B4F002DAB42 /* UART */ = {
 			isa = PBXGroup;
 			children = (
-				A7EBBC2C2EBB78C3000001DF /* StringFlag.swift */,
 				A7D7B0D92EBA1E56009B69CE /* XMLFileDocument.swift */,
 				A7D7B0D72EBA044E009B69CE /* UARTFileManager.swift */,
 				A7D7B0D52EBA024F009B69CE /* UARTPresetsXmlParser.swift */,
@@ -1129,7 +1126,6 @@
 				AA479EAD2D0B24E50052E801 /* HealthThermometerViewModel.swift in Sources */,
 				AAD1E3EC2D81E5AD00E5121E /* DisclosureAttributeItemView.swift in Sources */,
 				012E22922A6ACD8400B14064 /* AttributeTableItemView.swift in Sources */,
-				A7EBBC2D2EBB78C5000001DF /* StringFlag.swift in Sources */,
 				012E22902A69AFC200B14064 /* String+Name.swift in Sources */,
 				AA95CBCF2D0846E800D1FBC6 /* CyclingServiceViewModel.swift in Sources */,
 				AAE42EEC2DCCC915006212B4 /* UARTPresetsMainView.swift in Sources */,
