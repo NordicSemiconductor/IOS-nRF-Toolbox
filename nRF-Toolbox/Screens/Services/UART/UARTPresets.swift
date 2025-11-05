@@ -23,7 +23,7 @@ struct UARTPresets: Identifiable, Codable, Hashable, Equatable, CustomStringConv
     
     // MARK: Properties
     
-    let name: String
+    var name: String
     let commands: [UARTPreset]
     
     var id: String { name }

@@ -88,6 +88,9 @@ struct UARTPresetsMainView: View {
                 showNewPresetsAlert = false
             }
         }
+        .alert(viewModel.alertMessage, isPresented: $viewModel.showAlert) {
+            Button("OK", role: .cancel) { viewModel.showAlert = false }
+        }
         .fileImporter(
             isPresented: $showFileImporter,
             allowedContentTypes: [.xml],
@@ -98,7 +101,7 @@ struct UARTPresetsMainView: View {
                 guard let url = urls.first else { return }
                 do {
                     let data = try Data(contentsOf: url)
-                    viewModel.loadPresets(data)
+                    viewModel.importPresets(data)
                 } catch {
                     print("Error reading file: \(error.localizedDescription)")
                 }

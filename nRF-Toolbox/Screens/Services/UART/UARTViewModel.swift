@@ -43,6 +43,11 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
     
     @Published var showFileExporter = false
     @Published var xmlFileDocument: XMLFileDocument?
+    @Published var selectedPresetsUrl: URL?
+    @Published var pendingChanges = false
+    
+    @Published var alertMessage: String = ""
+    @Published var showAlert: Bool = false
     
     var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
@@ -209,7 +214,11 @@ extension UARTViewModel {
         savePresets()
     }
     
-    // MARK: Private
+    func updatePresets(name: String? = nil, commands: [UARTPreset]? = nil) {
+        if let name = name {
+            selectedPresets.name = name
+        }
+    }
     
     func savePresets() {
         let copy = presets
@@ -218,14 +227,46 @@ extension UARTViewModel {
         }
     }
     
-    func loadPresets(_ data: Data) {
+    func savePresetsToFile(notifyUser: Bool = true) {
+        let text = (try? parser.toXml(selectedPresets)) ?? ""
+        let filename = selectedPresets.name
+        let tempDir = FileManager.default.temporaryDirectory
+        let url = tempDir.appendingPathComponent(filename)
+
+        do {
+            try text.write(to: url, atomically: true, encoding: .utf8)
+            selectedPresetsUrl = url
+            
+            if (notifyUser) {
+                alertMessage = "Presets have been saved!"
+                showAlert = true
+            }
+        } catch {
+            if (notifyUser) {
+                alertMessage = "An error occured while saving presets. Please try again."
+                showAlert = true
+            }
+        }
+    }
+    
+    func importPresets(_ data: Data) {
+        do {
+            let presets = try parser.fromXml(data)
+            self.presets.append(presets)
+            selectedPresets = presets
+            alertMessage = "Presets have been successfully imported!"
+            showAlert = true
+        } catch {
+            alertMessage = "An error occured while importing presets. Please try again."
+            showAlert = true
+        }
         if let presets = try? parser.fromXml(data) {
             self.presets.append(presets)
             selectedPresets = presets
         }
     }
     
-    func openFileExporter() {
+    func exportPresets() {
         showFileExporter = true
         let result = (try? parser.toXml(selectedPresets)) ?? ""
         log.debug("Trying to save xml to a file: \(result)")

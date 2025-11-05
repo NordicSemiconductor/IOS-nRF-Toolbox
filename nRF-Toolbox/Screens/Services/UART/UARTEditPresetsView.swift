@@ -34,7 +34,7 @@ struct UARTEditPresetsView: View {
                     .keyboardType(.alphabet)
                     .submitLabel(.done)
                     .onSubmit {
-                        save()
+                        viewModel.savePresets()
                     }
             }
             
@@ -65,15 +65,6 @@ struct UARTEditPresetsView: View {
                 .tint(.universalAccentColor)
                 .centered()
             }
-            
-            Section {
-                Button("Save") {
-                    viewModel.showEditPresetsSheet = false
-                    // onDisappear will trigger a save.
-                }
-                .tint(.universalAccentColor)
-                .centered()
-            }
         }
         .listStyle(.insetGrouped)
         .navigationTitle("Edit \(viewModel.selectedPresets.name)")
@@ -84,38 +75,30 @@ struct UARTEditPresetsView: View {
                     viewModel.showEditPresetsSheet = false
                 }
             }
-            
-            ToolbarItem(placement: .topBarTrailing) {
-                Button("Export", systemImage: "square.and.arrow.up") {
-                    viewModel.openFileExporter()
+            if let url = viewModel.selectedPresetsUrl {
+                ToolbarItem(placement: .topBarTrailing) {
+                    ShareLink(item: url) {
+                        Image(systemName: "square.and.arrow.up")
+                    }
                 }
             }
+            ToolbarItem(placement: .confirmationAction) {
+                Button("Dismiss", systemImage: "checkmark") {
+                    viewModel.savePresetsToFile()
+                }.disabled(viewModel.pendingChanges)
+            }
+        }
+        .onAppear {
+            viewModel.savePresetsToFile(notifyUser: false)
+        }
+        .onDisappear {
+            viewModel.selectedPresetsUrl = nil
         }
         .doOnce {
             name = viewModel.selectedPresets.name
         }
-        .onDisappear {
-            save()
+        .alert(viewModel.alertMessage, isPresented: $viewModel.showAlert) {
+            Button("OK", role: .cancel) { viewModel.showAlert = false }
         }
-        .fileExporter(
-            isPresented: $viewModel.showFileExporter,
-            document: viewModel.xmlFileDocument,
-            contentType: .xml,
-            defaultFilename: "\(viewModel.selectedPresets.name).xml"
-        ) { result in
-            switch result {
-            case .success(let url):
-                print("File saved to: \(url)")
-            case .failure(let error):
-                print("Error saving file: \(error.localizedDescription)")
-            }
-        }
-    }
-    
-    // MARK: API
-    
-    func save() {
-        appLog.debug(#function)
-        viewModel.savePresets()
     }
 }
