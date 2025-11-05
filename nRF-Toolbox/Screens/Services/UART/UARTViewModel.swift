@@ -43,7 +43,6 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
     
     @Published var showFileExporter = false
     @Published var xmlFileDocument: XMLFileDocument?
-    @Published var selectedPresetsUrl: URL?
     @Published var pendingChanges = false
     
     @Published var alertMessage: String = ""
@@ -235,8 +234,7 @@ extension UARTViewModel {
 
         do {
             try text.write(to: url, atomically: true, encoding: .utf8)
-            selectedPresetsUrl = url
-            
+
             if (notifyUser) {
                 alertMessage = "Presets have been saved!"
                 showAlert = true

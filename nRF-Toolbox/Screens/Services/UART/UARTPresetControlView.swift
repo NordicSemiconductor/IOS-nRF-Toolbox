@@ -41,6 +41,10 @@ struct UARTPresetControlView: View {
             .padding(.vertical, 8)
 
             VStack(spacing: 16) {
+                ShareLink(item: viewModel.selectedPresets.url) {
+                    Image(systemName: "square.and.arrow.up")
+                }
+                
                 Button("", systemImage: "gear") {
                     viewModel.showEditPresetsSheet = true
                 }

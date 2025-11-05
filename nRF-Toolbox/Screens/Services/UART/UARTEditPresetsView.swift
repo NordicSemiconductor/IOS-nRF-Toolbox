@@ -75,13 +75,6 @@ struct UARTEditPresetsView: View {
                     viewModel.showEditPresetsSheet = false
                 }
             }
-            if let url = viewModel.selectedPresetsUrl {
-                ToolbarItem(placement: .topBarTrailing) {
-                    ShareLink(item: url) {
-                        Image(systemName: "square.and.arrow.up")
-                    }
-                }
-            }
             ToolbarItem(placement: .confirmationAction) {
                 Button("Dismiss", systemImage: "checkmark") {
                     viewModel.savePresetsToFile()
@@ -90,9 +83,6 @@ struct UARTEditPresetsView: View {
         }
         .onAppear {
             viewModel.savePresetsToFile(notifyUser: false)
-        }
-        .onDisappear {
-            viewModel.selectedPresetsUrl = nil
         }
         .doOnce {
             name = viewModel.selectedPresets.name

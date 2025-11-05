@@ -26,6 +26,11 @@ struct UARTPresets: Identifiable, Codable, Hashable, Equatable, CustomStringConv
     var name: String
     let commands: [UARTPreset]
     
+    var url: URL {
+        let tempDir = FileManager.default.temporaryDirectory
+        return tempDir.appendingPathComponent(name)
+    }
+    
     var id: String { name }
     var description: String { name }
     
