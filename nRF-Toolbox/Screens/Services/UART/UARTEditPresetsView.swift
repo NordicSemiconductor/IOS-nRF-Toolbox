@@ -19,10 +19,10 @@ struct UARTEditPresetsView: View {
     @EnvironmentObject private var viewModel: UARTViewModel
     
     // MARK: Private Properties
-    
+  
     @State private var name: String = ""
     @State private var sequence: [UARTPreset] = [UARTPreset]()
-
+    
     private let appLog = NordicLog(category: #file)
     
     // MARK: view
@@ -34,12 +34,12 @@ struct UARTEditPresetsView: View {
                     .keyboardType(.alphabet)
                     .submitLabel(.done)
                     .onSubmit {
-                        viewModel.savePresets()
+                        viewModel.updateSelectedPresetsName(name)
                     }
             }
             
             Section("Presets") {
-                UARTPresetsGridView(presets: viewModel.selectedPresets, onTap: { i in
+                UARTPresetsGridView(presets: viewModel.editedPresets, onTap: { i in
                     viewModel.editCommandIndex = i
                     viewModel.showEditPresetSheet = true
                 }, onLongPress: { i in
@@ -76,16 +76,15 @@ struct UARTEditPresetsView: View {
                 }
             }
             ToolbarItem(placement: .confirmationAction) {
-                Button("Dismiss", systemImage: "checkmark") {
-                    viewModel.savePresetsToFile()
+                Button("Save", systemImage: "checkmark") {
+                    viewModel.updateSelectedPresetsName(name)
+                    viewModel.savePresets()
                 }.disabled(viewModel.pendingChanges)
             }
         }
-        .onAppear {
-            viewModel.savePresetsToFile(notifyUser: false)
-        }
         .doOnce {
-            name = viewModel.selectedPresets.name
+            viewModel.startEdit()
+            name = viewModel.editedPresets.name
         }
         .alert(viewModel.alertMessage, isPresented: $viewModel.showAlert) {
             Button("OK", role: .cancel) { viewModel.showAlert = false }

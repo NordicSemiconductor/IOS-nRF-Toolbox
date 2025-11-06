@@ -37,6 +37,7 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
     
     @Published private(set) var presets: [UARTPresets] = [.none]
     @Published var selectedPresets = UARTPresets.none
+    @Published var editedPresets: UARTPresets = UARTPresets.none
     @Published var showEditPresetsSheet = false
     @Published var editCommandIndex: Int = 0
     @Published var showEditPresetSheet: Bool = false
@@ -181,25 +182,36 @@ extension UARTViewModel {
         }
     }
     
+    func startEdit() {
+        editedPresets = selectedPresets
+        savePresetsToFile(notifyUser: false)
+    }
+    
+    @MainActor
+    func savePresets() {
+        guard editedPresets != .none, let i = presets.firstIndex(of: selectedPresets)  else { return }
+        
+        presets[i] = editedPresets
+        selectedPresets = editedPresets
+        editedPresets = .none
+        savePresets()
+        showEditPresetsSheet = false
+    }
+    
     @MainActor
     func updateSelectedPresetsName(_ name: String) {
-        guard selectedPresets != .none, let i = presets.firstIndex(of: selectedPresets) else { return }
-        let commands = selectedPresets.commands
-        let updatedPresets = UARTPresets(name, commands: commands)
-        presets[i] = updatedPresets
-        selectedPresets = updatedPresets
-        savePresets()
+        guard editedPresets != .none else { return }
+        
+        editedPresets.name = name
     }
     
     @MainActor
     func updateSelectedPresetCommand(_ command: UARTPreset) {
-        guard selectedPresets != .none, let i = presets.firstIndex(of: selectedPresets) else { return }
-        var updatedCommands = selectedPresets.commands
+        guard editedPresets != .none else { return }
+        
+        var updatedCommands = editedPresets.commands
         updatedCommands[command.id] = command
-        let updatedPresets = UARTPresets(selectedPresets.name, commands: updatedCommands)
-        presets[i] = updatedPresets
-        selectedPresets = updatedPresets
-        savePresets()
+        self.editedPresets = UARTPresets(editedPresets.name, commands: updatedCommands)
     }
     
     @MainActor
@@ -218,7 +230,7 @@ extension UARTViewModel {
         }
     }
     
-    func savePresets() {
+    func savePresetsToJsonFile() {
         let copy = presets
         Task.detached {
             Self.writeBack(presets: copy)
