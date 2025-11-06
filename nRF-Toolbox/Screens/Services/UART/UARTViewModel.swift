@@ -244,20 +244,24 @@ extension UARTViewModel {
         }
     }
     
-    func importPresets(_ data: Data) {
-        do {
-            let presets = try parser.fromXml(data)
-            self.presets.append(presets)
-            selectedPresets = presets
-            alertMessage = "Presets have been successfully imported!"
-            showAlert = true
-        } catch {
+    func importPresets(result: Result<[URL], any Error>) {
+        switch result {
+        case .success(let urls):
+            do {
+                let data = try Data(contentsOf: urls.first!)
+                let presets = try parser.fromXml(data)
+                self.presets.append(presets)
+                selectedPresets = presets
+                alertMessage = "Presets have been successfully imported!"
+                showAlert = true
+            } catch {
+                alertMessage = "An error occured while importing presets. Please try again."
+                showAlert = true
+            }
+        case .failure(let error):
             alertMessage = "An error occured while importing presets. Please try again."
             showAlert = true
-        }
-        if let presets = try? parser.fromXml(data) {
-            self.presets.append(presets)
-            selectedPresets = presets
+            log.debug("File importer exited with error: \(error.localizedDescription)")
         }
     }
 }

@@ -96,18 +96,7 @@ struct UARTPresetsMainView: View {
             allowedContentTypes: [.xml],
             allowsMultipleSelection: false
         ) { result in
-            switch result {
-            case .success(let urls):
-                guard let url = urls.first else { return }
-                do {
-                    let data = try Data(contentsOf: url)
-                    viewModel.importPresets(data)
-                } catch {
-                    print("Error reading file: \(error.localizedDescription)")
-                }
-            case .failure(let error):
-                print("File importer exited with error: \(error.localizedDescription)")
-            }
+            viewModel.importPresets(result: result)
         }
     }
 }
