@@ -99,7 +99,7 @@ struct UARTEditPresetView: View {
         }
         .navigationTitle("Edit Command #\(command.id + 1)")
         .toolbar {
-            ToolbarItem(placement: .primaryAction) {
+            ToolbarItem(placement: .confirmationAction) {
                 Button("Save", systemImage: "checkmark") {
                     save()
                     dismiss()
