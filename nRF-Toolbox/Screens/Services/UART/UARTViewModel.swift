@@ -171,7 +171,8 @@ extension UARTViewModel {
         let newPresets = UARTPresets(named)
         presets.append(newPresets)
         selectedPresets = newPresets
-        savePresets()
+        savePresetsToXmlFile()
+        savePresetsToJsonFile()
     }
     
     @MainActor
@@ -184,7 +185,7 @@ extension UARTViewModel {
     
     func startEdit() {
         editedPresets = selectedPresets
-        savePresetsToFile(notifyUser: false)
+        savePresetsToXmlFile(notifyUser: false)
     }
     
     @MainActor
@@ -194,7 +195,8 @@ extension UARTViewModel {
         presets[i] = editedPresets
         selectedPresets = editedPresets
         editedPresets = .none
-        savePresets()
+        savePresetsToXmlFile()
+        savePresetsToJsonFile()
         showEditPresetsSheet = false
     }
     
@@ -221,7 +223,7 @@ extension UARTViewModel {
             presets.remove(at: i)
             selectedPresets = presets.first ?? .none
         }
-        savePresets()
+        savePresetsToJsonFile()
     }
     
     func updatePresets(name: String? = nil, commands: [UARTPreset]? = nil) {
@@ -237,7 +239,7 @@ extension UARTViewModel {
         }
     }
     
-    func savePresetsToFile(notifyUser: Bool = true) {
+    func savePresetsToXmlFile(notifyUser: Bool = true) {
         let text = (try? parser.toXml(selectedPresets)) ?? ""
         let url = selectedPresets.url
 
