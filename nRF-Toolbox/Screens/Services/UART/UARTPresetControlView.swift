@@ -45,13 +45,19 @@ struct UARTPresetControlView: View {
                     Image(systemName: "square.and.arrow.up")
                 }
                 
-                Button("", systemImage: "gear") {
+                Button {
                     viewModel.showEditPresetsSheet = true
+                } label: {
+                    Image(systemName: "gear")
+                        .font(.title2)
                 }
                 .tint(.primary)
-                
-                Button("", systemImage: "play.fill") {
+
+                Button {
                     print("PLAY")
+                } label: {
+                    Image(systemName: "play.fill")
+                        .font(.title2)
                 }
                 .tint(.nordicBlue)
             }
