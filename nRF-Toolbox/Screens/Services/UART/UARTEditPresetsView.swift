@@ -10,6 +10,46 @@ import SwiftUI
 import iOS_Common_Libraries
 import AEXML
 
+// MARK: - UARTSequenceItem
+
+enum UARTSequenceItem : Hashable {
+    case delay(Int)
+    case command(UARTPreset)
+}
+
+struct SequenceItemView : View {
+    
+    let item: UARTSequenceItem
+    @State var value: Float
+    
+    init(item: UARTSequenceItem) {
+        self.item = item
+        if case let .delay(delay) = item {
+            self.value = Float(delay)
+        } else {
+            self.value = 0
+        }
+    }
+    
+    var body: some View {
+        switch item {
+        case .delay:
+            Slider(value: $value, in: 0...30, step: 1) {
+                EmptyView()
+            } minimumValueLabel: {
+                Text("0 ms")
+            } maximumValueLabel: {
+                Text("200 ms")
+            }
+            .onChange(of: value) {
+                self.value = value
+            }
+        case .command(let preset):
+            Text(preset.toString() ?? "N/A")
+        }
+    }
+}
+
 // MARK: - UARTEditPresetsView
 
 struct UARTEditPresetsView: View {
@@ -21,7 +61,7 @@ struct UARTEditPresetsView: View {
     // MARK: Private Properties
   
     @State private var name: String = ""
-    @State private var sequence: [UARTPreset] = [UARTPreset]()
+    @State private var sequence: [UARTSequenceItem] = [UARTSequenceItem]()
     
     private let appLog = NordicLog(category: #file)
     
@@ -44,7 +84,7 @@ struct UARTEditPresetsView: View {
                     viewModel.showEditPresetSheet = true
                 }, onLongPress: { i in
                     guard viewModel.selectedPresets.commands[i].data != nil else { return }
-                    sequence.append(viewModel.selectedPresets.commands[i])
+                    sequence.append(.command(viewModel.selectedPresets.commands[i]))
                 })
                 .aspectRatio(1, contentMode: .fit)
                 .padding(.vertical, 8)
@@ -55,12 +95,12 @@ struct UARTEditPresetsView: View {
                 Text ("Tip: Long press command to add it to a sequence.")
                     .foregroundColor(.secondary)
                     .font(Font.caption.bold())
-                ForEach(sequence, id: \.self) { command in
-                    Text(command.toString() ?? "N/A")
+                ForEach(Array(sequence.enumerated()), id: \.offset) { index, command in
+                    SequenceItemView(item: command)
                 }
                 
                 Button("Add Delay") {
-                    
+                    sequence.append(.delay(1))
                 }
                 .tint(.universalAccentColor)
                 .centered()
