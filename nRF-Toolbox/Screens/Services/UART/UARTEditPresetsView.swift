@@ -55,10 +55,9 @@ struct UARTEditPresetsView: View {
                 Text ("Tip: Long press command to add it to a sequence.")
                     .foregroundColor(.secondary)
                     .font(Font.caption.bold())
-                ForEach(Array(sequence.enumerated()), id: \.offset) { index, command in
-                    SequenceItemView(item: command)
+                ForEach(sequence.indices, id: \.self) { index in
+                    SequenceItemView(item: $sequence[index])
                 }
-                
                 Button("Add Delay") {
                     sequence.append(.delay(1))
                 }
@@ -78,6 +77,7 @@ struct UARTEditPresetsView: View {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Save", systemImage: "checkmark") {
                     viewModel.updateSelectedPresetsName(name)
+                    viewModel.updateSelectedPresetsSequence(sequence)
                     viewModel.savePresets()
                 }.disabled(viewModel.pendingChanges)
             }
@@ -85,6 +85,7 @@ struct UARTEditPresetsView: View {
         .doOnce {
             viewModel.startEdit()
             name = viewModel.editedPresets.name
+            sequence = viewModel.editedPresets.sequence
         }
         .alert(viewModel.alertMessage, isPresented: $viewModel.showAlert) {
             Button("OK", role: .cancel) { viewModel.showAlert = false }

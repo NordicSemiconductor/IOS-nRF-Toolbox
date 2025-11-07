@@ -11,8 +11,8 @@ import iOS_Common_Libraries
 
 // MARK: - UARTSequenceItem
 
-enum UARTSequenceItem : Hashable {
-    case delay(Int)
+enum UARTSequenceItem : Hashable, Codable, Equatable {
+    case delay(Float)
     case command(UARTPreset)
 }
 
@@ -32,6 +32,7 @@ struct UARTPresets: Identifiable, Codable, Hashable, Equatable, CustomStringConv
     
     let name: String
     let commands: [UARTPreset]
+    let sequence: [UARTSequenceItem]
     
     var url: URL {
         let filename = name.hasSuffix(".xml") ? name : "\(name).xml"
@@ -44,7 +45,7 @@ struct UARTPresets: Identifiable, Codable, Hashable, Equatable, CustomStringConv
     
     // MARK: Init
     
-    init(_ name: String, commands: [UARTPreset]? = nil) {
+    init(_ name: String, commands: [UARTPreset]? = nil, sequence: [UARTSequenceItem]? = nil) {
         self.name = name.isEmpty ? "Unnamed Presets" : name
         if let commands {
             self.commands = commands
@@ -56,6 +57,7 @@ struct UARTPresets: Identifiable, Codable, Hashable, Equatable, CustomStringConv
             }
             self.commands = emptyCommands
         }
+        self.sequence = sequence ?? []
     }
 }
 

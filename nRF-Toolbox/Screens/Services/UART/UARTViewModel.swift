@@ -217,6 +217,13 @@ extension UARTViewModel {
     }
     
     @MainActor
+    func updateSelectedPresetsSequence(_ sequence: [UARTSequenceItem]) {
+        guard editedPresets != .none else { return }
+        
+        self.editedPresets = UARTPresets(editedPresets.name, commands: editedPresets.commands, sequence: sequence)
+    }
+    
+    @MainActor
     func deleteSelectedPresets() {
         guard selectedPresets != .none else { return }
         if let i = presets.firstIndex(of: selectedPresets) {
