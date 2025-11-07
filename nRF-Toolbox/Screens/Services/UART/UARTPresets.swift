@@ -9,6 +9,13 @@
 import SwiftUI
 import iOS_Common_Libraries
 
+// MARK: - UARTSequenceItem
+
+enum UARTSequenceItem : Hashable {
+    case delay(Int)
+    case command(UARTPreset)
+}
+
 // MARK: - UARTPresets
 
 struct UARTPresets: Identifiable, Codable, Hashable, Equatable, CustomStringConvertible {
@@ -23,7 +30,7 @@ struct UARTPresets: Identifiable, Codable, Hashable, Equatable, CustomStringConv
     
     // MARK: Properties
     
-    var name: String
+    let name: String
     let commands: [UARTPreset]
     
     var url: URL {

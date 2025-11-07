@@ -204,7 +204,7 @@ extension UARTViewModel {
     func updateSelectedPresetsName(_ name: String) {
         guard editedPresets != .none else { return }
         
-        editedPresets.name = name
+        self.editedPresets = UARTPresets(name, commands: editedPresets.commands)
     }
     
     @MainActor
@@ -224,12 +224,6 @@ extension UARTViewModel {
             selectedPresets = presets.first ?? .none
         }
         savePresetsToJsonFile()
-    }
-    
-    func updatePresets(name: String? = nil, commands: [UARTPreset]? = nil) {
-        if let name = name {
-            selectedPresets.name = name
-        }
     }
     
     func savePresetsToJsonFile() {
