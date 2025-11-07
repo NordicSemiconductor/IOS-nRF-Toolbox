@@ -28,9 +28,19 @@ class UARTPresetsXmlParser {
         let children = try presets.commands.compactMap {
             try toXml($0)
         }
+        let sequence = AEXMLElement(name: "sequence", attributes: [
+            "length": "\(presets.sequence.count)"
+        ])
+        let sequenceChildren = presets.sequence.compactMap {
+            $0.toXMLElement()
+        }
         commands.addChildren(children)
+        sequence.addChildren(sequenceChildren)
         root.addChild(commands)
+        root.addChild(sequence)
         doc.addChild(root)
+        
+        log.debug("AAATESTAAA - result \(doc.xml)")
         return doc.xml
     }
     
@@ -93,6 +103,57 @@ class UARTPresetsXmlParser {
             commands.append(UARTPreset(i))
         }
         
-        return UARTPresets(name, commands: commands)
+        guard let sequenceNode = rootNode.children.first(where: { $0.name == "sequence" }) else {
+            return UARTPresets(name, commands: commands)
+        }
+        
+        let sequence = sequenceNode.children.compactMap { item in
+            UARTSequenceItem(xml: item, commands: commands)
+        }
+        
+        
+        return UARTPresets(name, commands: commands, sequence: sequence)
+    }
+}
+
+private extension UARTSequenceItem {
+    
+    func toXMLElement() -> AEXMLElement {
+        switch self {
+        case .delay(let value):
+            let element = AEXMLElement(name: "item")
+            element.attributes["type"] = "delay"
+            element.attributes["value"] = "\(value)"
+            return element
+            
+        case .command(let preset):
+            let element = AEXMLElement(name: "item")
+            element.attributes["type"] = "command"
+            element.attributes["id"] = "\(preset.id)"
+            return element
+        }
+    }
+    
+    init?(xml: AEXMLElement, commands: [UARTPreset]) {
+        guard let type = xml.attributes["type"] else { return nil }
+        
+        switch type {
+        case "delay":
+            if let valueStr = xml.attributes["value"], let value = Float(valueStr) {
+                self = .delay(value)
+            } else { return nil }
+            
+        case "command":
+            if let id = xml.attributes["id"] {
+                if let preset = commands.first(where: { $0.id == Int(id) }) {
+                    self = .command(preset)
+                } else {
+                    return nil
+                }
+            } else { return nil }
+            
+        default:
+            return nil
+        }
     }
 }
