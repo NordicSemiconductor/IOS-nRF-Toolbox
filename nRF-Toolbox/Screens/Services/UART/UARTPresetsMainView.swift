@@ -59,7 +59,7 @@ struct UARTPresetsMainView: View {
                         .frame(size: Constant.ButtonSize)
                 }
                 .buttonStyle(.bordered)
-                .foregroundStyle(Color.primary)
+                .foregroundStyle(Color.universalAccentColor)
             }
             
             UARTPresetControlView(viewModel.selectedPresets)

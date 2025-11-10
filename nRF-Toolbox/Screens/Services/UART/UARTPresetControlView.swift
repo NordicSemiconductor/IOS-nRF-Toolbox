@@ -43,6 +43,7 @@ struct UARTPresetControlView: View {
             VStack(spacing: 16) {
                 ShareLink(item: viewModel.selectedPresets.url) {
                     Image(systemName: "square.and.arrow.up")
+                        .font(.title2)
                 }
                 
                 Button {
@@ -56,7 +57,7 @@ struct UARTPresetControlView: View {
                 Button {
                     print("PLAY")
                 } label: {
-                    Image(systemName: "play.fill")
+                    Image(systemName: "play")
                         .font(.title2)
                 }
                 .tint(.nordicBlue)
