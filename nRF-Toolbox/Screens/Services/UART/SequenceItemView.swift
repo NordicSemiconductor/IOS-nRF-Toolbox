@@ -33,19 +33,23 @@ struct SequenceItemView : View {
     var body: some View {
         switch item {
         case .delay(let delayValue):
-            Slider(value: value, in: 0...30, step: 1) {
-                EmptyView()
-            } minimumValueLabel: {
-                Text("0 ms")
-            } maximumValueLabel: {
-                Text("200 ms")
+            VStack(alignment: .leading) {
+                Slider(value: value, in: 0...30, step: 1) {
+                    EmptyView()
+                } minimumValueLabel: {
+                    Text("0 ms")
+                } maximumValueLabel: {
+                    Text("30 ms")
+                }
+                .onChange(of: value.wrappedValue) {
+                    self.value.wrappedValue = value.wrappedValue
+                }
+                .doOnce {
+                    value.wrappedValue = delayValue
+                }
+                Text("Selected value: \(Int(value.wrappedValue)) ms")
             }
-            .onChange(of: value.wrappedValue) {
-                self.value.wrappedValue = value.wrappedValue
-            }
-            .doOnce {
-                value.wrappedValue = delayValue
-            }
+
         case .command(let preset):
             Text(preset.toString() ?? "N/A")
         }
