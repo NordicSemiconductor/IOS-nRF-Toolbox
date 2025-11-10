@@ -30,7 +30,7 @@ struct UARTPresetsMainView: View {
             HStack {
                 InlinePicker(title: "", systemImage: "command.square", selectedValue: $viewModel.selectedPresets,
                              possibleValues: viewModel.presets)
-                    .labeledContentStyle(.accentedContent)
+                .labeledContentStyle(.accentedContent)
                 
                 Button {
                     viewModel.deleteSelectedPresets()
@@ -98,6 +98,7 @@ struct UARTPresetsMainView: View {
         ) { result in
             viewModel.importPresets(result: result)
         }
+        .disabled(viewModel.isPlayInProgress)
     }
 }
 

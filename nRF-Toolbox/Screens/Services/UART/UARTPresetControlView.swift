@@ -62,6 +62,7 @@ struct UARTPresetControlView: View {
                             .font(.title2)
                     }
                     .tint(.nordicBlue)
+                    .environment(\.isEnabled, true)
                 } else {
                     Button {
                         viewModel.play()
