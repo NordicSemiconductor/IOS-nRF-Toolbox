@@ -48,6 +48,8 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
     @Published var alertMessage: String = ""
     @Published var showAlert: Bool = false
     
+    private var isPlayInProgress: Bool = false
+    
     var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
     // MARK: init
@@ -277,6 +279,23 @@ extension UARTViewModel {
             alertMessage = "An error occured while importing presets. Please try again."
             showAlert = true
             log.debug("File importer exited with error: \(error.localizedDescription)")
+        }
+    }
+    
+    func play(_ sequence: [UARTSequenceItem]) {
+        Task {
+            isPlayInProgress = true
+            for item in sequence {
+                switch (item) {
+                case .command(let preset):
+                    await runCommand(preset)
+                    break
+                case .delay(let delay):
+                    usleep(UInt32(delay * 1_000_000))
+                    break
+                }
+            }
+            isPlayInProgress = false
         }
     }
 }
