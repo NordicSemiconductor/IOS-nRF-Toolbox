@@ -48,7 +48,8 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
     @Published var alertMessage: String = ""
     @Published var showAlert: Bool = false
     
-    private var isPlayInProgress: Bool = false
+    @Published var isPlayInProgress: Bool = false
+    private var playTask: Task<(), Never>?
     
     var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
@@ -282,16 +283,26 @@ extension UARTViewModel {
         }
     }
     
-    func play(_ sequence: [UARTSequenceItem]) {
-        Task {
+    func stop() {
+        playTask?.cancel()
+    }
+    
+    @MainActor
+    func play() {
+        let sequence = selectedPresets.sequence
+        playTask = Task {
             isPlayInProgress = true
             for item in sequence {
+                if Task.isCancelled {
+                    isPlayInProgress = false
+                    return
+                }
                 switch (item) {
                 case .command(let preset):
-                    await runCommand(preset)
+                    runCommand(preset)
                     break
                 case .delay(let delay):
-                    usleep(UInt32(delay * 1_000_000))
+                    try? await Task.sleep(nanoseconds: UInt64(delay) * 1_000_000_000)
                     break
                 }
             }

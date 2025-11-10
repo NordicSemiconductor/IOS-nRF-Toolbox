@@ -54,13 +54,23 @@ struct UARTPresetControlView: View {
                 }
                 .tint(.primary)
 
-                Button {
-                    print("PLAY")
-                } label: {
-                    Image(systemName: "play")
-                        .font(.title2)
+                if viewModel.isPlayInProgress {
+                    Button {
+                        viewModel.stop()
+                    } label: {
+                        Image(systemName: "stop")
+                            .font(.title2)
+                    }
+                    .tint(.nordicBlue)
+                } else {
+                    Button {
+                        viewModel.play()
+                    } label: {
+                        Image(systemName: "play")
+                            .font(.title2)
+                    }
+                    .tint(.nordicBlue)
                 }
-                .tint(.nordicBlue)
             }
         }
     }
