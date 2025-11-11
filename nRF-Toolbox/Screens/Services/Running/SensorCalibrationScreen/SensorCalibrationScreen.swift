@@ -88,8 +88,10 @@ struct SensorCalibrationScreen: View {
         .toolbarRole(.navigationStack)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                Button("Dismiss", systemImage: "chevron.down") {
+                Button {
                     dismiss()
+                } label: {
+                    Image(systemName: "chevron.down")
                 }
             }
         }

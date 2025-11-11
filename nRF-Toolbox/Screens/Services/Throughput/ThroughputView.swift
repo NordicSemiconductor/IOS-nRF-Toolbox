@@ -62,8 +62,10 @@ struct ThroughputView: View {
                         ToolbarItemGroup(placement: .keyboard) {
                             Spacer()
                             
-                            Button("Done") {
+                            Button {
                                 focusedField = .none
+                            } label: {
+                                Text("Done")
                             }
                         }
                     }

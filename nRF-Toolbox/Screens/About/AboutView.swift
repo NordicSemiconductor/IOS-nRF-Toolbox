@@ -72,8 +72,10 @@ struct AboutView: View {
         .toolbarRole(.navigationStack)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                Button("Dismiss", systemImage: "chevron.down") {
+                Button {
                     presentationMode.wrappedValue.dismiss()
+                } label: {
+                    Image(systemName: "chevron.down")
                 }
             }
         }

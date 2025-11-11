@@ -52,9 +52,13 @@ struct UARTMessagesList: View {
         }
         .navigationTitle("UART Messages")
         .toolbar {
-            Button("Clear", systemImage: "eraser.line.dashed") {
-                Task { @MainActor in
-                    viewModel.clearReceivedMessages()
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    Task { @MainActor in
+                        viewModel.clearReceivedMessages()
+                    }
+                } label: {
+                    Image(systemName: "eraser.line.dashed")
                 }
             }
         }

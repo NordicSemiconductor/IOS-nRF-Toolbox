@@ -42,9 +42,11 @@ struct PeripheralScannerScreen: View {
             viewModel.refresh()
         }
         .toolbar {
-            ToolbarItem(placement: .destructiveAction) {
-                Button("Refresh", systemImage: "arrow.circlepath") {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
                     viewModel.refresh()
+                } label: {
+                    Image(systemName: "arrow.circlepath")
                 }
             }
         }

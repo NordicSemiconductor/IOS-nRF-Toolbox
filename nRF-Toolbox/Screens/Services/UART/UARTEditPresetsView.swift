@@ -70,16 +70,20 @@ struct UARTEditPresetsView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                Button("Dismiss", systemImage: "chevron.down") {
+                Button {
                     viewModel.showEditPresetsSheet = false
+                } label: {
+                    Image(systemName: "chevron.down")
                 }
             }
             ToolbarItem(placement: .confirmationAction) {
-                Button("Save", systemImage: "checkmark") {
+                Button {
                     viewModel.updateSelectedPresetsName(name)
                     viewModel.updateSelectedPresetsSequence(sequence)
                     viewModel.savePresets()
-                }.disabled(viewModel.pendingChanges)
+                } label: {
+                    Image(systemName: "checkmark")
+                }
             }
         }
         .doOnce {

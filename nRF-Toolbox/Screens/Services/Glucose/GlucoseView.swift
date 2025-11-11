@@ -82,7 +82,7 @@ struct GlucoseView: View {
         }
         .labeledContentStyle(.accentedContent)
         .toolbar {
-            Button("", systemImage: "arrow.counterclockwise") {
+            Button {
                 switch viewMode {
                 case .all:
                     viewModel.requestRecords(.allRecords)
@@ -91,6 +91,8 @@ struct GlucoseView: View {
                 case .last:
                     viewModel.requestRecords(.lastRecord)
                 }
+            } label: {
+                Image(systemName: "arrow.counterclockwise")
             }
         }
     }
