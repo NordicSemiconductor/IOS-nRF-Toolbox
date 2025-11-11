@@ -40,7 +40,6 @@ class UARTPresetsXmlParser {
         root.addChild(sequence)
         doc.addChild(root)
         
-        log.debug("AAATESTAAA - result \(doc.xml)")
         return doc.xml
     }
     
