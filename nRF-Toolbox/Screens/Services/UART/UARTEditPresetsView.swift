@@ -87,8 +87,5 @@ struct UARTEditPresetsView: View {
             name = viewModel.editedPresets.name
             sequence = viewModel.editedPresets.sequence
         }
-        .alert(viewModel.alertMessage, isPresented: $viewModel.showAlert) {
-            Button("OK", role: .cancel) { viewModel.showAlert = false }
-        }
     }
 }
