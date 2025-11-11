@@ -58,10 +58,12 @@ struct GlucoseListView: View {
         }
         .navigationTitle("Glucose Records")
         .toolbar {
-            Button {
-                viewModel.requestRecords(.allRecords)
-            } label: {
-                Image(systemName: "arrow.counterclockwise")
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    viewModel.requestRecords(.allRecords)
+                } label: {
+                    Image(systemName: "arrow.counterclockwise")
+                }
             }
         }
     }

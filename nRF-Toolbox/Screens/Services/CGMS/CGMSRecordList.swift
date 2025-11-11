@@ -45,14 +45,16 @@ struct CGMSRecordList: View {
         }
         .navigationTitle("Glucose Records")
         .toolbar {
-            Button {
-                Task {
-                    await viewModel.requestRecords(.allRecords)
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    Task {
+                        await viewModel.requestRecords(.allRecords)
+                    }
+                } label: {
+                    Image(systemName: "arrow.counterclockwise")
                 }
-            } label: {
-                Image(systemName: "arrow.counterclockwise")
+                .disabled(viewModel.inFlightRequest != nil)
             }
-            .disabled(viewModel.inFlightRequest != nil)
         }
     }
 }
