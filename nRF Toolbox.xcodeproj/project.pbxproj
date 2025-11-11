@@ -75,13 +75,10 @@
 		A77FD2632EB120E1007B05C0 /* CBMCharacteristicPropertiesExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77FD2622EB120E0007B05C0 /* CBMCharacteristicPropertiesExt.swift */; };
 		A7A28FD32EAD3D4B004ECC8B /* AggregatedPeripheralSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A28FD22EAD3D46004ECC8B /* AggregatedPeripheralSpecDelegate.swift */; };
 		A7A28FD52EAD3E02004ECC8B /* MockSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A28FD42EAD3E01004ECC8B /* MockSpecDelegate.swift */; };
-		A7C1E5752EC216450048D2B0 /* NIO in Frameworks */ = {isa = PBXBuildFile; productRef = A7C1E5742EC216450048D2B0 /* NIO */; };
-		A7C1E5772EC216450048D2B0 /* NIOCore in Frameworks */ = {isa = PBXBuildFile; productRef = A7C1E5762EC216450048D2B0 /* NIOCore */; };
 		A7CB671E2E967BFA007E1311 /* CGMSSensorStatusOctet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CB671D2E967BF5007E1311 /* CGMSSensorStatusOctet.swift */; };
 		A7CB67202E967C05007E1311 /* CGMSCalTempOctet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CB671F2E967C00007E1311 /* CGMSCalTempOctet.swift */; };
 		A7CB67222E967C0D007E1311 /* CGMSWarningOctet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CB67212E967C08007E1311 /* CGMSWarningOctet.swift */; };
 		A7CB67242E9680E3007E1311 /* UnitGlucoseTrend.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CB67232E9680E2007E1311 /* UnitGlucoseTrend.swift */; };
-		A7CF7BD92EC21210007309DD /* ByteByfferExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CF7BD82EC2120B007309DD /* ByteByfferExt.swift */; };
 		A7CF97B42E8BBE5500C1E1B3 /* CaloriesResetState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CF97B32E8BBE5400C1E1B3 /* CaloriesResetState.swift */; };
 		A7D2C8E52E7D414700C93C28 /* CGMSFeatureEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D2C8E42E7D414300C93C28 /* CGMSFeatureEnvelope.swift */; };
 		A7D657C42EA2470E00CA7D63 /* UARTCBMPeripheralSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D657C32EA2470300CA7D63 /* UARTCBMPeripheralSpecDelegate.swift */; };
@@ -265,7 +262,6 @@
 		A7CB671F2E967C00007E1311 /* CGMSCalTempOctet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSCalTempOctet.swift; sourceTree = "<group>"; };
 		A7CB67212E967C08007E1311 /* CGMSWarningOctet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSWarningOctet.swift; sourceTree = "<group>"; };
 		A7CB67232E9680E2007E1311 /* UnitGlucoseTrend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitGlucoseTrend.swift; sourceTree = "<group>"; };
-		A7CF7BD82EC2120B007309DD /* ByteByfferExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteByfferExt.swift; sourceTree = "<group>"; };
 		A7CF97B32E8BBE5400C1E1B3 /* CaloriesResetState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaloriesResetState.swift; sourceTree = "<group>"; };
 		A7D2C8E42E7D414300C93C28 /* CGMSFeatureEnvelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSFeatureEnvelope.swift; sourceTree = "<group>"; };
 		A7D657C32EA2470300CA7D63 /* UARTCBMPeripheralSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTCBMPeripheralSpecDelegate.swift; sourceTree = "<group>"; };
@@ -356,10 +352,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				015642472AA4E640005A0A44 /* iOS-BLE-Library-Mock in Frameworks */,
-				A7C1E5772EC216450048D2B0 /* NIOCore in Frameworks */,
 				AA1AD37F2DD5DFC400799308 /* AEXML in Frameworks */,
 				018873C42A58332400253273 /* iOSCommonLibraries in Frameworks */,
-				A7C1E5752EC216450048D2B0 /* NIO in Frameworks */,
 				A7E289352EB35E70007199DB /* CoreBluetoothMock in Frameworks */,
 				01B861872AB34DBF0001118F /* iOS-Bluetooth-Numbers-Database in Frameworks */,
 			);
@@ -413,7 +407,6 @@
 		013E5D872ADD337300B9C475 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				A7CF7BD82EC2120B007309DD /* ByteByfferExt.swift */,
 				AA306A072DF30D3B005B4E04 /* Glucose */,
 				AA047E0F2DF1B38B00DA401E /* Blinky */,
 				AA7769FB2DEDED770005A82B /* BPS */,
@@ -913,8 +906,6 @@
 				01B861862AB34DBF0001118F /* iOS-Bluetooth-Numbers-Database */,
 				AA1AD37E2DD5DFC400799308 /* AEXML */,
 				A7E289342EB35E70007199DB /* CoreBluetoothMock */,
-				A7C1E5742EC216450048D2B0 /* NIO */,
-				A7C1E5762EC216450048D2B0 /* NIOCore */,
 			);
 			productName = "nRF-Toolbox";
 			productReference = 017D102B2A5809E300E38E5F /* nRF-Toolbox.app */;
@@ -1003,7 +994,6 @@
 				018873CA2A583C3300253273 /* XCRemoteSwiftPackageReference "IOS-BLE-Library" */,
 				01C81ACC2A5CAC350011B41E /* XCRemoteSwiftPackageReference "iOS-Bluetooth-Numbers-Database" */,
 				A7255E6A2EAF9C6600774CEE /* XCRemoteSwiftPackageReference "IOS-CoreBluetooth-Mock" */,
-				A7CF7BD72EC21195007309DD /* XCRemoteSwiftPackageReference "swift-nio" */,
 			);
 			productRefGroup = 5217F3E31859EE0000F2D5BB /* Products */;
 			projectDirPath = "";
@@ -1109,7 +1099,6 @@
 				A770FE6A2E7D69CA00357127 /* CGMFeatures.swift in Sources */,
 				AA306A092DF30D54005B4E04 /* GlucoseViewModel.swift in Sources */,
 				01CEB4262AE9100300945105 /* DeviceScreen.swift in Sources */,
-				A7CF7BD92EC21210007309DD /* ByteByfferExt.swift in Sources */,
 				AAAD7F532DD2CEAE004952F3 /* UARTPresetControlView.swift in Sources */,
 				018873C72A583A9900253273 /* PeripheralScannerScreen.swift in Sources */,
 				013E5D962AE02A1700B9C475 /* RunningValuesGrid.swift in Sources */,
@@ -1911,14 +1900,6 @@
 				version = 1.0.3;
 			};
 		};
-		A7CF7BD72EC21195007309DD /* XCRemoteSwiftPackageReference "swift-nio" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apple/swift-nio.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.88.0;
-			};
-		};
 		AAFC9CD027BA85EA00860638 /* XCRemoteSwiftPackageReference "IOS-nRF-Connect-Device-Manager" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/NordicSemiconductor/IOS-nRF-Connect-Device-Manager";
@@ -1966,16 +1947,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 01C81ACC2A5CAC350011B41E /* XCRemoteSwiftPackageReference "iOS-Bluetooth-Numbers-Database" */;
 			productName = "iOS-Bluetooth-Numbers-Database";
-		};
-		A7C1E5742EC216450048D2B0 /* NIO */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A7CF7BD72EC21195007309DD /* XCRemoteSwiftPackageReference "swift-nio" */;
-			productName = NIO;
-		};
-		A7C1E5762EC216450048D2B0 /* NIOCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A7CF7BD72EC21195007309DD /* XCRemoteSwiftPackageReference "swift-nio" */;
-			productName = NIOCore;
 		};
 		A7E289342EB35E70007199DB /* CoreBluetoothMock */ = {
 			isa = XCSwiftPackageProductDependency;

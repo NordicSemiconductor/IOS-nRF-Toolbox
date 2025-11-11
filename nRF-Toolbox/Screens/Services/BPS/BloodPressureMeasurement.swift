@@ -8,7 +8,6 @@
 
 import Foundation
 import iOS_Common_Libraries
-import NIO
 
 // MARK: - BloodPressureMeasurement
 
@@ -31,20 +30,20 @@ struct BloodPressureMeasurement {
     // MARK: init
     
     init(data: Data) throws {
-        var reader = data.toByteBuffer()
+        let reader = DataReader(data: data)
         
-        let featureFlags = UInt(reader.readInteger(endianness: .little, as: UInt8.self)!)
+        let featureFlags = UInt(try reader.read(UInt8.self))
         let flagsRegister = BitField<MeasurementFlag>(featureFlags)
         let unit: UnitPressure = flagsRegister.contains(.unit) ? .kilopascals : .millimetersOfMercury
         
-        systolicPressure = Measurement<UnitPressure>(value: try reader.readDouble()!, unit: unit)
-        diastolicPressure = Measurement<UnitPressure>(value: try reader.readDouble()!, unit: unit)
-        meanArterialPressure = Measurement<UnitPressure>(value: try reader.readDouble()!, unit: unit)
+        systolicPressure = Measurement<UnitPressure>(value: try reader.read(), unit: unit)
+        diastolicPressure = Measurement<UnitPressure>(value: try reader.read(), unit: unit)
+        meanArterialPressure = Measurement<UnitPressure>(value: try reader.read(), unit: unit)
         
-        date = flagsRegister.contains(.timestamp) ? try reader.readDate() : nil
-        pulseRate = flagsRegister.contains(.pulseRate) ? Int(try reader.readSFloat()!) : nil
-        userID = flagsRegister.contains(.userID) ? reader.readInteger(endianness: .little, as: UInt8.self)! : nil
-        status = flagsRegister.contains(.measurementStatus) ? BitField<MeasurementStatus>(RegisterValue(reader.readInteger(endianness: .little, as: UInt16.self)!)) : nil
+        date = flagsRegister.contains(.timestamp) ? try reader.read() : nil
+        pulseRate = flagsRegister.contains(.pulseRate) ? Int(try reader.read() as Float) : nil
+        userID = flagsRegister.contains(.userID) ? try reader.read() : nil
+        status = flagsRegister.contains(.measurementStatus) ? BitField<MeasurementStatus>(RegisterValue(try reader.read() as UInt16)) : nil
     }
 }
 
