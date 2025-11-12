@@ -37,9 +37,9 @@ struct SequenceItemView : View {
                 Slider(value: value, in: 0...30, step: 1) {
                     EmptyView()
                 } minimumValueLabel: {
-                    Text("0 ms")
+                    Text("0 s")
                 } maximumValueLabel: {
-                    Text("30 ms")
+                    Text("30 s")
                 }
                 .onChange(of: value.wrappedValue) {
                     self.value.wrappedValue = value.wrappedValue
@@ -47,7 +47,7 @@ struct SequenceItemView : View {
                 .doOnce {
                     value.wrappedValue = delayValue
                 }
-                Text("Selected value: \(Int(value.wrappedValue)) ms")
+                Text("Selected value: \(Int(value.wrappedValue)) s")
             }
 
         case .command(let preset):
