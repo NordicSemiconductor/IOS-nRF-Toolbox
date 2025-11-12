@@ -40,7 +40,7 @@ struct UARTPresetsMainView: View {
                 }
                 .disabled(viewModel.selectedPresets == .none)
                 .buttonStyle(.bordered)
-                .foregroundStyle(Color.nordicRed)
+                .tint(Color.nordicRed)
                 
                 Button {
                     newPresetsName = ""
@@ -50,7 +50,7 @@ struct UARTPresetsMainView: View {
                         .frame(size: Constant.ButtonSize)
                 }
                 .buttonStyle(.bordered)
-                .foregroundStyle(Color.universalAccentColor)
+                .tint(Color.universalAccentColor)
                 
                 Button {
                     showFileImporter = true
@@ -59,7 +59,7 @@ struct UARTPresetsMainView: View {
                         .frame(size: Constant.ButtonSize)
                 }
                 .buttonStyle(.bordered)
-                .foregroundStyle(Color.universalAccentColor)
+                .tint(Color.universalAccentColor)
             }
             
             UARTPresetControlView(viewModel.selectedPresets)
