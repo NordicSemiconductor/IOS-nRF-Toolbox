@@ -64,7 +64,8 @@ struct GlucoseAllRecordsChartView: View {
                 }
             }
             .chartScrollableAxes(.horizontal)
-            .chartXScale(domain: [-1, 20])
+            .chartXScale(domain: [-1, viewModel.maxX+5])
+            .chartXVisibleDomain(length: 10)
             .chartScrollPosition(x: $viewModel.scrollPosition)
             .padding(.top, 8)
         }

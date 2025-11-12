@@ -37,6 +37,7 @@ final class GlucoseViewModel: @MainActor SupportedServiceViewModel, ObservableOb
     @Published private(set) var inFlightRequest: RecordOperator?
     @Published private(set) var minY = 0.6
     @Published private(set) var maxY = 0.0
+    @Published private(set) var maxX = 20.0
     
     var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
@@ -56,6 +57,9 @@ final class GlucoseViewModel: @MainActor SupportedServiceViewModel, ObservableOb
 
             self.minY = minY
             self.maxY = maxY
+            if let maxX = self.allRecords.max(by: { $0.sequenceNumber < $1.sequenceNumber })?.sequenceNumber {
+                self.maxX = Double(maxX)
+            }
         }.store(in: &cancellables)
     }
     
