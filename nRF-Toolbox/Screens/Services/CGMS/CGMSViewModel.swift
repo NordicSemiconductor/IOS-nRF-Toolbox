@@ -273,7 +273,9 @@ private extension CGMSViewModel {
                     self.lastRecord = newValues.first!
                 default: // also .allRecords
                     self.records += newValues
-                    scrollPosition = max(0, self.records.endIndex-5)
+                    if scrollPosition >= self.records.endIndex-10 {
+                        scrollPosition = max(0, self.records.endIndex-5)
+                    }
                 }
                 
             })
