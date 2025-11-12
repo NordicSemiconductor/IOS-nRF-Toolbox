@@ -196,7 +196,11 @@ class CGMSCBMPeripheralSpecDelegate: MockSpecDelegate {
             timerCancellable = Timer.publish(every: 2.0, on: .main, in: .default)
                 .autoconnect()
                 .sink { [unowned self] _ in
-                    self.records.append(generateNewRecord())
+                    guard let record = generateNewRecord() else {
+                        timerCancellable?.cancel()
+                        return
+                    }
+                    self.records.append(record)
                     sendResponse(peripheral, records.endIndex - 1)
                 }
         }
@@ -207,22 +211,23 @@ class CGMSCBMPeripheralSpecDelegate: MockSpecDelegate {
         peripheral.simulateValueUpdate(data, for: CBMCharacteristicMock.cgmsMeasurement)
     }
     
-    private func getRecordIndex() -> UInt8 {
+    private func getRecordIndex() -> UInt8? {
         if nextRecordIndex == UInt8.max {
-            nextRecordIndex = 0
+            return nil
         } else {
             nextRecordIndex += 1
         }
         return nextRecordIndex
     }
     
-    private func generateNewRecord() -> [UInt8] {
+    private func generateNewRecord() -> [UInt8]? {
+        guard let index = getRecordIndex() else { return nil }
         return [
             0x0F,  // Size: 15 bytes (6 base + 2 trend + 2 quality + 1 warning + 1 temp + 1 status + 2 CRC + size)
             0xE3,  // Flags: All optional fields present (binary 11100011)
             0x79 + nextRecordIndex % 10,
             0x00,  // Glucose concentration: 121 mg/dL
-            getRecordIndex(),
+            index,
             0x00,  // Time offset:
             0x01,  // Sensor status
             0x02,  // Calibration temp status
