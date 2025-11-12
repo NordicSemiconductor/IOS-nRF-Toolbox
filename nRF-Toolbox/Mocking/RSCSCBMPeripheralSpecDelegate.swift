@@ -168,13 +168,16 @@ class RSCSCBMPeripheralSpecDelegate: MockSpecDelegate {
         timerCancellable = nil
     }
     
+    private var totalDistance = 0.0
+    
     private func random(flags: BitField<RSCSFeature> = .all()) -> RSCSMeasurement {
+        totalDistance += 1
         var measurement = RSCSMeasurement(
             flags: flags,
             instantaneousSpeed: 2.5,
             instantaneousCadence: 170,
             instantaneousStrideLength: 80,
-            totalDistance: 0
+            totalDistance: self.totalDistance
         )
         
         let newIS = Double.random(in: 0...3)
@@ -184,11 +187,6 @@ class RSCSCBMPeripheralSpecDelegate: MockSpecDelegate {
         if flags.contains(.instantaneousStrideLengthMeasurement) {
             let value = Int.random(in: 75 ... 85)
             measurement.instantaneousStrideLength = Measurement<UnitLength>(value: Double(value), unit: .centimeters)
-        }
-        
-        if flags.contains(.totalDistanceMeasurement), let distanceValue = measurement.totalDistance?.value {
-            measurement.totalDistance =
-                Measurement<UnitLength>(value: distanceValue + Double.random(in: 1...2), unit: .meters)
         }
         return measurement
     }
