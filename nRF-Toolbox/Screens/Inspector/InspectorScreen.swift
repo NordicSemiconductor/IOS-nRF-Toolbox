@@ -57,14 +57,6 @@ struct InspectorScreen: View {
                 if let signalViewModel = deviceVM.signalViewModel {
                     Section {
                         SignalChart()
-                            .onAppear {
-                                guard deviceIsConnected else { return }
-                                signalViewModel.startTimer()
-                            }
-                            .onDisappear {
-                                guard deviceIsConnected else { return }
-                                signalViewModel.stopTimer()
-                            }
                             .environmentObject(signalViewModel.environment)
                     }
                     .disabled(!deviceIsConnected)
@@ -73,16 +65,6 @@ struct InspectorScreen: View {
                 if let batteryServiceViewModel = deviceVM.batteryServiceViewModel {
                     Section {
                         BatteryView()
-                            .onAppear() {
-                                guard deviceIsConnected else { return }
-                                Task { @MainActor in
-                                    try? await batteryServiceViewModel.startListening()
-                                }
-                            }
-                            .onDisappear {
-                                guard deviceIsConnected else { return }
-                                batteryServiceViewModel.onDisconnect()
-                            }
                             .environmentObject(batteryServiceViewModel)
                     }
                     .disabled(!deviceIsConnected)

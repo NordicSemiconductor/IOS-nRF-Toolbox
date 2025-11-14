@@ -189,6 +189,7 @@ extension DeviceDetailsViewModel {
             
             for supportedServiceViewModel in self.supportedServiceViewModels {
                 await supportedServiceViewModel.onConnect()
+                signalViewModel?.startTimer()
                 
                 supportedServiceViewModel.errors
                     .sink { error in
@@ -209,6 +210,7 @@ extension DeviceDetailsViewModel {
                 supportedServiceViewModels.forEach {
                     $0.onDisconnect()
                 }
+                signalViewModel?.stopTimer()
             }
             .store(in: &cancellable)
     }

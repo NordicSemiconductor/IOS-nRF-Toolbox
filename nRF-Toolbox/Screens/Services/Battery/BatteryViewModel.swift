@@ -151,9 +151,10 @@ final class BatteryViewModel: SupportedServiceViewModel, ObservableObject {
     
     // MARK: onConnect()
     
+    @MainActor
     func onConnect() async {
         log.debug(#function)
-        // Don't start listening to Battery on connect.
+        try? await startListening()
     }
     
     // MARK: onDisconnect()
