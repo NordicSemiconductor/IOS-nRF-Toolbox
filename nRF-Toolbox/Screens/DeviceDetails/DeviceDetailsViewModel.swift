@@ -140,10 +140,6 @@ extension DeviceDetailsViewModel {
                 let characteristics: [CBCharacteristic] = try await peripheral.discoverCharacteristics(nil, for: service).firstValue
                 for characteristic in characteristics {
                     table.addCharacteristic(characteristic, to: service)
-
-                    if !characteristic.hasNotyfyingProperties() {
-                        continue
-                    }
                     
                     let descriptors = try await peripheral.discoverDescriptors(for: characteristic).firstValue
                     for descriptor in descriptors {
