@@ -67,8 +67,9 @@ private extension CBMServiceMock {
 class RSCSCBMPeripheralSpecDelegate: MockSpecDelegate {
     private var enabledFeatures: BitField<RSCSFeature> = .all()
     private var sensorLocation: RSCSSensorLocation = .inShoe
-    private var notifyMeasurement: Bool = false
+    private var totalDistance = 0.0
     
+    private var notifyMeasurement: Bool = false
     private var notifySCControlPoint: Bool = false
     
     private let log = NordicLog(category: "RunningSpeedAndCadence")
@@ -168,8 +169,6 @@ class RSCSCBMPeripheralSpecDelegate: MockSpecDelegate {
         timerCancellable = nil
     }
     
-    private var totalDistance = 0.0
-    
     private func random(flags: BitField<RSCSFeature> = .all()) -> RSCSMeasurement {
         totalDistance += 1
         var measurement = RSCSMeasurement(
@@ -192,8 +191,7 @@ class RSCSCBMPeripheralSpecDelegate: MockSpecDelegate {
     }
     
     private func didReceiveSetCumulativeValue(_ peripheral: CBMPeripheralSpec, value: UInt32) {
-        var measurement: RSCSMeasurement = random()
-        measurement.totalDistance = Measurement<UnitLength>(value: Double(value), unit: .meters)
+        totalDistance = Double(value)
         peripheral.simulateValueUpdate(SetCumulativeValueResponse(responseCode: .success).data, for: .scControlPoint)
     }
     
