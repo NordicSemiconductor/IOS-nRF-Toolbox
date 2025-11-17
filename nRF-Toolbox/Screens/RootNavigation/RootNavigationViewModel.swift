@@ -24,12 +24,19 @@ final class RootNavigationViewModel: ObservableObject {
 
 extension RootNavigationView {
     
-    enum MenuCategory: String, Equatable, Hashable, Identifiable, CaseIterable {
-        case scanner = "Scanner"
-        case device = "DeviceDetails"
+    private static let scannerUUID = UUID()
+    
+    enum MenuCategory: Equatable, Hashable, Identifiable {
+        case scanner
+        case device(UUID)
         
-        var id: String {
-            self.rawValue
+        var id: UUID {
+            switch self {
+            case .scanner:
+                return scannerUUID
+            case .device(let uuid):
+                return uuid
+            }
         }
     }
 }

@@ -52,7 +52,7 @@ struct RootNavigationView: View {
             switch (oldValue, newValue) {
             case (.regular, .compact):
                 log.debug("Transition from REGULAR size class to COMPACT")
-                if rootViewModel.selectedCategory == .device, connectedDevicesViewModel.selectedDevice != nil {
+                if case .device = rootViewModel.selectedCategory, connectedDevicesViewModel.selectedDevice != nil {
                     preferredCompactColumn = .detail
                 } else {
                     preferredCompactColumn = .sidebar
