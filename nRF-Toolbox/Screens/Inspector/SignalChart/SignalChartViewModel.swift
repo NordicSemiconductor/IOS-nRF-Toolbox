@@ -81,6 +81,11 @@ import Charts
                 
                 environment.lowest = min - 5
                 environment.highest = max + 5
+                
+                let values = environment.chartData.map { $0.date }
+
+                environment.minDate = (values.min() ?? .distantPast).addingTimeInterval(-2)
+                environment.maxDate = (values.max() ?? .distantFuture).addingTimeInterval(2)
             }
             .store(in: &cancellable)
     }
@@ -117,6 +122,9 @@ extension SignalChartViewModel {
         
         @Published fileprivate(set) var lowest: Int = -100
         @Published fileprivate(set) var highest: Int = -40
+        
+        @Published var minDate: Date = .distantPast
+        @Published var maxDate: Date = .distantFuture
         
         private let log = NordicLog(category: "SignalChartViewModel.Environment",
                                     subsystem: "com.nordicsemi.nrf-toolbox")

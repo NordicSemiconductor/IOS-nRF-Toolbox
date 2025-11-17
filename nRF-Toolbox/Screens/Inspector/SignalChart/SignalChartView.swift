@@ -61,6 +61,7 @@ struct SignalChart: View {
     private func scalableChart() -> some View {
         pureChart()
             .chartScrollableAxes(.horizontal)
+            .chartXScale(domain: [environment.minDate, environment.maxDate], range: .plotDimension(padding: 8))
             .chartXVisibleDomain(length: SignalChartViewModel.Environment.visibleDomain)
             .chartScrollPosition(x: $environment.scrollPosition)
     }

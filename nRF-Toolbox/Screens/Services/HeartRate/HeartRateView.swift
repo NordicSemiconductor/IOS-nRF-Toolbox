@@ -60,8 +60,7 @@ struct HeartRateChart: View {
             }
             .chartXScale(domain: [viewModel.minDate, viewModel.maxDate], range: .plotDimension(padding: 8))
             .chartXAxis(.hidden)
-            .chartYScale(domain: [viewModel.lowest, viewModel.highest],
-                         range: .plotDimension(padding: 8))
+            .chartYScale(domain: [viewModel.lowest, viewModel.highest], range: .plotDimension(padding: 8))
             .chartScrollableAxes(.horizontal)
             .chartXVisibleDomain(length: viewModel.visibleDomain)
             .chartScrollPosition(x: $viewModel.scrollPosition)
