@@ -32,7 +32,7 @@ struct SidebarDeviceView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            ScanResultItem(name: device.name ?? "Unnamed", services: device.services)
+            ScanResultItem(name: device.name ?? "Unnamed", services: device.services, isScanner: false)
             
             switch device.status {
             case .connected, .userInitiatedDisconnection:

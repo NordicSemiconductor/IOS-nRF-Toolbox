@@ -19,13 +19,15 @@ struct ScanResultItem: View {
     private let name: String?
     private let services: Set<Service>
     private let inProgress: Bool
+    private let isScanner: Bool
     
     // MARK: init
     
-    init(name: String?, services: Set<Service>, showProgress: Bool = false) {
+    init(name: String?, services: Set<Service>, showProgress: Bool = false, isScanner: Bool = true) {
         self.name = name
         self.services = services
         self.inProgress = showProgress
+        self.isScanner = isScanner
     }
     
     // MARK: view
@@ -35,7 +37,7 @@ struct ScanResultItem: View {
             Label {
                 VStack(alignment: .leading) {
                     Text(name ?? "Unnamed Device")
-                        .foregroundColor(name == nil ? .secondary : .primary)
+                        .foregroundColor(isScanner ? (name == nil ? .secondary : .primary) : nil)
                     
                     if services.hasItems {
                         ServiceBadgeGroup(services)
@@ -43,7 +45,7 @@ struct ScanResultItem: View {
                 }
             } icon: {
                 Image(systemName: "cpu")
-                    .foregroundStyle(Color.universalAccentColor)
+                    .foregroundColor(isScanner ? Color.universalAccentColor : nil)
             }
             .frame(maxWidth: .infinity, alignment: .topLeading)
             .padding(.trailing, 8)
