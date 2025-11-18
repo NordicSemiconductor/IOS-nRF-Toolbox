@@ -28,14 +28,14 @@ extension RootNavigationView {
     
     enum MenuCategory: Equatable, Hashable, Identifiable {
         case scanner
-        case device(UUID)
+        case device(ConnectedDevicesViewModel.Device)
         
         var id: UUID {
             switch self {
             case .scanner:
                 return scannerUUID
-            case .device(let uuid):
-                return uuid
+            case .device(let device):
+                return device.id
             }
         }
     }

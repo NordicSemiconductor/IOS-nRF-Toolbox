@@ -27,33 +27,18 @@ struct SidebarView: View {
                     NoContentView(title: "No Connected Devices", systemImage: "cable.connector.slash", description: "Open the Scanner from below to connect to one or multiple Devices.")
                 } else {
                     ForEach(viewModel.connectedDevices) { device in
-                        if let deviceViewModel = viewModel.deviceViewModel(for: device.id) {
-                            NavigationLink {
-                                DeviceScreen(device)
-                                    .environmentObject(rootViewModel)
-                                    .environmentObject(viewModel)
-                                    .environmentObject(deviceViewModel)
-                            } label: {
-                                SidebarDeviceView(device)
-                            }
-                            .isDetailLink(true)
-                            .tag(RootNavigationView.MenuCategory.device(device.id))
+                        NavigationLink(value: RootNavigationView.MenuCategory.device(device)) {
+                            SidebarDeviceView(device)
                         }
                     }
                 }
             }
             
             Section("Scanner") {
-                NavigationLink {
-                    PeripheralScannerScreen()
-                        
-                        .environmentObject(viewModel)
-                } label: {
+                NavigationLink(value: RootNavigationView.MenuCategory.scanner) {
                     Label("Connect to Device", systemImage: "dot.radiowaves.right")
                         .setAccent(.universalAccentColor)
                 }
-                .isDetailLink(true)
-                .tag(RootNavigationView.MenuCategory.scanner)
             }
             
             Section {

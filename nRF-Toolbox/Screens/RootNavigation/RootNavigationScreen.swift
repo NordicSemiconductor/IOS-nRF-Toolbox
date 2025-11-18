@@ -42,10 +42,18 @@ struct RootNavigationView: View {
                 .navigationSplitViewColumnWidth(ideal: 420.0)
                 .environmentObject(connectedDevicesViewModel)
         } detail: {
-            NavigationStack {
+            switch (rootViewModel.selectedCategory) {
+            case .device(let device):
+                DeviceScreen(device)
+                    .environmentObject(rootViewModel)
+                    .environmentObject(connectedDevicesViewModel)
+                    .environmentObject(connectedDevicesViewModel.deviceViewModel(for: device.id)!)
+            case .scanner:
+                PeripheralScannerScreen()
+                    .environmentObject(connectedDevicesViewModel)
+            case nil:
                 NordicEmptyView()
             }
-            .navigationBarTitleDisplayMode(.inline)
         }
         .navigationSplitViewStyle(.balanced)
         .onChange(of: horizontalSizeClass) { oldValue, newValue in
