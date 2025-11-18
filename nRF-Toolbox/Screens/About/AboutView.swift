@@ -64,6 +64,8 @@ struct AboutView: View {
                 
                 Label("Device in advertising range", systemImage: "wave.3.up")
             }
+            .setAccent(.universalAccentColor)
+            .tint(.primarylabel)
             .listRowSeparator(.hidden)
         }
         .listStyle(.insetGrouped)
