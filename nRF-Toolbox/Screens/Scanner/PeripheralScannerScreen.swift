@@ -50,7 +50,7 @@ struct PeripheralScannerScreen: View {
                 }
             }
         }
-        .onFirstAppear {
+        .onAppear {
             viewModel.refresh()
         }
         .onDisappear {
