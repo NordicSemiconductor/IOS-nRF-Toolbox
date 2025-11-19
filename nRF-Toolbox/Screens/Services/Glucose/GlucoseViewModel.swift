@@ -81,6 +81,17 @@ final class GlucoseViewModel: @MainActor SupportedServiceViewModel, ObservableOb
     @MainActor
     func onConnect() async {
         log.debug(#function)
+        do {
+            try await initializeCharacteristics()
+        } catch {
+            log.error("Error \(error.localizedDescription)")
+            handleError(error)
+        }
+    }
+    
+    @MainActor
+    private func initializeCharacteristics() async throws {
+        log.debug(#function)
         let characteristics: [Characteristic] = [
             .glucoseMeasurement, .glucoseFeature,
             .recordAccessControlPoint
@@ -91,7 +102,7 @@ final class GlucoseViewModel: @MainActor SupportedServiceViewModel, ObservableOb
         
         cbGlucoseMeasurement = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.glucoseMeasurement.uuid)
         cbRACP = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.recordAccessControlPoint.uuid)
-        guard cbGlucoseMeasurement != nil else { return }
+        guard cbGlucoseMeasurement != nil else { throw ServiceError.noMandatoryCharacteristic }
         
         requestRecords(.allRecords)
     }

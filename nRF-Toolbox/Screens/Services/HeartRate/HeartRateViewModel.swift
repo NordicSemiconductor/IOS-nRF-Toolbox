@@ -30,7 +30,7 @@ final class HeartRateViewModel: @MainActor SupportedServiceViewModel, Observable
     @Published private(set) var minDate: Date = .distantPast
     @Published private(set) var maxDate: Date = .distantFuture
     
-    @Published fileprivate(set) var criticalError: CriticalError?
+    @Published fileprivate(set) var criticalError: ServiceError?
     @Published var alertError: Error?
     
     let visibleDomain = 60
@@ -41,7 +41,7 @@ final class HeartRateViewModel: @MainActor SupportedServiceViewModel, Observable
     
     var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
-    fileprivate var internalAlertError: AlertError? {
+    fileprivate var internalAlertError: ServiceWarning? {
         didSet {
             alertError = internalAlertError
         }
@@ -87,12 +87,14 @@ final class HeartRateViewModel: @MainActor SupportedServiceViewModel, Observable
     
     // MARK: onConnect()
     
+    @MainActor
     func onConnect() async {
         log.debug(#function)
         do {
             try await initializeCharacteristics()
         } catch {
-            criticalError = .noMandatoryCharacteristic
+            log.error("Error \(error.localizedDescription)")
+            handleError(error)
         }
     }
     
@@ -121,23 +123,20 @@ private extension HeartRateViewModel {
         }
         
         hrMeasurement = heartRateCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.heartRateMeasurement.uuid)
-        
-        if let hrMeasurement {
-            do {
-                try await notifyHRMeasurement(true)
-                // in case of success - listen
-                listenTo(hrMeasurement)
-            } catch {
-                log.error("Unable to Enable Notifications: \(error.localizedDescription)")
-            }
+        guard hrMeasurement != nil else {
+            throw ServiceError.noMandatoryCharacteristic
         }
+        
+        try await notifyHRMeasurement(true)
+        // in case of success - listen
+        listenTo(hrMeasurement)
         
         guard let bodySensorCharacteristic = heartRateCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.bodySensorLocation.uuid) else { return }
         
         log.debug("Found Body Sensor Characteristic")
         location = try? await peripheral.readValue(for: bodySensorCharacteristic).tryMap { data in
             guard let data, data.canRead(UInt8.self, atOffset: 0) else {
-                throw CriticalError.unknown
+                throw ServiceError.unknown
             }
             
             self.log.debug("Received location data: \(data.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
@@ -145,7 +144,7 @@ private extension HeartRateViewModel {
             return HeartRateMeasurement.SensorLocation(rawValue: RegisterValue(data[0]))
         }
         .timeout(.seconds(1), scheduler: DispatchQueue.main, customError: {
-            CriticalError.unknown
+            ServiceError.unknown
         })
         .firstValue
 
@@ -169,7 +168,7 @@ private extension HeartRateViewModel {
             }
             .sink { completion in
                 if case .failure = completion {
-                    self.internalAlertError = .measurement
+                    self.internalAlertError = ServiceWarning.measurement
                 }
             } receiveValue: { [unowned self] newValue in
                 let diff = newValue.date.timeIntervalSince1970 - scrollPosition.timeIntervalSince1970
@@ -210,39 +209,6 @@ private extension HeartRateViewModel {
     }
 }
 
-// MARK: - Errors
-
-extension HeartRateViewModel {
-    
-    enum CriticalError: LocalizedError {
-        case unknown
-        case noMandatoryCharacteristic
-        
-        var errorDescription: String? {
-            switch self {
-            case .unknown:
-                return "Unknown error"
-            case .noMandatoryCharacteristic:
-                return "No mandatory characteristic"
-            }
-        }
-    }
-
-    enum AlertError: LocalizedError {
-        case unknown
-        case measurement
-        
-        var errorDescription: String? {
-            switch self {
-            case .unknown:
-                return "Unknown error"
-            case .measurement:
-                return "Error occured while reading measurement"
-            }
-        }
-    }
-}
-
 // MARK: - Actions
 
 extension HeartRateViewModel {
@@ -263,7 +229,7 @@ extension HeartRateViewModel {
                     log.debug("Reset energy counter - end")
                 } catch {
                     caloriesResetState = .available
-                    self.errors.value.warning = AlertError.unknown
+                    self.errors.value.warning = ServiceWarning.unknown
                     log.debug("Reset energy counter - error: \(error)")
                 }
             } else {

@@ -13,6 +13,10 @@ import Combine
 struct ErrorsHolder {
     var warning: LocalizedError?
     var error: LocalizedError?
+    
+    func hasAnyError() -> Bool {
+        return warning != nil || error != nil
+    }
 }
 
 // MARK: - SupportedServiceViewModel
@@ -29,4 +33,17 @@ protocol SupportedServiceViewModel {
     // TODO: async throws for onConnect()
     func onConnect() async
     func onDisconnect()
+}
+
+extension SupportedServiceViewModel {
+    
+    func handleError(_ error: Error) {
+        if case let serviceError as ServiceError = error {
+            self.errors.value.error = serviceError
+        } else if case let serviceWarning as ServiceWarning = error {
+            self.errors.value.warning = serviceWarning
+        } else {
+            self.errors.value.error = ServiceError.unknown
+        }
+    }
 }

@@ -53,24 +53,32 @@ final class HealthThermometerViewModel: SupportedServiceViewModel, ObservableObj
     }
     
     // MARK: onConnect()
-    
+    @MainActor
     func onConnect() async {
         log.debug(#function)
         do {
-            let characteristics: [Characteristic] = [.temperatureMeasurement]
-            
-            let measurementCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
-                characteristics.contains { $0.uuid == cbChar.uuid }
-            }
-            
-            for characteristic in measurementCharacteristics where characteristic.uuid == Characteristic.temperatureMeasurement.uuid {
-                listenTo(characteristic)
-                _ = try await peripheral.setNotifyValue(true, for: characteristic).firstValue
-            }
+            try await initializeCharacteristics()
+        } catch {
+            log.error("Error \(error.localizedDescription)")
+            handleError(error)
         }
-        catch {
-            log.error(error.localizedDescription)
+    }
+    
+    @MainActor
+    func initializeCharacteristics() async throws {
+        log.debug(#function)
+        
+        let characteristics: [Characteristic] = [.temperatureMeasurement]
+        
+        let measurementCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
+            characteristics.contains { $0.uuid == cbChar.uuid }
         }
+        
+        guard let temperatureMeasurement = measurementCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.temperatureMeasurement.uuid) else {
+            throw ServiceError.noMandatoryCharacteristic
+        }
+        listenTo(temperatureMeasurement)
+        _ = try await peripheral.setNotifyValue(true, for: temperatureMeasurement).firstValue
     }
     
     // MARK: onDisconnect()

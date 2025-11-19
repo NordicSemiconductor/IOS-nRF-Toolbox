@@ -63,9 +63,20 @@ final class BloodPressureViewModel: @MainActor SupportedServiceViewModel, Observ
     }
     
     // MARK: onConnect()
-    
+    @MainActor
     func onConnect() async {
         log.debug(#function)
+        do {
+            try await initializeCharacteristics()
+        } catch {
+            log.error("Error \(error.localizedDescription)")
+            handleError(error)
+            onDisconnect()
+        }
+    }
+    
+    @MainActor
+    func initializeCharacteristics() async throws {
         let characteristics: [Characteristic] = [
             .bloodPressureMeasurement, .bloodPressureFeature
         ]
@@ -76,30 +87,24 @@ final class BloodPressureViewModel: @MainActor SupportedServiceViewModel, Observ
         bpsMeasurement = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.bloodPressureMeasurement.uuid)
         bpsFlags = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.bloodPressureFeature.uuid)
         
-        do {
-            if let bpsMeasurement {
-                log.debug("Found Blood Pressure Measurement.")
-                if let initialValue = bpsMeasurement.value {
-                    currentValue = try? BloodPressureMeasurement(data: initialValue)
-                    log.debug("Obtained initial Blood Pressure Measurement.")
-                }
-                let bpsEnable = try await peripheral.setNotifyValue(true, for: bpsMeasurement).firstValue
-                log.debug("BPS Measurement.setNotifyValue(true): \(bpsEnable)")
-                
-                listenTo(bpsMeasurement)
-            }
-            
-            if let bpsFlags {
-                log.debug("Found Blood Pressure Feature.")
-                let featureData = try await peripheral.readValue(for: bpsFlags).firstValue
-                if let featureData, featureData.canRead(UInt16.self, atOffset: 0) {
-                    let featureFlags = UInt(featureData.littleEndianBytes(atOffset: 0, as: UInt16.self))
-                    self.features = BitField<BloodPressureMeasurement.Feature>(featureFlags)
-                }
-            }
-        } catch {
-            log.debug(error.localizedDescription)
-            onDisconnect()
+        guard let bpsMeasurement, let bpsFlags else {
+            throw ServiceError.noMandatoryCharacteristic
+        }
+        
+        if let initialValue = bpsMeasurement.value {
+            currentValue = try? BloodPressureMeasurement(data: initialValue)
+            log.debug("Obtained initial Blood Pressure Measurement.")
+        }
+        let bpsEnable = try await peripheral.setNotifyValue(true, for: bpsMeasurement).firstValue
+        log.debug("BPS Measurement.setNotifyValue(true): \(bpsEnable)")
+        
+        listenTo(bpsMeasurement)
+        
+        log.debug("Found Blood Pressure Feature.")
+        let featureData = try await peripheral.readValue(for: bpsFlags).firstValue
+        if let featureData, featureData.canRead(UInt16.self, atOffset: 0) {
+            let featureFlags = UInt(featureData.littleEndianBytes(atOffset: 0, as: UInt16.self))
+            self.features = BitField<BloodPressureMeasurement.Feature>(featureFlags)
         }
     }
     

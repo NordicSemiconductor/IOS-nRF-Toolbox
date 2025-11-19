@@ -123,7 +123,7 @@ extension CyclingData {
         crankData = flags.contains(.crankData) ? try CrankDataPoint(reader.subdata(CrankDataPoint.DataSize)) : nil
         
         if crankData == nil && wheelData == nil {
-            throw CriticalError.noData
+            throw ServiceError.noData
         }
     }
 }

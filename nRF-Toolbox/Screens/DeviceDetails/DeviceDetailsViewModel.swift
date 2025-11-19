@@ -186,12 +186,15 @@ extension DeviceDetailsViewModel {
             attributeTable = table
             
             signalViewModel = SignalChartViewModel(peripheral: peripheral)
+            signalViewModel?.startTimer()
             
             for supportedServiceViewModel in self.supportedServiceViewModels {
                 await supportedServiceViewModel.onConnect()
-                signalViewModel?.startTimer()
                 
                 supportedServiceViewModel.errors
+                    .drop(while: { value in // Default values from other services may override an actual error.
+                        !value.hasAnyError()
+                    })
                     .sink { error in
                         self.errors = error
                     }.store(in: &cancellable)

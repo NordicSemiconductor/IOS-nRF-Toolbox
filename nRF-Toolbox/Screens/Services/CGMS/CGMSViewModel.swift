@@ -154,6 +154,17 @@ final class CGMSViewModel: SupportedServiceViewModel, ObservableObject {
     @MainActor
     func onConnect() async {
         log.debug(#function)
+        do {
+            try await initializeCharacteristics()
+        } catch {
+            log.error("Error \(error.localizedDescription)")
+            handleError(error)
+        }
+    }
+    
+    @MainActor
+    private func initializeCharacteristics() async throws {
+        log.debug(#function)
         let characteristics: [Characteristic] = [
             .cgmMeasurement, .recordAccessControlPoint,
             .cgmSpecificOpsControlPoint, .cgmSessionStartTime, .cgmFeature
@@ -169,56 +180,51 @@ final class CGMSViewModel: SupportedServiceViewModel, ObservableObject {
         let cbSST = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.cgmSessionStartTime.uuid)
         
         guard let cbCGMMeasurement, let cbSOCP, let cbSST else {
-            return
+            throw ServiceError.noMandatoryCharacteristic
         }
         
-        do {
-            let now = Date.now
-            if let dateData = now.toData(options: [.appendTimeZone, .appendDSTOffset]) {
-                log.debug("Sending SST (Session Start Time): \(dateData.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
-                try await peripheral.writeValueWithResponse(dateData, for: cbSST).firstValue
-            }
-            
-            if let sstData = try await peripheral.readValue(for: cbSST).firstValue {
-                log.debug("SST: \(sstData.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
-                peripheralSessionTime = Date(sstData)
-            } else {
-                log.debug("Unable to read SST. Defaulting to now.")
-                peripheralSessionTime = .now
-            }
-            
-            listenToMeasurements(cbCGMMeasurement)
-            let cgmEnable = try await peripheral.setNotifyValue(true, for: cbCGMMeasurement).firstValue
-            log.debug("CGMS Measurement.setNotifyValue(true): \(cgmEnable)")
-            
-            //            guard result else {
-            //                // TODO: throw Error
-            //            }
-            
-            listenToOperations(cbSOCP)
-            let socpEnable = try await peripheral.setNotifyValue(true, for: cbSOCP).firstValue
-            log.debug("CGMS SOCP.setNotifyValue(true): \(socpEnable)")
-            
-            let racpEnable = try await peripheral.setNotifyValue(true, for: cbRACP).firstValue
-            log.debug("CGMS RACP.setNotifyValue(true): \(racpEnable)")
-            
-            var secured = false
-            let featuresRaw = try? await peripheral.readValue(for: cbFeature).firstValue
-            if let featuresRaw {
-                log.debug("Received features data: \(featuresRaw.hexEncodedString(options: [.upperCase, .twoByteSpacing])))")
-                let result = CGMSFeatureParser.parse(data: featuresRaw)
-                secured = result?.secured ?? false
-            }
-            
-            // Starts session. Since now records are generated.
-            let startSessionData = createStartSession(opCode: CGMOpCode.startSession.rawValue, secure: secured)
-            try await peripheral.writeValueWithResponse(startSessionData, for: cbSOCP).firstValue
-            
-            await requestRecords(.allRecords)
-        } catch {
-            log.error(error.localizedDescription)
-            onDisconnect()
+        let now = Date.now
+        if let dateData = now.toData(options: [.appendTimeZone, .appendDSTOffset]) {
+            log.debug("Sending SST (Session Start Time): \(dateData.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
+            try await peripheral.writeValueWithResponse(dateData, for: cbSST).firstValue
         }
+        
+        if let sstData = try await peripheral.readValue(for: cbSST).firstValue {
+            log.debug("SST: \(sstData.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
+            peripheralSessionTime = Date(sstData)
+        } else {
+            log.debug("Unable to read SST. Defaulting to now.")
+            peripheralSessionTime = .now
+        }
+        
+        listenToMeasurements(cbCGMMeasurement)
+        let cgmEnable = try await peripheral.setNotifyValue(true, for: cbCGMMeasurement).firstValue
+        log.debug("CGMS Measurement.setNotifyValue(true): \(cgmEnable)")
+        
+        //            guard result else {
+        //                // TODO: throw Error
+        //            }
+        
+        listenToOperations(cbSOCP)
+        let socpEnable = try await peripheral.setNotifyValue(true, for: cbSOCP).firstValue
+        log.debug("CGMS SOCP.setNotifyValue(true): \(socpEnable)")
+        
+        let racpEnable = try await peripheral.setNotifyValue(true, for: cbRACP).firstValue
+        log.debug("CGMS RACP.setNotifyValue(true): \(racpEnable)")
+        
+        var secured = false
+        let featuresRaw = try? await peripheral.readValue(for: cbFeature).firstValue
+        if let featuresRaw {
+            log.debug("Received features data: \(featuresRaw.hexEncodedString(options: [.upperCase, .twoByteSpacing])))")
+            let result = CGMSFeatureParser.parse(data: featuresRaw)
+            secured = result?.secured ?? false
+        }
+        
+        // Starts session. Since now records are generated.
+        let startSessionData = createStartSession(opCode: CGMOpCode.startSession.rawValue, secure: secured)
+        try await peripheral.writeValueWithResponse(startSessionData, for: cbSOCP).firstValue
+        
+        await requestRecords(.allRecords)
     }
     
     private func createStartSession(opCode: UInt8, secure: Bool) -> Data {

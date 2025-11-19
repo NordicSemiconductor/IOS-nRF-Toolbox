@@ -15,9 +15,6 @@ import Combine
 // MARK: - RunningServiceViewModel
 
 final class RunningServiceViewModel: @MainActor SupportedServiceViewModel, ObservableObject {
-    private enum Err: Error {
-        case unknown, noData, timeout, noMandatoryCharacteristic
-    }
     
     let peripheral: Peripheral
     private let characteristics: [CBCharacteristic]
@@ -59,10 +56,15 @@ final class RunningServiceViewModel: @MainActor SupportedServiceViewModel, Obser
     }
     
     // MARK: onConnect()
-    
+    @MainActor
     func onConnect() async {
         log.debug(#function)
-        await enableDeviceCommunication()
+        do {
+            try await initializeCharacteristics()
+        } catch {
+            log.error("Error \(error.localizedDescription)")
+            handleError(error)
+        }
     }
     
     // MARK: onDisconnect()
@@ -75,64 +77,36 @@ final class RunningServiceViewModel: @MainActor SupportedServiceViewModel, Obser
 
 extension RunningServiceViewModel {
     
-    // MARK: enableDeviceCommunication()
-    
-    public func enableDeviceCommunication() async {
+    // MARK: initializeCharacteristics()
+    @MainActor
+    public func initializeCharacteristics() async throws {
         log.debug(#function)
-        do {
-            try await initializeCharacteristics()
-            try await readFeature()
-        } catch let error as Err {
-            switch error {
-            case .timeout, .noMandatoryCharacteristic:
-                environment.criticalError = Environment.CriticalError.noMandatoryCharacteristics
-            case .noData:
-                environment.criticalError = Environment.CriticalError.noData
-            case .unknown:
-                environment.criticalError = Environment.CriticalError.unknown
-            }
-            return
-        } catch {
-            environment.criticalError = Environment.CriticalError.unknown
-            return
-        }
+        try await setUpGlobalVariables()
+        try await readFeature()
         
-        do {
-            try await enableMeasurementNotifications()
-        } catch {
-            environment.criticalError = Environment.CriticalError.unknown
-        }
+        try await enableMeasurementNotifications()
     }
 }
 
 private extension RunningServiceViewModel {
     
-    // MARK: initializeCharacteristics()
+    // MARK: setUpGlobalVariables()
     
-    func initializeCharacteristics() async throws {
+    func setUpGlobalVariables() async throws {
         log.debug(#function)
         let characteristics: [Characteristic] = [.rscMeasurement, .rscFeature, .scControlPoint]
         let discoveredCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
             characteristics.contains { $0.uuid == cbChar.uuid }
         }
         
-        for characteristic in discoveredCharacteristics {
-            switch characteristic.uuid {
-            case Characteristic.rscMeasurement.uuid:
-                self.rscMeasurement = characteristic
-            case Characteristic.rscFeature.uuid:
-                self.rscFeature = characteristic
-            case Characteristic.scControlPoint.uuid:
-                self.scControlPoint = characteristic
-            default:
-                break
-            }
-        }
+        rscMeasurement = discoveredCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.rscMeasurement.uuid)
+        rscFeature = discoveredCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.rscFeature.uuid)
+        scControlPoint = discoveredCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.scControlPoint.uuid)
         
         self.environment.isSensorCalibrationAvailable = scControlPoint != nil
         
         guard rscMeasurement != nil && rscFeature != nil else {
-            throw Err.noMandatoryCharacteristic
+            throw ServiceError.noMandatoryCharacteristic
         }
     }
     
@@ -142,10 +116,10 @@ private extension RunningServiceViewModel {
         log.debug(#function)
         let features = try await peripheral.readValue(for: rscFeature)
             .tryMap { data in
-                guard let data else { throw Err.noData }
+                guard let data else { throw ServiceError.noData }
                 return BitField<RSCSFeature>(RegisterValue(data[0]))
             }
-            .timeout(.seconds(1), scheduler: DispatchQueue.main, customError: { Err.timeout })
+            .timeout(.seconds(1), scheduler: DispatchQueue.main, customError: { ServiceError.timeout })
             .firstValue
         
         let calibrationViewModel = SensorCalibrationViewModel(peripheral: peripheral, characteristics: characteristics, features: features)

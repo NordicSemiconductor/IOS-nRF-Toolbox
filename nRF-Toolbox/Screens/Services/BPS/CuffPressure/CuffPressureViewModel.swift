@@ -62,8 +62,19 @@ final class CuffPressureViewModel: @MainActor SupportedServiceViewModel, Observa
     }
     
     // MARK: onConnect()
-    
+    @MainActor
     func onConnect() async {
+        log.debug(#function)
+        do {
+            try await initializeCharacteristics()
+        } catch {
+            log.error("Error \(error.localizedDescription)")
+            handleError(error)
+        }
+    }
+    
+    @MainActor
+    func initializeCharacteristics() async throws {
         log.debug(#function)
         let characteristics: [Characteristic] = [
             .intermediateCuffPressure
@@ -74,23 +85,18 @@ final class CuffPressureViewModel: @MainActor SupportedServiceViewModel, Observa
         
         cuffMeasurement = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.intermediateCuffPressure.uuid)
         
-        do {
-            if let cuffMeasurement {
-                log.debug("Found Intermediate Cuff Pressure Measurement \(cuffMeasurement.uuid)")
-                let cuffData = try? await peripheral.readValue(for: cuffMeasurement).firstValue
-                if let cuffData {
-                    currentValue = try? CuffPressureMeasurement(data: cuffData)
-                    log.debug("Obtained initial Intermediate Cuff Pressure Measurement.")
-                }
-                
-                let cuffEnable = try await peripheral.setNotifyValue(true, for: cuffMeasurement).firstValue
-                log.debug("Cuff Measurement.setNotifyValue(true): \(cuffEnable)")
-                
-                listenTo(cuffMeasurement)
+        if let cuffMeasurement {
+            log.debug("Found Intermediate Cuff Pressure Measurement \(cuffMeasurement.uuid)")
+            let cuffData = try? await peripheral.readValue(for: cuffMeasurement).firstValue
+            if let cuffData {
+                currentValue = try? CuffPressureMeasurement(data: cuffData)
+                log.debug("Obtained initial Intermediate Cuff Pressure Measurement.")
             }
-        } catch {
-            log.debug(error.localizedDescription)
-            onDisconnect()
+            
+            let cuffEnable = try await peripheral.setNotifyValue(true, for: cuffMeasurement).firstValue
+            log.debug("Cuff Measurement.setNotifyValue(true): \(cuffEnable)")
+            
+            listenTo(cuffMeasurement)
         }
     }
     

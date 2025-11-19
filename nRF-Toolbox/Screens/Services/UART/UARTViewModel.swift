@@ -86,6 +86,18 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
     @MainActor
     func onConnect() async {
         log.debug(#function)
+        do {
+            try await initializeCharacteristics()
+        } catch {
+            log.error("Error \(error.localizedDescription)")
+            handleError(error)
+            onDisconnect()
+        }
+    }
+    
+    @MainActor
+    func initializeCharacteristics() async throws {
+        log.debug(#function)
         let characteristics: [Characteristic] = [
             .nordicsemiUartRx, .nordicsemiUartTx
         ]
@@ -96,7 +108,10 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
         uartRX = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.nordicsemiUartRx.uuid)
         uartTX = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.nordicsemiUartTx.uuid)
         
-        guard let uartTX else { return }
+        guard let uartTX, let uartRX else {
+            throw ServiceError.noMandatoryCharacteristic
+        }
+        
         do {
             let txEnable = try await peripheral.setNotifyValue(true, for: uartTX).firstValue
             log.debug("\(#function) tx.setNotifyValue(true): \(txEnable)")

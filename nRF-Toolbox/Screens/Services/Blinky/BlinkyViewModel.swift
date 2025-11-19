@@ -59,42 +59,50 @@ final class BlinkyViewModel: SupportedServiceViewModel, ObservableObject {
     func onConnect() async {
         log.debug(#function)
         do {
-            let characteristics: [Characteristic] = [.nordicsemiBlinkyLedState, .nordicsemiBlinkyButtonState]
-            let blinkyCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
-                characteristics.contains { $0.uuid == cbChar.uuid }
+            try await initializeCharacteristics()
+        } catch {
+            log.error("Error \(error.localizedDescription)")
+            handleError(error)
+        }
+    }
+    
+    @MainActor
+    private func initializeCharacteristics() async throws {
+        log.debug(#function)
+        
+        let characteristics: [Characteristic] = [.nordicsemiBlinkyLedState, .nordicsemiBlinkyButtonState]
+        let blinkyCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
+            characteristics.contains { $0.uuid == cbChar.uuid }
+        }
+        
+        guard let buttonCharacteristics = blinkyCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.nordicsemiBlinkyButtonState.uuid) else {
+            throw ServiceError.noMandatoryCharacteristic
+        }
+        guard let ledCharacteristics = blinkyCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.nordicsemiBlinkyLedState.uuid) else {
+            throw ServiceError.noMandatoryCharacteristic
+        }
+        
+        if let initialValue = try await peripheral.readValue(for: buttonCharacteristics).firstValue {
+            log.debug("peripheral.readValue(characteristic): \(initialValue.hexEncodedString(options: [.prepend0x, .twoByteSpacing]))")
+            isButtonPressed = initialValue.littleEndianBytes(as: UInt8.self) > 0
+        }
+        
+        let result = try await peripheral.setNotifyValue(true, for: buttonCharacteristics).firstValue
+        log.debug("peripheral.setNotifyValue(true, for: .nordicsemiBlinkyButtonState): \(result)")
+        listenToButtonPress(buttonCharacteristics)
+        
+        $isLedOn
+            .map { [log] newValue in
+                log.debug("Changed to \(newValue)")
+                return Data(repeating: newValue ? 1 : 0, count: 1)
             }
-            
-            for characteristic in blinkyCharacteristics where characteristic.uuid == Characteristic.nordicsemiBlinkyButtonState.uuid {
-                if let initialValue = try await peripheral.readValue(for: characteristic).firstValue {
-                    log.debug("peripheral.readValue(characteristic): \(initialValue.hexEncodedString(options: [.prepend0x, .twoByteSpacing]))")
-                    isButtonPressed = initialValue.littleEndianBytes(as: UInt8.self) > 0
+            .sink { [log, peripheral] data in
+                Task {
+                    log.debug("Writing \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing]))")
+                    _ = try? await peripheral.writeValueWithResponse(data, for: ledCharacteristics).firstValue
                 }
-                
-                
-                let result = try await peripheral.setNotifyValue(true, for: characteristic).firstValue
-                log.debug("peripheral.setNotifyValue(true, for: .nordicsemiBlinkyButtonState): \(result)")
-                listenToButtonPress(characteristic)
             }
-            
-            for characteristic in blinkyCharacteristics where characteristic.uuid == Characteristic.nordicsemiBlinkyLedState.uuid {
-                $isLedOn
-                    .map { [log] newValue in
-                        log.debug("Changed to \(newValue)")
-                        return Data(repeating: newValue ? 1 : 0, count: 1)
-                    }
-                    .sink { [log, peripheral] data in
-                        Task {
-                            log.debug("Writing \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing]))")
-                            _ = try? await peripheral.writeValueWithResponse(data, for: characteristic).firstValue
-                        }
-                    }
-                    .store(in: &cancellables)
-                break
-            }
-        }
-        catch {
-            log.error(error.localizedDescription)
-        }
+            .store(in: &cancellables)
     }
     
     // MARK: onDisconnect()

@@ -45,10 +45,9 @@ final class BatteryViewModel: SupportedServiceViewModel, ObservableObject {
         log.debug(#function)
     }
     
-    // startListening()
-    
+    // initializeCharacteristics()
     @MainActor
-    func startListening() async throws {
+    func initializeCharacteristics() async throws {
         log.debug(#function)
         let characteristics: [Characteristic] = [.batteryLevel]
         let cbCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
@@ -57,7 +56,7 @@ final class BatteryViewModel: SupportedServiceViewModel, ObservableObject {
         
         // Check if `batteryLevel` characteristic was discovered
         guard let cbBatteryLevel = cbCharacteristics.first, cbBatteryLevel.uuid == Characteristic.batteryLevel.uuid else {
-            return
+            throw ServiceError.noMandatoryCharacteristic
         }
         
         batteryLevelAvailable = true
@@ -154,7 +153,12 @@ final class BatteryViewModel: SupportedServiceViewModel, ObservableObject {
     @MainActor
     func onConnect() async {
         log.debug(#function)
-        try? await startListening()
+        do {
+            try await initializeCharacteristics()
+        } catch {
+            log.error("Error \(error.localizedDescription)")
+            handleError(error)
+        }
     }
     
     // MARK: onDisconnect()

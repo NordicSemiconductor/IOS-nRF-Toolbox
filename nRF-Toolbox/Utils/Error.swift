@@ -10,9 +10,36 @@ import Foundation
 
 // MARK: - CriticalError
 
-enum CriticalError: Error {
-    case noMandatoryCharacteristics
+enum ServiceError: LocalizedError {
+    case unknown
+    case noMandatoryCharacteristic
     case timeout
     case noData
+    
+    var errorDescription: String? {
+        switch self {
+        case .unknown:
+            return "Unknown error."
+        case .noMandatoryCharacteristic:
+            return "Mandatory characteristics are missing."
+        case .timeout:
+            return "Timeout has occured."
+        case .noData:
+            return "Ivalid data."
+        }
+    }
+}
+
+enum ServiceWarning: LocalizedError {
     case unknown
+    case measurement
+    
+    var errorDescription: String? {
+        switch self {
+        case .unknown:
+            return "Unknown error."
+        case .measurement:
+            return "Error occured while reading measurement."
+        }
+    }
 }

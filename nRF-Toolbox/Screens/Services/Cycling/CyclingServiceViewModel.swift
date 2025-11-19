@@ -59,7 +59,7 @@ final class CyclingServiceViewModel: SupportedServiceViewModel, ObservableObject
     }
     
     // MARK: initializeCharacteristics()
-    
+    @MainActor
     func initializeCharacteristics() async throws {
         log.debug(#function)
         let serviceCharacteristics: [Characteristic] = [.cscMeasurement, .cscFeature]
@@ -67,21 +67,11 @@ final class CyclingServiceViewModel: SupportedServiceViewModel, ObservableObject
             serviceCharacteristics.contains { $0.uuid == cbChar.uuid }
         }
         
-        for characteristic in discoveredCharacteristics {
-            switch characteristic.uuid {
-            case .cscMeasurement:
-                self.cscMeasurement = characteristic
-                log.debug("Found CSC Measurement Characteristic.")
-            case .cscFeature:
-                self.cscFeature = characteristic
-                log.debug("Found CSC Feature Characteristic.")
-            default:
-                break
-            }
-        }
+        cscMeasurement = discoveredCharacteristics.first(where: \.uuid, isEqualsTo: .cscMeasurement)
+        cscFeature = discoveredCharacteristics.first(where: \.uuid, isEqualsTo: .cscFeature)
         
         guard cscMeasurement != nil, cscFeature != nil else {
-            throw CriticalError.noMandatoryCharacteristics
+            throw ServiceError.noMandatoryCharacteristic
         }
     }
     
@@ -92,12 +82,12 @@ final class CyclingServiceViewModel: SupportedServiceViewModel, ObservableObject
         log.debug(#function)
         features = try await peripheral.readValue(for: cscFeature).tryMap { data in
             guard let data, data.canRead(UInt8.self, atOffset: 0) else {
-                throw CriticalError.noData
+                throw ServiceError.noData
             }
             return BitField<CyclingFlag>(RegisterValue(data[0]))
         }
         .timeout(.seconds(5), scheduler: DispatchQueue.main, customError: {
-            CriticalError.timeout
+            ServiceError.timeout
         })
         .firstValue
         
@@ -172,7 +162,7 @@ final class CyclingServiceViewModel: SupportedServiceViewModel, ObservableObject
     }
     
     // MARK: onConnect()
-    
+    @MainActor
     func onConnect() async {
         log.debug(#function)
         do {
@@ -182,7 +172,7 @@ final class CyclingServiceViewModel: SupportedServiceViewModel, ObservableObject
         }
         catch let error {
             log.error("Error \(error.localizedDescription)")
-            // TODO: Later, I guess.
+            handleError(error)
         }
     }
     
