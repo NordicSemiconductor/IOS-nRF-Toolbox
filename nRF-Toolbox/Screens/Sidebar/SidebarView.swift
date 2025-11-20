@@ -29,7 +29,7 @@ struct SidebarView: View {
                     ForEach(viewModel.connectedDevices) { device in
                         NavigationLink(value: RootNavigationView.MenuCategory.device(device)) {
                             SidebarDeviceView(device)
-                        }
+                        }.setAccent(.universalAccentColor)
                     }
                 }
             }
