@@ -21,10 +21,6 @@ struct CyclingDataView: View {
     private static let minWheelSize = Measurement<UnitLength>(value: 20.0, unit: .inches)
     private static let maxWheelSize = Measurement<UnitLength>(value: 29.0, unit: .inches)
     
-    // MARK: Properties
-    
-    @State private var wheelSizeInches = 29.0
-    
     // MARK: view
     
     var body: some View {
@@ -36,16 +32,13 @@ struct CyclingDataView: View {
             .font(.title3)
             .bold()
         
-        Slider(value: $wheelSizeInches, in: Self.minWheelSize.value...Self.maxWheelSize.value,
+        Slider(value: $viewModel.wheelSizeInches, in: Self.minWheelSize.value...Self.maxWheelSize.value,
                step: 1) {
             EmptyView()
         } minimumValueLabel: {
             Text(Self.minWheelSize, format: .measurement(width: .abbreviated, usage: .asProvided))
         } maximumValueLabel: {
             Text(Self.maxWheelSize, format: .measurement(width: .abbreviated, usage: .asProvided))
-        }
-        .onChange(of: wheelSizeInches) {
-            viewModel.wheelSize = Measurement<UnitLength>(value: wheelSizeInches, unit: .inches)
         }
         .listRowSeparator(.hidden)
         .accentColor(.nordicBlue)
@@ -69,7 +62,7 @@ struct CyclingDataView: View {
         items.append(RunningAttribute(title: totalDistanceKey, value: String(format: "%.2f", viewModel.totalTravelDistance.value), unit: viewModel.totalTravelDistance.unit.symbol))
         
         let wheelKey = "Wheel Size"
-        items.append(RunningAttribute(title: wheelKey, value: String(format: "%.1f", viewModel.wheelSize.value), unit: viewModel.wheelSize.unit.symbol))
+        items.append(RunningAttribute(title: wheelKey, value: String(format: "%.1f", viewModel.wheelSizeInches), unit: UnitLength.inches.symbol))
         
         let gearKey = "Gear Ratio"
         items.append(RunningAttribute(title: gearKey, value: String(format: "%.2f", viewModel.gearRatio), unit: "⚙️"))
