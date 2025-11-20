@@ -96,15 +96,10 @@ final class CGMSViewModel: SupportedServiceViewModel, ObservableObject {
     
     func listenRACPResponse() async throws -> Data {
         log.debug(#function)
-        do {
-            let racpData = try await peripheral.listenValues(for: cbRACP).firstValue
-            log.debug("\(#function) Response \(racpData.hexEncodedString(options: [.prepend0x, .upperCase]))")
-            
-            return racpData
-        } catch {
-            log.debug(error.localizedDescription)
-            throw error
-        }
+        let racpData = try await peripheral.listenValues(for: cbRACP).firstValue
+        log.debug("\(#function) Response \(racpData.hexEncodedString(options: [.prepend0x, .upperCase]))")
+        
+        return racpData
     }
     
     // MARK: requestRecords()
@@ -133,6 +128,7 @@ final class CGMSViewModel: SupportedServiceViewModel, ObservableObject {
             log.debug("Received \(try await racpData)")
         } catch {
             log.debug(error.localizedDescription)
+            handleError(error)
         }
     }
     

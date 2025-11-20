@@ -112,14 +112,9 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
             throw ServiceError.noMandatoryCharacteristic
         }
         
-        do {
-            let txEnable = try await peripheral.setNotifyValue(true, for: uartTX).firstValue
-            log.debug("\(#function) tx.setNotifyValue(true): \(txEnable)")
-            listenToIncomingMessages(uartTX)
-        } catch {
-            log.debug("Error when enabling UART listening: \(error.localizedDescription)")
-            onDisconnect()
-        }
+        let txEnable = try await peripheral.setNotifyValue(true, for: uartTX).firstValue
+        log.debug("\(#function) tx.setNotifyValue(true): \(txEnable)")
+        listenToIncomingMessages(uartTX)
     }
     
     // MARK: onDisconnect()
@@ -155,6 +150,7 @@ extension UARTViewModel {
             try await peripheral.writeValueWithResponse(data, for: uartRX).firstValue
         } catch {
             log.debug("\(#function) Error: \(error.localizedDescription)")
+            handleError(error)
         }
     }
     

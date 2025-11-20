@@ -85,6 +85,7 @@ final class GlucoseViewModel: @MainActor SupportedServiceViewModel, ObservableOb
             try await initializeCharacteristics()
         } catch {
             log.error("Error \(error.localizedDescription)")
+            inFlightRequest = nil
             handleError(error)
         }
     }
@@ -108,21 +109,16 @@ final class GlucoseViewModel: @MainActor SupportedServiceViewModel, ObservableOb
     }
     
     fileprivate func enableNotificationsIfNeeded() async throws {
-        do {
-            if glucoseNotifyEnabled { return }
-            
-            glucoseNotifyEnabled = try await peripheral.setNotifyValue(true, for: cbGlucoseMeasurement)
-                .receive(on: RunLoop.main)
-                .firstValue
-            log.debug("GlucoseMeasurement.setNotifyValue(true): \(glucoseNotifyEnabled)")
-            
-            guard glucoseNotifyEnabled else { return }
-
-            listenToMeasurements(cbGlucoseMeasurement)
-        } catch {
-            log.error("Error during enabling glucose measurement notifications.")
-            inFlightRequest = nil
-        }
+        if glucoseNotifyEnabled { return }
+        
+        glucoseNotifyEnabled = try await peripheral.setNotifyValue(true, for: cbGlucoseMeasurement)
+            .receive(on: RunLoop.main)
+            .firstValue
+        log.debug("GlucoseMeasurement.setNotifyValue(true): \(glucoseNotifyEnabled)")
+        
+        guard glucoseNotifyEnabled else { return }
+        
+        listenToMeasurements(cbGlucoseMeasurement)
     }
     
     // MARK: onDisconnect()
@@ -184,6 +180,7 @@ extension GlucoseViewModel {
                 log.debug("peripheral.setIndicate(false): \(turnOffIndications)")
             } catch {
                 log.error("\(#function) Error: \(error.localizedDescription)")
+                handleError(error)
             }
         }
     }

@@ -196,7 +196,7 @@ private extension HeartRateViewModel {
     }
     
     // MARK: notifyHRMeasurement()
-    
+    @MainActor
     func notifyHRMeasurement(_ enable: Bool) async throws {
         guard let hrMeasurement else { return }
         log.debug(#function)
@@ -205,6 +205,7 @@ private extension HeartRateViewModel {
             log.debug("Enabled HR Measurement Characteristic: \(result)")
         } catch {
             log.error(error.localizedDescription)
+            handleError(error)
         }
     }
 }

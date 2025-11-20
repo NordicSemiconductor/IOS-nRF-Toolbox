@@ -91,7 +91,7 @@ extension RunningServiceViewModel {
 private extension RunningServiceViewModel {
     
     // MARK: setUpGlobalVariables()
-    
+    @MainActor
     func setUpGlobalVariables() async throws {
         log.debug(#function)
         let characteristics: [Characteristic] = [.rscMeasurement, .rscFeature, .scControlPoint]
