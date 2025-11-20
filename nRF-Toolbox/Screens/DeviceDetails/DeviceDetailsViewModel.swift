@@ -88,6 +88,7 @@ extension DeviceDetailsViewModel {
     
     func onDisconnect() async {
         log.debug(#function)
+        signalViewModel?.stopTimer()
         supportedServiceViewModels.forEach {
             $0.onDisconnect()
         }
