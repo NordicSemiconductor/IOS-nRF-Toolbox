@@ -48,11 +48,20 @@ struct RootNavigationView: View {
                     .environmentObject(rootViewModel)
                     .environmentObject(connectedDevicesViewModel)
                     .environmentObject(connectedDevicesViewModel.deviceViewModel(for: device.id)!)
+                    .onAppear {
+                        log.debug("DeviceScreen opened on details tab.")
+                    }
             case .scanner:
                 PeripheralScannerScreen()
                     .environmentObject(connectedDevicesViewModel)
+                    .onAppear {
+                        log.debug("PeripheralScannerScreen opened on details tab.")
+                    }
             case nil:
                 NordicEmptyView()
+                    .onAppear {
+                        log.debug("Empty view opened on details tab.")
+                    }
             }
         }
         .navigationSplitViewStyle(.balanced)
