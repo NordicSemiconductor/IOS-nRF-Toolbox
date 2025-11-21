@@ -42,26 +42,28 @@ struct RootNavigationView: View {
                 .navigationSplitViewColumnWidth(ideal: 420.0)
                 .environmentObject(connectedDevicesViewModel)
         } detail: {
-            switch (rootViewModel.selectedCategory) {
-            case .device(let device):
-                DeviceScreen(device)
-                    .environmentObject(rootViewModel)
-                    .environmentObject(connectedDevicesViewModel)
-                    .environmentObject(connectedDevicesViewModel.deviceViewModel(for: device.id)!)
-                    .onAppear {
-                        log.debug("DeviceScreen opened on details tab.")
-                    }
-            case .scanner:
-                PeripheralScannerScreen()
-                    .environmentObject(connectedDevicesViewModel)
-                    .onAppear {
-                        log.debug("PeripheralScannerScreen opened on details tab.")
-                    }
-            case nil:
-                NordicEmptyView()
-                    .onAppear {
-                        log.debug("Empty view opened on details tab.")
-                    }
+            Group {
+                switch (rootViewModel.selectedCategory) {
+                case .device(let device):
+                    DeviceScreen(device)
+                        .environmentObject(rootViewModel)
+                        .environmentObject(connectedDevicesViewModel)
+                        .environmentObject(connectedDevicesViewModel.deviceViewModel(for: device.id)!)
+                        .onAppear {
+                            log.debug("DeviceScreen opened on details tab.")
+                        }
+                case .scanner:
+                    PeripheralScannerScreen()
+                        .environmentObject(connectedDevicesViewModel)
+                        .onAppear {
+                            log.debug("PeripheralScannerScreen opened on details tab.")
+                        }
+                case nil:
+                    NordicEmptyView()
+                        .onAppear {
+                            log.debug("Empty view opened on details tab.")
+                        }
+                }
             }
         }
         .navigationSplitViewStyle(.balanced)
