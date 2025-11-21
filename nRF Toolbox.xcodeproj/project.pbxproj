@@ -87,13 +87,8 @@
 		A7D7B0DA2EBA1E59009B69CE /* XMLFileDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D7B0D92EBA1E56009B69CE /* XMLFileDocument.swift */; };
 		A7E289352EB35E70007199DB /* CoreBluetoothMock in Frameworks */ = {isa = PBXBuildFile; productRef = A7E289342EB35E70007199DB /* CoreBluetoothMock */; };
 		A7EBBC2F2EBDF336000001DF /* SequenceItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EBBC2E2EBDF334000001DF /* SequenceItemView.swift */; };
-		A7F11C052ED0531100D1862B /* IridescenceModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F11C032ED0531100D1862B /* IridescenceModifier.swift */; };
-		A7F11C062ED0531100D1862B /* FlickerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F11C012ED0531100D1862B /* FlickerModifier.swift */; };
-		A7F11C072ED0531100D1862B /* BlinkingModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F11C002ED0531100D1862B /* BlinkingModifier.swift */; };
-		A7F11C082ED0531100D1862B /* GlowingModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F11C022ED0531100D1862B /* GlowingModifier.swift */; };
-		A7F11C0C2ED0532800D1862B /* Flicker.metal in Sources */ = {isa = PBXBuildFile; fileRef = A7F11C092ED0532800D1862B /* Flicker.metal */; };
-		A7F11C0D2ED0532800D1862B /* Iridescence.metal in Sources */ = {isa = PBXBuildFile; fileRef = A7F11C0A2ED0532800D1862B /* Iridescence.metal */; };
-		A7F11C112ED056FC00D1862B /* BlinkingCursorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F11C102ED056FC00D1862B /* BlinkingCursorView.swift */; };
+		A7F11C1C2ED05A5600D1862B /* Iridescence.metal in Sources */ = {isa = PBXBuildFile; fileRef = A7F11C172ED05A5600D1862B /* Iridescence.metal */; };
+		A7F11C1D2ED05A5600D1862B /* IridescenceModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F11C152ED05A5600D1862B /* IridescenceModifier.swift */; };
 		A7FA7A482E852D6500DA192B /* CGMSMeasurementParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FA7A472E852D6500DA192B /* CGMSMeasurementParser.swift */; };
 		AA01D4922D4A3D38008523CE /* Throughput+Attributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01D4912D4A3D38008523CE /* Throughput+Attributes.swift */; };
 		AA047E112DF1B3A300DA401E /* BlinkyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA047E102DF1B3A300DA401E /* BlinkyView.swift */; };
@@ -277,13 +272,8 @@
 		A7D7B0D92EBA1E56009B69CE /* XMLFileDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLFileDocument.swift; sourceTree = "<group>"; };
 		A7E289322EB35E5F007199DB /* IOS-CoreBluetooth-Mock */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "IOS-CoreBluetooth-Mock"; path = "../IOS-CoreBluetooth-Mock"; sourceTree = "<group>"; };
 		A7EBBC2E2EBDF334000001DF /* SequenceItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceItemView.swift; sourceTree = "<group>"; };
-		A7F11C002ED0531100D1862B /* BlinkingModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkingModifier.swift; sourceTree = "<group>"; };
-		A7F11C012ED0531100D1862B /* FlickerModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickerModifier.swift; sourceTree = "<group>"; };
-		A7F11C022ED0531100D1862B /* GlowingModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlowingModifier.swift; sourceTree = "<group>"; };
-		A7F11C032ED0531100D1862B /* IridescenceModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IridescenceModifier.swift; sourceTree = "<group>"; };
-		A7F11C092ED0532800D1862B /* Flicker.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Flicker.metal; sourceTree = "<group>"; };
-		A7F11C0A2ED0532800D1862B /* Iridescence.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Iridescence.metal; sourceTree = "<group>"; };
-		A7F11C102ED056FC00D1862B /* BlinkingCursorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkingCursorView.swift; sourceTree = "<group>"; };
+		A7F11C152ED05A5600D1862B /* IridescenceModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IridescenceModifier.swift; sourceTree = "<group>"; };
+		A7F11C172ED05A5600D1862B /* Iridescence.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Iridescence.metal; sourceTree = "<group>"; };
 		A7FA7A472E852D6500DA192B /* CGMSMeasurementParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSMeasurementParser.swift; sourceTree = "<group>"; };
 		AA01D4912D4A3D38008523CE /* Throughput+Attributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Throughput+Attributes.swift"; sourceTree = "<group>"; };
 		AA047E102DF1B3A300DA401E /* BlinkyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkyView.swift; sourceTree = "<group>"; };
@@ -402,6 +392,7 @@
 		0129F2262A68404C002FB3F5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A7F11C122ED05A4F00D1862B /* Effects */,
 				013E5D992AE0545100B9C475 /* Modifiers */,
 				0129F2272A684059002FB3F5 /* LabeledValueView.swift */,
 				0164A4802AD8330E0093E501 /* ServiceBadgeGroup.swift */,
@@ -525,7 +516,6 @@
 		017D102C2A5809E300E38E5F /* nRF-Toolbox */ = {
 			isa = PBXGroup;
 			children = (
-				A7F11BFF2ED052F900D1862B /* UiEffects */,
 				AA8DF2152DE9B08E00D49141 /* Info.plist */,
 				019E77792ACC289500760124 /* Screens */,
 				0129F2262A68404C002FB3F5 /* Views */,
@@ -754,42 +744,37 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		A7F11BFF2ED052F900D1862B /* UiEffects */ = {
+		A7F11C122ED05A4F00D1862B /* Effects */ = {
 			isa = PBXGroup;
 			children = (
-				A7F11C0F2ED056F800D1862B /* View */,
-				A7F11C0B2ED0532800D1862B /* Shaders */,
-				A7F11C042ED0531100D1862B /* Modifiers */,
+				A7F11C192ED05A5600D1862B /* Effects */,
 			);
-			path = UiEffects;
+			path = Effects;
 			sourceTree = "<group>";
 		};
-		A7F11C042ED0531100D1862B /* Modifiers */ = {
+		A7F11C162ED05A5600D1862B /* Modifiers */ = {
 			isa = PBXGroup;
 			children = (
-				A7F11C002ED0531100D1862B /* BlinkingModifier.swift */,
-				A7F11C012ED0531100D1862B /* FlickerModifier.swift */,
-				A7F11C022ED0531100D1862B /* GlowingModifier.swift */,
-				A7F11C032ED0531100D1862B /* IridescenceModifier.swift */,
+				A7F11C152ED05A5600D1862B /* IridescenceModifier.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
 		};
-		A7F11C0B2ED0532800D1862B /* Shaders */ = {
+		A7F11C182ED05A5600D1862B /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
-				A7F11C092ED0532800D1862B /* Flicker.metal */,
-				A7F11C0A2ED0532800D1862B /* Iridescence.metal */,
+				A7F11C172ED05A5600D1862B /* Iridescence.metal */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
 		};
-		A7F11C0F2ED056F800D1862B /* View */ = {
+		A7F11C192ED05A5600D1862B /* Effects */ = {
 			isa = PBXGroup;
 			children = (
-				A7F11C102ED056FC00D1862B /* BlinkingCursorView.swift */,
+				A7F11C162ED05A5600D1862B /* Modifiers */,
+				A7F11C182ED05A5600D1862B /* Shaders */,
 			);
-			path = View;
+			path = Effects;
 			sourceTree = "<group>";
 		};
 		AA047E0F2DF1B38B00DA401E /* Blinky */ = {
@@ -1167,15 +1152,13 @@
 				A75F116E2E9FA30E00B0D6CB /* CGMSCBMPeripheralSpecDelegate.swift in Sources */,
 				AA124CD52DA52B8200EBA004 /* CGMSRecordList.swift in Sources */,
 				A75F11722E9FA32300B0D6CB /* BPSCBMPeripheralSpecDelegate.swift in Sources */,
+				A7F11C1C2ED05A5600D1862B /* Iridescence.metal in Sources */,
+				A7F11C1D2ED05A5600D1862B /* IridescenceModifier.swift in Sources */,
 				018C053E2AE16682007CE0FE /* SignalChartView.swift in Sources */,
 				01C62AE52B72463F00CDEE31 /* DeviceInformation.swift in Sources */,
 				01C62AE72B72480C00CDEE31 /* DeviceInformationView.swift in Sources */,
 				AA5AB3DF2D0868DD005213D5 /* CyclingDataView.swift in Sources */,
 				A75F11702E9FA31300B0D6CB /* GLSCBMPeripheralSpecDelegate.swift in Sources */,
-				A7F11C052ED0531100D1862B /* IridescenceModifier.swift in Sources */,
-				A7F11C062ED0531100D1862B /* FlickerModifier.swift in Sources */,
-				A7F11C072ED0531100D1862B /* BlinkingModifier.swift in Sources */,
-				A7F11C082ED0531100D1862B /* GlowingModifier.swift in Sources */,
 				018C053B2AE0844E007CE0FE /* SignalChartViewModel.swift in Sources */,
 				A7D7B0DA2EBA1E59009B69CE /* XMLFileDocument.swift in Sources */,
 				AAA898B72DD4C0B6000C7012 /* UARTPresetsGridView.swift in Sources */,
@@ -1191,7 +1174,6 @@
 				AA95CBCF2D0846E800D1FBC6 /* CyclingServiceViewModel.swift in Sources */,
 				AAE42EEC2DCCC915006212B4 /* UARTPresetsMainView.swift in Sources */,
 				013E5D9B2AE0545F00B9C475 /* OnFirstAppear.swift in Sources */,
-				A7F11C112ED056FC00D1862B /* BlinkingCursorView.swift in Sources */,
 				AA2931592DEEEFCD002C82B6 /* BloodPressureMeasurement.swift in Sources */,
 				A7A28FD52EAD3E02004ECC8B /* MockSpecDelegate.swift in Sources */,
 				A7D2C8E52E7D414700C93C28 /* CGMSFeatureEnvelope.swift in Sources */,
@@ -1254,8 +1236,6 @@
 				AA69FF382E056F9F0065A39C /* GlucoseAllRecordsChartView.swift in Sources */,
 				AAA04F232DAD513A002DAB42 /* UARTMessagesList.swift in Sources */,
 				AA94C5512D01B49200562F7A /* BatteryView.swift in Sources */,
-				A7F11C0C2ED0532800D1862B /* Flicker.metal in Sources */,
-				A7F11C0D2ED0532800D1862B /* Iridescence.metal in Sources */,
 				A72A343C2EAA57160011BA44 /* CSCSCBMPeripheralSpecDelegate.swift in Sources */,
 				AA01D4922D4A3D38008523CE /* Throughput+Attributes.swift in Sources */,
 				AA306A0B2DF30DBF005B4E04 /* GlucoseView.swift in Sources */,
