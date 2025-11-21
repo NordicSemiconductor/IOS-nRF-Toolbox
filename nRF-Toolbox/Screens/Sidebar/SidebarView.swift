@@ -27,18 +27,27 @@ struct SidebarView: View {
                     NoContentView(title: "No Connected Devices", systemImage: "cable.connector.slash", description: "Open the Scanner from below to connect to one or multiple Devices.")
                 } else {
                     ForEach(viewModel.connectedDevices) { device in
-                        NavigationLink(value: RootNavigationView.MenuCategory.device(device)) {
+                        let isSelected = rootViewModel.selectedCategory == .device(device)
+                        Button(action: {
+                            rootViewModel.selectedCategory = RootNavigationView.MenuCategory.device(device)
+                        }, label: {
                             SidebarDeviceView(device)
-                        }.setAccent(.universalAccentColor)
+                                .setAccent(isSelected ? Color.white : .nordicBlue)
+                                .tint(isSelected ? Color.white : .primarylabel)
+                        }).listRowBackground(isSelected ? Color.universalAccentColor : nil)
                     }
                 }
             }
             
             Section("Scanner") {
-                NavigationLink(value: RootNavigationView.MenuCategory.scanner) {
+                let isSelected = rootViewModel.selectedCategory == .scanner
+                Button(action: {
+                    rootViewModel.selectedCategory = RootNavigationView.MenuCategory.scanner
+                }, label: {
                     Label("Connect to Device", systemImage: "dot.radiowaves.right")
-                        .setAccent(.universalAccentColor)
-                }
+                        .setAccent(isSelected ? Color.white : .nordicBlue)
+                        .tint(isSelected ? Color.white : .primarylabel)
+                }).listRowBackground(isSelected ? Color.universalAccentColor : nil)
             }
             
             Section {
