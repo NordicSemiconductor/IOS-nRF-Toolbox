@@ -256,6 +256,15 @@ extension UARTViewModel {
     func savePresetsToXmlFile(notifyUser: Bool = true) {
         let text = (try? parser.toXml(selectedPresets)) ?? ""
         let url = selectedPresets.url
+        
+        let didAccess = url.startAccessingSecurityScopedResource()
+        defer { if didAccess { url.stopAccessingSecurityScopedResource() } }
+        
+        guard didAccess else {
+            alertMessage = "Cannot access a file. Please try again."
+            showAlert = true
+            return
+        }
 
         do {
             try text.write(to: url, atomically: true, encoding: .utf8)
@@ -276,7 +285,18 @@ extension UARTViewModel {
         switch result {
         case .success(let urls):
             do {
-                let data = try Data(contentsOf: urls.first!)
+                let url = urls.first!
+                
+                let didAccess = url.startAccessingSecurityScopedResource()
+                defer { if didAccess { url.stopAccessingSecurityScopedResource() } }
+                
+                guard didAccess else {
+                    alertMessage = "Cannot access a file. Please try again."
+                    showAlert = true
+                    return
+                }
+
+                let data = try Data(contentsOf: url)
                 let presets = try parser.fromXml(data)
                 self.presets.append(presets)
                 selectedPresets = presets
@@ -285,6 +305,7 @@ extension UARTViewModel {
             } catch {
                 alertMessage = "An error occured while importing presets. Please try again."
                 showAlert = true
+                log.debug("File importer exited with error: \(error.localizedDescription)")
             }
         case .failure(let error):
             alertMessage = "An error occured while importing presets. Please try again."
