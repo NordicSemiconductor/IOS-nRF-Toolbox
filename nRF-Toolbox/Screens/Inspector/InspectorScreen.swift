@@ -76,21 +76,6 @@ struct InspectorScreen: View {
                     }
                 }
             }
-            
-            if deviceIsConnected {
-                Section {
-                    Button("Disconnect") {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-                            Task { @MainActor in
-                                deviceViewModel.showDeviceSheet = false
-                                try await connectedDevicesViewModel.disconnectAndRemoveViewModel(device.id)
-                            }
-                        }
-                    }
-                    .foregroundStyle(.red)
-                    .centered()
-                }
-            }
         }
         .navigationTitle("Device Inspector")
         .toolbarRole(.navigationStack)
