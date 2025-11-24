@@ -14,23 +14,26 @@ extension UARTViewModel {
     
     static let fileManager = FileManager.default
     
+    static func fileUrl() throws -> URL {
+        try self.fileUrl(for: "presets")
+    }
+    
     // MARK: read
     
-    static func read() -> [UARTPresets]? {
-        let fileUrl = try? self.fileUrl(for: "presets")
-        guard let fileUrl, let readData = try? Data(contentsOf: fileUrl) else { return nil }
+    static func read() throws -> [UARTPresets]? {
+        let fileUrl = try self.fileUrl(for: "presets")
+        let readData = try Data(contentsOf: fileUrl)
         let decodedData = try? JSONDecoder().decode([UARTPresets].self, from: readData)
         return decodedData
     }
     
     // MARK: write
     
-    static func writeBack(presets: [UARTPresets]) {
-        let fileUrl = try? self.fileUrl(for: "presets")
-        let jsonData = try? JSONEncoder().encode(presets)
+    static func writeBack(presets: [UARTPresets]) throws {
+        let fileUrl = try self.fileUrl(for: "presets")
+        let jsonData = try JSONEncoder().encode(presets)
         
-        guard let fileUrl, let jsonData else { return }
-        try? jsonData.write(to: fileUrl)
+        try jsonData.write(to: fileUrl)
     }
     
     private static func presetsDir() throws -> URL {

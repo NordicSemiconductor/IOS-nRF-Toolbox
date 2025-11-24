@@ -60,12 +60,7 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
         self.characteristics = characteristics
         self.cancellables = Set<AnyCancellable>()
         log.debug(#function)
-        if let savedPresets = Self.read() {
-            self.presets = savedPresets
-            if self.presets.count >= 2 {
-                self.selectedPresets = savedPresets[1]
-            }
-        }
+        loadPresetsFromJsonFile()
     }
     
     // MARK: description
@@ -190,6 +185,7 @@ extension UARTViewModel {
     
     @MainActor
     func runCommand(_ command: UARTPreset) {
+        log.debug(#function)
         guard let data = command.data else { return }
         Task {
             await send(data)
@@ -203,6 +199,7 @@ extension UARTViewModel {
     
     @MainActor
     func savePresets() {
+        log.debug(#function)
         guard editedPresets != .none, let i = presets.firstIndex(of: selectedPresets)  else { return }
         
         presets[i] = editedPresets
@@ -247,13 +244,35 @@ extension UARTViewModel {
     }
     
     func savePresetsToJsonFile() {
+        log.debug(#function)
         let copy = presets
         Task.detached {
-            Self.writeBack(presets: copy)
+            do {
+                try Self.writeBack(presets: copy)
+            } catch {
+                self.log.debug("Error while storing presets to a local cache - \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func loadPresetsFromJsonFile() {
+        log.debug(#function)
+        Task.detached {
+            do {
+                if let savedPresets = try Self.read() {
+                    self.presets = savedPresets
+                    if self.presets.count >= 2 {
+                        self.selectedPresets = savedPresets[1]
+                    }
+                }
+            } catch {
+                self.log.debug("Error while importing presets from a local cache - \(error.localizedDescription)")
+            }
         }
     }
     
     func savePresetsToXmlFile(notifyUser: Bool = true) {
+        log.debug(#function)
         let text = (try? parser.toXml(selectedPresets)) ?? ""
         let url = selectedPresets.url
         
@@ -277,11 +296,13 @@ extension UARTViewModel {
             if (notifyUser) {
                 alertMessage = "An error occured while saving presets. Please try again."
                 showAlert = true
+                log.debug("An error occured while saving presets: \(error.localizedDescription)")
             }
         }
     }
     
     func importPresets(result: Result<[URL], any Error>) {
+        log.debug(#function)
         switch result {
         case .success(let urls):
             do {
@@ -299,13 +320,16 @@ extension UARTViewModel {
                 let data = try Data(contentsOf: url)
                 let presets = try parser.fromXml(data)
                 self.presets.append(presets)
+                
+                savePresetsToJsonFile()
+                
                 selectedPresets = presets
                 alertMessage = "Presets have been successfully imported!"
                 showAlert = true
             } catch {
                 alertMessage = "An error occured while importing presets. Please try again."
                 showAlert = true
-                log.debug("File importer exited with error: \(error.localizedDescription)")
+                log.debug("Error while laoding presets: \(error.localizedDescription)")
             }
         case .failure(let error):
             alertMessage = "An error occured while importing presets. Please try again."
