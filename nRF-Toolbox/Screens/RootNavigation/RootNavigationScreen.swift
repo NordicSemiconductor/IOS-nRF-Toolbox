@@ -42,7 +42,7 @@ struct RootNavigationView: View {
                 .navigationSplitViewColumnWidth(ideal: 420.0)
                 .environmentObject(connectedDevicesViewModel)
         } detail: {
-            Group {
+            NavigationStack {
                 switch (rootViewModel.selectedCategory) {
                 case .device(let device):
                     DeviceScreen(device)
