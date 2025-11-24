@@ -29,12 +29,12 @@ private extension CBMCharacteristicMock {
     static let uartTx = CBMCharacteristicMock(
         type: .tx,
         properties: .notify,
+        descriptors: .clientCharacteristicConfiguration
     )
     
     static let uartRx = CBMCharacteristicMock(
         type: .rx,
         properties: [.write],
-        descriptors: .clientCharacteristicConfiguration
     )
 }
 

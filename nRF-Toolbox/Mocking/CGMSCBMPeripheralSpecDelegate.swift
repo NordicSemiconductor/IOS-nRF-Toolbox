@@ -39,13 +39,11 @@ private extension CBMCharacteristicMock {
     static let cgmsFeature = CBMCharacteristicMock(
         type: .cgmFeature,
         properties: .read,
-        descriptors: .clientCharacteristicConfiguration
     )
     
     static let sessionStartTime = CBMCharacteristicMock(
         type: .cgmSessionStartTime,
         properties: [.write, .writeWithoutResponse, .read],
-        descriptors: .clientCharacteristicConfiguration
     )
     
     static let sopCp = CBMCharacteristicMock(

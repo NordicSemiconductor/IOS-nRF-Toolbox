@@ -36,6 +36,7 @@ private extension CBMCharacteristicMock {
     static let recordAccessControlPoint = CBMCharacteristicMock(
         type: .bloodPressureFeature,
         properties: [.write, .indicate],
+        descriptors: .clientCharacteristicConfiguration
     )
 }
 
