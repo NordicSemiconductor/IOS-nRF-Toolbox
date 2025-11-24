@@ -71,7 +71,6 @@ final class BloodPressureViewModel: @MainActor SupportedServiceViewModel, Observ
         } catch {
             log.error("Error \(error.localizedDescription)")
             handleError(error)
-            onDisconnect()
         }
     }
     

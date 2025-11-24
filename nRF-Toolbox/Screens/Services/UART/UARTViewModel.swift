@@ -91,7 +91,6 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
         } catch {
             log.error("Error \(error.localizedDescription)")
             handleError(error)
-            onDisconnect()
         }
     }
     
