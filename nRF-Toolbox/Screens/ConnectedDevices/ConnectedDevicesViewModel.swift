@@ -89,7 +89,9 @@ extension ConnectedDevicesViewModel {
         
         await deviceViewModel.onDisconnect()
         if let i = connectedDevices.firstIndex(where: \.id, equals: deviceID) {
+            let device = connectedDevices[i]
             connectedDevices[i].status = .userInitiatedDisconnection
+            deviceViewModels[device.id]?.device = connectedDevices[i]
         }
         
         defer {
@@ -129,7 +131,9 @@ extension ConnectedDevicesViewModel {
                 case .poweredOff, .unauthorized, .unsupported:
                     guard let self else { return }
                     for i in connectedDevices.indices {
+                        let device = connectedDevices[i]
                         connectedDevices[i].status = .error(ConnectionError.bluetoothUnavailable)
+                        deviceViewModels[device.id]?.device = connectedDevices[i]
                     }
                 default:
                     break
@@ -170,7 +174,7 @@ extension ConnectedDevicesViewModel {
         if deviceViewModels[device.id] == nil,
            let peripheral = centralManager.retrievePeripherals(withIdentifiers: [device.id]).first {
             
-            let viewModel = DeviceDetailsViewModel(cbPeripheral: peripheral, centralManager: centralManager)
+            let viewModel = DeviceDetailsViewModel(cbPeripheral: peripheral, centralManager: centralManager, device: device)
             deviceViewModels[device.id] = viewModel
             Task {
                 await viewModel.discoverSupportedServices()
@@ -191,7 +195,9 @@ extension ConnectedDevicesViewModel {
                 let disconnectedDevice = self.connectedDevices[i]
                 self.log.debug("Disconnected Device Status: \(disconnectedDevice.status)")
                 if let error {
+                    let device = connectedDevices[i]
                     self.connectedDevices[i].status = .error(error)
+                    deviceViewModels[device.id]?.device = connectedDevices[i]
                 } else {
                     self.connectedDevices.remove(at: i)
                 }

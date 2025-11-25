@@ -45,7 +45,7 @@ struct RootNavigationView: View {
             NavigationStack {
                 switch (rootViewModel.selectedCategory) {
                 case .device(let device):
-                    DeviceScreen(device)
+                    DeviceScreen()
                         .environmentObject(rootViewModel)
                         .environmentObject(connectedDevicesViewModel)
                         .environmentObject(connectedDevicesViewModel.deviceViewModel(for: device.id)!)

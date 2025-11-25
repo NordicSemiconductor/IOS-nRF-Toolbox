@@ -38,6 +38,9 @@ final class DeviceDetailsViewModel: ObservableObject {
     @Published
     var errors: ErrorsHolder = ErrorsHolder()
     
+    @Published
+    var device: ConnectedDevicesViewModel.Device
+    
     private(set) var supportedServiceViewModels: [any SupportedServiceViewModel] = []
     
     private let log = NordicLog(category: "DeviceDetails.VM", subsystem: "com.nordicsemi.nrf-toolbox")
@@ -51,9 +54,10 @@ final class DeviceDetailsViewModel: ObservableObject {
     
     // MARK: init
     
-    init(cbPeripheral: CBPeripheral, centralManager: CentralManager) {
+    init(cbPeripheral: CBPeripheral, centralManager: CentralManager, device: ConnectedDevicesViewModel.Device) {
         self.peripheral = Peripheral(peripheral: cbPeripheral, delegate: ReactivePeripheralDelegate())
         self.centralManager = centralManager
+        self.device = device
         
         listenForDisconnection()
         log.debug(#function)

@@ -23,22 +23,15 @@ struct DeviceScreen: View {
     
     // MARK: Properties
     
-    private let device: ConnectedDevicesViewModel.Device
     private let log = NordicLog(category: "DeviceScreen", subsystem: "com.nordicsemi.nrf-toolbox")
-        
-    // MARK: init
-    
-    init(_ device: ConnectedDevicesViewModel.Device) {
-        self.device = device
-    }
     
     // MARK: view
 
     var body: some View {
         List {
-            if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: device.id) {
+            if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: deviceViewModel.device.id) {
                 deviceVM.supportedServiceViews()
-                    .disabled(device.status.hashValue != ConnectedDevicesViewModel.Device.Status.connected.hashValue)
+                    .disabled(deviceViewModel.device.status.hashValue != ConnectedDevicesViewModel.Device.Status.connected.hashValue)
             }
             
             if let error = deviceViewModel.errors.warning {
@@ -74,7 +67,7 @@ struct DeviceScreen: View {
             }
             
             Section("Connection") {
-                switch device.status {
+                switch deviceViewModel.device.status {
                 case .userInitiatedDisconnection:
                     ProgressView()
                         .centered()
@@ -98,10 +91,10 @@ struct DeviceScreen: View {
                 }
             }
             
-            if case .error = device.status {
+            if case .error = deviceViewModel.device.status {
                 Section {
                     Button("Clear Device") {
-                        connectedDevicesViewModel.clearViewModel(device.id)
+                        connectedDevicesViewModel.clearViewModel(deviceViewModel.device.id)
                         dismiss()
                     }
                     .foregroundStyle(Color.universalAccentColor)
@@ -111,24 +104,24 @@ struct DeviceScreen: View {
         }
         .task {
             log.debug("DeviceScreen.task()")
-            connectedDevicesViewModel.selectedDevice = device
+            connectedDevicesViewModel.selectedDevice = deviceViewModel.device
         }
         .onDisappear {
             log.debug("DeviceScreen.onDisappear()")
         }
         .listStyle(.insetGrouped)
-        .navigationTitle(device.name ?? "Unnamed")
+        .navigationTitle(deviceViewModel.device.name ?? "Unnamed")
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $deviceViewModel.showDeviceSheet) {
             NavigationStack {
-                InspectorScreen(device)
+                InspectorScreen(deviceViewModel.device)
                     .navigationBarTitleDisplayMode(.inline)
             }
             .setupTranslucentBackground()
         }
         .onReceive(connectedDevicesViewModel.objectWillChange) {
-            guard connectedDevicesViewModel.connectedDevices.firstIndex(where: \.id, equals: device.id) == nil else { return }
-            log.debug("Device \(device) not found in Connected Devices anymore. Dismissing.")
+            guard connectedDevicesViewModel.connectedDevices.firstIndex(where: \.id, equals: deviceViewModel.device.id) == nil else { return }
+            log.debug("Device \(deviceViewModel.device) not found in Connected Devices anymore. Dismissing.")
             dismiss()
         }
     }
@@ -138,7 +131,7 @@ struct DeviceScreen: View {
     func reconnect() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
             Task { @MainActor in
-                await connectedDevicesViewModel.deviceViewModel(for: device.id)?.reconnect()
+                await connectedDevicesViewModel.deviceViewModel(for: deviceViewModel.device.id)?.reconnect()
             }
         }
     }
@@ -148,8 +141,8 @@ struct DeviceScreen: View {
     func disconnect() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
             Task { @MainActor in
-                try await connectedDevicesViewModel.disconnectAndRemoveViewModel(device.id)
-                log.debug("Finished disconnectAndRemoveViewModel(\(device.id))")
+                try await connectedDevicesViewModel.disconnectAndRemoveViewModel(deviceViewModel.device.id)
+                log.debug("Finished disconnectAndRemoveViewModel(\(deviceViewModel.device.id))")
                 dismiss()
             }
         }
