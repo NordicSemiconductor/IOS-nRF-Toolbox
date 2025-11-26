@@ -26,8 +26,11 @@ struct ScanResultList: View {
                 ForEach(viewModel.devices) { device in
                     Button {
                         Task {
-                            guard await viewModel.connect(to: device) else { return }
-                            dismiss()
+                            let result = await viewModel.connect(to: device)
+                            dismiss() // Dismiss first before showing error.
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                                viewModel.onConnectionResult(result: result)
+                            }
                         }
                     } label: {
                         ScanResultItem(name: device.name, services: device.services,

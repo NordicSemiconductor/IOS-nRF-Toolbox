@@ -218,6 +218,7 @@ extension ConnectedDevicesViewModel {
     enum ConnectionError: LocalizedError {
         case bluetoothUnavailable
         case connectionTimeout
+        case ongoingConnection
         
         var errorDescription: String? {
             switch self {
@@ -225,6 +226,8 @@ extension ConnectedDevicesViewModel {
                 return "Bluetooth is powered off or is unavailable."
             case .connectionTimeout:
                 return "Timeout when attempting to connect."
+            case .ongoingConnection:
+                return "Another connection is in progress."
             }
         }
     }
@@ -237,10 +240,10 @@ extension ConnectedDevicesViewModel {
     // MARK: connect(to:)
     
     @MainActor
-    func connect(to device: ConnectedDevicesViewModel.ScanResult) async -> Bool {
+    func connect(to device: ConnectedDevicesViewModel.ScanResult) async -> Result<Void, Error> {
         log.debug(#function)
         if connectingDevice != nil {
-            return false
+            return Result.failure(ConnectionError.ongoingConnection)
         }
         
         connectingDevice = device
@@ -260,12 +263,18 @@ extension ConnectedDevicesViewModel {
                 .firstValue
             log.debug("Connected to \(connectedDevice)")
         } catch let error {
+            return Result.failure(error)
+        }
+        return Result.success(Void())
+    }
+    
+    @MainActor
+    func onConnectionResult(result: Result<Void, Error>) {
+        if case .failure(let error) = result {
             log.error("Error: \(error.localizedDescription)")
             self.unexpectedDisconnectionMessage = error.localizedDescription
             self.showUnexpectedDisconnectionAlert = true
-            return false
         }
-        return true
     }
     
     // MARK: setupManager()
