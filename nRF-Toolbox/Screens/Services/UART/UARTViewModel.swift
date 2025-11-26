@@ -275,15 +275,6 @@ extension UARTViewModel {
         log.debug(#function)
         let text = (try? parser.toXml(selectedPresets)) ?? ""
         let url = selectedPresets.url
-        
-        let didAccess = url.startAccessingSecurityScopedResource()
-        defer { if didAccess { url.stopAccessingSecurityScopedResource() } }
-        
-        guard didAccess else {
-            alertMessage = "Cannot access a file. Please try again."
-            showAlert = true
-            return
-        }
 
         do {
             try text.write(to: url, atomically: true, encoding: .utf8)
