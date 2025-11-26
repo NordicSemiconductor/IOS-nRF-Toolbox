@@ -19,7 +19,7 @@ enum ServiceError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .unknown:
-            return "Unknown error."
+            return "An unknown error has occurred."
         case .noMandatoryCharacteristic:
             return "Mandatory characteristics are missing."
         case .timeout:
@@ -37,7 +37,7 @@ enum ServiceWarning: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .unknown:
-            return "Unknown error."
+            return "An unknown error has occurred"
         case .measurement:
             return "Error occured while reading measurement."
         }

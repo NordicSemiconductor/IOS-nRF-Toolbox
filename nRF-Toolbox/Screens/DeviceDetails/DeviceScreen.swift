@@ -36,14 +36,14 @@ struct DeviceScreen: View {
             
             if let error = deviceViewModel.errors.warning {
                 Section("Warning") {
-                    Text(error.errorDescription ?? "Unknown issue.")
+                    Text(error.errorDescription ?? "An unknown problem has occurred.")
                         .foregroundStyle(Color.nordicSun)
                 }
             }
             
             if let error = deviceViewModel.errors.error {
                 Section("Error") {
-                    Text(error.errorDescription ?? "Unknown error.")
+                    Text(error.errorDescription ?? "An unknown error has occurred.")
                         .foregroundStyle(Color.nordicRed)
                 }
             }

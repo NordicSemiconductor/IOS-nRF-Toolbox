@@ -234,7 +234,7 @@ extension RunningServiceViewModel.Environment.CriticalError {
         case .noData:
             ReadableError(title: "Error", message: "Can't read required data")
         case .unknown:
-            ReadableError(title: "Error", message: "Unknown error has occurred")
+            ReadableError(title: "Error", message: "An unknown error has occurred")
         }
     }
 }
