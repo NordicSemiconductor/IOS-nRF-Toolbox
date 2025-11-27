@@ -273,21 +273,23 @@ extension UARTViewModel {
     
     func savePresetsToXmlFile(notifyUser: Bool = true) {
         log.debug(#function)
-        let text = (try? parser.toXml(selectedPresets)) ?? ""
-        let url = selectedPresets.url
+        Task.detached {
+            let text = (try? self.parser.toXml(self.selectedPresets)) ?? ""
+            let url = self.selectedPresets.url
 
-        do {
-            try text.write(to: url, atomically: true, encoding: .utf8)
+            do {
+                try text.write(to: url, atomically: true, encoding: .utf8)
 
-            if (notifyUser) {
-                alertMessage = "Presets have been saved!"
-                showAlert = true
-            }
-        } catch {
-            if (notifyUser) {
-                alertMessage = "An error occured while saving presets. Please try again."
-                showAlert = true
-                log.debug("An error occured while saving presets: \(error.localizedDescription)")
+                if (notifyUser) {
+                    self.alertMessage = "Presets have been saved!"
+                    self.showAlert = true
+                }
+            } catch {
+                if (notifyUser) {
+                    self.alertMessage = "An error occured while saving presets. Please try again."
+                    self.showAlert = true
+                    self.log.debug("An error occured while saving presets: \(error.localizedDescription)")
+                }
             }
         }
     }
