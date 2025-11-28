@@ -26,7 +26,7 @@ struct SidebarView: View {
                 if viewModel.connectedDevices.isEmpty {
                     NoContentView(title: "No Connected Devices", systemImage: "cable.connector.slash", description: "Open the Scanner from below to connect to one or multiple Devices.")
                 } else {
-                    ForEach(viewModel.connectedDevices) { device in
+                    ForEach(Array(viewModel.connectedDevices.enumerated()), id: \.element.id) { index, device in
                         let isSelected = rootViewModel.selectedCategory == .device(device)
                         Button(action: {
                             rootViewModel.selectedCategory = RootNavigationView.MenuCategory.device(device)
@@ -34,7 +34,9 @@ struct SidebarView: View {
                             SidebarDeviceView(device)
                                 .setAccent(isSelected ? Color.white : .nordicBlue)
                                 .tint(isSelected ? Color.white : .primarylabel)
-                        }).listRowBackground(isSelected ? Color.universalAccentColor : nil)
+                        })
+                        .listRowBackground(isSelected ? Color.universalAccentColor : nil)
+                        .accessibilityIdentifier("device_item_\(index)")
                     }
                 }
             }
@@ -47,7 +49,9 @@ struct SidebarView: View {
                     Label("Connect to Device", systemImage: "dot.radiowaves.right")
                         .setAccent(isSelected ? Color.white : .nordicBlue)
                         .tint(isSelected ? Color.white : .primarylabel)
-                }).listRowBackground(isSelected ? Color.universalAccentColor : nil)
+                })
+                .listRowBackground(isSelected ? Color.universalAccentColor : nil)
+                .accessibilityIdentifier("scannerButton")
             }
             
             Section {

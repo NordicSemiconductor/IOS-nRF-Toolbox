@@ -77,17 +77,10 @@ struct DeviceScreen: View {
                     }
                     .foregroundStyle(Color.red)
                     .centered()
+                    .accessibilityIdentifier("disconnect_button")
                 case .error(let error):
                     Label(error.localizedDescription, systemImage: "exclamationmark.circle")
                         .foregroundStyle(Color.nordicRed)
-                    
-                    // TODO: Restore.
-//
-//                    Button("Reconnect") {
-//                        reconnect()
-//                    }
-//                    .foregroundStyle(Color.universalAccentColor)
-//                    .centered()
                 }
             }
             

@@ -23,7 +23,7 @@ struct ScanResultList: View {
     var body: some View {
         List {
             Section {
-                ForEach(viewModel.devices) { device in
+                ForEach(Array(viewModel.devices.enumerated()), id: \.element.id) { index, device in
                     Button {
                         Task {
                             let result = await viewModel.connect(to: device)
@@ -35,7 +35,7 @@ struct ScanResultList: View {
                     } label: {
                         ScanResultItem(name: device.name, services: device.services,
                                        showProgress: viewModel.connectingDevice == device)
-                    }
+                    }.accessibilityIdentifier("scanner_item_\(index)")
                 }
                 
                 VStack {

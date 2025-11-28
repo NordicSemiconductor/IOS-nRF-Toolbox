@@ -63,6 +63,10 @@
 		01FB19D22AE3DB70006DAB9F /* SensorCalibrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FB19D12AE3DB70006DAB9F /* SensorCalibrationViewModel.swift */; };
 		01FD68D32AE82EB90021101C /* AttributeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FD68D22AE82EB90021101C /* AttributeList.swift */; };
 		A70054642E9E82BC00F781BE /* HeartRateCBMPeripheralSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70054632E9E82B000F781BE /* HeartRateCBMPeripheralSpecDelegate.swift */; };
+		A71D57792ED9BCB300CB7B3F /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71D57772ED9BCB300CB7B3F /* SnapshotHelper.swift */; };
+		A71D577A2ED9BCB300CB7B3F /* Snapfile in Resources */ = {isa = PBXBuildFile; fileRef = A71D57762ED9BCB300CB7B3F /* Snapfile */; };
+		A71D577C2ED9C41400CB7B3F /* ScreenshotsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71D577B2ED9C40E00CB7B3F /* ScreenshotsTests.swift */; };
+		A71D57802ED9CBA200CB7B3F /* Fastfile in Resources */ = {isa = PBXBuildFile; fileRef = A71D577F2ED9CB9F00CB7B3F /* Fastfile */; };
 		A7255E692EAF5F2800774CEE /* MockError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7255E682EAF5F2700774CEE /* MockError.swift */; };
 		A72A343C2EAA57160011BA44 /* CSCSCBMPeripheralSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72A343B2EAA570F0011BA44 /* CSCSCBMPeripheralSpecDelegate.swift */; };
 		A75F116C2E9FA30500B0D6CB /* HTSCBMPeripheralSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75F116B2E9FA2FE00B0D6CB /* HTSCBMPeripheralSpecDelegate.swift */; };
@@ -246,6 +250,10 @@
 		52BDCBBD1C3FD86900E2680F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A70054632E9E82B000F781BE /* HeartRateCBMPeripheralSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateCBMPeripheralSpecDelegate.swift; sourceTree = "<group>"; };
+		A71D57762ED9BCB300CB7B3F /* Snapfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Snapfile; sourceTree = "<group>"; };
+		A71D57772ED9BCB300CB7B3F /* SnapshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
+		A71D577B2ED9C40E00CB7B3F /* ScreenshotsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotsTests.swift; sourceTree = "<group>"; };
+		A71D577F2ED9CB9F00CB7B3F /* Fastfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Fastfile; sourceTree = "<group>"; };
 		A7255E682EAF5F2700774CEE /* MockError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockError.swift; sourceTree = "<group>"; };
 		A72A343B2EAA570F0011BA44 /* CSCSCBMPeripheralSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSCSCBMPeripheralSpecDelegate.swift; sourceTree = "<group>"; };
 		A75F116B2E9FA2FE00B0D6CB /* HTSCBMPeripheralSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTSCBMPeripheralSpecDelegate.swift; sourceTree = "<group>"; };
@@ -556,6 +564,7 @@
 		017D10482A5809E500E38E5F /* nRF-ToolboxUITests */ = {
 			isa = PBXGroup;
 			children = (
+				A71D577B2ED9C40E00CB7B3F /* ScreenshotsTests.swift */,
 				017D10492A5809E500E38E5F /* nRF_ToolboxUITests.swift */,
 				017D104B2A5809E500E38E5F /* nRF_ToolboxUITestsLaunchTests.swift */,
 			);
@@ -706,6 +715,7 @@
 		5217F3D91859EE0000F2D5BB = {
 			isa = PBXGroup;
 			children = (
+				A71D57782ED9BCB300CB7B3F /* fastlane */,
 				A7CB67182E964A7C007E1311 /* nRF-ToolboxTests.xctestplan */,
 				018873CD2A583C4E00253273 /* IOS-BLE-Library */,
 				017D105C2A580DCD00E38E5F /* IOS-Common-Libraries */,
@@ -742,6 +752,16 @@
 				89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A71D57782ED9BCB300CB7B3F /* fastlane */ = {
+			isa = PBXGroup;
+			children = (
+				A71D577F2ED9CB9F00CB7B3F /* Fastfile */,
+				A71D57762ED9BCB300CB7B3F /* Snapfile */,
+				A71D57772ED9BCB300CB7B3F /* SnapshotHelper.swift */,
+			);
+			path = fastlane;
 			sourceTree = "<group>";
 		};
 		A7F11C122ED05A4F00D1862B /* Effects */ = {
@@ -1059,6 +1079,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A71D57802ED9CBA200CB7B3F /* Fastfile in Resources */,
+				A71D577A2ED9BCB300CB7B3F /* Snapfile in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1265,7 +1287,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				017D104A2A5809E500E38E5F /* nRF_ToolboxUITests.swift in Sources */,
+				A71D577C2ED9C41400CB7B3F /* ScreenshotsTests.swift in Sources */,
 				017D104C2A5809E500E38E5F /* nRF_ToolboxUITestsLaunchTests.swift in Sources */,
+				A71D57792ED9BCB300CB7B3F /* SnapshotHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

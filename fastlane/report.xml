@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="fastlane.lanes">
+    
+    
+    
+      
+      <testcase classname="fastlane.lanes" name="0: capture_screenshots" time="313.918151">
+        
+      </testcase>
+    
+  </testsuite>
+</testsuites>
