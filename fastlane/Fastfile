@@ -1,4 +1,8 @@
 
+lane :tests do
+  run_tests(scheme: "nRF-ToolboxTests")
+end
+
 lane :screenshots do
   capture_screenshots
 end

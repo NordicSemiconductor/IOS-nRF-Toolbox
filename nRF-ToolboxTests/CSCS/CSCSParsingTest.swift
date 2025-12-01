@@ -51,7 +51,7 @@ class CSCSParsingTest {
         
         let data = Data(byteArray)
         
-        #expect(throws: CriticalError.noData) {
+        #expect(throws: ServiceError.noData) {
             try CyclingData(data)
         }
     }
