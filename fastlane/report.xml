@@ -5,7 +5,22 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: run_tests" time="77.893242">
+      <testcase classname="fastlane.lanes" name="0: git describe --tags --abbrev=0" time="0.035994">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="1: git rev-list --count HEAD" time="0.019468">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="2: increment_version_number" time="0.166166">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="3: increment_build_number" time="0.168331">
         
       </testcase>
     

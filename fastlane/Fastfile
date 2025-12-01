@@ -1,4 +1,50 @@
 
+lane :version do
+  last_tag = sh("git describe --tags --abbrev=0").strip
+  version_name = last_tag.gsub("v", "")
+  
+  commit_count = sh("git rev-list --count HEAD").strip.to_i
+  
+  now = Time.now.getutc
+  yy = now.year % 100
+  mm = format("%02d", now.month)
+  dd = format("%02d", now.day)
+  revisions = format("%02d", commit_count % 100)
+  version_code = "#{yy}#{mm}#{dd}#{revisions}"
+
+  UI.message("Setting iOS version:")
+  UI.message("Version name: #{version_name}")
+  UI.message("Version code: #{version_code}")
+
+  increment_version_number(
+    version_number: version_name,
+    xcodeproj: "nRF Toolbox.xcodeproj"
+  )
+
+  increment_build_number(
+    build_number: version_code,
+    xcodeproj: "nRF Toolbox.xcodeproj"
+  )
+end
+
+lane :release do
+  base64_key = ENV["APPLE_P8"]
+  key_path = "/tmp/AuthKey.p8"
+  File.open(key_path, "wb") do |f|
+    f.write(Base64.decode64(base64_key))
+  end
+  
+  api_key = app_store_connect_api_key(
+    key_id: ENV["APPLE_KEY_ID"],
+    issuer_id: ENV["APPLE_ISSUER_ID"],
+    key_filepath: key_path,
+    duration: 1200,
+    in_house: false
+  )
+
+  pilot(api_key: api_key)
+end
+
 lane :tests do
   run_tests(scheme: "nRF-ToolboxTests")
 end
