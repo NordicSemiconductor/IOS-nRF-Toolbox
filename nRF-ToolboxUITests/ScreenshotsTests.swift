@@ -30,14 +30,14 @@ final class ScreenshotsTests: XCTestCase {
         let scannerButton = app/*@START_MENU_TOKEN@*/.staticTexts["Connect to Device"]/*[[".buttons[\"scannerButton\"].staticTexts",".buttons.staticTexts[\"Connect to Device\"]",".staticTexts[\"Connect to Device\"]"],[[[-1,2],[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.firstMatch
         scannerButton.tap()
         
+        sleep(sleepTime)
+        
         snapshot("ScannerScreen")
         
         sleep(sleepTime)
         app/*@START_MENU_TOKEN@*/.staticTexts["Cycling Speed and Cadence sensor"]/*[[".buttons[\"Cycling Speed and Cadence sensor\"].staticTexts",".buttons.staticTexts[\"Cycling Speed and Cadence sensor\"]",".staticTexts[\"Cycling Speed and Cadence sensor\"]"],[[[-1,2],[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.firstMatch.tap()
         sleep(sleepTime)
         app/*@START_MENU_TOKEN@*/.buttons["device_item_0"]/*[[".buttons",".containing(.other, identifier: nil)",".containing(.staticText, identifier: \"Cycling Sensor\")",".containing(.image, identifier: \"cpu\")",".otherElements",".buttons[\"Cycling Sensor\"]",".buttons[\"device_item_0\"]"],[[[-1,6],[-1,5],[-1,4,2],[-1,0,1]],[[-1,3],[-1,2],[-1,1]],[[-1,6],[-1,5]]],[0]]@END_MENU_TOKEN@*/.firstMatch.tap()
-        sleep(sleepTime)
-        app/*@START_MENU_TOKEN@*/.sliders["29"]/*[[".otherElements.sliders[\"29\"]",".sliders",".sliders[\"29\"]"],[[[-1,2],[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.firstMatch.swipeLeft()
         
         sleep(sleepTime)
         snapshot("CSCSScreen")
@@ -67,8 +67,9 @@ final class ScreenshotsTests: XCTestCase {
         sleep(sleepTime)
         snapshot("UARTScreen")
         sleep(sleepTime)
-        if backButton.exists { backButton.tap() }
-        
-        snapshot("MainScreen")
+        if backButton.exists {
+            backButton.tap()
+            snapshot("MainScreen")
+        }
     }
 }
