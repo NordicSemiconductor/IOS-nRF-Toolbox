@@ -8,22 +8,28 @@
 
 import XCTest
 
+@MainActor
 final class ScreenshotsTests: XCTestCase {
+    
+    var app: XCUIApplication!
 
     override func setUpWithError() throws {
         continueAfterFailure = false
     }
+    
+    override func setUp() {
+        super.setUp()
 
-    @MainActor
-    func testSnapshots() throws {
-        let app = XCUIApplication()
+        app = XCUIApplication()
         setupSnapshot(app)
-        app.activate()
-        
-        snapshot("MainScreen")
-        
+        app.launch()
+    }
+
+    func testSnapshots() throws {
         let element = app/*@START_MENU_TOKEN@*/.staticTexts["Connect to Device"]/*[[".buttons[\"scannerButton\"].staticTexts",".buttons.staticTexts[\"Connect to Device\"]",".staticTexts[\"Connect to Device\"]"],[[[-1,2],[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.firstMatch
         element.tap()
+        
+        snapshot("ScannerScreen")
         
         sleep(5)
         app/*@START_MENU_TOKEN@*/.staticTexts["Cycling Speed and Cadence sensor"]/*[[".buttons[\"Cycling Speed and Cadence sensor\"].staticTexts",".buttons.staticTexts[\"Cycling Speed and Cadence sensor\"]",".staticTexts[\"Cycling Speed and Cadence sensor\"]"],[[[-1,2],[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.firstMatch.tap()
@@ -42,7 +48,7 @@ final class ScreenshotsTests: XCTestCase {
         element.tap()
         
         sleep(5)
-        app/*@START_MENU_TOKEN@*/.buttons["scanner_item_2"]/*[[".buttons.containing(.staticText, identifier: \"Heart rate\")",".otherElements",".buttons[\"Heart rate\"]",".buttons[\"scanner_item_2\"]"],[[[-1,3],[-1,2],[-1,1,1],[-1,0]],[[-1,3],[-1,2]]],[0]]@END_MENU_TOKEN@*/.firstMatch.tap()
+        app.buttons["Heart rate"].firstMatch.tap()
         sleep(5)
         app/*@START_MENU_TOKEN@*/.buttons["device_item_1"]/*[[".buttons",".containing(.staticText, identifier: \"Heart Rate\")",".containing(.image, identifier: \"heart.fill\")",".containing(.staticText, identifier: \"Heart Rate Sensor\")",".otherElements",".buttons[\"Heart Rate Sensor\"]",".buttons[\"device_item_1\"]"],[[[-1,6],[-1,5],[-1,4,2],[-1,0,1]],[[-1,3],[-1,2],[-1,1]],[[-1,6],[-1,5]]],[0]]@END_MENU_TOKEN@*/.firstMatch.tap()
         
@@ -53,12 +59,15 @@ final class ScreenshotsTests: XCTestCase {
         app/*@START_MENU_TOKEN@*/.buttons["scannerButton"]/*[[".buttons",".containing(.staticText, identifier: \"Connect to Device\")",".containing(.image, identifier: \"dot.radiowaves.right\")",".otherElements",".buttons[\"Connect to Device\"]",".buttons[\"scannerButton\"]"],[[[-1,5],[-1,4],[-1,3,2],[-1,0,1]],[[-1,2],[-1,1]],[[-1,5],[-1,4]]],[0]]@END_MENU_TOKEN@*/.firstMatch.tap()
         
         sleep(5)
-        app/*@START_MENU_TOKEN@*/.buttons["scanner_item_6"]/*[[".buttons.containing(.staticText, identifier: \"UART\")",".otherElements",".buttons[\"UART\"]",".buttons[\"scanner_item_6\"]"],[[[-1,3],[-1,2],[-1,1,1],[-1,0]],[[-1,3],[-1,2]]],[0]]@END_MENU_TOKEN@*/.firstMatch.tap()
+        app.buttons["UART"].firstMatch.tap()
         sleep(5)
         app/*@START_MENU_TOKEN@*/.buttons["device_item_2"]/*[[".buttons",".containing(.staticText, identifier: \"Nordic UART Service\")",".containing(.image, identifier: \"character.cursor.ibeam\")",".containing(.staticText, identifier: \"UART\")",".otherElements",".buttons[\"UART\"]",".buttons[\"device_item_2\"]"],[[[-1,6],[-1,5],[-1,4,2],[-1,0,1]],[[-1,3],[-1,2],[-1,1]],[[-1,6],[-1,5]]],[0]]@END_MENU_TOKEN@*/.firstMatch.tap()
         
         sleep(5)
-        snapshot("HRSScreen")
-        app.launch()
+        snapshot("UARTScreen")
+        sleep(5)
+        element2.tap()
+        
+        snapshot("MainScreen")
     }
 }
