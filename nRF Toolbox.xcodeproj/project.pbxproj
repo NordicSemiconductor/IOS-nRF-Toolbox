@@ -270,6 +270,7 @@
 		A77FD2622EB120E0007B05C0 /* CBMCharacteristicPropertiesExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBMCharacteristicPropertiesExt.swift; sourceTree = "<group>"; };
 		A7A28FD22EAD3D46004ECC8B /* AggregatedPeripheralSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AggregatedPeripheralSpecDelegate.swift; sourceTree = "<group>"; };
 		A7A28FD42EAD3E01004ECC8B /* MockSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSpecDelegate.swift; sourceTree = "<group>"; };
+		A7C21A5D2EE1C65B005E2610 /* testflight.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = testflight.yml; sourceTree = "<group>"; };
 		A7CB67182E964A7C007E1311 /* nRF-ToolboxTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "nRF-ToolboxTests.xctestplan"; sourceTree = "<group>"; };
 		A7CB671D2E967BF5007E1311 /* CGMSSensorStatusOctet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSSensorStatusOctet.swift; sourceTree = "<group>"; };
 		A7CB671F2E967C00007E1311 /* CGMSCalTempOctet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSCalTempOctet.swift; sourceTree = "<group>"; };
@@ -359,17 +360,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		A76A45252E7D638E00E0E19C /* nRF-ToolboxTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
-			explicitFileTypes = {
-			};
-			explicitFolders = (
-			);
-			path = "nRF-ToolboxTests";
-			sourceTree = "<group>";
-		};
+		A76A45252E7D638E00E0E19C /* nRF-ToolboxTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "nRF-ToolboxTests"; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -729,6 +720,7 @@
 		5217F3D91859EE0000F2D5BB = {
 			isa = PBXGroup;
 			children = (
+				A7C21A5B2EE1C604005E2610 /* .github */,
 				A71D57782ED9BCB300CB7B3F /* fastlane */,
 				A7CB67182E964A7C007E1311 /* nRF-ToolboxTests.xctestplan */,
 				018873CD2A583C4E00253273 /* IOS-BLE-Library */,
@@ -778,6 +770,22 @@
 				A71D57772ED9BCB300CB7B3F /* SnapshotHelper.swift */,
 			);
 			path = fastlane;
+			sourceTree = "<group>";
+		};
+		A7C21A5B2EE1C604005E2610 /* .github */ = {
+			isa = PBXGroup;
+			children = (
+				A7C21A5C2EE1C64E005E2610 /* workflows */,
+			);
+			path = .github;
+			sourceTree = "<group>";
+		};
+		A7C21A5C2EE1C64E005E2610 /* workflows */ = {
+			isa = PBXGroup;
+			children = (
+				A7C21A5D2EE1C65B005E2610 /* testflight.yml */,
+			);
+			path = workflows;
 			sourceTree = "<group>";
 		};
 		A7F11C122ED05A4F00D1862B /* Effects */ = {
