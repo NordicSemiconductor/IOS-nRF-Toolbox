@@ -13,22 +13,6 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 # Available Actions
 
-### version
-
-```sh
-[bundle exec] fastlane version
-```
-
-
-
-### release
-
-```sh
-[bundle exec] fastlane release
-```
-
-
-
 ### tests
 
 ```sh
@@ -37,10 +21,58 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
+### version
+
+```sh
+[bundle exec] fastlane version
+```
+
+
+
+### authenticate
+
+```sh
+[bundle exec] fastlane authenticate
+```
+
+
+
+### unlock_db
+
+```sh
+[bundle exec] fastlane unlock_db
+```
+
+
+
+### build
+
+```sh
+[bundle exec] fastlane build
+```
+
+
+
+### upload_testflight
+
+```sh
+[bundle exec] fastlane upload_testflight
+```
+
+
+
 ### screenshots
 
 ```sh
 [bundle exec] fastlane screenshots
+```
+
+
+
+### release
+
+```sh
+[bundle exec] fastlane release
 ```
 
 

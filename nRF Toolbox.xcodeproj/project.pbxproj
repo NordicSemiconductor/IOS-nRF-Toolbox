@@ -76,6 +76,7 @@
 		A770FE6A2E7D69CA00357127 /* CGMFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = A770FE692E7D69C900357127 /* CGMFeatures.swift */; };
 		A770FE6C2E7D69FF00357127 /* CGMSFeatureParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A770FE6B2E7D69FE00357127 /* CGMSFeatureParser.swift */; };
 		A770FE6E2E7D6F2B00357127 /* CRC16.swift in Sources */ = {isa = PBXBuildFile; fileRef = A770FE6D2E7D6F2800357127 /* CRC16.swift */; };
+		A778C7352EDEE6890093B174 /* Appfile in Resources */ = {isa = PBXBuildFile; fileRef = A778C7342EDEE6850093B174 /* Appfile */; };
 		A77FD2632EB120E1007B05C0 /* CBMCharacteristicPropertiesExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77FD2622EB120E0007B05C0 /* CBMCharacteristicPropertiesExt.swift */; };
 		A7A28FD32EAD3D4B004ECC8B /* AggregatedPeripheralSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A28FD22EAD3D46004ECC8B /* AggregatedPeripheralSpecDelegate.swift */; };
 		A7A28FD52EAD3E02004ECC8B /* MockSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A28FD42EAD3E01004ECC8B /* MockSpecDelegate.swift */; };
@@ -94,6 +95,7 @@
 		A7F11C1C2ED05A5600D1862B /* Iridescence.metal in Sources */ = {isa = PBXBuildFile; fileRef = A7F11C172ED05A5600D1862B /* Iridescence.metal */; };
 		A7F11C1D2ED05A5600D1862B /* IridescenceModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F11C152ED05A5600D1862B /* IridescenceModifier.swift */; };
 		A7FA7A482E852D6500DA192B /* CGMSMeasurementParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FA7A472E852D6500DA192B /* CGMSMeasurementParser.swift */; };
+		A7FAB6312EDF1725006C3074 /* Matchfile in Resources */ = {isa = PBXBuildFile; fileRef = A7FAB6302EDF1725006C3074 /* Matchfile */; };
 		AA01D4922D4A3D38008523CE /* Throughput+Attributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01D4912D4A3D38008523CE /* Throughput+Attributes.swift */; };
 		AA047E112DF1B3A300DA401E /* BlinkyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA047E102DF1B3A300DA401E /* BlinkyView.swift */; };
 		AA047E132DF1B3CE00DA401E /* BlinkyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA047E122DF1B3CE00DA401E /* BlinkyViewModel.swift */; };
@@ -264,6 +266,7 @@
 		A770FE692E7D69C900357127 /* CGMFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMFeatures.swift; sourceTree = "<group>"; };
 		A770FE6B2E7D69FE00357127 /* CGMSFeatureParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSFeatureParser.swift; sourceTree = "<group>"; };
 		A770FE6D2E7D6F2800357127 /* CRC16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRC16.swift; sourceTree = "<group>"; };
+		A778C7342EDEE6850093B174 /* Appfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Appfile; sourceTree = "<group>"; };
 		A77FD2622EB120E0007B05C0 /* CBMCharacteristicPropertiesExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBMCharacteristicPropertiesExt.swift; sourceTree = "<group>"; };
 		A7A28FD22EAD3D46004ECC8B /* AggregatedPeripheralSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AggregatedPeripheralSpecDelegate.swift; sourceTree = "<group>"; };
 		A7A28FD42EAD3E01004ECC8B /* MockSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSpecDelegate.swift; sourceTree = "<group>"; };
@@ -283,6 +286,7 @@
 		A7F11C152ED05A5600D1862B /* IridescenceModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IridescenceModifier.swift; sourceTree = "<group>"; };
 		A7F11C172ED05A5600D1862B /* Iridescence.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Iridescence.metal; sourceTree = "<group>"; };
 		A7FA7A472E852D6500DA192B /* CGMSMeasurementParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSMeasurementParser.swift; sourceTree = "<group>"; };
+		A7FAB6302EDF1725006C3074 /* Matchfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Matchfile; sourceTree = "<group>"; };
 		AA01D4912D4A3D38008523CE /* Throughput+Attributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Throughput+Attributes.swift"; sourceTree = "<group>"; };
 		AA047E102DF1B3A300DA401E /* BlinkyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkyView.swift; sourceTree = "<group>"; };
 		AA047E122DF1B3CE00DA401E /* BlinkyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkyViewModel.swift; sourceTree = "<group>"; };
@@ -355,7 +359,17 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		A76A45252E7D638E00E0E19C /* nRF-ToolboxTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "nRF-ToolboxTests"; sourceTree = "<group>"; };
+		A76A45252E7D638E00E0E19C /* nRF-ToolboxTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = "nRF-ToolboxTests";
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -757,6 +771,8 @@
 		A71D57782ED9BCB300CB7B3F /* fastlane */ = {
 			isa = PBXGroup;
 			children = (
+				A7FAB6302EDF1725006C3074 /* Matchfile */,
+				A778C7342EDEE6850093B174 /* Appfile */,
 				A71D577F2ED9CB9F00CB7B3F /* Fastfile */,
 				A71D57762ED9BCB300CB7B3F /* Snapfile */,
 				A71D57772ED9BCB300CB7B3F /* SnapshotHelper.swift */,
@@ -1004,8 +1020,6 @@
 				A76A45252E7D638E00E0E19C /* nRF-ToolboxTests */,
 			);
 			name = "nRF-ToolboxTests";
-			packageProductDependencies = (
-			);
 			productName = "nRF-ToolboxTests";
 			productReference = A76A45242E7D638E00E0E19C /* nRF-ToolboxTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -1079,7 +1093,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A778C7352EDEE6890093B174 /* Appfile in Resources */,
 				A71D57802ED9CBA200CB7B3F /* Fastfile in Resources */,
+				A7FAB6312EDF1725006C3074 /* Matchfile in Resources */,
 				A71D577A2ED9BCB300CB7B3F /* Snapfile in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1339,8 +1355,9 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "nRF-Toolbox/nRF_Toolbox.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25120156;
+				CURRENT_PROJECT_VERSION = 25120458;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_ASSET_PATHS = "";
@@ -1370,11 +1387,12 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 6.0;
+				MARKETING_VERSION = 6.0.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nordicsemi.nRF-Toolbox-d";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1399,13 +1417,16 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "nRF-Toolbox/nRF_Toolbox.entitlements";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 25120156;
+				CURRENT_PROJECT_VERSION = 25120458;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = P3R8YQEV4L;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = P3R8YQEV4L;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1431,11 +1452,13 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 6.0;
+				MARKETING_VERSION = 6.0.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nordicsemi.nRF-Toolbox";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.nordicsemi.nRF-Toolbox 1764767011";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1459,13 +1482,15 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "nRF-Toolbox/nRF_Toolbox.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 25120156;
+				CURRENT_PROJECT_VERSION = 25120458;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = P3R8YQEV4L;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = P3R8YQEV4L;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1491,12 +1516,13 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 6.0;
+				MARKETING_VERSION = 6.0.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nordicsemi.nRF-Toolbox";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.nordicsemi.nRF-Toolbox 1764767011";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1517,7 +1543,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25120156;
+				CURRENT_PROJECT_VERSION = 25120458;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = P3R8YQEV4L;
@@ -1553,7 +1579,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 25120156;
+				CURRENT_PROJECT_VERSION = 25120458;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = P3R8YQEV4L;
@@ -1587,7 +1613,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 25120156;
+				CURRENT_PROJECT_VERSION = 25120458;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = P3R8YQEV4L;
@@ -1797,8 +1823,9 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25120156;
+				CURRENT_PROJECT_VERSION = 25120458;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = P3R8YQEV4L;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -1831,9 +1858,10 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 25120156;
+				CURRENT_PROJECT_VERSION = 25120458;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = P3R8YQEV4L;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -1866,7 +1894,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 25120156;
+				CURRENT_PROJECT_VERSION = 25120458;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = P3R8YQEV4L;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
