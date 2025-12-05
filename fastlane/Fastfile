@@ -60,7 +60,7 @@ def ensure_keychain(name)
   ) if File.exist? File.expand_path("~/Library/Keychains/#{name}-db")
   create_keychain(
     name: name,
-    password: ENV["FASTLANE_DB_PASSWORD"],
+    password: ENV["MATCH_KEYCHAIN_PASSWORD"],
     default_keychain: true,
     unlock: true,
     timeout: 0,
@@ -70,7 +70,7 @@ def ensure_keychain(name)
 end
 
 lane :unlock_db do
-  sh("security unlock-keychain -p #{ENV["FASTLANE_DB_PASSWORD"]} fastlane-db")
+  sh("security unlock-keychain -p #{ENV["MATCH_KEYCHAIN_PASSWORD"]} fastlane-db")
   sh("security default-keychain -s fastlane-db")
 end
 
@@ -94,7 +94,7 @@ lane :upload_testflight do
   match(
     type: "appstore",
     keychain_name: "fastlane",
-    keychain_password: ENV["FASTLANE_DB_PASSWORD"],
+    keychain_password: ENV["MATCH_KEYCHAIN_PASSWORD"],
     app_identifier: "com.nordicsemi.nRF-Toolbox",
     readonly: true
   )

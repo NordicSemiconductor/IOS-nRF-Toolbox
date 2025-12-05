@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleShortVersionString</key>
-	<string>6.0.2</string>
+	<string>6.0.0</string>
 	<key>UIDesignRequiresCompatibility</key>
 	<false/>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
