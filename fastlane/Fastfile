@@ -113,6 +113,29 @@ end
 
 lane :release do
   tests
-  screenshots
   version
+  screenshots
+  frame_screenshots
+  api_key = authenticate
+  
+  ensure_keychain('fastlane');
+  unlock_db
+
+  match(
+    type: "appstore",
+    keychain_name: "fastlane",
+    keychain_password: ENV["MATCH_KEYCHAIN_PASSWORD"],
+    app_identifier: "com.nordicsemi.nRF-Toolbox",
+    readonly: true
+  )
+  
+  path = build
+  
+  deliver(
+    submit_for_review: false,
+    api_key: api_key,
+    ipa: path,
+    force: true,
+    precheck_include_in_app_purchases: false,
+  )
 end
