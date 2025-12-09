@@ -108,7 +108,10 @@ lane :upload_testflight do
 end
 
 lane :screenshots do
-  capture_screenshots
+  capture_ios_screenshots(
+    override_status_bar: true,
+    skip_open_summary: true,
+  )
 end
 
 lane :release do

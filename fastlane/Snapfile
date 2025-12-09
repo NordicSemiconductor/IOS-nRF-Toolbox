@@ -1,6 +1,6 @@
 # Uncomment the lines below you want to change by removing the # in the beginning
 
-devices(["iPhone 16e", "iPad Air 13-inch (M3)"])
+devices(["iPhone 16e", "iPad Air 13-inch (M3)", "iPhone 16 Plus"])
 languages(["en-US"])
 scheme("nRF-ToolboxUITests")
 clear_previous_screenshots(true)
