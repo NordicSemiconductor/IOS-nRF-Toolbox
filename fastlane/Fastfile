@@ -137,5 +137,7 @@ lane :release do
     ipa: path,
     force: true,
     precheck_include_in_app_purchases: false,
+    screenshots_path: "./fastlane/screenshots",
+    overwrite_screenshots: true
   )
 end
