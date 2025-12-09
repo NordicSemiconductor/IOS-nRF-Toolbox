@@ -60,12 +60,12 @@ final class ScreenshotsTests: XCTestCase {
         app/*@START_MENU_TOKEN@*/.buttons["scannerButton"]/*[[".buttons",".containing(.staticText, identifier: \"Connect to Device\")",".containing(.image, identifier: \"dot.radiowaves.right\")",".otherElements",".buttons[\"Connect to Device\"]",".buttons[\"scannerButton\"]"],[[[-1,5],[-1,4],[-1,3,2],[-1,0,1]],[[-1,2],[-1,1]],[[-1,5],[-1,4]]],[0]]@END_MENU_TOKEN@*/.firstMatch.tap()
         
         sleep(sleepTime)
-        app.buttons["UART"].firstMatch.tap()
+        app.buttons["Blood pressure"].firstMatch.tap()
         sleep(sleepTime)
         app/*@START_MENU_TOKEN@*/.buttons["device_item_2"]/*[[".buttons",".containing(.staticText, identifier: \"Nordic UART Service\")",".containing(.image, identifier: \"character.cursor.ibeam\")",".containing(.staticText, identifier: \"UART\")",".otherElements",".buttons[\"UART\"]",".buttons[\"device_item_2\"]"],[[[-1,6],[-1,5],[-1,4,2],[-1,0,1]],[[-1,3],[-1,2],[-1,1]],[[-1,6],[-1,5]]],[0]]@END_MENU_TOKEN@*/.firstMatch.tap()
         
         sleep(sleepTime)
-        snapshot("UARTScreen")
+        snapshot("BPSScreen")
         sleep(sleepTime)
         if backButton.exists {
             backButton.tap()
