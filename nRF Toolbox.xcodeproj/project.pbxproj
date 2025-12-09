@@ -271,6 +271,7 @@
 		A7A28FD22EAD3D46004ECC8B /* AggregatedPeripheralSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AggregatedPeripheralSpecDelegate.swift; sourceTree = "<group>"; };
 		A7A28FD42EAD3E01004ECC8B /* MockSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSpecDelegate.swift; sourceTree = "<group>"; };
 		A7C21A5D2EE1C65B005E2610 /* testflight.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = testflight.yml; sourceTree = "<group>"; };
+		A7CA690D2EE876F1006FC7F3 /* deploy.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = deploy.yml; sourceTree = "<group>"; };
 		A7CB67182E964A7C007E1311 /* nRF-ToolboxTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "nRF-ToolboxTests.xctestplan"; sourceTree = "<group>"; };
 		A7CB671D2E967BF5007E1311 /* CGMSSensorStatusOctet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSSensorStatusOctet.swift; sourceTree = "<group>"; };
 		A7CB671F2E967C00007E1311 /* CGMSCalTempOctet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSCalTempOctet.swift; sourceTree = "<group>"; };
@@ -360,17 +361,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		A76A45252E7D638E00E0E19C /* nRF-ToolboxTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
-			explicitFileTypes = {
-			};
-			explicitFolders = (
-			);
-			path = "nRF-ToolboxTests";
-			sourceTree = "<group>";
-		};
+		A76A45252E7D638E00E0E19C /* nRF-ToolboxTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "nRF-ToolboxTests"; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -793,6 +784,7 @@
 		A7C21A5C2EE1C64E005E2610 /* workflows */ = {
 			isa = PBXGroup;
 			children = (
+				A7CA690D2EE876F1006FC7F3 /* deploy.yml */,
 				A7C21A5D2EE1C65B005E2610 /* testflight.yml */,
 			);
 			path = workflows;
