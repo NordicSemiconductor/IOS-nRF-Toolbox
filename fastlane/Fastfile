@@ -118,7 +118,6 @@ lane :release do
   tests
   version
   screenshots
-  frame_screenshots
   api_key = authenticate
   
   ensure_keychain('fastlane');
