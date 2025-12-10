@@ -19,24 +19,6 @@
       }
     },
     {
-      "identity" : "ios-dfu-library",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/NordicSemiconductor/IOS-DFU-Library.git",
-      "state" : {
-        "branch" : "main",
-        "revision" : "43de982ac8bd792c8c72870ac541c2083f7fb7a3"
-      }
-    },
-    {
-      "identity" : "ios-nrf-connect-device-manager",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/NordicSemiconductor/IOS-nRF-Connect-Device-Manager",
-      "state" : {
-        "branch" : "main",
-        "revision" : "115182ad255d77d6473d26790131e41aee0a1b60"
-      }
-    },
-    {
       "identity" : "swift-docc-plugin",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-docc-plugin",
@@ -52,15 +34,6 @@
       "state" : {
         "revision" : "b45d1f2ed151d057b54504d653e0da5552844e34",
         "version" : "1.0.0"
-      }
-    },
-    {
-      "identity" : "swiftcbor",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/valpackett/SwiftCBOR.git",
-      "state" : {
-        "revision" : "04ccff117f6549121d5721ec84fdf0162122b90e",
-        "version" : "0.5.0"
       }
     },
     {
