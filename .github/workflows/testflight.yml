@@ -1,4 +1,4 @@
-name: Deploy to Play Store Internal
+name: Deploy to Testflight
 on:
   push:
     tags:
