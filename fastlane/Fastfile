@@ -134,14 +134,11 @@ lane :release do
     app_identifier: "com.nordicsemi.nRF-Toolbox",
     readonly: true
   )
-
-  UI.message("STAGE: screenshots")
-  screenshots
   
   UI.message("STAGE: build")
   path = build
   
-  UI.message("STAGE: devlier")
+  UI.message("STAGE: deliver")
   deliver(
     submit_for_review: false,
     api_key: api_key,
