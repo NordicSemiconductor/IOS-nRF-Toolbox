@@ -70,8 +70,8 @@ def ensure_keychain(name)
 end
 
 lane :unlock_db do
-  sh("security unlock-keychain -p #{ENV["MATCH_KEYCHAIN_PASSWORD"]} fastlane-db")
-  sh("security default-keychain -s fastlane-db")
+  sh("security unlock-keychain -p #{ENV["MATCH_KEYCHAIN_PASSWORD"]} fastlane-db", log: false)
+  sh("security default-keychain -s fastlane-db", log: false)
 end
 
 lane :build do
