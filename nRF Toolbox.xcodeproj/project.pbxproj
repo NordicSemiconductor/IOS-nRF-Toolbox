@@ -70,6 +70,7 @@
 		A7255E692EAF5F2800774CEE /* MockError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7255E682EAF5F2700774CEE /* MockError.swift */; };
 		A72A343C2EAA57160011BA44 /* CSCSCBMPeripheralSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72A343B2EAA570F0011BA44 /* CSCSCBMPeripheralSpecDelegate.swift */; };
 		A74B9FDE2EEADDB100121B7A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = A74B9FDD2EEADDB100121B7A /* .gitignore */; };
+		A75291BA2EEC2D25002D50F4 /* rename_files.sh in Resources */ = {isa = PBXBuildFile; fileRef = A75291B92EEC2D25002D50F4 /* rename_files.sh */; };
 		A75F116C2E9FA30500B0D6CB /* HTSCBMPeripheralSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75F116B2E9FA2FE00B0D6CB /* HTSCBMPeripheralSpecDelegate.swift */; };
 		A75F116E2E9FA30E00B0D6CB /* CGMSCBMPeripheralSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75F116D2E9FA30B00B0D6CB /* CGMSCBMPeripheralSpecDelegate.swift */; };
 		A75F11702E9FA31300B0D6CB /* GLSCBMPeripheralSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75F116F2E9FA31200B0D6CB /* GLSCBMPeripheralSpecDelegate.swift */; };
@@ -260,6 +261,7 @@
 		A7255E682EAF5F2700774CEE /* MockError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockError.swift; sourceTree = "<group>"; };
 		A72A343B2EAA570F0011BA44 /* CSCSCBMPeripheralSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSCSCBMPeripheralSpecDelegate.swift; sourceTree = "<group>"; };
 		A74B9FDD2EEADDB100121B7A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		A75291B92EEC2D25002D50F4 /* rename_files.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = rename_files.sh; sourceTree = "<group>"; };
 		A75F116B2E9FA2FE00B0D6CB /* HTSCBMPeripheralSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTSCBMPeripheralSpecDelegate.swift; sourceTree = "<group>"; };
 		A75F116D2E9FA30B00B0D6CB /* CGMSCBMPeripheralSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSCBMPeripheralSpecDelegate.swift; sourceTree = "<group>"; };
 		A75F116F2E9FA31200B0D6CB /* GLSCBMPeripheralSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLSCBMPeripheralSpecDelegate.swift; sourceTree = "<group>"; };
@@ -767,6 +769,7 @@
 		A71D57782ED9BCB300CB7B3F /* fastlane */ = {
 			isa = PBXGroup;
 			children = (
+				A75291B92EEC2D25002D50F4 /* rename_files.sh */,
 				A7FAB6302EDF1725006C3074 /* Matchfile */,
 				A778C7342EDEE6850093B174 /* Appfile */,
 				A71D577F2ED9CB9F00CB7B3F /* Fastfile */,
@@ -1108,6 +1111,7 @@
 				A778C7352EDEE6890093B174 /* Appfile in Resources */,
 				A71D57802ED9CBA200CB7B3F /* Fastfile in Resources */,
 				A7FAB6312EDF1725006C3074 /* Matchfile in Resources */,
+				A75291BA2EEC2D25002D50F4 /* rename_files.sh in Resources */,
 				A71D577A2ED9BCB300CB7B3F /* Snapfile in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

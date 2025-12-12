@@ -112,6 +112,7 @@ lane :screenshots do
     override_status_bar: true,
     skip_open_summary: true,
   )
+  sh("bash rename_files.sh", log: false)
 end
 
 lane :release do
