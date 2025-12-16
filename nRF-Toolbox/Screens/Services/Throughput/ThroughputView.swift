@@ -40,6 +40,11 @@ struct ThroughputView: View {
         }
         
         Group {
+            LabeledContent("MTU (in bytes)") {
+                Text("\(viewModel.mtu + 3)")
+                    .multilineTextAlignment(.trailing)
+            }
+            
             InlinePicker(title: "Test Mode", selectedValue: $viewModel.testMode)
             
             LabeledContent(viewModel.isTimeLimited ? "Time Limit (seconds)" : "Test Size (in kB)") {
@@ -49,26 +54,6 @@ struct ThroughputView: View {
                     .frame(maxWidth: 125)
                     .focused($focusedField, equals: .numberInput)
                     .keyboardType(viewModel.isTimeLimited ? .numberPad : .decimalPad)
-            }
-            
-            LabeledContent("MTU (in bytes)") {
-                TextField("MTU Size here", value: $viewModel.mtu, formatter: Self.formatter)
-                    .focused($focusedField, equals: .mtu)
-                    .multilineTextAlignment(.trailing)
-                    .textFieldStyle(.roundedBorder)
-                    .keyboardType(.numberPad)
-                    .frame(maxWidth: 125)
-                    .toolbar {
-                        ToolbarItemGroup(placement: .keyboard) {
-                            Spacer()
-                            
-                            Button {
-                                focusedField = .none
-                            } label: {
-                                Text("Done")
-                            }
-                        }
-                    }
             }
         }
         .labeledContentStyle(.accentedContent(
