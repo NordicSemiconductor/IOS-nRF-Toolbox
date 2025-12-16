@@ -51,6 +51,7 @@ final class DeviceDetailsViewModel: ObservableObject {
     @Published var attributeTable: AttributeTable?
     @Published var deviceInfo: DeviceInformation?
     @Published var signalViewModel: SignalChartViewModel?
+    @Published var isInitialized: Bool = false
     
     // MARK: init
     
@@ -204,6 +205,7 @@ extension DeviceDetailsViewModel {
                         self.errors = error
                     }.store(in: &cancellable)
             }
+            isInitialized = true
         } catch {
             errors.error = AlertError.servicesNotFound
             log.error("\(#function) Error: \(error.localizedDescription)")
