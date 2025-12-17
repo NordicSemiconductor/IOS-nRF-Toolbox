@@ -98,10 +98,6 @@ extension ConnectedDevicesViewModel {
             clearViewModel(deviceID)
         }
         
-//        if case .disconnectedWithError = deviceViewModel.environment.criticalError {
-//            return
-//        }
-        
         do {
             _ = try await centralManager.cancelPeripheralConnection(peripheral).firstValue
         } catch {
@@ -170,10 +166,8 @@ extension ConnectedDevicesViewModel {
         } else {
             connectedDevices.append(device)
         }
-        
-        if deviceViewModels[device.id] == nil,
-           let peripheral = centralManager.retrievePeripherals(withIdentifiers: [device.id]).first {
-            
+
+        if let peripheral = centralManager.retrievePeripherals(withIdentifiers: [device.id]).first {
             let viewModel = DeviceDetailsViewModel(cbPeripheral: peripheral, centralManager: centralManager, device: device)
             deviceViewModels[device.id] = viewModel
             Task {
@@ -223,7 +217,7 @@ extension ConnectedDevicesViewModel {
         var errorDescription: String? {
             switch self {
             case .bluetoothUnavailable:
-                return "Bluetooth is powered off or is unavailable."
+                return "The connection was lost because Bluetooth was disabled."
             case .connectionTimeout:
                 return "Timeout when attempting to connect."
             case .ongoingConnection:

@@ -227,26 +227,6 @@ extension DeviceDetailsViewModel {
 }
 
 extension DeviceDetailsViewModel {
-    
-    // MARK: CriticalError
-    
-    enum CriticalError: LocalizedError {
-        case disconnectedWithError(Error?)
-
-        var description: String? {
-            switch self {
-            case .disconnectedWithError:
-                return "Disconnected"
-            }
-        }
-
-        var errorDescription: String? {
-            switch self {
-            case .disconnectedWithError(let error):
-                return error?.localizedDescription ?? "Disconnected with unknown error."
-            }
-        }
-    }
 
     // MARK: AlertError
     
