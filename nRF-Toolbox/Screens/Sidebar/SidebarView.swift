@@ -61,7 +61,7 @@ struct SidebarView: View {
                     Label("About nRF Toolbox", systemImage: "app.gift")
                 }
                 
-                SourceCodeLinkView(url: URL(string:  "https://github.com/NordicSemiconductor/IOS-nRF-Toolbox")!)
+                SourceCodeLinkView(url: URL(string: "https://github.com/NordicSemiconductor/IOS-nRF-Toolbox")!)
                 
                 DevZoneLinkView()
             } header: {

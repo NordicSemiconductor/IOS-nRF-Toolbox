@@ -147,12 +147,16 @@ extension ConnectedDevicesViewModel {
             .filter { $0.1 == nil } // No connection error
             .receive(on: RunLoop.main)
             .map { [weak self] (peripheral: CBPeripheral, error: Error?) -> Device in
-                let advertisedServices = self?.devices
-                    .first(where: \.id, isEqualsTo: peripheral.identifier)?
-                    .services ?? Set<Service>()
+                let device = self?.devices.first(where: \.id, isEqualsTo: peripheral.identifier)
+                let advertisedServices = device?.services ?? Set<Service>()
+                let name = device?.name ?? peripheral.name
                 
-                return Device(name: peripheral.name, id: peripheral.identifier,
-                                    services: advertisedServices, status: .connected)
+                return Device(
+                    name: name,
+                    id: peripheral.identifier,
+                    services: advertisedServices,
+                    status: .connected
+                )
             }
             .sink { [unowned self] device in
                 handleConnection(device: device)
@@ -318,7 +322,6 @@ extension ConnectedDevicesViewModel {
                 .sink { completion in
                     if case .failure(let error) = completion {
                         self.unexpectedDisconnectionMessage = error.localizedDescription
-    //                    self.error = ReadableError(error)
                     }
                 } receiveValue: { result in
                     if let i = self.devices.firstIndex(where: \.id, equals: result.id) {

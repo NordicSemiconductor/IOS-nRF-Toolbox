@@ -205,9 +205,22 @@ extension DeviceDetailsViewModel {
                         self.errors = error
                     }.store(in: &cancellable)
             }
+            
+            let ids = device.services.map { $0.uuid }
+            let discoveredIds = discoveredServices.map { $0.uuid }
+            let allSatisfy = ids.allSatisfy { discoveredIds.contains($0) }
+            if !allSatisfy {
+                throw ServiceError.noMandatoryCharacteristic
+            }
+            
             isInitialized = true
         } catch {
-            errors.error = AlertError.servicesNotFound
+            if case let serviceError as ServiceError = error {
+                errors.error = serviceError
+            } else {
+                errors.error = AlertError.servicesNotFound
+            }
+            errors.error = ServiceError.noMandatoryCharacteristic
             log.error("\(#function) Error: \(error.localizedDescription)")
         }
     }
