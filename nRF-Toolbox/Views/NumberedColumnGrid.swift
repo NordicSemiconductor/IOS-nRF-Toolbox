@@ -38,6 +38,7 @@ struct NumberedColumnGrid<Data: RandomAccessCollection, ID: Hashable, Content: V
             { chunk  in
                 GridRow {
                     ForEach(chunk, id: self.id, content: content)
+                        .gridCellColumns(Int(columns))
                 }
             }
         }
