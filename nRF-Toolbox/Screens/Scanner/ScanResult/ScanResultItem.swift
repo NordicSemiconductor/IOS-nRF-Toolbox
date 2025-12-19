@@ -20,6 +20,7 @@ struct ScanResultItem: View {
     private let services: Set<Service>
     private let inProgress: Bool
     private let isScanner: Bool
+    private let hasSupportedServices: Bool
     
     // MARK: init
     
@@ -28,6 +29,7 @@ struct ScanResultItem: View {
         self.services = services
         self.inProgress = showProgress
         self.isScanner = isScanner
+        self.hasSupportedServices = !services.map({ $0 }).filter(\.isSupported).isEmpty
     }
     
     // MARK: view
@@ -39,7 +41,7 @@ struct ScanResultItem: View {
                     Text(name ?? "Unnamed Device")
                         .foregroundColor(isScanner ? (name == nil ? .secondary : .primary) : nil)
                     
-                    if services.hasItems {
+                    if hasSupportedServices {
                         ServiceBadgeGroup(services)
                     }
                 }
@@ -49,7 +51,7 @@ struct ScanResultItem: View {
             }
             .frame(maxWidth: .infinity, alignment: .topLeading)
             .padding(.trailing, 8)
-            .padding(.bottom, 6)
+            .padding(.bottom, hasSupportedServices ? 6 : 0)
             
             ProgressView()
                 .opacity(inProgress ? 1.0 : 0.0)
