@@ -85,7 +85,6 @@ final class CGMSViewModel: SupportedServiceViewModel, ObservableObject {
             }
         } catch {
             log.debug(error.localizedDescription)
-            let _ = try await peripheral.setNotifyValue(false, for: cbRACP).firstValue
             throw error
         }
         
