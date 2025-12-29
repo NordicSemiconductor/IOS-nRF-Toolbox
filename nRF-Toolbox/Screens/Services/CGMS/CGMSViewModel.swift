@@ -195,14 +195,12 @@ final class CGMSViewModel: SupportedServiceViewModel, ObservableObject {
         
         listenToMeasurements(cbCGMMeasurement)
         let cgmEnable = try await peripheral.setNotifyValue(true, for: cbCGMMeasurement).firstValue
+        guard cgmEnable else { throw ServiceError.notificationsNotEnabled }
         log.debug("CGMS Measurement.setNotifyValue(true): \(cgmEnable)")
-        
-        //            guard result else {
-        //                // TODO: throw Error
-        //            }
         
         listenToOperations(cbSOCP)
         let socpEnable = try await peripheral.setNotifyValue(true, for: cbSOCP).firstValue
+        guard socpEnable else { throw ServiceError.notificationsNotEnabled }
         log.debug("CGMS SOCP.setNotifyValue(true): \(socpEnable)")
         
         let racpEnable = try await peripheral.setNotifyValue(true, for: cbRACP).firstValue

@@ -87,9 +87,10 @@ final class BlinkyViewModel: SupportedServiceViewModel, ObservableObject {
             isButtonPressed = initialValue.littleEndianBytes(as: UInt8.self) > 0
         }
         
-        let result = try await peripheral.setNotifyValue(true, for: buttonCharacteristics).firstValue
-        log.debug("peripheral.setNotifyValue(true, for: .nordicsemiBlinkyButtonState): \(result)")
         listenToButtonPress(buttonCharacteristics)
+        let isNotifyEnabled = try await peripheral.setNotifyValue(true, for: buttonCharacteristics).firstValue
+        guard isNotifyEnabled else { throw ServiceError.notificationsNotEnabled }
+        log.debug("peripheral.setNotifyValue(true, for: .nordicsemiBlinkyButtonState): \(isNotifyEnabled)")
         
         $isLedOn
             .map { [log] newValue in

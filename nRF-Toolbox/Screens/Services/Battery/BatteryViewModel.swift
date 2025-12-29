@@ -61,16 +61,11 @@ final class BatteryViewModel: SupportedServiceViewModel, ObservableObject {
         
         batteryLevelAvailable = true
         do {
-            // try to enable notifications for
-            log.debug("peripheral.setNotifyValue(true, for: cbBatteryLevel)")
-            async let turnOnNotifications = try peripheral.setNotifyValue(true, for: cbBatteryLevel)
+            listen(for: cbBatteryLevel)
+            let turnOnNotifications = try await peripheral.setNotifyValue(true, for: cbBatteryLevel)
                 .timeout(1, scheduler: DispatchQueue.main)
                 .firstValue
-            
-            if try await turnOnNotifications {
-                // in case of success - listen
-                listen(for: cbBatteryLevel)
-            }
+            log.debug("peripheral.setNotifyValue(true, for: cbBatteryLevel)")
         } catch {
             // Read in case of error.
             try? await readBatteryLevelOnTimer(cbBatteryLevel)

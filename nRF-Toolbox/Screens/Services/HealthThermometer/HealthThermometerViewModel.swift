@@ -78,7 +78,9 @@ final class HealthThermometerViewModel: SupportedServiceViewModel, ObservableObj
             throw ServiceError.noMandatoryCharacteristic
         }
         listenTo(temperatureMeasurement)
-        _ = try await peripheral.setNotifyValue(true, for: temperatureMeasurement).firstValue
+        let isNotifyEnabled = try await peripheral.setNotifyValue(true, for: temperatureMeasurement).firstValue
+        log.debug("HTS Measurement setNotifyValue(true): \(isNotifyEnabled)")
+        guard isNotifyEnabled else { throw ServiceError.notificationsNotEnabled }
     }
     
     // MARK: onDisconnect()

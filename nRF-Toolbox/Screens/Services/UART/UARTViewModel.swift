@@ -106,9 +106,10 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
             throw ServiceError.noMandatoryCharacteristic
         }
         
-        let txEnable = try await peripheral.setNotifyValue(true, for: uartTX).firstValue
-        log.debug("\(#function) tx.setNotifyValue(true): \(txEnable)")
         listenToIncomingMessages(uartTX)
+        let txEnable = try await peripheral.setNotifyValue(true, for: uartTX).firstValue
+        guard txEnable else { throw ServiceError.notificationsNotEnabled }
+        log.debug("\(#function) tx.setNotifyValue(true): \(txEnable)")
     }
     
     // MARK: onDisconnect()

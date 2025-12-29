@@ -15,6 +15,7 @@ enum ServiceError: LocalizedError {
     case noMandatoryCharacteristic
     case timeout
     case noData
+    case notificationsNotEnabled
     
     var errorDescription: String? {
         switch self {
@@ -26,6 +27,8 @@ enum ServiceError: LocalizedError {
             return "Timeout has occured."
         case .noData:
             return "Ivalid data."
+        case .notificationsNotEnabled:
+            return "An error occurred while enabling notifications."
         }
     }
 }

@@ -111,14 +111,13 @@ final class GlucoseViewModel: @MainActor SupportedServiceViewModel, ObservableOb
     fileprivate func enableNotificationsIfNeeded() async throws {
         if glucoseNotifyEnabled { return }
         
+        listenToMeasurements(cbGlucoseMeasurement)
         glucoseNotifyEnabled = try await peripheral.setNotifyValue(true, for: cbGlucoseMeasurement)
             .receive(on: RunLoop.main)
             .firstValue
         log.debug("GlucoseMeasurement.setNotifyValue(true): \(glucoseNotifyEnabled)")
         
-        guard glucoseNotifyEnabled else { return }
-        
-        listenToMeasurements(cbGlucoseMeasurement)
+        guard glucoseNotifyEnabled else { throw ServiceError.notificationsNotEnabled }
     }
     
     // MARK: onDisconnect()

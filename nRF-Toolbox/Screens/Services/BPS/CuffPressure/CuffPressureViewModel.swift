@@ -93,10 +93,10 @@ final class CuffPressureViewModel: @MainActor SupportedServiceViewModel, Observa
                 log.debug("Obtained initial Intermediate Cuff Pressure Measurement.")
             }
             
-            let cuffEnable = try await peripheral.setNotifyValue(true, for: cuffMeasurement).firstValue
-            log.debug("Cuff Measurement.setNotifyValue(true): \(cuffEnable)")
-            
             listenTo(cuffMeasurement)
+            let cuffEnable = try await peripheral.setNotifyValue(true, for: cuffMeasurement).firstValue
+            guard cuffEnable else { throw ServiceError.notificationsNotEnabled }
+            log.debug("Cuff Measurement.setNotifyValue(true): \(cuffEnable)")
         }
     }
     

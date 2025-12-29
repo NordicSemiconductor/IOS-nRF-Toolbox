@@ -120,7 +120,9 @@ final class CyclingServiceViewModel: SupportedServiceViewModel, ObservableObject
         
         // Enable Notifications
         log.debug("Enabling Cycling Speed & Cadence Notifications...")
-        _ = try await peripheral.setNotifyValue(true, for: cscMeasurement).firstValue
+        let isNotifyEnabled = try await peripheral.setNotifyValue(true, for: cscMeasurement).firstValue
+        log.debug("CSCS Measurement setNotifyValue(true): \(isNotifyEnabled)")
+        guard isNotifyEnabled else { throw ServiceError.notificationsNotEnabled }
     }
     
     // MARK: update(from:)

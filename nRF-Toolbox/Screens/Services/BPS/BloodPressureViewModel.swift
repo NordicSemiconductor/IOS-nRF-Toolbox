@@ -97,6 +97,7 @@ final class BloodPressureViewModel: @MainActor SupportedServiceViewModel, Observ
         
         listenTo(bpsMeasurement)
         let bpsEnable = try await peripheral.setNotifyValue(true, for: bpsMeasurement).firstValue
+        guard bpsEnable else { throw ServiceError.notificationsNotEnabled }
         log.debug("BPS Measurement.setNotifyValue(true): \(bpsEnable)")
         
         log.debug("Found Blood Pressure Feature.")

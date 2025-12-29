@@ -160,7 +160,9 @@ private extension RunningServiceViewModel {
             }
             .store(in: &cancelable)
         
-        _ = try await peripheral.setNotifyValue(true, for: rscMeasurement).firstValue
+        let isNotifyEnabled = try await peripheral.setNotifyValue(true, for: rscMeasurement).firstValue
+        log.debug("RSCS Measurement setNotifyValue(true): \(isNotifyEnabled)")
+        guard isNotifyEnabled else { throw ServiceError.notificationsNotEnabled }
     }
 }
 
