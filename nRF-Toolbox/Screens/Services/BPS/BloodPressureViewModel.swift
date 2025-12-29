@@ -94,10 +94,10 @@ final class BloodPressureViewModel: @MainActor SupportedServiceViewModel, Observ
             currentValue = try? BloodPressureMeasurement(data: initialValue)
             log.debug("Obtained initial Blood Pressure Measurement.")
         }
-        let bpsEnable = try await peripheral.setNotifyValue(true, for: bpsMeasurement).firstValue
-        log.debug("BPS Measurement.setNotifyValue(true): \(bpsEnable)")
         
         listenTo(bpsMeasurement)
+        let bpsEnable = try await peripheral.setNotifyValue(true, for: bpsMeasurement).firstValue
+        log.debug("BPS Measurement.setNotifyValue(true): \(bpsEnable)")
         
         log.debug("Found Blood Pressure Feature.")
         let featureData = try await peripheral.readValue(for: bpsFlags).firstValue
