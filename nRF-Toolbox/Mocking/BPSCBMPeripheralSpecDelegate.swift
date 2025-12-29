@@ -29,13 +29,13 @@ private extension CBMDescriptorMock {
 private extension CBMCharacteristicMock {
     static let bloodPresssureMeasurement = CBMCharacteristicMock(
         type: .bloodPresssureMeasurement,
-        properties: .notify,
+        properties: .indicate,
         descriptors: .clientCharacteristicConfiguration
     )
     
-    static let recordAccessControlPoint = CBMCharacteristicMock(
+    static let bpsFeature = CBMCharacteristicMock(
         type: .bloodPressureFeature,
-        properties: [.write, .indicate],
+        properties: [.read],
         descriptors: .clientCharacteristicConfiguration
     )
 }
@@ -45,7 +45,7 @@ private extension CBMServiceMock {
     static let bloodPressure = CBMServiceMock(
         type: .bloodPressure,
         primary: true,
-        characteristics: .bloodPresssureMeasurement, .recordAccessControlPoint,
+        characteristics: .bloodPresssureMeasurement, .bpsFeature,
     )
 }
 
