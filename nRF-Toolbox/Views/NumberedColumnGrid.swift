@@ -31,15 +31,13 @@ struct NumberedColumnGrid<Data: RandomAccessCollection, ID: Hashable, Content: V
     }
     
     var body: some View {
-        Grid(alignment: .leading, horizontalSpacing: 54, verticalSpacing: 12) {
-            ForEach(
-                data.chunk(columns),
-                id: (\Array<Data.Element>.first!).appending(path: self.id))
-            { chunk  in
-                GridRow {
-                    ForEach(chunk, id: self.id, content: content)
-                        .gridCellColumns(Int(columns))
-                }
+        LazyVGrid(
+            columns: Array(repeating: GridItem(.flexible()), count: Int(columns)),
+            spacing: 12
+        ) {
+            ForEach(data, id: self.id) { item in
+                content(item)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
     }
