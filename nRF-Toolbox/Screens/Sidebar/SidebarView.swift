@@ -18,6 +18,8 @@ struct SidebarView: View {
     @EnvironmentObject var rootViewModel: RootNavigationViewModel
     @EnvironmentObject var viewModel: ConnectedDevicesViewModel
     
+    private let logs = Logs()
+    
     // MARK: view
     
     var body: some View {
@@ -64,6 +66,15 @@ struct SidebarView: View {
                 SourceCodeLinkView(url: URL(string: "https://github.com/NordicSemiconductor/IOS-nRF-Toolbox")!)
                 
                 DevZoneLinkView()
+                
+                ShareLink(
+                    item: logs,
+                    preview: SharePreview(
+                        "nRF Toolbox Logs",
+                        image: Image("AppIconPreview")
+                    )) {
+                        Label("Upload logs", systemImage: "square.and.arrow.up")
+                    }
             } header: {
                 Text("Links")
             } footer: {
