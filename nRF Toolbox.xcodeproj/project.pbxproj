@@ -63,6 +63,7 @@
 		01FB19D22AE3DB70006DAB9F /* SensorCalibrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FB19D12AE3DB70006DAB9F /* SensorCalibrationViewModel.swift */; };
 		01FD68D32AE82EB90021101C /* AttributeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FD68D22AE82EB90021101C /* AttributeList.swift */; };
 		A70054642E9E82BC00F781BE /* HeartRateCBMPeripheralSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70054632E9E82B000F781BE /* HeartRateCBMPeripheralSpecDelegate.swift */; };
+		A70A61DC2F0D3BF800C341AB /* SwiftDataContextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70A61DB2F0D3BF800C341AB /* SwiftDataContextManager.swift */; };
 		A71D57792ED9BCB300CB7B3F /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71D57772ED9BCB300CB7B3F /* SnapshotHelper.swift */; };
 		A71D577A2ED9BCB300CB7B3F /* Snapfile in Resources */ = {isa = PBXBuildFile; fileRef = A71D57762ED9BCB300CB7B3F /* Snapfile */; };
 		A71D577C2ED9C41400CB7B3F /* ScreenshotsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71D577B2ED9C40E00CB7B3F /* ScreenshotsTests.swift */; };
@@ -256,6 +257,7 @@
 		52BDCBBD1C3FD86900E2680F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A70054632E9E82B000F781BE /* HeartRateCBMPeripheralSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateCBMPeripheralSpecDelegate.swift; sourceTree = "<group>"; };
+		A70A61DB2F0D3BF800C341AB /* SwiftDataContextManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataContextManager.swift; sourceTree = "<group>"; };
 		A71D57762ED9BCB300CB7B3F /* Snapfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Snapfile; sourceTree = "<group>"; };
 		A71D57772ED9BCB300CB7B3F /* SnapshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 		A71D577B2ED9C40E00CB7B3F /* ScreenshotsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotsTests.swift; sourceTree = "<group>"; };
@@ -520,6 +522,7 @@
 		0164A4772AD7409C0093E501 /* ConnectedDevices */ = {
 			isa = PBXGroup;
 			children = (
+				A70A61DB2F0D3BF800C341AB /* SwiftDataContextManager.swift */,
 				A7451D6E2F07F0EB00336EF6 /* Logs.swift */,
 				0164A4782AD741200093E501 /* ConnectedDevicesViewModel.swift */,
 			);
@@ -1298,6 +1301,7 @@
 				AA69FF382E056F9F0065A39C /* GlucoseAllRecordsChartView.swift in Sources */,
 				AAA04F232DAD513A002DAB42 /* UARTMessagesList.swift in Sources */,
 				AA94C5512D01B49200562F7A /* BatteryView.swift in Sources */,
+				A70A61DC2F0D3BF800C341AB /* SwiftDataContextManager.swift in Sources */,
 				A72A343C2EAA57160011BA44 /* CSCSCBMPeripheralSpecDelegate.swift in Sources */,
 				AA01D4922D4A3D38008523CE /* Throughput+Attributes.swift in Sources */,
 				AA306A0B2DF30DBF005B4E04 /* GlucoseView.swift in Sources */,
