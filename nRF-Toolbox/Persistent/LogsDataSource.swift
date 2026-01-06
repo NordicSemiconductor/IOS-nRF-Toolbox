@@ -1,5 +1,5 @@
 //
-//  SwiftDataContextManager.swift
+//  LogsDataSource.swift
 //  nRF Toolbox
 //
 //  Created by Sylwester Zielinski on 06/01/2026.
@@ -8,35 +8,6 @@
 
 import SwiftData
 import Foundation
-
-@Model
-final class LogDb {
-    var value: String
-    var timestamp: Date = Date()
-    
-    init(value: String) {
-        self.value = value
-    }
-}
-
-class SwiftDataContextManager{
-    
-    static let shared = SwiftDataContextManager()
-    
-    var container: ModelContainer?
-    var context : ModelContext?
-    
-    private init() {
-        do {
-            container = try ModelContainer(for: LogDb.self)
-            if let container {
-                context = ModelContext(container)
-            }
-        } catch {
-            debugPrint("Error initializing database container:", error)
-        }
-    }
-}
 
 @MainActor
 class LogsDataSource {
@@ -47,9 +18,7 @@ class LogsDataSource {
         self.container = container
         self.context = context
     }
-}
-
-extension LogsDataSource {
+    
     func insert(_ entity: LogDb) {
         self.container?.mainContext.insert(entity)
         try? self.container?.mainContext.save()

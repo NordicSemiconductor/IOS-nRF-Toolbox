@@ -63,7 +63,9 @@
 		01FB19D22AE3DB70006DAB9F /* SensorCalibrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FB19D12AE3DB70006DAB9F /* SensorCalibrationViewModel.swift */; };
 		01FD68D32AE82EB90021101C /* AttributeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FD68D22AE82EB90021101C /* AttributeList.swift */; };
 		A70054642E9E82BC00F781BE /* HeartRateCBMPeripheralSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70054632E9E82B000F781BE /* HeartRateCBMPeripheralSpecDelegate.swift */; };
-		A70A61DC2F0D3BF800C341AB /* SwiftDataContextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70A61DB2F0D3BF800C341AB /* SwiftDataContextManager.swift */; };
+		A70A61FC2F0D46CA00C341AB /* LogDb.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70A61FB2F0D46C500C341AB /* LogDb.swift */; };
+		A70A61FE2F0D46F100C341AB /* SwiftDataContextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70A61FD2F0D46F000C341AB /* SwiftDataContextManager.swift */; };
+		A70A62002F0D470100C341AB /* LogsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70A61FF2F0D470100C341AB /* LogsDataSource.swift */; };
 		A71D57792ED9BCB300CB7B3F /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71D57772ED9BCB300CB7B3F /* SnapshotHelper.swift */; };
 		A71D577A2ED9BCB300CB7B3F /* Snapfile in Resources */ = {isa = PBXBuildFile; fileRef = A71D57762ED9BCB300CB7B3F /* Snapfile */; };
 		A71D577C2ED9C41400CB7B3F /* ScreenshotsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71D577B2ED9C40E00CB7B3F /* ScreenshotsTests.swift */; };
@@ -257,7 +259,9 @@
 		52BDCBBD1C3FD86900E2680F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A70054632E9E82B000F781BE /* HeartRateCBMPeripheralSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateCBMPeripheralSpecDelegate.swift; sourceTree = "<group>"; };
-		A70A61DB2F0D3BF800C341AB /* SwiftDataContextManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataContextManager.swift; sourceTree = "<group>"; };
+		A70A61FB2F0D46C500C341AB /* LogDb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDb.swift; sourceTree = "<group>"; };
+		A70A61FD2F0D46F000C341AB /* SwiftDataContextManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataContextManager.swift; sourceTree = "<group>"; };
+		A70A61FF2F0D470100C341AB /* LogsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsDataSource.swift; sourceTree = "<group>"; };
 		A71D57762ED9BCB300CB7B3F /* Snapfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Snapfile; sourceTree = "<group>"; };
 		A71D57772ED9BCB300CB7B3F /* SnapshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 		A71D577B2ED9C40E00CB7B3F /* ScreenshotsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotsTests.swift; sourceTree = "<group>"; };
@@ -522,7 +526,6 @@
 		0164A4772AD7409C0093E501 /* ConnectedDevices */ = {
 			isa = PBXGroup;
 			children = (
-				A70A61DB2F0D3BF800C341AB /* SwiftDataContextManager.swift */,
 				A7451D6E2F07F0EB00336EF6 /* Logs.swift */,
 				0164A4782AD741200093E501 /* ConnectedDevicesViewModel.swift */,
 			);
@@ -543,6 +546,7 @@
 		017D102C2A5809E300E38E5F /* nRF-Toolbox */ = {
 			isa = PBXGroup;
 			children = (
+				A70A61FA2F0D46C000C341AB /* Persistent */,
 				AA8DF2152DE9B08E00D49141 /* Info.plist */,
 				019E77792ACC289500760124 /* Screens */,
 				0129F2262A68404C002FB3F5 /* Views */,
@@ -773,6 +777,16 @@
 				89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A70A61FA2F0D46C000C341AB /* Persistent */ = {
+			isa = PBXGroup;
+			children = (
+				A70A61FF2F0D470100C341AB /* LogsDataSource.swift */,
+				A70A61FD2F0D46F000C341AB /* SwiftDataContextManager.swift */,
+				A70A61FB2F0D46C500C341AB /* LogDb.swift */,
+			);
+			path = Persistent;
 			sourceTree = "<group>";
 		};
 		A71D57782ED9BCB300CB7B3F /* fastlane */ = {
@@ -1239,6 +1253,7 @@
 				013E5D9B2AE0545F00B9C475 /* OnFirstAppear.swift in Sources */,
 				AA2931592DEEEFCD002C82B6 /* BloodPressureMeasurement.swift in Sources */,
 				A7A28FD52EAD3E02004ECC8B /* MockSpecDelegate.swift in Sources */,
+				A70A61FE2F0D46F100C341AB /* SwiftDataContextManager.swift in Sources */,
 				A7D2C8E52E7D414700C93C28 /* CGMSFeatureEnvelope.swift in Sources */,
 				01C81AD52A5CB6420011B41E /* ServiceBadge.swift in Sources */,
 				01FB19D22AE3DB70006DAB9F /* SensorCalibrationViewModel.swift in Sources */,
@@ -1301,9 +1316,9 @@
 				AA69FF382E056F9F0065A39C /* GlucoseAllRecordsChartView.swift in Sources */,
 				AAA04F232DAD513A002DAB42 /* UARTMessagesList.swift in Sources */,
 				AA94C5512D01B49200562F7A /* BatteryView.swift in Sources */,
-				A70A61DC2F0D3BF800C341AB /* SwiftDataContextManager.swift in Sources */,
 				A72A343C2EAA57160011BA44 /* CSCSCBMPeripheralSpecDelegate.swift in Sources */,
 				AA01D4922D4A3D38008523CE /* Throughput+Attributes.swift in Sources */,
+				A70A62002F0D470100C341AB /* LogsDataSource.swift in Sources */,
 				AA306A0B2DF30DBF005B4E04 /* GlucoseView.swift in Sources */,
 				AA21A3402E13D8AD00316CAD /* HeartRateValue.swift in Sources */,
 				A7D7B0D62EBA0254009B69CE /* UARTPresetsXmlParser.swift in Sources */,
@@ -1314,6 +1329,7 @@
 				AA8B89282E28F18C0017F219 /* BlinkyCBMPeripheralSpecDelegate.swift in Sources */,
 				01EBE6192AE4845100960672 /* View+ErrorAlert.swift in Sources */,
 				01F6A9602A812D6200540B45 /* Emulator.swift in Sources */,
+				A70A61FC2F0D46CA00C341AB /* LogDb.swift in Sources */,
 				015AAE652B0383BD00D79833 /* SidebarView.swift in Sources */,
 				AA71C78E2E0EBA89008F018C /* ScanResult.swift in Sources */,
 				AA479EA72D0B0BFF0052E801 /* CrankDataPoint.swift in Sources */,
