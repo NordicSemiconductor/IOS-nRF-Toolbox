@@ -51,6 +51,7 @@ final class ConnectedDevicesViewModel: ObservableObject {
     
     @Published var showUnexpectedDisconnectionAlert: Bool = false
     @Published fileprivate(set) var unexpectedDisconnectionMessage: String = ""
+    @Published var logs: Logs = Logs()
     
     // MARK: init
     
@@ -61,10 +62,17 @@ final class ConnectedDevicesViewModel: ObservableObject {
         self.devices = []
         self.connectingDevice = nil
         self.scannerState = .disabled
+        observeLogs()
         observeStateChange()
         observeConnections()
         observeDisconnections()
         log.debug(#function)
+    }
+    
+    func observeLogs() {
+        NordicLog.lastLog
+            .sink(receiveValue: { log in self.logs.values.append(log)} )
+            .store(in: &cancellables)
     }
 }
 

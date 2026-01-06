@@ -18,8 +18,6 @@ struct SidebarView: View {
     @EnvironmentObject var rootViewModel: RootNavigationViewModel
     @EnvironmentObject var viewModel: ConnectedDevicesViewModel
     
-    private let logs = Logs()
-    
     // MARK: view
     
     var body: some View {
@@ -68,12 +66,12 @@ struct SidebarView: View {
                 DevZoneLinkView()
                 
                 ShareLink(
-                    item: logs,
+                    item: viewModel.logs,
                     preview: SharePreview(
                         "nRF Toolbox Logs",
                         image: Image("AppIconPreview")
                     )) {
-                        Label("Upload logs", systemImage: "square.and.arrow.up")
+                        Label("Share logs", systemImage: "square.and.arrow.up")
                     }
             } header: {
                 Text("Links")
