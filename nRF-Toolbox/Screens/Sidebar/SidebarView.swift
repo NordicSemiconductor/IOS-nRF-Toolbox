@@ -8,6 +8,7 @@
 
 import SwiftUI
 import iOS_Common_Libraries
+import SwiftData
 
 // MARK: - SidebarView
 
@@ -17,6 +18,8 @@ struct SidebarView: View {
     
     @EnvironmentObject var rootViewModel: RootNavigationViewModel
     @EnvironmentObject var viewModel: ConnectedDevicesViewModel
+    
+    @Query(sort: \LogDb.timestamp) var logs: [LogDb]
     
     // MARK: view
     
@@ -66,7 +69,7 @@ struct SidebarView: View {
                 DevZoneLinkView()
                 
                 ShareLink(
-                    item: viewModel.logs,
+                    item: Logs(values: logs.map { $0.value }),
                     preview: SharePreview(
                         "nRF Toolbox Logs",
                         image: Image("AppIconPreview")

@@ -51,7 +51,7 @@ final class ConnectedDevicesViewModel: ObservableObject {
     
     @Published var showUnexpectedDisconnectionAlert: Bool = false
     @Published fileprivate(set) var unexpectedDisconnectionMessage: String = ""
-    @Published var logs: Logs = Logs()
+
     
     private let logsDataSource = LogsDataSource(
         container: SwiftDataContextManager.shared.container,

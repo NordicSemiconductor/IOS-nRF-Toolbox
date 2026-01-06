@@ -12,7 +12,7 @@ import Foundation
 @Model
 final class LogDb {
     var value: String
-    var updatedAt: Date = Date()
+    var timestamp: Date = Date()
     
     init(value: String) {
         self.value = value
@@ -61,7 +61,7 @@ extension LogsDataSource {
     }
     
     func fetchContacts() -> [LogDb] {
-        var fetchDescriptor = FetchDescriptor<LogDb>(sortBy: [SortDescriptor(\.updatedAt, order: .forward)])
+        let fetchDescriptor = FetchDescriptor<LogDb>(sortBy: [SortDescriptor(\.timestamp, order: .forward)])
         let contacts = try? self.container?.mainContext.fetch(fetchDescriptor)
         return contacts ?? []
     }

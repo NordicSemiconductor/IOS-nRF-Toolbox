@@ -6,6 +6,7 @@
 //  Copyright © 2023 Nordic Semiconductor. All rights reserved.
 //
 
+import SwiftData
 import SwiftUI
 import iOS_BLE_Library_Mock
 
@@ -24,6 +25,7 @@ struct nRF_ToolboxApp: App {
                     BluetoothEmulation.shared.simulatePeripherals()
                 }
                 .setupTranslucentBackground()
+                .environment(\.modelContext, SwiftDataContextManager.shared.context!)
         }
     }
 }
