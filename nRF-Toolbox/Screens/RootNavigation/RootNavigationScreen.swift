@@ -58,6 +58,12 @@ struct RootNavigationView: View {
                         .onAppear {
                             log.debug("PeripheralScannerScreen opened on details tab.")
                         }
+                case .logs:
+                    LogsScreen()
+                        .environmentObject(connectedDevicesViewModel)
+                        .onAppear {
+                            log.debug("LogsScreen opened on details tab.")
+                        }
                 case nil:
                     NordicEmptyView()
                         .onAppear {

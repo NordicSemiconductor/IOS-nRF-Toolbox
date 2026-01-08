@@ -34,4 +34,8 @@ class LogsDataSource {
         let contacts = try? self.container?.mainContext.fetch(fetchDescriptor)
         return contacts ?? []
     }
+    
+    func deleteAll() {
+        try? context?.delete(model: LogDb.self)
+    }
 }
