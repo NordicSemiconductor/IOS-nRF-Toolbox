@@ -66,6 +66,8 @@
 		A70A61FC2F0D46CA00C341AB /* LogDb.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70A61FB2F0D46C500C341AB /* LogDb.swift */; };
 		A70A61FE2F0D46F100C341AB /* SwiftDataContextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70A61FD2F0D46F000C341AB /* SwiftDataContextManager.swift */; };
 		A70A62002F0D470100C341AB /* LogsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70A61FF2F0D470100C341AB /* LogsDataSource.swift */; };
+		A70A621C2F0FB56E00C341AB /* LogsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70A621B2F0FB56B00C341AB /* LogsScreen.swift */; };
+		A70A621E2F0FD3D400C341AB /* LogsSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70A621D2F0FD3C900C341AB /* LogsSettings.swift */; };
 		A71D57792ED9BCB300CB7B3F /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71D57772ED9BCB300CB7B3F /* SnapshotHelper.swift */; };
 		A71D577A2ED9BCB300CB7B3F /* Snapfile in Resources */ = {isa = PBXBuildFile; fileRef = A71D57762ED9BCB300CB7B3F /* Snapfile */; };
 		A71D577C2ED9C41400CB7B3F /* ScreenshotsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71D577B2ED9C40E00CB7B3F /* ScreenshotsTests.swift */; };
@@ -262,6 +264,8 @@
 		A70A61FB2F0D46C500C341AB /* LogDb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDb.swift; sourceTree = "<group>"; };
 		A70A61FD2F0D46F000C341AB /* SwiftDataContextManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataContextManager.swift; sourceTree = "<group>"; };
 		A70A61FF2F0D470100C341AB /* LogsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsDataSource.swift; sourceTree = "<group>"; };
+		A70A621B2F0FB56B00C341AB /* LogsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsScreen.swift; sourceTree = "<group>"; };
+		A70A621D2F0FD3C900C341AB /* LogsSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsSettings.swift; sourceTree = "<group>"; };
 		A71D57762ED9BCB300CB7B3F /* Snapfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Snapfile; sourceTree = "<group>"; };
 		A71D57772ED9BCB300CB7B3F /* SnapshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 		A71D577B2ED9C40E00CB7B3F /* ScreenshotsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotsTests.swift; sourceTree = "<group>"; };
@@ -663,6 +667,7 @@
 		019E77792ACC289500760124 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				A70A621A2F0F9A9500C341AB /* Logs */,
 				AAC0D99D2D80513C00F25096 /* About */,
 				015AAE6D2B063D4A00D79833 /* RootNavigation */,
 				015AAE622B03838C00D79833 /* Sidebar */,
@@ -787,6 +792,15 @@
 				A70A61FB2F0D46C500C341AB /* LogDb.swift */,
 			);
 			path = Persistent;
+			sourceTree = "<group>";
+		};
+		A70A621A2F0F9A9500C341AB /* Logs */ = {
+			isa = PBXGroup;
+			children = (
+				A70A621B2F0FB56B00C341AB /* LogsScreen.swift */,
+				A70A621D2F0FD3C900C341AB /* LogsSettings.swift */,
+			);
+			path = Logs;
 			sourceTree = "<group>";
 		};
 		A71D57782ED9BCB300CB7B3F /* fastlane */ = {
@@ -1236,6 +1250,7 @@
 				01C62AE72B72480C00CDEE31 /* DeviceInformationView.swift in Sources */,
 				AA5AB3DF2D0868DD005213D5 /* CyclingDataView.swift in Sources */,
 				A75F11702E9FA31300B0D6CB /* GLSCBMPeripheralSpecDelegate.swift in Sources */,
+				A70A621E2F0FD3D400C341AB /* LogsSettings.swift in Sources */,
 				018C053B2AE0844E007CE0FE /* SignalChartViewModel.swift in Sources */,
 				A7D7B0DA2EBA1E59009B69CE /* XMLFileDocument.swift in Sources */,
 				AAA898B72DD4C0B6000C7012 /* UARTPresetsGridView.swift in Sources */,
@@ -1244,6 +1259,7 @@
 				0129F2282A684059002FB3F5 /* LabeledValueView.swift in Sources */,
 				0164A4792AD741200093E501 /* ConnectedDevicesViewModel.swift in Sources */,
 				A7D657C42EA2470E00CA7D63 /* UARTCBMPeripheralSpecDelegate.swift in Sources */,
+				A70A621C2F0FB56E00C341AB /* LogsScreen.swift in Sources */,
 				AA479EAD2D0B24E50052E801 /* HealthThermometerViewModel.swift in Sources */,
 				AAD1E3EC2D81E5AD00E5121E /* DisclosureAttributeItemView.swift in Sources */,
 				012E22922A6ACD8400B14064 /* AttributeTableItemView.swift in Sources */,

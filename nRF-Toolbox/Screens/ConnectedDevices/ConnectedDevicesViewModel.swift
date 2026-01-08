@@ -51,7 +51,7 @@ final class ConnectedDevicesViewModel: ObservableObject {
     
     @Published var showUnexpectedDisconnectionAlert: Bool = false
     @Published fileprivate(set) var unexpectedDisconnectionMessage: String = ""
-
+    @Published var logsSettings = LogsSettings()
     
     private let logsDataSource = LogsDataSource(
         container: SwiftDataContextManager.shared.container,
@@ -76,9 +76,14 @@ final class ConnectedDevicesViewModel: ObservableObject {
     
     func observeLogs() {
         NordicLog.lastLog
+            .filter { _ in self.logsSettings.isEnabled == true}
             .map { log in LogDb(value: log) }
             .sink(receiveValue: { log in self.logsDataSource.insert(log) } )
             .store(in: &cancellables)
+    }
+    
+    func clearLogs() {
+        self.logsDataSource.deleteAll()
     }
 }
 

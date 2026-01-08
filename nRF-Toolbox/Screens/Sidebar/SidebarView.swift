@@ -19,8 +19,6 @@ struct SidebarView: View {
     @EnvironmentObject var rootViewModel: RootNavigationViewModel
     @EnvironmentObject var viewModel: ConnectedDevicesViewModel
     
-    @Query(sort: \LogDb.timestamp) var logs: [LogDb]
-    
     // MARK: view
     
     var body: some View {
@@ -68,16 +66,17 @@ struct SidebarView: View {
                 
                 DevZoneLinkView()
                 
-                ShareLink(
-                    item: Logs(values: logs.map { $0.value }),
-                    preview: SharePreview(
-                        "nRF Toolbox Logs",
-                        image: Image("AppIconPreview")
-                    )) {
-                        Label("Share logs", systemImage: "square.and.arrow.up")
-                    }
+                let isSelected = rootViewModel.selectedCategory == .logs
+                Button {
+                    rootViewModel.selectedCategory = RootNavigationView.MenuCategory.logs
+                } label: {
+                    Label("Logs settings", systemImage: "gearshape")
+                }
+                .listRowBackground(isSelected ? Color.universalAccentColor : nil)
+                .setAccent(isSelected ? Color.white : .nordicBlue)
+                .tint(isSelected ? Color.white : .primarylabel)
             } header: {
-                Text("Links")
+                Text("More")
             } footer: {
                 Text(Constant.copyright)
                     .foregroundStyle(Color.nordicMiddleGrey)
