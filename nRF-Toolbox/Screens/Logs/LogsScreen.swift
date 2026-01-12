@@ -18,6 +18,7 @@ struct LogsScreen: View {
     
     @EnvironmentObject var viewModel: ConnectedDevicesViewModel
     @State private var isDeleteDialogShown = false
+    @State private var logsMeta: LogsMeta = LogsMeta()
     
     var body: some View {
         List {
@@ -52,10 +53,29 @@ struct LogsScreen: View {
                     .setAccent(.black)
                     .tint(.black)
                     .foregroundStyle(.black)
-                    
             }
             .listRowSeparator(.hidden)
             .listRowBackground(Color.nordicSun)
+            
+            Section("Statistics") {
+                VStack {
+                    HStack(alignment: .bottom) {
+                        Text("Current size:").font(.caption)
+                        Spacer()
+                        Text("\(logsMeta.size) MB")
+                    }
+                    ProgressView(value: Double(logsMeta.size), total: Double(logsMeta.maxSize))
+                        .progressViewStyle(LinearProgressViewStyle(tint: .universalAccentColor))
+                        .scaleEffect(x: 1, y: 2, anchor: .center)
+                    HStack {
+                        Text("Used: \(logsMeta.percentageUsed)%").font(.caption)
+                        Spacer()
+                        Text("Free \(logsMeta.percentageLeft)%").font(.footnote)
+                    }
+                }
+            }
+            .setAccent(.universalAccentColor)
+            .tint(.primarylabel)
             
             Section("Actions") {
                 ShareLink(
@@ -88,6 +108,9 @@ struct LogsScreen: View {
             }
         } message: {
             Text("This action cannot be undone.")
+        }
+        .onAppear {
+            logsMeta = viewModel.getSwiftDataStoreSize() ?? LogsMeta()
         }
     }
 }
