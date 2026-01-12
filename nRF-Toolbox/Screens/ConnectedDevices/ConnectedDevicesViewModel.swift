@@ -85,6 +85,23 @@ final class ConnectedDevicesViewModel: ObservableObject {
     func clearLogs() {
         self.logsDataSource.deleteAll()
     }
+    
+    func getSwiftDataStoreSize() -> LogsMeta? {
+        guard let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first?.appendingPathComponent("default.store") else {
+            return nil
+        }
+        
+        do {
+            let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
+            if let fileSize = attributes[FileAttributeKey.size] as? UInt64 {
+                let megabytes = Double(fileSize) / (1024 * 1024)
+                return LogsMeta(size: megabytes)
+            }
+        } catch {
+            print("Error getting file size: \(error)")
+        }
+        return nil
+    }
 }
 
 extension ConnectedDevicesViewModel {
