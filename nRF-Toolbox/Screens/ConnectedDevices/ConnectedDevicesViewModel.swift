@@ -77,7 +77,8 @@ final class ConnectedDevicesViewModel: ObservableObject {
     func observeLogs() {
         NordicLog.lastLog
             .filter { _ in self.logsSettings.isEnabled == true}
-            .map { log in LogDb(value: log) }
+            .compactMap { $0 }
+            .map { log in LogDb(value: log.message, level: log.level) }
             .sink(receiveValue: { log in self.logsDataSource.insert(log) } )
             .store(in: &cancellables)
     }
