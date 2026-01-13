@@ -6,6 +6,7 @@
 //  Copyright © 2026 Nordic Semiconductor. All rights reserved.
 //
 
+import SwiftUI
 import SwiftData
 import Foundation
 import iOS_Common_Libraries
@@ -19,5 +20,33 @@ final class LogDb {
     init(value: String, level: LogLevel) {
         self.value = value
         self.level = level
+    }
+}
+
+extension LogDb {
+    private static let formatter = {
+        let f = DateFormatter()
+        f.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+        return f
+    }()
+    
+    var levelName: String {
+        switch level {
+        case .debug:   return "debug"
+        case .info:    return "info"
+        case .error:   return "error"
+        }
+    }
+    
+    var levelColor: Color {
+        switch level {
+        case .debug:   return .nordicBlue
+        case .info:    return .nordicGrass
+        case .error:   return .nordicRed
+        }
+    }
+    
+    var displayString: String {
+        "\(LogDb.formatter.string(from: timestamp)): \(levelName) - \(value)"
     }
 }

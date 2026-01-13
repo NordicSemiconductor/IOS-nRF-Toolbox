@@ -37,5 +37,6 @@ class LogsDataSource {
     
     func deleteAll() {
         try? context?.delete(model: LogDb.self)
+        try? self.container?.mainContext.save()
     }
 }
