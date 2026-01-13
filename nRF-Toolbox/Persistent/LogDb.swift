@@ -8,13 +8,16 @@
 
 import SwiftData
 import Foundation
+import iOS_Common_Libraries
 
 @Model
 final class LogDb {
     var value: String
+    var level: LogLevel
     var timestamp: Date = Date()
     
-    init(value: String) {
+    init(value: String, level: LogLevel) {
         self.value = value
+        self.level = level
     }
 }
