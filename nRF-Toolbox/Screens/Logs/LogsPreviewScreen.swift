@@ -12,13 +12,26 @@ import SwiftUI
 struct LogsPreviewScreen: View {
     
     @Query(sort: \LogDb.timestamp) var logs: [LogDb]
+    @State private var searchText: String = ""
     
+    var filteredLogs: [LogDb] {
+        if searchText.isEmpty {
+            return logs
+        } else {
+            return logs.filter {
+                $0.displayString.localizedCaseInsensitiveContains(searchText)
+            }
+        }
+    }
+
     var body: some View {
         List {
-            ForEach(logs) { value in
-                Text(value.value)
+            ForEach(filteredLogs) { log in
+                Text(log.displayString)
+                    .foregroundColor(log.levelColor)
             }
         }
         .navigationTitle("Logs preview")
+        .searchable(text: $searchText)
     }
 }
