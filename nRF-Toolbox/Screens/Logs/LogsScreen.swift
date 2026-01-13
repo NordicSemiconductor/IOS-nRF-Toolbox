@@ -112,5 +112,14 @@ struct LogsScreen: View {
         .onAppear {
             logsMeta = viewModel.getSwiftDataStoreSize() ?? LogsMeta()
         }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink {
+                    LogsPreviewScreen()
+                } label: {
+                    Image(systemName: "magnifyingglass")
+                }
+            }
+        }
     }
 }
