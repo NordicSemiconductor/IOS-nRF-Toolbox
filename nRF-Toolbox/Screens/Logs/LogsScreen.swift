@@ -10,30 +10,33 @@ import SwiftData
 import SwiftUI
 import iOS_Common_Libraries
 
+private enum Tabs {
+    case settings, preview
+}
+
 // MARK: - LogsScreen
 
 struct LogsScreen: View {
     
+    @State private var selectedTab: Tabs = .settings
+    
     var body: some View {
-        TabView {
-            Tab("Settings", systemImage: "tray.and.arrow.down.fill") {
+        TabView(selection: $selectedTab) {
+            Tab("Settings", systemImage: "gear", value: Tabs.settings) {
                 LogsSettingsScreen()
             }
             
-            Tab("Logs", systemImage: "tray.and.arrow.up.fill") {
-                LogsPreviewScreen()
-            }
-            Tab(role: .search) {
+            Tab("Preview", systemImage: "list.bullet.clipboard", value: Tabs.preview) {
                 LogsPreviewScreen()
             }
         }
+        .navigationTitle("Logs")
         .applyTabBarMinimazeBehaviorIfAvailable()
         .tint(.universalAccentColor)
-        
     }
 }
 
-extension View {
+private extension View {
     @ViewBuilder
     func applyTabBarMinimazeBehaviorIfAvailable() -> some View {
         if #available(iOS 26.0, *) {

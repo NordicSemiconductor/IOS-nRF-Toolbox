@@ -31,9 +31,7 @@ struct LogsPreviewScreen: View {
                     .foregroundColor(log.levelColor)
             }
         }
-        .navigationTitle("Logs preview")
         .searchable(text: $searchText)
-        .applySearchBehaviorIfAvailable()
     }
 }
 
