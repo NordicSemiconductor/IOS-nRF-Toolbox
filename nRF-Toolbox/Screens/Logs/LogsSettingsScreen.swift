@@ -97,7 +97,6 @@ struct LogsSettingsScreen: View {
             .setAccent(.universalAccentColor)
             .tint(.primarylabel)
         }
-        .navigationTitle("Logs settings")
         .alert("Clear All Logs?", isPresented: $isDeleteDialogShown) {
             Button("Delete", role: .destructive) {
                 viewModel.clearLogs()
@@ -111,15 +110,6 @@ struct LogsSettingsScreen: View {
         }
         .onAppear {
             logsMeta = viewModel.getSwiftDataStoreSize() ?? LogsMeta()
-        }
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                NavigationLink {
-                    LogsPreviewScreen()
-                } label: {
-                    Image(systemName: "magnifyingglass")
-                }
-            }
         }
     }
 }
