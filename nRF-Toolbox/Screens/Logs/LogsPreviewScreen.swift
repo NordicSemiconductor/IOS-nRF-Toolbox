@@ -33,5 +33,17 @@ struct LogsPreviewScreen: View {
         }
         .navigationTitle("Logs preview")
         .searchable(text: $searchText)
+        .applySearchBehaviorIfAvailable()
+    }
+}
+
+extension View {
+    @ViewBuilder
+    func applySearchBehaviorIfAvailable() -> some View {
+        if #available(iOS 26.0, *) {
+            self.searchToolbarBehavior(.minimize)
+        } else {
+            self
+        }
     }
 }
