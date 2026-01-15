@@ -77,6 +77,7 @@
 		A7255E692EAF5F2800774CEE /* MockError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7255E682EAF5F2700774CEE /* MockError.swift */; };
 		A72A343C2EAA57160011BA44 /* CSCSCBMPeripheralSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72A343B2EAA570F0011BA44 /* CSCSCBMPeripheralSpecDelegate.swift */; };
 		A7451D6F2F07F0F400336EF6 /* Logs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7451D6E2F07F0EB00336EF6 /* Logs.swift */; };
+		A745E2AD2F18CEEE000B47FD /* LogsSettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A745E2AC2F18CEE9000B47FD /* LogsSettingsScreen.swift */; };
 		A74B9FDE2EEADDB100121B7A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = A74B9FDD2EEADDB100121B7A /* .gitignore */; };
 		A75291BA2EEC2D25002D50F4 /* rename_files.sh in Resources */ = {isa = PBXBuildFile; fileRef = A75291B92EEC2D25002D50F4 /* rename_files.sh */; };
 		A75F116C2E9FA30500B0D6CB /* HTSCBMPeripheralSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75F116B2E9FA2FE00B0D6CB /* HTSCBMPeripheralSpecDelegate.swift */; };
@@ -277,6 +278,7 @@
 		A7255E682EAF5F2700774CEE /* MockError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockError.swift; sourceTree = "<group>"; };
 		A72A343B2EAA570F0011BA44 /* CSCSCBMPeripheralSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSCSCBMPeripheralSpecDelegate.swift; sourceTree = "<group>"; };
 		A7451D6E2F07F0EB00336EF6 /* Logs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logs.swift; sourceTree = "<group>"; };
+		A745E2AC2F18CEE9000B47FD /* LogsSettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsSettingsScreen.swift; sourceTree = "<group>"; };
 		A74B9FDD2EEADDB100121B7A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		A75291B92EEC2D25002D50F4 /* rename_files.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = rename_files.sh; sourceTree = "<group>"; };
 		A75F116B2E9FA2FE00B0D6CB /* HTSCBMPeripheralSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTSCBMPeripheralSpecDelegate.swift; sourceTree = "<group>"; };
@@ -802,6 +804,7 @@
 		A70A621A2F0F9A9500C341AB /* Logs */ = {
 			isa = PBXGroup;
 			children = (
+				A745E2AC2F18CEE9000B47FD /* LogsSettingsScreen.swift */,
 				A70A62552F1633D800C341AB /* LogsPreviewScreen.swift */,
 				A70A621B2F0FB56B00C341AB /* LogsScreen.swift */,
 				A70A621D2F0FD3C900C341AB /* LogsSettings.swift */,
@@ -1285,6 +1288,7 @@
 				013E5D8F2ADFDDC600B9C475 /* NumberedColumnGrid.swift in Sources */,
 				AAC542B62E2E63BA004FB4D2 /* RSCSCBMPeripheralSpecDelegate.swift in Sources */,
 				AAE9673C2E38E58D00A7B93B /* SCResponse.swift in Sources */,
+				A745E2AD2F18CEEE000B47FD /* LogsSettingsScreen.swift in Sources */,
 				AAA04F1D2DAD1B5C002DAB42 /* UARTView.swift in Sources */,
 				A7A28FD32EAD3D4B004ECC8B /* AggregatedPeripheralSpecDelegate.swift in Sources */,
 				AAC4177F2DCB725F0059FE97 /* UARTPresets.swift in Sources */,
