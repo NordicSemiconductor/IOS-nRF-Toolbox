@@ -18,6 +18,9 @@ private enum Tabs {
 
 struct LogsScreen: View {
     
+    @StateObject var viewModel = LogsPreviewViewModel()
+    
+    @Query(sort: \LogDb.timestamp) var logs: [LogDb]
     @State private var selectedTab: Tabs = .settings
     
     var body: some View {
@@ -33,6 +36,10 @@ struct LogsScreen: View {
         .navigationTitle("Logs")
         .applyTabBarMinimazeBehaviorIfAvailable()
         .tint(.universalAccentColor)
+        .environmentObject(viewModel)
+        .onChange(of: logs, initial: true) {
+            viewModel.updateModel(logs: logs)
+        }
     }
 }
 

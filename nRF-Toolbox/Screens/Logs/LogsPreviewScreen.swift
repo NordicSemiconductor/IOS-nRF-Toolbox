@@ -11,19 +11,13 @@ import SwiftUI
 import iOS_Common_Libraries
 
 struct LogsPreviewScreen: View {
-    @Query(sort: \LogDb.timestamp) var logs: [LogDb]
+    
+    @EnvironmentObject var viewModel: LogsPreviewViewModel
+    
     @State private var searchText: String = ""
     @State private var selectedLogLevel: LogLevel = .debug
     @FocusState private var isFocused: Bool
     
-    var filteredLogs: [LogDb] {
-        let filteredBySearch = searchText.isEmpty
-            ? logs
-            : logs.filter { $0.displayString.localizedCaseInsensitiveContains(searchText) }
-        
-        return filteredBySearch.filter { $0.level == selectedLogLevel }
-    }
-
     var body: some View {
         VStack {
             HStack {
@@ -53,13 +47,19 @@ struct LogsPreviewScreen: View {
             }
             
             List {
-                ForEach(filteredLogs) { log in
+                ForEach(viewModel.filteredLogs) { log in
                     LogItem(log: log)
                 }
             }
             .listStyle(.plain)
             .ignoresSafeArea(.container, edges: .horizontal)
             .searchable(text: $searchText)
+        }
+        .onChange(of: searchText, initial: true) {
+            viewModel.updateModel(searchText: searchText, logLevel: selectedLogLevel)
+        }
+        .onChange(of: selectedLogLevel, initial: true) {
+            viewModel.updateModel(searchText: searchText, logLevel: selectedLogLevel)
         }
     }
 }
