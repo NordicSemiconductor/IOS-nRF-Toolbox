@@ -96,6 +96,7 @@ final class ConnectedDevicesViewModel: ObservableObject {
             let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
             if let fileSize = attributes[FileAttributeKey.size] as? UInt64 {
                 let megabytes = Double(fileSize) / (1024 * 1024)
+                print("AAATESTAAA - file size \(fileSize) bytes")
                 return LogsMeta(size: megabytes)
             }
         } catch {
@@ -104,19 +105,16 @@ final class ConnectedDevicesViewModel: ObservableObject {
         return nil
     }
     
-    func memorySize<T>(of array: [T]) -> LogsMeta? {
-        let stackSize = MemoryLayout<[T]>.size
-        
-        let heapSize = array.withUnsafeBufferPointer { buffer -> Int in
-            guard let baseAddress = buffer.baseAddress else { return 0 }
-            return malloc_size(baseAddress)
+    func memorySize(of logs: [LogDb]) -> LogsMeta? {
+        let totalSize = logs.reduce(0) { acc, item in
+            let instanceSize = class_getInstanceSize(LogDb.self)
+            let stringSize = item.value.utf8.count * MemoryLayout<UInt16>.size
+            
+            return acc + stringSize + instanceSize
         }
         
-        let size = Double(stackSize + heapSize) / (1024 * 1024)
-        
-        log.debug("AAATESTAAA - Log size: \(stackSize + heapSize)")
-        
-        return LogsMeta(size: size)
+        print("AAATESTAAA - memory size \(totalSize) bytes")
+        return LogsMeta(size: Double(totalSize / (1024*1024)))
     }
 }
 
