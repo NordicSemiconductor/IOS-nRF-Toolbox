@@ -47,7 +47,7 @@ struct LogsPreviewScreen: View {
             }
             
             List {
-                ForEach(viewModel.filteredLogs) { log in
+                ForEach(viewModel.logsPreview.filteredLogs) { log in
                     LogItem(log: log)
                 }
             }
@@ -101,16 +101,5 @@ struct LogLevelItem: View {
                 RoundedRectangle(cornerRadius: 12)
                     .fill(level.color)
             )
-    }
-}
-
-extension View {
-    @ViewBuilder
-    func applySearchBehaviorIfAvailable() -> some View {
-        if #available(iOS 26.0, *) {
-            self.searchToolbarBehavior(.minimize)
-        } else {
-            self
-        }
     }
 }
