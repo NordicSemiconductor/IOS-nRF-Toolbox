@@ -46,11 +46,44 @@ struct LogsPreviewScreen: View {
             
             List {
                 ForEach(filteredLogs) { log in
-                    Text(log.displayString)
-                        .foregroundColor(log.levelColor)
+                    LogItem(log: log)
                 }
             }
+            .listStyle(.plain)
+            .ignoresSafeArea(.container, edges: .horizontal)
             .searchable(text: $searchText)
+        }
+    }
+}
+
+struct LogItem: View {
+    
+    let log: LogDb
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text(log.displayDate)
+                    .foregroundColor(log.levelColor)
+                    .monospaced()
+                    .font(.caption)
+                
+                Spacer()
+                
+                Text(log.levelName)
+                    .foregroundColor(Color.white)
+                    .monospaced()
+                    .font(.caption)
+                    .padding(6)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(log.levelColor)
+                    )
+            }
+            
+            Text(log.value)
+                .foregroundColor(log.levelColor)
+                .monospaced()
         }
     }
 }

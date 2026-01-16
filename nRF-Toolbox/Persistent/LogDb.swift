@@ -46,7 +46,11 @@ extension LogDb {
         }
     }
     
+    var displayDate: String {
+        LogDb.formatter.string(from: timestamp)
+    }
+    
     var displayString: String {
-        "\(LogDb.formatter.string(from: timestamp)): \(levelName) - \(value)"
+        "\(displayDate): \(levelName) - \(value)"
     }
 }

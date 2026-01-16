@@ -103,6 +103,21 @@ final class ConnectedDevicesViewModel: ObservableObject {
         }
         return nil
     }
+    
+    func memorySize<T>(of array: [T]) -> LogsMeta? {
+        let stackSize = MemoryLayout<[T]>.size
+        
+        let heapSize = array.withUnsafeBufferPointer { buffer -> Int in
+            guard let baseAddress = buffer.baseAddress else { return 0 }
+            return malloc_size(baseAddress)
+        }
+        
+        let size = Double(stackSize + heapSize) / (1024 * 1024)
+        
+        log.debug("AAATESTAAA - Log size: \(stackSize + heapSize)")
+        
+        return LogsMeta(size: size)
+    }
 }
 
 extension ConnectedDevicesViewModel {
