@@ -20,7 +20,7 @@ struct LogsSettingsScreen: View {
     
     var body: some View {
         List {
-            let logsMeta = previewViewModel.logsMeta
+            let logsMeta = previewViewModel.logsPreview.logsMeta
             
             Section("Configuration") {
                 Toggle(isOn: $settingsViewModel.logsSettings.isEnabled) {
@@ -79,7 +79,7 @@ struct LogsSettingsScreen: View {
             
             Section("Actions") {
                 ShareLink(
-                    item: Logs(values: previewViewModel.printableLogs),
+                    item: Logs(values: previewViewModel.logsPreview.printableLogs),
                     preview: SharePreview(
                         "nRF Toolbox Logs",
                         image: Image("AppIconPreview")
