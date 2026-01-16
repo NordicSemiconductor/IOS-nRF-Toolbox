@@ -108,8 +108,13 @@ struct LogsSettingsScreen: View {
         } message: {
             Text("This action cannot be undone.")
         }
-        .onAppear {
-            logsMeta = viewModel.memorySize(of: logs) ?? LogsMeta()
+        .onChange(of: logs, initial: true) {
+            let memorySize = viewModel.memorySize(of: logs) ?? LogsMeta()
+            let fileSize = viewModel.getSwiftDataStoreSize() ?? LogsMeta()
+            
+            print("AAATESTAAA - memory size \(memorySize.size)")
+            print("AAATESTAAA - file size \(fileSize.size)")
+            logsMeta = memorySize
         }
     }
 }
