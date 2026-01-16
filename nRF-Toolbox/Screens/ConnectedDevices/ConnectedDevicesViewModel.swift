@@ -96,7 +96,6 @@ final class ConnectedDevicesViewModel: ObservableObject {
             let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
             if let fileSize = attributes[FileAttributeKey.size] as? UInt64 {
                 let megabytes = Double(fileSize) / (1024 * 1024)
-                print("AAATESTAAA - file size \(fileSize) bytes")
                 return LogsMeta(size: megabytes)
             }
         } catch {
@@ -105,6 +104,7 @@ final class ConnectedDevicesViewModel: ObservableObject {
         return nil
     }
     
+    // It's rather an estimation than exact evaluation.
     func memorySize(of logs: [LogDb]) -> LogsMeta? {
         let totalSize = logs.reduce(0) { acc, item in
             let instanceSize = class_getInstanceSize(LogDb.self)
@@ -113,8 +113,7 @@ final class ConnectedDevicesViewModel: ObservableObject {
             return acc + stringSize + instanceSize
         }
         
-        print("AAATESTAAA - memory size \(totalSize) bytes")
-        return LogsMeta(size: Double(totalSize / (1024*1024)))
+        return LogsMeta(size: Double(totalSize / (1024 * 1024)))
     }
 }
 
