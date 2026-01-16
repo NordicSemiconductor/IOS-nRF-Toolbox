@@ -30,27 +30,29 @@ extension LogDb {
         return f
     }()
     
-    var levelName: String {
-        switch level {
+    var displayDate: String {
+        LogDb.formatter.string(from: timestamp)
+    }
+    
+    var displayString: String {
+        "\(displayDate): \(level.name) - \(value)"
+    }
+}
+
+extension LogLevel {
+    var name: String {
+        switch self {
         case .debug:   return "debug"
         case .info:    return "info"
         case .error:   return "error"
         }
     }
     
-    var levelColor: Color {
-        switch level {
+    var color: Color {
+        switch self {
         case .debug:   return .nordicBlue
         case .info:    return .nordicGrass
         case .error:   return .nordicRed
         }
-    }
-    
-    var displayDate: String {
-        LogDb.formatter.string(from: timestamp)
-    }
-    
-    var displayString: String {
-        "\(displayDate): \(levelName) - \(value)"
     }
 }
