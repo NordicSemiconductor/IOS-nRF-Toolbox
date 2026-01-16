@@ -51,13 +51,7 @@ final class ConnectedDevicesViewModel: ObservableObject {
     
     @Published var showUnexpectedDisconnectionAlert: Bool = false
     @Published fileprivate(set) var unexpectedDisconnectionMessage: String = ""
-    @Published var logsSettings = LogsSettings()
-    
-    private let logsDataSource = LogsDataSource(
-        container: SwiftDataContextManager.shared.container,
-        context: SwiftDataContextManager.shared.context,
-    )
-    
+
     // MARK: init
     
     init(centralManager: CentralManager) {
@@ -67,53 +61,10 @@ final class ConnectedDevicesViewModel: ObservableObject {
         self.devices = []
         self.connectingDevice = nil
         self.scannerState = .disabled
-        observeLogs()
         observeStateChange()
         observeConnections()
         observeDisconnections()
         log.debug(#function)
-    }
-    
-    func observeLogs() {
-        NordicLog.lastLog
-            .filter { _ in self.logsSettings.isEnabled == true}
-            .compactMap { $0 }
-            .map { log in LogDb(value: log.message, level: log.level) }
-            .sink(receiveValue: { log in self.logsDataSource.insert(log) } )
-            .store(in: &cancellables)
-    }
-    
-    func clearLogs() {
-        self.logsDataSource.deleteAll()
-    }
-    
-    func getSwiftDataStoreSize() -> LogsMeta? {
-        guard let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first?.appendingPathComponent("default.store") else {
-            return nil
-        }
-        
-        do {
-            let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
-            if let fileSize = attributes[FileAttributeKey.size] as? UInt64 {
-                let megabytes = Double(fileSize) / (1024 * 1024)
-                return LogsMeta(size: megabytes)
-            }
-        } catch {
-            print("Error getting file size: \(error)")
-        }
-        return nil
-    }
-    
-    // It's rather an estimation than exact evaluation.
-    func memorySize(of logs: [LogDb]) -> LogsMeta? {
-        let totalSize = logs.reduce(0) { acc, item in
-            let instanceSize = class_getInstanceSize(LogDb.self)
-            let stringSize = item.value.utf8.count * MemoryLayout<UInt16>.size
-            
-            return acc + stringSize + instanceSize
-        }
-        
-        return LogsMeta(size: Double(totalSize / (1024 * 1024)))
     }
 }
 

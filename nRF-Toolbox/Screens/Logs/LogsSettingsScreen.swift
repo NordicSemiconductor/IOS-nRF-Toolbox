@@ -14,16 +14,16 @@ import iOS_Common_Libraries
 
 struct LogsSettingsScreen: View {
     
-    @Query(sort: \LogDb.timestamp) var logs: [LogDb]
-    
-    @EnvironmentObject var viewModel: ConnectedDevicesViewModel
+    @EnvironmentObject var previewViewModel: LogsPreviewViewModel
+    @EnvironmentObject var settingsViewModel: LogsSettingsViewModel
     @State private var isDeleteDialogShown = false
-    @State private var logsMeta: LogsMeta = LogsMeta()
     
     var body: some View {
         List {
+            let logsMeta = previewViewModel.logsMeta
+            
             Section("Configuration") {
-                Toggle(isOn: $viewModel.logsSettings.isEnabled) {
+                Toggle(isOn: $settingsViewModel.logsSettings.isEnabled) {
                     HStack(spacing: 12) {
                         Image(systemName: "tray.and.arrow.down.fill")
                             .frame(width: 24)
@@ -79,7 +79,7 @@ struct LogsSettingsScreen: View {
             
             Section("Actions") {
                 ShareLink(
-                    item: Logs(values: logs.map { $0.value }),
+                    item: Logs(values: previewViewModel.printableLogs),
                     preview: SharePreview(
                         "nRF Toolbox Logs",
                         image: Image("AppIconPreview")
@@ -99,7 +99,7 @@ struct LogsSettingsScreen: View {
         }
         .alert("Clear All Logs?", isPresented: $isDeleteDialogShown) {
             Button("Delete", role: .destructive) {
-                viewModel.clearLogs()
+                settingsViewModel.clearLogs()
                 isDeleteDialogShown = false
             }
             Button("Cancel", role: .cancel) {
@@ -107,9 +107,6 @@ struct LogsSettingsScreen: View {
             }
         } message: {
             Text("This action cannot be undone.")
-        }
-        .onChange(of: logs, initial: true) {
-            logsMeta = viewModel.memorySize(of: logs) ?? LogsMeta()
         }
     }
 }

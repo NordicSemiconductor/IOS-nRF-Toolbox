@@ -74,6 +74,8 @@
 		A71D577A2ED9BCB300CB7B3F /* Snapfile in Resources */ = {isa = PBXBuildFile; fileRef = A71D57762ED9BCB300CB7B3F /* Snapfile */; };
 		A71D577C2ED9C41400CB7B3F /* ScreenshotsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71D577B2ED9C40E00CB7B3F /* ScreenshotsTests.swift */; };
 		A71D57802ED9CBA200CB7B3F /* Fastfile in Resources */ = {isa = PBXBuildFile; fileRef = A71D577F2ED9CB9F00CB7B3F /* Fastfile */; };
+		A71FAAD42F1A596400AB36FC /* LogsPreviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71FAAD32F1A596000AB36FC /* LogsPreviewViewModel.swift */; };
+		A71FAAD62F1A5D2B00AB36FC /* LogsSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71FAAD52F1A5D2500AB36FC /* LogsSettingsViewModel.swift */; };
 		A7255E692EAF5F2800774CEE /* MockError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7255E682EAF5F2700774CEE /* MockError.swift */; };
 		A72A343C2EAA57160011BA44 /* CSCSCBMPeripheralSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72A343B2EAA570F0011BA44 /* CSCSCBMPeripheralSpecDelegate.swift */; };
 		A7451D6F2F07F0F400336EF6 /* Logs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7451D6E2F07F0EB00336EF6 /* Logs.swift */; };
@@ -275,6 +277,8 @@
 		A71D57772ED9BCB300CB7B3F /* SnapshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 		A71D577B2ED9C40E00CB7B3F /* ScreenshotsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotsTests.swift; sourceTree = "<group>"; };
 		A71D577F2ED9CB9F00CB7B3F /* Fastfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Fastfile; sourceTree = "<group>"; };
+		A71FAAD32F1A596000AB36FC /* LogsPreviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsPreviewViewModel.swift; sourceTree = "<group>"; };
+		A71FAAD52F1A5D2500AB36FC /* LogsSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsSettingsViewModel.swift; sourceTree = "<group>"; };
 		A7255E682EAF5F2700774CEE /* MockError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockError.swift; sourceTree = "<group>"; };
 		A72A343B2EAA570F0011BA44 /* CSCSCBMPeripheralSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSCSCBMPeripheralSpecDelegate.swift; sourceTree = "<group>"; };
 		A7451D6E2F07F0EB00336EF6 /* Logs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logs.swift; sourceTree = "<group>"; };
@@ -804,6 +808,8 @@
 		A70A621A2F0F9A9500C341AB /* Logs */ = {
 			isa = PBXGroup;
 			children = (
+				A71FAAD52F1A5D2500AB36FC /* LogsSettingsViewModel.swift */,
+				A71FAAD32F1A596000AB36FC /* LogsPreviewViewModel.swift */,
 				A745E2AC2F18CEE9000B47FD /* LogsSettingsScreen.swift */,
 				A70A62552F1633D800C341AB /* LogsPreviewScreen.swift */,
 				A70A621B2F0FB56B00C341AB /* LogsScreen.swift */,
@@ -1247,6 +1253,7 @@
 				0164A46B2AD550000093E501 /* RSSIChartView.swift in Sources */,
 				012C8EB52B0D31C400FFE4EC /* Logger+Ext.swift in Sources */,
 				013E5D8C2ADD33EF00B9C475 /* RunningServiceViewModel.swift in Sources */,
+				A71FAAD62F1A5D2B00AB36FC /* LogsSettingsViewModel.swift in Sources */,
 				01FD68D32AE82EB90021101C /* AttributeList.swift in Sources */,
 				0132082A2A5C142100DCEA11 /* ScanResultItem.swift in Sources */,
 				AA102C4D2E1579A30001BDC5 /* CuffPressureView.swift in Sources */,
@@ -1266,6 +1273,7 @@
 				AAA898B72DD4C0B6000C7012 /* UARTPresetsGridView.swift in Sources */,
 				AA5539202D00AAD200F589F5 /* BatteryViewModel.swift in Sources */,
 				AAE967342E38D09A00A7B93B /* RSCSFeature.swift in Sources */,
+				A71FAAD42F1A596400AB36FC /* LogsPreviewViewModel.swift in Sources */,
 				0129F2282A684059002FB3F5 /* LabeledValueView.swift in Sources */,
 				0164A4792AD741200093E501 /* ConnectedDevicesViewModel.swift in Sources */,
 				A7D657C42EA2470E00CA7D63 /* UARTCBMPeripheralSpecDelegate.swift in Sources */,

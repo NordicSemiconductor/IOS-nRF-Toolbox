@@ -26,6 +26,7 @@ struct RootNavigationView: View {
     
     @StateObject var rootViewModel = RootNavigationViewModel.shared
     @StateObject var connectedDevicesViewModel = ConnectedDevicesViewModel(centralManager: centralManager)
+    @StateObject var logsSettingsViewModel = LogsSettingsViewModel()
     
     @State private var visibility: NavigationSplitViewVisibility = .doubleColumn
     @State private var preferredCompactColumn: NavigationSplitViewColumn = .sidebar
@@ -46,7 +47,6 @@ struct RootNavigationView: View {
                 switch (rootViewModel.selectedCategory) {
                 case .device(let device):
                     DeviceScreen()
-                        .environmentObject(rootViewModel)
                         .environmentObject(connectedDevicesViewModel)
                         .environmentObject(connectedDevicesViewModel.deviceViewModel(for: device.id)!)
                         .onAppear {
@@ -108,5 +108,6 @@ struct RootNavigationView: View {
         }
         .accentColor(.white)
         .environmentObject(rootViewModel)
+        .environmentObject(logsSettingsViewModel)
     }
 }
