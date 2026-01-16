@@ -11,38 +11,46 @@ import SwiftUI
 import iOS_Common_Libraries
 
 struct LogsPreviewScreen: View {
-    
     @Query(sort: \LogDb.timestamp) var logs: [LogDb]
     @State private var searchText: String = ""
+    @State private var selectedLogLevel: LogLevel = .debug
     @FocusState private var isFocused: Bool
     
     var filteredLogs: [LogDb] {
-        if searchText.isEmpty {
-            return logs
-        } else {
-            return logs.filter {
-                $0.displayString.localizedCaseInsensitiveContains(searchText)
-            }
-        }
+        let filteredBySearch = searchText.isEmpty
+            ? logs
+            : logs.filter { $0.displayString.localizedCaseInsensitiveContains(searchText) }
+        
+        return filteredBySearch.filter { $0.level == selectedLogLevel }
     }
 
     var body: some View {
         VStack {
-            ZStack(alignment: .leading) {
-                
-                BlinkingCursorView().hidden(!searchText.isEmpty)
+            HStack {
+                ZStack(alignment: .leading) {
+                    
+                    BlinkingCursorView().hidden(!searchText.isEmpty)
 
-                HStack(spacing: 0) {
-                    TextField("Search logs", text: $searchText, prompt: Text("Search logs")).focused($isFocused).tint(.clear)
-                    BlinkingCursorView().padding(.leading, 6).hidden()
+                    HStack(spacing: 0) {
+                        TextField("Search logs", text: $searchText, prompt: Text("Search logs")).focused($isFocused).tint(.clear)
+                        BlinkingCursorView().padding(.leading, 6).hidden()
+                    }
+                    
+                    HStack(spacing: 0) {
+                        Text(searchText).lineLimit(1).hidden()
+                        BlinkingCursorView().padding(.leading, 2).hidden(searchText.isEmpty)
+                    }
                 }
+                .padding()
                 
-                HStack(spacing: 0) {
-                    Text(searchText).lineLimit(1).hidden()
-                    BlinkingCursorView().padding(.leading, 2).hidden(searchText.isEmpty)
-                }
+                Picker("Color", selection: $selectedLogLevel, content: {
+                    ForEach(LogLevel.allCases) { log in
+                        LogLevelItem(level: log).tag(log)
+                    }
+                }, currentValueLabel: {
+                    LogLevelItem(level: selectedLogLevel)
+                })
             }
-            .padding()
             
             List {
                 ForEach(filteredLogs) { log in
@@ -64,27 +72,35 @@ struct LogItem: View {
         VStack(alignment: .leading) {
             HStack {
                 Text(log.displayDate)
-                    .foregroundColor(log.levelColor)
                     .monospaced()
                     .font(.caption)
                 
                 Spacer()
                 
-                Text(log.levelName)
-                    .foregroundColor(Color.white)
-                    .monospaced()
-                    .font(.caption)
-                    .padding(6)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(log.levelColor)
-                    )
+                LogLevelItem(level: log.level)
             }
             
             Text(log.value)
-                .foregroundColor(log.levelColor)
+                .foregroundColor(log.level.color)
                 .monospaced()
         }
+    }
+}
+
+struct LogLevelItem: View {
+    
+    let level: LogLevel
+    
+    var body: some View {
+        Text(level.name)
+            .foregroundColor(Color.white)
+            .monospaced()
+            .font(.caption)
+            .padding(6)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(level.color)
+            )
     }
 }
 
