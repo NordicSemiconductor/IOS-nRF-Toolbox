@@ -12,11 +12,31 @@ import iOS_Common_Libraries
 
 struct LogsPreviewScreen: View {
     
-    @EnvironmentObject var viewModel: LogsPreviewViewModel
-    
-    @State private var searchText: String = ""
-    @State private var selectedLogLevel: LogLevel = .debug
+    @Binding private var searchText: String
+    @Binding private var selectedLogLevel: LogLevel
     @FocusState private var isFocused: Bool
+    
+    @Query(sort: \LogDb.timestamp) var logs: [LogDb]
+    
+    init(searchText: Binding<String>, selectedLogLevel: Binding<LogLevel>) {
+        self._searchText = searchText
+        self._selectedLogLevel = selectedLogLevel
+        
+        let searchText = searchText.wrappedValue
+        let selectedLogLevel = selectedLogLevel.wrappedValue
+        
+        if searchText.isEmpty {
+            let predicate = #Predicate<LogDb> { log in
+                log.level == selectedLogLevel.rawValue
+            }
+            _logs = Query(filter: predicate, sort: \LogDb.timestamp, order: .reverse)
+        } else {
+            let predicate = #Predicate<LogDb> { log in
+                (searchText.isEmpty ? true : log.value.localizedStandardContains(searchText)) && log.level == selectedLogLevel.rawValue
+            }
+            _logs = Query(filter: predicate, sort: \LogDb.timestamp, order: .reverse)
+        }
+    }
     
     var body: some View {
         VStack {
@@ -47,19 +67,13 @@ struct LogsPreviewScreen: View {
             }
             
             List {
-                ForEach(viewModel.logsPreview.filteredLogs) { log in
+                ForEach(logs) { log in
                     LogItem(log: log)
                 }
             }
             .listStyle(.plain)
             .ignoresSafeArea(.container, edges: .horizontal)
             .searchable(text: $searchText)
-        }
-        .onChange(of: searchText, initial: true) {
-            viewModel.updateModel(searchText: searchText, logLevel: selectedLogLevel)
-        }
-        .onChange(of: selectedLogLevel, initial: true) {
-            viewModel.updateModel(searchText: searchText, logLevel: selectedLogLevel)
         }
     }
 }
@@ -77,11 +91,11 @@ struct LogItem: View {
                 
                 Spacer()
                 
-                LogLevelItem(level: log.level)
+                LogLevelItem(level: log.logLevel)
             }
             
             Text(log.value)
-                .foregroundColor(log.level.color)
+                .foregroundColor(log.logLevel.color)
                 .monospaced()
         }
     }
