@@ -14,14 +14,18 @@ import iOS_Common_Libraries
 
 struct LogsSettingsScreen: View {
     
-    @EnvironmentObject var previewViewModel: LogsPreviewViewModel
     @EnvironmentObject var settingsViewModel: LogsSettingsViewModel
     @State private var isDeleteDialogShown = false
     
+    @Query(sort: \LogDb.timestamp) var logs: [LogDb]
+    @State var logsMeta = LogsMeta()
+    
+    private var sharedItem: Logs {
+       Logs(values: logs)
+    }
+    
     var body: some View {
         List {
-            let logsMeta = previewViewModel.logsPreview.logsMeta
-            
             Section("Configuration") {
                 Toggle(isOn: $settingsViewModel.logsSettings.isEnabled) {
                     HStack(spacing: 12) {
@@ -79,7 +83,7 @@ struct LogsSettingsScreen: View {
             
             Section("Actions") {
                 ShareLink(
-                    item: Logs(values: previewViewModel.logsPreview.printableLogs),
+                    item: sharedItem,
                     preview: SharePreview(
                         "nRF Toolbox Logs",
                         image: Image("AppIconPreview")
@@ -97,6 +101,9 @@ struct LogsSettingsScreen: View {
             .setAccent(.universalAccentColor)
             .tint(.primarylabel)
         }
+        .onAppear {
+            logsMeta = getSwiftDataStoreSize() ?? LogsMeta()
+        }
         .alert("Clear All Logs?", isPresented: $isDeleteDialogShown) {
             Button("Delete", role: .destructive) {
                 settingsViewModel.clearLogs()
@@ -108,5 +115,22 @@ struct LogsSettingsScreen: View {
         } message: {
             Text("This action cannot be undone.")
         }
+    }
+    
+    func getSwiftDataStoreSize() -> LogsMeta? {
+        guard let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first?.appendingPathComponent("default.store") else {
+            return nil
+        }
+        
+        do {
+            let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
+            if let fileSize = attributes[FileAttributeKey.size] as? UInt64 {
+                let megabytes = Double(fileSize) / (1024 * 1024)
+                return LogsMeta(size: megabytes)
+            }
+        } catch {
+            print("Error getting file size: \(error)")
+        }
+        return nil
     }
 }
