@@ -30,7 +30,7 @@ final class ConnectedDevicesViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private var scannerCancellables = Set<AnyCancellable>()
     
-    private let log = NordicLog(category: "HeartRateScreen", subsystem: "com.nordicsemi.nrf-toolbox")
+    private let log = NordicLog(category: "ConnectedDevicesViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
     
     // MARK: Properties
     

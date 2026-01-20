@@ -12,74 +12,54 @@ import iOS_Common_Libraries
 
 struct LogsPreviewScreen: View {
     
-    @Binding private var searchText: String
-    @Binding private var selectedLogLevel: LogLevel
+    @EnvironmentObject var viewModel: LogsSettingsViewModel
+    
     @FocusState private var isFocused: Bool
-    
-    @Query(sort: \LogDb.timestamp, order: .forward) var logs: [LogDb]
-    
-    init(searchText: Binding<String>, selectedLogLevel: Binding<LogLevel>) {
-        self._searchText = searchText
-        self._selectedLogLevel = selectedLogLevel
-        
-        let searchText = searchText.wrappedValue
-        let selectedLogLevel = selectedLogLevel.wrappedValue
-        
-        var descriptor = FetchDescriptor<LogDb>(
-             predicate: #Predicate<LogDb> { log in
-                 (searchText.isEmpty ? true : log.value.localizedStandardContains(searchText)) && log.level == selectedLogLevel.rawValue
-             },
-             sortBy: [
-                .init(\.timestamp)
-            ]
-         )
-        descriptor.fetchLimit = 5
-        _logs = Query(descriptor)
-    }
     
     var body: some View {
         VStack {
             HStack {
                 ZStack(alignment: .leading) {
                     
-                    BlinkingCursorView().hidden(!searchText.isEmpty)
+                    BlinkingCursorView().hidden(!viewModel.searchText.isEmpty)
 
                     HStack(spacing: 0) {
-                        TextField("Search logs", text: $searchText, prompt: Text("Search logs")).focused($isFocused).tint(.clear)
+                        TextField("Search logs", text: $viewModel.searchText, prompt: Text("Search logs")).focused($isFocused).tint(.clear)
                         BlinkingCursorView().padding(.leading, 6).hidden()
                     }
                     
                     HStack(spacing: 0) {
-                        Text(searchText).lineLimit(1).hidden()
-                        BlinkingCursorView().padding(.leading, 2).hidden(searchText.isEmpty)
+                        Text(viewModel.searchText).lineLimit(1).hidden()
+                        BlinkingCursorView().padding(.leading, 2).hidden(viewModel.searchText.isEmpty)
                     }
                 }
                 .padding()
                 
-                Picker("Color", selection: $selectedLogLevel, content: {
+                Picker("Color", selection: $viewModel.selectedLogLevel, content: {
                     ForEach(LogLevel.allCases) { log in
                         LogLevelItem(level: log).tag(log)
                     }
                 }, currentValueLabel: {
-                    LogLevelItem(level: selectedLogLevel)
+                    LogLevelItem(level: viewModel.selectedLogLevel)
                 })
             }
             
             List {
-                ForEach(logs, id: \.displayString) { log in
+                ForEach(viewModel.filteredLogs) { log in
                     LogItem(log: log)
                 }
             }
             .listStyle(.plain)
             .ignoresSafeArea(.container, edges: .horizontal)
-            .searchable(text: $searchText)
+            .searchable(text: $viewModel.searchText)
         }
+        .onAppear { viewModel.loadRecords() }
     }
 }
 
-struct LogItem: View {
+private struct LogItem: View {
     
-    let log: LogDb
+    let log: LogItemDomain
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -100,7 +80,7 @@ struct LogItem: View {
     }
 }
 
-struct LogLevelItem: View {
+private struct LogLevelItem: View {
     
     let level: LogLevel
     

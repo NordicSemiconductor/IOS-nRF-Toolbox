@@ -18,11 +18,13 @@ private enum Tabs {
 
 struct LogsScreen: View {
     
+    @StateObject var viewModel = LogsSettingsViewModel(container: SwiftDataContextManager.shared.container!)
+    
     @State private var selectedTab: Tabs = .settings
     
     @State private var searchText: String = ""
     @State private var selectedLogLevel: LogLevel = .debug
-    
+
     var body: some View {
         TabView(selection: $selectedTab) {
             Tab("Settings", systemImage: "gear", value: Tabs.settings) {
@@ -30,12 +32,13 @@ struct LogsScreen: View {
             }
             
             Tab("Preview", systemImage: "list.bullet.clipboard", value: Tabs.preview) {
-                LogsPreviewScreen(searchText: $searchText, selectedLogLevel: $selectedLogLevel)
+                LogsPreviewScreen()
             }
         }
         .navigationTitle("Logs")
         .applyTabBarMinimazeBehaviorIfAvailable()
         .tint(.universalAccentColor)
+        .environmentObject(viewModel)
     }
 }
 

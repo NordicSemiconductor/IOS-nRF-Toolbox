@@ -11,7 +11,7 @@ import iOS_Common_Libraries
 
 struct Logs: Transferable {
     
-    var values: [LogDb]
+    var values: [LogItemDomain]
     
     static var transferRepresentation: some TransferRepresentation {
         DataRepresentation(exportedContentType: .plainText) { logs in

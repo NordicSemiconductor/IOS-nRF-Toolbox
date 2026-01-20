@@ -63,6 +63,8 @@
 		01FB19D22AE3DB70006DAB9F /* SensorCalibrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FB19D12AE3DB70006DAB9F /* SensorCalibrationViewModel.swift */; };
 		01FD68D32AE82EB90021101C /* AttributeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FD68D22AE82EB90021101C /* AttributeList.swift */; };
 		A70054642E9E82BC00F781BE /* HeartRateCBMPeripheralSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70054632E9E82B000F781BE /* HeartRateCBMPeripheralSpecDelegate.swift */; };
+		A704BC4C2F1FB120003ACE2C /* LogItemDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A704BC4B2F1FB11C003ACE2C /* LogItemDomain.swift */; };
+		A704BC4E2F1FB7D3003ACE2C /* ProtectedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A704BC4D2F1FB7D2003ACE2C /* ProtectedModel.swift */; };
 		A70A61FC2F0D46CA00C341AB /* LogDb.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70A61FB2F0D46C500C341AB /* LogDb.swift */; };
 		A70A61FE2F0D46F100C341AB /* SwiftDataContextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70A61FD2F0D46F000C341AB /* SwiftDataContextManager.swift */; };
 		A70A62002F0D470100C341AB /* LogsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70A61FF2F0D470100C341AB /* LogsDataSource.swift */; };
@@ -265,6 +267,8 @@
 		52BDCBBD1C3FD86900E2680F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		89CF4D2BA242FBAD9F6C46E9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A70054632E9E82B000F781BE /* HeartRateCBMPeripheralSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateCBMPeripheralSpecDelegate.swift; sourceTree = "<group>"; };
+		A704BC4B2F1FB11C003ACE2C /* LogItemDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogItemDomain.swift; sourceTree = "<group>"; };
+		A704BC4D2F1FB7D2003ACE2C /* ProtectedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectedModel.swift; sourceTree = "<group>"; };
 		A70A61FB2F0D46C500C341AB /* LogDb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDb.swift; sourceTree = "<group>"; };
 		A70A61FD2F0D46F000C341AB /* SwiftDataContextManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataContextManager.swift; sourceTree = "<group>"; };
 		A70A61FF2F0D470100C341AB /* LogsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsDataSource.swift; sourceTree = "<group>"; };
@@ -796,6 +800,8 @@
 		A70A61FA2F0D46C000C341AB /* Persistent */ = {
 			isa = PBXGroup;
 			children = (
+				A704BC4D2F1FB7D2003ACE2C /* ProtectedModel.swift */,
+				A704BC4B2F1FB11C003ACE2C /* LogItemDomain.swift */,
 				A70A61FF2F0D470100C341AB /* LogsDataSource.swift */,
 				A70A61FD2F0D46F000C341AB /* SwiftDataContextManager.swift */,
 				A70A61FB2F0D46C500C341AB /* LogDb.swift */,
@@ -1345,10 +1351,12 @@
 				AA102C4B2E1578FD0001BDC5 /* CuffPressureViewModel.swift in Sources */,
 				012E22942A6AD5BE00B14064 /* NamedItem.swift in Sources */,
 				A70A623B2F1528CA00C341AB /* LogsMeta.swift in Sources */,
+				A704BC4C2F1FB120003ACE2C /* LogItemDomain.swift in Sources */,
 				AA69FF382E056F9F0065A39C /* GlucoseAllRecordsChartView.swift in Sources */,
 				AAA04F232DAD513A002DAB42 /* UARTMessagesList.swift in Sources */,
 				AA94C5512D01B49200562F7A /* BatteryView.swift in Sources */,
 				A72A343C2EAA57160011BA44 /* CSCSCBMPeripheralSpecDelegate.swift in Sources */,
+				A704BC4E2F1FB7D3003ACE2C /* ProtectedModel.swift in Sources */,
 				AA01D4922D4A3D38008523CE /* Throughput+Attributes.swift in Sources */,
 				A70A62002F0D470100C341AB /* LogsDataSource.swift in Sources */,
 				AA306A0B2DF30DBF005B4E04 /* GlucoseView.swift in Sources */,
