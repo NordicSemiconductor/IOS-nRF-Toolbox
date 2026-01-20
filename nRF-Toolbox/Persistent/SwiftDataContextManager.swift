@@ -13,14 +13,11 @@ class SwiftDataContextManager{
     static let shared = SwiftDataContextManager()
     
     var container: ModelContainer?
-    var context : ModelContext?
     
     private init() {
         do {
-            container = try ModelContainer(for: LogDb.self)
-            if let container {
-                context = ModelContext(container)
-            }
+            let configuration = ModelConfiguration(isStoredInMemoryOnly: false)
+            self.container = try ModelContainer(for: LogDb.self, configurations: configuration)
         } catch {
             debugPrint("Error initializing database container:", error)
         }

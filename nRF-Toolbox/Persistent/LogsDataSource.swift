@@ -8,39 +8,43 @@
 
 import SwiftData
 import Foundation
+import iOS_Common_Libraries
 
-@MainActor
-class LogsDataSource {
-    private let container: ModelContainer?
-    private let context: ModelContext?
+@ModelActor
+actor LogsDataSource {
     
-    init(container: ModelContainer?, context: ModelContext?) {
-        self.container = container
-        self.context = context
+    private let log = NordicLog(category: "LogsDataSource", subsystem: "com.nordicsemi.nrf-toolbox")
+    
+    func fetch() throws -> [LogItemDomain] {
+        try modelContext
+            .fetch(FetchDescriptor<LogDb>())
+            .map { LogItemDomain(from: $0) }
     }
     
-    func insert(_ entity: LogDb) {
-        self.container?.mainContext.insert(entity)
-        try? self.container?.mainContext.save()
+    func fetch(page: Int = 0, amountPerPage: Int = 50) throws -> [LogItemDomain] {
+        let alreadyFetched = page * amountPerPage
+        
+        var descriptor = FetchDescriptor<LogDb>()
+        descriptor.fetchLimit = amountPerPage
+        descriptor.fetchOffset = alreadyFetched
+        
+        let fetched = try modelContext.fetch(descriptor)
+        
+        return fetched.map {
+            LogItemDomain(from: $0)
+        }
     }
     
-    func save() {
-        try? self.container?.mainContext.save()
-    }
-
-    func delete(_ entity: LogDb) {
-        self.container?.mainContext.delete(entity)
-        try? self.container?.mainContext.save()
-    }
-    
-    func fetchContacts() -> [LogDb] {
-        let fetchDescriptor = FetchDescriptor<LogDb>(sortBy: [SortDescriptor(\.timestamp, order: .forward)])
-        let contacts = try? self.container?.mainContext.fetch(fetchDescriptor)
-        return contacts ?? []
+    @discardableResult
+    func insert(_ item: LogItemDomain) throws -> PersistentIdentifier {
+        let model = LogDb(from: item)
+        modelContext.insert(model)
+        try modelContext.save()
+        return model.persistentModelID
     }
     
-    func deleteAll() {
-        try? context?.delete(model: LogDb.self)
-        try? self.container?.mainContext.save()
+    func deleteAll() throws {
+        try modelContext.delete(model: LogDb.self)
+        try modelContext.save()
     }
 }
