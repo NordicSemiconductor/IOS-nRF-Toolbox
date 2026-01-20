@@ -12,7 +12,7 @@ import Foundation
 import iOS_Common_Libraries
 
 @Model
-final class LogDb {
+final class LogDb: Sendable {
     var value: String
     var level: Int
     var timestamp: Date
@@ -27,10 +27,6 @@ final class LogDb {
         self.value = value
         self.level = level.rawValue
         self.timestamp = timestamp
-    }
-    
-    convenience init(value: String, level: LogLevel) {
-        self.init(value: value, level: level, timestamp: Date())
     }
 
     func copy() -> LogDb {

@@ -29,8 +29,21 @@ class LogsSettingsViewModel : ObservableObject {
         NordicLog.lastLog
             .filter { _ in self.logsSettings.isEnabled == true}
             .compactMap { $0 }
-            .map { log in LogDb(value: log.message, level: log.level) }
+            .map { log in LogDb(value: log.message, level: log.level, timestamp: log.timestamp) }
             .sink(receiveValue: { log in self.logsDataSource.insert(log) } )
+            .store(in: &cancellables)
+        
+        NordicLog.lastLog
+            .filter { _ in self.logsSettings.isEnabled == true}
+            .compactMap { $0 }
+            .throttle(
+                for: .seconds(10),
+                scheduler: RunLoop.main,
+                latest: true
+            )
+            .sink { record in
+                self.logsDataSource.save()
+            }
             .store(in: &cancellables)
     }
     

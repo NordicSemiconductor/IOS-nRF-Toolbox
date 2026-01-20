@@ -17,13 +17,13 @@ struct LogsSettingsScreen: View {
     @EnvironmentObject var settingsViewModel: LogsSettingsViewModel
     @State private var isDeleteDialogShown = false
     
-    @Query(sort: \LogDb.timestamp) var logs: [LogDb]
+    @Query(sort: \LogDb.timestamp, order: .forward) var logs: [LogDb]
     @State var logsMeta = LogsMeta()
     
     private var sharedItem: Logs {
-       Logs(values: logs)
+        Logs(values: logs)
     }
-    
+
     var body: some View {
         List {
             Section("Configuration") {
