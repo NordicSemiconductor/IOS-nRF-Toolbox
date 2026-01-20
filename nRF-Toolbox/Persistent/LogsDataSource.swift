@@ -23,6 +23,10 @@ class LogsDataSource {
         self.container?.mainContext.insert(entity)
         try? self.container?.mainContext.save()
     }
+    
+    func save() {
+        try? self.container?.mainContext.save()
+    }
 
     func delete(_ entity: LogDb) {
         self.container?.mainContext.delete(entity)

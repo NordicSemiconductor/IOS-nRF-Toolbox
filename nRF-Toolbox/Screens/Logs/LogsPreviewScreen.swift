@@ -16,7 +16,7 @@ struct LogsPreviewScreen: View {
     @Binding private var selectedLogLevel: LogLevel
     @FocusState private var isFocused: Bool
     
-    @Query(sort: \LogDb.timestamp) var logs: [LogDb]
+    @Query(sort: \LogDb.timestamp, order: .forward) var logs: [LogDb]
     
     init(searchText: Binding<String>, selectedLogLevel: Binding<LogLevel>) {
         self._searchText = searchText
@@ -25,17 +25,16 @@ struct LogsPreviewScreen: View {
         let searchText = searchText.wrappedValue
         let selectedLogLevel = selectedLogLevel.wrappedValue
         
-        if searchText.isEmpty {
-            let predicate = #Predicate<LogDb> { log in
-                log.level == selectedLogLevel.rawValue
-            }
-            _logs = Query(filter: predicate, sort: \LogDb.timestamp, order: .reverse)
-        } else {
-            let predicate = #Predicate<LogDb> { log in
-                (searchText.isEmpty ? true : log.value.localizedStandardContains(searchText)) && log.level == selectedLogLevel.rawValue
-            }
-            _logs = Query(filter: predicate, sort: \LogDb.timestamp, order: .reverse)
-        }
+        var descriptor = FetchDescriptor<LogDb>(
+             predicate: #Predicate<LogDb> { log in
+                 (searchText.isEmpty ? true : log.value.localizedStandardContains(searchText)) && log.level == selectedLogLevel.rawValue
+             },
+             sortBy: [
+                .init(\.timestamp)
+            ]
+         )
+        descriptor.fetchLimit = 5
+        _logs = Query(descriptor)
     }
     
     var body: some View {
@@ -67,7 +66,7 @@ struct LogsPreviewScreen: View {
             }
             
             List {
-                ForEach(logs) { log in
+                ForEach(logs, id: \.displayString) { log in
                     LogItem(log: log)
                 }
             }
