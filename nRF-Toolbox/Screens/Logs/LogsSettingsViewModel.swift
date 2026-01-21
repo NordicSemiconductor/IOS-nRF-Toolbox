@@ -36,12 +36,22 @@ class LogsSettingsViewModel : ObservableObject {
     init(container: ModelContainer) {
         self.store = LogsDataSource(modelContainer: container)
         observeLogs()
+        observeFilterChange()
         subscribeToNotifications()
     }
     
     deinit {
         notificationTask?.cancel()
         notificationTask = nil
+    }
+    
+    func observeFilterChange() {
+        Publishers
+            .CombineLatest($searchText, $selectedLogLevel)
+            .sink { [weak self] searchText, logLevel in
+                self?.updateFilters(searchText: searchText, level: logLevel)
+            }
+            .store(in: &cancellables)
     }
     
     func updateFilters(
@@ -77,7 +87,7 @@ class LogsSettingsViewModel : ObservableObject {
     
     func subscribeToNotifications() {
         notificationTask = Task.detached {
-            for await notification in NotificationCenter.default.notifications(named: ModelContext.didSave) {
+            for await _ in NotificationCenter.default.notifications(named: ModelContext.didSave) {
                 let context = ModelContext(self.store.modelContainer)
                 let page = await self.page
                 let itemsPerPage = self.itemsPerPage

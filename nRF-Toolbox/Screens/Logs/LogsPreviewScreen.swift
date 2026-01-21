@@ -47,6 +47,7 @@ struct LogsPreviewScreen: View {
             List {
                 ForEach(viewModel.filteredLogs) { log in
                     LogItem(log: log)
+                        .onAppear { viewModel.filteredLogs.last == log ? viewModel.loadRecords() : nil }
                 }
             }
             .listStyle(.plain)
