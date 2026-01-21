@@ -16,7 +16,7 @@ struct LogsPreviewScreen: View {
     
     @FocusState private var isFocused: Bool
     
-    @State private var scrollToTheTop = false
+    @State private var scrollToTheTop = true
     @State private var position: ScrollPosition = .init(idType: LogItemDomain.ID.self)
     
     var body: some View {
@@ -49,39 +49,44 @@ struct LogsPreviewScreen: View {
                 Button {
                     scrollToTheTop = !scrollToTheTop
                 } label: {
-                    Image(systemName: scrollToTheTop ? "lock" : "lock.slash")
+                    Image(systemName: scrollToTheTop ? "lock.slash" : "lock")
                 }
                 .padding()
             }
             
-            if scrollToTheTop {
-                List {
+            ScrollView {
+                LazyVStack {
                     ForEach(viewModel.filteredLogs) { log in
                         LogItem(log: log)
+                            .padding(.vertical, 10)
+                            .padding(.horizontal, 16)
                             .onAppear { viewModel.filteredLogs.last == log ? viewModel.loadNextPage() : nil }
-                    }
-                }
-                .listStyle(.plain)
-                .ignoresSafeArea(.container, edges: .horizontal)
-                .searchable(text: $viewModel.searchText)
-            } else {
-                ScrollView {
-                    LazyVStack {
-                        ForEach(viewModel.filteredLogs) { log in
-                            LogItem(log: log)
-                                .padding()
-                                .onAppear { viewModel.filteredLogs.last == log ? viewModel.loadNextPage() : nil }
+                        
+                        if viewModel.filteredLogs.last != log {
+                            Separator()
                         }
                     }
-                    .scrollTargetLayout()
                 }
-                .listStyle(.plain)
-                .ignoresSafeArea(.container, edges: .horizontal)
-                .searchable(text: $viewModel.searchText)
-                .scrollPosition($position, anchor: .bottom)
+                .scrollTargetLayout()
+            }
+            .ignoresSafeArea(.container, edges: .horizontal)
+            .searchable(text: $viewModel.searchText)
+            .scrollPosition($position, anchor: .top)
+            .onChange(of: viewModel.filteredLogs) {
+                if scrollToTheTop {
+                    position.scrollTo(x: 0)
+                }
             }
         }
         .onAppear { viewModel.loadNextPage() }
+    }
+}
+
+private struct Separator: View {
+    var body: some View {
+        Divider()
+            .padding(.leading, 16)
+            .background(Color(.systemGray5))
     }
 }
 
