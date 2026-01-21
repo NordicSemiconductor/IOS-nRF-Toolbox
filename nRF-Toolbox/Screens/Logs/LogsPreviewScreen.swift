@@ -47,14 +47,14 @@ struct LogsPreviewScreen: View {
             List {
                 ForEach(viewModel.filteredLogs) { log in
                     LogItem(log: log)
-                        .onAppear { viewModel.filteredLogs.last == log ? viewModel.loadRecords() : nil }
+                        .onAppear { viewModel.filteredLogs.last == log ? viewModel.loadNextPage() : nil }
                 }
             }
             .listStyle(.plain)
             .ignoresSafeArea(.container, edges: .horizontal)
             .searchable(text: $viewModel.searchText)
         }
-        .onAppear { viewModel.loadRecords() }
+        .onAppear { viewModel.loadNextPage() }
     }
 }
 

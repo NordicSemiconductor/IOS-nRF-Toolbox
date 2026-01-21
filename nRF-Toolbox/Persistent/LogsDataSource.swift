@@ -17,14 +17,23 @@ actor LogsDataSource {
     
     func fetch() throws -> [LogItemDomain] {
         try modelContext
-            .fetch(FetchDescriptor<LogDb>())
+            .fetch(getFetchDescriptor())
+            .map { LogItemDomain(from: $0) }
+    }
+    
+    func fetch(limit: Int) throws -> [LogItemDomain] {
+        var descriptor = getFetchDescriptor()
+        descriptor.fetchLimit = limit
+        
+        return try modelContext
+            .fetch(descriptor)
             .map { LogItemDomain(from: $0) }
     }
     
     func fetch(page: Int, amountPerPage: Int) throws -> [LogItemDomain] {
         let alreadyFetched = page * amountPerPage
         
-        var descriptor = FetchDescriptor<LogDb>()
+        var descriptor = getFetchDescriptor()
         descriptor.fetchLimit = amountPerPage
         descriptor.fetchOffset = alreadyFetched
         
@@ -33,6 +42,14 @@ actor LogsDataSource {
         return fetched.map {
             LogItemDomain(from: $0)
         }
+    }
+    
+    func getFetchDescriptor() -> FetchDescriptor<LogDb> {
+        return FetchDescriptor<LogDb>(
+            sortBy: [
+                SortDescriptor(\.timestamp, order: .reverse)
+            ]
+        )
     }
     
     @discardableResult
