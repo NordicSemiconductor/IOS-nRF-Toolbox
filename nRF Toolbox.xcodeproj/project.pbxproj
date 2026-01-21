@@ -66,11 +66,12 @@
 		A704BC4C2F1FB120003ACE2C /* LogItemDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A704BC4B2F1FB11C003ACE2C /* LogItemDomain.swift */; };
 		A70A61FC2F0D46CA00C341AB /* LogDb.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70A61FB2F0D46C500C341AB /* LogDb.swift */; };
 		A70A61FE2F0D46F100C341AB /* SwiftDataContextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70A61FD2F0D46F000C341AB /* SwiftDataContextManager.swift */; };
-		A70A62002F0D470100C341AB /* LogsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70A61FF2F0D470100C341AB /* LogsDataSource.swift */; };
+		A70A62002F0D470100C341AB /* LogsWriteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70A61FF2F0D470100C341AB /* LogsWriteDataSource.swift */; };
 		A70A621C2F0FB56E00C341AB /* LogsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70A621B2F0FB56B00C341AB /* LogsScreen.swift */; };
 		A70A621E2F0FD3D400C341AB /* LogsSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70A621D2F0FD3C900C341AB /* LogsSettings.swift */; };
 		A70A623B2F1528CA00C341AB /* LogsMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70A623A2F1528C800C341AB /* LogsMeta.swift */; };
 		A70A62562F1633DD00C341AB /* LogsPreviewScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70A62552F1633D800C341AB /* LogsPreviewScreen.swift */; };
+		A711312E2F20FAF700BC321F /* LogsReadDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A711312D2F20FAF300BC321F /* LogsReadDataSource.swift */; };
 		A71D57792ED9BCB300CB7B3F /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71D57772ED9BCB300CB7B3F /* SnapshotHelper.swift */; };
 		A71D577A2ED9BCB300CB7B3F /* Snapfile in Resources */ = {isa = PBXBuildFile; fileRef = A71D57762ED9BCB300CB7B3F /* Snapfile */; };
 		A71D577C2ED9C41400CB7B3F /* ScreenshotsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71D577B2ED9C40E00CB7B3F /* ScreenshotsTests.swift */; };
@@ -269,11 +270,12 @@
 		A704BC4B2F1FB11C003ACE2C /* LogItemDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogItemDomain.swift; sourceTree = "<group>"; };
 		A70A61FB2F0D46C500C341AB /* LogDb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDb.swift; sourceTree = "<group>"; };
 		A70A61FD2F0D46F000C341AB /* SwiftDataContextManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataContextManager.swift; sourceTree = "<group>"; };
-		A70A61FF2F0D470100C341AB /* LogsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsDataSource.swift; sourceTree = "<group>"; };
+		A70A61FF2F0D470100C341AB /* LogsWriteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsWriteDataSource.swift; sourceTree = "<group>"; };
 		A70A621B2F0FB56B00C341AB /* LogsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsScreen.swift; sourceTree = "<group>"; };
 		A70A621D2F0FD3C900C341AB /* LogsSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsSettings.swift; sourceTree = "<group>"; };
 		A70A623A2F1528C800C341AB /* LogsMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsMeta.swift; sourceTree = "<group>"; };
 		A70A62552F1633D800C341AB /* LogsPreviewScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsPreviewScreen.swift; sourceTree = "<group>"; };
+		A711312D2F20FAF300BC321F /* LogsReadDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsReadDataSource.swift; sourceTree = "<group>"; };
 		A71D57762ED9BCB300CB7B3F /* Snapfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Snapfile; sourceTree = "<group>"; };
 		A71D57772ED9BCB300CB7B3F /* SnapshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 		A71D577B2ED9C40E00CB7B3F /* ScreenshotsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotsTests.swift; sourceTree = "<group>"; };
@@ -798,8 +800,9 @@
 		A70A61FA2F0D46C000C341AB /* Persistent */ = {
 			isa = PBXGroup;
 			children = (
+				A711312D2F20FAF300BC321F /* LogsReadDataSource.swift */,
 				A704BC4B2F1FB11C003ACE2C /* LogItemDomain.swift */,
-				A70A61FF2F0D470100C341AB /* LogsDataSource.swift */,
+				A70A61FF2F0D470100C341AB /* LogsWriteDataSource.swift */,
 				A70A61FD2F0D46F000C341AB /* SwiftDataContextManager.swift */,
 				A70A61FB2F0D46C500C341AB /* LogDb.swift */,
 			);
@@ -1287,6 +1290,7 @@
 				AA2931592DEEEFCD002C82B6 /* BloodPressureMeasurement.swift in Sources */,
 				A7A28FD52EAD3E02004ECC8B /* MockSpecDelegate.swift in Sources */,
 				A70A61FE2F0D46F100C341AB /* SwiftDataContextManager.swift in Sources */,
+				A711312E2F20FAF700BC321F /* LogsReadDataSource.swift in Sources */,
 				A7D2C8E52E7D414700C93C28 /* CGMSFeatureEnvelope.swift in Sources */,
 				01C81AD52A5CB6420011B41E /* ServiceBadge.swift in Sources */,
 				01FB19D22AE3DB70006DAB9F /* SensorCalibrationViewModel.swift in Sources */,
@@ -1354,7 +1358,7 @@
 				AA94C5512D01B49200562F7A /* BatteryView.swift in Sources */,
 				A72A343C2EAA57160011BA44 /* CSCSCBMPeripheralSpecDelegate.swift in Sources */,
 				AA01D4922D4A3D38008523CE /* Throughput+Attributes.swift in Sources */,
-				A70A62002F0D470100C341AB /* LogsDataSource.swift in Sources */,
+				A70A62002F0D470100C341AB /* LogsWriteDataSource.swift in Sources */,
 				AA306A0B2DF30DBF005B4E04 /* GlucoseView.swift in Sources */,
 				AA21A3402E13D8AD00316CAD /* HeartRateValue.swift in Sources */,
 				A7D7B0D62EBA0254009B69CE /* UARTPresetsXmlParser.swift in Sources */,
