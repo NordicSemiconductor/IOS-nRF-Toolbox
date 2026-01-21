@@ -21,7 +21,7 @@ actor LogsDataSource {
             .map { LogItemDomain(from: $0) }
     }
     
-    func fetch(page: Int = 0, amountPerPage: Int = 50) throws -> [LogItemDomain] {
+    func fetch(page: Int, amountPerPage: Int) throws -> [LogItemDomain] {
         let alreadyFetched = page * amountPerPage
         
         var descriptor = FetchDescriptor<LogDb>()
