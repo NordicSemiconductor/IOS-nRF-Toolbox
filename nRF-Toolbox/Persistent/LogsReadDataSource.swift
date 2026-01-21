@@ -1,8 +1,8 @@
 //
-//  LogsDataSource.swift
+//  LogsReadDataSource.swift
 //  nRF Toolbox
 //
-//  Created by Sylwester Zielinski on 06/01/2026.
+//  Created by Sylwester Zielinski on 21/01/2026.
 //  Copyright © 2026 Nordic Semiconductor. All rights reserved.
 //
 
@@ -11,9 +11,9 @@ import Foundation
 import iOS_Common_Libraries
 
 @ModelActor
-actor LogsDataSource {
+actor LogsReadDataSource {
     
-    private let log = NordicLog(category: "LogsDataSource", subsystem: "com.nordicsemi.nrf-toolbox")
+    private let log = NordicLog(category: "LogsReadDataSource", subsystem: "com.nordicsemi.nrf-toolbox")
     
     func fetch() throws -> [LogItemDomain] {
         try modelContext
@@ -50,18 +50,5 @@ actor LogsDataSource {
                 SortDescriptor(\.timestamp, order: .reverse)
             ]
         )
-    }
-    
-    @discardableResult
-    func insert(_ item: LogItemDomain) throws -> PersistentIdentifier {
-        let model = LogDb(from: item)
-        modelContext.insert(model)
-        try modelContext.save()
-        return model.persistentModelID
-    }
-    
-    func deleteAll() throws {
-        try modelContext.delete(model: LogDb.self)
-        try modelContext.save()
     }
 }

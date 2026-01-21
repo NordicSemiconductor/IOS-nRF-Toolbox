@@ -24,17 +24,20 @@ class LogsSettingsViewModel : ObservableObject {
     @Published var selectedLogLevel: LogLevel = .debug
     @Published var filteredLogs: [LogItemDomain] = []
     
-    let store: LogsDataSource
+    let writeDataSource: LogsWriteDataSource
+    let readDataSource: LogsReadDataSource
+    
     var isLoading: Bool = false
     @Published var page: Int = 0
-    let itemsPerPage: Int = 100
+    private let itemsPerPage: Int = 100
     
     private var cancellables = Set<AnyCancellable>()
     
     private var notificationTask: Task<Void, Never>? = nil
 
     init(container: ModelContainer) {
-        self.store = LogsDataSource(modelContainer: container)
+        self.writeDataSource = LogsWriteDataSource(modelContainer: container)
+        self.readDataSource = LogsReadDataSource(modelContainer: container)
         observeLogs()
         observeFilterChange()
         subscribeToNotifications()
@@ -88,17 +91,10 @@ class LogsSettingsViewModel : ObservableObject {
     func subscribeToNotifications() {
         notificationTask = Task.detached {
             for await _ in NotificationCenter.default.notifications(named: ModelContext.didSave) {
-                let context = ModelContext(self.store.modelContainer)
+                
                 let limit = await self.page * self.itemsPerPage
+                let records = try? await self.readDataSource.fetch(limit: limit)
                 
-                var descriptor = FetchDescriptor<LogDb>(
-                    sortBy: [
-                        SortDescriptor(\.timestamp, order: .reverse)
-                    ]
-                )
-                descriptor.fetchLimit = limit
-                
-                let records = try? context.fetch(descriptor).compactMap { LogItemDomain(from: $0) }
                 await MainActor.run {
                     guard let records else { return }
                     self.logs = records
@@ -110,7 +106,7 @@ class LogsSettingsViewModel : ObservableObject {
     
     func insertRecord(_ item: LogItemDomain) {
         Task.detached(priority: .userInitiated) {
-            try await self.store.insert(item)
+            try await self.writeDataSource.insert(item)
         }
     }
     
@@ -118,7 +114,7 @@ class LogsSettingsViewModel : ObservableObject {
         guard !isLoading else { return }
         isLoading = true
         Task.detached(priority: .userInitiated) {
-            let records = try? await self.store.fetch(page: self.page, amountPerPage: self.itemsPerPage)
+            let records = try? await self.readDataSource.fetch(page: self.page, amountPerPage: self.itemsPerPage)
         
             await MainActor.run {
                 self.logs.append(contentsOf: records ?? [])
@@ -131,7 +127,7 @@ class LogsSettingsViewModel : ObservableObject {
     
     func clearLogs() {
         Task.detached(priority: .userInitiated) {
-            try await self.store.deleteAll()
+            try await self.writeDataSource.deleteAll()
         }
     }
 }
