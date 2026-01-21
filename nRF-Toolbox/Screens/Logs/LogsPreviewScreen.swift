@@ -45,22 +45,41 @@ struct LogsPreviewScreen: View {
                 }, currentValueLabel: {
                     LogLevelItem(level: viewModel.selectedLogLevel)
                 })
+                
+                Button {
+                    scrollToTheTop = !scrollToTheTop
+                } label: {
+                    Image(systemName: scrollToTheTop ? "lock" : "lock.slash")
+                }
+                .padding()
             }
             
-            ScrollView {
-                LazyVStack {
+            if scrollToTheTop {
+                List {
                     ForEach(viewModel.filteredLogs) { log in
                         LogItem(log: log)
-                            .padding()
                             .onAppear { viewModel.filteredLogs.last == log ? viewModel.loadNextPage() : nil }
                     }
                 }
-                .scrollTargetLayout()
+                .listStyle(.plain)
+                .ignoresSafeArea(.container, edges: .horizontal)
+                .searchable(text: $viewModel.searchText)
+            } else {
+                ScrollView {
+                    LazyVStack {
+                        ForEach(viewModel.filteredLogs) { log in
+                            LogItem(log: log)
+                                .padding()
+                                .onAppear { viewModel.filteredLogs.last == log ? viewModel.loadNextPage() : nil }
+                        }
+                    }
+                    .scrollTargetLayout()
+                }
+                .listStyle(.plain)
+                .ignoresSafeArea(.container, edges: .horizontal)
+                .searchable(text: $viewModel.searchText)
+                .scrollPosition($position, anchor: .bottom)
             }
-            .listStyle(.plain)
-            .ignoresSafeArea(.container, edges: .horizontal)
-            .searchable(text: $viewModel.searchText)
-            .scrollPosition($position, anchor: .bottom)
         }
         .onAppear { viewModel.loadNextPage() }
     }
