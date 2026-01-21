@@ -16,6 +16,9 @@ struct LogsPreviewScreen: View {
     
     @FocusState private var isFocused: Bool
     
+    @State private var scrollToTheTop = false
+    @State private var position: ScrollPosition = .init(idType: LogItemDomain.ID.self)
+    
     var body: some View {
         VStack {
             HStack {
@@ -44,15 +47,20 @@ struct LogsPreviewScreen: View {
                 })
             }
             
-            List {
-                ForEach(viewModel.filteredLogs) { log in
-                    LogItem(log: log)
-                        .onAppear { viewModel.filteredLogs.last == log ? viewModel.loadNextPage() : nil }
+            ScrollView {
+                LazyVStack {
+                    ForEach(viewModel.filteredLogs) { log in
+                        LogItem(log: log)
+                            .padding()
+                            .onAppear { viewModel.filteredLogs.last == log ? viewModel.loadNextPage() : nil }
+                    }
                 }
+                .scrollTargetLayout()
             }
             .listStyle(.plain)
             .ignoresSafeArea(.container, edges: .horizontal)
             .searchable(text: $viewModel.searchText)
+            .scrollPosition($position, anchor: .bottom)
         }
         .onAppear { viewModel.loadNextPage() }
     }
