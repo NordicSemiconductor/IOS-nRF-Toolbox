@@ -11,7 +11,7 @@ import SwiftData
 import iOS_Common_Libraries
 import SwiftUI
 
-nonisolated struct LogItemDomain: Equatable {
+nonisolated struct LogItemDomain: Equatable, Sendable, Identifiable {
     var id: UUID = UUID()
     var persistentModelID: PersistentIdentifier?
     
@@ -20,7 +20,7 @@ nonisolated struct LogItemDomain: Equatable {
     var timestamp: Date
 }
 
-nonisolated extension LogItemDomain: ProtectedModel {
+nonisolated extension LogItemDomain {
     init(from item: LogDb) {
         self.init(
             id: item.id,

@@ -89,16 +89,20 @@ class LogsSettingsViewModel : ObservableObject {
         notificationTask = Task.detached {
             for await _ in NotificationCenter.default.notifications(named: ModelContext.didSave) {
                 let context = ModelContext(self.store.modelContainer)
-                let page = await self.page
-                let itemsPerPage = self.itemsPerPage
+                let limit = await self.page * self.itemsPerPage
                 
-                var descriptor = FetchDescriptor<LogDb>()
-                descriptor.fetchLimit = page * itemsPerPage
+                var descriptor = FetchDescriptor<LogDb>(
+                    sortBy: [
+                        SortDescriptor(\.timestamp, order: .reverse)
+                    ]
+                )
+                descriptor.fetchLimit = limit
                 
                 let records = try? context.fetch(descriptor).compactMap { LogItemDomain(from: $0) }
                 await MainActor.run {
                     guard let records else { return }
                     self.logs = records
+                    self.updateFilters(searchText: self.searchText, level: self.selectedLogLevel)
                 }
             }
         }
@@ -110,7 +114,7 @@ class LogsSettingsViewModel : ObservableObject {
         }
     }
     
-    func loadRecords() {
+    func loadNextPage() {
         guard !isLoading else { return }
         isLoading = true
         Task.detached(priority: .userInitiated) {

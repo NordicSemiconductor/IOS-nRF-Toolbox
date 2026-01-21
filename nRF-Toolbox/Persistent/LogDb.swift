@@ -13,6 +13,9 @@ import iOS_Common_Libraries
 
 @Model
 final class LogDb {
+    
+    #Index<LogDb>([\.timestamp])
+    
     var id: UUID
     var value: String
     var level: Int
