@@ -60,7 +60,7 @@ struct LogsPreviewScreen: View {
             }
             .padding()
             
-            LoadingListContainer(data: viewModel.filteredLogs) { logs in
+            LoadingListContainer(data: viewModel.logs) { logs in
                 ScrollView {
                     LazyVStack {
                         ForEach(logs) { log in
@@ -79,7 +79,7 @@ struct LogsPreviewScreen: View {
                 .ignoresSafeArea(.container, edges: .horizontal)
                 .searchable(text: $viewModel.searchText)
                 .scrollPosition($position, anchor: .top)
-                .onChange(of: viewModel.filteredLogs) {
+                .onChange(of: viewModel.logs) {
                     if scrollToTheTop {
                         position.scrollTo(x: 0)
                     }
