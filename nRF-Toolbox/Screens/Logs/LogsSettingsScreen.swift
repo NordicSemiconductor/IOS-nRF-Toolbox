@@ -15,6 +15,7 @@ import iOS_Common_Libraries
 struct LogsSettingsScreen: View {
     
     @EnvironmentObject var viewModel: LogsSettingsViewModel
+    @EnvironmentObject var appViewModel: AppViewModel
     @State private var isDeleteDialogShown = false
     
     private var sharedItem: Logs {
@@ -24,7 +25,7 @@ struct LogsSettingsScreen: View {
     var body: some View {
         List {
             Section("Configuration") {
-                Toggle(isOn: $viewModel.logsSettings.isEnabled) {
+                Toggle(isOn: $appViewModel.logsSettings.isEnabled) {
                     HStack(spacing: 12) {
                         Image(systemName: "tray.and.arrow.down.fill")
                             .frame(width: 24)
@@ -102,7 +103,7 @@ struct LogsSettingsScreen: View {
         }
         .alert("Clear All Logs?", isPresented: $isDeleteDialogShown) {
             Button("Delete", role: .destructive) {
-                viewModel.clearLogs()
+                appViewModel.clearLogs()
                 isDeleteDialogShown = false
             }
             Button("Cancel", role: .cancel) {

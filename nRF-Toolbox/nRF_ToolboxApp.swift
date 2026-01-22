@@ -15,7 +15,7 @@ import iOS_BLE_Library_Mock
 @main
 struct nRF_ToolboxApp: App {
     
-    private let container: SwiftDataContextManager = SwiftDataContextManager.shared
+    @StateObject var viewModel = AppViewModel()
     
     // MARK: view
     
@@ -27,6 +27,7 @@ struct nRF_ToolboxApp: App {
                     BluetoothEmulation.shared.simulatePeripherals()
                 }
                 .setupTranslucentBackground()
+                .environmentObject(viewModel)
         }
     }
 }

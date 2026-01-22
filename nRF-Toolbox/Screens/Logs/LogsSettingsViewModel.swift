@@ -16,8 +16,6 @@ class LogsSettingsViewModel : ObservableObject {
     
     private let log = NordicLog(category: "LogsSettingsScreen", subsystem: "com.nordicsemi.nrf-toolbox")
     
-    @Published var logsSettings = LogsSettings()
-    
     @Published var logs: [LogItemDomain] = []
 
     @Published var searchText: String = ""
@@ -25,7 +23,6 @@ class LogsSettingsViewModel : ObservableObject {
     @Published var filteredLogs: [LogItemDomain]? = nil
 
     @Published var logsMeta: LogsMeta? = nil
-    let writeDataSource: LogsWriteDataSource
     let readDataSource: LogsReadDataSource
     
     var isLoading: Bool = false
@@ -38,9 +35,7 @@ class LogsSettingsViewModel : ObservableObject {
     private var countTask: Task<(), any Error>? = nil
 
     init(container: ModelContainer) {
-        self.writeDataSource = LogsWriteDataSource(modelContainer: container)
         self.readDataSource = LogsReadDataSource(modelContainer: container)
-        observeLogs()
         observeFilterChange()
         subscribeToNotifications()
         fetchLogsCount()
@@ -98,16 +93,6 @@ class LogsSettingsViewModel : ObservableObject {
         }
     }
     
-    func observeLogs() {
-        log.debug(#function)
-        NordicLog.lastLog
-            .filter { _ in self.logsSettings.isEnabled == true }
-            .compactMap { $0 }
-            .map { log in LogItemDomain(value: log.message, level: log.level.rawValue, timestamp: log.timestamp) }
-            .sink(receiveValue: { log in self.insertRecord(log) } )
-            .store(in: &cancellables)
-    }
-    
     func subscribeToNotifications() {
         log.debug(#function)
         notificationTask = Task.detached {
@@ -127,11 +112,7 @@ class LogsSettingsViewModel : ObservableObject {
         }
     }
     
-    func insertRecord(_ item: LogItemDomain) {
-        Task.detached(priority: .userInitiated) {
-            try await self.writeDataSource.insert(item)
-        }
-    }
+
     
     func loadNextPage() {
         log.debug(#function)
@@ -146,13 +127,6 @@ class LogsSettingsViewModel : ObservableObject {
                 self.page += 1
                 self.updateFilters(searchText: self.searchText, level: self.selectedLogLevel)
             }
-        }
-    }
-    
-    func clearLogs() {
-        log.debug(#function)
-        Task.detached(priority: .userInitiated) {
-            try await self.writeDataSource.deleteAll()
         }
     }
 }
