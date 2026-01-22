@@ -22,7 +22,7 @@ class LogsSettingsViewModel : ObservableObject {
     
     @Published var searchText: String = ""
     @Published var selectedLogLevel: LogLevel = .debug
-    @Published var filteredLogs: [LogItemDomain] = []
+    @Published var filteredLogs: [LogItemDomain]? = nil
     
     let writeDataSource: LogsWriteDataSource
     let readDataSource: LogsReadDataSource
@@ -52,7 +52,9 @@ class LogsSettingsViewModel : ObservableObject {
         Publishers
             .CombineLatest($searchText, $selectedLogLevel)
             .sink { [weak self] searchText, logLevel in
-                self?.updateFilters(searchText: searchText, level: logLevel)
+                if self?.filteredLogs != nil {
+                    self?.updateFilters(searchText: searchText, level: logLevel)
+                }
             }
             .store(in: &cancellables)
     }

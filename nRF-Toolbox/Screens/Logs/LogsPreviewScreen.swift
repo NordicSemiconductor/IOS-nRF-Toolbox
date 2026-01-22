@@ -54,29 +54,36 @@ struct LogsPreviewScreen: View {
                 .padding()
             }
             
-            ScrollView {
-                LazyVStack {
-                    ForEach(viewModel.filteredLogs) { log in
-                        LogItem(log: log)
-                            .padding(.vertical, 10)
-                            .padding(.horizontal, 16)
-                            .onAppear { viewModel.filteredLogs.last == log ? viewModel.loadNextPage() : nil }
-                        
-                        if viewModel.filteredLogs.last != log {
-                            Separator()
+            if let logs = viewModel.filteredLogs {
+                ScrollView {
+                    LazyVStack {
+                        ForEach(logs) { log in
+                            LogItem(log: log)
+                                .padding(.vertical, 10)
+                                .padding(.horizontal, 16)
+                                .onAppear { logs.last == log ? viewModel.loadNextPage() : nil }
+                            
+                            if logs.last != log {
+                                Separator()
+                            }
                         }
                     }
+                    .scrollTargetLayout()
                 }
-                .scrollTargetLayout()
-            }
-            .ignoresSafeArea(.container, edges: .horizontal)
-            .searchable(text: $viewModel.searchText)
-            .scrollPosition($position, anchor: .top)
-            .onChange(of: viewModel.filteredLogs) {
-                if scrollToTheTop {
-                    position.scrollTo(x: 0)
+                .ignoresSafeArea(.container, edges: .horizontal)
+                .searchable(text: $viewModel.searchText)
+                .scrollPosition($position, anchor: .top)
+                .onChange(of: viewModel.filteredLogs) {
+                    if scrollToTheTop {
+                        position.scrollTo(x: 0)
+                    }
                 }
+            } else {
+                ProgressView()
+                    .padding()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
+
         }
         .onAppear { viewModel.loadNextPage() }
     }
