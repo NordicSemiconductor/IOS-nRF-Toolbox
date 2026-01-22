@@ -91,6 +91,7 @@
 		A770FE6C2E7D69FF00357127 /* CGMSFeatureParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A770FE6B2E7D69FE00357127 /* CGMSFeatureParser.swift */; };
 		A770FE6E2E7D6F2B00357127 /* CRC16.swift in Sources */ = {isa = PBXBuildFile; fileRef = A770FE6D2E7D6F2800357127 /* CRC16.swift */; };
 		A778C7352EDEE6890093B174 /* Appfile in Resources */ = {isa = PBXBuildFile; fileRef = A778C7342EDEE6850093B174 /* Appfile */; };
+		A77FA6EB2F22532B00490375 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77FA6EA2F22532600490375 /* AppViewModel.swift */; };
 		A77FD2632EB120E1007B05C0 /* CBMCharacteristicPropertiesExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77FD2622EB120E0007B05C0 /* CBMCharacteristicPropertiesExt.swift */; };
 		A7A28FD32EAD3D4B004ECC8B /* AggregatedPeripheralSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A28FD22EAD3D46004ECC8B /* AggregatedPeripheralSpecDelegate.swift */; };
 		A7A28FD52EAD3E02004ECC8B /* MockSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A28FD42EAD3E01004ECC8B /* MockSpecDelegate.swift */; };
@@ -296,6 +297,7 @@
 		A770FE6B2E7D69FE00357127 /* CGMSFeatureParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSFeatureParser.swift; sourceTree = "<group>"; };
 		A770FE6D2E7D6F2800357127 /* CRC16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRC16.swift; sourceTree = "<group>"; };
 		A778C7342EDEE6850093B174 /* Appfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Appfile; sourceTree = "<group>"; };
+		A77FA6EA2F22532600490375 /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		A77FD2622EB120E0007B05C0 /* CBMCharacteristicPropertiesExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBMCharacteristicPropertiesExt.swift; sourceTree = "<group>"; };
 		A7A28FD22EAD3D46004ECC8B /* AggregatedPeripheralSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AggregatedPeripheralSpecDelegate.swift; sourceTree = "<group>"; };
 		A7A28FD42EAD3E01004ECC8B /* MockSpecDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSpecDelegate.swift; sourceTree = "<group>"; };
@@ -572,6 +574,7 @@
 				018873BE2A5831ED00253273 /* ConnectedDevices */,
 				017D10342A5809E400E38E5F /* Mocking */,
 				017D102D2A5809E300E38E5F /* nRF_ToolboxApp.swift */,
+				A77FA6EA2F22532600490375 /* AppViewModel.swift */,
 				017D10312A5809E400E38E5F /* Assets.xcassets */,
 				017D10332A5809E400E38E5F /* nRF_Toolbox.entitlements */,
 				01C81ADC2A5DFA8E0011B41E /* Localizable.stringsdict */,
@@ -1370,6 +1373,7 @@
 				01EBE6192AE4845100960672 /* View+ErrorAlert.swift in Sources */,
 				01F6A9602A812D6200540B45 /* Emulator.swift in Sources */,
 				A70A61FC2F0D46CA00C341AB /* LogDb.swift in Sources */,
+				A77FA6EB2F22532B00490375 /* AppViewModel.swift in Sources */,
 				015AAE652B0383BD00D79833 /* SidebarView.swift in Sources */,
 				AA71C78E2E0EBA89008F018C /* ScanResult.swift in Sources */,
 				AA479EA72D0B0BFF0052E801 /* CrankDataPoint.swift in Sources */,
