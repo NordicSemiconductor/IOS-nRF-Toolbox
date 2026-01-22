@@ -54,7 +54,7 @@ struct LogsPreviewScreen: View {
                 .padding()
             }
             
-            if let logs = viewModel.filteredLogs {
+            LoadingListContainer(data: viewModel.filteredLogs) { logs in
                 ScrollView {
                     LazyVStack {
                         ForEach(logs) { log in
@@ -78,14 +78,32 @@ struct LogsPreviewScreen: View {
                         position.scrollTo(x: 0)
                     }
                 }
-            } else {
-                ProgressView()
-                    .padding()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-
         }
         .onAppear { viewModel.loadNextPage() }
+    }
+}
+
+private struct LoadingListContainer<Data, Content: View>: View {
+    
+    let data: [Data]?
+    @ViewBuilder let content: ([Data]) -> Content
+    
+    var body: some View {
+        if let data = data {
+            if data.isEmpty {
+                Text("No records")
+                    .foregroundColor(Color(.systemGray2))
+                    .padding()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                content(data)
+            }
+        } else {
+            ProgressView()
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
     }
 }
 
