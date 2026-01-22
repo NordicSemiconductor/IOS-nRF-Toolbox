@@ -15,6 +15,10 @@ actor LogsReadDataSource {
     
     private let log = NordicLog(category: "LogsReadDataSource", subsystem: "com.nordicsemi.nrf-toolbox")
     
+    func fetchCount() throws -> Int {
+        return try modelContext.fetchCount(FetchDescriptor<LogDb>())
+    }
+    
     func fetch() throws -> [LogItemDomain] {
         try modelContext
             .fetch(getFetchDescriptor())

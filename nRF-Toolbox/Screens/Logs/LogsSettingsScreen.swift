@@ -17,8 +17,6 @@ struct LogsSettingsScreen: View {
     @EnvironmentObject var viewModel: LogsSettingsViewModel
     @State private var isDeleteDialogShown = false
     
-    @State var logsMeta = LogsMeta()
-    
     private var sharedItem: Logs {
         Logs(values: viewModel.logs)
     }
@@ -51,7 +49,7 @@ struct LogsSettingsScreen: View {
                     .setAccent(.black)
                     .tint(.black)
                     .foregroundStyle(.black)
-                Text("Logging can consume significant disk space over time. Clear logs to free up storage.")
+                Text("Logging can consume significant disk space over time and may impact performance. Logs will be automatically cleaned once they reach 100 000 records. It is recommended to clean the logs before performing any import task to ensure there is enough space available for new log entries.")
                     .font(.footnote)
                     .setAccent(.black)
                     .tint(.black)
@@ -60,20 +58,22 @@ struct LogsSettingsScreen: View {
             .listRowSeparator(.hidden)
             .listRowBackground(Color.nordicSun)
             
+            let logsMeta = viewModel.logsMeta
             Section("Statistics") {
                 VStack {
                     HStack(alignment: .bottom) {
-                        Text("Current size:").font(.caption)
+                        Text("Number of records:").font(.caption)
                         Spacer()
-                        Text("\(logsMeta.size) MB")
+                        let currentSize = (logsMeta != nil) ? "\(logsMeta!.count)" : "loading"
+                        Text(currentSize)
                     }
-                    ProgressView(value: Double(logsMeta.size), total: Double(logsMeta.maxSize))
+                    ProgressView(value: Double(logsMeta?.count ?? 0), total: Double(logsMeta?.maxCount ?? 100))
                         .progressViewStyle(LinearProgressViewStyle(tint: .universalAccentColor))
                         .scaleEffect(x: 1, y: 2, anchor: .center)
                     HStack {
-                        Text("Used: \(logsMeta.percentageUsed)%").font(.caption)
+                        Text("Used: \(logsMeta?.percentageUsed ?? 0)%").font(.caption)
                         Spacer()
-                        Text("Free \(logsMeta.percentageLeft)%").font(.footnote)
+                        Text("Free \(logsMeta?.percentageLeft ?? 100)%").font(.footnote)
                     }
                 }
             }
@@ -100,9 +100,6 @@ struct LogsSettingsScreen: View {
             .setAccent(.universalAccentColor)
             .tint(.primarylabel)
         }
-        .onAppear {
-            logsMeta = getSwiftDataStoreSize() ?? LogsMeta()
-        }
         .alert("Clear All Logs?", isPresented: $isDeleteDialogShown) {
             Button("Delete", role: .destructive) {
                 viewModel.clearLogs()
@@ -114,22 +111,5 @@ struct LogsSettingsScreen: View {
         } message: {
             Text("This action cannot be undone.")
         }
-    }
-    
-    func getSwiftDataStoreSize() -> LogsMeta? {
-        guard let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first?.appendingPathComponent("default.store") else {
-            return nil
-        }
-        
-        do {
-            let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
-            if let fileSize = attributes[FileAttributeKey.size] as? UInt64 {
-                let megabytes = Double(fileSize) / (1024 * 1024)
-                return LogsMeta(size: megabytes)
-            }
-        } catch {
-            print("Error getting file size: \(error)")
-        }
-        return nil
     }
 }

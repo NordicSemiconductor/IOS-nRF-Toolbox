@@ -19,11 +19,12 @@ class LogsSettingsViewModel : ObservableObject {
     @Published var logsSettings = LogsSettings()
     
     @Published var logs: [LogItemDomain] = []
-    
+
     @Published var searchText: String = ""
     @Published var selectedLogLevel: LogLevel = .debug
     @Published var filteredLogs: [LogItemDomain]? = nil
-    
+
+    @Published var logsMeta: LogsMeta? = nil
     let writeDataSource: LogsWriteDataSource
     let readDataSource: LogsReadDataSource
     
@@ -34,6 +35,7 @@ class LogsSettingsViewModel : ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     private var notificationTask: Task<Void, Never>? = nil
+    private var countTask: Task<(), any Error>? = nil
 
     init(container: ModelContainer) {
         self.writeDataSource = LogsWriteDataSource(modelContainer: container)
@@ -41,14 +43,29 @@ class LogsSettingsViewModel : ObservableObject {
         observeLogs()
         observeFilterChange()
         subscribeToNotifications()
+        fetchLogsCount()
     }
     
     deinit {
+        countTask?.cancel()
         notificationTask?.cancel()
+        countTask = nil
         notificationTask = nil
     }
     
+    private nonisolated func fetchLogsCount() {
+        Task.detached {
+            let count = try? await self.readDataSource.fetchCount()
+            let meta = count != nil ? LogsMeta(size: Double(count!)) : nil
+            
+            await MainActor.run {
+                self.logsMeta = meta
+            }
+        }
+    }
+    
     func observeFilterChange() {
+        log.debug(#function)
         Publishers
             .CombineLatest($searchText, $selectedLogLevel)
             .sink { [weak self] searchText, logLevel in
@@ -82,8 +99,9 @@ class LogsSettingsViewModel : ObservableObject {
     }
     
     func observeLogs() {
+        log.debug(#function)
         NordicLog.lastLog
-            .filter { _ in self.logsSettings.isEnabled == true}
+            .filter { _ in self.logsSettings.isEnabled == true }
             .compactMap { $0 }
             .map { log in LogItemDomain(value: log.message, level: log.level.rawValue, timestamp: log.timestamp) }
             .sink(receiveValue: { log in self.insertRecord(log) } )
@@ -91,6 +109,7 @@ class LogsSettingsViewModel : ObservableObject {
     }
     
     func subscribeToNotifications() {
+        log.debug(#function)
         notificationTask = Task.detached {
             for await _ in NotificationCenter.default.notifications(named: ModelContext.didSave) {
                 
@@ -102,6 +121,8 @@ class LogsSettingsViewModel : ObservableObject {
                     self.logs = records
                     self.updateFilters(searchText: self.searchText, level: self.selectedLogLevel)
                 }
+                
+                self.fetchLogsCount()
             }
         }
     }
@@ -113,6 +134,7 @@ class LogsSettingsViewModel : ObservableObject {
     }
     
     func loadNextPage() {
+        log.debug(#function)
         guard !isLoading else { return }
         isLoading = true
         Task.detached(priority: .userInitiated) {
@@ -128,6 +150,7 @@ class LogsSettingsViewModel : ObservableObject {
     }
     
     func clearLogs() {
+        log.debug(#function)
         Task.detached(priority: .userInitiated) {
             try await self.writeDataSource.deleteAll()
         }
