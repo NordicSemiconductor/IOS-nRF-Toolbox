@@ -7,8 +7,8 @@
 //
 
 struct LogsMeta {
-    let size: Int
-    let maxSize: Int
+    let count: Int
+    let maxCount: Int
     let percentageUsed: Int
     let percentageLeft: Int
     
@@ -17,9 +17,9 @@ struct LogsMeta {
     }
 
     init(size: Double) {
-        self.size = Int(size)
-        self.maxSize = 50
-        self.percentageUsed = self.size * 100 / self.maxSize
+        self.count = Int(size)
+        self.maxCount = 100_000
+        self.percentageUsed = self.count * 100 / self.maxCount
         self.percentageLeft = 100 - self.percentageUsed
     }
 }

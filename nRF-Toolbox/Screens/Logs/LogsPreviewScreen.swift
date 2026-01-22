@@ -27,7 +27,7 @@ struct LogsPreviewScreen: View {
                     BlinkingCursorView().hidden(!viewModel.searchText.isEmpty)
 
                     HStack(spacing: 0) {
-                        TextField("Search logs", text: $viewModel.searchText, prompt: Text("Search logs")).focused($isFocused).tint(.clear)
+                        TextField("Search logs", text: $viewModel.searchText, prompt: Text("Search logs...")).focused($isFocused).tint(.clear)
                         BlinkingCursorView().padding(.leading, 6).hidden()
                     }
                     
@@ -37,6 +37,10 @@ struct LogsPreviewScreen: View {
                     }
                 }
                 .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 24)
+                        .fill(Color(.systemGray5))
+                )
                 
                 Picker("Color", selection: $viewModel.selectedLogLevel, content: {
                     ForEach(LogLevel.allCases) { log in
@@ -53,8 +57,8 @@ struct LogsPreviewScreen: View {
                         Image(systemName: scrollToTheTop ? "lock.slash" : "lock")
                     }.frame(width: 24, height: 24)
                 }
-                .padding()
             }
+            .padding()
             
             LoadingListContainer(data: viewModel.filteredLogs) { logs in
                 ScrollView {
