@@ -19,7 +19,7 @@ struct LogsSettingsScreen: View {
     @State private var isDeleteDialogShown = false
     
     private var sharedItem: Logs {
-        Logs(values: viewModel.logs)
+        Logs(values: viewModel.logs ?? [])
     }
 
     var body: some View {
@@ -90,6 +90,7 @@ struct LogsSettingsScreen: View {
                     )) {
                         Label("Share logs", systemImage: "square.and.arrow.up")
                     }
+                    .disabled(viewModel.logs == nil)
                 Button(action: {
                     isDeleteDialogShown = true
                 }, label: {

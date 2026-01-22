@@ -19,14 +19,14 @@ actor LogsReadDataSource {
         return try modelContext.fetchCount(FetchDescriptor<LogDb>())
     }
     
-    func fetch() throws -> [LogItemDomain] {
+    func fetch(searchText: String, logLevel: LogLevel) throws -> [LogItemDomain] {
         try modelContext
-            .fetch(getFetchDescriptor())
+            .fetch(getFetchDescriptor(searchText: searchText, logLevel: logLevel))
             .map { LogItemDomain(from: $0) }
     }
     
-    func fetch(limit: Int) throws -> [LogItemDomain] {
-        var descriptor = getFetchDescriptor()
+    func fetch(searchText: String, logLevel: LogLevel, limit: Int) throws -> [LogItemDomain] {
+        var descriptor = getFetchDescriptor(searchText: searchText, logLevel: logLevel)
         descriptor.fetchLimit = limit
         
         return try modelContext
@@ -34,10 +34,10 @@ actor LogsReadDataSource {
             .map { LogItemDomain(from: $0) }
     }
     
-    func fetch(page: Int, amountPerPage: Int) throws -> [LogItemDomain] {
+    func fetch(searchText: String, logLevel: LogLevel, page: Int, amountPerPage: Int) throws -> [LogItemDomain] {
         let alreadyFetched = page * amountPerPage
         
-        var descriptor = getFetchDescriptor()
+        var descriptor = getFetchDescriptor(searchText: searchText, logLevel: logLevel)
         descriptor.fetchLimit = amountPerPage
         descriptor.fetchOffset = alreadyFetched
         
@@ -48,8 +48,11 @@ actor LogsReadDataSource {
         }
     }
     
-    func getFetchDescriptor() -> FetchDescriptor<LogDb> {
+    func getFetchDescriptor(searchText: String, logLevel: LogLevel) -> FetchDescriptor<LogDb> {
         return FetchDescriptor<LogDb>(
+            predicate: #Predicate { log in
+                (searchText.isEmpty ? true : log.value.contains(searchText)) && log.level == logLevel.rawValue
+            },
             sortBy: [
                 SortDescriptor(\.timestamp, order: .reverse)
             ]
