@@ -65,7 +65,7 @@ extension LogLevel {
     var color: Color {
         switch self {
         case .debug:   return .nordicBlue
-        case .info:    return .nordicGrass
+        case .info:    return .nordicPower
         case .error:   return .nordicRed
         }
     }

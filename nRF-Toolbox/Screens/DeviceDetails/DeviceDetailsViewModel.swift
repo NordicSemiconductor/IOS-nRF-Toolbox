@@ -214,6 +214,7 @@ extension DeviceDetailsViewModel {
             }
             
             isInitialized = true
+            log.info("Successfully initialized connection with the peripheral.")
         } catch {
             if case let serviceError as ServiceError = error {
                 errors.error = serviceError

@@ -60,7 +60,6 @@ class LogsSettingsViewModel : ObservableObject {
     }
     
     func observeFilterChange() {
-        log.debug(#function)
         Publishers
             .CombineLatest($searchText, $selectedLogLevel)
             .sink { [weak self] searchText, logLevel in
@@ -94,7 +93,6 @@ class LogsSettingsViewModel : ObservableObject {
     }
     
     func subscribeToNotifications() {
-        log.debug(#function)
         notificationTask = Task.detached {
             for await _ in NotificationCenter.default.notifications(named: ModelContext.didSave) {
                 
@@ -115,7 +113,6 @@ class LogsSettingsViewModel : ObservableObject {
 
     
     func loadNextPage() {
-        log.debug(#function)
         guard !isLoading else { return }
         isLoading = true
         Task.detached(priority: .userInitiated) {
