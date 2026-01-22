@@ -49,7 +49,9 @@ struct LogsPreviewScreen: View {
                 Button {
                     scrollToTheTop = !scrollToTheTop
                 } label: {
-                    Image(systemName: scrollToTheTop ? "lock.slash" : "lock")
+                    ZStack {
+                        Image(systemName: scrollToTheTop ? "lock.slash" : "lock")
+                    }.frame(width: 24, height: 24)
                 }
                 .padding()
             }
