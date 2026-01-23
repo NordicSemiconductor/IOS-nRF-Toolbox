@@ -41,8 +41,7 @@ class LogsSettingsViewModel : ObservableObject {
         fetchLogsCount()
     }
     
-    deinit {
-        print("AAATESTAAA - deinit")
+    func stop() {
         countTask?.cancel()
         notificationTask?.cancel()
         countTask = nil
