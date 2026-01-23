@@ -42,6 +42,7 @@ class LogsSettingsViewModel : ObservableObject {
     }
     
     deinit {
+        print("AAATESTAAA - deinit")
         countTask?.cancel()
         notificationTask?.cancel()
         countTask = nil
@@ -83,7 +84,7 @@ class LogsSettingsViewModel : ObservableObject {
 
         Task.detached(priority: .userInitiated) {
             let result = sourceLogs.filter { log in
-                (searchText.isEmpty ? true : log.value.localizedStandardContains(searchText)) && log.level == selectedLogLevel.rawValue
+                (searchText.isEmpty ? true : log.value.localizedStandardContains(searchText)) && log.level <= selectedLogLevel.rawValue
             }
 
             await MainActor.run {
