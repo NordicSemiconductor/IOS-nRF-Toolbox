@@ -29,16 +29,20 @@ struct LogsScreen: View {
         TabView(selection: $selectedTab) {
             Tab("Settings", systemImage: "gear", value: Tabs.settings) {
                 LogsSettingsScreen()
+                    .environmentObject(viewModel)
             }
             
             Tab("Preview", systemImage: "list.bullet.clipboard", value: Tabs.preview) {
                 LogsPreviewScreen()
+                    .environmentObject(viewModel)
             }
         }
         .navigationTitle("Logs")
         .applyTabBarMinimazeBehaviorIfAvailable()
         .tint(.universalAccentColor)
-        .environmentObject(viewModel)
+        .onDisappear {
+            viewModel.stop()
+        }
     }
 }
 
