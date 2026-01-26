@@ -12,106 +12,148 @@ import iOS_Common_Libraries
 import SwiftData
 
 @MainActor
-class LogsSettingsViewModel : ObservableObject {
+class LogsSettingsViewModel: ObservableObject {
     
     private let log = NordicLog(category: "LogsSettingsScreen", subsystem: "com.nordicsemi.nrf-toolbox")
     
     @Published var logs: [LogItemDomain]? = nil
-
     @Published var searchText: String = ""
     @Published var selectedLogLevel: LogLevel = .debug
-
     @Published var logsMeta: LogsMeta? = nil
-    let readDataSource: LogsReadDataSource
     
-    var isLoading: Bool = false
-    @Published var page: Int = 0
+    private let readDataSource: LogsReadDataSource
+    
+    @Published var isLoading: Bool = false
+    
+    private var page: Int = 1
     private let itemsPerPage: Int = 100
+    private var canLoadMore: Bool = true
     
     private var cancellables = Set<AnyCancellable>()
     
-    private var notificationTask: Task<Void, Never>? = nil
-
+    private var activeLoadTask: Task<Void, Never>? = nil
 
     init(container: ModelContainer) {
         self.readDataSource = LogsReadDataSource(modelContainer: container)
-        observeFilterChange()
+        setupObservers()
         fetchLogsCount()
     }
     
-    func onAppear() {
-        subscribeToNotifications()
+    private func setupObservers() {
+        Publishers.CombineLatest($searchText, $selectedLogLevel)
+            .dropFirst()
+            .debounce(for: .seconds(0.3), scheduler: RunLoop.main)
+            .removeDuplicates { prev, curr in
+                prev.0 == curr.0 && prev.1 == curr.1
+            }
+            .sink { [weak self] _ in
+                self?.reload()
+            }
+            .store(in: &cancellables)
+            
+        NotificationCenter.default.publisher(for: ModelContext.didSave)
+            .throttle(for: .seconds(1.0), scheduler: RunLoop.main, latest: true)
+            .sink { [weak self] _ in
+                self?.handleDatabaseUpdate()
+            }
+            .store(in: &cancellables)
     }
-    
-    func onDisappear() {
-        notificationTask?.cancel()
-        notificationTask = nil
 
+    func reload() {
+        activeLoadTask?.cancel()
+        
+        isLoading = true
+        page = 1
+        canLoadMore = true
+        
+        let currentSearch = searchText
+        let currentLevel = selectedLogLevel
+        let limit = itemsPerPage
+        
+        activeLoadTask = Task.detached(priority: .userInitiated) { [weak self] in
+            guard let self = self else { return }
+            
+            let records = try? await self.readDataSource.fetch(
+                searchText: currentSearch,
+                logLevel: currentLevel,
+                limit: limit
+            )
+            
+            await MainActor.run {
+                guard !Task.isCancelled else { return }
+                self.logs = records
+                self.isLoading = false
+                self.fetchLogsCount()
+            }
+        }
+    }
+
+    func loadNextPage() {
+        guard !isLoading, canLoadMore else { return }
+        isLoading = true
+        
+        let currentSearch = searchText
+        let currentLevel = selectedLogLevel
+        let currentPage = page
+        let amount = itemsPerPage
+        
+        activeLoadTask = Task.detached(priority: .userInitiated) { [weak self] in
+            guard let self = self else { return }
+            
+            let newRecords = try? await self.readDataSource.fetch(
+                searchText: currentSearch,
+                logLevel: currentLevel,
+                page: currentPage,
+                amountPerPage: amount
+            )
+            
+            await MainActor.run {
+                guard !Task.isCancelled else { return }
+                
+                if let newRecords = newRecords, !newRecords.isEmpty {
+                    if (self.logs == nil) {
+                        self.logs = []
+                    }
+                    self.logs?.append(contentsOf: newRecords)
+                    self.page += 1
+                } else {
+                    self.canLoadMore = false
+                }
+                self.isLoading = false
+            }
+        }
     }
     
+    private func handleDatabaseUpdate() {
+        guard !isLoading else { return }
+        refreshCurrentView()
+    }
+    
+    private func refreshCurrentView() {
+        let currentTotalCount = (logs?.count ?? 0)
+        let limit = max(itemsPerPage, currentTotalCount)
+        let currentSearch = searchText
+        let currentLevel = selectedLogLevel
+        
+        Task.detached(priority: .utility) { [weak self] in
+            guard let self = self else { return }
+            let records = try? await self.readDataSource.fetch(searchText: currentSearch, logLevel: currentLevel, limit: limit)
+            
+            await MainActor.run {
+                self.logs = records
+                self.fetchLogsCount()
+            }
+        }
+    }
+
     private nonisolated func fetchLogsCount() {
-        Task.detached {
+        Task.detached { [weak self] in
+            guard let self = self else { return }
             let count = try? await self.readDataSource.fetchCount()
             let meta = count != nil ? LogsMeta(size: Double(count!)) : nil
             
             await MainActor.run {
                 self.logsMeta = meta
-            }
-        }
-    }
-    
-    func observeFilterChange() {
-        Publishers
-            .CombineLatest($searchText, $selectedLogLevel)
-            .sink { searchText, logLevel in
-                self.reload()
-            }
-            .store(in: &cancellables)
-    }
-
-    func subscribeToNotifications() {
-        notificationTask?.cancel()
-        notificationTask = Task.detached {
-            for await _ in NotificationCenter.default.notifications(named: ModelContext.didSave) {
-                
-                let limit = await self.page * self.itemsPerPage
-                let records = try? await self.readDataSource.fetch(searchText: self.searchText, logLevel: self.selectedLogLevel, limit: limit)
-                
-                await MainActor.run {
-                    guard let records else { return }
-                    self.logs = records
-                }
-                
-                self.fetchLogsCount()
-            }
-        }
-    }
-    
-    func reload() {
-        guard !isLoading else { return }
-        isLoading = true
-        Task.detached(priority: .userInitiated) {
-            let limit = await self.page * self.itemsPerPage
-            let records = try? await self.readDataSource.fetch(searchText: self.searchText, logLevel: self.selectedLogLevel, limit: limit)
-        
-            await MainActor.run {
-                self.logs = records
-                self.isLoading = false
-                self.page += 1
-            }
-        }
-    }
-    
-    func loadNextPage() {
-        guard !isLoading else { return }
-        isLoading = true
-        Task.detached(priority: .userInitiated) {
-            let records = try? await self.readDataSource.fetch(searchText: self.searchText, logLevel: self.selectedLogLevel, page: self.page, amountPerPage: self.itemsPerPage)
-        
-            await MainActor.run {
-                self.logs?.append(contentsOf: records ?? [])
-                self.isLoading = false
-                self.page += 1
             }
         }
     }

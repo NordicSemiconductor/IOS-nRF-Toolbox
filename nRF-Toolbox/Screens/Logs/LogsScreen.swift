@@ -41,8 +41,6 @@ struct LogsScreen: View {
         .navigationTitle("Logs")
         .applyTabBarMinimazeBehaviorIfAvailable()
         .tint(.universalAccentColor)
-        .onAppear { viewModel.onAppear() }
-        .onDisappear { viewModel.onDisappear() }
     }
 }
 
