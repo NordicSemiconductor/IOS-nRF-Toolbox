@@ -32,20 +32,22 @@ class LogsSettingsViewModel : ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     private var notificationTask: Task<Void, Never>? = nil
-    private var countTask: Task<(), any Error>? = nil
+
 
     init(container: ModelContainer) {
         self.readDataSource = LogsReadDataSource(modelContainer: container)
         observeFilterChange()
-        subscribeToNotifications()
         fetchLogsCount()
     }
     
-    func stop() {
-        countTask?.cancel()
+    func onAppear() {
+        subscribeToNotifications()
+    }
+    
+    func onDisappear() {
         notificationTask?.cancel()
-        countTask = nil
         notificationTask = nil
+
     }
     
     private nonisolated func fetchLogsCount() {
@@ -93,6 +95,7 @@ class LogsSettingsViewModel : ObservableObject {
     }
     
     func subscribeToNotifications() {
+        notificationTask?.cancel()
         notificationTask = Task.detached {
             for await _ in NotificationCenter.default.notifications(named: ModelContext.didSave) {
                 
