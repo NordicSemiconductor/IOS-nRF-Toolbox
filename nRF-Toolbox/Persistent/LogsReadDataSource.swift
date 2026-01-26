@@ -51,7 +51,7 @@ actor LogsReadDataSource {
     func getFetchDescriptor(searchText: String, logLevel: LogLevel) -> FetchDescriptor<LogDb> {
         return FetchDescriptor<LogDb>(
             predicate: #Predicate { log in
-                (searchText.isEmpty ? true : log.value.contains(searchText)) && log.level == logLevel.rawValue
+                (searchText.isEmpty ? true : log.value.localizedStandardContains(searchText)) && log.level <= logLevel.rawValue
             },
             sortBy: [
                 SortDescriptor(\.timestamp, order: .reverse)
