@@ -61,7 +61,9 @@ final class RunningServiceViewModel: @MainActor SupportedServiceViewModel, Obser
         log.debug(#function)
         do {
             try await initializeCharacteristics()
+            log.info("Running service has set up successfully.")
         } catch {
+            log.error("Running service set up failed.")
             log.error("Error \(error.localizedDescription)")
             handleError(error)
         }
@@ -105,7 +107,13 @@ private extension RunningServiceViewModel {
         
         self.environment.isSensorCalibrationAvailable = scControlPoint != nil
         
-        guard rscMeasurement != nil && rscFeature != nil else {
+        guard rscMeasurement != nil else {
+            log.error("Running Measurement characteristic is missing.")
+            throw ServiceError.noMandatoryCharacteristic
+        }
+        
+        guard rscFeature != nil else {
+            log.error("Running Feature characteristic is missing.")
             throw ServiceError.noMandatoryCharacteristic
         }
     }
@@ -134,7 +142,14 @@ private extension RunningServiceViewModel {
     func enableMeasurementNotifications() async throws {
         peripheral.listenValues(for: rscMeasurement)                    // Listen for values
             .compactMap { data in
-                try? RSCSMeasurement(from: data)
+                self.log.debug("Received \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing])) bytes.")
+                
+                let result = try? RSCSMeasurement(from: data)
+                if let result {
+                    self.log.info("Received a new measurement: \(result)")
+                }
+                
+                return result
             }
             .sink { [unowned self] completion in
                 switch completion {

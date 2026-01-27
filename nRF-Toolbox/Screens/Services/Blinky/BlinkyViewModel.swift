@@ -60,7 +60,9 @@ final class BlinkyViewModel: SupportedServiceViewModel, ObservableObject {
         log.debug(#function)
         do {
             try await initializeCharacteristics()
+            log.info("Blinky service has set up successfully.")
         } catch {
+            log.error("Blinky service set up failed.")
             log.error("Error \(error.localizedDescription)")
             handleError(error)
         }
@@ -76,9 +78,11 @@ final class BlinkyViewModel: SupportedServiceViewModel, ObservableObject {
         }
         
         guard let buttonCharacteristics = blinkyCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.nordicsemiBlinkyButtonState.uuid) else {
+            log.error("Blinky button characteristic is missing.")
             throw ServiceError.noMandatoryCharacteristic
         }
         guard let ledCharacteristics = blinkyCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.nordicsemiBlinkyLedState.uuid) else {
+            log.error("Blinky LED characteristic is missing.")
             throw ServiceError.noMandatoryCharacteristic
         }
         
@@ -89,17 +93,20 @@ final class BlinkyViewModel: SupportedServiceViewModel, ObservableObject {
         
         listenToButtonPress(buttonCharacteristics)
         let isNotifyEnabled = try await peripheral.setNotifyValue(true, for: buttonCharacteristics).firstValue
-        guard isNotifyEnabled else { throw ServiceError.notificationsNotEnabled }
+        guard isNotifyEnabled else {
+            log.error("Notifications not enabled.")
+            throw ServiceError.notificationsNotEnabled
+        }
         log.debug("peripheral.setNotifyValue(true, for: .nordicsemiBlinkyButtonState): \(isNotifyEnabled)")
         
         $isLedOn
             .map { [log] newValue in
-                log.debug("Changed to \(newValue)")
+                log.info("LED state changed to: \(newValue)")
                 return Data(repeating: newValue ? 1 : 0, count: 1)
             }
             .sink { [log, peripheral] data in
                 Task {
-                    log.debug("Writing \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing]))")
+                    log.debug("Sending new LED state \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing]))")
                     _ = try? await peripheral.writeValueWithResponse(data, for: ledCharacteristics).firstValue
                 }
             }
@@ -118,10 +125,15 @@ final class BlinkyViewModel: SupportedServiceViewModel, ObservableObject {
     func listenToButtonPress(_ characteristic: CBCharacteristic) {
         peripheral.listenValues(for: characteristic)
             .map { [weak self] data in
-                self?.log.debug("Received \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing]))")
+                self?.log.debug("Received button data: \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing]))")
                 return data.littleEndianBytes(as: UInt8.self) > 0
             }
-            .sink(to: \.isButtonPressed, in: self, assigningInCaseOfError: false)
+            .sink { completion in
+                
+            } receiveValue: { [log, weak self] value in
+                log.info("Button pressed: \(value)")
+                self?.isButtonPressed = value
+            }
             .store(in: &cancellables)
     }
 }

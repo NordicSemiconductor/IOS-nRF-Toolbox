@@ -82,8 +82,10 @@ extension ConnectedDevicesViewModel {
     
     // MARK: disconnectAndRemoveViewModel()
     
-    func disconnectAndRemoveViewModel(_ deviceID: Device.ID) async throws {
+    func disconnectAndRemoveViewModel(_ device: Device) async throws {
         log.debug(#function)
+        let deviceID = device.id
+        log.info("Disconnecting from the device: \(device.logName)")
         guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [deviceID]).first else { return }
         guard let deviceViewModel = deviceViewModels[deviceID] else { return }
         
@@ -95,7 +97,7 @@ extension ConnectedDevicesViewModel {
         }
         
         defer {
-            clearViewModel(deviceID)
+            clearViewModel(device)
         }
         
         do {
@@ -107,10 +109,11 @@ extension ConnectedDevicesViewModel {
     
     // MARK: clearViewModel(:)
     
-    func clearViewModel(_ deviceID: Device.ID) {
+    func clearViewModel(_ device: Device) {
         log.debug(#function)
-        connectedDevices.removeAll(where: { $0.id == deviceID })
-        deviceViewModels.removeValue(forKey: deviceID)
+        connectedDevices.removeAll(where: { $0.id == device.id })
+        deviceViewModels.removeValue(forKey: device.id)
+        log.info("Device successfully removed: \(device.logName)")
     }
 }
 
@@ -125,12 +128,15 @@ extension ConnectedDevicesViewModel {
                 log.debug("BLE State changed to \(state).")
                 switch state {
                 case .poweredOff, .unauthorized, .unsupported:
+                    log.error("Bluetooth is off.")
                     guard let self else { return }
                     for i in connectedDevices.indices {
                         let device = connectedDevices[i]
                         connectedDevices[i].status = .error(ConnectionError.bluetoothUnavailable)
                         deviceViewModels[device.id]?.device = connectedDevices[i]
                     }
+                case .poweredOn:
+                    log.info("Bluetooth is on.")
                 default:
                     break
                 }
@@ -165,6 +171,7 @@ extension ConnectedDevicesViewModel {
     }
     
     private func handleConnection(device: Device) {
+        log.info("Connecting to the device: \(device.logName)")
         if let i = connectedDevices.firstIndex(where: \.id, equals: device.id) {
             connectedDevices[i] = device
         } else {
@@ -397,6 +404,10 @@ extension ConnectedDevicesViewModel {
         var status: Status
         var description: String { name ?? "Unnamed" }
         var debugDescription: String { description }
+        
+        var logName: String {
+            "Device(name: \(description), id: \(id))"
+        }
         
         // MARK: init
         

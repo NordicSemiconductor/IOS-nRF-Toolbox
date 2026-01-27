@@ -83,7 +83,9 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
         log.debug(#function)
         do {
             try await initializeCharacteristics()
+            log.info("UART service has set up successfully.")
         } catch {
+            log.error("UART service set up failed.")
             log.error("Error \(error.localizedDescription)")
             handleError(error)
         }
@@ -102,13 +104,22 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
         uartRX = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.nordicsemiUartRx.uuid)
         uartTX = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.nordicsemiUartTx.uuid)
         
-        guard let uartTX, let uartRX else {
+        guard let uartTX else {
+            log.error("Transmit characteristic is missing.")
+            throw ServiceError.noMandatoryCharacteristic
+        }
+        
+        guard let uartRX else {
+            log.error("Receive characteristic is missing.")
             throw ServiceError.noMandatoryCharacteristic
         }
         
         listenToIncomingMessages(uartTX)
         let txEnable = try await peripheral.setNotifyValue(true, for: uartTX).firstValue
-        guard txEnable else { throw ServiceError.notificationsNotEnabled }
+        guard txEnable else {
+            log.error("Notifications not enabled.")
+            throw ServiceError.notificationsNotEnabled
+        }
         log.debug("\(#function) tx.setNotifyValue(true): \(txEnable)")
     }
     
@@ -134,10 +145,12 @@ extension UARTViewModel {
         do {
             if let dataAsString = String(data: data, encoding: .utf8) {
                 let cleanText = dataAsString.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
+                log.info("Received new message: \(cleanText).")
                 let uartMessage = UARTMessage(text: cleanText, source: .user, previousMessage: messages.last)
                 messages.append(uartMessage)
             } else {
                 let rawBytes = "\(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing, .upperCase]))"
+                log.info("Received new byte message.")
                 let uartMessage = UARTMessage(text: rawBytes, source: .user, previousMessage: messages.last)
                 messages.append(uartMessage)
             }
@@ -158,6 +171,8 @@ extension UARTViewModel {
                     return nil
                 }
                 let cleanString = string.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
+                
+                log.info("Received message: \(cleanString)")
                 return UARTMessage(text: cleanString, source: .other, previousMessage: nil)
             }
             .receive(on: RunLoop.main)

@@ -68,7 +68,9 @@ final class BloodPressureViewModel: @MainActor SupportedServiceViewModel, Observ
         log.debug(#function)
         do {
             try await initializeCharacteristics()
+            log.info("Blood Pressure service has set up successfully.")
         } catch {
+            log.error("Blood Pressure service set up failed.")
             log.error("Error \(error.localizedDescription)")
             handleError(error)
         }
@@ -86,7 +88,13 @@ final class BloodPressureViewModel: @MainActor SupportedServiceViewModel, Observ
         bpsMeasurement = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.bloodPressureMeasurement.uuid)
         bpsFlags = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.bloodPressureFeature.uuid)
         
-        guard let bpsMeasurement, let bpsFlags else {
+        guard let bpsMeasurement else {
+            log.error("Blood Presssure Measurement characteristic is missing.")
+            throw ServiceError.noMandatoryCharacteristic
+        }
+        
+        guard let bpsFlags else {
+            log.error("Blood Presssure Feature characteristic is missing.")
             throw ServiceError.noMandatoryCharacteristic
         }
         
@@ -127,7 +135,9 @@ extension BloodPressureViewModel {
             .compactMap { [log] data -> BloodPressureMeasurement? in
                 log.debug("Received Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing])) (\(data.count) bytes)")
                 do {
-                    return try BloodPressureMeasurement(data: data)
+                    let result = try BloodPressureMeasurement(data: data)
+                    log.info("Received new measurement: \(result)")
+                    return result
                 } catch {
                     log.error("Error parsing data: \(error.localizedDescription)")
                     return nil

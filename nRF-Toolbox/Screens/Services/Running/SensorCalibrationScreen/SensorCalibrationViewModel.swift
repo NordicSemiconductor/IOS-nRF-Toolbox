@@ -78,13 +78,13 @@ extension SensorCalibrationViewModel {
             
             guard let scControlPoint = discovered.first(where: { $0.uuid == Characteristic.scControlPoint.uuid }) else {
                 criticalError = .noMandatoryCharacteristic
-                log.debug("Error: \(criticalError.nilDescription)")
+                log.error("Error: \(criticalError.nilDescription)")
                 return
             }
             self.scControlPoint = scControlPoint
             guard try await peripheral.setNotifyValue(true, for: self.scControlPoint).firstValue else {
                 criticalError = .cantEnableNotifyCharacteristic
-                log.debug("Error: \(criticalError.nilDescription)")
+                log.error("Error: \(criticalError.nilDescription)")
                 return
             }
             
@@ -108,7 +108,7 @@ extension SensorCalibrationViewModel {
             
             guard !availableSensorLocations.isEmpty else {
                 internalError = .unableReadSensorLocation
-                log.debug("Error: \(internalError.nilDescription)")
+                log.error("Error: \(internalError.nilDescription)")
                 return
             }
         } catch let error {

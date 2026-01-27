@@ -94,7 +94,7 @@ struct DeviceScreen: View {
             if case .error = deviceViewModel.device.status {
                 Section {
                     Button("Clear Device") {
-                        connectedDevicesViewModel.clearViewModel(deviceViewModel.device.id)
+                        connectedDevicesViewModel.clearViewModel(deviceViewModel.device)
                         dismiss()
                     }
                     .foregroundStyle(Color.universalAccentColor)
@@ -141,8 +141,7 @@ struct DeviceScreen: View {
     func disconnect() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
             Task { @MainActor in
-                try await connectedDevicesViewModel.disconnectAndRemoveViewModel(deviceViewModel.device.id)
-                log.debug("Finished disconnectAndRemoveViewModel(\(deviceViewModel.device.id))")
+                try await connectedDevicesViewModel.disconnectAndRemoveViewModel(deviceViewModel.device)
                 dismiss()
             }
         }

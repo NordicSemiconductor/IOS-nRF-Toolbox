@@ -132,6 +132,7 @@ extension DeviceDetailsViewModel {
     
     func discoverSupportedServices() async {
         log.debug(#function)
+        log.info("Discovering services...")
         do {
             if supportedServiceViewModels.hasItems {
                 await onDisconnect()
@@ -153,6 +154,8 @@ extension DeviceDetailsViewModel {
                     }
                 }
                 
+                log.info("\(service.uuid.toServiceName()) service discovered.")
+                
                 switch service.uuid {
                 case .nordicBlinkyService:
                     supportedServiceViewModels.append(BlinkyViewModel(peripheral: peripheral, characteristics: characteristics))
@@ -170,6 +173,7 @@ extension DeviceDetailsViewModel {
                         cbChar.uuid == Characteristic.intermediateCuffPressure.uuid
                     }
                     if cuffCharacteristics.hasItems {
+                        log.info("Cuff Pressure Characteristic discovered.")
                         supportedServiceViewModels.append(CuffPressureViewModel(peripheral: peripheral, characteristics: characteristics))
                     }
                 case .battery:
@@ -193,6 +197,7 @@ extension DeviceDetailsViewModel {
             
             signalViewModel = SignalChartViewModel(peripheral: peripheral)
             signalViewModel?.startTimer()
+            log.info("Initialised RSSI probing.")
             
             for supportedServiceViewModel in self.supportedServiceViewModels {
                 await supportedServiceViewModel.onConnect()
@@ -206,10 +211,11 @@ extension DeviceDetailsViewModel {
                     }.store(in: &cancellable)
             }
             
-            let ids = device.services.map { $0.uuid }
+            let ids = device.services.map { $0.uuid }.filter { $0.isSupported() }
             let discoveredIds = discoveredServices.map { $0.uuid }
-            let allSatisfy = ids.allSatisfy { discoveredIds.contains($0) }
-            if !allSatisfy {
+            let missingIds = ids.filter { !discoveredIds.contains($0) }
+            if !missingIds.isEmpty {
+                missingIds.forEach { log.error("Missing required service: \($0.toServiceName())") }
                 throw ServiceError.noMandatoryCharacteristic
             }
             
@@ -259,6 +265,60 @@ extension DeviceDetailsViewModel {
             case .servicesNotFound:
                 return "Error occured while discovering services."
             }
+        }
+    }
+}
+
+extension CBUUID {
+    
+    func toServiceName() -> String {
+        return switch self {
+        case .nordicBlinkyService:
+            "Blinky"
+        case .runningSpeedCadence:
+            "Running Speed and Cadence"
+        case .cyclingSpeedCadence:
+            "Cycling Speed and Cadence"
+        case .healthThermometer:
+            "Health Thermometer"
+        case .heartRate:
+            "Heart Rate"
+        case .bloodPressure:
+            "Blood Pressure"
+        case .battery:
+            "Battery"
+        case .throughputService:
+            "Throughput"
+        case .glucoseService:
+            "Glucose"
+        case .continuousGlucoseMonitoringService:
+            "Continous Glucose"
+        case .nordicsemiUART:
+            "UART"
+        case .deviceInformation:
+            "Device Information"
+        default:
+            "Unknown"
+        }
+    }
+    
+    func isSupported() -> Bool {
+        return switch self {
+        case .nordicBlinkyService,
+                .runningSpeedCadence,
+                .cyclingSpeedCadence,
+                .healthThermometer,
+                .heartRate,
+                .bloodPressure,
+                .battery,
+                .throughputService,
+                .glucoseService,
+                .continuousGlucoseMonitoringService,
+                .nordicsemiUART,
+                .deviceInformation:
+            true
+        default:
+            false
         }
     }
 }

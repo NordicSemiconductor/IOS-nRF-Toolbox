@@ -83,7 +83,9 @@ final class GlucoseViewModel: @MainActor SupportedServiceViewModel, ObservableOb
         log.debug(#function)
         do {
             try await initializeCharacteristics()
+            log.info("Glucose service has set up successfully.")
         } catch {
+            log.error("Glucose service set up failed.")
             log.error("Error \(error.localizedDescription)")
             inFlightRequest = nil
             handleError(error)
@@ -103,7 +105,10 @@ final class GlucoseViewModel: @MainActor SupportedServiceViewModel, ObservableOb
         
         cbGlucoseMeasurement = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.glucoseMeasurement.uuid)
         cbRACP = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.recordAccessControlPoint.uuid)
-        guard cbGlucoseMeasurement != nil else { throw ServiceError.noMandatoryCharacteristic }
+        guard cbGlucoseMeasurement != nil else {
+            log.error("Glucose measurement characteristic is missing.")
+            throw ServiceError.noMandatoryCharacteristic
+        }
         
         requestRecords(.allRecords)
     }
@@ -151,6 +156,8 @@ extension GlucoseViewModel {
                 try await enableNotificationsIfNeeded()
                 guard glucoseNotifyEnabled else { return }
                 
+                log.info(requestRecordsInfo(op))
+                
                 if op == .allRecords {
                     allRecords.removeAll()
                 }
@@ -183,6 +190,19 @@ extension GlucoseViewModel {
             }
         }
     }
+    
+    private func requestRecordsInfo(_ op: RecordOperator) -> String {
+        return switch op {
+        case .allRecords:
+            "Requesting all records."
+        case .firstRecord:
+            "Requesting first record."
+        case .lastRecord:
+            "Requesting last record."
+        default:
+            "Unknown request."
+        }
+    }
 }
 
 // MARK: - Private
@@ -202,7 +222,7 @@ private extension GlucoseViewModel {
                     return nil
                 }
                 
-                log.debug("Parsed measurement \(parsed.description).")
+                log.info("Received measurement: \(parsed.description).")
                 return parsed
             }
             .receive(on: RunLoop.main)

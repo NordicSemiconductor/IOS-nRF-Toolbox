@@ -92,7 +92,9 @@ final class HeartRateViewModel: @MainActor SupportedServiceViewModel, Observable
         log.debug(#function)
         do {
             try await initializeCharacteristics()
+            log.info("Heart Rate service has set up successfully.")
         } catch {
+            log.error("Heart Rate service set up failed.")
             log.error("Error \(error.localizedDescription)")
             handleError(error)
         }
@@ -124,6 +126,7 @@ private extension HeartRateViewModel {
         
         hrMeasurement = heartRateCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.heartRateMeasurement.uuid)
         guard hrMeasurement != nil else {
+            log.error("Heart Rate Measurement characteristic is missing.")
             throw ServiceError.noMandatoryCharacteristic
         }
         
@@ -148,11 +151,13 @@ private extension HeartRateViewModel {
         })
         .firstValue
 
-        log.debug("Body Sensor Location: \(location.nilDescription)")
+        if let location {
+            log.info("Body Sensor Location: \(location.description)")
+        }
         
         heartRateControlPoint = heartRateCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.heartRateControlPoint.uuid)
         if heartRateControlPoint != nil {
-            log.debug("Found Heart Rate Control Point Characteristic")
+            log.info("Found Heart Rate Control Point Characteristic")
             caloriesResetState = .available
         }
     }
@@ -164,7 +169,13 @@ private extension HeartRateViewModel {
         peripheral.listenValues(for: characteristic)
             .compactMap { data in
                 self.log.debug("Received measurement data: \(data.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
-                return try? HeartRateValue(with: data)
+                
+                let result = try? HeartRateValue(with: data)
+                if let result {
+                    self.log.info("Received a new measurement: \(result)")
+                }
+              
+                return result
             }
             .sink { completion in
                 if case .failure = completion {
@@ -218,7 +229,7 @@ extension HeartRateViewModel {
     func resetMeasurement() {
         Task {
             if let heartRateControlPoint {
-                log.debug("Reset energy counter - start")
+                log.info("Resetting energy counter...")
                 do {
                     self.errors.value.warning = nil
                     caloriesResetState = .inProgress
@@ -227,11 +238,11 @@ extension HeartRateViewModel {
                     try await peripheral.writeValueWithResponse(data, for: heartRateControlPoint)
                         .firstValue
                     caloriesResetState = .available
-                    log.debug("Reset energy counter - end")
+                    log.info("Successfully reset energy counter.")
                 } catch {
                     caloriesResetState = .available
                     self.errors.value.warning = ServiceWarning.unknown
-                    log.debug("Reset energy counter - error: \(error)")
+                    log.error("Reset energy counter - error: \(error)")
                 }
             } else {
                 log.error("heartRateControlPoint is nil. Cannot reset measurement.")
