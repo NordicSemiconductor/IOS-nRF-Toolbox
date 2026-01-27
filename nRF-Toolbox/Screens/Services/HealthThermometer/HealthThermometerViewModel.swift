@@ -58,7 +58,9 @@ final class HealthThermometerViewModel: SupportedServiceViewModel, ObservableObj
         log.debug(#function)
         do {
             try await initializeCharacteristics()
+            log.info("Health Thermometer service has set up successfully.")
         } catch {
+            log.error("Health Thermometer service set up failed.")
             log.error("Error \(error.localizedDescription)")
             handleError(error)
         }
@@ -75,6 +77,7 @@ final class HealthThermometerViewModel: SupportedServiceViewModel, ObservableObj
         }
         
         guard let temperatureMeasurement = measurementCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.temperatureMeasurement.uuid) else {
+            log.error("Health Thermometer Measurement characteristic is missing.")
             throw ServiceError.noMandatoryCharacteristic
         }
         listenTo(temperatureMeasurement)
@@ -93,7 +96,14 @@ final class HealthThermometerViewModel: SupportedServiceViewModel, ObservableObj
     func listenTo(_ characteristic: CBCharacteristic) {
         peripheral.listenValues(for: characteristic)
             .map { data in
-                try? TemperatureMeasurement(data)
+                self.log.debug("Received measurement data: \(data.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
+                
+                let result = try? TemperatureMeasurement(data)
+                if let result {
+                    self.log.info("Received a new measurement: \(result)")
+                }
+                
+                return result
             }
             .sink(to: \.measurement, in: self, assigningInCaseOfError: nil)
             .store(in: &cancellables)

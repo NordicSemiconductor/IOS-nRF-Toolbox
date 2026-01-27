@@ -71,7 +71,13 @@ final class CyclingServiceViewModel: SupportedServiceViewModel, ObservableObject
         cscMeasurement = discoveredCharacteristics.first(where: \.uuid, isEqualsTo: .cscMeasurement)
         cscFeature = discoveredCharacteristics.first(where: \.uuid, isEqualsTo: .cscFeature)
         
-        guard cscMeasurement != nil, cscFeature != nil else {
+        guard cscMeasurement != nil else {
+            log.error("Cycling Measurement characteristic is missing.")
+            throw ServiceError.noMandatoryCharacteristic
+        }
+        
+        guard cscFeature != nil else {
+            log.error("Cycling Feature characteristic is missing.")
             throw ServiceError.noMandatoryCharacteristic
         }
     }
@@ -102,7 +108,13 @@ final class CyclingServiceViewModel: SupportedServiceViewModel, ObservableObject
         peripheral.listenValues(for: cscMeasurement)
             .compactMap { [log] in
                 log.debug("Received \($0.hexEncodedString(options: [.prepend0x, .twoByteSpacing])) bytes.")
-                return try? CyclingData($0)
+                
+                let result = try? CyclingData($0)
+                if let result {
+                    self.log.info("Received a new measurement: \(result)")
+                }
+                
+                return result
             }
             .sink { [log] completion in
                 switch completion {
@@ -149,6 +161,7 @@ final class CyclingServiceViewModel: SupportedServiceViewModel, ObservableObject
         let wheelData = newData.wheelData ?? data.wheelData
         let crankData = newData.crankData ?? data.crankData
         self.data = CyclingData(wheelData: wheelData ?? .zero, crankData: crankData ?? .zero)
+        self.log.info("Updated cycling data: \(self.data)")
     }
     
     // MARK: description
@@ -172,8 +185,10 @@ final class CyclingServiceViewModel: SupportedServiceViewModel, ObservableObject
             try await initializeCharacteristics()
             try await readFeatures()
             try await startListening()
+            log.info("Cycling service has set up successfully.")
         }
         catch let error {
+            log.error("Cycling service set up failed.")
             log.error("Error \(error.localizedDescription)")
             handleError(error)
         }

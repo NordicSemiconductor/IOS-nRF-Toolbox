@@ -93,7 +93,6 @@ internal class BlinkyCBMPeripheralSpecDelegate: MockSpecDelegate {
             return .success(buttonData)
         case .ledCharacteristic:
             ledEnabled = .random()
-            log.debug("Randomised LED to \(ledEnabled)")
             return .success(ledData)
         default:
             return .failure(MockError.readingIsNotSupported)
@@ -135,7 +134,6 @@ internal class BlinkyCBMPeripheralSpecDelegate: MockSpecDelegate {
                 .sink { [weak self] _ in
                     guard let self else { return }
                     buttonPressed = .random()
-                    log.debug("Button Pressed \(buttonPressed)")
                     peripheral.simulateValueUpdate(buttonData, for: characteristic)
                 }
         }

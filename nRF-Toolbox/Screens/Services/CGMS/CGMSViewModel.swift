@@ -151,7 +151,9 @@ final class CGMSViewModel: SupportedServiceViewModel, ObservableObject {
         log.debug(#function)
         do {
             try await initializeCharacteristics()
+            log.info("Continous Glucose service has set up successfully.")
         } catch {
+            log.error("Continous Glucose service set up failed.")
             log.error("Error \(error.localizedDescription)")
             handleError(error)
         }
@@ -174,7 +176,18 @@ final class CGMSViewModel: SupportedServiceViewModel, ObservableObject {
         self.cbFeature = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.cgmFeature.uuid)
         let cbSST = cbCharacteristics.first(where: \.uuid, isEqualsTo: Characteristic.cgmSessionStartTime.uuid)
         
-        guard let cbCGMMeasurement, let cbSOCP, let cbSST else {
+        guard let cbCGMMeasurement else {
+            log.error("CGM Measurement characteristic is missing.")
+            throw ServiceError.noMandatoryCharacteristic
+        }
+        
+        guard let cbSOCP else {
+            log.error("SOCP characteristic is missing.")
+            throw ServiceError.noMandatoryCharacteristic
+        }
+        
+        guard let cbSST else {
+            log.error("SST characteristic is missing.")
             throw ServiceError.noMandatoryCharacteristic
         }
         
@@ -265,6 +278,8 @@ private extension CGMSViewModel {
                 print("Completion")
             }, receiveValue: { [weak self] newValues in
                 guard let self, !newValues.isEmpty else { return }
+                
+                log.info("Received new values: \(newValues)")
                 switch self.inFlightRequest {
                 case .firstRecord:
                     self.firstRecord = newValues.first!
