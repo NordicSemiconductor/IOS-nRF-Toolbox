@@ -172,7 +172,7 @@ private extension HeartRateViewModel {
                 
                 let result = try? HeartRateValue(with: data)
                 if let result {
-                    self.log.info("Received a new measurement: \(result)")
+                    self.log.info(result.newDataLog())
                 }
               
                 return result

@@ -111,6 +111,8 @@
 		A7F11C1C2ED05A5600D1862B /* Iridescence.metal in Sources */ = {isa = PBXBuildFile; fileRef = A7F11C172ED05A5600D1862B /* Iridescence.metal */; };
 		A7F11C1D2ED05A5600D1862B /* IridescenceModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F11C152ED05A5600D1862B /* IridescenceModifier.swift */; };
 		A7F7BBA82F2A2B1600F2D42D /* LogsToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F7BBA72F2A2B1300F2D42D /* LogsToolbarItem.swift */; };
+		A7F7BBAA2F2A4F5F00F2D42D /* BeautifulLogFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F7BBA92F2A4F5900F2D42D /* BeautifulLogFormat.swift */; };
+		A7F7BBAC2F2A525700F2D42D /* LogFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F7BBAB2F2A525000F2D42D /* LogFormatters.swift */; };
 		A7FA7A482E852D6500DA192B /* CGMSMeasurementParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FA7A472E852D6500DA192B /* CGMSMeasurementParser.swift */; };
 		A7FAB6312EDF1725006C3074 /* Matchfile in Resources */ = {isa = PBXBuildFile; fileRef = A7FAB6302EDF1725006C3074 /* Matchfile */; };
 		AA01D4922D4A3D38008523CE /* Throughput+Attributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01D4912D4A3D38008523CE /* Throughput+Attributes.swift */; };
@@ -321,6 +323,8 @@
 		A7F11C152ED05A5600D1862B /* IridescenceModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IridescenceModifier.swift; sourceTree = "<group>"; };
 		A7F11C172ED05A5600D1862B /* Iridescence.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Iridescence.metal; sourceTree = "<group>"; };
 		A7F7BBA72F2A2B1300F2D42D /* LogsToolbarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsToolbarItem.swift; sourceTree = "<group>"; };
+		A7F7BBA92F2A4F5900F2D42D /* BeautifulLogFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeautifulLogFormat.swift; sourceTree = "<group>"; };
+		A7F7BBAB2F2A525000F2D42D /* LogFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFormatters.swift; sourceTree = "<group>"; };
 		A7FA7A472E852D6500DA192B /* CGMSMeasurementParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSMeasurementParser.swift; sourceTree = "<group>"; };
 		A7FAB6302EDF1725006C3074 /* Matchfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Matchfile; sourceTree = "<group>"; };
 		AA01D4912D4A3D38008523CE /* Throughput+Attributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Throughput+Attributes.swift"; sourceTree = "<group>"; };
@@ -440,6 +444,7 @@
 		0129F2262A68404C002FB3F5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A7F7BBAB2F2A525000F2D42D /* LogFormatters.swift */,
 				A7F7BBA72F2A2B1300F2D42D /* LogsToolbarItem.swift */,
 				A7F11C122ED05A4F00D1862B /* Effects */,
 				013E5D992AE0545100B9C475 /* Modifiers */,
@@ -806,6 +811,7 @@
 		A70A61FA2F0D46C000C341AB /* Persistent */ = {
 			isa = PBXGroup;
 			children = (
+				A7F7BBA92F2A4F5900F2D42D /* BeautifulLogFormat.swift */,
 				A711312D2F20FAF300BC321F /* LogsReadDataSource.swift */,
 				A704BC4B2F1FB11C003ACE2C /* LogItemDomain.swift */,
 				A70A61FF2F0D470100C341AB /* LogsWriteDataSource.swift */,
@@ -1333,6 +1339,7 @@
 				AAD693332DD348E700D8C436 /* UARTEditPresetView.swift in Sources */,
 				AAA04F1B2DAD1B4F002DAB42 /* UARTViewModel.swift in Sources */,
 				0164A4862AD84A170093E501 /* DeviceDetailsViewModel.swift in Sources */,
+				A7F7BBAA2F2A4F5F00F2D42D /* BeautifulLogFormat.swift in Sources */,
 				AA29315B2DEF1B4F002C82B6 /* CuffPressureMeasurement.swift in Sources */,
 				01ABB07D2AE700E100615A21 /* AttributeTableScreen.swift in Sources */,
 				013E5D8A2ADD33E000B9C475 /* RunningServiceScreen.swift in Sources */,
@@ -1365,6 +1372,7 @@
 				A72A343C2EAA57160011BA44 /* CSCSCBMPeripheralSpecDelegate.swift in Sources */,
 				AA01D4922D4A3D38008523CE /* Throughput+Attributes.swift in Sources */,
 				A70A62002F0D470100C341AB /* LogsWriteDataSource.swift in Sources */,
+				A7F7BBAC2F2A525700F2D42D /* LogFormatters.swift in Sources */,
 				AA306A0B2DF30DBF005B4E04 /* GlucoseView.swift in Sources */,
 				AA21A3402E13D8AD00316CAD /* HeartRateValue.swift in Sources */,
 				A7D7B0D62EBA0254009B69CE /* UARTPresetsXmlParser.swift in Sources */,

@@ -25,7 +25,7 @@ class LogsSettingsViewModel: ObservableObject {
     
     @Published var isLoading: Bool = false
     
-    private var page: Int = 1
+    private var page: Int = 0
     private let itemsPerPage: Int = 100
     private var canLoadMore: Bool = true
     
@@ -63,7 +63,7 @@ class LogsSettingsViewModel: ObservableObject {
         activeLoadTask?.cancel()
         
         isLoading = true
-        page = 1
+        page = 0
         canLoadMore = true
         
         let currentSearch = searchText

@@ -222,7 +222,7 @@ private extension GlucoseViewModel {
                     return nil
                 }
                 
-                log.info("Received measurement: \(parsed.description).")
+                log.info(parsed.newDataLog())
                 return parsed
             }
             .receive(on: RunLoop.main)

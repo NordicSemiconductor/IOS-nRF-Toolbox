@@ -111,7 +111,7 @@ final class CyclingServiceViewModel: SupportedServiceViewModel, ObservableObject
                 
                 let result = try? CyclingData($0)
                 if let result {
-                    self.log.info("Received a new measurement: \(result)")
+                    self.log.info(result.newDataLog())
                 }
                 
                 return result
@@ -161,7 +161,7 @@ final class CyclingServiceViewModel: SupportedServiceViewModel, ObservableObject
         let wheelData = newData.wheelData ?? data.wheelData
         let crankData = newData.crankData ?? data.crankData
         self.data = CyclingData(wheelData: wheelData ?? .zero, crankData: crankData ?? .zero)
-        self.log.info("Updated cycling data: \(self.data)")
+        self.log.info("Updated cycling data:\n\n\(self.data.getLogString())")
     }
     
     // MARK: description

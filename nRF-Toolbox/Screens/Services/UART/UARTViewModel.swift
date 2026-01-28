@@ -145,17 +145,18 @@ extension UARTViewModel {
         do {
             if let dataAsString = String(data: data, encoding: .utf8) {
                 let cleanText = dataAsString.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
-                log.info("Received new message: \(cleanText).")
+                log.info("Sending new message: \(cleanText).")
                 let uartMessage = UARTMessage(text: cleanText, source: .user, previousMessage: messages.last)
                 messages.append(uartMessage)
             } else {
                 let rawBytes = "\(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing, .upperCase]))"
-                log.info("Received new byte message.")
+                log.info("Sending new byte message.")
                 let uartMessage = UARTMessage(text: rawBytes, source: .user, previousMessage: messages.last)
                 messages.append(uartMessage)
             }
             
             try await peripheral.writeValueWithResponse(data, for: uartRX).firstValue
+            log.info("Message successfully sent.")
         } catch {
             log.debug("\(#function) Error: \(error.localizedDescription)")
             handleError(error)
