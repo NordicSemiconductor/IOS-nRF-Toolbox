@@ -29,7 +29,7 @@ extension RootNavigationView {
     
     enum MenuCategory: Equatable, Hashable, Identifiable {
         case scanner
-        case logs
+        case logs(LogsTab)
         case device(ConnectedDevicesViewModel.Device)
         
         var id: UUID {

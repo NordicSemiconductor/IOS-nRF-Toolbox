@@ -14,6 +14,7 @@ struct CyclingDataView: View {
     
     // MARK: Environment
     
+    @EnvironmentObject var rootViewModel: RootNavigationViewModel
     @EnvironmentObject private var viewModel: CyclingServiceViewModel
     
     // MARK: Static

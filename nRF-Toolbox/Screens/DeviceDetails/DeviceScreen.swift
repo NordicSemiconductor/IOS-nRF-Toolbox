@@ -124,6 +124,7 @@ struct DeviceScreen: View {
             log.debug("Device \(deviceViewModel.device) not found in Connected Devices anymore. Dismissing.")
             dismiss()
         }
+        .toolbar { LogsToolbarItem() }
     }
     
     // MARK: reconnect()
