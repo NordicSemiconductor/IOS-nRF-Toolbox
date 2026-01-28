@@ -10,7 +10,7 @@ import SwiftData
 import SwiftUI
 import iOS_Common_Libraries
 
-private enum Tabs {
+enum LogsTab {
     case settings, preview
 }
 
@@ -20,20 +20,24 @@ struct LogsScreen: View {
     
     @State var viewModel = LogsSettingsViewModel(container: SwiftDataContextManager.shared.container!)
     
-    @State private var selectedTab: Tabs = .settings
+    @State private var selectedTab: LogsTab
     
     @State private var searchText: String = ""
     @State private var selectedLogLevel: LogLevel = .debug
+    
+    init(tab: LogsTab) {
+        selectedTab = tab
+    }
 
     var body: some View {
    
         TabView(selection: $selectedTab) {
-            Tab("Settings", systemImage: "gear", value: Tabs.settings) {
+            Tab("Settings", systemImage: "gear", value: LogsTab.settings) {
                 LogsSettingsScreen()
                     .environmentObject(viewModel)
             }
             
-            Tab("Preview", systemImage: "list.bullet.clipboard", value: Tabs.preview) {
+            Tab("Preview", systemImage: "list.bullet.clipboard", value: LogsTab.preview) {
                 LogsPreviewScreen()
                     .environmentObject(viewModel)
             }

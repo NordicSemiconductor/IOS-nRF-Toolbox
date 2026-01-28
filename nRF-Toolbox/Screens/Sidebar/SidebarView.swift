@@ -66,9 +66,14 @@ struct SidebarView: View {
                 
                 DevZoneLinkView()
                 
-                let isSelected = rootViewModel.selectedCategory == .logs
+                let isSelected = if case .logs = rootViewModel.selectedCategory {
+                    true
+                } else {
+                    false
+                }
+                
                 Button {
-                    rootViewModel.selectedCategory = RootNavigationView.MenuCategory.logs
+                    rootViewModel.selectedCategory = RootNavigationView.MenuCategory.logs(LogsTab.settings)
                 } label: {
                     Label("Logs settings", systemImage: "gearshape")
                 }

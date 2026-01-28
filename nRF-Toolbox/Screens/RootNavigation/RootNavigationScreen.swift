@@ -58,8 +58,8 @@ struct RootNavigationView: View {
                         .onAppear {
                             log.debug("PeripheralScannerScreen opened on details tab.")
                         }
-                case .logs:
-                    LogsScreen()
+                case .logs(let tab):
+                    LogsScreen(tab: tab)
                         .environmentObject(connectedDevicesViewModel)
                         .onAppear {
                             log.debug("LogsScreen opened on details tab.")
