@@ -148,6 +148,11 @@ class HeartRateCBMPeripheralSpecDelegate: MockSpecDelegate {
         }
     }
     
+    func peripheral(_ peripheral: CBMPeripheralSpec, didDisconnect error: (any Error)?) {
+        log.debug(#function)
+        timerCancellable?.cancel()
+    }
+    
     private func generateNextFlags() -> Data {
         isBodyContactPresent = !isBodyContactPresent
         if (isBodyContactPresent) {
