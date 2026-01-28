@@ -100,7 +100,7 @@ final class HealthThermometerViewModel: SupportedServiceViewModel, ObservableObj
                 
                 let result = try? TemperatureMeasurement(data)
                 if let result {
-                    self.log.info("Received a new measurement: \(result)")
+                    self.log.info(result.newDataLog())
                 }
                 
                 return result

@@ -136,7 +136,7 @@ extension BloodPressureViewModel {
                 log.debug("Received Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing])) (\(data.count) bytes)")
                 do {
                     let result = try BloodPressureMeasurement(data: data)
-                    log.info("Received new measurement: \(result)")
+                    log.info(result.newDataLog())
                     return result
                 } catch {
                     log.error("Error parsing data: \(error.localizedDescription)")
