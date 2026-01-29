@@ -47,7 +47,7 @@ struct RootNavigationView: View {
                 case .device(let device):
                     DeviceScreen()
                         .environment(connectedDevicesViewModel)
-                        .environmentObject(connectedDevicesViewModel.deviceViewModel(for: device.id)!)
+                        .environment(connectedDevicesViewModel.deviceViewModel(for: device.id)!)
                         .onAppear {
                             log.debug("DeviceScreen opened on details tab.")
                         }
