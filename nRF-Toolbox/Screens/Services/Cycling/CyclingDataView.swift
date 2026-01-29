@@ -15,7 +15,7 @@ struct CyclingDataView: View {
     // MARK: Environment
     
     @Environment(RootNavigationViewModel.self) var rootViewModel: RootNavigationViewModel
-    @EnvironmentObject private var viewModel: CyclingServiceViewModel
+    @Environment(CyclingServiceViewModel.self) private var viewModel: CyclingServiceViewModel
     
     // MARK: Static
     
@@ -25,6 +25,8 @@ struct CyclingDataView: View {
     // MARK: view
     
     var body: some View {
+        @Bindable var viewModel = viewModel
+        
         NumberedColumnGrid(columns: 2, data: attributes) { item in
             RunningValuesGridItem(title: item.title, value: item.value, unit: item.unit)
         }
