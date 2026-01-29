@@ -15,7 +15,8 @@ import iOS_Common_Libraries
 
 // MARK: - ThroughputViewModel
 
-final class ThroughputViewModel: SupportedServiceViewModel, ObservableObject {
+@Observable
+final class ThroughputViewModel: SupportedServiceViewModel {
     
     // MARK: Mode
     
@@ -35,14 +36,14 @@ final class ThroughputViewModel: SupportedServiceViewModel, ObservableObject {
     
     // MARK: Published
     
-    @Published fileprivate(set) var inProgress: Bool
-    @Published fileprivate(set) var readData: ThroughputData
-    @Published fileprivate(set) var testProgress: Double
-    @Published var mtu: Int
-    @Published var testSize: Measurement<UnitInformationStorage>
-    @Published var testDuration: Measurement<UnitDuration>
-    @Published var testTimeLimit: Measurement<UnitDuration>
-    @Published var testMode: Mode
+    fileprivate(set) var inProgress: Bool
+    fileprivate(set) var readData: ThroughputData
+    fileprivate(set) var testProgress: Double
+    var mtu: Int
+    var testSize: Measurement<UnitInformationStorage>
+    var testDuration: Measurement<UnitDuration>
+    var testTimeLimit: Measurement<UnitDuration>
+    var testMode: Mode
     
     // MARK: Private Properties
     
@@ -264,7 +265,7 @@ final class ThroughputViewModel: SupportedServiceViewModel, ObservableObject {
     
     var attachedView: any View {
         return ThroughputView()
-            .environmentObject(self)
+            .environment(self)
     }
     
     // MARK: onConnect()
