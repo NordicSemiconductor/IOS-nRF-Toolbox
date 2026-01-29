@@ -15,7 +15,14 @@ import iOS_Common_Libraries
 
 // MARK: - CuffPressureViewModel
 
-final class CuffPressureViewModel: @MainActor SupportedServiceViewModel, ObservableObject {
+@Observable
+final class CuffPressureViewModel: @MainActor SupportedServiceViewModel {
+    
+    // MARK: Properties
+    
+    private(set) var currentValue: CuffPressureMeasurement?
+    
+    var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
     // MARK: Private Properties
     
@@ -23,17 +30,10 @@ final class CuffPressureViewModel: @MainActor SupportedServiceViewModel, Observa
     private let characteristics: [CBCharacteristic]
     
     private var cuffMeasurement: CBCharacteristic!
-    private lazy var cancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     
-    private let log = NordicLog(category: "CuffPressureViewModel",
-                                subsystem: "com.nordicsemi.nrf-toolbox")
-    
-    // MARK: Properties
-    
-    @Published private(set) var currentValue: CuffPressureMeasurement?
-    
-    var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
-    
+    private let log = NordicLog(category: "CuffPressureViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
+
     // MARK: init
     
     init(peripheral: Peripheral, characteristics: [CBCharacteristic]) {
@@ -58,7 +58,7 @@ final class CuffPressureViewModel: @MainActor SupportedServiceViewModel, Observa
     
     var attachedView: any View {
         return CuffPressureView()
-            .environmentObject(self)
+            .environment(self)
     }
     
     // MARK: onConnect()

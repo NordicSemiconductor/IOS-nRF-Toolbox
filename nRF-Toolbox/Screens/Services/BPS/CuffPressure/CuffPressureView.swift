@@ -15,7 +15,7 @@ struct CuffPressureView: View {
     
     // MARK: EnvironmentObject
     
-    @EnvironmentObject private var viewModel: CuffPressureViewModel
+    @Environment(CuffPressureViewModel.self) private var viewModel: CuffPressureViewModel
     
     // MARK: view
     
