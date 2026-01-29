@@ -56,13 +56,19 @@ final class CyclingServiceViewModel: SupportedServiceViewModel, ObservableObject
         self.peripheral = peripheral
         self.characteristics = characteristics
         self.cancellables = Set<AnyCancellable>()
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
+    }
+    
+    // MARK: deinit
+    
+    deinit {
+        log.debug("\(type(of: self)).\(#function)")
     }
     
     // MARK: initializeCharacteristics()
     @MainActor
     func initializeCharacteristics() async throws {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         let serviceCharacteristics: [Characteristic] = [.cscMeasurement, .cscFeature]
         let discoveredCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
             serviceCharacteristics.contains { $0.uuid == cbChar.uuid }
@@ -86,7 +92,7 @@ final class CyclingServiceViewModel: SupportedServiceViewModel, ObservableObject
     
     @MainActor
     func readFeatures() async throws {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         features = try await peripheral.readValue(for: cscFeature).tryMap { data in
             guard let data, data.canRead(UInt8.self, atOffset: 0) else {
                 throw ServiceError.noData
@@ -180,7 +186,7 @@ final class CyclingServiceViewModel: SupportedServiceViewModel, ObservableObject
     // MARK: onConnect()
     @MainActor
     func onConnect() async {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         do {
             try await initializeCharacteristics()
             try await readFeatures()
@@ -197,7 +203,7 @@ final class CyclingServiceViewModel: SupportedServiceViewModel, ObservableObject
     // MARK: onDisconnect()
     
     func onDisconnect() {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         cancellables.removeAll()
     }
 }

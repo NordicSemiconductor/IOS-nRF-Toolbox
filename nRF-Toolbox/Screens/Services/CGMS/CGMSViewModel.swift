@@ -48,14 +48,20 @@ final class CGMSViewModel: SupportedServiceViewModel {
         self.peripheral = peripheral
         self.characteristics = characteristics
         self.cancellables = Set<AnyCancellable>()
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
+    }
+    
+    // MARK: deinit
+    
+    deinit {
+        log.debug("\(type(of: self)).\(#function)")
     }
     
     // MARK: requestNumberOfRecords()
     
     @MainActor
     func requestNumberOfRecords() async throws -> Int {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         do {
             async let racpDataResponse = listenRACPResponse()
             
@@ -83,7 +89,7 @@ final class CGMSViewModel: SupportedServiceViewModel {
     // MARK: listenRACPResponse()
     
     func listenRACPResponse() async throws -> Data {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         let racpData = try await peripheral.listenValues(for: cbRACP).firstValue
         log.debug("\(#function) Response \(racpData.hexEncodedString(options: [.prepend0x, .upperCase]))")
         
@@ -94,7 +100,7 @@ final class CGMSViewModel: SupportedServiceViewModel {
     
     @MainActor
     func requestRecords(_ op: RecordOperator) async {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         inFlightRequest = op
         defer {
             inFlightRequest = nil
@@ -137,7 +143,7 @@ final class CGMSViewModel: SupportedServiceViewModel {
     
     @MainActor
     func onConnect() async {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         do {
             try await initializeCharacteristics()
             log.info("Continous Glucose service has set up successfully.")
@@ -150,7 +156,7 @@ final class CGMSViewModel: SupportedServiceViewModel {
     
     @MainActor
     private func initializeCharacteristics() async throws {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         let characteristics: [Characteristic] = [
             .cgmMeasurement, .recordAccessControlPoint,
             .cgmSpecificOpsControlPoint, .cgmSessionStartTime, .cgmFeature
@@ -237,7 +243,7 @@ final class CGMSViewModel: SupportedServiceViewModel {
     // MARK: onDisconnect()
     
     func onDisconnect() {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         peripheralSessionTime = nil
         cbCGMMeasurement = nil
         cbSOCP = nil
@@ -253,7 +259,7 @@ private extension CGMSViewModel {
     // MARK: listenToMeasurements()
     
     func listenToMeasurements(_ measurementCharacteristic: CBCharacteristic) {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         peripheral.listenValues(for: measurementCharacteristic)
             .compactMap { [log, peripheralSessionTime] data -> [CGMSMeasurement] in
                 log.debug("Received Measurement Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing])) (\(data.count) bytes)")
@@ -297,7 +303,7 @@ private extension CGMSViewModel {
     }
     
     func listenToOperations(_ opsControlPointCharacteristic: CBCharacteristic) {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         peripheral.listenValues(for: opsControlPointCharacteristic)
             .map { [log] data in
                 log.debug("Received Ops Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing]))")

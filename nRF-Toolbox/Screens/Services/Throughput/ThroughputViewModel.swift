@@ -73,7 +73,7 @@ final class ThroughputViewModel: SupportedServiceViewModel, ObservableObject {
         self.readData = ThroughputData(Data())
         self.progressSubject = PassthroughSubject<Double, Never>()
         self.cancellables = Set<AnyCancellable>()
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         
         progressSubject
             .throttle(for: 0.5, scheduler: DispatchQueue.main, latest: true)
@@ -84,6 +84,12 @@ final class ThroughputViewModel: SupportedServiceViewModel, ObservableObject {
                 }
             }
             .store(in: &cancellables)
+    }
+    
+    // MARK: deinit
+    
+    deinit {
+        log.debug("\(type(of: self)).\(#function)")
     }
     
     // MARK:
@@ -146,7 +152,7 @@ final class ThroughputViewModel: SupportedServiceViewModel, ObservableObject {
     // MARK: start()
     
     func start(_ size: Measurement<UnitInformationStorage>, using mtu: Int) async throws {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         let characteristics: [Characteristic] = [.throughputCharacteristic]
         //TODO: assign once. This code is repeated multiple times in the file.
         let cbCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
@@ -218,7 +224,7 @@ final class ThroughputViewModel: SupportedServiceViewModel, ObservableObject {
     // MARK: reset()
     
     func reset() async {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         
         let characteristics: [Characteristic] = [.throughputCharacteristic]
         let cbCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in

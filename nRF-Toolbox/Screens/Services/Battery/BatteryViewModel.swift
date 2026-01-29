@@ -42,13 +42,13 @@ final class BatteryViewModel: SupportedServiceViewModel, ObservableObject {
         self.batteryLevelData = []
         self.currentBatteryLevel = nil
         self.batteryLevelAvailable = false
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
     }
     
     // initializeCharacteristics()
     @MainActor
     func initializeCharacteristics() async throws {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         let characteristics: [Characteristic] = [.batteryLevel]
         let cbCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
             characteristics.contains { $0.uuid == cbChar.uuid }
@@ -75,7 +75,7 @@ final class BatteryViewModel: SupportedServiceViewModel, ObservableObject {
     // MARK: listen(for:)
     
     private func listen(for batteryLevelCh: CBCharacteristic) {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         let publisher = peripheral.listenValues(for: batteryLevelCh)
             .eraseToAnyPublisher()
         
@@ -85,7 +85,7 @@ final class BatteryViewModel: SupportedServiceViewModel, ObservableObject {
     // MARK: readBatteryLevelOnTimer()
     
     private func readBatteryLevelOnTimer(_ batteryLevelCh: CBCharacteristic, timeInterval: TimeInterval = 1) async throws {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         let publisher = Timer.publish(every: 3.0, on: .main, in: .common)
             .autoconnect()
             .flatMap { [unowned self] _ in
@@ -147,7 +147,7 @@ final class BatteryViewModel: SupportedServiceViewModel, ObservableObject {
     
     @MainActor
     func onConnect() async {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         do {
             try await initializeCharacteristics()
         } catch {
@@ -159,7 +159,7 @@ final class BatteryViewModel: SupportedServiceViewModel, ObservableObject {
     // MARK: onDisconnect()
     
     func onDisconnect() {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         cancellables.removeAll()
     }
 }

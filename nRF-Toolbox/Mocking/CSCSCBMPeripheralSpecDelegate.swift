@@ -88,7 +88,7 @@ class CSCSCBMPeripheralSpecDelegate: MockSpecDelegate {
     func peripheral(_ peripheral: CBMPeripheralSpec,
                     didReceiveReadRequestFor characteristic: CBMCharacteristicMock)
     -> Result<Data, Error> {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         switch characteristic.uuid {
         case .cscFeature:
             return .success(Data([0x03]))
@@ -100,7 +100,7 @@ class CSCSCBMPeripheralSpecDelegate: MockSpecDelegate {
     func peripheral(_ peripheral: CBMPeripheralSpec,
                     didReceiveWriteRequestFor characteristic: CBMCharacteristicMock,
                     data: Data) -> Result<Void, Error> {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         return .failure(MockError.writingIsNotSupported)
     }
     
@@ -115,7 +115,7 @@ class CSCSCBMPeripheralSpecDelegate: MockSpecDelegate {
     }
     
     func peripheral(_ peripheral: CBMPeripheralSpec, didDisconnect error: (any Error)?) {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         timerCancellable?.cancel()
         timerCancellable = nil
     }

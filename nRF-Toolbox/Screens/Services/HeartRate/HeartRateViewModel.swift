@@ -57,13 +57,13 @@ final class HeartRateViewModel: @MainActor SupportedServiceViewModel {
         self.alertError = nil
         self.characteristics = characteristics
         self.data.reserveCapacity(capacity)
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
     }
     
     // MARK: deinit
     
     deinit {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
     }
     
     // MARK: description
@@ -83,7 +83,7 @@ final class HeartRateViewModel: @MainActor SupportedServiceViewModel {
     
     @MainActor
     func onConnect() async {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         do {
             try await initializeCharacteristics()
             log.info("Heart Rate service has set up successfully.")
@@ -97,7 +97,7 @@ final class HeartRateViewModel: @MainActor SupportedServiceViewModel {
     // MARK: onDisconnect()
     
     func onDisconnect() {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
 //        await notifyHRMeasurement(false)
         cancellables.removeAll()
     }
@@ -111,7 +111,7 @@ private extension HeartRateViewModel {
     
     @MainActor
     func initializeCharacteristics() async throws {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         let hrCharacteristics: [Characteristic] = [.heartRateMeasurement, .bodySensorLocation, .heartRateControlPoint]
         
         let heartRateCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
@@ -159,7 +159,7 @@ private extension HeartRateViewModel {
     // MARK: listenTo()
     
     func listenTo(_ characteristic: CBCharacteristic) {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         peripheral.listenValues(for: characteristic)
             .compactMap { data in
                 self.log.debug("Received measurement data: \(data.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
@@ -206,7 +206,7 @@ private extension HeartRateViewModel {
     @MainActor
     func notifyHRMeasurement(_ enable: Bool) async throws {
         guard let hrMeasurement else { return }
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         do {
             let result = try await peripheral.setNotifyValue(enable, for: hrMeasurement).firstValue
             log.debug("Enabled HR Measurement Characteristic: \(result)")

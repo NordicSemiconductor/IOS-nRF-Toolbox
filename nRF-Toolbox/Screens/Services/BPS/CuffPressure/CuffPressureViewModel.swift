@@ -39,13 +39,13 @@ final class CuffPressureViewModel: @MainActor SupportedServiceViewModel, Observa
     init(peripheral: Peripheral, characteristics: [CBCharacteristic]) {
         self.peripheral = peripheral
         self.characteristics = characteristics
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
     }
     
     // MARK: deinit
     
     deinit {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
     }
     
     // MARK: description
@@ -64,7 +64,7 @@ final class CuffPressureViewModel: @MainActor SupportedServiceViewModel, Observa
     // MARK: onConnect()
     @MainActor
     func onConnect() async {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         do {
             try await initializeCharacteristics()
         } catch {
@@ -75,7 +75,7 @@ final class CuffPressureViewModel: @MainActor SupportedServiceViewModel, Observa
     
     @MainActor
     func initializeCharacteristics() async throws {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         let characteristics: [Characteristic] = [
             .intermediateCuffPressure
         ]
@@ -103,7 +103,7 @@ final class CuffPressureViewModel: @MainActor SupportedServiceViewModel, Observa
     // MARK: onDisconnect()
     
     func onDisconnect() {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         cuffMeasurement = nil
         cancellables.removeAll()
     }
@@ -114,7 +114,7 @@ extension CuffPressureViewModel {
     // MARK: listenTo(:)
     
     func listenTo(_ cuffCharacteristic: CBCharacteristic) {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         peripheral.listenValues(for: cuffCharacteristic)
             .compactMap { [log] data -> CuffPressureMeasurement? in
                 log.debug("Received Cuff Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing])) (\(data.count) bytes)")

@@ -35,11 +35,11 @@ final class RunningServiceViewModel: @MainActor SupportedServiceViewModel, Obser
     init(peripheral: Peripheral, characteristics: [CBCharacteristic]) {
         self.peripheral = peripheral
         self.characteristics = characteristics
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
     }
     
     deinit {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
     }
     
     // MARK: description
@@ -58,7 +58,7 @@ final class RunningServiceViewModel: @MainActor SupportedServiceViewModel, Obser
     // MARK: onConnect()
     @MainActor
     func onConnect() async {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         do {
             try await initializeCharacteristics()
             log.info("Running service has set up successfully.")
@@ -72,7 +72,7 @@ final class RunningServiceViewModel: @MainActor SupportedServiceViewModel, Obser
     // MARK: onDisconnect()
     
     func onDisconnect() {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         cancelable.removeAll()
     }
 }
@@ -82,7 +82,7 @@ extension RunningServiceViewModel {
     // MARK: initializeCharacteristics()
     @MainActor
     public func initializeCharacteristics() async throws {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         try await setUpGlobalVariables()
         try await readFeature()
         
@@ -95,7 +95,7 @@ private extension RunningServiceViewModel {
     // MARK: setUpGlobalVariables()
     @MainActor
     func setUpGlobalVariables() async throws {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         let characteristics: [Characteristic] = [.rscMeasurement, .rscFeature, .scControlPoint]
         let discoveredCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
             characteristics.contains { $0.uuid == cbChar.uuid }
@@ -121,7 +121,7 @@ private extension RunningServiceViewModel {
     // MARK: readFeature()
     @MainActor
     func readFeature() async throws {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         let features = try await peripheral.readValue(for: rscFeature)
             .tryMap { data in
                 guard let data else { throw ServiceError.noData }
@@ -218,11 +218,11 @@ extension RunningServiceViewModel {
             self.totalDistance = totalDistance
             self.isRunning = isRunning
             
-            log.debug(#function)
+            log.debug("\(type(of: self)).\(#function)")
         }
         
         deinit {
-            log.debug(#function)
+            log.debug("\(type(of: self)).\(#function)")
         }
     }
 }

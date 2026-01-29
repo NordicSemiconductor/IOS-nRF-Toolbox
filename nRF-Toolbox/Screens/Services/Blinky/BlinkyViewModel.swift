@@ -15,7 +15,21 @@ import iOS_Common_Libraries
 
 // MARK: - BlinkyViewModel
 
-final class BlinkyViewModel: SupportedServiceViewModel, ObservableObject {
+@Observable
+final class BlinkyViewModel: SupportedServiceViewModel {
+    
+    // MARK: Properties
+    
+    private let (ledStream, continuation) = AsyncStream.makeStream(of: Bool.self)
+    var isLedOn = false {
+        willSet {
+            continuation.yield(newValue)
+        }
+    }
+    
+    private(set) var isButtonPressed: Bool = false
+    
+    var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
     // MARK: Private Properties
     
@@ -24,20 +38,19 @@ final class BlinkyViewModel: SupportedServiceViewModel, ObservableObject {
     private var cancellables: Set<AnyCancellable>
     private let log = NordicLog(category: "BlinkyViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
     
-    // MARK: Properties
-    
-    @Published var isLedOn: Bool = false
-    @Published private(set) var isButtonPressed: Bool = false
-    
-    var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
-    
     // MARK: init
     
     init(peripheral: Peripheral, characteristics: [CBCharacteristic]) {
         self.peripheral = peripheral
         self.cancellables = Set<AnyCancellable>()
         self.characteristics = characteristics
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
+    }
+    
+    // MARK: deinit
+    
+    deinit {
+        log.debug("\(type(of: self)).\(#function)")
     }
     
     // MARK: description
@@ -50,14 +63,14 @@ final class BlinkyViewModel: SupportedServiceViewModel, ObservableObject {
     
     var attachedView: any View {
         return BlinkyView()
-            .environmentObject(self)
+            .environment(self)
     }
     
     // MARK: onConnect()
     
     @MainActor
     func onConnect() async {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         do {
             try await initializeCharacteristics()
             log.info("Blinky service has set up successfully.")
@@ -70,7 +83,7 @@ final class BlinkyViewModel: SupportedServiceViewModel, ObservableObject {
     
     @MainActor
     private func initializeCharacteristics() async throws {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         
         let characteristics: [Characteristic] = [.nordicsemiBlinkyLedState, .nordicsemiBlinkyButtonState]
         let blinkyCharacteristics: [CBCharacteristic] = self.characteristics.filter { cbChar in
@@ -99,24 +112,22 @@ final class BlinkyViewModel: SupportedServiceViewModel, ObservableObject {
         }
         log.debug("peripheral.setNotifyValue(true, for: .nordicsemiBlinkyButtonState): \(isNotifyEnabled)")
         
-        $isLedOn
-            .map { [log] newValue in
+        Task { [weak self] in
+            guard let self else { return }
+            for await newValue in self.ledStream {
                 log.info("LED state changed to: \(newValue)")
-                return Data(repeating: newValue ? 1 : 0, count: 1)
+                let data = Data(repeating: newValue ? 1 : 0, count: 1)
+                
+                log.debug("Sending new LED state \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing]))")
+                _ = try? await peripheral.writeValueWithResponse(data, for: ledCharacteristics).firstValue
             }
-            .sink { [log, peripheral] data in
-                Task {
-                    log.debug("Sending new LED state \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing]))")
-                    _ = try? await peripheral.writeValueWithResponse(data, for: ledCharacteristics).firstValue
-                }
-            }
-            .store(in: &cancellables)
+        }
     }
     
     // MARK: onDisconnect()
     
     func onDisconnect() {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         cancellables.removeAll()
     }
     

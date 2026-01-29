@@ -32,11 +32,19 @@ class LogsSettingsViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     private var activeLoadTask: Task<Void, Never>? = nil
-
+    
+    // MARK: init
+    
     init(container: ModelContainer) {
         self.readDataSource = LogsReadDataSource(modelContainer: container)
         setupObservers()
         fetchLogsCount()
+    }
+    
+    // MARK: deinit
+    
+    deinit {
+        log.debug("\(type(of: self)).\(#function)")
     }
     
     private func setupObservers() {

@@ -58,18 +58,18 @@ final class SensorCalibrationViewModel: ObservableObject {
             .map { $0 == $1 }
             .assign(to: &$updateSensorLocationDisabled)
         
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
     }
     
     deinit {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
     }
 }
 
 extension SensorCalibrationViewModel {
     
     func initializeCharacteristic() async {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         do {
             let characteristics: [Characteristic] = [.scControlPoint, .sensorLocation]
             let discovered: [CBCharacteristic] = self.characteristics.filter { cbChar in
@@ -97,7 +97,7 @@ extension SensorCalibrationViewModel {
     }
     
     func readLocations() async {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         guard features.contains(.multipleSensorLocation) else { return }
         
         do {
@@ -164,7 +164,7 @@ extension SensorCalibrationViewModel {
     
     @discardableResult
     private func writeCommand(opCode: SCControlPointOpCode, parameter: Data?) async throws -> Data? {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         guard let scControlPoint else {
             throw Err.noMandatoryCharacteristic
         }
@@ -196,7 +196,7 @@ extension SensorCalibrationViewModel {
     }
     
     func readSensorLocation() async throws -> RSCSSensorLocation {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         guard let sensorLocationCharacteristic else {
             throw Err.noMandatoryCharacteristic
         }
@@ -213,7 +213,7 @@ extension SensorCalibrationViewModel {
     }
     
     func readAvailableLocations() async throws -> [RSCSSensorLocation] {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         guard let data = try await writeCommand(opCode: .requestSupportedSensorLocations, parameter: nil) else {
             throw Err.badData
         }

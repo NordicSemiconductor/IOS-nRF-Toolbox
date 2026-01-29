@@ -61,13 +61,13 @@ final class DeviceDetailsViewModel: ObservableObject {
         self.device = device
         
         listenForDisconnection()
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
     }
     
     // MARK: deinit
     
     deinit {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
     }
 }
 
@@ -77,7 +77,7 @@ extension DeviceDetailsViewModel {
     private struct TimeoutError: Error { }
     
     func reconnect() async {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         do {
             _ = try await centralManager.connect(peripheral.peripheral)
                 // Set timeout for 5 seconds
@@ -92,7 +92,7 @@ extension DeviceDetailsViewModel {
     }
     
     func onDisconnect() async {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         signalViewModel?.stopTimer()
         supportedServiceViewModels.forEach {
             $0.onDisconnect()
@@ -131,7 +131,7 @@ extension DeviceDetailsViewModel {
     // MARK: discoverSupportedServices()
     
     func discoverSupportedServices() async {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         log.info("Discovering services...")
         do {
             if supportedServiceViewModels.hasItems {

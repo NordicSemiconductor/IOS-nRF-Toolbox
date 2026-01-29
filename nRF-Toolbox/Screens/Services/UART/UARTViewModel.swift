@@ -59,7 +59,7 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
         self.peripheral = peripheral
         self.characteristics = characteristics
         self.cancellables = Set<AnyCancellable>()
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         loadPresetsFromJsonFile()
     }
     
@@ -80,7 +80,7 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
     
     @MainActor
     func onConnect() async {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         do {
             try await initializeCharacteristics()
             log.info("UART service has set up successfully.")
@@ -93,7 +93,7 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
     
     @MainActor
     func initializeCharacteristics() async throws {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         let characteristics: [Characteristic] = [
             .nordicsemiUartRx, .nordicsemiUartTx
         ]
@@ -109,7 +109,7 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
             throw ServiceError.noMandatoryCharacteristic
         }
         
-        guard let uartRX else {
+        guard uartRX != nil else {
             log.error("Receive characteristic is missing.")
             throw ServiceError.noMandatoryCharacteristic
         }
@@ -126,7 +126,7 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
     // MARK: onDisconnect()
     
     func onDisconnect() {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         uartRX = nil
         uartTX = nil
         cancellables.removeAll()
@@ -140,7 +140,7 @@ extension UARTViewModel {
     @MainActor
     func send(_ data: Data) async {
         guard let uartRX else { return }
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         
         do {
             if let dataAsString = String(data: data, encoding: .utf8) {
@@ -164,7 +164,7 @@ extension UARTViewModel {
     }
     
     func listenToIncomingMessages(_ rxCharacteristic: CBCharacteristic) {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         peripheral.listenValues(for: rxCharacteristic)
             .compactMap { [log] data -> UARTMessage? in
                 log.debug("Received Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing])) (\(data.count) bytes)")
@@ -202,7 +202,7 @@ extension UARTViewModel {
     
     @MainActor
     func runCommand(_ command: UARTPreset) {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         guard let data = command.data else { return }
         Task {
             await send(data)
@@ -216,7 +216,7 @@ extension UARTViewModel {
     
     @MainActor
     func savePresets() {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         guard editedPresets != .none, let i = presets.firstIndex(of: selectedPresets)  else { return }
         
         presets[i] = editedPresets
@@ -261,7 +261,7 @@ extension UARTViewModel {
     }
     
     func savePresetsToJsonFile() {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         let copy = presets
         Task.detached {
             do {
@@ -273,7 +273,7 @@ extension UARTViewModel {
     }
     
     func loadPresetsFromJsonFile() {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         Task.detached {
             do {
                 if let savedPresets = try Self.read() {
@@ -289,7 +289,7 @@ extension UARTViewModel {
     }
     
     func savePresetsToXmlFile(notifyUser: Bool = true) {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         Task.detached {
             let text = (try? self.parser.toXml(self.selectedPresets)) ?? ""
             let url = self.selectedPresets.url
@@ -312,7 +312,7 @@ extension UARTViewModel {
     }
     
     func importPresets(result: Result<[URL], any Error>) {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         switch result {
         case .success(let urls):
             do {

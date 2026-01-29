@@ -48,7 +48,13 @@ final class GlucoseViewModel: @MainActor SupportedServiceViewModel {
         self.peripheral = peripheral
         self.characteristics = characteristics
         self.cancellables = Set<AnyCancellable>()
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
+    }
+    
+    // MARK: deinit
+    
+    deinit {
+        log.debug("\(type(of: self)).\(#function)")
     }
     
     // MARK: description
@@ -68,7 +74,7 @@ final class GlucoseViewModel: @MainActor SupportedServiceViewModel {
     
     @MainActor
     func onConnect() async {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         do {
             try await initializeCharacteristics()
             log.info("Glucose service has set up successfully.")
@@ -82,7 +88,7 @@ final class GlucoseViewModel: @MainActor SupportedServiceViewModel {
     
     @MainActor
     private func initializeCharacteristics() async throws {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         let characteristics: [Characteristic] = [
             .glucoseMeasurement, .glucoseFeature,
             .recordAccessControlPoint
@@ -116,7 +122,7 @@ final class GlucoseViewModel: @MainActor SupportedServiceViewModel {
     // MARK: onDisconnect()
     
     func onDisconnect() {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         cbGlucoseMeasurement = nil
         cbRACP = nil
         cancellables.removeAll()
@@ -134,7 +140,7 @@ extension GlucoseViewModel {
         Task { @MainActor in
             guard let cbRACP else { return }
             
-            log.debug(#function)
+            log.debug("\(type(of: self)).\(#function)")
             do {
                 inFlightRequest = op
                 defer {
@@ -200,7 +206,7 @@ private extension GlucoseViewModel {
     // MARK: listenToMeasurements()
     
     func listenToMeasurements(_ measurementCharacteristic: CBCharacteristic) {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         peripheral.listenValues(for: measurementCharacteristic)
             .compactMap { [log] data -> GlucoseMeasurement? in
                 log.debug("Received Measurement Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing])) (\(data.count) bytes)")
@@ -249,7 +255,7 @@ private extension GlucoseViewModel {
     
     @MainActor
     private func processRACPResponse(_ responseData: Data) throws {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         log.debug("RACP response: \(responseData.hexEncodedString(options: [.upperCase, .twoByteSpacing]))")
         let opcodeValue = responseData.littleEndianBytes(atOffset: 0, as: UInt8.self)
         let recordOpcode = RecordOpcode(rawValue: UInt8(opcodeValue))
