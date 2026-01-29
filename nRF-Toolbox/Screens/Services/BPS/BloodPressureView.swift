@@ -15,7 +15,7 @@ struct BloodPressureView: View {
     
     // MARK: EnvironmentObject
     
-    @EnvironmentObject private var viewModel: BloodPressureViewModel
+    @Environment(BloodPressureViewModel.self) private var viewModel: BloodPressureViewModel
     
     // MARK: view
     
