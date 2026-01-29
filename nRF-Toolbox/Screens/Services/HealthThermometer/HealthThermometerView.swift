@@ -14,7 +14,7 @@ struct HealthThermometerView: View {
     
     // MARK: Environment
     
-    @EnvironmentObject private var viewModel: HealthThermometerViewModel
+    @Environment(HealthThermometerViewModel.self) private var viewModel: HealthThermometerViewModel
     
     // MARK: Constants
     

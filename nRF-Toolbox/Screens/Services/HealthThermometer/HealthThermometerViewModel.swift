@@ -15,7 +15,13 @@ import iOS_Common_Libraries
 
 // MARK: - HealthThermometerViewModel
 
-final class HealthThermometerViewModel: SupportedServiceViewModel, ObservableObject {
+@Observable
+final class HealthThermometerViewModel: SupportedServiceViewModel {
+    
+    // MARK: Properties
+    
+    private(set) var measurement: TemperatureMeasurement?
+    var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
     // MARK: Private Properties
     
@@ -23,12 +29,6 @@ final class HealthThermometerViewModel: SupportedServiceViewModel, ObservableObj
     private let characteristics: [CBCharacteristic]
     private var cancellables: Set<AnyCancellable>
     private let log = NordicLog(category: "TemperatureViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
-    
-    var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
-    
-    // MARK: Properties
-    
-    @Published private(set) var measurement: TemperatureMeasurement?
     
     // MARK: init
     
@@ -55,7 +55,7 @@ final class HealthThermometerViewModel: SupportedServiceViewModel, ObservableObj
     
     var attachedView: any View {
         return HealthThermometerView()
-            .environmentObject(self)
+            .environment(self)
     }
     
     // MARK: onConnect()
