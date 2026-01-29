@@ -14,7 +14,7 @@ import Combine
 
 // MARK: - RunningServiceViewModel
 
-final class RunningServiceViewModel: @MainActor SupportedServiceViewModel, ObservableObject {
+final class RunningServiceViewModel: @MainActor SupportedServiceViewModel {
     
     let peripheral: Peripheral
     private let characteristics: [CBCharacteristic]
@@ -52,7 +52,7 @@ final class RunningServiceViewModel: @MainActor SupportedServiceViewModel, Obser
     
     var attachedView: any View {
         return RunningServiceView()
-            .environmentObject(self.environment)
+            .environment(self.environment)
     }
     
     // MARK: onConnect()
@@ -185,20 +185,21 @@ private extension RunningServiceViewModel {
 
 extension RunningServiceViewModel {
     
-    class Environment: ObservableObject {
-        @Published fileprivate(set) var criticalError: CriticalError?
-        @Published fileprivate(set) var alertError: AlertError?
+    @Observable
+    class Environment {
+        fileprivate(set) var criticalError: CriticalError?
+        fileprivate(set) var alertError: AlertError?
         
-        @Published fileprivate(set) var features = BitField<RSCSFeature>()
+        fileprivate(set) var features = BitField<RSCSFeature>()
         
-        @Published var instantaneousSpeed: Measurement<UnitSpeed>?
-        @Published var instantaneousCadence: Int?
-        @Published var instantaneousStrideLength: Measurement<UnitLength>?
-        @Published var totalDistance: Measurement<UnitLength>?
-        @Published var isRunning: Bool?
-        @Published var isSensorCalibrationAvailable: Bool?
+        var instantaneousSpeed: Measurement<UnitSpeed>?
+        var instantaneousCadence: Int?
+        var instantaneousStrideLength: Measurement<UnitLength>?
+        var totalDistance: Measurement<UnitLength>?
+        var isRunning: Bool?
+        var isSensorCalibrationAvailable: Bool?
         
-        @Published var sensorCalibrationViewModel: SensorCalibrationViewModel?
+        var sensorCalibrationViewModel: SensorCalibrationViewModel?
         
         private let log = NordicLog(category: "RunningService.ViewModel.Environment")
         

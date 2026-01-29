@@ -28,7 +28,7 @@ struct RunningValuesGrid: View {
     
     // MARK: Environment
     
-    @EnvironmentObject private var environment: Env
+    @Environment(Env.self) private var environment: Env
     
     // MARK: view
     

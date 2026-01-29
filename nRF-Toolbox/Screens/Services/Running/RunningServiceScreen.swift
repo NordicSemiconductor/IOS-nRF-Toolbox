@@ -14,7 +14,7 @@ struct RunningServiceView: View {
     
     // MARK: Environment
     
-    @EnvironmentObject private var environment: RunningServiceViewModel.Environment
+    @Environment(RunningServiceViewModel.Environment.self) private var environment: RunningServiceViewModel.Environment
     
     // MARK: Properties
     
