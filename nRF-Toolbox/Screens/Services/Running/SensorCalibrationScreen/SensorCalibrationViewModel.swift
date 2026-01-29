@@ -15,32 +15,45 @@ import iOS_Common_Libraries
 // MARK: - SensorCalibrationViewModel
 
 @MainActor
-final class SensorCalibrationViewModel: ObservableObject {
+@Observable
+final class SensorCalibrationViewModel {
     
-    @Published fileprivate(set) var setCumulativeValueEnabled = false
-    @Published fileprivate(set) var startSensorCalibrationEnabled = false
-    @Published fileprivate(set) var sensorLocationEnabled = false
+    fileprivate(set) var setCumulativeValueEnabled = false
+    fileprivate(set) var startSensorCalibrationEnabled = false
+    fileprivate(set) var sensorLocationEnabled = false
             
-    @Published var updateSensorLocationDisabled = false
-    @Published fileprivate(set) var currentSensorLocation: RSCSSensorLocation.RawValue = 0
-    @Published var pickerSensorLocation: RSCSSensorLocation.RawValue = 0
-    @Published var isOperationInProgress = false
+    var updateSensorLocationDisabled = false
     
-    @Published fileprivate(set) var availableSensorLocations: [RSCSSensorLocation] = []
+    private let currentSensorLocationSubject = CurrentValueSubject<UInt8, Never>(0)
+    fileprivate(set) var currentSensorLocation: RSCSSensorLocation.RawValue = 0 {
+        didSet {
+            currentSensorLocationSubject.send(currentSensorLocation)
+        }
+    }
+    private let pickerSensorLocationSubject = CurrentValueSubject<UInt8, Never>(0)
+    var pickerSensorLocation: RSCSSensorLocation.RawValue = 0 {
+        didSet {
+            pickerSensorLocationSubject.send(pickerSensorLocation)
+        }
+    }
+    
+    var isOperationInProgress = false
+    fileprivate(set) var availableSensorLocations: [RSCSSensorLocation] = []
     
     fileprivate var internalError: AlertError? = nil {
         didSet {
             self.alertError = internalError
         }
     }
-    @Published var alertError: Error? = nil
-    @Published fileprivate(set) var criticalError: CriticalError? = nil
+    var alertError: Error? = nil
+    fileprivate(set) var criticalError: CriticalError? = nil
     
     private let peripheral: Peripheral
     private let characteristics: [CBCharacteristic]
     private let features: BitField<RSCSFeature>
     private var scControlPoint: CBCharacteristic!
     private var sensorLocationCharacteristic: CBCharacteristic?
+    private var cancellables = Set<AnyCancellable>()
     
     private let log = NordicLog(category: "SensorCalibration.VM")
     
@@ -54,9 +67,12 @@ final class SensorCalibrationViewModel: ObservableObject {
         setCumulativeValueEnabled = features.contains(.totalDistanceMeasurement)
         startSensorCalibrationEnabled = features.contains(.sensorCalibrationProcedure)
         
-        Publishers.CombineLatest($pickerSensorLocation, $currentSensorLocation)
+        Publishers.CombineLatest(pickerSensorLocationSubject, currentSensorLocationSubject)
             .map { $0 == $1 }
-            .assign(to: &$updateSensorLocationDisabled)
+            .sink(receiveValue: { value in
+                self.updateSensorLocationDisabled = value
+            })
+            .store(in: &cancellables)
         
         log.debug("\(type(of: self)).\(#function)")
     }

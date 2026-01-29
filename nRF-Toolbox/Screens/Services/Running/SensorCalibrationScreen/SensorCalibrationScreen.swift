@@ -14,7 +14,7 @@ struct SensorCalibrationScreen: View {
     
     // MARK: Environment
     
-    @EnvironmentObject private var viewModel: SensorCalibrationViewModel
+    @Environment(SensorCalibrationViewModel.self) private var viewModel: SensorCalibrationViewModel
     
     // MARK: Private Properties
     
@@ -26,7 +26,7 @@ struct SensorCalibrationScreen: View {
     // MARK: view
     
     var body: some View {
-        
+        @Bindable var viewModel = viewModel
         List {
             if (viewModel.isOperationInProgress) {
                 ProgressView()
