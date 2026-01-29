@@ -15,7 +15,21 @@ import iOS_Common_Libraries
 
 // MARK: - GlucoseViewModel
 
-final class GlucoseViewModel: @MainActor SupportedServiceViewModel, ObservableObject {
+@Observable
+final class GlucoseViewModel: @MainActor SupportedServiceViewModel {
+    
+    // MARK: Published
+    
+    var scrollPosition = -1
+    private(set) var allRecords = [GlucoseMeasurement]()
+    private(set) var firstRecord: GlucoseMeasurement?
+    private(set) var lastRecord: GlucoseMeasurement?
+    private(set) var inFlightRequest: RecordOperator?
+    private(set) var minY = 0.6
+    private(set) var maxY = 0.0
+    private(set) var maxX = 20.0
+    
+    var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
     // MARK: Private Properties
     
@@ -28,19 +42,6 @@ final class GlucoseViewModel: @MainActor SupportedServiceViewModel, ObservableOb
     private var cancellables: Set<AnyCancellable>
     private let log = NordicLog(category: "GlucoseViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
     
-    // MARK: Published
-    
-    @Published var scrollPosition = -1
-    @Published private(set) var allRecords = [GlucoseMeasurement]()
-    @Published private(set) var firstRecord: GlucoseMeasurement?
-    @Published private(set) var lastRecord: GlucoseMeasurement?
-    @Published private(set) var inFlightRequest: RecordOperator?
-    @Published private(set) var minY = 0.6
-    @Published private(set) var maxY = 0.0
-    @Published private(set) var maxX = 20.0
-    
-    var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
-    
     // MARK: init
     
     init(peripheral: Peripheral, characteristics: [CBCharacteristic]) {
@@ -48,19 +49,6 @@ final class GlucoseViewModel: @MainActor SupportedServiceViewModel, ObservableOb
         self.characteristics = characteristics
         self.cancellables = Set<AnyCancellable>()
         log.debug(#function)
-        
-        $allRecords.sink { records in
-            let values = records.map { $0.measurement?.value ?? 0.0 }
-
-            let minY = (values.min() ?? 0.2) - 0.2
-            let maxY = (values.max() ?? 0.2) + 0.2
-
-            self.minY = minY
-            self.maxY = maxY
-            if let maxX = self.allRecords.max(by: { $0.sequenceNumber < $1.sequenceNumber })?.sequenceNumber {
-                self.maxX = Double(maxX)
-            }
-        }.store(in: &cancellables)
     }
     
     // MARK: description
@@ -73,7 +61,7 @@ final class GlucoseViewModel: @MainActor SupportedServiceViewModel, ObservableOb
     
     var attachedView: any View {
         return GlucoseView()
-            .environmentObject(self)
+            .environment(self)
     }
     
     // MARK: onConnect()
@@ -237,10 +225,24 @@ private extension GlucoseViewModel {
                     self.lastRecord = newValue
                 default:
                     self.allRecords.append(newValue)
+                    refreshXDomain()
                     scrollPosition = max(-1, self.allRecords.endIndex-5) // GLS sequence number is 0, -1 is for padding
                 }
             })
             .store(in: &cancellables)
+    }
+    
+    private func refreshXDomain() {
+        let values = allRecords.map { $0.measurement?.value ?? 0.0 }
+
+        let minY = (values.min() ?? 0.2) - 0.2
+        let maxY = (values.max() ?? 0.2) + 0.2
+
+        self.minY = minY
+        self.maxY = maxY
+        if let maxX = self.allRecords.max(by: { $0.sequenceNumber < $1.sequenceNumber })?.sequenceNumber {
+            self.maxX = Double(maxX)
+        }
     }
     
     // MARK: processRACPResponse(:)

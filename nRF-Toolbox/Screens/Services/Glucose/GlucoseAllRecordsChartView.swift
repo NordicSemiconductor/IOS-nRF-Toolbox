@@ -14,9 +14,9 @@ import iOS_Common_Libraries
 
 struct GlucoseAllRecordsChartView: View {
     
-    // MARK: EnvironmentObject
+    // MARK: Environment
     
-    @EnvironmentObject private var viewModel: GlucoseViewModel
+    @Environment(GlucoseViewModel.self) private var viewModel: GlucoseViewModel
     
     // MARK: view
     
@@ -34,6 +34,7 @@ struct GlucoseAllRecordsChartView: View {
             }
             .padding(.top, -4)
             
+            @Bindable var bindableVM = viewModel
             Chart {
                 ForEach(viewModel.allRecords, id: \.sequenceNumber) { value in
                     LineMark(
@@ -66,13 +67,13 @@ struct GlucoseAllRecordsChartView: View {
             .chartScrollableAxes(.horizontal)
             .chartXScale(domain: [-1, viewModel.maxX+5])
             .chartXVisibleDomain(length: 10)
-            .chartScrollPosition(x: $viewModel.scrollPosition)
+            .chartScrollPosition(x: $bindableVM.scrollPosition)
             .padding(.top, 8)
         }
         
         NavigationLink("View All Records") {
             GlucoseListView(viewModel.allRecords)
-                .environmentObject(viewModel)
+                .environment(viewModel)
         }
         .foregroundStyle(Color.universalAccentColor)
     }

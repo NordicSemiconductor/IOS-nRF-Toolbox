@@ -14,9 +14,9 @@ import iOS_Common_Libraries
 
 struct GlucoseView: View {
     
-    // MARK: EnvironmentObject
+    // MARK: Environment
     
-    @EnvironmentObject private var viewModel: GlucoseViewModel
+    @Environment(GlucoseViewModel.self) private var viewModel: GlucoseViewModel
     
     // MARK: Properties
     
@@ -55,7 +55,6 @@ struct GlucoseView: View {
         case .all:
             if viewModel.allRecords.hasItems {
                 GlucoseAllRecordsChartView()
-                    .environmentObject(viewModel)
             } else {
                 noDataView()
             }
