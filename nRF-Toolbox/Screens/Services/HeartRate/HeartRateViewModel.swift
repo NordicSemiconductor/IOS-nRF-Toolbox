@@ -13,7 +13,24 @@ import iOS_Bluetooth_Numbers_Database
 import iOS_Common_Libraries
 
 // MARK: - HeartRateViewModel
-final class HeartRateViewModel: @MainActor SupportedServiceViewModel, ObservableObject {
+@Observable
+final class HeartRateViewModel: @MainActor SupportedServiceViewModel {
+    
+    fileprivate(set) var data: [HeartRateValue] = []
+    fileprivate(set) var location: HeartRateMeasurement.SensorLocation?
+    fileprivate(set) var caloriesResetState = CaloriesResetState.unavailable
+    var scrollPosition = Date()
+    private(set) var minDate: Date = .distantPast
+    private(set) var maxDate: Date = .distantFuture
+    
+    fileprivate(set) var criticalError: ServiceError?
+    var alertError: Error?
+
+    fileprivate(set) var lowest: Int = 40
+    fileprivate(set) var highest: Int = 200
+    
+    let visibleDomain = 60
+    private let capacity = 360
     
     private let peripheral: Peripheral
     private let characteristics: [CBCharacteristic]
@@ -22,22 +39,6 @@ final class HeartRateViewModel: @MainActor SupportedServiceViewModel, Observable
     private var cancellables = Set<AnyCancellable>()
     
     private let log = NordicLog(category: "HeartRateViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
-    
-    @Published fileprivate(set) var data: [HeartRateValue] = []
-    @Published fileprivate(set) var location: HeartRateMeasurement.SensorLocation?
-    @Published fileprivate(set) var caloriesResetState = CaloriesResetState.unavailable
-    @Published var scrollPosition = Date()
-    @Published private(set) var minDate: Date = .distantPast
-    @Published private(set) var maxDate: Date = .distantFuture
-    
-    @Published fileprivate(set) var criticalError: ServiceError?
-    @Published var alertError: Error?
-    
-    let visibleDomain = 60
-    let capacity = 360
-    
-    @Published fileprivate(set) var lowest: Int = 40
-    @Published fileprivate(set) var highest: Int = 200
     
     var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
@@ -57,13 +58,6 @@ final class HeartRateViewModel: @MainActor SupportedServiceViewModel, Observable
         self.characteristics = characteristics
         self.data.reserveCapacity(capacity)
         log.debug(#function)
-        
-        $data.sink { records in
-            let values = records.map { $0.date }
-
-            self.minDate = (values.min() ?? .distantPast).addingTimeInterval(-5)
-            self.maxDate = (values.max() ?? .distantFuture).addingTimeInterval(5)
-        }.store(in: &cancellables)
     }
     
     // MARK: deinit
@@ -82,7 +76,7 @@ final class HeartRateViewModel: @MainActor SupportedServiceViewModel, Observable
     
     var attachedView: any View {
         return HeartRateView()
-            .environmentObject(self)
+            .environment(self)
     }
     
     // MARK: onConnect()
@@ -202,6 +196,8 @@ private extension HeartRateViewModel {
                 
                 lowest = min - 5
                 highest = max + 5
+                
+                recalculateXDomain()
             }
             .store(in: &cancellables)
     }
@@ -218,6 +214,13 @@ private extension HeartRateViewModel {
             log.error(error.localizedDescription)
             handleError(error)
         }
+    }
+    
+    private func recalculateXDomain() {
+        let values = data.map { $0.date }
+
+        minDate = (values.min() ?? .distantPast).addingTimeInterval(-5)
+        maxDate = (values.max() ?? .distantFuture).addingTimeInterval(5)
     }
 }
 
