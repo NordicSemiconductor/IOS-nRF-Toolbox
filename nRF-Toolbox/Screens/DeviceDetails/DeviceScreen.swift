@@ -18,7 +18,7 @@ struct DeviceScreen: View {
     @Environment(\.dismiss) var dismiss
     
     @EnvironmentObject private var deviceViewModel: DeviceDetailsViewModel
-    @EnvironmentObject private var navigationViewModel: RootNavigationViewModel
+    @Environment(RootNavigationViewModel.self) var navigationViewModel: RootNavigationViewModel
     @EnvironmentObject private var connectedDevicesViewModel: ConnectedDevicesViewModel
     
     // MARK: Properties

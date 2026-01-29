@@ -16,13 +16,14 @@ struct SidebarView: View {
     
     // MARK: Environment
     
-    @EnvironmentObject var rootViewModel: RootNavigationViewModel
+    @Environment(RootNavigationViewModel.self) var rootViewModel: RootNavigationViewModel
     @EnvironmentObject var viewModel: ConnectedDevicesViewModel
     
     // MARK: view
     
     var body: some View {
-        List(selection: $rootViewModel.selectedCategory) {
+        @Bindable var bindableVM = rootViewModel
+        List(selection: $bindableVM.selectedCategory) {
             Section("Connected") {
                 if viewModel.connectedDevices.isEmpty {
                     NoContentView(title: "No Connected Devices", systemImage: "cable.connector.slash", description: "Open the Scanner from below to connect to one or multiple Devices.")
