@@ -41,13 +41,13 @@ final class BloodPressureViewModel: @MainActor SupportedServiceViewModel {
     init(peripheral: Peripheral, characteristics: [CBCharacteristic]) {
         self.peripheral = peripheral
         self.characteristics = characteristics
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
     }
     
     // MARK: deinit
     
     deinit {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
     }
     
     // MARK: description
@@ -66,7 +66,7 @@ final class BloodPressureViewModel: @MainActor SupportedServiceViewModel {
     // MARK: onConnect()
     @MainActor
     func onConnect() async {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         do {
             try await initializeCharacteristics()
             log.info("Blood Pressure service has set up successfully.")
@@ -120,7 +120,7 @@ final class BloodPressureViewModel: @MainActor SupportedServiceViewModel {
     // MARK: onDisconnect()
     
     func onDisconnect() {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         bpsMeasurement = nil
         cancellables.removeAll()
     }
@@ -131,7 +131,7 @@ extension BloodPressureViewModel {
     // MARK: listenTo(:)
     
     func listenTo(_ bpsCharacteristic: CBCharacteristic) {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         peripheral.listenValues(for: bpsCharacteristic)
             .compactMap { [log] data -> BloodPressureMeasurement? in
                 log.debug("Received Data \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing])) (\(data.count) bytes)")

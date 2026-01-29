@@ -79,7 +79,7 @@ internal class BlinkyCBMPeripheralSpecDelegate: MockSpecDelegate {
     }
     
     func reset() {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         ledEnabled = false
         buttonPressed = false
         timerCancellable?.cancel()
@@ -87,7 +87,7 @@ internal class BlinkyCBMPeripheralSpecDelegate: MockSpecDelegate {
     }
     
     func peripheral(_ peripheral: CBMPeripheralSpec, didReceiveReadRequestFor characteristic: CBMCharacteristicMock) -> Result<Data, Error> {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         switch characteristic.uuid {
         case .buttonCharacteristic:
             return .success(buttonData)
@@ -102,7 +102,7 @@ internal class BlinkyCBMPeripheralSpecDelegate: MockSpecDelegate {
     func peripheral(_ peripheral: CBMPeripheralSpec,
                     didReceiveWriteRequestFor characteristic: CBMCharacteristicMock,
                     data: Data) -> Result<Void, Error> {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         switch characteristic.uuid {
         case .ledCharacteristic:
             ledEnabled = data[0] != 0x00
@@ -123,7 +123,7 @@ internal class BlinkyCBMPeripheralSpecDelegate: MockSpecDelegate {
     }
     
     func peripheral(_ peripheral: CBMPeripheralSpec, didDisconnect error: (any Error)?) {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         reset()
     }
     

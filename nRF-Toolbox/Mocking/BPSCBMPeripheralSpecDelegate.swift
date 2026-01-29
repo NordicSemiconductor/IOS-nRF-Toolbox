@@ -110,7 +110,7 @@ class BPSCBMPeripheralSpecDelegate: MockSpecDelegate {
     }
     
     func peripheral(_ peripheral: CBMPeripheralSpec, didDisconnect error: (any Error)?) {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         timerCancellable?.cancel()
         timerCancellable = nil
     }

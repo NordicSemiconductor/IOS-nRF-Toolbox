@@ -64,7 +64,7 @@ final class ConnectedDevicesViewModel: ObservableObject {
         observeStateChange()
         observeConnections()
         observeDisconnections()
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
     }
 }
 
@@ -83,7 +83,7 @@ extension ConnectedDevicesViewModel {
     // MARK: disconnectAndRemoveViewModel()
     
     func disconnectAndRemoveViewModel(_ device: Device) async throws {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         let deviceID = device.id
         log.info("Disconnecting from the device: \(device.logName)")
         guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [deviceID]).first else { return }
@@ -110,7 +110,7 @@ extension ConnectedDevicesViewModel {
     // MARK: clearViewModel(:)
     
     func clearViewModel(_ device: Device) {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         connectedDevices.removeAll(where: { $0.id == device.id })
         deviceViewModels.removeValue(forKey: device.id)
         log.info("Device successfully removed: \(device.logName)")
@@ -122,7 +122,7 @@ extension ConnectedDevicesViewModel {
     // MARK: observeStateChange()
     
     private func observeStateChange() {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         centralManager.stateChannel
             .sink { [log, weak self] state in
                 log.debug("BLE State changed to \(state).")
@@ -147,7 +147,7 @@ extension ConnectedDevicesViewModel {
     // MARK: observeConnections()
     
     private func observeConnections() {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         centralManager.connectedPeripheralChannel
             .map { $0 } // Remove <Never> as $1
             .filter { $0.1 == nil } // No connection error
@@ -190,7 +190,7 @@ extension ConnectedDevicesViewModel {
     // MARK: observeDisconnections()
     
     private func observeDisconnections() {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         centralManager.disconnectedPeripheralsChannel
             .sink { [unowned self] (peripheral, error) in
                 guard let i = self.connectedDevices.firstIndex(where: \.id, equals: peripheral.identifier) else {
@@ -246,7 +246,7 @@ extension ConnectedDevicesViewModel {
     
     @MainActor
     func connect(to device: ConnectedDevicesViewModel.ScanResult) async -> Result<Void, Error> {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         if connectingDevice != nil {
             return Result.failure(ConnectionError.ongoingConnection)
         }
@@ -285,7 +285,7 @@ extension ConnectedDevicesViewModel {
     // MARK: setupManager()
     
     func setupManager() {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         guard scannerCancellables.isEmpty else { return }
         // Track state CBCentralManager's state changes
         centralManager.stateChannel
@@ -309,7 +309,7 @@ extension ConnectedDevicesViewModel {
     // MARK: startScanning()
     
     func startScanning() {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         Task {
             guard (try? await centralManager.isPoweredOn()) != nil else { return }
 
@@ -345,7 +345,7 @@ extension ConnectedDevicesViewModel {
     // MARK: stopScanning()
     
     func stopScanning() {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         centralManager.stopScan()
         scannerCancellables.removeAll()
     }

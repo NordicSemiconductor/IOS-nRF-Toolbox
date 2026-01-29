@@ -16,7 +16,7 @@ class UARTFileManager {
     private let parser = UARTPresetsXmlParser()
     
     func saveToFile(_ presets: UARTPresets) {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let fileURL = documentsDirectory.appendingPathComponent("yourFileName.txt")
         

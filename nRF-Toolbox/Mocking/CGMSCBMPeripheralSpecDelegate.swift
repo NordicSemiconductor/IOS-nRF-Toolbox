@@ -110,7 +110,7 @@ class CGMSCBMPeripheralSpecDelegate: MockSpecDelegate {
     
     func peripheral(_ peripheral: CBMPeripheralSpec, didReceiveReadRequestFor characteristic: CBMCharacteristicMock)
     -> Result<Data, Error> {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         switch characteristic.uuid {
         case CBMUUID.cgmFeature:
             return .success(Data([0x0F, 0x00, 0x00, 0x00]))
@@ -184,7 +184,7 @@ class CGMSCBMPeripheralSpecDelegate: MockSpecDelegate {
     }
     
     func peripheral(_ peripheral: CBMPeripheralSpec, didDisconnect error: (any Error)?) {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         timerCancellable?.cancel()
         timerCancellable = nil
     }

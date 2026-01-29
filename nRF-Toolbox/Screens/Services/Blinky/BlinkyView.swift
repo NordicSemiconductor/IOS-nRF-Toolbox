@@ -15,13 +15,14 @@ struct BlinkyView: View {
     
     // MARK: Environment
     
-    @EnvironmentObject private var viewModel: BlinkyViewModel
+    @Environment(BlinkyViewModel.self) private var viewModel: BlinkyViewModel
     
     // MARK: view
     
     var body: some View {
         LabeledContent {
-            Toggle(viewModel.isLedOn ? "ON" : "OFF", isOn: $viewModel.isLedOn)
+            @Bindable var bindableVm = viewModel
+            Toggle(viewModel.isLedOn ? "ON" : "OFF", isOn: $bindableVm.isLedOn)
                 .tint(.universalAccentColor)
         } label: {
             Label("LED State", systemImage: viewModel.isLedOn ? "lightbulb.max.fill" : "lightbulb")

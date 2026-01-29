@@ -27,19 +27,19 @@ import Charts
     
     init(peripheral: Peripheral) {
         self.peripheral = peripheral
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
     }
     
     // MARK: deinit
     
     deinit {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
     }
     
     // MARK: startTimer
     
     func startTimer() {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         
         // Run Timer every 1 second
         Timer.publish(every: 1, on: .main, in: .common)
@@ -93,7 +93,7 @@ import Charts
     // MARK: stopTimer
     
     func stopTimer() {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         cancellable.removeAll()
     }
 }
@@ -135,11 +135,11 @@ extension SignalChartViewModel {
             self.chartData = chartData
             self.chartData.reserveCapacity(Self.capacity)
             assert(Self.capacity >= Self.visibleDomain)
-            log.debug(#function)
+            log.debug("\(type(of: self)).\(#function)")
         }
         
         deinit {
-            log.debug(#function)
+            log.debug("\(type(of: self)).\(#function)")
         }
     }
 }

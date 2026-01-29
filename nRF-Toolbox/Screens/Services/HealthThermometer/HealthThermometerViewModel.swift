@@ -36,7 +36,13 @@ final class HealthThermometerViewModel: SupportedServiceViewModel, ObservableObj
         self.peripheral = peripheral
         self.characteristics = characteristics
         self.cancellables = Set<AnyCancellable>()
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
+    }
+    
+    // MARK: deinit
+    
+    deinit {
+        log.debug("\(type(of: self)).\(#function)")
     }
   
     // MARK: description
@@ -55,7 +61,7 @@ final class HealthThermometerViewModel: SupportedServiceViewModel, ObservableObj
     // MARK: onConnect()
     @MainActor
     func onConnect() async {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         do {
             try await initializeCharacteristics()
             log.info("Health Thermometer service has set up successfully.")
@@ -68,7 +74,7 @@ final class HealthThermometerViewModel: SupportedServiceViewModel, ObservableObj
     
     @MainActor
     func initializeCharacteristics() async throws {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         
         let characteristics: [Characteristic] = [.temperatureMeasurement]
         
@@ -89,7 +95,7 @@ final class HealthThermometerViewModel: SupportedServiceViewModel, ObservableObj
     // MARK: onDisconnect()
     
     func onDisconnect() {
-        log.debug(#function)
+        log.debug("\(type(of: self)).\(#function)")
         cancellables.removeAll()
     }
     
