@@ -15,7 +15,30 @@ import iOS_Common_Libraries
 
 // MARK: - UARTViewModel
 
-final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
+@Observable
+final class UARTViewModel: SupportedServiceViewModel {
+    
+    // MARK: Published
+    
+    private(set) var messages: [UARTMessage] = []
+    var newMessage: String = ""
+    
+    private(set) var presets: [UARTPresets] = [.none]
+    var selectedPresets = UARTPresets.none
+    var editedPresets: UARTPresets = UARTPresets.none
+    var showEditPresetsSheet = false
+    var editCommandIndex: Int = 0
+    var showEditPresetSheet: Bool = false
+    
+    var showFileExporter = false
+    var pendingChanges = false
+    
+    var alertMessage: String = ""
+    var showAlert: Bool = false
+    
+    var isPlayInProgress: Bool = false
+    
+    var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
     // MARK: Private Properties
     
@@ -26,33 +49,11 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
     
     private let fileManager = UARTFileManager()
     private let parser = UARTPresetsXmlParser()
+    private var playTask: Task<(), Never>?
     
     private var cancellables: Set<AnyCancellable>
     private let log = NordicLog(category: "UARTViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
-    
-    // MARK: Published
-    
-    @Published private(set) var messages: [UARTMessage] = []
-    @Published var newMessage: String = ""
-    
-    @Published private(set) var presets: [UARTPresets] = [.none]
-    @Published var selectedPresets = UARTPresets.none
-    @Published var editedPresets: UARTPresets = UARTPresets.none
-    @Published var showEditPresetsSheet = false
-    @Published var editCommandIndex: Int = 0
-    @Published var showEditPresetSheet: Bool = false
-    
-    @Published var showFileExporter = false
-    @Published var pendingChanges = false
-    
-    @Published var alertMessage: String = ""
-    @Published var showAlert: Bool = false
-    
-    @Published var isPlayInProgress: Bool = false
-    private var playTask: Task<(), Never>?
-    
-    var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
-    
+
     // MARK: init
     
     init(peripheral: Peripheral, characteristics: [CBCharacteristic]) {
@@ -73,7 +74,7 @@ final class UARTViewModel: SupportedServiceViewModel, ObservableObject {
     
     var attachedView: any View {
         return UARTView()
-            .environmentObject(self)
+            .environment(self)
     }
     
     // MARK: onConnect()

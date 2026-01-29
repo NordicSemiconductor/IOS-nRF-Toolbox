@@ -15,7 +15,7 @@ struct UARTPresetsMainView: View {
     
     // MARK: EnvironmentObject
     
-    @EnvironmentObject private var viewModel: UARTViewModel
+    @Environment(UARTViewModel.self) private var viewModel: UARTViewModel
     
     // MARK: Properties
     
@@ -26,9 +26,10 @@ struct UARTPresetsMainView: View {
     // MARK: view
     
     var body: some View {
+        @Bindable var bindableVM = viewModel
         DisclosureGroup {
             HStack {
-                InlinePicker(title: "", systemImage: "command.square", selectedValue: $viewModel.selectedPresets,
+                InlinePicker(title: "", systemImage: "command.square", selectedValue: $bindableVM.selectedPresets,
                              possibleValues: viewModel.presets)
                 .labeledContentStyle(.accentedContent)
                 
@@ -88,7 +89,7 @@ struct UARTPresetsMainView: View {
                 showNewPresetsAlert = false
             }
         }
-        .alert(viewModel.alertMessage, isPresented: $viewModel.showAlert) {
+        .alert(viewModel.alertMessage, isPresented: $bindableVM.showAlert) {
             Button("OK", role: .cancel) { viewModel.showAlert = false }
         }
         .fileImporter(

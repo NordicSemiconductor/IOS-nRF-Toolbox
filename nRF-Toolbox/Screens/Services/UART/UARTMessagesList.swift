@@ -15,11 +15,12 @@ struct UARTMessagesList: View {
     
     // MARK: EnvironmentObject
     
-    @EnvironmentObject private var viewModel: UARTViewModel
+    @Environment(UARTViewModel.self) private var viewModel: UARTViewModel
     
     // MARK: view
     
     var body: some View {
+        @Bindable var bindableVM = viewModel
         ScrollViewReader { proxy in
             List {
                 Section("Oldest First") {
@@ -62,16 +63,14 @@ struct UARTMessagesList: View {
                 }
             }
         }
-        .sheet(isPresented: $viewModel.showEditPresetsSheet) {
+        .sheet(isPresented: $bindableVM.showEditPresetsSheet) {
             NavigationStack {
                 UARTEditPresetsView()
-                    .navigationDestination(isPresented: $viewModel.showEditPresetSheet) {
+                    .navigationDestination(isPresented: $bindableVM.showEditPresetSheet) {
                         UARTEditPresetView(viewModel.editedPresets.commands[viewModel.editCommandIndex])
-                            .environmentObject(viewModel)
                     }
-                    .environmentObject(viewModel)
+                    .environment(viewModel)
             }
-            .environmentObject(viewModel)
         }
     }
 }

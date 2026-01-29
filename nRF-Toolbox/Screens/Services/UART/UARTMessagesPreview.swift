@@ -14,7 +14,7 @@ struct UARTMessagesPreview: View {
     
     // MARK: EnvironmentObject
     
-    @EnvironmentObject private var viewModel: UARTViewModel
+    @Environment(UARTViewModel.self) private var viewModel: UARTViewModel
     
     // MARK: Properties
     
