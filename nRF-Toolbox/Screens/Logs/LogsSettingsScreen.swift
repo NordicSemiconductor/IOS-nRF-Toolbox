@@ -15,7 +15,7 @@ import iOS_Common_Libraries
 struct LogsSettingsScreen: View {
     
     @EnvironmentObject var viewModel: LogsSettingsViewModel
-    @EnvironmentObject var appViewModel: AppViewModel
+    @Environment(AppViewModel.self) var appViewModel: AppViewModel
     @State private var isDeleteDialogShown = false
     
     private var sharedItem: Logs {
@@ -23,6 +23,7 @@ struct LogsSettingsScreen: View {
     }
 
     var body: some View {
+        @Bindable var appViewModel = appViewModel
         List {
             Section("Configuration") {
                 Toggle(isOn: $appViewModel.logsSettings.isEnabled) {

@@ -10,9 +10,10 @@ import iOS_Common_Libraries
 import Foundation
 import Combine
 
-class AppViewModel : ObservableObject {
+@Observable
+final class AppViewModel {
     
-    @Published var logsSettings = LogsSettings()
+    var logsSettings = LogsSettings()
     
     private var logCounter = 0
     let writeDataSource: LogsWriteDataSource
