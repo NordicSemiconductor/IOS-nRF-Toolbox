@@ -102,7 +102,9 @@ import Charts
 
 extension SignalChartViewModel {
     
-    @MainActor final class Environment: ObservableObject {
+    @MainActor
+    @Observable
+    final class Environment {
         
         struct ChartData: Identifiable {
             let date: Date
@@ -117,14 +119,14 @@ extension SignalChartViewModel {
         
         // MARK: Properties
         
-        @Published fileprivate(set) var chartData: [ChartData] = []
-        @Published var scrollPosition = Date()
+        fileprivate(set) var chartData: [ChartData] = []
+        var scrollPosition = Date()
         
-        @Published fileprivate(set) var lowest: Int = -100
-        @Published fileprivate(set) var highest: Int = -40
+        fileprivate(set) var lowest: Int = -100
+        fileprivate(set) var highest: Int = -40
         
-        @Published var minDate: Date = .distantPast
-        @Published var maxDate: Date = .distantFuture
+        var minDate: Date = .distantPast
+        var maxDate: Date = .distantFuture
         
         private let log = NordicLog(category: "SignalChartViewModel.Environment",
                                     subsystem: "com.nordicsemi.nrf-toolbox")

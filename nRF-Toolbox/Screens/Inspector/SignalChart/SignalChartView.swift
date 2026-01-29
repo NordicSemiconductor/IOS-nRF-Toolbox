@@ -35,7 +35,7 @@ private extension Env.ChartData {
 // MARK: - SignalChart
 
 struct SignalChart: View {
-    @EnvironmentObject private var environment: Env 
+    @Environment(Env.self) private var environment: Env
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -59,6 +59,7 @@ struct SignalChart: View {
     @available(iOS 17.0, *)
     @ViewBuilder
     private func scalableChart() -> some View {
+        @Bindable var environment = environment
         pureChart()
             .chartScrollableAxes(.horizontal)
             .chartXScale(domain: [environment.minDate, environment.maxDate], range: .plotDimension(padding: 8))

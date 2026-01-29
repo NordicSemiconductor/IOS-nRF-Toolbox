@@ -57,7 +57,7 @@ struct InspectorScreen: View {
                 if let signalViewModel = deviceVM.signalViewModel {
                     Section {
                         SignalChart()
-                            .environmentObject(signalViewModel.environment)
+                            .environment(signalViewModel.environment)
                     }
                     .disabled(!deviceIsConnected)
                 }
