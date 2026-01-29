@@ -13,9 +13,9 @@ import iOS_Common_Libraries
 
 struct GlucoseListView: View {
     
-    // MARK: EnvironmentObject
+    // MARK: Environment
     
-    @EnvironmentObject private var viewModel: GlucoseViewModel
+    @Environment(GlucoseViewModel.self) private var viewModel: GlucoseViewModel
     
     // MARK: Private Properties
     
