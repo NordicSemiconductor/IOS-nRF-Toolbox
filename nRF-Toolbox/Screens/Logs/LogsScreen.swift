@@ -34,12 +34,12 @@ struct LogsScreen: View {
         TabView(selection: $selectedTab) {
             Tab("Settings", systemImage: "gear", value: LogsTab.settings) {
                 LogsSettingsScreen()
-                    .environmentObject(viewModel)
+                    .environment(viewModel)
             }
             
             Tab("Preview", systemImage: "list.bullet.clipboard", value: LogsTab.preview) {
                 LogsPreviewScreen()
-                    .environmentObject(viewModel)
+                    .environment(viewModel)
             }
         }
         .navigationTitle("Logs")

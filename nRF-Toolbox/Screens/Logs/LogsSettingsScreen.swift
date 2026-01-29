@@ -14,7 +14,7 @@ import iOS_Common_Libraries
 
 struct LogsSettingsScreen: View {
     
-    @EnvironmentObject var viewModel: LogsSettingsViewModel
+    @Environment(LogsSettingsViewModel.self) var viewModel: LogsSettingsViewModel
     @Environment(AppViewModel.self) var appViewModel: AppViewModel
     @State private var isDeleteDialogShown = false
     
