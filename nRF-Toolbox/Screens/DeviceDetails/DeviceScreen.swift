@@ -17,7 +17,7 @@ struct DeviceScreen: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @EnvironmentObject private var deviceViewModel: DeviceDetailsViewModel
+    @Environment(DeviceDetailsViewModel.self) private var deviceViewModel: DeviceDetailsViewModel
     @Environment(RootNavigationViewModel.self) var navigationViewModel: RootNavigationViewModel
     @Environment(ConnectedDevicesViewModel.self) private var connectedDevicesViewModel: ConnectedDevicesViewModel
     
@@ -28,6 +28,7 @@ struct DeviceScreen: View {
     // MARK: view
 
     var body: some View {
+        @Bindable var deviceViewModel = deviceViewModel
         List {
             let hasMissingCharacteristics = (deviceViewModel.errors.error as? ServiceError) == .noMandatoryCharacteristic
             

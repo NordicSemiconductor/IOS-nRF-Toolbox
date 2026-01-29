@@ -23,7 +23,8 @@ private extension Array {
 // MARK: - DeviceDetailsViewModel
 
 @MainActor
-final class DeviceDetailsViewModel: ObservableObject {
+@Observable
+final class DeviceDetailsViewModel {
     
     // MARK: Private Properties
     
@@ -35,10 +36,8 @@ final class DeviceDetailsViewModel: ObservableObject {
     
     var id: UUID { peripheral.peripheral.identifier }
     
-    @Published
     var errors: ErrorsHolder = ErrorsHolder()
     
-    @Published
     var device: ConnectedDevicesViewModel.Device
     
     private(set) var supportedServiceViewModels: [any SupportedServiceViewModel] = []
@@ -47,11 +46,11 @@ final class DeviceDetailsViewModel: ObservableObject {
     
     // MARK: Properties
     
-    @Published var showDeviceSheet: Bool = false
-    @Published var attributeTable: AttributeTable?
-    @Published var deviceInfo: DeviceInformation?
-    @Published var signalViewModel: SignalChartViewModel?
-    @Published var isInitialized: Bool = false
+    var showDeviceSheet: Bool = false
+    var attributeTable: AttributeTable?
+    var deviceInfo: DeviceInformation?
+    var signalViewModel: SignalChartViewModel?
+    var isInitialized: Bool = false
     
     // MARK: init
     
