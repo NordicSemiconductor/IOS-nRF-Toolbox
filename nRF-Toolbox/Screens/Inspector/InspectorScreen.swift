@@ -65,7 +65,7 @@ struct InspectorScreen: View {
                 if let batteryServiceViewModel = deviceVM.batteryServiceViewModel {
                     Section {
                         BatteryView()
-                            .environmentObject(batteryServiceViewModel)
+                            .environment(batteryServiceViewModel)
                     }
                     .disabled(!deviceIsConnected)
                 }
