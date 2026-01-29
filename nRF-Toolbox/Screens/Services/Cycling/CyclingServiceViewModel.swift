@@ -20,25 +20,28 @@ private extension CBUUID {
 
 // MARK: - CyclingServiceViewModel
 
-final class CyclingServiceViewModel: SupportedServiceViewModel, ObservableObject {
+@Observable
+final class CyclingServiceViewModel: SupportedServiceViewModel {
     
     // MARK: Properties
     
-    @Published private(set) var data: CyclingData = .zero
-    @Published private(set) var travelDistance = Measurement<UnitLength>(value: 0, unit: .kilometers)
-    @Published private(set) var totalTravelDistance = Measurement<UnitLength>(value: 0, unit: .kilometers)
-    @Published private(set) var speed = Measurement<UnitSpeed>(value: 0, unit: .kilometersPerHour)
-    @Published private(set) var gearRatio: Double = 1
-    @Published private(set) var cadence: Int = 0
+    private(set) var data: CyclingData = .zero
+    private(set) var travelDistance = Measurement<UnitLength>(value: 0, unit: .kilometers)
+    private(set) var totalTravelDistance = Measurement<UnitLength>(value: 0, unit: .kilometers)
+    private(set) var speed = Measurement<UnitSpeed>(value: 0, unit: .kilometersPerHour)
+    private(set) var gearRatio: Double = 1
+    private(set) var cadence: Int = 0
     
-    @Published var wheelSizeInches: Double = 29.0
+    var wheelSizeInches: Double = 29.0
     private func wheelLength() -> Measurement<UnitLength> {
         let wheelSize = Measurement<UnitLength>(value: self.wheelSizeInches, unit: .inches)
         return Measurement<UnitLength>(value: wheelSize.converted(to: .meters).value * .pi,
                                 unit: .meters)
     }
     
-    @Published private(set) var features: BitField<CyclingFlag>?
+    private(set) var features: BitField<CyclingFlag>?
+    
+    // MARK: Private Properties
     
     private let peripheral: Peripheral
     private let characteristics: [CBCharacteristic]
@@ -180,7 +183,7 @@ final class CyclingServiceViewModel: SupportedServiceViewModel, ObservableObject
     
     var attachedView: any View {
         return CyclingDataView()
-            .environmentObject(self)
+            .environment(self)
     }
     
     // MARK: onConnect()
