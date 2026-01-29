@@ -23,44 +23,43 @@ struct RootNavigationView: View {
     
     // MARK: Properties
     
-    private static let centralManager = CentralManager()
-    
     @State var rootViewModel = RootNavigationViewModel.shared
-    @StateObject var connectedDevicesViewModel = ConnectedDevicesViewModel(centralManager: centralManager)
+    @Environment(ConnectedDevicesViewModel.self) var connectedDevicesViewModel: ConnectedDevicesViewModel
     
     @State private var visibility: NavigationSplitViewVisibility = .doubleColumn
     @State private var preferredCompactColumn: NavigationSplitViewColumn = .sidebar
     
     private let log = NordicLog(category: "RootNavigationView", subsystem: "com.nordicsemi.nrf-toolbox")
-    
+
     // MARK: view
     
     var body: some View {
+        @Bindable var connectedDevicesViewModel = connectedDevicesViewModel
         NavigationSplitView(columnVisibility: $visibility, preferredCompactColumn: $preferredCompactColumn) {
             SidebarView()
                 .navigationTitle("nRF Toolbox")
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationSplitViewColumnWidth(ideal: 420.0)
-                .environmentObject(connectedDevicesViewModel)
+                .environment(connectedDevicesViewModel)
         } detail: {
             NavigationStack {
                 switch (rootViewModel.selectedCategory) {
                 case .device(let device):
                     DeviceScreen()
-                        .environmentObject(connectedDevicesViewModel)
+                        .environment(connectedDevicesViewModel)
                         .environmentObject(connectedDevicesViewModel.deviceViewModel(for: device.id)!)
                         .onAppear {
                             log.debug("DeviceScreen opened on details tab.")
                         }
                 case .scanner:
                     PeripheralScannerScreen()
-                        .environmentObject(connectedDevicesViewModel)
+                        .environment(connectedDevicesViewModel)
                         .onAppear {
                             log.debug("PeripheralScannerScreen opened on details tab.")
                         }
                 case .logs(let tab):
                     LogsScreen(tab: tab)
-                        .environmentObject(connectedDevicesViewModel)
+                        .environment(connectedDevicesViewModel)
                         .onAppear {
                             log.debug("LogsScreen opened on details tab.")
                         }

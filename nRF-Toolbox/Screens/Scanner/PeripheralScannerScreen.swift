@@ -15,7 +15,7 @@ struct PeripheralScannerScreen: View {
     
     // MARK: Properties
     
-    @EnvironmentObject private var viewModel: ConnectedDevicesViewModel
+    @Environment(ConnectedDevicesViewModel.self) private var viewModel: ConnectedDevicesViewModel
     
     // MARK: view
     

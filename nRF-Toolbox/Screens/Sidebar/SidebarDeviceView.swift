@@ -16,7 +16,7 @@ struct SidebarDeviceView: View {
     
     // MARK: Environment
     
-    @EnvironmentObject var connectedDevicesViewModel: ConnectedDevicesViewModel
+    @Environment(ConnectedDevicesViewModel.self) var connectedDevicesViewModel: ConnectedDevicesViewModel
     
     // MARK: Properties
     

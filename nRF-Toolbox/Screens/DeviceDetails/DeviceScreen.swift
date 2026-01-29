@@ -19,7 +19,7 @@ struct DeviceScreen: View {
     
     @EnvironmentObject private var deviceViewModel: DeviceDetailsViewModel
     @Environment(RootNavigationViewModel.self) var navigationViewModel: RootNavigationViewModel
-    @EnvironmentObject private var connectedDevicesViewModel: ConnectedDevicesViewModel
+    @Environment(ConnectedDevicesViewModel.self) private var connectedDevicesViewModel: ConnectedDevicesViewModel
     
     // MARK: Properties
     
@@ -119,7 +119,7 @@ struct DeviceScreen: View {
             }
             .setupTranslucentBackground()
         }
-        .onReceive(connectedDevicesViewModel.objectWillChange) {
+        .onChange(of: connectedDevicesViewModel.connectedDevices) {
             guard connectedDevicesViewModel.connectedDevices.firstIndex(where: \.id, equals: deviceViewModel.device.id) == nil else { return }
             log.debug("Device \(deviceViewModel.device) not found in Connected Devices anymore. Dismissing.")
             dismiss()

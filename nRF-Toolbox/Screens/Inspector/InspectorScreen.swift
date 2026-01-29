@@ -15,7 +15,7 @@ struct InspectorScreen: View {
     // MARK: Environment
     
     @EnvironmentObject private var deviceViewModel: DeviceDetailsViewModel
-    @EnvironmentObject private var connectedDevicesViewModel: ConnectedDevicesViewModel
+    @Environment(ConnectedDevicesViewModel.self) private var connectedDevicesViewModel: ConnectedDevicesViewModel
     
     // MARK: Private Properties
     
