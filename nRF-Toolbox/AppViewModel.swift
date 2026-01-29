@@ -14,6 +14,7 @@ class AppViewModel : ObservableObject {
     
     @Published var logsSettings = LogsSettings()
     
+    private var logCounter = 0
     let writeDataSource: LogsWriteDataSource
     private let container: SwiftDataContextManager = SwiftDataContextManager.shared
     private var cancellables = Set<AnyCancellable>()
@@ -21,6 +22,11 @@ class AppViewModel : ObservableObject {
     init() {
         self.writeDataSource = LogsWriteDataSource(modelContainer: container.container!)
         observeLogs()
+        
+        Task {
+            let readDataSource = LogsReadDataSource(modelContainer: container.container!)
+            logCounter = (try? await readDataSource.fetchCount()) ?? 0
+        }
     }
     
     func observeLogs() {
@@ -33,6 +39,10 @@ class AppViewModel : ObservableObject {
     }
     
     func insertRecord(_ item: LogItemDomain) {
+        logCounter += 1
+        if logCounter > 100000 {
+            clearLogs()
+        }
         Task.detached(priority: .userInitiated) {
             try await self.writeDataSource.insert(item)
         }
