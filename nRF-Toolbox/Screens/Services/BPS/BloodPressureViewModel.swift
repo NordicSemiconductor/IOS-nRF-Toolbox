@@ -15,7 +15,15 @@ import iOS_Common_Libraries
 
 // MARK: - BloodPressureViewModel
 
-final class BloodPressureViewModel: @MainActor SupportedServiceViewModel, ObservableObject {
+@Observable
+final class BloodPressureViewModel: @MainActor SupportedServiceViewModel {
+    
+    // MARK: Properties
+    
+    private(set) var currentValue: BloodPressureMeasurement?
+    private(set) var features = BitField<BloodPressureMeasurement.Feature>()
+    
+    var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
     // MARK: Private Properties
     
@@ -24,16 +32,9 @@ final class BloodPressureViewModel: @MainActor SupportedServiceViewModel, Observ
     
     private var bpsMeasurement: CBCharacteristic!
     private var bpsFlags: CBCharacteristic!
-    private lazy var cancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     
     private let log = NordicLog(category: "BloodPressureViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
-    
-    // MARK: Properties
-    
-    @Published private(set) var currentValue: BloodPressureMeasurement?
-    @Published private(set) var features = BitField<BloodPressureMeasurement.Feature>()
-    
-    var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
     // MARK: init
     
@@ -59,7 +60,7 @@ final class BloodPressureViewModel: @MainActor SupportedServiceViewModel, Observ
     
     var attachedView: any View {
         return BloodPressureView()
-            .environmentObject(self)
+            .environment(self)
     }
     
     // MARK: onConnect()
