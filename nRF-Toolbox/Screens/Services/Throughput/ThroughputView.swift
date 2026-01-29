@@ -15,7 +15,7 @@ struct ThroughputView: View {
     
     // MARK: EnvironmentObject
     
-    @EnvironmentObject private var viewModel: ThroughputViewModel
+    @Environment(ThroughputViewModel.self) private var viewModel: ThroughputViewModel
     
     // MARK: Properties
     
@@ -45,10 +45,11 @@ struct ThroughputView: View {
                     .multilineTextAlignment(.trailing)
             }
             
-            InlinePicker(title: "Test Mode", selectedValue: $viewModel.testMode)
+            @Bindable var bindableVm = viewModel
+            InlinePicker(title: "Test Mode", selectedValue: $bindableVm.testMode)
             
             LabeledContent(viewModel.isTimeLimited ? "Time Limit (seconds)" : "Test Size (in kB)") {
-                TextField(viewModel.isTimeLimited ? "Time Limit here" : "Test Size here", value: viewModel.isTimeLimited ? $viewModel.testTimeLimit.value : $viewModel.testSize.value, formatter: Self.formatter)
+                TextField(viewModel.isTimeLimited ? "Time Limit here" : "Test Size here", value: viewModel.isTimeLimited ? $bindableVm.testTimeLimit.value : $bindableVm.testSize.value, formatter: Self.formatter)
                     .multilineTextAlignment(.trailing)
                     .textFieldStyle(.roundedBorder)
                     .frame(maxWidth: 125)
