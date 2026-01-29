@@ -15,7 +15,19 @@ import iOS_Common_Libraries
 
 // MARK: - CGMSViewModel
 
-final class CGMSViewModel: SupportedServiceViewModel, ObservableObject {
+@Observable
+final class CGMSViewModel: SupportedServiceViewModel {
+    
+    private(set) var sessionStarted = false
+    private(set) var firstRecord: CGMSMeasurement?
+    private(set) var records = [CGMSMeasurement]()
+    private(set) var lastRecord: CGMSMeasurement?
+    private(set) var inFlightRequest: RecordOperator?
+    private(set) var minY = 80.0
+    private(set) var maxY = 100.0
+    var scrollPosition = -1
+    
+    var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
     // MARK: Private Properties
     
@@ -29,20 +41,7 @@ final class CGMSViewModel: SupportedServiceViewModel, ObservableObject {
     
     private var cancellables: Set<AnyCancellable>
     private let log = NordicLog(category: "CGMSViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
-    
-    // MARK: Published
-    
-    @Published private(set) var sessionStarted = false
-    @Published private(set) var firstRecord: CGMSMeasurement?
-    @Published private(set) var records = [CGMSMeasurement]()
-    @Published private(set) var lastRecord: CGMSMeasurement?
-    @Published private(set) var inFlightRequest: RecordOperator?
-    @Published private(set) var minY = 80.0
-    @Published private(set) var maxY = 100.0
-    @Published var scrollPosition = -1
-    
-    var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
-    
+
     // MARK: init
     
     init(peripheral: Peripheral, characteristics: [CBCharacteristic]) {
@@ -50,16 +49,6 @@ final class CGMSViewModel: SupportedServiceViewModel, ObservableObject {
         self.characteristics = characteristics
         self.cancellables = Set<AnyCancellable>()
         log.debug(#function)
-        
-        $records.sink { records in
-            let values = records.map { $0.measurement.value }
-
-            let minY = (values.min() ?? 0) - 5.0
-            let maxY = (values.max() ?? 0) + 5.0
-
-            self.minY = minY
-            self.maxY = maxY
-        }.store(in: &cancellables)
     }
     
     // MARK: requestNumberOfRecords()
@@ -141,7 +130,7 @@ final class CGMSViewModel: SupportedServiceViewModel, ObservableObject {
     
     var attachedView: any View {
         return CGMSView()
-            .environmentObject(self)
+            .environment(self)
     }
     
     // MARK: onConnect()
@@ -290,10 +279,21 @@ private extension CGMSViewModel {
                     if scrollPosition >= self.records.endIndex-10 {
                         scrollPosition = max(0, self.records.endIndex-5)
                     }
+                    updateXDomain()
                 }
                 
             })
             .store(in: &cancellables)
+    }
+    
+    private func updateXDomain() {
+        let values = records.map { $0.measurement.value }
+
+        let minY = (values.min() ?? 0) - 5.0
+        let maxY = (values.max() ?? 0) + 5.0
+
+        self.minY = minY
+        self.maxY = maxY
     }
     
     func listenToOperations(_ opsControlPointCharacteristic: CBCharacteristic) {

@@ -15,7 +15,7 @@ struct CGMSRecordList: View {
     
     // MARK: EnvironmentObject
     
-    @EnvironmentObject private var viewModel: CGMSViewModel
+    @Environment(CGMSViewModel.self) private var viewModel: CGMSViewModel
     
     // MARK: view
     
