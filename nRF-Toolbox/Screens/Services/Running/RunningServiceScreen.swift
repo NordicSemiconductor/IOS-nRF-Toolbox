@@ -42,7 +42,7 @@ struct RunningServiceView: View {
                 if let viewModel = environment.sensorCalibrationViewModel {
                     NavigationStack {
                         SensorCalibrationScreen()
-                            .environmentObject(viewModel)
+                            .environment(viewModel)
                     }
                 }
             })
