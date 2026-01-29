@@ -8,11 +8,12 @@
 
 import SwiftUI
 
-class LogsSettings: ObservableObject {
+@Observable
+class LogsSettings {
     private let flagKey = "logs-enabled"
     private let defaults = UserDefaults.standard
 
-    @Published var isEnabled: Bool {
+    var isEnabled: Bool {
         didSet {
             defaults.set(isEnabled, forKey: flagKey)
         }
