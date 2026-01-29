@@ -15,7 +15,7 @@ struct UARTView: View {
     
     // MARK: EnvironmentObject
     
-    @EnvironmentObject private var viewModel: UARTViewModel
+    @Environment(UARTViewModel.self) private var viewModel: UARTViewModel
     
     // MARK: view
     
@@ -30,7 +30,7 @@ struct UARTView: View {
         
         NavigationLink("All Messages (\(viewModel.messages.count))") {
             UARTMessagesList()
-                .environmentObject(viewModel)
+                .environment(viewModel)
         }
         .foregroundStyle(Color.universalAccentColor)
     }

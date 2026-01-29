@@ -16,7 +16,7 @@ struct UARTEditPresetsView: View {
     
     // MARK: EnvironmentObject
     
-    @EnvironmentObject private var viewModel: UARTViewModel
+    @Environment(UARTViewModel.self) private var viewModel: UARTViewModel
     
     // MARK: Private Properties
   

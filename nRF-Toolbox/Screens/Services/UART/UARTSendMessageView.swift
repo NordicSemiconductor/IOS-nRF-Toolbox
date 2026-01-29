@@ -13,7 +13,7 @@ struct UARTSendMessageView: View {
     
     // MARK: EnvironmentObject
     
-    @EnvironmentObject private var viewModel: UARTViewModel
+    @Environment(UARTViewModel.self) private var viewModel: UARTViewModel
     @FocusState private var isFocused: Bool
     
     // MARK: view
@@ -24,8 +24,9 @@ struct UARTSendMessageView: View {
                 
                 BlinkingCursorView().hidden(!viewModel.newMessage.isEmpty)
 
+                @Bindable var bindableVM = viewModel
                 HStack(spacing: 0) {
-                    TextField("UART Message", text: $viewModel.newMessage, prompt: Text("Write new message here")).focused($isFocused).tint(.clear)
+                    TextField("UART Message", text: $bindableVM.newMessage, prompt: Text("Write new message here")).focused($isFocused).tint(.clear)
                     BlinkingCursorView().padding(.leading, 6).hidden()
                 }
                 
