@@ -12,7 +12,7 @@ struct LogsToolbarItem: ToolbarContent {
     
     // MARK: Environment
     
-    @EnvironmentObject var viewModel: RootNavigationViewModel
+    @Environment(RootNavigationViewModel.self) var viewModel: RootNavigationViewModel
     
     // MARK: view
     

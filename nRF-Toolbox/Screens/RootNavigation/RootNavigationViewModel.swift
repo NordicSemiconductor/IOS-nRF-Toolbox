@@ -12,10 +12,11 @@ import SwiftUI
 // MARK: - RootNavigationViewModel
 
 @MainActor
-final class RootNavigationViewModel: ObservableObject {
+@Observable
+final class RootNavigationViewModel {
     
-    @Published var selectedCategory: RootNavigationView.MenuCategory?
-    @Published var showAboutView: Bool = false
+    var selectedCategory: RootNavigationView.MenuCategory?
+    var showAboutView: Bool = false
     
     static let shared = RootNavigationViewModel()
 }

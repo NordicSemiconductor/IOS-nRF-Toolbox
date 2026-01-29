@@ -25,7 +25,7 @@ struct RootNavigationView: View {
     
     private static let centralManager = CentralManager()
     
-    @StateObject var rootViewModel = RootNavigationViewModel.shared
+    @State var rootViewModel = RootNavigationViewModel.shared
     @StateObject var connectedDevicesViewModel = ConnectedDevicesViewModel(centralManager: centralManager)
     
     @State private var visibility: NavigationSplitViewVisibility = .doubleColumn
@@ -107,6 +107,6 @@ struct RootNavigationView: View {
             connectedDevicesViewModel.setupManager()
         }
         .accentColor(.white)
-        .environmentObject(rootViewModel)
+        .environment(rootViewModel)
     }
 }
