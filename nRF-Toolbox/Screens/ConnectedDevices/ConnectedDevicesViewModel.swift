@@ -15,7 +15,8 @@ import iOS_Bluetooth_Numbers_Database
 // MARK: - ConnectedDevicesViewModel
 
 @MainActor
-final class ConnectedDevicesViewModel: ObservableObject {
+@Observable
+final class ConnectedDevicesViewModel {
     
     // MARK: ScannerState
     
@@ -23,23 +24,14 @@ final class ConnectedDevicesViewModel: ObservableObject {
         case scanning, unsupported, disabled, unauthorized
     }
     
-    // MARK: Private Properties
-    
-    private let centralManager: CentralManager
-    private var deviceViewModels: [UUID: DeviceDetailsViewModel] = [:]
-    private var cancellables = Set<AnyCancellable>()
-    private var scannerCancellables = Set<AnyCancellable>()
-    
-    private let log = NordicLog(category: "ConnectedDevicesViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
-    
     // MARK: Properties
     
-    @Published fileprivate(set) var devices: [ConnectedDevicesViewModel.ScanResult]
-    @Published fileprivate(set) var connectingDevice: ConnectedDevicesViewModel.ScanResult?
-    @Published fileprivate(set) var scannerState: ScannerState
+    fileprivate(set) var devices: [ConnectedDevicesViewModel.ScanResult]
+    fileprivate(set) var connectingDevice: ConnectedDevicesViewModel.ScanResult?
+    fileprivate(set) var scannerState: ScannerState
     
-    @Published fileprivate(set) var connectedDevices: [Device]
-    @Published var selectedDevice: Device? {
+    fileprivate(set) var connectedDevices: [Device]
+    var selectedDevice: Device? {
         didSet {
             if let d = connectedDevices.first(where: { $0 == selectedDevice }) {
                 print(d.name ?? "")
@@ -49,8 +41,17 @@ final class ConnectedDevicesViewModel: ObservableObject {
         }
     }
     
-    @Published var showUnexpectedDisconnectionAlert: Bool = false
-    @Published fileprivate(set) var unexpectedDisconnectionMessage: String = ""
+    var showUnexpectedDisconnectionAlert: Bool = false
+    fileprivate(set) var unexpectedDisconnectionMessage: String = ""
+    
+    // MARK: Private Properties
+    
+    private let centralManager: CentralManager
+    private var deviceViewModels: [UUID: DeviceDetailsViewModel] = [:]
+    private var cancellables = Set<AnyCancellable>()
+    private var scannerCancellables = Set<AnyCancellable>()
+    
+    private let log = NordicLog(category: "ConnectedDevicesViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
 
     // MARK: init
     
@@ -301,7 +302,10 @@ extension ConnectedDevicesViewModel {
                     return .scanning
                 }
             }
-            .assign(to: &$scannerState)
+            .sink(receiveValue: { value in
+                self.scannerState = value
+            })
+            .store(in: &cancellables)
         
         guard centralManager.centralManager.state == .poweredOn else { return }
     }

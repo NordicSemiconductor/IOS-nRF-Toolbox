@@ -15,7 +15,10 @@ import iOS_BLE_Library_Mock
 @main
 struct nRF_ToolboxApp: App {
     
+    private static let centralManager = CentralManager()
+    
     @State var viewModel = AppViewModel()
+    @State var connectedDevicesViewModel: ConnectedDevicesViewModel = ConnectedDevicesViewModel(centralManager: centralManager)
     
     // MARK: view
     
@@ -28,6 +31,7 @@ struct nRF_ToolboxApp: App {
                 }
                 .setupTranslucentBackground()
                 .environment(viewModel)
+                .environment(connectedDevicesViewModel)
         }
     }
 }

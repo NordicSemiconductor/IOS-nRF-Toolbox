@@ -17,7 +17,7 @@ struct SidebarView: View {
     // MARK: Environment
     
     @Environment(RootNavigationViewModel.self) var rootViewModel: RootNavigationViewModel
-    @EnvironmentObject var viewModel: ConnectedDevicesViewModel
+    @Environment(ConnectedDevicesViewModel.self) var viewModel: ConnectedDevicesViewModel
     
     // MARK: view
     

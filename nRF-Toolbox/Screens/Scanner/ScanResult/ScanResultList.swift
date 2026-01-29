@@ -15,7 +15,7 @@ struct ScanResultList: View {
     
     // MARK: Environment
     
-    @EnvironmentObject private var viewModel: ConnectedDevicesViewModel
+    @Environment(ConnectedDevicesViewModel.self) private var viewModel: ConnectedDevicesViewModel
     @Environment(\.dismiss) var dismiss
     
     // MARK: view
