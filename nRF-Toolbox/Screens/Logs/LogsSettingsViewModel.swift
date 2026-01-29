@@ -12,18 +12,30 @@ import iOS_Common_Libraries
 import SwiftData
 
 @MainActor
-class LogsSettingsViewModel: ObservableObject {
+@Observable
+class LogsSettingsViewModel {
     
     private let log = NordicLog(category: "LogsSettingsScreen", subsystem: "com.nordicsemi.nrf-toolbox")
+
+    var logs: [LogItemDomain]? = nil
+    var logsMeta: LogsMeta? = nil
+    var isLoading: Bool = false
     
-    @Published var logs: [LogItemDomain]? = nil
-    @Published var searchText: String = ""
-    @Published var selectedLogLevel: LogLevel = .debug
-    @Published var logsMeta: LogsMeta? = nil
+    private let searchTextSubject = CurrentValueSubject<String, Never>("")
+    var searchText: String = "" {
+        didSet {
+            searchTextSubject.send(searchText)
+        }
+    }
+    private let selectedLogLevelSubject = CurrentValueSubject<LogLevel, Never>(.debug)
+    var selectedLogLevel: LogLevel = .debug {
+        didSet {
+            selectedLogLevelSubject.send(selectedLogLevel)
+        }
+    }
+
     
     private let readDataSource: LogsReadDataSource
-    
-    @Published var isLoading: Bool = false
     
     private var page: Int = 0
     private let itemsPerPage: Int = 100
@@ -48,7 +60,7 @@ class LogsSettingsViewModel: ObservableObject {
     }
     
     private func setupObservers() {
-        Publishers.CombineLatest($searchText, $selectedLogLevel)
+        Publishers.CombineLatest(searchTextSubject, selectedLogLevelSubject)
             .dropFirst()
             .debounce(for: .seconds(0.3), scheduler: RunLoop.main)
             .removeDuplicates { prev, curr in

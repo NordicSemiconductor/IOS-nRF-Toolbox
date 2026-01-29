@@ -12,7 +12,7 @@ import iOS_Common_Libraries
 
 struct LogsPreviewScreen: View {
     
-    @EnvironmentObject var viewModel: LogsSettingsViewModel
+    @Environment(LogsSettingsViewModel.self) var viewModel: LogsSettingsViewModel
     
     @FocusState private var isFocused: Bool
     
@@ -20,6 +20,7 @@ struct LogsPreviewScreen: View {
     @State private var position: ScrollPosition = .init(idType: LogItemDomain.ID.self)
     
     var body: some View {
+        @Bindable var viewModel = viewModel
         VStack {
             HStack {
                 ZStack(alignment: .leading) {
