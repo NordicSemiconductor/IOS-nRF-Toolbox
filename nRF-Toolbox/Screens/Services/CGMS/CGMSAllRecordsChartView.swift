@@ -16,7 +16,7 @@ struct CGMSAllRecordsChartView: View {
     
     // MARK: EnvironmentObject
     
-    @EnvironmentObject private var viewModel: CGMSViewModel
+    @Environment(CGMSViewModel.self) private var viewModel: CGMSViewModel
     
     // MARK: view
     
@@ -32,6 +32,7 @@ struct CGMSAllRecordsChartView: View {
                     .foregroundStyle(.secondary)
             }
             
+            @Bindable var bindableVM = viewModel
             Chart {
                 ForEach(viewModel.records, id: \.timeOffset) { value in
                     LineMark(
@@ -63,13 +64,13 @@ struct CGMSAllRecordsChartView: View {
             .chartScrollableAxes(.horizontal)
             .chartXScale(domain: [0, max(20, Double(viewModel.records.count+5))])
             .chartXVisibleDomain(length: 10)
-            .chartScrollPosition(x: $viewModel.scrollPosition)
+            .chartScrollPosition(x: $bindableVM.scrollPosition)
         }
         .padding(.vertical, 4)
         
         NavigationLink("View All Records") {
             CGMSRecordList()
-                .environmentObject(viewModel)
+                .environment(viewModel)
         }
         .foregroundStyle(Color.universalAccentColor)
     }
