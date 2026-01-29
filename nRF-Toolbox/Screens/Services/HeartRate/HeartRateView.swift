@@ -17,8 +17,8 @@ struct HeartRateChart: View {
     
     // MARK: Environment
     
-    @EnvironmentObject private var viewModel: HeartRateViewModel
-    
+    @Environment(HeartRateViewModel.self) private var viewModel: HeartRateViewModel
+
     // MARK: view
     
     var body: some View {
@@ -41,7 +41,8 @@ struct HeartRateChart: View {
                 Text("\(viewModel.data.last?.measurement.heartRateValue ?? 0) BPM")
                     .foregroundStyle(.secondary)
             }
-            
+        
+            @Bindable var bindableVM = viewModel
             Chart {
                 ForEach(viewModel.data, id: \.date) { value in
                     LineMark(
@@ -63,7 +64,7 @@ struct HeartRateChart: View {
             .chartYScale(domain: [viewModel.lowest, viewModel.highest], range: .plotDimension(padding: 8))
             .chartScrollableAxes(.horizontal)
             .chartXVisibleDomain(length: viewModel.visibleDomain)
-            .chartScrollPosition(x: $viewModel.scrollPosition)
+            .chartScrollPosition(x: $bindableVM.scrollPosition)
             
             if let lastMeasurement = viewModel.data.last {
                 Label(lastMeasurement.measurement.sensorContact.description, systemImage: "hand.rays.fill")
@@ -100,7 +101,7 @@ struct HeartRateChart: View {
 
 struct RefreshCaloriesCounterView: View {
     
-    @EnvironmentObject private var viewModel: HeartRateViewModel
+    @Environment(HeartRateViewModel.self) private var viewModel: HeartRateViewModel
     
     @State var showAlert = false
     
@@ -149,9 +150,9 @@ extension View {
 
 struct HeartRateView: View {
     
-    // MARK: EnvironmentObject
+    // MARK: Environment
     
-    @EnvironmentObject private var viewModel: HeartRateViewModel
+    @Environment(HeartRateViewModel.self) private var viewModel: HeartRateViewModel
     
     // MARK: view
     
