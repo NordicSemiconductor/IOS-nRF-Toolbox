@@ -14,7 +14,7 @@ struct BatteryView: View {
     
     // MARK: EnvironmentObject
     
-    @EnvironmentObject private var viewModel: BatteryViewModel
+    @Environment(BatteryViewModel.self) private var viewModel: BatteryViewModel
     
     // MARK: view
     

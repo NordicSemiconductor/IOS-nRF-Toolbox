@@ -15,13 +15,18 @@ import iOS_Common_Libraries
 
 // MARK: - BatteryViewModel
 
-final class BatteryViewModel: SupportedServiceViewModel, ObservableObject {
+@Observable
+final class BatteryViewModel: SupportedServiceViewModel {
     
     // MARK: Properties
     
-    @Published fileprivate(set) var batteryLevelData: [ChartTimeData<Battery.Level>]
-    @Published fileprivate(set) var currentBatteryLevel: UInt?
-    @Published fileprivate(set) var batteryLevelAvailable: Bool
+    fileprivate(set) var batteryLevelData: [ChartTimeData<Battery.Level>]
+    fileprivate(set) var currentBatteryLevel: UInt?
+    fileprivate(set) var batteryLevelAvailable: Bool
+    
+    var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
+    
+    // MARK: Properties
     
     private let peripheral: Peripheral
     private let characteristics: [CBCharacteristic]
@@ -30,8 +35,6 @@ final class BatteryViewModel: SupportedServiceViewModel, ObservableObject {
     
     private static let batteryLevelDataLength = 120
     private static let batteryLevelRange: ClosedRange<UInt> = 0...100
-    
-    var errors: CurrentValueSubject<ErrorsHolder, Never> = CurrentValueSubject<ErrorsHolder, Never>(ErrorsHolder())
     
     // MARK: init
     
@@ -140,7 +143,7 @@ final class BatteryViewModel: SupportedServiceViewModel, ObservableObject {
     
     var attachedView: any View {
         return BatteryView()
-            .environmentObject(self)
+            .environment(self)
     }
     
     // MARK: onConnect()
