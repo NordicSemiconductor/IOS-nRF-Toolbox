@@ -64,6 +64,12 @@ final class UARTViewModel: SupportedServiceViewModel {
         loadPresetsFromJsonFile()
     }
     
+    // MARK: deinit
+    
+    deinit {
+        log.debug("\(type(of: self)).\(#function)")
+    }
+    
     // MARK: description
     
     var description: String {
