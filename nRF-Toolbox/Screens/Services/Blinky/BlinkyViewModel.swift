@@ -20,10 +20,10 @@ final class BlinkyViewModel: SupportedServiceViewModel {
     
     // MARK: Properties
     
-    private let (ledStream, continuation) = AsyncStream.makeStream(of: Bool.self)
+    private let ledStream = CurrentValueSubject<Bool, Never>(false)
     var isLedOn = false {
-        willSet {
-            continuation.yield(newValue)
+        didSet {
+            ledStream.send(isLedOn)
         }
     }
     
@@ -35,7 +35,9 @@ final class BlinkyViewModel: SupportedServiceViewModel {
     
     private let peripheral: Peripheral
     private let characteristics: [CBCharacteristic]
+    private var ledCharacteristics: CBCharacteristic!
     private var cancellables: Set<AnyCancellable>
+    private var ledTask: Task<Void, Never>?
     private let log = NordicLog(category: "BlinkyViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
     
     // MARK: init
@@ -98,6 +100,7 @@ final class BlinkyViewModel: SupportedServiceViewModel {
             log.error("Blinky LED characteristic is missing.")
             throw ServiceError.noMandatoryCharacteristic
         }
+        self.ledCharacteristics = ledCharacteristics
         
         if let initialValue = try await peripheral.readValue(for: buttonCharacteristics).firstValue {
             log.debug("peripheral.readValue(characteristic): \(initialValue.hexEncodedString(options: [.prepend0x, .twoByteSpacing]))")
@@ -112,15 +115,22 @@ final class BlinkyViewModel: SupportedServiceViewModel {
         }
         log.debug("peripheral.setNotifyValue(true, for: .nordicsemiBlinkyButtonState): \(isNotifyEnabled)")
         
-        Task { [weak self] in
+        self.ledStream
+            .dropFirst()
+            .sink(receiveValue: { value in
+                self.setLed(value)
+            })
+            .store(in: &cancellables)
+    }
+    
+    private func setLed(_ newValue: Bool) {
+        Task.detached { [weak self] in
             guard let self else { return }
-            for await newValue in self.ledStream {
-                log.info("LED state changed to: \(newValue)")
-                let data = Data(repeating: newValue ? 1 : 0, count: 1)
-                
-                log.debug("Sending new LED state \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing]))")
-                _ = try? await peripheral.writeValueWithResponse(data, for: ledCharacteristics).firstValue
-            }
+            log.info("LED state changed to: \(newValue)")
+            let data = Data(repeating: newValue ? 1 : 0, count: 1)
+            
+            log.debug("Sending new LED state \(data.hexEncodedString(options: [.prepend0x, .twoByteSpacing]))")
+            _ = try? await peripheral.writeValueWithResponse(data, for: ledCharacteristics).firstValue
         }
     }
     
@@ -128,6 +138,7 @@ final class BlinkyViewModel: SupportedServiceViewModel {
     
     func onDisconnect() {
         log.debug("\(type(of: self)).\(#function)")
+        ledTask?.cancel()
         cancellables.removeAll()
     }
     
@@ -141,8 +152,8 @@ final class BlinkyViewModel: SupportedServiceViewModel {
             }
             .sink { completion in
                 
-            } receiveValue: { [log, weak self] value in
-                log.info("Button pressed: \(value)")
+            } receiveValue: { [weak self] value in
+                self?.log.info("Button pressed: \(value)")
                 self?.isButtonPressed = value
             }
             .store(in: &cancellables)
