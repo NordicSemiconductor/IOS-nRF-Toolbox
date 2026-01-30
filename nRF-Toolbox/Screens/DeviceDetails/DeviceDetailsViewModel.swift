@@ -205,8 +205,8 @@ extension DeviceDetailsViewModel {
                     .drop(while: { value in // Default values from other services may override an actual error.
                         !value.hasAnyError()
                     })
-                    .sink { error in
-                        self.errors = error
+                    .sink { [weak self] error in
+                        self?.errors = error
                     }.store(in: &cancellable)
             }
             
