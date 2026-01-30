@@ -274,7 +274,8 @@ private extension CGMSViewModel {
             }, receiveValue: { [weak self] newValues in
                 guard let self, !newValues.isEmpty else { return }
                 
-                log.info("Received new values:\n\n\(newValues.map { $0.getLogString() })")
+                let message = newValues.map { $0.getLogString() }.joined(separator: "\n\n")
+                log.info("Received new values:\n\n\(message)")
                 switch self.inFlightRequest {
                 case .firstRecord:
                     self.firstRecord = newValues.first!
