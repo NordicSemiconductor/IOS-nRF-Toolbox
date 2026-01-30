@@ -20,15 +20,16 @@ struct nRF_ToolboxApp: App {
     @State var viewModel = AppViewModel()
     @State var connectedDevicesViewModel: ConnectedDevicesViewModel = ConnectedDevicesViewModel(centralManager: centralManager)
     
+    init() {
+        BluetoothEmulation.shared.simulateState()
+        BluetoothEmulation.shared.simulatePeripherals()
+    }
+    
     // MARK: view
     
     var body: some Scene {
         WindowGroup {
             RootNavigationView()
-                .onAppear {
-                    BluetoothEmulation.shared.simulateState()
-                    BluetoothEmulation.shared.simulatePeripherals()
-                }
                 .setupTranslucentBackground()
                 .environment(viewModel)
                 .environment(connectedDevicesViewModel)
