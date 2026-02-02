@@ -88,7 +88,7 @@ class UARTCBMPeripheralSpecDelegate: MockSpecDelegate {
             if (isNotificationEnabled) {
                 let receivedMessage = String(data: data, encoding: .utf8)
                 messageCounter += 1
-                let reply = "Received message #\(messageCounter):\n \(receivedMessage ?? "<empty>")"
+                let reply = "Received message #\(messageCounter):\n\(receivedMessage ?? "<empty>")"
                 let replyData = reply.data(using: .utf8) ?? Data()
                 peripheral.simulateValueUpdate(replyData, for: CBMCharacteristicMock.uartTx)
                 return .success(())
