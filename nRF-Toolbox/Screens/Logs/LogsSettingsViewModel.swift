@@ -33,7 +33,6 @@ class LogsSettingsViewModel {
             selectedLogLevelSubject.send(selectedLogLevel)
         }
     }
-
     
     private let readDataSource: LogsReadDataSource
     

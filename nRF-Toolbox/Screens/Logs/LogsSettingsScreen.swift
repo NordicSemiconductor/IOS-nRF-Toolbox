@@ -17,10 +17,6 @@ struct LogsSettingsScreen: View {
     @Environment(LogsSettingsViewModel.self) var viewModel: LogsSettingsViewModel
     @Environment(AppViewModel.self) var appViewModel: AppViewModel
     @State private var isDeleteDialogShown = false
-    
-    private var sharedItem: Logs {
-        Logs(values: viewModel.logs ?? [])
-    }
 
     var body: some View {
         @Bindable var appViewModel = appViewModel
@@ -84,7 +80,7 @@ struct LogsSettingsScreen: View {
             
             Section("Actions") {
                 ShareLink(
-                    item: sharedItem,
+                    item: LogsTransfarable(),
                     preview: SharePreview(
                         "nRF Toolbox Logs",
                         image: Image("AppIconPreview")

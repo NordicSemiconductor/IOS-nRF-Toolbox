@@ -19,6 +19,10 @@ actor LogsReadDataSource {
         return try modelContext.fetchCount(FetchDescriptor<LogDb>())
     }
     
+    func fetchAll() throws -> [LogItemDomain] {
+        return try fetch(searchText: "", logLevel: .error)
+    }
+    
     func fetch(searchText: String, logLevel: LogLevel) throws -> [LogItemDomain] {
         try modelContext
             .fetch(getFetchDescriptor(searchText: searchText, logLevel: logLevel))
