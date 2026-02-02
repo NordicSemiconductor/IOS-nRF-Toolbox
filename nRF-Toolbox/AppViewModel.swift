@@ -9,24 +9,38 @@
 import iOS_Common_Libraries
 import Foundation
 import Combine
+import SwiftData
 
 @Observable
 final class AppViewModel {
     
     var logsSettings = LogsSettings()
     
+    private let readDataSource: LogsReadDataSource
+    private let writeDataSource: LogsWriteDataSource
     private var logCounter = 0
-    let writeDataSource: LogsWriteDataSource
-    private let container: SwiftDataContextManager = SwiftDataContextManager.shared
+    private var clearTask: Task<(), Error>? = nil
+ 
+    private let contextManager: SwiftDataContextManager = SwiftDataContextManager.shared
+    private let log = NordicLog(category: "AppViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
     private var cancellables = Set<AnyCancellable>()
     
     init() {
-        self.writeDataSource = LogsWriteDataSource(modelContainer: container.container!)
+        self.readDataSource = LogsReadDataSource(modelContainer: contextManager.container!)
+        self.writeDataSource = LogsWriteDataSource(modelContainer: contextManager.container!)
         observeLogs()
-        
-        Task {
-            let readDataSource = LogsReadDataSource(modelContainer: container.container!)
-            logCounter = (try? await readDataSource.fetchCount()) ?? 0
+
+        NotificationCenter.default.publisher(for: ModelContext.didSave)
+            .throttle(for: .seconds(1.0), scheduler: RunLoop.main, latest: true)
+            .sink { [weak self] _ in
+                self?.refreshLogsCount()
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func refreshLogsCount() {
+        Task.detached {
+            self.logCounter = (try? await self.readDataSource.fetchCount()) ?? 0
         }
     }
     
@@ -50,8 +64,17 @@ final class AppViewModel {
     }
     
     func clearLogs() {
-        Task.detached(priority: .userInitiated) {
-            try await self.writeDataSource.deleteAll()
+        guard clearTask == nil else { return }
+        clearTask = Task.detached(priority: .userInitiated) {
+            do {
+                self.log.debug("Deleting all logs.")
+                let cleanDataSource = LogsWriteDataSource(modelContainer: self.contextManager.container!)
+                try await cleanDataSource.deleteAll()
+                self.log.info("Successfully deleted logs.")
+            } catch let error {
+                self.log.error("Deleting logs failed: \(error.localizedDescription)")
+            }
+            self.clearTask = nil
         }
     }
 }
