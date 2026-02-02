@@ -77,7 +77,6 @@ struct LogsPreviewScreen: View {
                     }
                     .scrollTargetLayout()
                 }
-                .ignoresSafeArea(.container, edges: .horizontal)
                 .searchable(text: $viewModel.searchText)
                 .scrollPosition($position, anchor: .top)
                 .onChange(of: viewModel.logs) {
