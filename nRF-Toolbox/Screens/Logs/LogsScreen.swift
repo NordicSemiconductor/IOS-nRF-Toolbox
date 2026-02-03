@@ -18,7 +18,7 @@ enum LogsTab {
 
 struct LogsScreen: View {
     
-    @State var viewModel = LogsSettingsViewModel(container: SwiftDataContextManager.shared.container!)
+    @State private var viewModel: LogsSettingsViewModel = LogsSettingsViewModel(container: SwiftDataContextManager.shared.container!)
     
     @State private var selectedTab: LogsTab
     
@@ -30,7 +30,6 @@ struct LogsScreen: View {
     }
 
     var body: some View {
-   
         TabView(selection: $selectedTab) {
             Tab("Settings", systemImage: "gear", value: LogsTab.settings) {
                 LogsSettingsScreen()
@@ -45,6 +44,9 @@ struct LogsScreen: View {
         .navigationTitle("Logs")
         .applyTabBarMinimazeBehaviorIfAvailable()
         .tint(.universalAccentColor)
+        .task {
+            viewModel.initialise()
+        }
     }
 }
 

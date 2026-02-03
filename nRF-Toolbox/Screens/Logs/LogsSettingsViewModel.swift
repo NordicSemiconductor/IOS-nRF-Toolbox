@@ -47,7 +47,12 @@ class LogsSettingsViewModel {
     // MARK: init
     
     init(container: ModelContainer) {
+        log.debug("\(type(of: self)).\(#function)")
         self.readDataSource = LogsReadDataSource(modelContainer: container)
+    }
+    
+    func initialise() {
+        print("AAATESTAAA - create()")
         setupObservers()
         fetchLogsCount()
         reload()
