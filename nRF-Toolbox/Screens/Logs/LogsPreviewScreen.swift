@@ -50,6 +50,7 @@ struct LogsPreviewScreen: View {
                 }, currentValueLabel: {
                     LogLevelItem(level: viewModel.selectedLogLevel)
                 })
+                .tint(viewModel.selectedLogLevel.color)
                 
                 Button {
                     scrollToTheTop = !scrollToTheTop
