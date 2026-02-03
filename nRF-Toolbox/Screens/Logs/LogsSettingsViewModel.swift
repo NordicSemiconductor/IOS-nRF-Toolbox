@@ -36,7 +36,7 @@ class LogsSettingsViewModel {
     
     private let readDataSource: LogsReadDataSource
     
-    private var page: Int = 0
+    private var page: Int = 1
     private let itemsPerPage: Int = 100
     private var canLoadMore: Bool = true
     

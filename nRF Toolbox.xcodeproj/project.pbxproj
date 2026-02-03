@@ -83,6 +83,7 @@
 		A745E2AD2F18CEEE000B47FD /* LogsSettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A745E2AC2F18CEE9000B47FD /* LogsSettingsScreen.swift */; };
 		A74B9FDE2EEADDB100121B7A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = A74B9FDD2EEADDB100121B7A /* .gitignore */; };
 		A75291BA2EEC2D25002D50F4 /* rename_files.sh in Resources */ = {isa = PBXBuildFile; fileRef = A75291B92EEC2D25002D50F4 /* rename_files.sh */; };
+		A755EB242F3203CF002AEC76 /* CombineExt in Frameworks */ = {isa = PBXBuildFile; productRef = A755EB232F3203CF002AEC76 /* CombineExt */; };
 		A75F116C2E9FA30500B0D6CB /* HTSCBMPeripheralSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75F116B2E9FA2FE00B0D6CB /* HTSCBMPeripheralSpecDelegate.swift */; };
 		A75F116E2E9FA30E00B0D6CB /* CGMSCBMPeripheralSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75F116D2E9FA30B00B0D6CB /* CGMSCBMPeripheralSpecDelegate.swift */; };
 		A75F11702E9FA31300B0D6CB /* GLSCBMPeripheralSpecDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75F116F2E9FA31200B0D6CB /* GLSCBMPeripheralSpecDelegate.swift */; };
@@ -411,6 +412,7 @@
 				AA1AD37F2DD5DFC400799308 /* AEXML in Frameworks */,
 				018873C42A58332400253273 /* iOSCommonLibraries in Frameworks */,
 				A7E289352EB35E70007199DB /* CoreBluetoothMock in Frameworks */,
+				A755EB242F3203CF002AEC76 /* CombineExt in Frameworks */,
 				01B861872AB34DBF0001118F /* iOS-Bluetooth-Numbers-Database in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1063,6 +1065,7 @@
 				01B861862AB34DBF0001118F /* iOS-Bluetooth-Numbers-Database */,
 				AA1AD37E2DD5DFC400799308 /* AEXML */,
 				A7E289342EB35E70007199DB /* CoreBluetoothMock */,
+				A755EB232F3203CF002AEC76 /* CombineExt */,
 			);
 			productName = "nRF-Toolbox";
 			productReference = 017D102B2A5809E300E38E5F /* nRF-Toolbox.app */;
@@ -1147,6 +1150,7 @@
 				018873CA2A583C3300253273 /* XCRemoteSwiftPackageReference "IOS-BLE-Library" */,
 				01C81ACC2A5CAC350011B41E /* XCRemoteSwiftPackageReference "iOS-Bluetooth-Numbers-Database" */,
 				A7255E6A2EAF9C6600774CEE /* XCRemoteSwiftPackageReference "IOS-CoreBluetooth-Mock" */,
+				A755EB222F320299002AEC76 /* XCRemoteSwiftPackageReference "CombineExt" */,
 			);
 			productRefGroup = 5217F3E31859EE0000F2D5BB /* Products */;
 			projectDirPath = "";
@@ -2092,6 +2096,14 @@
 				version = 1.0.3;
 			};
 		};
+		A755EB222F320299002AEC76 /* XCRemoteSwiftPackageReference "CombineExt" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CombineCommunity/CombineExt";
+			requirement = {
+				kind = exactVersion;
+				version = 1.9.0;
+			};
+		};
 		C39941BA27341AAE00E7AA33 /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/weichsel/ZIPFoundation.git";
@@ -2123,6 +2135,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 01C81ACC2A5CAC350011B41E /* XCRemoteSwiftPackageReference "iOS-Bluetooth-Numbers-Database" */;
 			productName = "iOS-Bluetooth-Numbers-Database";
+		};
+		A755EB232F3203CF002AEC76 /* CombineExt */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A755EB222F320299002AEC76 /* XCRemoteSwiftPackageReference "CombineExt" */;
+			productName = CombineExt;
 		};
 		A7E289342EB35E70007199DB /* CoreBluetoothMock */ = {
 			isa = XCSwiftPackageProductDependency;

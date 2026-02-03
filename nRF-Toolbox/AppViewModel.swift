@@ -6,6 +6,7 @@
 //  Copyright © 2026 Nordic Semiconductor. All rights reserved.
 //
 
+import CombineExt
 import iOS_Common_Libraries
 import Foundation
 import Combine
@@ -15,6 +16,8 @@ import SwiftData
 @Observable
 final class AppViewModel {
     
+    private static let bufferSize = 1000
+    
     var logsSettings = LogsSettings()
     
     private let readDataSource: LogsReadDataSource
@@ -23,13 +26,14 @@ final class AppViewModel {
     private var clearTask: Task<(), Error>? = nil
  
     private let startLoggingSignal = PassthroughSubject<Void, Never>()
+    private var replaySubject = ReplaySubject<LogItemDomain, Never>(bufferSize: bufferSize)
     private let contextManager: SwiftDataContextManager = SwiftDataContextManager.shared
     private let log = NordicLog(category: "AppViewModel", subsystem: "com.nordicsemi.nrf-toolbox")
     private var cancellables = Set<AnyCancellable>()
     
     @ObservationIgnored
     private lazy var parentPublisher: CurrentValueSubject<AnyPublisher<LogItemDomain, Never>, Never> = {
-        return CurrentValueSubject<AnyPublisher<LogItemDomain, Never>, Never>(createNewPublisher())
+        return CurrentValueSubject<AnyPublisher<LogItemDomain, Never>, Never>(createNewPublisher(replaySubject))
     }()
     
     init() {
@@ -37,41 +41,39 @@ final class AppViewModel {
         self.writeDataSource = LogsWriteDataSource(modelContainer: contextManager.container!)
        
         observeLogs()
+        observeLogsInsertion()
         refreshLogsCount()
     }
     
-    private func refreshLogsCount() {
-        Task.detached { [weak self] in
-            let result = (try? await self?.readDataSource.fetchCount()) ?? 0
-            
-            await MainActor.run { [weak self] in
-                guard let self else { return }
-                self.logCounter = result
-                self.log.debug("Log counter fetched: \(self.logCounter)")
-                self.startLoggingSignal.send(())
-            }
-        }
+    private func observeLogs() {
+        NordicLog.lastLog
+            .filter { _ in self.logsSettings.isEnabled == true }
+            .compactMap { $0 }
+            .map { log in LogItemDomain(value: log.message, level: log.level.rawValue, timestamp: log.timestamp) }
+            .sink(receiveValue: { log in
+                print("AAATESTAAA - send to subject: \(log.value)")
+                self.replaySubject.send(log) } )
+            .store(in: &cancellables)
     }
     
-    func observeLogs() {
+    func observeLogsInsertion() {
         parentPublisher
             .switchToLatest()
             .sink(receiveValue: { log in self.insertRecord(log) } )
             .store(in: &cancellables)
     }
     
-    private func createNewPublisher() -> AnyPublisher<LogItemDomain, Never>{
-        return NordicLog.lastLog
-            .filter { _ in self.logsSettings.isEnabled == true }
-            .compactMap { $0 }
-            .map { log in LogItemDomain(value: log.message, level: log.level.rawValue, timestamp: log.timestamp) }
-            .buffer(size: .max, prefetch: .keepFull, whenFull: .dropOldest)
-            .combineLatest(startLoggingSignal)
-            .map(\.0)
+    private func createNewPublisher(_ newReplySubject: ReplaySubject<LogItemDomain, Never>) -> AnyPublisher<LogItemDomain, Never> {
+        replaySubject = newReplySubject
+
+        return startLoggingSignal
+            .flatMap { _ in newReplySubject }
             .eraseToAnyPublisher()
     }
     
     func insertRecord(_ item: LogItemDomain) {
+        logCounter += 1
+        print("AAATESTAAA - log counter: \(logCounter)")
         if logCounter > 100000 {
             clearLogs()
         }
@@ -81,8 +83,9 @@ final class AppViewModel {
     }
     
     func clearLogs() {
+        print("AAATESTAAA - clear logsś")
         guard clearTask == nil else { return }
-        parentPublisher.send(createNewPublisher())
+        parentPublisher.send(createNewPublisher(ReplaySubject<LogItemDomain, Never>(bufferSize: AppViewModel.bufferSize)))
         let cleanDataSource = LogsWriteDataSource(modelContainer: self.contextManager.container!)
         clearTask = Task.detached(priority: .userInitiated) {
             do {
@@ -94,6 +97,19 @@ final class AppViewModel {
             }
             await MainActor.run {
                 self.refreshLogsCount()
+            }
+        }
+    }
+    
+    private func refreshLogsCount() {
+        Task.detached { [weak self] in
+            let result = (try? await self?.readDataSource.fetchCount()) ?? 0
+            
+            await MainActor.run { [weak self] in
+                guard let self else { return }
+                self.logCounter = result
+                self.log.debug("Log counter fetched: \(self.logCounter)")
+                self.startLoggingSignal.send(())
                 self.clearTask = nil
             }
         }

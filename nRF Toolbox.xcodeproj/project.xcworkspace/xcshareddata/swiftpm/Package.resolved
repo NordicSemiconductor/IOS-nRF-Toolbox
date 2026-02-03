@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "combineext",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/CombineCommunity/CombineExt",
+      "state" : {
+        "revision" : "96a7610ca165e027b24710fc2f04c9ba8d2ce0e6",
+        "version" : "1.9.0"
+      }
+    },
+    {
       "identity" : "ios-bluetooth-numbers-database",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/NickKibish/iOS-Bluetooth-Numbers-Database.git",
