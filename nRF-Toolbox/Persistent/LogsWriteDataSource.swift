@@ -25,6 +25,7 @@ actor LogsWriteDataSource {
     
     func deleteAll() throws {
         try modelContext.delete(model: LogDb.self)
+        modelContext.insert(LogDb(value: "New log session.", level: LogLevel.debug.rawValue, timestamp: Date())) // Triggers callback that refreshes counter.
         try modelContext.save()
     }
 }
