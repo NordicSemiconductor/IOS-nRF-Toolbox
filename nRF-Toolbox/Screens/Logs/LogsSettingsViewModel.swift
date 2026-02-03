@@ -50,6 +50,7 @@ class LogsSettingsViewModel {
         self.readDataSource = LogsReadDataSource(modelContainer: container)
         setupObservers()
         fetchLogsCount()
+        reload()
     }
     
     // MARK: deinit

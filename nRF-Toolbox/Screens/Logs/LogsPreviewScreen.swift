@@ -86,7 +86,6 @@ struct LogsPreviewScreen: View {
                 }
             }
         }
-        .onAppear { viewModel.loadNextPage() }
     }
 }
 
