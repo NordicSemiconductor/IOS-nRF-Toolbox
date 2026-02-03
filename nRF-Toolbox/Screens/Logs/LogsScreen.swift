@@ -18,7 +18,7 @@ enum LogsTab {
 
 struct LogsScreen: View {
     
-    @State private var viewModel: LogsSettingsViewModel = LogsSettingsViewModel(container: SwiftDataContextManager.shared.container!)
+    @State private var viewModel: LogsSettingsViewModel?
     
     @State private var selectedTab: LogsTab
     
@@ -30,22 +30,21 @@ struct LogsScreen: View {
     }
 
     var body: some View {
-        TabView(selection: $selectedTab) {
-            Tab("Settings", systemImage: "gear", value: LogsTab.settings) {
-                LogsSettingsScreen()
-                    .environment(viewModel)
+        ViewModelContainer(createVM: { LogsSettingsViewModel(container: SwiftDataContextManager.shared.container!) }) { viewModel in
+            TabView(selection: $selectedTab) {
+                Tab("Settings", systemImage: "gear", value: LogsTab.settings) {
+                    LogsSettingsScreen()
+                        .environment(viewModel)
+                }
+                
+                Tab("Preview", systemImage: "list.bullet.clipboard", value: LogsTab.preview) {
+                    LogsPreviewScreen()
+                        .environment(viewModel)
+                }
             }
-            
-            Tab("Preview", systemImage: "list.bullet.clipboard", value: LogsTab.preview) {
-                LogsPreviewScreen()
-                    .environment(viewModel)
-            }
-        }
-        .navigationTitle("Logs")
-        .applyTabBarMinimazeBehaviorIfAvailable()
-        .tint(.universalAccentColor)
-        .task {
-            viewModel.initialise()
+            .navigationTitle("Logs")
+            .applyTabBarMinimazeBehaviorIfAvailable()
+            .tint(.universalAccentColor)
         }
     }
 }
