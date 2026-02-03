@@ -36,7 +36,7 @@ class LogsSettingsViewModel {
     
     private let readDataSource: LogsReadDataSource
     
-    private var page: Int = 1
+    private var page: Int = 0
     private let itemsPerPage: Int = 100
     private var canLoadMore: Bool = true
     
@@ -73,12 +73,13 @@ class LogsSettingsViewModel {
         NotificationCenter.default.publisher(for: ModelContext.didSave)
             .throttle(for: .seconds(1.0), scheduler: RunLoop.main, latest: true)
             .sink { [weak self] _ in
-                self?.handleDatabaseUpdate()
+                self?.reload()
             }
             .store(in: &cancellables)
     }
 
     func reload() {
+        guard !isLoading else { return }
         activeLoadTask?.cancel()
         
         isLoading = true
@@ -113,7 +114,7 @@ class LogsSettingsViewModel {
         
         let currentSearch = searchText
         let currentLevel = selectedLogLevel
-        let currentPage = page
+        let nextPage = page + 1
         let amount = itemsPerPage
         
         activeLoadTask = Task.detached(priority: .userInitiated) { [weak self] in
@@ -122,7 +123,7 @@ class LogsSettingsViewModel {
             let newRecords = try? await self.readDataSource.fetch(
                 searchText: currentSearch,
                 logLevel: currentLevel,
-                page: currentPage,
+                page: nextPage,
                 amountPerPage: amount
             )
             
@@ -139,28 +140,6 @@ class LogsSettingsViewModel {
                     self.canLoadMore = false
                 }
                 self.isLoading = false
-            }
-        }
-    }
-    
-    private func handleDatabaseUpdate() {
-        guard !isLoading else { return }
-        refreshCurrentView()
-    }
-    
-    private func refreshCurrentView() {
-        let currentTotalCount = (logs?.count ?? 0)
-        let limit = max(itemsPerPage, currentTotalCount)
-        let currentSearch = searchText
-        let currentLevel = selectedLogLevel
-        
-        Task.detached(priority: .utility) { [weak self] in
-            guard let self = self else { return }
-            let records = try? await self.readDataSource.fetch(searchText: currentSearch, logLevel: currentLevel, limit: limit)
-            
-            await MainActor.run {
-                self.logs = records
-                self.fetchLogsCount()
             }
         }
     }
