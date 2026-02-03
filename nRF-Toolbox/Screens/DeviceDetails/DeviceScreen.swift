@@ -35,11 +35,9 @@ struct DeviceScreen: View {
             if (hasMissingCharacteristics) {
                 MissingCharacteristicsView()
             } else {
-                if let deviceVM = connectedDevicesViewModel.deviceViewModel(for: deviceViewModel.device.id) {
-                    deviceVM.supportedServiceViews()
-                        .disabled(deviceViewModel.device.status.hashValue != ConnectedDevicesViewModel.Device.Status.connected.hashValue)
-                        .disabled(!deviceViewModel.isInitialized)
-                }
+                deviceViewModel.supportedServiceViews()
+                    .disabled(deviceViewModel.device.status.hashValue != ConnectedDevicesViewModel.Device.Status.connected.hashValue)
+                    .disabled(!deviceViewModel.isInitialized)
                 
                 if let error = deviceViewModel.errors.warning {
                     Section("Warning") {
