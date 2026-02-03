@@ -42,10 +42,10 @@ struct LogsScreen: View {
                         .environment(viewModel)
                 }
             }
-            .navigationTitle("Logs")
             .applyTabBarMinimazeBehaviorIfAvailable()
             .tint(.universalAccentColor)
         }
+        .navigationTitle("Logs")
     }
 }
 
