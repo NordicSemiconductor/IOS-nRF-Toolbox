@@ -65,7 +65,7 @@ struct LogsPreviewScreen: View {
             LoadingListContainer(data: viewModel.logs) { logs in
                 ScrollView {
                     LazyVStack {
-                        ForEach(logs) { log in
+                        ForEach(logs, id: \.id) { log in
                             LogItem(log: log)
                                 .padding(.vertical, 10)
                                 .padding(.horizontal, 16)
