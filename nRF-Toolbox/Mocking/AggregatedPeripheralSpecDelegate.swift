@@ -81,4 +81,10 @@ class AggregatedPeripheralSpecDelegate: CBMPeripheralSpecDelegate {
         }
         return .failure(MockError.notifyIsNotSupported)
     }
+    
+    func peripheral(_ peripheral: CBMPeripheralSpec, didDisconnect error: (any Error)?) {
+        for delegate in delegates {
+            delegate.peripheral(peripheral, didDisconnect: error)
+        }
+    }
 }

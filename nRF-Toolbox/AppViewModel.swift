@@ -50,9 +50,7 @@ final class AppViewModel {
             .filter { _ in self.logsSettings.isEnabled == true }
             .compactMap { $0 }
             .map { log in LogItemDomain(value: log.message, level: log.level.rawValue, timestamp: log.timestamp) }
-            .sink(receiveValue: { log in
-                print("AAATESTAAA - send to subject: \(log.value)")
-                self.replaySubject.send(log) } )
+            .sink(receiveValue: { log in self.replaySubject.send(log) } )
             .store(in: &cancellables)
     }
     
@@ -73,7 +71,6 @@ final class AppViewModel {
     
     func insertRecord(_ item: LogItemDomain) {
         logCounter += 1
-        print("AAATESTAAA - log counter: \(logCounter)")
         if logCounter > 100000 {
             clearLogs()
         }
@@ -83,7 +80,6 @@ final class AppViewModel {
     }
     
     func clearLogs() {
-        print("AAATESTAAA - clear logsś")
         guard clearTask == nil else { return }
         parentPublisher.send(createNewPublisher(ReplaySubject<LogItemDomain, Never>(bufferSize: AppViewModel.bufferSize)))
         let cleanDataSource = LogsWriteDataSource(modelContainer: self.contextManager.container!)
