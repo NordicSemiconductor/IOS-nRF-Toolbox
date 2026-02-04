@@ -129,8 +129,7 @@ private struct LogItem: View {
         VStack(alignment: .leading) {
             HStack {
                 Text(log.displayDate)
-                    .monospaced()
-                    .font(.caption)
+                    .font(.system(.caption2, design: .monospaced))
                 
                 Spacer()
                 
@@ -139,7 +138,7 @@ private struct LogItem: View {
             
             Text(log.value)
                 .foregroundColor(log.logLevel.color)
-                .monospaced()
+                .font(.system(.footnote, design: .monospaced))
         }
     }
 }
@@ -151,8 +150,7 @@ private struct LogLevelItem: View {
     var body: some View {
         Text(level.name)
             .foregroundColor(Color.white)
-            .monospaced()
-            .font(.caption)
+            .font(.system(.caption2, design: .monospaced))
             .padding(6)
             .background(
                 RoundedRectangle(cornerRadius: 12)
