@@ -4,6 +4,7 @@ devices(["iPad Air 13-inch (M3)", "iPhone 16 Plus"])
 languages(["en-US"])
 scheme("nRF-ToolboxUITests")
 clear_previous_screenshots(true)
+dark_mode(true)
 
 # A list of devices you want to take the screenshots from
 # devices([
