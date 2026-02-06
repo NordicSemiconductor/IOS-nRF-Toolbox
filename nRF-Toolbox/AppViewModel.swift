@@ -104,7 +104,6 @@ final class AppViewModel {
             await MainActor.run { [weak self] in
                 guard let self else { return }
                 self.logCounter = result
-                self.log.debug("Log counter fetched: \(self.logCounter)")
                 self.startLoggingSignal.send(())
                 self.clearTask = nil
             }
