@@ -2097,7 +2097,7 @@
 			repositoryURL = "https://github.com/NordicSemiconductor/IOS-CoreBluetooth-Mock.git";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.3;
+				version = 1.0.4;
 			};
 		};
 		A755EB222F320299002AEC76 /* XCRemoteSwiftPackageReference "CombineExt" */ = {
