@@ -137,8 +137,17 @@ extension DeviceDetailsViewModel {
                 await onDisconnect()
                 supportedServiceViewModels.removeAll()
             }
-            discoveredServices = try await peripheral.discoverServices(serviceUUIDs: nil).firstValue
 
+            discoveredServices = try await peripheral.discoverServices(serviceUUIDs: nil).firstValue
+            
+            let ids = device.services.map { $0.uuid }.filter { $0.isSupported() }
+            let discoveredIds = discoveredServices.map { $0.uuid }
+            let missingIds = ids.filter { !discoveredIds.contains($0) }
+            if !missingIds.isEmpty {
+                missingIds.forEach { log.error("Missing required service: \($0.toServiceName())") }
+                throw ServiceError.noMandatoryCharacteristic
+            }
+            
             var table = AttributeTable()
             for service in discoveredServices {
                 table.addService(service)
@@ -146,8 +155,9 @@ extension DeviceDetailsViewModel {
                 let characteristics: [CBCharacteristic] = try await peripheral.discoverCharacteristics(nil, for: service).firstValue
                 for characteristic in characteristics {
                     table.addCharacteristic(characteristic, to: service)
-                    
+
                     let descriptors = try await peripheral.discoverDescriptors(for: characteristic).firstValue
+                    
                     for descriptor in descriptors {
                         table.addDescriptor(descriptor, to: characteristic, in: service)
                     }
@@ -210,14 +220,6 @@ extension DeviceDetailsViewModel {
                     }.store(in: &cancellable)
             }
             
-            let ids = device.services.map { $0.uuid }.filter { $0.isSupported() }
-            let discoveredIds = discoveredServices.map { $0.uuid }
-            let missingIds = ids.filter { !discoveredIds.contains($0) }
-            if !missingIds.isEmpty {
-                missingIds.forEach { log.error("Missing required service: \($0.toServiceName())") }
-                throw ServiceError.noMandatoryCharacteristic
-            }
-            
             isInitialized = true
             log.info("Successfully initialized connection with the peripheral.")
         } catch {
@@ -226,7 +228,6 @@ extension DeviceDetailsViewModel {
             } else {
                 errors.error = AlertError.servicesNotFound
             }
-            errors.error = ServiceError.noMandatoryCharacteristic
             log.error("\(#function) Error: \(error.localizedDescription)")
         }
     }
