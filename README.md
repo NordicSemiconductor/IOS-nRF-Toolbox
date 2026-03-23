@@ -52,4 +52,4 @@ This project integrates [Core Bluetooth Mock](https://github.com/NordicSemicondu
 
 ## Resources
 
-nRF5340 and nRF54 series Development kits can be ordered from [Nordic](http://www.nordicsemi.com/eng/Buy-Online).
+nRF5340, as well as the nRF52 and nRF54 series development kits, can be ordered from [Nordic](http://www.nordicsemi.com/eng/Buy-Online).
